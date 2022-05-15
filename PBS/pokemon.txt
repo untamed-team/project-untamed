@@ -27353,7 +27353,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
-Evolutions = NOCTAVISPA,Level,30
+Evolutions = NOCTAVISPA,HasMoveType,DARK
 #-------------------------------
 [922]
 Name = Noctavispa
