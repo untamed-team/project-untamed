@@ -234,3 +234,4 @@
 232,PRISMARMOR,Prism Armor,"Reduces damage from super-effective attacks."
 233,NEUROFORCE,Neuroforce,"Powers up moves that are super-effective."
 234,ARTILLERIST,Artillerist,"Powers up Bomb moves."
+235,AMPLIFIER,Amplifier,"Powers up Bomb moves."
