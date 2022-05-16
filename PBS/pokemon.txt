@@ -27504,7 +27504,6 @@ BattlerShadowSize = 1
 #------------------------------- 
 #Purrloin 26 - Liepard 27 - Spinarak 28 - Ariados 29 - Teddiursa 30 - Ursaring 31
 #------------------------------- 
-#placeholders placeholders placeholders placeholders
 [926] 
 #32
 Name = Zea-Zaya 
@@ -27641,12 +27640,83 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #------------------------------- 
-#Pumpkaboo 36 - Gourgeist 37 - Skiddo 38 - Gogoat 39 - Pichu 40 - Pikachu 41 - Raichu 42 - Lotad 43 - Lombre 44 - Ludicolo 45 - Dewpider 46 - Araquanid 47 - Budew 48 - M_Roselia 49 - M_Roserade 50 - Litwick 51 - Lampent 52 - Chandelure 53
+#Pumpkaboo 36 - Gourgeist 37 - Skiddo 38 - Gogoat 39 - Pichu 40 - Pikachu 41 - Raichu 42 - Lotad 43 - Lombre 44 - Ludicolo 45 - Dewpider 46 - Araquanid 47 - Budew 48
 #------------------------------- 
 [930] 
+#49
+Name = Roselia
+InternalName = M_ROSELIA
+Type1 = GRASS
+Type2 = GHOST
+BaseStats = 50,45,50,70,80,105
+GenderRate = Female50Percent
+GrowthRate = Parabolic
+BaseEXP = 140
+EffortPoints = 0,0,0,0,0,2
+Rareness = 150
+Happiness = 70
+Abilities = CURSEDBODY,FLOWERVEIL
+HiddenAbility = SEANCE
+Moves = 1,ASTONISH,1,GROWTH,1,STUNSPORE,5,MEGADRAIN,10,MAGICALLEAF,15,HAUNT,20,FORESTSCURSE,25,LEECHSEED,30,GIGADRAIN,35,MOONLIGHT,40,SLEEPPOWDER,45,MOONBLAST,50,CHILLINGWAIL,55,DESTINYBOND,60,PETALDANCE
+TutorMoves = 
+EggMoves = POLLENPUFF,OMINOUSWIND,SPIKES,TOXICSPIKES,LEAFSTORM
+Compatibility = Fairy,Grass
+StepsToHatch = 5120
+Height = 0.3
+Weight = 1.2
+Color = Black
+Shape = Bipedal
+Habitat = Urban
+Kind = Thorn
+Pokedex = On certain nights in the Mazah region, Roselia gather en masse in graveyards. The flowers on the ends of their arms are said to possess supernatural properties.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions = M_ROSERADE,Item,MOONSTONE
+#------------------------------- 
+[931] 
+#50
+Name = Roserade
+InternalName = M_ROSERADE
+Type1 = GRASS
+Type2 = GHOST
+BaseStats = 70,50,70,90,105,135
+GenderRate = Female50Percent
+GrowthRate = Parabolic
+BaseEXP = 258
+EffortPoints = 0,0,0,0,0,3
+Rareness = 75
+Happiness = 70
+Abilities = CURSEDBODY,FLOWERVEIL
+HiddenAbility = SEANCE
+Moves = 1,ASTONISH,1,GROWTH,1,STUNSPORE,1,MEGADRAIN,1,MAGICALLEAF,1,HAUNT,1,FORESTSCURSE,1,LEECHSEED,1,GIGADRAIN,1,MOONLIGHT,1,SLEEPPOWDER,1,MOONBLAST,1,CHILLINGWAIL,1,DESTINYBOND,1,PETALDANCE
+TutorMoves = 
+Compatibility = Fairy,Grass
+StepsToHatch = 5120
+Height = 0.9
+Weight = 10.4
+Color = Black
+Shape = Bipedal
+Habitat = Urban
+Kind = Bouquet
+Pokedex = Roserade in the Mazah region have a special connection with the afterlife. They can wield supernatural powers to help people communicate with passed on loved ones, as well as striking down foes.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+#-------------------------------
+#Litwick 51 - Lampent 52 - Chandelure 53
+#-------------------------------
+[932] 
 #54
 Name = Liloriña
-#Ñ wont work in internal name
 InternalName = LILORINA		
 Type1 = GHOST
 Type2 = WATER
@@ -27680,7 +27750,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = YAQUENA,Level,39
 #------------------------------- 
-[931] 
+[933] 
 #55
 Name = Yaquena
 InternalName = YAQUENA
@@ -27715,7 +27785,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #------------------------------- 
-[932] 
+[934] 
 #56
 Name = Yoronaqua
 InternalName = YORONAQUA
