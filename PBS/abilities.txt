@@ -235,3 +235,4 @@
 233,NEUROFORCE,Neuroforce,"Powers up moves that are super-effective."
 234,ARTILLERIST,Artillerist,"Powers up Bomb moves."
 235,AMPLIFIER,Amplifier,"Powers up Sound moves."
+236,GRIMTEARS,Grim Tears,"Lowers the foe's Sp. Atk. stat."
