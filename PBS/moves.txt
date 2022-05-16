@@ -713,3 +713,5 @@
 693,GEODEBURST,Geode Burst,00F,110,ROCK,Special,80,20,10,NearOther,0,bef,"The user attacks its target with a hail of glittering crystals. This may also make the target flinch."
 694,FORGEBREATH,Forge Breath,00A,85,STEEL,Special,100,15,10,NearOther,0,bef,"The user spews superheated metal at its target. This may also leave the target with a burn."
 695,EXCITE,Excite,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
+#placeholders
+696,FLIPTURN,Flip Turn,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
