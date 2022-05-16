@@ -1757,7 +1757,7 @@ Pokedex = This gorgeous Magearna looks as it did at the time of its invention. I
 #-------------------------------
 #placeholders placeholders placeholders placeholders
 [MEOWTH,3]
-FormName = Mazzian
+FormName = Mazian
 Type1 = FIGHTING
 BaseStats = 40,35,35,90,50,40
 HiddenAbility = RATTLED
@@ -1770,7 +1770,7 @@ Generation = 7
 Evolutions = PERSIAN,Happiness,
 #-------------------------------
 [ROSELIA,1]
-FormName = Mazzian
+FormName = Mazian
 Type1 = FIGHTING
 BaseStats = 40,35,35,90,50,40
 HiddenAbility = RATTLED
@@ -1783,7 +1783,7 @@ Generation = 7
 Evolutions = PERSIAN,Happiness,
 #-------------------------------
 [ROSERADE,1]
-FormName = Mazzian
+FormName = Mazian
 Type1 = FIGHTING
 BaseStats = 40,35,35,90,50,40
 HiddenAbility = RATTLED
