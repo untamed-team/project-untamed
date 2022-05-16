@@ -26809,8 +26809,9 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-#------------------------------- # Legends pokedex ends at 905 with Enamorus
-[906]
+#------------------------------- #Legends pokedex ends at 905 with Enamorus
+[906] 
+#1
 Name = Mollucotta
 InternalName = MOLLUCOTTA
 Type1 = GRASS
@@ -26844,7 +26845,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
-[907]
+[907] 
+#2
 Name = Expursum
 InternalName = EXPURSUM
 Type1 = GRASS
@@ -26878,7 +26880,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GASTRONAUT,Level,36
 #-------------------------------
-[908]
+[908] 
+#3
 Name = Gastronaut
 InternalName = GASTRONAUT
 Type1 = GRASS
@@ -26912,7 +26915,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[909]
+[909] 
+#4
 Name = Quetzalil
 InternalName = QUETZALIL
 Type1 = FIRE
@@ -26946,7 +26950,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = QUEXCELL,Level,16
 #-------------------------------
-[910]
+[910] 
+#5
 Name = Quexcell
 InternalName = QUEXCELL
 Type1 = FIRE
@@ -26980,7 +26985,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = QUETZILLIAN,Level,36
 #-------------------------------
-[911]
+[911] 
+#6
 Name = Quetzillian
 InternalName = QUETZILLIAN
 Type1 = FIRE
@@ -27014,7 +27020,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #------------------------------- 
-[912]
+[912] 
+#7
 Name = Porsite
 InternalName = PORSITE
 Type1 = WATER
@@ -27048,7 +27055,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = CETTOEKKO,Level,16
 #------------------------------- 
-[913]
+[913] 
+#8
 Name = Cettoekko
 InternalName = CETTOEKKO
 Type1 = WATER
@@ -27083,7 +27091,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = BATHYGIGAS,Level,36
 #------------------------------- 
-[914]
+[914] 
+#9
 Name = Bathygigas
 InternalName = BATHYGIGAS
 Type1 = WATER
@@ -27117,7 +27126,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #------------------------------- 
-[915]
+[915] 
+#10
 Name = Pacuna
 InternalName = PACUNA
 Type1 = NORMAL
@@ -27150,7 +27160,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #------------------------------- 
-[916]
+[916] 
+#11
 Name = Laguna
 InternalName = LAGUNA
 Type1 = NORMAL
@@ -27184,7 +27195,10 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #------------------------------- 
-[917]
+#Flabebe 12 - Floette 13 - Florges 14
+#------------------------------- 
+[917] 
+#15
 Name = Wrenner
 InternalName = WRENNER
 Type1 = NORMAL
@@ -27218,7 +27232,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #------------------------------- 
-[918]
+[918] 
+#16
 Name = Aveor
 InternalName = AVEOR
 Type1 = ELECTRIC
@@ -27253,7 +27268,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Evolutions = ROADRAPTOR,Level,34
 #------------------------------- 
-[919]
+[919] 
+#17
 Name = Roadraptor
 InternalName = ROADRAPTOR
 Type1 = ELECTRIC
@@ -27287,7 +27303,8 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[920]
+[920] 
+#18
 Name = Minimelo
 InternalName = MINIMELO
 Type1 = BUG
@@ -27321,7 +27338,8 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = CHICATTA,Level,10
 #-------------------------------
-[921]
+[921] 
+#19
 Name = Chicatta
 InternalName = CHICATTA
 Type1 = BUG
@@ -27353,9 +27371,10 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
-Evolutions = NOCTAVISPA,LevelDarkInParty,30
+Evolutions = NOCTAVISPA,HasMoveType,DARK
 #-------------------------------
-[922]
+[922] 
+#20
 Name = Noctavispa
 InternalName = NOCTAVISPA
 Type1 = BUG
@@ -27389,3 +27408,363 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions =
+#-------------------------------
+#Rockruff 21 - Lycanroc 22
+#------------------------------- 
+[923] 
+#23
+Name = Techuppi
+InternalName = TECHUPPI
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+#placeholders placeholders placeholders placeholders
+[924] 
+#24
+Name = Lupacabra 
+InternalName = LUPACABRA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[925] 
+#25
+Name = Zolupine 
+InternalName = ZOLUPINE
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+#Purrloin 26 - Liepard 27 - Spinarak 28 - Ariados 29 - Teddiursa 30 - Ursaring 31
+#------------------------------- 
+[926] 
+#32
+Name = Zea-Zaya 
+InternalName = ZEAZAYA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[927] 
+#33
+Name = Zhusk
+InternalName = ZHUSK
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[928] 
+#34
+Name = Mayzmen
+InternalName = MAYZMEN
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[929] 
+#35
+Name = Blazea
+InternalName = BLAZEA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+#Pumpkaboo 36 - Gourgeist 37 - Skiddo 38 - Gogoat 39 - Pichu 40 - Pikachu 41 - Raichu 42 - Lotad 43 - Lombre 44 - Ludicolo 45 - Dewpider 46 - Araquanid 47 - Budew 48 - M_Roselia 49 - M_Roserade 50 - Litwick 51 - Lampent 52 - Chandelure 53
+#------------------------------- 
+[930] 
+#54
+Name = Liloriña
+InternalName = LILORIÑA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[931] 
+#55
+Name = Yaquena
+InternalName = YAQUENA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+[932] 
+#56
+Name = Yoronaqua
+InternalName = RORONAQUA
+Type1 = DARK
+BaseStats = 45,60,45,35,40,45
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 56
+EffortPoints = 0,2,0,1,0,0
+Rareness = 255
+Happiness = 70
+Abilities = HUSTLE,ANGERPOINT
+HiddenAbility = GUTS
+Moves = 1,LEER,1,TACKLE,4,BITE,8,HOWL,12,LICK,16,FURYSWIPES,20,ODORSLEUTH,24,SUCKERPUNCH,28,BULKUP,32,SUBMISSION,36,DARKESTLARIAT,40,PLAYROUGH
+TutorMoves = 
+EggMoves = FIREFANG,ICEFANG,POWERTRIP,PUNISHMENT,THUNDERFANG
+Compatibility = Field
+StepsToHatch = 5120
+Height = 0.3
+Weight = 5.9
+Color = Blue
+Shape = Quadruped
+Habitat = Urban
+Kind = Small Dog
+Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history tells the same story. Their tiny jaws are capable of clamping down at surprising strength.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Evolutions =
+#------------------------------- 
+#Gothita 57 - Gothorita 58 - Gothithelle 59 - Sableye 60
+#------------------------------- 
