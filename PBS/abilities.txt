@@ -236,3 +236,4 @@
 234,ARTILLERIST,Artillerist,"Powers up Bomb moves."
 235,AMPLIFIER,Amplifier,"Powers up Sound moves."
 236,GRIMTEARS,Grim Tears,"Lowers the foe's Sp. Atk. stat."
+237,SEANCE,Seance,"The Pokémon copies the Ability of a defeated Pokémon."
