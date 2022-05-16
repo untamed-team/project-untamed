@@ -116,3 +116,9 @@ Pokemon = CHARIZARD,63
     Item = SITRUSBERRY
 Pokemon = BLASTOISE,63
     Item = SITRUSBERRY
+#-------------------------------
+[RIVAL1,Blue,3]
+LoseText = "..."
+Pokemon = WHISMUR,10
+Pokemon = DELCATTY,10
+Pokemon = GYARADOS,5
