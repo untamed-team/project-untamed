@@ -233,6 +233,7 @@
 231,SHADOWSHIELD,Shadow Shield,"Resists damage while its HP is full."
 232,PRISMARMOR,Prism Armor,"Reduces damage from super-effective attacks."
 233,NEUROFORCE,Neuroforce,"Powers up moves that are super-effective."
+######################################## New Abilities ########################################
 234,ARTILLERIST,Artillerist,"Powers up Bomb moves."
 235,AMPLIFIER,Amplifier,"Powers up Sound moves."
 236,GRIMTEARS,Grim Tears,"Lowers the foe's Sp. Atk. stat."
