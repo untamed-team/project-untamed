@@ -113,6 +113,12 @@ MapPosition = 0,14,8
 BattleBack = field
 MapSize = 1,11
 #-------------------------------
+[022]
+# initial town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
 [023]
 # Lerucean Town
 Outdoor = true
@@ -239,6 +245,12 @@ MapPosition = 0,15,10
 BattleBack = rocky
 MapSize = 2,11
 Environment = Rock
+#-------------------------------
+[048]
+# route 1
+Outdoor = true
+ShowArea = true
+Bicycle = true
 #-------------------------------
 [049]
 # Rock Cave
@@ -390,3 +402,21 @@ MapPosition = 0,12,10
 Outdoor = true
 MapPosition = 1,13,16
 BattleBack = city
+#-------------------------------
+[076]
+# hacienda outskirts
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[077]
+# town gym 1
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[078]
+# hacienda back
+Outdoor = true
+ShowArea = true
+Bicycle = true
