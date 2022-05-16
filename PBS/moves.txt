@@ -716,3 +716,4 @@
 #placeholders placeholders placeholders placeholders
 696,FLIPTURN,Flip Turn,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
 697,LIFEDEW,Life Dew,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
+698,BURNINGJEALOUSY,Burning Jealousy,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
