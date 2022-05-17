@@ -32,3 +32,7 @@ Pokemon = ROCKRUFF,12
 Pokemon = ROCKRUFF,40
     Moves = FLIPTURN,LIFEDEW,BURNINGJEALOUSY
     AbilityIndex = 237
+#-------------------------------
+[BEAUTY,Bridget]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,10
