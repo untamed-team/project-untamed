@@ -708,7 +708,7 @@
 688,HAUNT,Haunt,0DD,85,GHOST,Physical,100,10,0,NearOther,0,abefj,"The user drains the target’s life force. The user's HP is restored by half the damage taken by the target."
 689,BITINGCOLD,Biting Cold,00C,0,ICE,Status,75,15,0,NearOther,0,bce,"The user chills their target to the bone to inflict frostbite."
 690,CHILLINGWAIL,Chilling Wail,007,90,GHOST,Special,100,10,30,NearOther,0,bce,"The user wails eerily at its target, chilling them to the bone. This may also paralyze the target."
-691,MYSTICBLADE,Mystic Blade,042,95,FAIRY,Physical,100,10,10,NearOther,0,abefh,"The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily."
+691,MYSTICBLADE,Mystic Blade,042,85,FAIRY,Physical,100,10,10,NearOther,0,abefh,"The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily."
 692,FORCEWAVE,Force Wave,000,90,FIGHTING,Special,95,10,0,AllNearFoes,0,bef,"The user strikes the air to send a damaging shockwave towards opposing pokemon."
 693,GEODEBURST,Geode Burst,00F,110,ROCK,Special,80,20,10,NearOther,0,bef,"The user attacks its target with a hail of glittering crystals. This may also make the target flinch."
 694,FORGEBREATH,Forge Breath,00A,85,STEEL,Special,100,15,10,NearOther,0,bef,"The user spews superheated metal at its target. This may also leave the target with a burn."
