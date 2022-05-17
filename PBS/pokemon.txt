@@ -32,6 +32,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -10
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
 [2]
@@ -65,6 +66,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -20
 Evolutions = GASTRONAUT,Level,36
 #-------------------------------
 [3]
@@ -99,6 +101,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -30
 #-------------------------------
 [4]
 Name = Quetzalil
@@ -132,6 +135,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -10
 Evolutions = QUEXCELL,Level,16
 #-------------------------------
 [5]
@@ -165,6 +169,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -20
 Evolutions = QUETZILLIAN,Level,36
 #-------------------------------
 [6]
@@ -199,6 +204,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -30
 #-------------------------------
 [7]
 Name = Porsite
@@ -232,6 +238,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -10
 Evolutions = CETTOEKKO,Level,16
 #-------------------------------
 [8]
@@ -266,6 +273,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -20
 Evolutions = BATHYGIGAS,Level,36
 #-------------------------------
 [9]
@@ -300,6 +308,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -30
 #-------------------------------
 [10]
 Name = Pacuna
@@ -333,6 +342,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 20
 #-------------------------------
 [11]
 Name = Laguna
@@ -366,6 +376,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 10
 #-------------------------------
 [12]
 Name = Flabébé
@@ -400,6 +411,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = FLOETTE,Level,19
+Score = 20
 #-------------------------------
 [13]
 Name = Floette
@@ -433,6 +445,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = FLORGES,Item,SHINYSTONE
+Score = 50
 #-------------------------------
 [14]
 Name = Florges
@@ -465,6 +478,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 40
 #-------------------------------
 [15]
 Name = Wrenner
@@ -499,6 +513,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -10
 #-------------------------------
 [16]
 Name = Aveor
@@ -533,6 +548,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
 Evolutions = ROADRAPTOR,Level,34
+Score = -30
 #-------------------------------
 [17]
 Name = Roadraptor
@@ -566,6 +582,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -60
 #-------------------------------
 [18]
 Name = Minimelo
@@ -600,6 +617,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = CHICATTA,Level,10
+Score = 50
 #-------------------------------
 [19]
 Name = Chicatta
@@ -633,6 +651,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = NOCTAVISPA,HasMoveType,DARK
+Score = 50
 #-------------------------------
 [20]
 Name = Noctavispa
@@ -667,6 +686,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions =
+Score = 30
 #-------------------------------
 [21]
 Name = Rockruff
@@ -700,6 +720,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = LYCANROC,Level,25
+Score = -20
 #-------------------------------
 [22]
 Name = Lycanroc
@@ -732,6 +753,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -50
 #-------------------------------
 [23]
 Name = Techuppi
@@ -766,6 +788,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions =
+Score = -20
 #-------------------------------
 [24]
 Name = Zolupine
@@ -799,6 +822,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -30
 #-------------------------------
 [25]
 Name = Lupacabra
@@ -831,6 +855,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -40
 #-------------------------------
 [26]
 Name = Purrloin
@@ -864,6 +889,7 @@ BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = LIEPARD,Level,20
+Score = 20
 #-------------------------------
 [27]
 Name = Liepard
@@ -895,6 +921,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
+Score = 25
 #-------------------------------
 [28]
 Name = Spinarak
@@ -930,6 +957,7 @@ BattlerEnemyY = 30
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = ARIADOS,Level,22
+Score = 30
 #-------------------------------
 [29]
 Name = Ariados
@@ -963,6 +991,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
+Score = 40
 #-------------------------------
 [30]
 Name = Teddiursa
@@ -997,6 +1026,7 @@ BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = URSARING,Level,30
+Score = 0
 #-------------------------------
 [31]
 Name = Ursaring
@@ -1029,6 +1059,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
+Score = -10
 #-------------------------------
 [32]
 Name = Zea-Zaya
@@ -1063,6 +1094,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = ZHUSK,Level,17
+Score = 10
 #-------------------------------
 [33]
 Name = Zhusk
@@ -1095,6 +1127,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -10
 Evolutions = MAYZMEN,Item,SUNSTONE,BLAZEA,Item,FIRESTONE
 #-------------------------------
 [34]
@@ -1128,6 +1161,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -30
 #-------------------------------
 [35]
 Name = Blazea
@@ -1161,6 +1195,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -20
 #-------------------------------
 [36]
 Name = Pumpkaboo
@@ -1194,6 +1229,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 20
 Evolutions = GOURGEIST,Trade,
 #-------------------------------
 [37]
@@ -1227,6 +1263,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 30
 #-------------------------------
 [38]
 Name = Skiddo
@@ -1260,6 +1297,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GOGOAT,Level,32
+Score = 30
 #-------------------------------
 [39]
 Name = Gogoat
@@ -1291,6 +1329,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 50
 #-------------------------------
 [40]
 Name = Pichu
@@ -1324,6 +1363,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 23
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = -10
 Evolutions = PIKACHU,Happiness,
 #-------------------------------
 [41]
@@ -1358,6 +1398,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 14
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = -10
 Evolutions = RAICHU,Item,THUNDERSTONE
 #-------------------------------
 [42]
@@ -1391,6 +1432,7 @@ BattlerEnemyX = 11
 BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
+Score = 10
 #-------------------------------
 [43]
 Name = Lotad
@@ -1426,6 +1468,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 27
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 30
 Evolutions = LOMBRE,Level,14
 #-------------------------------
 [44]
@@ -1461,6 +1504,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 20
 Evolutions = LUDICOLO,Item,WATERSTONE
 #-------------------------------
 [45]
@@ -1496,6 +1540,7 @@ BattlerEnemyX = -2
 BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
+Score = 10
 #-------------------------------
 [46]
 Name = Dewpider
@@ -1530,6 +1575,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -20
 Evolutions = ARAQUANID,Level,22
 #-------------------------------
 [47]
@@ -1564,6 +1610,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -30
 #-------------------------------
 [48]
 Name = Budew
@@ -1599,6 +1646,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = -10
 Evolutions = M_ROSELIA,HappinessDay,
 Incense = ROSEINCENSE
 #-------------------------------
@@ -1635,6 +1683,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -30
 Evolutions = M_ROSERADE,Item,MOONSTONE
 #-------------------------------
 [50]
@@ -1669,6 +1718,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -50
 #-------------------------------
 [51]
 Name = Litwick
@@ -1702,6 +1752,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = -10
 Evolutions = LAMPENT,Level,41
 #-------------------------------
 [52]
@@ -1735,6 +1786,7 @@ BattlerEnemyX = 4
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = -20
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
 [53]
@@ -1768,6 +1820,7 @@ BattlerEnemyX = -1
 BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -30
 #-------------------------------
 [54]
 Name = Liloriña
@@ -1802,6 +1855,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = 0
 Evolutions = YAQUENA,Level,39
 #-------------------------------
 [55]
@@ -1836,6 +1890,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = 5
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #-------------------------------
 [56]
@@ -1870,6 +1925,7 @@ BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
+Score = -5
 #-------------------------------
 [57]
 Name = Gothita
@@ -1902,6 +1958,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 30
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = 10
 Evolutions = GOTHORITA,Level,32
 #-------------------------------
 [58]
@@ -1934,6 +1991,7 @@ BattlerEnemyX = 2
 BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 1
+Score = 20
 Evolutions = GOTHITELLE,Level,41
 #-------------------------------
 [59]
@@ -1966,6 +2024,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -10
 #-------------------------------
 [60]
 Name = Sableye
@@ -2001,4 +2060,5 @@ BattlerEnemyX = 2
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 10
 #-------------------------------

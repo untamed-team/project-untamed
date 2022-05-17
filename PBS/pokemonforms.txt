@@ -97,3 +97,47 @@ Moves = 0,THRASH,1,THRASH,1,ACCELEROCK,1,COUNTER,1,TACKLE,1,LEER,1,SANDATTACK,1,
 TutorMoves = ATTRACT,BRICKBREAK,BULKUP,CONFIDE,COVET,DOUBLETEAM,DRILLRUN,EARTHPOWER,ECHOEDVOICE,ENDEAVOR,FACADE,FRUSTRATION,HIDDENPOWER,HYPERVOICE,IRONDEFENSE,IRONHEAD,IRONTAIL,LASTRESORT,OUTRAGE,PROTECT,REST,RETURN,ROAR,ROCKPOLISH,ROCKSLIDE,ROCKTOMB,ROUND,SLEEPTALK,SNARL,SNORE,STEALTHROCK,STOMPINGTANTRUM,STONEEDGE,SUBSTITUTE,SWAGGER,SWORDSDANCE,TAUNT,TOXIC,ZENHEADBUTT
 Pokedex = Bathed in the setting sun of evening, Lycanroc has undergone a special kind of evolution. An intense fighting spirit underlies its calmness.
 #-------------------------------
+[FLABEBE,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLABEBE,2]
+FormName = Orange Flower
+#-------------------------------
+[FLABEBE,3]
+FormName = Blue Flower
+#-------------------------------
+[FLABEBE,4]
+FormName = White Flower
+#-------------------------------
+[FLOETTE,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLOETTE,2]
+FormName = Orange Flower
+#-------------------------------
+[FLOETTE,3]
+FormName = Blue Flower
+#-------------------------------
+[FLOETTE,4]
+FormName = White Flower
+#-------------------------------
+[FLOETTE,5]
+FormName = Eternal Flower
+BaseStats = 74,65,67,92,125,128
+BaseEXP = 243
+Moves = 1,TACKLE,1,VINEWHIP,1,FAIRYWIND,6,FAIRYWIND,10,LUCKYCHANT,15,RAZORLEAF,20,WISH,25,MAGICALLEAF,27,GRASSYTERRAIN,33,PETALBLIZZARD,38,AROMATHERAPY,43,MISTYTERRAIN,46,MOONBLAST,50,LIGHTOFRUIN,51,PETALDANCE,58,SOLARBEAM
+Compatibility = Undiscovered
+Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
+Evolutions = FLORGES,None,
+#-------------------------------
+[FLORGES,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLORGES,2]
+FormName = Orange Flower
+#-------------------------------
+[FLORGES,3]
+FormName = Blue Flower
+#-------------------------------
+[FLORGES,4]
+FormName = White Flower
