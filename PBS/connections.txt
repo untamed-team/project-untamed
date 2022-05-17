@@ -1,43 +1,5 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# Lappet Town (2) - Route 1 (5)
-2,North,0,5,South,4
-# Lappet Town (2) - Safari Zone (66)
-2,West,0,66,East,0
-# Route 8 (69) - Lappet Town (2)
-69,North,12,2,South,0
-# Route 6 (44) - Route 1 (5)
-44,South,43,5,North,0
-# Safari Zone (66) - Route 1 (5)
-66,North,18,5,South,0
-# Cedolan City (7) - Route 1 (5)
-7,South,0,5,North,2
-# Cedolan City (7) - Route 6 (44)
-7,West,5,44,East,0
-# Cedolan City (7) - Lerucean Town (23)
-7,East,0,23,West,78
-# Route 7 (47) - Cedolan City (7)
-47,West,0,7,East,0
-# Route 2 (21) - Cedolan City (7)
-21,South,0,7,North,21
-# Route 2 (21) - Lerucean Town (23)
-21,East,0,23,West,1
-# Route 2 (21) - Route 7 (47)
-21,East,77,47,West,0
-# Route 3 (31) - Lerucean Town (23)
-31,South,32,23,North,0
-# Route 3 (31) - Ingido Plateau (35)
-31,West,0,35,East,10
-# Ingido Plateau (35) - Route 4 (39)
-35,West,11,39,East,0
-# Route 5 (41) - Route 4 (40)
-41,North,0,40,South,0
-# Route 5 (41) - Route 6 (45)
-41,South,6,45,North,0
-# Route 7 (47) - Battle Frontier (52)
-47,East,8,52,West,0
-# Route 8 (69) - Safari Zone (66)
-69,North,0,66,South,10
 # initial town (22) - route 1 (48)
 22,East,0,48,West,6
 # hacienda outskirts (76) - route 1 (48)
