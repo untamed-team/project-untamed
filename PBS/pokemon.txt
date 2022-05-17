@@ -1,7 +1,6 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #------------------------------- #Legends pokedex ends at 905 with Enamorus
-[906]
-#1
+[1]
 Name = Mollucotta
 InternalName = MOLLUCOTTA
 Type1 = GRASS
@@ -35,8 +34,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
-[907]
-#2
+[2]
 Name = Expursum
 InternalName = EXPURSUM
 Type1 = GRASS
@@ -69,8 +67,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GASTRONAUT,Level,36
 #-------------------------------
-[908]
-#3
+[3]
 Name = Gastronaut
 InternalName = GASTRONAUT
 Type1 = GRASS
@@ -103,8 +100,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[909]
-#4
+[4]
 Name = Quetzalil
 InternalName = QUETZALIL
 Type1 = FIRE
@@ -138,8 +134,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = QUEXCELL,Level,16
 #-------------------------------
-[910]
-#5
+[5]
 Name = Quexcell
 InternalName = QUEXCELL
 Type1 = FIRE
@@ -172,8 +167,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = QUETZILLIAN,Level,36
 #-------------------------------
-[911]
-#6
+[6]
 Name = Quetzillian
 InternalName = QUETZILLIAN
 Type1 = FIRE
@@ -206,8 +200,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[912]
-#7
+[7]
 Name = Porsite
 InternalName = PORSITE
 Type1 = WATER
@@ -241,8 +234,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = CETTOEKKO,Level,16
 #-------------------------------
-[913]
-#8
+[8]
 Name = Cettoekko
 InternalName = CETTOEKKO
 Type1 = WATER
@@ -276,8 +268,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = BATHYGIGAS,Level,36
 #-------------------------------
-[914]
-#9
+[9]
 Name = Bathygigas
 InternalName = BATHYGIGAS
 Type1 = WATER
@@ -310,8 +301,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[915]
-#10
+[10]
 Name = Pacuna
 InternalName = PACUNA
 Type1 = NORMAL
@@ -344,8 +334,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[916]
-#11
+[11]
 Name = Laguna
 InternalName = LAGUNA
 Type1 = NORMAL
@@ -378,8 +367,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[669]
-#12
+[12]
 Name = Flabébé
 InternalName = FLABEBE
 Type1 = FAIRY
@@ -413,8 +401,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = FLOETTE,Level,19
 #-------------------------------
-[670]
-#13
+[13]
 Name = Floette
 InternalName = FLOETTE
 Type1 = FAIRY
@@ -447,8 +434,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = FLORGES,Item,SHINYSTONE
 #-------------------------------
-[671]
-#14
+[14]
 Name = Florges
 InternalName = FLORGES
 Type1 = FAIRY
@@ -480,8 +466,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[917]
-#15
+[15]
 Name = Wrenner
 InternalName = WRENNER
 Type1 = NORMAL
@@ -515,8 +500,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[918]
-#16
+[16]
 Name = Aveor
 InternalName = AVEOR
 Type1 = ELECTRIC
@@ -550,8 +534,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Evolutions = ROADRAPTOR,Level,34
 #-------------------------------
-[919]
-#17
+[17]
 Name = Roadraptor
 InternalName = ROADRAPTOR
 Type1 = ELECTRIC
@@ -584,8 +567,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[920]
-#18
+[18]
 Name = Minimelo
 InternalName = MINIMELO
 Type1 = BUG
@@ -619,8 +601,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = CHICATTA,Level,10
 #-------------------------------
-[921]
-#19
+[19]
 Name = Chicatta
 InternalName = CHICATTA
 Type1 = BUG
@@ -653,8 +634,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = NOCTAVISPA,HasMoveType,DARK
 #-------------------------------
-[922]
-#20
+[20]
 Name = Noctavispa
 InternalName = NOCTAVISPA
 Type1 = BUG
@@ -688,8 +668,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions =
 #-------------------------------
-[744]
-#21
+[21]
 Name = Rockruff
 InternalName = ROCKRUFF
 Type1 = ROCK
@@ -722,8 +701,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = LYCANROC,Level,25
 #-------------------------------
-[745]
-#22
+[22]
 Name = Lycanroc
 InternalName = LYCANROC
 Type1 = ROCK
@@ -755,8 +733,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[923]
-#23
+[23]
 Name = Techuppi
 InternalName = TECHUPPI
 Type1 = DARK
@@ -790,8 +767,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions =
 #-------------------------------
-[924]
-#24
+[24]
 Name = Zolupine
 InternalName = ZOLUPINE
 Type1 = DARK
@@ -824,8 +800,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[925]
-#25
+[25]
 Name = Lupacabra
 InternalName = LUPACABRA
 Type1 = DARK
@@ -857,8 +832,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[509]
-#26
+[26]
 Name = Purrloin
 InternalName = PURRLOIN
 Type1 = DARK
@@ -891,8 +865,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = LIEPARD,Level,20
 #-------------------------------
-[510]
-#27
+[27]
 Name = Liepard
 InternalName = LIEPARD
 Type1 = DARK
@@ -923,8 +896,7 @@ BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
-[167]
-#28
+[28]
 Name = Spinarak
 InternalName = SPINARAK
 Type1 = BUG
@@ -959,8 +931,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = ARIADOS,Level,22
 #-------------------------------
-[168]
-#29
+[29]
 Name = Ariados
 InternalName = ARIADOS
 Type1 = BUG
@@ -993,8 +964,7 @@ BattlerEnemyY = 22
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
-[216]
-#30
+[30]
 Name = Teddiursa
 InternalName = TEDDIURSA
 Type1 = NORMAL
@@ -1028,8 +998,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = URSARING,Level,30
 #-------------------------------
-[217]
-#31
+[31]
 Name = Ursaring
 InternalName = URSARING
 Type1 = NORMAL
@@ -1061,8 +1030,7 @@ BattlerEnemyY = 7
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
-[926]
-#32
+[32]
 Name = Zea-Zaya
 InternalName = ZEAZAYA
 Type1 = GRASS
@@ -1096,8 +1064,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = ZHUSK,Level,17
 #-------------------------------
-[927]
-#33
+[33]
 Name = Zhusk
 InternalName = ZHUSK
 Type1 = GRASS
@@ -1130,8 +1097,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = MAYZMEN,Item,SUNSTONE,BLAZEA,Item,FIRESTONE
 #-------------------------------
-[928]
-#34
+[34]
 Name = Mayzmen
 InternalName = MAYZMEN
 Type1 = GRASS
@@ -1163,8 +1129,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[929]
-#35
+[35]
 Name = Blazea
 InternalName = BLAZEA
 Type1 = DARK
@@ -1197,8 +1162,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[710]
-#36
+[36]
 Name = Pumpkaboo
 InternalName = PUMPKABOO
 Type1 = GHOST
@@ -1232,8 +1196,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GOURGEIST,Trade,
 #-------------------------------
-[711]
-#37
+[37]
 Name = Gourgeist
 InternalName = GOURGEIST
 Type1 = GHOST
@@ -1265,8 +1228,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[672]
-#38
+[38]
 Name = Skiddo
 InternalName = SKIDDO
 Type1 = GRASS
@@ -1299,8 +1261,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = GOGOAT,Level,32
 #-------------------------------
-[673]
-#39
+[39]
 Name = Gogoat
 InternalName = GOGOAT
 Type1 = GRASS
@@ -1331,8 +1292,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[172]
-#40
+[40]
 Name = Pichu
 InternalName = PICHU
 Type1 = ELECTRIC
@@ -1366,8 +1326,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = PIKACHU,Happiness,
 #-------------------------------
-[25]
-#41
+[41]
 Name = Pikachu
 InternalName = PIKACHU
 Type1 = ELECTRIC
@@ -1401,8 +1360,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = RAICHU,Item,THUNDERSTONE
 #-------------------------------
-[26]
-#42
+[42]
 Name = Raichu
 InternalName = RAICHU
 Type1 = ELECTRIC
@@ -1434,8 +1392,7 @@ BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
-[270]
-#43
+[43]
 Name = Lotad
 InternalName = LOTAD
 Type1 = WATER
@@ -1471,8 +1428,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = LOMBRE,Level,14
 #-------------------------------
-[271]
-#44
+[44]
 Name = Lombre
 InternalName = LOMBRE
 Type1 = WATER
@@ -1507,8 +1463,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = LUDICOLO,Item,WATERSTONE
 #-------------------------------
-[272]
-#45
+[45]
 Name = Ludicolo
 InternalName = LUDICOLO
 Type1 = WATER
@@ -1542,8 +1497,7 @@ BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 3
 #-------------------------------
-[751]
-#46
+[46]
 Name = Dewpider
 InternalName = DEWPIDER
 Type1 = WATER
@@ -1578,8 +1532,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = ARAQUANID,Level,22
 #-------------------------------
-[752]
-#47
+[47]
 Name = Araquanid
 InternalName = ARAQUANID
 Type1 = WATER
@@ -1612,8 +1565,7 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[406]
-#48
+[48]
 Name = Budew
 InternalName = BUDEW
 Type1 = GRASS
@@ -1629,7 +1581,8 @@ Abilities = NATURALCURE,POISONPOINT
 HiddenAbility = LEAFGUARD
 Moves = 1,ABSORB,4,GROWTH,7,WATERSPORT,10,STUNSPORE,13,MEGADRAIN,16,WORRYSEED
 TutorMoves = ATTRACT,CONFIDE,COVET,CUT,DAZZLINGGLEAM,DOUBLETEAM,ENERGYBALL,FACADE,FRUSTRATION,GIGADRAIN,GRASSKNOT,HIDDENPOWER,NATUREPOWER,PROTECT,PSYCHUP,RAINDANCE,REST,RETURN,ROUND,SEEDBOMB,SHADOWBALL,SLEEPTALK,SLUDGEBOMB,SNORE,SOLARBEAM,SUBSTITUTE,SUNNYDAY,SWAGGER,SWORDSDANCE,SYNTHESIS,TOXIC,UPROAR,VENOSHOCK,WORRYSEED
-EggMoves = COTTONSPORE,EXTRASENSORY,GIGADRAIN,GRASSWHISTLE,LEAFSTORM,MINDREADER,NATURALGIFT,PINMISSILE,RAZORLEAF,SEEDBOMB,SLEEPPOWDER,SPIKES,SYNTHESIS
+EggMoves = POLLENPUFF,OMINOUSWIND,SPIKES,TOXICSPIKES,LEAFSTORM
+####### budew needs changes #######
 Compatibility = Undiscovered
 StepsToHatch = 5120
 Height = 0.2
@@ -1649,8 +1602,7 @@ BattlerShadowSize = 1
 Evolutions = M_ROSELIA,HappinessDay,
 Incense = ROSEINCENSE
 #-------------------------------
-[930]
-#49
+[49]
 Name = Roselia
 InternalName = M_ROSELIA
 Type1 = GRASS
@@ -1685,8 +1637,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = M_ROSERADE,Item,MOONSTONE
 #-------------------------------
-[931]
-#50
+[50]
 Name = Roserade
 InternalName = M_ROSERADE
 Type1 = GRASS
@@ -1719,8 +1670,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[607]
-#51
+[51]
 Name = Litwick
 InternalName = LITWICK
 Type1 = GHOST
@@ -1754,8 +1704,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = LAMPENT,Level,41
 #-------------------------------
-[608]
-#52
+[52]
 Name = Lampent
 InternalName = LAMPENT
 Type1 = GHOST
@@ -1788,8 +1737,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
-[609]
-#53
+[53]
 Name = Chandelure
 InternalName = CHANDELURE
 Type1 = GHOST
@@ -1821,8 +1769,7 @@ BattlerEnemyY = 2
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[932]
-#54
+[54]
 Name = Liloriña
 InternalName = LILORINA
 Type1 = GHOST
@@ -1857,8 +1804,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = YAQUENA,Level,39
 #-------------------------------
-[933]
-#55
+[55]
 Name = Yaquena
 InternalName = YAQUENA
 Type1 = GHOST
@@ -1892,8 +1838,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 1
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #-------------------------------
-[934]
-#56
+[56]
 Name = Yoronaqua
 InternalName = YORONAQUA
 Type1 = GHOST
@@ -1926,8 +1871,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 #-------------------------------
-[574]
-#57
+[57]
 Name = Gothita
 InternalName = GOTHITA
 Type1 = PSYCHIC
@@ -1960,8 +1904,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = GOTHORITA,Level,32
 #-------------------------------
-[575]
-#58
+[58]
 Name = Gothorita
 InternalName = GOTHORITA
 Type1 = PSYCHIC
@@ -1993,8 +1936,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = GOTHITELLE,Level,41
 #-------------------------------
-[576]
-#59
+[59]
 Name = Gothitelle
 InternalName = GOTHITELLE
 Type1 = PSYCHIC
@@ -2025,8 +1967,7 @@ BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-[302]
-#60
+[60]
 Name = Sableye
 InternalName = SABLEYE
 Type1 = DARK
