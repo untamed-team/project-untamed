@@ -1,0 +1,3 @@
+Name         = EVs and IVs in Summary
+Version      = 1.0.0
+Credits      = Deoxysprime
