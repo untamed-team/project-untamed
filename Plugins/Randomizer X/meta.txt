@@ -1,0 +1,5 @@
+Name         = Randomizer X
+Version      = 1.0.1
+Website      = https://luka-sj.com/res/rndx
+Credits      = Luka S.J.
+Conflicts    = Elite Battle: DX
