@@ -1,13 +1,11 @@
 <body>
 <div id="map">
-  <img name="map" src="Graphics/Pictures/mapRegion0.png" alt="" width="480" height="320"/>
+  <img name="map" src="Graphics/Pictures/mapRegion0.png" alt=""/>
 </div>
 <form name="mf" action="javascript:void(null)">
   <div>
     Map Filename (in Graphics/Pictures/): <input type="text" name="filename" value="mapRegion0.png"/>&nbsp;
     <input type="button" name="btnChange" value="Change"/><br/ >
-    Square width: <input type="text" name="sqwidth" size="4" min="1" max="16" value="16"/>&nbsp;
-    Square height: <input type="text" name="sqheight" size="4" min="1" max="16" value="16"/>&nbsp;
     <input type="button" name="btnRefresh" value="Refresh"/><br/ >
     Region Name: <input type="text" name="name" value="Sample Region"/>&nbsp;
     <input type="button" name="btnChange2" value="Change"/>
@@ -15,29 +13,12 @@
 </form>
 <hr/>
 <form name="f" action="javascript:void(null)">
-  <table>
-    <tr>
-      <td>Current Position:</td>
-	  <td><input type="text" name="curpos" readonly="readonly"/></td>
-	</tr>
-    <tr>
-      <td>Name:</td>
-	  <td><input type="text" name="locname"/><td>
-	</tr>
-    <tr>
-      <td>Point of Interest:</td>
-	  <td><input type="text" name="poi"/><td>
-	</tr>
-    <tr>
-      <td>Fly Destination:</td>
-	  <td><input type="text" name="healing"/><td>
-	</tr>
-    <tr>
-      <td>Switch:</td>
-	  <td><input type="text" name="swtch"/><td>
-	</tr>
-  </table>
   <div>
+    Current Position: <input type="text" name="curpos" readonly="readonly"/><br/ >
+    Name: <input type="text" name="locname"/><br/ >
+    Point of Interest: <input type="text" name="poi"/><br/ >
+    Fly Destination: <input type="text" name="healing"/><br/ >
+    Switch: <input type="text" name="swtch"/><br/ >
     <input type="button" name="btnSave" value="Save" disabled="disabled"/> 
     <input type="button" name="btnCancel" value="Cancel"/><br/ >
     Single section from townmap.txt (without section heading):<br/ >
@@ -127,10 +108,9 @@
       if (temp.indexOf(',') >= 0) break;
       return temp;
     }
- //   temp = temp.replace(/\'/g,"''");
- //   temp = temp.replace(/\"/g,"\"\"");
-    return temp
- //   return "\"" + temp + "\"";
+    temp = temp.replace(/\'/g,"''");
+    temp = temp.replace(/\"/g,"\"\"");
+    return "\"" + temp + "\"";
   }
 
   function CsvNextToken(dataobj){
@@ -167,11 +147,11 @@
         value = value + c;
         continue;  
       }
-//      if ((c == '"') || (c == "'")){
-//        inside = true;
-//        q = c;
-//        continue;
-//      }
+      if ((c == '"') || (c == "'")){
+        inside = true;
+        q = c;
+        continue;
+      }
       if (c == ',') break;
       value = value + c;
     }
@@ -194,7 +174,7 @@
         }
         if(e[1]=="Filename"){
           o=document.getElementById("map")
-          o.innerHTML='<img name="map" src="Graphics/Pictures/'+e[2]+'" alt="" width="480" height="320"/'+'>' 
+          o.innerHTML='<img name="map" src="Graphics/Pictures/'+e[2]+'" alt=""/'+'>' 
         } else if(e[1]=="Name"){
           document.mf.name.value=e[2]
         } else if(e[1]=="Point"){
@@ -215,8 +195,8 @@
   function createMapPoint(imgfile,x,y){
     e=document.createElement("div")
     e.innerHTML="<img src='"+imgfile+"' alt=''/>"
-    e.style.left=elempos[0]+x*document.mf.sqwidth.value+(document.mf.sqwidth.value-8)/2
-    e.style.top=elempos[1]+y*document.mf.sqheight.value+(document.mf.sqheight.value-8)/2
+    e.style.left=elempos[0]+x*16+(16-8)/2
+    e.style.top=elempos[1]+y*16+(16-8)/2
     e.style.position="absolute"
     attachEvent(e,"mousemove",MapMouseMove)
     attachEvent(e,"click",MapClick)
@@ -244,23 +224,23 @@
   function MapMouseMove(e){
     if(choiceX==-1 && choiceY==-1){
       elempos=elementPosObject(e,document.getElementById("map"))
-      if (elempos[0]>=0 && elempos[0]<480 && elempos[1]>=0 && elempos[1]<320){
-        setMapPoint(Math.floor(elempos[0]/document.mf.sqwidth.value),
-                    Math.floor(elempos[1]/document.mf.sqheight.value))
-      }
+      //if (elempos[0]>=0 && elempos[0]<480 && elempos[1]>=0 && elempos[1]<320){
+        setMapPoint(Math.floor(elempos[0]/16),
+                    Math.floor(elempos[1]/16))
+      //}
     }
   }
 
   function MapClick(e){
     elempos=elementPosObject(e,document.getElementById("map"))
-    if(elempos[0]>=0 && elempos[0]<480 && elempos[1]>=0 && elempos[1]<320){
-      choiceX=Math.floor(elempos[0]/document.mf.sqwidth.value)
-      choiceY=Math.floor(elempos[1]/document.mf.sqheight.value)
-      setMapPoint(Math.floor(elempos[0]/document.mf.sqwidth.value),
-                  Math.floor(elempos[1]/document.mf.sqheight.value))
+    //if(elempos[0]>=0 && elempos[0]<480 && elempos[1]>=0 && elempos[1]<320){
+      choiceX=Math.floor(elempos[0]/16)
+      choiceY=Math.floor(elempos[1]/16)
+      setMapPoint(Math.floor(elempos[0]/16),
+                  Math.floor(elempos[1]/16))
       document.f.btnSave.disabled=false
       showMapPoints()
-    }
+    //}
   }
 
   function getbase(fn){
@@ -275,10 +255,10 @@
 
   function genMapPoints(){
     ret=""
-    ret+="Filename = "+qstr(getbase(document.images.map.src))+"\r\n"
-    ret+="Name = "+qstr(document.mf.name.value)+"\r\n"
+    ret+="Filename="+qstr(getbase(document.images.map.src))+"\r\n"
+    ret+="Name="+qstr(document.mf.name.value)+"\r\n"
     for(var i=0;i<mappoints.length;i++){
-      ret+="Point = "+[mappoints[i][0],mappoints[i][1],
+      ret+="Point="+[mappoints[i][0],mappoints[i][1],
            qstr(mappoints[i][2]),qstr(mappoints[i][3]),
            mappoints[i][4][0]!=null?mappoints[i][4][0]:"",
            mappoints[i][4][1]!=null?mappoints[i][4][1]:"",
