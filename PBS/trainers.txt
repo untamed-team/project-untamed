@@ -2,34 +2,34 @@
 #-------------------------------
 [BEAUTY,Test]
 LoseText = "..."
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = SLIMESHOT
     AbilityIndex = 1
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = SLIMESHOT
     AbilityIndex = 234
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = PSYSONIC,PSYCRUSH
     AbilityIndex = 1
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = PSYSONIC,PSYCRUSH
     AbilityIndex = 235
 #-------------------------------
 [BEAUTY,Test2]
 LoseText = "..."
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = ZEALOUSDANCE,BODYPRESS,JOLTKICK,FROSTKICK
     AbilityIndex = 236
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = METEORBEAM,SCOURINGWINDS,BREAKINGSWIPE,STUFFCHEEKS
     AbilityIndex = 236
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = HAUNT,BITINGCOLD,CHILLINGWAIL,MYSTICBLADE
     AbilityIndex = 237
-Pokemon = ROCKRUFF,12
+Pokemon = TECHUPPI,12
     Moves = FORCEWAVE,GEODEBURST,FORGEBREATH,EXCITE
     AbilityIndex = 237
-Pokemon = ROCKRUFF,40
+Pokemon = TECHUPPI,40
     Moves = FLIPTURN,LIFEDEW,BURNINGJEALOUSY
     AbilityIndex = 237
 #-------------------------------
