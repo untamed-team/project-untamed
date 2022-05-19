@@ -1,10 +1,10 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# initial town (22) - route 1 (48)
-22,East,0,48,West,6
+# route 1 (48) - Veravalles (22)
+48,West,19,22,East,0
+# hacienda outskirts (76) - Veravalles (22)
+76,South,0,22,North,10
 # hacienda outskirts (76) - route 1 (48)
-76,East,14,48,West,0
+76,East,1,48,West,0
 # town gym 1 (77) - route 1 (48)
 77,South,0,48,North,2
-# hacienda outskirts (76) - initial town (22)
-76,South,0,22,North,10

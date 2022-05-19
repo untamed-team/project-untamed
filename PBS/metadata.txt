@@ -15,7 +15,14 @@ PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,gi
 # Intro
 #-------------------------------
 [022]
-# initial town
+# Veravalles
+Outdoor = true
+ShowArea = true
+Bicycle = true
+MapPosition = 0,19,5
+#-------------------------------
+[048]
+# route 1
 Outdoor = true
 ShowArea = true
 Bicycle = true
