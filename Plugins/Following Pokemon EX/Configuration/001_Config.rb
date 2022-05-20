@@ -86,6 +86,9 @@ module FollowingPkmn
     # Gen 8
     :ORBEETLE, :FLAPPLE, :SINISTEA, :POLTEAGEIST, :FROSMOTH, :DREEPY, :DRAKLOAK,
     :DRAGAPULT, :ETERNATUS, :REGIELEKI, :REGIDRAGO, :CALYREX
+    # Mazah originals
+    # :NOCTAVISPA, :BLAZEA, :POTASSOPOD, :XIBALBAT, :CHARCOPAL, :GEOCOPRION, 
+    # :CHIXULOB, :NOSEPONCH, :BURBRAWL, :HUMMIPUMMEL
   ]
 
   # List of Pokemon that will not appear behind the player when surfing,
@@ -111,6 +114,8 @@ module FollowingPkmn
     :ROWLET, :DARTRIX, :PIKIPEK, :ORICORIO, :SILVALLY_2,
     # Gen VIII
     :ROOKIDEE, :CALYREX_1, :CALYREX_2
+    #Mazah originals
+    # :WRENNER, :AVEOR, :ROADRAPTOR, :BEAKPEEP, :GUSTEON
   ]
 end
 
