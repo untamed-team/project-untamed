@@ -189,7 +189,7 @@ class MenuEntryDebug < MenuEntry
     return $PokemonTemp.menu_theme_changed
   end
 
-  def selectable?; return $DEBUG; end
+  def selectable?; return true; end
 end
 #-------------------------------------------------------------------------------
 # Entry for quitting Safari Zone
