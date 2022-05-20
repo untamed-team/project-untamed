@@ -72,7 +72,7 @@ module ModularTitle
   # Config used for determining the cry of species to play, along with displaying
   # a certain Pokemon sprite if applicable. Leave it as nil in order not to play
   # a species cry, otherwise set as a symbolic value
-  SPECIES = :PIKACHU
+  SPECIES = :MOLLUCOTTA
   # Applies a form to Pokemon species
   SPECIES_FORM = 0
   # Applies female form

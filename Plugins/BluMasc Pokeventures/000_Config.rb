@@ -26,7 +26,7 @@ module PokeventureConfig
   # Wild Pokemon
   GlobalPkmn = false # should this script use the global encounter list everywhere instead of the specific map encounters.
   # Form of this list is [ItemID,chance]
-  PkmnList = [[:PIKACHU,1], [:CHARMANDER,3], [:SQUIRTLE,3], [:BULBASAUR,3], [:EEVEE,1]]
+  PkmnList = [[:MOLLUCOTTA,1], [:CHARMANDER,3], [:SQUIRTLE,3], [:BULBASAUR,3], [:EEVEE,1]]
   # Form of this list is [ItemID,chance]
   EggList = [[:PICHU,5],[:CLEFFA,5],[:IGGLYBUFF,5],[:TOGEPI,5],[:TYROGUE,5],[:SMOOCHUM,5],[:ELEKID,5],[:MAGBY,5],[:BUDEW,5],
             [:CHINGLING,5],[:BONSLY,5],[:MIMEJR,5],[:HAPPINY,5],[:MUCHLAX,5],[:RIOLU,5],[:MANTYKE,5],[:PHIONE,2],
