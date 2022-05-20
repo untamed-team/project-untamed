@@ -716,3 +716,4 @@
 696,FLIPTURN,Flip Turn,0EE,60,WATER,Physical,100,20,0,NearOther,0,abef,"After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
 697,LIFEDEW,Life Dew,17E,0,WATER,Status,0,10,0,UserAndAllies,0,d,"The user scatters mysterious water around and restores the HP of itself."
 698,BURNINGJEALOUSY,Burning Jealousy,18B,70,FIRE,Special,100,5,100,AllNearFoes,0,bef,"Attacks with energy from jealousy. All opposing Pokémon with stat boosts get burned."
+#TESTTEST
