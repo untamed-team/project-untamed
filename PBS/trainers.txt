@@ -36,3 +36,8 @@ Pokemon = TECHUPPI,40
 [BEAUTY,Bridget]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,10
+#-------------------------------
+[BEAUTY,Bridget,3]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,10
+Pokemon = MOLLUCOTTA,10
