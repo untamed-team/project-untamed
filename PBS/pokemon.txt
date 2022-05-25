@@ -31,7 +31,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -10
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
@@ -100,7 +100,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [4]
@@ -134,7 +134,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -10
 Evolutions = QUEXCELL,Level,16
 #-------------------------------
@@ -203,7 +203,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [7]
@@ -237,7 +237,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -10
 Evolutions = CETTOEKKO,Level,16
 #-------------------------------
@@ -307,7 +307,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [10]
@@ -341,7 +341,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = 20
 #-------------------------------
 [11]
@@ -410,7 +410,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -10
 #-------------------------------
 [13]
@@ -444,7 +444,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Evolutions = ROADRAPTOR,Level,34
 Score = -30
 #-------------------------------
@@ -479,7 +479,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -60
 #-------------------------------
 [15]
@@ -582,7 +582,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Evolutions =
 Score = 30
 #-------------------------------
@@ -617,7 +617,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = FLOETTE,Level,19
 Score = 20
 #-------------------------------
@@ -720,7 +720,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = -1
 BattlerEnemyY = 16
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = LEDIAN,Level,18
 #-------------------------------
 [22]
@@ -887,7 +887,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -40
 #-------------------------------
 [27]
@@ -921,7 +921,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -30
 #-------------------------------
 [28]
@@ -993,7 +993,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -30
 Evolutions = M_ROSERADE,Item,MOONSTONE
 #-------------------------------
@@ -1028,7 +1028,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -50
 #-------------------------------
 [31]
@@ -1200,7 +1200,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 1
 BattlerEnemyY = 27
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = 30
 Evolutions = LOMBRE,Level,14
 #-------------------------------
@@ -1307,7 +1307,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -20
 Evolutions = ARAQUANID,Level,22
 #-------------------------------
@@ -1512,7 +1512,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -30
 #-------------------------------
 [47]
@@ -1546,7 +1546,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -20
 #-------------------------------
 [48]
@@ -1580,7 +1580,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = 20
 Evolutions = GOURGEIST,Trade,
 #-------------------------------
@@ -1680,7 +1680,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
-BattlerShadowSize = 3
+BattlerShadowSize = 2
 Score = 25
 #-------------------------------
 [52]
@@ -1713,7 +1713,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 1
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = EXCADRILL,Level,31
 #-------------------------------
 [53]
@@ -1746,7 +1746,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
-BattlerShadowSize = 3
+BattlerShadowSize = 2
 #-------------------------------
 [54]
 Name = Liloriña
@@ -1815,7 +1815,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = 5
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #-------------------------------
@@ -1850,7 +1850,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 3
 Score = -5
 #-------------------------------
 [57]
@@ -1885,7 +1885,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = -1
 BattlerEnemyY = 3
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = DUSCLOPS,Level,37
 #-------------------------------
 [58]
@@ -1919,7 +1919,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 7
 BattlerEnemyY = 7
 BattlerShadowX = 0
-BattlerShadowSize = 3
+BattlerShadowSize = 2
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 #-------------------------------
 [59]
@@ -2085,7 +2085,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 3
 BattlerEnemyY = 19
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = NINETALES,Item,FIRESTONE
 #-------------------------------
 [64]
@@ -2153,7 +2153,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Evolutions = HONCHKROW,Item,DUSKSTONE
 #-------------------------------
 [66]
