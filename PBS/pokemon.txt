@@ -31,7 +31,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = -10
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
