@@ -244,3 +244,6 @@
 241,BLADEMASTER,Blademaster,"Boosts Sword moves. +1 Crit Ratio."
 242,FERVOR,Fervor,"Boosts Speed after making contact."
 243,FREEZEOVER,Freeze Over,"During hail, changes to the Frozen form."
+244,CRYSTALJAW,Crystal Jaw,"Biting moves use the attacker's Special Attack."
+245,JUNGLEFURY,Jungle Fury,"Higher Crit Ratio on Grassy Terrain."
+246,MOMENTUM,Momentum,"Increases power of moves used consecutively."
