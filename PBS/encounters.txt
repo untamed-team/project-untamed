@@ -1,6 +1,6 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[048,0] # Route 1
+[048] # Route 1
 Land,21
     30,PACUNA,5
     20,MINIMELO,5
@@ -9,7 +9,7 @@ Land,21
     10,LEDYBA,5
     5,SUNKERN,5
 #-------------------------------
-[076,0] # hacienda outskirts
+[076] # hacienda outskirts
 Land,21
     20,BUDEW,5
     20,TECHUPPI,5
@@ -18,3 +18,13 @@ Land,21
     15,WRENNER,5
     10,HOOTHOOT,5
     5,CAFECARACHA,5
+#-------------------------------
+[078] # hacienda back
+Land,21
+    35,ZEAZAYA,5
+    15,SUNKERN,5
+    15,PUMPKABOO,5
+    10,PURRLOIN,5
+    10,HOOTHOOT,5
+    10,CAFECARACHA,5
+    5,DRILBUR,5
