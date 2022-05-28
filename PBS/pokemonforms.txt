@@ -73,24 +73,30 @@ FormName = White Flower
 [FLOETTE,5]
 FormName = Eternal Flower
 BaseStats = 74,65,67,92,125,128
-HiddenAbility = FAIRYAURA
 BaseEXP = 243
+HiddenAbility = FAIRYAURA
 Moves = 1,TACKLE,1,VINEWHIP,1,FAIRYWIND,6,FAIRYWIND,10,LUCKYCHANT,15,RAZORLEAF,20,WISH,25,MAGICALLEAF,27,GRASSYTERRAIN,33,PETALBLIZZARD,38,AROMATHERAPY,43,MISTYTERRAIN,46,MOONBLAST,50,LIGHTOFRUIN,51,PETALDANCE,58,SOLARBEAM
 Compatibility = Undiscovered
 Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
+BattlerPlayerY = 9
+BattlerEnemyY = 0
 Evolutions = FLORGES,None,
 #-------------------------------
 [FLORGES,1]
 FormName = Yellow Flower
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,2]
 FormName = Orange Flower
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,3]
 FormName = Blue Flower
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
+BattlerEnemyY = 6
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female
@@ -100,5 +106,6 @@ TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTE
 #-------------------------------
 [CROACROZEN,1]
 FormName = Frozen
+Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,65,130
