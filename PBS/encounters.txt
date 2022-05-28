@@ -1,1 +1,48 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[002] # Cemetery/Gym
+Land,21
+    30,LILORINA,7,12
+    15,DUSKULL,8,10
+    15,FLABEBE,7,8
+    15,GOTHITA,9,11
+    15,M_ROSELIA,7,10
+    5,MURKROW,6,9
+    5,VULPIX,7,9
+#-------------------------------
+[022] # Veravalles Town
+OldRod
+    60,LOTAD,6,9
+    40,DEWPIDER,5,10
+Water,2
+    60,LOTAD,6,9
+    40,DEWPIDER,5,10
+#-------------------------------
+[048] # Route 1
+Land,21
+    30,PACUNA,4,5
+    20,MINIMELO,4,6
+    20,WRENNER,4,6
+    15,FLABEBE,4,5
+    10,LEDYBA,4,5
+    5,SUNKERN,4,5
+#-------------------------------
+[076] # Hacienda Outskirts
+Land,21
+    20,BUDEW,4,6
+    20,TECHUPPI,5,8
+    15,EKANS,5,6
+    15,PACUNA,4,6
+    15,WRENNER,5,7
+    10,HOOTHOOT,4,5
+    5,CAFECARACHA,5,6
+#-------------------------------
+[078] # Hacienda Back
+Land,21
+    35,ZEAZAYA,6,7
+    15,PUMPKABOO,5,6
+    15,SUNKERN,5,7
+    10,CAFECARACHA,5,7
+    10,HOOTHOOT,5,6
+    10,PURRLOIN,6,7
+    5,DRILBUR,4,8

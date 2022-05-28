@@ -80,6 +80,7 @@ Compatibility = Undiscovered
 Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
 BattlerPlayerY = 9
 BattlerEnemyY = 0
+BattlerShadowSize = 2
 Evolutions = FLORGES,None,
 #-------------------------------
 [FLORGES,1]

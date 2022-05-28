@@ -33,11 +33,25 @@ Pokemon = TECHUPPI,40
     Moves = FLIPTURN,LIFEDEW,BURNINGJEALOUSY
     AbilityIndex = 237
 #-------------------------------
-[BEAUTY,Bridget]
+[YOUNGSTER_F,Placeholder]
 LoseText = "..."
-Pokemon = MOLLUCOTTA,10
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
 #-------------------------------
-[BEAUTY,Bridget,3]
+[YOUNGSTER_M,Placeholder2]
 LoseText = "..."
-Pokemon = MOLLUCOTTA,10
-Pokemon = MOLLUCOTTA,10
+Pokemon = WRENNER,5
+#-------------------------------
+[BUGCATCHER,Placeholder3]
+LoseText = "..."
+Pokemon = MINIMELO,5
+Pokemon = LEDYBA,5
+#-------------------------------
+[POKEMANIAC,Placeholder4]
+LoseText = "..."
+Pokemon = PURRLOIN,5
+#-------------------------------
+[FISHERMAN,Placeholder5]
+LoseText = "..."
+Pokemon = TECHUPPI,6
+#-------------------------------
