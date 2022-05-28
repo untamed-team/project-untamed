@@ -51,7 +51,7 @@ Pokemon = LEDYBA,5
 LoseText = "..."
 Pokemon = PURRLOIN,5
 #-------------------------------
-[POKEMANIAC,Placeholder5]
+[FISHERMAN,Placeholder5]
 LoseText = "..."
 Pokemon = TECHUPPI,6
 #-------------------------------
