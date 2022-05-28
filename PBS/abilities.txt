@@ -234,8 +234,8 @@
 232,PRISMARMOR,Prism Armor,"Reduces damage from super-effective attacks."
 233,NEUROFORCE,Neuroforce,"Powers up moves that are super-effective."
 ######################################## New Abilities ########################################
-234,ARTILLERIST,Artillerist,"Powers up Bomb moves."
-235,AMPLIFIER,Amplifier,"Powers up Sound moves."
+234,ARTILLERIST,Artillerist,"Boosts the power of ball and bomb moves."
+235,AMPLIFIER,Amplifier,"Boosts power and resistance of sound moves."
 236,GRIMTEARS,Grim Tears,"Lowers the foe's Sp. Atk. stat."
 237,SEANCE,Seance,"The Pokémon copies the Ability of a defeated Pokémon."
 238,MICROSTRIKE,Micro Strike,"1.2x Atk and SpAtk against heavier targets."
@@ -247,3 +247,5 @@
 244,CRYSTALJAW,Crystal Jaw,"Biting moves use the attacker's Special Attack."
 245,JUNGLEFURY,Jungle Fury,"Higher Crit Ratio on Grassy Terrain."
 246,MOMENTUM,Momentum,"Increases power of moves used consecutively."
+247,WARRIORSPIRIT,Warrior Spirit,"Powers up supereffective attacks."
+248,PARTYPOPPER,Party Popper,"Fully heals the next ally after fainting."
