@@ -1416,74 +1416,74 @@ BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [42]
-Name = Barboach
-InternalName = BARBOACH
-Type1 = WATER
-Type2 = GROUND
-BaseStats = 50,48,43,60,46,41
+Name = Wooper
+InternalName = WOOPER
+Type1 = GRASS
+BaseStats = 40,35,35,45,50,45
 GenderRate = Female50Percent
-GrowthRate = Medium
-BaseEXP = 58
+GrowthRate = Parabolic
+BaseEXP = 64
 EffortPoints = 1,0,0,0,0,0
-Rareness = 190
+Rareness = 255
 Happiness = 70
-Abilities = OBLIVIOUS,ANTICIPATION
-HiddenAbility = HYDRATION
-Moves = 1,MUDSLAP,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,32,EARTHQUAKE,35,MUDDYWATER,39,FUTURESIGHT,44,FISSURE
-TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,BULLDOZE,CONFIDE,DIVE,DOUBLETEAM,EARTHPOWER,EARTHQUAKE,FACADE,FRUSTRATION,HAIL,HIDDENPOWER,ICEBEAM,ICYWIND,PROTECT,RAINDANCE,REST,RETURN,ROCKTOMB,ROUND,SANDSTORM,SCALD,SLEEPTALK,SNORE,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,WATERPULSE
-EggMoves = DRAGONDANCE,EARTHPOWER,FLAIL,HYDROPUMP,MUDSHOT,MUDDYWATER,SPARK,TAKEDOWN,THRASH,WHIRLPOOL
-Compatibility = Water2
+Abilities = REGENERATOR,HARVEST
+HiddenAbility = GRASSYSURGE
+Moves = 1,HELPINGHAND,1,POUND,3,ABSORB,6,GROWTH,9,COTTONSPORE,12,MEGADRAIN,15,LEECHSEED,18,NATURALGIFT,21,SEEDBOMB,24,GIGADRAIN,27,SYNTHESIS,30,SUNNYDAY,33,WEATHERBALL
+TutorMoves = HELPINGHAND,SUNNYDAY,SOLARBEAM,DIG,SAFEGUARD,ROUND,ALLYSWITCH,ENERGYBALL,BULLETSEED,GRASSKNOT,GYROBALL
+EggMoves = GRASSWHISTLE,STRENGTHSAP,TEETERDANCE,NATUREPOWER
+Compatibility = Grass
 StepsToHatch = 5120
-Height = 0.4
-Weight = 1.9
-Color = Gray
-Shape = Finned
-Habitat = WatersEdge
-Kind = Whiskers
-Pokedex = Its body is covered with a slimy film. The film acts as a barrier to prevent germs in muddy water from entering the Barboach's body.
-Generation = 3
-BattlerPlayerX = 3
-BattlerPlayerY = 0
-BattlerEnemyX = 0
-BattlerEnemyY = 16
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 0
-Evolutions = WHISCASH,Level,30
+Height = 0.1
+Weight = 1.4
+Color = Green
+Shape = MultiBody
+Habitat = Grassland
+Kind = Twin Kernel
+Pokedex = Zea-Zaya are born with conjoined leaves, and are always found in pairs. Ancient myth tells a story about how humanity was created because of Zea-zaya, garnering them a huge amount of respect.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Score = 10
+Evolutions = ZHUSK,Level,17
 #-------------------------------
 [43]
-Name = Whiscash
-InternalName = WHISCASH
-Type1 = WATER
-Type2 = GROUND
-BaseStats = 110,78,73,60,76,71
+Name = Quagsire
+InternalName = QUAGSIRE
+Type1 = GRASS
+BaseStats = 40,35,35,45,50,45
 GenderRate = Female50Percent
-GrowthRate = Medium
-BaseEXP = 164
-EffortPoints = 2,0,0,0,0,0
-Rareness = 75
+GrowthRate = Parabolic
+BaseEXP = 64
+EffortPoints = 1,0,0,0,0,0
+Rareness = 255
 Happiness = 70
-Abilities = OBLIVIOUS,ANTICIPATION
-HiddenAbility = HYDRATION
-Moves = 0,THRASH,1,THRASH,1,BELCH,1,ZENHEADBUTT,1,TICKLE,1,MUDSLAP,1,MUDSPORT,1,WATERSPORT,1,WATERGUN,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,34,EARTHQUAKE,39,MUDDYWATER,45,FUTURESIGHT,52,FISSURE
-TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,BULLDOZE,CONFIDE,DIVE,DOUBLETEAM,EARTHPOWER,EARTHQUAKE,FACADE,FRUSTRATION,GIGAIMPACT,HAIL,HIDDENPOWER,HYPERBEAM,ICEBEAM,ICYWIND,PROTECT,RAINDANCE,REST,RETURN,ROCKSLIDE,ROCKSMASH,ROCKTOMB,ROUND,SANDSTORM,SCALD,SLEEPTALK,SNORE,STOMPINGTANTRUM,STONEEDGE,STRENGTH,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,WATERPULSE,ZENHEADBUTT
-Compatibility = Water2
+Abilities = REGENERATOR,HARVEST
+HiddenAbility = GRASSYSURGE
+Moves = 1,HELPINGHAND,1,POUND,3,ABSORB,6,GROWTH,9,COTTONSPORE,12,MEGADRAIN,15,LEECHSEED,18,NATURALGIFT,21,SEEDBOMB,24,GIGADRAIN,27,SYNTHESIS,30,SUNNYDAY,33,WEATHERBALL
+TutorMoves = HELPINGHAND,SUNNYDAY,SOLARBEAM,DIG,SAFEGUARD,ROUND,ALLYSWITCH,ENERGYBALL,BULLETSEED,GRASSKNOT,GYROBALL
+EggMoves = GRASSWHISTLE,STRENGTHSAP,TEETERDANCE,NATUREPOWER
+Compatibility = Grass
 StepsToHatch = 5120
-Height = 0.9
-Weight = 23.6
-Color = Blue
-Shape = Finned
-Habitat = WatersEdge
-Kind = Whiskers
-Pokedex = Mysteriously, it can foretell earthquakes. In the daytime, it sleeps in mud at the bottom of a pond. When it awakens, it continually feeds throughout the night.
-Generation = 3
-BattlerPlayerX = -4
-BattlerPlayerY = 0
-BattlerEnemyX = -1
-BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 3
-Score = 0
+Height = 0.1
+Weight = 1.4
+Color = Green
+Shape = MultiBody
+Habitat = Grassland
+Kind = Twin Kernel
+Pokedex = Zea-Zaya are born with conjoined leaves, and are always found in pairs. Ancient myth tells a story about how humanity was created because of Zea-zaya, garnering them a huge amount of respect.
+Generation = 9
+BattlerPlayerX = 1
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
+BattlerShadowX = 1
+BattlerShadowSize = 1
+Score = 10
+Evolutions = ZHUSK,Level,17
 #-------------------------------
 [44]
 Name = Zea-Zaya
@@ -1822,7 +1822,13 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[54]
+#[54]
+#ARROKUDA
+#-------------------------------
+#[55]
+#BARRASKEWDA
+#-------------------------------
+[56]
 Name = Liloriña
 InternalName = LILORINA
 Type1 = GHOST
@@ -1858,7 +1864,7 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = YAQUENA,Level,39
 #-------------------------------
-[55]
+[57]
 Name = Yaquena
 InternalName = YAQUENA
 Type1 = GHOST
@@ -1893,7 +1899,7 @@ BattlerShadowSize = 2
 Score = 5
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #-------------------------------
-[56]
+[58]
 Name = Yoronaqua
 InternalName = YORONAQUA
 Type1 = GHOST
@@ -1927,7 +1933,7 @@ BattlerShadowX = 1
 BattlerShadowSize = 3
 Score = -5
 #-------------------------------
-[57]
+[59]
 Name = Duskull
 InternalName = DUSKULL
 Type1 = GHOST
@@ -1963,7 +1969,7 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = DUSCLOPS,Level,37
 #-------------------------------
-[58]
+[60]
 Name = Dusclops
 InternalName = DUSCLOPS
 Type1 = GHOST
@@ -1998,7 +2004,7 @@ BattlerShadowSize = 3
 Score = 0
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 #-------------------------------
-[59]
+[61]
 Name = Dusknoir
 InternalName = DUSKNOIR
 Type1 = GHOST
@@ -2031,7 +2037,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[60]
+[62]
 Name = Gothita
 InternalName = GOTHITA
 Type1 = PSYCHIC
@@ -2065,7 +2071,7 @@ BattlerShadowSize = 1
 Score = 10
 Evolutions = GOTHORITA,Level,32
 #-------------------------------
-[61]
+[63]
 Name = Gothorita
 InternalName = GOTHORITA
 Type1 = PSYCHIC
@@ -2098,7 +2104,7 @@ BattlerShadowSize = 2
 Score = 20
 Evolutions = GOTHITELLE,Level,41
 #-------------------------------
-[62]
+[64]
 Name = Gothitelle
 InternalName = GOTHITELLE
 Type1 = PSYCHIC
@@ -2130,7 +2136,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -10
 #-------------------------------
-[63]
+[65]
 Name = Vulpix
 InternalName = VULPIX
 Type1 = FIRE
@@ -2166,7 +2172,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = NINETALES,Item,FIRESTONE
 #-------------------------------
-[64]
+[66]
 Name = Ninetales
 InternalName = NINETALES
 Type1 = FIRE
@@ -2200,7 +2206,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[65]
+[67]
 Name = Murkrow
 InternalName = MURKROW
 Type1 = DARK
@@ -2236,7 +2242,7 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = HONCHKROW,Item,DUSKSTONE
 #-------------------------------
-[66]
+[68]
 Name = Honchkrow
 InternalName = HONCHKROW
 Type1 = DARK
@@ -3510,4 +3516,74 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = 0
+#-------------------------------
+[141]
+Name = Barboach
+InternalName = BARBOACH
+Type1 = WATER
+Type2 = GROUND
+BaseStats = 50,48,43,60,46,41
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 58
+EffortPoints = 1,0,0,0,0,0
+Rareness = 190
+Happiness = 70
+Abilities = OBLIVIOUS,ANTICIPATION
+HiddenAbility = HYDRATION
+Moves = 1,MUDSLAP,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,32,EARTHQUAKE,35,MUDDYWATER,39,FUTURESIGHT,44,FISSURE
+TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,BULLDOZE,CONFIDE,DIVE,DOUBLETEAM,EARTHPOWER,EARTHQUAKE,FACADE,FRUSTRATION,HAIL,HIDDENPOWER,ICEBEAM,ICYWIND,PROTECT,RAINDANCE,REST,RETURN,ROCKTOMB,ROUND,SANDSTORM,SCALD,SLEEPTALK,SNORE,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,WATERPULSE
+EggMoves = DRAGONDANCE,EARTHPOWER,FLAIL,HYDROPUMP,MUDSHOT,MUDDYWATER,SPARK,TAKEDOWN,THRASH,WHIRLPOOL
+Compatibility = Water2
+StepsToHatch = 5120
+Height = 0.4
+Weight = 1.9
+Color = Gray
+Shape = Finned
+Habitat = WatersEdge
+Kind = Whiskers
+Pokedex = Its body is covered with a slimy film. The film acts as a barrier to prevent germs in muddy water from entering the Barboach's body.
+Generation = 3
+BattlerPlayerX = 3
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 16
+BattlerShadowX = 0
+BattlerShadowSize = 2
+Score = 0
+Evolutions = WHISCASH,Level,30
+#-------------------------------
+[142]
+Name = Whiscash
+InternalName = WHISCASH
+Type1 = WATER
+Type2 = GROUND
+BaseStats = 110,78,73,60,76,71
+GenderRate = Female50Percent
+GrowthRate = Medium
+BaseEXP = 164
+EffortPoints = 2,0,0,0,0,0
+Rareness = 75
+Happiness = 70
+Abilities = OBLIVIOUS,ANTICIPATION
+HiddenAbility = HYDRATION
+Moves = 0,THRASH,1,THRASH,1,BELCH,1,ZENHEADBUTT,1,TICKLE,1,MUDSLAP,1,MUDSPORT,1,WATERSPORT,1,WATERGUN,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,34,EARTHQUAKE,39,MUDDYWATER,45,FUTURESIGHT,52,FISSURE
+TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,BULLDOZE,CONFIDE,DIVE,DOUBLETEAM,EARTHPOWER,EARTHQUAKE,FACADE,FRUSTRATION,GIGAIMPACT,HAIL,HIDDENPOWER,HYPERBEAM,ICEBEAM,ICYWIND,PROTECT,RAINDANCE,REST,RETURN,ROCKSLIDE,ROCKSMASH,ROCKTOMB,ROUND,SANDSTORM,SCALD,SLEEPTALK,SNORE,STOMPINGTANTRUM,STONEEDGE,STRENGTH,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,WATERPULSE,ZENHEADBUTT
+Compatibility = Water2
+StepsToHatch = 5120
+Height = 0.9
+Weight = 23.6
+Color = Blue
+Shape = Finned
+Habitat = WatersEdge
+Kind = Whiskers
+Pokedex = Mysteriously, it can foretell earthquakes. In the daytime, it sleeps in mud at the bottom of a pond. When it awakens, it continually feeds throughout the night.
+Generation = 3
+BattlerPlayerX = -4
+BattlerPlayerY = 0
+BattlerEnemyX = -1
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 3
 Score = 0
