@@ -10,6 +10,14 @@ Land,21
     5,MURKROW,6,9
     5,VULPIX,7,9
 #-------------------------------
+[022] # Veravalles Town
+OldRod
+    60,LOTAD,6,9
+    40,DEWPIDER,5,10
+Water,2
+    60,LOTAD,6,9
+    40,DEWPIDER,5,10
+#-------------------------------
 [048] # Route 1
 Land,21
     30,PACUNA,4,5
