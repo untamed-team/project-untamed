@@ -1165,7 +1165,69 @@ BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 2
 #-------------------------------
-# placeholder: Cafe and Flitjitter
+[35]
+Name = Cafécaracha
+InternalName = CAFECARACHA
+Type1 = BUG
+Type2 = ELECTRIC
+BaseStats = 50,40,60,75,40,40
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 72
+EffortPoints = 0,0,0,1,0,0
+Rareness = 45
+Happiness = 50
+Abilities = SHELLARMOR
+HiddenAbility = ELECTRICSURGE
+Moves = 1,TACKLE,1,THUNDERSHOCK,5,CHARGE,10,ROLLOUT,15,NUZZLE,20,STRUGGLEBUG,25,ELECTROBALL,30,SKITTERSMACK,35,RAGEPOWDER,40,ELECTRIFY,45,BUGBUZZ,50,RISINGVOLTAGE
+TutorMoves = SPLASH
+EggMoves = SPLASH
+Compatibility = Bug
+StepsToHatch = 1240
+Height = 1.1
+Weight = 28.8
+Color = White
+Shape = Insectoid
+Kind = coffee
+Pokedex = coom
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 0
+Evolutions = FLITJITTER,Level,21
+#-------------------------------
+[36]
+Name = Flitjitter
+InternalName = FLITJITTER
+Type1 = BUG
+Type2 = ELECTRIC
+BaseStats = 62,65,65,130,88,65
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 275
+EffortPoints = 0,0,0,2,0,0
+Rareness = 15
+Happiness = 50
+Abilities = SPEEDBOOST
+HiddenAbility = ELECTRICSURGE
+Moves = 0,AIRCUTTER,1,TACKLE,1,THUNDERSHOCK,5,CHARGE,10,ROLLOUT,15,NUZZLE,20,STRUGGLEBUG,27,ELECTROBALL,34,SKITTERSMACK,41,RAGEPOWDER,48,ELECTRIFY,55,BUGBUZZ,62,RISINGVOLTAGE,69,QUIVERDANCE
+TutorMoves = SPLASH
+Compatibility = Bug
+StepsToHatch = 1240
+Height = 1.6
+Weight = 46.0
+Color = White
+Shape = MultiWinged
+Kind = coffee
+Pokedex = nyooooooooooooooooooom
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 0
 #-------------------------------
 [37]
 Name = Lotad
