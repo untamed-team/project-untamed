@@ -34,13 +34,18 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [077]
-# town gym 1
 Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
 [078]
 # hacienda back
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[081]
+# san cerigold
 Outdoor = true
 ShowArea = true
 Bicycle = true
