@@ -45,7 +45,7 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [081]
-# san cerigold
+# San Cerigold
 Outdoor = true
 ShowArea = true
 Bicycle = true

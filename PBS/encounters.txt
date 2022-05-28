@@ -1,1 +1,10 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[048,1] # Route 1
+Land,21
+    30,PACUNA,5
+    20,WRENNER,5
+    20,MINIMELO,5
+    15,FLABEBE,5
+    10,LEDYBA,5
+    5,SUNKERN,5
