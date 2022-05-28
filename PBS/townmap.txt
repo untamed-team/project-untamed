@@ -3,9 +3,9 @@
 [0]
 Name=Mazah
 Filename=mapRegion0.png
-Point=19,5,Veravalles,,,,,
+Name="South Mazah"
+Point=19,5,"Veravalles Town",,,,,
 Point=20,5,"Route 1",,,,,
 Point=20,4,"Route 1",,,,,
-Point=18,3,Hacienda,,,,,
-Point=19,3,"Hacienda Outskirts",,,,,
-Point=21,3,???,,,,,
+Point=20,3,"San Cerigold Town",,,,,
+Point=19,3,"hacienda outskirts",,,,,

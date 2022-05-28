@@ -11,10 +11,10 @@ Land,21
 #-------------------------------
 [076,2] # hacienda outskirts
 Land,21
-    20,TECHUPPI,5
     20,BUDEW,5
-    15,WRENNER,5
+    20,TECHUPPI,5
     15,EKANS,5
     15,PACUNA,5
+    15,WRENNER,5
     10,HOOTHOOT,5
     5,CAFECARACHA,5
