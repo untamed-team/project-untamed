@@ -14,6 +14,12 @@ PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,gi
 [001]
 # Intro
 #-------------------------------
+[002]
+# Cemetery/Gym
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
 [022]
 # Veravalles Town
 Outdoor = true
@@ -29,7 +35,7 @@ Bicycle = true
 MapPosition = 0,20,4
 #-------------------------------
 [076]
-# hacienda outskirts
+# Hacienda Outskirts
 Outdoor = true
 ShowArea = true
 Bicycle = true
@@ -41,7 +47,7 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [078]
-# hacienda back
+# Hacienda Back
 Outdoor = true
 ShowArea = true
 Bicycle = true

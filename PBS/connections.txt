@@ -1,12 +1,14 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# route 1 (48) - Veravalles (22)
-48,West,19,22,East,0
-# hacienda outskirts (76) - Veravalles (22)
-76,South,0,22,North,10
-# hacienda outskirts (76) - route 1 (48)
+# Route 1 (48) - San Cerigold Town (81)
+48,North,0,81,South,15
+# Hacienda Outskirts (76) - San Cerigold Town (81)
+76,North,15,81,South,0
+# Cemetery/Gym (2) - San Cerigold Town (81)
+2,South,0,81,North,25
+# Veravalles Town (22) - Route 1 (48)
+22,East,0,48,West,19
+# Hacienda Outskirts (76) - Route 1 (48)
 76,East,0,48,West,0
-# san cerigold (81) - route 1 (48)
-81,South,15,48,North,0
-# san cerigold (81) - hacienda outskirts (76)
-81,South,0,76,North,15
+# Hacienda Outskirts (76) - Veravalles Town (22)
+76,South,0,22,North,10

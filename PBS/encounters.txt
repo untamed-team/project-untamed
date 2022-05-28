@@ -1,5 +1,15 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
+[002] # Cemetery/Gym
+Land,21
+    30,LILORINA,5
+    15,FLABEBE,5
+    15,DUSKULL,5
+    15,M_ROSELIA,5
+    15,GOTHITA,5
+    5,VULPIX,5
+    5,MURKROW,5
+#-------------------------------
 [048] # Route 1
 Land,21
     30,PACUNA,5
@@ -9,7 +19,7 @@ Land,21
     10,LEDYBA,5
     5,SUNKERN,5
 #-------------------------------
-[076] # hacienda outskirts
+[076] # Hacienda Outskirts
 Land,21
     20,BUDEW,5
     20,TECHUPPI,5
@@ -19,12 +29,12 @@ Land,21
     10,HOOTHOOT,5
     5,CAFECARACHA,5
 #-------------------------------
-[078] # hacienda back
+[078] # Hacienda Back
 Land,21
     35,ZEAZAYA,5
-    15,SUNKERN,5
     15,PUMPKABOO,5
-    10,PURRLOIN,5
-    10,HOOTHOOT,5
+    15,SUNKERN,5
     10,CAFECARACHA,5
+    10,HOOTHOOT,5
+    10,PURRLOIN,5
     5,DRILBUR,5
