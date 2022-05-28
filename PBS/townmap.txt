@@ -1,14 +1,13 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [0]
-Name=Mazah
-Filename=mapRegion0.png
-Name="South Mazah"
-Point=19,5,"Veravalles Town",,,,,
-Point=20,5,"Route 1",,,,,
-Point=20,4,"Route 1",,,,,
-Point=20,3,"San Cerigold Town",,,,,
-Point=19,3,"Hacienda Outskirts",,,,,
-Point=18,3,"Hacienda",,,,,
-Point=17,3,"Hacienda Back",,,,,
-Point=20,2,"Cemetery/Gym",,,,,
+Name = 
+Filename = mapRegion0.png
+Point = 19,5,Veravalles Town,,,,,
+Point = 20,5,Route 1,,,,,
+Point = 20,4,Route 1,,,,,
+Point = 20,3,San Cerigold Town,,,,,
+Point = 19,3,Hacienda Outskirts,,,,,
+Point = 18,3,Hacienda,,,,,
+Point = 17,3,Hacienda Back,,,,,
+Point = 20,2,Cemetery/Gym,,,,,
