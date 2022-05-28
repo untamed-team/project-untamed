@@ -37,7 +37,7 @@
 34,PICNICKER,Picnicker,16,,,,Female,,
 35,COOLTRAINER_M,Cool Trainer,60,,,,Male,,
 36,COOLTRAINER_F,Cool Trainer,60,,,,Female,,
-37,YOUNGSTER,Youngster,16,,,,Male,,
+37,YOUNGSTER_M,Youngster,16,,,,Male,, #edited
 38,LASS,Lass,16,,,,Female,,
 39,POKEMONRANGER_M,Pokémon Ranger,60,,,,Male,,
 40,POKEMONRANGER_F,Pokémon Ranger,60,,,,Female,,
@@ -72,3 +72,5 @@
 69,ELITEFOUR_Agatha,Elite Four,100,Battle Elite,Battle victory leader,,Female,,
 70,ELITEFOUR_Lance,Elite Four,100,Battle Elite,Battle victory leader,,Male,,
 71,CHAMPION,Champion,100,Battle Elite,Battle victory leader,,Male,,
+#---new---#
+72,YOUNGSTER_F,Youngster,16,,,,Female,, 

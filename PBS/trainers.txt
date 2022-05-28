@@ -33,12 +33,12 @@ Pokemon = TECHUPPI,40
     Moves = FLIPTURN,LIFEDEW,BURNINGJEALOUSY
     AbilityIndex = 237
 #-------------------------------
-[YOUNGSTER,Placeholder]
+[YOUNGSTER_F,Placeholder]
 LoseText = "..."
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
 #-------------------------------
-[YOUNGSTER,Placeholder2]
+[YOUNGSTER_M,Placeholder2]
 LoseText = "..."
 Pokemon = WRENNER,5
 #-------------------------------
