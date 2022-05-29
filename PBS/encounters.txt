@@ -2,47 +2,51 @@
 #-------------------------------
 [002] # Cemetery/Gym
 Land,21
-    30,LILORINA,7,12
-    15,DUSKULL,8,10
-    15,FLABEBE,7,8
-    15,GOTHITA,9,11
-    15,M_ROSELIA,7,10
-    5,MURKROW,6,9
-    5,VULPIX,7,9
+    30,LILORINA,5,10
+    15,DUSKULL,6,8
+    15,FLABEBE,5,6
+    15,GOTHITA,7,9
+    15,M_ROSELIA,5,8
+    5,MURKROW,4,7
+    5,VULPIX,5,7
 #-------------------------------
 [022] # Veravalles Town
+Water,2
+    60,LOTAD,8,11
+    40,DEWPIDER,8,11
 OldRod
     60,LOTAD,6,9
     40,DEWPIDER,5,10
-Water,2
-    60,LOTAD,6,9
-    40,DEWPIDER,5,10
+GoodRod
+    60,WOOPER,12,17
+    20,LOTAD,10,15
+    20,DEWPIDER,10,16
 #-------------------------------
 [048] # Route 1
 Land,21
-    30,PACUNA,4,5
-    20,MINIMELO,4,6
-    20,WRENNER,4,6
-    15,FLABEBE,4,5
-    10,LEDYBA,4,5
-    5,SUNKERN,4,5
+    30,PACUNA,2,4
+    20,MINIMELO,2,4
+    20,WRENNER,2,4
+    15,FLABEBE,2,3
+    10,LEDYBA,2,3
+    5,SUNKERN,2,3
 #-------------------------------
 [076] # Hacienda Outskirts
 Land,21
-    20,BUDEW,4,6
-    20,TECHUPPI,5,8
-    15,EKANS,5,6
-    15,PACUNA,4,6
-    15,WRENNER,5,7
-    10,HOOTHOOT,4,5
-    5,CAFECARACHA,5,6
+    20,BUDEW,2,4
+    20,TECHUPPI,3,6
+    15,EKANS,3,4
+    15,PACUNA,2,4
+    15,WRENNER,3,5
+    10,HOOTHOOT,2,3
+    5,CAFECARACHA,3,4
 #-------------------------------
 [078] # Hacienda Back
 Land,21
-    35,ZEAZAYA,6,7
-    15,PUMPKABOO,5,6
-    15,SUNKERN,5,7
-    10,CAFECARACHA,5,7
-    10,HOOTHOOT,5,6
-    10,PURRLOIN,6,7
-    5,DRILBUR,4,8
+    35,ZEAZAYA,4,5
+    15,PUMPKABOO,3,4
+    15,SUNKERN,3,5
+    10,CAFECARACHA,3,5
+    10,HOOTHOOT,3,4
+    10,PURRLOIN,4,5
+    5,DRILBUR,2,6
