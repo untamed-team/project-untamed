@@ -727,3 +727,5 @@
 707,PEPPERSPRAY,Pepper Spray,00A,85,GRASS,Special,100,15,30,NearOther,0,befg,"The user unleashes a spray of spicy vapors at its target to attack. It may also leave the target with a burn."
 708,TITANSWRATH,Titan's Wrath,511,120,QMARKS,Special,100,5,0,NearOther,0,bef,"The damage is based on the user's highest attacking stat. The move's type is set by the user's type."
 709,SIRENSONG,Siren Song,003,75,WATER,Special,100,10,10,NearOther,0,befk,"An ancient song appeals to the hearts of those listening. It may also induce sleep."
+#----placeholder
+710,SCALESHOT,Siren Song,003,75,WATER,Special,100,10,10,NearOther,0,befk,"blablabla"
