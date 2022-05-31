@@ -1,4 +1,0 @@
-﻿Name      = Easy Text Skip
-Version   = 1.0
-Website   = https://www.enls.eu/
-Credits   = Amethyst, Kurotsune, ENLS
