@@ -31,7 +31,7 @@ BattlerPlayerY = 23
 BattlerEnemyX = 0
 BattlerEnemyY = 31
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -10
 Evolutions = EXPURSUM,Level,16
 #-------------------------------
@@ -65,7 +65,7 @@ BattlerPlayerY = 18
 BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -20
 Evolutions = GASTRONAUT,Level,36
 #-------------------------------
@@ -100,7 +100,7 @@ BattlerPlayerY = 20
 BattlerEnemyX = 0
 BattlerEnemyY = 11
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [4]
@@ -130,11 +130,11 @@ Kind = Feathered Snake
 Pokedex = From years of high praise and attention, Quetzalil see themselves as gods. Their entitled and disrespectful nature towards their trainers make them hard to train.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 19
+BattlerPlayerY = 18
 BattlerEnemyX = 0
-BattlerEnemyY = 25
+BattlerEnemyY = 24
 BattlerShadowX = -2
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -10
 Evolutions = QUEXCELL,Level,16
 #-------------------------------
@@ -164,11 +164,11 @@ Kind = Feathered Snake
 Pokedex = Quexcell are aware that they are not as strong as they think they are. Regardless, they will throw themselves into danger and expect opponents to go easy on them.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 21
+BattlerPlayerY = 22
 BattlerEnemyX = 0
 BattlerEnemyY = 28
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = -20
 Evolutions = QUETZILLIAN,Level,36
 #-------------------------------
@@ -200,10 +200,10 @@ Pokedex = In battle, Quetzillian moves as if it is dancing, launching flaming fe
 Generation = 9
 BattlerPlayerX = 0
 BattlerPlayerY = 9
-BattlerEnemyX = 1
-BattlerEnemyY = 14
+BattlerEnemyX = 0
+BattlerEnemyY = 15
 BattlerShadowX = -2
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [7]
@@ -233,9 +233,9 @@ Kind = Sonar
 Pokedex = Porsite have been known to communicate telepathically through the bubbles they produce. Due to their high intelligence, they're the easiest for young trainers to work with.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 15
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 15
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Score = -10
@@ -268,9 +268,9 @@ Kind = Sonar
 Pokedex = Much like an adolescent human, Cettoekko tends to throw tantrums and lash out using their sharp teeth and psychic bubbles. The bubbles on their head are used to block out their trainer’s voice.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 13
+BattlerPlayerY = 12
 BattlerEnemyX = 0
-BattlerEnemyY = 13
+BattlerEnemyY = 18
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -20
@@ -305,7 +305,7 @@ Generation = 9
 BattlerPlayerX = 0
 BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 3
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = -30
@@ -337,11 +337,11 @@ Kind = Nibbling
 Pokedex = Considered as pests, Pacuna have an insatiable appetite that causes the decimation of farmland. Their fur is highly reflective, and is capable of blinding predators for a short period of time.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 25
+BattlerPlayerY = 23
 BattlerEnemyX = 0
 BattlerEnemyY = 30
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 20
 #-------------------------------
 [11]
@@ -375,7 +375,7 @@ BattlerPlayerY = 10
 BattlerEnemyX = 0
 BattlerEnemyY = 15
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 10
 #-------------------------------
 [12]
@@ -406,11 +406,11 @@ Kind = Swift Chick
 Pokedex = From the moment they hatch, the first thing a Wrenner does is run. While they’re poor flyers, they can glide short distances after jumping great heights.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 20
+BattlerPlayerY = 12
 BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -10
 #-------------------------------
 [13]
@@ -440,11 +440,11 @@ Kind = Star Runner
 Pokedex = Due to being able to reach speeds of fifty miles per hour, Aveor is known as "The Comet of the Sands." Friction against its feathers generates electricity, causing sparks to fly behind it.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 15
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 17
+BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -30
 Evolutions = ROADRAPTOR,Level,34
 #-------------------------------
@@ -477,9 +477,9 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 8
+BattlerEnemyY = 9
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -60
 #-------------------------------
 [15]
@@ -509,11 +509,11 @@ Kind = Sugar Ant
 Pokedex = Minimelo is capable of storing large amounts of nectar in a specialized organ located in their abdomen. While it can’t consume the nectar, it can be used for defending itself from attackers.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 26
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 31
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 50
 Evolutions = CHICATTA,Level,10
 #-------------------------------
@@ -543,11 +543,11 @@ Kind = Cutter Ant
 Pokedex = Using their strong jaws, Chicatta can cut through thick leaves with relative ease. They don’t eat the leaves they collect, so they are used to feed other members of their colony.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 19
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 24
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 50
 Evolutions = NOCTAVISPA,HasMoveType,DARK
 #-------------------------------
@@ -578,9 +578,9 @@ Kind = Hawk Wasp
 Pokedex = Acting as the leaders of the colony, Noctavispa support their nests by bringing in live prey. The colony survives through a cycle involving all members, that of which Noctivispa starts.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 8
-BattlerEnemyX = 0
-BattlerEnemyY = 6
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = 30
@@ -648,7 +648,7 @@ Generation = 6
 BattlerPlayerX = 0
 BattlerPlayerY = 12
 BattlerEnemyX = 0
-BattlerEnemyY = 4
+BattlerEnemyY = 5
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Score = 50
@@ -681,10 +681,10 @@ FormName = Red Flower
 Generation = 6
 BattlerPlayerX = 0
 BattlerPlayerY = 10
-BattlerEnemyX = 4
-BattlerEnemyY = 12
+BattlerEnemyX = 0
+BattlerEnemyY = 10
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 40
 #-------------------------------
 [21]
@@ -719,7 +719,7 @@ BattlerPlayerY = 20
 BattlerEnemyX = -1
 BattlerEnemyY = 25
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 Evolutions = LEDIAN,Level,18
 #-------------------------------
@@ -751,10 +751,10 @@ Pokedex = It is said that in lands with clean air, where the stars fill the sky,
 Generation = 2
 BattlerPlayerX = 1
 BattlerPlayerY = 14
-BattlerEnemyX = -1
-BattlerEnemyY = 15
+BattlerEnemyX = 1
+BattlerEnemyY = 7
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = 0
 #-------------------------------
 [23]
@@ -783,12 +783,12 @@ Habitat = Grassland
 Kind = Seed
 Pokedex = Sunkern try to minimize movement to conserve the nutrients they have stored in their bodies for evolution. They will not eat, subsisting only on morning dew.
 Generation = 2
-BattlerPlayerX = -3
-BattlerPlayerY = 28
-BattlerEnemyX = 3
-BattlerEnemyY = 34
+BattlerPlayerX = 3
+BattlerPlayerY = 23
+BattlerEnemyX = 1
+BattlerEnemyY = 25
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 0
 Evolutions = SUNFLORA,Item,SUNSTONE
 #-------------------------------
@@ -822,7 +822,7 @@ BattlerPlayerY = 18
 BattlerEnemyX = 1
 BattlerEnemyY = 28
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 #-------------------------------
 [25]
@@ -854,9 +854,9 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = -2
-BattlerEnemyY = 21
+BattlerEnemyY = 22
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -20
 #-------------------------------
 [26]
@@ -885,11 +885,11 @@ Kind = Mange Dog
 Pokedex = Due to terrible rumors, Lupacabra has earned an unjustified reputation as a dangerous monster. If trained properly, they’re incredibly loyal to their trainer.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 13
-BattlerEnemyX = -5
-BattlerEnemyY = 9
+BattlerPlayerY = 5
+BattlerEnemyX = -4
+BattlerEnemyY = 7
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -40
 #-------------------------------
 [27]
@@ -919,11 +919,11 @@ Kind = Aqua Dog
 Pokedex = Zolupine makes it home in underwater caves and tunnels, making it one of the rarest Pokemon in the Mazah region. It can use the large hand on its tail for all sorts of physical activities.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 11
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 12
+BattlerEnemyY = 11
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -30
 #-------------------------------
 [28]
@@ -958,7 +958,7 @@ BattlerPlayerY = 24
 BattlerEnemyX = 1
 BattlerEnemyY = 26
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -10
 Evolutions = M_ROSELIA,HappinessNight,
 Incense = ROSEINCENSE
@@ -992,10 +992,10 @@ Pokedex = On certain nights in the Mazah region, Roselia gather en masse in grav
 Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
-BattlerEnemyX = 1
-BattlerEnemyY = 27
+BattlerEnemyX = 2
+BattlerEnemyY = 26
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -30
 Evolutions = M_ROSERADE,Item,MOONSTONE
 #-------------------------------
@@ -1026,11 +1026,11 @@ Kind = Bouquet
 Pokedex = Roserade in the Mazah region have a special connection with the afterlife. They can wield supernatural powers to help people communicate with passed on loved ones, as well as striking down foes.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 14
-BattlerEnemyX = 1
+BattlerPlayerY = 11
+BattlerEnemyX = 2
 BattlerEnemyY = 20
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -50
 #-------------------------------
 [31]
@@ -1064,7 +1064,7 @@ BattlerPlayerY = 23
 BattlerEnemyX = 2
 BattlerEnemyY = 31
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 Evolutions = ARBOK,Level,22
 #-------------------------------
@@ -1098,7 +1098,7 @@ BattlerPlayerY = 15
 BattlerEnemyX = 2
 BattlerEnemyY = 21
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 0
 #-------------------------------
 [33]
@@ -1133,7 +1133,7 @@ BattlerPlayerY = 23
 BattlerEnemyX = 0
 BattlerEnemyY = 28
 BattlerShadowX = -2
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 0
 Evolutions = NOCTOWL,Level,20
 #-------------------------------
@@ -1168,7 +1168,7 @@ BattlerPlayerY = 15
 BattlerEnemyX = -1
 BattlerEnemyY = 20
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 #-------------------------------
 [35]
@@ -1198,9 +1198,9 @@ Kind = coffee
 Pokedex = coom
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 27
-BattlerEnemyX = 4
-BattlerEnemyY = 32
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
@@ -1236,7 +1236,7 @@ BattlerPlayerY = 0
 BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 0
 Score = 0
 #-------------------------------
 [37]
@@ -1272,7 +1272,7 @@ BattlerPlayerY = 29
 BattlerEnemyX = 1
 BattlerEnemyY = 35
 BattlerShadowX = 2
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 30
 Evolutions = LOMBRE,Level,14
 #-------------------------------
@@ -1308,7 +1308,7 @@ BattlerPlayerY = 20
 BattlerEnemyX = 0
 BattlerEnemyY = 28
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 20
 Evolutions = LUDICOLO,Item,WATERSTONE
 #-------------------------------
@@ -1344,7 +1344,7 @@ BattlerPlayerY = 12
 BattlerEnemyX = -2
 BattlerEnemyY = 16
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 10
 #-------------------------------
 [40]
@@ -1379,7 +1379,7 @@ BattlerPlayerY = 15
 BattlerEnemyX = 0
 BattlerEnemyY = 22
 BattlerShadowX = -3
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -20
 Evolutions = ARAQUANID,Level,22
 #-------------------------------
@@ -1414,7 +1414,7 @@ BattlerPlayerY = 14
 BattlerEnemyX = 0
 BattlerEnemyY = 18
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [42]
@@ -1445,11 +1445,11 @@ Kind = Water Fish
 Pokedex = Wooper usually live in water but come out onto land seeking food occasionally. On land, they coat their bodies with a gooey, toxic film.
 Generation = 2
 BattlerPlayerX = 0
-BattlerPlayerY = 28
-BattlerEnemyX = 1
-BattlerEnemyY = 31
+BattlerPlayerY = 0
+BattlerEnemyX = -1
+BattlerEnemyY = 25
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 20
 Evolutions = QUAGSIRE,Level,20
 #-------------------------------
@@ -1480,11 +1480,11 @@ Kind = Water Fish
 Pokedex = A Quagsire hunts by leaving its mouth wide open in water and waiting for its prey to blunder in. Because it doesn't move, it does not get very hungry.
 Generation = 2
 BattlerPlayerX = 6
-BattlerPlayerY = 16
+BattlerPlayerY = 0
 BattlerEnemyX = 2
-BattlerEnemyY = 21
+BattlerEnemyY = 16
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 10
 #-------------------------------
 [44]
@@ -1514,11 +1514,11 @@ Kind = Twin Kernel
 Pokedex = Zea-Zaya are born with conjoined leaves, and are always found in pairs. Ancient myth tells a story about how humanity was created because of Zea-zaya, garnering them a huge amount of respect.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 27
+BattlerPlayerY = 29
 BattlerEnemyX = 1
-BattlerEnemyY = 31
+BattlerEnemyY = 33
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 10
 Evolutions = ZHUSK,Level,17
 #-------------------------------
@@ -1549,10 +1549,10 @@ Pokedex = When multiple Zea-Zaya band together to live in a colony, they create 
 Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 19
-BattlerEnemyX = -4
-BattlerEnemyY = 19
+BattlerEnemyX = 1
+BattlerEnemyY = 20
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = -10
 Evolutions = MAYZMEN,Item,SUNSTONE,BLAZEA,Item,FIRESTONE
 #-------------------------------
@@ -1582,11 +1582,11 @@ Kind = Kernel Colony
 Pokedex = Found throughout all of the Mazah region, Mayzmen are a massive colony of several individual Pokemon. While each mind is independent, they work together for everyday life and for battle.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 11
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 11
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = -30
 #-------------------------------
 [47]
@@ -1618,7 +1618,7 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 6
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -20
@@ -1650,7 +1650,7 @@ Pokedex = The pumpkin body is inhabited by a spirit trapped in this world. As th
 FormName = Small Size
 Generation = 6
 BattlerPlayerX = 0
-BattlerPlayerY = 22
+BattlerPlayerY = 25
 BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = -2
@@ -1686,9 +1686,9 @@ Generation = 6
 BattlerPlayerX = 0
 BattlerPlayerY = 9
 BattlerEnemyX = 0
-BattlerEnemyY = 15
+BattlerEnemyY = 6
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 30
 #-------------------------------
 [50]
@@ -1717,11 +1717,11 @@ Kind = Devious
 Pokedex = Its cute act is a ruse. When victims let down their guard, they find their items taken. It attacks with sharp claws.
 Generation = 5
 BattlerPlayerX = 2
-BattlerPlayerY = 19
+BattlerPlayerY = 16
 BattlerEnemyX = -2
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 20
 Evolutions = LIEPARD,Level,20
 #-------------------------------
@@ -1754,7 +1754,7 @@ BattlerPlayerY = 15
 BattlerEnemyX = 0
 BattlerEnemyY = 19
 BattlerShadowX = -1
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 25
 #-------------------------------
 [52]
@@ -1787,7 +1787,7 @@ BattlerPlayerY = 21
 BattlerEnemyX = 1
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 Evolutions = EXCADRILL,Level,31
 #-------------------------------
@@ -1821,7 +1821,7 @@ BattlerPlayerY = 15
 BattlerEnemyX = 0
 BattlerEnemyY = 23
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 0
 #-------------------------------
 [54]
@@ -1848,9 +1848,9 @@ Kind = ???
 Pokedex = If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw.
 Generation = 8
 BattlerPlayerX = 0
-BattlerPlayerY = 27
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 21
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 20
@@ -1880,9 +1880,9 @@ Kind = ???
 Pokedex = If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw.
 Generation = 8
 BattlerPlayerX = 0
-BattlerPlayerY = 21
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 19
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 10
@@ -1915,11 +1915,11 @@ Kind = Weeping
 Pokedex = By nature, Liloriña are skittish, and are afraid of water and adult humans. They hover around small children as if they want to find someone to play with.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 11
+BattlerPlayerY = 8
 BattlerEnemyX = 1
-BattlerEnemyY = 13
+BattlerEnemyY = 7
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 0
 Score = 0
 Evolutions = YAQUENA,Level,39
 #-------------------------------
@@ -1952,7 +1952,7 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 11
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = 5
@@ -2059,7 +2059,7 @@ BattlerPlayerY = 13
 BattlerEnemyX = 7
 BattlerEnemyY = 18
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 0
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 #-------------------------------
@@ -2091,7 +2091,7 @@ WildItemUncommon = SPELLTAG
 BattlerPlayerX = 5
 BattlerPlayerY = 11
 BattlerEnemyX = -4
-BattlerEnemyY = -1
+BattlerEnemyY = 10
 BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
@@ -2126,7 +2126,7 @@ BattlerPlayerY = 22
 BattlerEnemyX = 0
 BattlerEnemyY = 31
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 10
 Evolutions = GOTHORITA,Level,32
 #-------------------------------
@@ -2159,7 +2159,7 @@ BattlerPlayerY = 17
 BattlerEnemyX = 2
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 20
 Evolutions = GOTHITELLE,Level,41
 #-------------------------------
@@ -2192,7 +2192,7 @@ BattlerPlayerY = 6
 BattlerEnemyX = 0
 BattlerEnemyY = 13
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = -10
 #-------------------------------
 [65]
@@ -2227,7 +2227,7 @@ BattlerPlayerY = 21
 BattlerEnemyX = 3
 BattlerEnemyY = 25
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 Evolutions = NINETALES,Item,FIRESTONE
 #-------------------------------
@@ -2258,11 +2258,11 @@ Pokedex = It has long been said that each of the nine tails embody an enchanted 
 Generation = 1
 WildItemUncommon = CHARCOAL
 BattlerPlayerX = -3
-BattlerPlayerY = 13
-BattlerEnemyX = 2
-BattlerEnemyY = 19
+BattlerPlayerY = 4
+BattlerEnemyX = 6
+BattlerEnemyY = 13
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 2
 Score = 0
 #-------------------------------
 [67]
@@ -2331,7 +2331,7 @@ BattlerPlayerY = 18
 BattlerEnemyX = 0
 BattlerEnemyY = 24
 BattlerShadowX = 0
-BattlerShadowSize = 0
+BattlerShadowSize = 3
 Score = 0
 #-------------------------------
 [69]
@@ -2434,7 +2434,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = -30
 #-------------------------------
 [102]
 Name = Gusteon
@@ -2466,7 +2466,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = -30
 #-------------------------------
 [103]
 Name = Gohila
@@ -2499,7 +2499,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 20
 #-------------------------------
 [104]
 Name = Atelanger
@@ -2532,7 +2532,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 20
 #-------------------------------
 [105]
 Name = Beakpeep
@@ -2566,7 +2566,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 20
 Evolutions = BEAKRAFT,Level,31
 #-------------------------------
 [106]
@@ -2601,7 +2601,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 10
 #-------------------------------
 [107]
 Name = Macrabra
@@ -2635,7 +2635,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 30
 #-------------------------------
 [108]
 Name = Xibalbat
@@ -2668,7 +2668,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 20
 #-------------------------------
 [109]
 Name = Titanotrop
@@ -2700,7 +2700,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = -10
 #-------------------------------
 [110]
 Name = Banagnaw
@@ -2733,7 +2733,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = POTASSOPOD,TradeItem,DUSKSTONE,NANAHI,Level,22
 #-------------------------------
 [111]
@@ -2766,7 +2766,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [112]
 Name = Potassopod
@@ -2798,7 +2798,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 #-------------------------------
 [115]
 Name = Suchip
@@ -2830,7 +2830,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 10
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [116]
@@ -2895,7 +2895,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 10
 #-------------------------------
 [118]
 Name = Zarcoil
@@ -2922,12 +2922,12 @@ Shape = Quadruped
 Kind = Forbearance
 Pokedex = This Pokémon is from about 100,000,000 years ago. It has the presence of a king, vicious but magnificent.
 BattlerPlayerX = 0
-BattlerPlayerY = 0
+BattlerPlayerY = 20
 BattlerEnemyX = 0
-BattlerEnemyY = 0
+BattlerEnemyY = 24
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 0
+Score = 10
 #-------------------------------
 [119]
 Name = Burbrawl
@@ -2959,7 +2959,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
 [120]
@@ -2991,7 +2991,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -10
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
 [121]
@@ -3023,7 +3023,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 #-------------------------------
 [122]
 Name = Xolsmol
@@ -3056,7 +3056,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
 [123]
@@ -3090,7 +3090,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
 [124]
@@ -3123,7 +3123,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 #-------------------------------
 [125]
 Name = Croacrozen
@@ -3155,7 +3155,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 #-------------------------------
 [126]
 Name = Ariamano
@@ -3189,7 +3189,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 #-------------------------------
 [127]
 Name = Cromen
@@ -3222,7 +3222,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 Evolutions = CORVOYANT,Level,22
 #-------------------------------
 [128]
@@ -3255,7 +3255,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = CAWMADAME,Level,33
 #-------------------------------
 [129]
@@ -3288,7 +3288,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [130]
 Name = Elegoop
@@ -3321,7 +3321,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 Evolutions = TARTUSK,Level,32
 #-------------------------------
 [131]
@@ -3354,7 +3354,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 #-------------------------------
 [132]
 Name = Charcopal
@@ -3387,7 +3387,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
 [133]
@@ -3420,7 +3420,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [134]
 Name = Chixulob
@@ -3452,7 +3452,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 #-------------------------------
 [135]
 Name = Meowth
@@ -3485,7 +3485,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
 [136]
@@ -3518,7 +3518,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [137]
 Name = Chispeka
@@ -3551,7 +3551,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [138]
 Name = Rotatona
@@ -3583,7 +3583,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [139]
 Name = Dunsparce
@@ -3615,7 +3615,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 75
 Evolutions = DUNSENDED,Location,999
 #-------------------------------
 [140]
@@ -3648,7 +3648,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 10
 #-------------------------------
 [141]
 Name = Mudbray
@@ -3681,7 +3681,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
 [142]
@@ -3715,7 +3715,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 19
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [143]
 Name = Nosepass
@@ -3749,7 +3749,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 29
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
 [144]
@@ -3783,7 +3783,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [145]
 Name = Maractus
@@ -3817,7 +3817,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 40
 #-------------------------------
 [146]
 Name = Regiwood
@@ -3848,7 +3848,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 10
 #-------------------------------
 [147]
 Name = Regibrute
@@ -3879,7 +3879,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 5
 #-------------------------------
 [148]
 Name = Regiternal
@@ -3910,7 +3910,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 5
 #-------------------------------
 [149]
 Name = Bowllo
@@ -3942,7 +3942,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 30
 Evolutions = DUPEDILLO,Level,36
 #-------------------------------
 [150]
@@ -3974,7 +3974,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = 20
 #-------------------------------
 [151]
 Name = Melumuse
@@ -4005,7 +4005,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -75
 #-------------------------------
 [152]
 Name = Melucholy
@@ -4036,7 +4036,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -75
 #-------------------------------
 [153]
 Name = Melumaunder
@@ -4067,7 +4067,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -75
 #-------------------------------
 [154]
 Name = Melumyst
@@ -4098,7 +4098,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -75
 #-------------------------------
 [155]
 Name = Maripome
@@ -4129,7 +4129,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 #-------------------------------
 [156]
 Name = Hylarmos
@@ -4160,4 +4160,4 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
