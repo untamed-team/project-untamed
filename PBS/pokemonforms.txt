@@ -6,15 +6,12 @@ BaseStats = 49,66,70,51,44,55
 HiddenAbility = INSOMNIA
 Height = 0.4
 Weight = 5.0
-BattlerPlayerY = 20
 #-------------------------------
 [PUMPKABOO,2]
 FormName = Large Size
 BaseStats = 54,66,70,46,44,55
 Height = 0.5
 Weight = 7.5
-BattlerPlayerY = 19
-BattlerEnemyY = 22
 #-------------------------------
 [PUMPKABOO,3]
 FormName = Super Size
@@ -25,8 +22,6 @@ Weight = 15.0
 WildItemCommon = MIRACLESEED
 WildItemUncommon = MIRACLESEED
 WildItemRare = MIRACLESEED
-BattlerPlayerY = 18
-BattlerEnemyY = 21
 #-------------------------------
 [GOURGEIST,1]
 FormName = Average Size
@@ -34,14 +29,12 @@ BaseStats = 65,90,122,84,58,75
 HiddenAbility = INSOMNIA
 Height = 0.9
 Weight = 12.5
-BattlerEnemyY = 13
 #-------------------------------
 [GOURGEIST,2]
 FormName = Large Size
 BaseStats = 75,95,122,69,58,75
 Height = 1.1
 Weight = 14.0
-BattlerEnemyY = 12
 #-------------------------------
 [GOURGEIST,3]
 FormName = Super Size
@@ -52,23 +45,18 @@ Weight = 39.0
 WildItemCommon = MIRACLESEED
 WildItemUncommon = MIRACLESEED
 WildItemRare = MIRACLESEED
-BattlerEnemyY = 10
 #-------------------------------
 [FLABEBE,1]
 FormName = Yellow Flower
-BattlerEnemyY = 8
 #-------------------------------
 [FLABEBE,2]
 FormName = Orange Flower
-BattlerEnemyY = 8
 #-------------------------------
 [FLABEBE,3]
 FormName = Blue Flower
-BattlerEnemyY = 8
 #-------------------------------
 [FLABEBE,4]
 FormName = White Flower
-BattlerEnemyY = 8
 #-------------------------------
 [FLOETTE,1]
 FormName = Yellow Flower
@@ -90,28 +78,26 @@ HiddenAbility = FAIRYAURA
 Moves = 1,TACKLE,1,VINEWHIP,1,FAIRYWIND,6,FAIRYWIND,10,LUCKYCHANT,15,RAZORLEAF,20,WISH,25,MAGICALLEAF,27,GRASSYTERRAIN,33,PETALBLIZZARD,38,AROMATHERAPY,43,MISTYTERRAIN,46,MOONBLAST,50,LIGHTOFRUIN,51,PETALDANCE,58,SOLARBEAM
 Compatibility = Undiscovered
 Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
-BattlerPlayerX = -6
-BattlerPlayerY = 8
-BattlerEnemyX = 3
-BattlerEnemyY = 1
+BattlerPlayerY = 9
+BattlerEnemyY = 0
 BattlerShadowSize = 2
 Evolutions = FLORGES,None,
 #-------------------------------
 [FLORGES,1]
 FormName = Yellow Flower
-BattlerEnemyY = 8
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,2]
 FormName = Orange Flower
-BattlerEnemyY = 8
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,3]
 FormName = Blue Flower
-BattlerEnemyY = 8
+BattlerEnemyY = 6
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
-BattlerEnemyY = 8
+BattlerEnemyY = 6
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female

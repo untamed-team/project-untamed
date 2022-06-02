@@ -406,9 +406,9 @@ Kind = Swift Chick
 Pokedex = From the moment they hatch, the first thing a Wrenner does is run. While they’re poor flyers, they can glide short distances after jumping great heights.
 Generation = 9
 BattlerPlayerX = 0
-BattlerPlayerY = 12
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 24
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Score = -10
@@ -477,7 +477,7 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 9
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -60
@@ -751,10 +751,10 @@ Pokedex = It is said that in lands with clean air, where the stars fill the sky,
 Generation = 2
 BattlerPlayerX = 1
 BattlerPlayerY = 14
-BattlerEnemyX = 1
-BattlerEnemyY = 7
+BattlerEnemyX = -1
+BattlerEnemyY = 15
 BattlerShadowX = 0
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = 0
 #-------------------------------
 [23]
@@ -853,8 +853,8 @@ Pokedex = Almost every family in the Mazah region keeps a Techuppi, and history 
 Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
-BattlerEnemyX = -2
-BattlerEnemyY = 22
+BattlerEnemyX = 1
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Score = -20
@@ -885,9 +885,9 @@ Kind = Mange Dog
 Pokedex = Due to terrible rumors, Lupacabra has earned an unjustified reputation as a dangerous monster. If trained properly, they’re incredibly loyal to their trainer.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 5
-BattlerEnemyX = -4
-BattlerEnemyY = 7
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -40
@@ -921,7 +921,7 @@ Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 11
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -30
@@ -992,10 +992,10 @@ Pokedex = On certain nights in the Mazah region, Roselia gather en masse in grav
 Generation = 9
 BattlerPlayerX = 1
 BattlerPlayerY = 1
-BattlerEnemyX = 2
-BattlerEnemyY = 26
+BattlerEnemyX = 1
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -30
 Evolutions = M_ROSERADE,Item,MOONSTONE
 #-------------------------------
@@ -1026,11 +1026,11 @@ Kind = Bouquet
 Pokedex = Roserade in the Mazah region have a special connection with the afterlife. They can wield supernatural powers to help people communicate with passed on loved ones, as well as striking down foes.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 11
-BattlerEnemyX = 2
-BattlerEnemyY = 20
+BattlerPlayerY = 1
+BattlerEnemyX = 1
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 1
+BattlerShadowSize = 2
 Score = -50
 #-------------------------------
 [31]
@@ -1450,8 +1450,8 @@ BattlerEnemyX = -1
 BattlerEnemyY = 25
 BattlerShadowX = 0
 BattlerShadowSize = 1
-Score = 20
 Evolutions = QUAGSIRE,Level,20
+Score = 20
 #-------------------------------
 [43]
 Name = Quagsire
@@ -1514,9 +1514,9 @@ Kind = Twin Kernel
 Pokedex = Zea-Zaya are born with conjoined leaves, and are always found in pairs. Ancient myth tells a story about how humanity was created because of Zea-zaya, garnering them a huge amount of respect.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 29
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 33
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Score = 10
@@ -1548,9 +1548,9 @@ Kind = Kernel Cluster
 Pokedex = When multiple Zea-Zaya band together to live in a colony, they create a Zhusk. In a pinch, they will launch members of the colony at foes as a form of attack.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 19
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 20
+BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Score = -10
@@ -1586,7 +1586,7 @@ BattlerPlayerY = 1
 BattlerEnemyX = 1
 BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 3
+BattlerShadowSize = 2
 Score = -30
 #-------------------------------
 [47]
@@ -1829,13 +1829,14 @@ Name = Arrokuda
 InternalName = ARROKUDA
 Type1 = WATER
 BaseStats = 41,63,40,66,40,30
-GenderRate = Female50Percent
+GenderRatio = Female50Percent
 GrowthRate = Slow
 BaseEXP = 56
 EffortPoints = 0,0,0,1,0,0
 Rareness = 255
 Happiness = 70
 Abilities = SWIFTSWIM
+HiddenAbilities = MOLDBREAKER
 Moves = 1,THROATCHOP,1,PECK,1,AQUAJET,1,FURYATTACK,1,BITE,18,AGILITY,24,DIVE,32,LASERFOCUS,40,CRUNCH,48,LIQUIDATION,56,DOUBLEEDGE
 TutorMoves = AGILITY,ASSURANCE,ATTRACT,BOUNCE,BRICKBREAK,CLOSECOMBAT,CRUNCH,DIVE,DRILLRUN,ENDURE,FACADE,FLIPTURN,FOCUSENERGY,GIGAIMPACT,HIDDENPOWER,HYDROPUMP,HYPERBEAM,ICEFANG,LIQUIDATION,POISONJAB,PROTECT,PSYCHICFANGS,RAINDANCE,REST,ROUND,SCALD,SCARYFACE,SLEEPTALK,SNORE,SUBSTITUTE,SURF,SWIFT,THROATCHOP,WATERFALL,WHIRLPOOL
 Compatibility = Water2
@@ -1844,9 +1845,10 @@ Height = 0.5
 Weight = 1.0
 Color = Brown
 Shape = Finned
-Kind = ???
+Category = Rush
 Pokedex = If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw.
 Generation = 8
+Evolutions = BARRASKEWDA,Level,26
 BattlerPlayerX = 0
 BattlerPlayerY = 0
 BattlerEnemyX = 0
@@ -1854,29 +1856,29 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 20
-Evolutions = BARRASKEWDA,Level,26
 #-------------------------------
 [55]
 Name = Barraskewda
 InternalName = BARRASKEWDA
 Type1 = WATER
 BaseStats = 61,123,60,136,60,50
-GenderRate = Female50Percent
+GenderRatio = Female50Percent
 GrowthRate = Slow
 BaseEXP = 172
 EffortPoints = 0,0,0,2,0,0
 Rareness = 60
 Happiness = 70
 Abilities = SWIFTSWIM
+HiddenAbilities = MOLDBREAKER
 Moves = 1,PECK,1,AQUAJET,6,FURYATTACK,12,BITE,18,AGILITY,24,DIVE,30,LASERFOCUS,36,CRUNCH,42,LIQUIDATION,48,DOUBLEEDGE
 TutorMoves = ACUPRESSURE,AGILITY,ASSURANCE,ATTRACT,BOUNCE,BRICKBREAK,CLOSECOMBAT,CRUNCH,DIVE,DRILLRUN,ENDURE,FACADE,FOCUSENERGY,HIDDENPOWER,ICEFANG,LIQUIDATION,NIGHTSLASH,POISONJAB,PROTECT,PSYCHICFANGS,RAINDANCE,REST,ROUND,SCALD,SLASH,SLEEPTALK,SNORE,SUBSTITUTE,SWIFT,THRASH,THROATCHOP,WATERFALL,WHIRLPOOL
 Compatibility = Water2
 StepsToHatch = 5120
 Height = 1.3
-Weight = 30.0
+Weight = 30
 Color = Brown
 Shape = Finned
-Kind = ???
+Category = Skewer
 Pokedex = If it sees any movement around it, this Pokémon charges for it straightaway, leading with its sharply pointed jaw. It's very proud of that jaw.
 Generation = 8
 BattlerPlayerX = 0
@@ -1915,11 +1917,11 @@ Kind = Weeping
 Pokedex = By nature, Liloriña are skittish, and are afraid of water and adult humans. They hover around small children as if they want to find someone to play with.
 Generation = 9
 BattlerPlayerX = 1
-BattlerPlayerY = 8
+BattlerPlayerY = 1
 BattlerEnemyX = 1
-BattlerEnemyY = 7
+BattlerEnemyY = 1
 BattlerShadowX = 1
-BattlerShadowSize = 0
+BattlerShadowSize = 1
 Score = 0
 Evolutions = YAQUENA,Level,39
 #-------------------------------
@@ -2258,7 +2260,7 @@ Pokedex = It has long been said that each of the nine tails embody an enchanted 
 Generation = 1
 WildItemUncommon = CHARCOAL
 BattlerPlayerX = -3
-BattlerPlayerY = 4
+BattlerPlayerY = 0
 BattlerEnemyX = 6
 BattlerEnemyY = 13
 BattlerShadowX = 0
@@ -2434,7 +2436,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = -30
+Score = 0
 #-------------------------------
 [102]
 Name = Gusteon
@@ -2466,7 +2468,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = -30
+Score = 0
 #-------------------------------
 [103]
 Name = Gohila
@@ -2499,7 +2501,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 20
+Score = 0
 #-------------------------------
 [104]
 Name = Atelanger
@@ -2532,7 +2534,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 20
+Score = 0
 #-------------------------------
 [105]
 Name = Beakpeep
@@ -2566,7 +2568,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 20
+Score = 0
 Evolutions = BEAKRAFT,Level,31
 #-------------------------------
 [106]
@@ -2601,7 +2603,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 10
+Score = 0
 #-------------------------------
 [107]
 Name = Macrabra
@@ -2635,7 +2637,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 30
+Score = 0
 #-------------------------------
 [108]
 Name = Xibalbat
@@ -2668,7 +2670,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 20
+Score = 0
 #-------------------------------
 [109]
 Name = Titanotrop
@@ -2685,7 +2687,7 @@ Happiness = 70
 Abilities = HARVEST,SOLARPOWER
 HiddenAbility = HUGEPOWER
 Moves = 0,WOODHAMMER,1,DRAGONHAMMER,1,LEAFSTORM,1,LEER,1,GUST,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,WHIRLWIND,26,LEAFTORNADO,30,NATURALGIFT,36,AIRSLASH,41,BODYSLAM,46,BESTOW,50,SYNTHESIS,56,SOLARBEAM,61,LEAFSTORM,75,OUTRAGE,83,GIGAIMPACT
-TutorMoves = CUT,TAUNT,PROTECT,TRIATTACK,HIDDENPOWER,AERIALACE,STEELWING,FOCUSBLAST,ACROBATICS,THUNDERWAVE,ASSURANCE,BRUTALSWING,GYROBALL,SWORDSDANCE,REST,SLEEPTALK,SWORDSDANCE,DRAGONCLAW,XSCISSOR,UTURN,ZENHEADBUTT,SHADOWCLAW,DARKPULSE,SNARL,FLASHCANNON,DRILLRUN,SURF,STRENGTH,ROAR,RAINDANCE,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,BRICKBREAK,ENERGYBALL,BULLETSEED,GRASSKNOT,GIGAIMPACT,BODYSLAM,BRUTALSWING,ROCKSLIDE,DRAGONPULSE,STONEEDGE,HYPERBEAM
+TutorMoves = CUT,TAUNT,PROTECT,TRIATTACK,HIDDENPOWER,AERIALACE,STEELWING,FOCUSBLAST,ACROBATICS,THUNDERWAVE,ASSURANCE,BRUTALSWING,GYROBALL,SWORDSDANCE,REST,SLEEPTALK,SWORDSDANCE,DRAGONCLAW,XSCISSOR,UTURN,ZENHEADBUTT,SHADOWCLAW,DARKPULSE,SNARL,FLASHCANNON,DRILLRUN,SURF,STRENGTH,ROAR,RAINDANCE,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,BRICKBREAK,ENERGYBALL,BULLETSEED,GRASSKNOT,GIGAIMPACT,BODYSLAM,BRUTALSWING,ROCKSLIDE,DRAGONPULSE,STONEEDGE,HYPERBEAM,
 Compatibility = Monster,Grass
 StepsToHatch = 6630
 Height = 22.5
@@ -2700,7 +2702,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = -10
+Score = 0
 #-------------------------------
 [110]
 Name = Banagnaw
@@ -2733,7 +2735,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 Evolutions = POTASSOPOD,TradeItem,DUSKSTONE,NANAHI,Level,22
 #-------------------------------
 [111]
@@ -2766,7 +2768,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [112]
 Name = Potassopod
@@ -2798,7 +2800,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 #-------------------------------
 [115]
 Name = Suchip
@@ -2830,7 +2832,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 10
+Score = 0
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [116]
@@ -2895,7 +2897,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 10
+Score = 0
 #-------------------------------
 [118]
 Name = Zarcoil
@@ -2922,12 +2924,12 @@ Shape = Quadruped
 Kind = Forbearance
 Pokedex = This Pokémon is from about 100,000,000 years ago. It has the presence of a king, vicious but magnificent.
 BattlerPlayerX = 0
-BattlerPlayerY = 20
+BattlerPlayerY = 0
 BattlerEnemyX = 0
-BattlerEnemyY = 24
+BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 0
-Score = 10
+Score = 0
 #-------------------------------
 [119]
 Name = Burbrawl
@@ -2959,7 +2961,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -100
+Score = 0
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
 [120]
@@ -2991,7 +2993,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -10
+Score = 0
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
 [121]
@@ -3023,7 +3025,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -100
+Score = 0
 #-------------------------------
 [122]
 Name = Xolsmol
@@ -3056,7 +3058,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -100
+Score = 0
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
 [123]
@@ -3090,7 +3092,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -100
+Score = 0
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
 [124]
@@ -3123,7 +3125,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = -100
+Score = 0
 #-------------------------------
 [125]
 Name = Croacrozen
@@ -3155,7 +3157,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 40
+Score = 0
 #-------------------------------
 [126]
 Name = Ariamano
@@ -3189,7 +3191,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 40
+Score = 0
 #-------------------------------
 [127]
 Name = Cromen
@@ -3222,7 +3224,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 40
+Score = 0
 Evolutions = CORVOYANT,Level,22
 #-------------------------------
 [128]
@@ -3255,7 +3257,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 Evolutions = CAWMADAME,Level,33
 #-------------------------------
 [129]
@@ -3288,7 +3290,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [130]
 Name = Elegoop
@@ -3321,7 +3323,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 Evolutions = TARTUSK,Level,32
 #-------------------------------
 [131]
@@ -3354,7 +3356,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 #-------------------------------
 [132]
 Name = Charcopal
@@ -3387,7 +3389,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
 [133]
@@ -3404,7 +3406,7 @@ Rareness = 45
 Happiness = 70
 Abilities = CRYSTALJAW
 HiddenAbility = MAGICBOUNCE
-Moves = 1,FAIRYWIND,1,BABYDOLLEYES,1,FAIRYWIND,1,ICEFANG,1,THUNDERFANG,1,FIREFANG,1,HYPERFANG,1,ROCKTHROW,4,WATERGUN,5,EXCITE,8,CONFUSION,12,DRAININGKISS,16,ROCKPOLISH,20,ANCIENTPOWER,24,DAZZLINGGLEAM,28,PSYCHICFANGS,32,POWERGEM,39,MOONLIGHT,44,MOONBLAST,48,GEODEBURST
+Moves = 1,FAIRYWIND,1,BABYDOLLEYES,1,FAIRYWIND,1,ICEFANG,1,THUNDERFANG,1,FIREFANG,1,HYPERFANG,1,ROCKTHROW,5,EXCITE,4,WATERGUN,8,CONFUSION,12,DRAININGKISS,16,ROCKPOLISH,20,ANCIENTPOWER,24,DAZZLINGGLEAM,28,PSYCHICFANGS,32,POWERGEM,39,MOONLIGHT,44,MOONBLAST,48,GEODEBURST
 TutorMoves = SURF,WATERFALL,DIVE,TRICKROOM,CALMMIND,SANDSTORM,RAINDANCE,PSYSHOCK,SAFEGUARD,ROCKTOMB,LIQUIDATION,ALLYSWITCH,POWERSWAP,GEODEBURST,ZENHEADBUTT,DAZZLINGGLEAM,HYPERBEAM,PSYCHIC,LIGHTSCREEN,REFLECT,PSYCRUSH
 Compatibility = Monster,Water2
 StepsToHatch = 7680
@@ -3420,7 +3422,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [134]
 Name = Chixulob
@@ -3452,7 +3454,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 40
+Score = 0
 #-------------------------------
 [135]
 Name = Meowth
@@ -3485,7 +3487,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 30
+Score = 0
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
 [136]
@@ -3518,7 +3520,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [137]
 Name = Chispeka
@@ -3551,7 +3553,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [138]
 Name = Rotatona
@@ -3583,7 +3585,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 20
+Score = 0
 #-------------------------------
 [139]
 Name = Dunsparce
@@ -3599,8 +3601,8 @@ Happiness = 70
 Abilities = SERENEGRACE,RUNAWAY
 HiddenAbility = RATTLED
 Moves = 1,FLAIL,1,DEFENSECURL,4,MUDSLAP,8,ROLLOUT,12,GLARE,16,SCREECH,20,ANCIENTPOWER,24,DRILLRUN,28,YAWN,32,BODYSLAM,36,TAKEDOWN,40,ROOST,44,DRAGONRUSH,48,COIL,52,DOUBLEEDGE,56,ENDEAVOR
-TutorMoves = SOLARBEAM,DIG,SCREECH,ROCKSLIDE,THIEF,RAINDANCE,SUNNYDAY,HELPINGHAND,ROCKTOMB,ROUND,BODYSLAM,FLAMETHROWER,ICEBEAM,BLIZZARD,THUNDERBOLT,THUNDER,EARTHQUAKE,FIREBLAST,SHADOWBALL,CALMMIND,GYROBALL,POISONJAB,ZENHEADBUTT,WILDCHARGE,DRILLRUN,THUNDERWAVE,STEALTHROCK,SWAGGER,STRENGTH,FLY,DEFOG,BULKUP,ROAR,HYPERBEAM,TRIATTACK,SOLARBLADE,BRICKBREAK,LIGHTSCREEN,REFLECT,SAFEGUARD,AERIALACE,SCORCHINGSANDS,ALLYSWITCH,STEELWING,FLASHCANNON,FOCUSBLAST,BODYPRESS,PSYCRUSH,ENERGYBALL,ACROBATICS,SCOURINGWINDS,WILLOWISP,GIGAIMPACT,ASSURANCE,BRUTALSWING,DRAGONPULSE,GEODEBURST,SNARL,DARKPULSE,PLAYROUGH,DAZZLINGGLEAM
 EggMoves = BIDE,BITE,HEADBUTT,ASTONISH,CURSE,TRUMPCARD,MAGICCOAT,SNORE,AGILITY,SECRETPOWER,SLEEPTALK,HEX
+TutorMoves = SOLARBEAM,DIG,SCREECH,ROCKSLIDE,THIEF,RAINDANCE,SUNNYDAY,HELPINGHAND,ROCKTOMB,ROUND,BODYSLAM,FLAMETHROWER,ICEBEAM,BLIZZARD,THUNDERBOLT,THUNDER,EARTHQUAKE,FIREBLAST,SHADOWBALL,CALMMIND,GYROBALL,POISONJAB,ZENHEADBUTT,WILDCHARGE,DRILLRUN,THUNDERWAVE,STEALTHROCK,SWAGGER,STRENGTH,FLY,DEFOG,BULKUP,ROAR,HYPERBEAM,TRIATTACK,SOLARBLADE,BRICKBREAK,LIGHTSCREEN,REFLECT,SAFEGUARD,AERIALACE,SCORCHINGSANDS,ALLYSWITCH,STEELWING,FLASHCANNON,FOCUSBLAST,BODYPRESS,PSYCRUSH,ENERGYBALL,ACROBATICS,SCOURINGWINDS,WILLOWISP,GIGAIMPACT,ASSURANCE,BRUTALSWING,DRAGONPULSE,GEODEBURST,SNARL,DARKPULSE,PLAYROUGH,DAZZLINGGLEAM
 Compatibility = Field
 StepsToHatch = 5355
 Height = 1.5
@@ -3615,7 +3617,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 75
+Score = 0
 Evolutions = DUNSENDED,Location,999
 #-------------------------------
 [140]
@@ -3648,7 +3650,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 32
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 10
+Score = 0
 #-------------------------------
 [141]
 Name = Mudbray
@@ -3675,13 +3677,9 @@ Shape = Quadruped
 Kind = Fiesta
 Pokedex = In the Mazah region, Mudbray are treated with great respect, being loyal companions and bringing joy to trainers. They’re capable of producing a substance that can heal injuries.
 WildItemUncommon = LIGHTCLAY
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 30
+BattlerAltitude = 0
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
 [142]
@@ -3709,13 +3707,10 @@ Shape = Quadruped
 Kind = Fiesta
 Pokedex = Theory states that when a Mudbray is exposed to enough human joy, it will evolve into Mudsmache. They form incredible bonds with trainers and even stay within the trainer’s family for generations.
 WildItemUncommon = LIGHTCLAY
-BattlerPlayerX = 0
 BattlerPlayerY = 15
-BattlerEnemyX = 0
 BattlerEnemyY = 19
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 20
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [143]
 Name = Nosepass
@@ -3732,8 +3727,8 @@ Happiness = 70
 Abilities = STURDY,SOLIDROCK
 HiddenAbility = STEADFAST
 Moves = 1,TACKLE,4,HARDEN,7,BLOCK,10,ROCKTHROW,13,DETECT,16,BULKUP,19,SUBMISSION,22,ROCKTOMB,25,ROCKSLIDE,28,ROCKBLAST,31,CIRCLETHROW,34,SANDSTORM,37,EARTHPOWER,40,SKYUPPERCUT,43,STONEEDGE,43,FOCUSPUNCH
-TutorMoves = STRENGTH,WORKUP,BULKUP,EXPLOSION,DOUBLETEAM,HIDDENPOWER,SWAGGER,PROTECT,SANDSTORM,EARTHQUAKE,RETURN,DIG,BRICKBREAK,REFLECT,ROCKTOMB,FACADE,REST,SLEEPTALK,ROUND,LOWSWEEP,ALLYSWITCH,FLASHCANNON,FOCUSBLAST,BODYPRESS,TOXIC,GIGAIMPACT,BODYSLAM,BRUTALSWING,GYROBALL,SUBSTITUTE,ROCKSLIDE,STONEEDGE,GEODEBURST,ZENHEADBUTT,AVALANCHE
-EggMoves = MAGNITUDE,ROLLOUT,DOUBLEEDGE,DYNAMICPUNCH
+TutorMoves  =  STRENGTH,WORKUP,BULKUP,EXPLOSION,DOUBLETEAM,HIDDENPOWER,SWAGGER,PROTECT,SANDSTORM,EARTHQUAKE,RETURN,DIG,BRICKBREAK,REFLECT,ROCKTOMB,FACADE,REST,SLEEPTALK,ROUND,LOWSWEEP,ALLYSWITCH,FLASHCANNON,FOCUSBLAST,BODYPRESS,TOXIC,GIGAIMPACT,BODYSLAM,BRUTALSWING,GYROBALL,SUBSTITUTE,ROCKSLIDE,STONEEDGE,GEODEBURST,ZENHEADBUTT,AVALANCHE
+EggMoves  =  MAGNITUDE,ROLLOUT,DOUBLEEDGE,DYNAMICPUNCH
 Compatibility = Mineral
 StepsToHatch = 5355
 Height = 1.0
@@ -3743,13 +3738,9 @@ Shape = Head
 Kind = Compass
 Pokedex = Its magnetic nose consistently faces north. Travelers check Nosepass to get their bearings.
 WildItemUncommon = MAGNET
-BattlerPlayerX = 0
 BattlerPlayerY = 24
-BattlerEnemyX = 0
 BattlerEnemyY = 29
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 40
+BattlerAltitude = 0
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
 [144]
@@ -3767,7 +3758,7 @@ Happiness = 70
 Abilities = LEVITATE,IRONFIST
 HiddenAbility = WARRIORSPIRIT
 Moves = 0,CLOSECOMBAT,1,CLOSECOMBAT,1,BULKUP,1,DETECT,1,SHADOWPUNCH,1,FIREPUNCH,1,ICEPUNCH,1,THUNDERPUNCH,1,POWERUPPUNCH,1,QUICKGUARD,4,HARDEN,7,BLOCK,10,ROCKTHROW,13,DETECT,16,BULKUP,19,SUBMISSION,22,ROCKTOMB,25,ROCKSLIDE,28,ROCKBLAST,31,CIRCLETHROW,34,SANDSTORM,37,EARTHPOWER,40,SKYUPPERCUT,43,STONEEDGE,43,FOCUSPUNCH,50,ROCKWRECKER
-TutorMoves = STRENGTH,WORKUP,HELPINGHAND,BULKUP,EXPLOSION,DOUBLETEAM,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,EARTHQUAKE,RETURN,DIG,BRICKBREAK,REFLECT,ROCKTOMB,FACADE,REST,SLEEPTALK,ROUND,LOWSWEEP,ALLYSWITCH,FALSESWIPE,FLASHCANNON,FOCUSBLAST,BODYPRESS,TOXIC,GIGAIMPACT,BODYSLAM,FOULPLAY,BRUTALSWING,GYROBALL,SWORDSDANCE,SUBSTITUTE,ROCKSLIDE,POISONJAB,STONEEDGE,GEODEBURST,ZENHEADBUTT,PLAYROUGH,AVALANCHE,DRILLRUN,FIREPUNCH,ICEPUNCH,THUNDERPUNCH
+TutorMoves  =  STRENGTH,WORKUP,HELPINGHAND,BULKUP,EXPLOSION,DOUBLETEAM,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,EARTHQUAKE,RETURN,DIG,BRICKBREAK,REFLECT,ROCKTOMB,FACADE,REST,SLEEPTALK,ROUND,LOWSWEEP,ALLYSWITCH,FALSESWIPE,FLASHCANNON,FOCUSBLAST,BODYPRESS,TOXIC,GIGAIMPACT,BODYSLAM,FOULPLAY,BRUTALSWING,GYROBALL,SWORDSDANCE,SUBSTITUTE,ROCKSLIDE,POISONJAB,STONEEDGE,GEODEBURST,ZENHEADBUTT,PLAYROUGH,AVALANCHE,DRILLRUN,FIREPUNCH,ICEPUNCH,THUNDERPUNCH
 Compatibility = Mineral
 StepsToHatch = 5355
 Height = 1.4
@@ -3777,13 +3768,10 @@ Shape = Head
 Kind = Warrior
 Pokedex = japanese delinquent looking ass
 WildItemUncommon = MAGNET
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 20
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [145]
 Name = Maractus
@@ -3800,8 +3788,8 @@ Happiness = 50
 Abilities = FLASHFIRE,CHLOROPHYLL
 HiddenAbility = SOLARPOWER
 Moves = 1,ABSORB,1,EMBER,1,INGRAIN,4,GROWTH,8,MEGADRAIN,12,LEECHSEED,16,SUCKERPUNCH,20,FLAMECHARGE,24,GIGADRAIN,28,SWEETSCENT,32,SYNTHESIS,36,PETALBLIZZARD,40,FIRELASH,44,SUNNYDAY,48,SOLARBEAM,52,PEPPERSPRAY,56,PETALDANCE,60,ERUPTION
-TutorMoves = SOLARBEAM,SCREECH,SAFEGUARD,RAINDANCE,SUNNYDAY,HELPINGHAND,BULLETSEED,ASSURANCE,ROUND,POISONJAB,ENERGYBALL,GRASSKNOT,SCATTERDUST,FLAMETHROWER,FIREBLAST,WILLOWISP,FLAMEWHEEL,SCALD
 EggMoves = WORRYSEED,WOODHAMMER,SEEDBOMB,NATUREPOWER
+TutorMoves = SOLARBEAM,SCREECH,SAFEGUARD,RAINDANCE,SUNNYDAY,HELPINGHAND,BULLETSEED,ASSURANCE,ROUND,POISONJAB,ENERGYBALL,GRASSKNOT,SCATTERDUST,FLAMETHROWER,FIREBLAST,WILLOWISP,FLAMEWHEEL,SCALD
 Compatibility = Grass
 StepsToHatch = 5355
 Height = 1.0
@@ -3811,13 +3799,10 @@ Shape = Bipedal
 Kind = Cactus
 Pokedex = To survive the arid deserts and predatory Pokémon of Mazah, Maractus adapted durable yet smooth skin. Under this skin lies hundreds of seeds that heat up to nearly 300 degrees when shaken.
 WildItemUncommon = MIRACLESEED
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 40
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [146]
 Name = Regiwood
@@ -3839,16 +3824,13 @@ StepsToHatch = 20655
 Height = 2.5
 Weight = 120.0
 Color = Brown
-Shape = Bipedal
+Shape = 12
 Kind = Ancient Puppet
 Pokedex = Regiwood was originally thought to have been constructed by an ancient civilization, but its design cannot be linked to any known society. It can swing its arms 360 degrees, with enough force to shatter boulders.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 10
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [147]
 Name = Regibrute
@@ -3870,16 +3852,13 @@ StepsToHatch = 20655
 Height = 3.0
 Weight = 375.0
 Color = Red
-Shape = Bipedal
+Shape = 12
 Kind = Homunculus
 Pokedex = Despite being made of organic material, Regibrute shows no signs of decomposition. Upon reactivation, it went into a destructive rampage and leveled the lab it was being studied in.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 5
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [148]
 Name = Regiternal
@@ -3901,16 +3880,13 @@ StepsToHatch = 20655
 Height = 2.0
 Weight = 100.0
 Color = Pink
-Shape = Bipedal
+Shape = 12
 Kind = Constructor
 Pokedex = Regiternal’s body is made of strange metal that has yet to have been identified by scientists. It can focus energy from its core into compressed bursts of energy that reduce anything it hits to atoms.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 5
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [149]
 Name = Bowllo
@@ -3931,18 +3907,14 @@ EggMoves = COUNTER,CRUSHCLAW,HONECLAWS,RAPIDSPIN
 Compatibility = Mineral,Field
 StepsToHatch = 5355
 Height = 0.5
-Weight = 20.0
+Weight = 20
 Color = Red
 Shape = BipedalTail
 Kind = Little Armored
 Pokedex = Eager trainers who find a Poké Ball in the wilds of the Mazah region may quickly realize that they've found a curled up Bowllo. They’re capable of bouncing several feet up in the air, and stun opponents when they crash down.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 30
+BattlerAltitude = 0
 Evolutions = DUPEDILLO,Level,36
 #-------------------------------
 [150]
@@ -3963,18 +3935,15 @@ TutorMoves = CUT,HELPINGHAND,CALMMIND,TAUNT,DIG,LIGHTSCREEN,REFLECT,SAFEGUARD,RO
 Compatibility = Mineral
 StepsToHatch = 5355
 Height = 1.5
-Weight = 120.0
+Weight = 120
 Color = Red
 Shape = BipedalTail
 Kind = Decoy Ball
 Pokedex = Due to looking similar in color and appearance to a Great Ball, Dupedillo are subjected to unwanted attention, making them very grumpy. Their shells are nearly impenetrable.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = 20
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [151]
 Name = Melumuse
@@ -3999,13 +3968,10 @@ Color = Blue
 Shape = Bipedal
 Kind = Estuary
 Pokedex = siren 1
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -75
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [152]
 Name = Melucholy
@@ -4030,13 +3996,10 @@ Color = Gray
 Shape = Bipedal
 Kind = Coral Reef
 Pokedex = siren 2
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -75
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [153]
 Name = Melumaunder
@@ -4061,13 +4024,10 @@ Color = Blue
 Shape = Bipedal
 Kind = Open Ocean
 Pokedex = siren 3
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -75
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [154]
 Name = Melumyst
@@ -4092,13 +4052,10 @@ Color = Blue
 Shape = Bipedal
 Kind = Deep Sea
 Pokedex = siren 4
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -75
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [155]
 Name = Maripome
@@ -4123,13 +4080,10 @@ Color = Blue
 Shape = Bipedal
 Kind = First Hunted
 Pokedex = Some accredit Maripome for the Mazah region’s balanced ecosystem. Stories tell of Maripome sacrificing itself to another Pokémon, so that it would never find weaker Pokémon or humans.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -100
+BattlerAltitude = 0
+Evolutions = 
 #-------------------------------
 [156]
 Name = Hylarmos
@@ -4148,16 +4102,13 @@ Moves = 1,POISONSTING,1,HAZE,1,NOBLEROAR,1,POISONGAS,5,TAUNT,10,ROAR,15,CONFUSER
 TutorMoves = CUT,STRENGTH,WORKUP,BULKUP,ROAR,VENOSHOCK,SWAGGER,ICEBEAM,BLIZZARD,HYPERBEAM,EARTHQUAKE,DIG,BRICKBREAK,SLUDGEBOMB,ROCKTOMB,TORMENT,THIEF,LOWSWEEP,FOCUSBLAST,BODYPRESS,SCALD,BITINGCOLD,GYROBALL,SWORDSDANCE,NASTYPLOT,ROCKSLIDE,DRAGONPULSE,DRAGONCLAW,POISONJAB,XSCISSOR,SCREECH,STONEEDGE,SNARL,SHADOWCLAW,PLAYROUGH,WILDCHARGE,AVALANCHE
 Compatibility = Undiscovered
 StepsToHatch = 30855
-Height = 6.1
+Height = 6.12
 Weight = 804.0
 Color = Blue
 Shape = Quadruped
 Kind = First Hunter
 Pokedex = Establishing itself as the first hunter of the Mazah region, Hylarmos put the region’s ecological system in motion. It can produce a lethal neurotoxin that, when inhaled, slowly shuts down the victim's body.
-BattlerPlayerX = 0
 BattlerPlayerY = 0
-BattlerEnemyX = 0
 BattlerEnemyY = 0
-BattlerShadowX = 0
-BattlerShadowSize = 2
-Score = -100
+BattlerAltitude = 0
+Evolutions = 

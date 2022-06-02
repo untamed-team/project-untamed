@@ -1,6 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
-#-------------------------------
-1,STENCH,Stench,"The stench may cause the target to flinch."
+﻿1,STENCH,Stench,"The stench may cause the target to flinch."
 2,DRIZZLE,Drizzle,"The Pokémon makes it rain if it appears in battle."
 3,SPEEDBOOST,Speed Boost,"Its Speed stat is gradually boosted."
 4,BATTLEARMOR,Battle Armor,"The Pokémon is protected against critical hits."
@@ -244,7 +242,7 @@
 241,BLADEMASTER,Blademaster,"Boosts Sword moves. +1 Crit Ratio."
 242,FERVOR,Fervor,"Boosts Speed after making contact."
 243,FREEZEOVER,Freeze Over,"During hail, changes to the Frozen form."
-244,CRYSTALJAW,Crystal Jaw,"Biting moves use the attacker's Special Attack."
+244,CRYSTALJAW,Crystal Jaw,"Biting moves use the attacker's SpAtk."
 245,JUNGLEFURY,Jungle Fury,"Higher Crit Ratio on Grassy Terrain."
 246,MOMENTUM,Momentum,"Increases power of moves used consecutively."
 247,WARRIORSPIRIT,Warrior Spirit,"Powers up supereffective attacks."
