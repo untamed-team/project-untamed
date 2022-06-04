@@ -858,6 +858,7 @@ BattlerEnemyY = 1
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Score = -20
+Evolutions = EXPURSUM,Level,16
 #-------------------------------
 [26]
 Name = Lupacabra
