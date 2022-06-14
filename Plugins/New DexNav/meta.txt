@@ -1,0 +1,4 @@
+Name         = New DexNav
+Version      = 2.0
+Website      = https://reliccastle.com/members/7217/
+Credits      = Phantombass: the majority of the fixes to this script,suzerain: backbone for New DexNav,NuriYuri and the developers of SimpleEncounterUI
