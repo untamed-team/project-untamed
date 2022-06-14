@@ -1,0 +1,4 @@
+Name         = BluMascs Pokeventures (v19)
+Version      = 0.9
+Link         = "not.yet.online.com"
+Credits      = BluMasc
