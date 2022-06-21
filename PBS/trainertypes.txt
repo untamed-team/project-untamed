@@ -4,8 +4,8 @@
 1,POKEMONTRAINER_Leaf,Pokémon Trainer,60,,,,Female,,
 2,POKEMONTRAINER_Brendan,Pokémon Trainer,60,,,,Male,,
 3,POKEMONTRAINER_May,Pokémon Trainer,60,,,,Female,,
-4,RIVAL1,Rival,16,,,,Male,,
-5,RIVAL2,Rival,36,,,,Male,,
+4,RIVAL1,Rival,16,Battle trainer.mid,Battle victory trainer.ogg,,Male,,
+5,RIVAL2,Rival,16,Battle trainer.mid,Battle victory trainer.ogg,,Female,,
 6,AROMALADY,Aroma Lady,32,,,,Female,,
 7,BEAUTY,Beauty,56,,,,Female,,
 8,BIKER,Biker,32,,,,Male,,
@@ -37,7 +37,7 @@
 34,PICNICKER,Picnicker,16,,,,Female,,
 35,COOLTRAINER_M,Cool Trainer,60,,,,Male,,
 36,COOLTRAINER_F,Cool Trainer,60,,,,Female,,
-37,YOUNGSTER_M,Youngster,16,,,,Male,, #edited
+37,YOUNGSTER_M,Youngster,16,,,,Male,,#edited
 38,LASS,Lass,16,,,,Female,,
 39,POKEMONRANGER_M,Pokémon Ranger,60,,,,Male,,
 40,POKEMONRANGER_F,Pokémon Ranger,60,,,,Female,,
@@ -72,8 +72,6 @@
 69,ELITEFOUR_Agatha,Elite Four,100,Battle Elite,Battle victory leader,,Female,,
 70,ELITEFOUR_Lance,Elite Four,100,Battle Elite,Battle victory leader,,Male,,
 71,CHAMPION,Champion,100,Battle Elite,Battle victory leader,,Male,,
-#-------------------------------
-#Gen4 PBS
 72,LASS2,Lass,16,,,,Female,,
 73,LASS3,Lass,16,,,,Female,,
 74,SCHOOLKID_M,School Kid,20,,,,Male,,
@@ -170,7 +168,7 @@
 165,BIRDKEEPER_M,Bird Keeper,32,,,,Male,,
 166,BIRDKEEPER_F,Bird Keeper,32,,,,Female,,
 167,RANCHER,Rancher,40,,,,Male,,
-168,COWGIRL,Cowgirl16,,,,Female,,
+168,COWGIRL,Cowgirl16,30,,,Female,Mixed,,
 169,POKEFAN_M,Poké Fan,64,,,,Male,,
 170,POKEFAN_M2,Poké Fan,64,,,,Male,,
 171,POKEFAN_F,Poké Fan,64,,,,Female,,
@@ -205,6 +203,4 @@
 200,TWINS2,Twins,32,,,,Mixed,,
 201,TWINS3,Twins,32,,,,Mixed,,
 202,YOUNGCOUPLE2,Young Couple,128,,,,Mixed,,
-#-------------------------------
-#New
-239,YOUNGSTER_F,Youngster,16,,,,Female,, 
+239,YOUNGSTER_F,Youngster,16,,,,Female,,

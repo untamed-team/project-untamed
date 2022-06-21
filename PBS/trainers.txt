@@ -55,3 +55,26 @@ Pokemon = PURRLOIN,5
 LoseText = "..."
 Pokemon = TECHUPPI,6
 #-------------------------------
+[RIVAL1,FirstBattle]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,5
+#-------------------------------
+[RIVAL1,FirstBattle,1]
+LoseText = "..."
+Pokemon = QUETZALIL,5
+#-------------------------------
+[RIVAL1,FirstBattle,2]
+LoseText = "..."
+Pokemon = PORSITE,5
+#-------------------------------
+[RIVAL2,FirstBattle]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,5
+#-------------------------------
+[RIVAL2,FirstBattle,1]
+LoseText = "..."
+Pokemon = QUETZALIL,5
+#-------------------------------
+[RIVAL2,FirstBattle,2]
+LoseText = "..."
+Pokemon = PORSITE,5
