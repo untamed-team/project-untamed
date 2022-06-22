@@ -349,7 +349,7 @@
 336,ICICLESPEAR,Icicle Spear,0C0,25,ICE,Physical,100,30,0,NearOther,0,bef,"The user launches sharp icicles at the target. It strikes two to five times in a row."
 337,SHEERCOLD,Sheer Cold,070,1,ICE,Special,30,5,0,NearOther,0,be,"The foe is attacked with a blast of absolute-zero cold. The target instantly faints if it hits."
 338,AURORAVEIL,Aurora Veil,167,0,ICE,Status,0,20,0,UserSide,0,d,"This move reduces damage from attacks for five turns. This can be used only in a hailstorm."
-339,HAIL,Hail,102,0,ICE,Status,0,10,0,BothSides,0,,"The user summons a hail storm lasting five turns. It damages all Pokémon except the Ice type."
+339,HAIL,Hail,102,0,ICE,Status,0,10,0,BothSides,0,,"Summons a hailstorm for 5 turns to hurt all Pokémon except Ice types. It weakens Super-Effective moves against Ice types."
 340,HAZE,Haze,051,0,ICE,Status,0,30,0,BothSides,0,,"The user creates a haze that eliminates every stat change among all the Pokémon engaged in battle."
 341,MIST,Mist,056,0,ICE,Status,0,30,0,UserSide,0,d,"The user cloaks its body with a white mist that prevents any of its stats from being cut for five turns."
 #-------------------------------
