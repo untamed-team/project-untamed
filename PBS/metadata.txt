@@ -15,19 +15,19 @@ PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,gi
 # Intro
 #-------------------------------
 [002]
-# Cemetery/Gym
+# Cemetery/Gym (old)
 Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
 [004]
-# San Cerigold Town 2.0
+# San Cerigold Town
 Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
 [005]
-# Cemetery/Gym 2.0
+# San Cerigold Cemetery
 Outdoor = true
 ShowArea = true
 Bicycle = true
@@ -65,7 +65,7 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [081]
-# San Cerigold Town
+# San Cerigold Town (old)
 Outdoor = true
 ShowArea = true
 Bicycle = true
