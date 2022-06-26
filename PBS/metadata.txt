@@ -26,6 +26,12 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
+[005]
+# Cemetery/Gym 2.0
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
 [022]
 # Veravalles Town
 Outdoor = true
@@ -53,7 +59,7 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [078]
-# Hacienda ""Back""
+# Hacienda (Back)
 Outdoor = true
 ShowArea = true
 Bicycle = true
