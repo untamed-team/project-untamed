@@ -78,3 +78,27 @@ Pokemon = QUETZALIL,5
 [RIVAL2,Pepa,2]
 LoseText = "..."
 Pokemon = PORSITE,5
+#-------------------------------
+[RIVAL1,Homero,100]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,5
+#-------------------------------
+[RIVAL1,Homero,101]
+LoseText = "..."
+Pokemon = QUETZALIL,5
+#-------------------------------
+[RIVAL1,Homero,102]
+LoseText = "..."
+Pokemon = PORSITE,5
+#-------------------------------
+[RIVAL2,Pepa,100]
+LoseText = "..."
+Pokemon = MOLLUCOTTA,5
+#-------------------------------
+[RIVAL2,Pepa,101]
+LoseText = "..."
+Pokemon = QUETZALIL,5
+#-------------------------------
+[RIVAL2,Pepa,102]
+LoseText = "..."
+Pokemon = PORSITE,5
