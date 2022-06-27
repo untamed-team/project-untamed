@@ -48,11 +48,11 @@ Pokemon = MINIMELO,5
 Pokemon = LEDYBA,5
 #-------------------------------
 [POKEMANIAC,Placeholder4]
-LoseText = "..."
+LoseText = "Wow, your Pokémon are great!"
 Pokemon = PURRLOIN,5
 #-------------------------------
 [FISHERMAN,Placeholder5]
-LoseText = "..."
+LoseText = "Maybe I'll go back to the river."
 Pokemon = TECHUPPI,6
 #-------------------------------
 [RIVAL1,Homero]
