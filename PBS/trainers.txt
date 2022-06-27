@@ -67,14 +67,14 @@ Pokemon = QUETZALIL,5
 LoseText = "..."
 Pokemon = PORSITE,5
 #-------------------------------
-[RIVAL2,Peppa]
+[RIVAL2,Pepa]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
 #-------------------------------
-[RIVAL2,Peppa,1]
+[RIVAL2,Pepa,1]
 LoseText = "..."
 Pokemon = QUETZALIL,5
 #-------------------------------
-[RIVAL2,Peppa,2]
+[RIVAL2,Pepa,2]
 LoseText = "..."
 Pokemon = PORSITE,5
