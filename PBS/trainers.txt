@@ -34,16 +34,16 @@ Pokemon = TECHUPPI,40
     AbilityIndex = 237
 #-------------------------------
 [YOUNGSTER_F,Placeholder]
-LoseText = "..."
+LoseText = "I guess it's also double the chance to lose..."
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
 #-------------------------------
 [YOUNGSTER_M,Placeholder2]
-LoseText = "..."
+LoseText = "B-but, how did I lose?"
 Pokemon = WRENNER,5
 #-------------------------------
 [BUGCATCHER,Placeholder3]
-LoseText = "..."
+LoseText = "Man, your Pokémon are really strong too!"
 Pokemon = MINIMELO,5
 Pokemon = LEDYBA,5
 #-------------------------------
