@@ -29,12 +29,17 @@ BaseStats = 65,90,122,84,58,75
 HiddenAbility = INSOMNIA
 Height = 0.9
 Weight = 12.5
+BattlerEnemyX = 0
+BattlerEnemyY = 12
 #-------------------------------
 [GOURGEIST,2]
 FormName = Large Size
 BaseStats = 75,95,122,69,58,75
 Height = 1.1
 Weight = 14.0
+BattlerEnemyX = 0
+BattlerEnemyY = 10
+BattlerShadowSize = 3
 #-------------------------------
 [GOURGEIST,3]
 FormName = Super Size
@@ -45,6 +50,9 @@ Weight = 39.0
 WildItemCommon = MIRACLESEED
 WildItemUncommon = MIRACLESEED
 WildItemRare = MIRACLESEED
+BattlerEnemyX = 0
+BattlerEnemyY = 8
+BattlerShadowSize = 3
 #-------------------------------
 [FLABEBE,1]
 FormName = Yellow Flower
@@ -85,19 +93,19 @@ Evolutions = FLORGES,None,
 #-------------------------------
 [FLORGES,1]
 FormName = Yellow Flower
-BattlerEnemyY = 6
+BattlerEnemyY = 9
 #-------------------------------
 [FLORGES,2]
 FormName = Orange Flower
-BattlerEnemyY = 6
+BattlerEnemyY = 9
 #-------------------------------
 [FLORGES,3]
 FormName = Blue Flower
-BattlerEnemyY = 6
+BattlerEnemyY = 9
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
-BattlerEnemyY = 6
+BattlerEnemyY = 9
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female
