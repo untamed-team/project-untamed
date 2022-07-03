@@ -204,3 +204,7 @@
 201,TWINS3,Twins,32,,,,Mixed,,
 202,YOUNGCOUPLE2,Young Couple,128,,,,Mixed,,
 239,YOUNGSTER_F,Youngster,16,,,,Female,,
+240,EONGRUNT_M,Eon Grunt,16,,,,Male,,
+241,NEOGRUNT_M,Neo Grunt,16,,,,Male,,
+242,EONGRUNT_F,Eon Grunt,16,,,,Female,,
+243,NEOGRUNT_F,Neo Grunt,16,,,,Female,,
