@@ -120,7 +120,17 @@ LoseText = "..."
 Pokemon = LEDYBA,10
     Gender = male
 #-------------------------------
+[EONGRUNT_M,Placeholder,100]
+LoseText = "..."
+Pokemon = LEDYBA,10
+    Gender = male
+#-------------------------------
 [EONGRUNT_F,Placeholder]
+LoseText = "..."
+Pokemon = SUNKERN,10
+    Gender = male
+#-------------------------------
+[EONGRUNT_F,Placeholder,100]
 LoseText = "..."
 Pokemon = SUNKERN,10
     Gender = male
