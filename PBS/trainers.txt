@@ -58,47 +58,69 @@ Pokemon = TECHUPPI,6
 [RIVAL1,Homero]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
+    Gender = male
 #-------------------------------
 [RIVAL1,Homero,1]
 LoseText = "..."
 Pokemon = QUETZALIL,5
+    Gender = male
 #-------------------------------
 [RIVAL1,Homero,2]
 LoseText = "..."
 Pokemon = PORSITE,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa,1]
 LoseText = "..."
 Pokemon = QUETZALIL,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa,2]
 LoseText = "..."
 Pokemon = PORSITE,5
+    Gender = male
 #-------------------------------
 [RIVAL1,Homero,100]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
+    Gender = male
 #-------------------------------
 [RIVAL1,Homero,101]
 LoseText = "..."
 Pokemon = QUETZALIL,5
+    Gender = male
 #-------------------------------
 [RIVAL1,Homero,102]
 LoseText = "..."
 Pokemon = PORSITE,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa,100]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa,101]
 LoseText = "..."
 Pokemon = QUETZALIL,5
+    Gender = male
 #-------------------------------
 [RIVAL2,Pepa,102]
 LoseText = "..."
 Pokemon = PORSITE,5
+    Gender = male
+#-------------------------------
+[EONGRUNT_M,Placeholder]
+LoseText = "..."
+Pokemon = LEDYBA,10
+    Gender = male
+#-------------------------------
+[EONGRUNT_F,Placeholder]
+LoseText = "..."
+Pokemon = SUNKERN,10
+    Gender = male
