@@ -653,4 +653,4 @@
 #-------------------------------
 639,THICKMUSHROOM,Thick Mushroom,Thick Mushrooms,1,1000,"An item to be held by Croacrozen. Has different effects based on which form it tooks.",0,0,0
 #-------------------------------
-640,CROPMASTERPLANS,CropMaster Plans,CropMaster Planss,8,0,"Plans for a scientist's invention called the CropMaster. They appear to be written on a napkin.",0,0,0
+640,CROPMASTERPLANS,CropMaster Plans,CropMaster Planss,8,0,"Plans for a scientist's invention called the CropMaster. They appear to be written on a used napkin.",0,0,6
