@@ -64,6 +64,12 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
+[079]
+# Hacienda Castaneda (Outside)
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
 [081]
 # San Cerigold Town (old)
 Outdoor = true
