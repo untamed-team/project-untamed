@@ -2672,6 +2672,38 @@ BattlerShadowSize = 0
 Score = 0
 #-------------------------------
 [109]
+Name = Tropius
+InternalName = TROPIUS
+Type1 = GRASS
+Type2 = FLYING
+BaseStats = 99,68,83,72,87,51
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 161
+EffortPoints = 2,0,0,0,0,0
+Rareness = 200
+Happiness = 70
+Abilities = CHLOROPHYLL,SOLARPOWER
+HiddenAbility = HARVEST
+Moves = 1,DRAGONHAMMER,1,LEAFSTORM,1,LEER,1,GUST,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,WHIRLWIND,26,LEAFTORNADO,30,DRAGONDANCE,36,AIRSLASH,41,BODYSLAM,46,DRAGONHAMMER,50,SYNTHESIS,56,SOLARBEAM,61,LEAFSTORM
+TutorMoves = CUT,PROTECT,AERIALACE,STEELWING,SWORDSDANCE,REST,SLEEPTALK,STRENGTH,ROAR,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,ENERGYBALL,BULLETSEED,GRASSKNOT,GIGAIMPACT,DRAGONPULSE,HYPERBEAM,GIGADRAIN,SAFEGUARD,DOUBLETEAM,FACADE,ATTRACT,ROOST,ENDURE,FLASH,BULLDOZE,SWAGGER,SUBSTITUTE,FLY,DEFOG,ROCKSMASH
+Compatibility = Monster,Grass
+StepsToHatch = 6630
+Height = 6.5
+Weight = 100
+Color = Green
+Shape = Quadruped
+Kind = Fruit
+Pokedex = Because it continually ate only its favorite fruit, the fruit started growing around its neck.
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 0
+BattlerShadowX = 0
+BattlerShadowSize = 0
+Score = 0
+#-------------------------------
+[110]
 Name = Titanotrop
 InternalName = TITANOTROP
 Type1 = GRASS
@@ -2703,7 +2735,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[110]
+[111]
 Name = Banagnaw
 InternalName = BANAGNAW
 Type1 = GRASS
@@ -2737,7 +2769,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = POTASSOPOD,TradeItem,DUSKSTONE,NANAHI,Level,22
 #-------------------------------
-[111]
+[112]
 Name = Nanahi
 InternalName = NANAHI
 Type1 = GRASS
@@ -2769,7 +2801,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[112]
+[113]
 Name = Potassopod
 InternalName = POTASSOPOD
 Type1 = GRASS
@@ -2801,7 +2833,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[115]
+[114]
 Name = Suchip
 InternalName = SUCHIP
 Type1 = DRAGON
@@ -2834,7 +2866,7 @@ BattlerShadowSize = 0
 Score = 0
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
-[116]
+[115]
 Name = Suchobile
 InternalName = SUCHOBILE
 Type1 = DRAGON
@@ -2866,7 +2898,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[117]
+[116]
 Name = Frizzard
 InternalName = FRIZZARD
 Type1 = DRAGON
@@ -2898,7 +2930,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[118]
+[117]
 Name = Zarcoil
 InternalName = ZARCOIL
 Type1 = DRAGON
@@ -2930,7 +2962,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[119]
+[118]
 Name = Burbrawl
 InternalName = BURBRAWL
 Type1 = FIGHTING
@@ -2963,7 +2995,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
-[120]
+[119]
 Name = Humbeat
 InternalName = HUMBEAT
 Type1 = FIGHTING
@@ -2995,7 +3027,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
-[121]
+[120]
 Name = Hummipummel
 InternalName = HUMMIPUMMEL
 Type1 = FIGHTING
@@ -3026,7 +3058,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[122]
+[121]
 Name = Xolsmol
 InternalName = XOLSMOL
 Type1 = WATER
@@ -3060,7 +3092,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
-[123]
+[122]
 Name = Amphibark
 InternalName = AMPHIBARK
 Type1 = WATER
@@ -3094,7 +3126,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
-[124]
+[123]
 Name = Peroxotal
 InternalName = PEROXOTAL
 Type1 = WATER
@@ -3126,7 +3158,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[125]
+[124]
 Name = Croacrozen
 InternalName = CROACROZEN
 Type1 = POISON
@@ -3158,7 +3190,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[126]
+[125]
 Name = Ariamano
 InternalName = ARIAMANO
 Type1 = BUG
@@ -3192,7 +3224,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[127]
+[126]
 Name = Cromen
 InternalName = CROMEN
 Type1 = PSYCHIC
@@ -3226,7 +3258,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = CORVOYANT,Level,22
 #-------------------------------
-[128]
+[127]
 Name = Corvoyant
 InternalName = CORVOYANT
 Type1 = PSYCHIC
@@ -3259,7 +3291,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = CAWMADAME,Level,33
 #-------------------------------
-[129]
+[128]
 Name = Cawmadame
 InternalName = CAWMADAME
 Type1 = PSYCHIC
@@ -3291,7 +3323,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[130]
+[129]
 Name = Elegoop
 InternalName = ELEGOOP
 Type1 = ROCK
@@ -3325,7 +3357,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = TARTUSK,Level,32
 #-------------------------------
-[131]
+[130]
 Name = Tartusk
 InternalName = TARTUSK
 Type1 = ROCK
@@ -3357,7 +3389,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[132]
+[131]
 Name = Charcopal
 InternalName = CHARCOPAL
 Type1 = ROCK
@@ -3391,7 +3423,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
-[133]
+[132]
 Name = Geocoprion
 InternalName = GEOCOPRION
 Type1 = ROCK
@@ -3423,7 +3455,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[134]
+[133]
 Name = Chixulob
 InternalName = CHIXULOB
 Type1 = FIRE
@@ -3455,7 +3487,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[135]
+[134]
 Name = Meowth
 InternalName = M_MEOWTH
 Type1 = FIGHTING
@@ -3489,7 +3521,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
-[136]
+[135]
 Name = Persian
 InternalName = M_PERSIAN
 Type1 = FIGHTING
@@ -3521,7 +3553,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[137]
+[136]
 Name = Chispeka
 InternalName = CHISPEKA
 Type1 = ELECTRIC
@@ -3554,7 +3586,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[138]
+[137]
 Name = Rotatona
 InternalName = ROTATONA
 Type1 = FAIRY
@@ -3586,7 +3618,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[139]
+[138]
 Name = Dunsparce
 InternalName = DUNSPARCE
 Type1 = NORMAL
@@ -3619,7 +3651,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = DUNSENDED,Location,999
 #-------------------------------
-[140]
+[139]
 Name = Dunsended
 InternalName = DUNSENDED
 Type1 = NORMAL
@@ -3651,7 +3683,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[141]
+[140]
 Name = Mudbray
 InternalName = M_MUDBRAY
 Type1 = FAIRY
@@ -3685,7 +3717,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
-[142]
+[141]
 Name = Mudsmache
 InternalName = MUDSMACHE
 Type1 = FAIRY
@@ -3718,7 +3750,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[143]
+[142]
 Name = Nosepass
 InternalName = M_NOSEPASS
 Type1 = ROCK
@@ -3753,7 +3785,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
-[144]
+[143]
 Name = Noseponch
 InternalName = NOSEPONCH
 Type1 = ROCK
@@ -3786,7 +3818,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[145]
+[144]
 Name = Maractus
 InternalName = M_MARACTUS
 Type1 = FIRE
@@ -3820,7 +3852,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[146]
+[145]
 Name = Regiwood
 InternalName = REGIWOOD
 Type1 = GRASS
@@ -3851,7 +3883,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[147]
+[146]
 Name = Regibrute
 InternalName = REGIBRUTE
 Type1 = FIGHTING
@@ -3882,7 +3914,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[148]
+[147]
 Name = Regiternal
 InternalName = REGITERNAL
 Type1 = FAIRY
@@ -3913,7 +3945,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[149]
+[148]
 Name = Bowllo
 InternalName = BOWLLO
 Type1 = STEEL
@@ -3946,7 +3978,7 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = DUPEDILLO,Level,36
 #-------------------------------
-[150]
+[149]
 Name = Dupedillo
 InternalName = DUPEDILLO
 Type1 = STEEL
@@ -3977,7 +4009,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[151]
+[150]
 Name = Melumuse
 InternalName = MELUMUSE
 Type1 = WATER
@@ -4008,7 +4040,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[152]
+[151]
 Name = Melucholy
 InternalName = MELUCHOLY
 Type1 = WATER
@@ -4039,7 +4071,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[153]
+[152]
 Name = Melumaunder
 InternalName = MELUMAUNDER
 Type1 = WATER
@@ -4070,7 +4102,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[154]
+[153]
 Name = Melumyst
 InternalName = MELUMYST
 Type1 = WATER
@@ -4101,7 +4133,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[155]
+[154]
 Name = Maripome
 InternalName = MARIPOME
 Type1 = BUG
@@ -4132,7 +4164,7 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[156]
+[155]
 Name = Hylarmos
 InternalName = HYLARMOS
 Type1 = ICE
