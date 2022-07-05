@@ -30,6 +30,7 @@ class Component
 
   def update; pbUpdateSpriteHash(@sprites); end
   def dispose; pbDisposeSpriteHash(@sprites); end
+
 end
 
 #-------------------------------------------------------------------------------
