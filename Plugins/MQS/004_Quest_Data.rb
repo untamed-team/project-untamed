@@ -6,7 +6,7 @@ module QuestModule
     :ID => "1",
     :Name => "Saying Goodbye",
     :QuestGiver => "Dad",
-    :Stage1 => "Meet with Professor Ceiba",
+    :Stage1 => "Meet with Professor Ceiba.",
     :Location1 => "Vervalles Town",
     :QuestDescription => "Professor Ceiba is taking the Pokemon home with her today. Don't forget to say goodbye to them!",
   }
@@ -14,7 +14,7 @@ module QuestModule
     :ID => "2",
     :Name => "To San Cerigold",
     :QuestGiver => "Professor Ceiba",
-    :Stage1 => "Take on the Gym in San Cerigold Town",
+    :Stage1 => "Take on the Gym in San Cerigold Town.",
     :Location1 => "Vervalles Town",
     :QuestDescription => "Defeat the gym in San Cerigold Town as part of the gym challenge.",
   }
@@ -22,9 +22,9 @@ module QuestModule
     :ID => "3",
     :Name => "Stolen Invention Plans",
     :QuestGiver => "Scientist Curtis",
-    :Stage1 => "Find the theives who stole the plans",
-    :Stage2 => "Retrieve the plans from the crop field",
-    :Stage3 => "Return the plans to Scientist Curtis",
+    :Stage1 => "Find the theives who stole the plans.",
+    :Stage2 => "Retrieve the plans from the crop field.",
+    :Stage3 => "Return the plans to Scientist Curtis.",
     :Location1 => "Hacienda",
 	:Location2 => "Hacienda",
 	:Location3 => "Route 1",
@@ -32,11 +32,13 @@ module QuestModule
   }
   Quest4 = {
     :ID => "4",
-    :Name => "Landlord Issues",
+    :Name => "A Hungry Visitor",
     :QuestGiver => "Farmer Julio",
-    :Stage1 => "Convince the landlord to let the farmers stay",
+    :Stage1 => "Find the Pokemon that has been eating the crop yield.",
+    :Stage2 => "Tell Julio what you found.",
     :Location1 => "Hacienda",
-    :QuestDescription => "The owner of the Hacienda wants to kick out the farmers living there. Convince him to let the farmers stay!",
+    :Location2 => "Hacienda",
+    :QuestDescription => "The owner of the Hacienda is displeased with the lack of crop yield recently. The tenants say a Pokemon might be eating it. Find that Pokemon and stop it!",
   }
   
   # Here's the simplest example of a single-stage quest with everything specified
