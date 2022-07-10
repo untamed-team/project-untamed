@@ -207,7 +207,7 @@ end
 class MenuEntryDebug < MenuEntry
   def initialize
     @icon = "menuDebug"
-    @name = "Debug1"
+    @name = "Debug"
   end
 
   def selected(menu)

@@ -6,9 +6,37 @@ module QuestModule
     :ID => "1",
     :Name => "Saying Goodbye",
     :QuestGiver => "Dad",
-    :Stage1 => "Meet with Mom and Professor Ceiba",
+    :Stage1 => "Meet with Professor Ceiba",
     :Location1 => "Vervalles Town",
     :QuestDescription => "Professor Ceiba is taking the Pokemon home with her today. Don't forget to say goodbye to them!",
+  }
+  Quest2 = {
+    :ID => "2",
+    :Name => "To San Cerigold",
+    :QuestGiver => "Professor Ceiba",
+    :Stage1 => "Take on the Gym in San Cerigold Town",
+    :Location1 => "Vervalles Town",
+    :QuestDescription => "Defeat the gym in San Cerigold Town as part of the gym challenge.",
+  }
+  Quest3 = {
+    :ID => "3",
+    :Name => "Stolen Invention Plans",
+    :QuestGiver => "Scientist Curtis",
+    :Stage1 => "Find the theives who stole the plans",
+    :Stage2 => "Retrieve the plans from the crop field",
+    :Stage3 => "Return the plans to Scientist Curtis",
+    :Location1 => "Hacienda",
+	:Location2 => "Hacienda",
+	:Location3 => "Route 1",
+    :QuestDescription => "Find the stolen CropMaster plans.",
+  }
+  Quest4 = {
+    :ID => "4",
+    :Name => "Landlord Issues",
+    :QuestGiver => "Farmer Julio",
+    :Stage1 => "Convince the landlord to let the farmers stay",
+    :Location1 => "Hacienda",
+    :QuestDescription => "The owner of the Hacienda wants to kick out the farmers living there. Convince him to let the farmers stay!",
   }
   
   # Here's the simplest example of a single-stage quest with everything specified
