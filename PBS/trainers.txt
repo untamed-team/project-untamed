@@ -55,62 +55,32 @@ Pokemon = PURRLOIN,5
 LoseText = "Maybe I'll go back to the river."
 Pokemon = TECHUPPI,6
 #-------------------------------
-[RIVAL1,Homero]
+[RIVAL1,Emilio]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
     Gender = male
 #-------------------------------
-[RIVAL1,Homero,1]
+[RIVAL1,Emilio,1]
 LoseText = "..."
 Pokemon = QUETZALIL,5
     Gender = male
 #-------------------------------
-[RIVAL1,Homero,2]
+[RIVAL1,Emilio,2]
 LoseText = "..."
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
-[RIVAL2,Pepa]
+[RIVAL1,Emilio,100]
 LoseText = "..."
 Pokemon = MOLLUCOTTA,5
     Gender = male
 #-------------------------------
-[RIVAL2,Pepa,1]
-LoseText = "..."
-Pokemon = QUETZALIL,5
-    Gender = male
-#-------------------------------
-[RIVAL2,Pepa,2]
-LoseText = "..."
-Pokemon = PORSITE,5
-    Gender = male
-#-------------------------------
-[RIVAL1,Homero,100]
-LoseText = "..."
-Pokemon = MOLLUCOTTA,5
-    Gender = male
-#-------------------------------
-[RIVAL1,Homero,101]
+[RIVAL1,Emilio,101]
 LoseText = "..."
 Pokemon = QUETZALIL,5
     Gender = male
 #-------------------------------
 [RIVAL1,Homero,102]
-LoseText = "..."
-Pokemon = PORSITE,5
-    Gender = male
-#-------------------------------
-[RIVAL2,Pepa,100]
-LoseText = "..."
-Pokemon = MOLLUCOTTA,5
-    Gender = male
-#-------------------------------
-[RIVAL2,Pepa,101]
-LoseText = "..."
-Pokemon = QUETZALIL,5
-    Gender = male
-#-------------------------------
-[RIVAL2,Pepa,102]
 LoseText = "..."
 Pokemon = PORSITE,5
     Gender = male
