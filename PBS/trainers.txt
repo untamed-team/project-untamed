@@ -104,3 +104,8 @@ Pokemon = SUNKERN,10
 LoseText = "..."
 Pokemon = SUNKERN,10
     Gender = male
+#-------------------------------
+[EONADMIN,Carlito]
+LoseText = "..."
+Pokemon = TECHUPPI,9
+Pokemon = WOOPER,8

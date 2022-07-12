@@ -32,13 +32,13 @@ module QuestModule
   }
   Quest4 = {
     :ID => "4",
-    :Name => "A Hungry Visitor",
+    :Name => "Disappearing Food",
     :QuestGiver => "Farmer Julio",
-    :Stage1 => "Find the Pokemon that has been eating the crop yield.",
+    :Stage1 => "Investigate the crop field.",
     :Stage2 => "Tell Julio what you found.",
     :Location1 => "Hacienda",
     :Location2 => "Hacienda",
-    :QuestDescription => "The owner of the Hacienda is displeased with the lack of crop yield recently. The tenants say a Pokemon might be eating it. Find that Pokemon and stop it!",
+    :QuestDescription => "The owner of the Hacienda is displeased with the small crop yield this season. Find out what happened to the crop!",
   }
   
   # Here's the simplest example of a single-stage quest with everything specified
