@@ -654,3 +654,10 @@
 639,THICKMUSHROOM,Thick Mushroom,Thick Mushrooms,1,1000,"An item to be held by Croacrozen. Has different effects based on which form it tooks.",0,0,0
 #-------------------------------
 640,CROPMASTERPLANS,CropMaster Plans,CropMaster Planss,8,0,"Plans for a scientist's invention called the CropMaster. They appear to be written on a used napkin.",0,0,6
+641,ROCKSMASHITEM,Rock Smash Item,Rock Smash Items,8,0,"Placeholder item so interacting with Rock Smash tiles doesn't crash.",2,0,6
+642,CUTITEM,Cut Item,Cut Items,8,0,"Placeholder item so interacting with Cut tiles doesn't crash.",2,0,6
+643,STRENGTHITEM,Strength Item,Strength Items,8,0,"Placeholder item so interacting with Strength tiles doesn't crash.",2,0,6
+644,SURFITEM,Surf Item,Surf Items,8,0,"Placeholder item so interacting with Surf tiles doesn't crash.",2,0,6
+645,FLYITEM,Fly Item,Fly Items,8,0,"Placeholder item so interacting with Fly tiles doesn't crash.",2,0,6
+646,HEADBUTTITEM,Headbutt Item,Headbutt Items,8,0,"Placeholder item so interacting with Headbutt tiles doesn't crash.",2,0,6
+647,FLASHITEM,Flash Item,Flash Items,8,0,"Placeholder item so interacting with Flash tiles doesn't crash.",2,0,6

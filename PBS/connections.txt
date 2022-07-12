@@ -2,6 +2,12 @@
 #-------------------------------
 # San Cerigold Town (4) - Hacienda Castaneda (79)
 4,West,6,79,East,0
+# Hacienda Outskirts (76) - Hacienda Castaneda (79)
+76,North,0,79,South,6
+# Route 1 (48) - Hacienda Castaneda (79)
+48,West,0,79,East,28
+# Hacienda (Back) (78) - Hacienda Castaneda (79)
+78,South,16,79,North,0
 # Hacienda Outskirts (76) - San Cerigold Town (4)
 76,East,0,4,West,25
 # Route 1 (48) - San Cerigold Town (4)
@@ -12,15 +18,11 @@
 78,East,35,4,West,0
 # San Cerigold Cemetery (5) - San Cerigold Town (4)
 5,South,0,4,North,3
-# Veravalles Town (22) - Route 1 (48)
-22,East,0,48,West,19
-# Route 1 (48) - Hacienda Castaneda (79)
-48,West,0,79,East,28
 # Route 1 (48) - Hacienda Outskirts (76)
 48,West,0,76,East,9
+# Veravalles Town (22) - Hacienda Outskirts (76)
+22,North,12,76,South,0
+# Veravalles Town (22) - Route 1 (48)
+22,East,0,48,West,19
 # Hacienda (Back) (78) - Route 1 (48)
 78,East,69,48,West,0
-# Hacienda Outskirts (76) - Hacienda Castaneda (79)
-76,North,0,79,South,9
-# Hacienda (Back) (78) - Hacienda Castaneda (79)
-78,South,21,79,North,0
