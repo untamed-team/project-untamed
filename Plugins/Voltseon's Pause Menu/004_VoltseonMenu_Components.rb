@@ -234,7 +234,7 @@ class NewQuestHud < Component
     numQuests = $PokemonGlobal.quests.active_quests.count { |quest| quest.respond_to?(:new) && quest.new }
     @sprites["overlay"].bitmap.clear
     if numQuests > 0
-      text = _INTL("You have {1} new quest{2}!",numQuests, numQuests == 1 ? "" : "s")
+      text = _INTL("You have {1} new objective{2}!",numQuests, numQuests == 1 ? "" : "s")
       pbSetSmallFont(@sprites["overlay"].bitmap)
       pbDrawTextPositions(@sprites["overlay"].bitmap,[[text,Graphics.width/2 - 8, 0,1,@baseColor,@shadowColor]])
     end

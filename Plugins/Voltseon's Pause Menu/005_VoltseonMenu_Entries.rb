@@ -309,8 +309,8 @@ end
 #-------------------------------------------------------------------------------
 class MenuEntryQuests < MenuEntry
   def initialize
-    @icon = "menuDebug"
-    @name = "Quests"
+    @icon = "menuObjectives"
+    @name = "Objectives"
   end
 
   def selected(menu); pbFadeOutIn(99999) { pbViewQuests }; end
