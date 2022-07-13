@@ -85,16 +85,11 @@ LoseText = "..."
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
-[EONGRUNT_M,Placeholder]
-LoseText = "..."
-Pokemon = LEDYBA,10
-    Gender = male
+[EONGRUNT_M,Jess]
+LoseText = "Yikes, what's up with kids these days?"
+Pokemon = SUNKERN,6
 #-------------------------------
-[EONGRUNT_M,Placeholder,100]
-LoseText = "..."
-Pokemon = LEDYBA,10
-    Gender = male
-#-------------------------------
+<<<<<<< Updated upstream
 [EONGRUNT_F,Placeholder]
 LoseText = "..."
 Pokemon = SUNKERN,10
@@ -109,3 +104,8 @@ Pokemon = SUNKERN,10
 LoseText = "..."
 Pokemon = TECHUPPI,9
 Pokemon = WOOPER,8
+=======
+[EONGRUNT_F,Jamie]
+LoseText = "Right? This used to be so much easier."
+Pokemon = LEDYBA,6
+>>>>>>> Stashed changes
