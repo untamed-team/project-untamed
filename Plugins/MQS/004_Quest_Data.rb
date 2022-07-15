@@ -32,13 +32,13 @@ module QuestModule
   }
   Quest4 = {
     :ID => "4",
-    :Name => "Disappearing Food",
+    :Name => "A Hungry Visitor",
     :QuestGiver => "Farmer Julio",
     :Stage1 => "Investigate the crop field.",
     :Stage2 => "Tell Julio what you found.",
     :Location1 => "Hacienda",
     :Location2 => "Hacienda",
-    :QuestDescription => "The owner of the Hacienda is displeased with the small crop yield this season. Find out what happened to the crop!",
+    :QuestDescription => "The crops the tenants have been growing have been disappearing. Find out what happened to the food!",
   }
   
   # Here's the simplest example of a single-stage quest with everything specified
