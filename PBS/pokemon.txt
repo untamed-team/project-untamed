@@ -2690,7 +2690,7 @@ TutorMoves = CUT,PROTECT,AERIALACE,STEELWING,SWORDSDANCE,REST,SLEEPTALK,STRENGTH
 Compatibility = Monster,Grass
 StepsToHatch = 6630
 Height = 6.5
-Weight = 100
+Weight = 100.0
 Color = Green
 Shape = Quadruped
 Kind = Fruit
@@ -4038,7 +4038,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -25
 #-------------------------------
 [151]
 Name = Melucholy
@@ -4069,7 +4069,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -25
 #-------------------------------
 [152]
 Name = Melumaunder
@@ -4100,7 +4100,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -25
 #-------------------------------
 [153]
 Name = Melumyst
@@ -4131,7 +4131,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -25
 #-------------------------------
 [154]
 Name = Maripome
@@ -4162,7 +4162,7 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-Score = 0
+Score = -100
 #-------------------------------
 [155]
 Name = Hylarmos
@@ -4193,4 +4193,106 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
+Score = -100
+#-------------------------------
+[156]
+Name = Vanillite
+InternalName = M_VANILLITE
+Type1 = ICE
+Type2 = PSYCHIC
+BaseStats = 46,40,50,44,65,60
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 61
+EffortPoints = 0,0,0,0,1,0
+Rareness = 255
+Happiness = 50
+Abilities = ICEBODY,HEALER
+HiddenAbility = SNOWWARNING
+Moves = 1,NATURALGIFT,1,MIRACLEEYE,1,SWEETTOOTH,4,TAUNT,8,MIST,12,ICYWIND,16,CONFUSION,20,HAIL,24,EXTRASENSORY,28,AURORABEAM,32,BARRIER,36,ICEBEAM,40,PSYSHOCK,44,BLIZZARD,48,AURORAVEIL
+TutorMoves = ALLYSWITCH,ATTRACT,AVALANCHE,BLIZZARD,ENDURE,FACADE,FLASHCANNON,HAIL,HIDDENPOWER,HYPERVOICE,ICEBEAM,ICICLESPEAR,ICYWIND,IMPRISON,IRONDEFENSE,LIGHTSCREEN,PROTECT,RAINDANCE,REST,ROUND,SELFDESTRUCT,SLEEPTALK,SNORE,SUBSTITUTE,TAUNT,UPROAR
+EggMoves = SHEERCOLD,AUTOTOMIZE,EXPLOSION,ICESHARD,ICICLECRASH,MAGNETRISE
+Compatibility = Mineral,Amorphous
+StepsToHatch = 5120
+Height = 0.3
+Weight = 6.4
+Color = White
+Shape = HeadBase
+Kind = Fresh Snow
+Pokedex = Unable to survive in hot areas, it makes itself comfortable by breathing out air cold enough to cause snow. It burrows into the snow to sleep.
+WildItemUncommon = NEVERMELTICE
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 14
+BattlerShadowX = 0
+BattlerShadowSize = 0
+Score = 0
+Evolutions = M_VANILLISH,Level,35
+#-------------------------------
+[157]
+Name = Vanillish
+InternalName = M_VANILLISH
+Type1 = ICE
+Type2 = PSYCHIC
+BaseStats = 60,50,65,49,96,75
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 138
+EffortPoints = 0,0,0,0,2,0
+Rareness = 120
+Happiness = 50
+Abilities = AROMAVEIL,HEALER
+HiddenAbility = SNOWWARNING
+Moves = 0,BITINGCOLD,1,NATURALGIFT,1,MIRACLEEYE,1,SWEETTOOTH,1,TAUNT,12,ICYWIND,16,CONFUSION,20,HAIL,24,EXTRASENSORY,28,AURORABEAM,32,BARRIER,38,ICEBEAM,44,PSYSHOCK,50,BLIZZARD,56,AURORAVEIL
+TutorMoves = ALLYSWITCH,ATTRACT,AVALANCHE,BLIZZARD,ENDURE,FACADE,FLASHCANNON,HAIL,HIDDENPOWER,HYPERVOICE,ICEBEAM,ICICLESPEAR,ICYWIND,IMPRISON,IRONDEFENSE,LIGHTSCREEN,PROTECT,RAINDANCE,REST,ROUND,SELFDESTRUCT,SLEEPTALK,SNORE,SUBSTITUTE,TAUNT,UPROAR
+Compatibility = Mineral,Amorphous
+StepsToHatch = 5120
+Height = 0.9
+Weight = 40.8
+Color = White
+Shape = HeadBase
+Kind = Icy Snow
+Pokedex = It blasts enemies with cold air reaching -148 degrees Fahrenheit, freezing them solid. But it spares their lives afterward's. It's a kind Pokémon.
+WildItemUncommon = NEVERMELTICE
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 8
+BattlerShadowX = 0
+BattlerShadowSize = 0
+Score = 0
+Evolutions = M_VANILLUXE,Level,47
+#-------------------------------
+[158]
+Name = Vanilluxe
+InternalName = M_VANILLUXE
+Type1 = ICE
+Type2 = PSYCHIC
+BaseStats = 80,55,95,69,129,107
+GenderRate = Female50Percent
+GrowthRate = Slow
+BaseEXP = 268
+EffortPoints = 0,0,0,0,3,0
+Rareness = 45
+Happiness = 50
+Abilities = AROMAVEIL,HEALER
+HiddenAbility = SNOWWARNING
+Moves = 0,PSYCHIC,1,HAZE,1,FREEZEDRY,1,NATURALGIFT,1,MIRACLEEYE,1,SWEETTOOTH,1,TAUNT,1,BITINGCOLD,12,ICYWIND,16,CONFUSION,20,HAIL,24,EXTRASENSORY,28,AURORABEAM,32,BARRIER,38,ICEBEAM,44,PSYSHOCK,52,BLIZZARD,60,AURORAVEIL
+TutorMoves = ALLYSWITCH,ATTRACT,AVALANCHE,BEATUP,BLIZZARD,ENDURE,FACADE,FLASHCANNON,GIGAIMPACT,HAIL,HIDDENPOWER,HYPERBEAM,HYPERVOICE,ICEBEAM,ICICLESPEAR,ICYWIND,IMPRISON,IRONDEFENSE,LIGHTSCREEN,PROTECT,RAINDANCE,REST,ROUND,SELFDESTRUCT,SLEEPTALK,SNORE,SUBSTITUTE,TAUNT,UPROAR,WEATHERBALL
+Compatibility = Mineral,Amorphous
+StepsToHatch = 5120
+Height = 1.2
+Weight = 58.0
+Color = White
+Shape = MultiBody
+Kind = Snowstorm
+Pokedex = When its anger reaches a breaking point, this Pokémon unleashes a fierce blizzard that freezes every creature around it, be they friend or foe.
+WildItemCommon = NEVERMELTICE
+BattlerPlayerX = 0
+BattlerPlayerY = 0
+BattlerEnemyX = 0
+BattlerEnemyY = 8
+BattlerShadowX = 0
+BattlerShadowSize = 0
 Score = 0

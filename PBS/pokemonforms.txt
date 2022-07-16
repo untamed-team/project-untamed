@@ -119,50 +119,20 @@ Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,65,130
 #-------------------------------
-###### PLACEHOLDER MEGAS ######
-#-------------------------------
-[NOCTAVISPA-1]
+[NOCTAVISPA,1]
 FormName = Mega Noctavispa
 MegaStone = NOCTAVISPITE
 BaseStats = 65,160,60,125,115,60
 Abilities = ADAPTABILITY
-#DARKAURA would fit right in with this evil mf, its also less brutal than adapt and [adapt + poison touch]
-Height = 0.88
+Height = 0.9
 Weight = 18.6
 #-------------------------------
-# [XATU-1]
-# FormName = Mega Xatu
-# MegaStone = XATUNITE
-# Type1 = PSYCHIC
-# Type2 = FIRE
-# BaseStats = 65,75,80,130,140,80
-# Abilities = DROUGHT
-# Height = 1.50
-# Weight = 16.7
-#-------------------------------
-# [FLYGON-1]
-# FormName = Mega Flygon
-# MegaStone = FLYGONITE
-# Type1 = BUG
-# Type2 = DRAGON
-# BaseStats = 80,130,80,120,130,80
-# Abilities = TINTEDLENS
-# Height = 2.0
-# Weight = 81.6
-#------------------------------- 
-[GOHILA-1]
+[GOHILA,1]
 FormName = Mega Gohila
 MegaStone = GOHILITE
 Type1 = POISON
 Type2 = ELECTRIC
 BaseStats = 100,60,75,105,150,115
 Abilities = VOLTABSORB
-#VOLTABSORB is basically what jack proposed /shrug
-#FLAREBOOST maybe? it makes sense considering it has a generator on its scales, we even have some liberties about making this thing fire/poison
-#TRANSISTOR speaking of generators
-#TERAVOLT / MOLDBREAKER its a bit more out there but this thing breaks the idea of megas only being big and heavy
-#BEASTBOOST it complements well with the napoleon complex this thing has
-#DAZZLING "scales glow white on the heat of battle"
 Height = 0.2
 Weight = 3.5
-#-------------------------------
