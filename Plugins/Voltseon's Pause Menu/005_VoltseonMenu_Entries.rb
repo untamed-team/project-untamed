@@ -99,7 +99,7 @@ class MenuEntryPokegear < MenuEntry
 
   def selectable?; return ($Trainer.has_pokedex && $Trainer.pokedex.accessible_dexes.length > 0); end
 end
-=begin
+
 #-------------------------------------------------------------------------------
 # Entry for DexNav Screen - added by SpaceWestern (Currently nonfunctional)
 #-------------------------------------------------------------------------------
@@ -111,20 +111,19 @@ class MenuEntryDexNav < MenuEntry
 
   def selected(menu)
     pbFadeOutIn(99999) {
-      if ($currentDexSearch != nil && $currentDexSearch.is_a?(Array)) {
+      if ($currentDexSearch != nil && $currentDexSearch.is_a?(Array))
         pbMessage(_INTL("<c2=7FE00000>You are already searching!</c2>"))
         pbMessage(_INTL("<c2=7FE00000>Leave the route and return to search again!</c2>"))
         pbShowMenu
-      }
-      else {
+	  else
         @scene = NewDexNav.new
-      }
-    }
-  end
+      end
+	}
+	end
 
   def selectable?; return true; end
 end
-=end
+
 #-------------------------------------------------------------------------------
 # Entry for Trainer Card Screen
 #-------------------------------------------------------------------------------

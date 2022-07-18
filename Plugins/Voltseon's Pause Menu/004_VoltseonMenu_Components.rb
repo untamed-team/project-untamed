@@ -194,7 +194,7 @@ class DateAndTimeHud < Component
 end
 
 #-------------------------------------------------------------------------------
-# New Quesst Message Hud component
+# New Quest Message Hud component
 #-------------------------------------------------------------------------------
 class NewQuestHud < Component
   def initialize
@@ -241,7 +241,6 @@ class NewQuestHud < Component
   end
 end
 
-=begin
 #-------------------------------------------------------------------------------
 # Dex Nav component - Added by SpaceWestern
 #-------------------------------------------------------------------------------
@@ -809,6 +808,3 @@ class DexNav
     return moves
   end
 end
-
-end
-=end
