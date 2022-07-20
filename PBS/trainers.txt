@@ -85,11 +85,11 @@ LoseText = "..."
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
-[EONGRUNT_M,Jamie]
+[EONGRUNT_M,Jess]
 LoseText = "Yikes, what's up with kids these days?"
 Pokemon = SUNKERN,6
 #-------------------------------
-[EONGRUNT_F,Jess]
+[EONGRUNT_F,Jamie]
 LoseText = "Right? This used to be so much easier."
 Pokemon = PURRLOIN,6
 #-------------------------------
