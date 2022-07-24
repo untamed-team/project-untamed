@@ -1,5 +1,0 @@
-Name         = Nuzlocke X
-Version      = 1.1.2
-Website      = https://luka-sj.com/res/nuzx
-Credits      = Luka S.J.
-Conflicts    = Elite Battle: DX
