@@ -1,3 +1,0 @@
-Name         = Bag Screen w/interactable Party
-Version      = 2.0
-Credits      = DiegoWT,Rose,Vendily
