@@ -1,0 +1,96 @@
+#Credits for Project Untamed
+====================
+Scripts & Coding
+Pokemon Essentials:
+Maruno
+
+Tweaks to Essentials:
+Derxwna Kapsyla
+
+Advanced HM Items:
+Moyo, Marin
+
+Advanced Map Transfers:
+Luka S.J.
+
+Always in Bushes:
+Kotaro, KleinStudio
+
+Astralneko's Scripting Utilities:
+Astralneko
+
+Bag Screen with Interactable Party:
+DiegoWT,Rose,Vendily
+
+Better Region Map:
+Marin
+Boonzeet
+
+DiegoWT's Starter Selection:
+DiegoWT
+
+DPPT Gender Selector Scene:
+A.Somersault
+
+Encounter List UI:
+ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
+
+Evolve from Party:
+IndianAnimator, eriedaberrie#1569
+
+EVs and IVs in Summary:
+Deoxysprime
+
+Following Pokemon EX:
+Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+
+Location Signposts:
+LostSoulsDev / carmaniac
+PurpleZaffre
+Golisopod User
+
+Luka's Scripting Utilities:
+Luka S.J.
+
+Modern Quest System + UI:
+ThatWelshOne_,mej71,derFischae,Marin
+
+Marin's Scripting Utilities:
+Marin
+
+Overworld Shadows EX:
+Golisopod User, Wolf PP, Marin
+
+Quicksave:
+Low
+
+Speed Up 2.0:
+Marin for the original script, Phantombass for updating to 19.1
+
+Video with Using Gif:
+bo4p5687
+
+Voltseon's Pause Menu:
+Voltseon, Golisopod User, ENLS
+
+====================
+Graphics
+Nintendo
+GameFreak
+The Pokemon Company
+====================
+Audio
+Nintendo
+GameFreak
+The Pokemon Company
+====================
+Mapping
+
+====================
+Eventing
+
+====================
+Story & Quests
+
+====================
+Play Testing
