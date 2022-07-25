@@ -1,4 +1,0 @@
-Name         = Advanced HM Items
-Version      = 1.0.1
-Website      = https://reliccastle.com/resources/803/
-Credits      = Moyo, Marin
