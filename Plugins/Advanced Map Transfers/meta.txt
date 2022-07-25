@@ -1,5 +1,0 @@
-Name         = Advanced Map Transfers
-Version      = 1.3
-Requires     = Luka's Scripting Utilities,3.2
-Website      = https://luka-sj.com/res/admt
-Credits      = Luka S.J.
