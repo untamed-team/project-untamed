@@ -82,9 +82,10 @@ Autotiles & Tilesets
 Nintendo
 GameFreak
 The Pokemon Company
-Groogey
+Tyler Jones- Environmental Designer
 GreenJellybean
 Akikaze
+ventesthefloof
 
 
 Pokemon & Pokedex:
@@ -94,12 +95,30 @@ The Pokemon Company
 Jack from Subjectively
 Evelyn315
 Firedude
+LuckyBenjamin the Appletun
+Loretze
+Applesaucior
+OPa, farbol234
+SoundJack426
+8xviktor
+ventesthefloof
+RockTomb
+Ian (The Picky Pixel Artist)
+Saltilton
+theWaterleaf
+Soda
+Lorka_Grey
 
 Trainers:
 Nintendo
 GameFreak
 The Pokemon Company
 Jack from Subjectively
+Loretze
+ventesthefloof
+RockTomb
+Saltilton
+HingisDingus
 
 Items:
 Nintendo
@@ -121,5 +140,18 @@ Eventing
 ====================
 Story & Quests
 Firedude
+Kyl-E
+BlueLightning
+====================
+Game Data & Balancing:
+Malarkey3072
+Kyl-E
+====================
+Translating:
+Blind guy,i guess
+Fitch
 ====================
 Play Testing
+====================
+Organization
+HingisDingus
