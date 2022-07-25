@@ -78,7 +78,7 @@ Voltseon's Pause Menu:
 Voltseon, Golisopod User, ENLS
 ====================
 Graphics:
-Autotiles & Tilesets
+Autotiles & Tilesets:
 Nintendo
 GameFreak
 The Pokemon Company
@@ -86,7 +86,6 @@ Tyler Jones- Environmental Designer
 GreenJellybean
 Akikaze
 ventesthefloof
-
 
 Pokemon & Pokedex:
 Nintendo
@@ -108,8 +107,12 @@ Saltilton
 theWaterleaf
 Soda
 Lorka_Grey
+KameOtaku
+Dan Bacon
+MillerMiller
+Cristata
 
-Trainers:
+Trainers/NPCs:
 Nintendo
 GameFreak
 The Pokemon Company
@@ -119,6 +122,10 @@ ventesthefloof
 RockTomb
 Saltilton
 HingisDingus
+Chespin (Ethan)
+Akikaze
+KameOtaku
+Gardenette
 
 Items:
 Nintendo
@@ -127,31 +134,55 @@ The Pokemon Company
 Spriter's Resource (but who gave the item list?)
 
 ====================
-Audio
+Audio:
 Nintendo
 GameFreak
 The Pokemon Company
+
+Music
+Rhythm Break
+
+Pokemon Cries
+Gardenette
 ====================
-Mapping
+Mapping:
+ImaDeadMan
+Gardenette
 
 ====================
-Eventing
-
+Eventing:
+Low
+SpaceWestern
+Stygma
+Gardenette
 ====================
-Story & Quests
+Story & Quests:
 Firedude
 Kyl-E
 BlueLightning
+Gardenette
 ====================
-Game Data & Balancing:
+Game Data (like adding dex entries or trainer classes, etc.) & Balancing:
 Malarkey3072
 Kyl-E
+Low
+SpaceWestern
+Stygma
+Gardenette
+MacheteMcGoo
 ====================
 Translating:
 Blind guy,i guess
 Fitch
 ====================
-Play Testing
+Play Testing:
+Chespin (Ethan)
+ventesthefloof
+BlueLightning
+Saltilton
 ====================
-Organization
+Organization:
+Stygma
+Katie
 HingisDingus
+Gardenette
