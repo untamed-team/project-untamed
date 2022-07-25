@@ -16,6 +16,10 @@ Luka S.J.
 Always in Bushes:
 Kotaro, KleinStudio
 
+Ambient Pokemon Cries:
+Vendily
+SpaceWestern
+
 Astralneko's Scripting Utilities:
 Astralneko
 
@@ -72,12 +76,37 @@ bo4p5687
 
 Voltseon's Pause Menu:
 Voltseon, Golisopod User, ENLS
-
 ====================
-Graphics
+Graphics:
+Autotiles & Tilesets
 Nintendo
 GameFreak
 The Pokemon Company
+Groogey
+GreenJellybean
+Akikaze
+
+
+Pokemon & Pokedex:
+Nintendo
+GameFreak
+The Pokemon Company
+Jack from Subjectively
+Evelyn315
+Firedude
+
+Trainers:
+Nintendo
+GameFreak
+The Pokemon Company
+Jack from Subjectively
+
+Items:
+Nintendo
+GameFreak
+The Pokemon Company
+Spriter's Resource (but who gave the item list?)
+
 ====================
 Audio
 Nintendo
@@ -91,6 +120,6 @@ Eventing
 
 ====================
 Story & Quests
-
+Firedude
 ====================
 Play Testing
