@@ -33,21 +33,21 @@ Pokemon = TECHUPPI,40
     Moves = FLIPTURN,LIFEDEW,BURNINGJEALOUSY
     AbilityIndex = 237
 #-------------------------------
-[YOUNGSTER_F,Placeholder]
+[YOUNGSTER_F,Emma]
 LoseText = "I guess it's also double the chance to lose..."
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
 #-------------------------------
-[YOUNGSTER_M,Placeholder2]
+[YOUNGSTER_M,Julian]
 LoseText = "B-but, how did I lose?"
 Pokemon = WRENNER,5
 #-------------------------------
-[BUGCATCHER,Placeholder3]
+[BUGCATCHER,Marco]
 LoseText = "Man, your Pokémon are really strong too!"
 Pokemon = MINIMELO,5
 Pokemon = LEDYBA,5
 #-------------------------------
-[POKEMANIAC,Placeholder4]
+[POKEMANIAC,Andres]
 LoseText = "Wow, your Pokémon are great!"
 Pokemon = PURRLOIN,5
 #-------------------------------
@@ -56,32 +56,32 @@ LoseText = "Maybe I'll go back to the river."
 Pokemon = TECHUPPI,6
 #-------------------------------
 [RIVAL1,Emilio]
-LoseText = "..."
+LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = MOLLUCOTTA,5
     Gender = male
 #-------------------------------
 [RIVAL1,Emilio,1]
-LoseText = "..."
+LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = QUETZALIL,5
     Gender = male
 #-------------------------------
 [RIVAL1,Emilio,2]
-LoseText = "..."
+LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
 [RIVAL1,Emilio,100]
-LoseText = "..."
+LoseText = "I lost? Just you wait, I'll train up a team you'll never beat!"
 Pokemon = MOLLUCOTTA,5
     Gender = male
 #-------------------------------
 [RIVAL1,Emilio,101]
-LoseText = "..."
+LoseText = "I lost? Just you wait, I'll train up a team you'll never beat!"
 Pokemon = QUETZALIL,5
     Gender = male
 #-------------------------------
 [RIVAL1,Homero,102]
-LoseText = "..."
+LoseText = "I lost? Just you wait, I'll train up a team you'll never beat!"
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
@@ -98,6 +98,21 @@ LoseText = "I guess this is why I'm still just a grunt..."
 Pokemon = DEWPIDER,7
 #-------------------------------
 [EONADMIN,Carlito]
-LoseText = "..."
+LoseText = "Bah, you don't even know what you're fighting for."
 Pokemon = TECHUPPI,9
 Pokemon = WOOPER,8
+#-------------------------------
+[PSYCHIC_M2,Xavier]
+LoseText = "I can sense great strength within you and your Pokémon."
+Pokemon = PUMPKABOO,8
+Pokemon = PHANTUMP,8
+#-------------------------------
+[PSYCHIC_F2,Maya]
+LoseText = "I guess the spirits favored you today."
+Pokemon = DUSKULL,9
+Pokemon = LITWICK,8
+#-------------------------------
+[LEADER_VALENTINA,Valentina]
+LoseText = "Ugh, I still can't do this right."
+Pokemon = LILORINA,14
+Pokemon = M_ROSELIA,12
