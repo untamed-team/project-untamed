@@ -86,6 +86,8 @@ Tyler Jones- Environmental Designer
 GreenJellybean
 Akikaze
 ventesthefloof
+Griffin L
+Kaloja
 
 Pokemon & Pokedex:
 Nintendo
@@ -111,6 +113,8 @@ KameOtaku
 Dan Bacon
 MillerMiller
 Cristata
+I’m Para
+Jeremy K
 
 Trainers/NPCs:
 Nintendo
@@ -126,6 +130,7 @@ Chespin (Ethan)
 Akikaze
 KameOtaku
 Gardenette
+Zacharie
 
 Items:
 Nintendo
@@ -157,12 +162,14 @@ Stygma
 Gardenette
 ====================
 Story & Quests:
+angellucem
+BlueLightning
 Firedude
 Kyl-E
-BlueLightning
 Gardenette
+ThisGrainCharacter (Gluten Free)
 ====================
-Game Data (like adding dex entries or trainer classes, etc.) & Balancing:
+Game Data (like adding dex entries or trainer classes, PBS, etc.) & Balancing:
 Malarkey3072
 Kyl-E
 Low
@@ -170,6 +177,9 @@ SpaceWestern
 Stygma
 Gardenette
 MacheteMcGoo
+noahthenumbat
+DomTom
+<3w<3
 ====================
 Translating:
 Blind guy,i guess
