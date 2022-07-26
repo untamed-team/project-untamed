@@ -59,16 +59,19 @@ Pokemon = TECHUPPI,6
 LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = MOLLUCOTTA,5
     Gender = male
+    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,1]
 LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = QUETZALIL,5
     Gender = male
+    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,2]
 LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
 Pokemon = PORSITE,5
     Gender = male
+    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,100]
 LoseText = "I lost? Just you wait, I'll train up a team you'll never beat!"
@@ -111,6 +114,7 @@ Pokemon = PHANTUMP,8
 LoseText = "I guess the spirits favored you today."
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
+    Ability = FLAMEBODY
 #-------------------------------
 [LEADER_Valentina,Valentina]
 LoseText = "Ugh, I still can't do this right."
