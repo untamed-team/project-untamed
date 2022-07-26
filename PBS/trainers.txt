@@ -112,7 +112,7 @@ LoseText = "I guess the spirits favored you today."
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
 #-------------------------------
-[LEADER_VALENTINA,Valentina]
+[LEADER_Valentina,Valentina]
 LoseText = "Ugh, I still can't do this right."
 Pokemon = LILORINA,14
 Pokemon = M_ROSELIA,12

@@ -58,7 +58,7 @@
 56,TEAMROCKET_M,Team Rocket,32,,,,Male,,
 57,TEAMROCKET_F,Team Rocket,32,,,,Female,,
 58,ROCKETBOSS,Rocket Boss,100,,,,Male,,
-59,LEADER_Brock,Gym Leader,100,Gym Battle.mp3,Battle victory leader,,Male,,
+59,LEADER_Valentina,Gym Leader,100,Gym Battle.mp3,Battle victory leader,,Female,,
 60,LEADER_Misty,Gym Leader,100,Gym Battle.mp3,Battle victory leader,,Female,,
 61,LEADER_Surge,Gym Leader,100,Gym Battle.mp3,Battle victory leader,,Male,,
 62,LEADER_Erika,Gym Leader,100,Gym Battle.mp3,Battle victory leader,,Female,,

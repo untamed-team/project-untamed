@@ -4296,8 +4296,8 @@ BattlerEnemyY = 8
 BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
-#-------------------------------
-[159] 					# 227 in the dex proper
+#-------------------------------# 227 in the dex proper
+[159]
 Name = Phantump
 InternalName = PHANTUMP
 Type1 = GHOST
@@ -4330,8 +4330,8 @@ BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
 Evolutions = TREVENANT,Trade,
-#-------------------------------
-[160] 					# 228 in the dex proper
+#-------------------------------# 228 in the dex proper
+[160]
 Name = Trevenant
 InternalName = TREVENANT
 Type1 = GHOST
@@ -4362,8 +4362,8 @@ BattlerEnemyX = 0
 BattlerEnemyY = 0
 BattlerShadowX = 0
 BattlerShadowSize = 2
-#-------------------------------
-[161] 					# 129 in the dex proper
+#-------------------------------# 129 in the dex proper
+[161]
 Name = Litwick
 InternalName = LITWICK
 Type1 = GHOST
@@ -4396,8 +4396,8 @@ BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = LAMPENT,Level,41
-#-------------------------------
-[162] 					# 130 in the dex proper
+#-------------------------------# 130 in the dex proper
+[162]
 Name = Lampent
 InternalName = LAMPENT
 Type1 = GHOST
@@ -4429,8 +4429,8 @@ BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = CHANDELURE,Item,DUSKSTONE
-#-------------------------------
-[163] 					# 131 in the dex proper
+#-------------------------------# 131 in the dex proper
+[163]
 Name = Chandelure
 InternalName = CHANDELURE
 Type1 = GHOST
