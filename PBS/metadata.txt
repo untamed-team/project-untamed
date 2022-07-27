@@ -15,10 +15,10 @@ PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,gi
 # Intro
 #-------------------------------
 [002]
-# Cemetery/Gym (old)
-Outdoor = true
-ShowArea = true
-Bicycle = true
+# MausoleumLeft
+Outdoor = false
+ShowArea = false
+Bicycle = false
 #-------------------------------
 [004]
 # San Cerigold Town
@@ -31,6 +31,7 @@ Bicycle = true
 Outdoor = true
 ShowArea = true
 Bicycle = true
+TrainerBattleBGM = joropo_zona_1.ogg
 #-------------------------------
 [022]
 # Veravalles Town
@@ -65,13 +66,12 @@ ShowArea = true
 Bicycle = true
 #-------------------------------
 [079]
-# Hacienda Castaneda (Outside)
+# Hacienda Castaneda
 Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
 [081]
-# San Cerigold Town (old)
 Outdoor = true
 ShowArea = true
 Bicycle = true
