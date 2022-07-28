@@ -32,6 +32,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 TrainerBattleBGM = joropo_zona_1.ogg
+HearCries = true
 #-------------------------------
 [022]
 # Veravalles Town
@@ -39,6 +40,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,19,5
+HearCries = false
 #-------------------------------
 [048]
 # Route 1
@@ -46,9 +48,10 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
+HearCries = true
 #-------------------------------
 [076]
-# Hacienda Outskirts
+# Hacienda Outskirts (delete)
 Outdoor = true
 ShowArea = true
 Bicycle = true
@@ -64,12 +67,14 @@ Bicycle = true
 Outdoor = true
 ShowArea = true
 Bicycle = true
+HearCries = true
 #-------------------------------
 [079]
-# Hacienda Castaneda
+# Hacienda
 Outdoor = true
 ShowArea = true
 Bicycle = true
+HearCries = true
 #-------------------------------
 [081]
 Outdoor = true
