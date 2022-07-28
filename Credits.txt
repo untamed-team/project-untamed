@@ -36,6 +36,11 @@ DiegoWT
 DPPT Gender Selector Scene:
 A.Somersault
 
+Easy Text Skip:
+Amethyst
+Kurotsune
+ENLS
+
 Encounter List UI:
 ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
 
