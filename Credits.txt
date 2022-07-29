@@ -92,6 +92,7 @@ GreenJellybean
 ventesthefloof
 Griffin L
 Kaloja
+Saltilton
 
 Pokemon & Pokedex:
 Nintendo
@@ -121,6 +122,9 @@ Cristata
 I’m Para
 Jeremy K
 Hub-Bub
+Ven
+Machi
+Pelican
 
 Trainers/NPCs:
 Nintendo
@@ -137,6 +141,7 @@ Akikaze
 KameOtaku
 Gardenette
 Zacharie
+Ven
 
 Items:
 Nintendo
