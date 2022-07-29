@@ -661,3 +661,5 @@
 645,FLYITEM,Fly Item,Fly Items,8,0,"Placeholder item so interacting with Fly tiles doesn't crash.",2,0,6
 646,HEADBUTTITEM,Headbutt Item,Headbutt Items,8,0,"Placeholder item so interacting with Headbutt tiles doesn't crash.",2,0,6
 647,FLASHITEM,Flash Item,Flash Items,8,0,"Placeholder item so interacting with Flash tiles doesn't crash.",2,0,6
+#-------------------------------
+648,STARTERBALLFIRE,Starter Ball Fire,Starter Ball Fires,3,0,,0,0,0
