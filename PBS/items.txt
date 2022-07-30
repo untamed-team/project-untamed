@@ -663,3 +663,5 @@
 647,FLASHITEM,Flash Item,Flash Items,8,0,"Placeholder item so interacting with Flash tiles doesn't crash.",2,0,6
 #-------------------------------
 648,STARTERBALLFIRE,Starter Ball Fire,Starter Ball Fires,3,0,,0,0,0
+649,STARTERBALLWATER,Starter Ball Water,Starter Ball Waters,3,0,,0,0,0
+650,STARTERBALLGRASS,Starter Ball Grass,Starter Ball Grass,3,0,,0,0,0
