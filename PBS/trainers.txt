@@ -38,11 +38,11 @@ Pokemon = PURRLOIN,5
 #-------------------------------
 [FISHERMAN,Ted]
 LoseText = "Maybe I'll go back to the river."
-Pokemon = TECHUPPI,6
+Pokemon = WOOPER,6
 #-------------------------------
 [FISHERMAN,Ted,100]
 LoseText = "Maybe I'll go back to the river."
-Pokemon = TECHUPPI,6
+Pokemon = WOOPER,6
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = "Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!"
@@ -77,19 +77,19 @@ LoseText = "I lost? Just you wait, I'll train up a team you'll never beat!"
 Pokemon = PORSITE,5
     Gender = male
 #-------------------------------
-[EONGRUNT_M,Jess]
+[EONGRUNT_M,Jamie]
 LoseText = "Yikes, what's up with kids these days?"
 Pokemon = SUNKERN,6
 #-------------------------------
-[EONGRUNT_M,Jess,100]
+[EONGRUNT_M,Jamie,100]
 LoseText = "Yikes, what's up with kids these days?"
 Pokemon = SUNKERN,6
 #-------------------------------
-[EONGRUNT_F,Jamie]
+[EONGRUNT_F,Jess]
 LoseText = "Right? This used to be so much easier."
 Pokemon = PURRLOIN,6
 #-------------------------------
-[EONGRUNT_F,Jamie,100]
+[EONGRUNT_F,Jess,100]
 LoseText = "Right? This used to be so much easier."
 Pokemon = PURRLOIN,6
 #-------------------------------
