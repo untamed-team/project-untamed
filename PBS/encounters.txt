@@ -31,7 +31,7 @@ Land,21
     10,PURRLOIN,4,5
     5,DRILBUR,2,6
 #-------------------------------
-[079] # Hacienda Castaneda
+[079] # Hacienda
 Land,21
     20,BUDEW,2,4
     20,TECHUPPI,3,6
@@ -40,3 +40,13 @@ Land,21
     15,WRENNER,3,5
     10,HOOTHOOT,2,3
     5,CAFECARACHA,3,4
+Water,2
+    60,LOTAD,8,11
+    40,DEWPIDER,8,11
+OldRod
+    60,LOTAD,6,9
+    40,DEWPIDER,5,10
+GoodRod
+    60,WOOPER,12,17
+    20,DEWPIDER,10,16
+    20,LOTAD,10,15
