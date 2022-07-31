@@ -34,6 +34,10 @@ Bicycle = true
 TrainerBattleBGM = joropo_zona_1.ogg
 HearCries = true
 #-------------------------------
+[019]
+# San Cerigold Poké Center
+ShowArea = false
+#-------------------------------
 [022]
 # Veravalles Town
 Outdoor = true
@@ -51,7 +55,6 @@ MapPosition = 0,20,4
 HearCries = true
 #-------------------------------
 [076]
-# Hacienda Outskirts (delete)
 Outdoor = true
 ShowArea = true
 Bicycle = true

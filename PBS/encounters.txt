@@ -21,16 +21,6 @@ Land,21
     10,LEDYBA,2,3
     5,SUNKERN,2,3
 #-------------------------------
-[076] # Hacienda Outskirts (delete)
-Land,21
-    20,BUDEW,2,4
-    20,TECHUPPI,3,6
-    15,EKANS,3,4
-    15,PACUNA,2,4
-    15,WRENNER,3,5
-    10,HOOTHOOT,2,3
-    5,CAFECARACHA,3,4
-#-------------------------------
 [078] # Hacienda (Back)
 Land,21
     35,ZEAZAYA,4,5
