@@ -168,3 +168,8 @@ Pokemon = DRILBUR,9
 LoseText = "I need some water..."
 Pokemon = SUNKERN,7
 Pokemon = DRILBUR,9
+#-------------------------------
+[TEST,Confuse Me]
+LoseText = "..."
+Pokemon = PORSITE,100
+    Moves = CONFUSERAY

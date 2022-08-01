@@ -665,3 +665,5 @@
 648,STARTERBALLFIRE,Starter Ball Fire,Starter Ball Fires,3,0,,0,0,0
 649,STARTERBALLWATER,Starter Ball Water,Starter Ball Waters,3,0,,0,0,0
 650,STARTERBALLGRASS,Starter Ball Grass,Starter Ball Grass,3,0,,0,0,0
+#-------------------------------
+651,CERIGOLDCONE,Cerigoldcone,Cerigoldcones,2,350,"San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.",1,1,0
