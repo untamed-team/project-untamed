@@ -70,9 +70,10 @@ Marin
 Overworld Shadows EX:
 Golisopod User, Wolf PP, Marin
 
-Pokemon Monitor Icons:
+Monitor Icons:
 Ulithium_Dragon
 bo4p5687
+ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
 
 Quicksave:
 Low
