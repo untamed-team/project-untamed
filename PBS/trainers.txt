@@ -112,23 +112,23 @@ Pokemon = TECHUPPI,9
 Pokemon = WOOPER,8
 #-------------------------------
 [PSYCHIC_M2,Xavier]
-LoseText = "I can sense great strength within you and your Pokémon."
+LoseText = "Wow, you’re pretty good!"
 Pokemon = PUMPKABOO,8
 Pokemon = PHANTUMP,8
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
-LoseText = "I can sense great strength within you and your Pokémon."
+LoseText = "Wow, you’re pretty good!"
 Pokemon = PUMPKABOO,8
 Pokemon = PHANTUMP,8
 #-------------------------------
 [PSYCHIC_F2,Maya]
-LoseText = "I guess the spirits favored you today."
+LoseText = "Sigh…"
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
     Ability = FLAMEBODY
 #-------------------------------
 [PSYCHIC_F2,Maya,100]
-LoseText = "I guess the spirits favored you today."
+LoseText = "Sigh…"
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
     Ability = FLAMEBODY
