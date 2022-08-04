@@ -87,6 +87,11 @@ Marin for the original script, Phantombass for updating to 19.1
 Video with Using Gif:
 bo4p5687
 
+Voltseon's A-Star Pathfinding:
+Voltseon
+Golisopod User
+ENLS
+
 Voltseon's Pause Menu:
 Voltseon, Golisopod User, ENLS
 ====================
