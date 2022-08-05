@@ -36,9 +36,6 @@ DiegoWT
 DPPT Gender Selector Scene:
 A.Somersault
 
-Easy Mouse System:
-Luka S.J
-
 Easy Text Skip:
 Amethyst
 Kurotsune
@@ -79,13 +76,29 @@ Golisopod User, Wolf PP, Marin
 Monitor Icons:
 Ulithium_Dragon
 bo4p5687
-ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
+ThatWelshOne_
+raZ
+Marin
+Maruno
+Nuri Yuri
+PurpleZaffre
+Savordez
+Vendily
+SpaceWestern
+Gardenette
+
+Pokemon Amie:
+PizzaSun, rigbycwts (v.17)
+BhagyaJyoti (v.18)
+Luka S.J (mask bitmap)
+bo4p5687
 
 Quicksave:
 Low
 
 Speed Up 2.0:
-Marin for the original script, Phantombass for updating to 19.1
+Marin for the original script
+Phantombass for updating to 19.1
 
 Video with Using Gif:
 bo4p5687
@@ -96,7 +109,9 @@ Golisopod User
 ENLS
 
 Voltseon's Pause Menu:
-Voltseon, Golisopod User, ENLS
+Voltseon
+Golisopod User
+ENLS
 ====================
 Graphics:
 Autotiles & Tilesets:
