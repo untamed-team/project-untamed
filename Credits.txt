@@ -41,6 +41,9 @@ Amethyst
 Kurotsune
 ENLS
 
+Easy Mouse System:
+Luka S.J.
+
 Encounter List UI:
 ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
 
