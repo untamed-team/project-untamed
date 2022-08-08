@@ -173,3 +173,14 @@ Pokemon = DRILBUR,9
 LoseText = "..."
 Pokemon = PORSITE,100
     Moves = CONFUSERAY
+#-------------------------------
+[HEXMANIAC,Moza]
+LoseText = "Would you like to see a magic trick?"
+Pokemon = M_ROSELIA,7
+Pokemon = LILORINA,7
+#-------------------------------
+[HEXMANIAC,Moza,100]
+LoseText = "Would you like to see a magic trick?"
+Pokemon = M_ROSELIA,7
+Pokemon = LILORINA,9
+

@@ -210,3 +210,4 @@
 244,EONADMIN,Eon Admin,30,,,,Mixed,,
 245,FARMER,Farmer,30,,,,Mixed,,
 246,TEST,TEST,0,,,,Mixed,,
+247,HEXMANIAC,Hex Maniac,50,,,,Female,,
