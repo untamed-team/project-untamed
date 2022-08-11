@@ -1,6 +1,9 @@
 #Credits for Project Untamed
+
 ====================
+
 Scripts & Coding
+
 Pokemon Essentials:
 Maruno
 
@@ -115,7 +118,17 @@ Voltseon's Pause Menu:
 Voltseon
 Golisopod User
 ENLS
+
 ====================
+
+Game general:
+
+Main devs:
+SpaceWestern
+Gardenette
+Low
+stygma
+
 Graphics:
 Autotiles & Tilesets:
 Nintendo
@@ -191,33 +204,31 @@ GameFreak
 The Pokemon Company
 Spriter's Resource (but who gave the item list?)
 
-====================
-Audio:
+General audio:
 Nintendo
 GameFreak
 The Pokemon Company
 
-Music
+Music:
 Rhythm Break
 
 Pokemon Center Theme:
 ReMX Bossa Nova
 
-Pokemon Cries
+Pokemon Cries:
 Gardenette
 Text 206
-====================
+
 Mapping:
 ImaDeadMan
 Gardenette
 
-====================
 Eventing:
 Low
 SpaceWestern
-Stygma
+stygma
 Gardenette
-====================
+
 Story & Quests:
 angellucem
 BlueLightning
@@ -225,31 +236,31 @@ Firedude
 Kyl-E
 Gardenette
 ThisGrainCharacter (Gluten Free)
-====================
+
 Game Data (like adding dex entries or trainer classes, PBS, etc.) & Balancing:
 Malarkey3072
 Kyl-E
 Low
 SpaceWestern
-Stygma
+stygma
 Gardenette
 MacheteMcGoo
 noahthenumbat
 DomTom
 <3w<3
-====================
+
 Translating:
 Blind guy,i guess
 Fitch
-====================
-Play Testing:
+
+Playtesting:
 Chespin (Ethan)
 ventesthefloof
 BlueLightning
 Saltilton
-====================
-Organization:
-Stygma
+
+Discord organization:
+stygma
 Katie
 HingisDingus
 Gardenette
