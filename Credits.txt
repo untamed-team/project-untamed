@@ -149,12 +149,14 @@ Donlawride
 aball
 Cristata
 Groogey
+ShadySheep
+the.sizzlepanda
 
 Pokemon & Pokedex:
 Nintendo
 GameFreak
 The Pokemon Company
-Jack from Subjectively
+Jack from Subjectively (Magik_Jack)
 Evelyn315
 Akikaze
 Firedude
@@ -184,7 +186,6 @@ Pelican
 Bean Soup
 A Happi Rapter
 aball
-BaconBoy
 Bee
 Chespin (Ethan)
 Chromatech01
@@ -194,6 +195,13 @@ Floriak
 gribbin
 Grimrose
 Igor!
+MarsTemple
+Regal-Turtwig
+ShadySheep
+SietseML
+Solvaa
+SomeAllay
+WillTheWall
 
 Trainers/NPCs:
 Nintendo
@@ -210,9 +218,10 @@ Akikaze
 KameOtaku
 Gardenette
 Zacharie
-Ven
 MillerMiller
 Bee
+TheRoyalDex
+MILKMAN
 
 
 UI & Misc:
@@ -225,6 +234,11 @@ Adam
 BaconBoy
 Basalte
 HwiteHwale
+MillerMiller
+Gardenette
+MANGO
+MarsTemple
+Riot
 
 General audio:
 Nintendo
@@ -246,6 +260,9 @@ ImaDeadMan
 Gardenette
 Kaloja
 GreenJellybean
+MANGO
+RISH
+Shadows
 
 Eventing:
 Low
@@ -260,9 +277,13 @@ Firedude
 Kyl-E
 Gardenette
 ThisGrainCharacter (Gluten Free)
-Deino
+DeinoNuggies
 HwiteHwale
 Krabby Enthusiast
+Gardenette
+Luc_
+Shilo
+sneakysnek
 
 Game Data (like adding dex entries or trainer classes, PBS, etc.) & Balancing:
 Malarkey3072
@@ -281,6 +302,14 @@ caesar
 Garreon
 Hare64
 HwiteHwale
+MarsTemple
+Midbus
+mSilk
+Robochef9000
+Señor Gallo de Caballo
+Shadows
+Waffler
+Zyuran
 
 Translating:
 Blind guy,i guess
@@ -288,6 +317,8 @@ Fitch
 Basalte
 Floriak
 Hey
+Truegear
+Wowo
 
 Playtesting:
 Chespin (Ethan)
@@ -303,3 +334,5 @@ HingisDingus
 Gardenette
 Machi
 Bee
+Luc_
+MarsTemple
