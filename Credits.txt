@@ -130,7 +130,7 @@ Low
 stygma
 
 Graphics:
-Autotiles & Tilesets:
+Tilesets:
 Nintendo
 GameFreak
 The Pokemon Company
@@ -146,6 +146,9 @@ King Tapia
 Magiscarf
 Princess Phoenix
 Donlawride
+aball
+Cristata
+Groogey
 
 Pokemon & Pokedex:
 Nintendo
@@ -179,6 +182,18 @@ Ven
 Machi
 Pelican
 Bean Soup
+A Happi Rapter
+aball
+BaconBoy
+Bee
+Chespin (Ethan)
+Chromatech01
+Eshan
+Fikolyte
+Floriak
+gribbin
+Grimrose
+Igor!
 
 Trainers/NPCs:
 Nintendo
@@ -197,12 +212,19 @@ Gardenette
 Zacharie
 Ven
 MillerMiller
+Bee
 
-Items:
+
+UI & Misc:
 Nintendo
 GameFreak
 The Pokemon Company
 Spriter's Resource (but who gave the item list?)
+aball
+Adam
+BaconBoy
+Basalte
+HwiteHwale
 
 General audio:
 Nintendo
@@ -222,6 +244,8 @@ Text 206
 Mapping:
 ImaDeadMan
 Gardenette
+Kaloja
+GreenJellybean
 
 Eventing:
 Low
@@ -236,6 +260,9 @@ Firedude
 Kyl-E
 Gardenette
 ThisGrainCharacter (Gluten Free)
+Deino
+HwiteHwale
+Krabby Enthusiast
 
 Game Data (like adding dex entries or trainer classes, PBS, etc.) & Balancing:
 Malarkey3072
@@ -247,20 +274,32 @@ Gardenette
 MacheteMcGoo
 noahthenumbat
 DomTom
-<3w<3
+💙 w 💖
+Adam
+caesar
+𝔈𝔪𝔭𝔶𝔯𝔢𝔞𝔫
+Garreon
+Hare64
+HwiteHwale
 
 Translating:
 Blind guy,i guess
 Fitch
+Basalte
+Floriak
+Hey
 
 Playtesting:
 Chespin (Ethan)
 ventesthefloof
 BlueLightning
 Saltilton
+Blind guy,i guess
 
 Discord organization:
 stygma
 Katie
 HingisDingus
 Gardenette
+Machi
+Bee
