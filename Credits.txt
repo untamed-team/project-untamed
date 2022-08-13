@@ -181,7 +181,7 @@ I’m Para
 Jeremy K
 Hub-Bub
 Ven
-Machi
+Master_Machi
 Pelican
 Bean Soup
 A Happi Rapter
@@ -271,7 +271,7 @@ stygma
 Gardenette
 
 Story & Quests:
-angellucem
+Angel
 BlueLightning
 Firedude
 Kyl-E
@@ -332,7 +332,7 @@ stygma
 Katie
 HingisDingus
 Gardenette
-Machi
+Master_Machi
 Bee
 Luc_
 MarsTemple
