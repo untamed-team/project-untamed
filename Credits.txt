@@ -239,6 +239,7 @@ Gardenette
 MANGO
 MarsTemple
 Riot
+Master_Machi
 
 General audio:
 Nintendo
