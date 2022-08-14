@@ -143,7 +143,7 @@ Tilesets:
 Nintendo
 GameFreak
 The Pokemon Company
-Tyler Jones- Environmental Designer
+Tyler Jones - Environmental Designer
 GreenJellybean
 ventesthefloof
 Griffin L
@@ -161,6 +161,7 @@ Groogey
 ShadySheep
 the.sizzlepanda
 Rider Dragon
+-----------
 
 Pokemon & Pokedex:
 Nintendo
