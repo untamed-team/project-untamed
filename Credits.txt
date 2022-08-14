@@ -129,6 +129,15 @@ Gardenette
 Low
 stygma
 
+
+
+
+
+
+
+
+
+
 Graphics:
 Tilesets:
 Nintendo
