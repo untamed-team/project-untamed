@@ -123,23 +123,26 @@ ENLS
 
 Game general:
 
+
+-----------
+-----------
 Main devs:
+
 SpaceWestern
 Gardenette
 Low
 stygma
+-----------
+-----------
 
 
-
-
-
-
-
-
-
-
+-----------
+-----------
 Graphics:
+
+-----------
 Tilesets:
+
 Nintendo
 GameFreak
 The Pokémon Company
@@ -163,7 +166,9 @@ the.sizzlepanda
 Rider Dragon
 -----------
 
+-----------
 Pokémon & Pokédex:
+
 Nintendo
 GameFreak
 The Pokémon Company
@@ -213,8 +218,11 @@ SietseML
 Solvaa
 SomeAllay
 WillTheWall
+-----------
 
+-----------
 Trainers/NPCs:
+
 Nintendo
 GameFreak
 The Pokémon Company
@@ -233,9 +241,11 @@ MillerMiller
 Bee
 TheRoyalDex
 MILKMAN
+-----------
 
-
+-----------
 UI & Misc.:
+
 Nintendo
 GameFreak
 The Pokémon Company
@@ -252,23 +262,46 @@ MarsTemple
 Riot
 Master_Machi
 Chespin (Ethan)
+-----------
 
+-----------
+-----------
+
+
+-----------
+-----------
+Sound:
+
+-----------
 General audio:
+
 Nintendo
 GameFreak
 The Pokémon Company
+-----------
 
+-----------
 Music:
+
 Rhythm Break
-
-Pokémon Center Theme:
 ReMX Bossa Nova
+-----------
 
+-----------
 Pokémon Cries:
 Gardenette
 Text 206
+-----------
 
+-----------
+-----------
+
+
+-----------
+-----------
 Mapping:
+
+stygma
 ImaDeadMan
 Gardenette
 Kaloja
@@ -276,14 +309,26 @@ GreenJellybean
 MANGO
 RISH
 Shadows
+-----------
+-----------
 
+
+-----------
+-----------
 Eventing:
+
 Low
 SpaceWestern
 stygma
 Gardenette
+-----------
+-----------
 
+
+-----------
+-----------
 Story & Quests:
+
 Angel
 BlueLightning
 Firedude
@@ -297,7 +342,11 @@ Gardenette
 Luc_
 Shilo
 sneakysnek
+-----------
+-----------
 
+-----------
+-----------
 Game Data & Balancing (like adding dex entries or trainer classes, PBS, etc.):
 Malarkey3072
 Kyl-E
@@ -323,8 +372,14 @@ Señor Gallo de Caballo
 Shadows
 Waffler
 Zyuran
+-----------
+-----------
 
+
+-----------
+-----------
 Translating:
+
 Blind guy,i guess
 Fitch
 Basalte
@@ -332,15 +387,28 @@ Floriak
 Hey
 Truegear
 Wowo
+-----------
+-----------
 
+
+-----------
+-----------
 Playtesting:
+
 Chespin (Ethan)
 ventesthefloof
 BlueLightning
 Saltilton
 Blind guy,i guess
+Jamadxx
+-----------
+-----------
 
+
+-----------
+-----------
 Discord organization:
+
 stygma
 Katie
 HingisDingus
@@ -349,6 +417,9 @@ Master_Machi
 Bee
 Luc_
 MarsTemple
+Firedude
+-----------
+-----------
 
 
 Links to Creators:
