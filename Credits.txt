@@ -4,7 +4,7 @@
 
 Scripts & Coding
 
-Pokemon Essentials:
+Pokémon Essentials:
 Maruno
 
 Tweaks to Essentials:
@@ -19,7 +19,7 @@ Luka S.J.
 Always in Bushes:
 Kotaro, KleinStudio
 
-Ambient Pokemon Cries:
+Ambient Pokémon Cries:
 Vendily
 SpaceWestern
 
@@ -56,7 +56,7 @@ IndianAnimator, eriedaberrie#1569
 EVs and IVs in Summary:
 Deoxysprime
 
-Following Pokemon EX:
+Following Pokémon EX:
 Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
 
 Item Find:
@@ -93,7 +93,7 @@ Vendily
 SpaceWestern
 Gardenette
 
-Pokemon Amie:
+Pokémon Amie:
 PizzaSun, rigbycwts (v.17)
 BhagyaJyoti (v.18)
 Luka S.J (mask bitmap)
@@ -142,7 +142,7 @@ Graphics:
 Tilesets:
 Nintendo
 GameFreak
-The Pokemon Company
+The Pokémon Company
 Tyler Jones - Environmental Designer
 GreenJellybean
 ventesthefloof
@@ -166,7 +166,7 @@ Rider Dragon
 Pokémon & Pokédex:
 Nintendo
 GameFreak
-The Pokemon Company
+The Pokémon Company
 Jack from Subjectively (Magik_Jack)
 Evelyn315
 Akikaze
@@ -217,7 +217,7 @@ WillTheWall
 Trainers/NPCs:
 Nintendo
 GameFreak
-The Pokemon Company
+The Pokémon Company
 Jack from Subjectively
 Loretze
 ventesthefloof
@@ -235,10 +235,10 @@ TheRoyalDex
 MILKMAN
 
 
-UI & Misc:
+UI & Misc.:
 Nintendo
 GameFreak
-The Pokemon Company
+The Pokémon Company
 Spriter's Resource (but who gave the item list?)
 aball
 Adam
@@ -256,15 +256,15 @@ Chespin (Ethan)
 General audio:
 Nintendo
 GameFreak
-The Pokemon Company
+The Pokémon Company
 
 Music:
 Rhythm Break
 
-Pokemon Center Theme:
+Pokémon Center Theme:
 ReMX Bossa Nova
 
-Pokemon Cries:
+Pokémon Cries:
 Gardenette
 Text 206
 
@@ -298,7 +298,7 @@ Luc_
 Shilo
 sneakysnek
 
-Game Data (like adding dex entries or trainer classes, PBS, etc.) & Balancing:
+Game Data & Balancing (like adding dex entries or trainer classes, PBS, etc.):
 Malarkey3072
 Kyl-E
 Low
