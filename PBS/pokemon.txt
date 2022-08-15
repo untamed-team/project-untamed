@@ -2371,7 +2371,7 @@ BattlerEnemyY = 13
 BattlerShadowX = 0
 BattlerShadowSize = 1
 Evolutions = LAMPENT,Level,41
-#-------------------------------# 130 in the dex proper
+#-------------------------------
 [70]
 Name = Lampent
 InternalName = LAMPENT
