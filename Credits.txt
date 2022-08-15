@@ -163,7 +163,7 @@ the.sizzlepanda
 Rider Dragon
 -----------
 
-Pokemon & Pokedex:
+Pokémon & Pokédex:
 Nintendo
 GameFreak
 The Pokemon Company
@@ -242,7 +242,7 @@ The Pokemon Company
 Spriter's Resource (but who gave the item list?)
 aball
 Adam
-BaconBoy
+Dan Bacon
 Basalte
 HwiteHwale
 MillerMiller
@@ -251,6 +251,7 @@ MANGO
 MarsTemple
 Riot
 Master_Machi
+Chespin (Ethan)
 
 General audio:
 Nintendo
