@@ -142,10 +142,6 @@ Graphics:
 
 -----------
 Tilesets:
-
-Nintendo
-GameFreak
-The Pokémon Company
 Tyler Jones - Environmental Designer
 GreenJellybean
 ventesthefloof
@@ -168,10 +164,6 @@ Rider Dragon
 
 -----------
 Pokémon & Pokédex:
-
-Nintendo
-GameFreak
-The Pokémon Company
 Jack from Subjectively (Magik_Jack)
 Evelyn315
 Akikaze
@@ -222,11 +214,7 @@ WillTheWall
 
 -----------
 Trainers/NPCs:
-
-Nintendo
-GameFreak
-The Pokémon Company
-Jack from Subjectively
+Jack from Subjectively (Magik_Jack)
 Loretze
 ventesthefloof
 RockTomb
@@ -245,11 +233,7 @@ MILKMAN
 
 -----------
 UI & Misc.:
-
-Nintendo
-GameFreak
-The Pokémon Company
-Spriter's Resource (but who gave the item list?)
+Random Talking Bush
 aball
 Adam
 Dan Bacon
@@ -262,22 +246,6 @@ MarsTemple
 Riot
 Master_Machi
 Chespin (Ethan)
------------
-
------------
------------
-
-
------------
------------
-Sound:
-
------------
-General audio:
-
-Nintendo
-GameFreak
-The Pokémon Company
 -----------
 
 -----------
@@ -420,6 +388,57 @@ MarsTemple
 Firedude
 -----------
 -----------
+Special Thanks:
+
+"Pokémon Essentials" was created by:
+Flameguru
+Poccil (Peter O.)
+Maruno
+
+With contributions from:
+AvatarMonkeyKirby
+Marin
+Boushy
+MiDas Mike
+Brother1440
+Near Fantastica
+FL.
+PinkMan
+Genzai Kawakami
+Popper
+Golisopod User
+Rataime
+help-14
+Savordez
+IceGod64
+SoundSpawn
+Jacob O. Wobbrock
+the__end
+KitsuneKouta
+Venom12
+Lisa Anthony
+Wachunga
+Luka S.J.
+And everyone else who helped out with Pokemon Essentials
+
+"mkxp-z" by:
+Roza
+Based on MKXP by Ancurio et al.
+
+"RPG Maker XP" by:
+Enterbrain
+
+-------------------
+Closing Statement
+Pokémon is owned by:
+The Pokémon Company
+Nintendo
+Affiliated with Game Freak
+
+This is a non-profit fan-made game.
+No copyright infringements intended.
+Please support the official games!
+
 
 
 Links to Creators:
