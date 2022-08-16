@@ -1,0 +1,132 @@
+#-------------------------------
+[VECTORS]
+SINGLE
+  XY     = 102,408
+  ANGLE  = 32
+  SCALE  = 342
+  ZOOM   = 1
+DOUBLE
+  XY     = 102,408
+  ANGLE  = 32
+  SCALE  = 342
+  ZOOM   = 1
+TRIPLE
+  XY     = 90,320
+  ANGLE  = 30
+  SCALE  = 310
+  ZOOM   = 1
+QUADRU
+  XY     = 75,230
+  ANGLE  = 25
+  SCALE  = 232
+  ZOOM   = 1
+QUINTE
+  XY     = 80,110
+  ANGLE  = 25
+  SCALE  = 232
+  ZOOM   = 1
+SENDOUT
+  XY     = 234,306
+  ANGLE  = 24
+  SCALE  = 206
+  ZOOM   = 0.5
+ENEMY
+  XY     = -272,628
+  ANGLE  = 28
+  SCALE  = 642
+  ZOOM   = 1.5
+PLAYER
+  XY     = 238,332
+  ANGLE  = 32
+  SCALE  = 292
+  ZOOM   = 1
+DUAL
+  XY     = 196,306
+  ANGLE  = 26
+  SCALE  = 242
+  ZOOM   = 0.6
+DYNAMAX
+  XY     = 202,308
+  ANGLE  = 18
+  SCALE  = 136
+  ZOOM   = 0.5
+#-------------------------------
+[BATTLERPOS-0]
+SINGLE
+  XYZ  = 116,252,21
+DOUBLE
+  XYZ  = 92,240,21
+TRIPLE
+  XYZ  = 76,234,21
+QUADRU
+  XYZ  = 97,280,21
+QUINTE
+  XYZ  = 97,280,21
+#-------------------------------
+[BATTLERPOS-1]
+SINGLE
+  XYZ  = 234,152,19
+DOUBLE
+  XYZ  = 256,164,19
+TRIPLE
+  XYZ  = 264,156,19
+QUADRU
+  XYZ  = 287,158,17
+QUINTE
+  XYZ  = 333,160,19
+#-------------------------------
+[BATTLERPOS-2]
+DOUBLE
+  XYZ  = 192,262,25
+TRIPLE
+  XYZ  = 152,244,25
+QUADRU
+  XYZ  = 154,282,25
+QUINTE
+  XYZ  = 154,282,25
+#-------------------------------
+[BATTLERPOS-3]
+DOUBLE
+  XYZ  = 198,152,17
+TRIPLE
+  XYZ  = 210,154,17
+QUADRU
+  XYZ  = 241,156,15
+QUINTE
+  XYZ  = 287,158,17
+#-------------------------------
+[BATTLERPOS-4]
+TRIPLE
+  XYZ  = 230,254,28
+QUADRU
+  XYZ  = 211,284,28
+QUINTE
+  XYZ  = 211,284,28
+#-------------------------------
+[BATTLERPOS-5]
+TRIPLE
+  XYZ  = 162,152,15
+QUADRU
+  XYZ  = 195,154,13
+QUINTE
+  XYZ  = 241,156,15
+#-------------------------------
+[BATTLERPOS-6]
+QUADRU
+  XYZ  = 268,286,30
+QUINTE
+  XYZ  = 268,286,30
+#-------------------------------
+[BATTLERPOS-7]
+QUADRU
+  XYZ  = 149,152,1
+QUINTE
+  XYZ  = 195,154,13
+#-------------------------------
+[BATTLERPOS-8]
+QUINTE
+  XYZ  = 315,288,32
+#-------------------------------
+[BATTLERPOS-9]
+QUINTE
+  XYZ  = 149,152,1
