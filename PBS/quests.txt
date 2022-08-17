@@ -17,16 +17,16 @@ A simple back and forth,0,true
 0,2) Talk to the kid near the berry fields.
 #-------------------
 Multi Page Demo,1,true
-2,1) I made this Quest
-2,2) With the specific intent of having so many objectives
-2,3) The quest log would have to display it on multiple pages
-2,4) in order to showcase how it'd work.
-2,5) First, you'll notice that even if some objectives
-2,6) are hidden while the next one is revealed,
-2,7) the script will process it accordingly and display the next goal in it's place. 
-0,8) That way, even if you can't see this message, there's no blanks in that screen!
+1,1) I made this Quest
+1,2) With the specific intent of having so many objectives
+1,3) The quest log would have to display it on multiple pages
+1,4) in order to showcase how it'd work.
+1,5) First, you'll notice that even if some objectives
+1,6) are hidden while the next one is revealed,
+1,7) the script will process it accordingly and display the next goal in it's place. 
+1,8) That way, even if you can't see this message, there's no blanks in that screen!
 1,9) As you can see, it displays arrows indicating whether there's stuff or not remaining
-2,10) to display, so the player knows to check for another page.
+1,10) to display, so the player knows to check for another page.
 1,11) However, the whole process is, it turns out, somewhat consuming on the game.
 1,12) You can notice a slight delay when opening that quest page.
 1,13) There's complicated reasons behind it, so if you're unfamilliar with scripting

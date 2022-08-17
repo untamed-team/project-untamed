@@ -1,4 +1,0 @@
-Name         = Quest Log
-Version      = 1.0
-Website      = https://reliccastle.com/threads/4399/
-Credits      = Yumil(Scripting), Caz(Background Design), Crim(Icon Design)
