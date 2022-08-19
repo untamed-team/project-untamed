@@ -52,6 +52,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
+BattleBack = field
 HearCries = true
 #-------------------------------
 [076]
