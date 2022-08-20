@@ -169,7 +169,8 @@ Rider Dragon
 
 -----------
 Pokémon & Pokédex:
-Jack from Subjectively (Magik_Jack)
+Jack
+Claire
 Evelyn315
 Akikaze
 Firedude
@@ -218,7 +219,8 @@ WillTheWall
 
 -----------
 Trainers/NPCs:
-Jack from Subjectively (Magik_Jack)
+Jack
+Claire
 Loretze
 ventesthefloof
 RockTomb
@@ -250,6 +252,7 @@ MarsTemple
 Riot
 Master_Machi
 Chespin (Ethan)
+Jackster
 -----------
 
 -----------
@@ -390,6 +393,13 @@ Bee
 Luc_
 MarsTemple
 Firedude
+-----------
+-----------
+Created by:
+
+Subjectively
+Jack
+Claire
 -----------
 -----------
 Special Thanks:
