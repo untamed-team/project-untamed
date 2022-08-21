@@ -399,11 +399,27 @@ MarsTemple
 Firedude
 -----------
 -----------
-Created by:
+
+-----------
+-----------
+Wiki:
+MarsTemple
+Chespin (Ethan)
+-----------
+-----------
+
+
+-----------
+-----------
+Mazah original concept:
 
 Subjectively
 Jack
 Claire
+-----------
+-----------
+
+
 -----------
 -----------
 Special Thanks:
@@ -445,8 +461,11 @@ Based on MKXP by Ancurio et al.
 
 "RPG Maker XP" by:
 Enterbrain
+-----------
+-----------
 
--------------------
+-----------
+-----------
 Closing Statement
 Pokémon is owned by:
 The Pokémon Company
@@ -456,7 +475,12 @@ Affiliated with Game Freak
 This is a non-profit fan-made game.
 No copyright infringements intended.
 Please support the official games!
+-----------
+-----------
 
 
-
+-----------
+-----------
 Links to Creators:
+-----------
+-----------
