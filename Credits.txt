@@ -129,7 +129,7 @@ ENLS
 
 ====================
 
-Game general:
+Game:
 
 
 -----------
@@ -320,6 +320,7 @@ Gardenette
 Luc_
 Shilo
 sneakysnek
+Hypnos
 -----------
 -----------
 
