@@ -78,11 +78,11 @@ Golisopod User
 Luka's Scripting Utilities:
 Luka S.J.
 
-Modern Quest System + UI:
-ThatWelshOne_,mej71,derFischae,Marin
-
 Marin's Scripting Utilities:
 Marin
+
+Modern Quest System + UI:
+ThatWelshOne_,mej71,derFischae,Marin
 
 Overworld Shadows EX:
 Golisopod User, Wolf PP, Marin
