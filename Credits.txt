@@ -33,6 +33,17 @@ Better Region Map:
 Marin
 Boonzeet
 
+DexNav:
+Phantombass
+suzerain
+NuriYuri
+raZ
+Vendily
+Savordez
+Marin
+Zaffre
+ThatWelshOne_
+
 DiegoWT's Starter Selection:
 DiegoWT
 
@@ -46,9 +57,6 @@ ENLS
 
 Easy Mouse System:
 Luka S.J.
-
-Encounter List UI:
-ThatWelshOne_,raZ,Marin,Maruno,Nuri Yuri,PurpleZaffre,Savordez,Vendily
 
 Evolve from Party:
 IndianAnimator, eriedaberrie#1569
@@ -70,11 +78,11 @@ Golisopod User
 Luka's Scripting Utilities:
 Luka S.J.
 
-Modern Quest System + UI:
-ThatWelshOne_,mej71,derFischae,Marin
-
 Marin's Scripting Utilities:
 Marin
+
+Modern Quest System + UI:
+ThatWelshOne_,mej71,derFischae,Marin
 
 Overworld Shadows EX:
 Golisopod User, Wolf PP, Marin
@@ -169,7 +177,8 @@ Rider Dragon
 
 -----------
 Pokémon & Pokédex:
-Jack from Subjectively (Magik_Jack)
+Jack
+Claire
 Evelyn315
 Akikaze
 Firedude
@@ -218,7 +227,8 @@ WillTheWall
 
 -----------
 Trainers/NPCs:
-Jack from Subjectively (Magik_Jack)
+Jack
+Claire
 Loretze
 ventesthefloof
 RockTomb
@@ -250,6 +260,7 @@ MarsTemple
 Riot
 Master_Machi
 Chespin (Ethan)
+Jackster
 -----------
 
 -----------
@@ -390,6 +401,13 @@ Bee
 Luc_
 MarsTemple
 Firedude
+-----------
+-----------
+Created by:
+
+Subjectively
+Jack
+Claire
 -----------
 -----------
 Special Thanks:
