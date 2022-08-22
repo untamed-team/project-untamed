@@ -2,7 +2,7 @@
 
 ====================
 
-Scripts & Coding
+-Scripts & Coding-
 
 Pokémon Essentials:
 Maruno
@@ -11,13 +11,15 @@ Tweaks to Essentials:
 Derxwna Kapsyla
 
 Advanced HM Items:
-Moyo, Marin
+Moyo
+Marin
 
 Advanced Map Transfers:
 Luka S.J.
 
 Always in Bushes:
-Kotaro, KleinStudio
+Kotaro
+KleinStudio
 
 Ambient Pokémon Cries:
 Vendily
@@ -27,7 +29,9 @@ Astralneko's Scripting Utilities:
 Astralneko
 
 Bag Screen with Interactable Party:
-DiegoWT,Rose,Vendily
+DiegoWT
+Rose
+Vendily
 
 Better Region Map:
 Marin
@@ -59,13 +63,24 @@ Easy Mouse System:
 Luka S.J.
 
 Evolve from Party:
-IndianAnimator, eriedaberrie#1569
+IndianAnimator
+eriedaberrie
 
 EVs and IVs in Summary:
 Deoxysprime
 
 Following Pokémon EX:
-Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+Golisopod User
+Help-14
+zingzags
+Rayd12smitty
+Venom12
+mej71
+PurpleZaffre
+Akizakura16
+Thundaga
+Armin (Fairies Resource Pack)
+Maruno
 
 Item Find:
 Boonzeet
@@ -82,10 +97,15 @@ Marin's Scripting Utilities:
 Marin
 
 Modern Quest System + UI:
-ThatWelshOne_,mej71,derFischae,Marin
+ThatWelshOne_
+mej71
+derFischae
+Marin
 
 Overworld Shadows EX:
-Golisopod User, Wolf PP, Marin
+Golisopod User
+Wolf PP
+Marin
 
 Monitor Icons:
 Ulithium_Dragon
@@ -129,10 +149,9 @@ ENLS
 
 ====================
 
-Game:
+-Game-
 
 
------------
 -----------
 Main devs:
 
@@ -141,15 +160,11 @@ Gardenette
 Low
 stygma
 -----------
------------
 
-
------------
------------
-Graphics:
 
 -----------
 Tilesets:
+
 Tyler Jones - Environmental Designer
 GreenJellybean
 ventesthefloof
@@ -170,8 +185,10 @@ the.sizzlepanda
 Rider Dragon
 -----------
 
+
 -----------
 Pokémon & Pokédex:
+
 Jack
 Claire
 Evelyn315
@@ -220,8 +237,10 @@ SomeAllay
 WillTheWall
 -----------
 
+
 -----------
 Trainers/NPCs:
+
 Jack
 Claire
 Loretze
@@ -240,8 +259,10 @@ TheRoyalDex
 MILKMAN
 -----------
 
+
 -----------
 UI & Misc.:
+
 Random Talking Bush
 aball
 Adam
@@ -258,24 +279,17 @@ Chespin (Ethan)
 Jackster
 -----------
 
+
 -----------
-Music:
+Music & Pokémon Cries:
 
 Rhythm Break
 ReMX Bossa Nova
------------
-
------------
-Pokémon Cries:
 Gardenette
 Text 206
 -----------
 
------------
------------
 
-
------------
 -----------
 Mapping:
 
@@ -288,10 +302,8 @@ MANGO
 RISH
 Shadows
 -----------
------------
 
 
------------
 -----------
 Eventing:
 
@@ -300,20 +312,18 @@ SpaceWestern
 stygma
 Gardenette
 -----------
------------
 
 
------------
 -----------
 Story & Quests:
 
 Angel
 BlueLightning
+DeinoNuggies
 Firedude
 Kyl-E
 Gardenette
 ThisGrainCharacter (Gluten Free)
-DeinoNuggies
 HwiteHwale
 Krabby Enthusiast
 Gardenette
@@ -322,11 +332,11 @@ Shilo
 sneakysnek
 Hypnos
 -----------
------------
+
 
 -----------
------------
 Game Data & Balancing (like adding dex entries or trainer classes, PBS, etc.):
+
 Malarkey3072
 Kyl-E
 Low
@@ -352,10 +362,8 @@ Shadows
 Waffler
 Zyuran
 -----------
------------
 
 
------------
 -----------
 Translating:
 
@@ -367,10 +375,8 @@ Hey
 Truegear
 Wowo
 -----------
------------
 
 
------------
 -----------
 Playtesting:
 
@@ -381,10 +387,8 @@ Saltilton
 Blind guy,i guess
 Jamadxx
 -----------
------------
 
 
------------
 -----------
 Team organization:
 
@@ -398,38 +402,39 @@ Luc_
 MarsTemple
 Firedude
 -----------
------------
+
 
 -----------
------------
 Wiki:
+
 MarsTemple
 Chespin (Ethan)
 -----------
------------
 
+====================
 
------------
------------
-Mazah original concept:
+-Mazah original concept-
 
-Subjectively
+Subjectively group
 Jack
 Claire
------------
------------
 
+====================
+
+-Special Thanks-
 
 -----------
------------
-Special Thanks:
-
 "Pokémon Essentials" was created by:
+
 Flameguru
 Poccil (Peter O.)
 Maruno
+-----------
 
+
+-----------
 With contributions from:
+
 AvatarMonkeyKirby
 Marin
 Boushy
@@ -454,33 +459,38 @@ Lisa Anthony
 Wachunga
 Luka S.J.
 And everyone else who helped out with Pokemon Essentials
+-----------
 
+
+-----------
 "mkxp-z" by:
+
 Roza
 Based on MKXP by Ancurio et al.
+-----------
 
+
+-----------
 "RPG Maker XP" by:
+
 Enterbrain
 -----------
------------
 
------------
------------
-Closing Statement
+====================
+
+-Closing Statement-
+
 Pokémon is owned by:
+
 The Pokémon Company
 Nintendo
 Affiliated with Game Freak
 
 This is a non-profit fan-made game.
+No one has got anymoney from it.
 No copyright infringements intended.
 Please support the official games!
------------
------------
 
+====================
 
------------
------------
 Links to Creators:
------------
------------
