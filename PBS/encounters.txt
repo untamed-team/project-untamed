@@ -31,7 +31,9 @@ Land,21
     10,PURRLOIN,4,5
     5,DRILBUR,2,6
 Corn,8
-    20,ZEAZAYA,5
+    75,ZEAZAYA,5
+    20,HOOTHOOT,3,4
+    5,DRILBUR,2,6
 #-------------------------------
 [079] # Hacienda
 Water,2
@@ -53,4 +55,6 @@ Land,21
     10,HOOTHOOT,2,3
     5,CAFECARACHA,3,4
 Corn,8
-    20,ZEAZAYA,5
+    75,ZEAZAYA,5
+    20,WRENNER,3,5
+    5,PACUNA,2,4
