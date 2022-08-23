@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 1,MEGAHORN,Megahorn,000,120,BUG,Physical,85,10,0,NearOther,0,abef,"Using its tough and impressive horn, the user rams into the target with no letup."
 2,ATTACKORDER,Attack Order,000,90,BUG,Physical,100,15,0,NearOther,0,befh,"The user calls out its underlings to pummel the target. Critical hits land more easily."
@@ -729,4 +729,4 @@
 709,SIRENSONG,Siren Song,003,75,WATER,Special,100,10,10,NearOther,0,befk,"An ancient song appeals to the hearts of those listening. It may also induce sleep."
 710,REBALANCING,Rebalancing,503,0,FIGHTING,Status,100,5,0,NearOther,0,bce,"The user buffs an ally or nerfs a foe by raising or sharply lowering their highest stat."
 711,FRIGIDMAW,Frigid Maw,044,80,ICE,Physical,100,5,100,NearOther,0,abei,"The user hunts down its foe with a deadly precision chomp, which lowers their speed."
-712,STEAMBURST,Steam Burst,503,75,FIRE,Special,100,10,0,NearOther,0,abef,"The move’s power is boosted in rain."
+712,STEAMBURST,Steam Burst,503,75,FIRE,Special,100,10,0,NearOther,0,abef,"The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain."
