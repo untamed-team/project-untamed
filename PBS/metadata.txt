@@ -26,7 +26,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 HealingSpot = 19,10,18
-Weather = YellowPetals,100
+Weather = Marigolds,100
 MapPosition = 0,20,3
 #-------------------------------
 [005]
@@ -34,7 +34,7 @@ MapPosition = 0,20,3
 Outdoor = true
 ShowArea = true
 Bicycle = true
-Weather = YellowPetals,100
+Weather = Marigolds,100
 TrainerBattleBGM = joropo_zona_1.ogg
 HearCries = true
 #-------------------------------
