@@ -34,6 +34,7 @@ MapPosition = 0,20,3
 Outdoor = true
 ShowArea = true
 Bicycle = true
+Weather = YellowPetals,100
 TrainerBattleBGM = joropo_zona_1.ogg
 HearCries = true
 #-------------------------------
