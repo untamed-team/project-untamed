@@ -25,6 +25,7 @@ Bicycle = false
 Outdoor = true
 ShowArea = true
 Bicycle = true
+Weather = YellowPetals,100
 #-------------------------------
 [005]
 # San Cerigold Cemetery
