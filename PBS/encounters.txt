@@ -30,7 +30,7 @@ Land,21
     10,HOOTHOOT,3,4
     10,PURRLOIN,4,5
     5,DRILBUR,2,6
-Corn,8
+Corn,5
     75,ZEAZAYA,5
     20,HOOTHOOT,3,4
     5,DRILBUR,2,6
@@ -54,7 +54,7 @@ Land,21
     15,WRENNER,3,5
     10,HOOTHOOT,2,3
     5,CAFECARACHA,3,4
-Corn,8
+Corn,5
     75,ZEAZAYA,5
     20,WRENNER,3,5
     5,PACUNA,2,4
