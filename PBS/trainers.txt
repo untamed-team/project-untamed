@@ -138,11 +138,6 @@ LoseText = "I need some water..."
 Pokemon = SUNKERN,9
 Pokemon = DRILBUR,11
 #-------------------------------
-[TEST,Confuse Me]
-LoseText = "..."
-Pokemon = PORSITE,100
-    Moves = CONFUSERAY
-#-------------------------------
 [HEXMANIAC,Moza]
 LoseText = "Would you like to see a magic trick?"
 Pokemon = M_ROSELIA,9
