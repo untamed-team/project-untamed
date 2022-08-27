@@ -68,7 +68,6 @@ FormName = White Flower
 #-------------------------------
 [FLOETTE,1]
 FormName = Yellow Flower
-BattlerPlayerY = 12
 #-------------------------------
 [FLOETTE,2]
 FormName = Orange Flower
@@ -87,6 +86,7 @@ HiddenAbility = FAIRYAURA
 Moves = 1,TACKLE,1,VINEWHIP,1,FAIRYWIND,6,FAIRYWIND,10,LUCKYCHANT,15,RAZORLEAF,20,WISH,25,MAGICALLEAF,27,GRASSYTERRAIN,33,PETALBLIZZARD,38,AROMATHERAPY,43,MISTYTERRAIN,46,MOONBLAST,50,LIGHTOFRUIN,51,PETALDANCE,58,SOLARBEAM
 Compatibility = Undiscovered
 Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
+BattlerPlayerX = -6
 BattlerPlayerY = 6
 BattlerEnemyY = 6
 BattlerShadowSize = 2
