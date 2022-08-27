@@ -3,7 +3,7 @@
 [0]
 Name = 
 Filename = mapRegion0.png
-Point = 19,5,Veravalles Town,,,,,
+Point = 19,5,Veravalles Town,Ceiba's Lab,22,18,11,
 Point = 20,5,Route 1,,,,,
 Point = 20,4,Route 1,,,,,
 Point = 20,3,San Cerigold Town,,,,,

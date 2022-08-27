@@ -25,6 +25,7 @@ Bicycle = false
 Outdoor = true
 ShowArea = true
 Bicycle = true
+HealingSpot = 19,10,18
 Weather = YellowPetals,100
 #-------------------------------
 [005]
@@ -44,6 +45,7 @@ ShowArea = false
 Outdoor = true
 ShowArea = true
 Bicycle = true
+HealingSpot = 33,4,9
 MapPosition = 0,19,5
 HearCries = false
 #-------------------------------
