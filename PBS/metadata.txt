@@ -27,6 +27,7 @@ ShowArea = true
 Bicycle = true
 HealingSpot = 19,10,18
 Weather = YellowPetals,100
+MapPosition = 0,20,3
 #-------------------------------
 [005]
 # San Cerigold Cemetery
@@ -81,6 +82,7 @@ HearCries = true
 Outdoor = true
 ShowArea = true
 Bicycle = true
+MapPosition = 0,18,3
 HearCries = true
 #-------------------------------
 [081]
