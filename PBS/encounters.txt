@@ -1,5 +1,15 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
+[005] # San Cerigold Cemetery
+Land,21
+    30,LILORINA,5,10
+    15,DUSKULL,6,8
+    20,FLABEBE,5,6
+    15,GOTHITA,7,9
+    15,BUDEW,5,8
+    5,MURKROW,4,7
+    5,VULPIX,5,7
+#-------------------------------
 [022] # Veravalles Town
 Water,2
     60,LOTAD,8,11
@@ -35,7 +45,7 @@ Corn,5
     20,HOOTHOOT,3,4
     5,DRILBUR,2,6
 #-------------------------------
-[079] # Hacienda
+[079] # Hacienda Castaneda
 Water,2
     60,LOTAD,8,11
     40,DEWPIDER,8,11
