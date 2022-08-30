@@ -51,6 +51,7 @@ class PokemonPokedexInfo_Scene
     @sprites["formback"].setOffset(PictureOrigin::Center)
   # Changes the X position of the back sprite of the Pokémon in the Forms Page  
     @sprites["formback"].x = 124  
+    @sprites["formback"].y = 240
     @sprites["formicon"] = PokemonSpeciesIconSprite.new(nil, @viewport)
     @sprites["formicon"].setOffset(PictureOrigin::Center)
   # Changes the X and Y position of the icon sprite of the Pokémon in the 
@@ -153,7 +154,7 @@ class PokemonPokedexInfo_Scene
       @sprites["formback"].setSpeciesBitmap(@species,@gender,@form,false,false,true)
   # This one was a bit hard to find, but it changes the Y position of the 
   # backsprite of the Pokémon in the Forms Page
-      @sprites["formback"].y = 226
+      #@sprites["formback"].y = 226
     end
     if @sprites["formicon"]
       @sprites["formicon"].pbSetParams(@species,@gender,@form)
