@@ -2,8 +2,8 @@
 #-------------------------------
 [000]
 Home = 33,6,6,6
-WildBattleBGM = Battle wild.mid
-TrainerBattleBGM = Battle trainer.mid
+WildBattleBGM = Battle Generic Wild.ogg
+TrainerBattleBGM = Battle Generic Trainer.mp3
 WildVictoryME = Battle victory wild.ogg
 TrainerVictoryME = Battle victory trainer.ogg
 SurfBGM = Surfing.mid
