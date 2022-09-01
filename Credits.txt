@@ -165,10 +165,9 @@ stygma
 -----------
 Tilesets:
 
-Tyler Jones - Environmental Designer
 GreenJellybean
-ventesthefloof
-Griffin L
+VentesTheFloof
+Griffin L.
 Kaloja
 Saltilton
 Aveon Trainer
@@ -179,10 +178,13 @@ Princess Phoenix
 Donlawride
 aball
 Cristata
-Groogey
+Tyler Jones
 ShadySheep
 the.sizzlepanda
 Rider Dragon
+Kutas Kitti
+Pint Sized Kiwi
+Jackeroni216
 -----------
 
 
@@ -194,22 +196,22 @@ Claire
 Evelyn315
 Akikaze
 Firedude
-LuckyBenjamin the Appletun
+LuckyBenjamin
 Loretze
 Applesaucior
 farbol234
 SoundJack426
 8xviktor
-ventesthefloof
+VentesTheFloof
 RockTomb
 Ian (The Picky Pixel Artist)
 Saltilton
-theWaterleaf
-Soda
+Waterleaf
+Sodacat
 Lorka_Grey
 KameOtaku
 Dan Bacon
-MillerMiller
+MadMillerMiller
 Cristata
 I’m Para
 Jeremy K
@@ -217,24 +219,26 @@ Hub-Bub
 Master_Machi
 Pelican
 Bean Soup
-A Happi Rapter
+A Slime Psycho
 aball
-Bee
-Chespin (Ethan)
+HingisDingus
+Chespin_Craft
 Chromatech01
 Eshan
 Fikolyte
 Floriak
-gribbin
+Griffin L.
 Grimrose
 Igor!
-MarsTemple
+Lukas Y.
 Regal-Turtwig
 ShadySheep
 SietseML
 Solvaa
 SomeAllay
 WillTheWall
+Venom_
+painT
 -----------
 
 
@@ -244,19 +248,21 @@ Trainers/NPCs:
 Jack
 Claire
 Loretze
-ventesthefloof
+VentesTheFloof
 RockTomb
 Saltilton
 HingisDingus
-Chespin (Ethan)
+Chespin_Craft
 Akikaze
 KameOtaku
 Gardenette
-Zacharie
-MillerMiller
-Bee
-TheRoyalDex
+BamBoshBubb
+MadMillerMiller
+TheFallenRoyal
 MILKMAN
+HwiteHwale
+Cristata
+aball
 -----------
 
 
@@ -265,18 +271,22 @@ UI & Misc.:
 
 Random Talking Bush
 aball
-Adam
+Adam B.
 Dan Bacon
 Basalte
 HwiteHwale
-MillerMiller
+MadMillerMiller
 Gardenette
-MANGO
-MarsTemple
+Tyler (MANGO) Jackson
+Lukas Y.
 Riot
 Master_Machi
-Chespin (Ethan)
+Chespin_Craft
 Jackster
+Saltilton
+Fikolyte
+Cristata
+Jeremy K
 -----------
 
 
@@ -287,6 +297,7 @@ Rhythm Break
 ReMX Bossa Nova
 Gardenette
 Text 206
+Purple Hat of Awesome
 -----------
 
 
@@ -298,9 +309,11 @@ ImaDeadMan
 Gardenette
 Kaloja
 GreenJellybean
-MANGO
+Tyler (MANGO) Jackson
 RISH
 Shadows
+Kutas Kitti
+MadMillerMiller
 -----------
 
 
@@ -319,25 +332,29 @@ Story & Quests:
 
 Angel
 BlueLightning
-DeinoNuggies
+Deino
 Firedude
 Kyl-E
 Gardenette
-ThisGrainCharacter (Gluten Free)
+ThisGrainCharacter
 HwiteHwale
-Krabby Enthusiast
+PaperTowelDealer
 Gardenette
 Luc_
 Shilo
 sneakysnek
-Hypnos
+Yadriel J. Vento (HypnosEmblem)
+Scandal
+Tyler Bland
+Bean Soup
+LuckyBenjamin
 -----------
 
 
 -----------
 Game Data & Balancing (like adding dex entries or trainer classes, PBS, etc.):
 
-Malarkey3072
+Malarkey
 Kyl-E
 Low
 SpaceWestern
@@ -347,13 +364,13 @@ MacheteMcGoo
 noahthenumbat
 DomTom
 💙 w 💖
-Adam
+Adam B.
 caesar
 𝔈𝔪𝔭𝔶𝔯𝔢𝔞𝔫
 Garreon
 Hare64
 HwiteHwale
-MarsTemple
+Lukas Y.
 Midbus
 mSilk
 Robochef9000
@@ -361,30 +378,36 @@ Señor Gallo de Caballo
 Shadows
 Waffler
 Zyuran
+Scandal
+PaperTowelDealer
+LuckyBenjamin
 -----------
 
 
 -----------
 Translating:
 
-Blind guy,i guess
+Cawa/Sasha
 Fitch
 Basalte
 Floriak
 Hey
 Truegear
 Wowo
+Zylber7
+Myztic
+Abstractpuppet
 -----------
 
 
 -----------
 Playtesting:
 
-Chespin (Ethan)
-ventesthefloof
+Chespin_Craft
+VentesTheFloof
 BlueLightning
 Saltilton
-Blind guy,i guess
+Cawa/Sasha
 Jamadxx
 -----------
 
@@ -393,13 +416,12 @@ Jamadxx
 Team organization:
 
 stygma
-Katie
+Kutas Kitti
 HingisDingus
 Gardenette
 Master_Machi
-Bee
 Luc_
-MarsTemple
+Lukas Y.
 Firedude
 -----------
 
@@ -407,8 +429,8 @@ Firedude
 -----------
 Wiki:
 
-MarsTemple
-Chespin (Ethan)
+Lukas Y.
+Chespin_Craft
 -----------
 
 ====================
