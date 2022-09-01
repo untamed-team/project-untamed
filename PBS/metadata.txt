@@ -59,7 +59,6 @@ Bicycle = true
 MapPosition = 0,20,4
 BattleBack = field
 WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
-TrainerBattleBGM = BW 126 Battle! (Trainer Battle).ogg
 WildVictoryME = Battle victory wild.ogg
 TrainerVictoryME = Battle victory trainer.ogg
 WildCaptureME = Battle victory.ogg
@@ -90,7 +89,6 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,18,3
 WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
-TrainerBattleBGM = BW 126 Battle! (Trainer Battle).ogg
 HearCries = true
 #-------------------------------
 [081]
