@@ -39,7 +39,7 @@ TrainerBattleBGM = joropo_zona_1.ogg
 HearCries = true
 #-------------------------------
 [019]
-# San Cerigold Poké Center
+# San Cerigold PC
 ShowArea = false
 #-------------------------------
 [022]
@@ -58,6 +58,11 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
 BattleBack = field
+WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
+TrainerBattleBGM = BW 126 Battle! (Trainer Battle).ogg
+WildVictoryME = Battle victory wild.ogg
+TrainerVictoryME = Battle victory trainer.ogg
+WildCaptureME = Battle victory.ogg
 HearCries = true
 #-------------------------------
 [076]
@@ -79,11 +84,13 @@ Bicycle = true
 HearCries = true
 #-------------------------------
 [079]
-# Hacienda
+# Hacienda Castaneda
 Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,18,3
+WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
+TrainerBattleBGM = BW 126 Battle! (Trainer Battle).ogg
 HearCries = true
 #-------------------------------
 [081]
