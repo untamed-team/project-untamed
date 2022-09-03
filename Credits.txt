@@ -212,7 +212,7 @@ Cristata
 I’m Para
 Jeremy K
 Hub-Bub
-Master_Machi
+MasterMachi
 Pelican
 Bean Soup
 A Slime Psycho
@@ -226,7 +226,6 @@ Floriak
 Griffin L.
 Grimrose
 Igor!
-Lukas Y.
 Regal-Turtwig
 ShadySheep
 SietseML
@@ -274,9 +273,8 @@ HwiteHwale
 MadMillerMiller
 Gardenette
 Tyler (MANGO) Jackson
-Lukas Y.
 Riot
-Master_Machi
+MasterMachi
 Chespin_Craft
 Jackster
 Saltilton
@@ -344,6 +342,7 @@ Scandal
 Tyler Bland
 Bean Soup
 LuckyBenjamin
+MasterMachi
 -----------
 
 
@@ -366,7 +365,6 @@ caesar
 Garreon
 Hare64
 HwiteHwale
-Lukas Y.
 Midbus
 mSilk
 Robochef9000
@@ -415,9 +413,8 @@ stygma
 Kutas Kitti
 HingisDingus
 Gardenette
-Master_Machi
+MasterMachi
 Luc_
-Lukas Y.
 Firedude
 -----------
 
@@ -425,7 +422,6 @@ Firedude
 -----------
 Wiki:
 
-Lukas Y.
 Chespin_Craft
 -----------
 
