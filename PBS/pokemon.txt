@@ -1856,7 +1856,7 @@ BattlerPlayerY = 20
 BattlerEnemyX = 0
 BattlerEnemyY = 20
 BattlerShadowX = 0
-BattlerShadowSize = 2
+BattlerShadowSize = 1
 Score = 0
 Evolutions = TREVENANT,Trade,
 #-------------------------------
