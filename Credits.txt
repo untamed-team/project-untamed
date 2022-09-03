@@ -151,17 +151,6 @@ ENLS
 
 -Game-
 
-
------------
-Main devs:
-
-SpaceWestern
-Gardenette
-Low
-stygma
------------
-
-
 -----------
 Tilesets:
 
