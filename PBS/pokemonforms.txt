@@ -12,6 +12,7 @@ FormName = Large Size
 BaseStats = 54,66,70,46,44,55
 Height = 0.5
 Weight = 7.5
+BattlerShadowSize = 2
 #-------------------------------
 [PUMPKABOO,3]
 FormName = Super Size
@@ -22,6 +23,7 @@ Weight = 15.0
 WildItemCommon = MIRACLESEED
 WildItemUncommon = MIRACLESEED
 WildItemRare = MIRACLESEED
+BattlerShadowSize = 2
 #-------------------------------
 [GOURGEIST,1]
 FormName = Average Size
