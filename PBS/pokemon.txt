@@ -2540,8 +2540,8 @@ BattlerShadowSize = 0
 Score = 0
 #-------------------------------
 [104]
-Name = Atelanger
-InternalName = ATELANGER
+Name = Atelangler
+InternalName = ATELANGLER
 Type1 = NORMAL
 BaseStats = 70,95,65,66,80,89
 GenderRate = Female50Percent
