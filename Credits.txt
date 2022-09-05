@@ -121,6 +121,11 @@ Vendily
 SpaceWestern
 Gardenette
 
+Name-box:
+mej71
+Vendily
+theo#7722
+
 Pokémon Amie:
 PizzaSun, rigbycwts (v.17)
 BhagyaJyoti (v.18)
