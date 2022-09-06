@@ -2,13 +2,13 @@
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
-    30,LILORINA,5,10
-    15,DUSKULL,6,8
-    20,FLABEBE,5,6
-    15,GOTHITA,7,9
+    20,LILORINA,5,10
+    20,DUSKULL,6,8
+    15,FLABEBE,5,6
     15,BUDEW,5,8
-    5,MURKROW,4,7
-    5,VULPIX,5,7
+    10,MURKROW,4,7
+    10,VULPIX,5,7
+    10,GOTHITA,7,9
 #-------------------------------
 [022] # Veravalles Town
 Water,2
@@ -24,24 +24,17 @@ GoodRod
 #-------------------------------
 [048] # Route 1
 Land,21
-    30,PACUNA,2,4
-    20,MINIMELO,2,4
+    25,PACUNA,2,4
+    25,MINIMELO,2,4
     20,WRENNER,2,4
-    15,FLABEBE,2,3
+    10,FLABEBE,2,3
     10,LEDYBA,2,3
-    5,SUNKERN,2,3
+    10,SUNKERN,2,3
 #-------------------------------
 [078] # Hacienda (Back)
-Land,21
-    35,ZEAZAYA,4,5
-    15,PUMPKABOO,3,4
-    15,SUNKERN,3,5
-    10,CAFECARACHA,3,5
-    10,HOOTHOOT,3,4
-    10,PURRLOIN,4,5
-    5,DRILBUR,2,6
 Corn,5
-    75,ZEAZAYA,5
+    50,ZEAZAYA,5,7
+    25,CAFECARACHA,4,6
     20,HOOTHOOT,3,4
     5,DRILBUR,2,6
 #-------------------------------
