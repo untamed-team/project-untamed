@@ -91,7 +91,7 @@ Pokemon = PUMPKABOO,10
 Pokemon = PHANTUMP,10
 #-------------------------------
 [PSYCHIC_F2,Maya]
-LoseText = "Sigh…"
+LoseText = "<i>Sigh...</i>"
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
     Ability = FLAMEBODY
