@@ -7,6 +7,9 @@ Scripts & Coding
 Advanced Map Transfers:
 Luka S.J.
 
+Advanced Pokédex:
+FL
+
 Always in Bushes:
 Kotaro
 KleinStudio
@@ -18,6 +21,9 @@ SpaceWestern
 Astralneko's Scripting Utilities:
 Astralneko
 
+Automatic Level Scaling:
+Benitex
+
 Bag Screen with Interactable Party:
 DiegoWT
 Rose
@@ -26,18 +32,6 @@ Vendily
 Better Region Map:
 Marin
 Boonzeet
-
-New DexNav:
-Phantombass
-suzerain
-NuriYuri
-raZ
-Vendily
-Savordez
-Marin
-Zaffre
-ThatWelshOne_
-Low
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -115,6 +109,18 @@ Savordez
 Vendily
 SpaceWestern
 Gardenette
+
+New DexNav:
+Phantombass
+suzerain
+NuriYuri
+raZ
+Vendily
+Savordez
+Marin
+Zaffre
+ThatWelshOne_
+Low
 
 Overworld Shadows EX:
 Golisopod User
