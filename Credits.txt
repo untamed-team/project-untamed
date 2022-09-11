@@ -2,18 +2,8 @@
 
 ====================
 
--Scripts & Coding-
-
-Pokémon Essentials:
-Maruno
-
-Tweaks to Essentials:
-Derxwna Kapsyla
-
-Advanced HM Items:
-Moyo
-Marin
-
+Scripts & Coding
+----------------
 Advanced Map Transfers:
 Luka S.J.
 
@@ -37,7 +27,7 @@ Better Region Map:
 Marin
 Boonzeet
 
-DexNav:
+New DexNav:
 Phantombass
 suzerain
 NuriYuri
@@ -47,6 +37,7 @@ Savordez
 Marin
 Zaffre
 ThatWelshOne_
+Low
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -79,14 +70,15 @@ mej71
 PurpleZaffre
 Akizakura16
 Thundaga
-Armin (Fairies Resource Pack)
+Armin
 Maruno
 
 Item Find:
 Boonzeet
 
 Location Signposts:
-LostSoulsDev / carmaniac
+LostSoulsDev
+carmaniac
 PurpleZaffre
 Golisopod User
 
@@ -101,11 +93,14 @@ ThatWelshOne_
 mej71
 derFischae
 Marin
+SpaceWestern
 
-Overworld Shadows EX:
+Name-box:
+Mr.Gela (theo#7722)
 Golisopod User
-Wolf PP
-Marin
+mej71
+Gardenette
+Vendily
 
 Monitor Icons:
 Ulithium_Dragon
@@ -121,23 +116,27 @@ Vendily
 SpaceWestern
 Gardenette
 
-Name-box:
-mej71
-Vendily
-theo#7722
+Overworld Shadows EX:
+Golisopod User
+Wolf PP
+Marin
 
 Pokémon Amie:
-PizzaSun, rigbycwts (v.17)
-BhagyaJyoti (v.18)
-Luka S.J (mask bitmap)
+PizzaSun
+rigbycwts
+BhagyaJyoti
+Luka S.J
 bo4p5687
 
 Quicksave:
 Low
 
 Speed Up 2.0:
-Marin for the original script
-Phantombass for updating to 19.1
+Marin
+Phantombass
+
+Tweaks to Essentials:
+Derxwna Kapsyla
 
 Video with Using Gif:
 bo4p5687
@@ -152,13 +151,18 @@ Voltseon
 Golisopod User
 ENLS
 
-====================
 
--Game-
 
------------
+
+
+
+
+
+
+
+Graphics
+--------
 Tilesets:
-
 GreenJellybean
 VentesTheFloof
 Griffin L.
@@ -186,12 +190,8 @@ PrincessPhoenix
 Seiyouh
 BE_Infinity
 Magiscarf
------------
 
-
------------
 Pokémon & Pokédex:
-
 Jack
 Claire
 Evelyn315
@@ -239,12 +239,8 @@ SomeAllay
 WillTheWall
 Venom_
 painT
------------
 
-
------------
 Trainers/NPCs:
-
 Jack
 Claire
 Loretze
@@ -263,12 +259,8 @@ MILKMAN
 HwiteHwale
 Cristata
 aball
------------
 
-
------------
 UI & Misc.:
-
 Random Talking Bush
 aball
 Adam B.
@@ -286,23 +278,38 @@ Saltilton
 Fikolyte
 Cristata
 Jeremy K
------------
 
 
------------
-Music & Pokémon Cries:
 
+
+
+
+
+
+
+
+Music
+-----
+Soundtrack:
 Rhythm Break
 ReMX Bossa Nova
+Purple Hat of Awesome
+
+Pokémon Cries:
 Gardenette
 Text 206
-Purple Hat of Awesome
------------
 
 
------------
-Mapping:
 
+
+
+
+
+
+
+
+Mapping
+-------
 stygma
 ImaDeadMan
 Gardenette
@@ -313,22 +320,35 @@ RISH
 Shadows
 Kutas Kitti
 MadMillerMiller
------------
 
 
------------
-Eventing:
 
+
+
+
+
+
+
+
+Eventing
+--------
 Low
 SpaceWestern
 stygma
 Gardenette
------------
+Kutas Kitti
 
 
------------
-Story & Quests:
 
+
+
+
+
+
+
+
+Story & Quests
+--------------
 Angel
 BlueLightning
 Deino
@@ -348,12 +368,18 @@ Tyler Bland
 Bean Soup
 LuckyBenjamin
 MasterMachi
------------
 
 
------------
-Game Data & Balancing (like adding dex entries or trainer classes, PBS, etc.):
 
+
+
+
+
+
+
+
+Game Data & Balancing
+---------------------
 Malarkey
 Kyl-E
 Low
@@ -363,7 +389,7 @@ Gardenette
 MacheteMcGoo
 noahthenumbat
 DomTom
-💙 w 💖
+Amber W
 Adam B.
 caesar
 𝔈𝔪𝔭𝔶𝔯𝔢𝔞𝔫
@@ -380,12 +406,18 @@ Zyuran
 Scandal
 PaperTowelDealer
 LuckyBenjamin
+
+
+
+
+
+
+
+
+
+
+Translating
 -----------
-
-
------------
-Translating:
-
 Cawa/Sasha
 Fitch
 Basalte
@@ -396,24 +428,36 @@ Wowo
 Zylber7
 Myztic
 Abstractpuppet
+
+
+
+
+
+
+
+
+
+
+Playtesting
 -----------
-
-
------------
-Playtesting:
-
 Chespin_Craft
 VentesTheFloof
 BlueLightning
 Saltilton
 Cawa/Sasha
 Jamadxx
------------
 
 
------------
-Team organization:
 
+
+
+
+
+
+
+
+Team Organization
+-----------------
 stygma
 Kutas Kitti
 HingisDingus
@@ -421,39 +465,52 @@ Gardenette
 MasterMachi
 Luc_
 Firedude
------------
 
 
------------
-Wiki:
 
+
+
+
+
+
+
+
+Wiki
+----
 Chespin_Craft
------------
 
-====================
 
--Mazah original concept-
 
-Subjectively group
+
+
+
+
+
+
+
+Mazah Region Created by
+-----------------------
+Subjectively Group
 Jack
 Claire
 
-====================
 
--Special Thanks-
 
------------
+
+
+
+
+
+
+
+Special Thanks
+--------------
 "Pokémon Essentials" was created by:
-
 Flameguru
 Poccil (Peter O.)
 Maruno
------------
 
-
------------
 With contributions from:
-
 AvatarMonkeyKirby
 Marin
 Boushy
@@ -477,37 +534,24 @@ Venom12
 Lisa Anthony
 Wachunga
 Luka S.J.
-Lukas Y.
-And everyone else who helped out with Pokemon Essentials
------------
+Derxwna Kapsyla
+and everyone else who helped out
 
-
------------
 "mkxp-z" by:
-
 Roza
 Based on MKXP by Ancurio et al.
------------
 
-
------------
 "RPG Maker XP" by:
-
 Enterbrain
------------
-
-====================
-
--Closing Statement-
 
 Pokémon is owned by:
-
 The Pokémon Company
 Nintendo
 Affiliated with Game Freak
 
+
+
 This is a non-profit fan-made game.
-No one has got anymoney from it.
 No copyright infringements intended.
 Please support the official games!
 
