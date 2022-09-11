@@ -131,6 +131,9 @@ bo4p5687
 Quicksave:
 Low
 
+Set the Controls Screen:
+FL
+
 Speed Up 2.0:
 Marin
 Phantombass
@@ -214,7 +217,7 @@ KameOtaku
 Dan Bacon
 MadMillerMiller
 Cristata
-I’m Para
+I'm Para
 Jeremy K
 Hub-Bub
 MasterMachi
@@ -392,7 +395,7 @@ DomTom
 Amber W
 Adam B.
 caesar
-𝔈𝔪𝔭𝔶𝔯𝔢𝔞𝔫
+Empyrean
 Garreon
 Hare64
 HwiteHwale
