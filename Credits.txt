@@ -7,6 +7,9 @@ Scripts & Coding
 Advanced Map Transfers:
 Luka S.J.
 
+Advanced Pokédex:
+FL
+
 Always in Bushes:
 Kotaro
 KleinStudio
@@ -18,6 +21,9 @@ SpaceWestern
 Astralneko's Scripting Utilities:
 Astralneko
 
+Automatic Level Scaling:
+Benitex
+
 Bag Screen with Interactable Party:
 DiegoWT
 Rose
@@ -26,18 +32,6 @@ Vendily
 Better Region Map:
 Marin
 Boonzeet
-
-New DexNav:
-Phantombass
-suzerain
-NuriYuri
-raZ
-Vendily
-Savordez
-Marin
-Zaffre
-ThatWelshOne_
-Low
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -116,10 +110,28 @@ Vendily
 SpaceWestern
 Gardenette
 
+New DexNav:
+Phantombass
+suzerain
+NuriYuri
+raZ
+Vendily
+Savordez
+Marin
+Zaffre
+ThatWelshOne_
+Low
+
 Overworld Shadows EX:
 Golisopod User
 Wolf PP
 Marin
+
+Pokédex BW Style:
+DeepBlue
+PacificWaves
+NettoHikari
+Xtreme1992
 
 Pokémon Amie:
 PizzaSun
@@ -561,3 +573,9 @@ Please support the official games!
 ====================
 
 Links to Creators:
+
+Name = Pokedex BW Style
+Version = 1.4.1
+Requires = Luka's Scripting Utilities,3.2
+Credits = DeepBlue PacificWaves, NettoHikari, Xtreme1992
+Website = https://reliccastle.com/resources/510/
