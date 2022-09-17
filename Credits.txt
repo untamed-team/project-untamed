@@ -11,12 +11,12 @@ Advanced Pokédex:
 FL
 
 Always in Bushes:
-Kotaro
 KleinStudio
+Kotaro
 
 Ambient Pokémon Cries:
-Vendily
 SpaceWestern
+Vendily
 
 Astralneko's Scripting Utilities:
 Astralneko
@@ -30,8 +30,8 @@ Rose
 Vendily
 
 Better Region Map:
-Marin
 Boonzeet
+Marin
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -41,40 +41,40 @@ A.Somersault
 
 Easy Text Skip:
 Amethyst
-Kurotsune
 ENLS
+Kurotsune
 
 Easy Mouse System:
 Luka S.J.
 
 Evolve from Party:
-IndianAnimator
 eriedaberrie
+IndianAnimator
 
 EVs and IVs in Summary:
 Deoxysprime
 
 Following Pokémon EX:
+Akizakura16
+Armin
 Golisopod User
 Help-14
-zingzags
-Rayd12smitty
-Venom12
+Maruno
 mej71
 PurpleZaffre
-Akizakura16
+Rayd12smitty
 Thundaga
-Armin
-Maruno
+Venom12
+zingzags
 
 Item Find:
 Boonzeet
 
 Location Signposts:
-LostSoulsDev
 carmaniac
-PurpleZaffre
 Golisopod User
+LostSoulsDev
+PurpleZaffre
 
 Luka's Scripting Utilities:
 Luka S.J.
@@ -83,62 +83,62 @@ Marin's Scripting Utilities:
 Marin
 
 Modern Quest System + UI:
-ThatWelshOne_
-mej71
 derFischae
 Marin
+mej71
 SpaceWestern
+ThatWelshOne_
 
 Name-box:
-Mr.Gela (theo#7722)
+Gardenette
 Golisopod User
 mej71
-Gardenette
+Mr.Gela (theo#7722)
 Vendily
 
 Monitor Icons:
-Ulithium_Dragon
 bo4p5687
-ThatWelshOne_
-raZ
+Gardenette
 Marin
 Maruno
 Nuri Yuri
 PurpleZaffre
+raZ
 Savordez
-Vendily
 SpaceWestern
-Gardenette
+ThatWelshOne_
+Ulithium_Dragon
+Vendily
 
 New DexNav:
-Phantombass
-suzerain
-NuriYuri
-raZ
-Vendily
-Savordez
-Marin
-Zaffre
-ThatWelshOne_
 Low
+Marin
+NuriYuri
+Phantombass
+raZ
+Savordez
+suzerain
+ThatWelshOne_
+Vendily
+Zaffre
 
 Overworld Shadows EX:
 Golisopod User
-Wolf PP
 Marin
+Wolf PP
 
 Pokédex BW Style:
 DeepBlue
-PacificWaves
 NettoHikari
+PacificWaves
 Xtreme1992
 
 Pokémon Amie:
+BhagyaJyoti
+bo4p5687
+Luka S.J
 PizzaSun
 rigbycwts
-BhagyaJyoti
-Luka S.J
-bo4p5687
 
 Quicksave:
 Low
@@ -157,14 +157,14 @@ Video with Using Gif:
 bo4p5687
 
 Voltseon's A-Star Pathfinding:
-Voltseon
-Golisopod User
 ENLS
+Golisopod User
+Voltseon
 
 Voltseon's Pause Menu:
-Voltseon
-Golisopod User
 ENLS
+Golisopod User
+Voltseon
 
 
 
@@ -178,121 +178,121 @@ ENLS
 Graphics
 --------
 Tilesets:
-GreenJellybean
-VentesTheFloof
-Griffin L.
-Kaloja
-Saltilton
-Aveon Trainer
-Derlo
-King Tapia
-Magiscarf
-Princess Phoenix
-Donlawride
 aball
+Aveon Trainer
+Aveontrainer
+BE_Infinity
 Cristata
-Tyler Jones
+Derlo
+Donlawride
+GreenJellybean
+Griffin L.
+Jackeroni216
+Kaloja
+King Tapia
+Kutas Kitti
+Magiscarf
+Magiscarf
+Pint Sized Kiwi
+PokemonEclipse
+Princess Phoenix
+PrincessPhoenix
+Rider Dragon
+Saltilton
+Seiyouh
 ShadySheep
 the.sizzlepanda
-Rider Dragon
-Kutas Kitti
-Pint Sized Kiwi
-Jackeroni216
 Tinytrashing
-Aveontrainer
-PokemonEclipse
-PrincessPhoenix
-Seiyouh
-BE_Infinity
-Magiscarf
+Tyler Jones
+VentesTheFloof
 
 Pokémon & Pokédex:
-Jack
-Claire
-Evelyn315
-Akikaze
-Firedude
-LuckyBenjamin
-Loretze
-Applesaucior
-farbol234
-SoundJack426
 8xviktor
-VentesTheFloof
-RockTomb
-Ian (The Picky Pixel Artist)
-Saltilton
-Waterleaf
-Sodacat
-Lorka_Grey
-KameOtaku
-Dan Bacon
-MadMillerMiller
-Cristata
-I'm Para
-Jeremy K
-Hub-Bub
-MasterMachi
-Pelican
-Bean Soup
 A Slime Psycho
 aball
-HingisDingus
+Akikaze
+Applesaucior
+Bean Soup
 Chespin_Craft
 Chromatech01
+Claire
+Cristata
+Dan Bacon
 Eshan
+Evelyn315
+farbol234
 Fikolyte
+Firedude
 Floriak
 Griffin L.
 Grimrose
+HingisDingus
+Hub-Bub
+Ian (The Picky Pixel Artist)
 Igor!
-Regal-Turtwig
-ShadySheep
-SietseML
-Solvaa
-SomeAllay
-WillTheWall
-Venom_
-painT
-
-Trainers/NPCs:
+I'm Para
 Jack
-Claire
+Jeremy K
+KameOtaku
 Loretze
-VentesTheFloof
+Lorka_Grey
+LuckyBenjamin
+MadMillerMiller
+MasterMachi
+painT
+Pelican
+Regal-Turtwig
 RockTomb
 Saltilton
-HingisDingus
-Chespin_Craft
-Akikaze
-KameOtaku
-Gardenette
-BamBoshBubb
-MadMillerMiller
-TheFallenRoyal
-MILKMAN
-HwiteHwale
-Cristata
+ShadySheep
+SietseML
+Sodacat
+Solvaa
+SomeAllay
+SoundJack426
+Venom_
+VentesTheFloof
+Waterleaf
+WillTheWall
+
+Trainers/NPCs:
 aball
+Akikaze
+BamBoshBubb
+Chespin_Craft
+Claire
+Cristata
+Gardenette
+HingisDingus
+HwiteHwale
+Jack
+KameOtaku
+Loretze
+MadMillerMiller
+MILKMAN
+RockTomb
+Saltilton
+TheFallenRoyal
+VentesTheFloof
 
 UI & Misc.:
-Random Talking Bush
 aball
 Adam B.
-Dan Bacon
 Basalte
-HwiteHwale
-MadMillerMiller
-Gardenette
-Tyler (MANGO) Jackson
-Riot
-MasterMachi
 Chespin_Craft
-Jackster
-Saltilton
-Fikolyte
 Cristata
+Dan Bacon
+Fikolyte
+Gardenette
+HwiteHwale
+Jackster
 Jeremy K
+MadMillerMiller
+MasterMachi
+Random Talking Bush
+Riot
+Saltilton
+Tyler (MANGO) Jackson
 
 
 
@@ -303,12 +303,12 @@ Jeremy K
 
 
 
-Sound
+Music
 -----
-Music:
-Rhythm Break
-ReMX Bossa Nova
+Soundtrack:
 Purple Hat of Awesome
+ReMX Bossa Nova
+Rhythm Break
 
 Pokémon Cries:
 Gardenette
@@ -325,16 +325,16 @@ Text 206
 
 Mapping
 -------
-stygma
-ImaDeadMan
 Gardenette
-Kaloja
 GreenJellybean
-Tyler (MANGO) Jackson
-RISH
-Shadows
+ImaDeadMan
+Kaloja
 Kutas Kitti
 MadMillerMiller
+RISH
+Shadows
+stygma
+Tyler (MANGO) Jackson
 
 
 
@@ -347,11 +347,11 @@ MadMillerMiller
 
 Eventing
 --------
+Gardenette
+Kutas Kitti
 Low
 SpaceWestern
 stygma
-Gardenette
-Kutas Kitti
 
 
 
@@ -365,25 +365,24 @@ Kutas Kitti
 Story & Quests
 --------------
 Angel
+Bean Soup
 BlueLightning
 Deino
 Firedude
-Kyl-E
 Gardenette
-ThisGrainCharacter
+Gardenette
 HwiteHwale
-PaperTowelDealer
-Gardenette
+Kyl-E
 Luc_
-Shilo
-sneakysnek
-Yadriel J. Vento (HypnosEmblem)
-Scandal
-Tyler Bland
-Bean Soup
 LuckyBenjamin
 MasterMachi
-stygma
+PaperTowelDealer
+Scandal
+Shilo
+sneakysnek
+ThisGrainCharacter
+Tyler Bland
+Yadriel J. Vento (HypnosEmblem)
 
 
 
@@ -396,32 +395,32 @@ stygma
 
 Game Data & Balancing
 ---------------------
-Malarkey
-Kyl-E
-Low
-SpaceWestern
-stygma
-Gardenette
-MacheteMcGoo
-noahthenumbat
-DomTom
-Amber W
 Adam B.
+Amber W
 caesar
+DomTom
 Empyrean
+Gardenette
 Garreon
 Hare64
 HwiteHwale
+Kyl-E
+Low
+LuckyBenjamin
+MacheteMcGoo
+Malarkey
 Midbus
 mSilk
+noahthenumbat
+PaperTowelDealer
 Robochef9000
+Scandal
 Señor Gallo de Caballo
 Shadows
+SpaceWestern
+stygma
 Waffler
 Zyuran
-Scandal
-PaperTowelDealer
-LuckyBenjamin
 
 
 
@@ -434,17 +433,16 @@ LuckyBenjamin
 
 Translating
 -----------
+Abstractpuppet
+Basalte
 Cawa/Sasha
 Fitch
-Basalte
 Floriak
 Hey
+Myztic
 Truegear
 Wowo
 Zylber7
-Myztic
-Abstractpuppet
-stygma
 
 
 
@@ -457,15 +455,12 @@ stygma
 
 Playtesting
 -----------
-Chespin_Craft
-VentesTheFloof
 BlueLightning
-Saltilton
 Cawa/Sasha
+Chespin_Craft
 Jamadxx
-j01
-das5198
-Tom Buenbarril
+Saltilton
+VentesTheFloof
 
 
 
@@ -478,13 +473,13 @@ Tom Buenbarril
 
 Team Organization
 -----------------
-stygma
-Kutas Kitti
-HingisDingus
-Gardenette
-MasterMachi
-Luc_
 Firedude
+Gardenette
+HingisDingus
+Kutas Kitti
+Luc_
+MasterMachi
+stygma
 
 
 
@@ -510,9 +505,9 @@ Chespin_Craft
 
 Mazah Region Created by
 -----------------------
-Subjectively Group
-Jack
 Claire
+Jack
+Subjectively Group
 
 
 
@@ -525,7 +520,7 @@ Claire
 
 Special Thanks
 --------------
-"Pokémon Essentials" was created by:
+Pokémon Essentials was created by:
 Flameguru
 Poccil (Peter O.)
 Maruno
@@ -557,11 +552,11 @@ Luka S.J.
 Derxwna Kapsyla
 and everyone else who helped out
 
-"mkxp-z" by:
+mkxp-z by:
 Roza
 Based on MKXP by Ancurio et al.
 
-"RPG Maker XP" by:
+RPG Maker XP by:
 Enterbrain
 
 Pokémon is owned by:
@@ -574,6 +569,7 @@ Affiliated with Game Freak
 This is a non-profit fan-made game.
 No copyright infringements intended.
 Please support the official games!
+
 
 ====================
 
