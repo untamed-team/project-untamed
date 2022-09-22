@@ -201,6 +201,7 @@ Rider Dragon
 Saltilton
 Seiyouh
 ShadySheep
+stygma
 the.sizzlepanda
 Tinytrashing
 Tyler Jones
@@ -370,7 +371,6 @@ BlueLightning
 Deino
 Firedude
 Gardenette
-Gardenette
 HwiteHwale
 Kyl-E
 Luc_
@@ -380,6 +380,7 @@ PaperTowelDealer
 Scandal
 Shilo
 sneakysnek
+stygma
 ThisGrainCharacter
 Tyler Bland
 Yadriel J. Vento (HypnosEmblem)
@@ -440,6 +441,7 @@ Fitch
 Floriak
 Hey
 Myztic
+stygma
 Truegear
 Wowo
 Zylber7
@@ -458,8 +460,12 @@ Playtesting
 BlueLightning
 Cawa/Sasha
 Chespin_Craft
+das5198
+j
 Jamadxx
 Saltilton
+stygma
+Tom Buenbarril
 VentesTheFloof
 
 
@@ -493,6 +499,7 @@ stygma
 Wiki
 ----
 Chespin_Craft
+Chroma
 
 
 
@@ -520,6 +527,9 @@ Subjectively Group
 
 Special Thanks
 --------------
+
+Chroma and all the other devs from the Kaskade Region
+
 Pokémon Essentials was created by:
 Flameguru
 Poccil (Peter O.)
