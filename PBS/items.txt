@@ -670,3 +670,4 @@
 652,DDTSPRAY,DDT Spray,DDT Sprays,8,0,"A incredibly advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.",2,0,6
 653,LINKCABLE,Link Cable,Link Cables,1,3000,"A peculiar stone that makes certain species of Pokémon evolve. It even comes with free Wifi!",1,0,7
 654,HYPERABILITYCAPSULE,Hyper Ability Capsule,Hyper Ability Capsule,2,20000,"A capsule that allows to switch a Pokémon Abilities when it is used.",1,0,0
+655,EXTRAPOKEDEX,Emilio's Pokédex,Emilio's Pokédex,8,0,"The extra Pokédex meant for Emilio.",0,0,0
