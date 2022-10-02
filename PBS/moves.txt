@@ -728,6 +728,6 @@
 708,TITANSWRATH,Titan's Wrath,511,120,QMARKS,Special,100,5,0,NearOther,0,bef,"The damage is based on the user's highest attacking stat. The move's type is set by the user's type."
 709,SIRENSONG,Siren Song,003,75,WATER,Special,100,10,10,NearOther,0,befk,"An ancient song appeals to the hearts of those listening. It may also induce sleep."
 710,REBALANCING,Rebalancing,503,0,FIGHTING,Status,100,5,0,NearOther,0,bce,"The user buffs an ally or nerfs a foe by raising or sharply lowering their highest stat."
-711,FRIGIDMAW,Frigid Maw,044,80,ICE,Physical,100,5,100,NearOther,0,abei,"The user hunts down its foe with a deadly precision chomp, which lowers their speed."
+711,FRIGIDMAW,Frigid Maw,044,80,ICE,Physical,100,5,100,NearOther,0,abeif,"The user hunts down its foe with a deadly precision chomp, which lowers their speed."
 712,MANADRAIN,Mana Drain,0DD,100,DRAGON,Special,100,5,0,NearOther,0,bef,"The user drains the life force from the target. This move heals the user by 50% of the damage dealt"
-713,STEAMBURST,Steam Burst,503,75,FIRE,Special,100,10,0,NearOther,0,abef,"The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain."
+713,STEAMBURST,Steam Burst,503,75,FIRE,Special,100,10,0,NearOther,0,bef,"The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain."
