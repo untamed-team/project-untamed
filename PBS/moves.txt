@@ -710,7 +710,7 @@
 690,CHILLINGWAIL,Chilling Wail,007,90,GHOST,Special,100,10,30,NearOther,0,bce,"The user wails eerily at its target, chilling them to the bone. This may also paralyze the target."
 691,MYSTICBLADE,Mystic Blade,042,85,FAIRY,Physical,100,10,10,NearOther,0,abefhp,"The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily."
 692,FORCEWAVE,Force Wave,000,90,FIGHTING,Special,95,10,0,AllNearFoes,0,bef,"The user strikes the air to send a damaging shockwave towards opposing pokemon."
-693,GEODEBURST,Geode Burst,00F,110,ROCK,Special,80,20,10,NearOther,0,bef,"The user attacks its target with a hail of glittering crystals. This may also make the target flinch."
+693,GEODEBURST,Geode Burst,00F,110,ROCK,Special,80,20,10,NearOther,0,be,"The user attacks its target with a hail of glittering crystals. This may also make the target flinch."
 694,FORGEBREATH,Forge Breath,00A,85,STEEL,Special,100,15,10,NearOther,0,bef,"The user spews superheated metal at its target. This may also leave the target with a burn."
 695,EXCITE,Excite,020,0,NORMAL,Status,0,40,0,User,0,d,"The user pumps themselves up, raising its Sp. Atk stat."
 696,FLIPTURN,Flip Turn,0EE,60,WATER,Physical,100,20,0,NearOther,0,abef,"After making its attack, the user rushes back to switch places with a party Pokémon in waiting."
