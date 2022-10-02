@@ -3757,7 +3757,7 @@ Score = 0
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
 [141]
-Name = Mudsmache
+Name = Mudsmaché
 InternalName = MUDSMACHE
 Type1 = FAIRY
 Type2 = GROUND
