@@ -723,7 +723,7 @@
 703,GRASSYGLIDE,Grassy Glide,18C,70,GRASS,Physical,100,20,0,NearOther,0,abef,"Attacks by gliding on the ground. This move always goes first on Grassy Terrain."
 704,SKITTERSMACK,Skitter Smack,045,70,BUG,Physical,90,10,100,NearOther,0,abef,"The user skitters behind the target to attack. This also lowers the target's Sp. Atk stat."
 705,RISINGVOLTAGE,Rising Voltage,18D,70,ELECTRIC,Special,100,20,0,NearOther,0,bef,"Attacks with electric voltage rising from the ground. Power doubles on Electric Terrain."
-706,SUPERNOVA,Supernova,502,150,ROCK,Physical,100,5,0,AllNearOthers,0,abef,"This move is Rock and Fire type simultaneously, damages the user heavily."
+706,SUPERNOVA,Supernova,502,150,ROCK,Physical,100,5,0,AllNearOthers,0,abef,"This move is Rock and Fire type simultaneously. It damages the user heavily."
 707,PEPPERSPRAY,Pepper Spray,00A,85,GRASS,Special,100,15,30,NearOther,0,befg,"The user unleashes a spray of spicy vapors at its target to attack. It may also leave the target with a burn."
 708,TITANSWRATH,Titan's Wrath,511,120,QMARKS,Special,100,5,0,NearOther,0,bef,"The damage is based on the user's highest attacking stat. The move's type is set by the user's type."
 709,SIRENSONG,Siren Song,003,75,WATER,Special,100,10,10,NearOther,0,befk,"An ancient song appeals to the hearts of those listening. It may also induce sleep."
