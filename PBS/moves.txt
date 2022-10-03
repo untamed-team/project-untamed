@@ -696,7 +696,7 @@
 ################################################################################## New Moves ##################################################################################
 677,SLIMESHOT,Slime Shot,044,85,GROUND,Special,100,10,30,NearOther,0,befn,"The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat."
 678,ZEALOUSDANCE,Zealous Dance,500,70,FIRE,Special,100,10,0,NearOther,0,befo,"The user assaults its target with a frenzied dance. The attack on the next turn always results in a critical hit."
-679,PSYSONIC,Psysonic,0A5,90,PSYCHIC,Special,100,10,0,AllNearFoes,0,befk,"The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses."
+679,PSYSONIC,Psysonic,0A5,90,PSYCHIC,Special,0,10,0,AllNearFoes,0,befk,"The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses."
 680,BODYPRESS,Body Press,177,80,FIGHTING,Physical,100,10,0,NearOther,0,abef,"Attacks by slamming its body into the target. Damage increases with the user's Defense stat."
 681,PSYCRUSH,Psycrush,501,80,PSYCHIC,Special,100,10,0,NearOther,0,abef,"The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat."
 682,JOLTKICK,Jolt Kick,007,85,ELECTRIC,Physical,90,10,10,NearOther,0,abefh,"The user launches a kick with a high critical-hit ratio. It may also leave the target with paralysis."
