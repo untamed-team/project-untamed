@@ -298,7 +298,7 @@
 287,SLEEPPOWDER,Sleep Powder,003,0,GRASS,Status,75,15,0,NearOther,0,bcel,"The user scatters a big cloud of sleep-inducing dust around the target."
 288,SPIKYSHIELD,Spiky Shield,14C,0,GRASS,Status,0,10,0,User,4,,"Protects the user from attacks. Also damages attackers that make contact with the user."
 289,SPORE,Spore,003,0,GRASS,Status,100,15,0,NearOther,0,bcel,"The user scatters bursts of spores that induce sleep."
-290,STRENGTHSAP,Strength Sap,160,0,GRASS,Status,100,10,0,NearOther,0,bce,"The user restores its HP by the target's Attack stat amount. Then lowers the target's Attack stat."
+290,STRENGTHSAP,Strength Sap,160,0,GRASS,Status,100,5,0,NearOther,0,bce,"Restores HP by the half of the target's Attack stat. Lowers the target's Attack stat. Double PP usage."
 291,STUNSPORE,Stun Spore,007,0,GRASS,Status,75,30,0,NearOther,0,bcel,"The user scatters a cloud of paralyzing powder. It may leave the target with paralysis."
 292,SYNTHESIS,Synthesis,0D8,0,GRASS,Status,0,5,0,User,0,d,"The user restores its own HP. The amount of HP regained varies with the weather."
 293,WORRYSEED,Worry Seed,064,0,GRASS,Status,100,10,0,NearOther,0,bce,"A seed that causes worry is planted on the foe. It prevents sleep by making its Ability Insomnia."
