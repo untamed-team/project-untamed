@@ -41,6 +41,10 @@ HearCries = true
 # San Cerigold PC
 ShowArea = false
 #-------------------------------
+[020]
+# Test World
+Outdoor = true
+#-------------------------------
 [022]
 # Veravalles Town
 Outdoor = true
