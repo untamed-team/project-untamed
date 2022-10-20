@@ -343,6 +343,7 @@ BattlerEnemyY = 30
 BattlerShadowX = 1
 BattlerShadowSize = 1
 Score = 20
+Evolutions = LAGUNA,Level,20
 #-------------------------------
 [11]
 Name = Laguna

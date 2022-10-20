@@ -105,12 +105,23 @@ Pokemon = LITWICK,10
 [LEADER_Valentina,Valentina]
 LoseText = "Ugh, I still can't do this right."
 Pokemon = LILORINA,14
+    AbilityIndex = 0
+	Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
 Pokemon = M_ROSELIA,12
+    AbilityIndex = 2
+	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,GRASSKNOT
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = "Ugh, I still can't do this right."
-Pokemon = LILORINA,16
-Pokemon = M_ROSELIA,14
+Pokemon = LILORINA,16,
+    AbilityIndex = 2
+	Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG,BUBBLE
+Pokemon = PACUNA, 17
+    AbilityIndex = 2
+	Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
+Pokemon = M_ROSELIA,15,
+    AbilityIndex = 0
+	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
 #-------------------------------
 [FARMER,Abraham]
 LoseText = "Zea-zaya's my best bud."
@@ -138,13 +149,13 @@ LoseText = "I need some water..."
 Pokemon = SUNKERN,9
 Pokemon = DRILBUR,11
 #-------------------------------
-[HEXMANIAC,Moza]
-LoseText = "Would you like to see a magic trick?"
-Pokemon = M_ROSELIA,9
-Pokemon = LILORINA,9
+[HEXMANIAC,Helena]
+LoseText = "My dark magic will make you even stronger.."
+Pokemon = PHANTUMP,9
+Pokemon = DUSKULL,9
 #-------------------------------
-[HEXMANIAC,Moza,100]
-LoseText = "Would you like to see a magic trick?"
-Pokemon = M_ROSELIA,9
-Pokemon = LILORINA,9
+[HEXMANIAC,Helena,100]
+LoseText = "My dark magic will make you even stronger.."
+Pokemon = PHANTUMP,10
+Pokemon = DUSKULL,10
 
