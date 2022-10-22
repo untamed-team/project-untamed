@@ -36,6 +36,10 @@ Weather = Marigolds,100
 TrainerBattleBGM = joropo_zona_1.ogg
 HearCries = true
 #-------------------------------
+[012]
+# Lag Test Town
+Outdoor = true
+#-------------------------------
 [019]
 # San Cerigold PC
 ShowArea = false
