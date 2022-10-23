@@ -1,40 +1,22 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# Route 5 (41) - Route 4 (40)
-41,N,0,40,S,0
-# Route 5 (41) - Route 6 (45)
-41,S,6,45,N,0
-# Route 6 (44) - Route 1 (5)
-44,S,43,5,N,0
-# Safari Zone (66) - Route 1 (5)
-66,N,18,5,S,0
-# Cedolan City (7) - Route 1 (5)
-7,S,0,5,N,2
-# Lappet Town (2) - Route 1 (5)
-2,N,0,5,S,4
-# Cedolan City (7) - Route 6 (44)
-7,W,5,44,E,0
-# Lappet Town (2) - Safari Zone (66)
-2,W,0,66,E,0
-# Route 8 (69) - Safari Zone (66)
-69,N,0,66,S,10
-# Ingido Plateau (35) - Route 4 (39)
-35,W,11,39,E,0
-# Cedolan City (7) - Lerucean Town (23)
-7,E,0,23,W,78
-# Route 3 (31) - Lerucean Town (23)
-31,S,32,23,N,0
-# Route 2 (21) - Lerucean Town (23)
-21,E,0,23,W,1
-# Route 7 (47) - Cedolan City (7)
-47,W,0,7,E,0
-# Route 2 (21) - Cedolan City (7)
-21,S,0,7,N,21
-# Route 3 (31) - Ingido Plateau (35)
-31,W,0,35,E,10
-# Route 8 (69) - Lappet Town (2)
-69,N,12,2,S,0
-# Route 7 (47) - Battle Frontier (52)
-47,E,8,52,W,0
-# Route 2 (21) - Route 7 (47)
-21,E,77,47,W,0
+# Route 1 (48) - Veravalles Town (22)
+48,W,19,22,E,0
+# San Cerigold Town (4) - Veravalles Town (22)
+4,W,59,22,E,0
+# Hacienda Castaneda (79) - Veravalles Town (22)
+79,S,0,22,N,6
+# Route 1 (48) - Hacienda (Back) (78)
+48,W,0,78,E,75
+# San Cerigold Town (4) - Hacienda (Back) (78)
+4,W,0,78,E,35
+# Hacienda Castaneda (79) - Hacienda (Back) (78)
+79,N,0,78,S,26
+# San Cerigold Town (4) - Route 1 (48)
+4,S,0,48,N,0
+# Hacienda Castaneda (79) - Route 1 (48)
+79,E,26,48,W,0
+# San Cerigold Cemetery (5) - San Cerigold Town (4)
+5,S,1,4,N,0
+# Hacienda Castaneda (79) - San Cerigold Town (4)
+79,E,0,4,W,14
