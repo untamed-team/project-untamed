@@ -8722,3 +8722,134 @@ TotalPP = 40
 Target = User
 FunctionCode = RaiseUserDefense1
 Description = The user withdraws its body into its hard shell, raising its Defense stat.
+################### New Moves ###################
+[SLIMESHOT]
+Name = Slime Shot
+Type = GROUND
+Category = Special
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = RaiseUserDefense1
+Flags = 
+EffectChance = 
+Description = The user withdraws its body into its hard shell, raising its Defense stat.
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type = 
+Category = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
