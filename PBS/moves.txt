@@ -8717,6 +8717,7 @@ Description = The user soaks itself with water. The move weakens Fire-type moves
 Name = Withdraw
 Type = WATER
 Category = Status
+Power = 
 Accuracy = 0
 TotalPP = 40
 Target = User
@@ -8727,19 +8728,133 @@ Description = The user withdraws its body into its hard shell, raising its Defen
 Name = Slime Shot
 Type = GROUND
 Category = Special
+Power = 85
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
 Priority = 0
-FunctionCode = RaiseUserDefense1
-Flags = 
-EffectChance = 
-Description = The user withdraws its body into its hard shell, raising its Defense stat.
+FunctionCode =
+Flags = CanProtect,CanMirrorMove,Bomb
+EffectChance = 30
+Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
+#-------------------------------
+[ZEALOUSDANCE]
+Name = Zealous Dance
+Type = FIRE
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = CanProtect,CanMirrorMove,Dance
+EffectChance = 0
+Description = The user assaults its target with a frenzied dance. The attack on the next turn always results in a critical hit.
+#-------------------------------
+[PSYSONIC]
+Name = Psysonic
+Type = PSYCHIC
+Category = Special
+Power = 90
+Accuracy = 0
+TotalPP = 10
+Target = AllNearFoes
+Priority = 0
+FunctionCode = 
+Flags = CanProtect,CanMirrorMove,Sound
+EffectChance = 0
+Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
+#-------------------------------
+[BODYPRESS]
+Name = Body Press
+Type = FIGHTING
+Category = Physical
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = Contact,CanProtect,CanMirrorMove
+EffectChance = 0
+Description = Attacks by slamming its body into the target. Damage increases with the user's Defense stat.
+#-------------------------------
+[PSYCRUSH]
+Name = Psycrush
+Type = PSYCHIC
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = Contact,CanProtect,CanMirrorMove
+EffectChance = 0
+Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
+#-------------------------------
+[JOLTKICK]
+Name = Jolt Kick
+Type = ELECTRIC
+Category = Physical
+Power = 85
+Accuracy = 90
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = abefh
+EffectChance = 10
+Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with paralysis.
+#-------------------------------
+[FROSTKICK]
+Name = Frost Kick
+Type = ICE
+Category = Physical
+Power = 85
+Accuracy = 90
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = abefh
+EffectChance = 10
+Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with frostbite.
+#-------------------------------
+[METEORBEAM]
+Name = Meteor Beam
+Type = ROCK
+Category = Special
+Power = 120
+Accuracy = 90
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = bef
+EffectChance = 0
+Description = Gathers space power and boosts its Sp. Atk stat on one turn, then attacks on the next turn.
+#-------------------------------
+[SCOURINGWINDS]
+Name = Scouring Winds
+Type = FLYING
+Category = Special
+Power = 85
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 
+Flags = bef
+EffectChance = 10
+Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
 #-------------------------------
 [INTERNALNAME]
 Name = 
 Type = 
 Category = 
+Power = 
 Accuracy = 
 TotalPP = 
 Target = 
@@ -8753,6 +8868,21 @@ Description =
 Name = 
 Type = 
 Category = 
+Power = 
+Accuracy = 
+TotalPP = 
+Target = 
+Priority = 
+FunctionCode = 
+Flags = 
+EffectChance = 
+Description = 
+#-------------------------------
+[INTERNALNAME]
+Name = 
+Type =  
+Category = 
+Power =
 Accuracy = 
 TotalPP = 
 Target = 
@@ -8766,6 +8896,7 @@ Description =
 Name = 
 Type = 
 Category = 
+Power = 
 Accuracy = 
 TotalPP = 
 Target = 
@@ -8779,6 +8910,7 @@ Description =
 Name = 
 Type = 
 Category = 
+Power = 
 Accuracy = 
 TotalPP = 
 Target = 
@@ -8792,58 +8924,7 @@ Description =
 Name = 
 Type = 
 Category = 
-Accuracy = 
-TotalPP = 
-Target = 
-Priority = 
-FunctionCode = 
-Flags = 
-EffectChance = 
-Description = 
-#-------------------------------
-[INTERNALNAME]
-Name = 
-Type = 
-Category = 
-Accuracy = 
-TotalPP = 
-Target = 
-Priority = 
-FunctionCode = 
-Flags = 
-EffectChance = 
-Description = 
-#-------------------------------
-[INTERNALNAME]
-Name = 
-Type = 
-Category = 
-Accuracy = 
-TotalPP = 
-Target = 
-Priority = 
-FunctionCode = 
-Flags = 
-EffectChance = 
-Description = 
-#-------------------------------
-[INTERNALNAME]
-Name = 
-Type = 
-Category = 
-Accuracy = 
-TotalPP = 
-Target = 
-Priority = 
-FunctionCode = 
-Flags = 
-EffectChance = 
-Description = 
-#-------------------------------
-[INTERNALNAME]
-Name = 
-Type = 
-Category = 
+Power = 
 Accuracy = 
 TotalPP = 
 Target = 
