@@ -6082,3 +6082,145 @@ Pocket = 8
 Price = 0
 Flags = KeyItem
 Description = A faded sea chart that shows the way to a certain island.
+#-------------------------------
+[CROPMASTERPLANS]
+Name = CropMaster Plans
+NamePlural = CropMaster Plans
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Plans for a scientist's invention called the CropMaster. They appear to be written on a used napkin.
+#-------------------------------
+[ROCKSMASHITEM]
+Name = Rock Smash Item
+NamePlural = Rock Smash Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Rock Smash tiles don't crash.
+#-------------------------------
+[CUTITEM]
+Name = Cut Item
+NamePlural = Cut Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Cut tiles don't crash.
+#-------------------------------
+[STRENGTHITEM]
+Name = Strength Item
+NamePlural = Strength Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Strength tiles don't crash.
+#-------------------------------
+[SURFITEM]
+Name = Surf Item
+NamePlural = Surf Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Surf tiles don't crash.
+#-------------------------------
+[FLYITEM]
+Name = Fly Item
+NamePlural = Fly Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Fly tiles don't crash.
+#-------------------------------
+[HEADBUTTITEM]
+Name = Headbutt Item
+NamePlural = Headbutt Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Headbutt tiles don't crash.
+#-------------------------------
+[FLASHITEM]
+Name = Flash Item
+NamePlural = Flash Items
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = Placeholder item so interacting with Flash tiles don't crash.
+#-------------------------------
+[STARTERBALLGRASS]
+Name = Special Pokéball
+NamePlural = Special Pokéballs
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = It's a special Pokéball that belongs to Professor Ceiba.
+#-------------------------------
+[STARTERBALLFIRE]
+Name = Special Pokéball
+NamePlural = Special Pokéballs
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = It's a special Pokéball that belongs to Professor Ceiba.
+#-------------------------------
+[STARTERBALLWATER]
+Name = Special Pokéball
+NamePlural = Special Pokéballs
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = It's a special Pokéball that belongs to Professor Ceiba.
+#-------------------------------
+[CERIGOLDCONE]
+Name = Cerigoldcone
+NamePlural = Cerigoldcones
+Pocket = 2
+Price = 350
+FieldUse = OnPokemon
+BattleUse = OnPokemon
+Flags = Fling_30
+Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+#-------------------------------
+[DDTSPRAY]
+Name = DDT Spray
+NamePlural = DDT Sprays
+Pocket = 8
+Price = 2000
+FieldUse = Direct
+Flags = Repel,Fling_30
+Description = A incredibly advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.
+#-------------------------------
+[LINKCABLE]
+Name = Link Cable
+NamePlural = Link Cables
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = Fling_30
+Description = A peculiar cable that makes certain species of Pokémon evolve. It even comes with free Wifi!
+#-------------------------------
+[HYPERABILITYCAPSULE]
+Name = Hyper Ability Capsule
+NamePlural = Hyper Ability Capsules
+Pocket = 2
+Price = 20000
+FieldUse = OnPokemon
+Flags = Fling_30
+Description = A capsule that allows one to switch a Pokémon's ability when used.
+#-------------------------------
+[EXTRAPOKEDEX]
+Name = Emilio's Pokédex
+NamePlural = Emilio's Pokédexes
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = The extra Pokédex meant for Emilio.
+#-------------------------------
+[EXTRAPOKEBALL]
+Name = Emilio's Pokéballs
+NamePlural = Emilio's Pokéballs
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = The extra Pokéballs meant for Emilio.
+#-------------------------------
