@@ -1405,9 +1405,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = -30
 #-------------------------------
-[42]
+[WOOPER]
 Name = Wooper
-InternalName = WOOPER
 Type1 = WATER
 Type2 = GROUND
 BaseStats = 55,45,45,15,25,25
@@ -1441,9 +1440,8 @@ BattlerShadowSize = 1
 Score = 20
 Evolutions = QUAGSIRE,Level,20
 #-------------------------------
-[43]
+[QUAGSIRE]
 Name = Quagsire
-InternalName = QUAGSIRE
 Type1 = WATER
 Type2 = GROUND
 BaseStats = 95,85,85,35,65,65
@@ -1475,9 +1473,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 10
 #-------------------------------
-[44]
+[ZEAZAYA]
 Name = Zea-Zaya
-InternalName = ZEAZAYA
 Type1 = GRASS
 BaseStats = 40,35,35,45,50,45
 GenderRate = Female50Percent
@@ -1510,9 +1507,8 @@ BattlerShadowSize = 3
 Score = 10
 Evolutions = ZHUSK,Level,17
 #-------------------------------
-[45]
+[ZHUSK]
 Name = Zhusk
-InternalName = ZHUSK
 Type1 = GRASS
 BaseStats = 65,55,60,50,70,60
 GenderRate = Female50Percent
@@ -1544,9 +1540,8 @@ BattlerShadowSize = 3
 Score = -10
 Evolutions = MAYZMEN,Item,SUNSTONE,BLAZEA,Item,FIRESTONE
 #-------------------------------
-[46]
+[MAYZMEN]
 Name = Mayzmen
-InternalName = MAYZMEN
 Type1 = GRASS
 BaseStats = 105,80,85,55,95,80
 GenderRate = Female50Percent
@@ -1577,9 +1572,8 @@ BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -30
 #-------------------------------
-[47]
+[BLAZEA]
 Name = Blazea
-InternalName = BLAZEA
 Type1 = DARK
 Type2 = FIRE
 BaseStats = 70,60,70,75,145,80
@@ -1611,9 +1605,8 @@ BattlerShadowX = 1
 BattlerShadowSize = 2
 Score = -20
 #-------------------------------
-[48]
+[PUMPKABOO]
 Name = Pumpkaboo
-InternalName = PUMPKABOO
 Type1 = GHOST
 Type2 = GRASS
 BaseStats = 44,66,70,56,44,55
@@ -1647,9 +1640,8 @@ BattlerShadowSize = 1
 Score = 20
 Evolutions = GOURGEIST,Trade,
 #-------------------------------
-[49]
+[GOURGEIST]
 Name = Gourgeist
-InternalName = GOURGEIST
 Type1 = GHOST
 Type2 = GRASS
 BaseStats = 55,85,122,99,58,75
@@ -1681,9 +1673,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 30
 #-------------------------------
-[50]
+[PURRLOIN]
 Name = Purrloin
-InternalName = PURRLOIN
 Type1 = DARK
 BaseStats = 41,50,37,66,50,37
 GenderRate = Female50Percent
@@ -1715,9 +1706,8 @@ BattlerShadowSize = 1
 Score = 20
 Evolutions = LIEPARD,Level,20
 #-------------------------------
-[51]
+[LIEPARD]
 Name = Liepard
-InternalName = LIEPARD
 Type1 = DARK
 BaseStats = 64,88,50,106,88,50
 GenderRate = Female50Percent
@@ -1747,9 +1737,8 @@ BattlerShadowX = -1
 BattlerShadowSize = 3
 Score = 25
 #-------------------------------
-[52]
+[DRILBUR]
 Name = Drilbur
-InternalName = DRILBUR
 Type1 = GROUND
 BaseStats = 60,85,40,68,30,45
 GenderRate = Female50Percent
@@ -1781,9 +1770,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = EXCADRILL,Level,31
 #-------------------------------
-[53]
+[EXCADRILL]
 Name = Excadrill
-InternalName = EXCADRILL
 Type1 = GROUND
 Type2 = STEEL
 BaseStats = 110,135,60,88,50,65
@@ -1814,9 +1802,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[54]
+[PHANTUMP]
 Name = Phantump
-InternalName = PHANTUMP
 Type1 = GHOST
 Type2 = GRASS
 BaseStats = 43,70,48,38,50,60
@@ -1849,9 +1836,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = TREVENANT,Trade,
 #-------------------------------
-[55]
+[TREVENANT]
 Name = Trevenant
-InternalName = TREVENANT
 Type1 = GHOST
 Type2 = GRASS
 BaseStats = 85,110,76,56,65,82
@@ -1882,9 +1868,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[56]
+[LILORINA]
 Name = Liloriña
-InternalName = LILORINA
 Type1 = GHOST
 Type2 = WATER
 BaseStats = 50,30,45,40,65,55
@@ -1918,9 +1903,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = YAQUENA,Level,39
 #-------------------------------
-[57]
+[YAQUENA]
 Name = Yaquena
-InternalName = YAQUENA
 Type1 = GHOST
 Type2 = WATER
 BaseStats = 65,45,65,45,105,95
@@ -1953,9 +1937,8 @@ BattlerShadowSize = 2
 Score = 5
 Evolutions = YORONAQUA,Item,DUSKSTONE
 #-------------------------------
-[58]
+[YORONAQUA]
 Name = Yoronaqua
-InternalName = YORONAQUA
 Type1 = GHOST
 Type2 = WATER
 BaseStats = 85,55,80,55,135,110
@@ -1987,9 +1970,8 @@ BattlerShadowX = 1
 BattlerShadowSize = 3
 Score = -5
 #-------------------------------
-[59]
+[DUSKULL]
 Name = Duskull
-InternalName = DUSKULL
 Type1 = GHOST
 BaseStats = 20,40,90,25,30,90
 GenderRate = Female50Percent
@@ -2023,9 +2005,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = DUSCLOPS,Level,37
 #-------------------------------
-[60]
+[DUSCLOPS]
 Name = Dusclops
-InternalName = DUSCLOPS
 Type1 = GHOST
 BaseStats = 40,70,130,25,60,130
 GenderRate = Female50Percent
@@ -2058,9 +2039,8 @@ BattlerShadowSize = 3
 Score = 0
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 #-------------------------------
-[61]
+[DUSKNOIR]
 Name = Dusknoir
-InternalName = DUSKNOIR
 Type1 = GHOST
 BaseStats = 45,100,135,45,65,135
 GenderRate = Female50Percent
@@ -2091,9 +2071,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[62]
+[GOTHITA]
 Name = Gothita
-InternalName = GOTHITA
 Type1 = PSYCHIC
 BaseStats = 45,30,50,45,55,65
 GenderRate = Female75Percent
@@ -2125,9 +2104,8 @@ BattlerShadowSize = 1
 Score = 10
 Evolutions = GOTHORITA,Level,32
 #-------------------------------
-[63]
+[GOTHORITA]
 Name = Gothorita
-InternalName = GOTHORITA
 Type1 = PSYCHIC
 BaseStats = 60,45,70,55,75,85
 GenderRate = Female75Percent
@@ -2158,9 +2136,8 @@ BattlerShadowSize = 2
 Score = 20
 Evolutions = GOTHITELLE,Level,41
 #-------------------------------
-[64]
+[GOTHITELLE]
 Name = Gothitelle
-InternalName = GOTHITELLE
 Type1 = PSYCHIC
 BaseStats = 70,55,95,65,95,110
 GenderRate = Female75Percent
@@ -2190,9 +2167,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -10
 #-------------------------------
-[65]
+[VULPIX]
 Name = Vulpix
-InternalName = VULPIX
 Type1 = FIRE
 BaseStats = 38,41,40,65,50,65
 GenderRate = Female75Percent
@@ -2226,9 +2202,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = NINETALES,Item,FIRESTONE
 #-------------------------------
-[66]
+[NINETALES]
 Name = Ninetales
-InternalName = NINETALES
 Type1 = FIRE
 BaseStats = 73,76,75,100,81,100
 GenderRate = Female75Percent
@@ -2260,9 +2235,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[67]
+[MURKROW]
 Name = Murkrow
-InternalName = MURKROW
 Type1 = DARK
 Type2 = FLYING
 BaseStats = 60,85,42,91,85,42
@@ -2296,9 +2270,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = HONCHKROW,Item,DUSKSTONE
 #-------------------------------
-[68]
+[HONCHKROW]
 Name = Honchkrow
-InternalName = HONCHKROW
 Type1 = DARK
 Type2 = FLYING
 BaseStats = 100,125,52,71,105,52
@@ -2329,9 +2302,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[69]
+[LITWICK]
 Name = Litwick
-InternalName = LITWICK
 Type1 = GHOST
 Type2 = FIRE
 BaseStats = 50,30,55,20,65,55
@@ -2364,9 +2336,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = LAMPENT,Level,41
 #-------------------------------
-[70]
+[LAMPENT]
 Name = Lampent
-InternalName = LAMPENT
 Type1 = GHOST
 Type2 = FIRE
 BaseStats = 60,40,60,55,95,60
@@ -2398,9 +2369,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
-[71]
+[CHANDELURE]
 Name = Chandelure
-InternalName = CHANDELURE
 Type1 = GHOST
 Type2 = FIRE
 BaseStats = 60,55,90,80,145,90
@@ -2431,9 +2401,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[101]
+[TERREON]
 Name = Terreon
-InternalName = TERREON
 Type1 = GROUND
 BaseStats = 130,110,95,60,65,65
 GenderRate = FemaleOneEighth
@@ -2463,9 +2432,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[102]
+[GUSTEON]
 Name = Gusteon
-InternalName = GUSTEON
 Type1 = FLYING
 BaseStats = 65,65,60,130,95,110
 GenderRate = FemaleOneEighth
@@ -2495,9 +2463,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[103]
+[GOHILA]
 Name = Gohila
-InternalName = GOHILA
 Type1 = POISON
 BaseStats = 100,65,80,60,95,105
 GenderRate = Female50Percent
@@ -2528,9 +2495,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[104]
+[ATELANGLER]
 Name = Atelangler
-InternalName = ATELANGLER
 Type1 = NORMAL
 BaseStats = 95,80,85,101,50,75
 GenderRate = Female50Percent
@@ -2561,9 +2527,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[105]
+[BEAKPEEP]
 Name = Beakpeep
-InternalName = BEAKPEEP
 Type1 = STEEL
 Type2 = FLYING
 BaseStats = 50,60,80,65,25,35
@@ -2596,9 +2561,8 @@ BattlerShadowSize = 0
 Score = 0
 Evolutions = BEAKRAFT,Level,31
 #-------------------------------
-[106]
+[BEAKRAFT]
 Name = Beakraft
-InternalName = BEAKRAFT
 Type1 = STEEL
 Type2 = FLYING
 BaseStats = 75,95,120,78,50,60
@@ -2630,9 +2594,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[107]
+[MACRABRA]
 Name = Macrabra
-InternalName = MACRABRA
 Type1 = GHOST
 Type2 = BUG
 BaseStats = 80,40,125,29,65,135
@@ -2664,9 +2627,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[108]
+[XIBALBAT]
 Name = Xibalbat
-InternalName = XIBALBAT
 Type1 = STEEL
 Type2 = DARK
 BaseStats = 65,135,85,64,50,65
@@ -2697,9 +2659,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[109]
+[TROPIUS]
 Name = Tropius
-InternalName = TROPIUS
 Type1 = GRASS
 Type2 = FLYING
 BaseStats = 99,68,83,72,87,51
@@ -2729,9 +2690,8 @@ BattlerShadowX = -10
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[110]
+[TITANOTROP]
 Name = Titanotrop
-InternalName = TITANOTROP
 Type1 = GRASS
 Type2 = DRAGON
 BaseStats = 183,72,104,29,103,90
@@ -2761,9 +2721,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[111]
+[BANAGNAW]
 Name = Banagnaw
-InternalName = BANAGNAW
 Type1 = GRASS
 Type2 = WATER
 BaseStats = 30,40,75,75,35,50
@@ -2795,9 +2754,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = POTASSOPOD,TradeItem,DUSKSTONE,NANAHI,Level,22
 #-------------------------------
-[112]
+[NANAHI]
 Name = Nanahi
-InternalName = NANAHI
 Type1 = GRASS
 Type2 = WATER
 BaseStats = 79,97,95,113,50,61
@@ -2827,9 +2785,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[113]
+[POTASSOPOD]
 Name = Potassopod
-InternalName = POTASSOPOD
 Type1 = GRASS
 Type2 = POISON
 BaseStats = 115,65,50,35,110,140
@@ -2859,9 +2816,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[114]
+[SUCHIP]
 Name = Suchip
-InternalName = SUCHIP
 Type1 = DRAGON
 BaseStats = 65,70,50,50,40,55
 GenderRate = FemaleOneEighth
@@ -2892,9 +2848,8 @@ BattlerShadowSize = 0
 Score = 0
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
-[115]
+[SUCHOBILE]
 Name = Suchobile
-InternalName = SUCHOBILE
 Type1 = DRAGON
 Type2 = POISON
 BaseStats = 110,120,80,40,85,80
@@ -2924,9 +2879,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[116]
+[FRIZZARD]
 Name = Frizzard
-InternalName = FRIZZARD
 Type1 = DRAGON
 Type2 = ICE
 BaseStats = 90,45,75,89,105,101
@@ -2956,9 +2910,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[117]
+[ZARCOIL]
 Name = Zarcoil
-InternalName = ZARCOIL
 Type1 = DRAGON
 Type2 = FIRE
 BaseStats = 65,110,68,72,115,75
@@ -2988,9 +2941,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[118]
+[BURBRAWL]
 Name = Burbrawl
-InternalName = BURBRAWL
 Type1 = FIGHTING
 Type2 = FLYING
 BaseStats = 40,70,35,70,45,40
@@ -3021,9 +2973,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
-[119]
+[HUMBEAT]
 Name = Humbeat
-InternalName = HUMBEAT
 Type1 = FIGHTING
 Type2 = FLYING
 BaseStats = 75,80,90,30,45,85
@@ -3053,9 +3004,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
-[120]
+[HUMMIPUMMEL]
 Name = Hummipummel
-InternalName = HUMMIPUMMEL
 Type1 = FIGHTING
 Type2 = FAIRY
 BaseStats = 60,115,60,145,95,75
@@ -3084,9 +3034,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[121]
+[XOLSMOL]
 Name = Xolsmol
-InternalName = XOLSMOL
 Type1 = WATER
 BaseStats = 60,45,39,24,65,60
 GenderRate = Female50Percent
@@ -3118,9 +3067,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
-[122]
+[AMPHIBARK]
 Name = Amphibark
-InternalName = AMPHIBARK
 Type1 = WATER
 Type2 = FIRE
 BaseStats = 75,70,60,46,95,80
@@ -3152,9 +3100,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
-[123]
+[PEROXOTAL]
 Name = Peroxotal
-InternalName = PEROXOTAL
 Type1 = WATER
 Type2 = FIRE
 BaseStats = 107,86,90,64,133,120
@@ -3184,9 +3131,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[124]
+[CROACROZEN]
 Name = Croacrozen
-InternalName = CROACROZEN
 Type1 = POISON
 BaseStats = 95,65,75,110,100,60
 GenderRate = Female50Percent
@@ -3216,9 +3162,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[125]
+[ARIAMANO]
 Name = Ariamano
-InternalName = ARIAMANO
 Type1 = BUG
 Type2 = DRAGON
 BaseStats = 60,90,40,125,40,75
@@ -3250,9 +3195,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[126]
+[CROMEN]
 Name = Cromen
-InternalName = CROMEN
 Type1 = PSYCHIC
 Type2 = FLYING
 BaseStats = 45,40,40,45,45,50
@@ -3284,9 +3228,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = CORVOYANT,Level,22
 #-------------------------------
-[127]
+[CORVOYANT]
 Name = Corvoyant
-InternalName = CORVOYANT
 Type1 = PSYCHIC
 Type2 = FLYING
 BaseStats = 55,50,60,70,80,70
@@ -3317,9 +3260,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = CAWMADAME,Level,33
 #-------------------------------
-[128]
+[CAWMADAME]
 Name = Cawmadame
-InternalName = CAWMADAME
 Type1 = PSYCHIC
 Type2 = FLYING
 BaseStats = 80,55,75,70,105,120
@@ -3349,9 +3291,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[129]
+[ELEGOOP]
 Name = Elegoop
-InternalName = ELEGOOP
 Type1 = ROCK
 Type2 = POISON
 BaseStats = 50,50,75,40,40,60
@@ -3383,9 +3324,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = TARTUSK,Level,32
 #-------------------------------
-[130]
+[TARTUSK]
 Name = Tartusk
-InternalName = TARTUSK
 Type1 = ROCK
 Type2 = POISON
 BaseStats = 105,105,130,30,60,95
@@ -3415,9 +3355,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[131]
+[CHARCOPAL]
 Name = Charcopal
-InternalName = CHARCOPAL
 Type1 = ROCK
 Type2 = FAIRY
 BaseStats = 40,45,50,75,85,60
@@ -3449,9 +3388,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
-[132]
+[GEOCOPRION]
 Name = Geocoprion
-InternalName = GEOCOPRION
 Type1 = ROCK
 Type2 = FAIRY
 BaseStats = 65,65,70,100,135,90
@@ -3481,9 +3419,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[133]
+[CHIXULOB]
 Name = Chixulob
-InternalName = CHIXULOB
 Type1 = FIRE
 Type2 = ROCK
 BaseStats = 75,125,50,140,85,50
@@ -3513,9 +3450,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[134]
+[M_MEOWTH]
 Name = Meowth
-InternalName = M_MEOWTH
 Type1 = FIGHTING
 BaseStats = 40,60,40,75,40,35
 GenderRate = Female50Percent
@@ -3547,9 +3483,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
-[135]
+[M_PERSIAN]
 Name = Persian
-InternalName = M_PERSIAN
 Type1 = FIGHTING
 BaseStats = 60,95,50,115,60,60
 GenderRate = Female50Percent
@@ -3579,9 +3514,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[136]
+[CHISPEKA]
 Name = Chispeka
-InternalName = CHISPEKA
 Type1 = ELECTRIC
 Type2 = FIGHTING
 BaseStats = 75,95,60,95,40,95
@@ -3612,9 +3546,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[137]
+[ROTATONA]
 Name = Rotatona
-InternalName = ROTATONA
 Type1 = FAIRY
 Type2 = GROUND
 BaseStats = 75,85,120,95,45,60
@@ -3644,9 +3577,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[138]
+[DUNSPARCE]
 Name = Dunsparce
-InternalName = DUNSPARCE
 Type1 = NORMAL
 BaseStats = 100,70,70,45,65,65
 GenderRate = Female50Percent
@@ -3677,9 +3609,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = DUNSENDED,Location,999
 #-------------------------------
-[139]
+[DUNSENDED]
 Name = Dunsended
-InternalName = DUNSENDED
 Type1 = NORMAL
 Type2 = FLYING
 BaseStats = 145,70,100,60,95,100
@@ -3709,9 +3640,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[140]
+[M_MUDBRAY]
 Name = Mudbray
-InternalName = M_MUDBRAY
 Type1 = FAIRY
 BaseStats = 85,45,70,25,80,80
 GenderRate = Female50Percent
@@ -3743,9 +3673,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
-[141]
+[MUDSMACHE]
 Name = Mudsmaché
-InternalName = MUDSMACHE
 Type1 = FAIRY
 Type2 = GROUND
 BaseStats = 85,65,90,25,100,135
@@ -3776,9 +3705,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[142]
+[M_NOSEPASS]
 Name = Nosepass
-InternalName = M_NOSEPASS
 Type1 = ROCK
 Type2 = FIGHTING
 BaseStats = 30,90,135,30,45,45
@@ -3811,9 +3739,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
-[143]
+[NOSEPONCH]
 Name = Noseponch
-InternalName = NOSEPONCH
 Type1 = ROCK
 Type2 = FIGHTING
 BaseStats = 75,150,145,40,55,60
@@ -3844,9 +3771,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[144]
+[M_MARACTUS]
 Name = Maractus
-InternalName = M_MARACTUS
 Type1 = FIRE
 Type2 = GRASS
 BaseStats = 70,50,63,93,110,75
@@ -3878,9 +3804,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[145]
+[REGIWOOD]
 Name = Regiwood
-InternalName = REGIWOOD
 Type1 = GRASS
 BaseStats = 50,150,75,80,150,75
 GenderRate = Genderless
@@ -3909,9 +3834,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[146]
+[REGIBRUTE]
 Name = Regibrute
-InternalName = REGIBRUTE
 Type1 = FIGHTING
 BaseStats = 100,200,100,50,80,50
 GenderRate = Genderless
@@ -3940,9 +3864,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[147]
+[REGITERNAL]
 Name = Regiternal
-InternalName = REGITERNAL
 Type1 = FAIRY
 BaseStats = 50,100,50,80,200,100
 GenderRate = Genderless
@@ -3971,9 +3894,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[148]
+[BOWLLO]
 Name = Bowllo
-InternalName = BOWLLO
 Type1 = STEEL
 BaseStats = 50,65,75,70,30,45
 GenderRate = Female50Percent
@@ -4004,9 +3926,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = DUPEDILLO,Level,36
 #-------------------------------
-[149]
+[DUPEDILLO]
 Name = Dupedillo
-InternalName = DUPEDILLO
 Type1 = STEEL
 BaseStats = 110,85,140,85,50,50
 GenderRate = Female50Percent
@@ -4035,9 +3956,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 0
 #-------------------------------
-[150]
+[MELUMUSE]
 Name = Melumuse
-InternalName = MELUMUSE
 Type1 = WATER
 Type2 = GRASS
 BaseStats = 90,60,85,105,120,120
@@ -4066,9 +3986,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -25
 #-------------------------------
-[151]
+[MELUCHOLY]
 Name = Melucholy
-InternalName = MELUCHOLY
 Type1 = WATER
 Type2 = DARK
 BaseStats = 70,70,120,120,125,75
@@ -4097,9 +4016,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -25
 #-------------------------------
-[152]
+[MELUMAUNDER]
 Name = Melumaunder
-InternalName = MELUMAUNDER
 Type1 = WATER
 Type2 = PSYCHIC
 BaseStats = 125,70,75,100,120,95
@@ -4128,9 +4046,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -25
 #-------------------------------
-[153]
+[MELUMYST]
 Name = Melumyst
-InternalName = MELUMYST
 Type1 = WATER
 Type2 = ICE
 BaseStats = 110,85,125,55,90,115
@@ -4159,9 +4076,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -25
 #-------------------------------
-[154]
+[MARIPOME]
 Name = Maripome
-InternalName = MARIPOME
 Type1 = BUG
 Type2 = FIGHTING
 BaseStats = 100,140,70,160,140,70
@@ -4190,9 +4106,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -100
 #-------------------------------
-[155]
+[HYLARMOS]
 Name = Hylarmos
-InternalName = HYLARMOS
 Type1 = ICE
 Type2 = POISON
 BaseStats = 100,160,140,70,140,70
@@ -4221,9 +4136,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -100
 #-------------------------------
-[156]
+[M_VANILLITE]
 Name = Vanillite
-InternalName = M_VANILLITE
 Type1 = ICE
 Type2 = PSYCHIC
 BaseStats = 46,40,50,44,65,60
@@ -4256,9 +4170,8 @@ BattlerShadowSize = 0
 Score = 0
 Evolutions = M_VANILLISH,Level,35
 #-------------------------------
-[157]
+[M_VANILLISH]
 Name = Vanillish
-InternalName = M_VANILLISH
 Type1 = ICE
 Type2 = PSYCHIC
 BaseStats = 60,50,65,49,96,75
@@ -4290,9 +4203,8 @@ BattlerShadowSize = 1
 Score = 0
 Evolutions = M_VANILLUXE,Level,47
 #-------------------------------
-[158]
+[M_VANILLUXE]
 Name = Vanilluxe
-InternalName = M_VANILLUXE
 Type1 = ICE
 Type2 = PSYCHIC
 BaseStats = 80,55,95,69,129,107
@@ -4323,9 +4235,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 0
 Score = 0
 #-------------------------------
-[159]
+[BARBOACH]
 Name = Barboach
-InternalName = BARBOACH
 Type1 = WATER
 Type2 = GROUND
 BaseStats = 50,48,43,60,46,41
@@ -4359,9 +4270,8 @@ BattlerShadowSize = 2
 Score = 0
 Evolutions = WHISCASH,Level,30
 #-------------------------------
-[160]
+[WHISCASH]
 Name = Whiscash
-InternalName = WHISCASH
 Type1 = WATER
 Type2 = GROUND
 BaseStats = 110,78,73,60,76,71
@@ -4393,9 +4303,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = 0
 #-------------------------------
-[161]
+[ARROKUDA]
 Name = Arrokuda
-InternalName = ARROKUDA
 Type1 = WATER
 BaseStats = 41,63,40,66,40,30
 GenderRate = Female50Percent
@@ -4425,9 +4334,8 @@ BattlerShadowSize = 2
 Score = 20
 Evolutions = BARRASKEWDA,Level,26
 #-------------------------------
-[162]
+[BARRASKEWDA]
 Name = Barraskewda
-InternalName = BARRASKEWDA
 Type1 = WATER
 BaseStats = 61,123,60,136,60,50
 GenderRate = Female50Percent
@@ -4456,9 +4364,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = 10
 #-------------------------------
-[163]
+[KNOGGIN]
 Name = K'Noggin
-InternalName = KNOGGIN
 Type1 = ROCK
 BaseStats = 40,75,70,35,35,20
 GenderRate = FemaleOneEighth
@@ -4491,9 +4398,8 @@ BattlerShadowSize = 1
 Score = 40
 Evolutions = KHATCHET,Level,32
 #-------------------------------
-[164]
+[KHATCHET]
 Name = K'Hatchet
-InternalName = KHATCHET
 Type1 = ROCK
 BaseStats = 65,100,110,60,55,40
 GenderRate = FemaleOneEighth
@@ -4525,9 +4431,8 @@ BattlerShadowSize = 2
 Score = -10
 Evolutions = MAKWAHURT,Level,52
 #-------------------------------
-[165]
+[MAKWAHURT]
 Name = Mak'Wahurt
-InternalName = MAKWAHURT
 Type1 = ROCK
 Type2 = DARK
 BaseStats = 87,145,150,78,65,55
@@ -4559,9 +4464,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 3
 Score = -50
 #-------------------------------
-[166]
+[ELORIMANDA]
 Name = Elorimanda
-InternalName = ELORIMANDA
 Type1 = DRAGON
 Type2 = PSYCHIC
 BaseStats = 110,80,140,80,110,160
@@ -4590,9 +4494,8 @@ BattlerShadowX = 0
 BattlerShadowSize = 2
 Score = -100
 #-------------------------------
-[167]
+[M_CRABRAWLER]
 Name = Crabrawler
-InternalName = M_CRABRAWLER
 Type1 = GROUND
 BaseStats = 57,57,82,73,32,37
 GenderRate = Female50Percent
@@ -4624,9 +4527,8 @@ BattlerShadowSize = 2
 Evolutions = CRUSTANG,Location,999
 Score = 20
 #-------------------------------
-[168]
+[CRUSTANG]
 Name = Crustang
-InternalName = CRUSTANG
 Type1 = GROUND
 Type2 = STEEL
 BaseStats = 90,93,132,86,44,43
