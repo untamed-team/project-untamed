@@ -6224,3 +6224,35 @@ Price = 0
 Flags = KeyItem
 Description = The extra Pokéballs meant for Emilio.
 #-------------------------------
+[NOCTAVISPITE]
+Name = Noctavispite
+NamePlural = Noctavispites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Noctavispa hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[XATUNITE]
+Name = Xatunite
+NamePlural = Xatunites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Xatu hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[FLYGONITE]
+Name = Flygonite
+NamePlural = Flygonites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Flygon hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[GOHILITE]
+Name = Gohilite
+NamePlural = Gohilites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Gohila hold it, and it will be able to Mega Evolve.
+#-------------------------------

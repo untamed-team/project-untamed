@@ -370,3 +370,13 @@ Name = Hex Maniac
 Gender = Female
 BaseMoney = 25
 #-------------------------------
+[PSYCHIC_M2]
+Name = Psychic
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[PSYCHIC_F2]
+Name = Psychic
+Gender = Female
+BaseMoney = 32
+#-------------------------------

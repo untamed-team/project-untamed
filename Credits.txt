@@ -1,0 +1,684 @@
+#Credits for Project Untamed
+
+====================
+
+Scripts & Coding
+----------------
+Advanced Map Transfers:
+Luka S.J.
+
+Advanced Pokédex:
+FL
+
+Always in Bushes:
+KleinStudio
+Kotaro
+
+Ambient Pokémon Cries:
+SpaceWestern
+Vendily
+
+Astralneko's Scripting Utilities:
+Astralneko
+
+Automatic Level Scaling:
+Benitex
+
+Bag Screen with Interactable Party:
+DiegoWT
+Rose
+Vendily
+
+Better Region Map:
+Boonzeet
+Marin
+
+DiegoWT's Starter Selection:
+DiegoWT
+
+DPPT Gender Selector Scene:
+A.Somersault
+
+Easy Text Skip:
+Amethyst
+ENLS
+Kurotsune
+
+Easy Mouse System:
+Luka S.J.
+
+Evolve from Party:
+eriedaberrie
+IndianAnimator
+
+EVs and IVs in Summary:
+Deoxysprime
+
+Following Pokémon EX:
+Akizakura16
+Armin
+Golisopod User
+Help-14
+Maruno
+mej71
+PurpleZaffre
+Rayd12smitty
+Thundaga
+Venom12
+zingzags
+
+Item Find:
+Boonzeet
+
+Location Signposts:
+carmaniac
+Golisopod User
+LostSoulsDev
+PurpleZaffre
+
+Luka's Scripting Utilities:
+Luka S.J.
+
+Marin's Scripting Utilities:
+Marin
+
+Modern Quest System + UI:
+derFischae
+Marin
+mej71
+SpaceWestern
+ThatWelshOne_
+
+Name-box:
+Gardenette
+Golisopod User
+mej71
+Mr.Gela (theo#7722)
+Vendily
+
+Monitor Icons:
+bo4p5687
+Gardenette
+Marin
+Maruno
+Nuri Yuri
+PurpleZaffre
+raZ
+Savordez
+SpaceWestern
+ThatWelshOne_
+Ulithium_Dragon
+Vendily
+
+New DexNav:
+Low
+Marin
+NuriYuri
+Phantombass
+raZ
+Savordez
+suzerain
+ThatWelshOne_
+Vendily
+Zaffre
+
+Overworld Shadows EX:
+Golisopod User
+Marin
+Wolf PP
+
+Pokédex BW Style:
+DeepBlue
+NettoHikari
+PacificWaves
+Xtreme1992
+
+Pokémon Amie:
+BhagyaJyoti
+bo4p5687
+Luka S.J
+PizzaSun
+rigbycwts
+
+Quicksave:
+Low
+
+Set the Controls Screen:
+FL
+
+Speed Up 2.0:
+Marin
+Phantombass
+
+Tweaks to Essentials:
+Derxwna Kapsyla
+
+Video with Using Gif:
+bo4p5687
+
+Voltseon's A-Star Pathfinding:
+ENLS
+Golisopod User
+Voltseon
+
+Voltseon's Pause Menu:
+ENLS
+Golisopod User
+Voltseon
+
+
+
+
+
+
+
+
+
+
+Graphics
+--------
+Tilesets:
+aball
+Aveon Trainer
+Aveontrainer
+BE_Infinity
+Cristata
+Derlo
+Donlawride
+GreenJellybean
+Griffin L.
+Jackeroni216
+Kaloja
+King Tapia
+Kutas Kitti
+Magiscarf
+Magiscarf
+Pint Sized Kiwi
+PokemonEclipse
+Princess Phoenix
+PrincessPhoenix
+Rider Dragon
+Saltilton
+Seiyouh
+ShadySheep
+stygma
+the.sizzlepanda
+Tinytrashing
+Tyler Jones
+VentesTheFloof
+
+Pokémon & Pokédex:
+8xviktor
+A Slime Psycho
+aball
+Akikaze
+Applesaucior
+Bean Soup
+Chespin_Craft
+Chromatech01
+Claire
+Cristata
+Dan Bacon
+Eshan
+Evelyn315
+farbol234
+Fikolyte
+Firedude
+Floriak
+Griffin L.
+Grimrose
+HingisDingus
+Hub-Bub
+Ian (The Picky Pixel Artist)
+Igor!
+I'm Para
+Jack
+Jeremy K
+KameOtaku
+Loretze
+Lorka_Grey
+LuckyBenjamin
+MadMillerMiller
+MasterMachi
+painT
+Pelican
+Regal-Turtwig
+RockTomb
+Saltilton
+ShadySheep
+SietseML
+Sodacat
+Solvaa
+SomeAllay
+SoundJack426
+Venom_
+VentesTheFloof
+Waterleaf
+WillTheWall
+
+Trainers/NPCs:
+aball
+Akikaze
+BamBoshBubb
+Chespin_Craft
+Claire
+Cristata
+Gardenette
+HingisDingus
+HwiteHwale
+Jack
+KameOtaku
+Loretze
+MadMillerMiller
+MILKMAN
+RockTomb
+Saltilton
+TheFallenRoyal
+VentesTheFloof
+
+UI & Misc.:
+aball
+Adam B.
+Basalte
+Chespin_Craft
+Cristata
+Dan Bacon
+Fikolyte
+Gardenette
+HwiteHwale
+Jackster
+Jeremy K
+MadMillerMiller
+MasterMachi
+Random Talking Bush
+Riot
+Saltilton
+Tyler (MANGO) Jackson
+WolfPP
+
+
+
+
+
+
+
+
+
+
+Music
+-----
+Soundtrack:
+Purple Hat of Awesome
+ReMX Bossa Nova
+Rhythm Break
+
+Pokémon Cries:
+Gardenette
+Text 206
+
+
+
+
+
+
+
+
+
+
+Mapping
+-------
+Gardenette
+GreenJellybean
+ImaDeadMan
+Kaloja
+Kutas Kitti
+MadMillerMiller
+RISH
+Shadows
+stygma
+Tyler (MANGO) Jackson
+
+
+
+
+
+
+
+
+
+
+Eventing
+--------
+Gardenette
+Kutas Kitti
+Low
+SpaceWestern
+stygma
+
+
+
+
+
+
+
+
+
+
+Story & Quests
+--------------
+Angel
+Bean Soup
+BlueLightning
+Deino
+Firedude
+Gardenette
+HwiteHwale
+Kyl-E
+Luc_
+LuckyBenjamin
+MasterMachi
+PaperTowelDealer
+Scandal
+Shilo
+sneakysnek
+stygma
+ThisGrainCharacter
+Tyler Bland
+Yadriel J. Vento (HypnosEmblem)
+
+
+
+
+
+
+
+
+
+
+Game Data & Balancing
+---------------------
+Adam B.
+Amber W
+caesar
+DomTom
+Empyrean
+Gardenette
+Garreon
+Hare64
+HwiteHwale
+Kyl-E
+Low
+LuckyBenjamin
+MacheteMcGoo
+Malarkey
+Midbus
+mSilk
+noahthenumbat
+PaperTowelDealer
+Robochef9000
+Scandal
+Señor Gallo de Caballo
+Shadows
+SpaceWestern
+stygma
+Waffler
+Zyuran
+
+
+
+
+
+
+
+
+
+
+Translating
+-----------
+Abstractpuppet
+Basalte
+Cawa/Sasha
+Deli
+Fitch
+Floriak
+Hey
+Myztic
+stygma
+Truegear
+Wowo
+Zylber7
+
+
+
+
+
+
+
+
+
+
+Playtesting
+-----------
+BlueLightning
+Cawa/Sasha
+Chespin_Craft
+das5198
+j
+Jamadxx
+Saltilton
+stygma
+Tom Buenbarril
+VentesTheFloof
+
+
+
+
+
+
+
+
+
+
+Team Organization
+-----------------
+Firedude
+Gardenette
+HingisDingus
+Kutas Kitti
+Luc_
+MasterMachi
+stygma
+
+
+
+
+
+
+
+
+
+
+Wiki
+----
+B (B_Creative/CloudHopperB)
+Chespin_Craft
+Chroma
+
+
+
+
+
+
+
+
+
+
+Mazah Region Created by
+-----------------------
+Claire
+Jack
+Subjectively Group
+
+
+
+
+
+
+
+
+
+
+Special Thanks
+--------------
+
+Chroma and all the other devs from the Kaskade Region
+
+Pokémon Essentials was created by:
+Flameguru
+Poccil (Peter O.)
+Maruno
+
+With contributions from:
+AvatarMonkeyKirby
+Marin
+Boushy
+MiDas Mike
+Brother1440
+Near Fantastica
+FL.
+PinkMan
+Genzai Kawakami
+Popper
+Golisopod User
+Rataime
+help-14
+Savordez
+IceGod64
+SoundSpawn
+Jacob O. Wobbrock
+the__end
+KitsuneKouta
+Venom12
+Lisa Anthony
+Wachunga
+Luka S.J.
+Derxwna Kapsyla
+and everyone else who helped out
+
+mkxp-z by:
+Roza
+Based on MKXP by Ancurio et al.
+
+RPG Maker XP by:
+Enterbrain
+
+Pokémon is owned by:
+The Pokémon Company
+Nintendo
+Affiliated with Game Freak
+
+
+
+This is a non-profit fan-made game.
+No copyright infringements intended.
+Please support the official games!
+
+
+====================
+
+Links to Creators:
+
+Name       = v20.1 Hotfixes
+Version    = 1.0.6
+Essentials = 20.1
+Conflicts  = v19 Hotfixes
+Conflicts  = v19.1 Updates
+Conflicts  = v20 Hotfixes
+Website    = https://github.com/Maruno17/pokemon-essentials
+Credits    = Maruno
+
+Name = Pokedex BW Style
+Version = 1.4.1
+Requires = Luka's Scripting Utilities,3.2
+Credits = DeepBlue PacificWaves, NettoHikari, Xtreme1992
+Website = https://reliccastle.com/resources/510/
+
+Name       = Voltseon's A-Star Pathfinding
+Version    = 1.2
+Essentials = 20
+Website    = https://www.voltseon.com/
+Credits    = Voltseon, Golisopod User, ENLS
+
+Name         = Item Find
+Version      = 2.0
+Website      = https://reliccastle.com/resources/371/
+Credits      = Boonzeet
+
+Name         = PokéCenter Monitor Icons
+Version      = 1.2
+Website      = https://reliccastle.com/resources/187/
+Credits      = Ulithium_Dragon
+
+Name         = EVs and IVs in Summary
+Version      = 1.0.0
+Credits      = Deoxysprime
+
+Name         = Better Speed Up
+Version      = 2.0
+Website      = [coming soon]
+Credits      = Marin for the original script, Phantombass for updating to 19.1
+
+Name       = Overworld Shadows EX
+Version    = 2.0.2
+Essentials = 20.1
+Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
+Conflicts  = Overworld Shadows
+Optional   = Gen 4 Character Animations EX, 1.0.0
+Credits    = Golisopod User, Wolf PP, Marin
+
+Name      = LA Party Evolver
+Version    = 2.0
+Essentials = 20.1
+Website    = https://youtu.be/2wi_fpGdllQ
+Credits   = IndianAnimator, eriedaberrie#1569
+
+Name         = Automatic Level Scaling
+Version      = 1.3.2
+Essentials   = 20, 20.1
+Website      = https://github.com/Benitex/Automatic-Level-Scaling
+Credits      = Benitex, Joltik, Umbreon
+
+Name       = Bag Screen w/int. Party
+Version    = 2.2.0
+Essentials = 20.1
+Credits    = DiegoWT
+
+Name         = Voltseon's Pause Menu
+Essentials   = 20
+Version      = 1.8
+Website      = https://reliccastle.com/threads/3930
+Credits      = Voltseon, Golisopod User, ENLS
+
+Name       = Modern Quest System + UI
+Version    = 1.0.2
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/709/
+Credits    = ThatWelshOne_,mej71,derFischae,Marin
+
+Name       = Following Pokemon EX
+Version    = 2.2.2
+Essentials = 20.1
+Optional   = Battle Scripting EX, 1.0.0
+Optional   = Boss Battles EX, 1.0.0
+Optional   = Battle Databoxes EX, 1.0.0
+Optional   = Party Screen BW Style, 2.1.0
+Optional   = Advanced HM Items, 1.0.0
+Optional   = Elite Battle: DX, 1.2.6
+Website    = https://reliccastle.com/resources/featured/
+Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+
+Name         = New DexNav
+Version      = 2.3
+Essentials = 20
+Website      = https://reliccastle.com/members/7217/
+Credits      = Phantombass: the majority of the fixes to this script,suzerain: backbone for New DexNav,NuriYuri and the developers of SimpleEncounterUI
