@@ -1,0 +1,181 @@
+#[CAMPER,Liam]
+#LoseText = A very good battle, indeed!
+#Pokemon = DIGLETT,10
+#Pokemon = BONSLY,11
+#-------------------------------
+#[LEADER_Brock,Brock]
+#Items = FULLRESTORE,FULLRESTORE
+#LoseText = Very good.
+#Pokemon = GEODUDE,12
+#    Gender = male
+#    Moves = DEFENSECURL,HEADSMASH,ROCKPOLISH,ROCKTHROW
+#    AbilityIndex = 0
+#    IV = 20,20,20,20,20,20
+#Pokemon = ONIX,14
+#    Name = Rocky
+#    Gender = male
+#    Shiny = yes
+#    Moves = HEADSMASH,ROCKTHROW,RAGE,ROCKTOMB
+#    AbilityIndex = 0
+#    Item = SITRUSBERRY
+#    IV = 20,20,20,20,20,20
+#    Ball = HEAVYBALL
+#-------------------------------
+[YOUNGSTER_F,Emma]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
+#-------------------------------
+[YOUNGSTER_F,Emma,100]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,6
+Pokemon = FLABEBE,6
+#-------------------------------
+[YOUNGSTER_M,Julián]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,5
+#-------------------------------
+[YOUNGSTER_M,Julián,100]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,7
+#-------------------------------
+[BUGCATCHER,Marco]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,5
+Pokemon = LEDYBA,5
+#-------------------------------
+[BUGCATCHER,Marco,100]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,7
+Pokemon = LEDYBA,7
+#-------------------------------
+[RIVAL1,Emilio]
+LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
+Pokemon = MOLLUCOTTA,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,1]
+LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
+Pokemon = QUETZALIL,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,2]
+LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
+Pokemon = PORSITE,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,100]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = MOLLUCOTTA,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,101]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = QUETZALIL,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,102]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = PORSITE,5
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[EONGRUNT_M,Jamie]
+LoseText = Yikes, what's up with kids these days?
+Pokemon = MURKROW,6
+#-------------------------------
+[EONGRUNT_M,Jamie,100]
+LoseText = Yikes, what's up with kids these days?
+Pokemon = MURKROW,8
+#-------------------------------
+[EONGRUNT_F,Jess]
+LoseText = Right? This used to be so much easier.
+Pokemon = TECHUPPI,6
+#-------------------------------
+[EONGRUNT_F,Jess,100]
+LoseText = Right? This used to be so much easier.
+Pokemon = TECHUPPI,8
+#-------------------------------
+[PSYCHIC_M2,Xavier]
+LoseText = Wow, you’re pretty good!
+Pokemon = PUMPKABOO,8
+Pokemon = PHANTUMP,8
+#-------------------------------
+[PSYCHIC_M2,Xavier,100]
+LoseText = Wow, you’re pretty good!
+Pokemon = PUMPKABOO,10
+Pokemon = PHANTUMP,10
+#-------------------------------
+[PSYCHIC_F2,Maya]
+LoseText = Sigh…
+Pokemon = DUSKULL,9
+Pokemon = LITWICK,8
+	AbilityIndex = 0
+#-------------------------------
+[PSYCHIC_F2,Maya,100]
+LoseText = Sigh…
+Pokemon = DUSKULL,11
+Pokemon = LITWICK,10
+	AbilityIndex = 0
+#-------------------------------
+[LEADER_Valentina,Valentina]
+LoseText = Ugh, I still can't do this right.
+Pokemon = LILORINA,14
+    AbilityIndex = 0
+	Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
+Pokemon = M_ROSELIA,12
+    AbilityIndex = 2
+	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,GRASSKNOT
+#-------------------------------
+[LEADER_Valentina,Valentina,100]
+LoseText = Ugh, I still can't do this right.
+Pokemon = LILORINA,16,
+    AbilityIndex = 2
+	Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG,BUBBLE
+Pokemon = PACUNA, 17
+    AbilityIndex = 2
+	Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
+Pokemon = M_ROSELIA,15,
+    AbilityIndex = 0
+	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
+#-------------------------------
+[FARMER,Abraham]
+LoseText = Zea-zaya's my best bud.
+Pokemon = ZEAZAYA,8
+#-------------------------------
+[FARMER,Abraham,100]
+LoseText = Zea-zaya's my best bud.
+Pokemon = ZEAZAYA,10
+#-------------------------------
+[FARMER,Feliciano]
+LoseText = Corn is surprisingly shady!
+Pokemon = CAFECARACHA,8
+#-------------------------------
+[FARMER,Feliciano,100]
+LoseText = Corn is surprisingly shady!
+Pokemon = CAFECARACHA,10
+#-------------------------------
+[FARMER,Rafa]
+LoseText = I need some water...
+Pokemon = SUNKERN,7
+Pokemon = DRILBUR,9
+#-------------------------------
+[FARMER,Rafa,100]
+LoseText = I need some water...
+Pokemon = SUNKERN,9
+Pokemon = DRILBUR,11
+#-------------------------------
+[HEXMANIAC,Helena]
+LoseText = My dark magic will make you even stronger..
+Pokemon = PHANTUMP,9
+Pokemon = DUSKULL,9
+#-------------------------------
+[HEXMANIAC,Helena,100]
+LoseText = My dark magic will make you even stronger..
+Pokemon = PHANTUMP,10
+Pokemon = DUSKULL,10
