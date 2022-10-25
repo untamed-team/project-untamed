@@ -591,11 +591,13 @@ Conflicts  = v20 Hotfixes
 Website    = https://github.com/Maruno17/pokemon-essentials
 Credits    = Maruno
 
-Name = Pokedex BW Style
-Version = 1.4.1
-Requires = Luka's Scripting Utilities,3.2
-Credits = DeepBlue PacificWaves, NettoHikari, Xtreme1992
-Website = https://reliccastle.com/resources/510/
+Name       = Always inside Bushes
+Version    = 1.1.0
+Essentials = 20.1
+Optional   = Following Pokemon EX,2.2.2
+Conflicts  = Deep Marsh Tiles,1.0.0
+Link       = https://reliccastle.com/resources/931/
+Credits    = Kotaro,Titania318,KleinStudio,derFischae
 
 Name       = Voltseon's A-Star Pathfinding
 Version    = 1.2
