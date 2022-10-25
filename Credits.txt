@@ -127,12 +127,6 @@ Golisopod User
 Marin
 Wolf PP
 
-Pokédex BW Style:
-DeepBlue
-NettoHikari
-PacificWaves
-Xtreme1992
-
 Pokémon Amie:
 BhagyaJyoti
 bo4p5687
@@ -588,8 +582,102 @@ Please support the official games!
 
 Links to Creators:
 
+Name       = v20.1 Hotfixes
+Version    = 1.0.6
+Essentials = 20.1
+Conflicts  = v19 Hotfixes
+Conflicts  = v19.1 Updates
+Conflicts  = v20 Hotfixes
+Website    = https://github.com/Maruno17/pokemon-essentials
+Credits    = Maruno
+
 Name = Pokedex BW Style
 Version = 1.4.1
 Requires = Luka's Scripting Utilities,3.2
 Credits = DeepBlue PacificWaves, NettoHikari, Xtreme1992
 Website = https://reliccastle.com/resources/510/
+
+Name       = Voltseon's A-Star Pathfinding
+Version    = 1.2
+Essentials = 20
+Website    = https://www.voltseon.com/
+Credits    = Voltseon, Golisopod User, ENLS
+
+Name         = Item Find
+Version      = 2.0
+Website      = https://reliccastle.com/resources/371/
+Credits      = Boonzeet
+
+Name         = PokéCenter Monitor Icons
+Version      = 1.2
+Website      = https://reliccastle.com/resources/187/
+Credits      = Ulithium_Dragon
+
+Name         = EVs and IVs in Summary
+Version      = 1.0.0
+Credits      = Deoxysprime
+
+Name         = Better Speed Up
+Version      = 2.0
+Website      = [coming soon]
+Credits      = Marin for the original script, Phantombass for updating to 19.1
+
+Name       = Overworld Shadows EX
+Version    = 2.0.2
+Essentials = 20.1
+Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
+Conflicts  = Overworld Shadows
+Optional   = Gen 4 Character Animations EX, 1.0.0
+Credits    = Golisopod User, Wolf PP, Marin
+
+Name      = LA Party Evolver
+Version    = 2.0
+Essentials = 20.1
+Website    = https://youtu.be/2wi_fpGdllQ
+Credits   = IndianAnimator, eriedaberrie#1569
+
+Name         = Automatic Level Scaling
+Version      = 1.3.2
+Essentials   = 20, 20.1
+Website      = https://github.com/Benitex/Automatic-Level-Scaling
+Credits      = Benitex, Joltik, Umbreon
+
+Name       = Bag Screen w/int. Party
+Version    = 2.2.0
+Essentials = 20.1
+Credits    = DiegoWT
+
+Name         = Voltseon's Pause Menu
+Essentials   = 20
+Version      = 1.8
+Website      = https://reliccastle.com/threads/3930
+Credits      = Voltseon, Golisopod User, ENLS
+
+Name       = Modern Quest System + UI
+Version    = 1.0.2
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/709/
+Credits    = ThatWelshOne_,mej71,derFischae,Marin
+
+Name       = Following Pokemon EX
+Version    = 2.2.2
+Essentials = 20.1
+Optional   = Battle Scripting EX, 1.0.0
+Optional   = Boss Battles EX, 1.0.0
+Optional   = Battle Databoxes EX, 1.0.0
+Optional   = Party Screen BW Style, 2.1.0
+Optional   = Advanced HM Items, 1.0.0
+Optional   = Elite Battle: DX, 1.2.6
+Website    = https://reliccastle.com/resources/featured/
+Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+
+Name         = New DexNav
+Version      = 2.3
+Essentials = 20
+Website      = https://reliccastle.com/members/7217/
+Credits      = Phantombass: the majority of the fixes to this script,suzerain: backbone for New DexNav,NuriYuri and the developers of SimpleEncounterUI
+
+Name         = DiegoWTs Starter Selection
+Version      = 1.3.0
+Essentials   = 20.1
+Credits      = DiegoWT

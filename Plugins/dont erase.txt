@@ -1,0 +1,3 @@
+plugins folder gets automatically deleted if it doesnt have any file inside it
+but the folder itself is necessary for the functioning of v20.1 of the engine
+this file prevents the folder from disappearing 

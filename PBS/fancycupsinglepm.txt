@@ -1,3 +1,0 @@
-# See the documentation on the wiki to learn how to edit this file.
-#-------------------------------
-#left empty as we don't have plans for a battle facility at the moment

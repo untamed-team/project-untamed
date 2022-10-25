@@ -1,0 +1,124 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[PUMPKABOO,1]
+FormName = Average Size
+BaseStats = 49,66,70,51,44,55
+HiddenAbilities = INSOMNIA
+Height = 0.4
+Weight = 5.0
+#-------------------------------
+[PUMPKABOO,2]
+FormName = Large Size
+BaseStats = 54,66,70,46,44,55
+Height = 0.5
+Weight = 7.5
+#-------------------------------
+[PUMPKABOO,3]
+FormName = Super Size
+BaseStats = 59,66,70,41,44,55
+HiddenAbilities = INSOMNIA
+Height = 0.8
+Weight = 15.0
+WildItemCommon = MIRACLESEED
+WildItemUncommon = MIRACLESEED
+WildItemRare = MIRACLESEED
+#-------------------------------
+[GOURGEIST,1]
+FormName = Average Size
+BaseStats = 65,90,122,84,58,75
+HiddenAbilities = INSOMNIA
+Height = 0.9
+Weight = 12.5
+#-------------------------------
+[GOURGEIST,2]
+FormName = Large Size
+BaseStats = 75,95,122,69,58,75
+Height = 1.1
+Weight = 14.0
+#-------------------------------
+[GOURGEIST,3]
+FormName = Super Size
+BaseStats = 85,100,122,54,58,75
+HiddenAbilities = INSOMNIA
+Height = 1.7
+Weight = 39.0
+WildItemCommon = MIRACLESEED
+WildItemUncommon = MIRACLESEED
+WildItemRare = MIRACLESEED
+#-------------------------------
+[FLABEBE,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLABEBE,2]
+FormName = Orange Flower
+#-------------------------------
+[FLABEBE,3]
+FormName = Blue Flower
+#-------------------------------
+[FLABEBE,4]
+FormName = White Flower
+#-------------------------------
+[FLOETTE,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLOETTE,2]
+FormName = Orange Flower
+#-------------------------------
+[FLOETTE,3]
+FormName = Blue Flower
+#-------------------------------
+[FLOETTE,4]
+FormName = White Flower
+#-------------------------------
+[FLOETTE,5]
+FormName = Eternal Flower
+BaseStats = 74,65,67,92,125,128
+BaseExp = 243
+HiddenAbilities = FAIRYAURA
+Moves = 1,TACKLE,1,VINEWHIP,1,FAIRYWIND,6,FAIRYWIND,10,LUCKYCHANT,15,RAZORLEAF,20,WISH,25,MAGICALLEAF,27,GRASSYTERRAIN,33,PETALBLIZZARD,38,AROMATHERAPY,43,MISTYTERRAIN,46,MOONBLAST,50,LIGHTOFRUIN,51,PETALDANCE,58,SOLARBEAM
+EggGroups = Undiscovered
+Pokedex = The flower it's holding can no longer be found blooming anywhere. It's also thought to contain terrifying power.
+Evolutions = FLORGES,None,
+#-------------------------------
+[FLORGES,1]
+FormName = Yellow Flower
+#-------------------------------
+[FLORGES,2]
+FormName = Orange Flower
+#-------------------------------
+[FLORGES,3]
+FormName = Blue Flower
+#-------------------------------
+[FLORGES,4]
+FormName = White Flower
+#-------------------------------
+[BEAKRAFT,1]
+FormName = Female
+BaseStats = 75,120,95,78,50,60
+Abilities = TECHNICIAN,RECKLESS
+Moves = 0,IRONHEAD,1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,DRILLPECK,32,SWORDSDANCE,38,ROOST,42,NIGHTSLASH,47,BRAVEBIRD,52,LEAFBLADE,57,HEADSMASH,62,MEGAHORN
+TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
+#-------------------------------
+[CROACROZEN,1]
+FormName = Frozen
+Type1 = POISON
+Type2 = ICE
+BaseStats = 95,45,145,25,65,130
+#-------------------------------
+[NOCTAVISPA,1]
+FormName = Mega Noctavispa
+MegaStone = NOCTAVISPITE
+BaseStats = 65,160,60,125,115,60
+Abilities = ADAPTABILITY
+Height = 0.9
+Weight = 18.6
+#-------------------------------
+[GOHILA,1]
+FormName = Mega Gohila
+MegaStone = GOHILITE
+Type1 = POISON
+Type2 = ELECTRIC
+BaseStats = 100,60,75,105,150,115
+Abilities = VOLTABSORB
+Height = 0.2
+Weight = 3.5

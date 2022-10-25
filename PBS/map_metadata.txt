@@ -1,0 +1,91 @@
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[001]   # Intro
+Name = Intro
+#-------------------------------
+[002]   # MausoleumLeft
+Name = MausoleumLeft
+Outdoor = false
+ShowArea = false
+Bicycle = false
+#-------------------------------
+[003]   # Sofía's house
+Name = San Cerigold Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+HealingSpot = 19,10,18
+#-------------------------------
+[004]   # San Cerigold Town
+Name = San Cerigold Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+Weather = Marigolds,100
+#-------------------------------
+[005]   # San Cerigold Cemetery
+Name = San Cerigold Cemetery
+Name = 
+Outdoor = true
+ShowArea = true
+Bicycle = false
+Weather = Marigolds,100
+#-------------------------------
+[006]   # NW house-Blue
+Name = Test World
+Outdoor = true
+#-------------------------------
+[007]   # Library (Yellow)
+Name = Veravalles Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+HealingSpot = 33,4,9
+#-------------------------------
+[008]   # SW house
+Name = Route 1
+Outdoor = true
+ShowArea = true
+Bicycle = true
+BattleBack = field
+#-------------------------------
+[009]   # SE house-Purple
+Name = Hacienda (Back)
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[010]   # SE house-Green
+Name = Hacienda Castaneda
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[019]   # San Cerigold PC
+Name = San Cerigold PC
+Name = 
+HealingSpot = 4,22,22
+#-------------------------------
+[022]   # Veravalles Town
+Name = Veravalles Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[048]   # Route 1
+Name = Route 1
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[078]   # Hacienda (Back)
+Name = Hacienda (Back)
+Outdoor = true
+ShowArea = true
+Bicycle = true
+#-------------------------------
+[079]   # Hacienda Castaneda
+Name = Hacienda Castaneda
+Outdoor = true
+ShowArea = true
+Bicycle = true

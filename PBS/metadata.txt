@@ -1,99 +1,29 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[000]
+[0]
+StartMoney = 3000
+StartItemStorage = POTION
 Home = 33,6,6,6
-WildBattleBGM = Battle Generic Wild.ogg
-TrainerBattleBGM = Battle Generic Trainer.mp3
-WildVictoryME = Battle victory wild.ogg
-TrainerVictoryME = Battle victory trainer.ogg
-SurfBGM = Surfing.mid
-BicycleBGM = Bicycle.mid
-PlayerA = POKEMONTRAINER_Red,trainer_POKEMONTRAINER_Red,boy_bike,boy_surf,boy_run,boy_surf,boy_fish_offset,boy_fish_offset
-PlayerB = POKEMONTRAINER_Leaf,trainer_POKEMONTRAINER_Leaf,girl_bike,girl_surf,girl_run,girl_surf,girl_fish_offset,girl_fish_offset
+StorageCreator = Bill
+WildBattleBGM = Battle Generic Wild
+TrainerBattleBGM = Battle Generic Trainer
+WildVictoryBGM = Battle victory wild
+TrainerVictoryBGM = Battle victory trainer
+SurfBGM = Surfing
+BicycleBGM = Bicycle
 #-------------------------------
-[001]
-# Intro
+[1]
+TrainerType = POKEMONTRAINER_Red
+WalkCharset = trainer_POKEMONTRAINER_Red
+RunCharset = boy_run
+CycleCharset = boy_bike
+SurfCharset = boy_surf
+FishCharset = boy_fish_offset
 #-------------------------------
-[002]
-# MausoleumLeft
-Outdoor = false
-ShowArea = false
-Bicycle = false
-#-------------------------------
-[004]
-# San Cerigold Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-HealingSpot = 19,10,18
-#-------------------------------
-[005]
-# San Cerigold Cemetery
-Outdoor = true
-ShowArea = true
-Bicycle = true
-Weather = Marigolds,100
-TrainerBattleBGM = joropo_zona_1.ogg
-HearCries = true
-#-------------------------------
-[012]
-# Lag Test Town
-Outdoor = true
-#-------------------------------
-[019]
-# San Cerigold PC
-ShowArea = false
-#-------------------------------
-[020]
-# Test World
-Outdoor = true
-#-------------------------------
-[022]
-# Veravalles Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-HealingSpot = 33,4,9
-HearCries = false
-#-------------------------------
-[048]
-# Route 1
-Outdoor = true
-ShowArea = true
-Bicycle = true
-BattleBack = field
-WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
-WildVictoryME = Battle victory wild.ogg
-TrainerVictoryME = Battle victory trainer.ogg
-WildCaptureME = Battle victory.ogg
-HearCries = true
-#-------------------------------
-[076]
-Outdoor = true
-ShowArea = true
-Bicycle = true
-#-------------------------------
-[077]
-Outdoor = true
-ShowArea = true
-Bicycle = true
-#-------------------------------
-[078]
-# Hacienda (Back)
-Outdoor = true
-ShowArea = true
-Bicycle = true
-HearCries = true
-#-------------------------------
-[079]
-# Hacienda Castaneda
-Outdoor = true
-ShowArea = true
-Bicycle = true
-WildBattleBGM = BW 114 Battle! (Wild Pokemon).ogg
-HearCries = true
-#-------------------------------
-[081]
-Outdoor = true
-ShowArea = true
-Bicycle = true
+[2]
+TrainerType = POKEMONTRAINER_Leaf
+WalkCharset = trainer_POKEMONTRAINER_Leaf
+RunCharset = girl_run
+CycleCharset = girl_bike
+SurfCharset = girl_surf
+FishCharset = girl_fish_offset

@@ -1,6 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
-#-------------------------------
-[005] # San Cerigold Cemetery
+﻿[005] # San Cerigold Cemetery
 Land,21
     20,LILORINA,5,10
     20,DUSKULL,6,8
