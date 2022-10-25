@@ -15,5 +15,5 @@ module Settings
   #-----------------------------------------------------------------------------
   # Toggles whether or not shadow forms should appear in the Pokedex.
   #-----------------------------------------------------------------------------
-  POKEDEX_SHADOW_FORMS = true
+  POKEDEX_SHADOW_FORMS = false
 end
