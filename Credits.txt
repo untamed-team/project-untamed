@@ -36,6 +36,9 @@ Berry Pots:
 Caruban
 DerxwnaKapsyla
 
+Better Item Finder:
+Kotaro
+
 Better Region Map:
 Boonzeet
 Marin
