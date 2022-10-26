@@ -6257,10 +6257,19 @@ Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Gohila hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BERRYPOTS]
-Name = Berry Pots
+Name = Berry Pot
 NamePlural = Berry Pots
 Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = Handy containers for cultivating Berries wherever you go.
+#-------------------------------
+[ITEMFINDEROFF]
+Name = Itemfinder
+NamePlural = Itemfinders
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A better device used for finding items. If there is a hidden item nearby when it is used, it emits a signal.
