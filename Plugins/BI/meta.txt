@@ -1,5 +1,0 @@
-Name       = Better Itemfinder
-Version    = 1.0.0
-Essentials = 20.1
-Link       = https://reliccastle.com/resources/932/
-Credits    = Kotaro
