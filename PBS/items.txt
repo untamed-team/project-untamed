@@ -6266,8 +6266,8 @@ Flags = KeyItem
 Description = Handy containers for cultivating Berries wherever you go.
 #-------------------------------
 [ITEMFINDEROFF]
-Name = Itemfinder +
-NamePlural = Itemfinders +
+Name = Itemfinder
+NamePlural = Itemfinders
 Pocket = 8
 Price = 0
 FieldUse = Direct
