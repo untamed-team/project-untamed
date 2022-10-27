@@ -81,7 +81,7 @@ Bicycle = true
 [078]   # Hacienda (Back)
 Name = Hacienda (Back)
 Outdoor = true
-ShowArea = true
+ShowArea = false
 Bicycle = true
 #-------------------------------
 [079]   # Hacienda Castaneda
