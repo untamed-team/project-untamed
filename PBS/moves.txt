@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [MEGAHORN]
 Name = Megahorn
@@ -96,7 +96,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Blade
 Description = The user slashes at the foe by crossing its scythes or claws as if they were a pair of scissors.
 #-------------------------------
 [SIGNALBEAM]
@@ -504,7 +504,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The user slashes the target the instant an opportunity arises. Critical hits land more easily.
 #-------------------------------
 [SUCKERPUNCH]
@@ -1951,7 +1951,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = IgnoreTargetDefSpDefEvaStatStages
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Blade
 Description = The user attacks by slicing with its long horns. The target's stat changes don't affect the damage.
 #-------------------------------
 [THUNDEROUSKICK]
@@ -1976,7 +1976,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = UseTargetDefenseInsteadOfTargetSpDef
-Flags = CanProtect,CanMirrorMove,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Blade
 Description = The user cuts with its long horn. The odd power contained in it does physical damage to the foe.
 #-------------------------------
 [SKYUPPERCUT]
@@ -2971,7 +2971,7 @@ Accuracy = 95
 TotalPP = 15
 Target = Other
 FunctionCode = FlinchTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Blade
 EffectChance = 30
 Description = The user attacks with a blade of air that slices even the sky. It may also make the target flinch.
 #-------------------------------
@@ -3552,7 +3552,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The user handles a sharp leaf like a sword and attacks by slashing. It has a high critical-hit ratio.
 #-------------------------------
 [PETALBLIZZARD]
@@ -4005,7 +4005,7 @@ Accuracy = 85
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome, Blade
 Description = The user attacks its foes by manifesting the power of the land in fearsome blades of stone.
 #-------------------------------
 [EARTHQUAKE]
@@ -4913,7 +4913,7 @@ Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = TwoTurnAttack
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = A two-turn attack. Blades of wind hit the foe on the second turn. Critical hits land more easily.
 #-------------------------------
 [SLAM]
@@ -5063,7 +5063,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The target is attacked with a slash of claws or blades. Critical hits land more easily.
 #-------------------------------
 [SMELLINGSALTS]
@@ -5172,7 +5172,7 @@ Accuracy = 95
 TotalPP = 30
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Blade
 Description = The target is cut with a scythe or a claw. It can also be used to cut down thin trees.
 #-------------------------------
 [RAPIDSPIN]
@@ -6745,7 +6745,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 EffectChance = 10
 Description = A slashing attack with a poisonous blade that may also poison the foe. Critical hits land more easily.
 #-------------------------------
@@ -7223,7 +7223,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The user tears at the target with blades formed by psychic power. Critical hits land more easily.
 #-------------------------------
 [PSYBEAM]
@@ -7999,7 +7999,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,CannotMetronome
+Flags = Contact,CanProtect,CanMirrorMove,CannotMetronome,Blade
 Description = The user becomes a gigantic sword and cuts the target.
 #-------------------------------
 [IRONTAIL]
@@ -8780,7 +8780,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 007
-Flags = abefh
+Flags = Contact,CanProtect,HighCriticalHitRate
 EffectChance = 10
 Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with paralysis.
 #-------------------------------
@@ -8794,7 +8794,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 00C
-Flags = abefh
+Flags = Contact,CanProtect,HighCriticalHitRate
 EffectChance = 10
 Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with frostbite.
 #-------------------------------
@@ -8808,7 +8808,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 044
-Flags = bef
+Flags = CanProtect
 EffectChance = 10
 Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
 #-------------------------------
@@ -8822,7 +8822,6 @@ TotalPP = 10
 Target = User
 Priority = 0
 FunctionCode = 183
-Flags = e
 EffectChance = 0
 Description = The user eats its held Berry, then sharply raises its Defense stat.
 #-------------------------------
@@ -8836,7 +8835,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 0DD
-Flags = abef
+Flags = Contact,CanProtect
 EffectChance = 0
 Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
 #-------------------------------
@@ -8850,7 +8849,7 @@ TotalPP = 15
 Target = NearOther
 Priority = 0
 FunctionCode = 00C
-Flags = bce
+Flags = CanProtect,CanMirrorMove
 EffectChance = 0
 Description = The user chills their target to the bone to inflict frostbite."
 #-------------------------------
@@ -8864,7 +8863,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 007
-Flags = bef
+Flags = CanProtect
 EffectChance = 30
 Description = The user wails eerily at its target, chilling them to the bone. This may also paralyze the target.
 #-------------------------------
@@ -8878,7 +8877,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 042
-Flags = abefhp
+Flags = Contact,CanProtect,HighCriticalHitRate,Blade
 EffectChance = 10
 Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
 #-------------------------------
@@ -8892,7 +8891,7 @@ TotalPP = 10
 Target = AllNearFoes
 Priority = 0
 FunctionCode = 000
-Flags = bef
+Flags = CanProtect
 EffectChance = 0
 Description = The user strikes the air to send a damaging shockwave towards opposing Pokémon.
 #-------------------------------
@@ -8906,7 +8905,7 @@ TotalPP = 20
 Target = NearOther
 Priority = 0
 FunctionCode = 00F
-Flags = be
+Flags = CanProtect
 EffectChance = 10
 Description = The user attacks its target with a hail of glittering crystals. This may also make the target flinch.
 #-------------------------------
@@ -8920,7 +8919,7 @@ TotalPP = 15
 Target = NearOther
 Priority = 0
 FunctionCode = 00A
-Flags = bef
+Flags = CanProtect
 EffectChance = 10
 Description = The user spews superheated metal at its target. This may also leave the target with a burn.
 #-------------------------------
@@ -8934,7 +8933,6 @@ TotalPP = 40
 Target = User
 Priority = 0
 FunctionCode = 020
-Flags = d
 EffectChance = 0
 Description = The user pumps themselves up, raising its Sp. Atk stat.
 #-------------------------------
@@ -8948,7 +8946,7 @@ TotalPP = 15
 Target = AllNearFoes
 Priority = 0
 FunctionCode = 044
-Flags = bef
+Flags = CanProtect
 EffectChance = 10
 Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
 #-------------------------------
@@ -8962,7 +8960,7 @@ TotalPP = 25
 Target = NearOther
 Priority = 0
 FunctionCode = 00F
-Flags = abei
+Flags = Contact,CanProtect,Biting
 EffectChance = 30
 Description = The target is bitten with sweet and sharp fangs. It may make the target flinch.
 #-------------------------------
@@ -8976,7 +8974,7 @@ TotalPP = 5
 Target = AllNearOthers
 Priority = 0
 FunctionCode = 502
-Flags = abef
+Flags = Contact,CanProtect
 EffectChance = 0
 Description = This move is Rock and Fire type simultaneously. It damages the user heavily.
 #-------------------------------
@@ -8990,7 +8988,7 @@ TotalPP = 15
 Target = NearOther
 Priority = 0
 FunctionCode = 00A
-Flags = befg
+Flags = CanProtect,ThawsUser
 EffectChance = 30
 Description = The user unleashes a spray of spicy vapors at its target to attack. It may also leave the target with a burn.
 #-------------------------------
@@ -9004,7 +9002,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = 511
-Flags = bef
+Flags = CanProtect
 EffectChance = 0
 Description = The damage is based on the user's highest attacking stat. The move's type is set by the user's type.
 #-------------------------------
@@ -9018,7 +9016,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 003
-Flags = befk
+Flags = CanProtect,Sound
 EffectChance = 10
 Description = An ancient song appeals to the hearts of those listening. It may also induce sleep.
 #-------------------------------
@@ -9032,7 +9030,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = 503
-Flags = bce
+Flags = CanProtect,CanMirrorMove
 EffectChance = 0
 Description = The user buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
@@ -9046,7 +9044,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = 044
-Flags = abefi
+Flags = Contact,CanProtect,Biting
 EffectChance = 100
 Description = The user hunts down its foe with a deadly precision chomp, which lowers their speed.
 #-------------------------------
@@ -9060,7 +9058,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = 0DD
-Flags = bef
+Flags = CanProtect
 EffectChance = 0
 Description = The user drains the life force from the target. This move heals the user by 50% of the damage dealt.
 #-------------------------------
@@ -9074,7 +9072,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = 503
-Flags = bef
+Flags = CanProtect
 EffectChance = 0
 Description = The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain.
 #-------------------------------
