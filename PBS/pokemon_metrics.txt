@@ -409,14 +409,14 @@ ShadowX = 0
 ShadowSize = 1
 #-------------------------------
 [YAQUENA]
-BackSprite = 0,14
-FrontSprite = 0,18
+BackSprite = 0,9
+FrontSprite = 0,11
 ShadowX = 0
 ShadowSize = 2
 #-------------------------------
 [YORONAQUA]
-BackSprite = 0,20
-FrontSprite = 0,11
+BackSprite = 0,15
+FrontSprite = 0,9
 ShadowX = 0
 ShadowSize = 3
 #-------------------------------
