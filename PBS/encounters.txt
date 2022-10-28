@@ -1,12 +1,14 @@
-﻿[005] # San Cerigold Cemetery
+﻿# See the documentation on the wiki to learn how to edit this file.
+#-------------------------------
+[005] # San Cerigold Cemetery
 Land,21
-    20,LILORINA,5,10
     20,DUSKULL,6,8
-    15,FLABEBE,5,6
+    20,LILORINA,5,10
     15,BUDEW,5,8
+    15,FLABEBE,5,6
+    10,GOTHITA,7,9
     10,MURKROW,4,7
     10,VULPIX,5,7
-    10,GOTHITA,7,9
 #-------------------------------
 [022] # Veravalles Town
 Water,2
@@ -22,8 +24,8 @@ GoodRod
 #-------------------------------
 [048] # Route 1
 Land,21
-    25,PACUNA,2,4
     25,MINIMELO,2,4
+    25,PACUNA,2,4
     20,WRENNER,2,4
     10,FLABEBE,2,3
     10,LEDYBA,2,3
