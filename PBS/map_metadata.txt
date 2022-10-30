@@ -43,10 +43,10 @@ Bicycle = true
 HealingSpot = 33,4,9
 #-------------------------------
 [008]   # SW house
-Name = Route 1
-Outdoor = true
-ShowArea = true
-Bicycle = true
+Name = Cerigold Cafe
+Outdoor = false
+ShowArea = false
+Bicycle = false
 BattleBack = field
 #-------------------------------
 [009]   # SE house-Purple
