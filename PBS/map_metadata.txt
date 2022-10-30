@@ -11,10 +11,6 @@ Bicycle = false
 #-------------------------------
 [003]   # Sofía's house
 Name = San Cerigold Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-HealingSpot = 19,10,18
 #-------------------------------
 [004]   # San Cerigold Town
 Name = San Cerigold Town
@@ -32,38 +28,22 @@ Bicycle = false
 Weather = Marigolds,100
 #-------------------------------
 [006]   # NW house-Blue
-Name = Test World
-Outdoor = true
+Name = NW house-blue
 #-------------------------------
 [007]   # Library (Yellow)
-Name = Veravalles Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-HealingSpot = 33,4,9
+Name = Library (Yellow)
 #-------------------------------
 [008]   # SW house
 Name = Cerigold Cafe
-Outdoor = false
-ShowArea = false
-Bicycle = false
-BattleBack = field
 #-------------------------------
 [009]   # SE house-Purple
-Name = Hacienda (Back)
-Outdoor = true
-ShowArea = true
-Bicycle = true
+Name = SE house-Purple
 #-------------------------------
 [010]   # SE house-Green
-Name = Hacienda Castaneda
-Outdoor = true
-ShowArea = true
-Bicycle = true
+Name = SE house-Green
 #-------------------------------
 [019]   # San Cerigold PC
 Name = San Cerigold PC
-Name = 
 HealingSpot = 4,22,22
 #-------------------------------
 [022]   # Veravalles Town
@@ -78,10 +58,10 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 #-------------------------------
-[078]   # Hacienda (Back)
-Name = Hacienda (Back)
+[078]   # Hacienda Fields
+Name = Hacienda Fields
 Outdoor = true
-ShowArea = false
+ShowArea = true
 Bicycle = true
 #-------------------------------
 [079]   # Hacienda Castaneda
