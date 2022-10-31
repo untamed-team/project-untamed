@@ -31,7 +31,7 @@ Land,21
     10,LEDYBA,2,3
     10,SUNKERN,2,3
 #-------------------------------
-[078] # Hacienda (Back)
+[078] # Hacienda Fields
 Corn,5
     50,ZEAZAYA,5,7
     25,CAFECARACHA,4,6

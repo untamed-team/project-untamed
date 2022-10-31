@@ -18,6 +18,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 Weather = Marigolds,100
+MapPosition = 0,20,3
 #-------------------------------
 [005]   # San Cerigold Cemetery
 Name = San Cerigold Cemetery
@@ -26,6 +27,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = false
 Weather = Marigolds,100
+MapPosition = 0,20,3
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
@@ -33,7 +35,7 @@ Name = NW house-blue
 [007]   # Library (Yellow)
 Name = Library (Yellow)
 #-------------------------------
-[008]   # SW house
+[008]   # SW House (Cafe)
 Name = Cerigold Cafe
 #-------------------------------
 [009]   # SE house-Purple
@@ -51,21 +53,25 @@ Name = Veravalles Town
 Outdoor = true
 ShowArea = true
 Bicycle = true
+MapPosition = 0,19,5
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
 Outdoor = true
 ShowArea = true
 Bicycle = true
+MapPosition = 0,20,4
 #-------------------------------
 [078]   # Hacienda Fields
 Name = Hacienda Fields
 Outdoor = true
 ShowArea = true
 Bicycle = true
+MapPosition = 0,18,3
 #-------------------------------
 [079]   # Hacienda Castaneda
 Name = Hacienda Castaneda
 Outdoor = true
 ShowArea = true
 Bicycle = true
+MapPosition = 0,18,4
