@@ -338,6 +338,7 @@ Habitat = RoughTerrain
 Category = Swift Chick
 Pokedex = From the moment they hatch, the first thing a Wrenner does is run. While they're poor flyers, they can glide short distances after jumping great heights.
 Generation = 9
+Evolutions = AVEOR,16
 #-------------------------------
 [AVEOR]
 Name = Aveor
@@ -363,7 +364,7 @@ Habitat = RoughTerrain
 Category = Star Runner
 Pokedex = The friction against Aveor's feathers as it runs upwards of 50mph generates electricity, causing sparks to fly behind it. It's dubbed "The Comet of the Sands".
 Generation = 9
-Evolutions = ROADRAPTOR,Level,34
+Evolutions = ROADRAPTOR,Level,36
 #-------------------------------
 [ROADRAPTOR]
 Name = Roadraptor
@@ -1052,8 +1053,8 @@ BaseExp = 54
 EVs = SPECIAL_DEFENSE,1
 CatchRate = 200
 Happiness = 70
-Abilities = WATERBUBBLE
-HiddenAbilities = WATERABSORB
+Abilities = WATERABSORB
+HiddenAbilities = WATERBUBBLE
 Moves = 1,WATERSPORT,1,BUBBLE,5,INFESTATION,8,SPIDERWEB,13,BUGBITE,16,BUBBLEBEAM,21,BITE,24,AQUARING,29,LEECHLIFE,32,CRUNCH,37,LUNGE,40,MIRRORCOAT,45,LIQUIDATION,48,ENTRAINMENT
 TutorMoves = ATTRACT,BLIZZARD,DOUBLETEAM,FACADE,HIDDENPOWER,ICEBEAM,LIQUIDATION,POISONJAB,PROTECT,RAINDANCE,REST,RETURN,ROUND,SCALD,SLEEPTALK,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,XSCISSOR
 EggMoves = AURORABEAM,POWERSPLIT,SPITUP,STICKYWEB,STOCKPILE
@@ -1079,8 +1080,8 @@ BaseExp = 159
 EVs = SPECIAL_DEFENSE,2
 CatchRate = 100
 Happiness = 70
-Abilities = WATERBUBBLE
-HiddenAbilities = WATERABSORB
+Abilities = WATERABSORB
+HiddenAbilities = WATERBUBBLE
 Moves = 1,WIDEGUARD,1,SOAK,1,BUBBLE,1,INFESTATION,1,SPIDERWEB,1,BUGBITE,5,INFESTATION,8,SPIDERWEB,13,BUGBITE,16,BUBBLEBEAM,21,BITE,26,AQUARING,33,LEECHLIFE,38,CRUNCH,45,LUNGE,50,MIRRORCOAT,57,LIQUIDATION,62,ENTRAINMENT
 TutorMoves = ATTRACT,BLIZZARD,DOUBLETEAM,FACADE,HIDDENPOWER,ICEBEAM,LIQUIDATION,POISONJAB,PROTECT,RAINDANCE,REFLECT,REST,RETURN,ROUND,SAFEGUARD,SCALD,SLEEPTALK,SUBSTITUTE,SURF,SWAGGER,TOXIC,WATERFALL,XSCISSOR
 EggGroups = Water1,Bug
