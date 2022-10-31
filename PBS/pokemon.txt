@@ -338,7 +338,7 @@ Habitat = RoughTerrain
 Category = Swift Chick
 Pokedex = From the moment they hatch, the first thing a Wrenner does is run. While they're poor flyers, they can glide short distances after jumping great heights.
 Generation = 9
-Evolutions = AVEOR,16
+Evolutions = AVEOR,Level,16
 #-------------------------------
 [AVEOR]
 Name = Aveor
