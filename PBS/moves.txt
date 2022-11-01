@@ -8851,7 +8851,7 @@ Priority = 0
 FunctionCode = 00C
 Flags = CanProtect,CanMirrorMove
 EffectChance = 0
-Description = The user chills their target to the bone to inflict frostbite."
+Description = The user chills their target to the bone to inflict frostbite.
 #-------------------------------
 [CHILLINGWAIL]
 Name = Chilling Wail
