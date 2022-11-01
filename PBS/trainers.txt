@@ -111,18 +111,6 @@ LoseText = Wow, you’re pretty good!
 Pokemon = PUMPKABOO,10
 Pokemon = PHANTUMP,10
 #-------------------------------
-[PSYCHIC_F2,Maya]
-LoseText = Sigh…
-Pokemon = DUSKULL,9
-Pokemon = LITWICK,8
-	AbilityIndex = 0
-#-------------------------------
-[PSYCHIC_F2,Maya,100]
-LoseText = Sigh…
-Pokemon = DUSKULL,11
-Pokemon = LITWICK,10
-	AbilityIndex = 0
-#-------------------------------
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,14
@@ -172,10 +160,12 @@ Pokemon = DRILBUR,11
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = My dark magic will make you even stronger..
-Pokemon = PHANTUMP,9
 Pokemon = DUSKULL,9
+Pokemon = LITWICK,8
+	AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = My dark magic will make you even stronger..
-Pokemon = PHANTUMP,10
-Pokemon = DUSKULL,10
+Pokemon = DUSKULL,11
+Pokemon = LITWICK,10
+	AbilityIndex = 0
