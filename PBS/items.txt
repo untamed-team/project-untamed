@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [REPEL]
 Name = Repel
@@ -3684,15 +3684,25 @@ BattleUse = OnFoe
 Flags = PokeBall
 Description = A special Poké Ball designed to catch Ultra Beasts. It has a low success rate for catching others.
 #-------------------------------
+[TM00]
+Name = TM00
+NamePlural = TM00s
+Pocket = 4
+Price = 5500
+FieldUse = TR
+Flags = Fling_10
+Move = TRICKROOM
+Description = The user creates a bizarre area in which slower Pokémon get to move first for five turns.
+#-------------------------------
 [TM01]
 Name = TM01
 NamePlural = TM01s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_150
-Move = FOCUSPUNCH
-Description = The user focuses its mind before launching a punch. This move fails if the user is hit before it is used.
+Flags = Fling_10
+Move = WORKUP
+Description = The user is roused, and its Attack and Sp. Atk stats increase.
 #-------------------------------
 [TM02]
 Name = TM02
@@ -3700,19 +3710,19 @@ NamePlural = TM02s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_80
-Move = DRAGONCLAW
-Description = The user slashes the target with huge sharp claws.
+Flags = Fling_10
+Move = HELPINGHAND
+Description = The user assists an ally by boosting the power of its attack.
 #-------------------------------
 [TM03]
 Name = TM03
 NamePlural = TM03s
 Pocket = 4
-Price = 3000
+Price = 1500
 FieldUse = TR
-Flags = Fling_60
-Move = WATERPULSE
-Description = The user attacks the target with a pulsing blast of water. This may also confuse the target.
+Flags = Fling_10
+Move = BULKUP
+Description = The user tenses its muscles to bulk up its body, boosting both its Attack and Defense stats.
 #-------------------------------
 [TM04]
 Name = TM04
@@ -3738,11 +3748,11 @@ Description = The target is scared off, and a different Pokémon is dragged out.
 Name = TM06
 NamePlural = TM06s
 Pocket = 4
-Price = 3000
+Price = 7500
 FieldUse = TR
-Flags = Fling_10
-Move = TOXIC
-Description = A move that leaves the target badly poisoned. Its poison damage worsens every turn.
+Flags = Fling_250
+Move = EXPLOSION
+Description = The user explodes to inflict damage on those around it. The user faints upon using this move.
 #-------------------------------
 [TM07]
 Name = TM07
@@ -3750,29 +3760,29 @@ NamePlural = TM07s
 Pocket = 4
 Price = 2000
 FieldUse = TR
-Flags = Fling_10
-Move = HAIL
-Description = The user summons a hailstorm lasting five turns. It damages all Pokémon except Ice types.
+Flags = Fling_65
+Move = VENOSHOCK
+Description = The user drenches the foe in a special poisonous liquid. Its power doubles if the target is poisoned.
 #-------------------------------
 [TM08]
 Name = TM08
 NamePlural = TM08s
 Pocket = 4
-Price = 1500
+Price = 1000
 FieldUse = TR
 Flags = Fling_10
-Move = BULKUP
-Description = The user tenses its muscles to bulk up its body, raising both its Attack and Defense stats.
+Move = DOUBLETEAM
+Description = By moving rapidly, the user makes illusory copies of itself to raise its evasiveness.
 #-------------------------------
 [TM09]
 Name = TM09
 NamePlural = TM09s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_25
-Move = BULLETSEED
-Description = The user forcefully shoots seeds at the target two to five times in a row.
+Flags = Fling_80
+Move = SCATTERDUST
+Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
 #-------------------------------
 [TM10]
 Name = TM10
@@ -3780,19 +3790,19 @@ NamePlural = TM10s
 Pocket = 4
 Price = 1500
 FieldUse = TR
-Flags = Fling_10
-Move = WORKUP
-Description = The user is roused, and its Attack and Sp. Atk stats increase.
+Flags = Fling_60
+Move = HIDDENPOWER
+Description = A unique attack that varies in type and intensity depending on the Pokémon using it.
 #-------------------------------
 [TM11]
 Name = TM11
-NamePlural = TM11s
+NamePlural = TM1s
 Pocket = 4
-Price = 2000
+Price = 1500
 FieldUse = TR
 Flags = Fling_10
-Move = SUNNYDAY
-Description = The user intensifies the sun for five turns, powering up Fire-type moves and weakening Water-type moves.
+Move = SWAGGER
+Description = The user enrages and confuses the target. However, this also sharply raises the target's Attack stat.
 #-------------------------------
 [TM12]
 Name = TM12
@@ -3840,9 +3850,9 @@ NamePlural = TM16s
 Pocket = 4
 Price = 2000
 FieldUse = TR
-Flags = Fling_10
-Move = LIGHTSCREEN
-Description = A wondrous wall of light is put up to reduce damage from special attacks for five turns.
+Flags = Fling_80
+Move = TRIATTACK
+Description = The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or freeze the target.
 #-------------------------------
 [TM17]
 Name = TM17
@@ -3861,18 +3871,18 @@ Pocket = 4
 Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = RAINDANCE
-Description = The user summons a heavy rain for five turns, powering up Water-type moves and weakening Fire-type ones.
+Move = SANDSTORM
+Description = A five-turn sandstorm is summoned to hurt all combatants except Rock, Ground, and Steel types.
 #-------------------------------
 [TM19]
 Name = TM19
 NamePlural = TM19s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_75
-Move = GIGADRAIN
-Description = A nutrient-draining attack. The user's HP is restored by half the damage taken by the target.
+Flags = Fling_10
+Move = RAINDANCE
+Description = The user summons a heavy rain for five turns, powering up Water-type moves and weakening Fire-type ones.
 #-------------------------------
 [TM20]
 Name = TM20
@@ -3881,8 +3891,8 @@ Pocket = 4
 Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = SAFEGUARD
-Description = The user creates a protective field that prevents status conditions for five turns.
+Move = SUNNYDAY
+Description = The user intensifies the sun for five turns, powering up Fire-type moves and weakening Water-type moves.
 #-------------------------------
 [TM21]
 Name = TM21
@@ -3890,9 +3900,9 @@ NamePlural = TM21s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_80
-Move = DAZZLINGGLEAM
-Description = The user damages opposing Pokémon by emitting a powerful flash.
+Flags = Fling_10
+Move = HAIL
+Description = The user summons a hail storm lasting five turns. It damages all Pokémon except the Ice type.
 #-------------------------------
 [TM22]
 Name = TM22
@@ -3910,9 +3920,9 @@ NamePlural = TM23s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_100
-Move = IRONTAIL
-Description = The target is slammed with a steel-hard tail. This may also lower the target's Defense stat.
+Flags = Fling_125
+Move = SOLARBLADE
+Description = The user gathers light energy into a blade, attacking the target on the next turn.
 #-------------------------------
 [TM24]
 Name = TM24
@@ -3950,9 +3960,9 @@ NamePlural = TM27s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_65
-Move = LOWSWEEP
-Description = The user makes a swift attack on the target's legs, which lowers the target's Speed stat.
+Flags = Fling_10
+Move = RETURN
+Description = A full-power attack that grows more powerful the more the user likes its Trainer.
 #-------------------------------
 [TM28]
 Name = TM28
@@ -3981,8 +3991,8 @@ Pocket = 4
 Price = 3000
 FieldUse = TR
 Flags = Fling_80
-Move = SHADOWBALL
-Description = The user hurls a shadowy blob at the target. This may also lower the target's Sp. Def stat.
+Move = PSYSHOCK
+Description = The user materializes an odd psychic wave to attack the target. This attack does physical damage.
 #-------------------------------
 [TM31]
 Name = TM31
@@ -3998,11 +4008,11 @@ Description = The user attacks with a swift chop. It can also break barriers, su
 Name = TM32
 NamePlural = TM32s
 Pocket = 4
-Price = 1000
+Price = 2000
 FieldUse = TR
-Flags = Fling_10
-Move = DOUBLETEAM
-Description = By moving rapidly, the user makes illusory copies of itself to raise its evasiveness.
+Flags = Fling_65
+Move = HEX
+Description = This relentless attack does massive damage to a target affected by status problems.
 #-------------------------------
 [TM33]
 Name = TM33
@@ -4011,28 +4021,28 @@ Pocket = 4
 Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = REFLECT
-Description = A wondrous wall of light is put up to reduce damage from physical attacks for five turns.
+Move = LIGHTSCREEN
+Description = A wondrous wall of light is put up to reduce damage from special attacks for five turns.
 #-------------------------------
 [TM34]
 Name = TM34
 NamePlural = TM34s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_60
-Move = SHOCKWAVE
-Description = The user strikes the target with a quick jolt of electricity. This attack never misses.
+Flags = Fling_10
+Move = REFLECT
+Description = A wondrous wall of light is put up to reduce damage from physical attacks for five turns.
 #-------------------------------
 [TM35]
 Name = TM35
 NamePlural = TM35s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_90
-Move = FLAMETHROWER
-Description = The target is scorched with an intense blast of fire. This may also leave the target with a burn.
+Flags = Fling_10
+Move = SAFEGUARD
+Description = The user creates a protective field that prevents status conditions for five turns.
 #-------------------------------
 [TM36]
 Name = TM36
@@ -4041,28 +4051,28 @@ Pocket = 4
 Price = 3000
 FieldUse = TR
 Flags = Fling_90
-Move = SLUDGEBOMB
-Description = Unsanitary sludge is hurled at the target. This may also poison the target.
+Move = FLAMETHROWER
+Description = The target is scorched with an intense blast of fire. This may also leave the target with a burn.
 #-------------------------------
 [TM37]
 Name = TM37
 NamePlural = TM37s
-Pocket = 4
-Price = 2000
-FieldUse = TR
-Flags = Fling_10
-Move = SANDSTORM
-Description = A five-turn sandstorm is summoned to hurt all combatants except Rock, Ground, and Steel types.
-#-------------------------------
-[TM38]
-Name = TM38
-NamePlural = TM38s
 Pocket = 4
 Price = 5500
 FieldUse = TR
 Flags = Fling_110
 Move = FIREBLAST
 Description = The target is attacked with an intense blast of all-consuming fire. This may also leave them with a burn.
+#-------------------------------
+[TM38]
+Name = TM38
+NamePlural = TM38s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_90
+Move = SLUDGEBOMB
+Description = Unsanitary sludge is hurled at the target. This may also poison the target.
 #-------------------------------
 [TM39]
 Name = TM39
@@ -4110,19 +4120,19 @@ NamePlural = TM43s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_70
-Move = VOLTSWITCH
-Description = After making its attack, the user rushes back to switch places with a party Pokémon in waiting.
+Flags = Fling_10
+Move = REST
+Description = The user goes to sleep for two turns. It fully restores the user's HP and heals any status problem.
 #-------------------------------
 [TM44]
 Name = TM44
 NamePlural = TM44s
 Pocket = 4
-Price = 3000
+Price = 1000
 FieldUse = TR
 Flags = Fling_10
-Move = REST
-Description = The user goes to sleep for two turns. This fully restores the user's HP and heals any status conditions.
+Move = SLEEPTALK
+Description = While it is asleep, the user randomly uses one of the moves it knows.
 #-------------------------------
 [TM45]
 Name = TM45
@@ -4130,13 +4140,33 @@ NamePlural = TM45s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = ATTRACT
-Description = If it is the opposite gender of the user, the target becomes infatuated and less likely to attack.
+Flags = Fling_85
+Move = LIQUIDATION
+Description = The user slams into the target using a full-force blast of water. May lower the target's Defense.
 #-------------------------------
 [TM46]
 Name = TM46
 NamePlural = TM46s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_10
+Move = ATTRACT
+Description = If it is the opposite gender of the user, the target becomes infatuated and less likely to attack.
+#-------------------------------
+[TM47]
+Name = TM47
+NamePlural = TM47s
+Pocket = 4
+Price = 2000
+FieldUse = TR
+Flags = Fling_60
+Move = ROUND
+Description = The user attacks with a song. Others can join in the Round and make the attack do greater damage.
+#-------------------------------
+[TM48]
+Name = TM48
+NamePlural = TM48s
 Pocket = 4
 Price = 2000
 FieldUse = TR
@@ -4144,45 +4174,25 @@ Flags = Fling_60
 Move = THIEF
 Description = The user attacks and steals the target's held item simultaneously.
 #-------------------------------
-[TM47]
-Name = TM47
-NamePlural = TM47s
-Pocket = 4
-Price = 3000
-FieldUse = TR
-Flags = Fling_70
-Move = STEELWING
-Description = The target is hit with wings of steel. This may also raise the user's Defense stat.
-#-------------------------------
-[TM48]
-Name = TM48
-NamePlural = TM48s
-Pocket = 4
-Price = 3000
-FieldUse = TR
-Flags = Fling_10
-Move = SKILLSWAP
-Description = The user employs its psychic power to exchange Abilities with the target.
-#-------------------------------
 [TM49]
 Name = TM49
 NamePlural = TM49s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_80
-Move = SCALD
-Description = The user shoots boiling hot water at its target. This may also leave the target with a burn.
+Flags = Fling_65
+Move = LOWSWEEP
+Description = The user makes a swift attack on the target's legs, which lowers the target's Speed stat.
 #-------------------------------
 [TM50]
 Name = TM50
 NamePlural = TM50s
 Pocket = 4
-Price = 5500
+Price = 3000
 FieldUse = TR
-Flags = Fling_130
-Move = OVERHEAT
-Description = The user attacks the target at full power. The attack's recoil harshly lowers the user's Sp. Atk stat.
+Flags = Fling_70
+Move = SCORCHINGSANDS
+Description = The user throws scorching sand at the target to attack. This may also burn the target.
 #-------------------------------
 [TM51]
 Name = TM51
@@ -4191,32 +4201,12 @@ Pocket = 4
 Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = ROOST
-Description = The user lands and rests its body. This move restores the user's HP by up to half of its max HP.
+Move = ALLYSWITCH
+Description = The user teleports using a strange power and switches its place with one of its allies.
 #-------------------------------
 [TM52]
 Name = TM52
 NamePlural = TM52s
-Pocket = 4
-Price = 5500
-FieldUse = TR
-Flags = Fling_120
-Move = FOCUSBLAST
-Description = The user heightens its mental focus and unleashes its power. This may also lower the target's Sp. Def stat.
-#-------------------------------
-[TM53]
-Name = TM53
-NamePlural = TM53s
-Pocket = 4
-Price = 3000
-FieldUse = TR
-Flags = Fling_90
-Move = ENERGYBALL
-Description = The user draws power from nature and fires it at the target. This may also lower the target's Sp. Def stat.
-#-------------------------------
-[TM54]
-Name = TM54
-NamePlural = TM54s
 Pocket = 4
 Price = 2000
 FieldUse = TR
@@ -4224,25 +4214,45 @@ Flags = Fling_40
 Move = FALSESWIPE
 Description = A restrained attack that prevents the target from fainting. The target is left with at least 1 HP.
 #-------------------------------
+[TM53]
+Name = TM53
+NamePlural = TM53s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_70
+Move = STEELWING
+Description = The target is hit with wings of steel. This may also raise the user's Defense stat.
+#-------------------------------
+[TM54]
+Name = TM54
+NamePlural = TM54s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_80
+Move = FLASHCANNON
+Description = The user gathers all its light energy and releases it all at once. This may also lower the target's Sp. Def stat.
+#-------------------------------
 [TM55]
 Name = TM55
 NamePlural = TM55s
 Pocket = 4
-Price = 3000
+Price = 5500
 FieldUse = TR
-Flags = Fling_65
-Move = BRINE
-Description = If the target's HP is half or less, this attack will hit with double the power.
+Flags = Fling_120
+Move = FOCUSBLAST
+Description = The user heightens its mental focus and unleashes its power. This may also lower the target's Sp. Def stat.
 #-------------------------------
 [TM56]
 Name = TM56
 NamePlural = TM56s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = FLING
-Description = The user flings its held item at the target to attack. This move's power and effects depend on the item.
+Flags = Fling_80
+Move = BODYPRESS
+Description = The user attacks by slamming its body into the target. Power increases the higher the user's Defense is.
 #-------------------------------
 [TM57]
 Name = TM57
@@ -4250,19 +4260,19 @@ NamePlural = TM57s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_50
-Move = CHARGEBEAM
-Description = The user attacks the target with an electric charge. The user may use any remaining charge to raise its Sp. Atk.
+Flags = Fling_80
+Move = PSYCRUSH
+Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
 #-------------------------------
 [TM58]
 Name = TM58
 NamePlural = TM58s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = ENDURE
-Description = The user endures any attack with at least 1 HP. Its chance of failing rises if it is used in succession.
+Flags = Fling_80
+Move = SCALD
+Description = The user shoots boiling hot water at its target. This may also leave the target with a burn.
 #-------------------------------
 [TM59]
 Name = TM59
@@ -4270,23 +4280,63 @@ NamePlural = TM59s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_85
-Move = DRAGONPULSE
-Description = The target is attacked with a shock wave generated by the user's gaping mouth.
+Flags = Fling_90
+Move = ENERGYBALL
+Description = The user draws power from nature and fires it at the target. This may also lower the target's Sp. Def stat.
 #-------------------------------
 [TM60]
 Name = TM60
 NamePlural = TM60s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_75
-Move = DRAINPUNCH
-Description = An energy-draining punch. The user's HP is restored by half the damage taken by the target.
+Flags = Fling_25
+Move = BULLETSEED
+Description = The user forcefully shoots seeds at the target. Two to five seeds are shot in rapid succession.
 #-------------------------------
 [TM61]
 Name = TM61
 NamePlural = TM61s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_10
+Move = GRASSKNOT
+Description = The user snares the target with grass and trips it. The heavier the target, the strong the move is.
+#-------------------------------
+[TM62]
+Name = TM62
+NamePlural = TM62s
+Pocket = 4
+Price = 2000
+FieldUse = TR
+Flags = Fling_55
+Move = ACROBATICS
+Description = The user nimbly strikes the foe. This attack does more damage if the user is not holding an item.
+#-------------------------------
+[TM63]
+Name = TM63
+NamePlural = TM63s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_85
+Move = SCOURINGWINDS
+Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
+#-------------------------------
+[TM64]
+Name = TM64
+NamePlural = TM64s
+Pocket = 4
+Price = 3000
+FieldUse = TR
+Flags = Fling_10
+Move = TOXIC
+Description = A move that leaves the target badly poisoned. Its poison damage worsens every turn.
+#-------------------------------
+[TM65]
+Name = TM65
+NamePlural = TM65s
 Pocket = 4
 Price = 2000
 FieldUse = TR
@@ -4294,69 +4344,39 @@ Flags = Fling_10
 Move = WILLOWISP
 Description = The user shoots a sinister flame at the target to inflict a burn.
 #-------------------------------
-[TM62]
-Name = TM62
-NamePlural = TM62s
-Pocket = 4
-Price = 3000
-FieldUse = TR
-Flags = Fling_90
-Move = BUGBUZZ
-Description = The user generates a damaging sound wave by vibration. This may also lower the target's Sp. Def stat.
-#-------------------------------
-[TM63]
-Name = TM63
-NamePlural = TM63s
-Pocket = 4
-Price = 2000
-FieldUse = TR
-Flags = Fling_10
-Move = NASTYPLOT
-Description = The user stimulates its brain by thinking bad thoughts. This sharply raises the user's Sp. Atk stat.
-#-------------------------------
-[TM64]
-Name = TM64
-NamePlural = TM64s
-Pocket = 4
-Price = 7500
-FieldUse = TR
-Flags = Fling_250
-Move = EXPLOSION
-Description = The user attacks everything around it by causing a tremendous explosion. The user faints upon using this move.
-#-------------------------------
-[TM65]
-Name = TM65
-NamePlural = TM65s
-Pocket = 4
-Price = 3000
-FieldUse = TR
-Flags = Fling_70
-Move = SHADOWCLAW
-Description = The user slashes with a sharp claw made from shadows. Critical hits land more easily.
-#-------------------------------
 [TM66]
 Name = TM66
 NamePlural = TM66s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_50
-Move = PAYBACK
-Description = The user stores power, then attacks. If the user moves after the target, this attack's power will be doubled.
+Flags = Fling_10
+Move = THUNDERWAVE
+Description = The user launches a weak jolt of electricity that paralyzes the target.
 #-------------------------------
 [TM67]
 Name = TM67
 NamePlural = TM67s
 Pocket = 4
-Price = 1000
+Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = RECYCLE
-Description = The user recycles a held item that has been used in battle so it can be used again.
+Move = BITINGCOLD
+Description = The user chills their target to the bone to inflict frostbite.
 #-------------------------------
 [TM68]
 Name = TM68
 NamePlural = TM68s
+Pocket = 4
+Price = 2000
+FieldUse = TR
+Flags = Fling_60
+Move = FLAMEWHEEL
+Description = The user cloaks itself in fire and charges at the target. It may also leave the target with a burn.
+#-------------------------------
+[TM69]
+Name = TM69
+NamePlural = TM69s
 Pocket = 4
 Price = 7500
 FieldUse = TR
@@ -4364,35 +4384,25 @@ Flags = Fling_150
 Move = GIGAIMPACT
 Description = The user charges at the target using every bit of its power. The user can't move on the next turn.
 #-------------------------------
-[TM69]
-Name = TM69
-NamePlural = TM69s
-Pocket = 4
-Price = 1500
-FieldUse = TR
-Flags = Fling_10
-Move = ROCKPOLISH
-Description = The user polishes its body to reduce drag. This sharply raises the Speed stat.
-#-------------------------------
 [TM70]
 Name = TM70
 NamePlural = TM70s
 Pocket = 4
-Price = 1000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = FLASH
-Description = The user flashes a light that lowers the target's accuracy. It can also be used to illuminate caves.
+Flags = Fling_85
+Move = BODYSLAM
+Description = The user drops onto the target with its full body weight. It may leave the target with paralysis.
 #-------------------------------
 [TM71]
 Name = TM71
 NamePlural = TM71s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
-Flags = Fling_100
-Move = STONEEDGE
-Description = The user stabs the target from below with sharpened stones. Critical hits land more easily.
+Flags = Fling_60
+Move = ASSURANCE
+Description = If the target has already taken some damage in the same turn, this attack's power is doubled.
 #-------------------------------
 [TM72]
 Name = TM72
@@ -4400,9 +4410,9 @@ NamePlural = TM72s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_60
-Move = AVALANCHE
-Description = The power of this attack move is doubled if the user has been hurt by the target in the same turn.
+Flags = Fling_95
+Move = FOULPLAY
+Description = The user turns the foe's power against it. It does more damage the higher the target's Attack stat.
 #-------------------------------
 [TM73]
 Name = TM73
@@ -4410,9 +4420,9 @@ NamePlural = TM73s
 Pocket = 4
 Price = 2000
 FieldUse = TR
-Flags = Fling_10
-Move = THUNDERWAVE
-Description = The user launches a weak jolt of electricity that paralyzes the target.
+Flags = Fling_60
+Move = BRUTALSWING
+Description = The user swings its body around violently to inflict damage on everything in its vicinity.
 #-------------------------------
 [TM74]
 Name = TM74
@@ -4441,48 +4451,48 @@ Pocket = 4
 Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = STEALTHROCK
-Description = The user lays a trap of levitating stones around the opposing team that hurt Pokémon that switch in.
+Move = SUBSTITUTE
+Description = The user creates a substitute for itself using some of its HP. The substitute serves as a decoy.
 #-------------------------------
 [TM77]
 Name = TM77
 NamePlural = TM77s
 Pocket = 4
-Price = 1500
+Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = PSYCHUP
-Description = The user hypnotizes itself into copying any stat change made by the target.
+Move = NASTYPLOT
+Description = The user stimulates its brain by thinking bad thoughts. This sharply raises the user's Sp. Atk stat.
 #-------------------------------
 [TM78]
 Name = TM78
 NamePlural = TM78s
 Pocket = 4
-Price = 3000
+Price = 1500
 FieldUse = TR
-Flags = Fling_55
-Move = SNARL
-Description = The user yells as if it's ranting about something, which lowers the Sp. Atk stats of opposing Pokémon.
+Flags = Fling_10
+Move = SPEEDSWAP
+Description = The user exchanges Speed stats with the target.
 #-------------------------------
 [TM79]
 Name = TM79
 NamePlural = TM79s
 Pocket = 4
-Price = 3000
+Price = 1500
 FieldUse = TR
-Flags = Fling_80
-Move = DARKPULSE
-Description = The user releases a horrible aura imbued with dark thoughts. This may also make the target flinch.
+Flags = Fling_10
+Move = POWERSWAP
+Description = The user employs its psychic power to switch changes to its Attack and Sp. Atk with the target.
 #-------------------------------
 [TM80]
 Name = TM80
 NamePlural = TM80s
 Pocket = 4
-Price = 3000
+Price = 1500
 FieldUse = TR
-Flags = Fling_75
-Move = ROCKSLIDE
-Description = Large boulders are hurled at opposing Pokémon to inflict damage. This may also make them flinch.
+Flags = Fling_10
+Move = GUARDSWAP
+Description = The user employs its psychic power to switch changes to its Defense and Sp. Def with the target.
 #-------------------------------
 [TM81]
 Name = TM81
@@ -4490,19 +4500,19 @@ NamePlural = TM81s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_80
-Move = XSCISSOR
-Description = The user slashes at the target by crossing its scythes or claws as if they were a pair of scissors.
+Flags = Fling_75
+Move = ROCKSLIDE
+Description = Large boulders are hurled at opposing Pokémon to inflict damage. This may also make them flinch.
 #-------------------------------
 [TM82]
 Name = TM82
 NamePlural = TM82s
 Pocket = 4
-Price = 1000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = SLEEPTALK
-Description = While it is asleep, the user randomly uses one of the moves it knows.
+Flags = Fling_85
+Move = DRAGONPULSE
+Description = The target is attacked with a shock wave generated by the user's gaping mouth.
 #-------------------------------
 [TM83]
 Name = TM83
@@ -4510,9 +4520,9 @@ NamePlural = TM83s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_60
-Move = BULLDOZE
-Description = The user strikes everything around it by stomping down on the ground. This lowers the Speed of those hit.
+Flags = Fling_80
+Move = DRAGONCLAW
+Description = The user slashes the target with huge, sharp claws.
 #-------------------------------
 [TM84]
 Name = TM84
@@ -4530,39 +4540,39 @@ NamePlural = TM85s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_100
-Move = DREAMEATER
-Description = The user eats the dreams of a sleeping target. The user's HP is restored by half the damage dealt.
+Flags = Fling_80
+Move = XSCISSOR
+Description = The user slashes at the target by crossing its scythes or claws as if they were a pair of scissors.
 #-------------------------------
 [TM86]
 Name = TM86
 NamePlural = TM86s
 Pocket = 4
-Price = 3000
+Price = 2000
 FieldUse = TR
 Flags = Fling_10
-Move = GRASSKNOT
-Description = The user snares the target with grass and trips it. The heavier the target, the strong the move is.
+Move = SCREECH
+Description = An earsplitting screech harshly reduces the target's Defense stat.
 #-------------------------------
 [TM87]
 Name = TM87
 NamePlural = TM87s
 Pocket = 4
-Price = 1500
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = SWAGGER
-Description = The user enrages and confuses the target. However, this also sharply raises the target's Attack stat.
+Flags = Fling_100
+Move = STONEEDGE
+Description = The user stabs the target from below with sharpened stones. Critical hits land more easily.
 #-------------------------------
 [TM88]
 Name = TM88
 NamePlural = TM88s
 Pocket = 4
-Price = 3000
+Price = 5500
 FieldUse = TR
-Flags = Fling_60
-Move = PLUCK
-Description = The user pecks the target. If the target is holding a Berry, the user eats it and gains its effect.
+Flags = Fling_110
+Move = GEODEBURST
+Description = The user attacks its target with a hail of glittering crystals. This may also make the target flinch.
 #-------------------------------
 [TM89]
 Name = TM89
@@ -4578,11 +4588,11 @@ Description = After making its attack, the user rushes back to switch places wit
 Name = TM90
 NamePlural = TM90s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = SUBSTITUTE
-Description = The user creates a substitute for itself using some of its HP. The substitute serves as a decoy.
+Flags = Fling_70
+Move = VOLTSWITCH
+Description = After making its attack, the user rushes back to switch places with a party Pokémon in waiting.
 #-------------------------------
 [TM91]
 Name = TM91
@@ -4590,89 +4600,89 @@ NamePlural = TM91s
 Pocket = 4
 Price = 3000
 FieldUse = TR
-Flags = Fling_80
-Move = FLASHCANNON
-Description = The user gathers all its light energy and releases it all at once. This may also lower the target's Sp. Def stat.
+Flags = Fling_55
+Move = SNARL
+Description = The user yells as if it's ranting about something, which lowers the Sp. Atk stats of opposing Pokémon.
 #-------------------------------
 [TM92]
 Name = TM92
 NamePlural = TM92s
 Pocket = 4
-Price = 5500
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = TRICKROOM
-Description = The user creates a bizarre area in which slower Pokémon get to move first for five turns.
+Flags = Fling_80
+Move = DARKPULSE
+Description = The user releases a horrible aura imbued with dark thoughts. This may also make the target flinch.
 #-------------------------------
 [TM93]
 Name = TM93
 NamePlural = TM93s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_50
-Move = CUT
-Description = The target is cut with a scythe or claw.
+Flags = Fling_70
+Move = SHADOWCLAW
+Description = The user slashes with a sharp claw made from shadows. Critical hits land more easily.
 #-------------------------------
 [TM94]
 Name = TM94
 NamePlural = TM94s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_90
-Move = FLY
-Description = The user flies up into the sky and then strikes its target on the next turn.
+Flags = Fling_80
+Move = ZENHEADBUTT
+Description = The user focuses its willpower to its head and attacks the foe. It may also make the target flinch.
 #-------------------------------
 [TM95]
 Name = TM95
 NamePlural = TM95s
 Pocket = 4
-Price = 2500
+Price = 3000
 FieldUse = TR
 Flags = Fling_90
-Move = SURF
-Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+Move = PLAYROUGH
+Description = The user plays rough with the target and attacks it. This may also lower the target's Attack stat.
 #-------------------------------
 [TM96]
 Name = TM96
 NamePlural = TM96s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
 Flags = Fling_80
-Move = STRENGTH
-Description = The target is slugged with a punch thrown at maximum power.
+Move = DAZZLINGGLEAM
+Description = The user damages opposing Pokémon by emitting a powerful flash.
 #-------------------------------
 [TM97]
 Name = TM97
 NamePlural = TM97s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_10
-Move = DEFOG
-Description = A strong wind blows away the target's barriers, such as Reflect, and lowers their evasiveness.
+Flags = Fling_90
+Move = WILDCHARGE
+Description = The user shrouds itself in electricity and smashes into its foe. It also damages the user a little.
 #-------------------------------
 [TM98]
 Name = TM98
 NamePlural = TM98s
 Pocket = 4
-Price = 2000
+Price = 3000
 FieldUse = TR
-Flags = Fling_40
-Move = ROCKSMASH
-Description = The user attacks with a punch that may lower the target's Defense stat.
+Flags = Fling_60
+Move = AVALANCHE
+Description = The power of this attack move is doubled if the user has been hurt by the target in the same turn.
 #-------------------------------
 [TM99]
 Name = TM99
 NamePlural = TM99s
 Pocket = 4
-Price = 2500
+Price = 3000
 FieldUse = TR
 Flags = Fling_80
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch.
+Move = DRILLRUN
+Description = The user crashes into its target while rotating its body like a drill. Critical hits land more easily.
 #-------------------------------
 [TM100]
 Name = TM100
@@ -4680,9 +4690,69 @@ NamePlural = TM100s
 Pocket = 4
 Price = 2000
 FieldUse = TR
+Flags = Fling_50
+Move = CUT
+Description = The target is cut with a scythe or claw.
+#-------------------------------
+[TM101]
+Name = TM101
+NamePlural = TM101s
+Pocket = 4
+Price = 2000
+FieldUse = TR
 Flags = Fling_90
-Move = ROCKCLIMB
-Description = A charging attack that may also leave the foe confused.
+Move = FLY
+Description = The user flies up into the sky and then strikes its target on the next turn.
+#-------------------------------
+[TM102]
+Name = TM102
+NamePlural = TM102s
+Pocket = 4
+Price = 2500
+FieldUse = TR
+Flags = Fling_90
+Move = SURF
+Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+#-------------------------------
+[TM103]
+Name = TM103
+NamePlural = TM103s
+Pocket = 4
+Price = 2000
+FieldUse = TR
+Flags = Fling_80
+Move = STRENGTH
+Description = The target is slugged with a punch thrown at maximum power.
+#-------------------------------
+[TM104]
+Name = TM104
+NamePlural = TM104s
+Pocket = 4
+Price = 2500
+FieldUse = TR
+Flags = Fling_80
+Move = WATERFALL
+Description = The user charges at the target and may make it flinch.
+#-------------------------------
+[TM105]
+Name = TM105
+NamePlural = TM105s
+Pocket = 4
+Price = 2000
+FieldUse = TR
+Flags = Fling_10
+Move = DEFOG
+Description = A strong wind blows away the target's barriers, such as Reflect, and lowers their evasiveness.
+#-------------------------------
+[TM106]
+Name = TM106
+NamePlural = TM106s
+Pocket = 4
+Price = 2500
+FieldUse = TR
+Flags = Fling_80
+Move = DIVE
+Description = Diving on the first turn, the user rises and hits on the next turn. It can be used to dive in the ocean.
 #-------------------------------
 [HM01]
 Name = HM01
