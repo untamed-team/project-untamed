@@ -706,3 +706,9 @@ Version      = 1.1
 Credits      = http404error
 Essentials   = 20.1
 Requires     = v20.1 Hotfixes,1.0.5
+
+Name         = Set the Controls Screen
+Version      = 1.1.2
+Credits      = FL
+Essentials   = 20.1
+Website:     = https://www.pokecommunity.com/showthread.php?t=309391
