@@ -2,183 +2,6 @@
 
 ====================
 
-Scripts & Coding
-----------------
-Advanced Map Transfers:
-Luka S.J.
-
-Advanced Pokédex:
-FL
-
-Always in Bushes:
-KleinStudio
-Kotaro
-
-Ambient Pokémon Cries:
-SpaceWestern
-Vendily
-
-Astralneko's Scripting Utilities:
-Astralneko
-
-Auto Multi Save
-http404error
-
-Automatic Level Scaling:
-Benitex
-
-Bag Screen with Interactable Party:
-DiegoWT
-Rose
-Vendily
-
-Berry Pots:
-Caruban
-DerxwnaKapsyla
-
-Better Item Finder:
-Kotaro
-
-Better Region Map:
-Boonzeet
-Marin
-
-DiegoWT's Starter Selection:
-DiegoWT
-
-DPPT Gender Selector Scene:
-A.Somersault
-
-Easy Text Skip:
-Amethyst
-ENLS
-Kurotsune
-
-Easy Mouse System:
-Luka S.J.
-
-Evolve from Party:
-eriedaberrie
-IndianAnimator
-
-EVs and IVs in Summary:
-Deoxysprime
-
-Following Pokémon EX:
-Akizakura16
-Armin
-Golisopod User
-Help-14
-Maruno
-mej71
-PurpleZaffre
-Rayd12smitty
-Thundaga
-Venom12
-zingzags
-
-Item Find:
-Boonzeet
-
-Location Signposts:
-carmaniac
-Golisopod User
-LostSoulsDev
-PurpleZaffre
-
-Luka's Scripting Utilities:
-Luka S.J.
-
-Marin's Scripting Utilities:
-Marin
-
-Modern Quest System + UI:
-derFischae
-Marin
-mej71
-SpaceWestern
-ThatWelshOne_
-
-Name-box:
-Gardenette
-Golisopod User
-mej71
-Mr.Gela (theo#7722)
-Vendily
-
-Monitor Icons:
-bo4p5687
-Gardenette
-Marin
-Maruno
-Nuri Yuri
-PurpleZaffre
-raZ
-Savordez
-SpaceWestern
-ThatWelshOne_
-Ulithium_Dragon
-Vendily
-
-New DexNav:
-Low
-Marin
-NuriYuri
-Phantombass
-raZ
-Savordez
-suzerain
-ThatWelshOne_
-Vendily
-Zaffre
-
-Overworld Shadows EX:
-Golisopod User
-Marin
-Wolf PP
-
-Pokémon Amie:
-BhagyaJyoti
-bo4p5687
-Luka S.J
-PizzaSun
-rigbycwts
-
-Quicksave:
-Low
-
-Set the Controls Screen:
-FL
-
-Speed Up 2.0:
-Marin
-Phantombass
-
-Tweaks to Essentials:
-Derxwna Kapsyla
-
-Video with Using Gif:
-bo4p5687
-
-Voltseon's A-Star Pathfinding:
-ENLS
-Golisopod User
-Voltseon
-
-Voltseon's Pause Menu:
-ENLS
-Golisopod User
-Voltseon
-
-
-
-
-
-
-
-
-
-
 Graphics
 --------
 Tilesets:
@@ -532,6 +355,183 @@ Subjectively Group
 
 
 
+Scripts & Coding
+----------------
+Advanced Map Transfers:
+Luka S.J.
+
+Advanced Pokédex:
+FL
+
+Always in Bushes:
+KleinStudio
+Kotaro
+
+Ambient Pokémon Cries:
+SpaceWestern
+Vendily
+
+Astralneko's Scripting Utilities:
+Astralneko
+
+Auto Multi Save
+http404error
+
+Automatic Level Scaling:
+Benitex
+
+Bag Screen with Interactable Party:
+DiegoWT
+Rose
+Vendily
+
+Berry Pots:
+Caruban
+DerxwnaKapsyla
+
+Better Item Finder:
+Kotaro
+
+Better Region Map:
+Boonzeet
+Marin
+
+DiegoWT's Starter Selection:
+DiegoWT
+
+DPPT Gender Selector Scene:
+A.Somersault
+
+Easy Text Skip:
+Amethyst
+ENLS
+Kurotsune
+
+Easy Mouse System:
+Luka S.J.
+
+Evolve from Party:
+eriedaberrie
+IndianAnimator
+
+EVs and IVs in Summary:
+Deoxysprime
+
+Following Pokémon EX:
+Akizakura16
+Armin
+Golisopod User
+Help-14
+Maruno
+mej71
+PurpleZaffre
+Rayd12smitty
+Thundaga
+Venom12
+zingzags
+
+Item Find:
+Boonzeet
+
+Location Signposts:
+carmaniac
+Golisopod User
+LostSoulsDev
+PurpleZaffre
+
+Luka's Scripting Utilities:
+Luka S.J.
+
+Marin's Scripting Utilities:
+Marin
+
+Modern Quest System + UI:
+derFischae
+Marin
+mej71
+SpaceWestern
+ThatWelshOne_
+
+Name-box:
+Gardenette
+Golisopod User
+mej71
+Mr.Gela (theo#7722)
+Vendily
+
+Monitor Icons:
+bo4p5687
+Gardenette
+Marin
+Maruno
+Nuri Yuri
+PurpleZaffre
+raZ
+Savordez
+SpaceWestern
+ThatWelshOne_
+Ulithium_Dragon
+Vendily
+
+New DexNav:
+Low
+Marin
+NuriYuri
+Phantombass
+raZ
+Savordez
+suzerain
+ThatWelshOne_
+Vendily
+Zaffre
+
+Overworld Shadows EX:
+Golisopod User
+Marin
+Wolf PP
+
+Pokémon Amie:
+BhagyaJyoti
+bo4p5687
+Luka S.J
+PizzaSun
+rigbycwts
+
+Quicksave:
+Low
+
+Set the Controls Screen:
+FL
+
+Speed Up 2.0:
+Marin
+Phantombass
+
+Tweaks to Essentials:
+Derxwna Kapsyla
+
+Video with Using Gif:
+bo4p5687
+
+Voltseon's A-Star Pathfinding:
+ENLS
+Golisopod User
+Voltseon
+
+Voltseon's Pause Menu:
+ENLS
+Golisopod User
+Voltseon
+
+
+
+
+
+
+
+
+
+
 Special Thanks
 --------------
 
@@ -593,7 +593,7 @@ Please support the official games!
 Links to Creators:
 
 Name       = v20.1 Hotfixes
-Version    = 1.0.6
+Version    = 1.0.7
 Essentials = 20.1
 Conflicts  = v19 Hotfixes
 Conflicts  = v19.1 Updates
@@ -712,3 +712,15 @@ Version      = 1.1.2
 Credits      = FL
 Essentials   = 20.1
 Website:     = https://www.pokecommunity.com/showthread.php?t=309391
+
+
+
+
+
+
+
+
+
+
+LINK TO MAZAH REGION FANGAME DISCORD
+https://discord.gg/4QfgJ26PWa
