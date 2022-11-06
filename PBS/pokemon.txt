@@ -442,7 +442,7 @@ Habitat = Grassland
 Category = Cutter Ant
 Pokedex = Chicatta's strong mandibles can cut through thick leaves with relative ease. The leaves they harvest are used to feed other members of their colony.
 Generation = 9
-Evolutions = NOCTAVISPA,Level,30
+Evolutions = NOCTAVISPA,Level30DarkMove,DARK
 #-------------------------------
 [NOCTAVISPA]
 Name = Noctavispa
