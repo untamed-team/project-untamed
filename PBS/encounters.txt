@@ -34,9 +34,10 @@ Land,21
 [078] # Hacienda Fields
 Corn,5
     50,ZEAZAYA,5,7
-    25,CAFECARACHA,4,6
-    20,HOOTHOOT,3,4
+    20,CAFECARACHA,4,6
+    10,HOOTHOOT,3,4
     5,DRILBUR,2,6
+    15,PUMPKABOO,4,7
 #-------------------------------
 [079] # Hacienda Castaneda
 Water,2
