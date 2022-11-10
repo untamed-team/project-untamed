@@ -28,3 +28,4 @@ RunCharset = girl_run
 CycleCharset = girl_bike
 SurfCharset = girl_surf
 FishCharset = girl_fish_offset
+#-------------------------------
