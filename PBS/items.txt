@@ -6343,11 +6343,3 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A better device used for finding items. If there is a hidden item nearby when it is used, it emits a signal.
-#-------------------------------
-[DEXNAV]
-Name = DexNav
-NamePlural = DexNavs
-Pocket = 8
-Price = 0
-Flags = KeyItem
-Description = A device that helps search for a wild Pokémon of your choosing in the area.
