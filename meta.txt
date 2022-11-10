@@ -1,0 +1,3 @@
+Name      = LA Party Evolver
+Version   = 1.2
+Credits   = IndianAnimator, eriedaberrie#1569
