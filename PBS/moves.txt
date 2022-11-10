@@ -3958,11 +3958,11 @@ Name = Strength Sap
 Type = GRASS
 Category = Status
 Accuracy = 100
-TotalPP = 10
+TotalPP = 5
 Target = NearOther
 FunctionCode = HealUserByTargetAttackLowerTargetAttack1
 Flags = CanProtect,CanMirrorMove
-Description = The user restores its HP by the target's Attack stat amount. Then lowers the target's Attack stat.
+Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat. Double PP usage.
 #-------------------------------
 [STUNSPORE]
 Name = Stun Spore
@@ -4005,7 +4005,7 @@ Accuracy = 85
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,CannotMetronome, Blade
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Blade
 Description = The user attacks its foes by manifesting the power of the land in fearsome blades of stone.
 #-------------------------------
 [EARTHQUAKE]
@@ -9075,16 +9075,4 @@ FunctionCode = 503
 Flags = CanProtect
 EffectChance = 0
 Description = The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain.
-#-------------------------------
-[BLADEMOVEIDK]
-Name = Blade move
-Type = NORMAL
-Category = Physical
-Power = 50
-Accuracy = 0
-TotalPP = 0
-Target = NearOther
-Priority = 0
-Flags = Blade
-Description = aaaaaa
 #-------------------------------

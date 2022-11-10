@@ -1074,45 +1074,60 @@ Description = Combines Unnerve and Grim Neigh Abilities.
 [ARTILLERIST]
 Name = Artillerist
 Description = mega launcher but worse
+#-------------------------------
 [AMPLIFIER]
 Name = Amplifier
 Description = punk rock but more general
+#-------------------------------
 [SEANCE]
 Name = Seance
 Description = alola muk ability again
+#-------------------------------
 [GRIMTEARS]
 Name = Grim Tears
 Description = intimidate but special
+#-------------------------------
 [MICROSTRIKE]
 Name = Micro Strike
-Description = 1.2x power when the user is lighter than the opponent
+Description = 1.3x power when the user is lighter than the opponent
+#-------------------------------
 [BAITEDLINE]
 Name = Baited Line
 Description = Water-type are stuck
+#-------------------------------
 [CARPENTER]
 Name = Carpenter
 Description = higher damage for grass/rock/steel allies
+#-------------------------------
 [BLADEMASTER]
 Name = Blademaster
 Description = +1 crit and 1.3x damage to blade moves
+#-------------------------------
 [FERVOR]
 Name = Fervor
 Description = speed boost after contact moves
+#-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
 Description = frog signature
+#-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
 Description = bite moves use special attack
+#-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
 Description = +2 crit on grassy terrain
+#-------------------------------
 [MOMENTUM]
 Name = Momentum
 Description = metronome ability
+#-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
 Description = passive healing wish
+#-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit
 Description = power boost when SE
+#-------------------------------
