@@ -696,9 +696,9 @@ Essentials   = 20.1
 Credits      = DiegoWT
 
 Name         = Essentials Deluxe
-Version      = 1.1.3
+Version      = 1.1.5
 Essentials   = 20.1
-Requires     = v20.1 Hotfixes,1.0.6
+Requires     = v20.1 Hotfixes,1.0.7
 Website      = https://www.pokecommunity.com/showthread.php?t=478494
 Credits      = Lucidious89
 
