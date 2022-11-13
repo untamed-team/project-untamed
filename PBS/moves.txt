@@ -8251,10 +8251,11 @@ Name = King's Shield
 Type = STEEL
 Category = Status
 Accuracy = 0
-TotalPP = 10
+TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesKingsShield
+Flags = DoublePPUse
 Description = Protects itself from damage. It also harshly lowers the Attack of attackers that make contact.
 #-------------------------------
 [METALSOUND]
