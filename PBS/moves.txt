@@ -758,10 +758,11 @@ Name = Obstruct
 Type = DARK
 Category = Status
 Accuracy = 100
-TotalPP = 10
+TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesObstruct
+Flags = DoublePPUse
 Description = The user protects itself from all attacks. Direct contact lowers the attacker's Defense.
 #-------------------------------
 [PARTINGSHOT]
@@ -2344,6 +2345,7 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
+Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [MATBLOCK]
@@ -2382,10 +2384,11 @@ Name = Quick Guard
 Type = FIGHTING
 Category = Status
 Accuracy = 0
-TotalPP = 15
+TotalPP = 5
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromPriorityMoves
+Flags = DoublePPUse
 Description = The user protects itself and its allies from priority moves. If may fail if used in succession.
 #-------------------------------
 [VCREATE]
@@ -3940,6 +3943,7 @@ TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromTargetingMovesSpikyShield
+Flags = DoublePPUse
 Description = Protects the user from attacks. Also damages attackers that make contact with the user.
 #-------------------------------
 [SPORE]
@@ -6262,10 +6266,11 @@ Name = Protect
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 10
+TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
+Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [PSYCHUP]
@@ -6879,10 +6884,11 @@ Name = Baneful Bunker
 Type = POISON
 Category = Status
 Accuracy = 0
-TotalPP = 10
+TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserBanefulBunker
+Flags = DoublePPUse
 Description = Protects the user from attacks. Also poisons any attacker that makes contact with the user.
 #-------------------------------
 [COIL]
@@ -7937,10 +7943,11 @@ Name = Wide Guard
 Type = ROCK
 Category = Status
 Accuracy = 0
-TotalPP = 10
+TotalPP = 5
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromMultiTargetDamagingMoves
+Flags = DoublePPUse
 Description = The user and its allies are protected from wide-ranging attacks for a turn. May fail if used in succession.
 #-------------------------------
 [DOOMDESIRE]
