@@ -8742,13 +8742,13 @@ Type = FIRE
 Category = Special
 Power = 70
 Accuracy = 100
-TotalPP = 10
+TotalPP = 5
 Target = NearOther
 Priority = 0
-FunctionCode = EnsureNextCriticalHit
+FunctionCode = PowerUpDragonMove
 Flags = CanProtect,CanMirrorMove,Dance
-EffectChance = 0
-Description = The user assaults its target with a frenzied dance. The attack on the next turn always results in a critical hit.
+EffectChance = 100
+Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
 #-------------------------------
 [PSYSONIC]
 Name = Psysonic
