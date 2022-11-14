@@ -1,0 +1,4 @@
+Name         = Randomized Names
+Version      = 1.0
+Essentials   = 20.1
+Credits      = Gardenette, FL
