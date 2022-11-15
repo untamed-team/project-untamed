@@ -524,7 +524,7 @@ Description = May disable a move used on the Pokémon.
 #-------------------------------
 [HEALER]
 Name = Healer
-Description = May heal an ally's status conditions.
+Description = Heals status every other turn.
 #-------------------------------
 [FRIENDGUARD]
 Name = Friend Guard
