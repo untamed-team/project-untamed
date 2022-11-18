@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [STENCH]
 Name = Stench
@@ -712,7 +712,7 @@ Description = Flying-type moves gain priority when its HP is full.
 #-------------------------------
 [MEGALAUNCHER]
 Name = Mega Launcher
-Description = Powers up aura and pulse moves.
+Description = Powers up aura, pulse, ball, and bomb moves.
 #-------------------------------
 [GRASSPELT]
 Name = Grass Pelt
