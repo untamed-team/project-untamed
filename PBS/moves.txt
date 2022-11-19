@@ -7925,7 +7925,7 @@ Accuracy = 0
 TotalPP = 20
 Target = FoeSide
 FunctionCode = AddStealthRocksToFoeSide
-Description = The user lays a trap of levitating stones around the foe. The trap hurts foes that switch into battle.
+Description = The user lays a trap stones around the foe. The trap hurts airborne switchins specially well.
 #-------------------------------
 [TARSHOT]
 Name = Tar Shot
