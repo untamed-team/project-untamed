@@ -22,7 +22,6 @@ MapPosition = 0,20,3
 #-------------------------------
 [005]   # San Cerigold Cemetery
 Name = San Cerigold Cemetery
-Name = 
 Outdoor = true
 ShowArea = true
 Bicycle = false
