@@ -3149,7 +3149,7 @@ Accuracy = 0
 TotalPP = 15
 Target = UserSide
 FunctionCode = StartUserSideDoubleSpeed
-Description = The user whips up a turbulent whirlwind that ups the Speed of all party Pokémon for four turns.
+Description = The user whips up a turbulent whirlwind that increases the Speed of all allies for three turns.
 #-------------------------------
 [ASTRALBARRAGE]
 Name = Astral Barrage
