@@ -140,6 +140,8 @@ WolfPP
 Music
 -----
 Soundtrack:
+Jumpluff
+Laminnanne
 Purple Hat of Awesome
 ReMX Bossa Nova
 Rhythm Break
@@ -204,6 +206,7 @@ BlueLightning
 Deino
 Firedude
 Gardenette
+Hex mono
 HwiteHwale
 Kyl-E
 Luc_
@@ -269,6 +272,7 @@ Zyuran
 Translating
 -----------
 Abstractpuppet
+Aelvric
 Basalte
 Cawa/Sasha
 Deli
