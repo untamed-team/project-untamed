@@ -243,6 +243,7 @@ Midbus
 mSilk
 noahthenumbat
 PaperTowelDealer
+ParaBellum
 Robochef9000
 Scandal
 Señor Gallo de Caballo
@@ -501,6 +502,9 @@ rigbycwts
 Quicksave:
 Low
 
+Relearner from Party:
+Marin
+
 Set the Controls Screen:
 FL
 
@@ -588,6 +592,11 @@ This is a non-profit fan-made game.
 No copyright infringements intended.
 Please support the official games!
 
+
+====================
+
+Link to Mazah Region Fangame Discord
+https://discord.gg/4QfgJ26PWa
 
 ====================
 
@@ -714,14 +723,8 @@ Credits      = FL
 Essentials   = 20.1
 Website:     = https://www.pokecommunity.com/showthread.php?t=309391
 
-
-
-
-
-
-
-
-
-
-LINK TO MAZAH REGION FANGAME DISCORD
-https://discord.gg/4QfgJ26PWa
+Name         = Relearner from Party
+Version      = 1.0
+Credits      = Marin
+Essentials   = 20
+Link         = https://reliccastle.com/threads/659/
