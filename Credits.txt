@@ -521,6 +521,9 @@ Speed Up 2.0:
 Marin
 Phantombass
 
+Tileset Rearranger:
+Maruno
+
 Tweaks to Essentials:
 Derxwna Kapsyla
 
@@ -737,3 +740,9 @@ Version      = 1.0
 Credits      = Marin
 Essentials   = 20
 Link         = https://reliccastle.com/threads/659/
+
+Name       = Tileset Rearranger
+Version    = 1.2
+Essentials = 20,20.1
+Credits    = Maruno
+Link       = https://reliccastle.com/resources/794/
