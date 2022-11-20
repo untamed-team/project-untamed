@@ -1131,3 +1131,7 @@ Description = passive healing wish
 Name = Warrior Spirit
 Description = power boost when SE
 #-------------------------------
+[SLIPPERYPEEL]
+Name = Slippery Peel
+Description = opponent switches out when making contact
+#-------------------------------

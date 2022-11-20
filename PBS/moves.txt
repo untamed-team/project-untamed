@@ -3149,7 +3149,7 @@ Accuracy = 0
 TotalPP = 15
 Target = UserSide
 FunctionCode = StartUserSideDoubleSpeed
-Description = The user whips up a turbulent whirlwind that ups the Speed of all party Pokémon for four turns.
+Description = The user whips up a turbulent whirlwind that increases the Speed of all allies for three turns.
 #-------------------------------
 [ASTRALBARRAGE]
 Name = Astral Barrage
@@ -7925,7 +7925,7 @@ Accuracy = 0
 TotalPP = 20
 Target = FoeSide
 FunctionCode = AddStealthRocksToFoeSide
-Description = The user lays a trap of levitating stones around the foe. The trap hurts foes that switch into battle.
+Description = The user lays a trap of stones that harm foes switching in. It deals more damage to airborne Pokémon.
 #-------------------------------
 [TARSHOT]
 Name = Tar Shot
