@@ -6244,7 +6244,7 @@ Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a 
 [DDTSPRAY]
 Name = DDT Spray
 NamePlural = DDT Sprays
-Pocket = 8
+Pocket = 1
 Price = 2000
 FieldUse = Direct
 Flags = Repel,Fling_30
@@ -6333,3 +6333,21 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A better device used for finding items. If there is a hidden item nearby when it is used, it emits a signal.
+#-------------------------------
+[POKEVIAL]
+Name = PokéVial
+NamePlural = PokéVials
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Heals your party. Recharges at the PokéCenter.
+#-------------------------------
+[EMPTYPOKEVIAL]
+Name = PokéVial
+NamePlural = PokéVials
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
