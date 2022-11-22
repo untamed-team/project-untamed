@@ -6247,8 +6247,8 @@ NamePlural = DDT Sprays
 Pocket = 1
 Price = 2000
 FieldUse = Direct
-Flags = Repel,Fling_30
-Description = A incredibly advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.
+Flags = KeyItem
+Description = A advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.
 #-------------------------------
 [LINKCABLE]
 Name = Link Cable
