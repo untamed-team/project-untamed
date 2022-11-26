@@ -1131,3 +1131,7 @@ Description = Powers up super-effective attacks.
 Name = Slippery Peel
 Description = Contact with the Pokémon forces the opponent to switch.
 #-------------------------------
+[TILEWORKER]
+Name = Tileworker
+Description = Removes all hazards from its side upon entry.
+#-------------------------------
