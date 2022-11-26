@@ -3525,7 +3525,7 @@ Colour = Red
 Shape = HeadBase
 Category = Bagworm
 Pokedex = Notoriously rebellious, stubborn and often ignore orders. They are released more often than most which makes them more rebellious to the common trainer.
-Evolutions = PAPELLAUDE,Level,55
+Evolutions = PAPELLAUDE,HappinessLevel,55
 #-------------------------------
 [PAPELLAUDE]
 Name = Papellaude
@@ -3549,3 +3549,53 @@ Shape = Winged
 Category = Confetti
 Pokedex = As deadly as it is precise. Due to the lack of interest from trainers in their pre-evo, these Pokemon are hard to come by. Only the calmest trainers can obtain it.
 WildItemUncommon = SILVERPOWDER
+#-------------------------------
+[MINGOT]
+Name = Mingot
+Types = NORMAL
+BaseStats = 30,40,55,67,28,35
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 55
+EVs = SPEED,1
+CatchRate = 255
+Happiness = 70
+Abilities = LONGREACH,PICKUP
+HiddenAbilities = TOUGHCLAWS
+Moves = 1,SCRATCH,1,LEER,3,ODORSLEUTH,6,LICK,9,FURYSWIPES,12,METALCLAW,15,QUICKATTACK,18,DIG,21,HONECLAWS,24,BULLETPUNCH,27,SUPERFANG,30,SMARTSTRIKE,33,SLASH,36,TAUNT,39,KNOCKOFF
+TutorMoves = CUT,WORKUP,HELPINGHAND,ROAR,SWAGGER,TAUNT,DIG,BRICKBREAK,ROCKTOMB,FACADE,THIEF,LOWSWEEP,FALSESWIPE,BODYSLAM,ASSURANCE,GYROBALL,SUBSTITUTE,ROCKSLIDE,XSCISSOR,SCREECH,SNARL,SHADOWCLAW
+EggMoves = ENDEAVOR,TAILSLAP,ENDURE,NIGHTSLASH
+EggGroups = Field
+HatchSteps = 5120
+Height = 0.3
+Weight = 4.5
+Colour = Brown
+Shape = BipedalTail
+Habitat = Grassland
+Category = Panhandle 
+Pokedex = rat
+Evolutions = RUSTACHE,LevelDay,30
+#-------------------------------
+[RUSTACHE]
+Name = Rustache
+Types = NORMAL,STEEL
+BaseStats = 80,97,83,102,37,51
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 55
+EVs = SPEED,2
+CatchRate = 255
+Happiness = 70
+Abilities = LONGREACH,PICKUP
+HiddenAbilities = TOUGHCLAWS
+Moves = 0,PAYDAY,1,SCRATCH,1,LEER,3,ODORSLEUTH,6,LICK,9,FURYSWIPES,12,METALCLAW,15,QUICKATTACK,18,DIG,21,HONECLAWS,24,BULLETPUNCH,27,SUPERFANG,30,SMARTSTRIKE,36,SLASH,39,TAUNT,42,KNOCKOFF,45,METEORMASH,51,CLOSECOMBAT
+TutorMoves = CUT,WORKUP,HELPINGHAND,BULKUP,ROAR,SWAGGER,TAUNT,TRIATTACK,EARTHQUAKE,DIG,BRICKBREAK,ROCKTOMB,FACADE,THIEF,LOWSWEEP,FALSESWIPE,BODYSLAM,ASSURANCE,BRUTALSWING,GYROBALL,SWORDSDANCE,SUBSTITUTE,ROCKSLIDE,XSCISSOR,SCREECH,STONEEDGE,SNARL,SHADOWCLAW
+EggGroups = Field
+HatchSteps = 5120
+Height = 0.9
+Weight = 39.5
+Colour = Brown
+Shape = BipedalTail
+Habitat = Grassland 
+Category = Panhandle 
+Pokedex = rat

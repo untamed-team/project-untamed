@@ -848,7 +848,7 @@ Description = Changes with other Cells if HP becomes half or less.
 #-------------------------------
 [CORROSION]
 Name = Corrosion
-Description = It can poison Steel- and Poison-type targets.
+Description = Enables moves to hit Steel-type Pokémon.
 #-------------------------------
 [COMATOSE]
 Name = Comatose
