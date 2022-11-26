@@ -1071,63 +1071,67 @@ Description = Combines Unnerve and Chilling Neigh Abilities.
 Name = As One
 Description = Combines Unnerve and Grim Neigh Abilities.
 #-------------------------------
+[ARTILLERIST]
+Name = Artillerist
+Description = mega launcher but worse
+#-------------------------------
 [AMPLIFIER]
 Name = Amplifier
-Description = Boosts power and resistance of sound moves.
+Description = punk rock but more general
 #-------------------------------
 [SEANCE]
 Name = Seance
-Description = Copies the Ability of a defeated ally.
+Description = alola muk ability again
 #-------------------------------
 [GRIMTEARS]
 Name = Grim Tears
-Description = Lowers the foe's Sp. Atk. stat.
+Description = intimidate but special
 #-------------------------------
 [MICROSTRIKE]
 Name = Micro Strike
-Description = Powers up moves when lighter than the opponent.
+Description = 1.3x power when the user is lighter than the opponent
 #-------------------------------
 [BAITEDLINE]
 Name = Baited Line
-Description = Prevents water-type foes from fleeing.
+Description = Water-type are stuck
 #-------------------------------
 [CARPENTER]
 Name = Carpenter
-Description = Boosts the power of Grass, Rock, and Steel-type allies.
+Description = higher damage for grass/rock/steel allies
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster
-Description = Boosts the power and critical hit ratio of blade moves.
+Description = +1 crit and 1.3x damage to blade moves
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises the Pokémon’s speed after making a direct attack.
+Description = speed boost after contact moves
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
-Description = Becomes frozen when exposed to hail.
+Description = frog signature
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
-Description = Biting moves use the Pokémon's Special Attack.
+Description = bite moves use special attack
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
-Description = Grassy Terrain boosts critical hit ratio.
+Description = +2 crit on grassy terrain
 #-------------------------------
 [MOMENTUM]
 Name = Momentum
-Description = Using the same move in succession raises its power.
+Description = metronome ability
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
-Description = Fully heals the next ally after fainting.
+Description = passive healing wish
 #-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit
-Description = Powers up super-effective attacks.
+Description = power boost when SE
 #-------------------------------
 [SLIPPERYPEEL]
 Name = Slippery Peel
-Description = Contact with the Pokémon forces the opponent to switch.
+Description = opponent switches out when making contact
 #-------------------------------
