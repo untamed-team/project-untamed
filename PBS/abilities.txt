@@ -216,7 +216,7 @@ Description = The Pokémon may pick up items.
 #-------------------------------
 [TRUANT]
 Name = Truant
-Description = Pokémon can't attack on consecutive turns.
+Description = Can only use healing moves every other turn.
 #-------------------------------
 [HUSTLE]
 Name = Hustle
