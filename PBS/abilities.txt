@@ -236,7 +236,7 @@ Description = Ups Sp. Atk if another Pokémon has Plus or Minus.
 #-------------------------------
 [FORECAST]
 Name = Forecast
-Description = Castform transforms with the weather.
+Description = Summons a weather, depending of its item.
 #-------------------------------
 [STICKYHOLD]
 Name = Sticky Hold
