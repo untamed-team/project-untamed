@@ -216,7 +216,7 @@ Description = The Pokémon may pick up items.
 #-------------------------------
 [TRUANT]
 Name = Truant
-Description = Pokémon can't attack on consecutive turns.
+Description = Can only use healing moves every other turn.
 #-------------------------------
 [HUSTLE]
 Name = Hustle
@@ -236,7 +236,7 @@ Description = Ups Sp. Atk if another Pokémon has Plus or Minus.
 #-------------------------------
 [FORECAST]
 Name = Forecast
-Description = Castform transforms with the weather.
+Description = Summons a weather, depending of its item.
 #-------------------------------
 [STICKYHOLD]
 Name = Sticky Hold
@@ -400,7 +400,7 @@ Description = Ensures attacks by or against the Pokémon land.
 #-------------------------------
 [STALL]
 Name = Stall
-Description = The Pokémon moves after all other Pokémon do.
+Description = Stalls for time, making an additional turn pass.
 #-------------------------------
 [TECHNICIAN]
 Name = Technician
@@ -848,7 +848,7 @@ Description = Changes with other Cells if HP becomes half or less.
 #-------------------------------
 [CORROSION]
 Name = Corrosion
-Description = It can poison Steel- and Poison-type targets.
+Description = Enables moves to hit Steel-type Pokémon.
 #-------------------------------
 [COMATOSE]
 Name = Comatose

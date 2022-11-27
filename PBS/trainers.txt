@@ -1,25 +1,4 @@
-#[CAMPER,Liam]
-#LoseText = A very good battle, indeed!
-#Pokemon = DIGLETT,10
-#Pokemon = BONSLY,11
-#-------------------------------
-#[LEADER_Brock,Brock]
-#Items = FULLRESTORE,FULLRESTORE
-#LoseText = Very good.
-#Pokemon = GEODUDE,12
-#    Gender = male
-#    Moves = DEFENSECURL,HEADSMASH,ROCKPOLISH,ROCKTHROW
-#    AbilityIndex = 0
-#    IV = 20,20,20,20,20,20
-#Pokemon = ONIX,14
-#    Name = Rocky
-#    Gender = male
-#    Shiny = yes
-#    Moves = HEADSMASH,ROCKTHROW,RAGE,ROCKTOMB
-#    AbilityIndex = 0
-#    Item = SITRUSBERRY
-#    IV = 20,20,20,20,20,20
-#    Ball = HEAVYBALL
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [YOUNGSTER_F,Emma]
 LoseText = I guess it's also double the chance to lose...
@@ -114,23 +93,23 @@ Pokemon = PHANTUMP,10
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,14
+    Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
     AbilityIndex = 0
-	Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
 Pokemon = M_ROSELIA,12
+    Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
-	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,GRASSKNOT
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, I still can't do this right.
-Pokemon = LILORINA,16,
+Pokemon = LILORINA,16
+    Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG,BUBBLE
     AbilityIndex = 2
-	Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG,BUBBLE
-Pokemon = PACUNA, 17
+Pokemon = PACUNA,17
+    Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
     AbilityIndex = 2
-	Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
-Pokemon = M_ROSELIA,15,
+Pokemon = M_ROSELIA,15
+    Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
     AbilityIndex = 0
-	Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
@@ -162,10 +141,10 @@ Pokemon = DRILBUR,11
 LoseText = My dark magic will make you even stronger..
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
-	AbilityIndex = 0
+    AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = My dark magic will make you even stronger..
 Pokemon = DUSKULL,11
 Pokemon = LITWICK,10
-	AbilityIndex = 0
+    AbilityIndex = 0
