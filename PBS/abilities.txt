@@ -400,7 +400,7 @@ Description = Ensures attacks by or against the Pokémon land.
 #-------------------------------
 [STALL]
 Name = Stall
-Description = The Pokémon moves after all other Pokémon do.
+Description = Stalls for time, making an additional turn pass.
 #-------------------------------
 [TECHNICIAN]
 Name = Technician
