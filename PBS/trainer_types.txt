@@ -322,7 +322,7 @@ Gender = Male
 BaseMoney = 100
 BattleBGM = Battle Champion
 VictoryBGM = Battle victory leader
-#---------------NEW----------------
+#-------------------------------
 [LEADER_Valentina]
 Name = Gym Leader
 Gender = Female
@@ -362,7 +362,7 @@ BaseMoney = 16
 #-------------------------------
 [FARMER]
 Name = Farmer
-Gender = Mixed
+Gender = Unknown
 BaseMoney = 25
 #-------------------------------
 [HEXMANIAC]
@@ -379,4 +379,3 @@ BaseMoney = 32
 Name = Psychic
 Gender = Female
 BaseMoney = 32
-#-------------------------------
