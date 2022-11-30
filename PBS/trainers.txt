@@ -102,14 +102,17 @@ Pokemon = M_ROSELIA,12
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,16
-    Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG,BUBBLE
+    Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG
     AbilityIndex = 2
+    IV = 0,0,0,0,0,0
+    EV = 10,10,10,10,20,10
 Pokemon = PACUNA,17
     Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
     AbilityIndex = 2
 Pokemon = M_ROSELIA,15
     Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
     AbilityIndex = 0
+	Ace = yes
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
