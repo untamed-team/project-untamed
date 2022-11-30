@@ -112,7 +112,7 @@ Pokemon = PACUNA,17
 Pokemon = M_ROSELIA,15
     Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
     AbilityIndex = 0
-	Ace = yes
+	Ace = true
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
