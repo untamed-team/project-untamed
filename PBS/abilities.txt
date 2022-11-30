@@ -1135,3 +1135,7 @@ Description = Contact with the Pokémon forces the opponent to switch.
 Name = Tileworker
 Description = Removes all hazards from its side upon entry.
 #-------------------------------
+[TRICKSTER]
+Name = Trickster
+Description = Summons Trick Room on the switch-in.
+#-------------------------------
