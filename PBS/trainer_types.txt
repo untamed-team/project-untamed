@@ -24,6 +24,9 @@ BaseMoney = 60
 Name = Rival
 Gender = Male
 BaseMoney = 16
+IntroBGM = Encounter - Emilio
+BattleBGM = Battle - Emilio
+VictoryBGM = Victory - Emilio
 #-------------------------------
 [RIVAL2]
 Name = Rival
@@ -313,22 +316,22 @@ BaseMoney = 100
 Name = Elite Four
 Gender = Male
 BaseMoney = 100
-BattleBGM = Battle Elite
-VictoryBGM = Battle victory leader
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [CHAMPION]
 Name = Champion
 Gender = Male
 BaseMoney = 100
-BattleBGM = Battle Champion
-VictoryBGM = Battle victory leader
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [LEADER_Valentina]
 Name = Gym Leader
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle Gym Leader
-VictoryBGM = Battle victory leader
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [YOUNGSTER_M]
 Name = Youngster
@@ -344,21 +347,33 @@ BaseMoney = 16
 Name = Eon Grunt
 Gender = Male
 BaseMoney = 16
+IntroBGM = Encounter - Eon
+BattleBGM = Battle - Eon
+VictoryBGM = Victory - Eon
 #-------------------------------
 [EONGRUNT_F]
 Name = Eon Grunt
 Gender = Female
 BaseMoney = 16
+IntroBGM = Encounter - Eon
+BattleBGM = Battle - Eon
+VictoryBGM = Victory - Eon
 #-------------------------------
 [NEOGRUNT_M]
 Name = Neo Grunt
 Gender = Male
 BaseMoney = 16
+IntroBGM = Encounter - Neo
+BattleBGM = Battle - Neo
+VictoryBGM = Victory - Neo
 #-------------------------------
 [NEOGRUNT_F]
 Name = Neo Grunt
 Gender = Female
 BaseMoney = 16
+IntroBGM = Encounter - Neo
+BattleBGM = Battle - Neo
+VictoryBGM = Victory - Neo
 #-------------------------------
 [FARMER]
 Name = Farmer
@@ -369,6 +384,7 @@ BaseMoney = 25
 Name = Hex Maniac
 Gender = Female
 BaseMoney = 25
+BattleBGM = Battle - Hex Maniac
 #-------------------------------
 [PSYCHIC_M2]
 Name = Psychic
