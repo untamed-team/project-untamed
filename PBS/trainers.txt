@@ -141,13 +141,13 @@ Pokemon = SUNKERN,9
 Pokemon = DRILBUR,11
 #-------------------------------
 [HEXMANIAC,Helena]
-LoseText = My dark magic will make you even stronger..
+LoseText = ..Is that a no?
 Pokemon = DUSKULL,9
 Pokemon = LITWICK,8
     AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,Helena,100]
-LoseText = My dark magic will make you even stronger..
+LoseText = ..Is that a no?
 Pokemon = DUSKULL,11
 Pokemon = LITWICK,10
     AbilityIndex = 0
