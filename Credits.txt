@@ -8,10 +8,12 @@ Tilesets:
 aball
 Aveon Trainer
 Aveontrainer
+Banana 'Eduardo' Toast
 BE_Infinity
 Cristata
 Derlo
 Donlawride
+Gearjuice
 GreenJellybean
 Griffin L.
 Jackeroni216
@@ -40,6 +42,7 @@ A Slime Psycho
 aball
 Akikaze
 Applesaucior
+Banana 'Eduardo' Toast
 Bean Soup
 Chespin_Craft
 Chromatech01
@@ -92,6 +95,7 @@ Chespin_Craft
 Claire
 Cristata
 Gardenette
+Gearjuice
 HingisDingus
 HwiteHwale
 Jack
@@ -206,7 +210,6 @@ BlueLightning
 Deino
 Firedude
 Gardenette
-Hex mono
 HwiteHwale
 Kyl-E
 Luc_
@@ -236,7 +239,9 @@ Adam B.
 Amber W
 caesar
 DomTom
+Elm
 Empyrean
+FIE.F
 Gardenette
 Garreon
 Hare64
