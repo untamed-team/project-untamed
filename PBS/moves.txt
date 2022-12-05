@@ -1536,8 +1536,8 @@ Description = A weak electric charge is launched at the target. It causes paraly
 Name = Light of Ruin
 Type = FAIRY
 Category = Special
-Power = 140
-Accuracy = 90
+Power = 150
+Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = RecoilHalfOfDamageDealt
@@ -4934,15 +4934,15 @@ Description = The target is slammed with a long tail, vines, etc., to inflict da
 #-------------------------------
 [STRENGTH]
 Name = Strength
-Type = NORMAL
+Type = ROCK
 Category = Physical
-Power = 80
+Power = 100
 Accuracy = 100
-TotalPP = 15
+TotalPP = 5
 Target = NearOther
-FunctionCode = None
+FunctionCode = LowerUserDefSpDef1
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The target is slugged with a punch thrown at maximum power. It can also be used to move heavy boulders.
+Description = The target is slugged with a punch thrown at maximum power. It also cuts the user's Defense and Sp. Def.
 #-------------------------------
 [TRIATTACK]
 Name = Tri Attack
@@ -5169,10 +5169,10 @@ Description = The target is gripped and squeezed from both sides to inflict dama
 #-------------------------------
 [CUT]
 Name = Cut
-Type = NORMAL
+Type = STEEL
 Category = Physical
-Power = 50
-Accuracy = 95
+Power = 65
+Accuracy = 100
 TotalPP = 30
 Target = NearOther
 FunctionCode = None
