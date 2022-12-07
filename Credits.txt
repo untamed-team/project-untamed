@@ -305,6 +305,7 @@ Zylber7
 
 Playtesting
 -----------
+B_Creative
 BlueLightning
 Cawa/Sasha
 Chespin_Craft
@@ -346,7 +347,7 @@ stygma
 
 Wiki
 ----
-B (B_Creative/CloudHopperB)
+B_Creative
 Chespin_Craft
 Chroma
 
@@ -528,6 +529,9 @@ FL
 Speed Up 2.0:
 Marin
 Phantombass
+
+Step on Spot OW Animation:
+Boonzeet
 
 Tileset Rearranger:
 Maruno
