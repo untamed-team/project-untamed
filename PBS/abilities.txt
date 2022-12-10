@@ -1101,7 +1101,7 @@ Description = Boosts the power and critical hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises the Pokémon’s speed after making a direct attack.
+Description = +1 Speed if contact move is used. +2 Speed cap.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
