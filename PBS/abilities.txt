@@ -1139,3 +1139,7 @@ Description = Removes all hazards from its side upon entry.
 Name = Trickster
 Description = Summons Trick Room on the switch-in.
 #-------------------------------
+[MASSEXTINCTION]
+Name = Mass Extinction
+Description = User moves are Super Effective on Dragon-types.
+#-------------------------------
