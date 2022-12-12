@@ -119,6 +119,23 @@ MegaStone = GOHILITE
 Type1 = POISON
 Type2 = ELECTRIC
 BaseStats = 100,60,75,105,150,115
-Abilities = VOLTABSORB
+Abilities = CORROSION
 Height = 0.2
 Weight = 3.5
+#-------------------------------
+[ATELANGLER,1]
+FormName = Mega Atelangler
+MegaStone = ATELANGLITE
+BaseStats = 95,133,106,109,58,85
+Abilities = BAITEDLINE
+Height = 1.9
+Weight = 46.7
+#-------------------------------
+[CHIXULOB,1]
+FormName = Mega Chixulob
+MegaStone = CHIXULOBYTE
+BaseStats = 75,150,90,145,90,75
+Abilities = RECKLESS
+HiddenAbilities = MASSEXTINCTION
+Height = 72.0
+Weight = 3580.0

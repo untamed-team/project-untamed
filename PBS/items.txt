@@ -6316,6 +6316,22 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Gohila hold it, and it will be able to Mega Evolve.
 #-------------------------------
+[ATELANGLITE]
+Name = Atelanglite
+NamePlural = Atelanglites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Atelangler hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[CHIXULOBYTE]
+Name = Chixulobyte
+NamePlural = Chixulobytes
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Chixulob hold it, and it will be able to Mega Evolve.
+#-------------------------------
 [BERRYPOTS]
 Name = Berry Pot
 NamePlural = Berry Pots
