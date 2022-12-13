@@ -104,6 +104,17 @@ FormName = Frozen
 Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,65,130
+#------------------------------- # 520 bst
+[STRELAVISON,1]
+FormName = School Form
+Type1 = BUG
+Type2 = ELECTRIC
+BaseStats = 62,54,117,22,131,134
+BaseEXP = 217
+Height = 8.2
+Weight = 78.6
+Shape = MultiBody
+Pokedex = lmao it sucks so bad
 #-------------------------------
 [NOCTAVISPA,1]
 FormName = Mega Noctavispa
@@ -139,3 +150,4 @@ Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
 Height = 72.0
 Weight = 3580.0
+#-------------------------------
