@@ -54,9 +54,9 @@ Description = Although this move has great power, it only works the first turn t
 Name = Pollen Puff
 Type = BUG
 Category = Special
-Power = 90
+Power = 70
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = HealAllyOrDamageFoe
 Flags = CanProtect,CanMirrorMove,Bomb
@@ -3146,8 +3146,9 @@ Name = Tailwind
 Type = FLYING
 Category = Status
 Accuracy = 0
-TotalPP = 15
+TotalPP = 5
 Target = UserSide
+Priority = -7
 FunctionCode = StartUserSideDoubleSpeed
 Description = The user whips up a turbulent whirlwind that increases the Speed of all allies for three turns.
 #-------------------------------
@@ -6383,10 +6384,10 @@ Name = Shell Smash
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 15
+TotalPP = 5
 Target = User
 FunctionCode = LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2
-Description = The user breaks its shell, lowering its defenses but sharply raising attacking and Speed stats.
+Description = Sharply lowers its defenses but raises Speed and sharply raises attacking stats.
 #-------------------------------
 [SIMPLEBEAM]
 Name = Simple Beam
