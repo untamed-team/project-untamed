@@ -155,6 +155,7 @@ FNaF 6
 
 Pokémon Cries:
 Gardenette
+Hummus
 Text 206
 
 
@@ -284,6 +285,7 @@ Aelvric
 Basalte
 Cawa/Sasha
 Deli
+Elm
 Fitch
 Floriak
 Hey
