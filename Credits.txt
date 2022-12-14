@@ -155,6 +155,7 @@ FNaF 6
 
 Pokémon Cries:
 Gardenette
+Hummus
 Text 206
 
 
@@ -284,6 +285,7 @@ Aelvric
 Basalte
 Cawa/Sasha
 Deli
+Elm
 Fitch
 Floriak
 Hey
@@ -305,6 +307,7 @@ Zylber7
 
 Playtesting
 -----------
+B_Creative
 BlueLightning
 Cawa/Sasha
 Chespin_Craft
@@ -346,7 +349,7 @@ stygma
 
 Wiki
 ----
-B (B_Creative/CloudHopperB)
+B_Creative
 Chespin_Craft
 Chroma
 
@@ -528,6 +531,9 @@ FL
 Speed Up 2.0:
 Marin
 Phantombass
+
+Step on Spot OW Animation:
+Boonzeet
 
 Tileset Rearranger:
 Maruno
@@ -754,3 +760,8 @@ Version    = 1.2
 Essentials = 20,20.1
 Credits    = Maruno
 Link       = https://reliccastle.com/resources/794/
+
+Name       = Step On Spot
+Version    = 1.0
+Credits    = Boonzeet
+Link       = https://reliccastle.com/resources/648/

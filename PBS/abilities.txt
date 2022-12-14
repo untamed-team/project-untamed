@@ -1101,7 +1101,7 @@ Description = Boosts the power and critical hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises the Pokémon’s speed after making a direct attack.
+Description = Raises the Pokémon’s speed after making a direct attack up to 2 times.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
@@ -1138,4 +1138,8 @@ Description = Removes all hazards from its side upon entry.
 [TRICKSTER]
 Name = Trickster
 Description = Summons Trick Room on the switch-in.
+#-------------------------------
+[MASSEXTINCTION]
+Name = Mass Extinction
+Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
