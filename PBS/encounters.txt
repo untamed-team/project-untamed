@@ -18,7 +18,7 @@ OldRod
     60,LOTAD,6,9
     40,DEWPIDER,5,10
 GoodRod
-    60,WOOPER,12,17
+    60,BARBOACH,12,17
     20,DEWPIDER,10,16
     20,LOTAD,10,15
 #-------------------------------
@@ -47,7 +47,7 @@ OldRod
     60,LOTAD,6,9
     40,DEWPIDER,5,10
 GoodRod
-    60,WOOPER,12,17
+    60,BARBOACH,12,17
     20,DEWPIDER,10,16
     20,LOTAD,10,15
 Land,21
