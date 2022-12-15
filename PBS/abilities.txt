@@ -768,7 +768,7 @@ Description = Alters weather to remove Flying-type's weaknesses.
 #-------------------------------
 [STAMINA]
 Name = Stamina
-Description = Boosts Defense when hit by an attack.
+Description = Boosts Defense when hit by an direct attack.
 #-------------------------------
 [WIMPOUT]
 Name = Wimp Out

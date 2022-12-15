@@ -282,18 +282,6 @@ FrontSprite = 0,18
 ShadowX = 0
 ShadowSize = 3
 #-------------------------------
-[WOOPER]
-BackSprite = 0,29
-FrontSprite = 0,31
-ShadowX = 0
-ShadowSize = 1
-#-------------------------------
-[QUAGSIRE]
-BackSprite = 0,21
-FrontSprite = 0,21
-ShadowX = -2
-ShadowSize = 2
-#-------------------------------
 [ZEAZAYA]
 BackSprite = 0,26
 FrontSprite = 0,30
@@ -853,18 +841,6 @@ ShadowX = 0
 ShadowSize = 2
 #-------------------------------
 [WHISCASH]
-BackSprite = 0,20
-FrontSprite = 0,24
-ShadowX = 0
-ShadowSize = 2
-#-------------------------------
-[ARROKUDA]
-BackSprite = 0,20
-FrontSprite = 0,24
-ShadowX = 0
-ShadowSize = 2
-#-------------------------------
-[BARRASKEWDA]
 BackSprite = 0,20
 FrontSprite = 0,24
 ShadowX = 0
