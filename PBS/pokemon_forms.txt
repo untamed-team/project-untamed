@@ -2,21 +2,19 @@
 #-------------------------------
 [PUMPKABOO,1]
 FormName = Average Size
-BaseStats = 49,66,70,51,44,55
-HiddenAbilities = INSOMNIA
+BaseStats = 49,44,70,51,66,55
 Height = 0.4
 Weight = 5.0
 #-------------------------------
 [PUMPKABOO,2]
 FormName = Large Size
-BaseStats = 54,66,70,46,44,55
+BaseStats = 54,44,70,46,66,55
 Height = 0.5
 Weight = 7.5
 #-------------------------------
 [PUMPKABOO,3]
 FormName = Super Size
-BaseStats = 59,66,70,41,44,55
-HiddenAbilities = INSOMNIA
+BaseStats = 59,44,70,41,66,55
 Height = 0.8
 Weight = 15.0
 WildItemCommon = MIRACLESEED
@@ -25,21 +23,19 @@ WildItemRare = MIRACLESEED
 #-------------------------------
 [GOURGEIST,1]
 FormName = Average Size
-BaseStats = 65,90,122,84,58,75
-HiddenAbilities = INSOMNIA
+BaseStats = 65,58,122,84,90,75
 Height = 0.9
 Weight = 12.5
 #-------------------------------
 [GOURGEIST,2]
 FormName = Large Size
-BaseStats = 75,95,122,69,58,75
+BaseStats = 75,58,122,69,95,75
 Height = 1.1
 Weight = 14.0
 #-------------------------------
 [GOURGEIST,3]
 FormName = Super Size
-BaseStats = 85,100,122,54,58,75
-HiddenAbilities = INSOMNIA
+BaseStats = 85,58,122,54,100,75
 Height = 1.7
 Weight = 39.0
 WildItemCommon = MIRACLESEED
