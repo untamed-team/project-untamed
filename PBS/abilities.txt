@@ -548,11 +548,11 @@ Description = Reduces damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
-Description = 1.5x Atk when poisoned. Immunity to poison damage.
+Description = Powers up Attack when poisoned, and eliminates poison damage.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost
-Description = 1.5x SpAtk when burned. Immunity to burn damage.
+Description = Powers up Special Attack when burned, and eliminates burn damage.
 #-------------------------------
 [HARVEST]
 Name = Harvest
