@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [PUMPKABOO,1]
 FormName = Average Size
@@ -107,10 +107,10 @@ Type1 = BUG
 Type2 = ELECTRIC
 BaseStats = 62,54,117,22,131,134
 BaseEXP = 217
-Height = 8.2
-Weight = 78.6
+Height = 7.7
+Weight = 902.2
 Shape = MultiBody
-Pokedex = lmao it sucks so bad
+Pokedex = 
 #-------------------------------
 [NOCTAVISPA,1]
 FormName = Mega Noctavispa
