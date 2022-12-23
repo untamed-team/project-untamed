@@ -1120,6 +1120,8 @@ Habitat = WatersEdge
 Category = Whiskers
 Pokedex = Its body is covered with a slimy film. The film acts as a barrier to prevent germs in muddy water from entering the Barboach's body.
 Generation = 3
+WildItemCommon = HEARTSCALE
+WildItemUncommon = HEARTSCALE
 Evolutions = WHISCASH,Level,30
 #-------------------------------
 [WHISCASH]
@@ -1144,6 +1146,8 @@ Color = Blue
 Shape = Finned
 Habitat = WatersEdge
 Category = Whiskers
+WildItemCommon = HEARTSCALE
+WildItemUncommon = HEARTSCALE
 Pokedex = Mysteriously, it can foretell earthquakes. In the daytime, it sleeps in mud at the bottom of a pond. When it awakens, it continually feeds throughout the night.
 Generation = 3
 #-------------------------------
