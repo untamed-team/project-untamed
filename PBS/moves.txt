@@ -5741,7 +5741,7 @@ Accuracy = 0
 TotalPP = 40
 Target = User
 FunctionCode = SwitchOutUserPassOnEffects
-Description = The user switches places with a party Pokémon in waiting, passing along any stat changes.
+Description = The user switches places with a party Pokémon in waiting, passing along any effects.
 #-------------------------------
 [BELLYDRUM]
 Name = Belly Drum
