@@ -564,7 +564,7 @@ Description = Anticipates an ally's attack and dodges it.
 #-------------------------------
 [MOODY]
 Name = Moody
-Description = Raises one stat and lowers another.
+Description = +2 on a random stat every turn. Resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
