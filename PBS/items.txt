@@ -6260,7 +6260,7 @@ Flags = Fling_30
 Description = A peculiar cable that makes certain species of Pokémon evolve. It even comes with free Wifi!
 #-------------------------------
 [HYPERABILITYCAPSULE]
-Name = Hyper Ability Capsule
+Name = H. Ability Capsule
 NamePlural = Hyper Ability Capsules
 Pocket = 2
 Price = 20000
