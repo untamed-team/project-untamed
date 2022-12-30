@@ -396,6 +396,9 @@ Vendily
 Astralneko's Scripting Utilities:
 Astralneko
 
+Auto Healing
+Dracarys
+
 Auto Multi Save
 http404error
 
@@ -769,3 +772,7 @@ Name       = Step On Spot
 Version    = 1.0
 Credits    = Boonzeet
 Link       = https://reliccastle.com/resources/648/
+
+Name       = Auto Healing
+Credits    = Dracarys
+Link       = https://reliccastle.com/resources/1123/
