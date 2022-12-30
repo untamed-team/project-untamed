@@ -6357,7 +6357,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = Heals your party. Recharges at the PokéCenter.
+Description = Heals your party. Recharges at the PokéCenter. CTRL + Auto Heal to activate in party menu.
 #-------------------------------
 [EMPTYPOKEVIAL]
 Name = PokéVial
