@@ -55,7 +55,7 @@ Immunities = NORMAL,FIGHTING
 Name = Steel
 IconPosition = 8
 Weaknesses = FIGHTING,GROUND,FIRE
-Resistances = NORMAL,FLYING,ROCK,BUG,STEEL,GRASS,PSYCHIC,ICE,DRAGON,FAIRY
+Resistances = NORMAL,FLYING,ROCK,STEEL,DRAGON,FAIRY
 Immunities = POISON
 #-------------------------------
 [QMARKS]
@@ -74,7 +74,7 @@ Resistances = BUG,STEEL,FIRE,GRASS,ICE,FAIRY
 Name = Water
 IconPosition = 11
 IsSpecialType = true
-Weaknesses = GRASS,ELECTRIC
+Weaknesses = GRASS,ELECTRIC,POISON
 Resistances = STEEL,FIRE,WATER,ICE
 #-------------------------------
 [GRASS]
@@ -103,7 +103,7 @@ Name = Ice
 IconPosition = 15
 IsSpecialType = true
 Weaknesses = FIGHTING,ROCK,STEEL,FIRE
-Resistances = ICE
+Resistances = ICE,WATER
 #-------------------------------
 [DRAGON]
 Name = Dragon
