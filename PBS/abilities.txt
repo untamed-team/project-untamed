@@ -548,11 +548,11 @@ Description = Reduces damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
-Description = Powers up physical attacks when poisoned.
+Description = Powers up Attack when poisoned, and eliminates poison damage.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost
-Description = Powers up special attacks when burned.
+Description = Powers up Special Attack when burned, and eliminates burn damage.
 #-------------------------------
 [HARVEST]
 Name = Harvest
@@ -564,7 +564,7 @@ Description = Anticipates an ally's attack and dodges it.
 #-------------------------------
 [MOODY]
 Name = Moody
-Description = Raises one stat and lowers another.
+Description = Sharply raises one stat every turn, and resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat

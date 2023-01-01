@@ -396,6 +396,9 @@ Vendily
 Astralneko's Scripting Utilities:
 Astralneko
 
+Auto Healing
+Dracarys
+
 Auto Multi Save
 http404error
 
@@ -518,6 +521,10 @@ bo4p5687
 Luka S.J
 PizzaSun
 rigbycwts
+
+PokéVial
+Voltseon
+qin2500
 
 Quicksave:
 Low
@@ -765,3 +772,7 @@ Name       = Step On Spot
 Version    = 1.0
 Credits    = Boonzeet
 Link       = https://reliccastle.com/resources/648/
+
+Name       = Auto Healing
+Credits    = Dracarys
+Link       = https://reliccastle.com/resources/1123/

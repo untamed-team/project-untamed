@@ -6260,7 +6260,7 @@ Flags = Fling_30
 Description = A peculiar cable that makes certain species of Pokémon evolve. It even comes with free Wifi!
 #-------------------------------
 [HYPERABILITYCAPSULE]
-Name = Hyper Ability Capsule
+Name = H. Ability Capsule
 NamePlural = Hyper Ability Capsules
 Pocket = 2
 Price = 20000
@@ -6357,7 +6357,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = Heals your party. Recharges at the PokéCenter.
+Description = Heals your party. Recharges at the PokéCenter. CTRL + Auto Heal to activate in party menu.
 #-------------------------------
 [EMPTYPOKEVIAL]
 Name = PokéVial

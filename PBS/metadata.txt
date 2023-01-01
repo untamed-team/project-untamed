@@ -2,7 +2,7 @@
 #-------------------------------
 [0]
 StartMoney = 1000
-StartItemStorage = POTION
+StartItemStorage = POTION, REPEL
 Home = 33,6,6,6
 StorageCreator = Bill
 WildBattleBGM = Battle - Generic Wild
