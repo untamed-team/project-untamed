@@ -674,7 +674,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Urban
 Category = Small Dog
-Pokedex = For centuries, almost every family in the Mazah region has kept a Techuppi. Their tiny jaws are capable of clamping down at surprising strength.
+Pokedex = For centuries, almost every family in the Mazah region has kept a Techuppi. Their tiny jaws are capable of clamping down with surprising strength.
 Generation = 9
 Evolutions = LUPACABRA,Level,26
 #-------------------------------
