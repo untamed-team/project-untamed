@@ -6367,11 +6367,3 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
-#-------------------------------
-[ROOMEXTENDER]
-Name = Room Extender
-NamePlural = Room Extenders
-Pocket = 1
-Price = 4000
-Flags = Fling_40
-Description = A Pokémon held item that extends the duration of the Room moves used by the holder.

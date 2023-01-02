@@ -1137,7 +1137,7 @@ Description = Removes all hazards from its side upon entry.
 #-------------------------------
 [TRICKSTER]
 Name = Trickster
-Description = Summons Trick Room on the switch-in.
+Description = When used, Room effects last 2 more turns.
 #-------------------------------
 [MASSEXTINCTION]
 Name = Mass Extinction
