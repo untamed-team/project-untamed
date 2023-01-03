@@ -8985,7 +8985,7 @@ Priority = 0
 FunctionCode = Supernova
 Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,CannotMetronome
 EffectChance = 0
-Description = This move is Rock and Fire type simultaneously. It damages the user heavily.
+Description = This move is Rock-type and Fire-type simultaneously. It damages the user heavily.
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
