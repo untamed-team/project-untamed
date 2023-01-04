@@ -6367,3 +6367,21 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
+#-------------------------------
+[PORTABLEPC]
+Name = Portable PC
+NamePlural = Portable PCs
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A small device that can transfer Pokemon to and from a timeless PC storage.
+#-------------------------------
+[PORTABLEBATTERY]
+Name = Portable Battery
+NamePlural = Portable Batteries
+Pocket = 1
+Price = 1000
+FieldUse = Direct
+Flags = Fling_40
+Description = A small battery used to temporarily charge a Portable PC.

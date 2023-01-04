@@ -1140,6 +1140,6 @@ Name = Trickster
 Description = When used, Room effects last 2 more turns.
 #-------------------------------
 [MASSEXTINCTION]
-Name = Mass Extinction
+Name = MassExtinction
 Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
