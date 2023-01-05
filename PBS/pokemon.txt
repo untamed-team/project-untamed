@@ -447,7 +447,7 @@ Evolutions = NOCTAVISPA,Level30DarkMove,DARK
 [NOCTAVISPA]
 Name = Noctavispa
 Types = BUG,DARK
-BaseStats = 65,110,69,97,89,60
+BaseStats = 65,110,69,97,89,65
 GenderRatio = Female25Percent
 GrowthRate = Medium
 BaseExp = 253
