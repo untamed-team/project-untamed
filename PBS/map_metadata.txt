@@ -28,7 +28,7 @@ ShowArea = true
 Bicycle = false
 Weather = Marigolds,100
 MapPosition = 0,20,3
-BattleBack = florest
+BattleBack = forest
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
