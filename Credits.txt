@@ -7,7 +7,6 @@ Graphics
 Tilesets:
 aball
 Aveon Trainer
-Aveontrainer
 Banana 'Eduardo' Toast
 BE_Infinity
 Cristata
@@ -55,6 +54,7 @@ farbol234
 Fikolyte
 Firedude
 Floriak
+GamerCroc11
 Griffin L.
 Grimrose
 HingisDingus
@@ -173,6 +173,7 @@ Gardenette
 GreenJellybean
 ImaDeadMan
 Kaloja
+Kameleron
 Kutas Kitti
 MadMillerMiller
 RISH
@@ -215,6 +216,7 @@ Deino
 Firedude
 Gardenette
 HwiteHwale
+Kameleron
 Kyl-E
 Luc_
 LuckyBenjamin
