@@ -45,6 +45,10 @@ Name = SE house-Purple
 [010]   # SE house-Green
 Name = SE house-Green
 #-------------------------------
+[017]   # Hacienda Garden
+Name = Hacienda Garden
+Outdoor = true
+#-------------------------------
 [019]   # San Cerigold PC
 Name = San Cerigold PC
 HealingSpot = 4,22,22
