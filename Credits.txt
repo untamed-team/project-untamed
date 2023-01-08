@@ -2,6 +2,25 @@
 
 ====================
 
+Mazah development team:
+BlueLightning
+Chespin_Craft
+Gardenette
+Kaloja
+Kitti Kutas
+Low
+SpaceWestern
+Spork
+stygma
+
+
+
+
+
+
+
+
+
 Graphics
 --------
 Tilesets:
