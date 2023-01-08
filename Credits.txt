@@ -7,7 +7,7 @@ BlueLightning
 Chespin_Craft
 Gardenette
 Kaloja
-Kitti Kutas
+Kutas Kitti
 Low
 SpaceWestern
 Spork
@@ -39,10 +39,8 @@ Kaloja
 King Tapia
 Kutas Kitti
 Magiscarf
-Magiscarf
 Pint Sized Kiwi
 PokemonEclipse
-Princess Phoenix
 PrincessPhoenix
 Rider Dragon
 Saltilton
