@@ -447,16 +447,16 @@ Description = The user pretends to bow its head, but then it stabs the target wi
 #-------------------------------
 [JAWLOCK]
 Name = Jaw Lock
-Type = DARK
+Type = FIGHTING
 Category = Physical
-Power = 80
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = TrapUserAndTargetInBattle
-Flags = Contact,CanProtect,CanMirrorMove
+FunctionCode = TrapTargetInBattle
+Flags = Contact,CanProtect,CanMirrorMove,Biting
 EffectChance = 100
-Description = This move prevents the user and the target from switching out until either of them faints.
+Description = Prevents the target from switching out.
 #-------------------------------
 [THROATCHOP]
 Name = Throat Chop
