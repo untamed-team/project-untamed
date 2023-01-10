@@ -6385,3 +6385,12 @@ Price = 1000
 FieldUse = Direct
 Flags = Fling_40
 Description = A small battery used to temporarily charge a Portable PC.
+#-------------------------------
+[SHINYBERRY]
+Name = Shiny Berry
+NamePlural = Shiny Berries
+Pocket = 2
+Price = 20000
+FieldUse = OnPokemon
+Flags = Berry,Fling_10,NaturalGift_FAIRY_100
+Description = a pill filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
