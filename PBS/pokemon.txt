@@ -2,7 +2,7 @@
 #-------------------------------
 #[BULBASAUR]
 #Name = Bulbasaur
-#Types = DRAGON,POISON
+#Types = GRASS,POISON
 #BaseStats = 45,49,49,45,65,65
 #GenderRatio = FemaleOneEighth
 #GrowthRate = Parabolic
