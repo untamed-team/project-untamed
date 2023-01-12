@@ -2024,8 +2024,9 @@ Power = 80
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
-FunctionCode = RecoilQuarterOfDamageDealt
+FunctionCode = RecoilQuarterOfDamageDealt,FlinchTarget
 Flags = Contact,CanProtect,CanMirrorMove
+EffectChance = 20
 Description = The user grabs the target and recklessly dives for the ground. It also hurts the user slightly.
 #-------------------------------
 [BRICKBREAK]
