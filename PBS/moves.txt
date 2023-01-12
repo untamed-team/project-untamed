@@ -2024,10 +2024,9 @@ Power = 80
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
-FunctionCode = RecoilQuarterOfDamageDealt,FlinchTarget
+FunctionCode = RecoilQuarterOfDamageDealt
 Flags = Contact,CanProtect,CanMirrorMove
-EffectChance = 20
-Description = The user grabs the target and recklessly dives for the ground. This move hurts the user slightly and may also cause the target to flinch.
+Description = The user grabs the target and recklessly dives for the ground. This move hurts the user slightly.
 #-------------------------------
 [BRICKBREAK]
 Name = Brick Break
