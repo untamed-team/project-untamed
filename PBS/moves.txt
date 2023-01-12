@@ -2027,7 +2027,7 @@ Target = NearOther
 FunctionCode = RecoilQuarterOfDamageDealt,FlinchTarget
 Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 20
-Description = The user grabs the target and recklessly dives for the ground. It also hurts the user slightly.
+Description = The user grabs the target and recklessly dives for the ground. This move hurts the user slightly and may also cause the target to flinch.
 #-------------------------------
 [BRICKBREAK]
 Name = Brick Break
