@@ -2021,12 +2021,12 @@ Name = Submission
 Type = FIGHTING
 Category = Physical
 Power = 80
-Accuracy = 80
+Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = RecoilQuarterOfDamageDealt
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user grabs the target and recklessly dives for the ground. It also hurts the user slightly.
+Description = The user grabs the target and recklessly dives for the ground. This move hurts the user slightly.
 #-------------------------------
 [BRICKBREAK]
 Name = Brick Break
