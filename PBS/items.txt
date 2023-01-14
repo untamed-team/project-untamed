@@ -4690,9 +4690,9 @@ NamePlural = TM100s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_50
-Move = CUT
-Description = The target is cut with a scythe or claw.
+Flags = Fling_10
+Move = DEFOG
+Description = A strong wind blows away the foe's obstacles such as Light Screen. It also lowers their evasion.
 #-------------------------------
 [TM101]
 Name = TM101
@@ -4700,13 +4700,23 @@ NamePlural = TM101s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_90
-Move = FLY
-Description = The user flies up into the sky and then strikes its target on the next turn.
+Flags = Fling_50
+Move = CUT
+Description = The target is cut with a scythe or claw.
 #-------------------------------
 [TM102]
 Name = TM102
 NamePlural = TM102s
+Pocket = 4
+Price = 2000
+FieldUse = TM
+Flags = Fling_90
+Move = FLY
+Description = The user flies up into the sky and then strikes its target on the next turn.
+#-------------------------------
+[TM103]
+Name = TM103
+NamePlural = TM103s
 Pocket = 4
 Price = 2500
 FieldUse = TM
@@ -4714,9 +4724,9 @@ Flags = Fling_90
 Move = SURF
 Description = The user attacks everything around it by swamping its surroundings with a giant wave.
 #-------------------------------
-[TM103]
-Name = TM103
-NamePlural = TM103s
+[TM104]
+Name = TM104
+NamePlural = TM104s
 Pocket = 4
 Price = 2000
 FieldUse = TM
@@ -4724,9 +4734,9 @@ Flags = Fling_80
 Move = STRENGTH
 Description = The target is slugged with a punch thrown at maximum power.
 #-------------------------------
-[TM104]
-Name = TM104
-NamePlural = TM104s
+[TM105]
+Name = TM105
+NamePlural = TM105s
 Pocket = 4
 Price = 2500
 FieldUse = TM
@@ -4734,9 +4744,9 @@ Flags = Fling_80
 Move = WATERFALL
 Description = The user charges at the target and may make it flinch.
 #-------------------------------
-[TM105]
-Name = TM105
-NamePlural = TM105s
+[TM106]
+Name = TM106
+NamePlural = TM106s
 Pocket = 4
 Price = 2500
 FieldUse = TM
