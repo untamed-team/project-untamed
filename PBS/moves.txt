@@ -3963,7 +3963,7 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = HealUserByTargetAttackLowerTargetAttack1
 Flags = CanProtect,CanMirrorMove
-Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat. Double PP usage.
+Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat.
 #-------------------------------
 [STUNSPORE]
 Name = Stun Spore
@@ -9033,7 +9033,7 @@ Priority = 0
 FunctionCode = Rebalancing
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
-Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat. Double PP usage.
+Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
 [FRIGIDMAW]
 Name = Frigid Maw
