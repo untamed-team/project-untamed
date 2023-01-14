@@ -4738,11 +4738,11 @@ Description = The user charges at the target and may make it flinch.
 Name = TM105
 NamePlural = TM105s
 Pocket = 4
-Price = 2000
+Price = 2500
 FieldUse = TM
-Flags = Fling_10
-Move = DEFOG
-Description = A strong wind blows away the target's barriers, such as Reflect, and lowers their evasiveness.
+Flags = Fling_80
+Move = DIVE
+Description = Diving on the first turn, the user floats up and attacks on the second. It can be used to dive underwater.
 #-------------------------------
 [HM01]
 Name = HM01
