@@ -3560,7 +3560,7 @@ Evolutions = CRYOGER,HasMove,BITINGCOLD
 [CRYOGER]
 Name = Cryoger
 Types =  ICE,STEEL
-BaseStats = 80,50,85,110,105,110
+BaseStats = 82,49,88,112,109,110
 GenderRatio = Female50Percent
 GrowthRate = Fluctuating
 BaseExp = 270
