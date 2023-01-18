@@ -1869,6 +1869,56 @@ Category = Luring
 Pokedex = Their flames are said to steal souls from humans. They inspired the chandelier and it was even named after them.
 Generation = 5
 #-------------------------------
+[SKIDDO]
+Name = Skiddo
+Types = GRASS,ROCK
+BaseStats = 66,65,48,62,52,57
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 70
+EVs = HP,1
+CatchRate = 200
+Happiness = 50
+Abilities = SAPSIPPER,GRASSPELT
+HiddenAbilities = ROCKHEAD
+Moves = 1,TACKLE,1,GROWTH,7,VINEWHIP,9,TAILWHIP,12,LEECHSEED,13,RAZORLEAF,16,WORRYSEED,20,SYNTHESIS,22,TAKEDOWN,26,BULLDOZE,30,SEEDBOMB,34,ROCKSLIDE,34,BULKUP,38,HORNLEECH,42,STONEEDGE,45,MILKDRINK,50,HEADSMASH,58,WOODHAMMER
+TutorMoves = ATTRACT,BRICKBREAK,BULKUP,BULLDOZE,CONFIDE,ENERGYBALL,FACADE,GIGADRAIN,GRASSKNOT,IRONTAIL,NATUREPOWER,PAYBACK,RAINDANCE,ROAR,ROCKSLIDE,ROCKSMASH,ROUND,SEEDBOMB,SOLARBEAM,SOLARBLADE,STRENGTH,SUNNYDAY,SURF,SWAGGER,SYNTHESIS,WILDCHARGE,WORKUP,WORRYSEED,ZENHEADBUTT
+EggMoves = DEFENSECURL,GRASSYTERRAIN,SHOREUP,ROLLOUT
+EggGroups = Field
+HatchSteps = 5120
+Height = 0.9
+Weight = 31.0
+Color = Brown
+Shape = Quadruped
+Category = Mount
+Pokedex = If it has sunshine and water, it doesn't need to eat, because it can generate energy from the leaves on its back.
+Generation = 6
+Evolutions = GOGOAT,Level,32
+#-------------------------------
+[GOGOAT]
+Name = Gogoat
+Types = GRASS,ROCK
+BaseStats = 123,100,72,88,63,81
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 186
+EVs = HP,2
+CatchRate = 45
+Happiness = 50
+Abilities = SAPSIPPER,GRASSPELT
+HiddenAbilities = ROCKHEAD
+Moves = 0,ROCKCLIMB,1,ROCKSLIDE,1,ROCKCLIMB,1,AERIALACE,1,EARTHQUAKE,1,TACKLE,1,GROWTH,1,VINEWHIP,1,TAILWHIP,7,VINEWHIP,9,TAILWHIP,12,LEECHSEED,13,RAZORLEAF,16,WORRYSEED,20,SYNTHESIS,22,TAKEDOWN,26,BULLDOZE,30,SEEDBOMB,34,ROCKSLIDE,34,BULKUP,40,HORNLEECH,47,STONEEDGE,55,MILKDRINK,58,HEADSMASH,64,WOODHAMMER
+TutorMoves = AERIALACE,ATTRACT,BOUNCE,BRICKBREAK,BULKUP,BULLDOZE,CONFIDE,EARTHQUAKE,ENERGYBALL,FACADE,GIGADRAIN,GRASSKNOT,IRONTAIL,NATUREPOWER,PAYBACK,RAINDANCE,ROAR,ROCKSLIDE,ROCKSMASH,ROUND,STONEEDGE,SEEDBOMB,SOLARBEAM,SOLARBLADE,STOMPINGTANTRUM,STRENGTH,SUNNYDAY,SUPERPOWER,SURF,SWAGGER,SYNTHESIS,WILDCHARGE,WORKUP,WORRYSEED,ZENHEADBUTT
+EggGroups = Field
+HatchSteps = 5120
+Height = 1.7
+Weight = 91.0
+Color = Brown
+Shape = Quadruped
+Category = Mount
+Pokedex = It can tell how its trainer is feeling by subtle shifts in the grip on its horns. This empathetic sense lets them run as if one being.
+Generation = 6
+#-------------------------------
 [TERREON]
 Name = Terreon
 Types = GROUND
