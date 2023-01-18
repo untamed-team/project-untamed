@@ -24,13 +24,14 @@ GoodRod
 #-------------------------------
 [026] # Route 2
 Land,21
+    20,SKIDDO,5
+    15,FLABEBE,5
     15,TECHUPPI,5
+    10,HOOTHOOT,5
+    10,SUNKERN,5
     10,WRENNER,5
     5,M_MEOWTH,5
-    15,FLABEBE,5
-    10,SUNKERN,5
-    10,HOOTHOOT,5
-    20,SKIDDO,5
+    15,BUNNELBY,5
 #-------------------------------
 [048] # Route 1
 Land,21
