@@ -1871,7 +1871,7 @@ Generation = 5
 #-------------------------------
 [SKIDDO]
 Name = Skiddo
-Types = GRASS,ROCK
+Types = GRASS
 BaseStats = 66,65,48,62,52,57
 GenderRatio = Female50Percent
 GrowthRate = Medium
@@ -1897,7 +1897,7 @@ Evolutions = GOGOAT,Level,32
 #-------------------------------
 [GOGOAT]
 Name = Gogoat
-Types = GRASS,ROCK
+Types = GRASS
 BaseStats = 123,100,72,88,63,81
 GenderRatio = Female50Percent
 GrowthRate = Medium
