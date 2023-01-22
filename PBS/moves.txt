@@ -762,7 +762,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesObstruct
-Flags = DoublePPUse
 Description = The user protects itself from all attacks. Direct contact lowers the attacker's Defense.
 #-------------------------------
 [PARTINGSHOT]
@@ -2345,7 +2344,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
-Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [MATBLOCK]
@@ -2388,7 +2386,6 @@ TotalPP = 5
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromPriorityMoves
-Flags = DoublePPUse
 Description = The user protects itself and its allies from priority moves. If may fail if used in succession.
 #-------------------------------
 [VCREATE]
@@ -3940,11 +3937,10 @@ Name = Spiky Shield
 Type = GRASS
 Category = Status
 Accuracy = 0
-TotalPP = 10
+TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromTargetingMovesSpikyShield
-Flags = DoublePPUse
 Description = Protects the user from attacks. Also damages attackers that make contact with the user.
 #-------------------------------
 [SPORE]
@@ -3966,8 +3962,8 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = HealUserByTargetAttackLowerTargetAttack1
-Flags = CanProtect,CanMirrorMove,DoublePPUse
-Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat. Double PP usage.
+Flags = CanProtect,CanMirrorMove
+Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat.
 #-------------------------------
 [STUNSPORE]
 Name = Stun Spore
@@ -6271,7 +6267,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
-Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [PSYCHUP]
@@ -6889,7 +6884,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserBanefulBunker
-Flags = DoublePPUse
 Description = Protects the user from attacks. Also poisons any attacker that makes contact with the user.
 #-------------------------------
 [COIL]
@@ -7948,7 +7942,6 @@ TotalPP = 5
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromMultiTargetDamagingMoves
-Flags = DoublePPUse
 Description = The user and its allies are protected from wide-ranging attacks for a turn. May fail if used in succession.
 #-------------------------------
 [DOOMDESIRE]
@@ -8263,7 +8256,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesKingsShield
-Flags = DoublePPUse
 Description = Protects itself from damage. It also harshly lowers the Attack of attackers that make contact.
 #-------------------------------
 [METALSOUND]
@@ -9039,9 +9031,9 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = Rebalancing
-Flags = CanProtect,CanMirrorMove,DoublePPUse,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
-Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat. Double PP usage.
+Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
 [FRIGIDMAW]
 Name = Frigid Maw
