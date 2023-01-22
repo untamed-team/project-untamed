@@ -1143,3 +1143,7 @@ Description = When used, Room effects last 2 more turns.
 Name = MassExtinction
 Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
+[PREMONITION]
+Name = Premonition
+Description = mega xatu
+#-------------------------------
