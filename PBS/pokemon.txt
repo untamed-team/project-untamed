@@ -1592,7 +1592,7 @@ Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 [DUSKNOIR]
 Name = Dusknoir
 Types = GHOST
-BaseStats = 65,125,125,45,45,125
+BaseStats = 65,125,125,45,50,125
 GenderRatio = Female50Percent
 GrowthRate = Fast
 BaseExp = 236
