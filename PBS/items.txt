@@ -6404,3 +6404,12 @@ Price = 20000
 FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
 Description = a pill filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+#-------------------------------
+[EVRESET]
+Name = EVs Resetter
+NamePlural = EVs Resetters
+Pocket = 2
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30
+Description = A intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
