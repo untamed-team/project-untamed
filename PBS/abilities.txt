@@ -548,7 +548,7 @@ Description = Reduces damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
-Description = Boosts Attack and negates poison damage when poisoned.
+Description = Boosts Atk and negates poison damage when poisoned.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost
@@ -564,7 +564,7 @@ Description = Anticipates an ally's attack and dodges it.
 #-------------------------------
 [MOODY]
 Name = Moody
-Description = Sharply raises one stat, resetting the previous boost.
+Description = Sharply raises one stat, resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
