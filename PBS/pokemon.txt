@@ -1991,7 +1991,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Mud Puppy
-Pokedex = eve but mud, mid even
+Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokemon underground.
 #-------------------------------
 [GUSTEON]
 Name = Gusteon
@@ -2015,7 +2015,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Urban
 Category = Breezy
-Pokedex = eve but cloud
+Pokedex = The mood of a Gusteon will change depending on the weather, being jovial on sunny days and irritable on stormy days.
 #-------------------------------
 [GOHILA]
 Name = Gohila
