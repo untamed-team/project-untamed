@@ -1145,5 +1145,5 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = mega xatu
+Description = makes a trap that will hit in 2 turns if the attack is STAB and does damage 
 #-------------------------------
