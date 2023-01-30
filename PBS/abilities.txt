@@ -548,7 +548,7 @@ Description = Reduces damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
-Description = Boosts Atk and negates poison damage when poisoned.
+Description = Boosts Atk & negates poison damage when poisoned.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost

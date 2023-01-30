@@ -8771,6 +8771,18 @@ Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 0
 Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
 #-------------------------------
+[KINETICREND]
+Name = Kinetic Rend
+Type = PSYCHIC
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 20
+Target = NearOther
+FunctionCode = SuperEffectiveAgainstSteel
+Flags = CanProtect,CanMirrorMove
+Description = The user deforms the space around the target. Is super-effective on Steel-types.
+#-------------------------------
 [JOLTKICK]
 Name = Jolt Kick
 Type = ELECTRIC
