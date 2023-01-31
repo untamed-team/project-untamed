@@ -3729,7 +3729,7 @@ Shape = Finned
 Category = False Beacon
 Pokedex =
 #-------------------------------
-[WRAZZAL]
+[WRRAZAL]
 Name = Wrrazal
 Types = GHOST,ROCK
 BaseStats = 70,60,45,65,50,40
