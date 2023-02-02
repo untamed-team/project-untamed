@@ -6266,7 +6266,7 @@ NamePlural = Link Cables
 Pocket = 1
 Price = 3000
 FieldUse = OnPokemon
-Flags = Fling_30
+Flags = EvolutionStone,Fling_30
 Description = A peculiar cable that makes certain species of Pokémon evolve. It even comes with free Wifi!
 #-------------------------------
 [HYPERABILITYCAPSULE]
