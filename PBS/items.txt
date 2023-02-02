@@ -6399,11 +6399,11 @@ Description = A small battery used to temporarily charge a Portable PC.
 [SHINYBERRY]
 Name = Shiny Berry
 NamePlural = Shiny Berries
-Pocket = 2
-Price = 20000
+Pocket = 5
+Price = 200
 FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
-Description = a pill filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
 #-------------------------------
 [EVRESET]
 Name = EVs Resetter
