@@ -6,20 +6,19 @@ Land,21
     20,LILORINA,5,10
     15,BUDEW,5,8
     15,FLABEBE,5,6
-    10,GOTHITA,7,9
     10,MURKROW,4,7
     10,VULPIX,5,7
 #-------------------------------
 [022] # Veravalles Town
 Water,2
     60,LOTAD,8,11
-    40,DEWPIDER,8,11
+    40,FEEBAS,8,11
 OldRod
     60,LOTAD,6,9
-    40,DEWPIDER,5,10
+    40,FEEBAS,5,10
 GoodRod
     60,BARBOACH,12,17
-    20,DEWPIDER,10,16
+    20,FEEBAS,10,16
     20,LOTAD,10,15
 #-------------------------------
 [026] # Route 2
@@ -40,35 +39,33 @@ Land,21
     20,WRENNER,2,4
     10,FLABEBE,2,3
     10,LEDYBA,2,3
-    10,SUNKERN,2,3
+    10,BUDEW,2,3
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
     50,ZEAZAYA,5,7
-    20,CAFECARACHA,4,6
+    20,MINIMELO,4,6
     15,PUMPKABOO,4,7
-    10,HOOTHOOT,3,4
+    10,MURKROW,3,4
     5,DRILBUR,2,6
 #-------------------------------
 [079] # Hacienda Castaneda
 Water,2
     60,LOTAD,8,11
-    40,DEWPIDER,8,11
+    40,FEEBAS,8,11
 OldRod
     60,LOTAD,6,9
-    40,DEWPIDER,5,10
+    40,FEEBAS,5,10
 GoodRod
     60,BARBOACH,12,17
-    20,DEWPIDER,10,16
+    20,FEEBAS,10,16
     20,LOTAD,10,15
 Land,21
-    20,BUDEW,2,4
+    30,PACUNA,2,4
     20,TECHUPPI,3,6
-    15,EKANS,3,4
-    15,PACUNA,2,4
+    20,SUNKERN,3,4
+    15,MINIMELO,2,4
     15,WRENNER,3,5
-    10,HOOTHOOT,2,3
-    5,CAFECARACHA,3,4
 Corn,5
     75,ZEAZAYA,5
     20,WRENNER,3,5
