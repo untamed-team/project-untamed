@@ -2394,10 +2394,10 @@ EggGroups = Field
 HatchSteps = 5120
 Height = 0.9
 Weight = 39.5
-Colour = Brown
+Colour = Blue
 Shape = BipedalTail
 Habitat = Grassland 
-Category = Panhandle 
+Category = Dowsing 
 Pokedex = rat
 #-------------------------------
 [BOWLLO]
@@ -2880,7 +2880,7 @@ Height = 0.1
 Weight = 0.1
 Color = Blue
 Shape = Winged
-Category = Tiny Bird
+Category = Hyperactive
 Pokedex = pseudo wannabe 1, this movepool is only beeg because of that wannabe btw
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
@@ -2903,7 +2903,7 @@ Height = 0.3
 Weight = 1.5
 Color = Blue
 Shape = Winged
-Category = Collector
+Category = Exhaustion
 Pokedex = pseudo wannabe 2
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
@@ -2924,9 +2924,9 @@ EggGroups = Flying
 HatchSteps = 4080
 Height = 0.3
 Weight = 1.8
-Color = Purple
+Color = Green
 Shape = Winged
-Category = Illustrious
+Category = Swift Strike
 Pokedex = pseudo wannabe 3, would make you fighting / flying but people would bitch about it
 #-------------------------------
 [XOLSMOL]
