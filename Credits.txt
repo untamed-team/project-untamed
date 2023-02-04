@@ -21,6 +21,26 @@ stygma
 
 
 
+
+Battle Animations
+----
+ardicoozer
+BellBlitzKing
+DarryBD99
+Reborn team
+riddlemeree
+StCooler
+WolfPP
+
+
+
+
+
+
+
+
+
+
 Graphics
 --------
 Tilesets:
