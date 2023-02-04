@@ -101,13 +101,13 @@ BaseStats = 75,60,75,82,105,105
 #-------------------------------
 [FURFROU,8]
 FormName = Kabuki Trim
-Types = NORMAL,FLYING
+Types = NORMAL,FIGHTING
 Abilities = GUTS
 BaseStats = 75,105,85,102,65,85
 #-------------------------------
 [FURFROU,9]
 FormName = Pharaoh Trim
-Types = NORMAL,FIGHTING
+Types = NORMAL,GHOST
 Abilities = MOLDBREAKER
 BaseStats = 75,60,85,92,105,75
 #-------------------------------
