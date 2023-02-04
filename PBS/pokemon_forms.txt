@@ -1,115 +1,4 @@
 # See the documentation on the wiki to learn how to edit this file.
-#---------------------------------------------------------------------------------------------
-# MEGAS
-#---------------------------------------------------------------------------------------------
-[NOCTAVISPA,1]
-FormName = Mega Noctavispa
-MegaStone = NOCTAVISPITE
-BaseStats = 65,141,78,103,139,69
-Abilities = DARKAURA
-Height = 0.9
-Weight = 18.6
-#-------------------------------
-[GOHILA,1]
-FormName = Mega Gohila
-MegaStone = GOHILITE
-Type1 = POISON
-Type2 = ELECTRIC
-BaseStats = 97,63,71,111,145,113
-Abilities = CORROSION
-Height = 0.2
-Weight = 3.5
-#-------------------------------
-[ATELANGLER,1]
-FormName = Mega Atelangler
-MegaStone = ATELANGLITE
-BaseStats = 95,133,106,109,58,85
-Abilities = BAITEDLINE
-Height = 1.9
-Weight = 46.7
-#-------------------------------
-[CHIXULOB,1]
-FormName = Mega Chixulob
-MegaStone = CHIXULOBYTE
-BaseStats = 75,150,90,145,90,75
-Abilities = RECKLESS
-HiddenAbilities = MASSEXTINCTION
-Height = 72.0
-Weight = 3580.0
-#-------------------------------
-[GARDEVOIR,1]
-FormName = Mega Gardevoir
-MegaStone = GARDEVOIRITE
-BaseStats = 68,85,65,100,165,135
-BaseExp = 309
-Abilities = PIXILATE
-Generation = 6
-#-------------------------------
-[GALLADE,1]
-FormName = Mega Gallade
-MegaStone = GALLADITE
-BaseStats = 68,165,95,110,65,115
-BaseExp = 309
-Abilities = BLADEMASTER
-HiddenAbilities = DEFIANT
-Weight = 56.4
-Generation = 6
-#---------------------------------------------------------------------------------------------
-# FORM CHANGES THAT AFFECT STATS
-#---------------------------------------------------------------------------------------------
-[FURFROU,1]
-FormName = Heart Trim
-Types = NORMAL,FAIRY
-Abilities = CUTECHARM
-BaseStats = 75,60,85,92,85,95
-#-------------------------------
-[FURFROU,2]
-FormName = Star Trim
-Types = NORMAL,ICE
-Abilities = SLUSHRUSH
-BaseStats = 75,115,75,112,40,75
-#-------------------------------
-[FURFROU,3]
-FormName = Diamond Trim
-Types = NORMAL,ROCK
-Abilities = ROCKHEAD
-BaseStats = 75,100,95,82,65,95
-#-------------------------------
-[FURFROU,4]
-FormName = Debutante Trim
-Types = NORMAL,ELECTRIC
-Abilities = STATIC
-BaseStats = 75,60,65,122,95,75
-#-------------------------------
-[FURFROU,5]
-FormName = Matron Trim
-Types = NORMAL,PSYCHIC
-Abilities = PRESSURE
-BaseStats = 75,40,75,102,115,95
-#-------------------------------
-[FURFROU,6]
-FormName = Dandy Trim
-Types = NORMAL,GRASS
-Abilities = NATURALCURE
-BaseStats = 75,90,65,82,95,95
-#-------------------------------
-[FURFROU,7]
-FormName = La Reine Trim
-Types = NORMAL,WATER
-Abilities = STORMDRAIN
-BaseStats = 75,60,75,82,105,105
-#-------------------------------
-[FURFROU,8]
-FormName = Kabuki Trim
-Types = NORMAL,FIGHTING
-Abilities = GUTS
-BaseStats = 75,105,85,102,65,85
-#-------------------------------
-[FURFROU,9]
-FormName = Pharaoh Trim
-Types = NORMAL,GHOST
-Abilities = MOLDBREAKER
-BaseStats = 75,60,85,92,105,75
 #-------------------------------
 [PUMPKABOO,1]
 FormName = Average Size
@@ -152,88 +41,6 @@ Weight = 39.0
 WildItemCommon = MIRACLESEED
 WildItemUncommon = MIRACLESEED
 WildItemRare = MIRACLESEED
-#-------------------------------
-[BEAKRAFT,1]
-FormName = Female
-BaseStats = 75,120,95,78,50,60
-Abilities = TECHNICIAN,RECKLESS
-Moves = 0,IRONHEAD,1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,DRILLPECK,32,SWORDSDANCE,38,ROOST,42,NIGHTSLASH,47,BRAVEBIRD,52,LEAFBLADE,57,HEADSMASH,62,MEGAHORN
-TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
-#-------------------------------
-[CROACROZEN,1]
-FormName = Frozen
-Type1 = POISON
-Type2 = ICE
-BaseStats = 95,45,145,25,65,130
-#------------------------------- # 520 bst
-[STRELAVISON,1]
-FormName = School Form
-Type1 = BUG
-Type2 = ELECTRIC
-BaseStats = 62,54,117,22,131,134
-BaseEXP = 217
-Height = 7.7
-Weight = 902.2
-Shape = MultiBody
-#---------------------------------------------------------------------------------------------
-# COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
-#---------------------------------------------------------------------------------------------
-[VIVILLON,1]
-FormName = Continental Pattern
-#-------------------------------
-[VIVILLON,2]
-FormName = Elegant Pattern
-#-------------------------------
-[VIVILLON,3]
-FormName = Garden Pattern
-#-------------------------------
-[VIVILLON,4]
-FormName = High Plains Pattern
-#-------------------------------
-[VIVILLON,5]
-FormName = Icy Snow Pattern
-#-------------------------------
-[VIVILLON,6]
-FormName = Jungle Pattern
-#-------------------------------
-[VIVILLON,7]
-FormName = Marine Pattern
-#-------------------------------
-[VIVILLON,8]
-FormName = Meadow Pattern
-#-------------------------------
-[VIVILLON,9]
-FormName = Modern Pattern
-#-------------------------------
-[VIVILLON,10]
-FormName = Monsoon Pattern
-#-------------------------------
-[VIVILLON,11]
-FormName = Ocean Pattern
-#-------------------------------
-[VIVILLON,12]
-FormName = Polar Pattern
-#-------------------------------
-[VIVILLON,13]
-FormName = River Pattern
-#-------------------------------
-[VIVILLON,14]
-FormName = Sandstorm Pattern
-#-------------------------------
-[VIVILLON,15]
-FormName = Savanna Pattern
-#-------------------------------
-[VIVILLON,16]
-FormName = Sun Pattern
-#-------------------------------
-[VIVILLON,17]
-FormName = Tundra Pattern
-#-------------------------------
-[VIVILLON,18]
-FormName = Fancy Pattern
-#-------------------------------
-[VIVILLON,19]
-FormName = Poké Ball Pattern
 #-------------------------------
 [FLABEBE,1]
 FormName = Yellow Flower
@@ -280,4 +87,63 @@ FormName = Blue Flower
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
+#-------------------------------
+[BEAKRAFT,1]
+FormName = Female
+BaseStats = 75,120,95,78,50,60
+Abilities = TECHNICIAN,RECKLESS
+Moves = 0,IRONHEAD,1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,DRILLPECK,32,SWORDSDANCE,38,ROOST,42,NIGHTSLASH,47,BRAVEBIRD,52,LEAFBLADE,57,HEADSMASH,62,MEGAHORN
+TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
+#-------------------------------
+[CROACROZEN,1]
+FormName = Frozen
+Type1 = POISON
+Type2 = ICE
+BaseStats = 95,45,145,25,65,130
+#------------------------------- # 520 bst
+[STRELAVISON,1]
+FormName = School Form
+Type1 = BUG
+Type2 = ELECTRIC
+BaseStats = 62,54,117,22,131,134
+BaseEXP = 217
+Height = 7.7
+Weight = 902.2
+Shape = MultiBody
+Pokedex = 
+#-------------------------------
+[NOCTAVISPA,1]
+FormName = Mega Noctavispa
+MegaStone = NOCTAVISPITE
+BaseStats = 65,141,78,103,139,69
+Abilities = DARKAURA
+Height = 0.9
+Weight = 18.6
+#-------------------------------
+[GOHILA,1]
+FormName = Mega Gohila
+MegaStone = GOHILITE
+Type1 = POISON
+Type2 = ELECTRIC
+BaseStats = 97,63,71,111,145,113
+Abilities = CORROSION
+Height = 0.2
+Weight = 3.5
+#-------------------------------
+[ATELANGLER,1]
+FormName = Mega Atelangler
+MegaStone = ATELANGLITE
+BaseStats = 95,133,106,109,58,85
+Abilities = BAITEDLINE
+Height = 1.9
+Weight = 46.7
+#-------------------------------
+[CHIXULOB,1]
+FormName = Mega Chixulob
+MegaStone = CHIXULOBYTE
+BaseStats = 75,150,90,145,90,75
+Abilities = RECKLESS
+HiddenAbilities = MASSEXTINCTION
+Height = 72.0
+Weight = 3580.0
 #-------------------------------
