@@ -843,15 +843,15 @@ Description = The user torments and enrages the foe, making it incapable of usin
 #-------------------------------
 [ETERNABEAM]
 Name = Eternabeam
-Type = DRAGON
+Type = POISON
 Category = Special
 Power = 160
 Accuracy = 90
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove,CannotMetronome
-Description = This is Eternatus's most powerful attack in its original form. The user can't move on the next turn.
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Pulse
+Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [DRAGONENERGY]
 Name = Dragon Energy
@@ -7002,9 +7002,9 @@ Power = 160
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = AttackAndSkipNextTurn
+FunctionCode = AttackAndSkipNextTurn,Bomb
 Flags = CanProtect,CanMirrorMove
-Description = The user shoots powerful lasers using the power of a prism. The user can't move on the next turn.
+Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [PSYCHOBOOST]
 Name = Psycho Boost
