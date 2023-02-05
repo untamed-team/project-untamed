@@ -165,6 +165,7 @@ FormName = Frozen
 Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,65,130
+Weight = 10.4
 #------------------------------- # 520 bst
 [STRELAVISON,1]
 FormName = School Form
