@@ -3529,7 +3529,7 @@ Height = 2.0
 Weight = 100.0
 Color = Pink
 Shape = Bipedal
-Category = Constructor
+Category = Seraph
 Pokedex = Regiternal’s body is made of strange metal that has yet to have been identified by scientists. It can focus energy from its core into compressed bursts of energy that reduce anything it hits to atoms.
 #-------------------------------
 [MELUMUSE]
