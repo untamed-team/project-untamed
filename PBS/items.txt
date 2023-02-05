@@ -6412,4 +6412,13 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
+Description = An intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
+#-------------------------------
+[CAMPINGGEAR]
+Name = Camping Gear
+NamePlural = Camping Gear
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A set of camping equipment used to start camping.
