@@ -36,13 +36,13 @@ Name = NW house-blue
 [007]   # Library (Yellow)
 Name = Library (Yellow)
 #-------------------------------
-[008]   # SW House (Cafe)
+[008]   # SE House (Cafe)
 Name = Cerigold Cafe
 #-------------------------------
 [009]   # SE house-Purple
 Name = SE house-Purple
 #-------------------------------
-[010]   # SE house-Green
+[010]   # SE house-Cyan
 Name = SE house-Green
 #-------------------------------
 [017]   # Hacienda Garden
@@ -60,6 +60,10 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,19,5
 BattleBack = city
+#-------------------------------
+[024]   # Camp - Grassy
+Name = Camp - Grassy
+Outdoor = true
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
