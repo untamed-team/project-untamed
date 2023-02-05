@@ -17,7 +17,7 @@ Type1 = POISON
 Type2 = ELECTRIC
 BaseStats = 97,63,71,111,145,113
 Abilities = CORROSION
-Height = 0.2
+Height = 0.3
 Weight = 3.5
 #-------------------------------
 [ATELANGLER,1]
