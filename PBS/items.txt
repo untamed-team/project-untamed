@@ -6419,6 +6419,5 @@ Name = Camping Gear
 NamePlural = Camping Gear
 Pocket = 8
 Price = 0
-FieldUse = Direct
 Flags = KeyItem
 Description = A set of camping equipment used to start camping.
