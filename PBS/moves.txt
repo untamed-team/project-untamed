@@ -9085,5 +9085,5 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = HigherDamageInRain
 Flags = CanProtect
-Description = The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain.
+Description = The user attacks by sending a spray of superheated steam towards its target. This move's power is boosted in the rain.
 #-------------------------------
