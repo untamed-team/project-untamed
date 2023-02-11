@@ -475,6 +475,11 @@ Kurotsune
 Easy Mouse System:
 Luka S.J.
 
+Enhanced UI:
+BlueEye007
+Lucidious89
+Poq
+
 Evolve from Party:
 eriedaberrie
 IndianAnimator
@@ -816,3 +821,9 @@ Link       = https://reliccastle.com/resources/648/
 Name       = Auto Healing
 Credits    = Dracarys
 Link       = https://reliccastle.com/resources/1123/
+
+Name         = Enhanced UI
+Version      = 1.0.9
+Essentials   = 20.1
+Website      = https://www.pokecommunity.com/showthread.php?t=478509
+Credits      = Lucidious89, Ball Sprites: Poq and BlueEye007
