@@ -422,6 +422,10 @@ Scripts & Coding
 Advanced Map Transfers:
 Luka S.J.
 
+Advanced Pathfinder
+Blizzard
+khkramer
+
 Advanced Pokédex:
 FL
 
