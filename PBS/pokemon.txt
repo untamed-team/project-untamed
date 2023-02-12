@@ -2018,7 +2018,7 @@ Color = White
 Shape = MultiWinged
 Category = Scale
 Pokedex = Vivillon with many different patterns are found all over the world. These patterns are affected by the climate of their habitat.
-FormName = Archipelago Pattern
+FormName = Sun Pattern
 Generation = 6
 #-------------------------------
 [SPOINK]

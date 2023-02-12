@@ -225,7 +225,7 @@ FormName = Sandstorm Pattern
 FormName = Savanna Pattern
 #-------------------------------
 [VIVILLON,16]
-FormName = Sun Pattern
+FormName = Archipelago Pattern
 #-------------------------------
 [VIVILLON,17]
 FormName = Tundra Pattern
