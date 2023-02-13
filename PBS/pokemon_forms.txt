@@ -36,24 +36,6 @@ Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
 Height = 72.0
 Weight = 3580.0
-#-------------------------------
-[GARDEVOIR,1]
-FormName = Mega Gardevoir
-MegaStone = GARDEVOIRITE
-BaseStats = 68,85,65,100,165,135
-BaseExp = 309
-Abilities = PIXILATE
-Generation = 6
-#-------------------------------
-[GALLADE,1]
-FormName = Mega Gallade
-MegaStone = GALLADITE
-BaseStats = 68,165,95,110,65,115
-BaseExp = 309
-Abilities = BLADEMASTER
-HiddenAbilities = DEFIANT
-Weight = 56.4
-Generation = 6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS
 #---------------------------------------------------------------------------------------------
