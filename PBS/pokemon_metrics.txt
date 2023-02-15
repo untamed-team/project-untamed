@@ -828,12 +828,6 @@ FrontSprite = 0,24
 ShadowX = 0
 ShadowSize = 2
 #-------------------------------
-[BALTOY]
-BackSprite = 0,14
-FrontSprite = 0,10
-ShadowX = 0
-ShadowSize = 1
-#-------------------------------
 [BUNNELBY]
 BackSprite = 0,24
 FrontSprite = 0,20
@@ -852,18 +846,6 @@ FrontSprite = 0,0
 ShadowX = 0
 ShadowSize = 1
 #-------------------------------
-[GALLADE]
-BackSprite = 0,18
-FrontSprite = 0,10
-ShadowX = 0
-ShadowSize = 1
-#-------------------------------
-[GARDEVOIR]
-BackSprite = 0,20
-FrontSprite = 0,0
-ShadowX = 0
-ShadowSize = 2
-#-------------------------------
 [GOGOAT]
 BackSprite = 0,16
 FrontSprite = -3,19
@@ -876,23 +858,11 @@ FrontSprite = 2,15
 ShadowX = 0
 ShadowSize = 2
 #-------------------------------
-[KIRLIA]
-BackSprite = 0,21
-FrontSprite = 0,18
-ShadowX = 0
-ShadowSize = 1
-#-------------------------------
 [MILOTIC]
 BackSprite = 0,10
 FrontSprite = 0,11
 ShadowX = 0
 ShadowSize = 2
-#-------------------------------
-[RALTS]
-BackSprite = 0,27
-FrontSprite = 0,25
-ShadowX = 0
-ShadowSize = 0
 #-------------------------------
 [SCATTERBUG]
 BackSprite = 0,27
