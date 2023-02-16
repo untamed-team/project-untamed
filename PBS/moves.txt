@@ -9089,7 +9089,7 @@ Description = The user attacks by sending a spray of superheated steam towards i
 #-------------------------------
 [QUESOBLAST]
 Name = Queso Blast
-Type = FIRE
+Type = QMARKS
 Category = Physical
 Power = 30
 Accuracy = 100
@@ -9098,5 +9098,5 @@ Target = NearOther
 FunctionCode = HitThreeToFiveTimesBurnTarget
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 15
-Description = Molten cheese slices fly at the target three to five times. It may also burn the target.
+Description = Tacos filled with molten cheese fly at the target 3 to 5 times. It may also burn the target.
 #-------------------------------
