@@ -9100,3 +9100,14 @@ Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 15
 Description = Tacos filled with molten cheese fly at the target 3 to 5 times. It may also burn the target.
 #-------------------------------
+[PREMONITIONMOVE]
+Name = Premonition Dummy
+Type = QMARKS
+Category = Special
+Power = 1
+Accuracy = 100
+TotalPP = 0
+Target = NearOther
+FunctionCode = AttackOneTurnLater
+Description = Move modified and used by Premonition.
+#-------------------------------
