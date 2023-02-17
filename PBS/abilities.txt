@@ -1145,5 +1145,5 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = Sets up a trap that will hit in 1 turn later if the attack is STAB and does damage. Future Sight power is boosted. 
+Description = STAB moves hit again a turn later, boosts Future Sight. 
 #-------------------------------
