@@ -31,11 +31,30 @@ Weight = 46.7
 [CHIXULOB,1]
 FormName = Mega Chixulob
 MegaStone = CHIXULOBYTE
-BaseStats = 75,150,90,145,90,75
+BaseStats = 75,156,98,148,87,71
 Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
 Height = 72.0
 Weight = 3580.0
+#-------------------------------
+[XATU,1]
+FormName = Mega Xatu
+MegaStone = XATUNITE
+Type1 = PSYCHIC
+Type2 = FIRE
+BaseStats = 75,87,71,98,123,126
+Abilities = SOLARPOWER
+HiddenAbilities = PREMONITION
+Height = 1.5
+Weight = 16.7
+#-------------------------------
+[FLYGON,1]
+FormName = Mega Flygon
+MegaStone = FLYGONITE
+BaseStats = 100,130,80,120,130,80
+Abilities = COMPOUNDEYES
+Height = 2.0
+Weight = 81.6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS
 #---------------------------------------------------------------------------------------------
