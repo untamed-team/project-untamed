@@ -2,12 +2,10 @@
 #-------------------------------
 # Veravalles Town (22) - San Cerigold Town (4)
 22,East,0,4,West,59
-# Hacienda Fields (78) - San Cerigold Town (4)
-78,East,35,4,West,0
 # Route 1 (48) - San Cerigold Town (4)
 48,North,0,4,South,0
-# San Cerigold Cemetery (5) - San Cerigold Town (4)
-5,South,1,4,North,0
+# Hacienda Fields (78) - San Cerigold Town (4)
+78,East,35,4,West,0
 # Hacienda Castaneda (79) - San Cerigold Town (4)
 79,East,0,4,West,14
 # Route 2 (26) - San Cerigold Town (4)
@@ -18,16 +16,12 @@
 48,West,19,22,East,0
 # Hacienda Castaneda (79) - Veravalles Town (22)
 79,South,0,22,North,6
-# Route 1 (48) - Hacienda Fields (78)
-48,West,0,78,East,75
-# Hacienda Castaneda (79) - Hacienda Fields (78)
-79,North,0,78,South,26
+# Hacienda Fields (78) - Route 1 (48)
+78,East,75,48,West,0
 # Hacienda Castaneda (79) - Route 1 (48)
 79,East,26,48,West,0
-# Route 2 (26) - San Cerigold Cemetery (5)
-26,North,0,5,South,51
-# Forest (27) - San Cerigold Cemetery (5)
-27,West,6,5,East,0
+# Hacienda Castaneda (79) - Hacienda Fields (78)
+79,North,0,78,South,26
 # Forest (27) - Route 2 (26)
 27,South,5,26,North,0
 # Resort City (28) - Route 2 (26)

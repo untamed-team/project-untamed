@@ -28,6 +28,7 @@ ShowArea = true
 Bicycle = false
 Weather = Marigolds,100
 MapPosition = 0,20,3
+SnapEdges = true
 BattleBack = forest
 #-------------------------------
 [006]   # NW house-Blue
@@ -36,13 +37,13 @@ Name = NW house-blue
 [007]   # Library (Yellow)
 Name = Library (Yellow)
 #-------------------------------
-[008]   # SE House (Cafe)
+[008]   # SW House (Cafe)
 Name = Cerigold Cafe
 #-------------------------------
 [009]   # SE house-Purple
 Name = SE house-Purple
 #-------------------------------
-[010]   # SE house-Cyan
+[010]   # SE house-Green
 Name = SE house-Green
 #-------------------------------
 [017]   # Hacienda Garden
