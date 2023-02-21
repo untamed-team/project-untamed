@@ -8914,12 +8914,11 @@ Type = ROCK
 Category = Special
 Power = 110
 Accuracy = 80
-TotalPP = 20
+TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = None
 Flags = CanProtect
-EffectChance = 10
 Description = The user attacks its target with a hail of glittering crystals.
 #-------------------------------
 [FORGEBREATH]
