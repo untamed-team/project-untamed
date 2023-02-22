@@ -2689,7 +2689,11 @@ Habitat = Forest
 Category = Prim
 Pokedex = Rather than keeping a permanent lair, it habitually seeks comfortable spots and sleeps there. It is nocturnal and becomes active at dusk.
 Generation = 3
-#-------------------------------
+#----------------------------------------------------------------#
+#----------------------------------------------------------------#
+#						  END OF DEMO 02						 #
+#----------------------------------------------------------------#
+#----------------------------------------------------------------#
 [GOHILA]
 Name = Gohila
 Types = POISON
