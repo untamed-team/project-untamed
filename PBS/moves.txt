@@ -9016,7 +9016,7 @@ Priority = 0
 FunctionCode = TitanWrath
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
-Description = The damage is based on the user's highest attacking stat. The move's type is set by the user's type.
+Description = The damage is based on the user's highest plain, non-HP stat. The move's type is set by the user's type.
 #-------------------------------
 [SIRENSONG]
 Name = Siren Song
