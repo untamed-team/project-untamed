@@ -548,11 +548,11 @@ Description = Reduces damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
-Description = Powers up Attack when poisoned, and eliminates poison damage.
+Description = Boosts Atk & negates poison damage when poisoned.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost
-Description = Powers up Special Attack when burned, and eliminates burn damage.
+Description = Boosts Sp. Atk and negates burn damage when burned.
 #-------------------------------
 [HARVEST]
 Name = Harvest
@@ -564,7 +564,7 @@ Description = Anticipates an ally's attack and dodges it.
 #-------------------------------
 [MOODY]
 Name = Moody
-Description = Sharply raises one stat every turn, and resets the previous boost.
+Description = Sharply raises one stat, resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
@@ -1097,11 +1097,11 @@ Description = Boosts the power of Grass, Rock, and Steel-type allies.
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster
-Description = Boosts the power and critical hit ratio of blade moves.
+Description = Boosts power and critical-hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises the Pokémon’s speed after making a direct attack up to 2 times.
+Description = Raises Speed up to 2x after making a direct hit.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
@@ -1145,5 +1145,5 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = mega xatu
+Description = STAB moves hit again a turn later, boosts Future Sight. 
 #-------------------------------

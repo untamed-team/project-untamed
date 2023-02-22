@@ -28,6 +28,7 @@ ShowArea = true
 Bicycle = false
 Weather = Marigolds,100
 MapPosition = 0,20,3
+SnapEdges = true
 BattleBack = forest
 #-------------------------------
 [006]   # NW house-Blue
@@ -60,6 +61,10 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,19,5
 BattleBack = city
+#-------------------------------
+[024]   # Camp - Grassy
+Name = Camp - Grassy
+Outdoor = true
 #-------------------------------
 [048]   # Route 1
 Name = Route 1

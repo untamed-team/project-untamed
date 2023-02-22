@@ -2,7 +2,7 @@
 
 ====================
 
-Mazah development team:
+Main Development Team:
 BlueLightning
 Chespin_Craft
 Gardenette
@@ -12,6 +12,26 @@ Low
 SpaceWestern
 Spork
 stygma
+
+
+
+
+
+
+
+
+
+
+Battle Animations
+----
+ardicoozer
+BellBlitzKing
+DarryBD99
+Reborn team
+riddlemeree
+StCooler
+WolfPP
+
 
 
 
@@ -402,6 +422,10 @@ Scripts & Coding
 Advanced Map Transfers:
 Luka S.J.
 
+Advanced Pathfinder
+Blizzard
+khkramer
+
 Advanced Pokédex:
 FL
 
@@ -455,6 +479,11 @@ Kurotsune
 Easy Mouse System:
 Luka S.J.
 
+Enhanced UI:
+BlueEye007
+Lucidious89
+Poq
+
 Evolve from Party:
 eriedaberrie
 IndianAnimator
@@ -492,6 +521,7 @@ Marin
 
 Modern Quest System + UI:
 derFischae
+Gardenette
 Marin
 mej71
 SpaceWestern
@@ -530,6 +560,10 @@ ThatWelshOne_
 Vendily
 Zaffre
 
+No Auto Evolve:
+Gardenette
+TimeAxis
+
 Overworld Shadows EX:
 Golisopod User
 Marin
@@ -551,6 +585,9 @@ Low
 
 Relearner from Party:
 Marin
+
+Save File Calls
+TechSkylander1518
 
 Set the Controls Screen:
 FL
@@ -796,3 +833,19 @@ Link       = https://reliccastle.com/resources/648/
 Name       = Auto Healing
 Credits    = Dracarys
 Link       = https://reliccastle.com/resources/1123/
+
+Name         = Enhanced UI
+Version      = 1.0.9
+Essentials   = 20.1
+Website      = https://www.pokecommunity.com/showthread.php?t=478509
+Credits      = Lucidious89, Ball Sprites: Poq and BlueEye007
+
+Name      = No Auto Evolve
+Version    = 1.0.0
+Essentials = 20.1
+Credits   = TimeAxis, Gardenette
+
+Name       = Save File Calls
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/808/
+Credits    = TechSkylander1518
