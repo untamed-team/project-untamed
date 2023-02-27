@@ -23,6 +23,8 @@ Weight = 3.5
 [ATELANGLER,1]
 FormName = Mega Atelangler
 MegaStone = ATELANGLITE
+Type1 = NORMAL
+Type2 = WATER
 BaseStats = 95,133,106,109,58,85
 Abilities = BAITEDLINE
 Height = 1.9

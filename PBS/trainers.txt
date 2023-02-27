@@ -93,12 +93,12 @@ Pokemon = PHANTUMP,10
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,14
-    Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
+    Moves = DISARMINGVOICE,WILLOWISP,ASTONISH,BUBBLE
     AbilityIndex = 2
 	Ace = true
-Pokemon = PACUNA,12
-    Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
-    AbilityIndex = 2
+Pokemon = TECHUPPI,12
+    Moves = HOWL,LICK,BITE,THUNDERFANG
+    AbilityIndex = 1
 Pokemon = M_ROSELIA,12
     Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
@@ -106,7 +106,7 @@ Pokemon = M_ROSELIA,12
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,16
-    Moves = DISARMINGVOICE,WILLOWISP,PERISHSONG
+    Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
     AbilityIndex = 2
     IV = 0,0,0,0,0,0
     EV = 10,10,10,10,20,10
@@ -117,6 +117,7 @@ Pokemon = PACUNA,17
 Pokemon = M_ROSELIA,15
     Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
     AbilityIndex = 0
+    EV = 10,10,10,10,20,10
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
