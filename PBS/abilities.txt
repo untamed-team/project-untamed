@@ -1121,7 +1121,7 @@ Description = Using the same move in succession raises its power.
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
-Description = Fully heals the next ally after fainting. tako
+Description = Fully heals the next ally after fainting.
 #-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit
