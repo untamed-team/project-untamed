@@ -6427,5 +6427,6 @@ Name = Exp. All
 NamePlural = Exp. Alls
 Pocket = 8
 Price = 0
+FieldUse = Direct
 Flags = KeyItem
-Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it for toggling this function.
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
