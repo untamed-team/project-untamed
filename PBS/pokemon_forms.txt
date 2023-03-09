@@ -285,3 +285,14 @@ FormName = Blue Flower
 [FLORGES,4]
 FormName = White Flower
 #-------------------------------
+#-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 50,85,125,20,85,115
+BaseExp = 168
+Abilities = MAGICBOUNCE
+HiddenAbilities = MAGICBOUNCE
+Weight = 161.0
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly and is vulnerable to attack from behind.
+Generation = 6
