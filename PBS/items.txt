@@ -124,6 +124,15 @@ FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_30
 Description = A peculiar stone that makes certain species of Pokémon evolve. It has a leaf pattern.
 #-------------------------------
+[ICESTONE]
+Name = Ice Stone
+NamePlural = Ice Stones
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A peculiar stone that makes certain species of Pokémon evolve. It has an unmistakable snowflake pattern.
+#-------------------------------
 [MOONSTONE]
 Name = Moon Stone
 NamePlural = Moon Stones
