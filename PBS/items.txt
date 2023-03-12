@@ -6334,9 +6334,9 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Atelangler hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[CHIXULOBYTE]
-Name = Chixulobyte
-NamePlural = Chixulobytes
+[CHIXULITE]
+Name = Chixulite
+NamePlural = Chixulites
 Pocket = 1
 Price = 0
 Flags = Fling_30
