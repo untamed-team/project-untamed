@@ -32,7 +32,7 @@ Weight = 46.7
 #-------------------------------
 [CHIXULOB,1]
 FormName = Mega Chixulob
-MegaStone = CHIXULOBYTE
+MegaStone = CHIXULITE
 BaseStats = 75,156,98,148,87,71
 Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
