@@ -286,7 +286,7 @@ Habitat = Grassland
 Category = Nibbling
 Pokedex = Pacuna have an insatiable appetite that causes the decimation of farmland. Their reflective fur is capable of blinding predators for a short period of time.
 Generation = 9
-Evolutions = LAGUNA,Level,20
+Evolutions = LAGUNA,LevelNight,20
 #-------------------------------
 [LAGUNA]
 Name = Laguna
@@ -937,7 +937,7 @@ Shape = Head
 Category = Jumping Bean
 Pokedex = The shell that protects Cafécaracha is packed with caffeine. The resulting hyperactivity causes them to ricochet off surfaces like tiny bullets.
 Generation = 9
-Evolutions = FLITJITTER,Level,21
+Evolutions = FLITJITTER,Level,29
 #-------------------------------
 [FLITJITTER]
 Name = Flitjitter
@@ -3990,7 +3990,7 @@ Shape = Insectoid
 Category = Boxing
 Pokedex = Its hard pincers are well suited to both offense and defense. Fights between two Crabrawler are like boxing matches.
 WildItemUncommon = SOFTSAND
-Evolutions = CRUSTANG,Location,999
+Evolutions = CRUSTANG,Item,METALCOAT
 #-------------------------------
 [CRUSTANG]
 Name = Crustang
