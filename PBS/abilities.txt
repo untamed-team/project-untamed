@@ -1105,7 +1105,7 @@ Description = Raises Speed up to 2x after making a direct hit.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
-Description = Becomes frozen when exposed to hail or Icy Rock.
+Description = Changes form in Hail. Holding an Icy Rock summons Hail.
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
