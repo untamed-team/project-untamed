@@ -3349,7 +3349,7 @@ Pokedex = Millions of years ago, Geocoprion used its vertical teeth to slice thr
 #-------------------------------
 [CHIXULOB]
 Name = Chixulob
-Types = FIRE,ROCK
+Types = ROCK,FIRE
 BaseStats = 75,125,50,140,85,50
 GenderRatio = Genderless
 GrowthRate = Slow
