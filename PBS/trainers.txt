@@ -162,3 +162,4 @@ Pokemon = LITWICK,10
 LoseText = sex
 Pokemon = NOCTAVISPA,10
     MEM = true
+	AAM = true
