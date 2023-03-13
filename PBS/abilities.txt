@@ -236,7 +236,7 @@ Description = Ups Sp. Atk if another Pokémon has Plus or Minus.
 #-------------------------------
 [FORECAST]
 Name = Forecast
-Description = Summons a weather, depending of its item.
+Description = Summons a weather, depending on its item.
 #-------------------------------
 [STICKYHOLD]
 Name = Sticky Hold
@@ -768,7 +768,7 @@ Description = Alters weather to remove Flying-type's weaknesses.
 #-------------------------------
 [STAMINA]
 Name = Stamina
-Description = Boosts Defense when hit by an direct attack.
+Description = Boosts Defense when hit by a direct attack.
 #-------------------------------
 [WIMPOUT]
 Name = Wimp Out
@@ -1105,7 +1105,7 @@ Description = Raises Speed up to 2x after making a direct hit.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
-Description = Becomes frozen when exposed to hail or Icy Rock.
+Description = Changes form in Hail. Holding an Icy Rock summons Hail.
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw

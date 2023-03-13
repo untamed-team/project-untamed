@@ -4,10 +4,6 @@
 78,East,35,4,West,0
 # Route 2 (26) - San Cerigold Town (4)
 26,West,0,4,East,0
-# Forest (27) - San Cerigold Town (4)
-27,South,0,4,North,45
-# Forest (27) - Route 2 (26)
-27,South,5,26,North,0
 # Resort City (28) - Route 2 (26)
 28,West,35,26,East,0
 # Veravalles Town (22) - Route 1 (48)
