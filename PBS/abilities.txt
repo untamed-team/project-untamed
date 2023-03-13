@@ -1085,7 +1085,7 @@ Description = Lowers the foe's Sp. Atk. stat.
 #-------------------------------
 [MICROSTRIKE]
 Name = Micro Strike
-Description = Powers up moves when lighter than the opponent.
+Description = Boosts damage when lighter than the opponent.
 #-------------------------------
 [BAITEDLINE]
 Name = Baited Line
