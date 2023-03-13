@@ -156,3 +156,9 @@ LoseText = ..Is that a no?
 Pokemon = DUSKULL,11
 Pokemon = LITWICK,10
     AbilityIndex = 0
+
+#-------------------------------
+[HEXMANIAC,zinnia,1]
+LoseText = sex
+Pokemon = NOCTAVISPA,10
+    MEM = true
