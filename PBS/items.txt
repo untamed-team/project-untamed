@@ -124,6 +124,15 @@ FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_30
 Description = A peculiar stone that makes certain species of Pokémon evolve. It has a leaf pattern.
 #-------------------------------
+[ICESTONE]
+Name = Ice Stone
+NamePlural = Ice Stones
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A peculiar stone that makes certain species of Pokémon evolve. It has an unmistakable snowflake pattern.
+#-------------------------------
 [MOONSTONE]
 Name = Moon Stone
 NamePlural = Moon Stones
@@ -168,15 +177,6 @@ Price = 3000
 FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_80
 Description = A peculiar stone that makes certain species of Pokémon evolve. It shines with a dazzling light.
-#-------------------------------
-[ICESTONE]
-Name = Ice Stone
-NamePlural = Ice Stones
-Pocket = 1
-Price = 3000
-FieldUse = OnPokemon
-Flags = EvolutionStone,Fling_30
-Description = A peculiar stone that makes certain species of Pokémon evolve. It has a snowflake pattern.
 #-------------------------------
 [SWEETAPPLE]
 Name = Sweet Apple
@@ -6334,9 +6334,9 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Atelangler hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[CHIXULOBYTE]
-Name = Chixulobyte
-NamePlural = Chixulobytes
+[CHIXULITE]
+Name = Chixulite
+NamePlural = Chixulites
 Pocket = 1
 Price = 0
 Flags = Fling_30

@@ -447,7 +447,7 @@ Description = The user pretends to bow its head, but then it stabs the target wi
 #-------------------------------
 [JAWLOCK]
 Name = Jaw Lock
-Type = FIGHTING
+Type = DARK
 Category = Physical
 Power = 90
 Accuracy = 100
@@ -8941,7 +8941,7 @@ Type = NORMAL
 Category = Status
 Power = 0
 Accuracy = 0
-TotalPP = 40
+TotalPP = 20
 Target = UserAndAllies
 Priority = 0
 FunctionCode = RaiseUserSpAtk1
