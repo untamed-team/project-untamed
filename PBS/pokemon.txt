@@ -2169,7 +2169,7 @@ Weight = 4.2
 Color = Yellow
 Shape = BipedalTail
 Category = Scratch Cat
-Pokedex = Meowth within the Mazah region are more commonly found in the wild than as domesticated pets. They live in colonies of up to fifty individuals, and defend their territory with vicious ferocity.
+Pokedex = Meowth in the Mazah region are more commonly found in the wild than as pets. They live in colonies of up to fifty, and viciously defend their territory.
 WildItemUncommon = QUICKCLAW
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
@@ -2194,7 +2194,7 @@ Weight = 36.3
 Color = Yellow
 Shape = Quadruped
 Category = Classy Cat
-Pokedex = When a Meowth in the Mazah region evolves into Persian, it will leave its colony. They can easily outmatch a colony of Meowth with their superior speed, strength, and cunning.
+Pokedex = When a Meowth evolves into Persian, it will leave its colony. It can easily outmatch a colony of Meowth with its superior speed, strength, and cunning.
 WildItemUncommon = QUICKCLAW
 #-------------------------------
 [BOWLLO]
@@ -2219,7 +2219,7 @@ Weight = 37.7
 Color = Red
 Shape = Bipedal
 Category = Little Armored
-Pokedex = Eager trainers who find a Poké Ball in the wilds of the Mazah region may quickly realize that they've found a curled up Bowllo. They’re capable of bouncing several feet up in the air, and stun opponents when they crash down.
+Pokedex = If you find a Poké Ball out in the wilderness, it may actually be a curled up Bowllo. They can bounce several feet in the air, stunning opponents when they land.
 Evolutions = DUPEDILLO,Level,42
 #-------------------------------
 [DUPEDILLO]
@@ -2243,7 +2243,7 @@ Weight = 120.0
 Color = Blue
 Shape = Bipedal
 Category = Decoy Ball
-Pokedex = Due to looking similar in color and appearance to a Great Ball, Dupedillo are subjected to unwanted attention, making them very grumpy. Their shells are nearly impenetrable.
+Pokedex = Due to the resemblance to a Great Ball, Dupedillo are subjected to unwanted attention, making them very grumpy. Their shells are nearly impenetrable.
 #-------------------------------
 [CROMEN]
 Name = Cromen
@@ -3274,7 +3274,7 @@ Weight = 86.2
 Color = Brown
 Shape = Quadruped
 Category = Preservation
-Pokedex = In attempts to reintroduce extinct species into the Mazah region, Elegoop was revived from fur remains found in tar pits. Due to the resurrection process, they are thought to behave differently from their ancestors.
+Pokedex = Previously extinct, Elegoop was revived from fur remains found in tar pits. Due to the process, its DNA became mixed with the mineral composition of the tar.
 Evolutions = TARTUSK,Level,32
 #-------------------------------
 [TARTUSK]
@@ -3298,7 +3298,7 @@ Weight = 1061.9
 Color = Brown
 Shape = Bipedal
 Category = Preservation
-Pokedex = Once thought to be some of the largest Pokémon, Tartusk have lost most of their size due to their bodies being replaced by minerals. Their newfound control over tar works both offensively and defensively.
+Pokedex = Once thought to be one of the largest Pokémon, much of Tartusk's body mass has been replaced by minerals. It uses its control of tar in battle to trap foes.
 #-------------------------------
 [CHARCOPAL]
 Name = Charcopal
@@ -3322,7 +3322,7 @@ Weight = 15.9
 Color = Gray
 Shape = Finned
 Category = Ancient Tooth
-Pokedex = The remains of a Charcopal sat on display for many years before being identified as an ancient Pokémon. It uses the large stone on its back to channel unearthly powers.
+Pokedex = For many years, fossilized Charcopal remains were misidentified as precious stones. It uses the large stone on its back to channel strange, unearthly powers.
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
 [GEOCOPRION]
@@ -3346,7 +3346,7 @@ Weight = 406.0
 Color = Gray
 Shape = Finned
 Category = Whorl Tooth
-Pokedex = Millions of years ago, Geocoprion used its vertical teeth to slice through its prey. Revived in modern times, it now uses its lower jaw to charge up and blast energy from the crystal formation on its head.
+Pokedex = Eons ago, Geocoprion used its unique teeth like a saw. Revived today, it spins its jaw to charge blasts of energy it fires from the crystals on its snout.
 #-------------------------------
 [CHIXULOB]
 Name = Chixulob
@@ -3370,7 +3370,7 @@ Weight = 459.9
 Color = Gray
 Shape = MultiBody
 Category = Impactor
-Pokedex = Long before humans, an asteroid slammed into Earth’s surface, shattering into many pieces. If enough shards from this event are gathered today, they can be revived into the alien Pokémon known as Chixulob.
+Pokedex = Long before humans, a huge meteorite struck Earth, splintering into many pieces. If enough of these pieces are gathered, they can be revived into a Chixulob.
 #-------------------------------
 [CHISPEKA]
 Name = Chispeka
@@ -3418,7 +3418,7 @@ Weight = 912.6
 Color = Yellow
 Shape = Head
 Category = Calendar
-Pokedex = These rare Pokémon reside within artifacts carved in ancient times. Due to Rotatona’s mischievous nature, the study of these artifacts is incredibly difficult for scientists.
+Pokedex = These rare Pokémon reside within ancient artifacts. Due to their mischievous nature, the study of these artifacts is incredibly difficult for scientists.
 #-------------------------------
 [DUNSPARCE]
 Name = Dunsparce
@@ -3466,7 +3466,7 @@ Weight = 10.4
 Color = Yellow
 Shape = Serpentine
 Category = Enigma
-Pokedex = The transition from Dunsparce to Dunsended baffles scientists of the Mazah region. It is incredibly hard to study due to its ability to soar overhead without making any noise.
+Pokedex = This incredibly rare evolution to Dunsparce has long baffled scientists. Despite its massive size, it can soar overhead silently, making study difficult.
 #-------------------------------
 [M_MUDBRAY]
 Name = Mudbray
@@ -3490,7 +3490,7 @@ Weight = 16.4
 Color = Yellow
 Shape = Quadruped
 Category = Fiesta
-Pokedex = In the Mazah region, Mudbray are treated with great respect, being loyal companions and bringing joy to trainers. They’re capable of producing a substance that can heal injuries.
+Pokedex = In the Mazah region, Mudbray are greatly respected, being loyal companions who bring joy to trainers. They produce a bright substance that can heal injuries.
 WildItemUncommon = LIGHTCLAY
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
@@ -3515,7 +3515,7 @@ Weight = 35.6
 Color = Blue
 Shape = Quadruped
 Category = Fiesta
-Pokedex = Theory states that when a Mudbray is exposed to enough human joy, it will evolve into Mudsmaché. They form incredible bonds with trainers and even stay within the trainer’s family for generations.
+Pokedex = Mudbray are theorized to evolve into Mudsmaché when exposed to enough human joy. They form incredible bonds and often stay within families for many generations.
 WildItemUncommon = LIGHTCLAY
 #-------------------------------
 [M_NOSEPASS]
