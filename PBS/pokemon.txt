@@ -2121,7 +2121,7 @@ Weight = 3.4
 Color = Red
 Shape = HeadBase
 Category = Bagworm
-Pokedex = Notoriously rebellious, stubborn and often ignore orders. They are released more often than most which makes them more rebellious to the common trainer.
+Pokedex = Burmy in the Mazah region adorn themselves with carefully trimmed scraps of material such as paper and fabric. They are celebrated for their intricade handiwork.
 Evolutions = PAPELLAUDE,HappinessLevel,26
 #-------------------------------
 [PAPELLAUDE]
@@ -2144,7 +2144,7 @@ Weight = 23.1
 Color = White
 Shape = MultiWinged
 Category = Confetti
-Pokedex = Due to the lack of interest from trainers in their pre-evolution, these Pokemon are hard to come by. Many Mazian residents call it a brat.
+Pokedex = These Pokémon are obsessed with the beauty of their work, and in pursuit of further praise and attention from people, Papellaude continue to modify their cloaks.
 WildItemUncommon = SILVERPOWDER
 #-------------------------------
 [M_MEOWTH]
@@ -2169,7 +2169,7 @@ Weight = 4.2
 Color = Yellow
 Shape = BipedalTail
 Category = Scratch Cat
-Pokedex = Meowth within the Mazah region are more commonly found in the wild than as domesticated pets. They live in colonies of up to fifty individuals, and defend their territory with vicious ferocity.
+Pokedex = Meowth in the Mazah region are more commonly found in the wild than as pets. They live in colonies of up to fifty, and viciously defend their territory.
 WildItemUncommon = QUICKCLAW
 Evolutions = M_PERSIAN,Level,28
 #-------------------------------
@@ -2194,7 +2194,7 @@ Weight = 36.3
 Color = Yellow
 Shape = Quadruped
 Category = Classy Cat
-Pokedex = When a Meowth in the Mazah region evolves into Persian, it will leave its colony. They can easily outmatch a colony of Meowth with their superior speed, strength, and cunning.
+Pokedex = When a Meowth evolves into Persian, it will leave its colony. It can easily outmatch a colony of Meowth with its superior speed, strength, and cunning.
 WildItemUncommon = QUICKCLAW
 #-------------------------------
 [BOWLLO]
@@ -2219,7 +2219,7 @@ Weight = 37.7
 Color = Red
 Shape = Bipedal
 Category = Little Armored
-Pokedex = Eager trainers who find a Poké Ball in the wilds of the Mazah region may quickly realize that they've found a curled up Bowllo. They’re capable of bouncing several feet up in the air, and stun opponents when they crash down.
+Pokedex = If you find a Poké Ball out in the wilderness, it may actually be a curled up Bowllo. They can bounce several feet in the air, stunning opponents when they land.
 Evolutions = DUPEDILLO,Level,42
 #-------------------------------
 [DUPEDILLO]
@@ -2243,7 +2243,7 @@ Weight = 120.0
 Color = Blue
 Shape = Bipedal
 Category = Decoy Ball
-Pokedex = Due to looking similar in color and appearance to a Great Ball, Dupedillo are subjected to unwanted attention, making them very grumpy. Their shells are nearly impenetrable.
+Pokedex = Due to the resemblance to a Great Ball, Dupedillo are subjected to unwanted attention, making them very grumpy. Their shells are nearly impenetrable.
 #-------------------------------
 [CROMEN]
 Name = Cromen
@@ -2267,7 +2267,7 @@ Weight = 1.6
 Color = Black
 Shape = Winged
 Category = Corvid
-Pokedex = smol birb, coot
+Pokedex = Cromen have a strong affinity for shiny objects and snatch any valuables left unattended. They always carry their favourite piece around in their beak
 Evolutions = CORVOYANT,Level,22
 #-------------------------------
 [CORVOYANT]
@@ -2291,7 +2291,7 @@ Weight = 5.3
 Color = Black
 Shape = Winged
 Category = Collector
-Pokedex = aaaaaaaaaaaaaaaaaaaaaa
+Pokedex = Corvoyant adorn themselves with precious stones to amplify their psychic powers. If one gets damaged, they will avoid conflict until it can be replaced.
 Evolutions = CAWMADAME,Level,33
 #-------------------------------
 [CAWMADAME]
@@ -2315,7 +2315,7 @@ Weight = 15.4
 Color = Black
 Shape = Winged
 Category = Illustrious
-Pokedex = i hate snobs.
+Pokedex = Cawmadame are popular amongst the wealthy in Mazah. They can foresee attacks in battle, but avoid conflict, as breaking their gems results in terrible visions.
 #-------------------------------
 [EEVEE]
 Name = Eevee
@@ -2743,7 +2743,7 @@ Color = Blue
 Shape = Bipedal
 Habitat = Urban
 Category = Fisher
-Pokedex = Breezy
+Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokemon in Mazah. 
 #-------------------------------
 [BEAKPEEP]
 Name = Beakpeep
@@ -2768,7 +2768,7 @@ Color = Yellow
 Shape = Winged
 Habitat = Urban
 Category = Helper
-Pokedex = Breezy
+Pokedex = Beakpeep use part of their eggshell as a helmet to protect them from falling debris. They mimic the actions of their parents or trainers in an attempt to help.
 Evolutions = BEAKRAFT,Level,31
 #-------------------------------
 [BEAKRAFT]
@@ -2794,7 +2794,7 @@ Color = Yellow
 Shape = Winged
 Habitat = Urban
 Category = Builder
-Pokedex = Breezy
+Pokedex = Beakraft couples pair for life, working together to construct elaborate nests. Their steel-hard beaks differ in shape and function between males and females.
 #-------------------------------
 [MACRABRA]
 Name = Macrabra
@@ -2819,7 +2819,7 @@ Color = Black
 Shape = Insectoid
 Habitat = Urban
 Category = Screeching
-Pokedex = Breezy
+Pokedex = Inside the shell of a Macrabra is an intricate system of chambers it uses to hide. These chambers resonate sound in a way similar to human screaming.
 #-------------------------------
 [XIBALBAT]
 Name = Xibalbat
@@ -2843,8 +2843,8 @@ Weight = 37.7
 Color = Yellow
 Shape = HeadArms
 Habitat = Urban
-Category = Idol?
-Pokedex = Breezy
+Category = Idol
+Pokedex = Xibalbat is a rare and incredibly dangerous Pokemon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
 #-------------------------------
 [TROPIUS]
 Name = Tropius
@@ -2891,7 +2891,7 @@ Weight = 2500.2
 Color = Green
 Shape = Quadruped
 Category = Fruit Bunch
-Pokedex = Breezy
+Pokedex = The tallest of all known Pokémon, Titanotrop are so large that they can only sustain themselves through a combination of high-calorie fruits and photosynthesis.
 #-------------------------------
 [BANAGNAW]
 Name = Banagnaw
@@ -2915,7 +2915,7 @@ Weight = 5.4
 Color = Yellow
 Shape = Finned
 Category = Peckish
-Pokedex = banana fish
+Pokedex = Banagnaw will eat nearly anything, but they're partial to sweets dropped into the sea by humans. Trainers struggle to catch them due to their slippery skin.
 Evolutions = POTASSOPOD,Potassopod,26,NANAHI,Level,22
 #-------------------------------
 [NANAHI]
@@ -2939,7 +2939,7 @@ Weight = 19.1
 Color = Yellow
 Shape = Finned
 Category = Golden Skin
-Pokedex = banana ...dolphin?
+Pokedex = Sought after as a prize sportfish, Nanahi have learned to secrete a slick fluid to remove themselves from the sugar-baited lines of local fishermen
 #-------------------------------
 [POTASSOPOD]
 Name = Potassopod
@@ -2962,7 +2962,7 @@ Weight = 5.9
 Color = Brown
 Shape = Multiped
 Category = Rotten
-Pokedex = banana octopus, oh hey its like octilerry but actually makes sense
+Pokedex = Lethargic and sedentary, Potassopod evolve from Banagnaw who's diet consists only of sweets. They produce a sugary compound acidic enough to melt flesh.
 #-------------------------------
 [SUCHIP]
 Name = Suchip
@@ -2986,7 +2986,7 @@ Weight = 10.4
 Color = Green
 Shape = Quadruped
 Category = Hunger
-Pokedex = This is an ancient Pokémon, revived in modern times. It has a violent disposition, and it'll tear apart anything it gets between its hefty jaws.
+Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokemon away from their homes, as they habitually chew inedible objects.
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [SUCHOBILE]
@@ -3010,7 +3010,7 @@ Weight = 305.3
 Color = Purple
 Shape = Quadruped
 Category = Forbearance
-Pokedex = This Pokémon is from about 100,000,000 years ago. It has the presence of a king, vicious but magnificent.
+Pokedex = Incredibly patient, Suchobile sometimes go months without eating. When they find the perfect prey, the jaw on their back clamps down, swallowing them whole.
 #-------------------------------
 [FRIZZARD]
 Name = Frizzard
@@ -3034,7 +3034,7 @@ Weight = 71.2
 Color = Blue
 Shape = BipedalTail
 Category = Freon
-Pokedex = This Pokémon is from about 100,000,000 years ago. It has the presence of a king, vicious but magnificent.
+Pokedex =  Adapting to the hot days of Mazah's deserts, Frizzard's body temperature is incredibly cool. It attacks by expelling super-cooled air through its arms.
 #-------------------------------
 [ZARCOIL]
 Name = Zarcoil
@@ -3058,7 +3058,7 @@ Weight = 59.9
 Color = Red
 Shape = BipedalTail
 Category = Radiator
-Pokedex = This Pokémon is from about 100,000,000 years ago. It has the presence of a king, vicious but magnificent.
+Pokedex = Adapting to the frigid nights of Mazah's deserts, Zarcoil's body temperature is incredibly hot. It attacks by expelling super-heated air through its arms.
 #-------------------------------
 [BURBRAWL]
 Name = Burbrawl
@@ -3081,7 +3081,7 @@ Weight = 0.1
 Color = Blue
 Shape = Winged
 Category = Hyperactive
-Pokedex = pseudo wannabe 1, this movepool is only beeg because of that wannabe btw
+Pokedex = Burbrawl is a well-known symbol of tenacity in the Mazah region. Despite their tiny size, they give their all in battle, landing blows with blinding speed.
 Evolutions = HUMBEAT,Level,30
 #-------------------------------
 [HUMBEAT]
@@ -3104,7 +3104,7 @@ Weight = 1.6
 Color = Blue
 Shape = Winged
 Category = Exhaustion
-Pokedex = pseudo wannabe 2
+Pokedex = Humbeat are lethargic and slow. They drag their large, wings along the ground, damaging their feathers and lowering the chance they will ever fly again.
 Evolutions = HUMMIPUMMEL,Level,50
 #-------------------------------
 [HUMMIPUMMEL]
@@ -3127,7 +3127,7 @@ Weight = 1.9
 Color = Green
 Shape = Winged
 Category = Swift Strike
-Pokedex = pseudo wannabe 3, would make you fighting / flying but people would bitch about it
+Pokedex = When it evolves, a supernatural energy surges through it. It regains the energy of Burbrawl but with the discipline to focus that energy into decisive strikes.
 #-------------------------------
 [XOLSMOL]
 Name = Xolsmol
@@ -3151,7 +3151,7 @@ Weight = 10.9
 Color = Pink
 Shape = Quadruped
 Category = Water Pup
-Pokedex = doog but mudkip
+Pokedex = Despite their reclusive nature, trainers who find these Pokémon find them to be friendly and energetic. They use their elongated tongue to attack foes.
 WildItemUncommon = SHEDSHELL
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
@@ -3176,7 +3176,7 @@ Weight = 30.8
 Color = Blue
 Shape = Quadruped
 Category = Water Dog
-Pokedex = Its four horns are a high-performance radar system. It uses them to sense sounds and smells, rather than using ears or a nose.
+Pokedex = Amphibark's limbs are designed for both aquatic and land, but it seems to prefer living on land. Their delicate gills must stay wet in order for them to breath.
 WildItemUncommon = SHEDSHELL
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
@@ -3201,7 +3201,7 @@ Weight = 97.5
 Color = Blue
 Shape = Quadruped
 Category = Cenote
-Pokedex = It attacks with retractable horns. It throws a punch that's the equivalent of the force of a hundred pro boxers.
+Pokedex = This rare Pokémon lives in underground lakes. They heat up the water around them using their specialized external gills, causing geysers to erupt from the ground
 #-------------------------------
 [CROACROZEN]
 Name = Croacrozen
@@ -3224,7 +3224,7 @@ Weight = 8.6
 Color = Green
 Shape = Bipedal
 Category = Wood Frog
-Pokedex = smol 2
+Pokedex = Though it prefers the warmth, it has adapted to live in some of the coldest parts of the Mazah region. Its diet consists of an extremely poisonous mushroom.
 WildItemRare = ICYROCK
 #-------------------------------
 [ARIAMANO]
@@ -3249,7 +3249,7 @@ Weight = 0.4
 Color = Green
 Shape = Serpentine
 Category = Twig Mimic
-Pokedex = smol 2
+Pokedex = Their small size and coloration hides them well among the trees and brush they live in. If camouflage fails, it will leap forward and attack with its sharp legs.
 WildItemUncommon = POISONBARB
 #-------------------------------
 [ELEGOOP]
@@ -3274,7 +3274,7 @@ Weight = 86.2
 Color = Brown
 Shape = Quadruped
 Category = Preservation
-Pokedex = In attempts to reintroduce extinct species into the Mazah region, Elegoop was revived from fur remains found in tar pits. Due to the resurrection process, they are thought to behave differently from their ancestors.
+Pokedex = Previously extinct, Elegoop was revived from fur remains found in tar pits. Due to the process, its DNA became mixed with the mineral composition of the tar.
 Evolutions = TARTUSK,Level,32
 #-------------------------------
 [TARTUSK]
@@ -3298,7 +3298,7 @@ Weight = 1061.9
 Color = Brown
 Shape = Bipedal
 Category = Preservation
-Pokedex = Once thought to be some of the largest Pokémon, Tartusk have lost most of their size due to their bodies being replaced by minerals. Their newfound control over tar works both offensively and defensively.
+Pokedex = Once thought to be one of the largest Pokémon, much of Tartusk's body mass has been replaced by minerals. It uses its control of tar in battle to trap foes.
 #-------------------------------
 [CHARCOPAL]
 Name = Charcopal
@@ -3322,7 +3322,7 @@ Weight = 15.9
 Color = Gray
 Shape = Finned
 Category = Ancient Tooth
-Pokedex = The remains of a Charcopal sat on display for many years before being identified as an ancient Pokémon. It uses the large stone on its back to channel unearthly powers.
+Pokedex = For many years, fossilized Charcopal remains were misidentified as precious stones. It uses the large stone on its back to channel strange, unearthly powers.
 Evolutions = GEOCOPRION,Level,32
 #-------------------------------
 [GEOCOPRION]
@@ -3346,7 +3346,7 @@ Weight = 406.0
 Color = Gray
 Shape = Finned
 Category = Whorl Tooth
-Pokedex = Millions of years ago, Geocoprion used its vertical teeth to slice through its prey. Revived in modern times, it now uses its lower jaw to charge up and blast energy from the crystal formation on its head.
+Pokedex = Eons ago, Geocoprion used its unique teeth like a saw. Revived today, it spins its jaw to charge blasts of energy it fires from the crystals on its snout.
 #-------------------------------
 [CHIXULOB]
 Name = Chixulob
@@ -3370,7 +3370,7 @@ Weight = 459.9
 Color = Gray
 Shape = MultiBody
 Category = Impactor
-Pokedex = Long before humans, an asteroid slammed into Earth’s surface, shattering into many pieces. If enough shards from this event are gathered today, they can be revived into the alien Pokémon known as Chixulob.
+Pokedex = Long before humans, a huge meteorite struck Earth, splintering into many pieces. If enough of these pieces are gathered, they can be revived into a Chixulob.
 #-------------------------------
 [CHISPEKA]
 Name = Chispeka
@@ -3394,7 +3394,7 @@ Weight = 5.4
 Color = Yellow
 Shape = Bipedal
 Category = Wrestler
-Pokedex = pain-peko
+Pokedex = During the day, they remain inactive inside deep caves. But at night, the caves light up with bright flashes as they hold duels for dominance over the colony.
 #-------------------------------
 [ROTATONA]
 Name = Rotatona
@@ -3418,7 +3418,7 @@ Weight = 912.6
 Color = Yellow
 Shape = Head
 Category = Calendar
-Pokedex = These rare Pokémon reside within artifacts carved in ancient times. Due to Rotatona’s mischievous nature, the study of these artifacts is incredibly difficult for scientists.
+Pokedex = These rare Pokémon reside within ancient artifacts. Due to their mischievous nature, the study of these artifacts is incredibly difficult for scientists.
 #-------------------------------
 [DUNSPARCE]
 Name = Dunsparce
@@ -3466,7 +3466,7 @@ Weight = 10.4
 Color = Yellow
 Shape = Serpentine
 Category = Enigma
-Pokedex = The transition from Dunsparce to Dunsended baffles scientists of the Mazah region. It is incredibly hard to study due to its ability to soar overhead without making any noise.
+Pokedex = This incredibly rare evolution to Dunsparce has long baffled scientists. Despite its massive size, it can soar overhead silently, making study difficult.
 #-------------------------------
 [M_MUDBRAY]
 Name = Mudbray
@@ -3490,7 +3490,7 @@ Weight = 16.4
 Color = Yellow
 Shape = Quadruped
 Category = Fiesta
-Pokedex = In the Mazah region, Mudbray are treated with great respect, being loyal companions and bringing joy to trainers. They’re capable of producing a substance that can heal injuries.
+Pokedex = In the Mazah region, Mudbray are greatly respected, being loyal companions who bring joy to trainers. They produce a bright substance that can heal injuries.
 WildItemUncommon = LIGHTCLAY
 Evolutions = MUDSMACHE,HappinessLevel,30
 #-------------------------------
@@ -3515,7 +3515,7 @@ Weight = 35.6
 Color = Blue
 Shape = Quadruped
 Category = Fiesta
-Pokedex = Theory states that when a Mudbray is exposed to enough human joy, it will evolve into Mudsmaché. They form incredible bonds with trainers and even stay within the trainer’s family for generations.
+Pokedex = Mudbray are theorized to evolve into Mudsmaché when exposed to enough human joy. They form incredible bonds and often stay within families for many generations.
 WildItemUncommon = LIGHTCLAY
 #-------------------------------
 [M_NOSEPASS]
@@ -3540,7 +3540,7 @@ Weight = 96.6
 Color = Yellow
 Shape = HeadLegs
 Category = Compass
-Pokedex = Its magnetic nose consistently faces north. Travelers check Nosepass to get their bearings.
+Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokemon.
 WildItemUncommon = MAGNET
 Evolutions = NOSEPONCH,Noseponch,
 #-------------------------------
@@ -3565,7 +3565,7 @@ Weight = 230.0
 Color = Yellow
 Shape = HeadArms
 Category = Warrior
-Pokedex = japanese delinquent looking ass
+Pokedex = Noseponch's very presence can cause people and pokemon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
 WildItemUncommon = MAGNET
 #-------------------------------
 [M_MARACTUS]
@@ -3590,7 +3590,7 @@ Weight = 27.7
 Color = Green
 Shape = HeadBase
 Category = Cactus
-Pokedex = To survive the arid deserts and predatory Pokémon of Mazah, Maractus adapted durable yet smooth skin. Under this skin lies hundreds of seeds that heat up to nearly 300 degrees when shaken.
+Pokedex = To survive the arid deserts of Mazah, Maractus adapted durable yet smooth skin. which protects hundreds of seeds that heat up to nearly 300 degrees when shaken.
 WildItemUncommon = MIRACLESEED
 #-------------------------------
 [REGIWOOD]
@@ -3614,7 +3614,7 @@ Weight = 317.1
 Color = Brown
 Shape = Bipedal
 Category = Ancient Puppet
-Pokedex = Regiwood was originally thought to have been constructed by an ancient civilization, but its design cannot be linked to any known society. It can swing its arms 360 degrees, with enough force to shatter boulders.
+Pokedex = Originally thought to have been constructed by an ancient civilization, Regiwood's design cannot be linked to any known society. It's arms can swing 360 degrees.
 #-------------------------------
 [REGIBRUTE]
 Name = Regibrute
@@ -3637,7 +3637,7 @@ Weight = 367.4
 Color = Brown
 Shape = Bipedal
 Category = Homunculus
-Pokedex = Despite being made of organic material, Regibrute shows no signs of decomposition. Upon reactivation, it went into a destructive rampage and leveled the lab it was being studied in.
+Pokedex = Explorers found this Pokémon lying dormant in an ancient temple. Though it seems to be made of organic material, no evidence of decomposition can be observed.
 #-------------------------------
 [REGITERNAL]
 Name = Regiternal
@@ -3660,7 +3660,7 @@ Weight = 286.7
 Color = White
 Shape = Bipedal
 Category = Seraph
-Pokedex = Regiternal’s body is made of strange metal that has yet to have been identified by scientists. It can focus energy from its core into compressed bursts of energy that reduce anything it hits to atoms.
+Pokedex = Regiternal’s body is made of a strange material unidentifiable by scientists. The outer shell contains an orb of destructive energy with unpredictable effects.
 #-------------------------------
 [MELUMUSE]
 Name = Melumuse
@@ -3682,7 +3682,7 @@ Weight = 16.8
 Color = Green
 Shape = HeadArms
 Category = Estuary
-Pokedex = siren 1
+Pokedex = This incredibly rare Pokémon resides in the shallow waters where the river meets the sea. It sings a calming, intricate melody said to inspire great ideas.
 #-------------------------------
 [MELUCHOLY]
 Name = Melucholy
@@ -3704,7 +3704,7 @@ Weight = 42.2
 Color = White
 Shape = HeadBase
 Category = Coral Reef
-Pokedex = siren 2
+Pokedex = In a short span of time, the coral reefs of the Mazah region have begun to die. Ever since, the once-joyful song of the warm seas has become sombre and eerie.
 #-------------------------------
 [MELUMAUNDER]
 Name = Melumaunder
@@ -3748,7 +3748,7 @@ Weight = 56.7
 Color = Blue
 Shape = HeadBase
 Category = Deep Sea
-Pokedex = siren 4
+Pokedex = The rarest and least-encountered of the Sirens. Its voice carries through the deepest, darkest depths of the ocean, cool and enigmatic.
 #-------------------------------
 [MARIPOME]
 Name = Maripome
@@ -3770,7 +3770,7 @@ Weight = 158.8
 Color = Green
 Shape = Winged
 Category = First Hunted
-Pokedex = Some accredit Maripome for the Mazah region’s balanced ecosystem. Stories tell of Maripome sacrificing itself to another Pokémon, so that it would never find weaker Pokémon or humans.
+Pokedex = Stories about Maripome claim that it sacrified itself to a great predator as the first ever prey: constantly hunted so the predator may never hunt weaker prey.
 #-------------------------------
 [HYLARMOS]
 Name = Hylarmos
@@ -3792,7 +3792,7 @@ Weight = 804.2
 Color = Blue
 Shape = Quadruped
 Category = First Hunter
-Pokedex = Establishing itself as the first hunter of the Mazah region, Hylarmos put the region’s ecological system in motion. It can produce a lethal neurotoxin that, when inhaled, slowly shuts down the victim's body.
+Pokedex = According to ancient legend, Hylarmos set the ecological system of the Mazah region in motion by establishing itself as the first ever predator. 
 #-------------------------------
 [M_VANILLITE]
 Name = Vanillite
@@ -3841,7 +3841,7 @@ Weight = 40.8
 Color = White
 Shape = HeadBase
 Category = Icy Snow
-Pokedex = It blasts enemies with cold air reaching -148 degrees Fahrenheit, freezing them solid. But it spares their lives afterward's. It's a Category Pokémon.
+Pokedex = Doctors in the Mazah region keep a Vanillish on call, as overheating is a common cause of hospital visits. Their berries can cure any headaches or frostbite
 WildItemUncommon = NEVERMELTICE
 Evolutions = M_VANILLUXE,Level,47
 #-------------------------------
@@ -3866,7 +3866,7 @@ Weight = 58.1
 Color = White
 Shape = MultiBody
 Category = Snowstorm
-Pokedex = When its anger reaches a breaking point, this Pokémon unleashes a fierce blizzard that freezes every creature around it, be they friend or foe.
+Pokedex = Psychic intuition allows Vanilluxe to tell the instant someone has contracted a headache, and they are ready with a pharmacy of berries to help cure it.
 WildItemCommon = NEVERMELTICE
 #-------------------------------
 [KNOGGIN]
@@ -3892,7 +3892,7 @@ Color = Gray
 Shape = HeadLegs
 Habitat = Cave
 Category = Knife Head
-Pokedex = made out of entirely just stone, its sig is just super luck again, made out of entirely just stone^2
+Pokedex = K'Noggin's body is made entirely out of stone, but its head is more brittle than the rest. It chips away at its head to sharpen it into a dangerous point.
 WildItemUncommon = HARDSTONE
 Evolutions = KHATCHET,Level,32
 #-------------------------------
@@ -3918,7 +3918,7 @@ Color = Gray
 Shape = BipedalTail
 Habitat = Cave
 Category = Axe Head
-Pokedex = made out of entirely just stone, its sig is just super luck again, made out of entirely just stone^2
+Pokedex = The volcanic stone of a K'Hatchet's head is incredibly sharp. They compete for territory by swinging their heads at eachother, and eat lichen growing in caves.
 WildItemUncommon = HARDSTONE
 Evolutions = MAKWAHURT,Level,52
 #-------------------------------
@@ -3944,7 +3944,7 @@ Color = Gray
 Shape = Bipedal
 Habitat = Cave
 Category = Arsenal
-Pokedex = Wah! "the cruelest Pokémon in mazah", its sig is just super luck again, made out of entirely just stone
+Pokedex = Infamous for its cruelty, Mak'Wahurt is dangerous, aggressive and territorial. A single swing from its club-like head can fell trees and shatter rocks.
 WildItemUncommon = HARDSTONE
 #-------------------------------
 [ELORIMANDA]
@@ -3967,7 +3967,7 @@ Weight = 1512.3
 Color = Pink
 Shape = Serpentine
 Category = Resplendent
-Pokedex = present or something i dunno, its signature is just solid rock, so get solid rock but for a black statue
+Pokedex = Ancient myths say that when humans first came to inhabit the Mazah region, Elorimanda shed its skin to reveal an entirely different, more beautiful appearance.
 #-------------------------------
 [M_CRABRAWLER]
 Name = Crabrawler
@@ -3991,7 +3991,7 @@ Weight = 6.8
 Color = Brown
 Shape = Insectoid
 Category = Boxing
-Pokedex = Its hard pincers are well suited to both offense and defense. Fights between two Crabrawler are like boxing matches.
+Pokedex = In the Mazah region, Crabrawler are adapted to desert life. They craft shelters out of dirt and mud and are often kept as assistants by local mechanics.
 WildItemUncommon = SOFTSAND
 Evolutions = CRUSTANG,Item,METALCOAT
 #-------------------------------
@@ -4016,7 +4016,7 @@ Weight = 332.9
 Color = Red
 Shape = Insectoid
 Category = Low Rider
-Pokedex = It stores coldness in its pincers and pummels its foes. It can even smash thick walls of ice to bits!
+Pokedex = Crustang are the Pokémon of choice for Mazian gearheads. Trainers will customise their Crustang's carapace with body paints and decals and enter them in shows.
 WildItemCommon = NUGGET
 WildItemUncommon = NUGGET
 WildItemRare = NUGGET
@@ -4043,7 +4043,7 @@ Weight = 13.2
 Color = Blue
 Shape = HeadArms
 Category = Small Step
-Pokedex = 
+Pokedex = It surrounds itself with a bubble made out of hyper-cooled water. It is neither a solid, nor a liquid, but it protect Cosmet from hazardous exterior conditions.
 WildItemUncommon = NEVERMELTICE
 Evolutions = GLACIUTTLE,Level,34
 #-------------------------------
@@ -4068,7 +4068,7 @@ Weight = 105.7
 Color = Blue
 Shape = HeadArms
 Category = Giant Leap
-Pokedex = 
+Pokedex = Seeking constant stimulation, Glaciuttle uses its tail-like bubble to launch itself into the atmosphere. It glides effortlessly whilst descending.
 WildItemUncommon = NEVERMELTICE
 Evolutions = CRYOGER,HasMove,BITINGCOLD
 #-------------------------------
@@ -4093,7 +4093,7 @@ Weight = 307.5
 Color = Blue
 Shape = HeadArms
 Category = Visitor
-Pokedex = 
+Pokedex = Their frozen bubble protects them from the outside elements. Despite being able to fly in space, Cryoger prefer to explore the Mazah region.
 WildItemUncommon = NEVERMELTICE
 #-------------------------------
 [GULPI]
@@ -4118,7 +4118,7 @@ Weight = 7.3
 Color = Green
 Shape = Finned
 Category = Lagoon
-Pokedex =
+Pokedex = It uses its glowing horns to allure divers into sea caves where they become disoriented and drown, so swimmers are advised not to follow them.
 Evolutions = MALHARO,Level,31
 #-------------------------------
 [MALHARO]
@@ -4166,7 +4166,7 @@ Weight = 6.8
 Color = Purple
 Shape = Winged
 Category = Ghost Feather
-Pokedex =
+Pokedex = Wrrazal was once thought to be an ancient Pokémon, but traces of it only go back a few decades. Some say it comes from a fallen deity.
 Evolutions = SPECTERZAL,Level,42
 #-------------------------------
 [SPECTERZAL]
@@ -4190,7 +4190,7 @@ Weight = 149.7
 Color = Purple
 Shape = Winged
 Category = God Feather
-Pokedex =
+Pokedex = Specterzal is one of the most dangerous predators in the Mazah region, able to take down prey much larger than itself. It has a fierce rivalry with Quetzillian.
 #-------------------------------
 [JAWSTER]
 Name = Jawster
@@ -4214,7 +4214,7 @@ Weight = 65.8
 Color = White
 Shape = HeadLegs
 Category = Surprise
-Pokedex = 
+Pokedex = It tucks its body inside a clay shell, sitting in places where passersby may stumble upon them. If anyone gets too close, it will attack with its sharp beak.
 WildItemUncommon = LIGHTCLAY
 #-------------------------------
 [LUMIPOP]
@@ -4264,7 +4264,7 @@ Weight = 34.5
 Color = Blue
 Shape = BipedalTail
 Category = Hypnosis
-Pokedex = 
+Pokedex = Their true size and shape is disguised by the patterns on their tails, which light up like the eyes of a great predator. They use this illusion to ward off prey.
 WildItemUncommon = 
 #-------------------------------
 [WORMOTE]
@@ -4288,7 +4288,7 @@ Weight = 1.2
 Color = Blue
 Shape = Insectoid
 Category = Glow Worm
-Pokedex = 
+Pokedex = If forced into conflict, the bumps on its body will flash randomly, leaving their prey in a trance. Because of this, children often use it to pull off pranks.
 Evolutions = STRELAVISON,Level,32
 #-------------------------------
 [STRELAVISON]
@@ -4311,7 +4311,7 @@ Weight = 12.3
 Color = Gray
 Shape = BipedalTail
 Category = Glamour
-Pokedex = 
+Pokedex = Though they prefer dancing with their own kind, they are known to force other Pokémon to dance with them, using their flashing lights to hypnotize them.
 #-------------------------------
 [M_DITTO]
 Name = Ditto
@@ -4334,7 +4334,7 @@ Color = Purple
 Shape = Head
 Habitat = Urban
 Category = Evil Goo
-Pokedex = No matter how hard it tried to replicate its target, it will get details wrong. However its exceptional at breeding.
+Pokedex = This variation of Ditto has only been encountered a handful of times. Very little documented research has ever been gathered but it is believed to be man-made.
 WildItemCommon = BLACKSLUDGE
 #-------------------------------
 [DRAGTACO]
@@ -4357,7 +4357,7 @@ Weight = 105.7
 Color = Brown
 Shape = Bipedal
 Category = Dragon Taco
-Pokedex = DRAGTACO IS REEEEEEEEEEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAALLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+Pokedex = This Pokémon is so rare that it has never been caught or documented by anyone, leading many to believe that it is nothing more than a story told among children.
 #-------------------------------
 [BOINKLEBEE]
 Name = Boinklebee
@@ -4380,7 +4380,7 @@ Color = White
 Shape = Quadruped
 Habitat = Mountain
 Category = Pig Wolf
-Pokedex = dog
+Pokedex = This unique Pokémon drifts across the Mazah region, making friends everywhere it goes. For every friend it makes, a new spirit is added to its magical collar.
 #-------------------------------
 [NATU]
 Name = Natu
@@ -4536,7 +4536,7 @@ Color = Brown
 Shape = BipedalTail
 Habitat = Grassland
 Category = Panhandle 
-Pokedex = rat
+Pokedex = These Pokémon can tell the difference between fake and real gold through taste alone. They enjoy eating foods that are heavy in metallic minerals.
 Evolutions = RUSTACHE,LevelDay,30
 #-------------------------------
 [RUSTACHE]
@@ -4561,7 +4561,7 @@ Color = Blue
 Shape = BipedalTail
 Habitat = Grassland 
 Category = Dowsing 
-Pokedex = rat
+Pokedex = Rustache can taste gold through 200ft of rock. When ore is found, the organ on its head releases a scent to attracts others to its location.
 #-------------------------------
 
 #-------------------------------
