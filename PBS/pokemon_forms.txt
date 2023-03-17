@@ -181,6 +181,30 @@ BaseEXP = 217
 Height = 7.7
 Weight = 902.2
 Shape = MultiBody
+#-------------------------------
+[CASTFORM,1]
+FormName = Sunny Form
+Types = FIRE
+Color = Red
+Pokedex = This is the form Castform takes on the brightest of days. Its skin is unexpectedly hot to the touch, so approach with care.
+#-------------------------------
+[CASTFORM,2]
+FormName = Rainy Form
+Types = WATER
+Color = Blue
+Pokedex = This is the form Castform takes when soaked with rain. When its body is compressed, water will seep out as if from a sponge.
+#-------------------------------
+[CASTFORM,3]
+FormName = Snowy Form
+Types = ICE
+Color = White
+Pokedex = This is the form Castform takes when covered in snow. Its body becomes an ice-like material, with a temperature near -5 degrees Celsius.
+#-------------------------------
+[CASTFORM,4]
+FormName = Sandy Form
+Types = GROUND
+Color = Brown
+Pokedex = catsform so cute i want to pat it
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
 #---------------------------------------------------------------------------------------------
@@ -287,14 +311,3 @@ FormName = Blue Flower
 [FLORGES,4]
 FormName = White Flower
 #-------------------------------
-#-------------------------------
-[SABLEYE,1]
-FormName = Mega Sableye
-MegaStone = SABLENITE
-BaseStats = 50,85,125,20,85,115
-BaseExp = 168
-Abilities = MAGICBOUNCE
-HiddenAbilities = MAGICBOUNCE
-Weight = 161.0
-Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly and is vulnerable to attack from behind.
-Generation = 6
