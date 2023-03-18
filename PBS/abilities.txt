@@ -1101,7 +1101,7 @@ Description = Boosts power and critical-hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises Speed up to 2x after making a direct hit.
+Description = Raises Speed up to 1.5x after making a direct hit.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over

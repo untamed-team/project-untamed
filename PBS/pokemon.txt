@@ -3110,7 +3110,7 @@ Evolutions = HUMMIPUMMEL,Level,50
 [HUMMIPUMMEL]
 Name = Hummipummel
 Types = FIGHTING,FAIRY
-BaseStats = 60,115,60,139,101,75
+BaseStats = 60,101,60,139,101,74
 GenderRatio = Female50Percent
 GrowthRate = Fluctuating
 BaseExp = 248
@@ -3351,7 +3351,7 @@ Pokedex = Eons ago, Geocoprion used its unique teeth like a saw. Revived today, 
 [CHIXULOB]
 Name = Chixulob
 Types = ROCK,FIRE
-BaseStats = 75,125,50,140,85,50
+BaseStats = 75,123,51,129,96,51
 GenderRatio = Genderless
 GrowthRate = Slow
 BaseExp = 180
@@ -4563,7 +4563,87 @@ Habitat = Grassland
 Category = Dowsing 
 Pokedex = Rustache can taste gold through 200ft of rock. When ore is found, the organ on its head releases a scent to attracts others to its location.
 #-------------------------------
-
+#-------------------------------
+[M_EKANS]
+Name = Ekans
+Types = POISON,DARK
+BaseStats = 33,60,42,55,56,42
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 58
+EVs = ATTACK,1
+CatchRate = 255
+Happiness = 50
+Abilities = SANDFORCE,RATTLED
+HiddenAbilities = INTIMIDATE
+Moves = 1,WRAP,1,LEER,4,POISONSTING,9,BITE,12,SNARL,17,DISARMINGVOICE,20,SCREECH,25,STOCKPILE,25,SWALLOW,25,SPITUP,28,ACIDSPRAY,33,SLUDGEBOMB,36,MEANLOOK,38,PURSUIT,41,SUBSTITUTE,44,GASTROACID,49,GUNKSHOT
+TutorMoves = ATTRACT,BRUTALSWING,HIDDENPOWER,FACADE,POISONJAB,ROCKTOMB,SLUDGEBOMB,SWAGGER,THIEF,TORMENT,TOXIC,VENOSHOCK,GUNKSHOT,GASTROACID,AQUATAIL
+EggMoves = BEATUP,POISONFANG,SANDSTORM,COIL
+EggGroups = Field,Dragon
+HatchSteps = 5120
+Height = 2.0
+Weight = 6.9
+Color = Purple
+Shape = Serpentine
+Habitat = Grassland
+Category = Snake
+Pokedex = snek
+Generation = 1
+Evolutions = ELLTAR,Level,24
+#-------------------------------
+[ELLTAR]
+Name = Elltar
+Types = POISON,DARK
+BaseStats = 44,101,64,85,90,64
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 157
+EVs = ATTACK,2
+CatchRate = 90
+Happiness = 50
+Abilities = SANDFORCE,RATTLED
+HiddenAbilities = INTIMIDATE
+Moves = 0,CRUNCH,1,CRUNCH,1,THUNDERFANG,1,WRAP,1,LEER,1,POISONSTING,1,BITE,4,POISONSTING,9,BITE,12,SNARL,17,DISARMINGVOICE,20,SCREECH,27,STOCKPILE,27,SWALLOW,27,SPITUP,32,ACIDSPRAY,39,SLUDGEBOMB,44,MEANLOOK,48,PURSUIT,51,SUBSTITUTE,56,GASTROACID,63,GUNKSHOT
+TutorMoves = ATTRACT,BRUTALSWING,DARKPULSE,HIDDENPOWER,EARTHQUAKE,FACADE,POISONJAB,ROCKSLIDE,ROCKTOMB,SLUDGEBOMB,SWAGGER,THIEF,TORMENT,TOXIC,VENOSHOCK,GUNKSHOT,IRONHEAD,GASTROACID,AQUATAIL,IRONTAIL
+EggGroups = Field,Dragon
+HatchSteps = 5120
+Height = 3.5
+Weight = 65.0
+Color = Purple
+Shape = Serpentine
+Habitat = Grassland
+Category = Mamba
+Pokedex = Boitatá pokemon real? this was made with the intent of being more than "Radical Red Arbok, but better", that was already done with A-Muk and its not a interesting way of making a fakemon. As such its a mixed early-game attacker, with its low level final evo and decent enough attacking stats it has the potential of being quite the crutch. Jack had some interesting ideas with Sand synergy and i wanted to keep it (but evasion is BS so Sand Force is your next best bet), Rattled is there for puns and intimidate is simply a good ability, you could go for Strong Jaw but again thats just "Radical Red Arbok, but better".
+Generation = 1
+#-------------------------------
+[CASTFORM]
+Name = Castform
+Types = NORMAL
+BaseStats = 80,80,80,80,80,80
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 147
+EVs = HP,1
+CatchRate = 45
+Happiness = 50
+Abilities = FORECAST
+Moves = 1,TACKLE,10,WATERGUN,10,EMBER,10,POWDERSNOW,10,MUDSLAP,15,HEADBUTT,20,RAINDANCE,20,SUNNYDAY,20,HAIL,20,SANDSTORM,25,WEATHERBALL,35,HYDROPUMP,35,FIREBLAST,35,BLIZZARD,35,EARTHPOWER,45,HURRICANE
+TutorMoves = WORKUP,HELPINGHAND,ICEBEAM,BLIZZARD,TRIATTACK,SANDSTORM,RAINDANCE,SUNNYDAY,HAIL,SOLARBEAM,THUNDERBOLT,EARTHQUAKE,SAFEGUARD,FLAMETHROWER,FIREBLAST,ROCKTOMB,ROUND,ENERGYBALL,SCOURINGWINDS,SCREECH,AVALANCHE
+EggMoves = AMNESIA,CLEARSMOG,COSMICPOWER,DISABLE,FUTURESIGHT,GUARDSWAP,HEX,REFLECTTYPE
+EggGroups = Fairy,Amorphous
+HatchSteps = 6400
+Height = 0.3
+Weight = 0.8
+Color = Gray
+Shape = Head
+Habitat = Grassland
+Category = Weather
+Pokedex = It alters its form depending on the weather. Changes in the climate such as the temperature and humidity appear to affect its cellular structure. Castform was already buffed immensely due to Forecast, this +10 stat to all stats might not be needed. Other than that, the usual ground moves for the newly obtained sandstorm variant and some movepool nerfs. (rain doesnt need any more incredible setters)
+FormName = Normal Form
+Generation = 3
+WildItemCommon = MYSTICWATER
+WildItemUncommon = MYSTICWATER
+WildItemRare = MYSTICWATER
 #-------------------------------
 [SABLEYE]
 Name = Sableye
