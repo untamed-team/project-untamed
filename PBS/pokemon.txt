@@ -3110,7 +3110,7 @@ Evolutions = HUMMIPUMMEL,Level,50
 [HUMMIPUMMEL]
 Name = Hummipummel
 Types = FIGHTING,FAIRY
-BaseStats = 60,115,60,139,101,75
+BaseStats = 60,101,60,139,101,74
 GenderRatio = Female50Percent
 GrowthRate = Fluctuating
 BaseExp = 248
@@ -3351,7 +3351,7 @@ Pokedex = Eons ago, Geocoprion used its unique teeth like a saw. Revived today, 
 [CHIXULOB]
 Name = Chixulob
 Types = ROCK,FIRE
-BaseStats = 75,125,50,140,85,50
+BaseStats = 75,123,51,129,96,51
 GenderRatio = Genderless
 GrowthRate = Slow
 BaseExp = 180
