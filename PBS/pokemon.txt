@@ -2144,7 +2144,7 @@ Weight = 23.1
 Color = White
 Shape = MultiWinged
 Category = Confetti
-Pokedex = These Pokémon are obsessed with the beauty of their work, and in pursuit of further praise and attention from people, Papellaude continue to modify their cloaks.
+Pokedex = Papellaude are obsessed with the beauty of their work, and in pursuit of further praise and attention from people, they continue to modify their cloaks.
 WildItemUncommon = SILVERPOWDER
 #-------------------------------
 [M_MEOWTH]
