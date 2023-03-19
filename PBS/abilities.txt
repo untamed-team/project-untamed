@@ -1145,5 +1145,9 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = STAB moves hit again a turn later, boosts Future Sight. 
+Description = Damaging STAB moves hit again with half the BP a turn later, 2x BP to Future Sight/Doom Desire. 
+#-------------------------------
+[ANGELICBEAUTY]
+Name = Angelic Beauty
+Description = Non-Contact moves against the user may confuse the attacker.
 #-------------------------------
