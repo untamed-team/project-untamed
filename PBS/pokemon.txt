@@ -4591,8 +4591,8 @@ Pokedex = snek
 Generation = 1
 Evolutions = ELLTAR,Level,24
 #-------------------------------
-[ELLTAR]
-Name = Elltar
+[ELTTAR]
+Name = Elttar
 Types = POISON,DARK
 BaseStats = 44,101,64,85,90,64
 GenderRatio = Female50Percent
