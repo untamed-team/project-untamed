@@ -8,7 +8,9 @@ Chespin_Craft
 Gardenette
 Kaloja
 Kutas Kitti
+Lovely Werewolf
 Low
+Merry
 SpaceWestern
 Spork
 stygma
@@ -155,6 +157,7 @@ Basalte
 Chespin_Craft
 Cristata
 Dan Bacon
+DomTom
 Fikolyte
 Gardenette
 HwiteHwale
@@ -218,6 +221,7 @@ Kaloja
 Kameleron
 Kutas Kitti
 MadMillerMiller
+Merry
 RISH
 Shadows
 stygma
@@ -235,6 +239,7 @@ Tyler (MANGO) Jackson
 Eventing
 --------
 Gardenette
+Kaloja
 Kutas Kitti
 Low
 SpaceWestern
@@ -263,6 +268,7 @@ Kyl-E
 Luc_
 LuckyBenjamin
 MasterMachi
+Merry
 PaperTowelDealer
 Scandal
 Shilo
@@ -299,6 +305,7 @@ Low
 LuckyBenjamin
 MacheteMcGoo
 Malarkey
+Merry
 Midbus
 mSilk
 noahthenumbat
@@ -358,6 +365,7 @@ Chespin_Craft
 das5198
 j
 Jamadxx
+Merry
 Saltilton
 stygma
 Tom Buenbarril
@@ -574,6 +582,9 @@ Golisopod User
 Marin
 Wolf PP
 
+Poké Ball Swap:
+TechSkylander1518
+
 Pokémon Amie:
 BhagyaJyoti
 bo4p5687
@@ -591,7 +602,7 @@ Low
 Relearner from Party:
 Marin
 
-Save File Calls
+Save File Calls:
 TechSkylander1518
 
 Set the Controls Screen:
@@ -853,4 +864,10 @@ Credits   = TimeAxis, Gardenette
 Name       = Save File Calls
 Essentials = 20.1
 Website    = https://reliccastle.com/resources/808/
+Credits    = TechSkylander1518
+
+Name       = Poké Ball Swap
+Version    = 1.0 
+Essentials = 20
+Link       = https://reliccastle.com/resources/817/
 Credits    = TechSkylander1518
