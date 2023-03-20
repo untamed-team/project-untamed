@@ -4589,7 +4589,7 @@ Habitat = Grassland
 Category = Snake
 Pokedex = snek
 Generation = 1
-Evolutions = ELLTAR,Level,24
+Evolutions = ELTTAR,Level,24
 #-------------------------------
 [ELTTAR]
 Name = Elttar
