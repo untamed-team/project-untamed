@@ -618,6 +618,9 @@ Boonzeet
 Tileset Rearranger:
 Maruno
 
+Tutor.net
+DemICE
+
 Tweaks to Essentials:
 Derxwna Kapsyla
 
@@ -871,3 +874,9 @@ Version    = 1.0
 Essentials = 20
 Link       = https://reliccastle.com/resources/817/
 Credits    = TechSkylander1518
+
+Name       = Tutor.net
+Version    = 1.0
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/1237/
+Credits    = DemICE
