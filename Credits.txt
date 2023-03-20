@@ -533,12 +533,15 @@ Marin's Scripting Utilities:
 Marin
 
 Modern Quest System + UI:
+Black Mage
 derFischae
+drago2308
 Gardenette
 Marin
 mej71
 SpaceWestern
 ThatWelshOne_
+Vendily
 
 Name-box:
 Gardenette
