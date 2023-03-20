@@ -163,3 +163,4 @@ LoseText = sex
 Pokemon = NOCTAVISPA,10
     MEM = true
 	AAM = true
+	Status = dizzy
