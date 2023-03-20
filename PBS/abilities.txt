@@ -1145,7 +1145,7 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = STAB moves hit a second time with less damage, boosts Future Sight and Doom Desire.
+Description = STAB moves hit again with less damage, boosts Future Sight.
 #-------------------------------
 [ANGELICBEAUTY]
 Name = Angelic Beauty
