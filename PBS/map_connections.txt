@@ -6,8 +6,6 @@
 26,West,0,4,East,0
 # Resort City (28) - Route 2 (26)
 28,West,35,26,East,0
-# Veravalles Town (22) - Route 1 (48)
-22,East,0,48,West,19
 # Hacienda Castaneda (79) - Route 1 (48)
 79,East,26,48,West,0
 # Hacienda Castaneda (79) - Veravalles Town (22)
