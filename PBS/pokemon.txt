@@ -4355,7 +4355,7 @@ HatchSteps = 201315
 Height = 1.9
 Weight = 105.7
 Color = Brown
-Shape = Bipedal
+Shape = BipedalTail
 Category = Dragon Taco
 Pokedex = This Pokémon is so rare that it has never been caught or documented by anyone, leading many to believe that it is nothing more than a story told among children.
 #-------------------------------
