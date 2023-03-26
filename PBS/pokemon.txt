@@ -4294,7 +4294,7 @@ Evolutions = STRELAVISON,Level,32
 [STRELAVISON]
 Name = Strelavison
 Types =  BUG,PSYCHIC
-BaseStats = 62,34,47,81,69,69
+BaseStats = 62,34,47,91,89,69
 GenderRatio = Female50Percent
 GrowthRate = Fast
 BaseExp = 63
