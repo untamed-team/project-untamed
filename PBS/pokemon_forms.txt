@@ -181,7 +181,6 @@ BaseEXP = 217
 Height = 7.7
 Weight = 902.2
 Shape = MultiBody
-GenderRatio = Genderless
 #-------------------------------
 [CASTFORM,1]
 FormName = Sunny Form
