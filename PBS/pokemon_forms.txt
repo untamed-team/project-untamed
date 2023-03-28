@@ -173,7 +173,7 @@ BaseStats = 95,45,145,25,65,130
 Weight = 10.4
 #------------------------------- # 520 bst
 [STRELAVISON,1]
-FormName = School Form
+FormName = Swarm Form
 Type1 = BUG
 Type2 = ELECTRIC
 BaseStats = 62,54,117,22,131,134
@@ -181,6 +181,7 @@ BaseEXP = 217
 Height = 7.7
 Weight = 902.2
 Shape = MultiBody
+GenderRatio = Genderless
 #-------------------------------
 [CASTFORM,1]
 FormName = Sunny Form
