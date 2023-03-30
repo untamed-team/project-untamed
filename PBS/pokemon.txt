@@ -4586,7 +4586,7 @@ Color = Purple
 Shape = Serpentine
 Habitat = Grassland
 Category = Snake
-Pokedex = snek
+Pokedex = As a deterrent, it shakes the scales on the tip of its tail to create a piercing sound like that of nails on a chalkboard. Its bright circle markings mimic eyes.
 Generation = 1
 Evolutions = ELTTAR,Level,24
 #-------------------------------
@@ -4612,7 +4612,7 @@ Color = Purple
 Shape = Serpentine
 Habitat = Grassland
 Category = Mamba
-Pokedex = Boitatá pokemon real? this was made with the intent of being more than "Radical Red Arbok, but better", that was already done with A-Muk and its not a interesting way of making a fakemon. As such its a mixed early-game attacker, with its low level final evo and decent enough attacking stats it has the potential of being quite the crutch. Jack had some interesting ideas with Sand synergy and i wanted to keep it (but evasion is BS so Sand Force is your next best bet), Rattled is there for puns and intimidate is simply a good ability, you could go for Strong Jaw but again thats just "Radical Red Arbok, but better".
+Pokedex = Masters of deception, Eltarr mesmerize both their predators and prey with the patterns on their scales and the decoy face on their tail
 Generation = 1
 #-------------------------------
 [CASTFORM]
