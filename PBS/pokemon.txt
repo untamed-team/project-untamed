@@ -1039,7 +1039,8 @@ Color = Green
 Shape = Bipedal
 Habitat = WatersEdge
 Category = Carefree
-Pokedex = Ludicolo dance around bodies of water on certain days, seemingly at random. The dance resembles a joyful Mazian dance.
+Pokedex = Ludicolo dance joyfully around bodies of water on certain days, seemingly at random. Humans perform these dances at traditional Mazian festivals.
+
 Generation = 3
 WildItemUncommon = MENTALHERB
 #-------------------------------
@@ -1250,7 +1251,7 @@ Weight = 9.5
 Color = Brown
 Shape = HeadBase
 Category = Pumpkin
-Pokedex = Gourgeist can vary wildly in size based on a range of environmental factors. However, it is generally agreed that the bigger, the better.
+Pokedex = Trainers in the Mazah region take pride in the size of their Gourgeist. Contests are held every year to see whose Gourgeist has grown the largest.
 FormName = Small Size
 Generation = 6
 #-------------------------------
@@ -1558,7 +1559,7 @@ Weight = 106.6
 Color = Black
 Shape = HeadArms
 Category = Gripper
-Pokedex = Due to Mazah's lack of superstitions surrounding death, Dusknoirs are welcomed in towns more-so than other regions. Dusknoirs apparently hate this.
+Pokedex = Due to Mazah's lack of superstitions surrounding death, Dusknoir are welcomed in towns more-so than other regions, Despite this, they prefer to live in solitude.
 Generation = 4
 WildItemUncommon = SPELLTAG
 #-------------------------------
@@ -1739,7 +1740,7 @@ Weight = 34.3
 Color = Black
 Shape = HeadArms
 Category = Luring
-Pokedex = Their flames are said to steal souls from humans. They inspired the chandelier and it was even named after them.
+Pokedex = It is said that Chandelure's flames are able to absorb the soul of any living being that makes contact. They inspired both the name and design of chandeliers.
 Generation = 5
 #-------------------------------
 [SKIDDO]
