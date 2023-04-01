@@ -2020,7 +2020,7 @@ Color = Pink
 Shape = Serpentine
 Habitat = WatersEdge
 Category = Tender
-Pokedex = It is said to live at the bottom of large lakes. Considered to be the most beautiful of all Pokémon, it has been depicted in paintings and statues.
+Pokedex = It is said to live at the bottom of large lakes. Renowned for its stunning beauty, it is often used as the subject of paintings and statues.
 Generation = 3
 #-------------------------------
 [TRUBBISH]
