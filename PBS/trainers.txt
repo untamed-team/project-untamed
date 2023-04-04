@@ -160,7 +160,7 @@ Pokemon = LITWICK,10
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
-Gimmick = Strong Winds
+Gimmick = :HarshSun_:TrickRoom_:PsychicTerrain
 Pokemon = NOCTAVISPA,10
     MEM = true
 	AAM = true
