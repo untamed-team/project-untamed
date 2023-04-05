@@ -95,7 +95,7 @@ LoseText = Ugh, I still can't do this right.
 Pokemon = LILORINA,14
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
-	Ace = true
+    Ace = yes
 Pokemon = LITWICK,12
     Moves = EMBER,HEX,WILLOWISP,FIRESPIN
     AbilityIndex = 1
@@ -110,7 +110,7 @@ Pokemon = LILORINA,16
     AbilityIndex = 2
     IV = 0,0,0,0,0,0
     EV = 10,10,10,10,20,10
-	Ace = true
+    Ace = yes
 Pokemon = PACUNA,17
     Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
     AbilityIndex = 2
@@ -156,12 +156,19 @@ LoseText = ..Is that a no?
 Pokemon = DUSKULL,11
 Pokemon = LITWICK,10
     AbilityIndex = 0
-
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
-Gimmick = HarshSun_TrickRoom_PsychicTerrain_MagicRoom_WonderRoom
+Gimmick = HarshSun_GrassyTerrain
 Pokemon = NOCTAVISPA,10
-    MEM = true
 	AAM = true
-	Status = Dizzy
+	MEM = true
+	Status = Sleep
+#-------------------------------
+[HEXMANIAC,zinnia,100]
+LoseText = sex
+Gimmick = HarshSun_GrassyTerrain
+Pokemon = NOCTAVISPA,10
+	AAM = true
+	MEM = true
+	Status = Sleep
