@@ -159,7 +159,7 @@ Pokemon = LITWICK,10
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
-Gimmick = HarshSun_GrassyTerrain
+Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity
 Pokemon = NOCTAVISPA,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
@@ -169,10 +169,20 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-Gimmick = HarshSun_GrassyTerrain
+Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity
 Pokemon = NOCTAVISPA,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
 	AAM = true
 	MEM = true
 	Status = Sleep
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,10
