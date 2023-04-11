@@ -191,7 +191,7 @@ Description = Ups resistance to Fire- and Ice-type moves.
 #-------------------------------
 [EARLYBIRD]
 Name = Early Bird
-Description = The Pokémon awakens quickly from sleep.
+Description = Halves the duration of timed status effects.
 #-------------------------------
 [FLAMEBODY]
 Name = Flame Body
