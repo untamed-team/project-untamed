@@ -4567,7 +4567,7 @@ Pokedex = Rustache can taste gold through 200ft of rock. When ore is found, the 
 [M_EKANS]
 Name = Ekans
 Types = POISON,DARK
-BaseStats = 33,60,42,55,56,42
+BaseStats = 35,60,44,70,25,54
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 58
@@ -4594,7 +4594,7 @@ Evolutions = ELTTAR,Level,24
 [ELTTAR]
 Name = Elttar
 Types = POISON,DARK
-BaseStats = 44,101,64,85,90,64
+BaseStats = 60,105,69,100,35,79
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 157
