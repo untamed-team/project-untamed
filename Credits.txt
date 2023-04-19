@@ -507,6 +507,7 @@ Deoxysprime
 Following Pokémon EX:
 Akizakura16
 Armin
+Gardenette
 Golisopod User
 Help-14
 Maruno
@@ -514,6 +515,7 @@ mej71
 PurpleZaffre
 Rayd12smitty
 Thundaga
+Vendily
 Venom12
 zingzags
 
@@ -794,7 +796,7 @@ Website    = https://reliccastle.com/resources/709/
 Credits    = ThatWelshOne_,mej71,derFischae,Marin
 
 Name       = Following Pokemon EX
-Version    = 2.2.2
+Version    = 2.2.4
 Essentials = 20.1
 Optional   = Battle Scripting EX, 1.0.0
 Optional   = Boss Battles EX, 1.0.0
@@ -803,7 +805,7 @@ Optional   = Party Screen BW Style, 2.1.0
 Optional   = Advanced HM Items, 1.0.0
 Optional   = Elite Battle: DX, 1.2.6
 Website    = https://reliccastle.com/resources/featured/
-Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno, Gardenette, Vendily
 
 Name         = New DexNav
 Version      = 2.3
