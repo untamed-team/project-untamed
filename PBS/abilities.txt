@@ -1151,3 +1151,15 @@ Description = STAB moves hit again with less damage, boosts Future Sight.
 Name = Angelic Beauty
 Description = May confuse the attacker when hit by non-contact moves.
 #-------------------------------
+[HOTHEADED]
+Name = Hotheaded
+Description = If Hail is active, the user's Fire-type moves are boosted by 1.5x.
+#-------------------------------
+[COOLHEADED]
+Name = Coolheaded
+Description = If Sun or Harsh Sun are active, the user's Ice-type moves are boosted by 1.5x.
+#-------------------------------
+[HEALINGSUN]
+Name = Healing Sun
+Description = If Sun is active, this Pokemon restores 1/16 of its maximum HP at the end of each turn. Restores 1/10 during Harsh Sun.
+#-------------------------------
