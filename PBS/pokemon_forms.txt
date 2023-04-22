@@ -59,6 +59,26 @@ BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
 Height = 2.0
 Weight = 81.6
+#-------------------------------
+[MILOTIC,1]
+FormName = Mega Milotic
+MegaStone = MILOTITE
+Type1 = WATER
+Type2 = FAIRY # maybe dragon? that would make it stand out from the 95% of mega milotics out there
+BaseStats = 95,85,96,82,126,156
+Abilities = DAZZLING
+#-------------------------------
+[SUCHOBILE,1]
+FormName = Mega Suchobile
+MegaStone = SUCHOBITE
+BaseStats = 110,142,119,41,106,97
+Abilities = CORROSION
+#------------------------------- 
+[SKARMORY,1]
+FormName = Mega Skarmory
+MegaStone = SKARMITE
+BaseStats = 65,120,160,80,60,80
+Abilities = HYPERCUTTER
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS
 #---------------------------------------------------------------------------------------------
