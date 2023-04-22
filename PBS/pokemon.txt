@@ -4643,6 +4643,33 @@ Generation = 3
 WildItemCommon = MYSTICWATER
 WildItemUncommon = MYSTICWATER
 WildItemRare = MYSTICWATER
+#------------------------------- # skarmory on his way to make beakraft useless in every conceivable way
+[SKARMORY]
+Name = Skarmory
+Types = STEEL,FLYING
+BaseStats = 65,80,140,70,40,70
+GenderRatio = Female50Percent
+GrowthRate = Slow
+BaseExp = 163
+EVs = DEFENSE,2
+CatchRate = 25
+Happiness = 50
+Abilities = KEENEYE,STURDY
+HiddenAbilities = WEAKARMOR
+Moves = 1,PECK,1,LEER,4,SANDATTACK,8,FURYATTACK,12,METALCLAW,16,AGILITY,20,WINGATTACK,24,SLASH,28,STEELWING,32,AUTOTOMIZE,36,DRILLPECK,40,METALSOUND,44,SPIKES,48,IRONDEFENSE,52,BRAVEBIRD
+TutorMoves = ROAR,DOUBLETEAM,HIDDENPOWER,TAUNT,SANDSTORM,SUNNYDAY,ROCKTOMB,AERIALACE,TORMENT,FACADE,THIEF,STEELWING,FLASHCANNON,SWORDSDANCE,SUBSTITUTE,GUARDSWAP,ROCKSLIDE,XSCISSOR,DARKPULSE,DEFOG,CUT,FLY,ROCKSMASH,MAGICROOM
+EggMoves = AIRCUTTER,ASSURANCE,BRAVEBIRD,CURSE,DRILLPECK,FEINT,GUARDSWAP,NIGHTSLASH,SKYATTACK,WHIRLWIND
+EggGroups = Flying
+HatchSteps = 6400
+Height = 1.7
+Weight = 50.5
+Color = Gray
+Shape = Winged
+Habitat = RoughTerrain
+Category = Armor Bird
+Pokedex = A Pokémon that has a body and wings of steel. People in the past used feathers fallen from Skarmory to make swords and knives.
+Generation = 2
+WildItemUncommon = METALCOAT
 #-------------------------------
 [SABLEYE]
 Name = Sableye
