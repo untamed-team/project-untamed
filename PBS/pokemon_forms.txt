@@ -64,21 +64,21 @@ Weight = 81.6
 FormName = Mega Milotic
 MegaStone = MILOTITE
 Type1 = WATER
-Type2 = FAIRY # maybe dragon? that would make it stand out from the 95% of mega milotics out there
-BaseStats = 95,85,96,82,126,156
+Type2 = FAIRY
+BaseStats = 95,60,99,91,130,165
 Abilities = DAZZLING
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
 MegaStone = SUCHOBITE
-BaseStats = 110,142,119,41,106,97
-Abilities = CORROSION
+BaseStats = 110,140,95,40,140,90
+Abilities = STRONGJAW
 #------------------------------- 
 [SKARMORY,1]
 FormName = Mega Skarmory
-MegaStone = SKARMITE
-BaseStats = 65,120,160,80,60,80
-Abilities = HYPERCUTTER
+MegaStone = SKARMORITE
+BaseStats = 65,135,145,95,40,85
+Abilities = BATTLEARMOR
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS
 #---------------------------------------------------------------------------------------------
