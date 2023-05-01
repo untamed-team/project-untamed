@@ -169,7 +169,7 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
+#Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
 Pokemon = NOCTAVISPA,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
