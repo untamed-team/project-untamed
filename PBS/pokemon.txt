@@ -1,32 +1,5 @@
 # See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-#[BULBASAUR]
-#Name = Bulbasaur
-#Types = GRASS,POISON
-#BaseStats = 45,49,49,45,65,65
-#GenderRatio = FemaleOneEighth
-#GrowthRate = Parabolic
-#BaseExp = 64
-#EVs = SPECIAL_ATTACK,1
-#CatchRate = 45
-#Happiness = 50
-#Abilities = OVERGROW
-#HiddenAbilities = CHLOROPHYLL
-#Moves = 1,TACKLE,1,GROWL,3,VINEWHIP,6,GROWTH,9,LEECHSEED,12,RAZORLEAF,15,POISONPOWDER,15,SLEEPPOWDER,18,SEEDBOMB,21,TAKEDOWN,24,SWEETSCENT,27,SYNTHESIS,30,WORRYSEED,33,DOUBLEEDGE,36,SOLARBEAM
-#TutorMoves = AMNESIA,ATTRACT,BODYSLAM,BULLETSEED,CHARM,CUT,DOUBLETEAM,ENDURE,ENERGYBALL,FACADE,FALSESWIPE,FLASH,GIGADRAIN,GRASSKNOT,GRASSPLEDGE,GRASSYGLIDE,GRASSYTERRAIN,HELPINGHAND,HIDDENPOWER,LEAFSTORM,LIGHTSCREEN,MAGICALLEAF,POWERWHIP,PROTECT,REST,ROCKSMASH,ROUND,SAFEGUARD,SEEDBOMB,SLEEPTALK,SLUDGEBOMB,SNORE,SOLARBEAM,STRENGTH,SUBSTITUTE,SUNNYDAY,SWAGGER,SWORDSDANCE,TOXIC,VENOSHOCK,WEATHERBALL,WORKUP
-#EggMoves = AMNESIA,CHARM,CURSE,GRASSYTERRAIN,INGRAIN,LEAFSTORM,MAGICALLEAF,NATUREPOWER,PETALDANCE,POWERWHIP,SKULLBASH,SLUDGE
-##EggGroups = Monster,Grass
-#HatchSteps = 5120
-#Height = 0.7
-#Weight = 6.9
-#Color = Green
-#Shape = Quadruped
-#Habitat = Grassland
-#Category = Seed
-#Pokedex = Bulbasaur can be seen napping in bright sunlight. There is a seed on its back. By soaking up the sun's rays, the seed grows progressively larger.
-#Generation = 1
-#Evolutions = IVYSAUR,Level,16
-#-------------------------------
 [MOLLUCOTTA]
 Name = Mollucotta
 Types = GRASS
@@ -4697,3 +4670,53 @@ Category = Darkness
 Pokedex = It digs branching holes in caves using its sharp claws in search of food--raw gems. A Sableye lurks in darkness and is seen only rarely.
 Generation = 3
 WildItemUncommon = WIDELENS
+#-------------------------------
+[MAGIKARP]
+Name = Magikarp
+Types = WATER
+BaseStats = 20,10,55,80,15,20
+GenderRatio = Female50Percent
+GrowthRate = Slow
+BaseExp = 40
+EVs = SPEED,1
+CatchRate = 255
+Happiness = 50
+Abilities = SWIFTSWIM
+HiddenAbilities = RATTLED
+Moves = 1,SPLASH,15,TACKLE,25,FLAIL
+TutorMoves = BOUNCE,HYDROPUMP
+EggGroups = Water2,Dragon
+HatchSteps = 1280
+Height = 0.9
+Weight = 10.0
+Color = Red
+Shape = Finned
+Habitat = WatersEdge
+Category = Fish
+Pokedex = Its swimming muscles are weak, so it is easily washed away by currents. In places where water pools, you can see many Magikarp deposited there by the flow.
+Generation = 1
+#-------------------------------
+[GYARADOS]
+Name = Gyarados
+Types = WATER,FLYING
+BaseStats = 95,125,79,81,60,100
+GenderRatio = Female50Percent
+GrowthRate = Slow
+BaseExp = 189
+EVs = ATTACK,2
+CatchRate = 45
+Happiness = 50
+Abilities = INTIMIDATE
+HiddenAbilities = MOXIE
+Moves = 0,BITE,1,BITE,1,FLAIL,1,SPLASH,1,TACKLE,1,LEER,1,TWISTER,4,WHIRLPOOL,8,ICEFANG,12,BRINE,16,SCARYFACE,21,WATERFALL,24,CRUNCH,28,RAINDANCE,32,AQUATAIL,36,DRAGONDANCE,40,HYDROPUMP,44,HURRICANE,48,THRASH,52,HYPERBEAM
+TutorMoves = ATTRACT,AVALANCHE,BLIZZARD,BODYSLAM,BOUNCE,BRINE,BRUTALSWING,BULLDOZE,CRUNCH,DARKPULSE,DIVE,DOUBLETEAM,DRAGONDANCE,DRAGONPULSE,EARTHQUAKE,ENDURE,FACADE,FIREBLAST,FLAMETHROWER,GIGAIMPACT,HAIL,HIDDENPOWER,HURRICANE,HYDROPUMP,HYPERBEAM,ICEBEAM,ICEFANG,ICYWIND,IRONHEAD,IRONTAIL,LASHOUT,MUDDYWATER,OUTRAGE,PAYBACK,POWERWHIP,PROTECT,RAINDANCE,REST,ROAR,ROCKSMASH,ROUND,SANDSTORM,SCALD,SCALESHOT,SCARYFACE,SLEEPTALK,SNORE,STONEEDGE,STRENGTH,SUBSTITUTE,SURF,SWAGGER,TAUNT,THUNDER,THUNDERBOLT,THUNDERWAVE,TORMENT,UPROAR,WATERFALL,WATERPULSE,WHIRLPOOL
+EggGroups = Water2,Dragon
+HatchSteps = 1280
+Height = 6.5
+Weight = 235.0
+Color = Blue
+Shape = Serpentine
+Habitat = WatersEdge
+Category = Atrocious # thats so true pokedex
+Pokedex = It is an extremely vicious and violent Pokémon. When humans begin to fight, it will appear and burn everything to the ground with intensely hot flames.
+Generation = 1

@@ -54,6 +54,10 @@ Outdoor = true
 Name = San Cerigold PC
 HealingSpot = 4,22,22
 #-------------------------------
+[020]   # Test World
+Name = Test World
+DiveMap = 38
+#-------------------------------
 [022]   # Veravalles Town
 Name = Veravalles Town
 Outdoor = true

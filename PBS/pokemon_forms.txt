@@ -86,7 +86,7 @@ Abilities = BATTLEARMOR
 Height = 1.9
 Weight = 60.3
 #---------------------------------------------------------------------------------------------
-# FORM CHANGES THAT AFFECT STATS
+# FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
 [FURFROU,1]
 FormName = Heart Trim
@@ -231,6 +231,26 @@ FormName = Sandy Form
 Types = GROUND
 Color = Brown
 Pokedex = catsform so cute i want to pat it
+#-------------------------------
+[MAGIKARP,2]
+FormName = mazah
+Types = WATER,ROCK
+#-------------------------------
+[GYARADOS,1]
+FormName = Mega Gyarados
+MegaStone = GYARADOSITE
+Types = WATER,DARK
+BaseStats = 95,155,109,81,70,130
+BaseExp = 224
+Abilities = MOLDBREAKER
+HiddenAbilities = MOLDBREAKER
+Weight = 305.0
+Pokedex = It zooms out of the water at Mach speeds. Even large ships caught in its path are split cleanly in two!
+Generation = 6
+#-------------------------------
+[GYARADOS,2]
+FormName = mazah
+Types = WATER,ROCK
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
 #---------------------------------------------------------------------------------------------
