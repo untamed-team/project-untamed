@@ -59,6 +59,32 @@ BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
 Height = 2.0
 Weight = 81.6
+#-------------------------------
+[MILOTIC,1]
+FormName = Mega Milotic
+MegaStone = MILOTITE
+Type1 = WATER
+Type2 = FAIRY
+BaseStats = 95,60,99,91,130,165
+Abilities = DAZZLING
+Height = 7.6
+Weight = 193.4
+#-------------------------------
+[SUCHOBILE,1]
+FormName = Mega Suchobile
+MegaStone = SUCHOBITE
+BaseStats = 110,140,95,40,140,90
+Abilities = STRONGJAW
+Height = 2.7
+Weight = 345.6
+#------------------------------- 
+[SKARMORY,1]
+FormName = Mega Skarmory
+MegaStone = SKARMORITE
+BaseStats = 65,135,145,95,40,85
+Abilities = BATTLEARMOR
+Height = 1.9
+Weight = 60.3
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS
 #---------------------------------------------------------------------------------------------
