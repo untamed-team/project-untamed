@@ -13,4 +13,4 @@
 # Papelbrook (31) - Route 2 (26)
 31,South,0,26,North,15
 # Calojarro Plaza (36) - Route 2 (26)
-36,West,0,26,East,22
+36,West,0,26,East,28
