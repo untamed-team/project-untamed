@@ -233,8 +233,14 @@ Color = Brown
 Pokedex = catsform so cute i want to pat it
 #-------------------------------
 [MAGIKARP,2]
-FormName = mazah
+FormName = Mazian Magikarp
 Types = WATER,ROCK
+BaseStats = 20,10,80,50,15,25
+BaseExp = 40
+Abilities = SOLIDROCK
+HiddenAbilities = POWEROFALCHEMY
+Moves = 1,SPLASH,15,SMACKDOWN,25,FLAIL
+TutorMoves = BODYSLAM,SURF
 #-------------------------------
 [GYARADOS,1]
 FormName = Mega Gyarados
@@ -249,8 +255,14 @@ Pokedex = It zooms out of the water at Mach speeds. Even large ships caught in i
 Generation = 6
 #-------------------------------
 [GYARADOS,2]
-FormName = mazah
+FormName = Mazian Gyarados
 Types = WATER,ROCK
+BaseStats = 85,89,125,60,91,90
+BaseExp = 189
+Abilities = FULLMETALBODY
+HiddenAbilities = STEELYSPIRIT
+Moves = 0,MIRRORSHOT,1,BITE,1,FLAIL,1,SPLASH,1,SMACKDOWN,1,LEER,1,TWISTER,4,WHIRLPOOL,8,ICEFANG,12,BRINE,16,SCARYFACE,21,WATERPULSE,24,CRUNCH,28,IRONDEFENSE,32,POWERGEM,36,ROCKPOLISH,40,HYDROPUMP,44,FORGEBREATH,48,GEODEBURST,52,STEELBEAM
+TutorMoves = WORKUP,ROAR,SWAGGER,ICEBEAM,BLIZZARD,RAINDANCE,EARTHQUAKE,ROCKTOMB,FACADE,FLASHCANNON,BODYSLAM,ROCKSLIDE,DRAGONPULSE,SCREECH,STONEEDGE,GEODEBURST,SNARL,LIQUIDATION,ZENHEADBUTT,AVALANCHE,GYROBALL,DEFOG,SURF,STRENGTH,WATERFALL,DIVE,AQUATAIL,IRONHEAD,IRONTAIL,ROCKBLAST,FORGEBREATH,SCALESHOT
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
 #---------------------------------------------------------------------------------------------
