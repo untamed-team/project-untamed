@@ -5,7 +5,7 @@
 [NOCTAVISPA,1]
 FormName = Mega Noctavispa
 MegaStone = NOCTAVISPITE
-BaseStats = 65,141,78,103,139,69
+BaseStats = 65,134,78,107,107,69
 Abilities = DARKAURA
 Height = 0.9
 Weight = 18.6
