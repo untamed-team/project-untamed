@@ -9112,7 +9112,7 @@ Description = Move modified and used by Premonition.
 #-------------------------------
 [CRIMSONSURGE]
 Name = Crimson Surge
-Type = POISON
+Type = WATER
 Category = Special
 Power = 45
 Accuracy = 100
