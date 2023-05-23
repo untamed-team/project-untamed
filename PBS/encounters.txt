@@ -2,10 +2,10 @@
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
-    20,DUSKULL,6,8
-    20,LILORINA,5,10
-    15,BUDEW,5,8
-    15,FLABEBE,5,6
+    20,DUSKULL,6,7
+    20,LILORINA,5,6
+    15,BUDEW,5,7
+    15,FLABEBE,5,7
     10,MURKROW,4,7
     10,VULPIX,5,7
 #-------------------------------
@@ -14,8 +14,8 @@ Water,2
     60,LOTAD,8,11
     40,FEEBAS,8,11
 OldRod
-    60,LOTAD,6,9
-    40,FEEBAS,5,10
+    60,LOTAD,6,6
+    40,FEEBAS,5,6
 GoodRod
     60,BARBOACH,12,17
     20,FEEBAS,10,16
@@ -43,9 +43,9 @@ Land,21
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
-    50,ZEAZAYA,5,7
+    50,ZEAZAYA,5,6
     20,MINIMELO,4,6
-    15,PUMPKABOO,4,7
+    15,PUMPKABOO,4,6
     10,MURKROW,3,4
     5,DRILBUR,2,6
 #-------------------------------
@@ -54,8 +54,8 @@ Water,2
     60,LOTAD,8,11
     40,FEEBAS,8,11
 OldRod
-    60,LOTAD,6,9
-    40,FEEBAS,5,10
+    60,LOTAD,6,6
+    40,FEEBAS,5,6
 GoodRod
     60,BARBOACH,12,17
     20,FEEBAS,10,16
