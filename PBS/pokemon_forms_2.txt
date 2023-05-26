@@ -23,8 +23,6 @@ Weight = 3.5
 [ATELANGLER,1]
 FormName = Mega Atelangler
 MegaStone = ATELANGLITE
-Type1 = NORMAL
-Type2 = WATER
 BaseStats = 95,123,106,109,69,84
 Abilities = BAITEDLINE
 Height = 1.9
@@ -64,7 +62,7 @@ Weight = 81.6
 FormName = Mega Milotic
 MegaStone = MILOTITE
 Type1 = WATER
-Type2 = FAIRY
+Type2 = DRAGON
 BaseStats = 95,85,96,82,126,156
 Abilities = DAZZLING
 #-------------------------------
