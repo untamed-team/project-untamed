@@ -6899,13 +6899,14 @@ Description = The user coils up and concentrates. This raises its Attack and Def
 [CORROSIVEGAS]
 Name = Corrosive Gas
 Type = POISON
-Category = Status
+Power = 40
+Category = Special
 Accuracy = 100
-TotalPP = 40
-Target = AllNearOthers
+TotalPP = 10
+Target = NearOther
 FunctionCode = CorrodeTargetItem
 Flags = CanProtect,CanMirrorMove
-Description = The user surrounds everything around it with highly acidic gas and melts away items they hold.
+Description = The user surrounds a target with highly acidic gas and melts away items they hold.
 #-------------------------------
 [GASTROACID]
 Name = Gastro Acid
@@ -9121,4 +9122,67 @@ Target = NearOther
 FunctionCode = OverrideTargetStatusWithPoison
 Flags = CanProtect,CanMirrorMove
 Description = After doing damage, if the target has a status condition that is not poison, leave the target poisoned.
+#-------------------------------
+[EROSIONWAVE]
+Name = Erosion Wave
+Type = ROCK
+Category = Special
+Power = 95
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = LowerTargetSpDef1
+Flags = CanProtect,CanMirrorMove
+EffectChance = 20
+Description = Pummels the foe with a dust storm. May also lower the foe’s Sp. Def.
+#-------------------------------
+[OWTHEEDGE]
+Name = Ow The Edge
+Type = DARK
+Category = Physical
+Power = 120
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = RecoilThirdOfDamageDealt
+Flags = Contact,CanProtect,CanMirrorMove
+Description = The user teleports behind the target and slices, cutting itself as well.
+#-------------------------------
+[THINKFAST]
+Name = Think Fast
+Type = PSYCHIC
+Category = Physical
+Power = 40
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+Priority = 1
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+Description = The user quickly thinks up a weak psychic attack.
+#-------------------------------
+[THOUSANDFOLDS]
+Name = Thousand Folds
+Type = STEEL
+Category = Physical
+Power = 90
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = RemoveProtections
+Flags = Contact,CanMirrorMove,Blade
+Description = A folded blade that tears through a target using Protect or Detect.
+#-------------------------------
+[TOXIRAVAGE]
+Name = Toxiravage
+Type = NORMAL
+Category = Physical
+Power = 80
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 2
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+Description = Sharp, toxic spikes impale the target. Always hits first.
 #-------------------------------
