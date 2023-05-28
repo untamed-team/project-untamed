@@ -2888,7 +2888,7 @@ Color = Yellow
 Shape = Finned
 Category = Peckish
 Pokedex = Banagnaw will eat nearly anything, but they're partial to sweets dropped into the sea by humans. Trainers struggle to catch them due to their slippery skin.
-Evolutions = POTASSOPOD,Potassopod,26,NANAHI,Level,22
+Evolutions = POTASSOPOD,Potassopod,26,NANAHI,Level,26
 #-------------------------------
 [NANAHI]
 Name = Nanahi
