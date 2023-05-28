@@ -6384,9 +6384,9 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Suchobile hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[SKARMITE]
-Name = Skarmite
-NamePlural = Skarmites
+[SKARMORITE]
+Name = Skarmorite
+NamePlural = Skarmorites
 Pocket = 1
 Price = 0
 Flags = Fling_30

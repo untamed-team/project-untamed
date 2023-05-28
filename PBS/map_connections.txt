@@ -4,13 +4,15 @@
 27,0,11,4,180,0
 # Route 1 (48) - Veravalles Town (22)
 48,West,19,22,East,0
-# Ice Cream Factory (28) - Calojarro (27)
-28,South,9,27,North,0
+# Papelbrook (31) - Route 2 (1) (26)
+31,South,0,26,North,13
+# Route 2 (2) (39) - Route 2 (1) (26)
+39,West,0,26,East,0
 # Route 3 (29) - Calojarro (27)
 29,North,28,27,South,0
+# Route 2 (2) (39) - Papelbrook (31)
+39,North,0,31,South,35
 # Route 1 (48) - Hacienda Castaneda (79)
 48,West,0,79,East,26
-# Papelbrook (31) - Route 2 (26)
-31,South,0,26,North,15
-# Calojarro Plaza (36) - Route 2 (26)
-36,West,0,26,East,22
+# Ice Cream Factory (28) - Calojarro Plaza (36)
+28,South,0,36,North,0
