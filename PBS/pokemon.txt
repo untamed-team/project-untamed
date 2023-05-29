@@ -2888,7 +2888,7 @@ Color = Yellow
 Shape = Finned
 Category = Peckish
 Pokedex = Banagnaw will eat nearly anything, but they're partial to sweets dropped into the sea by humans. Trainers struggle to catch them due to their slippery skin.
-Evolutions = POTASSOPOD,Potassopod,26,NANAHI,Level,22
+Evolutions = POTASSOPOD,Potassopod,26,NANAHI,Level,26
 #-------------------------------
 # in rain, outspeeds a pokemon with nature boosted 255 base speed with 416 speed EVs
 # in rain, speed ties with regieleki (eleki has +1 speed 160 speed EVs)
@@ -2904,7 +2904,7 @@ CatchRate = 60
 Happiness = 70
 Abilities = UNBURDEN,RIPEN
 HiddenAbilities = SWIFTSWIM
-Moves = 0,CRUNCH,1,TACKLE,1,LEAFAGE,1,SPLASH,5,LEAFAGE,9,AQUAJET,13,GROWTH,17,BITE,22,HORNLEECH,27,AQUATAIL,32,TAKEDOWN,37,FLIPTURN,45,SYNTHESIS,53,DOUBLEEDGE,61,GRASSYGLIDE,69,LIQUIDATION
+Moves = 0,CRUNCH,1,TACKLE,1,LEAFAGE,1,SPLASH,5,LEAFAGE,9,AQUAJET,13,GROWTH,17,BITE,22,HORNLEECH,27,AQUATAIL,32,TAKEDOWN,37,FLIPTURN,45,SYNTHESIS,53,DOUBLEEDGE,61,LEAFBLADE,69,LIQUIDATION
 TutorMoves = SURF,WATERFALL,DIVE,ICEBEAM,BLIZZARD,HYPERBEAM,RAINDANCE,SOLARBEAM,LIQUIDATION,SCALD,ENERGYBALL,GRASSKNOT,ACROBATICS,SPEEDSWAP,UTURN,WILDCHARGE,FLIPTURN,GRASSYGLIDE,GRASSPLEDGE,WATERPLEDGE,ICYWIND
 EggGroups = Water2,Grass
 HatchSteps = 5355
@@ -4568,7 +4568,7 @@ Evolutions = ELTTAR,Level,24
 [ELTTAR]
 Name = Elttar
 Types = POISON,DARK
-BaseStats = 44,101,64,85,90,64
+BaseStats = 52,101,64,87,75,69
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 157
