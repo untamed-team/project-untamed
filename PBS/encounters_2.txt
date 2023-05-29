@@ -25,7 +25,7 @@ GoodRod
 Land,21
     20,SKIDDO,5
     15,FLABEBE,5
-    15,TECHUPPI,5
+    15,M_EKANS,5
     10,HOOTHOOT,5
     10,SUNKERN,5
     10,WRENNER,5
@@ -62,7 +62,7 @@ GoodRod
     20,LOTAD,10,15
 Land,21
     30,PACUNA,2,4
-    20,TECHUPPI,3,6
+    20,M_EKANS,3,6
     20,SUNKERN,3,4
     15,MINIMELO,2,4
     15,WRENNER,3,5

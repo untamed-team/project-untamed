@@ -786,7 +786,7 @@ Pokedex = Roserade in the Mazah region have a special connection with the afterl
 Generation = 9
 #-------------------------------
 [EKANS]
-Name = Ekans
+Name = Failsafe_Ekans
 Types = POISON
 BaseStats = 35,60,44,55,40,54
 GenderRatio = Female50Percent
@@ -813,7 +813,7 @@ Generation = 1
 Evolutions = ARBOK,Level,22
 #-------------------------------
 [ARBOK]
-Name = Arbok
+Name = Failsafe_Arbok
 Types = POISON,DARK
 BaseStats = 75,95,69,80,66,84
 GenderRatio = Female50Percent
