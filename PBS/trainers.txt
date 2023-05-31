@@ -7,26 +7,26 @@ Pokemon = FLABEBE,4
 #-------------------------------
 [YOUNGSTER_F,Emma,100]
 LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,6
-Pokemon = FLABEBE,6
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
 #-------------------------------
 [YOUNGSTER_M,Julián]
 LoseText = B-but, how did I lose?
-Pokemon = WRENNER,5
+Pokemon = WRENNER,4
 #-------------------------------
 [YOUNGSTER_M,Julián,100]
 LoseText = B-but, how did I lose?
-Pokemon = WRENNER,7
+Pokemon = WRENNER,4
 #-------------------------------
 [BUGCATCHER,Marco]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,5
-Pokemon = LEDYBA,5
+Pokemon = MINIMELO,4
+Pokemon = LEDYBA,4
 #-------------------------------
 [BUGCATCHER,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,7
-Pokemon = LEDYBA,7
+Pokemon = MINIMELO,4
+Pokemon = LEDYBA,4
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
@@ -70,7 +70,8 @@ Pokemon = MURKROW,6
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = MURKROW,8
+Pokemon = MURKROW,6
+    AbilityIndex = 1
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
@@ -78,83 +79,87 @@ Pokemon = TECHUPPI,6
 #-------------------------------
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.
-Pokemon = TECHUPPI,8
+Pokemon = TECHUPPI,6
+    AbilityIndex = 2
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,8
-Pokemon = PHANTUMP,8
+Pokemon = PUMPKABOO,6
+Pokemon = PHANTUMP,7
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
 LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,10
-Pokemon = PHANTUMP,10
+Pokemon = PUMPKABOO,6
+Pokemon = PHANTUMP,7
 #-------------------------------
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, I still can't do this right.
-Pokemon = LILORINA,14
+Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
     Ace = yes
-Pokemon = LITWICK,12
+Pokemon = LITWICK,8
     Moves = EMBER,HEX,WILLOWISP,FIRESPIN
     AbilityIndex = 1
-Pokemon = M_ROSELIA,12
+Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, I still can't do this right.
-Pokemon = LILORINA,16
+Pokemon = LILORINA,8
+	Nature = BOLD
     Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
     AbilityIndex = 2
-    IV = 0,0,0,0,0,0
-    EV = 10,10,10,10,20,10
+    EV = 20,20,72,10,,10
     Ace = yes
-Pokemon = PACUNA,17
+Pokemon = PACUNA,8
+	Nature = JOLLY
     Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
+    EV = 10,20,10,72,,10
+    AbilityIndex = 1
+Pokemon = M_ROSELIA,8
+	Nature = MODEST
+    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,POLLENPUFF
     AbilityIndex = 2
-Pokemon = M_ROSELIA,15
-    Moves = DAZZLINGGLEAM,OMINOUSWIND,MEGADRAIN,POLLENPUFF
-    AbilityIndex = 0
-    EV = 10,10,10,10,20,10
+    EV = 30,72,10,10,,10
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,8
+Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,10
+Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
-Pokemon = CAFECARACHA,8
+Pokemon = CAFECARACHA,6
 #-------------------------------
 [FARMER,Feliciano,100]
 LoseText = Corn is surprisingly shady!
-Pokemon = CAFECARACHA,10
+Pokemon = CAFECARACHA,6
 #-------------------------------
 [FARMER,Rafa]
 LoseText = I need some water...
-Pokemon = SUNKERN,7
-Pokemon = DRILBUR,9
+Pokemon = SUNKERN,6
+Pokemon = DRILBUR,7
 #-------------------------------
 [FARMER,Rafa,100]
 LoseText = I need some water...
-Pokemon = SUNKERN,9
-Pokemon = DRILBUR,11
+Pokemon = SUNKERN,6
+Pokemon = DRILBUR,7
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?
-Pokemon = DUSKULL,9
-Pokemon = LITWICK,8
+Pokemon = DUSKULL,7
+Pokemon = LITWICK,7
     AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = ..Is that a no?
-Pokemon = DUSKULL,11
-Pokemon = LITWICK,10
+Pokemon = DUSKULL,7
+Pokemon = LITWICK,7
     AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,zinnia,1]
