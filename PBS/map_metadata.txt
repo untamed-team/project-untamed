@@ -19,6 +19,7 @@ ShowArea = true
 Bicycle = true
 Weather = Marigolds,100
 MapPosition = 0,20,3
+BattleBack = city
 #-------------------------------
 [005]   # San Cerigold Cemetery
 Name = San Cerigold Cemetery
@@ -27,6 +28,8 @@ ShowArea = true
 Bicycle = false
 Weather = Marigolds,100
 MapPosition = 0,20,3
+SnapEdges = true
+BattleBack = forest
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
@@ -43,9 +46,17 @@ Name = SE house-Purple
 [010]   # SE house-Green
 Name = SE house-Green
 #-------------------------------
+[017]   # Hacienda Garden
+Name = Hacienda Garden
+Outdoor = true
+#-------------------------------
 [019]   # San Cerigold PC
 Name = San Cerigold PC
 HealingSpot = 4,22,22
+#-------------------------------
+[020]   # Test World
+Name = Test World
+DiveMap = 38
 #-------------------------------
 [022]   # Veravalles Town
 Name = Veravalles Town
@@ -53,6 +64,11 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,19,5
+BattleBack = city
+#-------------------------------
+[024]   # Camp - Grassy
+Name = Camp - Grassy
+Outdoor = true
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
@@ -60,6 +76,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
+BattleBack = field
 #-------------------------------
 [078]   # Hacienda Fields
 Name = Hacienda Fields
@@ -67,6 +84,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,18,3
+BattleBack = field
 #-------------------------------
 [079]   # Hacienda Castaneda
 Name = Hacienda Castaneda
@@ -74,3 +92,4 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,18,4
+BattleBack = field

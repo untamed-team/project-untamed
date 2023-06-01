@@ -1,0 +1,4 @@
+Name       = Temporal Chains' Wardrobe
+Version    = 1.0
+Essentials = 20.1
+Credits    = DarrylBD99,StarWolff

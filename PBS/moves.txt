@@ -54,9 +54,9 @@ Description = Although this move has great power, it only works the first turn t
 Name = Pollen Puff
 Type = BUG
 Category = Special
-Power = 70
+Power = 90
 Accuracy = 100
-TotalPP = 10
+TotalPP = 15
 Target = NearOther
 FunctionCode = HealAllyOrDamageFoe
 Flags = CanProtect,CanMirrorMove,Bomb
@@ -285,7 +285,7 @@ Name = Quiver Dance
 Type = BUG
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 20
 Target = User
 FunctionCode = RaiseUserSpAtkSpDefSpd1
 Flags = Dance
@@ -449,12 +449,12 @@ Description = The user pretends to bow its head, but then it stabs the target wi
 Name = Jaw Lock
 Type = DARK
 Category = Physical
-Power = 80
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TrapUserAndTargetInBattle
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Biting
 EffectChance = 100
 Description = This move prevents the user and the target from switching out until either of them faints.
 #-------------------------------
@@ -758,11 +758,10 @@ Name = Obstruct
 Type = DARK
 Category = Status
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesObstruct
-Flags = DoublePPUse
 Description = The user protects itself from all attacks. Direct contact lowers the attacker's Defense.
 #-------------------------------
 [PARTINGSHOT]
@@ -844,15 +843,15 @@ Description = The user torments and enrages the foe, making it incapable of usin
 #-------------------------------
 [ETERNABEAM]
 Name = Eternabeam
-Type = DRAGON
+Type = POISON
 Category = Special
 Power = 160
 Accuracy = 90
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove,CannotMetronome
-Description = This is Eternatus's most powerful attack in its original form. The user can't move on the next turn.
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Pulse
+Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [DRAGONENERGY]
 Name = Dragon Energy
@@ -2021,12 +2020,12 @@ Name = Submission
 Type = FIGHTING
 Category = Physical
 Power = 80
-Accuracy = 80
+Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = RecoilQuarterOfDamageDealt
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user grabs the target and recklessly dives for the ground. It also hurts the user slightly.
+Description = The user grabs the target and recklessly dives for the ground. This move hurts the user slightly.
 #-------------------------------
 [BRICKBREAK]
 Name = Brick Break
@@ -2345,7 +2344,6 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
-Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [MATBLOCK]
@@ -2384,11 +2382,10 @@ Name = Quick Guard
 Type = FIGHTING
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 15
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromPriorityMoves
-Flags = DoublePPUse
 Description = The user protects itself and its allies from priority moves. If may fail if used in succession.
 #-------------------------------
 [VCREATE]
@@ -3136,7 +3133,7 @@ Name = Roost
 Type = FLYING
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHPLoseFlyingTypeThisTurn
 Description = The user lands and rests its body. It restores the user's HP by up to half of its max HP.
@@ -3146,9 +3143,8 @@ Name = Tailwind
 Type = FLYING
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 15
 Target = UserSide
-Priority = -7
 FunctionCode = StartUserSideDoubleSpeed
 Description = The user whips up a turbulent whirlwind that increases the Speed of all allies for three turns.
 #-------------------------------
@@ -3389,7 +3385,7 @@ Name = Destiny Bond
 Type = GHOST
 Category = Status
 Accuracy = 0
-TotalPP = 1
+TotalPP = 5
 Target = User
 FunctionCode = AttackerFaintsIfUserFaints
 Description = When this move is used, if the user faints, the foe that landed the knockout hit also faints.
@@ -3399,7 +3395,7 @@ Name = Grudge
 Type = GHOST
 Category = Status
 Accuracy = 0
-TotalPP = 1
+TotalPP = 5
 Target = User
 FunctionCode = SetAttackerMovePPTo0IfUserFaints
 Description = If the user faints, the user's grudge fully depletes the PP of the foe's move that knocked it out.
@@ -3773,7 +3769,7 @@ Description = The user attacks by pelting the target with leaves.
 Name = Mega Drain
 Type = GRASS
 Category = Special
-Power = 40
+Power = 50
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
@@ -3809,7 +3805,7 @@ Description = The user forcefully shoots seeds at the target. Two to five seeds 
 Name = Absorb
 Type = GRASS
 Category = Special
-Power = 20
+Power = 30
 Accuracy = 100
 TotalPP = 25
 Target = NearOther
@@ -3944,7 +3940,6 @@ TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromTargetingMovesSpikyShield
-Flags = DoublePPUse
 Description = Protects the user from attacks. Also damages attackers that make contact with the user.
 #-------------------------------
 [SPORE]
@@ -3963,11 +3958,11 @@ Name = Strength Sap
 Type = GRASS
 Category = Status
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
 FunctionCode = HealUserByTargetAttackLowerTargetAttack1
-Flags = CanProtect,CanMirrorMove,DoublePPUse
-Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat. Double PP usage.
+Flags = CanProtect,CanMirrorMove
+Description = Restores HP by the half of target's Attack stat. Lowers the target's Attack stat.
 #-------------------------------
 [STUNSPORE]
 Name = Stun Spore
@@ -6267,11 +6262,10 @@ Name = Protect
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
-Flags = DoublePPUse
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [PSYCHUP]
@@ -6289,7 +6283,7 @@ Name = Recover
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHP
 Description = Restoring its own cells, the user restores its own HP by half of its max HP.
@@ -6384,7 +6378,7 @@ Name = Shell Smash
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 15
 Target = User
 FunctionCode = LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2
 Description = Sharply lowers its defenses but raises Speed and sharply raises attacking stats.
@@ -6457,7 +6451,7 @@ Name = Soft-Boiled
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHP
 Description = The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP.
@@ -6885,11 +6879,10 @@ Name = Baneful Bunker
 Type = POISON
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUserBanefulBunker
-Flags = DoublePPUse
 Description = Protects the user from attacks. Also poisons any attacker that makes contact with the user.
 #-------------------------------
 [COIL]
@@ -7008,9 +7001,9 @@ Power = 160
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = AttackAndSkipNextTurn
+FunctionCode = AttackAndSkipNextTurn,Bomb
 Flags = CanProtect,CanMirrorMove
-Description = The user shoots powerful lasers using the power of a prism. The user can't move on the next turn.
+Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [PSYCHOBOOST]
 Name = Psycho Boost
@@ -7944,11 +7937,10 @@ Name = Wide Guard
 Type = ROCK
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = UserSide
 Priority = 3
 FunctionCode = ProtectUserSideFromMultiTargetDamagingMoves
-Flags = DoublePPUse
 Description = The user and its allies are protected from wide-ranging attacks for a turn. May fail if used in succession.
 #-------------------------------
 [DOOMDESIRE]
@@ -8259,11 +8251,10 @@ Name = King's Shield
 Type = STEEL
 Category = Status
 Accuracy = 0
-TotalPP = 5
+TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesKingsShield
-Flags = DoublePPUse
 Description = Protects itself from damage. It also harshly lowers the Attack of attackers that make contact.
 #-------------------------------
 [METALSOUND]
@@ -8779,6 +8770,18 @@ Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 0
 Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
 #-------------------------------
+[KINETICREND]
+Name = Kinetic Rend
+Type = PSYCHIC
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 20
+Target = NearOther
+FunctionCode = SuperEffectiveAgainstSteel
+Flags = CanProtect,CanMirrorMove
+Description = The user deforms the space around the target. Is super-effective on Steel-types.
+#-------------------------------
 [JOLTKICK]
 Name = Jolt Kick
 Type = ELECTRIC
@@ -8910,12 +8913,11 @@ Type = ROCK
 Category = Special
 Power = 110
 Accuracy = 80
-TotalPP = 20
+TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = None
 Flags = CanProtect
-EffectChance = 10
 Description = The user attacks its target with a hail of glittering crystals.
 #-------------------------------
 [FORGEBREATH]
@@ -8938,7 +8940,7 @@ Type = NORMAL
 Category = Status
 Power = 0
 Accuracy = 0
-TotalPP = 40
+TotalPP = 20
 Target = UserAndAllies
 Priority = 0
 FunctionCode = RaiseUserSpAtk1
@@ -8985,7 +8987,7 @@ Priority = 0
 FunctionCode = Supernova
 Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,CannotMetronome
 EffectChance = 0
-Description = This move is Rock and Fire type simultaneously. It damages the user heavily.
+Description = This move is Rock-type and Fire-type simultaneously. It damages the user heavily.
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
@@ -9013,7 +9015,7 @@ Priority = 0
 FunctionCode = TitanWrath
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
-Description = The damage is based on the user's highest attacking stat. The move's type is set by the user's type.
+Description = The damage is based on the user's highest plain, non-HP stat. The move's type is set by the user's type.
 #-------------------------------
 [SIRENSONG]
 Name = Siren Song
@@ -9039,9 +9041,9 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = Rebalancing
-Flags = CanProtect,CanMirrorMove,DoublePPUse,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
-Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat. Double PP usage.
+Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
 [FRIGIDMAW]
 Name = Frigid Maw
@@ -9067,7 +9069,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = HealUserByHalfOfDamageDone
-Flags = CanProtect,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
 Description = The user drains the life force from the target. This move heals the user by 50% of the damage dealt.
 #-------------------------------
@@ -9080,6 +9082,55 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = HigherDamageInRain
-Flags = CanProtect
-Description = The user attacks by sending a spray of superheated steam towards its target, this move's power is boosted in the rain.
+Flags = CanProtect,CanMirrorMove
+Description = The user attacks by sending a spray of superheated steam towards its target. This move's power is boosted in the rain.
+#-------------------------------
+[QUESOBLAST]
+Name = Queso Blast
+Type = QMARKS
+Category = Physical
+Power = 30
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+FunctionCode = HitThreeToFiveTimes
+Flags = CanProtect,CanMirrorMove,CannotMetronome
+EffectChance = 15
+Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
+#-------------------------------
+[PREMONITIONMOVE]
+Name = Premonition Dummy
+Type = QMARKS
+Category = Special
+Power = 1
+Accuracy = 100
+TotalPP = 0
+Target = NearOther
+FunctionCode = AttackOneTurnLater
+Description = Move modified and used by Premonition.
+#------------------------------- what if toxic but better in every way?
+[CRIMSONSURGE]
+Name = Crimson Surge
+Type = WATER
+Category = Special
+Power = 60
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = OverrideTargetStatusWithPoison
+Flags = CanProtect,CanMirrorMove
+Description = After doing damage, the target is left poisoned. Regardless if the target was already statused.
+#-------------------------------
+[TOXIRAVAGE]
+Name = Toxiravage
+Type = NORMAL
+Category = Physical
+Power = 80
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 2
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+Description = Sharp, toxic spikes impale the target. Always hits first.
 #-------------------------------
