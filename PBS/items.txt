@@ -3814,11 +3814,11 @@ Description = The user attacks by scattering a cloud of coarse debris. This may 
 Name = TM10
 NamePlural = TM10s
 Pocket = 4
-Price = 1500
+Price = 2000
 FieldUse = TM
-Flags = Fling_60
-Move = HIDDENPOWER
-Description = A unique attack that varies in type and intensity depending on the Pokémon using it.
+Flags = Fling_90
+Move = FLY
+Description = The user flies up into the sky and then strikes its target on the next turn.
 #-------------------------------
 [TM11]
 Name = TM11
@@ -4216,9 +4216,9 @@ NamePlural = TM50s
 Pocket = 4
 Price = 3000
 FieldUse = TM
-Flags = Fling_70
-Move = SCORCHINGSANDS
-Description = The user throws scorching sand at the target to attack. This may also burn the target.
+Flags = Fling_10
+Move = FRUSTRATION
+Description = A full-power attack that grows more powerful the less the user likes its Trainer.
 #-------------------------------
 [TM51]
 Name = TM51
@@ -4736,9 +4736,9 @@ NamePlural = TM102s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_90
-Move = FLY
-Description = The user flies up into the sky and then strikes its target on the next turn.
+Flags = Fling_40
+Move = ROCKSMASH
+Description = The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat.
 #-------------------------------
 [TM103]
 Name = TM103
@@ -4746,19 +4746,19 @@ NamePlural = TM103s
 Pocket = 4
 Price = 2500
 FieldUse = TM
-Flags = Fling_90
-Move = SURF
-Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+Flags = Fling_80
+Move = STRENGTH
+Description = The target is slugged with a punch thrown at maximum power.
 #-------------------------------
 [TM104]
 Name = TM104
 NamePlural = TM104s
 Pocket = 4
-Price = 2000
+Price = 2500
 FieldUse = TM
-Flags = Fling_80
-Move = STRENGTH
-Description = The target is slugged with a punch thrown at maximum power.
+Flags = Fling_90
+Move = ROCKCLIMB
+Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
 #-------------------------------
 [TM105]
 Name = TM105
@@ -4766,13 +4766,23 @@ NamePlural = TM105s
 Pocket = 4
 Price = 2500
 FieldUse = TM
-Flags = Fling_80
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch.
+Flags = Fling_90
+Move = SURF
+Description = The user attacks everything around it by swamping its surroundings with a giant wave.
 #-------------------------------
 [TM106]
 Name = TM106
 NamePlural = TM106s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_80
+Move = WATERFALL
+Description = The user charges at the target and may make it flinch.
+#-------------------------------
+[TM107]
+Name = TM107
+NamePlural = TM107s
 Pocket = 4
 Price = 2500
 FieldUse = TM
@@ -4795,8 +4805,8 @@ NamePlural = HM02s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = FLY
-Description = The user soars and then strikes on the next turn. This can also be used to fly to any familiar town.
+Move = ROCKSMASH
+Description = The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat.
 #-------------------------------
 [HM03]
 Name = HM03
@@ -4804,8 +4814,8 @@ NamePlural = HM03s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = SURF
-Description = Attacks everything by swamping the surroundings with a giant wave. This can also be used to cross water.
+Move = STRENGTH
+Description = The target is slugged with a punch thrown at maximum power. This can also be used to move heavy boulders.
 #-------------------------------
 [HM04]
 Name = HM04
@@ -4813,8 +4823,8 @@ NamePlural = HM04s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = STRENGTH
-Description = The target is slugged with a punch thrown at maximum power. This can also be used to move heavy boulders.
+Move = ROCKCLIMB
+Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
 #-------------------------------
 [HM05]
 Name = HM05
@@ -4822,12 +4832,21 @@ NamePlural = HM05s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
+Move = SURF
+Description = Attacks everything by swamping the surroundings with a giant wave. This can also be used to cross water.
 #-------------------------------
 [HM06]
 Name = HM06
 NamePlural = HM06s
+Pocket = 4
+Price = 0
+FieldUse = HM
+Move = WATERFALL
+Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
+#-------------------------------
+[HM07]
+Name = HM07
+NamePlural = HM07s
 Pocket = 4
 Price = 0
 FieldUse = HM
