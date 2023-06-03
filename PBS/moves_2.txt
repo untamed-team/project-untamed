@@ -524,7 +524,7 @@ Description = This move enables the user to attack first. It fails if the target
 Name = Knock Off
 Type = DARK
 Category = Physical
-Power = 65
+Power = 40
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -6902,7 +6902,7 @@ Type = POISON
 Power = 40
 Category = Special
 Accuracy = 100
-TotalPP = 10
+TotalPP = 20
 Target = NearOther
 FunctionCode = CorrodeTargetItem
 Flags = CanProtect,CanMirrorMove
@@ -9145,7 +9145,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = RecoilThirdOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Blade
 Description = The user teleports behind the target and slices, cutting itself as well.
 #-------------------------------
 [THINKFAST]
@@ -9185,4 +9185,16 @@ Priority = 2
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
 Description = Sharp, toxic spikes impale the target. Always hits first.
+#-------------------------------
+[SWINDLE]
+Name = Swindle
+Type = DARK
+Category = Special
+Power = 50
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = DoubleDamageIfTargetHasChoiceItem
+Flags = CanProtect,CanMirrorMove
+Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
 #-------------------------------
