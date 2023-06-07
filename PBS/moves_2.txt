@@ -9175,7 +9175,7 @@ Description = A folded blade that tears through a target using Protect or Detect
 #-------------------------------
 [TOXIRAVAGE]
 Name = Toxiravage
-Type = NORMAL
+Type = POISON
 Category = Physical
 Power = 80
 Accuracy = 100

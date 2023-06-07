@@ -9123,7 +9123,7 @@ Description = After doing damage, the target is left poisoned. Regardless if the
 #-------------------------------
 [TOXIRAVAGE]
 Name = Toxiravage
-Type = NORMAL
+Type = POISON
 Category = Physical
 Power = 80
 Accuracy = 100
