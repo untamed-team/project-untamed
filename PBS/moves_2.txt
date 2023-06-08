@@ -6904,7 +6904,7 @@ Category = Special
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
-FunctionCode = CorrodeTargetItem
+FunctionCode = RemoveTargetItem
 Flags = CanProtect,CanMirrorMove
 Description = The user surrounds a target with highly acidic gas and melts away items they hold.
 #-------------------------------
