@@ -1,0 +1,1552 @@
+Move MEGAHORN aka Megahorn has rough damage 10 and damage % 16
+Move MEGAHORN aka Megahorn has final score 39
+Move ATTACKORDER aka Attack Order has rough damage 8 and damage % 12
+Move ATTACKORDER aka Attack Order has final score 32
+Move BUGBUZZ aka Bug Buzz has rough damage 7 and damage % 11
+Move BUGBUZZ aka Bug Buzz has final score 28
+Move FIRSTIMPRESSION aka First Impression has rough damage 8 and damage % 12
+Move FIRSTIMPRESSION aka First Impression has final score 31
+Move POLLENPUFF aka Pollen Puff has rough damage 6 and damage % 9
+Move POLLENPUFF aka Pollen Puff has final score 23
+Move LEECHLIFE aka Leech Life has rough damage 7 and damage % 11
+Move LEECHLIFE aka Leech Life has final score 28
+Move LUNGE aka Lunge has rough damage 7 and damage % 11
+Move LUNGE aka Lunge has final score 28
+Move XSCISSOR aka X-Scissor has rough damage 7 and damage % 11
+Move XSCISSOR aka X-Scissor has final score 28
+Move SIGNALBEAM aka Signal Beam has rough damage 6 and damage % 9
+Move SIGNALBEAM aka Signal Beam has final score 53
+Move SKITTERSMACK aka Skitter Smack has rough damage 6 and damage % 9
+Move SKITTERSMACK aka Skitter Smack has final score 42
+Move UTURN aka U-turn has rough damage 6 and damage % 9
+Move UTURN aka U-turn has final score 23
+Move STEAMROLLER aka Steamroller has rough damage 6 and damage % 9
+Move STEAMROLLER aka Steamroller has final score 83
+Move BUGBITE aka Bug Bite has rough damage 6 and damage % 9
+Move BUGBITE aka Bug Bite has final score 23
+Move SILVERWIND aka Silver Wind has rough damage 5 and damage % 8
+Move SILVERWIND aka Silver Wind has final score 40
+Move FELLSTINGER aka Fell Stinger has rough damage 5 and damage % 8
+Move FELLSTINGER aka Fell Stinger has final score 50
+Move STRUGGLEBUG aka Struggle Bug has rough damage 5 and damage % 8
+Move STRUGGLEBUG aka Struggle Bug has final score 40
+Move FURYCUTTER aka Fury Cutter has rough damage 4 and damage % 6
+Move FURYCUTTER aka Fury Cutter has final score 13
+Move PINMISSILE aka Pin Missile has rough damage 3 and damage % 4
+Move PINMISSILE aka Pin Missile has final score 20
+Move TWINEEDLE aka Twineedle has rough damage 3 and damage % 4
+Move TWINEEDLE aka Twineedle has final score 46
+Move INFESTATION aka Infestation has rough damage 3 and damage % 4
+Move INFESTATION aka Infestation has final score 52
+Move DEFENDORDER aka Defend Order has rough damage 2 and damage % 25
+Move DEFENDORDER aka Defend Order has final score 31
+Move HEALORDER aka Heal Order has rough damage 2 and damage % 60
+Move HEALORDER aka Heal Order has final score 0
+Move POWDER aka Powder has rough damage 2 and damage % 10
+Move POWDER aka Powder has final score 0
+Move QUIVERDANCE aka Quiver Dance has rough damage 2 and damage % 40
+Move QUIVERDANCE aka Quiver Dance has final score 50
+Move RAGEPOWDER aka Rage Powder has rough damage 2 and damage % 25
+Move RAGEPOWDER aka Rage Powder has final score 0
+Move SPIDERWEB aka Spider Web has rough damage 2 and damage % 20
+Move SPIDERWEB aka Spider Web has final score 25
+Move STICKYWEB aka Sticky Web has rough damage 2 and damage % 60
+Move STICKYWEB aka Sticky Web has final score 0
+Move STRINGSHOT aka String Shot has rough damage 2 and damage % 10
+Move STRINGSHOT aka String Shot has final score 0
+Move TAILGLOW aka Tail Glow has rough damage 2 and damage % 35
+Move TAILGLOW aka Tail Glow has final score 43
+Move HYPERSPACEFURY aka Hyperspace Fury has rough damage 9 and damage % 14
+Move HYPERSPACEFURY aka Hyperspace Fury has final score 0
+Move FOULPLAY aka Foul Play has rough damage 12 and damage % 19
+Move FOULPLAY aka Foul Play has final score 48
+Move FIERYWRATH aka Fiery Wrath has rough damage 7 and damage % 11
+Move FIERYWRATH aka Fiery Wrath has final score 88
+Move DARKESTLARIAT aka Darkest Lariat has rough damage 8 and damage % 12
+Move DARKESTLARIAT aka Darkest Lariat has final score 31
+Move NIGHTDAZE aka Night Daze has rough damage 7 and damage % 11
+Move NIGHTDAZE aka Night Daze has final score 27
+Move CRUNCH aka Crunch has rough damage 7 and damage % 11
+Move CRUNCH aka Crunch has final score 28
+Move DARKPULSE aka Dark Pulse has rough damage 7 and damage % 11
+Move DARKPULSE aka Dark Pulse has final score 88
+Move FALSESURRENDER aka False Surrender has rough damage 7 and damage % 11
+Move FALSESURRENDER aka False Surrender has final score 28
+Move JAWLOCK aka Jaw Lock has rough damage 8 and damage % 12
+Move JAWLOCK aka Jaw Lock has final score 71
+Move THROATCHOP aka Throat Chop has rough damage 7 and damage % 11
+Move THROATCHOP aka Throat Chop has final score 28
+Move WICKEDBLOW aka Wicked Blow has rough damage 7 and damage % 11
+Move WICKEDBLOW aka Wicked Blow has final score 43
+Move LASHOUT aka Lash Out has rough damage 7 and damage % 11
+Move LASHOUT aka Lash Out has final score 28
+Move NIGHTSLASH aka Night Slash has rough damage 6 and damage % 9
+Move NIGHTSLASH aka Night Slash has final score 23
+Move SUCKERPUNCH aka Sucker Punch has rough damage 6 and damage % 9
+Move SUCKERPUNCH aka Sucker Punch has final score 23
+Move KNOCKOFF aka Knock Off has rough damage 4 and damage % 6
+Move KNOCKOFF aka Knock Off has final score 15
+Move ASSURANCE aka Assurance has rough damage 6 and damage % 9
+Move ASSURANCE aka Assurance has final score 23
+Move BITE aka Bite has rough damage 6 and damage % 9
+Move BITE aka Bite has final score 83
+Move BRUTALSWING aka Brutal Swing has rough damage 6 and damage % 9
+Move BRUTALSWING aka Brutal Swing has final score 23
+Move FEINTATTACK aka Feint Attack has rough damage 6 and damage % 9
+Move FEINTATTACK aka Feint Attack has final score 23
+Move THIEF aka Thief has rough damage 6 and damage % 9
+Move THIEF aka Thief has final score 0
+Move SNARL aka Snarl has rough damage 5 and damage % 8
+Move SNARL aka Snarl has final score 39
+Move PAYBACK aka Payback has rough damage 5 and damage % 8
+Move PAYBACK aka Payback has final score 50
+Move PURSUIT aka Pursuit has rough damage 4 and damage % 6
+Move PURSUIT aka Pursuit has final score 15
+Move BEATUP aka Beat Up has rough damage 2 and damage % 3
+Move BEATUP aka Beat Up has final score 17
+Move FLING aka Fling has rough damage 2 and damage % 3
+Move FLING aka Fling has final score 0
+Move POWERTRIP aka Power Trip has rough damage 2 and damage % 3
+Move POWERTRIP aka Power Trip has final score 11
+Move PUNISHMENT aka Punishment has rough damage 2 and damage % 3
+Move PUNISHMENT aka Punishment has final score 17
+Move DARKVOID aka Dark Void has rough damage 2 and damage % 100
+Move DARKVOID aka Dark Void has final score 50
+Move EMBARGO aka Embargo has rough damage 2 and damage % 10
+Move EMBARGO aka Embargo has final score 0
+Move FAKETEARS aka Fake Tears has rough damage 2 and damage % 15
+Move FAKETEARS aka Fake Tears has final score 15
+Move FLATTER aka Flatter has rough damage 2 and damage % 20
+Move FLATTER aka Flatter has final score 20
+Move HONECLAWS aka Hone Claws has rough damage 2 and damage % 35
+Move HONECLAWS aka Hone Claws has final score 43
+Move MEMENTO aka Memento has rough damage 2 and damage % 0
+Move MEMENTO aka Memento has final score 0
+Move NASTYPLOT aka Nasty Plot has rough damage 2 and damage % 35
+Move NASTYPLOT aka Nasty Plot has final score 43
+Move OBSTRUCT aka Obstruct has rough damage 2 and damage % 100
+Move OBSTRUCT aka Obstruct has final score 100
+Move PARTINGSHOT aka Parting Shot has rough damage 2 and damage % 35
+Move PARTINGSHOT aka Parting Shot has final score 35
+Move QUASH aka Quash has rough damage 2 and damage % 0
+Move QUASH aka Quash has final score 0
+Move SNATCH aka Snatch has rough damage 2 and damage % 5
+Move SNATCH aka Snatch has final score 0
+Move SWITCHEROO aka Switcheroo has rough damage 2 and damage % 25
+Move SWITCHEROO aka Switcheroo has final score 0
+Move TAUNT aka Taunt has rough damage 2 and damage % 25
+Move TAUNT aka Taunt has final score 25
+Move TOPSYTURVY aka Topsy-Turvy has rough damage 2 and damage % 25
+Move TOPSYTURVY aka Topsy-Turvy has final score 0
+Move TORMENT aka Torment has rough damage 2 and damage % 10
+Move TORMENT aka Torment has final score 0
+Move ETERNABEAM aka Eternabeam has rough damage 12 and damage % 19
+Move ETERNABEAM aka Eternabeam has final score 18
+Move DRAGONENERGY aka Dragon Energy has rough damage 11 and damage % 17
+Move DRAGONENERGY aka Dragon Energy has final score 34
+Move ROAROFTIME aka Roar of Time has rough damage 11 and damage % 17
+Move ROAROFTIME aka Roar of Time has final score 16
+Move DRACOMETEOR aka Draco Meteor has rough damage 10 and damage % 16
+Move DRACOMETEOR aka Draco Meteor has final score 31
+Move OUTRAGE aka Outrage has rough damage 10 and damage % 16
+Move OUTRAGE aka Outrage has final score 32
+Move CLANGINGSCALES aka Clanging Scales has rough damage 9 and damage % 14
+Move CLANGINGSCALES aka Clanging Scales has final score 28
+Move COREENFORCER aka Core Enforcer has rough damage 8 and damage % 12
+Move COREENFORCER aka Core Enforcer has final score 54
+Move DRAGONRUSH aka Dragon Rush has rough damage 9 and damage % 14
+Move DRAGONRUSH aka Dragon Rush has final score 87
+Move DYNAMAXCANNON aka Dynamax Cannon has rough damage 8 and damage % 12
+Move DYNAMAXCANNON aka Dynamax Cannon has final score 24
+Move SPACIALREND aka Spacial Rend has rough damage 8 and damage % 12
+Move SPACIALREND aka Spacial Rend has final score 23
+Move DRAGONHAMMER aka Dragon Hammer has rough damage 8 and damage % 12
+Move DRAGONHAMMER aka Dragon Hammer has final score 24
+Move DRAGONPULSE aka Dragon Pulse has rough damage 7 and damage % 11
+Move DRAGONPULSE aka Dragon Pulse has final score 22
+Move DRAGONCLAW aka Dragon Claw has rough damage 7 and damage % 11
+Move DRAGONCLAW aka Dragon Claw has final score 22
+Move BREAKINGSWIPE aka Breaking Swipe has rough damage 6 and damage % 9
+Move BREAKINGSWIPE aka Breaking Swipe has final score 18
+Move DRAGONBREATH aka Dragon Breath has rough damage 5 and damage % 8
+Move DRAGONBREATH aka Dragon Breath has final score 76
+Move DRAGONTAIL aka Dragon Tail has rough damage 6 and damage % 9
+Move DRAGONTAIL aka Dragon Tail has final score 17
+Move DRAGONDARTS aka Dragon Darts has rough damage 5 and damage % 8
+Move DRAGONDARTS aka Dragon Darts has final score 16
+Move DUALCHOP aka Dual Chop has rough damage 4 and damage % 6
+Move DUALCHOP aka Dual Chop has final score 16
+Move TWISTER aka Twister has rough damage 4 and damage % 6
+Move TWISTER aka Twister has final score 42
+Move SCALESHOT aka Scale Shot has rough damage 3 and damage % 4
+Move SCALESHOT aka Scale Shot has final score 7
+Move DRAGONRAGE aka Dragon Rage has rough damage 1 and damage % 1
+Move DRAGONRAGE aka Dragon Rage has final score 65
+Move CLANGOROUSSOUL aka Clangorous Soul has rough damage 2 and damage % 30
+Move CLANGOROUSSOUL aka Clangorous Soul has final score 30
+Move DRAGONDANCE aka Dragon Dance has rough damage 2 and damage % 40
+Move DRAGONDANCE aka Dragon Dance has final score 50
+Move BOLTSTRIKE aka Bolt Strike has rough damage 11 and damage % 17
+Move BOLTSTRIKE aka Bolt Strike has final score 93
+Move VOLTTACKLE aka Volt Tackle has rough damage 10 and damage % 16
+Move VOLTTACKLE aka Volt Tackle has final score 30
+Move ZAPCANNON aka Zap Cannon has rough damage 9 and damage % 14
+Move ZAPCANNON aka Zap Cannon has final score 87
+Move AURAWHEEL aka Aura Wheel has rough damage 9 and damage % 14
+Move AURAWHEEL aka Aura Wheel has final score 48
+Move THUNDER aka Thunder has rough damage 9 and damage % 14
+Move THUNDER aka Thunder has final score 87
+Move FUSIONBOLT aka Fusion Bolt has rough damage 9 and damage % 14
+Move FUSIONBOLT aka Fusion Bolt has final score 28
+Move PLASMAFISTS aka Plasma Fists has rough damage 9 and damage % 14
+Move PLASMAFISTS aka Plasma Fists has final score 28
+Move THUNDERBOLT aka Thunderbolt has rough damage 7 and damage % 11
+Move THUNDERBOLT aka Thunderbolt has final score 82
+Move WILDCHARGE aka Wild Charge has rough damage 8 and damage % 12
+Move WILDCHARGE aka Wild Charge has final score 22
+Move BOLTBEAK aka Bolt Beak has rough damage 8 and damage % 12
+Move BOLTBEAK aka Bolt Beak has final score 24
+Move DISCHARGE aka Discharge has rough damage 7 and damage % 11
+Move DISCHARGE aka Discharge has final score 82
+Move OVERDRIVE aka Overdrive has rough damage 7 and damage % 11
+Move OVERDRIVE aka Overdrive has final score 22
+Move THUNDERCAGE aka Thunder Cage has rough damage 7 and damage % 11
+Move THUNDERCAGE aka Thunder Cage has final score 61
+Move ZINGZAP aka Zing Zap has rough damage 7 and damage % 11
+Move ZINGZAP aka Zing Zap has final score 82
+Move THUNDERPUNCH aka Thunder Punch has rough damage 7 and damage % 11
+Move THUNDERPUNCH aka Thunder Punch has final score 82
+Move RISINGVOLTAGE aka Rising Voltage has rough damage 6 and damage % 9
+Move RISINGVOLTAGE aka Rising Voltage has final score 18
+Move VOLTSWITCH aka Volt Switch has rough damage 6 and damage % 9
+Move VOLTSWITCH aka Volt Switch has final score 18
+Move PARABOLICCHARGE aka Parabolic Charge has rough damage 6 and damage % 9
+Move PARABOLICCHARGE aka Parabolic Charge has final score 18
+Move SPARK aka Spark has rough damage 6 and damage % 9
+Move SPARK aka Spark has final score 78
+Move THUNDERFANG aka Thunder Fang has rough damage 6 and damage % 9
+Move THUNDERFANG aka Thunder Fang has final score 77
+Move SHOCKWAVE aka Shock Wave has rough damage 5 and damage % 8
+Move SHOCKWAVE aka Shock Wave has final score 16
+Move ELECTROWEB aka Electroweb has rough damage 5 and damage % 8
+Move ELECTROWEB aka Electroweb has final score 15
+Move CHARGEBEAM aka Charge Beam has rough damage 5 and damage % 8
+Move CHARGEBEAM aka Charge Beam has final score 35
+Move THUNDERSHOCK aka Thunder Shock has rough damage 4 and damage % 6
+Move THUNDERSHOCK aka Thunder Shock has final score 72
+Move NUZZLE aka Nuzzle has rough damage 3 and damage % 4
+Move NUZZLE aka Nuzzle has final score 68
+Move ELECTROBALL aka Electro Ball has rough damage 2 and damage % 3
+Move ELECTROBALL aka Electro Ball has final score 9
+Move CHARGE aka Charge has rough damage 2 and damage % 15
+Move CHARGE aka Charge has final score 18
+Move EERIEIMPULSE aka Eerie Impulse has rough damage 2 and damage % 15
+Move EERIEIMPULSE aka Eerie Impulse has final score 15
+Move ELECTRICTERRAIN aka Electric Terrain has rough damage 2 and damage % 30
+Move ELECTRICTERRAIN aka Electric Terrain has final score 37
+Move ELECTRIFY aka Electrify has rough damage 2 and damage % 20
+Move ELECTRIFY aka Electrify has final score 25
+Move IONDELUGE aka Ion Deluge has rough damage 2 and damage % 20
+Move IONDELUGE aka Ion Deluge has final score 25
+Move MAGNETRISE aka Magnet Rise has rough damage 2 and damage % 5
+Move MAGNETRISE aka Magnet Rise has final score 0
+Move MAGNETICFLUX aka Magnetic Flux has rough damage 2 and damage % 15
+Move MAGNETICFLUX aka Magnetic Flux has final score 0
+Move THUNDERWAVE aka Thunder Wave has rough damage 2 and damage % 35
+Move THUNDERWAVE aka Thunder Wave has final score 31
+Move LIGHTOFRUIN aka Light of Ruin has rough damage 11 and damage % 17
+Move LIGHTOFRUIN aka Light of Ruin has final score 32
+Move FLEURCANNON aka Fleur Cannon has rough damage 10 and damage % 16
+Move FLEURCANNON aka Fleur Cannon has final score 31
+Move MISTYEXPLOSION aka Misty Explosion has rough damage 8 and damage % 12
+Move MISTYEXPLOSION aka Misty Explosion has final score 0
+Move MOONBLAST aka Moonblast has rough damage 8 and damage % 12
+Move MOONBLAST aka Moonblast has final score 44
+Move PLAYROUGH aka Play Rough has rough damage 8 and damage % 12
+Move PLAYROUGH aka Play Rough has final score 23
+Move STRANGESTEAM aka Strange Steam has rough damage 7 and damage % 11
+Move STRANGESTEAM aka Strange Steam has final score 51
+Move DAZZLINGGLEAM aka Dazzling Gleam has rough damage 7 and damage % 11
+Move DAZZLINGGLEAM aka Dazzling Gleam has final score 22
+Move SPIRITBREAK aka Spirit Break has rough damage 7 and damage % 11
+Move SPIRITBREAK aka Spirit Break has final score 42
+Move DRAININGKISS aka Draining Kiss has rough damage 5 and damage % 8
+Move DRAININGKISS aka Draining Kiss has final score 16
+Move DISARMINGVOICE aka Disarming Voice has rough damage 4 and damage % 6
+Move DISARMINGVOICE aka Disarming Voice has final score 12
+Move FAIRYWIND aka Fairy Wind has rough damage 4 and damage % 6
+Move FAIRYWIND aka Fairy Wind has final score 12
+Move NATURESMADNESS aka Nature's Madness has rough damage 1 and damage % 1
+Move NATURESMADNESS aka Nature's Madness has final score 100
+Move AROMATICMIST aka Aromatic Mist has rough damage 2 and damage % 5
+Move AROMATICMIST aka Aromatic Mist has final score 0
+Move BABYDOLLEYES aka Baby-Doll Eyes has rough damage 2 and damage % 15
+Move BABYDOLLEYES aka Baby-Doll Eyes has final score 0
+Move CHARM aka Charm has rough damage 2 and damage % 10
+Move CHARM aka Charm has final score 0
+Move CRAFTYSHIELD aka Crafty Shield has rough damage 2 and damage % 0
+Move CRAFTYSHIELD aka Crafty Shield has final score 0
+Move DECORATE aka Decorate has rough damage 2 and damage % 10
+Move DECORATE aka Decorate has final score 0
+Move FAIRYLOCK aka Fairy Lock has rough damage 2 and damage % 5
+Move FAIRYLOCK aka Fairy Lock has final score 0
+Move FLORALHEALING aka Floral Healing has rough damage 2 and damage % 15
+Move FLORALHEALING aka Floral Healing has final score 0
+Move FLOWERSHIELD aka Flower Shield has rough damage 2 and damage % 20
+Move FLOWERSHIELD aka Flower Shield has final score 0
+Move GEOMANCY aka Geomancy has rough damage 2 and damage % 40
+Move GEOMANCY aka Geomancy has final score 50
+Move MISTYTERRAIN aka Misty Terrain has rough damage 2 and damage % 30
+Move MISTYTERRAIN aka Misty Terrain has final score 37
+Move MOONLIGHT aka Moonlight has rough damage 2 and damage % 60
+Move MOONLIGHT aka Moonlight has final score 0
+Move SWEETKISS aka Sweet Kiss has rough damage 2 and damage % 20
+Move SWEETKISS aka Sweet Kiss has final score 15
+Move FOCUSPUNCH aka Focus Punch has rough damage 12 and damage % 19
+Move FOCUSPUNCH aka Focus Punch has final score 57
+Move METEORASSAULT aka Meteor Assault has rough damage 12 and damage % 19
+Move METEORASSAULT aka Meteor Assault has final score 19
+Move HIGHJUMPKICK aka High Jump Kick has rough damage 11 and damage % 17
+Move HIGHJUMPKICK aka High Jump Kick has final score 51
+Move CLOSECOMBAT aka Close Combat has rough damage 10 and damage % 16
+Move CLOSECOMBAT aka Close Combat has final score 48
+Move FOCUSBLAST aka Focus Blast has rough damage 9 and damage % 14
+Move FOCUSBLAST aka Focus Blast has final score 42
+Move SUPERPOWER aka Superpower has rough damage 10 and damage % 16
+Move SUPERPOWER aka Superpower has final score 48
+Move CROSSCHOP aka Cross Chop has rough damage 9 and damage % 14
+Move CROSSCHOP aka Cross Chop has final score 43
+Move DYNAMICPUNCH aka Dynamic Punch has rough damage 9 and damage % 14
+Move DYNAMICPUNCH aka Dynamic Punch has final score 72
+Move FLYINGPRESS aka Flying Press has rough damage 9 and damage % 14
+Move FLYINGPRESS aka Flying Press has final score 42
+Move HAMMERARM aka Hammer Arm has rough damage 9 and damage % 14
+Move HAMMERARM aka Hammer Arm has final score 42
+Move JUMPKICK aka Jump Kick has rough damage 9 and damage % 14
+Move JUMPKICK aka Jump Kick has final score 42
+Move SACREDSWORD aka Sacred Sword has rough damage 8 and damage % 12
+Move SACREDSWORD aka Sacred Sword has final score 37
+Move THUNDEROUSKICK aka Thunderous Kick has rough damage 8 and damage % 12
+Move THUNDEROUSKICK aka Thunderous Kick has final score 37
+Move SECRETSWORD aka Secret Sword has rough damage 7 and damage % 11
+Move SECRETSWORD aka Secret Sword has final score 33
+Move SKYUPPERCUT aka Sky Uppercut has rough damage 8 and damage % 12
+Move SKYUPPERCUT aka Sky Uppercut has final score 36
+Move AURASPHERE aka Aura Sphere has rough damage 7 and damage % 11
+Move AURASPHERE aka Aura Sphere has final score 33
+Move BODYPRESS aka Body Press has rough damage 6 and damage % 9
+Move BODYPRESS aka Body Press has final score 28
+Move SUBMISSION aka Submission has rough damage 7 and damage % 11
+Move SUBMISSION aka Submission has final score 31
+Move BRICKBREAK aka Brick Break has rough damage 7 and damage % 11
+Move BRICKBREAK aka Brick Break has final score 33
+Move DRAINPUNCH aka Drain Punch has rough damage 7 and damage % 11
+Move DRAINPUNCH aka Drain Punch has final score 33
+Move VITALTHROW aka Vital Throw has rough damage 6 and damage % 9
+Move VITALTHROW aka Vital Throw has final score 28
+Move WAKEUPSLAP aka Wake-Up Slap has rough damage 6 and damage % 9
+Move WAKEUPSLAP aka Wake-Up Slap has final score 28
+Move LOWSWEEP aka Low Sweep has rough damage 6 and damage % 9
+Move LOWSWEEP aka Low Sweep has final score 28
+Move CIRCLETHROW aka Circle Throw has rough damage 6 and damage % 9
+Move CIRCLETHROW aka Circle Throw has final score 27
+Move FORCEPALM aka Force Palm has rough damage 6 and damage % 9
+Move FORCEPALM aka Force Palm has final score 88
+Move REVENGE aka Revenge has rough damage 6 and damage % 9
+Move REVENGE aka Revenge has final score 58
+Move ROLLINGKICK aka Rolling Kick has rough damage 6 and damage % 9
+Move ROLLINGKICK aka Rolling Kick has final score 87
+Move STORMTHROW aka Storm Throw has rough damage 6 and damage % 9
+Move STORMTHROW aka Storm Throw has final score 41
+Move KARATECHOP aka Karate Chop has rough damage 5 and damage % 8
+Move KARATECHOP aka Karate Chop has final score 25
+Move MACHPUNCH aka Mach Punch has rough damage 4 and damage % 6
+Move MACHPUNCH aka Mach Punch has final score 18
+Move POWERUPPUNCH aka Power-Up Punch has rough damage 4 and damage % 6
+Move POWERUPPUNCH aka Power-Up Punch has final score 38
+Move ROCKSMASH aka Rock Smash has rough damage 4 and damage % 6
+Move ROCKSMASH aka Rock Smash has final score 18
+Move VACUUMWAVE aka Vacuum Wave has rough damage 4 and damage % 6
+Move VACUUMWAVE aka Vacuum Wave has final score 18
+Move DOUBLEKICK aka Double Kick has rough damage 4 and damage % 6
+Move DOUBLEKICK aka Double Kick has final score 25
+Move ARMTHRUST aka Arm Thrust has rough damage 3 and damage % 4
+Move ARMTHRUST aka Arm Thrust has final score 20
+Move TRIPLEKICK aka Triple Kick has rough damage 2 and damage % 3
+Move TRIPLEKICK aka Triple Kick has final score 21
+Move COUNTER aka Counter has rough damage 1 and damage % 1
+Move COUNTER aka Counter has final score 97
+Move FINALGAMBIT aka Final Gambit has rough damage 1 and damage % 1
+Move FINALGAMBIT aka Final Gambit has final score 59
+Move LOWKICK aka Low Kick has rough damage 2 and damage % 3
+Move LOWKICK aka Low Kick has final score 12
+Move REVERSAL aka Reversal has rough damage 2 and damage % 3
+Move REVERSAL aka Reversal has final score 12
+Move SEISMICTOSS aka Seismic Toss has rough damage 1 and damage % 1
+Move SEISMICTOSS aka Seismic Toss has final score 17
+Move BULKUP aka Bulk Up has rough damage 2 and damage % 30
+Move BULKUP aka Bulk Up has final score 37
+Move COACHING aka Coaching has rough damage 2 and damage % 5
+Move COACHING aka Coaching has final score 0
+Move DETECT aka Detect has rough damage 2 and damage % 25
+Move DETECT aka Detect has final score 31
+Move MATBLOCK aka Mat Block has rough damage 2 and damage % 35
+Move MATBLOCK aka Mat Block has final score 43
+Move NORETREAT aka No Retreat has rough damage 2 and damage % 30
+Move NORETREAT aka No Retreat has final score 37
+Move OCTOLOCK aka Octolock has rough damage 2 and damage % 25
+Move OCTOLOCK aka Octolock has final score 25
+Move QUICKGUARD aka Quick Guard has rough damage 2 and damage % 5
+Move QUICKGUARD aka Quick Guard has final score 0
+Move VCREATE aka V-create has rough damage 14 and damage % 22
+Move VCREATE aka V-create has final score 66
+Move BLASTBURN aka Blast Burn has rough damage 11 and damage % 17
+Move BLASTBURN aka Blast Burn has final score 16
+Move ERUPTION aka Eruption has rough damage 11 and damage % 17
+Move ERUPTION aka Eruption has final score 52
+Move MINDBLOWN aka Mind Blown has rough damage 11 and damage % 17
+Move MINDBLOWN aka Mind Blown has final score 52
+Move SHELLTRAP aka Shell Trap has rough damage 11 and damage % 17
+Move SHELLTRAP aka Shell Trap has final score 0
+Move BLUEFLARE aka Blue Flare has rough damage 10 and damage % 16
+Move BLUEFLARE aka Blue Flare has final score 77
+Move BURNUP aka Burn Up has rough damage 10 and damage % 16
+Move BURNUP aka Burn Up has final score 0
+Move OVERHEAT aka Overheat has rough damage 10 and damage % 16
+Move OVERHEAT aka Overheat has final score 47
+Move FLAREBLITZ aka Flare Blitz has rough damage 10 and damage % 16
+Move FLAREBLITZ aka Flare Blitz has final score 46
+Move PYROBALL aka Pyro Ball has rough damage 10 and damage % 16
+Move PYROBALL aka Pyro Ball has final score 77
+Move FIREBLAST aka Fire Blast has rough damage 9 and damage % 14
+Move FIREBLAST aka Fire Blast has final score 72
+Move FUSIONFLARE aka Fusion Flare has rough damage 8 and damage % 12
+Move FUSIONFLARE aka Fusion Flare has final score 37
+Move INFERNO aka Inferno has rough damage 8 and damage % 12
+Move INFERNO aka Inferno has final score 66
+Move MAGMASTORM aka Magma Storm has rough damage 8 and damage % 12
+Move MAGMASTORM aka Magma Storm has final score 76
+Move SACREDFIRE aka Sacred Fire has rough damage 9 and damage % 14
+Move SACREDFIRE aka Sacred Fire has final score 72
+Move SEARINGSHOT aka Searing Shot has rough damage 8 and damage % 12
+Move SEARINGSHOT aka Searing Shot has final score 67
+Move HEATWAVE aka Heat Wave has rough damage 8 and damage % 12
+Move HEATWAVE aka Heat Wave has final score 66
+Move FLAMETHROWER aka Flamethrower has rough damage 7 and damage % 11
+Move FLAMETHROWER aka Flamethrower has final score 63
+Move BLAZEKICK aka Blaze Kick has rough damage 8 and damage % 12
+Move BLAZEKICK aka Blaze Kick has final score 68
+Move FIERYDANCE aka Fiery Dance has rough damage 7 and damage % 11
+Move FIERYDANCE aka Fiery Dance has final score 53
+Move FIRELASH aka Fire Lash has rough damage 7 and damage % 11
+Move FIRELASH aka Fire Lash has final score 33
+Move FIREPLEDGE aka Fire Pledge has rough damage 7 and damage % 11
+Move FIREPLEDGE aka Fire Pledge has final score 33
+Move LAVAPLUME aka Lava Plume has rough damage 7 and damage % 11
+Move LAVAPLUME aka Lava Plume has final score 63
+Move FIREPUNCH aka Fire Punch has rough damage 7 and damage % 11
+Move FIREPUNCH aka Fire Punch has final score 63
+Move MYSTICALFIRE aka Mystical Fire has rough damage 6 and damage % 9
+Move MYSTICALFIRE aka Mystical Fire has final score 48
+Move BURNINGJEALOUSY aka Burning Jealousy has rough damage 6 and damage % 9
+Move BURNINGJEALOUSY aka Burning Jealousy has final score 68
+Move FLAMEBURST aka Flame Burst has rough damage 6 and damage % 9
+Move FLAMEBURST aka Flame Burst has final score 28
+Move FIREFANG aka Fire Fang has rough damage 6 and damage % 9
+Move FIREFANG aka Fire Fang has final score 57
+Move FLAMEWHEEL aka Flame Wheel has rough damage 6 and damage % 9
+Move FLAMEWHEEL aka Flame Wheel has final score 58
+Move INCINERATE aka Incinerate has rough damage 5 and damage % 8
+Move INCINERATE aka Incinerate has final score 24
+Move FLAMECHARGE aka Flame Charge has rough damage 5 and damage % 8
+Move FLAMECHARGE aka Flame Charge has final score 24
+Move EMBER aka Ember has rough damage 4 and damage % 6
+Move EMBER aka Ember has final score 48
+Move FIRESPIN aka Fire Spin has rough damage 4 and damage % 6
+Move FIRESPIN aka Fire Spin has final score 57
+Move HEATCRASH aka Heat Crash has rough damage 2 and damage % 3
+Move HEATCRASH aka Heat Crash has final score 35
+Move SUNNYDAY aka Sunny Day has rough damage 2 and damage % 15
+Move SUNNYDAY aka Sunny Day has final score 18
+Move WILLOWISP aka Will-O-Wisp has rough damage 2 and damage % 35
+Move WILLOWISP aka Will-O-Wisp has final score 29
+Move SKYATTACK aka Sky Attack has rough damage 11 and damage % 17
+Move SKYATTACK aka Sky Attack has final score 36
+Move BRAVEBIRD aka Brave Bird has rough damage 10 and damage % 16
+Move BRAVEBIRD aka Brave Bird has final score 30
+Move DRAGONASCENT aka Dragon Ascent has rough damage 10 and damage % 16
+Move DRAGONASCENT aka Dragon Ascent has final score 32
+Move HURRICANE aka Hurricane has rough damage 9 and damage % 14
+Move HURRICANE aka Hurricane has final score 57
+Move AEROBLAST aka Aeroblast has rough damage 8 and damage % 12
+Move AEROBLAST aka Aeroblast has final score 23
+Move BEAKBLAST aka Beak Blast has rough damage 9 and damage % 14
+Move BEAKBLAST aka Beak Blast has final score 48
+Move FLY aka Fly has rough damage 8 and damage % 12
+Move FLY aka Fly has final score 11
+Move BOUNCE aka Bounce has rough damage 8 and damage % 12
+Move BOUNCE aka Bounce has final score 11
+Move DRILLPECK aka Drill Peck has rough damage 7 and damage % 11
+Move DRILLPECK aka Drill Peck has final score 22
+Move OBLIVIONWING aka Oblivion Wing has rough damage 7 and damage % 11
+Move OBLIVIONWING aka Oblivion Wing has final score 22
+Move AIRSLASH aka Air Slash has rough damage 6 and damage % 9
+Move AIRSLASH aka Air Slash has final score 77
+Move CHATTER aka Chatter has rough damage 6 and damage % 9
+Move CHATTER aka Chatter has final score 48
+Move AERIALACE aka Aerial Ace has rough damage 6 and damage % 9
+Move AERIALACE aka Aerial Ace has final score 18
+Move AIRCUTTER aka Air Cutter has rough damage 5 and damage % 8
+Move AIRCUTTER aka Air Cutter has final score 15
+Move PLUCK aka Pluck has rough damage 6 and damage % 9
+Move PLUCK aka Pluck has final score 18
+Move SKYDROP aka Sky Drop has rough damage 6 and damage % 9
+Move SKYDROP aka Sky Drop has final score 9
+Move WINGATTACK aka Wing Attack has rough damage 6 and damage % 9
+Move WINGATTACK aka Wing Attack has final score 18
+Move ACROBATICS aka Acrobatics has rough damage 5 and damage % 8
+Move ACROBATICS aka Acrobatics has final score 22
+Move DUALWINGBEAT aka Dual Wingbeat has rough damage 4 and damage % 6
+Move DUALWINGBEAT aka Dual Wingbeat has final score 16
+Move GUST aka Gust has rough damage 4 and damage % 6
+Move GUST aka Gust has final score 12
+Move PECK aka Peck has rough damage 4 and damage % 6
+Move PECK aka Peck has final score 12
+Move DEFOG aka Defog has rough damage 2 and damage % 5
+Move DEFOG aka Defog has final score 0
+Move FEATHERDANCE aka Feather Dance has rough damage 2 and damage % 15
+Move FEATHERDANCE aka Feather Dance has final score 0
+Move MIRRORMOVE aka Mirror Move has rough damage 2 and damage % 20
+Move MIRRORMOVE aka Mirror Move has final score 0
+Move ROOST aka Roost has rough damage 2 and damage % 60
+Move ROOST aka Roost has final score 0
+Move TAILWIND aka Tailwind has rough damage 2 and damage % 35
+Move TAILWIND aka Tailwind has final score 43
+Move ASTRALBARRAGE aka Astral Barrage has rough damage 9 and damage % 14
+Move ASTRALBARRAGE aka Astral Barrage has final score 28
+Move SHADOWFORCE aka Shadow Force has rough damage 10 and damage % 16
+Move SHADOWFORCE aka Shadow Force has final score 16
+Move POLTERGEIST aka Poltergeist has rough damage 9 and damage % 14
+Move POLTERGEIST aka Poltergeist has final score 0
+Move MOONGEISTBEAM aka Moongeist Beam has rough damage 8 and damage % 12
+Move MOONGEISTBEAM aka Moongeist Beam has final score 24
+Move PHANTOMFORCE aka Phantom Force has rough damage 8 and damage % 12
+Move PHANTOMFORCE aka Phantom Force has final score 12
+Move SPECTRALTHIEF aka Spectral Thief has rough damage 8 and damage % 12
+Move SPECTRALTHIEF aka Spectral Thief has final score 24
+Move SHADOWBONE aka Shadow Bone has rough damage 8 and damage % 12
+Move SHADOWBONE aka Shadow Bone has final score 24
+Move SHADOWBALL aka Shadow Ball has rough damage 7 and damage % 11
+Move SHADOWBALL aka Shadow Ball has final score 22
+Move SPIRITSHACKLE aka Spirit Shackle has rough damage 7 and damage % 11
+Move SPIRITSHACKLE aka Spirit Shackle has final score 22
+Move SHADOWCLAW aka Shadow Claw has rough damage 6 and damage % 9
+Move SHADOWCLAW aka Shadow Claw has final score 18
+Move HEX aka Hex has rough damage 6 and damage % 9
+Move HEX aka Hex has final score 18
+Move OMINOUSWIND aka Ominous Wind has rough damage 5 and damage % 8
+Move OMINOUSWIND aka Ominous Wind has final score 36
+Move SHADOWPUNCH aka Shadow Punch has rough damage 6 and damage % 9
+Move SHADOWPUNCH aka Shadow Punch has final score 18
+Move SHADOWSNEAK aka Shadow Sneak has rough damage 4 and damage % 6
+Move SHADOWSNEAK aka Shadow Sneak has final score 12
+Move ASTONISH aka Astonish has rough damage 4 and damage % 6
+Move ASTONISH aka Astonish has final score 72
+Move LICK aka Lick has rough damage 4 and damage % 6
+Move LICK aka Lick has final score 72
+Move NIGHTSHADE aka Night Shade has rough damage 1 and damage % 1
+Move NIGHTSHADE aka Night Shade has final score 17
+Move CONFUSERAY aka Confuse Ray has rough damage 2 and damage % 35
+Move CONFUSERAY aka Confuse Ray has final score 35
+Move CURSE aka Curse has rough damage 2 and damage % 30
+Move CURSE aka Curse has final score 37
+Move DESTINYBOND aka Destiny Bond has rough damage 2 and damage % 25
+Move DESTINYBOND aka Destiny Bond has final score 0
+Move GRUDGE aka Grudge has rough damage 2 and damage % 5
+Move GRUDGE aka Grudge has final score 0
+Move NIGHTMARE aka Nightmare has rough damage 2 and damage % 5
+Move NIGHTMARE aka Nightmare has final score 0
+Move SPITE aka Spite has rough damage 2 and damage % 0
+Move SPITE aka Spite has final score 0
+Move TRICKORTREAT aka Trick-or-Treat has rough damage 2 and damage % 15
+Move TRICKORTREAT aka Trick-or-Treat has final score 15
+Move FRENZYPLANT aka Frenzy Plant has rough damage 11 and damage % 17
+Move FRENZYPLANT aka Frenzy Plant has final score 16
+Move LEAFSTORM aka Leaf Storm has rough damage 10 and damage % 16
+Move LEAFSTORM aka Leaf Storm has final score 31
+Move SOLARBLADE aka Solar Blade has rough damage 10 and damage % 16
+Move SOLARBLADE aka Solar Blade has final score 0
+Move PETALDANCE aka Petal Dance has rough damage 9 and damage % 14
+Move PETALDANCE aka Petal Dance has final score 28
+Move POWERWHIP aka Power Whip has rough damage 10 and damage % 16
+Move POWERWHIP aka Power Whip has final score 31
+Move SEEDFLARE aka Seed Flare has rough damage 9 and damage % 14
+Move SEEDFLARE aka Seed Flare has final score 37
+Move SOLARBEAM aka Solar Beam has rough damage 9 and damage % 14
+Move SOLARBEAM aka Solar Beam has final score 0
+Move WOODHAMMER aka Wood Hammer has rough damage 10 and damage % 16
+Move WOODHAMMER aka Wood Hammer has final score 30
+Move ENERGYBALL aka Energy Ball has rough damage 7 and damage % 11
+Move ENERGYBALL aka Energy Ball has final score 22
+Move LEAFBLADE aka Leaf Blade has rough damage 8 and damage % 12
+Move LEAFBLADE aka Leaf Blade has final score 24
+Move PETALBLIZZARD aka Petal Blizzard has rough damage 8 and damage % 12
+Move PETALBLIZZARD aka Petal Blizzard has final score 24
+Move APPLEACID aka Apple Acid has rough damage 7 and damage % 11
+Move APPLEACID aka Apple Acid has final score 22
+Move DRUMBEATING aka Drum Beating has rough damage 7 and damage % 11
+Move DRUMBEATING aka Drum Beating has final score 22
+Move GRASSPLEDGE aka Grass Pledge has rough damage 7 and damage % 11
+Move GRASSPLEDGE aka Grass Pledge has final score 22
+Move GRAVAPPLE aka Grav Apple has rough damage 7 and damage % 11
+Move GRAVAPPLE aka Grav Apple has final score 42
+Move SEEDBOMB aka Seed Bomb has rough damage 7 and damage % 11
+Move SEEDBOMB aka Seed Bomb has final score 22
+Move GIGADRAIN aka Giga Drain has rough damage 6 and damage % 9
+Move GIGADRAIN aka Giga Drain has final score 18
+Move HORNLEECH aka Horn Leech has rough damage 7 and damage % 11
+Move HORNLEECH aka Horn Leech has final score 22
+Move GRASSYGLIDE aka Grassy Glide has rough damage 6 and damage % 9
+Move GRASSYGLIDE aka Grassy Glide has final score 18
+Move TROPKICK aka Trop Kick has rough damage 6 and damage % 9
+Move TROPKICK aka Trop Kick has final score 18
+Move LEAFTORNADO aka Leaf Tornado has rough damage 6 and damage % 9
+Move LEAFTORNADO aka Leaf Tornado has final score 17
+Move MAGICALLEAF aka Magical Leaf has rough damage 5 and damage % 8
+Move MAGICALLEAF aka Magical Leaf has final score 16
+Move NEEDLEARM aka Needle Arm has rough damage 6 and damage % 9
+Move NEEDLEARM aka Needle Arm has final score 78
+Move RAZORLEAF aka Razor Leaf has rough damage 5 and damage % 8
+Move RAZORLEAF aka Razor Leaf has final score 15
+Move VINEWHIP aka Vine Whip has rough damage 5 and damage % 8
+Move VINEWHIP aka Vine Whip has final score 16
+Move BRANCHPOKE aka Branch Poke has rough damage 4 and damage % 6
+Move BRANCHPOKE aka Branch Poke has final score 12
+Move LEAFAGE aka Leafage has rough damage 4 and damage % 6
+Move LEAFAGE aka Leafage has final score 12
+Move MEGADRAIN aka Mega Drain has rough damage 5 and damage % 8
+Move MEGADRAIN aka Mega Drain has final score 16
+Move SNAPTRAP aka Snap Trap has rough damage 4 and damage % 6
+Move SNAPTRAP aka Snap Trap has final score 52
+Move BULLETSEED aka Bullet Seed has rough damage 3 and damage % 4
+Move BULLETSEED aka Bullet Seed has final score 15
+Move ABSORB aka Absorb has rough damage 3 and damage % 4
+Move ABSORB aka Absorb has final score 8
+Move GRASSKNOT aka Grass Knot has rough damage 2 and damage % 3
+Move GRASSKNOT aka Grass Knot has final score 7
+Move AROMATHERAPY aka Aromatherapy has rough damage 2 and damage % 35
+Move AROMATHERAPY aka Aromatherapy has final score 43
+Move COTTONGUARD aka Cotton Guard has rough damage 2 and damage % 25
+Move COTTONGUARD aka Cotton Guard has final score 31
+Move COTTONSPORE aka Cotton Spore has rough damage 2 and damage % 15
+Move COTTONSPORE aka Cotton Spore has final score 15
+Move FORESTSCURSE aka Forest's Curse has rough damage 2 and damage % 5
+Move FORESTSCURSE aka Forest's Curse has final score 0
+Move GRASSWHISTLE aka Grass Whistle has rough damage 2 and damage % 100
+Move GRASSWHISTLE aka Grass Whistle has final score 55
+Move GRASSYTERRAIN aka Grassy Terrain has rough damage 2 and damage % 30
+Move GRASSYTERRAIN aka Grassy Terrain has final score 37
+Move INGRAIN aka Ingrain has rough damage 2 and damage % 15
+Move INGRAIN aka Ingrain has final score 18
+Move JUNGLEHEALING aka Jungle Healing has rough damage 2 and damage % 60
+Move JUNGLEHEALING aka Jungle Healing has final score 75
+Move LEECHSEED aka Leech Seed has rough damage 2 and damage % 30
+Move LEECHSEED aka Leech Seed has final score 27
+Move SLEEPPOWDER aka Sleep Powder has rough damage 2 and damage % 100
+Move SLEEPPOWDER aka Sleep Powder has final score 75
+Move SPIKYSHIELD aka Spiky Shield has rough damage 2 and damage % 100
+Move SPIKYSHIELD aka Spiky Shield has final score 125
+Move SPORE aka Spore has rough damage 2 and damage % 100
+Move SPORE aka Spore has final score 100
+Move STRENGTHSAP aka Strength Sap has rough damage 2 and damage % 60
+Move STRENGTHSAP aka Strength Sap has final score 0
+Move STUNSPORE aka Stun Spore has rough damage 2 and damage % 35
+Move STUNSPORE aka Stun Spore has final score 26
+Move SYNTHESIS aka Synthesis has rough damage 2 and damage % 60
+Move SYNTHESIS aka Synthesis has final score 0
+Move WORRYSEED aka Worry Seed has rough damage 2 and damage % 20
+Move WORRYSEED aka Worry Seed has final score 20
+Move PRECIPICEBLADES aka Precipice Blades has rough damage 10 and damage % 16
+Move PRECIPICEBLADES aka Precipice Blades has final score 31
+Move EARTHQUAKE aka Earthquake has rough damage 9 and damage % 14
+Move EARTHQUAKE aka Earthquake has final score 28
+Move HIGHHORSEPOWER aka High Horsepower has rough damage 8 and damage % 12
+Move HIGHHORSEPOWER aka High Horsepower has final score 23
+Move EARTHPOWER aka Earth Power has rough damage 7 and damage % 11
+Move EARTHPOWER aka Earth Power has final score 22
+Move LANDSWRATH aka Land's Wrath has rough damage 8 and damage % 12
+Move LANDSWRATH aka Land's Wrath has final score 24
+Move THOUSANDARROWS aka Thousand Arrows has rough damage 8 and damage % 12
+Move THOUSANDARROWS aka Thousand Arrows has final score 24
+Move THOUSANDWAVES aka Thousand Waves has rough damage 8 and damage % 12
+Move THOUSANDWAVES aka Thousand Waves has final score 24
+Move DIG aka Dig has rough damage 7 and damage % 11
+Move DIG aka Dig has final score 11
+Move DRILLRUN aka Drill Run has rough damage 7 and damage % 11
+Move DRILLRUN aka Drill Run has final score 21
+Move STOMPINGTANTRUM aka Stomping Tantrum has rough damage 7 and damage % 11
+Move STOMPINGTANTRUM aka Stomping Tantrum has final score 22
+Move SCORCHINGSANDS aka Scorching Sands has rough damage 6 and damage % 9
+Move SCORCHINGSANDS aka Scorching Sands has final score 48
+Move BONECLUB aka Bone Club has rough damage 6 and damage % 9
+Move BONECLUB aka Bone Club has final score 77
+Move MUDBOMB aka Mud Bomb has rough damage 6 and damage % 9
+Move MUDBOMB aka Mud Bomb has final score 17
+Move BULLDOZE aka Bulldoze has rough damage 6 and damage % 9
+Move BULLDOZE aka Bulldoze has final score 18
+Move MUDSHOT aka Mud Shot has rough damage 5 and damage % 8
+Move MUDSHOT aka Mud Shot has final score 15
+Move BONEMERANG aka Bonemerang has rough damage 5 and damage % 8
+Move BONEMERANG aka Bonemerang has final score 21
+Move SANDTOMB aka Sand Tomb has rough damage 4 and damage % 6
+Move SANDTOMB aka Sand Tomb has final score 51
+Move BONERUSH aka Bone Rush has rough damage 3 and damage % 4
+Move BONERUSH aka Bone Rush has final score 14
+Move MUDSLAP aka Mud-Slap has rough damage 3 and damage % 4
+Move MUDSLAP aka Mud-Slap has final score 8
+Move FISSURE aka Fissure has rough damage 1 and damage % 1
+Move FISSURE aka Fissure has final score 0
+Move MAGNITUDE aka Magnitude has rough damage 2 and damage % 3
+Move MAGNITUDE aka Magnitude has final score 14
+Move MUDSPORT aka Mud Sport has rough damage 2 and damage % 5
+Move MUDSPORT aka Mud Sport has final score 0
+Move ROTOTILLER aka Rototiller has rough damage 2 and damage % 5
+Move ROTOTILLER aka Rototiller has final score 0
+Move SANDATTACK aka Sand Attack has rough damage 2 and damage % 5
+Move SANDATTACK aka Sand Attack has final score 0
+Move SHOREUP aka Shore Up has rough damage 2 and damage % 60
+Move SHOREUP aka Shore Up has final score 0
+Move SPIKES aka Spikes has rough damage 2 and damage % 35
+Move SPIKES aka Spikes has final score 43
+Move FREEZESHOCK aka Freeze Shock has rough damage 11 and damage % 17
+Move FREEZESHOCK aka Freeze Shock has final score 76
+Move ICEBURN aka Ice Burn has rough damage 11 and damage % 17
+Move ICEBURN aka Ice Burn has final score 46
+Move GLACIALLANCE aka Glacial Lance has rough damage 11 and damage % 17
+Move GLACIALLANCE aka Glacial Lance has final score 26
+Move BLIZZARD aka Blizzard has rough damage 9 and damage % 14
+Move BLIZZARD aka Blizzard has final score 22
+Move ICEHAMMER aka Ice Hammer has rough damage 9 and damage % 14
+Move ICEHAMMER aka Ice Hammer has final score 21
+Move ICEBEAM aka Ice Beam has rough damage 7 and damage % 11
+Move ICEBEAM aka Ice Beam has final score 17
+Move ICICLECRASH aka Icicle Crash has rough damage 8 and damage % 12
+Move ICICLECRASH aka Icicle Crash has final score 77
+Move ICEPUNCH aka Ice Punch has rough damage 7 and damage % 11
+Move ICEPUNCH aka Ice Punch has final score 17
+Move FREEZEDRY aka Freeze-Dry has rough damage 6 and damage % 9
+Move FREEZEDRY aka Freeze-Dry has final score 13
+Move AURORABEAM aka Aurora Beam has rough damage 6 and damage % 9
+Move AURORABEAM aka Aurora Beam has final score 13
+Move GLACIATE aka Glaciate has rough damage 6 and damage % 9
+Move GLACIATE aka Glaciate has final score 12
+Move ICEFANG aka Ice Fang has rough damage 6 and damage % 9
+Move ICEFANG aka Ice Fang has final score 12
+Move AVALANCHE aka Avalanche has rough damage 6 and damage % 9
+Move AVALANCHE aka Avalanche has final score 43
+Move FROSTBREATH aka Frost Breath has rough damage 5 and damage % 8
+Move FROSTBREATH aka Frost Breath has final score 15
+Move ICYWIND aka Icy Wind has rough damage 5 and damage % 8
+Move ICYWIND aka Icy Wind has final score 11
+Move ICESHARD aka Ice Shard has rough damage 4 and damage % 6
+Move ICESHARD aka Ice Shard has final score 9
+Move POWDERSNOW aka Powder Snow has rough damage 4 and damage % 6
+Move POWDERSNOW aka Powder Snow has final score 9
+Move ICEBALL aka Ice Ball has rough damage 4 and damage % 6
+Move ICEBALL aka Ice Ball has final score 8
+Move ICICLESPEAR aka Icicle Spear has rough damage 3 and damage % 4
+Move ICICLESPEAR aka Icicle Spear has final score 10
+Move TRIPLEAXEL aka Triple Axel has rough damage 3 and damage % 4
+Move TRIPLEAXEL aka Triple Axel has final score 11
+Move SHEERCOLD aka Sheer Cold has rough damage 1 and damage % 1
+Move SHEERCOLD aka Sheer Cold has final score 0
+Move AURORAVEIL aka Aurora Veil has rough damage 2 and damage % 60
+Move AURORAVEIL aka Aurora Veil has final score 0
+Move HAIL aka Hail has rough damage 2 and damage % 15
+Move HAIL aka Hail has final score 0
+Move HAZE aka Haze has rough damage 2 and damage % 10
+Move HAZE aka Haze has final score 12
+Move MIST aka Mist has rough damage 2 and damage % 20
+Move MIST aka Mist has final score 25
+Move EXPLOSION aka Explosion has rough damage 19 and damage % 30
+Move EXPLOSION aka Explosion has final score 0
+Move SELFDESTRUCT aka Self-Destruct has rough damage 16 and damage % 25
+Move SELFDESTRUCT aka Self-Destruct has final score 0
+Move GIGAIMPACT aka Giga Impact has rough damage 12 and damage % 19
+Move GIGAIMPACT aka Giga Impact has final score 18
+Move HYPERBEAM aka Hyper Beam has rough damage 11 and damage % 17
+Move HYPERBEAM aka Hyper Beam has final score 16
+Move BOOMBURST aka Boomburst has rough damage 11 and damage % 17
+Move BOOMBURST aka Boomburst has final score 34
+Move LASTRESORT aka Last Resort has rough damage 11 and damage % 17
+Move LASTRESORT aka Last Resort has final score 34
+Move SKULLBASH aka Skull Bash has rough damage 11 and damage % 17
+Move SKULLBASH aka Skull Bash has final score 17
+Move DOUBLEEDGE aka Double-Edge has rough damage 10 and damage % 16
+Move DOUBLEEDGE aka Double-Edge has final score 30
+Move HEADCHARGE aka Head Charge has rough damage 10 and damage % 16
+Move HEADCHARGE aka Head Charge has final score 30
+Move MEGAKICK aka Mega Kick has rough damage 10 and damage % 16
+Move MEGAKICK aka Mega Kick has final score 31
+Move MULTIATTACK aka Multi-Attack has rough damage 10 and damage % 16
+Move MULTIATTACK aka Multi-Attack has final score 32
+Move TECHNOBLAST aka Techno Blast has rough damage 9 and damage % 14
+Move TECHNOBLAST aka Techno Blast has final score 28
+Move THRASH aka Thrash has rough damage 10 and damage % 16
+Move THRASH aka Thrash has final score 32
+Move EGGBOMB aka Egg Bomb has rough damage 9 and damage % 14
+Move EGGBOMB aka Egg Bomb has final score 27
+Move JUDGMENT aka Judgment has rough damage 8 and damage % 12
+Move JUDGMENT aka Judgment has final score 24
+Move HYPERVOICE aka Hyper Voice has rough damage 7 and damage % 11
+Move HYPERVOICE aka Hyper Voice has final score 22
+Move REVELATIONDANCE aka Revelation Dance has rough damage 7 and damage % 11
+Move REVELATIONDANCE aka Revelation Dance has final score 28
+Move ROCKCLIMB aka Rock Climb has rough damage 8 and damage % 12
+Move ROCKCLIMB aka Rock Climb has final score 53
+Move TAKEDOWN aka Take Down has rough damage 8 and damage % 12
+Move TAKEDOWN aka Take Down has final score 21
+Move UPROAR aka Uproar has rough damage 7 and damage % 11
+Move UPROAR aka Uproar has final score 22
+Move BODYSLAM aka Body Slam has rough damage 8 and damage % 12
+Move BODYSLAM aka Body Slam has final score 84
+Move EXTREMESPEED aka Extreme Speed has rough damage 7 and damage % 11
+Move EXTREMESPEED aka Extreme Speed has final score 22
+Move HYPERFANG aka Hyper Fang has rough damage 7 and damage % 11
+Move HYPERFANG aka Hyper Fang has final score 81
+Move MEGAPUNCH aka Mega Punch has rough damage 7 and damage % 11
+Move MEGAPUNCH aka Mega Punch has final score 21
+Move RAZORWIND aka Razor Wind has rough damage 7 and damage % 11
+Move RAZORWIND aka Razor Wind has final score 11
+Move SLAM aka Slam has rough damage 7 and damage % 11
+Move SLAM aka Slam has final score 21
+Move STRENGTH aka Strength has rough damage 9 and damage % 14
+Move STRENGTH aka Strength has final score 43
+Move TRIATTACK aka Tri Attack has rough damage 7 and damage % 11
+Move TRIATTACK aka Tri Attack has final score 52
+Move CRUSHCLAW aka Crush Claw has rough damage 7 and damage % 11
+Move CRUSHCLAW aka Crush Claw has final score 21
+Move RELICSONG aka Relic Song has rough damage 6 and damage % 9
+Move RELICSONG aka Relic Song has final score 48
+Move CHIPAWAY aka Chip Away has rough damage 6 and damage % 9
+Move CHIPAWAY aka Chip Away has final score 18
+Move DIZZYPUNCH aka Dizzy Punch has rough damage 6 and damage % 9
+Move DIZZYPUNCH aka Dizzy Punch has final score 48
+Move FACADE aka Facade has rough damage 6 and damage % 9
+Move FACADE aka Facade has final score 18
+Move HEADBUTT aka Headbutt has rough damage 6 and damage % 9
+Move HEADBUTT aka Headbutt has final score 78
+Move RETALIATE aka Retaliate has rough damage 6 and damage % 9
+Move RETALIATE aka Retaliate has final score 18
+Move SECRETPOWER aka Secret Power has rough damage 6 and damage % 9
+Move SECRETPOWER aka Secret Power has final score 18
+Move SLASH aka Slash has rough damage 6 and damage % 9
+Move SLASH aka Slash has final score 18
+Move SMELLINGSALTS aka Smelling Salts has rough damage 6 and damage % 9
+Move SMELLINGSALTS aka Smelling Salts has final score 18
+Move HORNATTACK aka Horn Attack has rough damage 6 and damage % 9
+Move HORNATTACK aka Horn Attack has final score 18
+Move STOMP aka Stomp has rough damage 6 and damage % 9
+Move STOMP aka Stomp has final score 78
+Move COVET aka Covet has rough damage 6 and damage % 9
+Move COVET aka Covet has final score 0
+Move HIDDENPOWER aka Hidden Power has rough damage 5 and damage % 8
+Move HIDDENPOWER aka Hidden Power has final score 16
+Move ROUND aka Round has rough damage 5 and damage % 8
+Move ROUND aka Round has final score 16
+Move SWIFT aka Swift has rough damage 5 and damage % 8
+Move SWIFT aka Swift has final score 16
+Move VISEGRIP aka Vise Grip has rough damage 5 and damage % 8
+Move VISEGRIP aka Vise Grip has final score 16
+Move CUT aka Cut has rough damage 6 and damage % 9
+Move CUT aka Cut has final score 28
+Move RAPIDSPIN aka Rapid Spin has rough damage 5 and damage % 8
+Move RAPIDSPIN aka Rapid Spin has final score 16
+Move SNORE aka Snore has rough damage 5 and damage % 8
+Move SNORE aka Snore has final score 146
+Move STRUGGLE aka Struggle has rough damage 5 and damage % 8
+Move STRUGGLE aka Struggle has final score 16
+Move TERRAINPULSE aka Terrain Pulse has rough damage 5 and damage % 8
+Move TERRAINPULSE aka Terrain Pulse has final score 16
+Move WEATHERBALL aka Weather Ball has rough damage 5 and damage % 8
+Move WEATHERBALL aka Weather Ball has final score 14
+Move ECHOEDVOICE aka Echoed Voice has rough damage 4 and damage % 6
+Move ECHOEDVOICE aka Echoed Voice has final score 9
+Move FAKEOUT aka Fake Out has rough damage 4 and damage % 6
+Move FAKEOUT aka Fake Out has final score 132
+Move FALSESWIPE aka False Swipe has rough damage 4 and damage % 6
+Move FALSESWIPE aka False Swipe has final score 12
+Move HOLDBACK aka Hold Back has rough damage 4 and damage % 6
+Move HOLDBACK aka Hold Back has final score 12
+Move PAYDAY aka Pay Day has rough damage 4 and damage % 6
+Move PAYDAY aka Pay Day has final score 12
+Move POUND aka Pound has rough damage 4 and damage % 6
+Move POUND aka Pound has final score 12
+Move QUICKATTACK aka Quick Attack has rough damage 4 and damage % 6
+Move QUICKATTACK aka Quick Attack has final score 12
+Move SCRATCH aka Scratch has rough damage 4 and damage % 6
+Move SCRATCH aka Scratch has final score 12
+Move TACKLE aka Tackle has rough damage 4 and damage % 6
+Move TACKLE aka Tackle has final score 12
+Move DOUBLEHIT aka Double Hit has rough damage 4 and damage % 6
+Move DOUBLEHIT aka Double Hit has final score 14
+Move FEINT aka Feint has rough damage 4 and damage % 6
+Move FEINT aka Feint has final score 12
+Move TAILSLAP aka Tail Slap has rough damage 3 and damage % 4
+Move TAILSLAP aka Tail Slap has final score 14
+Move RAGE aka Rage has rough damage 3 and damage % 4
+Move RAGE aka Rage has final score 8
+Move SPIKECANNON aka Spike Cannon has rough damage 3 and damage % 4
+Move SPIKECANNON aka Spike Cannon has final score 13
+Move COMETPUNCH aka Comet Punch has rough damage 3 and damage % 4
+Move COMETPUNCH aka Comet Punch has final score 11
+Move FURYSWIPES aka Fury Swipes has rough damage 3 and damage % 4
+Move FURYSWIPES aka Fury Swipes has final score 11
+Move BARRAGE aka Barrage has rough damage 3 and damage % 4
+Move BARRAGE aka Barrage has final score 11
+Move BIND aka Bind has rough damage 3 and damage % 4
+Move BIND aka Bind has final score 47
+Move DOUBLESLAP aka Double Slap has rough damage 3 and damage % 4
+Move DOUBLESLAP aka Double Slap has final score 11
+Move FURYATTACK aka Fury Attack has rough damage 3 and damage % 4
+Move FURYATTACK aka Fury Attack has final score 11
+Move WRAP aka Wrap has rough damage 3 and damage % 4
+Move WRAP aka Wrap has final score 47
+Move CONSTRICT aka Constrict has rough damage 2 and damage % 3
+Move CONSTRICT aka Constrict has final score 6
+Move BIDE aka Bide has rough damage 1 and damage % 1
+Move BIDE aka Bide has final score 65
+Move CRUSHGRIP aka Crush Grip has rough damage 2 and damage % 3
+Move CRUSHGRIP aka Crush Grip has final score 19
+Move ENDEAVOR aka Endeavor has rough damage 1 and damage % 1
+Move ENDEAVOR aka Endeavor has final score 42
+Move FLAIL aka Flail has rough damage 2 and damage % 3
+Move FLAIL aka Flail has final score 7
+Move FRUSTRATION aka Frustration has rough damage 2 and damage % 3
+Move FRUSTRATION aka Frustration has final score 14
+Move GUILLOTINE aka Guillotine has rough damage 1 and damage % 1
+Move GUILLOTINE aka Guillotine has final score 0
+Move HORNDRILL aka Horn Drill has rough damage 1 and damage % 1
+Move HORNDRILL aka Horn Drill has final score 0
+Move NATURALGIFT aka Natural Gift has rough damage 2 and damage % 3
+Move NATURALGIFT aka Natural Gift has final score 0
+Move PRESENT aka Present has rough damage 2 and damage % 3
+Move PRESENT aka Present has final score 10
+Move RETURN aka Return has rough damage 2 and damage % 3
+Move RETURN aka Return has final score 7
+Move SONICBOOM aka Sonic Boom has rough damage 1 and damage % 1
+Move SONICBOOM aka Sonic Boom has final score 32
+Move SPITUP aka Spit Up has rough damage 2 and damage % 3
+Move SPITUP aka Spit Up has final score 0
+Move SUPERFANG aka Super Fang has rough damage 1 and damage % 1
+Move SUPERFANG aka Super Fang has final score 100
+Move TRUMPCARD aka Trump Card has rough damage 2 and damage % 3
+Move TRUMPCARD aka Trump Card has final score 9
+Move WRINGOUT aka Wring Out has rough damage 2 and damage % 3
+Move WRINGOUT aka Wring Out has final score 17
+Move ACUPRESSURE aka Acupressure has rough damage 2 and damage % 10
+Move ACUPRESSURE aka Acupressure has final score 12
+Move AFTERYOU aka After You has rough damage 2 and damage % 0
+Move AFTERYOU aka After You has final score 0
+Move ASSIST aka Assist has rough damage 2 and damage % 15
+Move ASSIST aka Assist has final score 18
+Move ATTRACT aka Attract has rough damage 2 and damage % 25
+Move ATTRACT aka Attract has final score 0
+Move BATONPASS aka Baton Pass has rough damage 2 and damage % 30
+Move BATONPASS aka Baton Pass has final score 0
+Move BELLYDRUM aka Belly Drum has rough damage 2 and damage % 25
+Move BELLYDRUM aka Belly Drum has final score 31
+Move BESTOW aka Bestow has rough damage 2 and damage % 0
+Move BESTOW aka Bestow has final score 0
+Move BLOCK aka Block has rough damage 2 and damage % 20
+Move BLOCK aka Block has final score 25
+Move CAMOUFLAGE aka Camouflage has rough damage 2 and damage % 10
+Move CAMOUFLAGE aka Camouflage has final score 12
+Move CAPTIVATE aka Captivate has rough damage 2 and damage % 15
+Move CAPTIVATE aka Captivate has final score 0
+Move CELEBRATE aka Celebrate has rough damage 2 and damage % 0
+Move CELEBRATE aka Celebrate has final score 0
+Move CONFIDE aka Confide has rough damage 2 and damage % 10
+Move CONFIDE aka Confide has final score 12
+Move CONVERSION aka Conversion has rough damage 2 and damage % 5
+Move CONVERSION aka Conversion has final score 0
+Move CONVERSION2 aka Conversion 2 has rough damage 2 and damage % 20
+Move CONVERSION2 aka Conversion 2 has final score 0
+Move COPYCAT aka Copycat has rough damage 2 and damage % 20
+Move COPYCAT aka Copycat has final score 25
+Move COURTCHANGE aka Court Change has rough damage 2 and damage % 5
+Move COURTCHANGE aka Court Change has final score 0
+Move DEFENSECURL aka Defense Curl has rough damage 2 and damage % 10
+Move DEFENSECURL aka Defense Curl has final score 12
+Move DISABLE aka Disable has rough damage 2 and damage % 25
+Move DISABLE aka Disable has final score 25
+Move DOUBLETEAM aka Double Team has rough damage 2 and damage % 15
+Move DOUBLETEAM aka Double Team has final score 18
+Move ENCORE aka Encore has rough damage 2 and damage % 30
+Move ENCORE aka Encore has final score 30
+Move ENDURE aka Endure has rough damage 2 and damage % 5
+Move ENDURE aka Endure has final score 0
+Move ENTRAINMENT aka Entrainment has rough damage 2 and damage % 5
+Move ENTRAINMENT aka Entrainment has final score 0
+Move FLASH aka Flash has rough damage 2 and damage % 10
+Move FLASH aka Flash has final score 0
+Move FOCUSENERGY aka Focus Energy has rough damage 2 and damage % 10
+Move FOCUSENERGY aka Focus Energy has final score 12
+Move FOLLOWME aka Follow Me has rough damage 2 and damage % 25
+Move FOLLOWME aka Follow Me has final score 0
+Move FORESIGHT aka Foresight has rough damage 2 and damage % 5
+Move FORESIGHT aka Foresight has final score 0
+Move GLARE aka Glare has rough damage 2 and damage % 35
+Move GLARE aka Glare has final score 35
+Move GROWL aka Growl has rough damage 2 and damage % 10
+Move GROWL aka Growl has final score 0
+Move GROWTH aka Growth has rough damage 2 and damage % 10
+Move GROWTH aka Growth has final score 12
+Move HAPPYHOUR aka Happy Hour has rough damage 2 and damage % 0
+Move HAPPYHOUR aka Happy Hour has final score 0
+Move HARDEN aka Harden has rough damage 2 and damage % 10
+Move HARDEN aka Harden has final score 12
+Move HEALBELL aka Heal Bell has rough damage 2 and damage % 35
+Move HEALBELL aka Heal Bell has final score 43
+Move HELPINGHAND aka Helping Hand has rough damage 2 and damage % 5
+Move HELPINGHAND aka Helping Hand has final score 0
+Move HOLDHANDS aka Hold Hands has rough damage 2 and damage % 0
+Move HOLDHANDS aka Hold Hands has final score 0
+Move HOWL aka Howl has rough damage 2 and damage % 10
+Move HOWL aka Howl has final score 0
+Move LASERFOCUS aka Laser Focus has rough damage 2 and damage % 5
+Move LASERFOCUS aka Laser Focus has final score 0
+Move LEER aka Leer has rough damage 2 and damage % 10
+Move LEER aka Leer has final score 0
+Move LOCKON aka Lock-On has rough damage 2 and damage % 5
+Move LOCKON aka Lock-On has final score 0
+Move LOVELYKISS aka Lovely Kiss has rough damage 2 and damage % 100
+Move LOVELYKISS aka Lovely Kiss has final score 75
+Move LUCKYCHANT aka Lucky Chant has rough damage 2 and damage % 0
+Move LUCKYCHANT aka Lucky Chant has final score 0
+Move MEFIRST aka Me First has rough damage 2 and damage % 15
+Move MEFIRST aka Me First has final score 18
+Move MEANLOOK aka Mean Look has rough damage 2 and damage % 20
+Move MEANLOOK aka Mean Look has final score 25
+Move METRONOME aka Metronome has rough damage 2 and damage % 20
+Move METRONOME aka Metronome has final score 25
+Move MILKDRINK aka Milk Drink has rough damage 2 and damage % 60
+Move MILKDRINK aka Milk Drink has final score 0
+Move MIMIC aka Mimic has rough damage 2 and damage % 15
+Move MIMIC aka Mimic has final score 0
+Move MINDREADER aka Mind Reader has rough damage 2 and damage % 5
+Move MINDREADER aka Mind Reader has final score 0
+Move MINIMIZE aka Minimize has rough damage 2 and damage % 25
+Move MINIMIZE aka Minimize has final score 31
+Move MORNINGSUN aka Morning Sun has rough damage 2 and damage % 60
+Move MORNINGSUN aka Morning Sun has final score 0
+Move NATUREPOWER aka Nature Power has rough damage 2 and damage % 30
+Move NATUREPOWER aka Nature Power has final score 37
+Move NOBLEROAR aka Noble Roar has rough damage 2 and damage % 10
+Move NOBLEROAR aka Noble Roar has final score 12
+Move ODORSLEUTH aka Odor Sleuth has rough damage 2 and damage % 5
+Move ODORSLEUTH aka Odor Sleuth has final score 0
+Move PAINSPLIT aka Pain Split has rough damage 2 and damage % 30
+Move PAINSPLIT aka Pain Split has final score 37
+Move PERISHSONG aka Perish Song has rough damage 2 and damage % 20
+Move PERISHSONG aka Perish Song has final score 25
+Move PLAYNICE aka Play Nice has rough damage 2 and damage % 10
+Move PLAYNICE aka Play Nice has final score 0
+Move PROTECT aka Protect has rough damage 2 and damage % 100
+Move PROTECT aka Protect has final score 125
+Move PSYCHUP aka Psych Up has rough damage 2 and damage % 10
+Move PSYCHUP aka Psych Up has final score 0
+Move RECOVER aka Recover has rough damage 2 and damage % 60
+Move RECOVER aka Recover has final score 0
+Move RECYCLE aka Recycle has rough damage 2 and damage % 5
+Move RECYCLE aka Recycle has final score 0
+Move REFLECTTYPE aka Reflect Type has rough damage 2 and damage % 5
+Move REFLECTTYPE aka Reflect Type has final score 0
+Move REFRESH aka Refresh has rough damage 2 and damage % 15
+Move REFRESH aka Refresh has final score 0
+Move ROAR aka Roar has rough damage 2 and damage % 20
+Move ROAR aka Roar has final score 25
+Move SAFEGUARD aka Safeguard has rough damage 2 and damage % 0
+Move SAFEGUARD aka Safeguard has final score 0
+Move SCARYFACE aka Scary Face has rough damage 2 and damage % 15
+Move SCARYFACE aka Scary Face has final score 15
+Move SCREECH aka Screech has rough damage 2 and damage % 15
+Move SCREECH aka Screech has final score 12
+Move SHARPEN aka Sharpen has rough damage 2 and damage % 10
+Move SHARPEN aka Sharpen has final score 12
+Move SHELLSMASH aka Shell Smash has rough damage 2 and damage % 40
+Move SHELLSMASH aka Shell Smash has final score 50
+Move SIMPLEBEAM aka Simple Beam has rough damage 2 and damage % 20
+Move SIMPLEBEAM aka Simple Beam has final score 20
+Move SING aka Sing has rough damage 2 and damage % 100
+Move SING aka Sing has final score 55
+Move SKETCH aka Sketch has rough damage 2 and damage % 15
+Move SKETCH aka Sketch has final score 0
+Move SLACKOFF aka Slack Off has rough damage 2 and damage % 60
+Move SLACKOFF aka Slack Off has final score 0
+Move SLEEPTALK aka Sleep Talk has rough damage 2 and damage % 30
+Move SLEEPTALK aka Sleep Talk has final score 37
+Move SMOKESCREEN aka Smokescreen has rough damage 2 and damage % 10
+Move SMOKESCREEN aka Smokescreen has final score 0
+Move SOFTBOILED aka Soft-Boiled has rough damage 2 and damage % 60
+Move SOFTBOILED aka Soft-Boiled has final score 0
+Move SPLASH aka Splash has rough damage 2 and damage % 0
+Move SPLASH aka Splash has final score 0
+Move SPOTLIGHT aka Spotlight has rough damage 2 and damage % 5
+Move SPOTLIGHT aka Spotlight has final score 0
+Move STOCKPILE aka Stockpile has rough damage 2 and damage % 25
+Move STOCKPILE aka Stockpile has final score 31
+Move SUBSTITUTE aka Substitute has rough damage 2 and damage % 25
+Move SUBSTITUTE aka Substitute has final score 31
+Move SUPERSONIC aka Supersonic has rough damage 2 and damage % 10
+Move SUPERSONIC aka Supersonic has final score 0
+Move SWAGGER aka Swagger has rough damage 2 and damage % 20
+Move SWAGGER aka Swagger has final score 17
+Move SWALLOW aka Swallow has rough damage 2 and damage % 25
+Move SWALLOW aka Swallow has final score 0
+Move SWEETSCENT aka Sweet Scent has rough damage 2 and damage % 0
+Move SWEETSCENT aka Sweet Scent has final score 0
+Move SWORDSDANCE aka Swords Dance has rough damage 2 and damage % 35
+Move SWORDSDANCE aka Swords Dance has final score 43
+Move TAILWHIP aka Tail Whip has rough damage 2 and damage % 10
+Move TAILWHIP aka Tail Whip has final score 0
+Move TEARFULLOOK aka Tearful Look has rough damage 2 and damage % 10
+Move TEARFULLOOK aka Tearful Look has final score 12
+Move TEATIME aka Teatime has rough damage 2 and damage % 5
+Move TEATIME aka Teatime has final score 0
+Move TEETERDANCE aka Teeter Dance has rough damage 2 and damage % 5
+Move TEETERDANCE aka Teeter Dance has final score 0
+Move TICKLE aka Tickle has rough damage 2 and damage % 15
+Move TICKLE aka Tickle has final score 15
+Move TRANSFORM aka Transform has rough damage 2 and damage % 20
+Move TRANSFORM aka Transform has final score 0
+Move WHIRLWIND aka Whirlwind has rough damage 2 and damage % 20
+Move WHIRLWIND aka Whirlwind has final score 25
+Move WISH aka Wish has rough damage 2 and damage % 30
+Move WISH aka Wish has final score 37
+Move WORKUP aka Work Up has rough damage 2 and damage % 10
+Move WORKUP aka Work Up has final score 12
+Move YAWN aka Yawn has rough damage 2 and damage % 20
+Move YAWN aka Yawn has final score 25
+Move BELCH aka Belch has rough damage 9 and damage % 14
+Move BELCH aka Belch has final score 0
+Move GUNKSHOT aka Gunk Shot has rough damage 10 and damage % 16
+Move GUNKSHOT aka Gunk Shot has final score 61
+Move SLUDGEWAVE aka Sludge Wave has rough damage 8 and damage % 12
+Move SLUDGEWAVE aka Sludge Wave has final score 54
+Move SHELLSIDEARM aka Shell Side Arm has rough damage 7 and damage % 11
+Move SHELLSIDEARM aka Shell Side Arm has final score 27
+Move SLUDGEBOMB aka Sludge Bomb has rough damage 7 and damage % 11
+Move SLUDGEBOMB aka Sludge Bomb has final score 52
+Move POISONJAB aka Poison Jab has rough damage 7 and damage % 11
+Move POISONJAB aka Poison Jab has final score 52
+Move CROSSPOISON aka Cross Poison has rough damage 6 and damage % 9
+Move CROSSPOISON aka Cross Poison has final score 48
+Move SLUDGE aka Sludge has rough damage 6 and damage % 9
+Move SLUDGE aka Sludge has final score 48
+Move VENOSHOCK aka Venoshock has rough damage 6 and damage % 9
+Move VENOSHOCK aka Venoshock has final score 18
+Move CLEARSMOG aka Clear Smog has rough damage 5 and damage % 8
+Move CLEARSMOG aka Clear Smog has final score 0
+Move POISONFANG aka Poison Fang has rough damage 5 and damage % 8
+Move POISONFANG aka Poison Fang has final score 46
+Move POISONTAIL aka Poison Tail has rough damage 5 and damage % 8
+Move POISONTAIL aka Poison Tail has final score 46
+Move ACID aka Acid has rough damage 4 and damage % 6
+Move ACID aka Acid has final score 12
+Move ACIDSPRAY aka Acid Spray has rough damage 4 and damage % 6
+Move ACIDSPRAY aka Acid Spray has final score 22
+Move SMOG aka Smog has rough damage 3 and damage % 4
+Move SMOG aka Smog has final score 37
+Move POISONSTING aka Poison Sting has rough damage 3 and damage % 4
+Move POISONSTING aka Poison Sting has final score 38
+Move ACIDARMOR aka Acid Armor has rough damage 2 and damage % 25
+Move ACIDARMOR aka Acid Armor has final score 31
+Move BANEFULBUNKER aka Baneful Bunker has rough damage 2 and damage % 100
+Move BANEFULBUNKER aka Baneful Bunker has final score 125
+Move COIL aka Coil has rough damage 2 and damage % 30
+Move COIL aka Coil has final score 37
+Move CORROSIVEGAS aka Corrosive Gas has rough damage 4 and damage % 6
+Move CORROSIVEGAS aka Corrosive Gas has final score 0
+Move GASTROACID aka Gastro Acid has rough damage 2 and damage % 20
+Move GASTROACID aka Gastro Acid has final score 20
+Move POISONGAS aka Poison Gas has rough damage 2 and damage % 20
+Move POISONGAS aka Poison Gas has final score 18
+Move POISONPOWDER aka Poison Powder has rough damage 2 and damage % 15
+Move POISONPOWDER aka Poison Powder has final score 11
+Move PURIFY aka Purify has rough damage 2 and damage % 30
+Move PURIFY aka Purify has final score 0
+Move TOXIC aka Toxic has rough damage 2 and damage % 35
+Move TOXIC aka Toxic has final score 31
+Move TOXICSPIKES aka Toxic Spikes has rough damage 2 and damage % 35
+Move TOXICSPIKES aka Toxic Spikes has final score 43
+Move TOXICTHREAD aka Toxic Thread has rough damage 2 and damage % 20
+Move TOXICTHREAD aka Toxic Thread has final score 20
+Move VENOMDRENCH aka Venom Drench has rough damage 2 and damage % 15
+Move VENOMDRENCH aka Venom Drench has final score 0
+Move PRISMATICLASER aka Prismatic Laser has rough damage 12 and damage % 19
+Move PRISMATICLASER aka Prismatic Laser has final score 19
+Move PSYCHOBOOST aka Psycho Boost has rough damage 11 and damage % 17
+Move PSYCHOBOOST aka Psycho Boost has final score 33
+Move FUTURESIGHT aka Future Sight has rough damage 9 and damage % 14
+Move FUTURESIGHT aka Future Sight has final score 28
+Move SYNCHRONOISE aka Synchronoise has rough damage 9 and damage % 14
+Move SYNCHRONOISE aka Synchronoise has final score 0
+Move DREAMEATER aka Dream Eater has rough damage 8 and damage % 12
+Move DREAMEATER aka Dream Eater has final score 0
+Move PHOTONGEYSER aka Photon Geyser has rough damage 8 and damage % 12
+Move PHOTONGEYSER aka Photon Geyser has final score 24
+Move PSYSTRIKE aka Psystrike has rough damage 8 and damage % 12
+Move PSYSTRIKE aka Psystrike has final score 24
+Move FREEZINGGLARE aka Freezing Glare has rough damage 7 and damage % 11
+Move FREEZINGGLARE aka Freezing Glare has final score 22
+Move PSYCHIC aka Psychic has rough damage 7 and damage % 11
+Move PSYCHIC aka Psychic has final score 22
+Move PSYCHICFANGS aka Psychic Fangs has rough damage 8 and damage % 12
+Move PSYCHICFANGS aka Psychic Fangs has final score 24
+Move EERIESPELL aka Eerie Spell has rough damage 7 and damage % 11
+Move EERIESPELL aka Eerie Spell has final score 22
+Move EXPANDINGFORCE aka Expanding Force has rough damage 7 and damage % 11
+Move EXPANDINGFORCE aka Expanding Force has final score 22
+Move EXTRASENSORY aka Extrasensory has rough damage 7 and damage % 11
+Move EXTRASENSORY aka Extrasensory has final score 82
+Move HYPERSPACEHOLE aka Hyperspace Hole has rough damage 7 and damage % 11
+Move HYPERSPACEHOLE aka Hyperspace Hole has final score 22
+Move PSYSHOCK aka Psyshock has rough damage 7 and damage % 11
+Move PSYSHOCK aka Psyshock has final score 22
+Move ZENHEADBUTT aka Zen Headbutt has rough damage 7 and damage % 11
+Move ZENHEADBUTT aka Zen Headbutt has final score 81
+Move LUSTERPURGE aka Luster Purge has rough damage 6 and damage % 9
+Move LUSTERPURGE aka Luster Purge has final score 18
+Move MISTBALL aka Mist Ball has rough damage 6 and damage % 9
+Move MISTBALL aka Mist Ball has final score 38
+Move PSYCHOCUT aka Psycho Cut has rough damage 6 and damage % 9
+Move PSYCHOCUT aka Psycho Cut has final score 18
+Move PSYBEAM aka Psybeam has rough damage 6 and damage % 9
+Move PSYBEAM aka Psybeam has final score 48
+Move HEARTSTAMP aka Heart Stamp has rough damage 6 and damage % 9
+Move HEARTSTAMP aka Heart Stamp has final score 78
+Move CONFUSION aka Confusion has rough damage 5 and damage % 8
+Move CONFUSION aka Confusion has final score 46
+Move STOREDPOWER aka Stored Power has rough damage 3 and damage % 4
+Move STOREDPOWER aka Stored Power has final score 8
+Move MIRRORCOAT aka Mirror Coat has rough damage 1 and damage % 1
+Move MIRRORCOAT aka Mirror Coat has final score 97
+Move PSYWAVE aka Psywave has rough damage 1 and damage % 1
+Move PSYWAVE aka Psywave has final score 17
+Move AGILITY aka Agility has rough damage 2 and damage % 15
+Move AGILITY aka Agility has final score 18
+Move ALLYSWITCH aka Ally Switch has rough damage 2 and damage % 5
+Move ALLYSWITCH aka Ally Switch has final score 0
+Move AMNESIA aka Amnesia has rough damage 2 and damage % 25
+Move AMNESIA aka Amnesia has final score 31
+Move BARRIER aka Barrier has rough damage 2 and damage % 25
+Move BARRIER aka Barrier has final score 31
+Move CALMMIND aka Calm Mind has rough damage 2 and damage % 30
+Move CALMMIND aka Calm Mind has final score 37
+Move COSMICPOWER aka Cosmic Power has rough damage 2 and damage % 25
+Move COSMICPOWER aka Cosmic Power has final score 31
+Move GRAVITY aka Gravity has rough damage 2 and damage % 25
+Move GRAVITY aka Gravity has final score 0
+Move GUARDSPLIT aka Guard Split has rough damage 2 and damage % 5
+Move GUARDSPLIT aka Guard Split has final score 0
+Move GUARDSWAP aka Guard Swap has rough damage 2 and damage % 5
+Move GUARDSWAP aka Guard Swap has final score 0
+Move HEALBLOCK aka Heal Block has rough damage 2 and damage % 5
+Move HEALBLOCK aka Heal Block has final score 0
+Move HEALPULSE aka Heal Pulse has rough damage 2 and damage % 15
+Move HEALPULSE aka Heal Pulse has final score 0
+Move HEALINGWISH aka Healing Wish has rough damage 2 and damage % 15
+Move HEALINGWISH aka Healing Wish has final score 0
+Move HEARTSWAP aka Heart Swap has rough damage 2 and damage % 20
+Move HEARTSWAP aka Heart Swap has final score 25
+Move HYPNOSIS aka Hypnosis has rough damage 2 and damage % 100
+Move HYPNOSIS aka Hypnosis has final score 60
+Move IMPRISON aka Imprison has rough damage 2 and damage % 5
+Move IMPRISON aka Imprison has final score 0
+Move INSTRUCT aka Instruct has rough damage 2 and damage % 15
+Move INSTRUCT aka Instruct has final score 0
+Move KINESIS aka Kinesis has rough damage 2 and damage % 10
+Move KINESIS aka Kinesis has final score 0
+Move LIGHTSCREEN aka Light Screen has rough damage 2 and damage % 35
+Move LIGHTSCREEN aka Light Screen has final score 43
+Move LUNARDANCE aka Lunar Dance has rough damage 2 and damage % 15
+Move LUNARDANCE aka Lunar Dance has final score 0
+Move MAGICCOAT aka Magic Coat has rough damage 2 and damage % 5
+Move MAGICCOAT aka Magic Coat has final score 0
+Move MAGICPOWDER aka Magic Powder has rough damage 2 and damage % 5
+Move MAGICPOWDER aka Magic Powder has final score 0
+Move MAGICROOM aka Magic Room has rough damage 2 and damage % 5
+Move MAGICROOM aka Magic Room has final score 0
+Move MEDITATE aka Meditate has rough damage 2 and damage % 15
+Move MEDITATE aka Meditate has final score 18
+Move MIRACLEEYE aka Miracle Eye has rough damage 2 and damage % 5
+Move MIRACLEEYE aka Miracle Eye has final score 0
+Move POWERSPLIT aka Power Split has rough damage 2 and damage % 5
+Move POWERSPLIT aka Power Split has final score 0
+Move POWERSWAP aka Power Swap has rough damage 2 and damage % 5
+Move POWERSWAP aka Power Swap has final score 0
+Move POWERTRICK aka Power Trick has rough damage 2 and damage % 5
+Move POWERTRICK aka Power Trick has final score 0
+Move PSYCHICTERRAIN aka Psychic Terrain has rough damage 2 and damage % 30
+Move PSYCHICTERRAIN aka Psychic Terrain has final score 37
+Move PSYCHOSHIFT aka Psycho Shift has rough damage 2 and damage % 25
+Move PSYCHOSHIFT aka Psycho Shift has final score 25
+Move REFLECT aka Reflect has rough damage 2 and damage % 35
+Move REFLECT aka Reflect has final score 43
+Move REST aka Rest has rough damage 2 and damage % 20
+Move REST aka Rest has final score 0
+Move ROLEPLAY aka Role Play has rough damage 2 and damage % 15
+Move ROLEPLAY aka Role Play has final score 0
+Move SKILLSWAP aka Skill Swap has rough damage 2 and damage % 5
+Move SKILLSWAP aka Skill Swap has final score 0
+Move SPEEDSWAP aka Speed Swap has rough damage 2 and damage % 5
+Move SPEEDSWAP aka Speed Swap has final score 0
+Move TELEKINESIS aka Telekinesis has rough damage 2 and damage % 0
+Move TELEKINESIS aka Telekinesis has final score 0
+Move TELEPORT aka Teleport has rough damage 2 and damage % 30
+Move TELEPORT aka Teleport has final score 37
+Move TRICK aka Trick has rough damage 2 and damage % 25
+Move TRICK aka Trick has final score 0
+Move TRICKROOM aka Trick Room has rough damage 2 and damage % 30
+Move TRICKROOM aka Trick Room has final score 37
+Move WONDERROOM aka Wonder Room has rough damage 2 and damage % 30
+Move WONDERROOM aka Wonder Room has final score 37
+Move HEADSMASH aka Head Smash has rough damage 12 and damage % 19
+Move HEADSMASH aka Head Smash has final score 54
+Move ROCKWRECKER aka Rock Wrecker has rough damage 12 and damage % 19
+Move ROCKWRECKER aka Rock Wrecker has final score 18
+Move METEORBEAM aka Meteor Beam has rough damage 9 and damage % 14
+Move METEORBEAM aka Meteor Beam has final score 73
+Move DIAMONDSTORM aka Diamond Storm has rough damage 9 and damage % 14
+Move DIAMONDSTORM aka Diamond Storm has final score 52
+Move STONEEDGE aka Stone Edge has rough damage 9 and damage % 14
+Move STONEEDGE aka Stone Edge has final score 43
+Move POWERGEM aka Power Gem has rough damage 7 and damage % 11
+Move POWERGEM aka Power Gem has final score 33
+Move ROCKSLIDE aka Rock Slide has rough damage 7 and damage % 11
+Move ROCKSLIDE aka Rock Slide has final score 92
+Move ANCIENTPOWER aka Ancient Power has rough damage 5 and damage % 8
+Move ANCIENTPOWER aka Ancient Power has final score 44
+Move ROCKTOMB aka Rock Tomb has rough damage 6 and damage % 9
+Move ROCKTOMB aka Rock Tomb has final score 27
+Move ROCKTHROW aka Rock Throw has rough damage 5 and damage % 8
+Move ROCKTHROW aka Rock Throw has final score 23
+Move SMACKDOWN aka Smack Down has rough damage 5 and damage % 8
+Move SMACKDOWN aka Smack Down has final score 24
+Move ACCELEROCK aka Accelerock has rough damage 4 and damage % 6
+Move ACCELEROCK aka Accelerock has final score 18
+Move ROLLOUT aka Rollout has rough damage 4 and damage % 6
+Move ROLLOUT aka Rollout has final score 17
+Move ROCKBLAST aka Rock Blast has rough damage 3 and damage % 4
+Move ROCKBLAST aka Rock Blast has final score 25
+Move ROCKPOLISH aka Rock Polish has rough damage 2 and damage % 25
+Move ROCKPOLISH aka Rock Polish has final score 31
+Move SANDSTORM aka Sandstorm has rough damage 2 and damage % 15
+Move SANDSTORM aka Sandstorm has final score 0
+Move STEALTHROCK aka Stealth Rock has rough damage 2 and damage % 35
+Move STEALTHROCK aka Stealth Rock has final score 43
+Move TARSHOT aka Tar Shot has rough damage 2 and damage % 15
+Move TARSHOT aka Tar Shot has final score 15
+Move WIDEGUARD aka Wide Guard has rough damage 2 and damage % 35
+Move WIDEGUARD aka Wide Guard has final score 43
+Move DOOMDESIRE aka Doom Desire has rough damage 11 and damage % 17
+Move DOOMDESIRE aka Doom Desire has final score 52
+Move STEELBEAM aka Steel Beam has rough damage 11 and damage % 17
+Move STEELBEAM aka Steel Beam has final score 51
+Move STEELROLLER aka Steel Roller has rough damage 11 and damage % 17
+Move STEELROLLER aka Steel Roller has final score 0
+Move BEHEMOTHBASH aka Behemoth Bash has rough damage 9 and damage % 14
+Move BEHEMOTHBASH aka Behemoth Bash has final score 43
+Move BEHEMOTHBLADE aka Behemoth Blade has rough damage 9 and damage % 14
+Move BEHEMOTHBLADE aka Behemoth Blade has final score 43
+Move IRONTAIL aka Iron Tail has rough damage 9 and damage % 14
+Move IRONTAIL aka Iron Tail has final score 42
+Move SUNSTEELSTRIKE aka Sunsteel Strike has rough damage 9 and damage % 14
+Move SUNSTEELSTRIKE aka Sunsteel Strike has final score 43
+Move METEORMASH aka Meteor Mash has rough damage 8 and damage % 12
+Move METEORMASH aka Meteor Mash has final score 56
+Move ANCHORSHOT aka Anchor Shot has rough damage 7 and damage % 11
+Move ANCHORSHOT aka Anchor Shot has final score 33
+Move FLASHCANNON aka Flash Cannon has rough damage 7 and damage % 11
+Move FLASHCANNON aka Flash Cannon has final score 33
+Move IRONHEAD aka Iron Head has rough damage 7 and damage % 11
+Move IRONHEAD aka Iron Head has final score 93
+Move SMARTSTRIKE aka Smart Strike has rough damage 6 and damage % 9
+Move SMARTSTRIKE aka Smart Strike has final score 28
+Move STEELWING aka Steel Wing has rough damage 6 and damage % 9
+Move STEELWING aka Steel Wing has final score 27
+Move DOUBLEIRONBASH aka Double Iron Bash has rough damage 6 and damage % 9
+Move DOUBLEIRONBASH aka Double Iron Bash has final score 41
+Move MIRRORSHOT aka Mirror Shot has rough damage 6 and damage % 9
+Move MIRRORSHOT aka Mirror Shot has final score 27
+Move MAGNETBOMB aka Magnet Bomb has rough damage 6 and damage % 9
+Move MAGNETBOMB aka Magnet Bomb has final score 28
+Move GEARGRIND aka Gear Grind has rough damage 5 and damage % 8
+Move GEARGRIND aka Gear Grind has final score 36
+Move METALCLAW aka Metal Claw has rough damage 5 and damage % 8
+Move METALCLAW aka Metal Claw has final score 43
+Move BULLETPUNCH aka Bullet Punch has rough damage 4 and damage % 6
+Move BULLETPUNCH aka Bullet Punch has final score 18
+Move GYROBALL aka Gyro Ball has rough damage 2 and damage % 3
+Move GYROBALL aka Gyro Ball has final score 15
+Move HEAVYSLAM aka Heavy Slam has rough damage 2 and damage % 3
+Move HEAVYSLAM aka Heavy Slam has final score 35
+Move METALBURST aka Metal Burst has rough damage 1 and damage % 1
+Move METALBURST aka Metal Burst has final score 97
+Move AUTOTOMIZE aka Autotomize has rough damage 2 and damage % 25
+Move AUTOTOMIZE aka Autotomize has final score 31
+Move GEARUP aka Gear Up has rough damage 2 and damage % 15
+Move GEARUP aka Gear Up has final score 0
+Move IRONDEFENSE aka Iron Defense has rough damage 2 and damage % 25
+Move IRONDEFENSE aka Iron Defense has final score 31
+Move KINGSSHIELD aka King's Shield has rough damage 2 and damage % 100
+Move KINGSSHIELD aka King's Shield has final score 125
+Move METALSOUND aka Metal Sound has rough damage 2 and damage % 10
+Move METALSOUND aka Metal Sound has final score 0
+Move SHIFTGEAR aka Shift Gear has rough damage 2 and damage % 40
+Move SHIFTGEAR aka Shift Gear has final score 50
+Move HYDROCANNON aka Hydro Cannon has rough damage 11 and damage % 17
+Move HYDROCANNON aka Hydro Cannon has final score 16
+Move WATERSPOUT aka Water Spout has rough damage 11 and damage % 17
+Move WATERSPOUT aka Water Spout has final score 34
+Move HYDROPUMP aka Hydro Pump has rough damage 9 and damage % 14
+Move HYDROPUMP aka Hydro Pump has final score 27
+Move ORIGINPULSE aka Origin Pulse has rough damage 9 and damage % 14
+Move ORIGINPULSE aka Origin Pulse has final score 27
+Move STEAMERUPTION aka Steam Eruption has rough damage 9 and damage % 14
+Move STEAMERUPTION aka Steam Eruption has final score 57
+Move CRABHAMMER aka Crabhammer has rough damage 9 and damage % 14
+Move CRABHAMMER aka Crabhammer has final score 27
+Move AQUATAIL aka Aqua Tail has rough damage 8 and damage % 12
+Move AQUATAIL aka Aqua Tail has final score 23
+Move MUDDYWATER aka Muddy Water has rough damage 7 and damage % 11
+Move MUDDYWATER aka Muddy Water has final score 21
+Move SPARKLINGARIA aka Sparkling Aria has rough damage 7 and damage % 11
+Move SPARKLINGARIA aka Sparkling Aria has final score 22
+Move SURF aka Surf has rough damage 7 and damage % 11
+Move SURF aka Surf has final score 22
+Move FISHIOUSREND aka Fishious Rend has rough damage 8 and damage % 12
+Move FISHIOUSREND aka Fishious Rend has final score 24
+Move LIQUIDATION aka Liquidation has rough damage 8 and damage % 12
+Move LIQUIDATION aka Liquidation has final score 24
+Move DIVE aka Dive has rough damage 7 and damage % 11
+Move DIVE aka Dive has final score 11
+Move SCALD aka Scald has rough damage 7 and damage % 11
+Move SCALD aka Scald has final score 52
+Move SNIPESHOT aka Snipe Shot has rough damage 7 and damage % 11
+Move SNIPESHOT aka Snipe Shot has final score 22
+Move WATERPLEDGE aka Water Pledge has rough damage 7 and damage % 11
+Move WATERPLEDGE aka Water Pledge has final score 22
+Move WATERFALL aka Waterfall has rough damage 7 and damage % 11
+Move WATERFALL aka Waterfall has final score 82
+Move RAZORSHELL aka Razor Shell has rough damage 7 and damage % 11
+Move RAZORSHELL aka Razor Shell has final score 21
+Move BRINE aka Brine has rough damage 6 and damage % 9
+Move BRINE aka Brine has final score 18
+Move BUBBLEBEAM aka Bubble Beam has rough damage 6 and damage % 9
+Move BUBBLEBEAM aka Bubble Beam has final score 18
+Move OCTAZOOKA aka Octazooka has rough damage 6 and damage % 9
+Move OCTAZOOKA aka Octazooka has final score 17
+Move FLIPTURN aka Flip Turn has rough damage 6 and damage % 9
+Move FLIPTURN aka Flip Turn has final score 18
+Move WATERPULSE aka Water Pulse has rough damage 5 and damage % 8
+Move WATERPULSE aka Water Pulse has final score 46
+Move AQUAJET aka Aqua Jet has rough damage 4 and damage % 6
+Move AQUAJET aka Aqua Jet has final score 12
+Move BUBBLE aka Bubble has rough damage 4 and damage % 6
+Move BUBBLE aka Bubble has final score 12
+Move WATERGUN aka Water Gun has rough damage 4 and damage % 6
+Move WATERGUN aka Water Gun has final score 12
+Move CLAMP aka Clamp has rough damage 4 and damage % 6
+Move CLAMP aka Clamp has final score 51
+Move WHIRLPOOL aka Whirlpool has rough damage 4 and damage % 6
+Move WHIRLPOOL aka Whirlpool has final score 51
+Move SURGINGSTRIKES aka Surging Strikes has rough damage 3 and damage % 4
+Move SURGINGSTRIKES aka Surging Strikes has final score 8
+Move WATERSHURIKEN aka Water Shuriken has rough damage 2 and damage % 3
+Move WATERSHURIKEN aka Water Shuriken has final score 9
+Move AQUARING aka Aqua Ring has rough damage 2 and damage % 20
+Move AQUARING aka Aqua Ring has final score 25
+Move LIFEDEW aka Life Dew has rough damage 2 and damage % 1
+Move LIFEDEW aka Life Dew has final score 0
+Move RAINDANCE aka Rain Dance has rough damage 2 and damage % 15
+Move RAINDANCE aka Rain Dance has final score 18
+Move SOAK aka Soak has rough damage 2 and damage % 30
+Move SOAK aka Soak has final score 30
+Move WATERSPORT aka Water Sport has rough damage 2 and damage % 5
+Move WATERSPORT aka Water Sport has final score 0
+Move WITHDRAW aka Withdraw has rough damage 2 and damage % 10
+Move WITHDRAW aka Withdraw has final score 12
+Move SLIMESHOT aka Slime Shot has rough damage 7 and damage % 11
+Move SLIMESHOT aka Slime Shot has final score 22
+Move ZEALOUSDANCE aka Zealous Dance has rough damage 6 and damage % 9
+Move ZEALOUSDANCE aka Zealous Dance has final score 28
+Move PSYSONIC aka Psysonic has rough damage 7 and damage % 11
+Move PSYSONIC aka Psysonic has final score 22
+Move PSYCRUSH aka Psycrush has rough damage 6 and damage % 9
+Move PSYCRUSH aka Psycrush has final score 18
+Move KINETICREND aka Kinetic Rend has rough damage 6 and damage % 9
+Move KINETICREND aka Kinetic Rend has final score 18
+Move JOLTKICK aka Jolt Kick has rough damage 8 and damage % 12
+Move JOLTKICK aka Jolt Kick has final score 83
+Move FROSTKICK aka Frost Kick has rough damage 8 and damage % 12
+Move FROSTKICK aka Frost Kick has final score 17
+Move SCOURINGWINDS aka Scouring Winds has rough damage 7 and damage % 11
+Move SCOURINGWINDS aka Scouring Winds has final score 22
+Move STUFFCHEEKS aka Stuff Cheeks has rough damage 2 and damage % 1
+Move STUFFCHEEKS aka Stuff Cheeks has final score 0
+Move HAUNT aka Haunt has rough damage 8 and damage % 12
+Move HAUNT aka Haunt has final score 24
+Move BITINGCOLD aka Biting Cold has rough damage 2 and damage % 1
+Move BITINGCOLD aka Biting Cold has final score 0
+Move CHILLINGWAIL aka Chilling Wail has rough damage 7 and damage % 11
+Move CHILLINGWAIL aka Chilling Wail has final score 22
+Move MYSTICBLADE aka Mystic Blade has rough damage 8 and damage % 12
+Move MYSTICBLADE aka Mystic Blade has final score 24
+Move FORCEWAVE aka Force Wave has rough damage 7 and damage % 11
+Move FORCEWAVE aka Force Wave has final score 32
+Move GEODEBURST aka Geode Burst has rough damage 9 and damage % 14
+Move GEODEBURST aka Geode Burst has final score 42
+Move FORGEBREATH aka Forge Breath has rough damage 7 and damage % 11
+Move FORGEBREATH aka Forge Breath has final score 63
+Move EXCITE aka Excite has rough damage 2 and damage % 10
+Move EXCITE aka Excite has final score 12
+Move SCATTERDUST aka Scatterdust has rough damage 7 and damage % 11
+Move SCATTERDUST aka Scatterdust has final score 28
+Move SWEETTOOTH aka Sweet Tooth has rough damage 5 and damage % 8
+Move SWEETTOOTH aka Sweet Tooth has final score 76
+Move SUPERNOVA aka Supernova has rough damage 14 and damage % 22
+Move SUPERNOVA aka Supernova has final score 67
+Move PEPPERSPRAY aka Pepper Spray has rough damage 7 and damage % 11
+Move PEPPERSPRAY aka Pepper Spray has final score 52
+Move TITANSWRATH aka Titan's Wrath has rough damage 9 and damage % 14
+Move TITANSWRATH aka Titan's Wrath has final score 36
+Move SIRENSONG aka Siren Song has rough damage 6 and damage % 9
+Move SIRENSONG aka Siren Song has final score 48
+Move REBALANCING aka Rebalancing has rough damage 2 and damage % 1
+Move REBALANCING aka Rebalancing has final score 0
+Move FRIGIDMAW aka Frigid Maw has rough damage 7 and damage % 11
+Move FRIGIDMAW aka Frigid Maw has final score 17
+Move MANADRAIN aka Mana Drain has rough damage 8 and damage % 12
+Move MANADRAIN aka Mana Drain has final score 24
+Move STEAMBURST aka Steam Burst has rough damage 6 and damage % 9
+Move STEAMBURST aka Steam Burst has final score 0
+Move QUESOBLAST aka Queso Blast has rough damage 4 and damage % 6
+Move QUESOBLAST aka Queso Blast has final score 12
+Move PREMONITIONMOVE aka Premonition Dummy has rough damage 2 and damage % 3
+Move PREMONITIONMOVE aka Premonition Dummy has final score 11
+Move CRIMSONSURGE aka Crimson Surge has rough damage 4 and damage % 6
+Move CRIMSONSURGE aka Crimson Surge has final score 0
+Move EROSIONWAVE aka Erosion Wave has rough damage 8 and damage % 12
+Move EROSIONWAVE aka Erosion Wave has final score 37
+Move OWTHEEDGE aka Ow The Edge has rough damage 10 and damage % 16
+Move OWTHEEDGE aka Ow The Edge has final score 38
+Move THINKFAST aka Think Fast has rough damage 4 and damage % 6
+Move THINKFAST aka Think Fast has final score 12
+Move THOUSANDFOLDS aka Thousand Folds has rough damage 8 and damage % 12
+Move THOUSANDFOLDS aka Thousand Folds has final score 37
+Move TOXIRAVAGE aka Toxiravage has rough damage 7 and damage % 11
+Move TOXIRAVAGE aka Toxiravage has final score 22
+Move SWINDLE aka Swindle has rough damage 5 and damage % 8
+Move SWINDLE aka Swindle has final score 60
