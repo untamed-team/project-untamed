@@ -115,7 +115,7 @@ Move DARKVOID aka Dark Void has final score 50
 Move EMBARGO aka Embargo has rough damage 2 and damage % 10
 Move EMBARGO aka Embargo has final score 0
 Move FAKETEARS aka Fake Tears has rough damage 2 and damage % 15
-Move FAKETEARS aka Fake Tears has final score 15
+Move FAKETEARS aka Fake Tears has final score 0
 Move FLATTER aka Flatter has rough damage 2 and damage % 20
 Move FLATTER aka Flatter has final score 20
 Move HONECLAWS aka Hone Claws has rough damage 2 and damage % 35
@@ -581,7 +581,7 @@ Move PETALDANCE aka Petal Dance has final score 28
 Move POWERWHIP aka Power Whip has rough damage 10 and damage % 16
 Move POWERWHIP aka Power Whip has final score 31
 Move SEEDFLARE aka Seed Flare has rough damage 9 and damage % 14
-Move SEEDFLARE aka Seed Flare has final score 37
+Move SEEDFLARE aka Seed Flare has final score 27
 Move SOLARBEAM aka Solar Beam has rough damage 9 and damage % 14
 Move SOLARBEAM aka Solar Beam has final score 14
 Move WOODHAMMER aka Wood Hammer has rough damage 10 and damage % 16
@@ -765,7 +765,7 @@ Move AURORAVEIL aka Aurora Veil has final score 0
 Move HAIL aka Hail has rough damage 2 and damage % 15
 Move HAIL aka Hail has final score 0
 Move HAZE aka Haze has rough damage 2 and damage % 10
-Move HAZE aka Haze has final score 12
+Move HAZE aka Haze has final score 0
 Move MIST aka Mist has rough damage 2 and damage % 20
 Move MIST aka Mist has final score 25
 Move EXPLOSION aka Explosion has rough damage 19 and damage % 30
@@ -851,7 +851,7 @@ Move STOMP aka Stomp has final score 78
 Move COVET aka Covet has rough damage 6 and damage % 9
 Move COVET aka Covet has final score 0
 Move HIDDENPOWER aka Hidden Power has rough damage 5 and damage % 8
-Move HIDDENPOWER aka Hidden Power has final score 16
+Move HIDDENPOWER aka Hidden Power has final score 0
 Move ROUND aka Round has rough damage 5 and damage % 8
 Move ROUND aka Round has final score 16
 Move SWIFT aka Swift has rough damage 5 and damage % 8
@@ -1147,7 +1147,7 @@ Move SLUDGE aka Sludge has final score 48
 Move VENOSHOCK aka Venoshock has rough damage 6 and damage % 9
 Move VENOSHOCK aka Venoshock has final score 18
 Move CLEARSMOG aka Clear Smog has rough damage 5 and damage % 8
-Move CLEARSMOG aka Clear Smog has final score 0
+Move CLEARSMOG aka Clear Smog has final score 16
 Move POISONFANG aka Poison Fang has rough damage 5 and damage % 8
 Move POISONFANG aka Poison Fang has final score 46
 Move POISONTAIL aka Poison Tail has rough damage 5 and damage % 8
@@ -1155,7 +1155,7 @@ Move POISONTAIL aka Poison Tail has final score 46
 Move ACID aka Acid has rough damage 4 and damage % 6
 Move ACID aka Acid has final score 12
 Move ACIDSPRAY aka Acid Spray has rough damage 4 and damage % 6
-Move ACIDSPRAY aka Acid Spray has final score 22
+Move ACIDSPRAY aka Acid Spray has final score 12
 Move SMOG aka Smog has rough damage 3 and damage % 4
 Move SMOG aka Smog has final score 37
 Move POISONSTING aka Poison Sting has rough damage 3 and damage % 4
@@ -1259,7 +1259,7 @@ Move HEALPULSE aka Heal Pulse has final score 0
 Move HEALINGWISH aka Healing Wish has rough damage 2 and damage % 15
 Move HEALINGWISH aka Healing Wish has final score 0
 Move HEARTSWAP aka Heart Swap has rough damage 2 and damage % 20
-Move HEARTSWAP aka Heart Swap has final score 25
+Move HEARTSWAP aka Heart Swap has final score 0
 Move HYPNOSIS aka Hypnosis has rough damage 2 and damage % 100
 Move HYPNOSIS aka Hypnosis has final score 60
 Move IMPRISON aka Imprison has rough damage 2 and damage % 5
