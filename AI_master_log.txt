@@ -1550,3 +1550,4 @@ Move TOXIRAVAGE aka Toxiravage has rough damage 7 and damage % 11
 Move TOXIRAVAGE aka Toxiravage has final score 22
 Move SWINDLE aka Swindle has rough damage 5 and damage % 8
 Move SWINDLE aka Swindle has final score 60
+Move Fake Out has the best final score 132
