@@ -2864,7 +2864,7 @@ Evolutions = TITANOTROP,Titanotrop,42
 #-------------------------------
 [TITANOTROP]
 Name = Titanotrop
-Types = GRASS,DRAGON
+Types = GRASS
 BaseStats = 183,103,104,29,72,90
 GenderRatio = Female50Percent
 GrowthRate = Slow
