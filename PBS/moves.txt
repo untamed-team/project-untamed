@@ -9119,18 +9119,18 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = OverrideTargetStatusWithPoison
 Flags = CanProtect,CanMirrorMove
-Description = After doing damage, the target is left poisoned. Regardless if the target was already statused.
+Description = After doing damage, the target is left poisoned regardless of other status effects.
 #-------------------------------
-[TOXIRAVAGE]
-Name = Toxiravage
-Type = NORMAL
+[VENOMSTRIKE]
+Name = Venom Strike
+Type = POISON
 Category = Physical
-Power = 80
+Power = 60
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
-Priority = 2
+Priority = 1
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
-Description = Sharp, toxic spikes impale the target. Always hits first.
+Flags = Contact,CanProtect,CanMirrorMove,Biting
+Description = The user lashes toward the opponent and bites with venomous fangs. Always hits first.
 #-------------------------------
