@@ -1166,7 +1166,7 @@ Move BANEFULBUNKER aka Baneful Bunker has rough damage 2 and damage % 100
 Move BANEFULBUNKER aka Baneful Bunker has final score 125
 Move COIL aka Coil has rough damage 2 and damage % 30
 Move COIL aka Coil has final score 37
-Move CORROSIVEGAS aka Corrosive Gas has rough damage 2 and damage % 10
+Move CORROSIVEGAS aka Corrosive Gas has rough damage 2 and damage % 25
 Move CORROSIVEGAS aka Corrosive Gas has final score 0
 Move GASTROACID aka Gastro Acid has rough damage 2 and damage % 20
 Move GASTROACID aka Gastro Acid has final score 20
