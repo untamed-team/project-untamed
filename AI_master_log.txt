@@ -124,10 +124,10 @@ Move MEMENTO aka Memento has rough damage 2 and damage % 0 has the function User
 Move MEMENTO aka Memento has final score 0
 Move NASTYPLOT aka Nasty Plot has rough damage 2 and damage % 35 has the function RaiseUserSpAtk2
 Move NASTYPLOT aka Nasty Plot has final score 0
-Move OBSTRUCT aka Obstruct has rough damage 2 and damage % 100 has the function ProtectUserFromDamagingMovesObstruct
-Move OBSTRUCT aka Obstruct has final score 100
+Move OBSTRUCT aka Obstruct has rough damage 2 and damage % 80 has the function ProtectUserFromDamagingMovesObstruct
+Move OBSTRUCT aka Obstruct has final score 80
 Move PARTINGSHOT aka Parting Shot has rough damage 2 and damage % 35 has the function LowerTargetAtkSpAtk1SwitchOutUser
-Move PARTINGSHOT aka Parting Shot has final score 35
+Move PARTINGSHOT aka Parting Shot has final score 0
 Move QUASH aka Quash has rough damage 2 and damage % 0 has the function TargetActsLast
 Move QUASH aka Quash has final score 0
 Move SNATCH aka Snatch has rough damage 2 and damage % 5 has the function StealAndUseBeneficialStatusMove
@@ -245,7 +245,7 @@ Move EERIEIMPULSE aka Eerie Impulse has final score 15
 Move ELECTRICTERRAIN aka Electric Terrain has rough damage 2 and damage % 30 has the function StartElectricTerrain
 Move ELECTRICTERRAIN aka Electric Terrain has final score 37
 Move ELECTRIFY aka Electrify has rough damage 2 and damage % 20 has the function TargetMovesBecomeElectric
-Move ELECTRIFY aka Electrify has final score 25
+Move ELECTRIFY aka Electrify has final score 0
 Move IONDELUGE aka Ion Deluge has rough damage 2 and damage % 20 has the function NormalMovesBecomeElectric
 Move IONDELUGE aka Ion Deluge has final score 25
 Move MAGNETRISE aka Magnet Rise has rough damage 2 and damage % 5 has the function StartUserAirborne
@@ -569,7 +569,7 @@ Move NIGHTMARE aka Nightmare has final score 0
 Move SPITE aka Spite has rough damage 2 and damage % 0 has the function LowerPPOfTargetLastMoveBy4
 Move SPITE aka Spite has final score 0
 Move TRICKORTREAT aka Trick-or-Treat has rough damage 2 and damage % 15 has the function AddGhostTypeToTarget
-Move TRICKORTREAT aka Trick-or-Treat has final score 15
+Move TRICKORTREAT aka Trick-or-Treat has final score 0
 Move FRENZYPLANT aka Frenzy Plant has rough damage 13 and damage % 20 has the function AttackAndSkipNextTurn
 Move FRENZYPLANT aka Frenzy Plant has final score 0
 Move LEAFSTORM aka Leaf Storm has rough damage 12 and damage % 19 has the function LowerUserSpAtk2
@@ -654,8 +654,8 @@ Move LEECHSEED aka Leech Seed has rough damage 2 and damage % 30 has the functio
 Move LEECHSEED aka Leech Seed has final score 27
 Move SLEEPPOWDER aka Sleep Powder has rough damage 2 and damage % 100 has the function SleepTarget
 Move SLEEPPOWDER aka Sleep Powder has final score 75
-Move SPIKYSHIELD aka Spiky Shield has rough damage 2 and damage % 100 has the function ProtectUserFromTargetingMovesSpikyShield
-Move SPIKYSHIELD aka Spiky Shield has final score 125
+Move SPIKYSHIELD aka Spiky Shield has rough damage 2 and damage % 80 has the function ProtectUserFromTargetingMovesSpikyShield
+Move SPIKYSHIELD aka Spiky Shield has final score 100
 Move SPORE aka Spore has rough damage 2 and damage % 100 has the function SleepTarget
 Move SPORE aka Spore has final score 100
 Move STRENGTHSAP aka Strength Sap has rough damage 2 and damage % 60 has the function HealUserByTargetAttackLowerTargetAttack1
@@ -1052,8 +1052,8 @@ Move PERISHSONG aka Perish Song has rough damage 2 and damage % 20 has the funct
 Move PERISHSONG aka Perish Song has final score 0
 Move PLAYNICE aka Play Nice has rough damage 2 and damage % 10 has the function LowerTargetAttack1BypassSubstitute
 Move PLAYNICE aka Play Nice has final score 0
-Move PROTECT aka Protect has rough damage 2 and damage % 100 has the function ProtectUser
-Move PROTECT aka Protect has final score 125
+Move PROTECT aka Protect has rough damage 2 and damage % 80 has the function ProtectUser
+Move PROTECT aka Protect has final score 100
 Move PSYCHUP aka Psych Up has rough damage 2 and damage % 10 has the function UserCopyTargetStatStages
 Move PSYCHUP aka Psych Up has final score 0
 Move RECOVER aka Recover has rough damage 2 and damage % 60 has the function HealUserHalfOfTotalHP
@@ -1162,8 +1162,8 @@ Move POISONSTING aka Poison Sting has rough damage 3 and damage % 4 has the func
 Move POISONSTING aka Poison Sting has final score 0
 Move ACIDARMOR aka Acid Armor has rough damage 2 and damage % 25 has the function RaiseUserDefense2
 Move ACIDARMOR aka Acid Armor has final score 31
-Move BANEFULBUNKER aka Baneful Bunker has rough damage 2 and damage % 100 has the function ProtectUserBanefulBunker
-Move BANEFULBUNKER aka Baneful Bunker has final score 125
+Move BANEFULBUNKER aka Baneful Bunker has rough damage 2 and damage % 80 has the function ProtectUserBanefulBunker
+Move BANEFULBUNKER aka Baneful Bunker has final score 100
 Move COIL aka Coil has rough damage 2 and damage % 30 has the function RaiseUserAtkDefAcc1
 Move COIL aka Coil has final score 37
 Move CORROSIVEGAS aka Corrosive Gas has rough damage 2 and damage % 15 has the function CorrodeTargetItem
@@ -1400,8 +1400,8 @@ Move GEARUP aka Gear Up has rough damage 2 and damage % 15 has the function Rais
 Move GEARUP aka Gear Up has final score 0
 Move IRONDEFENSE aka Iron Defense has rough damage 2 and damage % 25 has the function RaiseUserDefense2
 Move IRONDEFENSE aka Iron Defense has final score 31
-Move KINGSSHIELD aka King's Shield has rough damage 2 and damage % 100 has the function ProtectUserFromDamagingMovesKingsShield
-Move KINGSSHIELD aka King's Shield has final score 125
+Move KINGSSHIELD aka King's Shield has rough damage 2 and damage % 80 has the function ProtectUserFromDamagingMovesKingsShield
+Move KINGSSHIELD aka King's Shield has final score 100
 Move METALSOUND aka Metal Sound has rough damage 2 and damage % 10 has the function LowerTargetSpDef2
 Move METALSOUND aka Metal Sound has final score 0
 Move SHIFTGEAR aka Shift Gear has rough damage 2 and damage % 40 has the function RaiseUserAtk1Spd2
@@ -1550,4 +1550,4 @@ Move THOUSANDFOLDS aka Failsafe Thousand Folds has rough damage 8 and damage % 1
 Move THOUSANDFOLDS aka Failsafe Thousand Folds has final score 0
 Move SWINDLE aka Failsafe Swindle has rough damage 5 and damage % 8 has the function DoubleDamageIfTargetHasChoiceItem
 Move SWINDLE aka Failsafe Swindle has final score 0
-Move Spiky Shield has the best final score 125
+Move Spiky Shield has the best final score 100
