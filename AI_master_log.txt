@@ -45,7 +45,7 @@ Move HEALORDER aka Heal Order has final score 0
 Move POWDER aka Powder has rough damage 2 and damage % 10 has the function TargetNextFireMoveDamagesTarget
 Move POWDER aka Powder has final score 0
 Move QUIVERDANCE aka Quiver Dance has rough damage 2 and damage % 40 has the function RaiseUserSpAtkSpDefSpd1
-Move QUIVERDANCE aka Quiver Dance has final score 0
+Move QUIVERDANCE aka Quiver Dance has final score 50
 Move RAGEPOWDER aka Rage Powder has rough damage 2 and damage % 25 has the function RedirectAllMovesToUser
 Move RAGEPOWDER aka Rage Powder has final score 0
 Move SPIDERWEB aka Spider Web has rough damage 2 and damage % 20 has the function TrapTargetInBattle
@@ -55,7 +55,7 @@ Move STICKYWEB aka Sticky Web has final score 75
 Move STRINGSHOT aka String Shot has rough damage 2 and damage % 10 has the function LowerTargetSpeed2
 Move STRINGSHOT aka String Shot has final score 0
 Move TAILGLOW aka Tail Glow has rough damage 2 and damage % 35 has the function RaiseUserSpAtk3
-Move TAILGLOW aka Tail Glow has final score 0
+Move TAILGLOW aka Tail Glow has final score 43
 Move HYPERSPACEFURY aka Hyperspace Fury has rough damage 9 and damage % 14 has the function HoopaRemoveProtectionsBypassSubstituteLowerUserDef1
 Move HYPERSPACEFURY aka Hyperspace Fury has final score 0
 Move FOULPLAY aka Foul Play has rough damage 12 and damage % 19 has the function UseTargetAttackInsteadOfUserAttack
@@ -123,7 +123,7 @@ Move HONECLAWS aka Hone Claws has final score 43
 Move MEMENTO aka Memento has rough damage 2 and damage % 0 has the function UserFaintsLowerTargetAtkSpAtk2
 Move MEMENTO aka Memento has final score 0
 Move NASTYPLOT aka Nasty Plot has rough damage 2 and damage % 35 has the function RaiseUserSpAtk2
-Move NASTYPLOT aka Nasty Plot has final score 0
+Move NASTYPLOT aka Nasty Plot has final score 43
 Move OBSTRUCT aka Obstruct has rough damage 2 and damage % 80 has the function ProtectUserFromDamagingMovesObstruct
 Move OBSTRUCT aka Obstruct has final score 80
 Move PARTINGSHOT aka Parting Shot has rough damage 2 and damage % 35 has the function LowerTargetAtkSpAtk1SwitchOutUser
@@ -1001,7 +1001,7 @@ Move GLARE aka Glare has final score 35
 Move GROWL aka Growl has rough damage 2 and damage % 10 has the function LowerTargetAttack1
 Move GROWL aka Growl has final score 0
 Move GROWTH aka Growth has rough damage 2 and damage % 10 has the function RaiseUserAtkSpAtk1Or2InSun
-Move GROWTH aka Growth has final score 12
+Move GROWTH aka Growth has final score 0
 Move HAPPYHOUR aka Happy Hour has rough damage 2 and damage % 0 has the function DoubleMoneyGainedFromBattle
 Move HAPPYHOUR aka Happy Hour has final score 0
 Move HARDEN aka Harden has rough damage 2 and damage % 10 has the function RaiseUserDefense1
@@ -1125,7 +1125,7 @@ Move WHIRLWIND aka Whirlwind has final score 0
 Move WISH aka Wish has rough damage 2 and damage % 30 has the function HealUserPositionNextTurn
 Move WISH aka Wish has final score 0
 Move WORKUP aka Work Up has rough damage 2 and damage % 10 has the function RaiseUserAtkSpAtk1
-Move WORKUP aka Work Up has final score 12
+Move WORKUP aka Work Up has final score 0
 Move YAWN aka Yawn has rough damage 2 and damage % 20 has the function SleepTargetNextTurn
 Move YAWN aka Yawn has final score 25
 Move BELCH aka Belch has rough damage 11 and damage % 17 has the function FailsIfUserNotConsumedBerry
@@ -1243,7 +1243,7 @@ Move AMNESIA aka Amnesia has final score 31
 Move BARRIER aka Barrier has rough damage 2 and damage % 25 has the function RaiseUserDefense2
 Move BARRIER aka Barrier has final score 31
 Move CALMMIND aka Calm Mind has rough damage 2 and damage % 30 has the function RaiseUserSpAtkSpDef1
-Move CALMMIND aka Calm Mind has final score 0
+Move CALMMIND aka Calm Mind has final score 37
 Move COSMICPOWER aka Cosmic Power has rough damage 2 and damage % 25 has the function RaiseUserDefSpDef1
 Move COSMICPOWER aka Cosmic Power has final score 31
 Move GRAVITY aka Gravity has rough damage 2 and damage % 25 has the function StartGravity
