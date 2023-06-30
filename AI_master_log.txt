@@ -1119,7 +1119,7 @@ Move TEETERDANCE aka Teeter Dance has final score 0
 Move TICKLE aka Tickle has rough damage 2 and damage % 15 has the function LowerTargetAtkDef1
 Move TICKLE aka Tickle has final score 15
 Move TRANSFORM aka Transform has rough damage 2 and damage % 20 has the function TransformUserIntoTarget
-Move TRANSFORM aka Transform has final score 0
+Move TRANSFORM aka Transform has final score 25
 Move WHIRLWIND aka Whirlwind has rough damage 2 and damage % 20 has the function SwitchOutTargetStatusMove
 Move WHIRLWIND aka Whirlwind has final score 0
 Move WISH aka Wish has rough damage 2 and damage % 30 has the function HealUserPositionNextTurn
@@ -1297,7 +1297,7 @@ Move REFLECT aka Reflect has final score 43
 Move REST aka Rest has rough damage 2 and damage % 20 has the function HealUserFullyAndFallAsleep
 Move REST aka Rest has final score 0
 Move ROLEPLAY aka Role Play has rough damage 2 and damage % 15 has the function SetUserAbilityToTargetAbility
-Move ROLEPLAY aka Role Play has final score 0
+Move ROLEPLAY aka Role Play has final score 18
 Move SKILLSWAP aka Skill Swap has rough damage 2 and damage % 5 has the function UserTargetSwapAbilities
 Move SKILLSWAP aka Skill Swap has final score 0
 Move SPEEDSWAP aka Speed Swap has rough damage 2 and damage % 5 has the function UserTargetSwapBaseSpeed
