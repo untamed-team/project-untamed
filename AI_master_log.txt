@@ -659,7 +659,7 @@ Move SPIKYSHIELD aka Spiky Shield has final score 100
 Move SPORE aka Spore has rough damage 2 and damage % 100 has the function SleepTarget
 Move SPORE aka Spore has final score 100
 Move STRENGTHSAP aka Strength Sap has rough damage 2 and damage % 60 has the function HealUserByTargetAttackLowerTargetAttack1
-Move STRENGTHSAP aka Strength Sap has final score 0
+Move STRENGTHSAP aka Strength Sap has final score 60
 Move STUNSPORE aka Stun Spore has rough damage 2 and damage % 35 has the function ParalyzeTarget
 Move STUNSPORE aka Stun Spore has final score 26
 Move SYNTHESIS aka Synthesis has rough damage 2 and damage % 60 has the function HealUserDependingOnWeather
