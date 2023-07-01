@@ -1,30 +1,48 @@
---------------------------------------------------------------------------------------------
-Known move Volt Tackle 1st score is 10.10772
 Known move Volt Tackle 2nd score base damage is 120
 Known move Volt Tackle 2nd score real damage (1) is 17
 Known move Volt Tackle 2nd score real damage (2) is 17
 Known move Volt Tackle 2nd score real damage (3) is 17
 Known move Volt Tackle 2nd score damage % is 47.22222222222222
 Known move Volt Tackle 2nd score final % is 47.22222222222222
-Known move Volt Tackle 2nd score is 57.10772
-Known move Volt Tackle 3rd score is 57.10772
---------------------------------------------------------------------------------------------
-Known move Flare Blitz 1st score is 9.18
 Known move Flare Blitz 2nd score base damage is 120
 Known move Flare Blitz 2nd score real damage (1) is 17
 Known move Flare Blitz 2nd score real damage (2) is 17
 Known move Flare Blitz 2nd score real damage (3) is 17
 Known move Flare Blitz 2nd score damage % is 47.22222222222222
 Known move Flare Blitz 2nd score final % is 47.22222222222222
-Known move Flare Blitz 2nd score is 56.18
-Known move Flare Blitz 3rd score is 56.18
---------------------------------------------------------------------------------------------
-Known move Failsafe Ow The Edge 1st score is 9.0
 Known move Failsafe Ow The Edge 2nd score base damage is 120
 Known move Failsafe Ow The Edge 2nd score real damage (1) is 26
 Known move Failsafe Ow The Edge 2nd score real damage (2) is 26
 Known move Failsafe Ow The Edge 2nd score real damage (3) is 26
 Known move Failsafe Ow The Edge 2nd score damage % is 72.22222222222223
 Known move Failsafe Ow The Edge 2nd score final % is 72.22222222222223
-Known move Failsafe Ow The Edge 2nd score is 81.0
-Known move Failsafe Ow The Edge 3rd score is 81.0
+Known move Pursuit 2nd score base damage is 40
+Known move Pursuit 2nd score real damage (1) is 11
+Known move Pursuit 2nd score real damage (2) is 11
+Known move Pursuit 2nd score real damage (3) is 11
+Known move Pursuit 2nd score damage % is 30.555555555555557
+Known move Pursuit 2nd score final % is 30.555555555555557
+Known move Volt Tackle 2nd score base damage is 120
+Known move Volt Tackle 2nd score real damage (1) is 7
+Known move Volt Tackle 2nd score real damage (2) is 7
+Known move Volt Tackle 2nd score real damage (3) is 7
+Known move Volt Tackle 2nd score damage % is 4.375
+Known move Volt Tackle 2nd score final % is 4.375
+Known move Flare Blitz 2nd score base damage is 120
+Known move Flare Blitz 2nd score real damage (1) is 7
+Known move Flare Blitz 2nd score real damage (2) is 7
+Known move Flare Blitz 2nd score real damage (3) is 7
+Known move Flare Blitz 2nd score damage % is 4.375
+Known move Flare Blitz 2nd score final % is 4.375
+Known move Failsafe Ow The Edge 2nd score base damage is 120
+Known move Failsafe Ow The Edge 2nd score real damage (1) is 14
+Known move Failsafe Ow The Edge 2nd score real damage (2) is 14
+Known move Failsafe Ow The Edge 2nd score real damage (3) is 14
+Known move Failsafe Ow The Edge 2nd score damage % is 8.75
+Known move Failsafe Ow The Edge 2nd score final % is 8.75
+Known move Pursuit 2nd score base damage is 40
+Known move Pursuit 2nd score real damage (1) is 6
+Known move Pursuit 2nd score real damage (2) is 6
+Known move Pursuit 2nd score real damage (3) is 6
+Known move Pursuit 2nd score damage % is 3.75
+Known move Pursuit 2nd score final % is 3.75
