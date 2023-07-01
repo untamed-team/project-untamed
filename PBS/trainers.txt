@@ -184,3 +184,6 @@ Pokemon = NOCTAVISPA,10
 	MEM = true
 #	Status = Sleep
 Pokemon = NOCTAVISPA,100
+Pokemon = NOCTAVISPA,75
+Pokemon = NOCTAVISPA,50
+Pokemon = NOCTAVISPA,25
