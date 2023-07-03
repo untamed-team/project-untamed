@@ -174,9 +174,11 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-#Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
-#Gimmick = AuroraVeil
 Pokemon = NOCTAVISPA,100
+	Nature = HARDY
 Pokemon = NOCTAVISPA,75
+	Nature = HARDY
 Pokemon = NOCTAVISPA,50
+	Nature = HARDY
 Pokemon = NOCTAVISPA,25
+	Nature = HARDY
