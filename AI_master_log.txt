@@ -15,7 +15,7 @@ Move LUNGE aka Lunge has final score 1
 Move XSCISSOR aka X-Scissor has rough damage 9 and damage % 0 has the function None
 Move XSCISSOR aka X-Scissor has final score 1
 Move SIGNALBEAM aka Signal Beam has rough damage 8 and damage % 0 has the function ConfuseTarget
-Move SIGNALBEAM aka Signal Beam has final score 31
+Move SIGNALBEAM aka Signal Beam has final score 0
 Move SKITTERSMACK aka Skitter Smack has rough damage 8 and damage % 0 has the function LowerTargetSpAtk1
 Move SKITTERSMACK aka Skitter Smack has final score 1
 Move UTURN aka U-turn has rough damage 8 and damage % 0 has the function SwitchOutUserDamagingMove
@@ -101,7 +101,7 @@ Move SNARL aka Snarl has final score 1
 Move PAYBACK aka Payback has rough damage 6 and damage % 0 has the function DoublePowerIfTargetActed
 Move PAYBACK aka Payback has final score 1
 Move PURSUIT aka Pursuit has rough damage 5 and damage % 0 has the function PursueSwitchingFoe
-Move PURSUIT aka Pursuit has final score 3
+Move PURSUIT aka Pursuit has final score 1
 Move BEATUP aka Beat Up has rough damage 2 and damage % 0 has the function HitOncePerUserTeamMember
 Move BEATUP aka Beat Up has final score 2
 Move FLING aka Fling has rough damage 2 and damage % 0 has the function ThrowUserItemAtTarget
@@ -169,7 +169,7 @@ Move DRAGONCLAW aka Dragon Claw has final score 1
 Move BREAKINGSWIPE aka Breaking Swipe has rough damage 7 and damage % 0 has the function LowerTargetAttack1
 Move BREAKINGSWIPE aka Breaking Swipe has final score 1
 Move DRAGONBREATH aka Dragon Breath has rough damage 6 and damage % 0 has the function ParalyzeTarget
-Move DRAGONBREATH aka Dragon Breath has final score 61
+Move DRAGONBREATH aka Dragon Breath has final score 1
 Move DRAGONTAIL aka Dragon Tail has rough damage 7 and damage % 0 has the function SwitchOutTargetDamagingMove
 Move DRAGONTAIL aka Dragon Tail has final score 1
 Move DRAGONDARTS aka Dragon Darts has rough damage 6 and damage % 0 has the function HitTwoTimesTargetThenTargetAlly
@@ -187,27 +187,27 @@ Move CLANGOROUSSOUL aka Clangorous Soul has final score 30
 Move DRAGONDANCE aka Dragon Dance has rough damage 2 and damage % 40 has the function RaiseUserAtkSpd1
 Move DRAGONDANCE aka Dragon Dance has final score 50
 Move BOLTSTRIKE aka Bolt Strike has rough damage 13 and damage % 0 has the function ParalyzeTarget
-Move BOLTSTRIKE aka Bolt Strike has final score 61
+Move BOLTSTRIKE aka Bolt Strike has final score 1
 Move VOLTTACKLE aka Volt Tackle has rough damage 12 and damage % 0 has the function RecoilThirdOfDamageDealtParalyzeTarget
 Move VOLTTACKLE aka Volt Tackle has final score 1
 Move ZAPCANNON aka Zap Cannon has rough damage 11 and damage % 0 has the function ParalyzeTarget
-Move ZAPCANNON aka Zap Cannon has final score 61
+Move ZAPCANNON aka Zap Cannon has final score 2
 Move AURAWHEEL aka Aura Wheel has rough damage 11 and damage % 0 has the function TypeDependsOnUserMorpekoFormRaiseUserSpeed1
 Move AURAWHEEL aka Aura Wheel has final score 21
 Move THUNDER aka Thunder has rough damage 11 and damage % 0 has the function ParalyzeTargetAlwaysHitsInRainHitsTargetInSky
-Move THUNDER aka Thunder has final score 61
+Move THUNDER aka Thunder has final score 1
 Move FUSIONBOLT aka Fusion Bolt has rough damage 10 and damage % 0 has the function DoublePowerAfterFusionFlare
 Move FUSIONBOLT aka Fusion Bolt has final score 1
 Move PLASMAFISTS aka Plasma Fists has rough damage 10 and damage % 0 has the function NormalMovesBecomeElectric
 Move PLASMAFISTS aka Plasma Fists has final score 0
 Move THUNDERBOLT aka Thunderbolt has rough damage 9 and damage % 0 has the function ParalyzeTarget
-Move THUNDERBOLT aka Thunderbolt has final score 61
+Move THUNDERBOLT aka Thunderbolt has final score 1
 Move WILDCHARGE aka Wild Charge has rough damage 9 and damage % 0 has the function RecoilQuarterOfDamageDealt
 Move WILDCHARGE aka Wild Charge has final score 0
 Move BOLTBEAK aka Bolt Beak has rough damage 9 and damage % 0 has the function DoublePowerIfTargetNotActed
 Move BOLTBEAK aka Bolt Beak has final score 1
 Move DISCHARGE aka Discharge has rough damage 8 and damage % 0 has the function ParalyzeTarget
-Move DISCHARGE aka Discharge has final score 61
+Move DISCHARGE aka Discharge has final score 1
 Move OVERDRIVE aka Overdrive has rough damage 8 and damage % 0 has the function None
 Move OVERDRIVE aka Overdrive has final score 1
 Move THUNDERCAGE aka Thunder Cage has rough damage 8 and damage % 0 has the function BindTarget
@@ -215,7 +215,7 @@ Move THUNDERCAGE aka Thunder Cage has final score 1
 Move ZINGZAP aka Zing Zap has rough damage 9 and damage % 0 has the function FlinchTarget
 Move ZINGZAP aka Zing Zap has final score 1
 Move THUNDERPUNCH aka Thunder Punch has rough damage 8 and damage % 0 has the function ParalyzeTarget
-Move THUNDERPUNCH aka Thunder Punch has final score 61
+Move THUNDERPUNCH aka Thunder Punch has final score 1
 Move RISINGVOLTAGE aka Rising Voltage has rough damage 7 and damage % 0 has the function DoublePowerInElectricTerrain
 Move RISINGVOLTAGE aka Rising Voltage has final score 1
 Move VOLTSWITCH aka Volt Switch has rough damage 7 and damage % 0 has the function SwitchOutUserDamagingMove
@@ -223,9 +223,9 @@ Move VOLTSWITCH aka Volt Switch has final score 0
 Move PARABOLICCHARGE aka Parabolic Charge has rough damage 7 and damage % 0 has the function HealUserByHalfOfDamageDone
 Move PARABOLICCHARGE aka Parabolic Charge has final score 1
 Move SPARK aka Spark has rough damage 7 and damage % 0 has the function ParalyzeTarget
-Move SPARK aka Spark has final score 61
+Move SPARK aka Spark has final score 1
 Move THUNDERFANG aka Thunder Fang has rough damage 7 and damage % 0 has the function ParalyzeFlinchTarget
-Move THUNDERFANG aka Thunder Fang has final score 61
+Move THUNDERFANG aka Thunder Fang has final score 2
 Move SHOCKWAVE aka Shock Wave has rough damage 6 and damage % 0 has the function None
 Move SHOCKWAVE aka Shock Wave has final score 1
 Move ELECTROWEB aka Electroweb has rough damage 6 and damage % 0 has the function LowerTargetSpeed1
@@ -233,9 +233,9 @@ Move ELECTROWEB aka Electroweb has final score 1
 Move CHARGEBEAM aka Charge Beam has rough damage 6 and damage % 0 has the function RaiseUserSpAtk1
 Move CHARGEBEAM aka Charge Beam has final score 0
 Move THUNDERSHOCK aka Thunder Shock has rough damage 5 and damage % 0 has the function ParalyzeTarget
-Move THUNDERSHOCK aka Thunder Shock has final score 61
+Move THUNDERSHOCK aka Thunder Shock has final score 1
 Move NUZZLE aka Nuzzle has rough damage 3 and damage % 0 has the function ParalyzeTarget
-Move NUZZLE aka Nuzzle has final score 61
+Move NUZZLE aka Nuzzle has final score 2
 Move ELECTROBALL aka Electro Ball has rough damage 2 and damage % 0 has the function PowerHigherWithUserFasterThanTarget
 Move ELECTROBALL aka Electro Ball has final score 1
 Move CHARGE aka Charge has rough damage 2 and damage % 15 has the function RaiseUserSpDef1PowerUpElectricMove
@@ -265,7 +265,7 @@ Move MOONBLAST aka Moonblast has final score 1
 Move PLAYROUGH aka Play Rough has rough damage 9 and damage % 0 has the function LowerTargetAttack1
 Move PLAYROUGH aka Play Rough has final score 1
 Move STRANGESTEAM aka Strange Steam has rough damage 9 and damage % 0 has the function ConfuseTarget
-Move STRANGESTEAM aka Strange Steam has final score 31
+Move STRANGESTEAM aka Strange Steam has final score 0
 Move DAZZLINGGLEAM aka Dazzling Gleam has rough damage 8 and damage % 0 has the function None
 Move DAZZLINGGLEAM aka Dazzling Gleam has final score 1
 Move SPIRITBREAK aka Spirit Break has rough damage 8 and damage % 0 has the function LowerTargetSpAtk1
@@ -317,7 +317,7 @@ Move SUPERPOWER aka Superpower has final score 0
 Move CROSSCHOP aka Cross Chop has rough damage 10 and damage % 0 has the function None
 Move CROSSCHOP aka Cross Chop has final score 1
 Move DYNAMICPUNCH aka Dynamic Punch has rough damage 10 and damage % 0 has the function ConfuseTarget
-Move DYNAMICPUNCH aka Dynamic Punch has final score 31
+Move DYNAMICPUNCH aka Dynamic Punch has final score 0
 Move FLYINGPRESS aka Flying Press has rough damage 10 and damage % 0 has the function EffectivenessIncludesFlyingType
 Move FLYINGPRESS aka Flying Press has final score 1
 Move HAMMERARM aka Hammer Arm has rough damage 10 and damage % 0 has the function LowerUserSpeed1
@@ -351,7 +351,7 @@ Move LOWSWEEP aka Low Sweep has final score 1
 Move CIRCLETHROW aka Circle Throw has rough damage 7 and damage % 0 has the function SwitchOutTargetDamagingMove
 Move CIRCLETHROW aka Circle Throw has final score 1
 Move FORCEPALM aka Force Palm has rough damage 7 and damage % 0 has the function ParalyzeTarget
-Move FORCEPALM aka Force Palm has final score 61
+Move FORCEPALM aka Force Palm has final score 1
 Move REVENGE aka Revenge has rough damage 7 and damage % 0 has the function DoublePowerIfUserLostHPThisTurn
 Move REVENGE aka Revenge has final score 1
 Move ROLLINGKICK aka Rolling Kick has rough damage 7 and damage % 0 has the function FlinchTarget
@@ -405,11 +405,11 @@ Move BLASTBURN aka Blast Burn has final score 0
 Move ERUPTION aka Eruption has rough damage 14 and damage % 0 has the function PowerHigherWithUserHP
 Move ERUPTION aka Eruption has final score 0
 Move MINDBLOWN aka Mind Blown has rough damage 14 and damage % 0 has the function UserLosesHalfOfTotalHPExplosive
-Move MINDBLOWN aka Mind Blown has final score 1
+Move MINDBLOWN aka Mind Blown has final score 0
 Move SHELLTRAP aka Shell Trap has rough damage 14 and damage % 0 has the function UsedAfterUserTakesPhysicalDamage
 Move SHELLTRAP aka Shell Trap has final score 0
 Move BLUEFLARE aka Blue Flare has rough damage 12 and damage % 0 has the function BurnTarget
-Move BLUEFLARE aka Blue Flare has final score 31
+Move BLUEFLARE aka Blue Flare has final score 1
 Move BURNUP aka Burn Up has rough damage 12 and damage % 0 has the function UserLosesFireType
 Move BURNUP aka Burn Up has final score 0
 Move OVERHEAT aka Overheat has rough damage 12 and damage % 0 has the function LowerUserSpAtk2
@@ -417,25 +417,25 @@ Move OVERHEAT aka Overheat has final score 0
 Move FLAREBLITZ aka Flare Blitz has rough damage 12 and damage % 0 has the function RecoilThirdOfDamageDealtBurnTarget
 Move FLAREBLITZ aka Flare Blitz has final score 0
 Move PYROBALL aka Pyro Ball has rough damage 12 and damage % 0 has the function BurnTarget
-Move PYROBALL aka Pyro Ball has final score 31
+Move PYROBALL aka Pyro Ball has final score 1
 Move FIREBLAST aka Fire Blast has rough damage 11 and damage % 0 has the function BurnTarget
-Move FIREBLAST aka Fire Blast has final score 31
+Move FIREBLAST aka Fire Blast has final score 1
 Move FUSIONFLARE aka Fusion Flare has rough damage 10 and damage % 0 has the function DoublePowerAfterFusionBolt
 Move FUSIONFLARE aka Fusion Flare has final score 1
 Move INFERNO aka Inferno has rough damage 10 and damage % 0 has the function BurnTarget
-Move INFERNO aka Inferno has final score 31
+Move INFERNO aka Inferno has final score 1
 Move MAGMASTORM aka Magma Storm has rough damage 10 and damage % 0 has the function BindTarget
 Move MAGMASTORM aka Magma Storm has final score 1
 Move SACREDFIRE aka Sacred Fire has rough damage 10 and damage % 0 has the function BurnTarget
-Move SACREDFIRE aka Sacred Fire has final score 31
+Move SACREDFIRE aka Sacred Fire has final score 1
 Move SEARINGSHOT aka Searing Shot has rough damage 10 and damage % 0 has the function BurnTarget
-Move SEARINGSHOT aka Searing Shot has final score 31
+Move SEARINGSHOT aka Searing Shot has final score 1
 Move HEATWAVE aka Heat Wave has rough damage 9 and damage % 0 has the function BurnTarget
-Move HEATWAVE aka Heat Wave has final score 31
+Move HEATWAVE aka Heat Wave has final score 1
 Move FLAMETHROWER aka Flamethrower has rough damage 9 and damage % 0 has the function BurnTarget
-Move FLAMETHROWER aka Flamethrower has final score 31
+Move FLAMETHROWER aka Flamethrower has final score 1
 Move BLAZEKICK aka Blaze Kick has rough damage 9 and damage % 0 has the function BurnTarget
-Move BLAZEKICK aka Blaze Kick has final score 31
+Move BLAZEKICK aka Blaze Kick has final score 1
 Move FIERYDANCE aka Fiery Dance has rough damage 8 and damage % 0 has the function RaiseUserSpAtk1
 Move FIERYDANCE aka Fiery Dance has final score 0
 Move FIRELASH aka Fire Lash has rough damage 9 and damage % 0 has the function LowerTargetDefense1
@@ -443,25 +443,25 @@ Move FIRELASH aka Fire Lash has final score 1
 Move FIREPLEDGE aka Fire Pledge has rough damage 8 and damage % 0 has the function FirePledge
 Move FIREPLEDGE aka Fire Pledge has final score 1
 Move LAVAPLUME aka Lava Plume has rough damage 8 and damage % 0 has the function BurnTarget
-Move LAVAPLUME aka Lava Plume has final score 31
+Move LAVAPLUME aka Lava Plume has final score 1
 Move FIREPUNCH aka Fire Punch has rough damage 8 and damage % 0 has the function BurnTarget
-Move FIREPUNCH aka Fire Punch has final score 31
+Move FIREPUNCH aka Fire Punch has final score 1
 Move MYSTICALFIRE aka Mystical Fire has rough damage 8 and damage % 0 has the function LowerTargetSpAtk1
 Move MYSTICALFIRE aka Mystical Fire has final score 1
 Move BURNINGJEALOUSY aka Burning Jealousy has rough damage 7 and damage % 0 has the function BurnTargetIfTargetStatsRaisedThisTurn
-Move BURNINGJEALOUSY aka Burning Jealousy has final score 41
+Move BURNINGJEALOUSY aka Burning Jealousy has final score 1
 Move FLAMEBURST aka Flame Burst has rough damage 7 and damage % 0 has the function DamageTargetAlly
 Move FLAMEBURST aka Flame Burst has final score 1
 Move FIREFANG aka Fire Fang has rough damage 7 and damage % 0 has the function BurnFlinchTarget
-Move FIREFANG aka Fire Fang has final score 31
+Move FIREFANG aka Fire Fang has final score 1
 Move FLAMEWHEEL aka Flame Wheel has rough damage 7 and damage % 0 has the function BurnTarget
-Move FLAMEWHEEL aka Flame Wheel has final score 31
+Move FLAMEWHEEL aka Flame Wheel has final score 1
 Move INCINERATE aka Incinerate has rough damage 6 and damage % 0 has the function DestroyTargetBerryOrGem
 Move INCINERATE aka Incinerate has final score 0
 Move FLAMECHARGE aka Flame Charge has rough damage 6 and damage % 0 has the function RaiseUserSpeed1
 Move FLAMECHARGE aka Flame Charge has final score 0
 Move EMBER aka Ember has rough damage 5 and damage % 0 has the function BurnTarget
-Move EMBER aka Ember has final score 31
+Move EMBER aka Ember has final score 1
 Move FIRESPIN aka Fire Spin has rough damage 4 and damage % 0 has the function BindTarget
 Move FIRESPIN aka Fire Spin has final score 1
 Move HEATCRASH aka Heat Crash has rough damage 2 and damage % 0 has the function PowerHigherWithUserHeavierThanTarget
@@ -477,7 +477,7 @@ Move BRAVEBIRD aka Brave Bird has final score 0
 Move DRAGONASCENT aka Dragon Ascent has rough damage 12 and damage % 0 has the function LowerUserDefSpDef1
 Move DRAGONASCENT aka Dragon Ascent has final score 0
 Move HURRICANE aka Hurricane has rough damage 11 and damage % 0 has the function ConfuseTargetAlwaysHitsInRainHitsTargetInSky
-Move HURRICANE aka Hurricane has final score 31
+Move HURRICANE aka Hurricane has final score 0
 Move AEROBLAST aka Aeroblast has rough damage 10 and damage % 0 has the function None
 Move AEROBLAST aka Aeroblast has final score 1
 Move BEAKBLAST aka Beak Blast has rough damage 10 and damage % 0 has the function BurnAttackerBeforeUserActs
@@ -493,7 +493,7 @@ Move OBLIVIONWING aka Oblivion Wing has final score 1
 Move AIRSLASH aka Air Slash has rough damage 8 and damage % 0 has the function FlinchTarget
 Move AIRSLASH aka Air Slash has final score 1
 Move CHATTER aka Chatter has rough damage 7 and damage % 0 has the function ConfuseTarget
-Move CHATTER aka Chatter has final score 31
+Move CHATTER aka Chatter has final score 0
 Move AERIALACE aka Aerial Ace has rough damage 7 and damage % 0 has the function None
 Move AERIALACE aka Aerial Ace has final score 1
 Move AIRCUTTER aka Air Cutter has rough damage 6 and damage % 0 has the function None
@@ -687,7 +687,7 @@ Move DRILLRUN aka Drill Run has final score 1
 Move STOMPINGTANTRUM aka Stomping Tantrum has rough damage 8 and damage % 0 has the function DoublePowerIfUserLastMoveFailed
 Move STOMPINGTANTRUM aka Stomping Tantrum has final score 1
 Move SCORCHINGSANDS aka Scorching Sands has rough damage 7 and damage % 0 has the function BurnTarget
-Move SCORCHINGSANDS aka Scorching Sands has final score 31
+Move SCORCHINGSANDS aka Scorching Sands has final score 1
 Move BONECLUB aka Bone Club has rough damage 7 and damage % 0 has the function FlinchTarget
 Move BONECLUB aka Bone Club has final score 1
 Move MUDBOMB aka Mud Bomb has rough damage 7 and damage % 0 has the function LowerTargetAccuracy1
@@ -725,23 +725,23 @@ Move ICEBURN aka Ice Burn has final score 0
 Move GLACIALLANCE aka Glacial Lance has rough damage 13 and damage % 0 has the function None
 Move GLACIALLANCE aka Glacial Lance has final score 1
 Move BLIZZARD aka Blizzard has rough damage 11 and damage % 0 has the function FreezeTargetAlwaysHitsInHail
-Move BLIZZARD aka Blizzard has final score 31
+Move BLIZZARD aka Blizzard has final score 1
 Move ICEHAMMER aka Ice Hammer has rough damage 10 and damage % 0 has the function LowerUserSpeed1
 Move ICEHAMMER aka Ice Hammer has final score 0
 Move ICEBEAM aka Ice Beam has rough damage 9 and damage % 0 has the function FreezeTarget
-Move ICEBEAM aka Ice Beam has final score 31
+Move ICEBEAM aka Ice Beam has final score 1
 Move ICICLECRASH aka Icicle Crash has rough damage 9 and damage % 0 has the function FlinchTarget
 Move ICICLECRASH aka Icicle Crash has final score 1
 Move ICEPUNCH aka Ice Punch has rough damage 8 and damage % 0 has the function FreezeTarget
-Move ICEPUNCH aka Ice Punch has final score 31
+Move ICEPUNCH aka Ice Punch has final score 1
 Move FREEZEDRY aka Freeze-Dry has rough damage 7 and damage % 0 has the function FreezeTargetSuperEffectiveAgainstWater
-Move FREEZEDRY aka Freeze-Dry has final score 31
+Move FREEZEDRY aka Freeze-Dry has final score 1
 Move AURORABEAM aka Aurora Beam has rough damage 7 and damage % 0 has the function LowerTargetAttack1
 Move AURORABEAM aka Aurora Beam has final score 1
 Move GLACIATE aka Glaciate has rough damage 7 and damage % 0 has the function LowerTargetSpeed1
 Move GLACIATE aka Glaciate has final score 1
 Move ICEFANG aka Ice Fang has rough damage 7 and damage % 0 has the function FreezeFlinchTarget
-Move ICEFANG aka Ice Fang has final score 31
+Move ICEFANG aka Ice Fang has final score 1
 Move AVALANCHE aka Avalanche has rough damage 7 and damage % 0 has the function DoublePowerIfUserLostHPThisTurn
 Move AVALANCHE aka Avalanche has final score 1
 Move FROSTBREATH aka Frost Breath has rough damage 6 and damage % 0 has the function AlwaysCriticalHit
@@ -751,7 +751,7 @@ Move ICYWIND aka Icy Wind has final score 1
 Move ICESHARD aka Ice Shard has rough damage 5 and damage % 0 has the function None
 Move ICESHARD aka Ice Shard has final score 1
 Move POWDERSNOW aka Powder Snow has rough damage 5 and damage % 0 has the function FreezeTarget
-Move POWDERSNOW aka Powder Snow has final score 31
+Move POWDERSNOW aka Powder Snow has final score 1
 Move ICEBALL aka Ice Ball has rough damage 4 and damage % 0 has the function MultiTurnAttackPowersUpEachTurn
 Move ICEBALL aka Ice Ball has final score 0
 Move ICICLESPEAR aka Icicle Spear has rough damage 4 and damage % 0 has the function HitTwoToFiveTimes
@@ -803,13 +803,13 @@ Move HYPERVOICE aka Hyper Voice has final score 1
 Move REVELATIONDANCE aka Revelation Dance has rough damage 9 and damage % 0 has the function TypeIsUserFirstType
 Move REVELATIONDANCE aka Revelation Dance has final score 1
 Move ROCKCLIMB aka Rock Climb has rough damage 9 and damage % 0 has the function ConfuseTarget
-Move ROCKCLIMB aka Rock Climb has final score 31
+Move ROCKCLIMB aka Rock Climb has final score 0
 Move TAKEDOWN aka Take Down has rough damage 9 and damage % 0 has the function RecoilQuarterOfDamageDealt
 Move TAKEDOWN aka Take Down has final score 0
 Move UPROAR aka Uproar has rough damage 9 and damage % 0 has the function MultiTurnAttackPreventSleeping
 Move UPROAR aka Uproar has final score 0
 Move BODYSLAM aka Body Slam has rough damage 9 and damage % 0 has the function ParalyzeTarget
-Move BODYSLAM aka Body Slam has final score 61
+Move BODYSLAM aka Body Slam has final score 1
 Move EXTREMESPEED aka Extreme Speed has rough damage 9 and damage % 0 has the function None
 Move EXTREMESPEED aka Extreme Speed has final score 1
 Move HYPERFANG aka Hyper Fang has rough damage 9 and damage % 0 has the function FlinchTarget
@@ -823,15 +823,15 @@ Move SLAM aka Slam has final score 1
 Move STRENGTH aka Strength has rough damage 10 and damage % 0 has the function LowerUserDefSpDef1
 Move STRENGTH aka Strength has final score 0
 Move TRIATTACK aka Tri Attack has rough damage 8 and damage % 0 has the function ParalyzeBurnOrFreezeTarget
-Move TRIATTACK aka Tri Attack has final score 31
+Move TRIATTACK aka Tri Attack has final score 1
 Move CRUSHCLAW aka Crush Claw has rough damage 8 and damage % 0 has the function LowerTargetDefense1
 Move CRUSHCLAW aka Crush Claw has final score 1
 Move RELICSONG aka Relic Song has rough damage 8 and damage % 0 has the function SleepTargetChangeUserMeloettaForm
-Move RELICSONG aka Relic Song has final score 31
+Move RELICSONG aka Relic Song has final score 1
 Move CHIPAWAY aka Chip Away has rough damage 8 and damage % 0 has the function IgnoreTargetDefSpDefEvaStatStages
 Move CHIPAWAY aka Chip Away has final score 1
 Move DIZZYPUNCH aka Dizzy Punch has rough damage 8 and damage % 0 has the function ConfuseTarget
-Move DIZZYPUNCH aka Dizzy Punch has final score 31
+Move DIZZYPUNCH aka Dizzy Punch has final score 0
 Move FACADE aka Facade has rough damage 8 and damage % 0 has the function DoublePowerIfUserPoisonedBurnedParalyzed
 Move FACADE aka Facade has final score 1
 Move HEADBUTT aka Headbutt has rough damage 8 and damage % 0 has the function FlinchTarget
@@ -873,7 +873,7 @@ Move WEATHERBALL aka Weather Ball has final score 1
 Move ECHOEDVOICE aka Echoed Voice has rough damage 5 and damage % 0 has the function PowerHigherWithConsecutiveUseOnUserSide
 Move ECHOEDVOICE aka Echoed Voice has final score 1
 Move FAKEOUT aka Fake Out has rough damage 5 and damage % 0 has the function FlinchTargetFailsIfNotUserFirstTurn
-Move FAKEOUT aka Fake Out has final score 121
+Move FAKEOUT aka Fake Out has final score 30
 Move FALSESWIPE aka False Swipe has rough damage 5 and damage % 0 has the function CannotMakeTargetFaint
 Move FALSESWIPE aka False Swipe has final score 1
 Move HOLDBACK aka Hold Back has rough damage 5 and damage % 0 has the function CannotMakeTargetFaint
@@ -1131,35 +1131,35 @@ Move YAWN aka Yawn has final score 25
 Move BELCH aka Belch has rough damage 11 and damage % 0 has the function FailsIfUserNotConsumedBerry
 Move BELCH aka Belch has final score 0
 Move GUNKSHOT aka Gunk Shot has rough damage 12 and damage % 0 has the function PoisonTarget
-Move GUNKSHOT aka Gunk Shot has final score 51
+Move GUNKSHOT aka Gunk Shot has final score 1
 Move SLUDGEWAVE aka Sludge Wave has rough damage 9 and damage % 0 has the function PoisonTarget
-Move SLUDGEWAVE aka Sludge Wave has final score 51
+Move SLUDGEWAVE aka Sludge Wave has final score 1
 Move SHELLSIDEARM aka Shell Side Arm has rough damage 9 and damage % 0 has the function CategoryDependsOnHigherDamagePoisonTarget
 Move SHELLSIDEARM aka Shell Side Arm has final score 6
 Move SLUDGEBOMB aka Sludge Bomb has rough damage 9 and damage % 0 has the function PoisonTarget
-Move SLUDGEBOMB aka Sludge Bomb has final score 51
+Move SLUDGEBOMB aka Sludge Bomb has final score 1
 Move POISONJAB aka Poison Jab has rough damage 9 and damage % 0 has the function PoisonTarget
-Move POISONJAB aka Poison Jab has final score 51
+Move POISONJAB aka Poison Jab has final score 1
 Move CROSSPOISON aka Cross Poison has rough damage 8 and damage % 0 has the function PoisonTarget
-Move CROSSPOISON aka Cross Poison has final score 51
+Move CROSSPOISON aka Cross Poison has final score 1
 Move SLUDGE aka Sludge has rough damage 7 and damage % 0 has the function PoisonTarget
-Move SLUDGE aka Sludge has final score 51
+Move SLUDGE aka Sludge has final score 1
 Move VENOSHOCK aka Venoshock has rough damage 7 and damage % 0 has the function DoublePowerIfTargetPoisoned
 Move VENOSHOCK aka Venoshock has final score 1
 Move CLEARSMOG aka Clear Smog has rough damage 6 and damage % 0 has the function ResetTargetStatStages
 Move CLEARSMOG aka Clear Smog has final score 1
 Move POISONFANG aka Poison Fang has rough damage 6 and damage % 0 has the function BadPoisonTarget
-Move POISONFANG aka Poison Fang has final score 51
+Move POISONFANG aka Poison Fang has final score 1
 Move POISONTAIL aka Poison Tail has rough damage 6 and damage % 0 has the function PoisonTarget
-Move POISONTAIL aka Poison Tail has final score 51
+Move POISONTAIL aka Poison Tail has final score 1
 Move ACID aka Acid has rough damage 5 and damage % 0 has the function LowerTargetSpDef1
 Move ACID aka Acid has final score 1
 Move ACIDSPRAY aka Acid Spray has rough damage 5 and damage % 0 has the function LowerTargetSpDef2
 Move ACIDSPRAY aka Acid Spray has final score 1
 Move SMOG aka Smog has rough damage 4 and damage % 0 has the function PoisonTarget
-Move SMOG aka Smog has final score 51
+Move SMOG aka Smog has final score 1
 Move POISONSTING aka Poison Sting has rough damage 3 and damage % 0 has the function PoisonTarget
-Move POISONSTING aka Poison Sting has final score 51
+Move POISONSTING aka Poison Sting has final score 1
 Move ACIDARMOR aka Acid Armor has rough damage 2 and damage % 25 has the function RaiseUserDefense2
 Move ACIDARMOR aka Acid Armor has final score 31
 Move BANEFULBUNKER aka Baneful Bunker has rough damage 2 and damage % 80 has the function ProtectUserBanefulBunker
@@ -1199,7 +1199,7 @@ Move PHOTONGEYSER aka Photon Geyser has final score 1
 Move PSYSTRIKE aka Psystrike has rough damage 10 and damage % 0 has the function UseTargetDefenseInsteadOfTargetSpDef
 Move PSYSTRIKE aka Psystrike has final score 1
 Move FREEZINGGLARE aka Freezing Glare has rough damage 9 and damage % 0 has the function FreezeTarget
-Move FREEZINGGLARE aka Freezing Glare has final score 31
+Move FREEZINGGLARE aka Freezing Glare has final score 1
 Move PSYCHIC aka Psychic has rough damage 9 and damage % 0 has the function LowerTargetSpDef1
 Move PSYCHIC aka Psychic has final score 1
 Move PSYCHICFANGS aka Psychic Fangs has rough damage 9 and damage % 0 has the function RemoveScreens
@@ -1223,11 +1223,11 @@ Move MISTBALL aka Mist Ball has final score 1
 Move PSYCHOCUT aka Psycho Cut has rough damage 8 and damage % 0 has the function None
 Move PSYCHOCUT aka Psycho Cut has final score 1
 Move PSYBEAM aka Psybeam has rough damage 7 and damage % 0 has the function ConfuseTarget
-Move PSYBEAM aka Psybeam has final score 31
+Move PSYBEAM aka Psybeam has final score 0
 Move HEARTSTAMP aka Heart Stamp has rough damage 7 and damage % 0 has the function FlinchTarget
 Move HEARTSTAMP aka Heart Stamp has final score 1
 Move CONFUSION aka Confusion has rough damage 6 and damage % 0 has the function ConfuseTarget
-Move CONFUSION aka Confusion has final score 31
+Move CONFUSION aka Confusion has final score 0
 Move STOREDPOWER aka Stored Power has rough damage 3 and damage % 0 has the function PowerHigherWithUserPositiveStatStages
 Move STOREDPOWER aka Stored Power has final score 1
 Move MIRRORCOAT aka Mirror Coat has rough damage 1 and damage % 0 has the function CounterSpecialDamage
@@ -1415,7 +1415,7 @@ Move HYDROPUMP aka Hydro Pump has final score 1
 Move ORIGINPULSE aka Origin Pulse has rough damage 11 and damage % 0 has the function None
 Move ORIGINPULSE aka Origin Pulse has final score 1
 Move STEAMERUPTION aka Steam Eruption has rough damage 11 and damage % 0 has the function BurnTarget
-Move STEAMERUPTION aka Steam Eruption has final score 31
+Move STEAMERUPTION aka Steam Eruption has final score 1
 Move CRABHAMMER aka Crabhammer has rough damage 10 and damage % 0 has the function None
 Move CRABHAMMER aka Crabhammer has final score 1
 Move AQUATAIL aka Aqua Tail has rough damage 9 and damage % 0 has the function None
@@ -1433,7 +1433,7 @@ Move LIQUIDATION aka Liquidation has final score 1
 Move DIVE aka Dive has rough damage 9 and damage % 0 has the function TwoTurnAttackInvulnerableUnderwater
 Move DIVE aka Dive has final score 0
 Move SCALD aka Scald has rough damage 8 and damage % 0 has the function BurnTarget
-Move SCALD aka Scald has final score 31
+Move SCALD aka Scald has final score 1
 Move SNIPESHOT aka Snipe Shot has rough damage 8 and damage % 0 has the function CannotBeRedirected
 Move SNIPESHOT aka Snipe Shot has final score 1
 Move WATERPLEDGE aka Water Pledge has rough damage 8 and damage % 0 has the function WaterPledge
@@ -1451,7 +1451,7 @@ Move OCTAZOOKA aka Octazooka has final score 0
 Move FLIPTURN aka Flip Turn has rough damage 7 and damage % 0 has the function SwitchOutUserDamagingMove
 Move FLIPTURN aka Flip Turn has final score 0
 Move WATERPULSE aka Water Pulse has rough damage 6 and damage % 0 has the function ConfuseTarget
-Move WATERPULSE aka Water Pulse has final score 31
+Move WATERPULSE aka Water Pulse has final score 0
 Move AQUAJET aka Aqua Jet has rough damage 5 and damage % 0 has the function None
 Move AQUAJET aka Aqua Jet has final score 1
 Move BUBBLE aka Bubble has rough damage 5 and damage % 0 has the function LowerTargetSpeed1
@@ -1473,7 +1473,7 @@ Move LIFEDEW aka Life Dew has final score 0
 Move RAINDANCE aka Rain Dance has rough damage 2 and damage % 15 has the function StartRainWeather
 Move RAINDANCE aka Rain Dance has final score 18
 Move SOAK aka Soak has rough damage 2 and damage % 30 has the function SetTargetTypesToWater
-Move SOAK aka Soak has final score 30
+Move SOAK aka Soak has final score 0
 Move WATERSPORT aka Water Sport has rough damage 2 and damage % 5 has the function StartWeakenFireMoves
 Move WATERSPORT aka Water Sport has final score 0
 Move WITHDRAW aka Withdraw has rough damage 2 and damage % 10 has the function RaiseUserDefense1
@@ -1489,9 +1489,9 @@ Move PSYCRUSH aka Psycrush has final score 1
 Move KINETICREND aka Kinetic Rend has rough damage 7 and damage % 0 has the function SuperEffectiveAgainstSteel
 Move KINETICREND aka Kinetic Rend has final score 1
 Move JOLTKICK aka Jolt Kick has rough damage 9 and damage % 0 has the function ParalyzeTarget
-Move JOLTKICK aka Jolt Kick has final score 61
+Move JOLTKICK aka Jolt Kick has final score 1
 Move FROSTKICK aka Frost Kick has rough damage 9 and damage % 0 has the function FreezeTarget
-Move FROSTKICK aka Frost Kick has final score 31
+Move FROSTKICK aka Frost Kick has final score 1
 Move SCOURINGWINDS aka Scouring Winds has rough damage 9 and damage % 0 has the function LowerTargetSpDef1
 Move SCOURINGWINDS aka Scouring Winds has final score 1
 Move STUFFCHEEKS aka Stuff Cheeks has rough damage 2 and damage % 15 has the function UserConsumeBerryRaiseDefense2
@@ -1509,7 +1509,7 @@ Move FORCEWAVE aka Force Wave has final score 1
 Move GEODEBURST aka Geode Burst has rough damage 11 and damage % 0 has the function None
 Move GEODEBURST aka Geode Burst has final score 1
 Move FORGEBREATH aka Forge Breath has rough damage 9 and damage % 0 has the function BurnTarget
-Move FORGEBREATH aka Forge Breath has final score 31
+Move FORGEBREATH aka Forge Breath has final score 1
 Move EXCITE aka Excite has rough damage 2 and damage % 10 has the function RaiseUserSpAtk1
 Move EXCITE aka Excite has final score 0
 Move SCATTERDUST aka Scatterdust has rough damage 8 and damage % 0 has the function LowerTargetSpeed1
@@ -1517,13 +1517,13 @@ Move SCATTERDUST aka Scatterdust has final score 1
 Move SWEETTOOTH aka Sweet Tooth has rough damage 6 and damage % 0 has the function FlinchTarget
 Move SWEETTOOTH aka Sweet Tooth has final score 1
 Move SUPERNOVA aka Supernova has rough damage 17 and damage % 0 has the function Supernova
-Move SUPERNOVA aka Supernova has final score 1
+Move SUPERNOVA aka Supernova has final score 0
 Move PEPPERSPRAY aka Pepper Spray has rough damage 9 and damage % 0 has the function BurnTarget
-Move PEPPERSPRAY aka Pepper Spray has final score 31
+Move PEPPERSPRAY aka Pepper Spray has final score 1
 Move TITANSWRATH aka Titan's Wrath has rough damage 11 and damage % 0 has the function TitanWrath
 Move TITANSWRATH aka Titan's Wrath has final score 1
 Move SIRENSONG aka Siren Song has rough damage 8 and damage % 0 has the function SleepTargetChangeUserMeloettaForm
-Move SIRENSONG aka Siren Song has final score 31
+Move SIRENSONG aka Siren Song has final score 1
 Move REBALANCING aka Rebalancing has rough damage 2 and damage % 20 has the function Rebalancing
 Move REBALANCING aka Rebalancing has final score 20
 Move FRIGIDMAW aka Frigid Maw has rough damage 9 and damage % 0 has the function LowerTargetSpeed1
@@ -1550,4 +1550,4 @@ Move THOUSANDFOLDS aka Failsafe Thousand Folds has rough damage 9 and damage % 0
 Move THOUSANDFOLDS aka Failsafe Thousand Folds has final score 1
 Move SWINDLE aka Failsafe Swindle has rough damage 6 and damage % 0 has the function DoubleDamageIfTargetHasChoiceItem
 Move SWINDLE aka Failsafe Swindle has final score 41
-Move Fake Out has the best final score 121
+Move Nature's Madness has the best final score 101
