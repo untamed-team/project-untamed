@@ -1163,8 +1163,3 @@ Description = If Sun or Harsh Sun are active, the user's Ice-type moves are boos
 Name = Healing Sun
 Description = The Pokémon gradually regains HP in Sun or Harsh Sun.
 #-------------------------------
-[PRESAGE]
-Name = Presage
-Description = Before dealing damage, change the weather for that turn.
-#-------------------------------
-

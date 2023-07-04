@@ -524,7 +524,7 @@ Description = This move enables the user to attack first. It fails if the target
 Name = Knock Off
 Type = DARK
 Category = Physical
-Power = 40
+Power = 65
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -6902,9 +6902,9 @@ Type = POISON
 Power = 40
 Category = Special
 Accuracy = 100
-TotalPP = 20
+TotalPP = 10
 Target = NearOther
-FunctionCode = RemoveTargetItem
+FunctionCode = CorrodeTargetItem
 Flags = CanProtect,CanMirrorMove
 Description = The user surrounds a target with highly acidic gas and melts away items they hold.
 #-------------------------------
@@ -9028,7 +9028,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 Priority = 0
-FunctionCode = SleepTargetChangeUserMeloettaForm
+FunctionCode = SleepTarget
 Flags = CanProtect,Sound,CannotMetronome
 EffectChance = 10
 Description = An ancient song appeals to the hearts of those listening. It may also induce sleep.
@@ -9145,7 +9145,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = RecoilThirdOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove,Blade
+Flags = Contact,CanProtect,CanMirrorMove
 Description = The user teleports behind the target and slices, cutting itself as well.
 #-------------------------------
 [THINKFAST]
@@ -9175,7 +9175,7 @@ Description = A folded blade that tears through a target using Protect or Detect
 #-------------------------------
 [TOXIRAVAGE]
 Name = Toxiravage
-Type = POISON
+Type = NORMAL
 Category = Physical
 Power = 80
 Accuracy = 100
@@ -9185,16 +9185,4 @@ Priority = 2
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
 Description = Sharp, toxic spikes impale the target. Always hits first.
-#-------------------------------
-[SWINDLE]
-Name = Swindle
-Type = DARK
-Category = Special
-Power = 50
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = DoubleDamageIfTargetHasChoiceItem
-Flags = CanProtect,CanMirrorMove
-Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
 #-------------------------------
