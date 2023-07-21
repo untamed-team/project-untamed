@@ -9096,7 +9096,7 @@ Target = NearOther
 FunctionCode = HitThreeToFiveTimes
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 15
-Description = Tacos filled with molten cheese fly at the target 3 to 5 times. More is thrown when a burrito is held.
+Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
 #-------------------------------
 [PREMONITIONMOVE]
 Name = Premonition Dummy

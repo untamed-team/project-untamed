@@ -83,14 +83,6 @@ BaseStats = 65,135,145,95,40,85
 Abilities = BATTLEARMOR
 Height = 1.9
 Weight = 60.3
-#-------------------------------
-[DRAGTACO,1]
-FormName = Mega Dragtaco
-MegaStone = SALAMENCITE
-BaseStats = 124,253,112,10,7,94
-Abilities = PARENTALBOND
-Height = 0.3
-Weight = 3.5
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
