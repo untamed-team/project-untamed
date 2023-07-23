@@ -9133,7 +9133,12 @@ Priority = 2
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove,Biting
 Description = The user lashes toward the opponent and bites with venomous fangs. Always hits first.
-#-------------------------------
+#----------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------
+# MOVES BEING "MADE" HERE ARE FOR COMPARTABILITY WITH trainers.txt AND OTHER FILES LIKE SUCH ONLY. 
+# IF YOU DONT LIKE THEM, DONT MENTION THEM. THEY WON'T APPEAR UNLESS MENTIONED.
+#----------------------------------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------------------------------
 [EROSIONWAVE]
 Name = Failsafe Erosion Wave
 Type = ROCK
