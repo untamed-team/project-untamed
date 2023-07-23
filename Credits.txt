@@ -528,6 +528,12 @@ Golisopod User
 LostSoulsDev
 PurpleZaffre
 
+Map Screenshot Maker:
+meustrus
+SephirothSpawn
+The MACL authors
+and Selwyn
+
 Luka's Scripting Utilities:
 Luka S.J.
 
