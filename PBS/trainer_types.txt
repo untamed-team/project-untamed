@@ -62,7 +62,6 @@ BaseMoney = 16
 Name = Burglar
 Gender = Male
 BaseMoney = 88
-SkillLevel = 32
 #-------------------------------
 [CHANELLER]
 Name = Channeler
@@ -88,7 +87,6 @@ BaseMoney = 32
 Name = Gambler
 Gender = Male
 BaseMoney = 72
-SkillLevel = 32
 #-------------------------------
 [GENTLEMAN]
 Name = Gentleman
@@ -109,7 +107,6 @@ BaseMoney = 32
 Name = Lady
 Gender = Female
 BaseMoney = 160
-SkillLevel = 72
 #-------------------------------
 [PAINTER]
 Name = Painter
@@ -225,55 +222,46 @@ BaseMoney = 32
 Name = Swimmer
 Gender = Male
 BaseMoney = 16
-SkillLevel = 32
 #-------------------------------
 [SWIMMER_F]
 Name = Swimmer
 Gender = Female
 BaseMoney = 16
-SkillLevel = 32
 #-------------------------------
 [SWIMMER2_M]
 Name = Swimmer
 Gender = Male
 BaseMoney = 16
-SkillLevel = 32
 #-------------------------------
 [SWIMMER2_F]
 Name = Swimmer
 Gender = Female
 BaseMoney = 16
-SkillLevel = 32
 #-------------------------------
 [TUBER_M]
 Name = Tuber
 Gender = Male
 BaseMoney = 4
-SkillLevel = 16
 #-------------------------------
 [TUBER_F]
 Name = Tuber
 Gender = Female
 BaseMoney = 4
-SkillLevel = 16
 #-------------------------------
 [TUBER2_M]
 Name = Tuber
 Gender = Male
 BaseMoney = 4
-SkillLevel = 16
 #-------------------------------
 [TUBER2_F]
 Name = Tuber
 Gender = Female
 BaseMoney = 4
-SkillLevel = 16
 #-------------------------------
 [COOLCOUPLE]
 Name = Cool Couple
 Gender = Unknown
 BaseMoney = 72
-SkillLevel = 48
 #-------------------------------
 [CRUSHKIN]
 Name = Crush Kin
@@ -284,7 +272,6 @@ BaseMoney = 48
 Name = Sis and Bro
 Gender = Unknown
 BaseMoney = 16
-SkillLevel = 48
 #-------------------------------
 [TWINS]
 Name = Twins
@@ -295,7 +282,6 @@ BaseMoney = 24
 Name = Young Couple
 Gender = Unknown
 BaseMoney = 60
-SkillLevel = 32
 #-------------------------------
 [TEAMROCKET_M]
 Name = Team Rocket

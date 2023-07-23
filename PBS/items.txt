@@ -124,6 +124,15 @@ FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_30
 Description = A peculiar stone that makes certain species of Pokémon evolve. It has a leaf pattern.
 #-------------------------------
+[ICESTONE]
+Name = Ice Stone
+NamePlural = Ice Stones
+Pocket = 1
+Price = 3000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A peculiar stone that makes certain species of Pokémon evolve. It has an unmistakable snowflake pattern.
+#-------------------------------
 [MOONSTONE]
 Name = Moon Stone
 NamePlural = Moon Stones
@@ -168,15 +177,6 @@ Price = 3000
 FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_80
 Description = A peculiar stone that makes certain species of Pokémon evolve. It shines with a dazzling light.
-#-------------------------------
-[ICESTONE]
-Name = Ice Stone
-NamePlural = Ice Stones
-Pocket = 1
-Price = 3000
-FieldUse = OnPokemon
-Flags = EvolutionStone,Fling_30
-Description = A peculiar stone that makes certain species of Pokémon evolve. It has a snowflake pattern.
 #-------------------------------
 [SWEETAPPLE]
 Name = Sweet Apple
@@ -3455,6 +3455,7 @@ NamePlural = Master Balls
 Pocket = 3
 Price = 0
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = The best Ball with the ultimate level of performance. It will catch any wild Pokémon without fail.
 #-------------------------------
@@ -3464,6 +3465,7 @@ NamePlural = Ultra Balls
 Pocket = 3
 Price = 800
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = An ultra-performance Ball that provides a higher Pokémon catch rate than a Great Ball.
 #-------------------------------
@@ -3473,6 +3475,7 @@ NamePlural = Great Balls
 Pocket = 3
 Price = 600
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A good, high-performance Ball that provides a higher Pokémon catch rate than a standard Poké Ball.
 #-------------------------------
@@ -3482,6 +3485,7 @@ NamePlural = Poké Balls
 Pocket = 3
 Price = 200
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A device for catching wild Pokémon. It is thrown like a ball at the target. It is designed as a capsule system.
 #-------------------------------
@@ -3491,6 +3495,7 @@ NamePlural = Safari Balls
 Pocket = 3
 Price = 0
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A special Poké Ball that is used only in the Safari Zone. It is decorated in a camouflage pattern.
 #-------------------------------
@@ -3500,6 +3505,7 @@ NamePlural = Sport Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A special Poké Ball for the Bug-Catching Contest.
 #-------------------------------
@@ -3509,6 +3515,7 @@ NamePlural = Net Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that works especially well on Water- and Bug-type Pokémon.
 #-------------------------------
@@ -3518,6 +3525,7 @@ NamePlural = Dive Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that works especially well on Pokémon that live underwater.
 #-------------------------------
@@ -3527,6 +3535,7 @@ NamePlural = Nest Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that works especially well on weaker Pokémon in the wild.
 #-------------------------------
@@ -3536,6 +3545,7 @@ NamePlural = Repeat Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that works especially well on Pokémon species that were previously caught.
 #-------------------------------
@@ -3545,6 +3555,7 @@ NamePlural = Timer Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Ball that becomes progressively better the more turns there are in a battle.
 #-------------------------------
@@ -3554,6 +3565,7 @@ NamePlural = Luxury Balls
 Pocket = 3
 Price = 3000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A comfortable Poké Ball that makes a caught wild Pokémon quickly grow friendly.
 #-------------------------------
@@ -3564,6 +3576,7 @@ Pocket = 3
 Price = 200
 SellPrice = 10
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat rare Poké Ball that has been specially made to commemorate an event of some sort.
 #-------------------------------
@@ -3573,6 +3586,7 @@ NamePlural = Dusk Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that makes it easier to catch wild Pokémon at night or in dark places like caves.
 #-------------------------------
@@ -3582,6 +3596,7 @@ NamePlural = Heal Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A remedial Poké Ball that restores the caught Pokémon's HP and eliminates any status problem.
 #-------------------------------
@@ -3591,6 +3606,7 @@ NamePlural = Quick Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that provides a better catch rate if used at the start of a wild encounter.
 #-------------------------------
@@ -3600,6 +3616,7 @@ NamePlural = Cherish Balls
 Pocket = 3
 Price = 0
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A quite rare Poké Ball that has been specially crafted to commemorate an occasion of some sort.
 #-------------------------------
@@ -3609,6 +3626,7 @@ NamePlural = Fast Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball that makes it easier to catch fast Pokémon.
 #-------------------------------
@@ -3618,6 +3636,7 @@ NamePlural = Level Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball for catching Pokémon that are a lower level than your own.
 #-------------------------------
@@ -3627,6 +3646,7 @@ NamePlural = Lure Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball for catching Pokémon hooked by a Rod when fishing.
 #-------------------------------
@@ -3636,6 +3656,7 @@ NamePlural = Heavy Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball for catching very heavy Pokémon.
 #-------------------------------
@@ -3645,6 +3666,7 @@ NamePlural = Love Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball for catching Pokémon that are the opposite gender of your Pokémon.
 #-------------------------------
@@ -3654,6 +3676,7 @@ NamePlural = Friend Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball that makes caught Pokémon more friendly.
 #-------------------------------
@@ -3663,6 +3686,7 @@ NamePlural = Moon Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A Poké Ball for catching Pokémon that evolve using the Moon Stone.
 #-------------------------------
@@ -3672,6 +3696,7 @@ NamePlural = Dream Balls
 Pocket = 3
 Price = 300
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A somewhat different Poké Ball that makes it easier to catch wild Pokémon while they're asleep.
 #-------------------------------
@@ -3681,6 +3706,7 @@ NamePlural = Beast Balls
 Pocket = 3
 Price = 1000
 BattleUse = OnFoe
+FieldUse = OnPokemon
 Flags = PokeBall
 Description = A special Poké Ball designed to catch Ultra Beasts. It has a low success rate for catching others.
 #-------------------------------
@@ -3788,11 +3814,11 @@ Description = The user attacks by scattering a cloud of coarse debris. This may 
 Name = TM10
 NamePlural = TM10s
 Pocket = 4
-Price = 1500
+Price = 2000
 FieldUse = TM
-Flags = Fling_60
-Move = HIDDENPOWER
-Description = A unique attack that varies in type and intensity depending on the Pokémon using it.
+Flags = Fling_90
+Move = FLY
+Description = The user flies up into the sky and then strikes its target on the next turn.
 #-------------------------------
 [TM11]
 Name = TM11
@@ -4190,9 +4216,9 @@ NamePlural = TM50s
 Pocket = 4
 Price = 3000
 FieldUse = TM
-Flags = Fling_70
-Move = SCORCHINGSANDS
-Description = The user throws scorching sand at the target to attack. This may also burn the target.
+Flags = Fling_10
+Move = FRUSTRATION
+Description = A full-power attack that grows more powerful the less the user likes its Trainer.
 #-------------------------------
 [TM51]
 Name = TM51
@@ -4690,9 +4716,9 @@ NamePlural = TM100s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_50
-Move = CUT
-Description = The target is cut with a scythe or claw.
+Flags = Fling_10
+Move = DEFOG
+Description = A strong wind blows away the foe's obstacles such as Light Screen. It also lowers their evasion.
 #-------------------------------
 [TM101]
 Name = TM101
@@ -4700,25 +4726,25 @@ NamePlural = TM101s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_90
-Move = FLY
-Description = The user flies up into the sky and then strikes its target on the next turn.
+Flags = Fling_50
+Move = CUT
+Description = The target is cut with a scythe or claw.
 #-------------------------------
 [TM102]
 Name = TM102
 NamePlural = TM102s
 Pocket = 4
-Price = 2500
+Price = 2000
 FieldUse = TM
-Flags = Fling_90
-Move = SURF
-Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+Flags = Fling_40
+Move = ROCKSMASH
+Description = The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat.
 #-------------------------------
 [TM103]
 Name = TM103
 NamePlural = TM103s
 Pocket = 4
-Price = 2000
+Price = 2500
 FieldUse = TM
 Flags = Fling_80
 Move = STRENGTH
@@ -4730,19 +4756,39 @@ NamePlural = TM104s
 Pocket = 4
 Price = 2500
 FieldUse = TM
-Flags = Fling_80
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch.
+Flags = Fling_90
+Move = ROCKCLIMB
+Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
 #-------------------------------
 [TM105]
 Name = TM105
 NamePlural = TM105s
 Pocket = 4
-Price = 2000
+Price = 2500
 FieldUse = TM
-Flags = Fling_10
-Move = DEFOG
-Description = A strong wind blows away the target's barriers, such as Reflect, and lowers their evasiveness.
+Flags = Fling_90
+Move = SURF
+Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+#-------------------------------
+[TM106]
+Name = TM106
+NamePlural = TM106s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_80
+Move = WATERFALL
+Description = The user charges at the target and may make it flinch.
+#-------------------------------
+[TM107]
+Name = TM107
+NamePlural = TM107s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_80
+Move = DIVE
+Description = Diving on the first turn, the user floats up and attacks on the second. It can be used to dive underwater.
 #-------------------------------
 [HM01]
 Name = HM01
@@ -4759,8 +4805,8 @@ NamePlural = HM02s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = FLY
-Description = The user soars and then strikes on the next turn. This can also be used to fly to any familiar town.
+Move = ROCKSMASH
+Description = The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat.
 #-------------------------------
 [HM03]
 Name = HM03
@@ -4768,8 +4814,8 @@ NamePlural = HM03s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = SURF
-Description = Attacks everything by swamping the surroundings with a giant wave. This can also be used to cross water.
+Move = STRENGTH
+Description = The target is slugged with a punch thrown at maximum power. This can also be used to move heavy boulders.
 #-------------------------------
 [HM04]
 Name = HM04
@@ -4777,8 +4823,8 @@ NamePlural = HM04s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = STRENGTH
-Description = The target is slugged with a punch thrown at maximum power. This can also be used to move heavy boulders.
+Move = ROCKCLIMB
+Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
 #-------------------------------
 [HM05]
 Name = HM05
@@ -4786,12 +4832,21 @@ NamePlural = HM05s
 Pocket = 4
 Price = 0
 FieldUse = HM
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
+Move = SURF
+Description = Attacks everything by swamping the surroundings with a giant wave. This can also be used to cross water.
 #-------------------------------
 [HM06]
 Name = HM06
 NamePlural = HM06s
+Pocket = 4
+Price = 0
+FieldUse = HM
+Move = WATERFALL
+Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
+#-------------------------------
+[HM07]
+Name = HM07
+NamePlural = HM07s
 Pocket = 4
 Price = 0
 FieldUse = HM
@@ -6256,11 +6311,11 @@ NamePlural = Link Cables
 Pocket = 1
 Price = 3000
 FieldUse = OnPokemon
-Flags = Fling_30
+Flags = EvolutionStone,Fling_30
 Description = A peculiar cable that makes certain species of Pokémon evolve. It even comes with free Wifi!
 #-------------------------------
 [HYPERABILITYCAPSULE]
-Name = Hyper Ability Capsule
+Name = H. Ability Capsule
 NamePlural = Hyper Ability Capsules
 Pocket = 2
 Price = 20000
@@ -6324,13 +6379,37 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Atelangler hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[CHIXULOBYTE]
-Name = Chixulobyte
-NamePlural = Chixulobytes
+[CHIXULITE]
+Name = Chixulite
+NamePlural = Chixulites
 Pocket = 1
 Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Chixulob hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[MILOTITE]
+Name = Milotite
+NamePlural = Milotites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Milotic hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[SUCHOBITE]
+Name = Suchobite
+NamePlural = Suchobites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Suchobile hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[SKARMORITE]
+Name = Skarmorite
+NamePlural = Skarmorites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Skarmory hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BERRYPOTS]
 Name = Berry Pot
@@ -6357,7 +6436,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = Heals your party. Recharges at the PokéCenter.
+Description = Heals your party. Recharges at the PokéCenter. CTRL + Auto Heal to activate in party menu.
 #-------------------------------
 [EMPTYPOKEVIAL]
 Name = PokéVial
@@ -6368,10 +6447,55 @@ FieldUse = Direct
 Flags = KeyItem
 Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
 #-------------------------------
-[ROOMEXTENDER]
-Name = Room Extender
-NamePlural = Room Extenders
+[PORTABLEPC]
+Name = Portable PC
+NamePlural = Portable PCs
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A small device that can transfer Pokemon to and from a timeless PC storage.
+#-------------------------------
+[PORTABLEBATTERY]
+Name = Portable Battery
+NamePlural = Portable Batteries
 Pocket = 1
-Price = 4000
+Price = 1000
+FieldUse = Direct
 Flags = Fling_40
-Description = A Pokémon held item that extends the duration of the Room moves used by the holder.
+Description = A small battery used to temporarily charge a Portable PC.
+#-------------------------------
+[SHINYBERRY]
+Name = Shiny Berry
+NamePlural = Shiny Berries
+Pocket = 5
+Price = 200
+FieldUse = OnPokemon
+Flags = Berry,Fling_10,NaturalGift_FAIRY_100
+Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+#-------------------------------
+[EVRESET]
+Name = EVs Resetter
+NamePlural = EVs Resetters
+Pocket = 2
+Price = 10000
+FieldUse = OnPokemon
+Flags = Fling_30
+Description = An intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
+#-------------------------------
+[CAMPINGGEAR]
+Name = Camping Gear
+NamePlural = Camping Gear
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A set of camping equipment used to start camping.
+#-------------------------------
+[EXPALL]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.

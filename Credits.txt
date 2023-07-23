@@ -2,12 +2,52 @@
 
 ====================
 
+Main Development Team:
+BlueLightning
+Chespin_Craft
+Gardenette
+Kaloja
+Kutas Kitti
+Lovely Werewolf
+Low
+Merry
+SpaceWestern
+Spork
+stygma
+
+
+
+
+
+
+
+
+
+
+Battle Animations
+----
+ardicoozer
+BellBlitzKing
+DarryBD99
+Reborn team
+riddlemeree
+StCooler
+WolfPP
+
+
+
+
+
+
+
+
+
+
 Graphics
 --------
 Tilesets:
 aball
 Aveon Trainer
-Aveontrainer
 Banana 'Eduardo' Toast
 BE_Infinity
 Cristata
@@ -21,10 +61,8 @@ Kaloja
 King Tapia
 Kutas Kitti
 Magiscarf
-Magiscarf
 Pint Sized Kiwi
 PokemonEclipse
-Princess Phoenix
 PrincessPhoenix
 Rider Dragon
 Saltilton
@@ -55,6 +93,7 @@ farbol234
 Fikolyte
 Firedude
 Floriak
+GamerCroc11
 Griffin L.
 Grimrose
 HingisDingus
@@ -118,6 +157,7 @@ Basalte
 Chespin_Craft
 Cristata
 Dan Bacon
+DomTom
 Fikolyte
 Gardenette
 HwiteHwale
@@ -144,18 +184,23 @@ WolfPP
 Music
 -----
 Soundtrack:
-Jumpluff
-Laminnanne
-Purple Hat of Awesome
-ReMX Bossa Nova
-Rhythm Break
-Pokémon Clover
 EntityUnknown
 FNaF 6
+Jumpluff
+Laminnanne
+Lovely Werewolf
+mhm
+Pokémon Clover
+Purple Hat of Awesome
+ReMX
+Rhythm Break
+
+
 
 Pokémon Cries:
 Gardenette
 Hummus
+mhm
 Text 206
 
 
@@ -173,8 +218,10 @@ Gardenette
 GreenJellybean
 ImaDeadMan
 Kaloja
+Kameleron
 Kutas Kitti
 MadMillerMiller
+Merry
 RISH
 Shadows
 stygma
@@ -192,6 +239,7 @@ Tyler (MANGO) Jackson
 Eventing
 --------
 Gardenette
+Kaloja
 Kutas Kitti
 Low
 SpaceWestern
@@ -215,10 +263,12 @@ Deino
 Firedude
 Gardenette
 HwiteHwale
+Kameleron
 Kyl-E
 Luc_
 LuckyBenjamin
 MasterMachi
+Merry
 PaperTowelDealer
 Scandal
 Shilo
@@ -255,6 +305,7 @@ Low
 LuckyBenjamin
 MacheteMcGoo
 Malarkey
+Merry
 Midbus
 mSilk
 noahthenumbat
@@ -314,6 +365,7 @@ Chespin_Craft
 das5198
 j
 Jamadxx
+Merry
 Saltilton
 stygma
 Tom Buenbarril
@@ -352,6 +404,7 @@ Wiki
 B_Creative
 Chespin_Craft
 Chroma
+Low
 
 
 
@@ -382,6 +435,10 @@ Scripts & Coding
 Advanced Map Transfers:
 Luka S.J.
 
+Advanced Pathfinder
+Blizzard
+khkramer
+
 Advanced Pokédex:
 FL
 
@@ -395,6 +452,9 @@ Vendily
 
 Astralneko's Scripting Utilities:
 Astralneko
+
+Auto Healing
+Dracarys
 
 Auto Multi Save
 http404error
@@ -432,6 +492,11 @@ Kurotsune
 Easy Mouse System:
 Luka S.J.
 
+Enhanced UI:
+BlueEye007
+Lucidious89
+Poq
+
 Evolve from Party:
 eriedaberrie
 IndianAnimator
@@ -442,6 +507,7 @@ Deoxysprime
 Following Pokémon EX:
 Akizakura16
 Armin
+Gardenette
 Golisopod User
 Help-14
 Maruno
@@ -449,6 +515,7 @@ mej71
 PurpleZaffre
 Rayd12smitty
 Thundaga
+Vendily
 Venom12
 zingzags
 
@@ -468,11 +535,15 @@ Marin's Scripting Utilities:
 Marin
 
 Modern Quest System + UI:
+Black Mage
 derFischae
+drago2308
+Gardenette
 Marin
 mej71
 SpaceWestern
 ThatWelshOne_
+Vendily
 
 Name-box:
 Gardenette
@@ -507,10 +578,17 @@ ThatWelshOne_
 Vendily
 Zaffre
 
+No Auto Evolve:
+Gardenette
+TimeAxis
+
 Overworld Shadows EX:
 Golisopod User
 Marin
 Wolf PP
+
+Poké Ball Swap:
+TechSkylander1518
 
 Pokémon Amie:
 BhagyaJyoti
@@ -519,11 +597,18 @@ Luka S.J
 PizzaSun
 rigbycwts
 
+PokéVial
+Voltseon
+qin2500
+
 Quicksave:
 Low
 
 Relearner from Party:
 Marin
+
+Save File Calls:
+TechSkylander1518
 
 Set the Controls Screen:
 FL
@@ -537,6 +622,9 @@ Boonzeet
 
 Tileset Rearranger:
 Maruno
+
+Tutor.net
+DemICE
 
 Tweaks to Essentials:
 Derxwna Kapsyla
@@ -708,7 +796,7 @@ Website    = https://reliccastle.com/resources/709/
 Credits    = ThatWelshOne_,mej71,derFischae,Marin
 
 Name       = Following Pokemon EX
-Version    = 2.2.2
+Version    = 2.2.4
 Essentials = 20.1
 Optional   = Battle Scripting EX, 1.0.0
 Optional   = Boss Battles EX, 1.0.0
@@ -717,7 +805,7 @@ Optional   = Party Screen BW Style, 2.1.0
 Optional   = Advanced HM Items, 1.0.0
 Optional   = Elite Battle: DX, 1.2.6
 Website    = https://reliccastle.com/resources/featured/
-Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno
+Credits    = Golisopod User, Help-14, zingzags, Rayd12smitty, Venom12, mej71, PurpleZaffre, Akizakura16, Thundaga, Armin (Fairies Resource Pack), Maruno, Gardenette, Vendily
 
 Name         = New DexNav
 Version      = 2.3
@@ -765,3 +853,35 @@ Name       = Step On Spot
 Version    = 1.0
 Credits    = Boonzeet
 Link       = https://reliccastle.com/resources/648/
+
+Name       = Auto Healing
+Credits    = Dracarys
+Link       = https://reliccastle.com/resources/1123/
+
+Name         = Enhanced UI
+Version      = 1.0.9
+Essentials   = 20.1
+Website      = https://www.pokecommunity.com/showthread.php?t=478509
+Credits      = Lucidious89, Ball Sprites: Poq and BlueEye007
+
+Name      = No Auto Evolve
+Version    = 1.0.0
+Essentials = 20.1
+Credits   = TimeAxis, Gardenette
+
+Name       = Save File Calls
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/808/
+Credits    = TechSkylander1518
+
+Name       = Poké Ball Swap
+Version    = 1.0 
+Essentials = 20
+Link       = https://reliccastle.com/resources/817/
+Credits    = TechSkylander1518
+
+Name       = Tutor.net
+Version    = 1.0
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/1237/
+Credits    = DemICE

@@ -1,8 +1,8 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [0]
-StartMoney = 1000
-StartItemStorage = POTION
+StartMoney = 3000
+StartItemStorage = POTION, REPEL
 Home = 33,6,6,6
 StorageCreator = Bill
 WildBattleBGM = Battle - Generic Wild
