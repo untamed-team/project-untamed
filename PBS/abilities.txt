@@ -1109,7 +1109,7 @@ Description = Changes form in Hail. Holding an Icy Rock summons Hail.
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
-Description = Biting moves use the Pokémon's Special Attack.
+Description = Boosts and uses Special Attack for biting moves.
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
