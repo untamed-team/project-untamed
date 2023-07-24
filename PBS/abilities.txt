@@ -1121,7 +1121,7 @@ Description = Using the same move in succession raises its power.
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
-Description = Fully heals the next ally after fainting. Once per battle.
+Description = Fully heals the next ally after fainting just once.
 #-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit
@@ -1145,11 +1145,11 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = STAB moves hit again with less damage. Boosts Future Sight.
+Description = STAB moves hit again weaker. Boosts Future Sight.
 #-------------------------------
 [ANGELICBEAUTY]
 Name = Angelic Beauty
-Description = May confuse the attacker when hit by non-contact moves.
+Description = Indirect contact with it may confuse the attacker.
 #-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
@@ -1165,5 +1165,5 @@ Description = Gradually regains HP in Sun or Harsh Sun.
 #-------------------------------
 [PRESAGE]
 Name = Presage
-Description = Before dealing damage, change the weather for that turn.
+Description = Changes the weather for a turn before attacking.
 #-------------------------------
