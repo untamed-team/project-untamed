@@ -1109,7 +1109,7 @@ Description = Changes form in Hail. Holding an Icy Rock summons Hail.
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
-Description = Boosts and uses Special Attack for biting moves.
+Description = Biting moves use Sp. Atk and have their power boosted.
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
@@ -1145,7 +1145,7 @@ Description = User moves are Super Effective on Dragon-types.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
-Description = STAB moves hit again with less damage, boosts Future Sight.
+Description = STAB moves hit again with less damage. Boosts Future Sight.
 #-------------------------------
 [ANGELICBEAUTY]
 Name = Angelic Beauty
@@ -1153,15 +1153,15 @@ Description = May confuse the attacker when hit by non-contact moves.
 #-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
-Description = If Hail is active, the user's Fire-type moves are boosted by 1.5x.
+Description = Boosts Fire-type moves in Hail.
 #-------------------------------
 [THERMOCOOL]
 Name = Thermo Cool
-Description = If Sun or Harsh Sun are active, the user's Ice-type moves are boosted by 1.5x.
+Description = Boosts Ice-type moves in Sun or Harsh Sun.
 #-------------------------------
 [HEALINGSUN]
 Name = Healing Sun
-Description = The Pokémon gradually regains HP in Sun or Harsh Sun.
+Description = Gradually regains HP in Sun or Harsh Sun.
 #-------------------------------
 [PRESAGE]
 Name = Presage
