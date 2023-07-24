@@ -3678,8 +3678,8 @@ Shape = HeadArms
 Category = Estuary
 Pokedex = This incredibly rare Pokémon resides in the shallow waters where the river meets the sea. It sings a calming, intricate melody said to inspire great ideas.
 #-------------------------------
-[MELUCHOLY]
-Name = Melucholy
+[MELUMOURN]
+Name = Melumourn
 Types = WATER,DARK
 BaseStats = 70,70,120,120,125,75
 GenderRatio = Genderless
