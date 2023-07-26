@@ -1168,6 +1168,6 @@ Name = Presage
 Description = Changes the weather for a turn before attacking.
 #-------------------------------
 [HONORBOUND]
-Name = Honorbound
+Name = Honor-bound
 Description = User cannot switch-out when below half health.
 #-------------------------------
