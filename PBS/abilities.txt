@@ -448,7 +448,7 @@ Description = Reduces damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
-Description = Temporarily halves Attack and Speed.
+Description = Temporarily weakens Atk and Speed at the start of the battle.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
@@ -1166,4 +1166,8 @@ Description = Gradually regains HP in Sun or Harsh Sun.
 [PRESAGE]
 Name = Presage
 Description = Changes the weather for a turn before attacking.
+#-------------------------------
+[HONORBOUND]
+Name = Honorbound
+Description = User cannot switch-out when below half health.
 #-------------------------------
