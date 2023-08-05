@@ -16,7 +16,7 @@ Description = Using its tough and impressive horn, the user rams into the target
 Name = Attack Order
 Type = BUG
 Category = Physical
-Power = 90
+Power = 95
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
@@ -8956,11 +8956,10 @@ Category = Special
 Power = 95
 Accuracy = 100
 TotalPP = 15
-Target = AllNearFoes
-Priority = 0
-FunctionCode = LowerTargetSpeed1
-Flags = CanProtect
-Description = The user attacks by scattering a cloud of coarse debris.
+Target = NearOther
+FunctionCode = None
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Description = The user attacks by scattering a cloud of coarse debris. Critical hits land more easily.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth
