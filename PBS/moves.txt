@@ -8951,14 +8951,15 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 95
+Power = 80
 Accuracy = 100
 TotalPP = 15
 Target = AllNearFoes
 Priority = 0
 FunctionCode = LowerTargetSpeed1
 Flags = CanProtect
-Description = The user attacks by scattering a cloud of coarse debris.
+EffectChance = 10
+Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth
