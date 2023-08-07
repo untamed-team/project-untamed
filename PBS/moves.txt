@@ -8723,10 +8723,10 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 Priority = 0
-FunctionCode = 044
+FunctionCode = LowerTargetSpeed1
 Flags = CanProtect,CanMirrorMove,Bomb
-EffectChance = 30
-Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
+EffectChance = 10
+Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Speed stat.
 #-------------------------------
 [ZEALOUSDANCE]
 Name = Zealous Dance
