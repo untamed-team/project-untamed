@@ -8716,47 +8716,6 @@ Target = User
 FunctionCode = RaiseUserDefense1
 Description = The user withdraws its body into its hard shell, raising its Defense stat.
 ################### New Moves ###################
-[SLIMESHOT]
-Name = Slime Shot
-Type = GROUND
-Category = Special
-Power = 85
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-Priority = 0
-FunctionCode = 044
-Flags = CanProtect,CanMirrorMove,Bomb
-EffectChance = 30
-Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
-#-------------------------------
-[ZEALOUSDANCE]
-Name = Zealous Dance
-Type = FIRE
-Category = Special
-Power = 70
-Accuracy = 100
-TotalPP = 5
-Target = NearOther
-Priority = 0
-FunctionCode = PowerUpDragonMove
-Flags = CanProtect,CanMirrorMove,Dance
-EffectChance = 100
-Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
-#-------------------------------
-[PSYSONIC]
-Name = Psysonic
-Type = PSYCHIC
-Category = Special
-Power = 90
-Accuracy = 0
-TotalPP = 10
-Target = AllNearFoes
-Priority = 0
-FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Sound
-EffectChance = 0
-Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
 #-------------------------------
 [PSYCRUSH]
 Name = Psycrush
@@ -9196,3 +9155,44 @@ FunctionCode = DoubleDamageIfTargetHasChoiceItem
 Flags = CanProtect,CanMirrorMove
 Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
 #-------------------------------
+[SLIMESHOT]
+Name = Failsafe Slime Shot
+Type = GROUND
+Category = Special
+Power = 85
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 044
+Flags = CanProtect,CanMirrorMove,Bomb
+EffectChance = 10
+Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
+#-------------------------------
+[ZEALOUSDANCE]
+Name = Failsafe Zealous Dance
+Type = FIRE
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 0
+FunctionCode = PowerUpDragonMove
+Flags = CanProtect,CanMirrorMove,Dance
+EffectChance = 100
+Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
+#-------------------------------
+[PSYSONIC]
+Name = Failsafe Psysonic
+Type = PSYCHIC
+Category = Special
+Power = 90
+Accuracy = 0
+TotalPP = 10
+Target = AllNearFoes
+Priority = 0
+FunctionCode = None
+Flags = CanProtect,CanMirrorMove,Sound
+EffectChance = 0
+Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
