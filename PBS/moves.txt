@@ -4355,7 +4355,7 @@ Target = AllNearFoes
 FunctionCode = FreezeTargetAlwaysHitsInHail
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = A howling blizzard is summoned to strike the opposing team. It may also freeze them solid.
+Description = A howling blizzard is summoned to strike the opposing team. It may also inflict frostbite.
 #-------------------------------
 [ICEHAMMER]
 Name = Ice Hammer
@@ -4380,7 +4380,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The target is struck with an icy-cold beam of energy. It may also freeze the target solid.
+Description = The target is struck with an icy-cold beam of energy. It may also inflict frostbite.
 #-------------------------------
 [ICICLECRASH]
 Name = Icicle Crash
@@ -4406,7 +4406,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = Contact,CanProtect,CanMirrorMove,Punching
 EffectChance = 10
-Description = The target is punched with an icy fist. It may also leave the target frozen.
+Description = The target is punched with an icy fist. It may also inflict frostbite.
 #-------------------------------
 [FREEZEDRY]
 Name = Freeze-Dry
@@ -4419,7 +4419,7 @@ Target = NearOther
 FunctionCode = FreezeTargetSuperEffectiveAgainstWater
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user rapidly cools the target. This may freeze the target. Is super-effective on Water types.
+Description = The user rapidly cools the target. This may inflict frostbite. Is super-effective on Water types.
 #-------------------------------
 [AURORABEAM]
 Name = Aurora Beam
@@ -4458,7 +4458,7 @@ Target = NearOther
 FunctionCode = FreezeFlinchTarget
 Flags = Contact,CanProtect,CanMirrorMove,Biting
 EffectChance = 100
-Description = The user bites with cold-infused fangs. It may also make the target flinch or leave it frozen.
+Description = The user bites with cold-infused fangs. It may also make the target flinch or inflict frostbite.
 #-------------------------------
 [AVALANCHE]
 Name = Avalanche
@@ -4522,7 +4522,7 @@ Target = AllNearFoes
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user attacks with a chilling gust of powdery snow. It may also freeze the targets.
+Description = The user attacks with a chilling gust of powdery snow. It may also inflict frostbite.
 #-------------------------------
 [ICEBALL]
 Name = Ice Ball
@@ -4951,7 +4951,7 @@ Target = NearOther
 FunctionCode = ParalyzeBurnOrFreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 20
-Description = The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or freeze the target.
+Description = The user strikes with a simultaneous three-beam attack. May also inflict paralysis, burn or frostbite on the target.
 #-------------------------------
 [CRUSHCLAW]
 Name = Crush Claw
@@ -7087,7 +7087,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 10
-Description = The user shoots its psychic power from its eyes to attack. This may also leave the target frozen.
+Description = The user shoots its psychic power from its eyes to attack. This may also inflict frostbite.
 #-------------------------------
 [PSYCHIC]
 Name = Psychic
@@ -8856,7 +8856,7 @@ Name = Biting Cold
 Type = ICE
 Category = Status
 Power = 0
-Accuracy = 75
+Accuracy = 85
 TotalPP = 15
 Target = NearOther
 Priority = 0
