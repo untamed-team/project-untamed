@@ -1,0 +1,76 @@
+Script Gen 9 and Adapting PLA for v20:
+-Caruban
+
+PBS for Gen 9:
+-Caruban
+-PorousMist (Updated the abilities, items, and moves description)
+-DJChaos (TM Items)
+
+Pokemon Gen 9 Battler Sprites:
+The-King-Of-Roads-X, Mak, leParagon, Caruban, Azria, Mashirosakura, Katten, jinxed, OldSoulja
+
+Battler Sprites QC:
+leParagon
+
+Pokemon Gen 9 icons:
+ezerart
+
+Pokemon Gen 9 Followers:
+Azria, DarkusShadow 
+
+Pokemon Gen 9 Cries:
+Edited from Lightblade Absol Gen 9 Cries compilation video
+https://www.youtube.com/watch?v=KV6k3G62oT0
+
+Gen 9 item icons:
+-lichenprincess (Tera Orb, Bamboos, Tera Shards, Mirror Herb, Loaded Dice, Leader Crest, and Kubfu Scrolls, Booster Energy, Gimmighoul coin, TM Material, Kofu's Wallet, Sandwich, Herba Mysticas)
+-Caruban (Punching Glove, Auspicious Armor, Malicious Armor, Ability Shield, Clear Amulet, Covert Cloak, Scarlet&Violet Book)
+
+Original Pokémon: Legends Arceus Expansion Script :
+-StCooler (Original script for Gen 8 Project in v18 and Status sprites)
+-PorousMist and curryofthepast (Adapting the script for v19.1 use)
+
+PLA item icons :
+-AztecCroc, 3DJackArt, Caruban, lichenprincess
+
+Pokemon cries ripped:
+-Morningdew
+
+Pokeballs battle animation and summary icon:
+-Caruban
+-WolfPP (Beast ball battle animation)
+
+PLA Pokémon icons:
+-LuigiTKO
+
+Follower
+-Boonzeet
+-DarkusShadow
+-princess-phoenix
+-Ezeart
+-WolfPP
+
+PLA Sprites from Smogon Gen8 Sprite Project :
+(https://www.smogon.com/forums/threads/smogon-sprite-project.3647722/)
+-Blaquaza, KingOfThe-X-Roads, KattenK, Travis, G.E.Z., SpheX, Hematite
+
+
+Vanilla Style Version
+Pokémon sprites:
+KingOfThe-X-Roads, Mak, Red7246, Vent, Caruban, leParagon, Sopita_Yorita, Z-nogyroP, 
+Alxndre~◇, Mashirosakura, NanaelJustice, KRLW890
+Blaquaza, KattenK, Travis, G.E.Z., SpheX, Hematite
+
+Gen 9 Icons:
+Vent, Katten, leParagon, Cesare_CBass, Alxndre~◇
+
+PLA Icons:
+LuigiTKO, Pikafan2000, Cesare_CBass, Vent, Cesare_Cbass, MultiDiegoDani, leParagon, JWNutz
+and thanks for 
+Pokémon Icons Act 2.9 - Teracristalizando
+(https://whackahack.com/foro/threads/pokemon-icons-act-2-9-teracristalizando-07-08-2022.63896/)
+
+Full Sprites Credit List:
+https://docs.google.com/spreadsheets/d/1T-KC-4XDOeFKq0Z6tfN6Sz4JIlpaK7B8A0lbmBg9fNY/edit?usp=sharing
+
+And let me know if there is someone that I forget to mentions here.

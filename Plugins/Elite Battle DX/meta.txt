@@ -1,0 +1,60 @@
+﻿Name       = Elite Battle: DX
+Version    = 1.4.1 (E20)
+Essentials = 20.1
+Conflicts  = Elite Battle System
+Requires   = Luka's Scripting Utilities,3.3
+Website    = https://luka-sj.com/res/ebdx
+Credits    = Luka S.J.,Maruno,Marin,Pokecheck.org,PinkCatDragon,Tebited15,BadSamaritan,WolfPP,redblueyellow,Damien,Issei Hyoudou,Nasasu,luckygirl88,NikDie,Manurocker95
+#====================================================================
+# Change log
+#====================================================================
+# 1.1.4 - Considered as 1.4.1
+# - HotFix in BossBattles regarding clear battle rules which were making them to crash
+#
+# 1.1.3 - Considered as 1.4.0
+# - HotFix in BossBattles regarding wrong names for event handling
+#
+# 1.1.2 - Considered as 1.3.9
+# - Force by config if pokemon_metrics.txt is checked by EBDX to set altitude or not.
+#
+# 1.1.1 - Considered as 1.3.8
+# - Fixed hatch scene.
+#
+# 1.1.0 - Considered as 1.3.7
+# - Added move animations. Included credits.
+#
+# 1.0.9 - Considered as 1.3.6
+# - Can't draw item if the ID doesn't exist ;D
+#
+# 1.0.8 - Considered as 1.3.5
+# - Changed compiler to accept cache data from ZUD Essentials to compile both plugins 
+#
+# 1.0.7 - Considered as 1.3.4
+# - Configuration to priorize animated sprites in battle to use them while keeping the static ones for party
+#
+# 1.0.6 - Considered as 1.3.3
+# - "Fix" of the HP text that was inside the HP bar
+# - Added dynamic Primal form so you can easily add them by just adding a new form + PrimalStone flag
+# - Added Sprite Y offset so it can be configured from Config.rb
+#
+# 1.0.5 - Considered as 1.3.2
+# - "Fix" of the move name when the move index is selected 
+# - Hotfix when the ID is not in the PBS for retreiving the altitude
+#
+# 1.0.4 - Considered as 1.3.1
+# - Fix in evolution scene due to frames.times ceiling
+#
+# 1.0.3 - Considered as 1.3.0
+# - Fix in status icons
+# - Fix in returning from bag
+# - Fix for mega evolution in battle
+#
+# 1.0.2 - Considered as 1.2.9
+# - Small fix for sprites in SafariZone (as it is not initialized from regular Battle class)
+#
+# 1.0.1 - Considered as 1.2.8:
+# - Small fix while accessing trainertype ID 
+#
+# 1.0.0 - Considered as 1.2.8:
+# - Initial Port from Essentials 19.1 to 20.1.
+#====================================================================

@@ -1,0 +1,102 @@
+#-------------------------------
+[ARTICUNO]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[ZAPDOS]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[MOLTRES]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[MEWTWO]
+BattleBGM       = EBDX/LGPK/RBY Legendary
+#-------------------------------
+[MEW]
+BattleBGM       = EBDX/LGPK/RBY Legendary
+#-------------------------------
+[RAIKOU]
+BattleBGM       = EBDX/LGPK/Raikou Battle
+#-------------------------------
+[ENTEI]
+BattleBGM       = EBDX/LGPK/Entei Battle
+#-------------------------------
+[SUICUNE]
+BattleBGM       = EBDX/LGPK/Suicune Battle
+#-------------------------------
+[LUGIA]
+BattleBGM       = EBDX/LGPK/Lugia Battle
+#-------------------------------
+[HOOH]
+BattleBGM       = EBDX/LGPK/Ho-oh Battle
+#-------------------------------
+[REGIROCK]
+BattleBGM       = EBDX/LGPK/Regi Battle
+#-------------------------------
+[REGICE]
+BattleBGM       = EBDX/LGPK/Regi Battle
+#-------------------------------
+[REGISTEEL]
+BattleBGM       = EBDX/LGPK/Regi Battle
+#-------------------------------
+[KYOGRE]
+BattleBGM       = EBDX/LGPK/Weather Trio Battle
+#-------------------------------
+[GROUDON]
+BattleBGM       = EBDX/LGPK/Weather Trio Battle
+#-------------------------------
+[RAYQUAZA]
+BattleBGM       = EBDX/LGPK/Weather Trio Battle
+#-------------------------------
+[DEOXYS]
+BattleBGM       = EBDX/LGPK/Deoxys Battle.ogg
+#-------------------------------
+[UXIE]
+BattleBGM       = EBDX/LGPK/Lake Trio Battle
+#-------------------------------
+[MESPRIT]
+BattleBGM       = EBDX/LGPK/Lake Trio Battle
+#-------------------------------
+[AZELF]
+BattleBGM       = EBDX/LGPK/Lake Trio Battle
+#-------------------------------
+[DIALGA]
+BattleBGM       = EBDX/LGPK/DPPT Legendary
+#-------------------------------
+[PALKIA]
+BattleBGM       = EBDX/LGPK/DPPT Legendary
+#-------------------------------
+[HEATRAN]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[REGIGIGAS]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[GIRATINA]
+BattleBGM       = EBDX/LGPK/Giratina Battle
+#-------------------------------
+[CRESSELIA]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[DARKRAI]
+BattleBGM       = EBDX/LGPK/Minor Legendary
+#-------------------------------
+[ARCEUS]
+BattleBGM       = EBDX/LGPK/Arceus Battle
+#-------------------------------
+[COBALION]
+BattleBGM       = EBDX/LGPK/Sword Legendary
+#-------------------------------
+[TERRAKION]
+BattleBGM       = EBDX/LGPK/Sword Legendary
+#-------------------------------
+[VIRIZION]
+BattleBGM       = EBDX/LGPK/Sword Legendary
+#-------------------------------
+[RESHIRAM]
+BattleBGM       = EBDX/LGPK/BW Legendary
+#-------------------------------
+[ZEKROM]
+BattleBGM       = EBDX/LGPK/BW Legendary
+#-------------------------------
+[KYUREM]
+BattleBGM       = EBDX/LGPK/Kyurem Battle
