@@ -13,22 +13,22 @@ module EliteBattle
   TRAINER_SPRITE_SCALE = 1
 
   # used to scale the Pokemon bitmaps (front sprites and UI) to 200%
-  FRONT_SPRITE_SCALE = 2
+  FRONT_SPRITE_SCALE = 1
 
   # used to scale the Pokemon bitmaps (back sprites) to 200%
-  BACK_SPRITE_SCALE = 2
+  BACK_SPRITE_SCALE = 1
 
   # configures the scale of the room to account for the vector motion
   ROOM_SCALE = 2.25
 
   # set this to true to use the low HP bgm when player's Pokemon HP reaches 25%
-  USE_LOW_HP_BGM = false
+  USE_LOW_HP_BGM = true
 
   # set this to true if you want to use your own common animations from the editor
-  CUSTOM_COMMON_ANIM = false
+  CUSTOM_COMMON_ANIM = true
 
   # set this to true to use animations from the Animation editor for missing move animations
-  CUSTOM_MOVE_ANIM = false
+  CUSTOM_MOVE_ANIM = true
 
   # disables "camera" zooming and movement throughout the entire scene
   DISABLE_SCENE_MOTION = false
@@ -52,7 +52,7 @@ module EliteBattle
   USE_FOLLOWER_EXCEPTION = true
 
   # add EBDX debug menu
-  SHOW_DEBUG_FEATURES = false
+  SHOW_DEBUG_FEATURES = true
 
   #offset of the HP text (e.g: 10/10) so you can move it around
   HP_TEXT_Y_OFFSET = 10
@@ -76,7 +76,7 @@ module EliteBattle
   SKIP_CACHED_DATA = false
 
   #if set to false, pokemon_metrics.txt is checked first (default Essentials file). If not, that file is skipped.
-  FORCE_EBDX_ALTITUDE = true
+  FORCE_EBDX_ALTITUDE = false
 end
 #-------------------------------------------------------------------------------
 # Adds additional "camera" vectors for when the camera is idling
