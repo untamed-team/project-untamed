@@ -536,11 +536,11 @@ InternalName            = SENTRET
 InternalName            = FURRET
 #-------------------------------
 [HOOTHOOT]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 55
 InternalName            = HOOTHOOT
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [NOCTOWL]
@@ -552,11 +552,11 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [LEDYBA]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 50
 InternalName            = LEDYBA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [LEDIAN]
@@ -650,19 +650,19 @@ InternalName            = JUMPLUFF
 InternalName            = AIPOM
 #-------------------------------
 [SUNKERN]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = SUNKERN
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [SUNFLORA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 55
 InternalName            = SUNFLORA
 BattlerAltitude         = 0
 BattlerPlayerX          = 3
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [YANMA]
@@ -922,19 +922,19 @@ InternalName            = CASCOON
 InternalName            = DUSTOX
 #-------------------------------
 [LOTAD]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = LOTAD
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [LOMBRE]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 55
 InternalName            = LOMBRE
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [LUDICOLO]
@@ -1767,11 +1767,11 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [LIEPARD]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 45
 InternalName            = LIEPARD
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 45
 BattlerEnemyX           = 0
 #-------------------------------
 [PANSAGE]
@@ -1966,11 +1966,11 @@ InternalName            = ARCHEN
 InternalName            = ARCHEOPS
 #-------------------------------
 [TRUBBISH]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 60
 InternalName            = TRUBBISH
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 60
 BattlerEnemyX           = 0
 #-------------------------------
 [GARBODOR]
@@ -2093,11 +2093,11 @@ InternalName            = ELGYEM
 InternalName            = BEHEEYEM
 #-------------------------------
 [LITWICK]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = LITWICK
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [LAMPENT]
@@ -2755,19 +2755,19 @@ InternalName            = GRENINJA
 InternalName            = GRENINJA
 #-------------------------------
 [BUNNELBY]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 45
 InternalName            = BUNNELBY
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 45
 BattlerEnemyX           = 0
 #-------------------------------
 [DIGGERSBY]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 35
 InternalName            = DIGGERSBY
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 35
 BattlerEnemyX           = 0
 #-------------------------------
 [FLETCHLING]
@@ -2780,19 +2780,19 @@ InternalName            = FLETCHINDER
 InternalName            = TALONFLAME
 #-------------------------------
 [SCATTERBUG]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 55
 InternalName            = SCATTERBUG
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [SPEWPA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = SPEWPA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [VIVILLON]
@@ -3050,43 +3050,43 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [FLORGES]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 25
 InternalName            = FLORGES
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [FLORGES,1]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 25
 InternalName            = FLORGES
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [FLORGES,2]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 25
 InternalName            = FLORGES
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [FLORGES,3]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 25
 InternalName            = FLORGES
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [FLORGES,4]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 25
 InternalName            = FLORGES
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [SKIDDO]
@@ -3098,11 +3098,11 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [GOGOAT]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 35
 InternalName            = GOGOAT
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 35
 BattlerEnemyX           = 0
 #-------------------------------
 [PANCHAM]
@@ -3304,11 +3304,11 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [TREVENANT]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 25
 InternalName            = TREVENANT
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [PUMPKABOO]
@@ -3352,11 +3352,11 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [GOURGEIST,1]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 50
 InternalName            = GOURGEIST
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 0
+BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [GOURGEIST,2]
@@ -4824,35 +4824,35 @@ InternalName
 InternalName            = GIMMIGHOUL
 #-------------------------------
 [MOLLUCOTTA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = MOLLUCOTTA
+BattlerAltitude         = 0
+BattlerPlayerX          = 0
+BattlerPlayerY          = 65
+BattlerEnemyX           = 0
+#-------------------------------
+[EXPURSUM]
+BattlerEnemyY           = 50
+InternalName            = EXPURSUM
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
 BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
-[EXPURSUM]
-BattlerEnemyY           = 92
-InternalName            = EXPURSUM
-BattlerAltitude         = 0
-BattlerPlayerX          = 23
-BattlerPlayerY          = 88
-BattlerEnemyX           = 0
-#-------------------------------
 [GASTRONAUT]
-BattlerEnemyY           = 92
+BattlerEnemyY           = 40
 InternalName            = GASTRONAUT
 BattlerAltitude         = 0
-BattlerPlayerX          = 28
-BattlerPlayerY          = 97
-BattlerEnemyX           = -7
+BattlerPlayerX          = 0
+BattlerPlayerY          = 40
+BattlerEnemyX           = 0
 #-------------------------------
 [QUETZALIL]
 BattlerEnemyY           = 50
 InternalName            = QUETZALIL
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [QUEXCELL]
@@ -4896,11 +4896,11 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [PACUNA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 55
 InternalName            = PACUNA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 55
 BattlerEnemyX           = 0
 #-------------------------------
 [LAGUNA]
@@ -4920,27 +4920,27 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [AVEOR]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 45
 InternalName            = AVEOR
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 46
 BattlerEnemyX           = 0
 #-------------------------------
 [ROADRAPTOR]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 25
 InternalName            = ROADRAPTOR
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 25
 BattlerEnemyX           = 0
 #-------------------------------
 [MINIMELO]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = MINIMELO
 BattlerAltitude         = 0
 BattlerPlayerX          = 1
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [CHICATTA]
@@ -4976,43 +4976,43 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [LUPACABRA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 30
 InternalName            = LUPACABRA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [ZOLUPINE]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 30
 InternalName            = ZOLUPINE
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [M_ROSELIA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 150
 InternalName            = M_ROSELIA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 150
 BattlerEnemyX           = 0
 #-------------------------------
 [M_ROSERADE]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 150
 InternalName            = M_ROSERADE
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 150
 BattlerEnemyX           = 0
 #-------------------------------
 [CAFECARACHA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = CAFECARACHA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [FLITJITTER]
@@ -5024,11 +5024,11 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [ZEAZAYA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 65
 InternalName            = ZEAZAYA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 65
 BattlerEnemyX           = 0
 #-------------------------------
 [ZHUSK]
@@ -5040,19 +5040,19 @@ BattlerPlayerY          = 50
 BattlerEnemyX           = 0
 #-------------------------------
 [MAYZMEN]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 30
 InternalName            = MAYZMEN
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [BLAZEA]
-BattlerEnemyY           = 50
+BattlerEnemyY           = 30
 InternalName            = BLAZEA
 BattlerAltitude         = 0
 BattlerPlayerX          = 0
-BattlerPlayerY          = 50
+BattlerPlayerY          = 30
 BattlerEnemyX           = 0
 #-------------------------------
 [LILORINA]
