@@ -11,6 +11,7 @@ Kutas Kitti
 Lovely Werewolf
 Low
 Merry
+mhm
 SpaceWestern
 Spork
 stygma
@@ -528,14 +529,17 @@ Golisopod User
 LostSoulsDev
 PurpleZaffre
 
+Luka's Scripting Utilities:
+Luka S.J.
+
 Map Screenshot Maker:
 meustrus
 SephirothSpawn
 The MACL authors
 and Selwyn
 
-Luka's Scripting Utilities:
-Luka S.J.
+Marin's Enhanced Staircases
+Marin
 
 Marin's Scripting Utilities:
 Marin
@@ -551,13 +555,6 @@ SpaceWestern
 ThatWelshOne_
 Vendily
 
-Name-box:
-Gardenette
-Golisopod User
-mej71
-Mr.Gela (theo#7722)
-Vendily
-
 Monitor Icons:
 bo4p5687
 Gardenette
@@ -570,6 +567,13 @@ Savordez
 SpaceWestern
 ThatWelshOne_
 Ulithium_Dragon
+Vendily
+
+Name-box:
+Gardenette
+Golisopod User
+mej71
+Mr.Gela (theo#7722)
 Vendily
 
 New DexNav:
@@ -891,3 +895,9 @@ Version    = 1.0
 Essentials = 20.1
 Website    = https://reliccastle.com/resources/1237/
 Credits    = DemICE
+
+Name         = Marin's Enhanced Staircases
+Version      = 2.0
+Credits      = Marin
+Essentials   = 20
+Link         = https://reliccastle.com/resources/396/
