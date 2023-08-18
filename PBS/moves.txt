@@ -8730,17 +8730,17 @@ Description = The user fires a glob of charged slime at the target to attack. Th
 #-------------------------------
 [ZEALOUSDANCE]
 Name = Zealous Dance
-Type = FIRE
+Type = DRAGON
 Category = Special
-Power = 70
+Power = 80
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = PowerUpDragonMove
 Flags = CanProtect,CanMirrorMove,Dance
 EffectChance = 100
-Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
+Description = The user assaults with a frenzied dance. The user boosts the power of its next Fire-type move.
 #-------------------------------
 [PSYSONIC]
 Name = Psysonic
