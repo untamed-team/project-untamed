@@ -161,9 +161,15 @@ class Battle
       pbDisplay(_INTL("But there was no target..."))
       return
     end
-    @scene.pbThrow(ball, 0, false, battler.index, showplayer)
-    pbDisplay(_INTL("{1} doesn't appear to be catchable!", battler.name))
-    BallHandlers.onFailCatch(ball, self, battler)
+    #edited by Gardenette to deflect ball rather than just bursting out
+	#@scene.pbThrow(ball, 0, false, battler.index, showplayer)
+    #pbDisplay(_INTL("{1} doesn't appear to be catchable!", battler.name))
+	@scene.pbThrowAndDeflect(ball, battler.index)
+    pbDisplay(_INTL("The ball was knocked away!"))
+	
+	#edited by Gardenette to fix a crash
+    #BallHandlers.onFailCatch(ball, self, battler)
+	Battle::PokeBallEffects.onFailCatch(ball, self, battler)
   end
   #-----------------------------------------------------------------------------
 end

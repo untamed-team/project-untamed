@@ -6,7 +6,8 @@ class Battle::Scene
   #-----------------------------------------------------------------------------
   #  Alias unused functions
   #-----------------------------------------------------------------------------
-  def pbThrowAndDeflect(ball, targetBattler); end
+  #edited by Gardenette to make pbThrowAndDeflect usable again
+  #def pbThrowAndDeflect(ball, targetBattler); end
   def pbHideCaptureBall(idxBattler); end
   #-----------------------------------------------------------------------------
   #  Pokeball throw animation
