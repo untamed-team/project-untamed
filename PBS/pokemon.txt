@@ -4101,7 +4101,7 @@ Evolutions = MALHARO,Level,45
 [MALHARO]
 Name = Malharo
 Types = GHOST,ELECTRIC
-BaseStats = 105,110,77,93,60,75
+BaseStats = 105,115,77,93,60,75
 GenderRatio = Female75Percent
 GrowthRate = Slow
 BaseExp = 218
