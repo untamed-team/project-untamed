@@ -530,15 +530,11 @@ LostSoulsDev
 PurpleZaffre
 
 Luka's Scripting Utilities:
-Luka S.J.
-
-Map Screenshot Maker:
-meustrus
-SephirothSpawn
-The MACL authors
-and Selwyn
 
 Marin's Enhanced Staircases
+Marin
+
+Marin's Map Exporter:
 Marin
 
 Marin's Scripting Utilities:
@@ -901,3 +897,16 @@ Version      = 2.0
 Credits      = Marin
 Essentials   = 20
 Link         = https://reliccastle.com/resources/396/
+
+Name         = Marin's Scripting Utilities
+Version      = 2.0
+Essentials   = 20
+Credits      = Marin
+Link         = https://reliccastle.com/resources/165/
+
+Name         = Marin's Map Exporter
+Version      = 2.1
+Credits      = Marin
+Essentials   = 20
+Requires     = Marin's Scripting Utilities, 2.0
+Link         = https://reliccastle.com/resources/184/
