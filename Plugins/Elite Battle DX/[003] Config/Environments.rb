@@ -267,6 +267,37 @@ module EnvironmentEBDX
       :x => 192, :y => 107
     }
   }
+  #-----------------------------------------------------------------------------
+LEADER_VAL = {
+    "backdrop" => "Champion",
+    "lightsA" => true,
+    "img001" => {
+      :scrolling => true, :vertical => true, :speed => 1,
+      :bitmap => "decor003",
+      :oy => 180, :y => 90, :z => 1, :flat => true
+    }, "img002" => {
+      :bitmap => "decor004",
+      :oy => 100, :y => 98, :z => 2, :flat => false
+    }, "img003" => {
+      :scrolling => true, :speed => 16,
+      :bitmap => "decor005",
+      :oy => 0, :y => 4, :z => 4, :flat => true
+    }, "img004" => {
+      :scrolling => true, :speed => 16, :direction => -1,
+      :bitmap => "decor006",
+      :oy => 0, :z => 4, :flat => true
+    }, "img005" => {
+      :scrolling => true, :speed => 0.5,
+      :bitmap => "base001c",
+      :oy => 0, :y => 122, :z => 1, :flat => true
+    }, "img006" => {
+      :bitmap => "pillars001",
+      :y => 128, :x => 144, :z => 3
+    }, "img007" => {
+      :bitmap => "pillars002",
+      :y => 192, :x => 144, :z => 18
+    },
+  }
 end
 #===============================================================================
 #  Extra additions to the battle scene based on terrain

@@ -5288,7 +5288,7 @@ BattlerPlayerY          = 0
 BattlerEnemyX           = 0
 #-------------------------------
 [SUCHOBILE]
-BattlerEnemyY           = 0
+BattlerEnemyY           = 16
 InternalName            = SUCHOBILE
 BattlerAltitude         = 0
 BattlerPlayerX          = 0

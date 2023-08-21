@@ -23,3 +23,8 @@ BattleVS         = trainerSM
 [TEAMROCKET_F]
 BattleIntro      = evilTeam
 BattleVS         = trainerSM
+#-------------------------------
+[LEADER_Valentina]
+TrainerPositionX = -8
+BattleVS         = integratedVS
+BattleEnv	 = LEADER_VAL
