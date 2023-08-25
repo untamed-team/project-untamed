@@ -3202,7 +3202,7 @@ Category = Wood Frog
 Pokedex = Though it prefers the warmth, it has adapted to live in some of the coldest parts of the Mazah region. Its diet consists of an extremely poisonous mushroom.
 WildItemRare = ICYROCK
 #-------------------------------
-[-]
+[ARIAMANO]
 Name = Ariamano
 Types = BUG,DRAGON
 BaseStats = 60,90,40,125,40,75
