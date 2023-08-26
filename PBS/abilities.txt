@@ -110,7 +110,7 @@ Description = Contact may poison or cause paralysis or sleep.
 #-------------------------------
 [SYNCHRONIZE]
 Name = Synchronize
-Description = Passes a burn, poison, or paralysis to the foe.
+Description = Passes a burn, frostbite, poison, or paralysis to the foe.
 #-------------------------------
 [CLEARBODY]
 Name = Clear Body
@@ -1133,7 +1133,7 @@ Description = Contact forces the opponent to switch.
 #-------------------------------
 [TILEWORKER]
 Name = Tileworker
-Description = Removes all hazards from its side upon entry.
+Description = Removes all hazards from its side upon entry, once. Immunity to hazards.
 #-------------------------------
 [TRICKSTER]
 Name = Trickster
