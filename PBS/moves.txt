@@ -1226,7 +1226,7 @@ Description = A strong electric blast is loosed at the target. It may also leave
 Name = Wild Charge
 Type = ELECTRIC
 Category = Physical
-Power = 90
+Power = 100
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
@@ -8985,7 +8985,7 @@ TotalPP = 5
 Target = AllNearFoes
 FunctionCode = Supernova
 Flags = GravityBoosted
-Description = big kaboom first turn
+Description = Crashes into the opposing side in a fiery blaze, sending sharp rocks into the air to hit 2 turns later.
 #-----------------
 [SUPERNOVA_ALT]
 Name = Supernova
