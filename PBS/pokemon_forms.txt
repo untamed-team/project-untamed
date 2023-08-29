@@ -193,9 +193,9 @@ TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTE
 FormName = Frozen
 Type1 = POISON
 Type2 = ICE
-BaseStats = 95,45,145,25,85,115
+BaseStats = 95,45,145,25,80,115
 Weight = 10.4
-#------------------------------- #
+#------------------------------- # 520 bst
 [STRELAVISON,1]
 FormName = Swarm Form
 Type1 = BUG
