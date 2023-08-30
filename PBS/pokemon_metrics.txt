@@ -732,7 +732,7 @@ FrontSprite = 0,24
 ShadowX = 0
 ShadowSize = 2
 #-------------------------------
-[MELUCHOLY]
+[MELUMOURN]
 BackSprite = 0,20
 FrontSprite = 0,24
 ShadowX = 0

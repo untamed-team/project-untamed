@@ -1,0 +1,5 @@
+Name         = Better Battle Animation Editor
+Version      = 1.0
+Essentials   = 20.1
+Conflicts    = Move Animation Fixer
+Credits      = KRLW890
