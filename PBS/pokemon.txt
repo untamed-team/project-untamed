@@ -389,6 +389,7 @@ Habitat = Grassland
 Category = Sugar Ant
 Pokedex = Minimelo is capable of storing large amounts of nectar in a specialized organ in its abdomen. While it can't consume the nectar, it can be used against attackers.
 Generation = 9
+WildItemCommon = HONEY
 Evolutions = CHICATTA,Level,10
 #-------------------------------
 [CHICATTA]
@@ -2019,7 +2020,7 @@ Shape = Bipedal
 Category = Trash Bag
 Pokedex = The combination of garbage bags and industrial waste caused the chemical reaction that crated this Pokémon.
 Generation = 5
-WildItemUncommon = SILKSCARF
+WildItemUncommon = BLACKSLUDGE
 Evolutions = GARBODOR,Level,36
 #-------------------------------
 [GARBODOR]
@@ -2045,8 +2046,8 @@ Shape = Bipedal
 Category = Trash Heap
 Pokedex = They absorb garbage and make it part of their bodies. They shoot a poisonous liquid from their right-hand fingertips.
 Generation = 5
-WildItemCommon = SILKSCARF
-WildItemUncommon = BLACKSLUDGE
+WildItemCommon = BLACKSLUDGE
+WildItemUncommon = STICKYBARB
 #-------------------------------
 [FURFROU]
 Name = Furfrou
@@ -2241,6 +2242,7 @@ Color = Black
 Shape = Winged
 Category = Corvid
 Pokedex = Cromen have a strong affinity for shiny objects and snatch any valuables left unattended. They always carry their favourite piece around in their beak
+WildItemUncommon = PEARL
 Evolutions = CORVOYANT,Level,26
 #-------------------------------
 [CORVOYANT]
@@ -2265,6 +2267,8 @@ Color = Black
 Shape = Winged
 Category = Collector
 Pokedex = Corvoyant adorn themselves with precious stones to amplify their psychic powers. If one gets damaged, they will avoid conflict until it can be replaced.
+WildItemUncommon = PEARL
+WildItemRare = BIGPEARL
 Evolutions = CAWMADAME,Level,40
 #-------------------------------
 [CAWMADAME]
@@ -3127,7 +3131,7 @@ Color = Pink
 Shape = Quadruped
 Category = Water Pup
 Pokedex = Despite their reclusive nature, trainers who find these Pokémon find them to be friendly and energetic. They use their elongated tongue to attack foes.
-WildItemUncommon = SHEDSHELL
+WildItemUncommon = MYSTICWATER
 Evolutions = AMPHIBARK,Level,30
 #-------------------------------
 [AMPHIBARK]
@@ -3152,7 +3156,7 @@ Color = Blue
 Shape = Quadruped
 Category = Water Dog
 Pokedex = Amphibark's limbs are designed for both aquatic and land, but it seems to prefer living on land. Their delicate gills must stay wet in order for them to breath.
-WildItemUncommon = SHEDSHELL
+WildItemUncommon = MYSTICWATER
 Evolutions = PEROXOTAL,LevelRain,65
 #-------------------------------
 [PEROXOTAL]
@@ -3200,6 +3204,7 @@ Color = Green
 Shape = Bipedal
 Category = Wood Frog
 Pokedex = Though it prefers the warmth, it has adapted to live in some of the coldest parts of the Mazah region. Its diet consists of an extremely poisonous mushroom.
+WildItemUncommon = TINYMUSHROOM
 WildItemRare = ICYROCK
 #-------------------------------
 [ARIAMANO]
@@ -3514,7 +3519,7 @@ Color = Yellow
 Shape = HeadLegs
 Category = Compass
 Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokemon.
-WildItemUncommon = MAGNET
+WildItemUncommon = IRONBALL
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
 [NOSEPONCH]
@@ -3539,7 +3544,7 @@ Color = Yellow
 Shape = HeadArms
 Category = Warrior
 Pokedex = Noseponch's very presence can cause people and pokemon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
-WildItemUncommon = MAGNET
+WildItemUncommon = IRONBALL
 #-------------------------------
 [M_MARACTUS]
 Name = Maractus
@@ -3794,7 +3799,7 @@ Color = White
 Shape = HeadBase
 Category = Fresh Snow
 Pokedex = Unable to survive in hot areas, it makes itself comfortable by breathing out air cold enough to cause snow. It burrows into the snow to sleep.
-WildItemUncommon = NEVERMELTICE
+WildItemUncommon = PERSIMBERRY
 Evolutions = M_VANILLISH,Level,35
 #-------------------------------
 [M_VANILLISH]
@@ -3819,7 +3824,8 @@ Color = White
 Shape = HeadBase
 Category = Icy Snow
 Pokedex = Doctors in the Mazah region keep a Vanillish on call, as overheating is a common cause of hospital visits. Their berries can cure any headaches or frostbite
-WildItemUncommon = NEVERMELTICE
+WildItemUncommon = PERSIMBERRY
+WildItemRare = SITRUSBERRY
 Evolutions = M_VANILLUXE,Level,47
 #-------------------------------
 [M_VANILLUXE]
@@ -3844,7 +3850,8 @@ Color = White
 Shape = MultiBody
 Category = Snowstorm
 Pokedex = Psychic intuition allows Vanilluxe to tell the instant someone has contracted a headache, and they are ready with a pharmacy of berries to help cure it.
-WildItemCommon = NEVERMELTICE
+WildItemUncommon = PERSIMBERRY
+WildItemRare = SITRUSBERRY
 #-------------------------------
 [KNOGGIN]
 Name = K'Noggin
@@ -3994,9 +4001,7 @@ Color = Red
 Shape = Insectoid
 Category = Low Rider
 Pokedex = Crustang are the Pokémon of choice for Mazian gearheads. Trainers will customise their Crustang's carapace with body paints and decals and enter them in shows.
-WildItemCommon = NUGGET
-WildItemUncommon = NUGGET
-WildItemRare = NUGGET
+WildItemUncommon = METALCOAT
 #-------------------------------
 [COSMET]
 Name = Cosmet
@@ -4514,6 +4519,7 @@ Shape = BipedalTail
 Habitat = Grassland
 Category = Panhandle 
 Pokedex = These Pokémon can tell the difference between fake and real gold through taste alone. They enjoy eating foods that are heavy in metallic minerals.
+WildItemUncommon = NUGGET
 Evolutions = RUSTACHE,LevelDay,30
 #-------------------------------
 [RUSTACHE]
@@ -4539,6 +4545,8 @@ Shape = BipedalTail
 Habitat = Grassland 
 Category = Dowsing 
 Pokedex = Rustache can taste gold through 200ft of rock. When ore is found, the organ on its head releases a scent to attracts others to its location.
+WildItemUncommon = NUGGET
+WildItemRare = BIGNUGGET
 #-------------------------------
 [M_EKANS]
 Name = Ekans
