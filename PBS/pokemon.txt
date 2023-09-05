@@ -4578,7 +4578,7 @@ Evolutions = ELTTAR,Level,24
 [ELTTAR]
 Name = Elttar
 Types = POISON,DARK
-BaseStats = 52,101,64,87,75,69
+BaseStats = 75,101,64,87,52,69
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 157
