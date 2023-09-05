@@ -4397,8 +4397,8 @@ Pocket = 4
 Price = 2000
 FieldUse = TM
 Flags = Fling_60
-Move = FLAMEWHEEL
-Description = The user cloaks itself in fire and charges at the target. It may also leave the target with a burn.
+Move = FLAMECHARGE
+Description = The user cloaks itself in flame and attacks. Building up more power, it raises the user's Speed stat.
 #-------------------------------
 [TM69]
 Name = TM69
