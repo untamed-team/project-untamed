@@ -6299,11 +6299,11 @@ Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a 
 [DDTSPRAY]
 Name = DDT Spray
 NamePlural = DDT Sprays
-Pocket = 1
-Price = 2000
+Pocket = 8
+Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = A advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.
+Description = A advanced Repel which attracts only not yet caught Pokémon. Also illegal in several states.
 #-------------------------------
 [LINKCABLE]
 Name = Link Cable
@@ -6499,3 +6499,11 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[COLOGNECASE]
+Name = Cologne Case
+NamePlural = Cologne Cases
+Pocket = 1
+Price = 4000
+Flags = Fling_25
+Description = A held item that makes healing more powerful, but doubles PP consumption.
