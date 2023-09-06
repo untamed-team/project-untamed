@@ -448,7 +448,7 @@ Description = Reduces damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
-Description = Temporarily weakens Atk and Speed at the start of the battle.
+Description = Temporarily weakens Attack and Speed.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
