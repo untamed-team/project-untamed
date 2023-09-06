@@ -198,6 +198,14 @@ Type1 = ICE
 Type2 = FAIRY
 BaseStats = 50,72,55,103,110,130
 Abilities = FURCOAT
+#-------------------------------
+[LEDIAN,1]
+FormName = Mega Ledian
+MegaStone = LEDINITE
+Type1 = BUG
+Type2 = FIGHTING
+BaseStats = 55,130,50,125,35,120
+Abilities = IRONFIST
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------

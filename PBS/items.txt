@@ -6557,6 +6557,14 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have LAGUNA hold it, and it will be able to Mega Evolve.
 #-------------------------------
+[LEDINITE]
+Name = Ledinite
+NamePlural = Ledinite
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have LEDIAN hold it, and it will be able to Mega Evolve.
+#-------------------------------
 [BERRYPOTS]
 Name = Berry Pot
 NamePlural = Berry Pots
