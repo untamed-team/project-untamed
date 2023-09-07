@@ -184,3 +184,21 @@ Pokemon = NOCTAVISPA,10
 	BOSS = true
 	Status = Sleep
 Pokemon = NOCTAVISPA,100
+#-------------------------------
+[HEXMANIAC,pory]
+LoseText = kaboom
+Gimmick = StatDropImmunity
+Pokemon = PORYGONZ,10
+	IV  = 10,10,10,10,10,10
+	EV  = 0,0,0,0,0,0
+	AAM = true
+	MEM = true
+#-------------------------------
+[HEXMANIAC,pory,100]
+LoseText = kaboom
+Gimmick = StatDropImmunity
+Pokemon = PORYGONZ,10
+	IV  = 10,10,10,10,10,10
+	EV  = 0,0,0,0,0,0
+	AAM = true
+	MEM = true
