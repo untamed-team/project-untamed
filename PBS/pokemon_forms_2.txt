@@ -62,9 +62,9 @@ Weight = 81.6
 FormName = Mega Milotic
 MegaStone = MILOTITE
 Type1 = WATER
-Type2 = DRAGON
+Type2 = FAIRY
 BaseStats = 95,85,96,82,126,156
-Abilities = DAZZLING
+Abilities = MISTYSURGE
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
@@ -77,6 +77,135 @@ FormName = Mega Skarmory
 MegaStone = SKARMORITE
 BaseStats = 65,120,160,80,60,80
 Abilities = HYPERCUTTER
+#------------------------------- 
+[BEHEEYEM,1]
+FormName = Mega Beheeyem
+MegaStone = BEHEEYEMITE
+BaseStats = 75,85,75,70,150,130
+Abilities = PSYCHICSURGE
+#------------------------------- 
+[GOLURK,1]
+FormName = Mega Golurk
+MegaStone = GOLURKITE
+Type1 = GROUND
+Type2 = FLYING
+BaseStats = 89,144,105,100,65,80
+Abilities = AERILATE
+#------------------------------- 
+[HAWLUCHA,1]
+FormName = Mega Hawlucha
+MegaStone = HAWLUCHITE
+BaseStats = 78,132,95,118,94,83
+Abilities = GALVANIZE
+HiddenAbilities = WARRIORSPIRIT
+#------------------------------- 
+[CACTURNE,1]
+FormName = Mega Cacturne
+MegaStone = CACTURNITE
+BaseStats = 70,135,100,55,145,70
+Abilities = SANDSTREAM
+#------------------------------- 
+[FROSMOTH,1]
+FormName = Mega Frosmoth
+MegaStone = FROSMOTHITE
+Type1 = ICE
+Type2 = FIRE
+BaseStats = 70,65,80,85,135,140
+Abilities = MAGICGUARD
+#------------------------------- 
+[CHIMECHO,1]
+FormName = Mega Chimecho
+MegaStone = CHIMECHITE
+Type1 = PSYCHIC
+Type2 = STEEL
+BaseStats = 75,50,100,65,115,150
+Abilities = FRIENDGUARD
+#------------------------------- 
+[PORYGONZ,1]
+FormName = Mega Porygon-Z
+MegaStone = PORYGONZITE
+Type1 = NORMAL
+Type2 = QMARKS
+BaseStats = 85,128,80,102,155,85
+Abilities = ENIGMIZE
+#------------------------------- 
+[MAGCARGO,1]
+FormName = Mega Magcargo
+MegaStone = MAGCARGOITE
+Type1 = FIRE
+Type2 = STEEL
+BaseStats = 60,60,160,50,100,100
+Abilities = BULLETPROOF
+#------------------------------- 
+[SPECTERZAL,1]
+FormName = Mega Specterzal
+MegaStone = SPECTERZITE
+BaseStats = 120,139,132,86,95,75
+Abilities = SPOOPERAURA
+#------------------------------- 
+[TREVENANT,1]
+FormName = Mega Trevenant
+MegaStone = TREVENANTITE
+BaseStats = 85,140,107,46,90,122
+Abilities = GRASSYSURGE
+#------------------------------- 
+[M_ROSERADE,1]
+FormName = Mega Roserade
+MegaStone = M_ROSERADITE
+BaseStats = 70,95,83,92,125,150
+Abilities = SEANCE
+#------------------------------- 
+[LUPACABRA,1]
+FormName = Mega Lupacabra
+MegaStone = LUPACABRITE
+Type1 = DARK
+Type2 = FIGHTING
+BaseStats = 80,135,135,65,95,80
+Abilities = MOLDBREAKER
+#------------------------------- 
+[ZOLUPINE,1]
+FormName = Mega Zolupine
+MegaStone = ZOLUPINEITE
+Type1 = GHOST
+Type2 = WATER
+BaseStats = 60,95,70,95,145,145
+Abilities = DRIZZLE
+#------------------------------- 
+[ROADRAPTOR,1]
+FormName = Mega Roadraptor
+MegaStone = ROADRAPTORITE
+Type1 = ELECTRIC
+Type2 = GROUND
+BaseStats = 70,129,72,133,117,69
+Abilities = LIGHTNINGROD
+#------------------------------- 
+[FRIZZARD,1]
+FormName = Mega Frizzard
+MegaStone = FRIZZARDITE
+BaseStats = 80,80,85,94,145,121
+Abilities = SNOWWARNING
+#------------------------------- 
+[ZARCOIL,1]
+FormName = Mega Zarcoil
+MegaStone = ZARCOILITE
+BaseStats = 65,135,89,91,140,85
+Abilities = DROUGHT
+#------------------------------- # ~112 def
+[LAGUNA,1]
+FormName = Mega Laguna
+MegaStone = LAGUNITE
+Type1 = ICE
+Type2 = FAIRY
+BaseStats = 50,72,55,103,110,130
+Abilities = FURCOAT
+#-------------------------------
+[LEDIAN,1]
+FormName = Mega Ledian
+MegaStone = LEDINITE
+Type1 = BUG
+Type2 = FIGHTING
+BaseStats = 55,130,50,125,35,120
+Abilities = IRONFIST
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------

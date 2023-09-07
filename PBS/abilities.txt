@@ -448,7 +448,7 @@ Description = Reduces damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
-Description = Temporarily weakens Atk and Speed at the start of the battle.
+Description = Temporarily weakens Attack and Speed.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
@@ -1170,4 +1170,12 @@ Description = Changes the weather for a turn before attacking.
 [HONORBOUND]
 Name = Honor-bound
 Description = User cannot switch-out when below half health.
+#-------------------------------
+[ENIGMIZE]
+Name = Enigmize
+Description = All the Pokémon's moves become the ??? type.
+#-------------------------------
+[SPOOPERAURA]
+Name = Spooper Aura
+Description = Powers up each Pokémon's Ghost-type moves.
 #-------------------------------
