@@ -4396,7 +4396,7 @@ NamePlural = TM68s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_60
+Flags = Fling_50
 Move = FLAMECHARGE
 Description = The user cloaks itself in flame and attacks. Building up more power, it raises the user's Speed stat.
 #-------------------------------
