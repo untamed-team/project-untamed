@@ -154,7 +154,7 @@ Abilities = CURSEDBODY
 FormName = Mega Trevenant
 MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
-Abilities = GRASSYSURGE
+Abilities = TRIAGE
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
