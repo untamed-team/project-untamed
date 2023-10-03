@@ -655,7 +655,7 @@ Evolutions = LUPACABRA,Level,26
 [LUPACABRA]
 Name = Lupacabra
 Types = DARK
-BaseStats = 80,105,95,55,85,70
+BaseStats = 80,105,95,70,55,85
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 170
