@@ -125,7 +125,7 @@ FormName = Mega Chimecho
 MegaStone = CHIMECHITE
 Type1 = PSYCHIC
 Type2 = STEEL
-BaseStats = 75,60,100,80,120,130
+BaseStats = 75,50,100,80,120,130
 Abilities = LEVITATE
 #------------------------------- 
 [PORYGONZ,1]
