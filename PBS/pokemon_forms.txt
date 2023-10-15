@@ -131,8 +131,6 @@ Abilities = LEVITATE
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
-Type1 = NORMAL
-Type2 = QMARKS
 BaseStats = 85,118,85,102,150,95
 Abilities = ADAPTABILITY
 #------------------------------- 
