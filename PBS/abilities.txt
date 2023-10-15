@@ -1171,9 +1171,9 @@ Description = Changes the weather for a turn before attacking.
 Name = Honor-bound
 Description = User cannot switch-out when below half health.
 #-------------------------------
-[ENIGMIZE]
-Name = Enigmize
-Description = All the Pokémon's moves become the ??? type.
+[OVERWRITE]
+Name = Overwrite
+Description = The user's first move determines the user's type.
 #-------------------------------
 [SPOOPERAURA]
 Name = Spooper Aura

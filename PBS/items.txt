@@ -6462,7 +6462,7 @@ Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have CHIMECHO hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [PORYGONZITE]
-Name = Porygon-Zite
+Name = Porygon-Zite # this name is horrible
 NamePlural = Porygon-Zites
 Pocket = 1
 Price = 0

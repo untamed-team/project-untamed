@@ -134,7 +134,7 @@ MegaStone = PORYGONZITE
 Type1 = NORMAL
 Type2 = QMARKS
 BaseStats = 85,118,85,102,150,95
-Abilities = ENIGMIZE
+Abilities = OVERWRITE
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
