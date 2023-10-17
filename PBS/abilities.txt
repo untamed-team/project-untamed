@@ -1157,11 +1157,11 @@ Description = Boosts Fire-type moves in Hail.
 #-------------------------------
 [THERMOCOOL]
 Name = Thermo Cool
-Description = Boosts Ice-type moves in Sun or Harsh Sun.
+Description = Boosts Ice-type moves in sunshine.
 #-------------------------------
 [HEALINGSUN]
 Name = Healing Sun
-Description = Gradually regains HP in Sun or Harsh Sun.
+Description = Gradually regains HP in sunshine.
 #-------------------------------
 [PRESAGE]
 Name = Presage
