@@ -6461,13 +6461,13 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have CHIMECHO hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[PORYGONZITE]
-Name = Porygon-Zite # this name is horrible
-NamePlural = Porygon-Zites
+[PORYGONZITE] # dont change this
+Name = Corrupted Cartridge
+NamePlural = Corrupted Cartridges
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have PORYGONZ hold it, and it will be able to Mega Evolve.
+Description = A horribly buggy and unstable program. Have PORYGONZ install it, and it will unleash its true potential.
 #-------------------------------
 [MAGCARGOITE]
 Name = Magcargoite
