@@ -147,8 +147,8 @@ Abilities = REGENERATOR
 [SPECTERZAL,1]
 FormName = Mega Specterzal
 MegaStone = SPECTERZITE
-BaseStats = 120,152,71,96,123,95
-Abilities = CURSEDBODY
+BaseStats = 120,145,86,96,115,95
+Abilities = TOUGHCLAWS
 #------------------------------- 
 [TREVENANT,1]
 FormName = Mega Trevenant
