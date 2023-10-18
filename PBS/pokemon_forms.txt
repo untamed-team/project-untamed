@@ -131,8 +131,6 @@ Abilities = LEVITATE
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
-Type1 = NORMAL
-Type2 = QMARKS
 BaseStats = 85,118,85,102,150,95
 Abilities = OVERWRITE
 #------------------------------- 
@@ -154,7 +152,7 @@ Abilities = TOUGHCLAWS
 FormName = Mega Trevenant
 MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
-Abilities = GRASSYSURGE
+Abilities = TRIAGE
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
