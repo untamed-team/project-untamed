@@ -110,7 +110,7 @@ Description = Contact may poison or cause paralysis or sleep.
 #-------------------------------
 [SYNCHRONIZE]
 Name = Synchronize
-Description = Passes a burn, poison, or paralysis to the foe.
+Description = Passes status problems to the foe.
 #-------------------------------
 [CLEARBODY]
 Name = Clear Body
@@ -448,7 +448,7 @@ Description = Reduces damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
-Description = Temporarily halves Attack and Speed.
+Description = Temporarily weakens Attack and Speed.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
@@ -1101,7 +1101,7 @@ Description = Boosts power and critical-hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises Speed up to 1.5x after making a direct hit.
+Description = Raises Speed after making a direct hit just once.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
@@ -1133,7 +1133,7 @@ Description = Contact forces the opponent to switch.
 #-------------------------------
 [TILEWORKER]
 Name = Tileworker
-Description = Removes all hazards from its side upon entry.
+Description = Removes all hazards from its side upon entry, once.
 #-------------------------------
 [TRICKSTER]
 Name = Trickster
@@ -1157,13 +1157,29 @@ Description = Boosts Fire-type moves in Hail.
 #-------------------------------
 [THERMOCOOL]
 Name = Thermo Cool
-Description = Boosts Ice-type moves in Sun or Harsh Sun.
+Description = Boosts Ice-type moves in sunshine.
 #-------------------------------
 [HEALINGSUN]
 Name = Healing Sun
-Description = Gradually regains HP in Sun or Harsh Sun.
+Description = Gradually regains HP in sunshine.
 #-------------------------------
 [PRESAGE]
 Name = Presage
 Description = Changes the weather for a turn before attacking.
+#-------------------------------
+[HONORBOUND]
+Name = Honor-bound
+Description = User cannot switch-out when below half health.
+#-------------------------------
+[OVERWRITE]
+Name = Overwrite
+Description = The user's first move determines the user's type.
+#-------------------------------
+[SPOOPERAURA]
+Name = Spooper Aura
+Description = Powers up each Pokémon's Ghost-type moves.
+#-------------------------------
+[ARTILLERIST]
+Name = Artillerist
+Description = Powers up ball and bomb moves.
 #-------------------------------

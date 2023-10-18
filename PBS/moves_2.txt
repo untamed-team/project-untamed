@@ -16,7 +16,7 @@ Description = Using its tough and impressive horn, the user rams into the target
 Name = Attack Order
 Type = BUG
 Category = Physical
-Power = 90
+Power = 95
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
@@ -1313,7 +1313,7 @@ Description = The target is punched with an electrified fist. It may also leave 
 Name = Rising Voltage
 Type = ELECTRIC
 Category = Special
-Power = 70
+Power = 60
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -1829,7 +1829,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove,CannotMetronome
+Flags = CanProtect,CanMirrorMove,CannotMetronome,GravityBoosted
 Description = The user attacks wildly with its thick leek. The user can't move on the next turn.
 #-------------------------------
 [HIGHJUMPKICK]
@@ -2814,7 +2814,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = PowerHigherWithUserHeavierThanTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize
+Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
 Description = The user slams the foe with its flaming body. The heavier the user is, the greater the damage.
 #-------------------------------
 [SUNNYDAY]
@@ -3610,14 +3610,14 @@ Description = A column of grass hits the foes. When used with its water equivale
 Name = Grav Apple
 Type = GRASS
 Category = Physical
-Power = 80
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = LowerTargetDefense1PowersUpInGravity
-Flags = CanProtect,CanMirrorMove,CannotMetronome
+FunctionCode = LowerTargetDefense1
+Flags = CanProtect,CanMirrorMove,CannotMetronome,GravityBoosted
 EffectChance = 100
-Description = The user inflicts damage by dropping an apple from high above. This also lowers the target's Defense.
+Description = The user drops an apple from high above. This also lowers the target's Defense. Boosted by Gravity.
 #-------------------------------
 [SEEDBOMB]
 Name = Seed Bomb
@@ -3659,7 +3659,7 @@ Description = The user drains the foe's energy with its horns. The user's HP is 
 Name = Grassy Glide
 Type = GRASS
 Category = Physical
-Power = 70
+Power = 55
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -4356,7 +4356,7 @@ Target = AllNearFoes
 FunctionCode = FreezeTargetAlwaysHitsInHail
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = A howling blizzard is summoned to strike the opposing team. It may also freeze them solid.
+Description = A howling blizzard is summoned to strike the opposing team. It may also give them frostbite.
 #-------------------------------
 [ICEHAMMER]
 Name = Ice Hammer
@@ -4381,7 +4381,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The target is struck with an icy-cold beam of energy. It may also freeze the target solid.
+Description = The target is struck with an icy-cold beam of energy. It may also give the target frostbite.
 #-------------------------------
 [ICICLECRASH]
 Name = Icicle Crash
@@ -4392,7 +4392,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,GravityBoosted
 EffectChance = 30
 Description = The user attacks by harshly dropping an icicle onto the foe. It may also make the target flinch.
 #-------------------------------
@@ -4407,7 +4407,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = Contact,CanProtect,CanMirrorMove,Punching
 EffectChance = 10
-Description = The target is punched with an icy fist. It may also leave the target frozen.
+Description = The target is punched with an icy fist. It may also leave the target with a frostbite.
 #-------------------------------
 [FREEZEDRY]
 Name = Freeze-Dry
@@ -4420,7 +4420,7 @@ Target = NearOther
 FunctionCode = FreezeTargetSuperEffectiveAgainstWater
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user rapidly cools the target. This may freeze the target. Is super-effective on Water types.
+Description = The user rapidly cools the target. This may give frostbite to the target. Is super-effective on Water types.
 #-------------------------------
 [AURORABEAM]
 Name = Aurora Beam
@@ -4459,7 +4459,7 @@ Target = NearOther
 FunctionCode = FreezeFlinchTarget
 Flags = Contact,CanProtect,CanMirrorMove,Biting
 EffectChance = 100
-Description = The user bites with cold-infused fangs. It may also make the target flinch or leave it frozen.
+Description = The user bites with cold-infused fangs. It may also make the target flinch or leave it with frostbite.
 #-------------------------------
 [AVALANCHE]
 Name = Avalanche
@@ -4471,7 +4471,7 @@ TotalPP = 10
 Target = NearOther
 Priority = -4
 FunctionCode = DoublePowerIfUserLostHPThisTurn
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,GravityBoosted
 Description = An attack move that inflicts double the damage if the user has been hurt by the foe in the same turn.
 #-------------------------------
 [FROSTBREATH]
@@ -4523,7 +4523,7 @@ Target = AllNearFoes
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user attacks with a chilling gust of powdery snow. It may also freeze the targets.
+Description = The user attacks with a chilling gust of powdery snow. It may also give the targets frostbite.
 #-------------------------------
 [ICEBALL]
 Name = Ice Ball
@@ -4863,7 +4863,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = ParalyzeTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize
+Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
 EffectChance = 30
 Description = The user drops onto the target with its full body weight. It may leave the target with paralysis.
 #-------------------------------
@@ -4952,7 +4952,7 @@ Target = NearOther
 FunctionCode = ParalyzeBurnOrFreezeTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 20
-Description = The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or freeze the target.
+Description = The user strikes with a simultaneous three-beam attack. May also paralyze, burn, or frostbite the target.
 #-------------------------------
 [CRUSHCLAW]
 Name = Crush Claw
@@ -7089,7 +7089,7 @@ Target = NearOther
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 10
-Description = The user shoots its psychic power from its eyes to attack. This may also leave the target frozen.
+Description = The user shoots its psychic power from its eyes to attack. This may also leave the target with a frostbite.
 #-------------------------------
 [PSYCHIC]
 Name = Psychic
@@ -7132,7 +7132,7 @@ Description = The user attacks with tremendous psychic power. This also removes 
 Name = Expanding Force
 Type = PSYCHIC
 Category = Special
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -7853,7 +7853,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = HitsTargetInSkyGroundsTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,GravityBoosted
 Description = The user throws a stone or projectile to attack. A flying Pokémon will fall to the ground when hit.
 #-------------------------------
 [ACCELEROCK]
@@ -8038,7 +8038,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = RaiseUserAttack1
-Flags = Contact,CanProtect,CanMirrorMove,Punching
+Flags = Contact,CanProtect,CanMirrorMove,Punching,GravityBoosted
 EffectChance = 20
 Description = The target is hit with a hard punch fired like a meteor. It may also raise the user's Attack.
 #-------------------------------
@@ -8203,7 +8203,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = PowerHigherWithUserHeavierThanTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize
+Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
 Description = The user slams into the foe with its heavy body. The heavier the user, the greater the damage.
 #-------------------------------
 [METALBURST]
@@ -8716,47 +8716,6 @@ Target = User
 FunctionCode = RaiseUserDefense1
 Description = The user withdraws its body into its hard shell, raising its Defense stat.
 ################### New Moves ###################
-[SLIMESHOT]
-Name = Slime Shot
-Type = GROUND
-Category = Special
-Power = 85
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-Priority = 0
-FunctionCode = 044
-Flags = CanProtect,CanMirrorMove,Bomb
-EffectChance = 30
-Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
-#-------------------------------
-[ZEALOUSDANCE]
-Name = Zealous Dance
-Type = FIRE
-Category = Special
-Power = 70
-Accuracy = 100
-TotalPP = 5
-Target = NearOther
-Priority = 0
-FunctionCode = PowerUpDragonMove
-Flags = CanProtect,CanMirrorMove,Dance
-EffectChance = 100
-Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
-#-------------------------------
-[PSYSONIC]
-Name = Psysonic
-Type = PSYCHIC
-Category = Special
-Power = 90
-Accuracy = 0
-TotalPP = 10
-Target = AllNearFoes
-Priority = 0
-FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Sound
-EffectChance = 0
-Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
 #-------------------------------
 [PSYCRUSH]
 Name = Psycrush
@@ -8843,7 +8802,7 @@ Description = The user eats its held Berry, then sharply raises its Defense stat
 Name = Haunt
 Type = GHOST
 Category = Physical
-Power = 85
+Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -8956,11 +8915,10 @@ Category = Special
 Power = 95
 Accuracy = 100
 TotalPP = 15
-Target = AllNearFoes
-Priority = 0
+Target = NearOther
 FunctionCode = None
-Flags = CanProtect
-Description = The user attacks by scattering a cloud of coarse debris.
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Description = The user attacks by scattering a cloud of coarse debris. Critical hits land more easily.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth
@@ -8978,17 +8936,27 @@ Description = The target is bitten with sweet and sharp fangs. It may make the t
 #-------------------------------
 [SUPERNOVA]
 Name = Supernova
-Type = ROCK
+Type = FIRE
 Category = Physical
-Power = 170
+Power = 80
 Accuracy = 100
 TotalPP = 5
-Target = AllNearOthers
-Priority = 0
+Target = AllNearFoes
 FunctionCode = Supernova
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,CannotMetronome
-EffectChance = 0
-Description = This move is Rock-type and Fire-type simultaneously. It damages the user heavily.
+Flags = GravityBoosted
+Description = big kaboom first turn
+#-----------------
+[SUPERNOVA_ALT]
+Name = Supernova
+Type = ROCK
+Category = Physical
+Power = 80
+Accuracy = 0
+TotalPP = 0
+Target = AllNearFoes
+FunctionCode = Supernova
+Flags = GravityBoosted
+Description = sharp rocks 2 turns next
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
@@ -9197,3 +9165,44 @@ FunctionCode = DoubleDamageIfTargetHasChoiceItem
 Flags = CanProtect,CanMirrorMove
 Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
 #-------------------------------
+[SLIMESHOT]
+Name = Failsafe Slime Shot
+Type = GROUND
+Category = Special
+Power = 85
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+Priority = 0
+FunctionCode = 044
+Flags = CanProtect,CanMirrorMove,Bomb
+EffectChance = 10
+Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
+#-------------------------------
+[ZEALOUSDANCE]
+Name = Failsafe Zealous Dance
+Type = FIRE
+Category = Special
+Power = 70
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 0
+FunctionCode = PowerUpDragonMove
+Flags = CanProtect,CanMirrorMove,Dance
+EffectChance = 100
+Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
+#-------------------------------
+[PSYSONIC]
+Name = Failsafe Psysonic
+Type = PSYCHIC
+Category = Special
+Power = 90
+Accuracy = 0
+TotalPP = 10
+Target = AllNearFoes
+Priority = 0
+FunctionCode = None
+Flags = CanProtect,CanMirrorMove,Sound
+EffectChance = 0
+Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
