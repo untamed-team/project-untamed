@@ -1179,3 +1179,7 @@ Description = The user's first move determines the user's type.
 Name = Spooper Aura
 Description = Powers up each Pokémon's Ghost-type moves.
 #-------------------------------
+[ARTILLERIST]
+Name = Artillerist
+Description = Powers up ball and bomb moves.
+#-------------------------------
