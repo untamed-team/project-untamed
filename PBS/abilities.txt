@@ -710,9 +710,9 @@ Description = Changes between Blade and Shield Forme with attacks.
 Name = Gale Wings
 Description = Flying-type moves gain priority when its HP is full.
 #-------------------------------
-[ARTILLERIST]
-Name = Artillerist
-Description = Powers up ball and bomb moves.
+[MEGALAUNCHER]
+Name = Mega Launcher
+Description = Powers up aura, pulse, ball, and bomb moves.
 #-------------------------------
 [GRASSPELT]
 Name = Grass Pelt
