@@ -4222,7 +4222,7 @@ Weight = 1.8
 Color = Blue
 Shape = Quadruped
 Category = Trance
-Pokedex = 
+Pokedex = This nocturnal Pokemon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
 WildItemUncommon = 
 Evolutions = LUMILIKO,LevelNight,29
 #-------------------------------
