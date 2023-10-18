@@ -9129,7 +9129,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = OverrideTargetStatusWithPoison
 Flags = CanProtect,CanMirrorMove
-Description = After doing damage, the target is left poisoned. Regardless if the target was already statused.
+Description = After doing damage, the target is left poisoned regardless of other status effects.
 #-------------------------------
 [TOXIRAVAGE]
 Name = Venom Strike
