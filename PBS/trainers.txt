@@ -194,8 +194,9 @@ Pokemon = PORYGONZ,10
 [HEXMANIAC,pory,100]
 LoseText = kaboom
 Gimmick = StatDropImmunity
-Pokemon = PORYGONZ,10
-	IV  = 10,10,10,10,10,10
-	EV  = 0,0,0,0,0,0
-	AAM = true
+Pokemon = BEAKRAFT,10
 	MEM = true
+	Gender = Male
+Pokemon = BEAKRAFT,10
+	MEM = true
+	Gender = Female
