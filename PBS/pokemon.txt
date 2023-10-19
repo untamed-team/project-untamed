@@ -3667,7 +3667,7 @@ Pokedex = This incredibly rare Pokémon resides in the shallow waters where the 
 [MELUMOURN]
 Name = Melumourn
 Types = WATER,DARK
-BaseStats = 70,110,80,120,125,75
+BaseStats = 70,125,80,105,125,75
 GenderRatio = Genderless
 GrowthRate = Fluctuating
 BaseExp = 257
