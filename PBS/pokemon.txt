@@ -1124,7 +1124,7 @@ Habitat = Grassland
 Category = Kernel Cluster
 Pokedex = When multiple Zea-Zaya band together to live in a colony, they create a Zhusk. In a pinch, they will launch members of the colony at foes as a form of attack.
 Generation = 9
-Evolutions = MAYZMEN,Item,SUNSTONE,BLAZEA,Item,FIRESTONE
+Evolutions = MAYZMEN,ItemLevel35,SUNSTONE,BLAZEA,ItemLevel35,FIRESTONE
 #-------------------------------
 [MAYZMEN]
 Name = Mayzmen
