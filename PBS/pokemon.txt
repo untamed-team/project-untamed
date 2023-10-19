@@ -3713,7 +3713,7 @@ Pokedex = siren 3
 [MELUMYST]
 Name = Melumyst
 Types = WATER,ICE
-BaseStats = 125,85,115,55,90,110
+BaseStats = 125,90,115,55,85,110
 GenderRatio = Genderless
 GrowthRate = Fluctuating
 BaseExp = 257
