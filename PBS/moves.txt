@@ -8959,7 +8959,7 @@ Priority = 0
 FunctionCode = LowerTargetSpeed1
 Flags = CanProtect
 EffectChance = 10
-Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
+Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon. 
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth

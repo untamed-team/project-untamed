@@ -6661,3 +6661,12 @@ Pocket = 1
 Price = 4000
 Flags = Fling_25
 Description = A held item that makes healing more powerful, but doubles PP consumption.
+#-------------------------------
+[CHAOSCODEX]
+Name = Chaos Codex
+NamePlural = Chaos Codex
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.
