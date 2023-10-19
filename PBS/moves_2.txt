@@ -110,7 +110,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user attacks with a sinister beam of light. It may also confuse the target.
+Description = The user attacks with a sinister beam of light. It may also leave the target dizzy.
 #-------------------------------
 [SKITTERSMACK]
 Name = Skitter Smack
@@ -720,7 +720,7 @@ TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetSpAtk1ConfuseTarget
 Flags = CanProtect,CanMirrorMove
-Description = Flattery is used to confuse the target. However, it also raises the target's Sp. Atk stat.
+Description = Flattery is used to leave the target with dizziness. However, it also raises the target's Sp. Atk stat.
 #-------------------------------
 [HONECLAWS]
 Name = Hone Claws
@@ -1604,7 +1604,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 20
-Description = The user attacks the target by emitting steam. This may also confuse the target.
+Description = The user attacks the target by emitting steam. This may also leave the target dizzy.
 #-------------------------------
 [DAZZLINGGLEAM]
 Name = Dazzling Gleam
@@ -1805,7 +1805,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove
-Description = The user kisses the target with a sweet, angelic cuteness that causes confusion.
+Description = The user kisses the target with a sweet, angelic cuteness that causes dizziness.
 #-------------------------------
 [FOCUSPUNCH]
 Name = Focus Punch
@@ -1904,7 +1904,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = Contact,CanProtect,CanMirrorMove,Punching
 EffectChance = 100
-Description = The user punches the target with full, concentrated power. It confuses the target if it hits.
+Description = The user punches the target with full, concentrated power. It leaves the target dizzy if it hits.
 #-------------------------------
 [FLYINGPRESS]
 Name = Flying Press
@@ -2885,7 +2885,7 @@ TotalPP = 10
 Target = Other
 FunctionCode = ConfuseTargetAlwaysHitsInRainHitsTargetInSky
 Flags = CanProtect,CanMirrorMove
-EffectChance = 30
+EffectChance = 1 # too lazy to recreate a hurricane without confusion
 Description = The user wraps its foe in a fierce wind that flies up into the sky. It may also confuse the foe.
 #-------------------------------
 [AEROBLAST]
@@ -2986,7 +2986,7 @@ Target = Other
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove,Sound
 EffectChance = 100
-Description = The user attacks using a sound wave based on words it has learned. It may also confuse the target.
+Description = The user attacks using a sound wave based on words it has learned. It will also leave the target dizzy.
 #-------------------------------
 [AERIALACE]
 Name = Aerial Ace
@@ -3369,17 +3369,17 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove
-Description = The target is exposed to a sinister ray that triggers confusion.
+Description = The target is exposed to a sinister ray that triggers dizziness.
 #-------------------------------
 [CURSE]
 Name = Curse
-Type = GHOST
+Type = QMARKS
 Category = Status
 Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = CurseTargetOrLowerUserSpd1RaiseUserAtkDef1
-Description = A move that works differently for the Ghost type than for all the other types.
+Description = The user yells naughty words. Raises the user Atk and Defense by 1, lowers the user Speed by 1.
 #-------------------------------
 [DESTINYBOND]
 Name = Destiny Bond
@@ -4828,7 +4828,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 20
-Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
+Description = The user attacks the target by smashing into it with incredible force. It may also dizzy the target.
 #-------------------------------
 [TAKEDOWN]
 Name = Take Down
@@ -5003,7 +5003,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = Contact,CanProtect,CanMirrorMove,Punching
 EffectChance = 20
-Description = The target is hit with rhythmically launched punches that may also leave it confused.
+Description = The target is hit with rhythmically launched punches that may also leave it dizzy.
 #-------------------------------
 [FACADE]
 Name = Facade
@@ -6508,7 +6508,7 @@ TotalPP = 20
 Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove,Sound
-Description = The user generates odd sound waves from its body. It may confuse the target.
+Description = The user generates odd sound waves from its body. It may dizzy the target.
 #-------------------------------
 [SWAGGER]
 Name = Swagger
@@ -6519,7 +6519,7 @@ TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetAttack2ConfuseTarget
 Flags = CanProtect,CanMirrorMove
-Description = The user enrages and confuses the target. However, it also sharply raises the target's Attack stat.
+Description = The user enrages and dizzies the target. However, it also sharply raises the target's Attack stat.
 #-------------------------------
 [SWALLOW]
 Name = Swallow
@@ -6594,7 +6594,7 @@ TotalPP = 20
 Target = AllNearOthers
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove,Dance
-Description = The user performs a wobbly dance that confuses the Pokémon around it.
+Description = The user performs a wobbly dance that dizzies the Pokémon around it.
 #-------------------------------
 [TICKLE]
 Name = Tickle
@@ -7239,7 +7239,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The target is attacked with a peculiar ray. It may also cause confusion.
+Description = The target is attacked with a peculiar ray. It may also cause dizziness.
 #-------------------------------
 [HEARTSTAMP]
 Name = Heart Stamp
@@ -7265,7 +7265,7 @@ Target = NearOther
 FunctionCode = ConfuseTarget
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The target is hit by a weak telekinetic force. It may also leave the target confused.
+Description = The target is hit by a weak telekinetic force. It may also leave the target dizzy.
 #-------------------------------
 [STOREDPOWER]
 Name = Stored Power
@@ -8559,12 +8559,11 @@ Type = WATER
 Category = Special
 Power = 60
 Accuracy = 100
-TotalPP = 20
+TotalPP = 15
 Target = Other
-FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Pulse
-EffectChance = 20
-Description = The user attacks the target with a pulsing blast of water. It may also confuse the target.
+FunctionCode = None
+Flags = CanProtect,CanMirrorMove,Pulse,HighCriticalHitRate
+Description = The user attacks the target with a pulsing blast of water. High critical-hit rate.
 #-------------------------------
 [AQUAJET]
 Name = Aqua Jet
@@ -8802,7 +8801,7 @@ Description = The user eats its held Berry, then sharply raises its Defense stat
 Name = Haunt
 Type = GHOST
 Category = Physical
-Power = 85
+Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther

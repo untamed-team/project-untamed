@@ -6419,7 +6419,7 @@ NamePlural = Beheeyemites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have BEHEEYEM hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Beheeyem hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [GOLURKITE]
 Name = Golurkite
@@ -6427,7 +6427,7 @@ NamePlural = Golurkites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have GOLURK hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Golurk hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [HAWLUCHITE]
 Name = Hawluchite
@@ -6435,7 +6435,7 @@ NamePlural = Hawluchites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have HAWLUCHA hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Hawlucha hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [CACTURNITE]
 Name = Cacturnite
@@ -6443,7 +6443,7 @@ NamePlural = Cacturnites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have CACTURNE hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Cacturne hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [FROSMOTHITE]
 Name = Frosmothite
@@ -6451,31 +6451,31 @@ NamePlural = Frosmothites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have Skarmory hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Frosmoth hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [CHIMECHITE]
-Name = Chimechite
-NamePlural = Chimechites
+Name = Copper Bell
+NamePlural = Copper Bells
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have CHIMECHO hold it, and it will be able to Mega Evolve.
+Description = A beautiful bell with a mysterious Mega Stone inside. Have Chimecho hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[PORYGONZITE]
-Name = Porygon-Zite # this name is horrible
-NamePlural = Porygon-Zites
+[PORYGONZITE] # dont change this
+Name = Corrupted Cartridge
+NamePlural = Corrupted Cartridges
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have PORYGONZ hold it, and it will be able to Mega Evolve.
+Description = A strange cartridge with a mysterious Mega Stone inside. Have Porygon-Z hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [MAGCARGOITE]
-Name = Magcargoite
-NamePlural = Magcargoites
+Name = Magcargite
+NamePlural = Magcargites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have MAGCARGO hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Magcargo hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [SPECTERZITE]
 Name = Specterzite
@@ -6483,7 +6483,7 @@ NamePlural = Specterzites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have SPECTERZAL hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Specterzal hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [TREVENANTITE]
 Name = Trevenantite
@@ -6491,7 +6491,7 @@ NamePlural = Trevenantites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have TREVENANT hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Trevenant hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [M_ROSERADITE]
 Name = Roseradite
@@ -6499,7 +6499,7 @@ NamePlural = Roseradites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have M_ROSERADE hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Roserade hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LUPACABRITE]
 Name = Lupacabrite
@@ -6507,7 +6507,7 @@ NamePlural = Lupacabrites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have LUPACABRA hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Lupacabra hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ZOLUPINEITE]
 Name = Zolupinite
@@ -6515,7 +6515,7 @@ NamePlural = Zolupinites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have ZOLUPINE hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Zolupine hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ROADRAPTORITE]
 Name = Roadraptorite
@@ -6523,7 +6523,7 @@ NamePlural = Roadraptorites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have ROADRAPTOR hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Roadraptor hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [FRIZZARDITE]
 Name = Frizzardite
@@ -6531,7 +6531,7 @@ NamePlural = Frizzardites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have FRIZZARD hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Frizzard hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ZARCOILITE]
 Name = Zarcoilite
@@ -6539,7 +6539,7 @@ NamePlural = Zarcoilites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have ZARCOIL hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Zarcoil hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BEAKRAFTITE]
 Name = Beakraftite
@@ -6547,7 +6547,7 @@ NamePlural = Beakraftites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have BEAKRAFT hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Beakraft hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LAGUNITE]
 Name = Lagunite
@@ -6555,15 +6555,15 @@ NamePlural = Lagunites
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have LAGUNA hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Laguna hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LEDINITE]
-Name = Ledinite
-NamePlural = Ledinite
+Name = Ledianite
+NamePlural = Ledianite
 Pocket = 1
 Price = 0
 Flags = Fling_30
-Description = One of a variety of mysterious Mega Stones. Have LEDIAN hold it, and it will be able to Mega Evolve.
+Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BERRYPOTS]
 Name = Berry Pot
@@ -6661,3 +6661,12 @@ Pocket = 1
 Price = 4000
 Flags = Fling_25
 Description = A held item that makes healing more powerful, but doubles PP consumption.
+#-------------------------------
+[CHAOSCODEX]
+Name = Chaos Codex
+NamePlural = Chaos Codex
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.

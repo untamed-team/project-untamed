@@ -8959,7 +8959,7 @@ Priority = 0
 FunctionCode = LowerTargetSpeed1
 Flags = CanProtect
 EffectChance = 10
-Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
+Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon. 
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth
@@ -9129,7 +9129,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = OverrideTargetStatusWithPoison
 Flags = CanProtect,CanMirrorMove
-Description = After doing damage, the target is left poisoned. Regardless if the target was already statused.
+Description = After doing damage, the target is left poisoned regardless of other status effects.
 #-------------------------------
 [TOXIRAVAGE]
 Name = Venom Strike
