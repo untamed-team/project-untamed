@@ -2175,7 +2175,7 @@ WildItemUncommon = QUICKCLAW
 [BOWLLO]
 Name = Bowllo
 Types = STEEL
-BaseStats = 50,65,75,70,30,45
+BaseStats = 70,65,80,70,30,60
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 66
@@ -2200,7 +2200,7 @@ Evolutions = DUPEDILLO,Level,42
 [DUPEDILLO]
 Name = Dupedillo
 Types = STEEL
-BaseStats = 110,85,140,85,50,50
+BaseStats = 110,85,140,85,50,70
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 172
