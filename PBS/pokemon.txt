@@ -3477,7 +3477,7 @@ Evolutions = MUDSMACHE,HappinessLevel,30
 [MUDSMACHE]
 Name = Mudsmaché
 Types = FAIRY,GROUND
-BaseStats = 85,60,90,35,100,135
+BaseStats = 85,55,90,35,100,135
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 175
