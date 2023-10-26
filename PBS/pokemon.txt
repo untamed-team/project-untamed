@@ -2200,7 +2200,7 @@ Evolutions = DUPEDILLO,Level,42
 [DUPEDILLO]
 Name = Dupedillo
 Types = STEEL
-BaseStats = 110,85,140,85,50,70
+BaseStats = 110,85,105,85,50,85
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 172
