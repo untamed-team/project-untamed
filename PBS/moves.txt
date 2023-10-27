@@ -8814,15 +8814,15 @@ Description = The user launches a kick with a high critical-hit ratio. It may al
 Name = Scouring Winds
 Type = FLYING
 Category = Special
-Power = 85
-Accuracy = 100
+Power = 95
+Accuracy = 90
 TotalPP = 10
-Target = NearOther
+Target = AllNearFoes
 Priority = 0
 FunctionCode = LowerTargetSpDef1
 Flags = CanProtect
 EffectChance = 10
-Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
+Description = The user whips up brutal winds around the opposing team. This may also lower the targets' Sp. Def stat.
 #-------------------------------
 [STUFFCHEEKS]
 Name = Stuff Cheeks
