@@ -1,0 +1,5 @@
+Name      = Time and Weather HUD Addon
+Version   = 1.0
+Essentials = 20.1
+Website   = None
+Credits   = Gardenette
