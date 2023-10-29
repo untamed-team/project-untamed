@@ -50,7 +50,7 @@ class DateAndTimeHud < Component
 	  time = 3
 	end
 
-	if time > 0
+	if time >= 0
 	  imagepos.push(["Graphics/Pictures/Voltseon's Pause Menu/weather", Graphics.width/2 - textwidth - 36, 42, 0, 24 * time, 24, 24])
 	end
 	
@@ -75,7 +75,7 @@ class DateAndTimeHud < Component
 	end
 
 	weather = 1
-	if weather > 0
+	if weather >= 0
 	  imagepos.push(["Graphics/Pictures/Voltseon's Pause Menu/weather", Graphics.width/2 - textwidth - 64, 42, 0, 24 * weather, 24, 24])
 	end
 	
