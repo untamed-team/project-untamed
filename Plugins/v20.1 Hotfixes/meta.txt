@@ -1,0 +1,120 @@
+﻿Name       = v20.1 Hotfixes
+Version    = 1.0.7
+Essentials = 20.1
+Conflicts  = v19 Hotfixes
+Conflicts  = v19.1 Updates
+Conflicts  = v20 Hotfixes
+Website    = https://github.com/Maruno17/pokemon-essentials
+Credits    = Maruno
+#====================================================================
+# Change log
+#====================================================================
+#
+# 1.0.0:
+# - Fixed Heavy Ball's catch rate calculation being inaccurate.
+# - Added Obstruct to the blacklists of Assist and Copycat.
+# - Fixed mispositioning of text in Debug features that edit Game
+#   Switches and Game Variables.
+# - Fixed the "See ya!" option in the PC menu not working properly.
+# - Fixed Pokémon icons sometimes disappearing in Pokémon storage
+#   screen.
+# - Fixed playing the credits/changing $scene leaving a ghost image
+#   of the old map behind.
+#
+# 1.0.1:
+#
+# - Fixed crash when the Compiler rewrites a door event.
+# - Fixed the "Withdraw Pokémon" and "Deposit Pokémon" not working,
+#   caused by the previous version of this plugin.
+# - Fixed Rare Candy not reviving a fainted Shedinja.
+# - Fixed fainted Pokémon reviving if they evolve.
+# - Fixed error messages appearing in the console because of some
+#   script switches in the "Switches" debug feature.
+#
+# 1.0.2:
+#
+# - Fixed battle rule "forceCatchIntoParty" being circumventable.
+# - Fixed wrong message when sending a party Pokémon to storage and
+#   replacing it with a caught Pokémon.
+# - Fixed typo in Grassy Glide's effect.
+# - Fixed some special battle intro animations not playing when they
+#   should.
+# - Fixed SystemStackError when two events on connected maps have
+#   their backs to the other map.
+# - Fixed error when getting terrain tag when the player moves
+#   between connected maps.
+#
+# 1.0.3:
+#
+# - Fixed Eerie Spell's effect working like a status move.
+# - Fixed play time carrying over to new games.
+# - Fixed being unable to set the player's movement speed during a
+#   move route.
+# - Fixed crash when ending a Bug Catching Contest.
+#
+# 1.0.4:
+#
+# - Fixed error when shifting Pokémon at the end of a battle round.
+# - Fixed Giratina's form code crashing if the current map doesn't
+#   have metadata.
+# - Fixed item sell prices being 25% of the buy prices rather than
+#   50%.
+# - Fixed bugs when the AI determines the best replacement Pokémon to
+#   switch into.
+# - The advanced battle-starting Debug functions now run
+#   encounter/trainer modifier code on the Pokémon/trainers.
+# - Fixed having no Pokémon in your party making the cursor not work
+#   as expected in the party screen.
+# - You can now reset a Pokémon's form to 0 in the Pokémon Debug menu
+#   if that Pokémon only has one defined form but its form is not 0.
+#
+# 1.0.5:
+#
+# - Fixed fully grown berry plants looking like sprouts upon entering
+#   the map.
+# - Fixed def pbShowCommandsWithHelp not properly deactivating
+#   showing a message window if it created one.
+# - Properly fixed Eerie Spell's effect working like a status move.
+# - Fixed text underline/strikethrough lines being mispositioned.
+#   Also added shadows to them.
+# - Fixed Flame Orb/Toxic Orb being able to replace an existing
+#   status problem.
+# - Fixed being able to interact with a follower that is beneath the
+#   player.
+# - Fixed Pastel Veil not providing poison immunity to allies, and
+#   not healing the bearer if it becomes poisoned anyway.
+# - Fixed Shadow Pokémon still knowing some of their original moves
+#   after being created.
+# - Fixed the Interpreter not resetting if the game was saved in the
+#   middle of an event and then you start a new game.
+# - Fixed priority 1 tiles appearing below the player at larger
+#   screen sizes.
+# - Fixed ability inheritance when breeding.
+# - Fixed crash when pressing the Action button in the Debug function
+#   "Roaming Pokémon".
+# - Fixed roaming Pokémon not remembering whether they have been
+#   caught.
+#
+# 1.0.6:
+#
+# - Fixed bug introduced by a change in the previous version relating
+#   to text underline/strikethrough lines.
+# - Fixed moves that deal fixed damage showing an effectiveness
+#   message.
+# - Fixed IV inheritance when breeding.
+# - Fixed Chip Away/Darkest Lariat/Sacred Sword not ignoring the
+#   target's evasion.
+# - Fixed entering a map always restarting the BGM if that map's BGM
+#   has a night version, even if it ends up playing the same music.
+#
+# 1.0.7:
+#
+# - Fixed a scrolled screen snapping back to centre on the player as
+#   soon as they move.
+# - Fixed error in battle fight menu when not using graphics for it.
+# - Fixed Liquid Ooze not oozing drained HP if the bearer fainted
+#   from that draining.
+# - Fixed only one IV being inherited due to a held Power item if
+#   both parents are holding different Power items.
+#
+#====================================================================
