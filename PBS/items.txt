@@ -2851,7 +2851,7 @@ Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = Old Chateau's hidden specialty. It heals all the status problems of a single Pokémon.
+Description = Old Chateau's hidden specialty. Can change a Pokémon's Hidden Power type.
 #-------------------------------
 [CASTELIACONE]
 Name = Casteliacone
