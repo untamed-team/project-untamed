@@ -517,7 +517,7 @@ Weight = 10.0
 Color = White
 Shape = HeadArms
 Category = Garden
-Pokedex = Florges are the powerful and benevolent leaders of colonies of Floette. Its subordinates offer up flowers to compete for their leader's approval.
+Pokedex = Often known as the "Lady of Flowers," Florges are powerful and benevolent leaders of Floette colonies. These Floette compete for approval by offering flowers to Florges.
 FormName = Red Flower
 Generation = 6
 #-------------------------------
