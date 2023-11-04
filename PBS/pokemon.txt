@@ -959,7 +959,7 @@ Color = Green
 Shape = Insectoid
 Habitat = WatersEdge
 Category = Water Weed
-Pokedex = These dim-witted but lovable Pokemon are often used as stepping stones by children, allowing them to cross rivers. They don't seem to mind being stepped on.
+Pokedex = These dim-witted but lovable Pokémon are often used as stepping stones by children, allowing them to cross rivers. They don't seem to mind being stepped on.
 Generation = 3
 WildItemUncommon = MENTALHERB
 Evolutions = LOMBRE,Level,14
@@ -1688,7 +1688,7 @@ Weight = 13.0
 Color = Black
 Shape = HeadArms
 Category = Lamp
-Pokedex = Lampent are speculated to be one of the most common Pokemon in the land of the dead. They are able to travel to and from the corporeal world at will.
+Pokedex = Lampent are speculated to be one of the most common Pokémon in the land of the dead. They are able to travel to and from the corporeal world at will.
 Generation = 5
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
@@ -2541,7 +2541,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Mud Puppy
-Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokemon underground.
+Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokémon underground.
 #-------------------------------
 [GUSTEON]
 Name = Gusteon
@@ -2721,7 +2721,7 @@ Color = Blue
 Shape = Bipedal
 Habitat = Urban
 Category = Fisher
-Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokemon in Mazah. 
+Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokémon in Mazah. 
 #-------------------------------
 [BEAKPEEP]
 Name = Beakpeep
@@ -2821,7 +2821,7 @@ Color = Yellow
 Shape = HeadArms
 Habitat = Urban
 Category = Idol
-Pokedex = Xibalbat is a rare and incredibly dangerous Pokemon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
+Pokedex = Xibalbat is a rare and incredibly dangerous Pokémon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
 #-------------------------------
 [TROPIUS]
 Name = Tropius
@@ -2966,7 +2966,7 @@ Weight = 10.4
 Color = Green
 Shape = Quadruped
 Category = Hunger
-Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokemon away from their homes, as they habitually chew inedible objects.
+Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokémon away from their homes, as they habitually chew inedible objects.
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [SUCHOBILE]
@@ -3519,7 +3519,7 @@ Weight = 96.6
 Color = Yellow
 Shape = HeadLegs
 Category = Compass
-Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokemon.
+Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokémon.
 WildItemUncommon = IRONBALL
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
@@ -3544,7 +3544,7 @@ Weight = 230.0
 Color = Yellow
 Shape = HeadArms
 Category = Warrior
-Pokedex = Noseponch's very presence can cause people and pokemon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
+Pokedex = Noseponch's very presence can cause people and Pokémon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
 WildItemUncommon = IRONBALL
 #-------------------------------
 [M_MARACTUS]
@@ -4222,7 +4222,7 @@ Weight = 1.8
 Color = Blue
 Shape = Quadruped
 Category = Trance
-Pokedex = This nocturnal Pokemon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
+Pokedex = This nocturnal Pokémon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
 WildItemUncommon = 
 Evolutions = LUMILIKO,LevelNight,29
 #-------------------------------
@@ -4807,7 +4807,7 @@ Weight = 5.9
 Color = Blue
 Shape = Insectoid
 Category = River Crab
-Pokedex = This blind Pokemon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
+Pokedex = This blind Pokémon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
 Evolutions = VLADIKRAB,Item,DUSKSTONE
 #-------------------------------
 [VLADIKRAB]
@@ -4831,7 +4831,7 @@ Weight = 60.3
 Color = Blue
 Shape = Insectoid
 Category = Pincer
-Pokedex = These Pokemon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
+Pokedex = These Pokémon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
 #-------------------------------
 [ELGYEM]
 Name = Elgyem
