@@ -517,7 +517,7 @@ Weight = 10.0
 Color = White
 Shape = HeadArms
 Category = Garden
-Pokedex = Often known as the "Lady of Flowers," Florges are powerful and benevolent leaders of colonies of Floette who will go on to be Florges themselves one day.
+Pokedex = Often known as the "Lady of Flowers," Florges are powerful and benevolent leaders of Floette colonies. These Floette compete for approval by offering flowers to Florges.
 FormName = Red Flower
 Generation = 6
 #-------------------------------
@@ -724,7 +724,7 @@ Weight = 1.2
 Color = Green
 Shape = Bipedal
 Category = Bud
-Pokedex = Budew helps pollinate flowers used to celebrate and mourn the dead. This tradition makes Budew popular in the Mazah Region.
+Pokedex = Budew help pollinate flowers used to celebrate and mourn the dead. When a Budew in the Mazah region is ready to evolve, its bud emits a supernatural energy.
 Generation = 4
 WildItemUncommon = POISONBARB
 Evolutions = M_ROSELIA,HappinessNight,
@@ -959,7 +959,7 @@ Color = Green
 Shape = Insectoid
 Habitat = WatersEdge
 Category = Water Weed
-Pokedex = These bizarre Pokémon sit around all day. Children like to use them as stepping stones.
+Pokedex = These dim-witted but lovable Pokémon are often used as stepping stones by children, allowing them to cross rivers. They don't seem to mind being stepped on.
 Generation = 3
 WildItemUncommon = MENTALHERB
 Evolutions = LOMBRE,Level,14
@@ -986,7 +986,7 @@ Color = Green
 Shape = Bipedal
 Habitat = WatersEdge
 Category = Jolly
-Pokedex = These Pokémon have learned from humans, adopting some of their dress codes. Lombre's sometimes find work in fashion stores.
+Pokedex = Lombre are considered quite fetching in the Mazah region. Fashion lines have been based on its appearance, and it can often be seen assisting in clothing stores.
 Generation = 3
 WildItemUncommon = MENTALHERB
 Evolutions = LUDICOLO,Item,WATERSTONE
@@ -1013,7 +1013,7 @@ Color = Green
 Shape = Bipedal
 Habitat = WatersEdge
 Category = Carefree
-Pokedex = Ludicolo dance around bodies of water on certain days, seemingly at random. The dance resembles a joyful Mazian dance.
+Pokedex = Ludicolo dances a joyful samba around bodies of water on seemingly random days. Whether the dance originated from Ludicolo or from Mazian humans is unknown.
 Generation = 3
 WildItemUncommon = MENTALHERB
 #-------------------------------
@@ -1070,7 +1070,7 @@ Habitat = WatersEdge
 Category = Whiskers
 WildItemCommon = HEARTSCALE
 WildItemUncommon = HEARTSCALE
-Pokedex = Mysteriously, it can foretell earthquakes. In the daytime, it sleeps in mud at the bottom of a pond. When it awakens, it continually feeds throughout the night.
+Pokedex = Whiscash are known to be playful, often burying themselves in mud. To wash themselves off, they leap into the water, creating a powerful wave.
 Generation = 3
 #-------------------------------
 [ZEAZAYA]
@@ -1250,7 +1250,7 @@ Weight = 10.1
 Color = Purple
 Shape = Quadruped
 Category = Devious
-Pokedex = In this region, Purrloin competes with Techuppi for most popular pet. However, both them and their evolved forms are also known to fight viciously in the wild.
+Pokedex = Purrloin competes with Techuppi for Mazah's most popular pet. When they encounter each other in the wild, they are known to fight viciously.
 Generation = 5
 Evolutions = LIEPARD,Level,20
 #-------------------------------
@@ -1479,7 +1479,7 @@ Color = Black
 Shape = HeadArms
 Habitat = Forest
 Category = Requiem
-Pokedex = Duskull often find it hard to scare Mazian children because of the sugar skull masks they wear for fun. The children usually manage to scare the Duskull instead.
+Pokedex = Duskull often find it hard to scare Mazian children due to their sugar skull resemblance. The children usually manage to scare the Duskull instead.
 Generation = 3
 WildItemUncommon = SPELLTAG
 Evolutions = DUSCLOPS,Level,37
@@ -1506,7 +1506,7 @@ Color = Black
 Shape = Bipedal
 Habitat = Forest
 Category = Beckon
-Pokedex = The body of a Dusclops are thought to contain a void. No scientific tests or humans have survived experiment to find out.
+Pokedex = The body of a Dusclops is thought to contain the perfect environment for harbouring souls. Because of this, the people of the Mazah region deem it as sacred.
 Generation = 3
 WildItemUncommon = SPELLTAG
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
@@ -1532,7 +1532,7 @@ Weight = 106.6
 Color = Black
 Shape = HeadArms
 Category = Gripper
-Pokedex = Due to Mazah's lack of superstitions surrounding death, Dusknoirs are welcomed in towns more-so than other regions. Dusknoirs apparently hate this.
+Pokedex = Due to Mazah's lack of superstitions about death, Dusknoir are adored by townsfolk as shepherds of lost souls. This has given them a friendlier attitude.
 Generation = 4
 WildItemUncommon = SPELLTAG
 #-------------------------------
@@ -1638,7 +1638,7 @@ Weight = 27.3
 Color = Black
 Shape = Winged
 Category = Big Boss
-Pokedex = Honchkrow and their Murkrow flocks compete with Noctavispa to try and control Minimelo colonies, their preferred prey.
+Pokedex = Honchkrow and their underlings compete over territory with Noctavispa to try and control colonies of Minimelo, their preferred prey.
 Generation = 4
 #-------------------------------
 [LITWICK]
@@ -1688,7 +1688,7 @@ Weight = 13.0
 Color = Black
 Shape = HeadArms
 Category = Lamp
-Pokedex = They disguise themselves as real lamps, but one can spot them by examining their "flame".
+Pokedex = Lampent are speculated to be one of the most common Pokémon in the land of the dead. They are able to travel to and from the corporeal world at will.
 Generation = 5
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
@@ -1713,7 +1713,7 @@ Weight = 34.3
 Color = Black
 Shape = HeadArms
 Category = Luring
-Pokedex = Their flames are said to steal souls from humans. They inspired the chandelier and it was even named after them.
+Pokedex =  It's beautiful flame is used to illuminate funerals. The enchanting fire is said to make watchers feel closer to their passed loved one.
 Generation = 5
 #-------------------------------
 [SKIDDO]
@@ -1738,7 +1738,7 @@ Weight = 31.0
 Color = Brown
 Shape = Quadruped
 Category = Mount
-Pokedex = If it has sunshine and water, it doesn't need to eat, because it can generate energy from the leaves on its back.
+Pokedex = Children in the Mazah region are taught to ride Skiddo at a young age, allowing them to safely traverse mountain paths. 
 Generation = 6
 Evolutions = GOGOAT,Level,32
 #-------------------------------
@@ -1763,7 +1763,7 @@ Weight = 91.0
 Color = Brown
 Shape = Quadruped
 Category = Mount
-Pokedex = It can tell how its trainer is feeling by subtle shifts in the grip on its horns. This empathetic sense lets them run as if one being.
+Pokedex = Gogoat can traverse any path, no matter how steep. However, it is recommended that only an experienced trainer should attempt to ride one.
 Generation = 6
 #-------------------------------
 [BUNNELBY]
@@ -2232,8 +2232,8 @@ CatchRate = 255
 Happiness = 70
 Abilities = PICKUP,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,20,POWERGEM,26,ROOST,29,AIRCUTTER,34,TRICK,36,CALMMIND,42,DAZZLINGGLEAM,45,SCOURINGWINDS
-TutorMoves = FLY,DEFOG,HEX,TAUNT,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
+Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,27,ROOST,30,POWERGEM,34,TRICK,38,DAZZLINGGLEAM,42,CALMMIND,46,SCOURINGWINDS,50,PSYSHOCK
+TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggMoves = TAILWIND,DEFOG,SPITE,INSTRUCT
 EggGroups = Flying
 HatchSteps = 4080
@@ -2258,8 +2258,8 @@ CatchRate = 120
 Happiness = 70
 Abilities = PICKUP,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,20,POWERGEM,29,ROOST,34,AIRCUTTER,36,TRICK,38,FUTURESIGHT,43,CALMMIND,46,PSYSHOCK,50,LIGHTSCREEN,50,REFLECT,58,DAZZLINGGLEAM,64,SCOURINGWINDS
-TutorMoves = FLY,DEFOG,HEX,TAUNT,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,CALMMIND,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
+Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,28,ROOST,32,POWERGEM,37,TRICK,42,DAZZLINGGLEAM,47,CALMMIND,52,SCOURINGWINDS,57,PSYSHOCK,62,REFLECT,62,LIGHTSCREEN
+TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,CALMMIND,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggGroups = Flying
 HatchSteps = 4080
 Height = 0.5
@@ -2284,8 +2284,8 @@ CatchRate = 45
 Happiness = 70
 Abilities = QUEENLYMAJESTY,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 0,PSYCHIC,1,PSYCHIC,1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,20,POWERGEM,29,ROOST,36,AIRCUTTER,38,TRICK,43,FUTURESIGHT,46,CALMMIND,50,PSYSHOCK,58,LIGHTSCREEN,58,REFLECT,64,DAZZLINGGLEAM,69,SCOURINGWINDS
-TutorMoves = FLY,DEFOG,HEX,TAUNT,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,SWAGGER,CALMMIND,FLASHCANNON,THUNDERBOLT,FOCUSBLAST,ROUND,FORCEWAVE,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
+Moves = 0,PSYCHIC,1,PSYCHIC,1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,29,ROOST,34,POWERGEM,39,TRICK,44,DAZZLINGGLEAM,49,CALMMIND,54,SCOURINGWINDS,59,PSYSHOCK,64,REFLECT,64,LIGHTSCREEN,69,FUTURESIGHT
+TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,SWAGGER,CALMMIND,FLASHCANNON,THUNDERBOLT,FOCUSBLAST,ROUND,FORCEWAVE,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggGroups = Flying
 HatchSteps = 4080
 Height = 0.7
@@ -2435,7 +2435,7 @@ Happiness = 35
 Abilities = SYNCHRONIZE
 HiddenAbilities = INNERFOCUS
 Moves = 0,SNARL,1,FOULPLAY,1,SNARL,1,COVET,1,SWIFT,1,BITE,1,COPYCAT,1,TAKEDOWN,1,CHARM,1,DOUBLEEDGE,1,HELPINGHAND,1,TACKLE,1,GROWL,1,TAILWHIP,5,SANDATTACK,10,QUICKATTACK,15,BABYDOLLEYES,20,CONFUSERAY,25,ASSURANCE,30,MOONLIGHT,35,GUARDSWAP,40,DARKPULSE,45,SCREECH,50,MEANLOOK,55,PARTINGSHOT
-TutorMoves = WORKUP,HELPINGHAND,CALMMIND,ROAR,VENOSHOCK,SWAGGER,TAUNT,TRIATTACK,DIG,PSYCHIC,HEX,LIGHTSCREEN,REFLECT,SLUDGEBOMB,TORMENT,FACADE,ATTRACT,ROUND,THIEF,ALLYSWITCH,FALSESWIPE,BODYPRESS,BODYSLAM,ASSURANCE,FOULPLAY,BRUTALSWING,GUARDSWAP,SCREECH,PSYCRUSH,SNARL,DARKPULSE,DOUBLETEAM,HYPERVOICE,HEALBELL,IRONTAIL,SHADOWBALL,EXCITE
+TutorMoves = WORKUP,HELPINGHAND,CALMMIND,ROAR,VENOSHOCK,SWAGGER,TAUNT,TRIATTACK,DIG,PSYCHIC,HEX,LIGHTSCREEN,REFLECT,SLUDGEBOMB,TORMENT,FACADE,ATTRACT,ROUND,THIEF,ALLYSWITCH,FALSESWIPE,BODYPRESS,TOXIC,BODYSLAM,ASSURANCE,FOULPLAY,BRUTALSWING,GUARDSWAP,SCREECH,PSYCRUSH,SNARL,DARKPULSE,DOUBLETEAM,HYPERVOICE,HEALBELL,IRONTAIL,SHADOWBALL,EXCITE
 EggGroups = Field
 HatchSteps = 8960
 Height = 1.0
@@ -2532,7 +2532,7 @@ Happiness = 70
 Abilities = GOOEY
 HiddenAbilities = NOGUARD
 Moves = 0,MUDSHOT,1,COVET,1,SWIFT,1,BITE,1,COPYCAT,1,TAKEDOWN,1,CHARM,1,DOUBLEEDGE,1,HELPINGHAND,1,TACKLE,1,GROWL,1,TAILWHIP,5,SANDATTACK,10,QUICKATTACK,15,BABYDOLLEYES,20,SANDTOMB,25,TARSHOT,30,BONERUSH,35,SANDSTORM,40,STOMPINGTANTRUM,45,HEADSMASH,50,EARTHQUAKE,55,GUNKSHOT
-TutorMoves = CUT,STRENGTH,WORKUP,HELPINGHAND,PROTECT,RAINDANCE,SUNNYDAY,RETURN,FACADE,REST,SLEEPTALK,ATTRACT,ROUND,AERIALACE,REST,SLEEPTALK,REST,SLEEPTALK,BODYSLAM,SUBSTITUTE,EARTHQUAKE,SCORCHINGSANDS,DIG,SANDSTORM,ROCKTOMB,ROCKSLIDE,STONEEDGE,GYROBALL,BODYPRESS,ZENHEADBUTT,PLAYROUGH,BRICKBREAK,ROAR,DOUBLETEAM,SWAGGER,HYPERVOICE,HEALBELL,IRONTAIL,SHADOWBALL,STEALTHROCK,SPIKES,EXCITE,ROCKBLAST,GUNKSHOT
+TutorMoves = CUT,STRENGTH,WORKUP,HELPINGHAND,PROTECT,RAINDANCE,SUNNYDAY,RETURN,FACADE,REST,SLEEPTALK,ATTRACT,ROUND,TOXIC,AERIALACE,REST,SLEEPTALK,REST,SLEEPTALK,BODYSLAM,SUBSTITUTE,EARTHQUAKE,SCORCHINGSANDS,DIG,SANDSTORM,ROCKTOMB,ROCKSLIDE,STONEEDGE,GYROBALL,BODYPRESS,ZENHEADBUTT,PLAYROUGH,BRICKBREAK,ROAR,DOUBLETEAM,SWAGGER,HYPERVOICE,HEALBELL,IRONTAIL,SHADOWBALL,STEALTHROCK,SPIKES,EXCITE,ROCKBLAST,GUNKSHOT
 EggGroups = Field
 HatchSteps = 8960
 Height = 1.0
@@ -2541,7 +2541,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Mud Puppy
-Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokemon underground.
+Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokémon underground.
 #-------------------------------
 [GUSTEON]
 Name = Gusteon
@@ -2721,7 +2721,7 @@ Color = Blue
 Shape = Bipedal
 Habitat = Urban
 Category = Fisher
-Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokemon in Mazah. 
+Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokémon in Mazah. 
 #-------------------------------
 [BEAKPEEP]
 Name = Beakpeep
@@ -2821,7 +2821,7 @@ Color = Yellow
 Shape = HeadArms
 Habitat = Urban
 Category = Idol
-Pokedex = Xibalbat is a rare and incredibly dangerous Pokemon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
+Pokedex = Xibalbat is a rare and incredibly dangerous Pokémon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
 #-------------------------------
 [TROPIUS]
 Name = Tropius
@@ -2835,8 +2835,8 @@ CatchRate = 200
 Happiness = 70
 Abilities = CHLOROPHYLL,SOLARPOWER
 HiddenAbilities = HARVEST
-Moves = 1,DRAGONHAMMER,1,LEAFSTORM,1,LEER,1,GUST,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,ROAR,26,LEAFTORNADO,30,NATURALGIFT,30,RECYCLE,36,AIRSLASH,41,GIGADRAIN,46,DRAGONHAMMER,50,SYNTHESIS,56,SOLARBEAM,61,LEAFSTORM
-TutorMoves = CUT,PROTECT,AERIALACE,STEELWING,REST,SLEEPTALK,STRENGTH,ROAR,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,ENERGYBALL,BULLETSEED,GRASSKNOT,GIGAIMPACT,DRAGONPULSE,HYPERBEAM,GIGADRAIN,SAFEGUARD,FACADE,ATTRACT,SWAGGER,SUBSTITUTE,FLY,DEFOG,ROCKSMASH,TAILWIND,DUALWINGBEAT
+Moves = 1,DRAGONHAMMER,1,LEER,1,GUST,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,ROAR,26,LEAFTORNADO,30,NATURALGIFT,30,RECYCLE,36,AIRSLASH,41,GIGADRAIN,46,BESTOW,50,SYNTHESIS,56,SOLARBEAM,61,LEAFSTORM
+TutorMoves = CUT,PROTECT,AERIALACE,STEELWING,BODYSLAM,REST,SLEEPTALK,STRENGTH,ROAR,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,ENERGYBALL,BULLETSEED,GRASSKNOT,GIGAIMPACT,DRAGONPULSE,HYPERBEAM,SAFEGUARD,FACADE,ATTRACT,SWAGGER,SUBSTITUTE,FLY,DEFOG,ROCKSMASH,TAILWIND,DUALWINGBEAT
 EggMoves = CURSE,HEADBUTT,LEAFBLADE,LEECHSEED,SLAM
 EggGroups = Monster,Grass
 HatchSteps = 6630
@@ -2860,8 +2860,8 @@ CatchRate = 200
 Happiness = 70
 Abilities = LEAFGUARD,SOLARPOWER
 HiddenAbilities = HARVEST
-Moves = 0,WOODHAMMER,1,DRAGONHAMMER,1,LEAFSTORM,1,LEER,1,HEAVYSLAM,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,ROAR,26,LEAFTORNADO,30,NATURALGIFT,30,RECYCLE,36,DRAGONDANCE,41,BODYSLAM,46,BESTOW,50,SYNTHESIS,56,SOLARBEAM,61,LEAFSTORM,75,POWERWHIP,83,JUNGLEHEALING
-TutorMoves = CUT,TAUNT,TRIATTACK,STEELWING,ASSURANCE,BRUTALSWING,GYROBALL,REST,SLEEPTALK,DRAGONCLAW,XSCISSOR,ZENHEADBUTT,SHADOWCLAW,SNARL,SURF,STRENGTH,ROAR,RAINDANCE,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,BRICKBREAK,ENERGYBALL,BULLETSEED,GRASSKNOT,BODYSLAM,BRUTALSWING,ROCKSLIDE,DRAGONPULSE,STONEEDGE,SWAGGER
+Moves = 0,WOODHAMMER,1,DRAGONHAMMER,1,LEAFSTORM,1,LEER,1,HEAVYSLAM,1,GROWTH,1,RAZORLEAF,6,SWEETSCENT,10,STOMP,16,MAGICALLEAF,21,ROAR,26,LEAFTORNADO,30,NATURALGIFT,30,RECYCLE,36,DRAGONDANCE,41,GIGADRAIN,46,BESTOW,50,SYNTHESIS,56,SOLARBEAM,61,DRAGONHAMMER,75,POWERWHIP,83,JUNGLEHEALING
+TutorMoves = CUT,TAUNT,TRIATTACK,STEELWING,ASSURANCE,BRUTALSWING,GYROBALL,REST,SLEEPTALK,DRAGONCLAW,XSCISSOR,ZENHEADBUTT,SHADOWCLAW,SNARL,SURF,STRENGTH,ROAR,RAINDANCE,SUNNYDAY,SOLARBEAM,SOLARBLADE,EARTHQUAKE,BRICKBREAK,ENERGYBALL,BULLETSEED,GRASSKNOT,BODYSLAM,BRUTALSWING,ROCKSLIDE,DRAGONPULSE,STONEEDGE,SWAGGER,SAFEGUARD,ROCKSMASH,METRONOME,IRONHEAD,IRONTAIL,SUPERPOWER
 EggGroups = Monster,Grass
 HatchSteps = 6630
 Height = 22.5
@@ -2957,7 +2957,7 @@ Happiness = 70
 Abilities = GLUTTONY,IMMUNITY
 HiddenAbilities = STRONGJAW
 Moves = 1,TWISTER,1,GROWL,4,BITE,8,TICKLE,12,POISONFANG,16,ROAR,20,DRAGONTAIL,24,CURSE,28,CRUNCH,32,TOXIC,36,DRAGONCLAW,40,RECYCLE,44,SLACKOFF,48,BELCH,52,GUNKSHOT,56,OUTRAGE
-TutorMoves = WORKUP,EXPLOSION,VENOSHOCK,SWAGGER,TOXIC,HYPERBEAM,EARTHQUAKE,DIG,BRICKBREAK,SLUDGEBOMB,SCORCHINGSANDS,FOCUSBLAST,BODYPRESS,BODYSLAM,FOULPLAY,ROCKSLIDE,DRAGONPULSE,DRAGONCLAW,POISONJAB,SWAGGER,GUNKSHOT,GASTROACID,SUPERPOWER,TOXICSPIKES
+TutorMoves = WORKUP,EXPLOSION,VENOSHOCK,SWAGGER,TOXIC,EARTHQUAKE,DIG,BRICKBREAK,SLUDGEBOMB,SCORCHINGSANDS,FOCUSBLAST,BODYPRESS,BODYSLAM,FOULPLAY,ROCKSLIDE,DRAGONPULSE,DRAGONCLAW,POISONJAB,SWAGGER,GUNKSHOT,GASTROACID,SUPERPOWER,TOXICSPIKES
 EggMoves = FIREFANG,ICEFANG,THUNDERFANG,SLUDGEWAVE
 EggGroups = Monster,Dragon
 HatchSteps = 10455
@@ -2966,7 +2966,7 @@ Weight = 10.4
 Color = Green
 Shape = Quadruped
 Category = Hunger
-Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokemon away from their homes, as they habitually chew inedible objects.
+Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokémon away from their homes, as they habitually chew inedible objects.
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [SUCHOBILE]
@@ -3519,7 +3519,7 @@ Weight = 96.6
 Color = Yellow
 Shape = HeadLegs
 Category = Compass
-Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokemon.
+Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokémon.
 WildItemUncommon = IRONBALL
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
@@ -3544,7 +3544,7 @@ Weight = 230.0
 Color = Yellow
 Shape = HeadArms
 Category = Warrior
-Pokedex = Noseponch's very presence can cause people and pokemon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
+Pokedex = Noseponch's very presence can cause people and Pokémon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
 WildItemUncommon = IRONBALL
 #-------------------------------
 [M_MARACTUS]
@@ -4222,7 +4222,7 @@ Weight = 1.8
 Color = Blue
 Shape = Quadruped
 Category = Trance
-Pokedex = This nocturnal Pokemon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
+Pokedex = This nocturnal Pokémon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
 WildItemUncommon = 
 Evolutions = LUMILIKO,LevelNight,29
 #-------------------------------
@@ -4807,7 +4807,7 @@ Weight = 5.9
 Color = Blue
 Shape = Insectoid
 Category = River Crab
-Pokedex = This blind Pokemon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
+Pokedex = This blind Pokémon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
 Evolutions = VLADIKRAB,Item,DUSKSTONE
 #-------------------------------
 [VLADIKRAB]
@@ -4831,7 +4831,7 @@ Weight = 60.3
 Color = Blue
 Shape = Insectoid
 Category = Pincer
-Pokedex = These Pokemon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
+Pokedex = These Pokémon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
 #-------------------------------
 [ELGYEM]
 Name = Elgyem
