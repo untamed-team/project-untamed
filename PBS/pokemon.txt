@@ -959,7 +959,7 @@ Color = Green
 Shape = Insectoid
 Habitat = WatersEdge
 Category = Water Weed
-Pokedex = These dim-witted but lovable Pokemon are often used as stepping stones by children, allowing them to cross rivers. They don't seem to mind being stepped on.
+Pokedex = These dim-witted but lovable Pokémon are often used as stepping stones by children, allowing them to cross rivers. They don't seem to mind being stepped on.
 Generation = 3
 WildItemUncommon = MENTALHERB
 Evolutions = LOMBRE,Level,14
@@ -1479,7 +1479,7 @@ Color = Black
 Shape = HeadArms
 Habitat = Forest
 Category = Requiem
-Pokedex = Duskull often find it hard to scare Mazian children because of the sugar skull masks they wear for fun. The children usually manage to scare the Duskull instead.
+Pokedex = Duskull often find it hard to scare Mazian children due to their sugar skull resemblance. The children usually manage to scare the Duskull instead.
 Generation = 3
 WildItemUncommon = SPELLTAG
 Evolutions = DUSCLOPS,Level,37
@@ -1506,7 +1506,7 @@ Color = Black
 Shape = Bipedal
 Habitat = Forest
 Category = Beckon
-Pokedex = The body of a Dusclops are thought to contain a void. No scientific tests or humans have survived experiment to find out.
+Pokedex = The body of a Dusclops is thought to contain the perfect environment for harbouring souls. Because of this, the people of the Mazah region deem it as sacred.
 Generation = 3
 WildItemUncommon = SPELLTAG
 Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
@@ -1532,7 +1532,7 @@ Weight = 106.6
 Color = Black
 Shape = HeadArms
 Category = Gripper
-Pokedex = Due to Mazah's lack of superstitions surrounding death, Dusknoirs are welcomed in towns more-so than other regions. Dusknoirs apparently hate this.
+Pokedex = Due to Mazah's lack of superstitions about death, Dusknoir are adored by townsfolk as shepherds of lost souls. This has given them a friendlier attitude.
 Generation = 4
 WildItemUncommon = SPELLTAG
 #-------------------------------
@@ -1688,7 +1688,7 @@ Weight = 13.0
 Color = Black
 Shape = HeadArms
 Category = Lamp
-Pokedex = Lampent are speculated to be one of the most common Pokemon in the land of the dead. They are able to travel to and from the corporeal world at will.
+Pokedex = Lampent are speculated to be one of the most common Pokémon in the land of the dead. They are able to travel to and from the corporeal world at will.
 Generation = 5
 Evolutions = CHANDELURE,Item,DUSKSTONE
 #-------------------------------
@@ -2232,7 +2232,7 @@ CatchRate = 255
 Happiness = 70
 Abilities = PICKUP,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,26,ROOST,29,POWERGEM,34,TRICK,36,DAZZLINGGLEAM,42,CALMMIND,45,SCOURINGWINDS,49,PSYSHOCK
+Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,27,ROOST,30,POWERGEM,34,TRICK,38,DAZZLINGGLEAM,42,CALMMIND,46,SCOURINGWINDS,50,PSYSHOCK
 TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggMoves = TAILWIND,DEFOG,SPITE,INSTRUCT
 EggGroups = Flying
@@ -2258,7 +2258,7 @@ CatchRate = 120
 Happiness = 70
 Abilities = PICKUP,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,29,ROOST,34,POWERGEM,36,TRICK,38,DAZZLINGGLEAM,43,CALMMIND,46,SCOURINGWINDS,50,PSYSHOCK,58,REFLECT,58,LIGHTSCREEN
+Moves = 1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,28,ROOST,32,POWERGEM,37,TRICK,42,DAZZLINGGLEAM,47,CALMMIND,52,SCOURINGWINDS,57,PSYSHOCK,62,REFLECT,62,LIGHTSCREEN
 TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,CALMMIND,ROUND,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggGroups = Flying
 HatchSteps = 4080
@@ -2284,7 +2284,7 @@ CatchRate = 45
 Happiness = 70
 Abilities = QUEENLYMAJESTY,FRISK
 HiddenAbilities = PSYCHICSURGE
-Moves = 0,PSYCHIC,1,PSYCHIC,1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,29,ROOST,36,POWERGEM,38,TRICK,43,DAZZLINGGLEAM,46,CALMMIND,50,SCOURINGWINDS,56,PSYSHOCK,62,REFLECT,62,LIGHTSCREEN,68,FUTURESIGHT
+Moves = 0,PSYCHIC,1,PSYCHIC,1,GUST,1,MIRACLEEYE,4,EXCITE,8,CONFUSION,12,COVET,16,HYPNOSIS,20,EXTRASENSORY,24,AIRCUTTER,29,ROOST,34,POWERGEM,39,TRICK,44,DAZZLINGGLEAM,49,CALMMIND,54,SCOURINGWINDS,59,PSYSHOCK,64,REFLECT,64,LIGHTSCREEN,69,FUTURESIGHT
 TutorMoves = FLY,DEFOG,HEX,TAUNT,THIEF,STEELWING,PSYCHIC,PSYSHOCK,AERIALACE,SAFEGUARD,ZENHEADBUTT,POWERSWAP,GUARDSWAP,TRICKROOM,PSYCRUSH,SWAGGER,CALMMIND,FLASHCANNON,THUNDERBOLT,FOCUSBLAST,ROUND,FORCEWAVE,METRONOME,DRAININGKISS,DREAMEATER,HEATWAVE,SKYATTACK,TAILWIND,SHADOWBALL,DUALWINGBEAT,EXPANDINGFORCE
 EggGroups = Flying
 HatchSteps = 4080
@@ -2541,7 +2541,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Mud Puppy
-Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokemon underground.
+Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokémon underground.
 #-------------------------------
 [GUSTEON]
 Name = Gusteon
@@ -2721,7 +2721,7 @@ Color = Blue
 Shape = Bipedal
 Habitat = Urban
 Category = Fisher
-Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokemon in Mazah. 
+Pokedex = Atetangler uses sugarcane as a rod to catch its favourite food: Banagnaw. Its ability to use tools makes it one of the most intelligent Pokémon in Mazah. 
 #-------------------------------
 [BEAKPEEP]
 Name = Beakpeep
@@ -2821,7 +2821,7 @@ Color = Yellow
 Shape = HeadArms
 Habitat = Urban
 Category = Idol
-Pokedex = Xibalbat is a rare and incredibly dangerous Pokemon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
+Pokedex = Xibalbat is a rare and incredibly dangerous Pokémon. Once thought as a bad omen, Xibalbat are now sought out for their alleged ability to create gold.
 #-------------------------------
 [TROPIUS]
 Name = Tropius
@@ -2966,7 +2966,7 @@ Weight = 10.4
 Color = Green
 Shape = Quadruped
 Category = Hunger
-Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokemon away from their homes, as they habitually chew inedible objects.
+Pokedex = Though small in size, Suchip are insatiable eaters. Trainers are advised to keep this Pokémon away from their homes, as they habitually chew inedible objects.
 Evolutions = SUCHOBILE,Level,39
 #-------------------------------
 [SUCHOBILE]
@@ -3519,7 +3519,7 @@ Weight = 96.6
 Color = Yellow
 Shape = HeadLegs
 Category = Compass
-Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokemon.
+Pokedex = Instead of possessing magnetic properties, Nosepass in the Mazah region exude an aura that is reported to invigorate both trainers and Pokémon.
 WildItemUncommon = IRONBALL
 Evolutions = NOSEPONCH,Location,999
 #-------------------------------
@@ -3544,7 +3544,7 @@ Weight = 230.0
 Color = Yellow
 Shape = HeadArms
 Category = Warrior
-Pokedex = Noseponch's very presence can cause people and pokemon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
+Pokedex = Noseponch's very presence can cause people and Pokémon to go into a frenzy, which is believed to have caused historic battles on Mazah soil during ancient times.
 WildItemUncommon = IRONBALL
 #-------------------------------
 [M_MARACTUS]
@@ -4222,7 +4222,7 @@ Weight = 1.8
 Color = Blue
 Shape = Quadruped
 Category = Trance
-Pokedex = This nocturnal Pokemon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
+Pokedex = This nocturnal Pokémon swings its bioluminescent tail back and forth in a hypnotic motion to distract larger predators and buy itself time to escape from danger.
 WildItemUncommon = 
 Evolutions = LUMILIKO,LevelNight,29
 #-------------------------------
@@ -4807,7 +4807,7 @@ Weight = 5.9
 Color = Blue
 Shape = Insectoid
 Category = River Crab
-Pokedex = This blind Pokemon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
+Pokedex = This blind Pokémon lives on the seafloor, using it's spikes to catch prey. Some question whether it's a variant of Krabby, or something entirely unique.
 Evolutions = VLADIKRAB,Item,DUSKSTONE
 #-------------------------------
 [VLADIKRAB]
@@ -4831,7 +4831,7 @@ Weight = 60.3
 Color = Blue
 Shape = Insectoid
 Category = Pincer
-Pokedex = These Pokemon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
+Pokedex = These Pokémon lie motionless on the seafloor, using light produced by an organ on their head to attract prey, before impaling them with their sharp spines.
 #-------------------------------
 [ELGYEM]
 Name = Elgyem
