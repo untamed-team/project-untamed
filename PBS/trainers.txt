@@ -175,12 +175,11 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 #Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
+Gimmick = HarshSun
 Pokemon = PACUNA,10
-Pokemon = NOCTAVISPA,10
-    Moves = RAZORLEAF,DEFENDORDER,HEALORDER,POLLENPUFF,ATTACKORDER
+Pokemon = BLAZEA,10
+	Moves = SCALD,SPLASH
 	AAM = true
-Pokemon = BEHEEYEM,100
-	Item = BEHEEYEMITE
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
