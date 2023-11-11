@@ -184,7 +184,7 @@ Pokemon = BEHEEYEM,100
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
-Gimmick = StatDropImmunity
+Gimmick = DragonZone
 Pokemon = PORYGONZ,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
@@ -193,7 +193,7 @@ Pokemon = PORYGONZ,10
 #-------------------------------
 [HEXMANIAC,pory,100]
 LoseText = kaboom
-Gimmick = StatDropImmunity
+Gimmick = DragonZone
 Pokemon = BEAKRAFT,10
 	MEM = true
 	Gender = Male
