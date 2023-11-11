@@ -8976,10 +8976,10 @@ EffectChance = 30
 Description = The target is bitten with sweet and sharp fangs. It may make the target flinch.
 #-------------------------------
 [SUPERNOVA]
-Name = Supernova
+Name = Impact Event
 Type = FIRE
 Category = Physical
-Power = 250
+Power = 200
 Accuracy = 100
 TotalPP = 5
 Target = AllNearOthers
