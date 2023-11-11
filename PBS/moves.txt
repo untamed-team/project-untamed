@@ -8979,13 +8979,13 @@ Description = The target is bitten with sweet and sharp fangs. It may make the t
 Name = Supernova
 Type = FIRE
 Category = Physical
-Power = 80
+Power = 250
 Accuracy = 100
 TotalPP = 5
-Target = AllNearFoes
-FunctionCode = Supernova
-Flags = GravityBoosted
-Description = Crashes into the opposing side in a fiery blaze, sending sharp rocks into the air to hit 2 turns later.
+Target = AllNearOthers
+FunctionCode = UserFaintsExplosive
+Flags = CanProtect,CanMirrorMove
+Description = The user creates a fiery explosion to inflict damage on those around it. The user faints upon using this move.
 #-----------------
 [SUPERNOVA_ALT]
 Name = Supernova
