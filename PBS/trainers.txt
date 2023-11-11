@@ -175,16 +175,15 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 #Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
+Gimmick = HarshSun
 Pokemon = PACUNA,10
-Pokemon = NOCTAVISPA,10
-    Moves = RAZORLEAF,DEFENDORDER,HEALORDER,POLLENPUFF,ATTACKORDER
+Pokemon = BLAZEA,10
+	Moves = SCALD,SPLASH
 	AAM = true
-Pokemon = BEHEEYEM,100
-	Item = BEHEEYEMITE
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
-Gimmick = StatDropImmunity
+Gimmick = DragonZone
 Pokemon = PORYGONZ,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
@@ -193,7 +192,7 @@ Pokemon = PORYGONZ,10
 #-------------------------------
 [HEXMANIAC,pory,100]
 LoseText = kaboom
-Gimmick = StatDropImmunity
+Gimmick = DragonZone
 Pokemon = BEAKRAFT,10
 	MEM = true
 	Gender = Male

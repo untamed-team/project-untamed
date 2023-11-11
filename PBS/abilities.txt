@@ -30,7 +30,7 @@ Description = The Pokémon is protected from paralysis.
 #-------------------------------
 [SANDVEIL]
 Name = Sand Veil
-Description = Boosts the Pokémon's evasion in a sandstorm.
+Description = Boosts the user's Defense by 1.5x in a sandstorm.
 #-------------------------------
 [STATIC]
 Name = Static
@@ -324,7 +324,7 @@ Description = Raises Speed each time the Pokémon flinches.
 #-------------------------------
 [SNOWCLOAK]
 Name = Snow Cloak
-Description = Raises evasion in a hailstorm.
+Description = Boosts the user's Sp.Def by 1.5x in a hailstorm.
 #-------------------------------
 [GLUTTONY]
 Name = Gluttony
@@ -1001,7 +1001,7 @@ Description = Just being next to the Pokémon powers up moves.
 #-------------------------------
 [MIMICRY]
 Name = Mimicry
-Description = Changes type depending on the terrain.
+Description = Changes type depending on field effects.
 #-------------------------------
 [SCREENCLEANER]
 Name = Screen Cleaner
@@ -1182,4 +1182,8 @@ Description = Powers up each Pokémon's Ghost-type moves.
 [ARTILLERIST]
 Name = Artillerist
 Description = Powers up ball and bomb moves.
+#-------------------------------
+[GALVANIZETWOELETRICBOOGALO]
+Name = insertnamehere
+Description = elec stab
 #-------------------------------
