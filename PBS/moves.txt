@@ -4932,13 +4932,13 @@ Description = The target is slammed with a long tail, vines, etc., to inflict da
 Name = Strength
 Type = ROCK
 Category = Physical
-Power = 1
+Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = PowerHigherWithUserHeavierThanTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
-Description = The target is slugged with a punch thrown at maximum power. The heavier the user is, the greater the damage.
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove,Punching
+Description = The target is slugged with a punch thrown at maximum power.
 #-------------------------------
 [TRIATTACK]
 Name = Tri Attack
