@@ -104,7 +104,7 @@ Abilities = AERILATE
 FormName = Mega Hawlucha
 MegaStone = HAWLUCHITE
 BaseStats = 78,120,85,143,94,83
-Abilities = GALVANIZE
+Abilities = VOLTAICSPIRIT
 #------------------------------- 
 [CACTURNE,1]
 FormName = Mega Cacturne
