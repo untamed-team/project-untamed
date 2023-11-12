@@ -3569,7 +3569,7 @@ Weight = 27.7
 Color = Green
 Shape = HeadBase
 Category = Cactus
-Pokedex = To survive the arid deserts of Mazah, Maractus adapted durable yet smooth skin. which protects hundreds of seeds that heat up to nearly 300 degrees when shaken.
+Pokedex = To survive the arid deserts of Mazah, Maractus adapted durable yet smooth skin which protects hundreds of seeds that heat up to nearly 300 degrees when shaken.
 WildItemUncommon = MIRACLESEED
 #-------------------------------
 [REGIWOOD]
