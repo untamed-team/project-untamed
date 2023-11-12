@@ -33,8 +33,8 @@ Weight = 46.7
 [CHIXULOB,1]
 FormName = Mega Chixulob
 MegaStone = CHIXULITE
-BaseStats = 75,156,88,138,107,71?
-Abilities = MASSEXTINCTION
+BaseStats = 75,107,88,138,156,71?
+Abilities = DRAGONSMAW
 Height = 72.0
 Weight = 3580.0
 #-------------------------------
