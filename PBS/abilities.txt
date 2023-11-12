@@ -1183,7 +1183,7 @@ Description = Powers up each Pokémon's Ghost-type moves.
 Name = Artillerist
 Description = Powers up ball and bomb moves.
 #-------------------------------
-[GALVANIZETWOELETRICBOOGALO]
-Name = insertnamehere
-Description = elec stab
+[VOLTAICSPIRIT]
+Name = Voltaic Spirit
+Description = Powers up Electric-type moves.
 #-------------------------------
