@@ -2849,7 +2849,6 @@ NamePlural = Old Gateaux
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
-BattleUse = OnPokemon
 Flags = Fling_30
 Description = Old Chateau's hidden specialty. Can change a Pokémon's Hidden Power type.
 #-------------------------------
