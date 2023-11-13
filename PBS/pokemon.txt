@@ -4758,7 +4758,7 @@ Color = Red
 Shape = Head
 Habitat = Sea
 Category = Algae
-Pokedex = phytide
+Pokedex = They live in blooms on the ocean's surface to absorb sunlight. In greater numbers, these blooms create a toxic environment, deterring people and Pokemon alike.
 Evolutions = VENORAYGE,Venorayge,44
 #-------------------------------
 [VENORAYGE]
@@ -4783,7 +4783,7 @@ Color = Red
 Shape = Winged
 Habitat = Sea
 Category = Red Tide
-Pokedex = venorayge
+Pokedex = Venorayge use blooms of Phytide to control and ride ocean waves. It crashes into prey with the force of a tidal wave before finishing them off with its stinger.
 #-------------------------------
 [M_KRABBY]
 Name = Krabby
