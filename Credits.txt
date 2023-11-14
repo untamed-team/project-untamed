@@ -505,6 +505,11 @@ IndianAnimator
 EVs and IVs in Summary:
 Deoxysprime
 
+Extra Fogs & Panorama Lock:
+Game_Guy
+Gardenette
+Jaiden
+
 Following Pokémon EX:
 Akizakura16
 Armin
