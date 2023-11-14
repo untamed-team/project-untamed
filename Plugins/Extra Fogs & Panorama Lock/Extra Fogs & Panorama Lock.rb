@@ -152,16 +152,15 @@ module CustomFogsPanorama
       end
       # Create parallax (unlike panorama, this overlays the map and should always = map size)
       if FileTest.exist?("Graphics/Fogs/Parallax/Map#{$game_map.map_id}.png")
-        @parallax = Plane.new(@viewport1)
+        #@parallax = Plane.new(@viewport1)
+		#changed by Gardenette so parallaxes appear under the player
+		#it will still appear above layer 2 and probably layer 3 as well
+		@parallax = Plane.new(@@viewport1)
         @parallax.bitmap = RPG::Cache.fog("/Parallax/Map#{$game_map.map_id}", 0)
         @parallax.blend_type = 0 # Normal blending
         @parallax.opacity = 255
         @parallax.ox = $game_map.display_x / 4
-        @parallax.oy = $game_map.display_y / 4
-		
-		#added by Gardenette to put parallax under the player's feet above the ground
-		@parallax.z = -1
-		
+        @parallax.oy = $game_map.display_y / 4		
       end
       # Create lightmap (above everything else)
       if FileTest.exist?("Graphics/Fogs/Lightmaps/Map#{$game_map.map_id}.png")
