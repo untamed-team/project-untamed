@@ -1004,7 +1004,7 @@ NamePlural = Power Herbs
 Pocket = 1
 Price = 4000
 Flags = Fling_10
-Description = A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges up first.
+Description = A item to be held by a Pokémon. It allows the immediate use of a move that charges up first.
 #-------------------------------
 [ABSORBBULB]
 Name = Absorb Bulb
@@ -2849,7 +2849,6 @@ NamePlural = Old Gateaux
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
-BattleUse = OnPokemon
 Flags = Fling_30
 Description = Old Chateau's hidden specialty. Can change a Pokémon's Hidden Power type.
 #-------------------------------
@@ -3089,7 +3088,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base HP of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into a neutral one.
 #-------------------------------
 [PROTEIN]
 Name = Protein
@@ -3098,7 +3097,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Attack stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Attack-boosting one.
 #-------------------------------
 [IRON]
 Name = Iron
@@ -3107,7 +3106,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Defense stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Defense-boosting one.
 #-------------------------------
 [CALCIUM]
 Name = Calcium
@@ -3116,7 +3115,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Sp. Atk (Special Attack) stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Attack-boosting one.
 #-------------------------------
 [ZINC]
 Name = Zinc
@@ -3125,7 +3124,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Sp. Def (Special Defense) stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Defense-boosting one.
 #-------------------------------
 [CARBOS]
 Name = Carbos
@@ -3134,7 +3133,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Speed stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Speed-boosting one.
 #-------------------------------
 [HEALTHFEATHER]
 Name = Health Feather

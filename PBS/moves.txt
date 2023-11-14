@@ -3466,7 +3466,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TwoTurnAttackOneTurnInSun
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Blade
 Description = The user gathers light energy into a blade, attacking the target on the next turn.
 #-------------------------------
 [PETALDANCE]
@@ -4148,7 +4148,7 @@ Name = Mud Bomb
 Type = GROUND
 Category = Special
 Power = 65
-Accuracy = 85
+Accuracy = 95
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetAccuracy1
@@ -4932,13 +4932,13 @@ Description = The target is slammed with a long tail, vines, etc., to inflict da
 Name = Strength
 Type = ROCK
 Category = Physical
-Power = 100
+Power = 80
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
-FunctionCode = LowerUserDefSpDef1
-Flags = Contact,CanProtect,CanMirrorMove
-Description = The target is slugged with a punch thrown at maximum power. It also cuts the user's Defense and Sp. Def.
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove,Punching
+Description = The target is slugged with a punch thrown at maximum power.
 #-------------------------------
 [TRIATTACK]
 Name = Tri Attack
@@ -8976,16 +8976,16 @@ EffectChance = 30
 Description = The target is bitten with sweet and sharp fangs. It may make the target flinch.
 #-------------------------------
 [SUPERNOVA]
-Name = Supernova
+Name = Impact Event
 Type = FIRE
 Category = Physical
-Power = 80
+Power = 200
 Accuracy = 100
 TotalPP = 5
-Target = AllNearFoes
-FunctionCode = Supernova
-Flags = GravityBoosted
-Description = Crashes into the opposing side in a fiery blaze, sending sharp rocks into the air to hit 2 turns later.
+Target = AllNearOthers
+FunctionCode = UserFaintsExplosive
+Flags = CanProtect,CanMirrorMove
+Description = The user creates a fiery explosion to inflict damage on those around it. The user faints upon using this move.
 #-----------------
 [SUPERNOVA_ALT]
 Name = Supernova
