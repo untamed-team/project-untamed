@@ -4598,7 +4598,7 @@ Color = Purple
 Shape = Serpentine
 Habitat = Grassland
 Category = Mamba
-Pokedex = Masters of deception, Eltarr mesmerize both their predators and prey with the patterns on their scales and the decoy face on their tail
+Pokedex = Masters of deception, Eltarr mesmerize both their predators and prey with the patterns on their scales and the decoy face on their tail.
 Generation = 1
 #-------------------------------
 [CASTFORM]
