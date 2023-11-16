@@ -1,5 +1,0 @@
-Name      = Extra Fogs & Panorama Lock
-Version   = 1.0
-Essentials = 20.1
-Website   = https://forum.chaos-project.com/index.php?topic=16015.0
-Credits   = Jaiden, Game_Guy (for helping with the parallax lock), Gardenette (minor editing to work with Pkmn Essentials)
