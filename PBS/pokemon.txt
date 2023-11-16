@@ -1049,15 +1049,15 @@ Evolutions = WHISCASH,Level,30
 [WHISCASH]
 Name = Whiscash
 Types = WATER,GROUND
-BaseStats = 119,51,79,60,86,83
+BaseStats = 110,98,73,80,76,71
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 164
 EVs = HP,2
 CatchRate = 75
 Happiness = 70
-Abilities = UNAWARE,ANTICIPATION
-HiddenAbilities = SAPSIPPER
+Abilities = UNAWARE,HYDRATION
+HiddenAbilities = SANDSPIT
 Moves = 0,BULLDOZE,1,BULLDOZE,1,BELCH,1,EXTRASENSORY,1,TICKLE,1,MUDSLAP,1,MUDSPORT,1,WATERSPORT,1,WATERGUN,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SLEEPTALK,28,AQUATAIL,34,MUDDYWATER,39,EARTHPOWER,45,FUTURESIGHT,52,HYDROPUMP
 TutorMoves = BLIZZARD,DIVE,EARTHQUAKE,HAIL,ICEBEAM,RAINDANCE,ROCKSLIDE,ROCKTOMB,SANDSTORM,SCALD,STONEEDGE,STRENGTH,SURF,WATERFALL,ZENHEADBUTT,ICYWIND,EARTHPOWER,IRONHEAD,STEALTHROCK,FLIPTURN,AQUATAIL
 EggGroups = Water2
@@ -1788,7 +1788,7 @@ Weight = 5.0
 Color = Brown
 Shape = BipedalTail
 Category = Digging
-Pokedex = It has ears like shovels. Digging holes strengthens its ears so much that they can sever thick roots effortlessly.
+Pokedex = An expert digger, Bunnelby is popular with gardeners in the Mazah region. It uses its shovel-like ears to dig flowerbeds and can remove tree stumps with ease.
 Generation = 6
 Evolutions = DIGGERSBY,Level,20
 #-------------------------------
@@ -1813,7 +1813,7 @@ Weight = 42.4
 Color = Brown
 Shape = BipedalTail
 Category = Digging
-Pokedex = As powerful as an excavator, its ears can reduce dense bedrock to rubble. When it's finished digging, it lounges lazily.
+Pokedex = Diggersby are typically easy-going and cooperative. They are often seen working with humans to assist in manual labour jobs such as farming and construction.
 Generation = 6
 #-------------------------------
 [SCATTERBUG]
@@ -1838,7 +1838,7 @@ Weight = 2.5
 Color = Black
 Shape = Insectoid
 Category = Scatterdust
-Pokedex = When under attack from bird Pokémon, it spews a poisonous black powder that causes paralysis on contact.
+Pokedex = Scatterbug play a vital role in forest ecosystems. They consume a diet of poisonous leaves, stopping certain plants from overpopulating.
 Generation = 6
 Evolutions = SPEWPA,Level,9
 #-------------------------------
@@ -1863,7 +1863,7 @@ Weight = 8.4
 Color = Black
 Shape = HeadBase
 Category = Scatterdust
-Pokedex = It lives hidden within thicket shadows. When predators attack, it quickly bristles the fur covering its body in an effort to threaten them.
+Pokedex = It protects its body with sharp, bristled fur, building up the energy it needs to evolve. If it is attacked, it spews a poisonous black powder.
 Generation = 6
 Evolutions = VIVILLON,Level,12
 #-------------------------------
@@ -1915,7 +1915,7 @@ Color = Black
 Shape = HeadArms
 Habitat = Mountain
 Category = Bounce
-Pokedex = A Pokémon that manipulates psychic power at will. It doesn't stop bouncing even when it is asleep. It loves eating mushrooms that grow underground.
+Pokedex = The pearl on Spoink's head amplifies it’s psychokinetic powers. However, it also makes it a prime target for thieving Cromen.
 Generation = 3
 Evolutions = GRUMPIG,Level,32
 #-------------------------------
@@ -1941,7 +1941,7 @@ Color = Purple
 Shape = BipedalTail
 Habitat = Mountain
 Category = Manipulate
-Pokedex = It stores power in the black pearls on its forehead. When it uses psychic power, it performs an odd dance step. Its style of dancing became hugely popular overseas.
+Pokedex = Grumpig are greedy and opportunistic. When the moment is right, they will attack Cawmadame's flock to steal more pearls for their collection.
 Generation = 3
 #-------------------------------
 [FEEBAS]
