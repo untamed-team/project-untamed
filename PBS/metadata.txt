@@ -2,7 +2,7 @@
 #-------------------------------
 [0]
 StartMoney = 3000
-StartItemStorage = POTION, REPEL
+StartItemStorage = POTION, DDTSPRAY
 Home = 33,6,6,6
 StorageCreator = Bill
 WildBattleBGM = Battle - Generic Wild

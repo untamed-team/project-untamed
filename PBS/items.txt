@@ -6302,7 +6302,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = A advanced Repel which attracts only not yet caught Pokémon. Also illegal in several states.
+Description = A advanced Repel with multiple built-in settings. Also illegal in several states.
 #-------------------------------
 [LINKCABLE]
 Name = Link Cable
