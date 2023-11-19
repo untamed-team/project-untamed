@@ -6653,3 +6653,21 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.
+#-------------------------------
+[EXPALL]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[EXPALLOFF]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
