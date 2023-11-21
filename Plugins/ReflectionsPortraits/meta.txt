@@ -1,5 +1,0 @@
-Name         = Reflections Dialogue Portraits
-Version      = 1.1.3
-Essentials   = 20.1,21
-Requires     = rainefallUtils
-Credits      = rainefall
