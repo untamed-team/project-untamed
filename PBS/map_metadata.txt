@@ -27,7 +27,7 @@ ShowArea = true
 Bicycle = false
 MapPosition = 0,20,3
 SnapEdges = true
-BattleBack = forest
+BattleBack = graveyard
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
