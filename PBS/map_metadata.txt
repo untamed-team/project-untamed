@@ -68,6 +68,10 @@ BattleBack = city
 Name = Camp - Grassy
 Outdoor = true
 #-------------------------------
+[032]   # Ceiba's Lab
+Name = Ceiba's Lab
+BattleBack = lab
+#-------------------------------
 [048]   # Route 1
 Name = Route 1
 Outdoor = true
