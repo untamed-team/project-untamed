@@ -1,4 +1,0 @@
-Name         = rainefallUtils
-Version      = 1.2
-Essentials   = 20.1,21
-Credits      = rainefall
