@@ -42,14 +42,14 @@ class Battle
 			if expAll
 				# Gain Exp for all Pokémon due to no Exp Leech users
 				eachInTeam(0, 0) do |pkmn, i|
-					values[i] = pbGainExpOne(i, b, numPartic, expShare, expAll, true)
+					values[i] = pbGainExpOne_Panel(i, b, numPartic, expShare, expAll, true)
 				end
 			else
 				if !vanillaStuff
 					# Gain Exp for Exp Leech users
 					eachInTeam(0, 0) do |pkmn, i|
 						next unless expleechtargets.include?(i)
-						values[i] = pbGainExpOne(i, b, haveexpleech, expleechtargets, expAll, !pkmn.shadowPokemon?)
+						values[i] = pbGainExpOne_Panel(i, b, haveexpleech, expleechtargets, expAll, !pkmn.shadowPokemon?)
 					end
 				else
 					eachInTeam(0, 0) do |pkmn, i|
@@ -57,48 +57,26 @@ class Battle
 							values[i] = 0
 							next
 						end
-						values[i] = pbGainExpOne(i, b, numPartic, expShare, expAll, true)
+						values[i] = pbGainExpOne_Panel(i, b, numPartic, expShare, expAll, true)
 					end
 				end
 			end
-=begin
-      if numPartic > 0 || expShare.length > 0 || expAll
-        # Gain EVs and Exp for participants
-        eachInTeam(0, 0) do |pkmn, i|
-          next if !pkmn.able?
-          unless b.participants.include?(i) || expShare.include?(i)
-            values[i] = 0
-            next
-          end
-          pbGainEVsOne(i, b)
-          values[i] = pbGainExpOne_Panel(i, b, numPartic, expShare, expAll, !pkmn.shadowPokemon?)
-        end
-        # Gain EVs and Exp for all other Pokémon because of Exp All
-        if expAll
-          showMessage = true
-          eachInTeam(0, 0) do |pkmn, i|
-            next if !pkmn.able?
-            next if b.participants.include?(i) || expShare.include?(i)
-            #pbDisplayPaused(_INTL("Your other Pokémon also gained Exp. Points!")) if showMessage
-            showMessage = false
-            pbGainEVsOne(i, b)
-            values[i] = pbGainExpOne_Panel(i, b, numPartic, expShare, expAll, false)
-          end
-        end
-      end
-=end
       vr = []
+			totalexps=0
       for v in values
         t_v = v ? v : 0
         vr.push(t_v)
+			totalexps+=v.to_i
       end
-      values = vr
-      s = Swdfm_Exp_Screen.new(values)
-      # Clear the participants array
-      for i in 0...$player.party.size
-        next if values[i] == 0
-        pbActualLevelUpAndGatherMoves(i, values[i])
-      end
+			if totalexps>0
+				values = vr
+				s = Swdfm_Exp_Screen.new(values)
+				# Clear the participants array
+				for i in 0...$player.party.size
+					next if values[i] == 0
+					pbActualLevelUpAndGatherMoves(i, values[i])
+				end
+			end
       b.participants = []
     end
   end
