@@ -1,4 +1,4 @@
-class Battle
+class Battle  
   def pbGainExp
     values = []
     moves  = {}
@@ -7,7 +7,7 @@ class Battle
     return if !@internalBattle || !@expGain
     # Go through each battler in turn to find the Pokémon that participated in
     # battle against it, and award those Pokémon Exp/EVs
-    expAll = $player.has_exp_all || $bag.has?(:EXPALL)
+    expAll = true
     p1 = pbParty(0)
     @battlers.each do |b|
       next unless b&.opposes?   # Can only gain Exp from fainted foes
@@ -15,20 +15,53 @@ class Battle
       next unless b.fainted? || b.captured
       # Count the number of participants
       numPartic = 0
+		if $game_variables[MECHANICSVAR] < 3
+			eachInTeam(0, 0) do |pkmn, i|
+				b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
+			end
+			b.participants.uniq! # removing repeats
+		end
       b.participants.each do |partic|
-        next unless p1[partic]&.able? && pbIsOwner?(0, partic)
+        next unless pbIsOwner?(0, partic)
         numPartic += 1
       end
       # Find which Pokémon have an Exp Share
-      expShare = []
-      if !expAll
-        eachInTeam(0, 0) do |pkmn, i|
-          next if !pkmn.able?
-          next if !pkmn.hasItem?(:EXPSHARE) && GameData::Item.try_get(@initialItems[0][i]) != :EXPSHARE
-          expShare.push(i)
-        end
-      end
+      expShare = [] # filler
+		haveexpleech = 0
+		expleechtargets = []
+		eachInTeam(0, 0) do |pkmn, i|
+			next if !pkmn.hasItem?(:EXPSHARE)
+			haveexpleech += 1
+			expleechtargets.push(i)
+		end
+		vanillaStuff = false
+		vanillaStuff = true if $bag.has?(:EXPALLOFF) && $game_variables[MECHANICSVAR] < 3
+		expAll = false if haveexpleech>0
+		expAll = false if vanillaStuff
       # Calculate EV and Exp gains for the participants
+			if expAll
+				# Gain Exp for all Pokémon due to no Exp Leech users
+				eachInTeam(0, 0) do |pkmn, i|
+					values[i] = pbGainExpOne(i, b, numPartic, expShare, expAll, true)
+				end
+			else
+				if !vanillaStuff
+					# Gain Exp for Exp Leech users
+					eachInTeam(0, 0) do |pkmn, i|
+						next unless expleechtargets.include?(i)
+						values[i] = pbGainExpOne(i, b, haveexpleech, expleechtargets, expAll, !pkmn.shadowPokemon?)
+					end
+				else
+					eachInTeam(0, 0) do |pkmn, i|
+						unless b.participants.include?(i)
+							values[i] = 0
+							next
+						end
+						values[i] = pbGainExpOne(i, b, numPartic, expShare, expAll, true)
+					end
+				end
+			end
+=begin
       if numPartic > 0 || expShare.length > 0 || expAll
         # Gain EVs and Exp for participants
         eachInTeam(0, 0) do |pkmn, i|
@@ -53,6 +86,7 @@ class Battle
           end
         end
       end
+=end
       vr = []
       for v in values
         t_v = v ? v : 0
@@ -72,6 +106,9 @@ class Battle
   def pbGainExpOne_Panel(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
     pkmn = pbParty(0)[idxParty]   # The Pokémon gaining Exp from defeatedBattler
     growth_rate = pkmn.growth_rate
+		if defeatedBattler.isSpecies?(:PHYTIDE) && pkmn.isSpecies?(:PHYTIDE) # Phytide evolution method
+			pkmn.evolution_steps += 1
+		end
     # Don't bother calculating if gainer is already at max Exp
     if pkmn.exp >= growth_rate.maximum_exp
       pkmn.calc_stats   # To ensure new EVs still have an effect
@@ -82,61 +119,33 @@ class Battle
     level = defeatedBattler.level
     # Main Exp calculation
     exp = 0
-    a   = level * defeatedBattler.pokemon.base_exp
-    if expShare.length > 0 && (isPartic || hasExpShare)
-      if numPartic == 0   # No participants, all Exp goes to Exp Share holders
-        exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? expShare.length : 1)
-      elsif Settings::SPLIT_EXP_BETWEEN_GAINERS   # Gain from participating and/or Exp Share
-        exp = a / (2 * numPartic) if isPartic
-        exp += a / (2 * expShare.length) if hasExpShare
-      else   # Gain from participating and/or Exp Share (Exp not split)
-        exp = (isPartic) ? a : a / 2
-      end
-    elsif isPartic   # Participated in battle, no Exp Shares held by anyone
-      exp = a / (Settings::SPLIT_EXP_BETWEEN_GAINERS ? numPartic : 1)
-    elsif expAll   # Didn't participate in battle, gaining Exp due to Exp All
-      # NOTE: Exp All works like the Exp Share from Gen 6+, not like the Exp All
-      #       from Gen 1, i.e. Exp isn't split between all Pokémon gaining it.
-      exp = a / 2
-    end
+		if !expAll # if someone has exp leech
+			haveexpshare = numPartic # number of mons with exp leech
+		else
+			haveexpshare = 1	
+		end
+		a = level * defeatedBattler.pokemon.base_exp
+		exp = (a/defeatedBattler.participants.length).floor * haveexpshare
     return 0 if exp <= 0
-    # Pokémon gain more Exp from trainer battles
-    exp = (exp * 1.5).floor if trainerBattle?
-    # Scale the gained Exp based on the gainer's level (or not)
-    if Settings::SCALED_EXP_FORMULA
-      exp /= 5
-      levelAdjust = ((2 * level) + 10.0) / (pkmn.level + level + 10.0)
-      levelAdjust = levelAdjust**5
-      levelAdjust = Math.sqrt(levelAdjust)
-      exp *= levelAdjust
-      exp = exp.floor
-      exp += 1 if isPartic || hasExpShare
-    else
-      exp /= 7
-    end
-    # Foreign Pokémon gain more Exp
-    isOutsider = (pkmn.owner.id != pbPlayer.id ||
-                 (pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language))
-    if isOutsider
-      if pkmn.owner.language != 0 && pkmn.owner.language != pbPlayer.language
-        exp = (exp * 1.7).floor
-      else
-        exp = (exp * 1.5).floor
-      end
-    end
-    # Exp. Charm increases Exp gained
-    exp = exp * 3 / 2 if $bag.has?(:EXPCHARM)
-    # Modify Exp gain based on pkmn's held item
-    i = Battle::ItemEffects.triggerExpGainModifier(pkmn.item, pkmn, exp)
-    if i < 0
-      i = Battle::ItemEffects.triggerExpGainModifier(@initialItems[0][idxParty], pkmn, exp)
-    end
-    exp = i if i >= 0
-    # Boost Exp gained with high affection
-    if Settings::AFFECTION_EFFECTS && @internalBattle && pkmn.affection_level >= 4 && !pkmn.mega?
-      exp = exp * 6 / 5
-      isOutsider = true   # To show the "boosted Exp" message
-    end
+		# level cap #by low
+		truelevel = defeatedBattler.level															# stuff
+		truelevel -= 10 if $game_variables[MASTERMODEVARS][7]==true		# for
+		truelevel -= 20 if $game_variables[MASTERMODEVARS][22]==true	# master
+		truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true	# mode
+		truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true	# settings
+		exp = (exp / 3).floor
+		expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
+		exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
+		exp = 0 if pkmn.level - truelevel == 3
+		exp = (exp / 2).floor if pkmn.level>40
+		#exp = (exp * 0.2).floor if $game_switches[319] 				# custom wild
+		#exp = 0 if $game_switches[305] && pkmn.level>=level 		# leader rematch
+		# exp leech #by low
+		if !expAll
+			# exp is multiplied by (number of allies in party) / (number of allies with exp leech) 
+			# 100.0 so we get some not round numbers
+			exp *= ((defeatedBattler.participants.length)*100)/(numPartic*100.0)
+		end
     # Make sure Exp doesn't exceed the maximum
     expFinal = growth_rate.add_exp(pkmn.exp, exp)
     expGained = expFinal - pkmn.exp
