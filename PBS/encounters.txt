@@ -67,5 +67,5 @@ Land,21
     15,WRENNER,3,5
 Corn,5
     75,ZEAZAYA,5
-    20,WRENNER,3,5
-    5,PACUNA,2,4
+    25,PACUNA,3,5
+   
