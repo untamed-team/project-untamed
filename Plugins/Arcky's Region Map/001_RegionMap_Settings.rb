@@ -79,7 +79,7 @@ module RegionMapSettings
     # Region District Names
     #===============================================================================
     # Set this to true if you want to change the default name (defined in the PBS) for certain parts of your Region Map.
-    USE_REGION_DISTRICTS_NAMES = true   
+    USE_REGION_DISTRICTS_NAMES = false  
 
     # - Region Number
     # - [min X, max X]; the minimum X value and the maximum X value, in squares.

@@ -361,11 +361,18 @@ class PokemonRegionMap_Scene
         @spritesMap["player"] = BitmapSprite.new(@mapWidth, @mapHeigth, @viewportMap)
         @spritesMap["player"].x = @spritesMap["map"].x
         @spritesMap["player"].y = @spritesMap["map"].y
-      end 
+      end
+	  
+	  #added by Gardenette
+	  trainerIcon = "Graphics/Pictures/RegionMap/Icons/#{$player.trainer_type.to_s}"
+	  
       @spritesMap["player"].z = 60
       pbDrawImagePositions(
         @spritesMap["player"].bitmap,
-        [[GameData::TrainerType.player_map_icon_filename($player.trainer_type), pointXtoScreenX(@mapX) , pointYtoScreenY(@mapY)]]
+        #[[GameData::TrainerType.player_map_icon_filename($player.trainer_type), pointXtoScreenX(@mapX) , pointYtoScreenY(@mapY)]]
+		
+		#added by Gardenette
+		[[trainerIcon, pointXtoScreenX(@mapX) , pointYtoScreenY(@mapY)]]
       )
     end
   end
