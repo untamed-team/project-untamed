@@ -15,11 +15,11 @@ Water,2
     40,FEEBAS,8,11
 OldRod
     60,BANAGNAW,6,6
-    40,FEEBAS,5,6
+    40,BARBOACH,5,6
 GoodRod
-    60,BARBOACH,12,17
-    20,FEEBAS,10,16
-    20,BANGNAW,10,15
+    60,BANAGNAW,12,17
+    15,FEEBAS,10,16
+    25,BARBOACH,10,15
 #-------------------------------
 [026] # Route 2
 Land,21
@@ -28,7 +28,7 @@ Land,21
     10,HOOTHOOT,8,11
     15,CHICATTA,10,11
     10,WRENNER,9,11
-    5,M_MEOWTH,9,11
+    5,M_MEOWTH,10,12
     15,BUNNELBY,8,11
 #-------------------------------
 [048] # Route 1
@@ -56,9 +56,9 @@ OldRod
     60,BANAGNAW,6,6
     40,BARBOACH,5,6
 GoodRod
-    60,BARBOACH,12,17
-    20,FEEBAS,10,16
-    20,BANAGNAW,10,15
+    60,BANAGNAW,12,17
+    15,FEEBAS,10,16
+    25,BARBOACH,10,15
 Land,21
     30,PACUNA,2,4
     20,TECHUPPI,3,6
