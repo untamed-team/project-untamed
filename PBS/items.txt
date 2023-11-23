@@ -829,12 +829,12 @@ Flags = Fling_30
 Description = An item to be held by a Pokémon. It is an egg filled with happiness that earns extra Exp. Points in battle.
 #-------------------------------
 [EXPSHARE]
-Name = Exp. Share
+Name = Exp. Leech
 NamePlural = Exp. Shares
 Pocket = 1
 Price = 3000
 Flags = Fling_30
-Description = An item to be held by a Pokémon. The holder gets a share of a battle's Exp. Points without battling.
+Description = An item to be held by a Pokémon. The holder absorbs all the Exp. Points from every member not holding one.
 #-------------------------------
 [AMULETCOIN]
 Name = Amulet Coin
@@ -6302,7 +6302,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = A advanced Repel which attracts only not yet caught Pokémon. Also illegal in several states.
+Description = A advanced Repel with multiple built-in settings. Also illegal in several states.
 #-------------------------------
 [LINKCABLE]
 Name = Link Cable
@@ -6627,15 +6627,6 @@ FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
 Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
 #-------------------------------
-[EVRESET]
-Name = EVs Resetter
-NamePlural = EVs Resetters
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = An intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
-#-------------------------------
 [CAMPINGGEAR]
 Name = Camping Gear
 NamePlural = Camping Gear
@@ -6644,14 +6635,7 @@ Price = 0
 Flags = KeyItem
 Description = A set of camping equipment used to start camping.
 #-------------------------------
-[EXPALL]
-Name = Exp. All
-NamePlural = Exp. Alls
-Pocket = 8
-Price = 0
-FieldUse = Direct
-Flags = KeyItem
-Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+# exp all is always active
 #-------------------------------
 [COLOGNECASE]
 Name = Cologne Case
@@ -6669,3 +6653,21 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.
+#-------------------------------
+[EXPALL]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[EXPALLOFF]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.

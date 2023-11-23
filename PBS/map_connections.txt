@@ -1,16 +1,16 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# Route 1 (48) - Veravalles Town (22)
-48,West,19,22,East,0
-# Ice Cream Factory (28) - Calojarro Plaza (36)
-28,South,0,36,North,0
-# Route 2 (2) (39) - Papelbrook (31)
-39,North,0,31,South,35
-# Route 1 (48) - Hacienda Castaneda (79)
-48,West,0,79,East,26
 # Calojarro (27) - San Cerigold Town (4)
 27,0,19,4,228,0
+# San Cerigold Town (4) - Route 2 (26)
+4,50,0,26,0,4
 # Route 3 (29) - Calojarro (27)
 29,North,28,27,South,0
-# San Cerigold Town (4) - Route 2 (1) (26)
-4,50,0,26,0,4
+# Ice Cream Factory (28) - Calojarro Plaza (36)
+28,South,0,36,North,0
+# Melolado (39) - Papelbrook (31)
+39,North,0,31,South,35
+# Veravalles Town (22) - Route 1 (48)
+22,East,0,48,West,19
+# Hacienda Castaneda (79) - Route 1 (48)
+79,East,26,48,West,0

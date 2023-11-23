@@ -65,7 +65,7 @@ module CustomFogsPanorama
       # or the lines below it. Mind your commas!
       
       # when MAPID then ["Name", Zoom_x (%), Zoom_y (%), Opacity (0-255), Blend Type (NORMAL, ADD, SUB), Tone.new(r,g,b,grey), scroll x, scroll y]
-        when 1 then ["003-Shade01", 100, 100, 50, SUB, Tone.new(0,0,0,0), -1, 5]
+      # when 1 then ["003-Shade01", 100, 100, 50, SUB, Tone.new(0,0,0,0), -1, 5]
       # when 2 then ["Fog Name", 100, 100, 255, NORMAL, Tone.new(0,0,0,0), 0, 0]
       
       #the below line works - Gardenette
@@ -135,9 +135,9 @@ module CustomFogsPanorama
     # * Initialize
     #--------------------------------------------------------------------------
     alias jaiden_lights_initialize_spritemap initialize
-    def initialize(map = nil)
+    def initialize(map)
       # Call original
-      jaiden_lights_initialize_spritemap
+      jaiden_lights_initialize_spritemap(map)
       # Reassign fog plane if a custom one is assigned
       second_fog = CustomFogsPanorama.fogs($game_map.map_id)
       if second_fog[0] != ""
