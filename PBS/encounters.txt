@@ -28,8 +28,8 @@ Land,21
     10,HOOTHOOT,8,11
     15,CHICATTA,10,11
     10,WRENNER,9,11
-    5,M_MEOWTH,10,12
-    15,BUNNELBY,8,11
+    10,BUNNELBY,8,11
+    10,SKIDDO,8,11
 #-------------------------------
 [048] # Route 1
 Land,21
@@ -50,8 +50,9 @@ Corn,5
 #-------------------------------
 [079] # Hacienda Castaneda
 Water,2
-    60,LOTAD,8,11
-    40,LILORINA,8,11
+    60,BANAGNAW,8,11
+    20,FINNEON,8,11
+    20,FEEBAS.8,11
 OldRod
     60,BANAGNAW,6,6
     40,BARBOACH,5,6
@@ -60,11 +61,12 @@ GoodRod
     15,FEEBAS,10,16
     25,BARBOACH,10,15
 Land,21
-    30,PACUNA,2,4
-    20,TECHUPPI,3,6
-    20,SUNKERN,3,4
-    15,MINIMELO,2,4
-    15,WRENNER,3,5
+    25,WRENNER,3,5
+    25,TECHUPPI,3,6
+    20,M_EKANS,3,6
+    10,SUNKERN,3,4
+    10,PACUNA,2,4
+    10,MINIMELO,3,5
 Corn,5
     75,ZEAZAYA,5
     25,PACUNA,3,5
