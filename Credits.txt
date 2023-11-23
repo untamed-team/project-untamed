@@ -451,6 +451,9 @@ Ambient Pokémon Cries:
 SpaceWestern
 Vendily
 
+Arcky's Region Map:
+Arcky
+
 Astralneko's Scripting Utilities:
 Astralneko
 
@@ -743,6 +746,12 @@ Optional   = Following Pokemon EX,2.2.2
 Conflicts  = Deep Marsh Tiles,1.0.0
 Link       = https://reliccastle.com/resources/931/
 Credits    = Kotaro,Titania318,KleinStudio,derFischae
+
+Name       = Arcky's Region Map
+Version    = 1.3.2
+Essentials = 20.1
+Optional   = Modern Quest System + UI, 1.0
+Credits    = Arcky
 
 Name       = Voltseon's A-Star Pathfinding
 Version    = 1.2
