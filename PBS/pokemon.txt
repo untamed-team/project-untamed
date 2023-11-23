@@ -1029,7 +1029,7 @@ CatchRate = 190
 Happiness = 70
 Abilities = OBLIVIOUS,ANTICIPATION
 HiddenAbilities = SAPSIPPER
-Moves = 1,MUDSLAP,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,32,MUDDYWATER,35,EARTHPOWER,39,FUTURESIGHT,44,HYDROPUMP
+Moves = 1,MUDSLAP,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SNORE,28,AQUATAIL,32,MUDDYWATER,35,EARTHQUAKE,39,FUTURESIGHT,44,LIQUIDATION
 TutorMoves = BLIZZARD,DIVE,EARTHQUAKE,HAIL,ICEBEAM,RAINDANCE,ROCKTOMB,SANDSTORM,SCALD,SURF,WATERFALL,ICYWIND,EARTHPOWER,IRONHEAD,STEALTHROCK,FLIPTURN,AQUATAIL
 EggMoves = DRAGONDANCE,EARTHPOWER,FLAIL,HYDROPUMP,MUDSHOT,MUDDYWATER,SPARK,TAKEDOWN,THRASH,WHIRLPOOL
 EggGroups = Water2
@@ -1056,9 +1056,9 @@ BaseExp = 164
 EVs = HP,2
 CatchRate = 75
 Happiness = 70
-Abilities = UNAWARE,HYDRATION
+Abilities = OBLIVIOUS,HYDRATION
 HiddenAbilities = SANDSPIT
-Moves = 0,BULLDOZE,1,BULLDOZE,1,BELCH,1,EXTRASENSORY,1,TICKLE,1,MUDSLAP,1,MUDSPORT,1,WATERSPORT,1,WATERGUN,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SLEEPTALK,28,AQUATAIL,34,MUDDYWATER,39,EARTHPOWER,45,FUTURESIGHT,52,HYDROPUMP
+Moves = 0,BULLDOZE,1,BULLDOZE,1,BELCH,1,EXTRASENSORY,1,TICKLE,1,MUDSLAP,1,MUDSPORT,1,WATERSPORT,1,WATERGUN,6,MUDSPORT,6,WATERSPORT,9,WATERGUN,13,MUDBOMB,15,AMNESIA,17,WATERPULSE,20,MAGNITUDE,25,REST,25,SLEEPTALK,28,AQUATAIL,34,MUDDYWATER,39,EARTHQUAKE,45,FUTURESIGHT,52,LIQUIDATION
 TutorMoves = BLIZZARD,DIVE,EARTHQUAKE,HAIL,ICEBEAM,RAINDANCE,ROCKSLIDE,ROCKTOMB,SANDSTORM,SCALD,STONEEDGE,STRENGTH,SURF,WATERFALL,ZENHEADBUTT,ICYWIND,EARTHPOWER,IRONHEAD,STEALTHROCK,FLIPTURN,AQUATAIL
 EggGroups = Water2
 HatchSteps = 5120
@@ -1967,7 +1967,7 @@ Color = Brown
 Shape = Finned
 Habitat = WatersEdge
 Category = Fish
-Pokedex = Feebas live in ponds that are heavily infested with weeds. Because of its hopelessly shabby appearance, it seems as if few trainers raise it.
+Pokedex = Although unattractive and unpopular, Feebas can survive under poor conditions most Pokémon could not.
 Generation = 3
 Evolutions = MILOTIC,Beauty,170,MILOTIC,TradeItem,PRISMSCALE
 #-------------------------------
@@ -1993,7 +1993,7 @@ Color = Pink
 Shape = Serpentine
 Habitat = WatersEdge
 Category = Tender
-Pokedex = It is said to live at the bottom of large lakes. Considered to be the most beautiful of all Pokémon, it has been depicted in paintings and statues.
+Pokedex = Milotic is said to be one of the most beautiful Pokémon in Mazah. It has provided inspiration for many works of art.
 Generation = 3
 #-------------------------------
 [TRUBBISH]
@@ -2018,7 +2018,7 @@ Weight = 31.0
 Color = Green
 Shape = Bipedal
 Category = Trash Bag
-Pokedex = The combination of garbage bags and industrial waste caused the chemical reaction that crated this Pokémon.
+Pokedex = Trubbish are primarily found in towns and cities. They enjoy rummaging through garbage bags for food and following people who litter.
 Generation = 5
 WildItemUncommon = BLACKSLUDGE
 Evolutions = GARBODOR,Level,36
@@ -2044,7 +2044,7 @@ Weight = 107.3
 Color = Green
 Shape = Bipedal
 Category = Trash Heap
-Pokedex = They absorb garbage and make it part of their bodies. They shoot a poisonous liquid from their right-hand fingertips.
+Pokedex = Garbodor can eat 60 pounds of garbage a day, keeping cities clean. However, they are hated for their vile stench.
 Generation = 5
 WildItemCommon = BLACKSLUDGE
 WildItemUncommon = STICKYBARB
@@ -2318,7 +2318,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Ewvolution
-Pokedex = An Eevee has an unstable genetic makeup that suddenly mutates due to its environment. Radiation from various stones causes this Pokémon to evolve.
+Pokedex = It possesses a unique genetic makeup, allowing it to evolve into many different forms. Two of these evolutions were recently discovered in the Mazah region.
 Generation = 1
 Evolutions = VAPOREON,Item,WATERSTONE,JOLTEON,Item,THUNDERSTONE,FLAREON,Item,FIRESTONE,LEAFEON,LocationFlag,MossRock,LEAFEON,Item,LEAFSTONE,GLACEON,LocationFlag,IceRock,GLACEON,Item,ICESTONE,SYLVEON,HappinessMoveType,FAIRY,ESPEON,HappinessDay,,UMBREON,HappinessNight,,TERREON,Location,999,GUSTEON,Location,999
 #-------------------------------
@@ -2344,7 +2344,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Urban
 Category = Bubble Jet
-Pokedex = Vaporeon underwent a spontaneous mutation and grew fins and gills that allow them to live underwater. They have the ability to freely control water.
+Pokedex = It has a temperament as cool as a stream of water. When it senses danger, it swiftly melts into the nearest body of water to make its escape.
 Generation = 1
 #-------------------------------
 [JOLTEON]
@@ -2369,7 +2369,7 @@ Color = Yellow
 Shape = Quadruped
 Habitat = Urban
 Category = Lightning
-Pokedex = Its cells generate weak power that is amplified by its fur's static electricity to drop thunderbolts. The bristling fur is made of electrically charged needles.
+Pokedex = If Jolteon build up too much static electricity, they become hyperactive and restless. They will run around in circles until the excess energy is burned.
 Generation = 1
 #-------------------------------
 [FLAREON]
@@ -2394,7 +2394,7 @@ Color = Red
 Shape = Quadruped
 Habitat = Urban
 Category = Flame
-Pokedex = Flareon's fluffy fur releases heat into the air so that its body does not get excessively hot. Its body temperature can rise to a maximum of 1,650 degrees F.
+Pokedex = If its trainer is cold, it will snuggle up to them, using its heated fur to keep them warm. This behavior makes them especially beloved during the winter.
 Generation = 1
 #-------------------------------
 [ESPEON]
@@ -2419,7 +2419,7 @@ Color = Purple
 Shape = Quadruped
 Habitat = Urban
 Category = Sun
-Pokedex = An Espeon is extremely loyal to any trainer it considers to be worthy. It is said to have developed precognitive powers to protect its trainer from harm.
+Pokedex = It’s often found lounging in the sunlight, converting solar power into psychic energy with the orb on its forehead. It dislikes physical contact.
 Generation = 2
 #-------------------------------
 [UMBREON]
@@ -2444,7 +2444,7 @@ Color = Black
 Shape = Quadruped
 Habitat = Urban
 Category = Moonlight
-Pokedex = Umbreon evolved from exposure to the moon's energy pulses. It lurks in darkness and waits for its foes to move. The rings on its body glow when it leaps to attack.
+Pokedex = It waits until nightfall for Pacuna to gather before pouncing. It weaponizes its poisonous sweat to subdue its prey.
 Generation = 2
 #-------------------------------
 [LEAFEON]
@@ -2468,7 +2468,7 @@ Weight = 25.5
 Color = Green
 Shape = Quadruped
 Category = Verdant
-Pokedex = Just like a plant, it uses photosynthesis. As a result, it is always enveloped in clear air.
+Pokedex = Leafeon reside in dense, unpolluted forests where it peacefully photosynthesizes for nutrients. Gentle and kind by nature, they prefer to avoid conflict. 
 Generation = 4
 #-------------------------------
 [GLACEON]
@@ -2492,7 +2492,7 @@ Weight = 25.9
 Color = Blue
 Shape = Quadruped
 Category = Fresh Snow
-Pokedex = As a protective technique, it can completely freeze its fur to make its hairs stand like needles.
+Pokedex = It crosses lakes and rivers by freezing the water beneath its paws. The ice bridges it creates are often used by other wild Pokemon unable to cross themselves.
 Generation = 4
 #-------------------------------
 [SYLVEON]
@@ -2516,7 +2516,7 @@ Weight = 23.5
 Color = Pink
 Shape = Quadruped
 Category = Intertwining
-Pokedex = Its ribbonlike feelers give off an aura that weakens hostility in its prey, causing them to let down their guard. Then it attacks.
+Pokedex = They emit an aura from their feelers to calm prey. Children in the Mazah region are told bedtime stories of a heroic Sylveon vanquishing an army of dragons.
 Generation = 6
 #-------------------------------
 [TERREON]
@@ -2541,7 +2541,7 @@ Color = Brown
 Shape = Quadruped
 Habitat = Urban
 Category = Mud Puppy
-Pokedex = Using its extraordinary sense of smell, Terreon can sniff out valuable treasures and even find rare Pokémon underground.
+Pokedex = Terreon use their strong sense of smell to forage for food underground. In battle, they will use their long ears to fling mud at their opponents's faces.
 #-------------------------------
 [GUSTEON]
 Name = Gusteon
@@ -2565,7 +2565,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Urban
 Category = Breezy
-Pokedex = The mood of a Gusteon will change depending on the weather, being jovial on sunny days and irritable on stormy days.
+Pokedex = It cheerfully prances among the clouds on sunny days, but become irritable during storms. They attack by diving towards the ground, shrouded in clouds.
 #-------------------------------
 [WOOBAT]
 Name = Woobat
@@ -2640,7 +2640,7 @@ Color = Pink
 Shape = Quadruped
 Habitat = Forest
 Category = Kitten
-Pokedex = A Skitty's adorably cute behavior makes it highly popular. In battle, it makes its tail puff out. It threatens foes with a sharp growl.
+Pokedex = It has an uncontrollable habit of chasing moving things. It will even chase its own tail, running in circles until it becomes dizzy.
 Generation = 3
 Evolutions = DELCATTY,Item,MOONSTONE
 #-------------------------------
@@ -2666,7 +2666,7 @@ Color = Purple
 Shape = Quadruped
 Habitat = Forest
 Category = Prim
-Pokedex = Rather than keeping a permanent lair, it habitually seeks comfortable spots and sleeps there. It is nocturnal and becomes active at dusk.
+Pokedex = Delcatty prefers to live a lazy, pampered lifestyle. If another Pokémon interupts its sleep, it will simply move somewhere else.
 Generation = 3
 #----------------------------------------------------------------#
 #----------------------------------------------------------------#
@@ -2845,7 +2845,7 @@ Weight = 100.0
 Color = Green
 Shape = Quadruped
 Category = Fruit
-Pokedex = Because it continually ate only its favorite fruit, the fruit started growing around its neck.
+Pokedex = It lives in jungles, offering the fruit that grows on its neck to hungry Pokemon in need. The fruit is at its most delicious when Tropius is ready to evolve.
 Evolutions = TITANOTROP,Titanotrop,42
 #-------------------------------
 [TITANOTROP]
@@ -3423,7 +3423,7 @@ Weight = 14.0
 Color = Yellow
 Shape = Serpentine
 Category = Land Snake
-Pokedex = It digs into the ground with its tail and makes a mazelike nest. It can fly just a little.
+Pokedex = When not underground, it can be seen improving its limited flight capabilities a little bit each day. Once mastered, it is said to transcend into a new form.
 Evolutions = DUNSENDED,Dunsended,46
 #-------------------------------
 [DUNSENDED]
@@ -4707,7 +4707,7 @@ Color = Red
 Shape = Finned
 Habitat = WatersEdge
 Category = Fish
-Pokedex = Its swimming muscles are weak, so it is easily washed away by currents. In places where water pools, you can see many Magikarp deposited there by the flow.
+Pokedex = Much rarer than their Mazah counterpart, these Magikarp are considered a delicacy amongst the Mazah region's most skilled chefs.
 Generation = 1
 #-------------------------------
 [GYARADOS]
@@ -4732,7 +4732,7 @@ Color = Blue
 Shape = Serpentine
 Habitat = WatersEdge
 Category = Atrocious # thats so true pokedex
-Pokedex = It is an extremely vicious and violent Pokémon. When humans begin to fight, it will appear and burn everything to the ground with intensely hot flames.
+Pokedex = Its ferocity has no equal. It will fight with its Mazian counterpart over territory in battles so fierce they whip up storms capable of sinking ships with ease.
 Generation = 1
 #-------------------------------
 [PHYTIDE]
@@ -4983,8 +4983,7 @@ Color = Green
 Shape = Bipedal
 Habitat = RoughTerrain
 Category = Cactus
-Pokedex = Cacnea live in deserts with virtually no rainfall. It battles by swinging its thick, spiked arms. Once a year, a yellow flower blooms.
-Generation = 3
+Pokedex = It prefers harsh and arid environments, like deserts. When a dust storm kicks up, Cacnea can some times be found rolling down sand dunes uncontrollably.
 WildItemUncommon = STICKYBARB
 Evolutions = CACTURNE,Level,32
 #-------------------------------
@@ -5010,7 +5009,7 @@ Color = Green
 Shape = Bipedal
 Habitat = RoughTerrain
 Category = Scarecrow
-Pokedex = After spending thousands of years in harsh deserts, its blood transformed into the same substances as sand. It is nocturnal, so it hunts at night.
+Pokedex = Legend tells of an outlaw who partnered with a Cacturne, which fired thorns from its arms like bullets and shielded the outlaw with its thorny hide.
 Generation = 3
 WildItemUncommon = STICKYBARB
 #-------------------------------
@@ -5164,7 +5163,7 @@ Color = Pink
 Shape = HeadLegs
 Habitat = Urban
 Category = Virtual
-Pokedex = It is capable of reverting itself entirely back to program data in order to enter cyberspace. A Porygon is copy-protected so it cannot be duplicated.
+Pokedex = They are thought to have entered the Mazah region through a data leak from Kanto. People are advised to keep their computers updated to avoid incidents.
 Generation = 1
 Evolutions = PORYGON2,TradeItem,UPGRADE
 #-------------------------------

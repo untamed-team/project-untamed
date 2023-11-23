@@ -383,7 +383,7 @@ Moves = 1,SPLASH,15,SMACKDOWN,25,FLAIL
 TutorMoves = BODYSLAM,SURF
 Weight = 65.4
 Color = Brown
-Pokedex = crystal
+Pokedex = These Magikarp are disliked by fishermen for their lumpy scales and putrid algae. However, some believe with enough love they will become a great treasure.
 #-------------------------------
 [GYARADOS,1]
 FormName = Mega Gyarados
@@ -409,7 +409,7 @@ Moves = 0,POWERGEM,1,BITE,1,FLAIL,1,SPLASH,1,SMACKDOWN,1,LEER,1,TWISTER,4,WHIRLP
 TutorMoves = WORKUP,ROAR,SWAGGER,ROUND,ICEBEAM,BLIZZARD,RAINDANCE,NASTYPLOT,EARTHQUAKE,ROCKTOMB,FACADE,FLASHCANNON,BODYSLAM,ROCKSLIDE,DRAGONPULSE,SCREECH,STONEEDGE,GEODEBURST,SNARL,LIQUIDATION,ZENHEADBUTT,AVALANCHE,GYROBALL,DEFOG,SURF,STRENGTH,WATERFALL,DIVE,AQUATAIL,IRONHEAD,IRONTAIL,ROCKBLAST,FORGEBREATH,SCALESHOT,EARTHPOWER
 Weight = 314.2
 Color = Brown
-Pokedex = crystal
+Pokedex = Prized for its valuable golden scales, it is exceptionally rare in the wild. Only those who raise Magikarp with care are able to easily obtain one.
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
 #---------------------------------------------------------------------------------------------
