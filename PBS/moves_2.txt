@@ -8834,14 +8834,14 @@ Target = NearOther
 Priority = 0
 FunctionCode = FreezeTarget
 Flags = CanProtect
-EffectChance = 20
+EffectChance = 10
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------
 [MYSTICBLADE]
 Name = Mystic Blade
 Type = FAIRY
 Category = Physical
-Power = 85
+Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -8869,14 +8869,14 @@ Description = The user strikes the air to send a damaging shockwave towards oppo
 Name = Geode Burst
 Type = ROCK
 Category = Special
-Power = 110
+Power = 100
 Accuracy = 80
 TotalPP = 5
 Target = NearOther
 Priority = 0
 FunctionCode = None
-Flags = CanProtect
-Description = The user attacks its target with a hail of glittering crystals.
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Description = The user attacks its target with a hail of glittering crystals. It has a high critical-hit ratio.
 #-------------------------------
 [FORGEBREATH]
 Name = Forge Breath
@@ -9038,18 +9038,6 @@ Flags = CanProtect,CanMirrorMove,CannotMetronome
 EffectChance = 0
 Description = The user drains the life force from the target. This move heals the user by 50% of the damage dealt.
 #-------------------------------
-[STEAMBURST]
-Name = Steam Burst
-Type = FIRE
-Category = Special
-Power = 75
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = HigherDamageInRain
-Flags = CanProtect,CanMirrorMove
-Description = The user attacks by sending a spray of superheated steam towards its target. This move's power is boosted in the rain.
-#-------------------------------
 [QUESOBLAST]
 Name = Queso Blast
 Type = QMARKS
@@ -9090,7 +9078,7 @@ Description = After doing damage, if the target has a status condition that is n
 Name = Erosion Wave
 Type = ROCK
 Category = Special
-Power = 95
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -9149,56 +9137,51 @@ FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
 Description = A folded blade that tears through a target using Protect or Detect.
 #-------------------------------
-[SWINDLE]
-Name = Swindle
-Type = DARK
-Category = Special
-Power = 50
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = DoubleDamageIfTargetHasChoiceItem
-Flags = CanProtect,CanMirrorMove
-Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
-#-------------------------------
 [SLIMESHOT]
 Name = Failsafe Slime Shot
 Type = GROUND
 Category = Special
-Power = 85
-Accuracy = 100
-TotalPP = 10
+Power = 2
+Accuracy = 0
+TotalPP = 1
 Target = NearOther
-Priority = 0
-FunctionCode = 044
-Flags = CanProtect,CanMirrorMove,Bomb
-EffectChance = 10
-Description = The user fires a glob of charged slime at the target to attack. This may also lower the target’s Sp. Def stat.
+FunctionCode = None
+Flags = CanProtect
+Description = ...
 #-------------------------------
 [ZEALOUSDANCE]
 Name = Failsafe Zealous Dance
 Type = FIRE
 Category = Special
-Power = 70
-Accuracy = 100
-TotalPP = 5
+Power = 2
+Accuracy = 0
+TotalPP = 1
 Target = NearOther
-Priority = 0
-FunctionCode = PowerUpDragonMove
-Flags = CanProtect,CanMirrorMove,Dance
-EffectChance = 100
-Description = The user assaults with a frenzied dance. The user boosts the power of the Dragon move it uses next.
+FunctionCode = None
+Flags = CanProtect
+Description = ...
 #-------------------------------
 [PSYSONIC]
 Name = Failsafe Psysonic
 Type = PSYCHIC
 Category = Special
-Power = 90
+Power = 2
 Accuracy = 0
-TotalPP = 10
+TotalPP = 1
 Target = AllNearFoes
-Priority = 0
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect
 EffectChance = 0
-Description = The user attacks opponents by unleashing a loud burst of sound directly into their minds. This move never misses.
+Description = ...
+#-------------------------------
+[STEAMBURST]
+Name = Failsafe Steam Burst
+Type = FIRE
+Category = Special
+Power = 2
+Accuracy = 0
+TotalPP = 1
+Target = NearOther
+FunctionCode = None
+Flags = CanProtect
+Description = ...
