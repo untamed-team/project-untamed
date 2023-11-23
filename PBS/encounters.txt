@@ -3,8 +3,8 @@
 [005] # San Cerigold Cemetery
 Land,21
     20,DUSKULL,6,7
-    20,LILORINA,5,6
-    15,BUDEW,5,7
+    25,LILORINA,5,6
+    20,BUDEW,5,7
     15,FLABEBE,5,7
     10,MURKROW,4,7
     10,VULPIX,5,7
@@ -14,23 +14,22 @@ Water,2
     60,LOTAD,8,11
     40,FEEBAS,8,11
 OldRod
-    60,LOTAD,6,6
+    60,BANAGNAW,6,6
     40,FEEBAS,5,6
 GoodRod
     60,BARBOACH,12,17
     20,FEEBAS,10,16
-    20,LOTAD,10,15
+    20,BANGNAW,10,15
 #-------------------------------
 [026] # Route 2
 Land,21
-    20,SKIDDO,5
-    15,FLABEBE,5
-    15,TECHUPPI,5
-    10,HOOTHOOT,5
-    10,SUNKERN,5
-    10,WRENNER,5
-    5,M_MEOWTH,5
-    15,BUNNELBY,5
+    20,TECHUPPI,9,11
+    25,M_EKANS,9,11
+    10,HOOTHOOT,8,11
+    15,CHICATTA,10,11
+    10,WRENNER,9,11
+    5,M_MEOWTH,9,11
+    15,BUNNELBY,8,11
 #-------------------------------
 [048] # Route 1
 Land,21
@@ -52,14 +51,14 @@ Corn,5
 [079] # Hacienda Castaneda
 Water,2
     60,LOTAD,8,11
-    40,FEEBAS,8,11
+    40,LILORINA,8,11
 OldRod
-    60,LOTAD,6,6
-    40,FEEBAS,5,6
+    60,BANAGNAW,6,6
+    40,BARBOACH,5,6
 GoodRod
     60,BARBOACH,12,17
     20,FEEBAS,10,16
-    20,LOTAD,10,15
+    20,BANAGNAW,10,15
 Land,21
     30,PACUNA,2,4
     20,TECHUPPI,3,6
