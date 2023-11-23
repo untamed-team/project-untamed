@@ -7002,8 +7002,8 @@ Power = 160
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = AttackAndSkipNextTurn,Bomb
-Flags = CanProtect,CanMirrorMove
+FunctionCode = AttackAndSkipNextTurn
+Flags = CanProtect,CanMirrorMove,Bomb
 Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [PSYCHOBOOST]
