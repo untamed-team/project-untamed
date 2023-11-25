@@ -4,9 +4,13 @@
 29,North,28,27,South,0
 # Ice Cream Factory (28) - Calojarro Plaza (36)
 28,South,0,36,North,0
-# Melolado (39) - Papelbrook (31)
-39,North,0,31,South,35
-# Route 1 (48) - Veravalles Town (22)
-48,0,19,22,38,0
-# San Cerigold Town (4) - Hacienda Castaneda (79)
-4,West,14,79,East,0
+# Papelbrook (31) - Melolado (39)
+31,South,35,39,North,0
+# San Cerigold Town (4) - Route 1 (48)
+4,South,0,48,North,2
+# Veravalles Town (22) - Route 1 (48)
+22,East,0,48,West,19
+# Hacienda Castaneda (79) - Route 1 (48)
+79,East,26,48,West,0
+# Hacienda Castaneda (79) - Veravalles Town (22)
+79,South,2,22,North,0
