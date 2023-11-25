@@ -9198,16 +9198,3 @@ Target = NearOther
 FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
 Description = A folded blade that tears through a target using Protect or Detect.
-#-------------------------------
-[SWINDLE]
-Name = Failsafe Swindle
-Type = DARK
-Category = Special
-Power = 50
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = DoubleDamageIfTargetHasChoiceItem
-Flags = CanProtect,CanMirrorMove
-Description = The user greedly coerces the foe into giving up their choice item using mind tricks.
-#-------------------------------

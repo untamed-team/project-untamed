@@ -2,11 +2,16 @@
 #-------------------------------
 [0]
 Filename = mapRegion0.png
-Name = Mazah
-Point = 19,5,Veravalles Town,Professor Ceiba's Lab,18,30,,
-Point = 20,5,Route 1,,,,,
-Point = 20,4,Route 1,,,,,
-Point = 18,4,Hacienda Castaneda,,,,,
-Point = 18,3,Hacienda Fields,,,,,
-Point = 19,4,Route 1,,,,,
-Point = 20,3,San Cerigold Town,,22,22,,
+Name = "Mazah Region"
+Point = 19,5,"Veravalles Town","Ceiba's Lab",13,11,,,
+Point = 20,5,"Route 1",,,,,,
+Point = 20,4,"Route 1",,,,,,
+Point = 19,4,"Route 1",,,,,,
+Point = 18,4,"Hacienda Castaneda",,,,,,
+Point = 18,3,"Hacienda Fields",,,,,,
+Point = 20,3,"San Cerigold Town","San Cerigold Cemetery,28,22,,,
+Point = 21,3,"Route 2",,,,,,
+Point = 22,3,"Route 2",,,,,,
+Point = 22,2,"Route 2",,,,,,
+Point = 23,2,"Route 2",,,,,,
+Point = 24,2,"Route 2",,,,,,

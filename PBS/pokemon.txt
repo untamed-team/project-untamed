@@ -90,7 +90,7 @@ CatchRate = 45
 Happiness = 70
 Abilities = BLAZE
 HiddenAbilities = DANCER
-Moves = 1,LEER,1,TACKLE,6,EMBER,9,PECK,12,ENCORE,15,FLAMEBURST,18,DRAGONBREATH,21,INCINERATE,24,FEATHERDANCE,27,WILLOWISP,30,DRAGONPULSE,33,FLAREBLITZ,36,ACROBATICS,39,FIERYDANCE,42,DRAGONDANCE
+Moves = 1,LEER,1,TACKLE,6,EMBER,9,PECK,12,ENCORE,15,FLAMEWHEEL,18,DRAGONBREATH,21,FLAMEBURST,24,FEATHERDANCE,27,WILLOWISP,30,DRAGONPULSE,33,FLAREBLITZ,36,ACROBATICS,39,FIERYDANCE,42,DRAGONDANCE
 TutorMoves = WORKUP,ROAR,SWAGGER,TAUNT,SUNNYDAY,FLAMETHROWER,FIREBLAST,TORMENT,THIEF,FALSESWIPE,WILLOWISP,FLAMECHARGE,SCREECH,ROUND,METRONOME,EXCITE,FIREPLEDGE,DEFOG,SCORCHINGSANDS
 EggMoves = OUTRAGE,CAPTIVATE,DRAGONTAIL,QUIVERDANCE
 EggGroups = Monster,Dragon
@@ -117,7 +117,7 @@ CatchRate = 45
 Happiness = 70
 Abilities = BLAZE
 HiddenAbilities = DANCER
-Moves = 1,LEER,1,TACKLE,1,EMBER,1,PECK,12,ENCORE,15,FLAMEBURST,20,DRAGONBREATH,25,INCINERATE,30,FEATHERDANCE,35,WILLOWISP,40,DRAGONPULSE,45,FLAREBLITZ,50,ACROBATICS,55,FIERYDANCE,60,DRAGONDANCE
+Moves = 1,LEER,1,TACKLE,1,EMBER,1,PECK,12,ENCORE,15,FLAMEWHEEL,20,DRAGONBREATH,25,FLAMEBURST,30,FEATHERDANCE,35,WILLOWISP,40,DRAGONPULSE,45,FLAREBLITZ,50,ACROBATICS,55,FIERYDANCE,60,DRAGONDANCE
 TutorMoves = WORKUP,ROAR,SWAGGER,SUNNYDAY,FLAMETHROWER,FIREBLAST,TORMENT,THIEF,FALSESWIPE,WILLOWISP,FLAMECHARGE,SCREECH,CUT,SAFEGUARD,DOUBLETEAM,ROUND,METRONOME,FIREPUNCH,EXCITE,FIREPLEDGE,DEFOG,SCORCHINGSANDS
 EggGroups = Monster,Dragon
 HatchSteps = 5120
@@ -143,7 +143,7 @@ CatchRate = 45
 Happiness = 70
 Abilities = BLAZE
 HiddenAbilities = DANCER
-Moves = 0,ZEALOUSDANCE,1,ZEALOUSDANCE,1,LEER,1,TACKLE,1,OVERHEAT,1,EMBER,1,PECK,12,ENCORE,15,FLAMEBURST,20,DRAGONBREATH,25,INCINERATE,30,FEATHERDANCE,35,WILLOWISP,42,DRAGONPULSE,49,FLAREBLITZ,56,ACROBATICS,63,FIERYDANCE,70,DRAGONDANCE
+Moves = 0,ZEALOUSDANCE,1,ZEALOUSDANCE,1,LEER,1,TACKLE,1,OVERHEAT,1,EMBER,1,PECK,12,ENCORE,15,FLAMEWHEEL,20,DRAGONBREATH,25,FLAMEBURST,30,FEATHERDANCE,35,WILLOWISP,42,DRAGONPULSE,49,FLAREBLITZ,56,ACROBATICS,63, FIERYDANCE,70,DRAGONDANCE
 TutorMoves = WORKUP,ROAR,SWAGGER,SUNNYDAY,FLAMETHROWER,FIREBLAST,TORMENT,THIEF,FALSESWIPE,WILLOWISP,FLAMECHARGE,SCREECH,CUT,AERIALACE,STEELWING,FLY,ACROBATICS,DRAGONPULSE,DRAGONCLAW,POISONJAB,SCOURINGWINDS,DOUBLETEAM,ROUND,METRONOME,FIREPUNCH,BLASTBURN,DRACOMETEOR,EXCITE,FIREPLEDGE,DEFOG,SCORCHINGSANDS
 EggGroups = Monster,Dragon
 HatchSteps = 5120
@@ -2317,8 +2317,8 @@ Weight = 6.5
 Color = Brown
 Shape = Quadruped
 Habitat = Urban
-Category = Evolution
-Pokedex =  It possesses a unique genetic makeup, allowing it to evolve into many different forms. Two of these evolutions were recently discovered in the Mazah region.
+Category = Ewvolution
+Pokedex = It possesses a unique genetic makeup, allowing it to evolve into many different forms. Two of these evolutions were recently discovered in the Mazah region.
 Generation = 1
 Evolutions = VAPOREON,Item,WATERSTONE,JOLTEON,Item,THUNDERSTONE,FLAREON,Item,FIRESTONE,LEAFEON,LocationFlag,MossRock,LEAFEON,Item,LEAFSTONE,GLACEON,LocationFlag,IceRock,GLACEON,Item,ICESTONE,SYLVEON,HappinessMoveType,FAIRY,ESPEON,HappinessDay,,UMBREON,HappinessNight,,TERREON,Location,999,GUSTEON,Location,999
 #-------------------------------
@@ -2345,7 +2345,6 @@ Shape = Quadruped
 Habitat = Urban
 Category = Bubble Jet
 Pokedex = It has a temperament as cool as a stream of water. When it senses danger, it swiftly melts into the nearest body of water to make its escape.
-
 Generation = 1
 #-------------------------------
 [JOLTEON]
@@ -2395,7 +2394,7 @@ Color = Red
 Shape = Quadruped
 Habitat = Urban
 Category = Flame
-Pokedex =  If its trainer is cold, it will snuggle up to them, using its heated fur to keep them warm. This behavior makes them especially beloved during the winter.
+Pokedex = If its trainer is cold, it will snuggle up to them, using its heated fur to keep them warm. This behavior makes them especially beloved during the winter.
 Generation = 1
 #-------------------------------
 [ESPEON]
@@ -2517,7 +2516,7 @@ Weight = 23.5
 Color = Pink
 Shape = Quadruped
 Category = Intertwining
-Pokedex = Sylveon: They emit an aura from their feelers to calm prey. Children in the Mazah region are told bedtime stories of a heroic Sylveon vanquishing an army of dragons.
+Pokedex = They emit an aura from their feelers to calm prey. Children in the Mazah region are told bedtime stories of a heroic Sylveon vanquishing an army of dragons.
 Generation = 6
 #-------------------------------
 [TERREON]
@@ -4708,7 +4707,7 @@ Color = Red
 Shape = Finned
 Habitat = WatersEdge
 Category = Fish
-Pokedex = Much rarer than their Mazah counterpart, these Magikarp are considered a delicacy amongst the Mazah region's most skilled chefs..
+Pokedex = Much rarer than their Mazah counterpart, these Magikarp are considered a delicacy amongst the Mazah region's most skilled chefs.
 Generation = 1
 #-------------------------------
 [GYARADOS]
@@ -4985,7 +4984,6 @@ Shape = Bipedal
 Habitat = RoughTerrain
 Category = Cactus
 Pokedex = It prefers harsh and arid environments, like deserts. When a dust storm kicks up, Cacnea can some times be found rolling down sand dunes uncontrollably.
-Generation = 3
 WildItemUncommon = STICKYBARB
 Evolutions = CACTURNE,Level,32
 #-------------------------------
@@ -5246,3 +5244,53 @@ Habitat = Mountain
 Category = Lava
 Pokedex = The shell on its back is made of hardened magma. Tens of thousands of years spent living in volcanic craters have turned Magcargo's bodies into magma.
 Generation = 2
+#-------------------------------
+[FINNEON]
+Name = Finneon
+Types = WATER
+BaseStats = 49,49,56,66,49,61
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 66
+EVs = SPEED,1
+CatchRate = 190
+Happiness = 70
+Abilities = SWIFTSWIM,STORMDRAIN
+HiddenAbilities = WATERVEIL
+Moves = 1,POUND,6,WATERGUN,10,ATTRACT,13,RAINDANCE,17,GUST,22,WATERPULSE,26,CAPTIVATE,29,SAFEGUARD,33,AQUARING,38,WHIRLPOOL,42,UTURN,45,BOUNCE,49,SILVERWIND,54,SOAK
+TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,CONFIDE,DEFOG,DIVE,DOUBLETEAM,FACADE,FRUSTRATION,HAIL,HIDDENPOWER,ICEBEAM,ICYWIND,NATUREPOWER,PAYBACK,PROTECT,PSYCHUP,RAINDANCE,REST,RETURN,ROUND,SAFEGUARD,SCALD,SIGNALBEAM,SLEEPTALK,SNORE,SUBSTITUTE,SURF,SWAGGER,TAILWIND,TOXIC,UTURN,WATERFALL,WATERPULSE
+EggMoves = AGILITY,AQUATAIL,AURORABEAM,BRINE,CHARM,CONFUSERAY,FLAIL,PSYBEAM,SIGNALBEAM,SPLASH,SWEETKISS,TICKLE
+EggGroups = Water2
+HatchSteps = 5120
+Height = 0.4
+Weight = 7.0
+Color = Blue
+Shape = Finned
+Category = Wing Fish
+Pokedex = After long exposure to sunlight, the patterns on its tail fins shine vividly when darkness arrives.
+Generation = 4
+Evolutions = LUMINEON,Level,31
+#-------------------------------
+[LUMINEON]
+Name = Lumineon
+Types = WATER
+BaseStats = 69,69,76,91,69,86
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 161
+EVs = SPEED,2
+CatchRate = 75
+Happiness = 70
+Abilities = SWIFTSWIM,STORMDRAIN
+HiddenAbilities = WATERVEIL
+Moves = 1,SOAK,1,GUST,1,POUND,1,WATERGUN,1,ATTRACT,6,WATERGUN,10,ATTRACT,13,RAINDANCE,17,GUST,22,WATERPULSE,26,CAPTIVATE,29,SAFEGUARD,35,AQUARING,42,WHIRLPOOL,48,UTURN,53,BOUNCE,59,SILVERWIND,66,SOAK
+TutorMoves = AQUATAIL,ATTRACT,BLIZZARD,BOUNCE,CONFIDE,DEFOG,DIVE,DOUBLETEAM,FACADE,FRUSTRATION,GIGAIMPACT,HAIL,HIDDENPOWER,HYPERBEAM,ICEBEAM,ICYWIND,PAYBACK,PROTECT,PSYCHUP,RAINDANCE,REST,RETURN,ROUND,SAFEGUARD,SCALD,SIGNALBEAM,SLEEPTALK,SNORE,SUBSTITUTE,SURF,SWAGGER,TAILWIND,TOXIC,UTURN,WATERFALL,WATERPULSE
+EggGroups = Water2
+HatchSteps = 5120
+Height = 1.2
+Weight = 24.0
+Color = Blue
+Shape = Finned
+Category = Neon
+Pokedex = It lives on the deep-sea floor. It attracts prey by flashing the patterns on its four tail fins.
+Generation = 4

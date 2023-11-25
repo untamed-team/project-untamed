@@ -17,7 +17,6 @@ Name = San Cerigold Town
 Outdoor = true
 ShowArea = true
 Bicycle = true
-Weather = Marigolds,100
 MapPosition = 0,20,3
 BattleBack = city
 #-------------------------------
@@ -26,10 +25,9 @@ Name = San Cerigold Cemetery
 Outdoor = true
 ShowArea = true
 Bicycle = false
-Weather = Marigolds,100
 MapPosition = 0,20,3
 SnapEdges = true
-BattleBack = forest
+BattleBack = graveyard
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
@@ -69,6 +67,10 @@ BattleBack = city
 [024]   # Camp - Grassy
 Name = Camp - Grassy
 Outdoor = true
+#-------------------------------
+[032]   # Ceiba's Lab
+Name = Ceiba's Lab
+BattleBack = lab
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
