@@ -17,6 +17,7 @@ Name = San Cerigold Town
 Outdoor = true
 ShowArea = true
 Bicycle = true
+Weather = Marigolds,100
 MapPosition = 0,20,3
 BattleBack = city
 #-------------------------------
@@ -25,6 +26,7 @@ Name = San Cerigold Cemetery
 Outdoor = true
 ShowArea = true
 Bicycle = false
+Weather = Marigolds,100
 MapPosition = 0,20,3
 SnapEdges = true
 BattleBack = graveyard
