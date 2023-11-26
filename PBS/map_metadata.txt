@@ -8,9 +8,11 @@ Name = MausoleumLeft
 Outdoor = false
 ShowArea = false
 Bicycle = false
+MapPosition = 0,20,3
 #-------------------------------
 [003]   # Sofía's house
 Name = San Cerigold Town
+MapPosition = 0,19,5
 #-------------------------------
 [004]   # San Cerigold Town
 Name = San Cerigold Town
@@ -33,30 +35,65 @@ BattleBack = graveyard
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
+MapPosition = 0,20,3
 #-------------------------------
 [007]   # Library (Yellow)
 Name = Library (Yellow)
+MapPosition = 0,20,3
 #-------------------------------
 [008]   # SW House (Cafe)
 Name = Cerigold Cafe
+MapPosition = 0,20,3
 #-------------------------------
 [009]   # SE house-Purple
 Name = SE house-Purple
+MapPosition = 0,20,3
 #-------------------------------
 [010]   # SE house-Green
 Name = SE house-Green
+MapPosition = 0,20,3
+#-------------------------------
+[011]   # NW house-Pink
+Name = NW house-Pink
+MapPosition = 0,20,3
+#-------------------------------
+[013]   # Hacienda Interior
+Name = Hacienda Interior
+MapPosition = 0,18,4
+#-------------------------------
+[014]   # NE house-Cyan
+Name = NE house-Cyan
+MapPosition = 0,20,3
+#-------------------------------
+[015]   # SE house-Orange
+Name = SE house-Orange
+MapPosition = 0,20,3
+#-------------------------------
+[016]   # Storage Shed
+Name = Storage Shed
+MapPosition = 0,18,3
 #-------------------------------
 [017]   # Hacienda Garden
 Name = Hacienda Garden
 Outdoor = true
+MapPosition = 0,18,4
+#-------------------------------
+[018]   # GymInterior
+Name = GymInterior
+MapPosition = 0,20,3
 #-------------------------------
 [019]   # San Cerigold PC
 Name = San Cerigold PC
 HealingSpot = 4,22,22
+MapPosition = 0,20,3
 #-------------------------------
 [020]   # Test World
 Name = Test World
 DiveMap = 38
+#-------------------------------
+[021]   # Teo's House
+Name = Teo's House
+MapPosition = 0,18,4
 #-------------------------------
 [022]   # Veravalles Town
 Name = Veravalles Town
@@ -66,13 +103,30 @@ Bicycle = true
 MapPosition = 0,19,5
 BattleBack = city
 #-------------------------------
+[023]   # Alejandro's House
+Name = Alejandro's House
+MapPosition = 0,18,4
+#-------------------------------
 [024]   # Camp - Grassy
 Name = Camp - Grassy
 Outdoor = true
 #-------------------------------
+[025]   # Pumpkaplace
+Name = Pumpkaplace
+MapPosition = 0,18,3
+#-------------------------------
 [032]   # Ceiba's Lab
 Name = Ceiba's Lab
+MapPosition = 0,19,5
 BattleBack = lab
+#-------------------------------
+[033]   # \PN's house
+Name = \PN's house
+MapPosition = 0,19,5
+#-------------------------------
+[042]   # Emilio's House
+Name = Emilio's House
+MapPosition = 0,19,5
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
@@ -81,6 +135,10 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
 BattleBack = field
+#-------------------------------
+[065]   # Julian's House
+Name = Julian's House
+MapPosition = 0,19,5
 #-------------------------------
 [078]   # Hacienda Fields
 Name = Hacienda Fields
