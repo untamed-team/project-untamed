@@ -1,0 +1,5 @@
+Name       = Tutor.net
+Version    = 1.0
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/1237/
+Credits    = DemICE
