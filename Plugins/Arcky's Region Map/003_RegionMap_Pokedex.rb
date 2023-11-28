@@ -90,12 +90,28 @@ class PokemonPokedexInfo_Scene
     end
     @mapX = -(@sprites["areamap"].x / PokemonRegionMap_Scene::SQUARE_WIDTH)
     @mapY = -(@sprites["areamap"].y / PokemonRegionMap_Scene::SQUARE_HEIGHT)
+	
+	#ADDED BY GARDENETTE FOR COMPATIBILITY WITH FL ADVANCED POKEDEX
+	#@maxPage = $game_switches[SWITCH] ? ADVANCED_PAGE : ADVANCED_PAGE-1
+    @maxPage = ADVANCED_PAGE
+    @subPage=1
+    #pbStartSceneOldFL(dexlist,index,region)
+    @sprites["advancedicon"]=PokemonSpeciesIconSprite.new(nil,@viewport)
+    @sprites["advancedicon"].setOffset(PictureOrigin::CENTER)
+    @sprites["advancedicon"].x = 82
+    @sprites["advancedicon"].y = 328
+    @sprites["advancedicon"].visible = false
+    
+    #added by Gardenette
+    $tips_log.tipAdvancedDex if !$tips_log.get_log.include?("Advanced Dex")
+	
+	
     pbSetSystemFont(@sprites["overlay"].bitmap)
     pbUpdateDummyPokemon
     @available = pbGetAvailableForms
     drawPage(@page)
     pbFadeInAndShow(@sprites) { pbUpdate }
-  end
+  end  
 
   def pbFindEncounter(enc_types, species)
     return false if !enc_types
@@ -284,8 +300,22 @@ class PokemonPokedexInfo_Scene
             dorefresh = true
           end
         end
+		
+	  #added by Gardenette for playing the cry on Forms page
+      elsif Input.trigger?(Input::SPECIAL)
+        case @page
+        when 1   # Info
+        when 2   # Area
+        when 3   # Forms
+          Pokemon.play_cry(@species, @form)
+        end
+		
       elsif !@mapMovement
         if Input.trigger?(Input::UP)
+		  #added by Gardenette for compatibility with FL Adv Dex
+		  #hide evo method again
+          @revealEvo = false
+		
           oldindex = @index
           pbGoToPrevious
           if @index != oldindex
@@ -296,6 +326,10 @@ class PokemonPokedexInfo_Scene
             dorefresh = true
           end 
         elsif Input.trigger?(Input::DOWN)
+		  #added by Gardenette for compatibility with FL Adv Dex
+		  #hide evo method again
+          @revealEvo = false
+		
           oldindex = @index
           pbGoToNext
           if @index != oldindex
@@ -309,7 +343,13 @@ class PokemonPokedexInfo_Scene
           oldpage = @page
           @page -= 1
           @page = 1 if @page < 1
-          @page = 3 if @page > 3
+		  
+		  
+          #@page = 3 if @page > 3
+		  #edited for FL's advanced pokedex page
+          @page=@maxPage if @page>@maxPage
+		  
+		  
           if @page != oldpage
             pbPlayCursorSE
             dorefresh = true
@@ -318,7 +358,13 @@ class PokemonPokedexInfo_Scene
           oldpage = @page
           @page += 1
           @page = 1 if @page < 1
-          @page = 3 if @page > 3
+		  
+		  
+          #@page = 3 if @page > 3
+		  #edited for FL's advanced pokedex page
+          @page=@maxPage if @page>@maxPage
+		  
+		  
           if @page != oldpage
             pbPlayCursorSE
             dorefresh = true
