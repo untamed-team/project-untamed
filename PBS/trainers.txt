@@ -93,7 +93,7 @@ Pokemon = PUMPKABOO,6
 Pokemon = PHANTUMP,7
 #-------------------------------
 [LEADER_Valentina,Valentina]
-LoseText = Ugh, I still can't do this right.
+LoseText = Ugh, whatever…
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
@@ -106,7 +106,7 @@ Pokemon = M_ROSELIA,8
     AbilityIndex = 2
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
-LoseText = Ugh, I still can't do this right.
+LoseText = Ugh, whatever…
 Pokemon = LILORINA,8
 	Nature = BOLD
     Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
