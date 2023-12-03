@@ -130,10 +130,12 @@ WillTheWall
 Trainers/NPCs:
 aball
 Akikaze
+AtomicReactor
 BamBoshBubb
 Chespin_Craft
 Claire
 Cristata
+DiegoWT
 Gardenette
 Gearjuice
 HingisDingus
@@ -142,13 +144,17 @@ Jack
 KameOtaku
 Loretze
 MadMillerMiller
+Maicerochico
 MILKMAN
+Neo-Spriteman
 Omegabroski2
 Owoodfin
+PurpleZaffre
 RockTomb
 Saltilton
 Spork
 TheFallenRoyal
+VanillaSunshine
 VentesTheFloof
 
 UI & Misc.:
