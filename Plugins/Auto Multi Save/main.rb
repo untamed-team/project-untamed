@@ -451,32 +451,71 @@ class PokemonSave_Scene
     @selected_file = SaveData.get_newest_save_slot
     if SaveData.get_newest_save_slot
       #if there is a loaded save slot, display which slot is loaded
-      loctext = _INTL("Loaded<r><c3={1}>{2}</c3></ac><br>", fileColor, @selected_file)
-      #show map name, adding it to loctext with +=
-      loctext += _INTL("<ac><c3={1}>{2}</c3></ac><br>", locationColor, mapname)
-    else
-      #if there is no loaded save slot and this is the first time saving, do not
-      #bother showing "Loaded"
-      #show map name, making it the first line in loctext
-      loctext = _INTL("<ac><c3={1}>{2}</c3></ac><br>", locationColor, mapname)
+      selectedFile = _INTL("Loaded<r><c3={1}>{2}</c3>", fileColor, @selected_file)
     end
-    
-    loctext += _INTL("Player<r><c3={1}>{2}</c3><br>", textColor, $player.name)
+	
+    locationName = _INTL("<ac><c3={1}>{2}</c3></ac>", locationColor, mapname)
+	
+    playerName = _INTL("Player<r><c3={1}>{2}</c3><br>", textColor, $player.name)
+	
+	# Last save time
+    time = $player.last_time_saved
+    if time
+      date_str = time.strftime("%x")
+      time_str = time.strftime(_INTL("%I:%M%p"))
+      datetime_str = "#{date_str}<r>#{time_str}<br>"
+    else
+      datetime_str = _INTL("<ac>(old save)</ac>")
+    end
+	
+	# Elapsed time
+    totalsec = (Graphics.frame_count || 0) / Graphics.frame_rate
+    hour = totalsec / 60 / 60
+    min = totalsec / 60 % 60
     if hour > 0
-      loctext += _INTL("Time<r><c3={1}>{2}h {3}m</c3><br>", textColor, hour, min)
+      elapsed_str = _INTL("Time<r><ac><c3=0070F8,78B8E8>{1}h {2}m<br></c3></ac>", hour, min)
     else
-      loctext += _INTL("Time<r><c3={1}>{2}m</c3><br>", textColor, min)
+      elapsed_str = _INTL("Time<r><ac><c3={1}>{2}m<br></c3></ac>", textColor, min)
     end
-    loctext += _INTL("Badges<r><c3={1}>{2}</c3><br>", textColor, $player.badge_count)
-    if $player.has_pokedex
-      loctext += _INTL("Pokédex<r><c3={1}>{2}/{3}</c3>", textColor, $player.pokedex.owned_count, $player.pokedex.seen_count)
-    end
+
+    badges = _INTL("Badges<r><c3={1}>{2}</c3><br>", textColor, $player.badge_count)
+    
+	if $player.has_pokedex
+      dex = _INTL("Pokédex<r><c3={1}>{2}/{3}</c3><br>", textColor, $player.pokedex.owned_count, $player.pokedex.seen_count)
+    else
+	  dex = ""
+	end
+	
+	#loctext = "#{selectedFile}" +
+	#       "#{locationName}" +
+     #      "#{playerName}" +
+     #      "#{elapsed_str}" +
+     #      "#{badges}" +
+      #     "#{dex}" +
+      #     "#{datetime_str}"
+	
+	loctext = "#{selectedFile}" +
+           "#{locationName}" +
+           "#{playerName}" +
+           "#{elapsed_str}" +
+           "#{badges}" +
+           "#{dex}" +
+           "#{datetime_str}"
+	
+	
+	
+	
+	
+	
+	
     @sprites["locwindow"] = Window_AdvancedTextPokemon.new(loctext)
     @sprites["locwindow"].viewport = @viewport
     @sprites["locwindow"].x = 0
     @sprites["locwindow"].y = 0
     @sprites["locwindow"].width = 228 if @sprites["locwindow"].width < 228
     @sprites["locwindow"].visible = true
+	
+	
   end
 
   def pbEndScreen
@@ -645,12 +684,12 @@ class PokemonSaveScreen
       elapsed_str = _INTL("Time<r><ac><c3={1}>{2}m<br></c3></ac>", dataTextColor, min)
     end
     
-    playerName = _INTL("Player<r><c3={1}>{2}</c3><br>", dataTextColor, $player.name)
+    playerName = _INTL("Player<r><c3={1}>{2}</c3><br>", dataTextColor, temp_save_data[:player].name)
 
-    badges = _INTL("Badges<r><c3={1}>{2}</c3><br>", dataTextColor, $player.badge_count)
+    badges = _INTL("Badges<r><c3={1}>{2}</c3><br>", dataTextColor, temp_save_data[:player].badge_count)
     
-    if $player.has_pokedex
-      dex = _INTL("Pokédex<r><c3={1}>{2}/{3}</c3><br>", dataTextColor, $player.pokedex.owned_count, $player.pokedex.seen_count)
+    if temp_save_data[:player].has_pokedex
+      dex = _INTL("Pokédex<r><c3={1}>{2}/{3}</c3><br>", dataTextColor, temp_save_data[:player].pokedex.owned_count, temp_save_data[:player].pokedex.seen_count)
     end
 
     #edited by Gardenette
