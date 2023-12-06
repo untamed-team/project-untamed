@@ -1,0 +1,4 @@
+﻿Name         = Auto Multi Save
+Version      = 1.1
+Credits      = http404error
+Essentials   = 20.1
