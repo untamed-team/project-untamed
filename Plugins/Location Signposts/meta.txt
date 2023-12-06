@@ -1,0 +1,5 @@
+﻿Name       = Location Signposts with Background Image
+Version    = 1.2
+Essentials = 20, 20.1
+Website    = https://reliccastle.com/resources/385/
+Credits    = PurpleZaffre, LostSoulsDev / carmaniac, Golisopod User, ENLS, spaceemotion, TechSkylander1518

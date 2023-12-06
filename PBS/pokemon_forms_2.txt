@@ -62,9 +62,9 @@ Weight = 81.6
 FormName = Mega Milotic
 MegaStone = MILOTITE
 Type1 = WATER
-Type2 = DRAGON
+Type2 = FAIRY
 BaseStats = 95,85,96,82,126,156
-Abilities = DAZZLING
+Abilities = MISTYSURGE
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
@@ -77,6 +77,133 @@ FormName = Mega Skarmory
 MegaStone = SKARMORITE
 BaseStats = 65,120,160,80,60,80
 Abilities = HYPERCUTTER
+#------------------------------- 
+[BEHEEYEM,1]
+FormName = Mega Beheeyem
+MegaStone = BEHEEYEMITE
+BaseStats = 75,105,75,70,135,125
+Abilities = PSYCHICSURGE
+#------------------------------- 
+[GOLURK,1]
+FormName = Mega Golurk
+MegaStone = GOLURKITE
+Type1 = GROUND
+Type2 = FLYING
+BaseStats = 89,144,105,100,65,80
+Abilities = AERILATE
+#------------------------------- 
+[HAWLUCHA,1]
+FormName = Mega Hawlucha
+MegaStone = HAWLUCHITE
+BaseStats = 78,132,95,118,94,83
+Abilities = GALVANIZE
+HiddenAbilities = WARRIORSPIRIT
+#------------------------------- 
+[CACTURNE,1]
+FormName = Mega Cacturne
+MegaStone = CACTURNITE
+BaseStats = 70,135,100,55,145,70
+Abilities = SANDSTREAM
+#------------------------------- 
+[FROSMOTH,1]
+FormName = Mega Frosmoth
+MegaStone = FROSMOTHITE
+Type1 = ICE
+Type2 = FIRE
+BaseStats = 70,65,80,85,135,140
+Abilities = MAGICGUARD
+#------------------------------- 
+[CHIMECHO,1]
+FormName = Mega Chimecho
+MegaStone = CHIMECHITE
+Type1 = PSYCHIC
+Type2 = STEEL
+BaseStats = 75,50,100,65,115,150
+Abilities = SOUNDPROOF
+#------------------------------- 
+[PORYGONZ,1]
+FormName = Mega Porygon-Z
+MegaStone = PORYGONZITE
+Type1 = NORMAL
+Type2 = QMARKS
+BaseStats = 85,128,80,102,155,85
+Abilities = OVERWRITE
+#------------------------------- 
+[MAGCARGO,1]
+FormName = Mega Magcargo
+MegaStone = MAGCARGOITE
+Type1 = FIRE
+Type2 = STEEL
+BaseStats = 60,60,160,50,100,100
+Abilities = BULLETPROOF
+#------------------------------- 
+[SPECTERZAL,1]
+FormName = Mega Specterzal
+MegaStone = SPECTERZITE
+BaseStats = 120,139,132,86,95,75
+Abilities = SPOOPERAURA
+#------------------------------- 
+[TREVENANT,1]
+FormName = Mega Trevenant
+MegaStone = TREVENANTITE
+BaseStats = 85,140,107,46,90,122
+Abilities = GRASSYSURGE
+#------------------------------- 
+[M_ROSERADE,1]
+FormName = Mega Roserade
+MegaStone = M_ROSERADITE
+BaseStats = 70,95,83,92,125,150
+Abilities = SEANCE
+#------------------------------- 
+[LUPACABRA,1]
+FormName = Mega Lupacabra
+MegaStone = LUPACABRITE
+BaseStats = 80,135,135,65,95,80
+Abilities = MOLDBREAKER
+#------------------------------- 
+[ZOLUPINE,1]
+FormName = Mega Zolupine
+MegaStone = ZOLUPINEITE
+Type1 = GHOST
+Type2 = WATER
+BaseStats = 60,95,70,85,135,145
+Abilities = DRIZZLE
+#------------------------------- 
+[ROADRAPTOR,1]
+FormName = Mega Roadraptor
+MegaStone = ROADRAPTORITE
+Type1 = ELECTRIC
+Type2 = GROUND
+BaseStats = 70,129,72,133,117,69
+Abilities = LIGHTNINGROD
+#------------------------------- 
+[FRIZZARD,1]
+FormName = Mega Frizzard
+MegaStone = FRIZZARDITE
+BaseStats = 80,80,85,94,145,121
+Abilities = SNOWWARNING
+#------------------------------- 
+[ZARCOIL,1]
+FormName = Mega Zarcoil
+MegaStone = ZARCOILITE
+BaseStats = 65,135,89,91,140,85
+Abilities = DROUGHT
+#------------------------------- # ~112 def
+[LAGUNA,1]
+FormName = Mega Laguna
+MegaStone = LAGUNITE
+Type1 = ICE
+Type2 = FAIRY
+BaseStats = 50,72,55,103,110,130
+Abilities = FURCOAT
+#-------------------------------
+[LEDIAN,1]
+FormName = Mega Ledian
+MegaStone = LEDINITE
+Type1 = BUG
+Type2 = FIGHTING
+BaseStats = 55,130,50,125,35,120
+Abilities = IRONFIST
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
@@ -151,9 +278,6 @@ FormName = Super Size
 BaseStats = 59,44,70,41,66,55
 Height = 0.8
 Weight = 15.0
-WildItemCommon = MIRACLESEED
-WildItemUncommon = MIRACLESEED
-WildItemRare = MIRACLESEED
 #-------------------------------
 [GOURGEIST,1]
 FormName = Average Size
@@ -172,15 +296,30 @@ FormName = Super Size
 BaseStats = 85,58,122,54,100,75
 Height = 1.7
 Weight = 39.0
-WildItemCommon = MIRACLESEED
-WildItemUncommon = MIRACLESEED
-WildItemRare = MIRACLESEED
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female
 BaseStats = 75,120,95,78,50,60
 Abilities = TECHNICIAN,RECKLESS
-Moves = 0,IRONHEAD,1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,DRILLPECK,32,SWORDSDANCE,38,ROOST,42,NIGHTSLASH,47,BRAVEBIRD,52,LEAFBLADE,57,HEADSMASH,62,MEGAHORN
+Moves = 1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
+TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
+#-------------------------------
+[BEAKRAFT,2]
+FormName = Mega Beakraft ♂
+MegaStone = BEAKRAFTITE
+UnmegaForm = 0
+Types = STEEL,ELECTRIC
+BaseStats = 75,115,150,82,76,80
+Abilities = ELECTRICSURGE
+#-------------------------------
+[BEAKRAFT,3]
+FormName = Mega Beakraft ♀
+MegaStone = BEAKRAFTITE
+UnmegaForm = 1
+Types = STEEL,ELECTRIC
+BaseStats = 75,140,105,82,100,76
+Abilities = ELECTRICSURGE
+Moves = 1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
 TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
 #-------------------------------
 [CROACROZEN,1]
@@ -237,7 +376,7 @@ TutorMoves = BODYSLAM,SURF
 [GYARADOS,1]
 FormName = Mega Gyarados
 MegaStone = GYARADOSITE
-Types = WATER,DARK
+Types = WATER,FLYING,DARK
 BaseStats = 95,155,109,81,70,130
 BaseExp = 224
 Abilities = INTIMIDATE
@@ -248,12 +387,12 @@ Generation = 6
 #-------------------------------
 [GYARADOS,2]
 FormName = Mazian Gyarados
-Types = WATER,ROCK
+Types = WATER,ROCK,DRAGON
 BaseStats = 85,89,125,60,91,90
 BaseExp = 189
 Abilities = FULLMETALBODY
-HiddenAbilities = STEELYSPIRIT
-Moves = 0,MIRRORSHOT,1,BITE,1,FLAIL,1,SPLASH,1,SMACKDOWN,1,LEER,1,TWISTER,4,WHIRLPOOL,8,ICEFANG,12,BRINE,16,SCARYFACE,21,WATERPULSE,24,CRUNCH,28,IRONDEFENSE,32,POWERGEM,36,ROCKPOLISH,40,HYDROPUMP,44,FORGEBREATH,48,GEODEBURST,52,STEELBEAM
+HiddenAbilities = BERSERK
+Moves = 0,MIRRORSHOT,1,BITE,1,FLAIL,1,SPLASH,1,SMACKDOWN,1,LEER,1,TWISTER,4,WHIRLPOOL,8,ICEFANG,12,BRINE,16,SCARYFACE,21,WATERPULSE,24,CRUNCH,28,IRONDEFENSE,32,POWERGEM,36,ROCKPOLISH,40,DRAGONPULSE,44,FORGEBREATH,48,GEODEBURST,52,STEELBEAM
 TutorMoves = WORKUP,ROAR,SWAGGER,ICEBEAM,BLIZZARD,RAINDANCE,EARTHQUAKE,ROCKTOMB,FACADE,FLASHCANNON,BODYSLAM,ROCKSLIDE,DRAGONPULSE,SCREECH,STONEEDGE,GEODEBURST,SNARL,LIQUIDATION,ZENHEADBUTT,AVALANCHE,GYROBALL,DEFOG,SURF,STRENGTH,WATERFALL,DIVE,AQUATAIL,IRONHEAD,IRONTAIL,ROCKBLAST,FORGEBREATH,SCALESHOT
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
