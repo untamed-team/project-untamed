@@ -130,10 +130,12 @@ WillTheWall
 Trainers/NPCs:
 aball
 Akikaze
+AtomicReactor
 BamBoshBubb
 Chespin_Craft
 Claire
 Cristata
+DiegoWT
 Gardenette
 Gearjuice
 HingisDingus
@@ -142,13 +144,17 @@ Jack
 KameOtaku
 Loretze
 MadMillerMiller
+Maicerochico
 MILKMAN
+Neo-Spriteman
 Omegabroski2
 Owoodfin
+PurpleZaffre
 RockTomb
 Saltilton
 Spork
 TheFallenRoyal
+VanillaSunshine
 VentesTheFloof
 
 UI & Misc.:
@@ -451,6 +457,9 @@ Ambient Pokémon Cries:
 SpaceWestern
 Vendily
 
+Arcky's Region Map:
+Arcky
+
 Astralneko's Scripting Utilities:
 Astralneko
 
@@ -474,10 +483,6 @@ DerxwnaKapsyla
 
 Better Item Finder:
 Kotaro
-
-Better Region Map:
-Boonzeet
-Marin
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -504,6 +509,11 @@ IndianAnimator
 
 EVs and IVs in Summary:
 Deoxysprime
+
+Extra Fogs & Panorama Lock:
+Game_Guy
+Gardenette
+Jaiden
 
 Following Pokémon EX:
 Akizakura16
@@ -738,6 +748,12 @@ Optional   = Following Pokemon EX,2.2.2
 Conflicts  = Deep Marsh Tiles,1.0.0
 Link       = https://reliccastle.com/resources/931/
 Credits    = Kotaro,Titania318,KleinStudio,derFischae
+
+Name       = Arcky's Region Map
+Version    = 1.3.2
+Essentials = 20.1
+Optional   = Modern Quest System + UI, 1.0
+Credits    = Arcky
 
 Name       = Voltseon's A-Star Pathfinding
 Version    = 1.2

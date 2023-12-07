@@ -93,7 +93,7 @@ Pokemon = PUMPKABOO,6
 Pokemon = PHANTUMP,7
 #-------------------------------
 [LEADER_Valentina,Valentina]
-LoseText = Ugh, I still can't do this right.
+LoseText = Ugh, whatever…
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
@@ -106,7 +106,7 @@ Pokemon = M_ROSELIA,8
     AbilityIndex = 2
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
-LoseText = Ugh, I still can't do this right.
+LoseText = Ugh, whatever…
 Pokemon = LILORINA,8
 	Nature = BOLD
     Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
@@ -175,12 +175,27 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 #Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
-Gimmick = AuroraVeil_PsychicTerrain
-Pokemon = NOCTAVISPA,10
-    Moves = RAZORLEAF,DEFENDORDER,HEALORDER,POLLENPUFF,ATTACKORDER
+Gimmick = HarshSun
+Pokemon = PACUNA,10
+Pokemon = BLAZEA,10
+	Moves = SCALD,SPLASH
+	AAM = true
+#-------------------------------
+[HEXMANIAC,pory]
+LoseText = kaboom
+Gimmick = DragonZone
+Pokemon = PORYGONZ,10
 	IV  = 10,10,10,10,10,10
 	EV  = 0,0,0,0,0,0
 	AAM = true
-	BOSS = true
-	Status = Sleep
-Pokemon = NOCTAVISPA,100
+	MEM = true
+#-------------------------------
+[HEXMANIAC,pory,100]
+LoseText = kaboom
+Gimmick = DragonZone
+Pokemon = BEAKRAFT,10
+	MEM = true
+	Gender = Male
+Pokemon = BEAKRAFT,10
+	MEM = true
+	Gender = Female

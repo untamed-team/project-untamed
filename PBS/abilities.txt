@@ -30,7 +30,7 @@ Description = The Pokémon is protected from paralysis.
 #-------------------------------
 [SANDVEIL]
 Name = Sand Veil
-Description = Boosts the Pokémon's evasion in a sandstorm.
+Description = Boosts the user's Defense by 1.5x in a sandstorm.
 #-------------------------------
 [STATIC]
 Name = Static
@@ -324,7 +324,7 @@ Description = Raises Speed each time the Pokémon flinches.
 #-------------------------------
 [SNOWCLOAK]
 Name = Snow Cloak
-Description = Raises evasion in a hailstorm.
+Description = Boosts the user's Sp.Def by 1.5x in a hailstorm.
 #-------------------------------
 [GLUTTONY]
 Name = Gluttony
@@ -448,7 +448,7 @@ Description = Reduces damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
-Description = Temporarily weakens Atk and Speed at the start of the battle.
+Description = Temporarily weakens Attack and Speed.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
@@ -1001,7 +1001,7 @@ Description = Just being next to the Pokémon powers up moves.
 #-------------------------------
 [MIMICRY]
 Name = Mimicry
-Description = Changes type depending on the terrain.
+Description = Changes type depending on field effects.
 #-------------------------------
 [SCREENCLEANER]
 Name = Screen Cleaner
@@ -1101,7 +1101,7 @@ Description = Boosts power and critical-hit ratio of blade moves.
 #-------------------------------
 [FERVOR]
 Name = Fervor
-Description = Raises Speed up to 1.5x after making a direct hit.
+Description = Raises Speed after making a direct hit just once.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
@@ -1153,15 +1153,15 @@ Description = Indirect contact with it may confuse the attacker.
 #-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
-Description = Boosts Fire-type moves in Hail.
+Description = Boosts Fire-type moves in a hailstorm.
 #-------------------------------
 [THERMOCOOL]
 Name = Thermo Cool
-Description = Boosts Ice-type moves in Sun or Harsh Sun.
+Description = Boosts Ice-type moves in sunshine.
 #-------------------------------
 [HEALINGSUN]
 Name = Healing Sun
-Description = Gradually regains HP in Sun or Harsh Sun.
+Description = Gradually regains HP in sunshine.
 #-------------------------------
 [PRESAGE]
 Name = Presage
@@ -1170,4 +1170,20 @@ Description = Changes the weather for a turn before attacking.
 [HONORBOUND]
 Name = Honor-bound
 Description = User cannot switch-out when below half health.
+#-------------------------------
+[OVERWRITE]
+Name = Overwrite
+Description = The user's first move determines the user's type.
+#-------------------------------
+[SPOOPERAURA]
+Name = Spooper Aura
+Description = Powers up each Pokémon's Ghost-type moves.
+#-------------------------------
+[ARTILLERIST]
+Name = Artillerist
+Description = Powers up ball and bomb moves.
+#-------------------------------
+[VOLTAICSPIRIT]
+Name = Voltaic Spirit
+Description = Powers up Electric-type moves.
 #-------------------------------

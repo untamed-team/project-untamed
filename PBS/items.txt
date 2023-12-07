@@ -829,12 +829,12 @@ Flags = Fling_30
 Description = An item to be held by a Pokémon. It is an egg filled with happiness that earns extra Exp. Points in battle.
 #-------------------------------
 [EXPSHARE]
-Name = Exp. Share
+Name = Exp. Leech
 NamePlural = Exp. Shares
 Pocket = 1
 Price = 3000
 Flags = Fling_30
-Description = An item to be held by a Pokémon. The holder gets a share of a battle's Exp. Points without battling.
+Description = An item to be held by a Pokémon. The holder absorbs all the Exp. Points from every member not holding one.
 #-------------------------------
 [AMULETCOIN]
 Name = Amulet Coin
@@ -1004,7 +1004,7 @@ NamePlural = Power Herbs
 Pocket = 1
 Price = 4000
 Flags = Fling_10
-Description = A single-use item to be held by a Pokémon. It allows the immediate use of a move that charges up first.
+Description = A item to be held by a Pokémon. It allows the immediate use of a move that charges up first.
 #-------------------------------
 [ABSORBBULB]
 Name = Absorb Bulb
@@ -2849,9 +2849,8 @@ NamePlural = Old Gateaux
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
-BattleUse = OnPokemon
 Flags = Fling_30
-Description = Old Chateau's hidden specialty. It heals all the status problems of a single Pokémon.
+Description = Old Chateau's hidden specialty. Can change a Pokémon's Hidden Power type.
 #-------------------------------
 [CASTELIACONE]
 Name = Casteliacone
@@ -3089,7 +3088,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base HP of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into a neutral one.
 #-------------------------------
 [PROTEIN]
 Name = Protein
@@ -3098,7 +3097,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Attack stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Attack-boosting one.
 #-------------------------------
 [IRON]
 Name = Iron
@@ -3107,7 +3106,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Defense stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Defense-boosting one.
 #-------------------------------
 [CALCIUM]
 Name = Calcium
@@ -3116,7 +3115,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Sp. Atk (Special Attack) stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Attack-boosting one.
 #-------------------------------
 [ZINC]
 Name = Zinc
@@ -3125,7 +3124,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Sp. Def (Special Defense) stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Defense-boosting one.
 #-------------------------------
 [CARBOS]
 Name = Carbos
@@ -3134,7 +3133,7 @@ Pocket = 2
 Price = 10000
 FieldUse = OnPokemon
 Flags = Fling_30
-Description = A nutritious drink for Pokémon. It raises the base Speed stat of a single Pokémon.
+Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Speed-boosting one.
 #-------------------------------
 [HEALTHFEATHER]
 Name = Health Feather
@@ -4396,9 +4395,9 @@ NamePlural = TM68s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_60
-Move = FLAMEWHEEL
-Description = The user cloaks itself in fire and charges at the target. It may also leave the target with a burn.
+Flags = Fling_50
+Move = FLAMECHARGE
+Description = The user cloaks itself in flame and attacks. Building up more power, it raises the user's Speed stat.
 #-------------------------------
 [TM69]
 Name = TM69
@@ -6299,11 +6298,11 @@ Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a 
 [DDTSPRAY]
 Name = DDT Spray
 NamePlural = DDT Sprays
-Pocket = 1
-Price = 2000
+Pocket = 8
+Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = A advanced Repel variant which attracts only not yet caught Pokémon. Also illegal in several states.
+Description = A advanced Repel with multiple built-in settings. Also illegal in several states.
 #-------------------------------
 [LINKCABLE]
 Name = Link Cable
@@ -6411,6 +6410,160 @@ Price = 0
 Flags = Fling_30
 Description = One of a variety of mysterious Mega Stones. Have Skarmory hold it, and it will be able to Mega Evolve.
 #-------------------------------
+#- Do NOT change internal names.
+#-------------------------------
+[BEHEEYEMITE]
+Name = Beheeyemite
+NamePlural = Beheeyemites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Beheeyem hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[GOLURKITE]
+Name = Golurkite
+NamePlural = Golurkites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Golurk hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[HAWLUCHITE]
+Name = Hawluchite
+NamePlural = Hawluchites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Hawlucha hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[CACTURNITE]
+Name = Cacturnite
+NamePlural = Cacturnites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Cacturne hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[FROSMOTHITE]
+Name = Frosmothite
+NamePlural = Frosmothites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Frosmoth hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[CHIMECHITE]
+Name = Copper Bell
+NamePlural = Copper Bells
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = A beautiful bell with a mysterious Mega Stone inside. Have Chimecho hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[PORYGONZITE] # dont change this
+Name = Corrupted Cartridge
+NamePlural = Corrupted Cartridges
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = A strange cartridge with a mysterious Mega Stone inside. Have Porygon-Z hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[MAGCARGOITE]
+Name = Magcargite
+NamePlural = Magcargites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Magcargo hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[SPECTERZITE]
+Name = Specterzite
+NamePlural = Specterzites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Specterzal hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[TREVENANTITE]
+Name = Trevenantite
+NamePlural = Trevenantites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Trevenant hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[M_ROSERADITE]
+Name = Roseradite
+NamePlural = Roseradites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Roserade hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[LUPACABRITE]
+Name = Lupacabrite
+NamePlural = Lupacabrites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Lupacabra hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[ZOLUPINEITE]
+Name = Zolupinite
+NamePlural = Zolupinites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Zolupine hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[ROADRAPTORITE]
+Name = Roadraptorite
+NamePlural = Roadraptorites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Roadraptor hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[FRIZZARDITE]
+Name = Frizzardite
+NamePlural = Frizzardites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Frizzard hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[ZARCOILITE]
+Name = Zarcoilite
+NamePlural = Zarcoilites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Zarcoil hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[BEAKRAFTITE]
+Name = Beakraftite
+NamePlural = Beakraftites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Beakraft hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[LAGUNITE]
+Name = Lagunite
+NamePlural = Lagunites
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Laguna hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[LEDINITE]
+Name = Ledianite
+NamePlural = Ledianite
+Pocket = 1
+Price = 0
+Flags = Fling_30
+Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
+#-------------------------------
 [BERRYPOTS]
 Name = Berry Pot
 NamePlural = Berry Pots
@@ -6474,15 +6627,6 @@ FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
 Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
 #-------------------------------
-[EVRESET]
-Name = EVs Resetter
-NamePlural = EVs Resetters
-Pocket = 2
-Price = 10000
-FieldUse = OnPokemon
-Flags = Fling_30
-Description = An intriguing pill for Pokémon. It resets the EVs of a specific stat of a single Pokémon.
-#-------------------------------
 [CAMPINGGEAR]
 Name = Camping Gear
 NamePlural = Camping Gear
@@ -6491,7 +6635,35 @@ Price = 0
 Flags = KeyItem
 Description = A set of camping equipment used to start camping.
 #-------------------------------
+# exp all is always active
+#-------------------------------
+[COLOGNECASE]
+Name = Cologne Case
+NamePlural = Cologne Cases
+Pocket = 1
+Price = 4000
+Flags = Fling_25
+Description = A held item that makes healing more powerful, but doubles PP consumption.
+#-------------------------------
+[CHAOSCODEX]
+Name = Chaos Codex
+NamePlural = Chaos Codex
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.
+#-------------------------------
 [EXPALL]
+Name = Exp. All
+NamePlural = Exp. Alls
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[EXPALLOFF]
 Name = Exp. All
 NamePlural = Exp. Alls
 Pocket = 8
