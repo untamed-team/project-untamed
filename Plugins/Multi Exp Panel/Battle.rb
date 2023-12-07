@@ -144,7 +144,9 @@ class Battle
     end
     # Actual adding of exp
     pkmn.exp = pkmn.exp + expGained
+	dedderson = (pkmn.fainted?) ? true : false
     pkmn.calc_stats
+	pkmn.hp = 0 if dedderson
     battler&.pbUpdate(false)
     @scene.pbRefreshOne(battler.index) if battler
     return if moves.empty?
