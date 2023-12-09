@@ -65,20 +65,25 @@ class Swdfm_Exp_Screen
   # For example, a value of 0.5 means the bar is halfway across the screen. 0.33 means the bar is a third of a way across the screen.
   CO_ORDINATES = [
   [[0.20, 0.16]], # Party Of 1: 1st Pokemon
+
 	[[0.20, 0.16],  # Party Of 2: 1st Pokemon
  	 [0.20, 0.32]], #             2nd Pokemon
+
 	[[0.20, 0.16],  # Party Of 3, 1st Pokemon
 	 [0.20, 0.32],  #             2nd Pokemon
 	 [0.20, 0.48]], #             3rd Pokemon
+
 	[[0.20, 0.16],  # Party Of 4, 1st Pokemon
 	 [0.20, 0.32],  #             2nd Pokemon
 	 [0.20, 0.48],  #             3rd Pokemon
 	 [0.20, 0.64]], #             4th Pokemon
+
   [[0.20, 0.16],  # Party Of 5, 1st Pokemon
 	 [0.20, 0.32],  #             2nd Pokemon
 	 [0.20, 0.48],  #             3rd Pokemon
 	 [0.20, 0.64],  #             4th Pokemon
-	 [0.20, 0.96]], #             5th Pokemon
+	 [0.20, 0.80]], #             5th Pokemon
+   
 	[[0.20, 0.16],  # Party Of 6, 1st Pokemon
 	 [0.20, 0.32],  #             2nd Pokemon
 	 [0.20, 0.48],  #             3rd Pokemon
