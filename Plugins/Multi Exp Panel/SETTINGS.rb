@@ -13,7 +13,7 @@ class Swdfm_Exp_Screen
   # The height in pixels in between the top/lower side of the screen and the top/lower side of the panel
   BORDER_HEIGHT     = 46
   # What colour is the edge of the panel?
-  PANEL_EDGE_COLOUR = Color.new(57, 69, 81)
+  PANEL_EDGE_COLOUR = Color.new(48, 48, 48)
   # What is the main colour of the panel?
   PANEL_FILL_COLOUR = Color.new(206, 206, 206)
   # What colour is the edge of the Exp bars?

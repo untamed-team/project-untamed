@@ -126,9 +126,11 @@ class Swdfm_Exp_Screen
 	  @sprites["exp_#{i}"].x = x + EXP_X
 	  @sprites["exp_#{i}"].y = y + EXP_Y
 	  set_comparative_z("exp_#{i}", "bg", 25)
+	  exp_msg_x = x + EXP_BAR_X
+	  exp_msg_y = y + EXP_BAR_y
 	  hash = {
-	    :X       => b_w / 2,
-	    :Align   => 2
+	    :X       => (exp_msg_x)*1.1,
+		:Y		 => (exp_msg_y)*1.1
 	  }
 	  bmp = Swdfm_Bitmap.text("+" + @values[i].to_s_formatted, hash, @sprites["exp_#{i}"].bitmap)
 	end
