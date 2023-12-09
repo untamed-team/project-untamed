@@ -32,13 +32,13 @@ class Swdfm_Exp_Screen
   end
   
   def draw_backing
-	@e_col     = PANEL_EDGE_COLOUR
-	@f_col     = PANEL_FILL_COLOUR
-	bmp = Swdfm_Bitmap.colour([@s_width, @s_height], @e_col, 0, 0, @s_width, @s_height)
-	e   = PANEL_EDGE_SIZE
-	bmp = Swdfm_Bitmap.colour(bmp, @f_col, e, e, @s_width - 2 * e, @s_height - 2 * e)
+	# @e_col     = PANEL_EDGE_COLOUR
+	# @f_col     = PANEL_FILL_COLOUR
+	# bmp = Swdfm_Bitmap.colour([@s_width, @s_height], @e_col, 0, 0, @s_width, @s_height)
+	# e   = PANEL_EDGE_SIZE
+	# bmp = Swdfm_Bitmap.colour(bmp, @f_col, e, e, @s_width - 2 * e, @s_height - 2 * e)
 	@sprites["bg"] = IconSprite.new(@s_x, @s_y, @viewport)
-	@sprites["bg"].setBitmap_Swdfm(pbPackageBitmap(bmp))
+	@sprites["bg"].setBitmap("Graphics/Pictures/EXP Panel.png")
 	@sprites["bg"].x = @s_x
 	@sprites["bg"].y = @s_y
   end
