@@ -20,8 +20,8 @@ class Swdfm_Exp_Screen
   def before_run
     @s_width  = @width - BORDER_WIDTH * 2
     @s_height = @height - BORDER_HEIGHT * 2
-	@s_x      = (@width - @s_width) / 2
-	@s_y      = (@height - @s_height) / 2
+	@s_x      = 0
+	@s_y      = 0
 	compile_bars
 	draw
   end
@@ -94,15 +94,17 @@ class Swdfm_Exp_Screen
 	  @sprites["poke_#{i}"] = s
 	  set_comparative_z("poke_#{i}", "bg", 5)
 	  # Bar
+	  bar_x = x + EXP_BAR_X
+	  bar_y = y + EXP_BAR_y
 	  @sprites["bar_#{i}"] = IconSprite.new(0, 0, @viewport)
 	  @sprites["bar_#{i}"].setBitmap_Swdfm(pbPackageBitmap(bmp))
-	  @sprites["bar_#{i}"].x = x
-	  @sprites["bar_#{i}"].y = y
+	  @sprites["bar_#{i}"].x = bar_x
+	  @sprites["bar_#{i}"].y = bar_y
 	  set_comparative_z("bar_#{i}", "bg", 10)
 	  # Bar Filler
 	  @sprites["bar_1_#{i}"] = BitmapSprite.new(b_w - 2 * e, b_h - 2 * e, @viewport)
-	  @sprites["bar_1_#{i}"].x = x + e
-	  @sprites["bar_1_#{i}"].y = y + e
+	  @sprites["bar_1_#{i}"].x = bar_x + e
+	  @sprites["bar_1_#{i}"].y = bar_y + e
 	  set_comparative_z("bar_1_#{i}", "bg", 15)
 	  # Poke Again
 	  @sprites["poke_#{i}"].x = x + POKE_X
