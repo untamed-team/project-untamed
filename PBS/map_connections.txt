@@ -1,7 +1,7 @@
 # See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# Route 3 (29) - Calojarro (27)
-29,North,28,27,South,0
+# Route 3 (29) - Calojarro Elevation (51)
+29,North,28,51,South,0
 # Ice Cream Factory (28) - Calojarro Plaza (36)
 28,South,0,36,North,0
 # Papelbrook (31) - Melolado (39)
