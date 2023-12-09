@@ -5,33 +5,33 @@
 # Settings
 #===============================================================================
 # The colours of the text used in the panel
-PANEL_BASE_COLOUR   = Color.new(80, 80, 88)
-PANEL_SHADOW_COLOUR = Color.new(160, 160, 168)
+PANEL_BASE_COLOUR   = Color.new(255, 255, 255)
+PANEL_SHADOW_COLOUR = Color.new(0, 0, 0)
 class Swdfm_Exp_Screen
   # The width in pixels in between the left/right side of the screen and the left/right side of the panel
   BORDER_WIDTH      = 140
   # The height in pixels in between the top/lower side of the screen and the top/lower side of the panel
   BORDER_HEIGHT     = 46
   # What colour is the edge of the panel?
-  PANEL_EDGE_COLOUR = Color.new(48, 48, 48)
+  PANEL_EDGE_COLOUR = Color.new(24, 20, 67)
   # What is the main colour of the panel?
-  PANEL_FILL_COLOUR = Color.new(206, 206, 206)
+  PANEL_FILL_COLOUR = Color.new(0, 96, 142)
   # What colour is the edge of the Exp bars?
   EXP_EDGE_COLOUR   = PANEL_EDGE_COLOUR
   # What colour is the fill of the exp bar (without exp)
   EXP_FILL_COLOUR   = PANEL_FILL_COLOUR
   # What colour is the exp in the exp bar?
-  EXP_EXP_COLOUR    = Color.new(229, 0, 0)
+  EXP_EXP_COLOUR    = Color.new(0, 246, 255)
   # The size in pixels of the edge of the panel
   PANEL_EDGE_SIZE   = 4
   # The height in pixels of the exp bar
-  EXP_BAR_HEIGHT    = 24
+  EXP_BAR_HEIGHT    = 16
   # (Quite complicated!)
   # Half of the difference, in pixels, between 1/3 of the width of the panel and the width of an exp bar
   # Basically, make smaller for a wider exp bar
   EXP_WIDTH_GAP     = 6
   # The size, in pixels, of the edge of each exp bar
-  EXP_BAR_EDGE_SIZE = 4
+  EXP_BAR_EDGE_SIZE = 2
   EXP_BAR_X         = 128
   EXP_BAR_y         = -28
   # What is the shortest amount of time (In seconds, assuming 40fps) that it takes for the exp bars to animate?
