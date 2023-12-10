@@ -1,0 +1,4 @@
+﻿Name         = Blukberry Phone
+Version      = 1.0
+Credits      = Low, Gardenette, Saltilton
+Essentials   = 20.1
