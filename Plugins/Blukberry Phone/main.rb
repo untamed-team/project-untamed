@@ -19,28 +19,41 @@ class PhoneScene # The scene class
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
+	
+	#Graphics
+	@sprites["phoneShell"] = IconSprite.new(0, 0, @viewport)
+    @sprites["phoneShell"].setBitmap("Graphics/Pictures/BlukBerry Phone/phone shell")
+    @sprites["phoneShell"].x = 0
+    @sprites["phoneShell"].y = 0
+	@sprites["phoneShell"].z = 99999
+	
     @sprites["background"] = IconSprite.new(0, 0, @viewport)
-    @sprites["background"].setBitmap("Graphics/Pictures/BlukBerry Phone/bg2")
+    @sprites["background"].setBitmap("Graphics/Pictures/BlukBerry Phone/bg")
     @sprites["background"].x = (Graphics.width - @sprites["background"].bitmap.width)/2
     @sprites["background"].y = (Graphics.height - @sprites["background"].bitmap.height)/2
+	@sprites["background"].z = 99998
     
     @sprites["appname"] = IconSprite.new(0, 0, @viewport)
     @sprites["appname"].setBitmap("Graphics/Pictures/BlukBerry Phone/appname")
     @sprites["appname"].x = (Graphics.width - @sprites["appname"].bitmap.width)/2
-    @sprites["appname"].y = @sprites["background"].y - 20
+    @sprites["appname"].y = 44
+	@sprites["appname"].z = 99999
     
     @sprites["cursor"] = IconSprite.new(0, 0, @viewport)
     @sprites["cursor"].setBitmap("Graphics/Pictures/BlukBerry Phone/cursor")
     @sprites["cursor"].x = (Graphics.width - 380)/2
     @sprites["cursor"].y = (Graphics.height - 184)/2
+	@sprites["cursor"].z = 99999
 		
     # Creates an overlay to write text over it. This is declared after the
     # background, so it will be over it.
     @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+	@sprites["overlay"].z = 99999
 		
     @sprites["msgwindow"] = Window_AdvancedTextPokemon.new("")
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
+	@sprites["msgwindow"].z = 99999
 		
     # Set the font defined in "options" on overlay
     pbSetSystemFont(@sprites["overlay"].bitmap)
