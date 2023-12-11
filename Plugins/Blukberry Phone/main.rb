@@ -15,7 +15,7 @@ class PhoneScene # The scene class
     pbUpdateSpriteHash(@sprites)
   end
 	
-  def pbStartScene
+  def pbStartScene  
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
@@ -29,8 +29,8 @@ class PhoneScene # The scene class
 	
     @sprites["background"] = IconSprite.new(0, 0, @viewport)
     @sprites["background"].setBitmap("Graphics/Pictures/BlukBerry Phone/bg")
-    @sprites["background"].x = (Graphics.width - @sprites["background"].bitmap.width)/2
-    @sprites["background"].y = (Graphics.height - @sprites["background"].bitmap.height)/2
+    @sprites["background"].x = 0
+    @sprites["background"].y = 0
 	@sprites["background"].z = 99998
     
     @sprites["appname"] = IconSprite.new(0, 0, @viewport)
@@ -54,6 +54,9 @@ class PhoneScene # The scene class
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
 	@sprites["msgwindow"].z = 99999
+	
+	@appPage = 1
+	drawApps
 		
     # Set the font defined in "options" on overlay
     pbSetSystemFont(@sprites["overlay"].bitmap)
@@ -97,8 +100,8 @@ class PhoneScene # The scene class
 													_INTL("Fandom Wiki")
 											 ]
     text_positions = [
-       [pg_specific_text[page],Graphics.width/2,52,2,base_color,shadow_color],
-       [_INTL("Game Freak"),Graphics.width - margin_right,Graphics.height - 64,1,base_color,shadow_color]
+       [pg_specific_text[page],Graphics.width/2,52,2,base_color,shadow_color]#,
+       #[_INTL("Game Freak"),Graphics.width - margin_right,Graphics.height - 64,1,base_color,shadow_color]
     ]
     # Draw these text on overlay.
     pbDrawTextPositions(overlay, text_positions)
@@ -109,7 +112,7 @@ class PhoneScene # The scene class
 
   def pbMain
     # Loop called once per frame.
-		@page = 1
+		@cursorPos = 1
     loop do
       # Updates the graphics.
       Graphics.update
@@ -122,7 +125,7 @@ class PhoneScene # The scene class
       # exits from loop and from pbMain (since the method contains only the
       # loop), starts pbEndScene (look at 'def pbStartScreen').
       if Input.trigger?(Input::USE)
-        case @page
+        case @cursorPos
 					when 1 # pokedex
 						pbFadeOutIn(99999) {
 							scene = PokemonPokedexMenu_Scene.new
@@ -149,14 +152,14 @@ class PhoneScene # The scene class
 					when 6 # fandom wiki
 				end
       elsif Input.trigger?(Input::RIGHT)
-        oldpage = @page
-        @page += 1
-        @page = 6 if @page < 1
-        @page = 1 if @page > 6
+        oldCursorPos = @cursorPos
+        @cursorPos += 1
+        @cursorPos = 6 if @cursorPos < 1
+        @cursorPos = 1 if @cursorPos > 6
 				#~ echoln "right #{@page.to_i}"
-        if @page != oldpage
+        if @cursorPos != oldCursorPos
 					@sprites["cursor"].x += 148
-					case @page
+					case @cursorPos
 						when 1
 							@sprites["cursor"].x = (Graphics.width - 380)/2
 							@sprites["cursor"].y = (Graphics.height - 184)/2
@@ -172,17 +175,17 @@ class PhoneScene # The scene class
 					end
           pbPlayCursorSE
           dorefresh = true
-					draw_text(@page)
+					draw_text(@cursorPos)
         end
       elsif Input.trigger?(Input::LEFT)
-        oldpage = @page
-        @page -= 1
-        @page = 6 if @page < 1
-        @page = 1 if @page > 6
+        oldCursorPos = @cursorPos
+        @cursorPos -= 1
+        @cursorPos = 6 if @cursorPos < 1
+        @cursorPos = 1 if @cursorPos > 6
 				#~ echoln "left #{@page.to_i}"
-        if @page != oldpage
+        if @cursorPos != oldCursorPos
 					@sprites["cursor"].x -= 148
-					case @page
+					case @cursorPos
 						when 1
 							@sprites["cursor"].x = (Graphics.width - 380)/2
 							@sprites["cursor"].y = (Graphics.height - 184)/2
@@ -198,34 +201,34 @@ class PhoneScene # The scene class
 					end
           pbPlayCursorSE
           dorefresh = true
-					draw_text(@page)
+					draw_text(@cursorPos)
         end
       elsif Input.trigger?(Input::DOWN)
-				if @page <= 3
-					oldpage = @page
-					@page += 3
-					@page = 6 if @page < 1
-					@page = 1 if @page > 6
+				if @cursorPos <= 3
+					oldCursorPos = @cursorPos
+					@cursorPos += 3
+					@cursorPos = 6 if @cursorPos < 1
+					@cursorPos = 1 if @cursorPos > 6
 					#~ echoln "down #{@page.to_i}"
-					if @page != oldpage
+					if @cursorPos != oldCursorPos
 						@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
 						pbPlayCursorSE
 						dorefresh = true
-						draw_text(@page)
+						draw_text(@cursorPos)
 					end
 				end
       elsif Input.trigger?(Input::UP)
-				if @page >= 4
-					oldpage = @page
-					@page -= 3
-					@page = 6 if @page < 1
-					@page = 1 if @page > 6
+				if @cursorPos >= 4
+					oldCursorPos = @cursorPos
+					@cursorPos -= 3
+					@cursorPos = 6 if @cursorPos < 1
+					@cursorPos = 1 if @cursorPos > 6
 					#~ echoln "up #{@page.to_i}"
-					if @page != oldpage
+					if @cursorPos != oldCursorPos
 						@sprites["cursor"].y = (Graphics.height - 184)/2
 						pbPlayCursorSE
 						dorefresh = true
-						draw_text(@page)
+						draw_text(@cursorPos)
 					end
 				end
       elsif Input.trigger?(Input::BACK)
