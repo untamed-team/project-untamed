@@ -16,11 +16,8 @@ APPS = [
 
 	def drawApps
 		numOfApps = PhoneScene::APPS.length
-		numOfPages = 
-		remainder
-		appsToDrawOnPage = 
+		@maxPages = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN) + 1
 		numOfApps - (@appPage * (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)).abs
-		print "apps to draw on page #{@appPage} is #{appsToDrawOnPage}"
 		appX = 68 #starting X
 		#draw apps on top row
 		PhoneScene::MAX_APPS_PER_ROW.times do
