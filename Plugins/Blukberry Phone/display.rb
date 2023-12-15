@@ -13,10 +13,22 @@ APPS = [
 	Tutorials = {:name => "Tutorials", :icon => "appTrainer"},
 	Achievements = {:name => "Achievements", :icon => "appTrainer"},
 ]
-
+	
+	def getSelectableApps
+		ret = PhoneScene::APPS.clone #this will be changed later
+		return ret
+	end #def getSelectableApps
+	
 	def drawApps
+		@selectableApps = getSelectableApps
 		numOfApps = PhoneScene::APPS.length
-		@maxPages = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN) + 1
+		@maxPages = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
+		
+		#if there's a remainder, add another page
+		if PhoneScene::APPS.length % (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN) > 0
+			@maxPages += 1
+		end
+		
 		numOfApps - (@appPage * (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)).abs
 		appX = 68 #starting X
 		#draw apps on top row
