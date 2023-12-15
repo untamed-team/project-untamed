@@ -328,12 +328,11 @@ Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,65,130
 Weight = 10.4
-#------------------------------- # 520 bst
+#------------------------------- # 490 bst
 [STRELAVISON,1]
 FormName = Swarm Form
-Type1 = BUG
-Type2 = ELECTRIC
-BaseStats = 62,54,117,22,131,134
+Types = BUG,PSYCHIC,ELECTRIC
+BaseStats = 69,69,117,49,69,117
 BaseEXP = 217
 Height = 7.7
 Weight = 902.2
