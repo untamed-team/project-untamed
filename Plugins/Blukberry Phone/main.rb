@@ -8,14 +8,24 @@
 
 #roadmap:
 #access via hotkey which you can change from controls screen
+
+#saved data
+SaveData.register(:blukberry_phone) do
+  save_value { $blukberry_phone }
+  load_value { |value|  $blukberry_phone = value }
+  new_game_value { PhoneScene.new }
+end
+
 class PhoneScene # The scene class
-  # Called every frame.
-  def update
-    # Updates all sprites in @sprites variable.
-    pbUpdateSpriteHash(@sprites)
-  end
+	attr_accessor :currentPage
 	
-  def pbStartScene  
+	def initialize
+		#set the page the first time we enter the phone
+		#the starting page is 0
+		@currentPage = 0
+	end #def initialize
+	
+  def pbStartScene
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
@@ -54,8 +64,7 @@ class PhoneScene # The scene class
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
 	@sprites["msgwindow"].z = 99999
-	
-	@appPage = 1
+
 	drawApps
 		
     # Set the font defined in "options" on overlay
@@ -64,6 +73,12 @@ class PhoneScene # The scene class
     draw_text
     # After everything is set, show the sprites with FadeIn effect.
     pbFadeInAndShow(@sprites) { update }
+  end
+  
+  # Called every frame.
+  def update
+    # Updates all sprites in @sprites variable.
+    pbUpdateSpriteHash(@sprites)
   end
 
   def draw_text(page = 1)

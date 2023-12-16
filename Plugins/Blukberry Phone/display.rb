@@ -19,19 +19,23 @@ APPS = [
 		return ret
 	end #def getSelectableApps
 	
+	def getMaxPages
+		ret = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
+		#if there's a remainder, add another page
+		ret += 1 if ret > 0
+		return ret
+	end #def getMaxPages
+	
 	def drawApps
 		@selectableApps = getSelectableApps
-		numOfApps = PhoneScene::APPS.length
-		@maxPages = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
+		@maxPages = getMaxPages
+		#this is the app we start with drawing in the first slot
+		#if on page 2, we exclude the first 6 apps (if that's how many are drawn on one page) and begin with drawing the 7th element in the available apps array
+		startingAppPos = @currentPage * (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
 		
-		#if there's a remainder, add another page
-		if PhoneScene::APPS.length % (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN) > 0
-			@maxPages += 1
-		end
-		
-		numOfApps - (@appPage * (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)).abs
 		appX = 68 #starting X
 		#draw apps on top row
+		
 		PhoneScene::MAX_APPS_PER_ROW.times do
 			break if appsToDrawOnPage <= 0
 			for j in 0...PhoneScene::MAX_APPS_PER_ROW.length
