@@ -64,7 +64,7 @@ class PhoneScene # The scene class
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
 	@sprites["msgwindow"].z = 99999
-	
+
 	drawApps
 		
     # Set the font defined in "options" on overlay
