@@ -1187,3 +1187,7 @@ Description = Powers up ball and bomb moves.
 Name = Voltaic Spirit
 Description = Powers up Electric-type moves.
 #-------------------------------
+[SHOWTIME]
+Name = Showtime
+Description = Changes for the finale. Targeted during finale.
+#-------------------------------
