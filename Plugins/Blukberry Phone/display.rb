@@ -15,34 +15,56 @@ APPS = [
 ]
 	
 	def getSelectableApps
-		ret = PhoneScene::APPS.clone #this will be changed later
-		return ret
+		selectable = PhoneScene::APPS.clone #this will be changed later
+		return selectable
 	end #def getSelectableApps
 	
 	def getMaxPages
-		ret = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
+		numOfPages = PhoneScene::APPS.length / (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
 		#if there's a remainder, add another page
-		ret += 1 if ret > 0
-		return ret
+		numOfPages += 1 if numOfPages > 0
+		return numOfPages
 	end #def getMaxPages
 	
+	def getAppsOnThisPage
+		#get the apps that will be on the currentPage
+		#.drop is a non-destructive way to drop elements, so we'll assign a new variable
+		appsOnPage = @selectableApps.drop(@currentPage * @maxAppsOnScreen)
+		#if more than @maxAppsOnScreen, drop everything after @maxAppsOnScreen
+		appsOnPage[@maxAppsOnScreen ..] = []
+		#take out the nil elements destructively so we don't need to make another array
+		appsOnPage.compact!
+		
+		return appsOnPage
+	end #def getAppsOnThisPage
+	
 	def drawApps
+	@currentPage = 1
 		@selectableApps = getSelectableApps
 		@maxPages = getMaxPages
+		@maxAppsOnScreen = PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN
+		
 		#this is the app we start with drawing in the first slot
 		#if on page 2, we exclude the first 6 apps (if that's how many are drawn on one page) and begin with drawing the 7th element in the available apps array
-		startingAppPos = @currentPage * (PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN)
+		startingAppPos = @currentPage * @maxAppsOnScreen
 		
 		appX = 68 #starting X
-		#draw apps on top row
+		@appsOnThisPage = getAppsOnThisPage
 		
+		print "page is #{@currentPage} and apps displayed are #{@appsOnThisPage}"
+		
+		#find out how many apps are on this page, because it might not be the max amount
+		
+		#draw apps on top row
 		PhoneScene::MAX_APPS_PER_ROW.times do
 			break if appsToDrawOnPage <= 0
 			for j in 0...PhoneScene::MAX_APPS_PER_ROW.length
 				break if appsToDrawOnPage <= 0
-				
-				
-				appsToDrawOnPage -= 1
+				@sprites["appBG"] = IconSprite.new(0, 0, @viewport)
+				@sprites["appBG"].setBitmap("Graphics/Pictures/BlukBerry Phone/appBg")
+				@sprites["appBG"].x = appX
+				@sprites["appBG"].y = 102
+				@sprites["appBG"].z = 99998
 			end #PhoneScene::MAX_APPS_PER_ROW.times do
 		end #PhoneScene::MAX_APPS_PER_ROW.times do
 		
