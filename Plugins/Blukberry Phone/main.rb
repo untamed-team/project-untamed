@@ -9,21 +9,7 @@
 #roadmap:
 #access via hotkey which you can change from controls screen
 
-#saved data
-SaveData.register(:blukberry_phone) do
-  save_value { $blukberry_phone }
-  load_value { |value|  $blukberry_phone = value }
-  new_game_value { PhoneScene.new }
-end
-
 class PhoneScene # The scene class
-	attr_accessor :currentPage
-	
-	def initialize
-		#set the page the first time we enter the phone
-		#the starting page is 0
-		@currentPage = 0
-	end #def initialize
 	
   def pbStartScene
     @sprites = {}
@@ -66,9 +52,25 @@ class PhoneScene # The scene class
     @sprites["msgwindow"].viewport = @viewport
 	@sprites["msgwindow"].z = 99999
 
-	drawApps
-	
+	#draw left and right arrows
+	@sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
+	@sprites["leftarrow"].x = 40
+	@sprites["leftarrow"].y = Graphics.height/2 - @sprites["leftarrow"].bitmap.height/16
+	@sprites["leftarrow"].z = 99999
+	@sprites["leftarrow"].visible = false
+	@sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
+	@sprites["rightarrow"].x = Graphics.width - 40 - @sprites["rightarrow"].bitmap.width
+	@sprites["rightarrow"].y = Graphics.height/2 - @sprites["rightarrow"].bitmap.height/16
+	@sprites["rightarrow"].z = 99999
+	@sprites["rightarrow"].visible = false
+	@sprites["leftarrow"].play
+	@sprites["rightarrow"].play
+
+	@currentPage = 0
 	@cursorPos = 1
+
+	drawApps
+	updateSideArrows
 	
     # Set the font defined in "options" on overlay
     pbSetSystemFont(@sprites["overlay"].bitmap)
@@ -81,6 +83,7 @@ class PhoneScene # The scene class
   # Called every frame.
   def update
     # Updates all sprites in @sprites variable.
+	updateCursorPos
     pbUpdateSpriteHash(@sprites)
   end
  
@@ -143,133 +146,87 @@ class PhoneScene # The scene class
 			screen.pbStartScreen
 		}
 	end #case @appHoveredOver[:functionName]
-	
-	
-	#phonePokedex
   end #def getAppFunction
-  
 
   def pbMain
     # Loop called once per frame.
     loop do
-      # Updates the graphics.
       Graphics.update
-      # Updates the button/key input check.
       Input.update
-      # Calls the update method on this class (look at 'def update' in
-      # this class).
       self.update
-      # If button C or button B (trigger by keys C and X) is pressed, then
-      # exits from loop and from pbMain (since the method contains only the
-      # loop), starts pbEndScene (look at 'def pbStartScreen').
       if Input.trigger?(Input::USE)
 		getAppFunction
-        #case @cursorPos
-		#			when 1 # pokedex
-		#				pbFadeOutIn(99999) {
-		#					scene = PokemonPokedexMenu_Scene.new
-		#					screen = PokemonPokedexMenuScreen.new(scene)
-		#					screen.pbStartScreen
-		#				}
-		#			when 2 # map
-		#				pbShowMap(-1,false)
-		#			when 3 # trainer card
-		#				pbFadeOutIn(99999) {
-		#					scene = PokemonTrainerCard_Scene.new
-		#					screen = PokemonTrainerCardScreen.new(scene)
-		#					screen.pbStartScreen
-		#				}
-		#			when 4 # settings
-		#				pbFadeOutIn(99999) {
-		#					scene = PokemonOption_Scene.new
-		#					screen = PokemonOptionScreen.new(scene)
-		#					screen.pbStartScreen
-		#					pbUpdateSceneMap
-		#				}
-		#			when 5 # quests
-		#				pbFadeOutIn(99999) { pbViewQuests }
-		#			when 6 # fandom wiki
-		#		end
       elsif Input.trigger?(Input::RIGHT)
-        oldCursorPos = @cursorPos
-        @cursorPos += 1
-        @cursorPos = 6 if @cursorPos < 1
-        @cursorPos = 1 if @cursorPos > 6
-				#~ echoln "right #{@page.to_i}"
-        if @cursorPos != oldCursorPos
-					@sprites["cursor"].x += 148
-					case @cursorPos
-						when 1
-							@sprites["cursor"].x = (Graphics.width - 380)/2
-							@sprites["cursor"].y = (Graphics.height - 184)/2
-						when 3
-							@sprites["cursor"].x = (Graphics.width - 380)/2 + (148 * 2)
-							@sprites["cursor"].y = (Graphics.height - 184)/2
-						when 4
-							@sprites["cursor"].x = (Graphics.width - 380)/2
-							@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
-						when 6
-							@sprites["cursor"].x = (Graphics.width - 380)/2 + (148 * 2)
-							@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
-					end
-          pbPlayCursorSE
-          dorefresh = true
-					draw_text
-        end
+        if @cursorPos >= @appsOnThisPage.length && @currentPage >= @maxPages-1
+			#if the cursor is already on the last app of the page and there is no next page, don't do anything
+		elsif @cursorPos == @maxAppsPerRow && @currentPage < @maxPages-1
+			#at the top-right edge of the screen
+			#another page exists to the right
+			oldCursorPos = @cursorPos
+			@cursorPos = 1
+			@currentPage += 1
+			updateSideArrows
+			drawApps
+		elsif @cursorPos < @maxAppsPerRow*2 && @cursorPos != @maxAppsPerRow
+			#not at the right edge of the screen
+			oldCursorPos = @cursorPos
+			@cursorPos += 1
+		elsif @cursorPos == @maxAppsPerRow*2 && @currentPage < @maxPages-1
+			#at the bottom-right edge of the screen
+			#another page exists to the right
+			oldCursorPos = @cursorPos
+			@cursorPos = @maxAppsPerRow+1 #if there's no bottom row of apps on the next page, this messes up. Corrected with 'correctCursorPos', which must run after 'drawApps'
+			@currentPage += 1
+			updateSideArrows
+			drawApps
+			correctCursorPos
+		end #if @cursorPos >= @maxAppsPerRow && @currentPage < @maxPages-1
+		pbPlayCursorSE
+		draw_text
       elsif Input.trigger?(Input::LEFT)
-        oldCursorPos = @cursorPos
-        @cursorPos -= 1
-        @cursorPos = 6 if @cursorPos < 1
-        @cursorPos = 1 if @cursorPos > 6
-				#~ echoln "left #{@page.to_i}"
-        if @cursorPos != oldCursorPos
-					@sprites["cursor"].x -= 148
-					case @cursorPos
-						when 1
-							@sprites["cursor"].x = (Graphics.width - 380)/2
-							@sprites["cursor"].y = (Graphics.height - 184)/2
-						when 3
-							@sprites["cursor"].x = (Graphics.width - 380)/2 + (148 * 2)
-							@sprites["cursor"].y = (Graphics.height - 184)/2
-						when 4
-							@sprites["cursor"].x = (Graphics.width - 380)/2
-							@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
-						when 6
-							@sprites["cursor"].x = (Graphics.width - 380)/2 + (148 * 2)
-							@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
-					end
-          pbPlayCursorSE
-          dorefresh = true
-					draw_text
-        end
+		if @cursorPos == 1 && @currentPage > 0
+			#at the top-left edge of the screen
+			#another page exists to the left
+			oldCursorPos = @cursorPos
+			@cursorPos = @maxAppsPerRow
+			@currentPage -= 1
+			updateSideArrows
+			drawApps
+		elsif @cursorPos > 1 && @cursorPos != @maxAppsPerRow+1
+			#not at the left edge of the screen
+			oldCursorPos = @cursorPos
+			@cursorPos -= 1
+		elsif @cursorPos == @maxAppsPerRow+1 && @currentPage > 0
+			#at the bottom-left edge of the screen
+			#another page exists to the left
+			oldCursorPos = @cursorPos
+			@cursorPos = @maxAppsPerRow*2
+			@currentPage -= 1
+			updateSideArrows
+			drawApps
+		end #if @cursorPos == 1 && @currentPage > 0
+		pbPlayCursorSE
+		draw_text
       elsif Input.trigger?(Input::DOWN)
-				if @cursorPos <= 3
-					oldCursorPos = @cursorPos
-					@cursorPos += 3
-					@cursorPos = 6 if @cursorPos < 1
-					@cursorPos = 1 if @cursorPos > 6
-					#~ echoln "down #{@page.to_i}"
-					if @cursorPos != oldCursorPos
-						@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
-						pbPlayCursorSE
-						dorefresh = true
-						draw_text
-					end
-				end
+		if @cursorPos+@maxAppsPerRow > @appsOnThisPage.length
+			#if the cursor cannot go down because an app does not exist below where it tries to go, put the cursor on the last available app
+			oldCursorPos = @cursorPos
+			@cursorPos = @appsOnThisPage.length
+		else
+			oldCursorPos = @cursorPos
+			@cursorPos += @maxAppsPerRow
+		end #if @cursorPos+@maxAppsPerRow > @appsOnThisPage.length
+		pbPlayCursorSE
+		draw_text
       elsif Input.trigger?(Input::UP)
-				if @cursorPos >= 4
-					oldCursorPos = @cursorPos
-					@cursorPos -= 3
-					@cursorPos = 6 if @cursorPos < 1
-					@cursorPos = 1 if @cursorPos > 6
-					#~ echoln "up #{@page.to_i}"
-					if @cursorPos != oldCursorPos
-						@sprites["cursor"].y = (Graphics.height - 184)/2
-						pbPlayCursorSE
-						dorefresh = true
-						draw_text
-					end
-				end
+		if @cursorPos-@maxAppsPerRow < 1
+			#if the cursor cannot go up because an app does not exist above where it tries to go
+		else
+			oldCursorPos = @cursorPos
+			@cursorPos -= @maxAppsPerRow
+		end #if @cursorPos-@maxAppsPerRow < 1
+		pbPlayCursorSE
+		draw_text
       elsif Input.trigger?(Input::BACK)
         # To play the Cancel SE (defined in database) when the diploma is
         # canceled, then uncomment the below line.
@@ -281,9 +238,10 @@ class PhoneScene # The scene class
 
   def pbEndScene
     # Hide all sprites with FadeOut effect.
-    pbFadeOutAndHide(@sprites) { update }
+	allSprites = @sprites.merge(@appSprites)
+    pbFadeOutAndHide(allSprites) { update }
     # Remove all sprites.
-    pbDisposeSpriteHash(@sprites)
+    pbDisposeSpriteHash(allSprites)
     # Remove the viewpoint.
     @viewport.dispose
   end
