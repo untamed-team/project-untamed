@@ -61,22 +61,34 @@ APPS = [
 			#draw apps on top row
 			for j in 0...@maxAppsPerRow
 				break if @appsLeftToDraw <= 0
-				@sprites["appBG"] = IconSprite.new(0, 0, @viewport)
-				@sprites["appBG"].setBitmap("Graphics/Pictures/BlukBerry Phone/appBg")
-				@sprites["appBG"].x = @appStartingX + (@spaceBetweenApps * j) + (@sprites["appBG"].width * j)
-				@sprites["appBG"].y = 102
-				@sprites["appBG"].z = 99998
+				@appSprites["appBG"] = IconSprite.new(0, 0, @viewport)
+				@appSprites["appBG"].setBitmap("Graphics/Pictures/BlukBerry Phone/appBg")
+				@appSprites["appBG"].x = @appStartingX + (@spaceBetweenApps * j) + (@appSprites["appBG"].width * j)
+				@appSprites["appBG"].y = 102
+				@appSprites["appBG"].z = 99998
+				
+				appIcon = @appsOnThisPage[j][:icon]
+				@appSprites["app"] = IconSprite.new(0, 0, @viewport)
+				@appSprites["app"].setBitmap("Graphics/Pictures/BlukBerry Phone/#{appIcon}")
+				#get the difference between the width and height of the appBG and the appIcon so we can center the icon
+				xDifference = (@appSprites["appBG"].width - @appSprites["app"].width).abs
+				@appSprites["app"].x = @appSprites["appBG"].x + (xDifference/2)
+				yDifference = (@appSprites["appBG"].height - @appSprites["app"].height).abs
+				@appSprites["app"].y = @appSprites["appBG"].y + (yDifference/2)
+				@appSprites["app"].z = 99998
+				
+				
 				@appsLeftToDraw -= 1
 			end #for j in 0...@maxAppsPerRow.length
 			
 			#draw apps on bottom row
 			for j in 0...@maxAppsPerRow
 				break if @appsLeftToDraw <= 0
-				@sprites["appBG"] = IconSprite.new(0, 0, @viewport)
-				@sprites["appBG"].setBitmap("Graphics/Pictures/BlukBerry Phone/appBg")
-				@sprites["appBG"].x = @appStartingX + (@spaceBetweenApps * j) + (@sprites["appBG"].width * j)
-				@sprites["appBG"].y = 226
-				@sprites["appBG"].z = 99998
+				@appSprites["appBG"] = IconSprite.new(0, 0, @viewport)
+				@appSprites["appBG"].setBitmap("Graphics/Pictures/BlukBerry Phone/appBg")
+				@appSprites["appBG"].x = @appStartingX + (@spaceBetweenApps * j) + (@appSprites["appBG"].width * j)
+				@appSprites["appBG"].y = 226
+				@appSprites["appBG"].z = 99998
 				@appsLeftToDraw -= 1
 			end #for j in 0...@maxAppsPerRow.length
 		end #@appsOnThisPage.length.times do

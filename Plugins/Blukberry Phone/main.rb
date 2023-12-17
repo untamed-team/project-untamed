@@ -27,6 +27,7 @@ class PhoneScene # The scene class
 	
   def pbStartScene
     @sprites = {}
+	@appSprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
 	
