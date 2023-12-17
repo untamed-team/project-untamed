@@ -77,7 +77,6 @@ APPS = [
 				@appSprites["app"].y = @appSprites["appBG"].y + (yDifference/2)
 				@appSprites["app"].z = 99998
 				
-				
 				@appsLeftToDraw -= 1
 			end #for j in 0...@maxAppsPerRow.length
 			
@@ -89,6 +88,17 @@ APPS = [
 				@appSprites["appBG"].x = @appStartingX + (@spaceBetweenApps * j) + (@appSprites["appBG"].width * j)
 				@appSprites["appBG"].y = 226
 				@appSprites["appBG"].z = 99998
+				
+				appIcon = @appsOnThisPage[j+@maxAppsPerRow][:icon]
+				@appSprites["app"] = IconSprite.new(0, 0, @viewport)
+				@appSprites["app"].setBitmap("Graphics/Pictures/BlukBerry Phone/#{appIcon}")
+				#get the difference between the width and height of the appBG and the appIcon so we can center the icon
+				xDifference = (@appSprites["appBG"].width - @appSprites["app"].width).abs
+				@appSprites["app"].x = @appSprites["appBG"].x + (xDifference/2)
+				yDifference = (@appSprites["appBG"].height - @appSprites["app"].height).abs
+				@appSprites["app"].y = @appSprites["appBG"].y + (yDifference/2)
+				@appSprites["app"].z = 99998
+				
 				@appsLeftToDraw -= 1
 			end #for j in 0...@maxAppsPerRow.length
 		end #@appsOnThisPage.length.times do

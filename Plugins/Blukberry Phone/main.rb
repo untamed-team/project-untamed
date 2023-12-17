@@ -67,7 +67,9 @@ class PhoneScene # The scene class
 	@sprites["msgwindow"].z = 99999
 
 	drawApps
-		
+	
+	@cursorPos = 1
+	
     # Set the font defined in "options" on overlay
     pbSetSystemFont(@sprites["overlay"].bitmap)
     # Calls the draw_text method
@@ -81,54 +83,29 @@ class PhoneScene # The scene class
     # Updates all sprites in @sprites variable.
     pbUpdateSpriteHash(@sprites)
   end
-
-  def draw_text(page = 1)
-    # This variable was made just to calls 'overlay' insteady of
-    # '@sprites["overlay"].bitmap'.
+ 
+  def draw_text
     overlay = @sprites["overlay"].bitmap
-    # Clear the overlay to write text over it. In this script the clear is
-    # useless, but if you want to change the text without remake the overlay,
-    # then this will be necessary.
     overlay.clear 
-    # I am using the _INTL for better parameters (like $Trainer.name) 
-    # manipulation and to allow text translation (made in Intl_Messages script
-    # section).
-    # The margins sizes for each side.
     margin_left = 112
     margin_right = 96
-    # Creates a new color for text base_color and text shadow_color.
-    # The three numbers are in RGB format.
     base_color = Color.new(72, 72, 72)
     shadow_color = Color.new(160, 160, 160)
-    # Creates an array to be pbDrawTextPositions second parameter. Search for
-    # 'def pbDrawTextPositions' to understand the second parameter.
-    # 'Graphics.width-value' and 'Graphics.height-value' make the value counts
-    # for the reverse side (starts at bottom right). This is also useful for
-    # different screen size graphics. Ex: Graphics.height-96 its the same than
-    # 288 if the graphics height is 384.
-    # 'Graphics.width/2' and 'Graphics.height/2' returns the center point. 
-		pg_specific_text = [	_INTL("watdafaq"), # ignore this
-													_INTL("Pokedex"),
-													_INTL("Map"),
-													_INTL("Player: {1}", $Trainer.name),
-													_INTL("Settings"),
-													_INTL("Objectives"),
-													_INTL("Fandom Wiki")
-											 ]
+	appHoveredOver = @appsOnThisPage[@cursorPos-1][:name]
+
     text_positions = [
-       [pg_specific_text[page],Graphics.width/2,52,2,base_color,shadow_color]#,
-       #[_INTL("Game Freak"),Graphics.width - margin_right,Graphics.height - 64,1,base_color,shadow_color]
+       ["#{appHoveredOver}",Graphics.width/2,52,2,base_color,shadow_color]
     ]
-    # Draw these text on overlay.
     pbDrawTextPositions(overlay, text_positions)
-    # Using drawTextEx (search for 'def drawTextEx' to understand the
-    # parameters) to make a line wrap text for main text.
-    #~ drawTextEx(overlay,margin_left,96,Graphics.width - margin_left - margin_right,8,"Test",base_color,shadow_color)
   end
+  
+  def getAppFunction
+	
+  end #def getAppFunction
+  
 
   def pbMain
     # Loop called once per frame.
-		@cursorPos = 1
     loop do
       # Updates the graphics.
       Graphics.update
@@ -141,32 +118,33 @@ class PhoneScene # The scene class
       # exits from loop and from pbMain (since the method contains only the
       # loop), starts pbEndScene (look at 'def pbStartScreen').
       if Input.trigger?(Input::USE)
-        case @cursorPos
-					when 1 # pokedex
-						pbFadeOutIn(99999) {
-							scene = PokemonPokedexMenu_Scene.new
-							screen = PokemonPokedexMenuScreen.new(scene)
-							screen.pbStartScreen
-						}
-					when 2 # map
-						pbShowMap(-1,false)
-					when 3 # trainer card
-						pbFadeOutIn(99999) {
-							scene = PokemonTrainerCard_Scene.new
-							screen = PokemonTrainerCardScreen.new(scene)
-							screen.pbStartScreen
-						}
-					when 4 # settings
-						pbFadeOutIn(99999) {
-							scene = PokemonOption_Scene.new
-							screen = PokemonOptionScreen.new(scene)
-							screen.pbStartScreen
-							pbUpdateSceneMap
-						}
-					when 5 # quests
-						pbFadeOutIn(99999) { pbViewQuests }
-					when 6 # fandom wiki
-				end
+		getAppFunction
+        #case @cursorPos
+		#			when 1 # pokedex
+		#				pbFadeOutIn(99999) {
+		#					scene = PokemonPokedexMenu_Scene.new
+		#					screen = PokemonPokedexMenuScreen.new(scene)
+		#					screen.pbStartScreen
+		#				}
+		#			when 2 # map
+		#				pbShowMap(-1,false)
+		#			when 3 # trainer card
+		#				pbFadeOutIn(99999) {
+		#					scene = PokemonTrainerCard_Scene.new
+		#					screen = PokemonTrainerCardScreen.new(scene)
+		#					screen.pbStartScreen
+		#				}
+		#			when 4 # settings
+		#				pbFadeOutIn(99999) {
+		#					scene = PokemonOption_Scene.new
+		#					screen = PokemonOptionScreen.new(scene)
+		#					screen.pbStartScreen
+		#					pbUpdateSceneMap
+		#				}
+		#			when 5 # quests
+		#				pbFadeOutIn(99999) { pbViewQuests }
+		#			when 6 # fandom wiki
+		#		end
       elsif Input.trigger?(Input::RIGHT)
         oldCursorPos = @cursorPos
         @cursorPos += 1
@@ -191,7 +169,7 @@ class PhoneScene # The scene class
 					end
           pbPlayCursorSE
           dorefresh = true
-					draw_text(@cursorPos)
+					draw_text
         end
       elsif Input.trigger?(Input::LEFT)
         oldCursorPos = @cursorPos
@@ -217,7 +195,7 @@ class PhoneScene # The scene class
 					end
           pbPlayCursorSE
           dorefresh = true
-					draw_text(@cursorPos)
+					draw_text
         end
       elsif Input.trigger?(Input::DOWN)
 				if @cursorPos <= 3
@@ -230,7 +208,7 @@ class PhoneScene # The scene class
 						@sprites["cursor"].y = (Graphics.height - 184)/2 + 124
 						pbPlayCursorSE
 						dorefresh = true
-						draw_text(@cursorPos)
+						draw_text
 					end
 				end
       elsif Input.trigger?(Input::UP)
@@ -244,7 +222,7 @@ class PhoneScene # The scene class
 						@sprites["cursor"].y = (Graphics.height - 184)/2
 						pbPlayCursorSE
 						dorefresh = true
-						draw_text(@cursorPos)
+						draw_text
 					end
 				end
       elsif Input.trigger?(Input::BACK)
