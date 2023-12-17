@@ -39,6 +39,7 @@ APPS = [
 	end #def getAppsOnThisPage
 	
 	def drawApps
+	@currentPage = 1
 		@selectableApps = getSelectableApps
 		@maxPages = getMaxPages
 		@maxAppsOnScreen = PhoneScene::MAX_APPS_PER_ROW * PhoneScene::APP_ROWS_ON_SCREEN

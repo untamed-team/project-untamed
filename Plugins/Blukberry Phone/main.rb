@@ -128,7 +128,12 @@ class PhoneScene # The scene class
 	when "phoneWiki"
 		pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }
 	when "phoneTutorNet"
-		
+		addPredefinedTutorMoves
+		pbFadeOutIn(99999) {
+			scene = PokemonTutorNet_Scene.new
+			screen = PokemonTutorNetScreen.new(scene)
+			screen.pbStartScreen
+		}	
 	when "phoneTutorials"
 		pbFadeOutIn(99999) { pbViewTips }
 	when "phoneAchievements"
