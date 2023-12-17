@@ -91,16 +91,56 @@ class PhoneScene # The scene class
     margin_right = 96
     base_color = Color.new(72, 72, 72)
     shadow_color = Color.new(160, 160, 160)
-	appHoveredOver = @appsOnThisPage[@cursorPos-1][:name]
+	@appHoveredOver = @appsOnThisPage[@cursorPos-1]
+	@appHoveredOverName = @appHoveredOver[:name]
 
     text_positions = [
-       ["#{appHoveredOver}",Graphics.width/2,52,2,base_color,shadow_color]
+       ["#{@appHoveredOverName}",Graphics.width/2,52,2,base_color,shadow_color]
     ]
     pbDrawTextPositions(overlay, text_positions)
   end
   
   def getAppFunction
+	case @appHoveredOver[:functionName]
+	when "phonePokedex"
+		pbFadeOutIn(99999) {
+			scene = PokemonPokedexMenu_Scene.new
+			screen = PokemonPokedexMenuScreen.new(scene)
+			screen.pbStartScreen
+		}
+	when "phoneMap"
+		pbShowMap(-1,false)
+	when "phoneTrainer"
+		pbFadeOutIn(99999) {
+			scene = PokemonTrainerCard_Scene.new
+			screen = PokemonTrainerCardScreen.new(scene)
+			screen.pbStartScreen
+		}
+	when "phoneOptions"
+		pbFadeOutIn(99999) {
+			scene = PokemonOption_Scene.new
+			screen = PokemonOptionScreen.new(scene)
+			screen.pbStartScreen
+			pbUpdateSceneMap
+		}
+	when "phoneObjectives"
+		pbFadeOutIn(99999) { pbViewQuests }
+	when "phoneWiki"
+		pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }
+	when "phoneTutorNet"
+		
+	when "phoneTutorials"
+		pbFadeOutIn(99999) { pbViewTips }
+	when "phoneAchievements"
+		pbFadeOutIn(99999) { 
+			scene = PokemonAchievements_Scene.new
+			screen = PokemonAchievements.new(scene)
+			screen.pbStartScreen
+		}
+	end #case @appHoveredOver[:functionName]
 	
+	
+	#phonePokedex
   end #def getAppFunction
   
 
