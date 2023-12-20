@@ -36,6 +36,7 @@ module Mouse
       @rect_x = nil
       @rect_y = nil
     end
+	
     #---------------------------------------------------------------------------
     #  safe input map function
     #---------------------------------------------------------------------------
@@ -69,7 +70,7 @@ module Mouse
     #  checks if mouse is not moving
     #---------------------------------------------------------------------------
     def static?
-      unless @static_x.eql?(@x) && @static_y.eql(@y)
+      unless @static_x.eql?(@x) && @static_y.eql?(@y)
         @static_x = @x
         @static_y = @y
         return false

@@ -24,6 +24,11 @@ PluginManager.register({
   :link    => "https://www.pokecommunity.com/showthread.php?t=439558",
   :credits => ["Bhagya Jyoti","Pizza Sun"]
 })
+
+#README
+#You will need to fix a typo in 'def static?' in Easy Mouse System
+#Change 'unless @static_x.eql?(@x) && @static_y.eql(@y)' to 'unless @static_x.eql?(@x) && @static_y.eql?(@y)'
+
 #=========================================================#
 #P.S.
 #The Sprite Mask script is required to run Pokemon Amie/Refresh and included
@@ -35,6 +40,7 @@ PluginManager.register({
 # Allows you to use a bitmap, sprite or image path to a bitmap to use as a mask
 # for a sprite's original bitmap.
 #===============================================================================
+
 # handled as an extension of the Sprite class
 class Sprite
   # function used to to mask the Sprite's current bitmap with another
@@ -367,16 +373,16 @@ def pbChangeLevel(pokemon,newlevel,scene)
   end
 end
 
-##
-
-class PokeBattle_Pokemon
-  attr_accessor(:amie_affection)
-  attr_accessor(:amie_fullness)
-  attr_accessor(:amie_enjoyment) # Pokemon-Amie stats
+#class PokeBattle_Pokemon
+class Pokemon
+  attr_accessor :amie_affection #attr_accessor(:amie_affection)
+  attr_accessor :amie_fullness #attr_accessor(:amie_fullness)
+  attr_accessor :amie_enjoyment #attr_accessor(:amie_enjoyment) # Pokemon-Amie stats
   MAXAMIEPOINTS = 255 # Max points that a single Amie/Refresh stat can have
   @amie_affection=0 if (@amie_affection==nil)
   @amie_fullness=0 if (@amie_fullness==nil)
   @amie_enjoyment=0 if (@amie_enjoyment==nil)
+  
   # Getters - return each stat values in points
   def amie_affection
     @amie_affection=0 if (@amie_affection==nil)
@@ -559,11 +565,11 @@ class Game_Mouse
 end
 #Gets First NonEgg Pokemon
 def pbFirstNonEggPokemon(variableNumber)
-  for i in 0...$Trainer.party.length
-    p = $Trainer.party[i]
+  for i in 0...$player.party.length
+    p = $player.party[i]
     if p && !p.egg?
       pbSet(variableNumber,i)
-      return $Trainer.party[i]
+      return $player.party[i]
     end
   end
   pbSet(variableNumber,-1)
@@ -572,9 +578,9 @@ end
 
 
 def setAmieIndex(pokemonindex)
-  if (pokemonindex<=$Trainer.party.length-1) &&(pokemonindex>=0)
+  if (pokemonindex<=$player.party.length-1) &&(pokemonindex>=0)
     pbSet(AMIEINDEX,pokemonindex)
-    pbSet(AMIEPOKEMON,$Trainer.party[pbGet(AMIEINDEX)])
+    pbSet(AMIEPOKEMON,$player.party[pbGet(AMIEINDEX)])
     return
   end
   defaultAmie
@@ -601,8 +607,8 @@ end
 
 def setAmiePokemon(pkmn)
   pbSet(AMIEPOKEMON,pkmn)
-  for i in 0...$Trainer.party.length
-    if pbGet(AMIEPOKEMON) == $Trainer.party[i]
+  for i in 0...$player.party.length
+    if pbGet(AMIEPOKEMON) == $player.party[i]
       pbSet(AMIEINDEX,i)
       return
     end
@@ -612,20 +618,21 @@ end
 
 def defaultAmie
   pbFirstNonEggPokemon(AMIEINDEX)
-  pbSet(AMIEPOKEMON,$Trainer.party[pbGet(AMIEINDEX)])
+  pbSet(AMIEPOKEMON,$player.party[pbGet(AMIEINDEX)])
 end
 
 #Lowers Fullness and Enjoyment by 1 every 50 steps
 HUNGERCOUNTER=0
-Events.onStepTaken+=proc {
-  HUNGERCOUNTER += 1
+EventHandlers.add(:on_step_taken, :hungerCounter,
+	proc { |event|
+	HUNGERCOUNTER += 1
   if HUNGERCOUNTER>=50
-    for pkmn in $Trainer.party
+    for pkmn in $player.party
       pkmn.changeAmieStats("walking")
     end
     HUNGERCOUNTER = 0
   end
-}
+	})
 
 class PokeBattle_Battler
   attr_accessor :amie_affection
@@ -678,7 +685,7 @@ class PokeAmie_Essentials_Scene
         if !@sprites["text"].disposed?
           base   = Color.new(248,248,248)
           shadow = Color.new(104,104,104)
-          pkname = $Trainer.party[@partyIndex].name
+          pkname = $player.party[@partyIndex].name
           textpos1 = [
             [_INTL("Affection"),32,70,0,base,shadow],
             [_INTL("Fullness"),32,102,0,base,shadow],
@@ -747,15 +754,17 @@ class PokeAmie_Essentials_Scene
       @sprites["itemcount"].bitmap.font.size=24
       @sprites["itemcount"].z=1
       for item in EATABLE_ITEMS
-        if $PokemonBag.pbQuantity(item)>0
+        if $bag.quantity(item)>0
           @items[@foodnum]=item
-          @sprites["food#{@foodnum}"] = ItemIconSprite.new(0,0,-1,@viewport)
-          @sprites["food#{@foodnum}"].item = getID(PBItems,item)
+          #@sprites["food#{@foodnum}"] = ItemIconSprite.new(0,0,-1,@viewport)
+		  @sprites["food#{@foodnum}"] = ItemIconSprite.new(0,0,nil,@viewport)
+          #@sprites["food#{@foodnum}"].item = getID(PBItems,item)
+		  @sprites["food#{@foodnum}"].item = GameData::Item.get(item).id
           @sprites["food#{@foodnum}"].ox = @sprites["food#{@foodnum}"].bitmap.width/2
           @sprites["food#{@foodnum}"].oy = @sprites["food#{@foodnum}"].bitmap.height/2
           @sprites["food#{@foodnum}"].x = @sprites["food#{@foodnum}"].ox+@sprites["feed"].ox+@sprites["feed"].x+@sprites["food#{@foodnum}"].bitmap.width*@foodnum
           @sprites["food#{@foodnum}"].y = @sprites["feed"].y
-          num=$PokemonBag.pbQuantity(item)
+          num=$bag.quantity(item)
           pbDrawOutlineText(@sprites["itemcount"].bitmap,@sprites["food#{@foodnum}"].x,@sprites["food#{@foodnum}"].y,24,24,num.to_s,Color.new(248,248,248),Color.new(30,30,30),0)
           srcx = @sprites["feed"].x-@sprites["food#{@foodnum}"].x
           srcx=0 if srcx<0
@@ -792,7 +801,7 @@ class PokeAmie_Essentials_Scene
   def pbSwitchScreen
     base   = Color.new(248,248,248)
     shadow = Color.new(104,104,104)
-    pkname = $Trainer.party[@partyIndex].name
+    pkname = $player.party[@partyIndex].name
     textpos1 = [
       [_INTL("Affection"),32,70,0,base,shadow],
       [_INTL("Fullness"),32,102,0,base,shadow],
@@ -803,9 +812,9 @@ class PokeAmie_Essentials_Scene
     @sprites["text"] = BitmapSprite.new(Graphics.width,Graphics.height,@viewport)
     pbSetSystemFont(@sprites["text"].bitmap)
     pbDrawTextPositions(@sprites["text"].bitmap,textpos1)
-    for i in 0...($Trainer.party.length)
-      pokemonIconFile = pbPokemonIconFile($Trainer.party[i])
-      @sprites["pokeicon#{i}"]=PokemonIconSprite.new($Trainer.party[i],@viewport)
+    for i in 0...($player.party.length)
+      #pokemonIconFile = pbPokemonIconFile($player.party[i])
+      @sprites["pokeicon#{i}"]=PokemonIconSprite.new($player.party[i],@viewport)
       @sprites["pokeicon#{i}"].ox=@sprites["pokeicon#{i}"].bitmap.width/4
       @sprites["pokeicon#{i}"].oy=@sprites["pokeicon#{i}"].bitmap.height/2
       @sprites["pokeicon#{i}"].x=68+76*i
@@ -926,8 +935,9 @@ class PokeAmie_Essentials_Scene
       @sprites["mouse"].viewport = @viewport
       @sprites["mouse"].ox = @sprites["mouse"].bitmap.width/2 
       @sprites["mouse"].oy = @sprites["mouse"].bitmap.height/2
-      @sprites["mouse"].x=$mouse.x if defined?($mouse.x)
-      @sprites["mouse"].y=$mouse.y if defined?($mouse.y)
+      @sprites["mouse"].x=Mouse.x if defined?(Mouse.x)
+      @sprites["mouse"].y=Mouse.y if defined?(Mouse.y)
+	  
       @sprites["pokemon"]=PokemonSprite.new(@viewport)
       @sprites["pokemon"].setPokemonBitmap(@pokemon)
       @sprites["pokemon"].mirror=false
@@ -935,8 +945,8 @@ class PokeAmie_Essentials_Scene
       @sprites["pokemon"].ox = @sprites["pokemon"].bitmap.width/2 
       @sprites["pokemon"].oy = @sprites["pokemon"].bitmap.height/2
       #places Pokemon at the center of screen
-      @sprites["pokemon"].x=SCREEN_WIDTH/2
-      @sprites["pokemon"].y = SCREEN_HEIGHT/2+30
+      @sprites["pokemon"].x=Graphics.width/2#SCREEN_WIDTH/2
+      @sprites["pokemon"].y = Graphics.height/2+30#SCREEN_HEIGHT/2+30
       @sprites["pokemon"].z = 3
       @pokemon.amie_enjoyment=(@pokemon.amie_enjoyment-2)
       @sprites["switch"] = IconSprite.new(0,0)
@@ -945,14 +955,14 @@ class PokeAmie_Essentials_Scene
       #sets switch icon to bottom right
       @sprites["switch"].ox = @sprites["switch"].bitmap.width
       @sprites["switch"].oy = @sprites["switch"].bitmap.height
-      @sprites["switch"].x=SCREEN_WIDTH
-      @sprites["switch"].y = SCREEN_HEIGHT
+      @sprites["switch"].x=Graphics.width #SCREEN_WIDTH
+      @sprites["switch"].y = Graphics.height #SCREEN_HEIGHT
       @sprites["back"] = IconSprite.new(0,0)
       @sprites["back"].setBitmap("Graphics/Pictures/Pokemon Amie/back")
       @sprites["back"].viewport = @viewport
       #sets 'back' icon to bottom left
       @sprites["back"].oy = @sprites["back"].bitmap.height
-      @sprites["back"].y = SCREEN_HEIGHT
+      @sprites["back"].y = Graphics.height#SCREEN_HEIGHT
       @sprites["feed"] = IconSprite.new(0,0)
       @sprites["feed"].setBitmap("Graphics/Pictures/Pokemon Amie/feed")
       @sprites["feed"].viewport = @viewport
@@ -966,11 +976,11 @@ class PokeAmie_Essentials_Scene
     end
     def pbAmieMouse
       if !(@sprites["pokemon"].disposed?)&&(@feeding!=true)
-        if $mouse.overPixel?(@sprites["pokemon"]) && ($mouse.leftPress?) #Pressing mouse while over Pokemon?
+        if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left) #Pressing mouse while over Pokemon?
           #pbGet(AMIEPOKEMON).feedAmie(:ORANBERRY)
           @sprites["mouse"].setBitmap("Graphics/Pictures/Pokemon Amie/hand1")
           pbWait(1)
-          if !$mouse.isStatic? #Is the mouse moving?
+          if !Mouse.static? #Is the mouse moving?
             @counter=@counter+1
             if (Time.now.to_f-@time2.to_f)>(getPlayTime("Audio/SE/pet.ogg")) #Audio doesn't overlap
               pbSEPlay("pet.ogg",90,100)
@@ -978,14 +988,14 @@ class PokeAmie_Essentials_Scene
             end
             if @counter>=50 #after counter reaches number, hearts appear
               pbGet(AMIEPOKEMON).changeAmieStats("pet")
-              pbPlayCry(@pokemon,90,110)
+              @pokemon.play_cry(90,110)
               for i in 0...4 #creates the hearts
                 @sprites["#{i}"] = IconSprite.new(0,0)
                 @sprites["#{i}"].setBitmap("Graphics/Pictures/Pokemon Amie/heart")
                 @sprites["#{i}"].viewport = @viewport
                 @sprites["#{i}"].z=4
-                @sprites["#{i}"].x=SCREEN_WIDTH/2+rand(70)-40
-                @sprites["#{i}"].y=SCREEN_HEIGHT/2-rand(40)+30
+                @sprites["#{i}"].x=Graphics.width/2+rand(70)-40#SCREEN_WIDTH/2+rand(70)-40
+                @sprites["#{i}"].y=Graphics.height/2-rand(40)+30#SCREEN_HEIGHT/2-rand(40)+30
               end
               15.times do
                 for i in 0...4 #moves hearts
@@ -1007,7 +1017,7 @@ class PokeAmie_Essentials_Scene
         end
       end
       if !(@sprites["pokemon"].disposed?)&&(@feeding==true)
-        if $mouse.overPixel?(@sprites["pokemon"]) && ($mouse.leftPress?)&&(@food!=nil)&&((Time.now.to_f-@time1.to_f)>0.4)
+		if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left)&&(@food!=nil)&&((Time.now.to_f-@time1.to_f)>0.4)
           @foodcounter=@foodcounter+1
           @time1=Time.now
           if @foodcounter==1
@@ -1023,10 +1033,10 @@ class PokeAmie_Essentials_Scene
           if @foodcounter==5
             pbSEPlay("eat.ogg",90,100)
             @sprites["mouse"].setBitmap("Graphics/Pictures/Pokemon Amie/eaten3.png")
-            pk=$Trainer.party[pbGet(AMIEINDEX)].species
+            pk=$player.party[pbGet(AMIEINDEX)].species
             pbGet(AMIEPOKEMON).feedAmie(@food)
-            if pk!=($Trainer.party[pbGet(AMIEINDEX)].species)
-              @sprites["pokemon"].setPokemonBitmap($Trainer.party[pbGet(AMIEINDEX)])
+            if pk!=($player.party[pbGet(AMIEINDEX)].species)
+              @sprites["pokemon"].setPokemonBitmap($player.party[pbGet(AMIEINDEX)])
             end
             @feeding=false
             @foodcounter=0
@@ -1037,8 +1047,8 @@ class PokeAmie_Essentials_Scene
               @sprites["#{i}"].setBitmap("Graphics/Pictures/Pokemon Amie/heart")
               @sprites["#{i}"].viewport = @viewport
               @sprites["#{i}"].z=4
-              @sprites["#{i}"].x=SCREEN_WIDTH/2+rand(70)-40
-              @sprites["#{i}"].y=SCREEN_HEIGHT/2-rand(40)+30
+              @sprites["#{i}"].x=Graphics.width/2+rand(70)-40#SCREEN_WIDTH/2+rand(70)-40
+              @sprites["#{i}"].y=Graphics.height#SCREEN_HEIGHT/2-rand(40)+30
             end
             15.times do
               for i in 0...4 #moves hearts
@@ -1061,28 +1071,30 @@ class PokeAmie_Essentials_Scene
         @sprites["mouse"].mask(@mask)
       end
       #moves hand picture to mouse position
-      @sprites["mouse"].x=$mouse.x if defined?($mouse.x)
-      @sprites["mouse"].y=$mouse.y if defined?($mouse.y)
+      @sprites["mouse"].x=Mouse.x if defined?(Mouse.x)
+      @sprites["mouse"].y=Mouse.y if defined?(Mouse.y)
     end
     def pbBackdrop #gets background based off location
       environ=pbGetEnvironment
       # Choose backdrop
       backdrop="Field"
-      if environ==PBEnvironment::Cave
+      if environ==:Cave #PBEnvironment::Cave
         backdrop="Cave"
-      elsif environ==PBEnvironment::MovingWater || environ==PBEnvironment::StillWater
+      elsif environ==:MovingWater #PBEnvironment::MovingWater || environ==PBEnvironment::StillWater
         backdrop="Water"
-      elsif environ==PBEnvironment::Underwater
+      elsif environ==:Underwater #PBEnvironment::Underwater
         backdrop="Underwater"
-      elsif environ==PBEnvironment::Rock
+      elsif environ==:Rock #PBEnvironment::Rock
         backdrop="Mountain"
       else
-        if !$game_map || !pbGetMetadata($game_map.map_id,MetadataOutdoor)
+        #if !$game_map || !pbGetMetadata($game_map.map_id,MetadataOutdoor)
+		if !$game_map || !$game_map.metadata
           backdrop="IndoorA"
         end
       end
       if $game_map
-        back=pbGetMetadata($game_map.map_id,MetadataBattleBack)
+        #back=pbGetMetadata($game_map.map_id,MetadataBattleBack)
+		back=$game_map.metadata.battle_background
         if back && back!=""
           backdrop=back
         end
@@ -1106,9 +1118,8 @@ class PokeAmie_Essentials_Scene
     end
   
     def update_command
-      
       # If B button was pressed
-      if Input.trigger?(Input::B)
+      if Input.trigger?(Input::BACK)
         if switch==0
           pbPlayCancelSE()
           @shouldbreak=true #ends scene loop and starts to end scene
@@ -1124,7 +1135,7 @@ class PokeAmie_Essentials_Scene
       end
       if (@sprites["textbox"]!=nil)
         if !@sprites["textbox"].disposed?
-          if $mouse.click?(@sprites["textbox"])
+          if Mouse.click?(@sprites["textbox"])
             setAmieIndex(@partyIndex)
             @pokemon=pbGet(AMIEPOKEMON)
             pbClickSprite(@sprites["textbox"])
@@ -1138,16 +1149,16 @@ class PokeAmie_Essentials_Scene
         end
       end
       if !@sprites["switch"].disposed?
-        if $mouse.click?(@sprites["switch"]) #clicks on switch sprite
+        if Mouse.click?(@sprites["switch"]) #clicks on switch sprite
           pbClickSprite(@sprites["switch"])
           @switch=1
         end
       end
       if @sprites["feedshow"]!=nil
         if !@sprites["feedshow"].disposed?
-          if ($mouse.leftPress?)&&(!$mouse.overPixel?(@sprites["feed"]))&&($mouse.overPixel?(@sprites["feedshow"]))
+          if Mouse.press?(@sprites["feedshow"], :left)&&(!Mouse.over_pixel?(@sprites["feed"]))&&(Mouse.over_pixel?(@sprites["feedshow"]))
             if (@mouse_x!=nil)
-              dx=$mouse.x-@mouse_x
+              dx=Mouse.x-@mouse_x
               if ((@sprites["food#{@foodnum-1}"].x+@sprites["food#{@foodnum-1}"].bitmap.width+dx)<=512)
                 dx=0
               end
@@ -1161,7 +1172,7 @@ class PokeAmie_Essentials_Scene
                 srcx = @sprites["feed"].x-@sprites["food#{x}"].x+40
                 srcx=0 if srcx<0
                 @sprites["food#{x}"].src_rect.set(srcx,0,@sprites["food#{x}"].bitmap.width,@sprites["food#{x}"].bitmap.width)
-                num=$PokemonBag.pbQuantity(@items[x])
+                num=$bag.quantity(@items[x])
                 if @sprites["feed"].x<@sprites["food#{x}"].x
                   pbDrawOutlineText(@sprites["itemcount"].bitmap,@sprites["food#{x}"].x,@sprites["food#{x}"].y,24,24,num.to_s,Color.new(248,248,248),Color.new(30,30,30),0)
                 end
@@ -1170,26 +1181,29 @@ class PokeAmie_Essentials_Scene
           end
         end
       end
-      @mouse_x=$mouse.x
-      if (!$mouse.leftPress?)&&(@feeding==true)
+      @mouse_x=Mouse.x
+      if !Mouse.press?(:left)&&(@feeding==true)
+	  print "test"
         @foodcounter=0
         @mask=nil
         @feeding=false
       end
       if @sprites["feedshow"]!=nil
-        if (!$mouse.leftPress?)or(!$mouse.isStatic?)
+        if !Mouse.press?(:left)or(!Mouse.static?)
           @time1=Time.now
         end
-        if ($mouse.isStatic?)&&((Time.now.to_f-@time1.to_f)>0.8)&&(!@sprites["feedshow"].disposed?)
+        #if (Mouse.static?)&&((Time.now.to_f-@time1.to_f)>0.8)&&(!@sprites["feedshow"].disposed?)
+		if (!@sprites["feedshow"].disposed?)
           for x in 0...@foodnum
-            if $mouse.leftPress?(@sprites["food#{x}"])
+            if Mouse.press?(@sprites["food#{x}"], :left)
               if (@pokemon.getFullnessLevel==5)
                 @full=true
                 @time3=Time.now
-                pbDrawOutlineText(@sprites["itemcount"].bitmap,SCREEN_WIDTH/2-64,@sprites["feed"].x+30,128,32,@pokemon.name+" is full!",Color.new(248,248,248),Color.new(30,30,30),0)
+				pbDrawOutlineText(@sprites["itemcount"].bitmap,Graphics.width/2-64,@sprites["feed"].x+30,128,32,@pokemon.name+" is full!",Color.new(248,248,248),Color.new(30,30,30),0)
                 break
               end
-              @sprites["mouse"].setBitmap(pbItemIconFile(getID(PBItems,@items[x])))
+              #@sprites["mouse"].setBitmap(pbItemIconFile(getID(PBItems,@items[x])))
+			  @sprites["mouse"].setBitmap(@sprites["food#{x}"].bitmap)
               @sprites["mouse"].ox=@sprites["mouse"].bitmap.width/2
               @sprites["mouse"].oy=@sprites["mouse"].bitmap.height/2
               @food=@items[x]
@@ -1204,7 +1218,7 @@ class PokeAmie_Essentials_Scene
             if !@sprites["feedshow"].disposed?
               @sprites["itemcount"].bitmap.clear
               for x in 0...@foodnum
-                num=$PokemonBag.pbQuantity(@items[x])
+                num=$bag.quantity(@items[x])
                 pbDrawOutlineText(@sprites["itemcount"].bitmap,@sprites["food#{x}"].x,@sprites["food#{x}"].y,24,24,num.to_s,Color.new(248,248,248),Color.new(30,30,30),0)
               end
             end
@@ -1212,7 +1226,7 @@ class PokeAmie_Essentials_Scene
         end
       end
       if !@sprites["feed"].disposed?
-        if $mouse.click?(@sprites["feed"])&&!$mouse.long?(Input::Mouse_Left) #clicks on feed sprite
+        if Mouse.click?(@sprites["feed"])&&!Mouse.hold?(:left) #clicks on feed sprite
           if @feedshow==3
             pbClickSprite(@sprites["feed"])
             @feedshow=2
@@ -1223,7 +1237,7 @@ class PokeAmie_Essentials_Scene
           end
         end
       end
-      if $mouse.click?(@sprites["back"])
+      if Mouse.click?(@sprites["back"])
         pbClickSprite(@sprites["back"])
         if switch==0
           @shouldbreak=true #ends scene loop and starts to end scene
@@ -1236,17 +1250,17 @@ class PokeAmie_Essentials_Scene
           }
         end
       end
-      for i in 0...($Trainer.party.length)
+      for i in 0...($player.party.length)
         if (@sprites["pokeicon#{i}"]==nil)
           break
         end
         if @sprites["pokeicon#{i}"].disposed?
           break
         end
-        if $mouse.click?(@sprites["pokeicon#{i}"])
+        if Mouse.click?(@sprites["pokeicon#{i}"])
           @partyIndex = i
           for a in 1...6
-            if a<=$Trainer.party[@partyIndex].getAffectionLevel
+            if a<=$player.party[@partyIndex].getAffectionLevel
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
             else
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
@@ -1258,7 +1272,7 @@ class PokeAmie_Essentials_Scene
             @sprites["affect#{a}"].x=178+@sprites["affect#{a}"].bitmap.width*a+space
             @sprites["affect#{a}"].y=87
             #Draw Fullness
-            if a<=($Trainer.party[@partyIndex].getFullnessLevel)
+            if a<=($player.party[@partyIndex].getFullnessLevel)
               @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full")
             else
               @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full_empty")
@@ -1270,7 +1284,7 @@ class PokeAmie_Essentials_Scene
             @sprites["full#{a}"].x=178+@sprites["full#{a}"].bitmap.width*a+space
             @sprites["full#{a}"].y=87+32
             #Draw Enjoyment
-            if a<=($Trainer.party[@partyIndex].getEnjoymentLevel)
+            if a<=($player.party[@partyIndex].getEnjoymentLevel)
               @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy")
             else
               @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy_empty")
@@ -1282,7 +1296,7 @@ class PokeAmie_Essentials_Scene
             @sprites["enjoy#{a}"].x=178+@sprites["enjoy#{a}"].bitmap.width*a+space
             @sprites["enjoy#{a}"].y=87+64
           end
-          if ($Trainer.party[@partyIndex].egg?)
+          if ($player.party[@partyIndex].egg?)
             if @sprites["textbox"]!=nil
               if !@sprites["textbox"].disposed?
                 @sprites["textbox"].dispose
@@ -1290,7 +1304,7 @@ class PokeAmie_Essentials_Scene
               end
             end
           end
-          if (pbGet(AMIEINDEX)!=i)&&(!$Trainer.party[@partyIndex].egg?)
+          if (pbGet(AMIEINDEX)!=i)&&(!$player.party[@partyIndex].egg?)
             if (@sprites["textbox"]==nil)or(@sprites["textbox"].disposed?)
               @sprites["textbox"] = IconSprite.new(96,281)
               @sprites["textbox"].setBitmap("Graphics/Pictures/Pokemon Amie/textbox")
@@ -1346,7 +1360,7 @@ class PokeAmie_EssentialsScreen
   
   def pbStartAmie(pokemon, partyIndex)
     @scene.pbStartScene(pokemon, partyIndex)
-    $mouse.hide
+    #Mouse.hide
     # Main loop
     loop do
       # Update game screen
@@ -1365,7 +1379,7 @@ class PokeAmie_EssentialsScreen
     pbFadeOutIn(99999) { 
       @scene.pbEndScene
     }
-    $mouse.show
+    #Mouse.show
   end
 end
 
@@ -1377,5 +1391,5 @@ def pokemonAmieRefresh
     screen.pbStartAmie(pbGet(AMIEPOKEMON),pbGet(AMIEINDEX))
   }
 end
-  
+
 #------------------------------------------------------------------------------#
