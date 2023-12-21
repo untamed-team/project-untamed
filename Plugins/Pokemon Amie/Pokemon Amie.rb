@@ -55,7 +55,7 @@ class Sprite
     elsif mask.is_a?(Sprite) # accepts other Sprite.new
       mbmp = mask.bitmap
     elsif mask.is_a?(String) # accepts Strings
-      mbmp = BitmapCache.load_bitmap(mask)
+      mbmp = RPG::Cache.load_bitmap("", mask) #BitmapCache.load_bitmap(mask)
     else # exits if non-matching type
       return false
     end
@@ -261,7 +261,7 @@ ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,pokemon,scene|
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status#healStatus
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} became healthy.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} became healthy.",pokemon.name)) if scene==nil
@@ -468,20 +468,23 @@ class Pokemon
     return if (amie_fullness>=MAXAMIEPOINTS)
     return if getFullnessLevel==5
     if EATABLE_ITEMS.include?(food)
-      if pbCanUseOnPokemon?(getID(PBItems,food))
-        ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil)
+      #if pbCanUseOnPokemon?(getID(PBItems,food))
+	  if pbCanUseOnPokemon?(food)
+        ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil, nil)
         #if ret && $ItemData[item][ITEMUSE]==1 # Usable on Pokémon, consumed
         #  $PokemonBag.pbDeleteItem(item)
         #end
       end
-      if pbIsBerry?(getID(PBItems,food))
+	  if GameData::Item.get(food).is_berry? #pbIsBerry?(getID(PBItems,food))
         if !@berryPlantData
           pbRgssOpen("Data/berry_plants.dat","rb"){|f|
              @berryPlantData=Marshal.load(f)
           }
         end
-        if @berryPlantData && @berryPlantData[getID(PBItems,food)]!=nil
-          ber = @berryPlantData[getID(PBItems,food)]
+        #if @berryPlantData && @berryPlantData[getID(PBItems,food)]!=nil
+		if @berryPlantData && @berryPlantData[GameData::Item.get(food)]!=nil
+          #ber = @berryPlantData[getID(PBItems,food)]
+		  ber = @berryPlantData[GameData::Item.get(food)]
         else
           ber = [3,15,2,5]
         end
@@ -493,7 +496,8 @@ class Pokemon
         fullGain = 90
         enjoyGain = 0
       end
-      $PokemonBag.pbDeleteItem(getID(PBItems,food))
+      #$PokemonBag.pbDeleteItem(getID(PBItems,food))
+	  $bag.remove(GameData::Item.get(food).id)
       @amie_affection = amie_affection+affGain
       @amie_affection = [0, [amie_affection, MAXAMIEPOINTS].min].max
       @amie_fullness = amie_fullness+fullGain
@@ -1017,7 +1021,7 @@ class PokeAmie_Essentials_Scene
         end
       end
       if !(@sprites["pokemon"].disposed?)&&(@feeding==true)
-		if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left)&&(@food!=nil)&&((Time.now.to_f-@time1.to_f)>0.4)
+		if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left)&&(@food!=nil)
           @foodcounter=@foodcounter+1
           @time1=Time.now
           if @foodcounter==1
@@ -1041,14 +1045,14 @@ class PokeAmie_Essentials_Scene
             @feeding=false
             @foodcounter=0
             @time1=0
-            pbPlayCry(@pokemon,90,110)
+            @pokemon.play_cry(90,110)
             for i in 0...4 #creates the hearts
               @sprites["#{i}"] = IconSprite.new(0,0)
               @sprites["#{i}"].setBitmap("Graphics/Pictures/Pokemon Amie/heart")
               @sprites["#{i}"].viewport = @viewport
               @sprites["#{i}"].z=4
               @sprites["#{i}"].x=Graphics.width/2+rand(70)-40#SCREEN_WIDTH/2+rand(70)-40
-              @sprites["#{i}"].y=Graphics.height#SCREEN_HEIGHT/2-rand(40)+30
+              @sprites["#{i}"].y=Graphics.height/2-rand(40)+30#SCREEN_HEIGHT/2-rand(40)+30
             end
             15.times do
               for i in 0...4 #moves hearts
@@ -1182,14 +1186,13 @@ class PokeAmie_Essentials_Scene
         end
       end
       @mouse_x=Mouse.x
-      if !Mouse.press?(:left)&&(@feeding==true)
-	  print "test"
+      if Input.release?(Input::MOUSELEFT)&&(@feeding==true)
         @foodcounter=0
         @mask=nil
         @feeding=false
       end
       if @sprites["feedshow"]!=nil
-        if !Mouse.press?(:left)or(!Mouse.static?)
+        if Input.release?(Input::MOUSELEFT) || (!Mouse.static?)
           @time1=Time.now
         end
         #if (Mouse.static?)&&((Time.now.to_f-@time1.to_f)>0.8)&&(!@sprites["feedshow"].disposed?)
@@ -1202,8 +1205,7 @@ class PokeAmie_Essentials_Scene
 				pbDrawOutlineText(@sprites["itemcount"].bitmap,Graphics.width/2-64,@sprites["feed"].x+30,128,32,@pokemon.name+" is full!",Color.new(248,248,248),Color.new(30,30,30),0)
                 break
               end
-              #@sprites["mouse"].setBitmap(pbItemIconFile(getID(PBItems,@items[x])))
-			  @sprites["mouse"].setBitmap(@sprites["food#{x}"].bitmap)
+			  @sprites["mouse"].setBitmap(GameData::Item.icon_filename(@items[x]))
               @sprites["mouse"].ox=@sprites["mouse"].bitmap.width/2
               @sprites["mouse"].oy=@sprites["mouse"].bitmap.height/2
               @food=@items[x]
