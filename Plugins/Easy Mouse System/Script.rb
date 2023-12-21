@@ -35,7 +35,7 @@ module Mouse
       @object_oy = 0
       @rect_x = nil
       @rect_y = nil
-    end
+    end  
 	
     #---------------------------------------------------------------------------
     #  safe input map function

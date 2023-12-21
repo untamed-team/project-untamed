@@ -181,11 +181,11 @@ def pbHPItem(pokemon,restorehp,scene)
 end
 #
 ItemHandlers::UseOnPokemon.add(:AWAKENING,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=PBStatuses::SLEEP
+   if pokemon.hp<=0 || pokemon.status!=:SLEEP
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} woke up.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} woke up.",pokemon.name)) if scene==nil
@@ -196,11 +196,11 @@ ItemHandlers::UseOnPokemon.add(:AWAKENING,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:AWAKENING,:CHESTOBERRY,:BLUEFLUTE,:POKEFLUTE)
 
 ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=PBStatuses::POISON
+   if pokemon.hp<=0 || pokemon.status!=:POISON
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} was cured of its poisoning.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} was cured of its poisoning.",pokemon.name)) if scene==nil
@@ -211,11 +211,11 @@ ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:ANTIDOTE,:PECHABERRY)
 
 ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=PBStatuses::BURN
+   if pokemon.hp<=0 || pokemon.status!=:BURN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1}'s burn was healed.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1}'s burn was healed.",pokemon.name)) if scene==nil
@@ -226,11 +226,11 @@ ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:BURNHEAL,:RAWSTBERRY)
 
 ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=PBStatuses::PARALYSIS
+   if pokemon.hp<=0 || pokemon.status!=:PARALYSIS
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} was cured of paralysis.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} was cured of paralysis.",pokemon.name)) if scene==nil
@@ -241,11 +241,11 @@ ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:PARLYZHEAL,:PARALYZEHEAL,:CHERIBERRY)
 
 ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=PBStatuses::FROZEN
+   if pokemon.hp<=0 || pokemon.status!=:FROZEN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} was thawed out.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} was thawed out.",pokemon.name)) if scene==nil
@@ -1021,8 +1021,13 @@ class PokeAmie_Essentials_Scene
         end
       end
       if !(@sprites["pokemon"].disposed?)&&(@feeding==true)
+	  #holding food on the pokemon
 		if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left)&&(@food!=nil)
-          @foodcounter=@foodcounter+1
+		@nibbleCooldown += 1
+		if @nibbleCooldown >= (Graphics.frame_rate*1)/2
+			@foodcounter+=1
+			@nibbleCooldown = 0
+		end
           @time1=Time.now
           if @foodcounter==1
             pbSEPlay("eat.ogg",90,100)
@@ -1071,6 +1076,9 @@ class PokeAmie_Essentials_Scene
             @mask=nil
             Graphics.update
           end
+		else
+			#not holding food on the pokemon
+			@nibbleCooldown = 0
         end
         @sprites["mouse"].mask(@mask)
       end
@@ -1362,7 +1370,6 @@ class PokeAmie_EssentialsScreen
   
   def pbStartAmie(pokemon, partyIndex)
     @scene.pbStartScene(pokemon, partyIndex)
-    #Mouse.hide
     # Main loop
     loop do
       # Update game screen
@@ -1381,7 +1388,6 @@ class PokeAmie_EssentialsScreen
     pbFadeOutIn(99999) { 
       @scene.pbEndScene
     }
-    #Mouse.show
   end
 end
 
