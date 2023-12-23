@@ -5,11 +5,10 @@
 #                 Further Adapted from rigbycwts's script
 ################################################################################
 =begin
-use either if the following two scripts to set Pokemon Amie a specific Pokemon 
+use the following script to set Pokemon Amie a specific Pokemon 
 beforehand:
 =============================================
-setAmieIndex(party index)
-setAmiePokemon(pokemon)
+PokemonAmieRefresh(party index)
 =============================================
 to begin Pokemon Amie/Refresh Scene use:
 =========================================================
@@ -568,15 +567,13 @@ class Game_Mouse
   end
 end
 #Gets First NonEgg Pokemon
-def pbFirstNonEggPokemon(variableNumber)
+def pbFirstNonEggPokemon
   for i in 0...$player.party.length
     p = $player.party[i]
     if p && !p.egg?
-      pbSet(variableNumber,i)
       return $player.party[i]
     end
   end
-  pbSet(variableNumber,-1)
   return nil
 end
 
@@ -610,20 +607,22 @@ end
 
 
 def setAmiePokemon(pkmn)
-  pbSet(AMIEPOKEMON,pkmn)
-  for i in 0...$player.party.length
-    if pbGet(AMIEPOKEMON) == $player.party[i]
-      pbSet(AMIEINDEX,i)
-      return
-    end
+  if pkmn.nil?
+	#if pkmn is not specified, get the first non-egg mon in the party
+	ret = pbFirstNonEggPokemon
+	return ret
+  else
+	#if pkmn is specified, make sure it's not an egg
+	#if it's an egg, just get the first non-egg instead
+	if $player.party[pkmn].egg?
+		ret = pbFirstNonEggPokemon
+		return ret
+	else
+		#if pkmn is specified and it's not an egg, go with it!
+		return $player.party[pkmn]
+	end
   end
-  defaultAmie
-end
-
-def defaultAmie
-  pbFirstNonEggPokemon(AMIEINDEX)
-  pbSet(AMIEPOKEMON,$player.party[pbGet(AMIEINDEX)])
-end
+end #def setAmiePokemon(pkmn)
 
 #Lowers Fullness and Enjoyment by 1 every 50 steps
 HUNGERCOUNTER=0
@@ -902,9 +901,17 @@ class PokeAmie_Essentials_Scene
     @switch=2
   end
   #-----------------------------------------------------------------------------
-  def pbStartScene(pokemon, partyIndex)
+  def getPartyIndex(pkmn)
+	for i in 0...$player.party.length
+		return i if $player.party[i] == pkmn
+	end
+  end #def getPartyIndex
+  
+  def pbStartScene(pokemon)
     @pokemon = pokemon
-    @partyIndex = partyIndex
+    #@partyIndex = partyIndex
+	@partyIndex = getPartyIndex(@pokemon)
+	print "@partyIndex for #{@pokemon.name} is #{@partyIndex}"
     @sprites={}
     @counter=0 
     @foodcounter=0
@@ -1148,8 +1155,8 @@ class PokeAmie_Essentials_Scene
       if (@sprites["textbox"]!=nil)
         if !@sprites["textbox"].disposed?
           if Mouse.click?(@sprites["textbox"])
-            setAmieIndex(@partyIndex)
-            @pokemon=pbGet(AMIEPOKEMON)
+            #setAmieIndex(@partyIndex)
+            #@pokemon=pbGet(AMIEPOKEMON)
             pbClickSprite(@sprites["textbox"])
             @switch=0
             pbFadeOutIn(99999) {
@@ -1368,8 +1375,8 @@ class PokeAmie_EssentialsScreen
     @scene=scene
   end
   
-  def pbStartAmie(pokemon, partyIndex)
-    @scene.pbStartScene(pokemon, partyIndex)
+  def pbStartAmie(pokemon)
+    @scene.pbStartScene(pokemon)
     # Main loop
     loop do
       # Update game screen
@@ -1391,12 +1398,12 @@ class PokeAmie_EssentialsScreen
   end
 end
 
-def pokemonAmieRefresh
-  setAmiePokemon(pbGet(AMIEPOKEMON))
+def pokemonAmieRefresh(pkmn = nil)
+  pokemon = setAmiePokemon(pkmn)
   pbFadeOutIn(99999) { 
     scene = PokeAmie_Essentials_Scene.new
     screen = PokeAmie_EssentialsScreen.new(scene)
-    screen.pbStartAmie(pbGet(AMIEPOKEMON),pbGet(AMIEINDEX))
+    screen.pbStartAmie(pokemon)
   }
 end
 
