@@ -176,23 +176,25 @@ def pbHPItem(pokemon,restorehp,scene)
   hpgain=pbItemRestoreHP(pokemon,restorehp)
   scene.pbRefresh if scene!=nil
   scene.pbDisplay(_INTL("{1}'s HP was restored by {2} points.",pokemon.name,hpgain)) if scene!=nil
+  pbMessage(_INTL("{1}'s HP was restored by {2} points.",pokemon.name,hpgain)) if scene==nil
   return true
 end
 #
 ItemHandlers::UseOnPokemon.add(:AWAKENING, proc { |item, qty, pkmn, scene|
   if pkmn.fainted? || pkmn.status != :SLEEP
-    scene.pbDisplay(_INTL("It won't have any effect."))
+    scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
     next false
   end
   pkmn.heal_status
-  scene.pbRefresh
-  scene.pbDisplay(_INTL("{1} woke up.", pkmn.name))
+  scene.pbRefresh if scene!=nil
+  scene.pbDisplay(_INTL("{1} woke up.", pkmn.name)) if scene!=nil
+  pbMessage(_INTL("{1} woke up.", pkmn.name)) if scene==nil
   next true
 })
 
 ItemHandlers::UseOnPokemon.copy(:AWAKENING,:CHESTOBERRY,:BLUEFLUTE,:POKEFLUTE)
 
-ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item, qty, pokemon, scene|
    if pokemon.hp<=0 || pokemon.status!=:POISON
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
@@ -207,7 +209,7 @@ ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item,pokemon,scene|
 
 ItemHandlers::UseOnPokemon.copy(:ANTIDOTE,:PECHABERRY)
 
-ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,qty,pokemon,scene|
    if pokemon.hp<=0 || pokemon.status!=:BURN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
@@ -222,7 +224,7 @@ ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,pokemon,scene|
 
 ItemHandlers::UseOnPokemon.copy(:BURNHEAL,:RAWSTBERRY)
 
-ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,qty,pokemon,scene|
    if pokemon.hp<=0 || pokemon.status!=:PARALYSIS
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
@@ -237,7 +239,7 @@ ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,pokemon,scene|
 
 ItemHandlers::UseOnPokemon.copy(:PARLYZHEAL,:PARALYZEHEAL,:CHERIBERRY)
 
-ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc{|item,qty,pokemon,scene|
    if pokemon.hp<=0 || pokemon.status!=:FROZEN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
@@ -253,12 +255,12 @@ ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:ICEHEAL,:ASPEARBERRY)
 
 
-ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,qty,pokemon,scene|
    if pokemon.hp<=0 || pokemon.status==0
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status#healStatus
+     pokemon.heal_status
      scene.pbRefresh if scene!=nil
      scene.pbDisplay(_INTL("{1} became healthy.",pokemon.name)) if scene!=nil
      pbMessage(_INTL("{1} became healthy.",pokemon.name)) if scene==nil
@@ -269,7 +271,7 @@ ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,pokemon,scene|
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,
    :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY)
 
-ItemHandlers::UseOnPokemon.add(:RARECANDY,proc{|item,pokemon,scene|
+ItemHandlers::UseOnPokemon.add(:RARECANDY,proc{|item,qty,pokemon,scene|
    if pokemon.level>=PBExperience.maxLevel || (pokemon.isShadow? rescue false)
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
@@ -468,10 +470,7 @@ class Pokemon
       #if pbCanUseOnPokemon?(getID(PBItems,food))
 	  if pbCanUseOnPokemon?(food)
         #ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil, nil)
-		ret=ItemHandlers.triggerUseOnPokemon(food, pkmn, nil, nil)
-        #if ret && $ItemData[item][ITEMUSE]==1 # Usable on Pokémon, consumed
-        #  $PokemonBag.pbDeleteItem(item)
-        #end
+		ret=ItemHandlers.triggerUseOnPokemon(food, qty=1, pkmn, nil)
       end
 	  if GameData::Item.get(food).is_berry? #pbIsBerry?(getID(PBItems,food))
         if !@berryPlantData
