@@ -179,17 +179,15 @@ def pbHPItem(pokemon,restorehp,scene)
   return true
 end
 #
-ItemHandlers::UseOnPokemon.add(:AWAKENING,proc{|item,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=:SLEEP
-     scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
-     next false
-   else
-     pokemon.heal_status
-     scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1} woke up.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1} woke up.",pokemon.name)) if scene==nil
-     next true
-   end
+ItemHandlers::UseOnPokemon.add(:AWAKENING, proc { |item, qty, pkmn, scene|
+  if pkmn.fainted? || pkmn.status != :SLEEP
+    scene.pbDisplay(_INTL("It won't have any effect."))
+    next false
+  end
+  pkmn.heal_status
+  scene.pbRefresh
+  scene.pbDisplay(_INTL("{1} woke up.", pkmn.name))
+  next true
 })
 
 ItemHandlers::UseOnPokemon.copy(:AWAKENING,:CHESTOBERRY,:BLUEFLUTE,:POKEFLUTE)
@@ -463,13 +461,14 @@ class Pokemon
     return getAmieStatLevel(amie_enjoyment)
   end
     
-  def feedAmie(food)
+  def feedAmie(food, pkmn)
     return if (amie_fullness>=MAXAMIEPOINTS)
     return if getFullnessLevel==5
     if EATABLE_ITEMS.include?(food)
       #if pbCanUseOnPokemon?(getID(PBItems,food))
 	  if pbCanUseOnPokemon?(food)
-        ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil, nil)
+        #ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil, nil)
+		ret=ItemHandlers.triggerUseOnPokemon(food, pkmn, nil, nil)
         #if ret && $ItemData[item][ITEMUSE]==1 # Usable on Pokémon, consumed
         #  $PokemonBag.pbDeleteItem(item)
         #end
@@ -901,18 +900,11 @@ class PokeAmie_Essentials_Scene
     @switch=2
   end
   #-----------------------------------------------------------------------------
-  def getPartyIndex(pkmn)
-	for i in 0...$player.party.length
-		return i if $player.party[i] == pkmn
-	end
-  end #def getPartyIndex
-  
+
   def pbStartScene(pokemon)
     @pokemon = pokemon
-    #@partyIndex = partyIndex
 	@partyIndex = getPartyIndex(@pokemon)
-	print "@partyIndex for #{@pokemon.name} is #{@partyIndex}"
-    @sprites={}
+	@sprites={}
     @counter=0 
     @foodcounter=0
     @shouldbreak = false
@@ -985,6 +977,7 @@ class PokeAmie_Essentials_Scene
       @sprites["feed"].z=2
       @custom = false            
     end
+  
     def pbAmieMouse
       if !(@sprites["pokemon"].disposed?)&&(@feeding!=true)
         if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left) #Pressing mouse while over Pokemon?
@@ -1049,10 +1042,14 @@ class PokeAmie_Essentials_Scene
           if @foodcounter==5
             pbSEPlay("eat.ogg",90,100)
             @sprites["mouse"].setBitmap("Graphics/Pictures/Pokemon Amie/eaten3.png")
-            pk=$player.party[pbGet(AMIEINDEX)].species
-            pbGet(AMIEPOKEMON).feedAmie(@food)
-            if pk!=($player.party[pbGet(AMIEINDEX)].species)
-              @sprites["pokemon"].setPokemonBitmap($player.party[pbGet(AMIEINDEX)])
+            #pk=$player.party[pbGet(AMIEINDEX)].species
+			pk = @pokemon.species
+            #pbGet(AMIEPOKEMON).feedAmie(@food)
+			@pokemon.feedAmie(@food, @pokemon)
+            #if pk!=($player.party[pbGet(AMIEINDEX)].species)
+			if pk!=@pokemon.species
+              #@sprites["pokemon"].setPokemonBitmap($player.party[pbGet(AMIEINDEX)])
+			  @sprites["pokemon"].setPokemonBitmap(@pokemon)
             end
             @feeding=false
             @foodcounter=0
@@ -1361,6 +1358,12 @@ class PokeAmie_Essentials_Scene
     end
     main
   end
+  
+  def getPartyIndex(pkmn)
+		for i in 0...$player.party.length
+			return i if $player.party[i] == pkmn
+		end
+	end #def getPartyIndex
   
   def pbEndScene
       # Disposes the windows
