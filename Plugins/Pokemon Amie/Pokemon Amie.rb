@@ -90,9 +90,6 @@ end
 # Pokemon-Amie/Pokemon Refresh Script
 ################################################################################
 
-AMIEPOKEMON = 100 # Variable number to store the main Amie/Refresh Pokemon
-AMIEINDEX = 101 # Variable number to store the main Amie/Refresh Pokemon Party Index
-
 #All Things Pokemon can eat (Mostly Berries)
 EATABLE_ITEMS = [
   :LAVACOOKIE,
@@ -168,14 +165,14 @@ EATABLE_ITEMS = [
 ]
 #Adds effect Compatibility for Items
 alias amie_pbHPItem pbHPItem
-def pbHPItem(pokemon,restorehp,scene)
-  if pokemon.hp<=0 || pokemon.hp==pokemon.totalhp || pokemon.egg?
+def pbHPItem(pkmn,restorehp,scene)
+  if !pkmn.able? || pkmn.hp == pkmn.totalhp
     scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
     return false
   end
-  hpgain=pbItemRestoreHP(pokemon,restorehp)
+  hpGain = pbItemRestoreHP(pkmn, restoreHP)
   scene.pbRefresh if scene!=nil
-  scene.pbDisplay(_INTL("{1}'s HP was restored by {2} points.",pokemon.name,hpgain)) if scene!=nil
+  scene.pbDisplay(_INTL("{1}'s HP was restored by {2} points.", pkmn.name, hpGain)) if scene!=nil
   pbMessage(_INTL("{1}'s HP was restored by {2} points.",pokemon.name,hpgain)) if scene==nil
   return true
 end
@@ -192,95 +189,115 @@ ItemHandlers::UseOnPokemon.add(:AWAKENING, proc { |item, qty, pkmn, scene|
   next true
 })
 
-ItemHandlers::UseOnPokemon.copy(:AWAKENING,:CHESTOBERRY,:BLUEFLUTE,:POKEFLUTE)
+ItemHandlers::UseOnPokemon.copy(:AWAKENING, :CHESTOBERRY, :BLUEFLUTE, :POKEFLUTE)
 
-ItemHandlers::UseOnPokemon.add(:ANTIDOTE,proc{|item, qty, pokemon, scene|
-   if pokemon.hp<=0 || pokemon.status!=:POISON
+ItemHandlers::UseOnPokemon.add(:ANTIDOTE, proc { |item, qty, pkmn, scene|
+   if pkmn.fainted? || pkmn.status != :POISON
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status
+     pkmn.heal_status
      scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1} was cured of its poisoning.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1} was cured of its poisoning.",pokemon.name)) if scene==nil
+     scene.pbDisplay(_INTL("{1} was cured of its poisoning.",pkmn.name)) if scene!=nil
+     pbMessage(_INTL("{1} was cured of its poisoning.",pkmn.name)) if scene==nil
      next true
    end
 })
 
-ItemHandlers::UseOnPokemon.copy(:ANTIDOTE,:PECHABERRY)
+ItemHandlers::UseOnPokemon.copy(:ANTIDOTE, :PECHABERRY)
 
-ItemHandlers::UseOnPokemon.add(:BURNHEAL,proc{|item,qty,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=:BURN
+ItemHandlers::UseOnPokemon.add(:BURNHEAL, proc { |item, qty, pkmn, scene|
+   if pkmn.fainted? || pkmn.status != :BURN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status
+     pkmn.heal_status
      scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1}'s burn was healed.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1}'s burn was healed.",pokemon.name)) if scene==nil
+     scene.pbDisplay(_INTL("{1}'s burn was healed.",pkmn.name)) if scene!=nil
+     pbMessage(_INTL("{1}'s burn was healed.",pkmn.name)) if scene==nil
      next true
    end
 })
 
-ItemHandlers::UseOnPokemon.copy(:BURNHEAL,:RAWSTBERRY)
+ItemHandlers::UseOnPokemon.copy(:BURNHEAL, :RAWSTBERRY)
 
-ItemHandlers::UseOnPokemon.add(:PARLYZHEAL,proc{|item,qty,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=:PARALYSIS
+ItemHandlers::UseOnPokemon.add(:PARALYZEHEAL, proc { |item, qty, pkmn, scene|
+   if pkmn.fainted? || pkmn.status != :PARALYSIS
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status
+     pkmn.heal_status
      scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1} was cured of paralysis.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1} was cured of paralysis.",pokemon.name)) if scene==nil
+     scene.pbDisplay(_INTL("{1} was cured of paralysis.",pkmn.name)) if scene!=nil
+     pbMessage(_INTL("{1} was cured of paralysis.",pkmn.name)) if scene==nil
      next true
    end
 })
 
-ItemHandlers::UseOnPokemon.copy(:PARLYZHEAL,:PARALYZEHEAL,:CHERIBERRY)
+ItemHandlers::UseOnPokemon.copy(:PARALYZEHEAL, :PARLYZHEAL, :CHERIBERRY)
 
-ItemHandlers::UseOnPokemon.add(:ICEHEAL,proc{|item,qty,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status!=:FROZEN
+ItemHandlers::UseOnPokemon.add(:ICEHEAL, proc { |item, qty, pkmn, scene|
+   if pkmn.fainted? || pkmn.status != :FROZEN
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status
+     pkmn.heal_status
      scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1} was thawed out.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1} was thawed out.",pokemon.name)) if scene==nil
+     scene.pbDisplay(_INTL("{1} was thawed out.",pkmn.name)) if scene!=nil
+     pbMessage(_INTL("{1} was thawed out.",pkmn.name)) if scene==nil
      next true
    end
 })
 
-ItemHandlers::UseOnPokemon.copy(:ICEHEAL,:ASPEARBERRY)
+ItemHandlers::UseOnPokemon.copy(:ICEHEAL, :ASPEARBERRY)
 
 
-ItemHandlers::UseOnPokemon.add(:FULLHEAL,proc{|item,qty,pokemon,scene|
-   if pokemon.hp<=0 || pokemon.status==0
+ItemHandlers::UseOnPokemon.add(:FULLHEAL, proc { |item, qty, pkmn, scene|
+   if pkmn.fainted? || pkmn.status == :NONE
      scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
      next false
    else
-     pokemon.heal_status
+     pkmn.heal_status
      scene.pbRefresh if scene!=nil
-     scene.pbDisplay(_INTL("{1} became healthy.",pokemon.name)) if scene!=nil
-     pbMessage(_INTL("{1} became healthy.",pokemon.name)) if scene==nil
+     scene.pbDisplay(_INTL("{1} became healthy.",pkmn.name)) if scene!=nil
+     pbMessage(_INTL("{1} became healthy.",pkmn.name)) if scene==nil
      next true
    end
 })
 
 ItemHandlers::UseOnPokemon.copy(:FULLHEAL,
-   :LAVACOOKIE,:OLDGATEAU,:CASTELIACONE,:LUMIOSEGALETTE,:SHALOURSABLE,:LUMBERRY)
+   :LAVACOOKIE, :CASTELIACONE, :LUMIOSEGALETTE, :SHALOURSABLE,
+   :BIGMALASADA, :PEWTERCRUNCHIES, :LUMBERRY)
 
-ItemHandlers::UseOnPokemon.add(:RARECANDY,proc{|item,qty,pokemon,scene|
-   if pokemon.level>=PBExperience.maxLevel || (pokemon.isShadow? rescue false)
-     scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
-     next false
-   else
-     pbChangeLevel(pokemon,pokemon.level+1,scene)
-     scene.pbHardRefresh if scene!=nil
-     next true
-   end
+ItemHandlers::UseOnPokemon.copy(:FULLHEAL, :RAGECANDYBAR) if Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
+
+ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
+  if pkmn.shadowPokemon?
+    scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
+    next false
+  end
+  if pkmn.level >= GameData::GrowthRate.max_level
+    new_species = pkmn.check_evolution_on_level_up
+    if !Settings::RARE_CANDY_USABLE_AT_MAX_LEVEL || !new_species
+      scene.pbDisplay(_INTL("It won't have any effect."))
+      next false
+    end
+    # Check for evolution
+    pbFadeOutInWithMusic {
+      evo = PokemonEvolutionScene.new
+      evo.pbStartScreen(pkmn, new_species)
+      evo.pbEvolution
+      evo.pbEndScreen
+      scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
+    }
+    next true
+  end
+  # Level up
+  pbChangeLevel(pkmn, pkmn.level + qty, scene)
+  scene.pbHardRefresh if scene!=nil
+  next true
 })
+
 alias amie_pbRaiseHappinessAndLowerEV pbRaiseHappinessAndLowerEV
 def pbRaiseHappinessAndLowerEV(pokemon,scene,ev,messages)
   h=(pokemon.happiness<255)
@@ -303,70 +320,74 @@ def pbRaiseHappinessAndLowerEV(pokemon,scene,ev,messages)
 end
 
 alias amie_pbChangeLevel pbChangeLevel
-def pbChangeLevel(pokemon,newlevel,scene)
-  newlevel=1 if newlevel<1
-  newlevel=PBExperience.maxLevel if newlevel>PBExperience.maxLevel
-  if pokemon.level>newlevel
-    attackdiff=pokemon.attack
-    defensediff=pokemon.defense
-    speeddiff=pokemon.speed
-    spatkdiff=pokemon.spatk
-    spdefdiff=pokemon.spdef
-    totalhpdiff=pokemon.totalhp
-    pokemon.level=newlevel
-    pokemon.calcStats
-    if !defined?(scene.Amie?)
-      scene.pbRefresh
+def pbChangeLevel(pkmn, new_level, scene)
+  new_level = new_level.clamp(1, GameData::GrowthRate.max_level)
+  if pkmn.level == new_level
+    if scene.is_a?(PokemonPartyScreen)
+      scene.pbDisplay(_INTL("{1}'s level remained unchanged.", pkmn.name))
+    else
+      pbMessage(_INTL("{1}'s level remained unchanged.", pkmn.name))
     end
-    pbMessage(_INTL("{1} was downgraded to Level {2}!",pokemon.name,pokemon.level))
-    attackdiff=pokemon.attack-attackdiff
-    defensediff=pokemon.defense-defensediff
-    speeddiff=pokemon.speed-speeddiff
-    spatkdiff=pokemon.spatk-spatkdiff
-    spdefdiff=pokemon.spdef-spdefdiff
-    totalhpdiff=pokemon.totalhp-totalhpdiff
+    return
+  end
+  old_level           = pkmn.level
+  old_total_hp        = pkmn.totalhp
+  old_attack          = pkmn.attack
+  old_defense         = pkmn.defense
+  old_special_attack  = pkmn.spatk
+  old_special_defense = pkmn.spdef
+  old_speed           = pkmn.speed
+  pkmn.level = new_level
+  pkmn.calc_stats
+  scene.pbRefresh if scene != nil
+  if old_level > new_level
+    if scene.is_a?(PokemonPartyScreen)
+      scene.pbDisplay(_INTL("{1} dropped to Lv. {2}!", pkmn.name, pkmn.level))
+    else
+      pbMessage(_INTL("{1} dropped to Lv. {2}!", pkmn.name, pkmn.level))
+    end
+    total_hp_diff        = pkmn.totalhp - old_total_hp
+    attack_diff          = pkmn.attack - old_attack
+    defense_diff         = pkmn.defense - old_defense
+    special_attack_diff  = pkmn.spatk - old_special_attack
+    special_defense_diff = pkmn.spdef - old_special_defense
+    speed_diff           = pkmn.speed - old_speed
     pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
-       totalhpdiff,attackdiff,defensediff,spatkdiff,spdefdiff,speeddiff))
+                           total_hp_diff, attack_diff, defense_diff, special_attack_diff, special_defense_diff, speed_diff), scene)
     pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
-       pokemon.totalhp,pokemon.attack,pokemon.defense,pokemon.spatk,pokemon.spdef,pokemon.speed))
-  elsif pokemon.level==newlevel
-    pbMessage(_INTL("{1}'s level remained unchanged.",pokemon.name))
+                           pkmn.totalhp, pkmn.attack, pkmn.defense, pkmn.spatk, pkmn.spdef, pkmn.speed), scene)
   else
-    attackdiff=pokemon.attack
-    defensediff=pokemon.defense
-    speeddiff=pokemon.speed
-    spatkdiff=pokemon.spatk
-    spdefdiff=pokemon.spdef
-    totalhpdiff=pokemon.totalhp
-    oldlevel=pokemon.level
-    pokemon.level=newlevel
-    pokemon.changeHappiness("levelup")
-    pokemon.calcStats
-    scene.pbRefresh if scene!=nil
-    pbMessage(_INTL("{1} was elevated to Level {2}!",pokemon.name,pokemon.level))
-    attackdiff=pokemon.attack-attackdiff
-    defensediff=pokemon.defense-defensediff
-    speeddiff=pokemon.speed-speeddiff
-    spatkdiff=pokemon.spatk-spatkdiff
-    spdefdiff=pokemon.spdef-spdefdiff
-    totalhpdiff=pokemon.totalhp-totalhpdiff
-    pbTopRightWindow(_INTL("Max. HP<r>+{1}\r\nAttack<r>+{2}\r\nDefense<r>+{3}\r\nSp. Atk<r>+{4}\r\nSp. Def<r>+{5}\r\nSpeed<r>+{6}",
-       totalhpdiff,attackdiff,defensediff,spatkdiff,spdefdiff,speeddiff))
-    pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
-       pokemon.totalhp,pokemon.attack,pokemon.defense,pokemon.spatk,pokemon.spdef,pokemon.speed))
-    movelist=pokemon.getMoveList
-    for i in movelist
-      if i[0]==pokemon.level          # Learned a new move
-        pbLearnMove(pokemon,i[1],true)
-      end
+    pkmn.changeHappiness("vitamin")
+    if scene.is_a?(PokemonPartyScreen)
+      scene.pbDisplay(_INTL("{1} grew to Lv. {2}!", pkmn.name, pkmn.level))
+    else
+      pbMessage(_INTL("{1} grew to Lv. {2}!", pkmn.name, pkmn.level))
     end
-    newspecies=pbCheckEvolution(pokemon)
-    if newspecies>0
-      pbFadeOutInWithMusic(99999){
-         evo=PokemonEvolutionScene.new
-         evo.pbStartScreen(pokemon,newspecies)
-         evo.pbEvolution
-         evo.pbEndScreen
+    total_hp_diff        = pkmn.totalhp - old_total_hp
+    attack_diff          = pkmn.attack - old_attack
+    defense_diff         = pkmn.defense - old_defense
+    special_attack_diff  = pkmn.spatk - old_special_attack
+    special_defense_diff = pkmn.spdef - old_special_defense
+    speed_diff           = pkmn.speed - old_speed
+    pbTopRightWindow(_INTL("Max. HP<r>+{1}\r\nAttack<r>+{2}\r\nDefense<r>+{3}\r\nSp. Atk<r>+{4}\r\nSp. Def<r>+{5}\r\nSpeed<r>+{6}",
+                           total_hp_diff, attack_diff, defense_diff, special_attack_diff, special_defense_diff, speed_diff), scene)
+    pbTopRightWindow(_INTL("Max. HP<r>{1}\r\nAttack<r>{2}\r\nDefense<r>{3}\r\nSp. Atk<r>{4}\r\nSp. Def<r>{5}\r\nSpeed<r>{6}",
+                           pkmn.totalhp, pkmn.attack, pkmn.defense, pkmn.spatk, pkmn.spdef, pkmn.speed), scene)
+    # Learn new moves upon level up
+    movelist = pkmn.getMoveList
+    movelist.each do |i|
+      next if i[0] <= old_level || i[0] > pkmn.level
+      pbLearnMove(pkmn, i[1], true) { scene.pbUpdate }
+    end
+    # Check for evolution
+    new_species = pkmn.check_evolution_on_level_up
+    if new_species
+      pbFadeOutInWithMusic {
+        evo = PokemonEvolutionScene.new
+        evo.pbStartScreen(pkmn, new_species)
+        evo.pbEvolution
+        evo.pbEndScreen
+        scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
       }
     end
   end
@@ -467,9 +488,7 @@ class Pokemon
     return if (amie_fullness>=MAXAMIEPOINTS)
     return if getFullnessLevel==5
     if EATABLE_ITEMS.include?(food)
-      #if pbCanUseOnPokemon?(getID(PBItems,food))
 	  if pbCanUseOnPokemon?(food)
-        #ret=ItemHandlers.triggerUseOnPokemon(food,pbGet(AMIEPOKEMON),nil, nil)
 		ret=ItemHandlers.triggerUseOnPokemon(food, qty=1, pkmn, nil)
       end
 	  if GameData::Item.get(food).is_berry? #pbIsBerry?(getID(PBItems,food))
@@ -575,16 +594,6 @@ def pbFirstNonEggPokemon
   return nil
 end
 
-
-def setAmieIndex(pokemonindex)
-  if (pokemonindex<=$player.party.length-1) &&(pokemonindex>=0)
-    pbSet(AMIEINDEX,pokemonindex)
-    pbSet(AMIEPOKEMON,$player.party[pbGet(AMIEINDEX)])
-    return
-  end
-  defaultAmie
-end
-
 def pbClickSprite(sprite)
   i=1
   5.times do
@@ -686,7 +695,8 @@ class PokeAmie_Essentials_Scene
         if !@sprites["text"].disposed?
           base   = Color.new(248,248,248)
           shadow = Color.new(104,104,104)
-          pkname = $player.party[@partyIndex].name
+		  @selectedIndex = @partyIndex if @selectedIndex.nil?
+          pkname = $player.party[@selectedIndex].name
           textpos1 = [
             [_INTL("Affection"),32,70,0,base,shadow],
             [_INTL("Fullness"),32,102,0,base,shadow],
@@ -822,7 +832,7 @@ class PokeAmie_Essentials_Scene
       @sprites["pokeicon#{i}"].y=228
       @sprites["pokeicon#{i}"].z=1
     end
-    index = pbGet(AMIEINDEX)+1
+    index = @partyIndex+1
     @sprites["bgmap"].setBitmap("Graphics/Pictures/Pokemon Amie/bgswitch"+index.to_s)
     @sprites["pokemon"].dispose
     @sprites["switch"].dispose
@@ -852,13 +862,13 @@ class PokeAmie_Essentials_Scene
     @sprites["active"].setBitmap("Graphics/Pictures/Pokemon Amie/active")
     @sprites["active"].ox = @sprites["active"].bitmap.width/2
     @sprites["active"].oy = @sprites["active"].bitmap.height/2
-    @sprites["active"].x = 68+76*(pbGet(AMIEINDEX))+24
+    @sprites["active"].x = 68+76*@partyIndex+24
     @sprites["active"].y = 228+24
     @sprites["active"].z=2
     #Draw Affection
     for a in 1...6
       @sprites["affect#{a}"] = IconSprite.new(0,0)
-      if a<=(pbGet(AMIEPOKEMON).getAffectionLevel)
+	  if a<=@pokemon.getAffectionLevel
         @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
       else
         @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
@@ -871,7 +881,7 @@ class PokeAmie_Essentials_Scene
       @sprites["affect#{a}"].y=87
       #Draw Fullness
       @sprites["full#{a}"] = IconSprite.new(0,0)
-      if a<=(pbGet(AMIEPOKEMON).getFullnessLevel)
+	  if a<=@pokemon.getFullnessLevel
         @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full")
       else
         @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full_empty")
@@ -884,7 +894,7 @@ class PokeAmie_Essentials_Scene
       @sprites["full#{a}"].y=87+32
       #Draw Enjoyment
       @sprites["enjoy#{a}"] = IconSprite.new(0,0)
-      if a<=(pbGet(AMIEPOKEMON).getEnjoymentLevel)
+	  if a<=@pokemon.getEnjoymentLevel
         @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy")
       else
         @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy_empty")
@@ -980,7 +990,6 @@ class PokeAmie_Essentials_Scene
     def pbAmieMouse
       if !(@sprites["pokemon"].disposed?)&&(@feeding!=true)
         if Mouse.over_pixel?(@sprites["pokemon"]) && Mouse.press?(@sprites["pokemon"], :left) #Pressing mouse while over Pokemon?
-          #pbGet(AMIEPOKEMON).feedAmie(:ORANBERRY)
           @sprites["mouse"].setBitmap("Graphics/Pictures/Pokemon Amie/hand1")
           pbWait(1)
           if !Mouse.static? #Is the mouse moving?
@@ -990,7 +999,7 @@ class PokeAmie_Essentials_Scene
               @time2= Time.now
             end
             if @counter>=50 #after counter reaches number, hearts appear
-              pbGet(AMIEPOKEMON).changeAmieStats("pet")
+			  @pokemon.changeAmieStats("pet")
               @pokemon.play_cry(90,110)
               for i in 0...4 #creates the hearts
                 @sprites["#{i}"] = IconSprite.new(0,0)
@@ -1041,13 +1050,9 @@ class PokeAmie_Essentials_Scene
           if @foodcounter==5
             pbSEPlay("eat.ogg",90,100)
             @sprites["mouse"].setBitmap("Graphics/Pictures/Pokemon Amie/eaten3.png")
-            #pk=$player.party[pbGet(AMIEINDEX)].species
 			pk = @pokemon.species
-            #pbGet(AMIEPOKEMON).feedAmie(@food)
 			@pokemon.feedAmie(@food, @pokemon)
-            #if pk!=($player.party[pbGet(AMIEINDEX)].species)
 			if pk!=@pokemon.species
-              #@sprites["pokemon"].setPokemonBitmap($player.party[pbGet(AMIEINDEX)])
 			  @sprites["pokemon"].setPokemonBitmap(@pokemon)
             end
             @feeding=false
@@ -1151,11 +1156,11 @@ class PokeAmie_Essentials_Scene
       if (@sprites["textbox"]!=nil)
         if !@sprites["textbox"].disposed?
           if Mouse.click?(@sprites["textbox"])
-            #setAmieIndex(@partyIndex)
-            #@pokemon=pbGet(AMIEPOKEMON)
             pbClickSprite(@sprites["textbox"])
             @switch=0
             pbFadeOutIn(99999) {
+				@partyIndex = @selectedIndex
+				@pokemon = $player.party[@partyIndex]
               pbDisposeSpriteHash(@sprites)
               @viewport.dispose
               main
@@ -1270,10 +1275,14 @@ class PokeAmie_Essentials_Scene
         if @sprites["pokeicon#{i}"].disposed?
           break
         end
+		
+		
+		
+		#on the pokemon switch screen
         if Mouse.click?(@sprites["pokeicon#{i}"])
-          @partyIndex = i
+          @selectedIndex = i
           for a in 1...6
-            if a<=$player.party[@partyIndex].getAffectionLevel
+            if a<=$player.party[@selectedIndex].getAffectionLevel
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
             else
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
@@ -1285,7 +1294,7 @@ class PokeAmie_Essentials_Scene
             @sprites["affect#{a}"].x=178+@sprites["affect#{a}"].bitmap.width*a+space
             @sprites["affect#{a}"].y=87
             #Draw Fullness
-            if a<=($player.party[@partyIndex].getFullnessLevel)
+            if a<=($player.party[@selectedIndex].getFullnessLevel)
               @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full")
             else
               @sprites["full#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/full_empty")
@@ -1297,7 +1306,7 @@ class PokeAmie_Essentials_Scene
             @sprites["full#{a}"].x=178+@sprites["full#{a}"].bitmap.width*a+space
             @sprites["full#{a}"].y=87+32
             #Draw Enjoyment
-            if a<=($player.party[@partyIndex].getEnjoymentLevel)
+            if a<=($player.party[@selectedIndex].getEnjoymentLevel)
               @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy")
             else
               @sprites["enjoy#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/enjoy_empty")
@@ -1309,7 +1318,7 @@ class PokeAmie_Essentials_Scene
             @sprites["enjoy#{a}"].x=178+@sprites["enjoy#{a}"].bitmap.width*a+space
             @sprites["enjoy#{a}"].y=87+64
           end
-          if ($player.party[@partyIndex].egg?)
+          if ($player.party[@selectedIndex].egg?)
             if @sprites["textbox"]!=nil
               if !@sprites["textbox"].disposed?
                 @sprites["textbox"].dispose
@@ -1317,7 +1326,7 @@ class PokeAmie_Essentials_Scene
               end
             end
           end
-          if (pbGet(AMIEINDEX)!=i)&&(!$player.party[@partyIndex].egg?)
+          if (@partyIndex!=@selectedIndex)&&(!$player.party[@selectedIndex].egg?)
             if (@sprites["textbox"]==nil)or(@sprites["textbox"].disposed?)
               @sprites["textbox"] = IconSprite.new(96,281)
               @sprites["textbox"].setBitmap("Graphics/Pictures/Pokemon Amie/textbox")
@@ -1338,7 +1347,7 @@ class PokeAmie_Essentials_Scene
               pbDrawTextPositions(@sprites["overlay"].bitmap,textpos)
             end
           end
-          if (pbGet(AMIEINDEX)==i)
+          if @selectedIndex == @partyIndex #1
             if !(@sprites["textbox"]==nil)
               if !@sprites["textbox"].disposed?
                 @sprites["textbox"].dispose
@@ -1349,7 +1358,10 @@ class PokeAmie_Essentials_Scene
 
           index = i+1
           @sprites["bgmap"].setBitmap("Graphics/Pictures/Pokemon Amie/bgswitch"+index.to_s)
-        end
+        end #if Mouse.click?(@sprites["pokeicon#{i}"])
+		
+		
+		
       end
     end
     def break?
