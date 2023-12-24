@@ -18,10 +18,10 @@ PokemonAmieRefresh
 #=========================================================#
 # Plugin Manager Support
 PluginManager.register({
-  :name    => "Pokemon Amie/Refresh",
-  :version => "1.5",
+  :name    => "Pokémon Amie",
+  :version => "1.6",
   :link    => "https://www.pokecommunity.com/showthread.php?t=439558",
-  :credits => ["Bhagya Jyoti","Pizza Sun"]
+  :credits => ["Bhagya Jyoti","Pizza Sun","rigbycwts","Gardenette"]
 })
 
 #README
