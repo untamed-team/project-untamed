@@ -290,7 +290,6 @@ class Battle::Battler
     @effects[PBEffects::SlipperyPeel]        = false
     @effects[PBEffects::MoodyMemory]     		 = -1
     @SetupMovesUsed             						 = []
-    @effects[PBEffects::RemaningHPBars]      = 0
   end
 
   #=============================================================================

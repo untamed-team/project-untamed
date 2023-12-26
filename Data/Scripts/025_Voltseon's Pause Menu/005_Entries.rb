@@ -426,3 +426,24 @@ class MenuEntryAchievements < MenuEntry
     return true
 	end
 end
+
+#-------------------------------------------------------------------------------
+# Entry for Blukberry Phone
+#-------------------------------------------------------------------------------
+class MenuEntryBlukberryPhone < MenuEntry
+  def initialize
+    @icon = "menuBlukberryPhone"
+    @name = "Blukberry Phone"
+  end
+
+  def selected(menu)
+    pbPlayDecisionSE
+      pbFadeOutIn(99999) { 
+      pbPhone
+    }
+	end
+
+  def selectable?
+    return true
+	end
+end
