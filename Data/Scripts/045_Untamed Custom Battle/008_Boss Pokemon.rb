@@ -86,16 +86,6 @@ class Battle::Battler
     if survDmg
       self.pbRecoverHP(self.totalhp,true)
       self.remaningHPBars-=1
-      case self.remaningHPBars
-      when 0
-        @battle.pbDisplayBrief(_INTL("{1}'s power is fully unleased!",self.pbThis))
-      when 1
-        @battle.pbDisplayBrief(_INTL("{1}'s anger is growing!",self.pbThis))
-      when 2
-        @battle.pbDisplayBrief(_INTL("{1} is starting to get tired!",self.pbThis))
-      when 3
-        @battle.pbDisplayBrief(_INTL("{1} seems indestructible...",self.pbThis))
-      end
       pbEffectsOnHPBarBreak(self)
     end
     return amt

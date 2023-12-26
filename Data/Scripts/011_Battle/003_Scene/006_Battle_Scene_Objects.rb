@@ -240,13 +240,13 @@ class Battle::Scene::PokemonDataBox < Sprite
   end
 
   def draw_bossHPBars
+    return if @battler.remaningHPBars == 0
     if @battler.isBossPokemon?
       i = 0
       @battler.remaningHPBars.times do
         pbDrawImagePositions(self.bitmap,
           [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
         )
-        #draw all possible hearts but grayed out
         i += 16
       end
     end
@@ -363,6 +363,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     end
     # Refresh the HP bar/numbers
     refreshHP
+    draw_bossHPBars
     @animatingHP = false if @currentHP == @endHP
   end
 
