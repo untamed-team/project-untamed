@@ -6,12 +6,7 @@
 # To use, either call event.step_on_spot with an event object, or from a script
 # tag use pbStepOnSpot(eventID) for events or pbStepOnSpot for player.
 #-------------------------------------------------------------------------------
-PluginManager.register({
-  :name => "Step On Spot",
-  :version => "1.0",
-  :credits => "Boonzeet",
-  :link => "https://reliccastle.com/resources/648/"
-})
+
 class Game_Character
   def step_on_spot
     oldpattern = self.pattern
