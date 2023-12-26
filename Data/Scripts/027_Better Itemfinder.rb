@@ -1,6 +1,5 @@
 #==============================================================================
 # Better Itemfinder by Kotaro [v20.1]
-# fuckin' weeb
 #============================================================================== 
 # Config   
 # Set this to false if you don't want the player to spin and force stop for a

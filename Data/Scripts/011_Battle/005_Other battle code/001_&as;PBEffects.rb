@@ -125,7 +125,8 @@ module PBEffects
   Momentum		        = 119
   SlipperyPeel        = 120
   MoodyMemory	        = 121
-  HonorBound          = 122
+  RemaningHPBars     	= 122
+  HonorBound          = 123
 
   #=============================================================================
   # These effects apply to a battler position

@@ -24,7 +24,9 @@ class Pokemon
 	end 		
 	
 	def isBossPokemon?
-		return true if bossmonMutation==true
+		if bossmonMutation==true || Settings::GLOBAL_MUTATION==true
+			return true 
+		end	
 	end
 end
 
@@ -40,9 +42,9 @@ class Battle::Battler
     oldHP = @hp
 		if amt >= self.hp
 			amt = self.hp
-			if true#self.effects[PBEffects::RemaningHPBars]>0 && self.isBossPokemon?
+			if self.effects[PBEffects::RemaningHPBars]>0 && self.isBossPokemon?
 				amt -= 1
-				#~ self.effects[PBEffects::RemaningHPBars]-=1
+				self.effects[PBEffects::RemaningHPBars]-=1
 				self.pbRecoverHP((self.totalhp - 1), true)
 				@battle.pbDisplay(_INTL("Enraged, {1} toughed out the hit!", self.pbThis))
 			end
@@ -102,9 +104,9 @@ class Battle::Move
       elsif target.effects[PBEffects::Endure]
         target.damageState.endured = true
         damage -= 1
-      #~ elsif target.effects[PBEffects::RemaningHPBars]>0 && target.isBossPokemon?
-        #~ target.damageState.endured = true # reused, who is gonna give a boss mon endure anyway?
-        #~ damage -= 1
+      elsif target.effects[PBEffects::RemaningHPBars]>0 && target.isBossPokemon?
+        target.damageState.endured = true # reused, who is gonna give a boss mon endure anyway?
+        damage -= 1
       elsif damage == target.totalhp
         if target.hasActiveAbility?(:STURDY) && !@battle.moldBreaker
           target.damageState.sturdy = true
@@ -144,10 +146,10 @@ class Battle::Move
       @battle.pbHideAbilitySplash(target)
     elsif target.damageState.endured
 			if target.isBossPokemon? #by low
-				if true#target.effects[PBEffects::RemaningHPBars]>0
-					#~ target.effects[PBEffects::RemaningHPBars]-=1
-					#~ target.pbRecoverHP((target.totalhp - 1), true)
-					#~ @battle.pbDisplay(_INTL("Enraged, {1} toughed out the hit!", target.pbThis))
+				if target.effects[PBEffects::RemaningHPBars]>0
+					target.effects[PBEffects::RemaningHPBars]-=1
+					target.pbRecoverHP((target.totalhp - 1), true)
+					@battle.pbDisplay(_INTL("Enraged, {1} toughed out the hit!", target.pbThis))
 =begin
 					moveset = nil
 					case target.species
