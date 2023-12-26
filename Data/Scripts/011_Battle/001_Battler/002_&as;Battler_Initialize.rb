@@ -148,11 +148,8 @@ class Battle::Battler
     @lastRoundMoveFailed   = false
     @movesUsed             = []
     @turnCount             = 0
-		#for DDA #by low
-    @turnCountMin      		 = 0 
-		@opponentTotalHP     	 = 0 
-		@playerTotalHP      	 = 0 
-		#
+		#by low
+    @remaningHPBars = (self.isBossPokemon?) ? 3 : 0 
     @effects[PBEffects::Attract]             = -1
     @battle.allBattlers.each do |b|   # Other battlers no longer attracted to self
       b.effects[PBEffects::Attract] = -1 if b.effects[PBEffects::Attract] == @index
@@ -290,7 +287,6 @@ class Battle::Battler
     @effects[PBEffects::SlipperyPeel]        = false
     @effects[PBEffects::MoodyMemory]     		 = -1
     @SetupMovesUsed             						 = []
-    @effects[PBEffects::RemaningHPBars]      = 0
   end
 
   #=============================================================================

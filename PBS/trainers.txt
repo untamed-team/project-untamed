@@ -174,12 +174,12 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-#Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
-Gimmick = HarshSun
-Pokemon = PACUNA,10
-Pokemon = BLAZEA,10
-	Moves = SCALD,SPLASH
-	AAM = true
+Gimmick = BugZone
+Pokemon = NOCTAVISPA,10
+    AbilityIndex = 0
+	Moves = DARKPULSE,ATTACKORDER,POISONJAB,GRASSKNOT
+	MEM = true
+	BOSS = true
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
