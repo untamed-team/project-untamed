@@ -170,10 +170,11 @@ def pbHPItem(pkmn,restorehp,scene)
     scene.pbDisplay(_INTL("It won't have any effect.")) if scene!=nil
     return false
   end
-  hpGain = pbItemRestoreHP(pkmn, restoreHP)
+  #print "pkmn is #{pkmn} and restoreHP is #{restoreHP}"
+  hpGain = pbItemRestoreHP(pkmn, restorehp)
   scene.pbRefresh if scene!=nil
   scene.pbDisplay(_INTL("{1}'s HP was restored by {2} points.", pkmn.name, hpGain)) if scene!=nil
-  pbMessage(_INTL("{1}'s HP was restored by {2} points.",pokemon.name,hpgain)) if scene==nil
+  pbMessage(_INTL("{1}'s HP was restored by {2} points.",pkmn.name,hpGain)) if scene==nil
   return true
 end
 #
