@@ -373,6 +373,7 @@ class Battle
 					Battle::AbilityEffects.triggerOnSwitchIn(b.ability, b, self, true)
 				end
       end
+			b.effects[PBEffects::RemaningHPBars] = 2 if b.isBossPokemon? #by low
       pbEndPrimordialWeather   # Checking this again just in case
       # Items that trigger upon switching in (Air Balloon message)
       if b.itemActive?
