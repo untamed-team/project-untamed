@@ -239,6 +239,19 @@ class Battle::Scene::PokemonDataBox < Sprite
 		end
   end
 
+  def draw_bossHPBars
+    if @battler.isBossPokemon?
+      i = 0
+      @battler.remaningHPBars.times do
+        pbDrawImagePositions(self.bitmap,
+          [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
+        )
+        #draw all possible hearts but grayed out
+        i += 16
+      end
+    end
+  end
+
   def draw_gender
     gender = @battler.displayGender
     return if ![0, 1].include?(gender)
@@ -295,6 +308,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     draw_background
     draw_name
     draw_level
+    #draw_bossHPBars
     draw_gender
     draw_status
     draw_shiny_icon

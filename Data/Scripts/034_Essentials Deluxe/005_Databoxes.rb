@@ -115,6 +115,7 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
     else
       draw_level
       draw_gender
+      draw_bossHPBars
     end
     draw_status
     draw_shiny_icon
