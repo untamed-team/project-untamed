@@ -1,5 +1,33 @@
-Name       = Tutor.net
-Version    = 1.0
+﻿Name       = Tutor.net
+Version    = 1.2.3
 Essentials = 20.1
 Website    = https://reliccastle.com/resources/1237/
 Credits    = DemICE
+
+#====================================================================
+# Change log
+#====================================================================
+#
+# 1.2.3:
+# - Added new currency: Coins. Example: pbTutorNetAdd(:ICEPUNCH,4000,"c")
+#
+# 1.2.2:
+# - Fixed isues related to purchasing TMs from shops when TM to Tutor is enabled.
+# - When you are asked to purchase a move, you are now also shown the amount of said currency you have.
+# - Added confirm selection sound effect when selecting a move in the list.
+#
+# 1.2.1:
+# - TM to Tutor feature related: Added an alternative Tutor.net introduction message if your first tutor move comes from picking up a TM.
+#
+# 1.2:
+# - Added the TM to Tutor optional feature.
+#
+# 1.1:
+# - The UI has been changed (improved?) slightly.
+# - The party is shown in the app with move compatibility indicators and can be taught moves directly without jumping to the party screen.
+# - Pressing SHIFT allows you to only show the moves a certain pokemon is compatible with.
+# - Pressing ACTION (default: Z) displays information of the move the cursor currently points to.
+# - Two party backgrounds to choose from: black and blue. Controllable via the new BLUE_PARTY_BACKGROUND setting.
+#
+# 1.0:
+# - Plugin Creation

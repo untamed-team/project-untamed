@@ -13,8 +13,7 @@ Weight = 18.6
 [GOHILA,1]
 FormName = Mega Gohila
 MegaStone = GOHILITE
-Type1 = POISON
-Type2 = ELECTRIC
+Types = POISON,ELECTRIC
 BaseStats = 97,73,71,101,135,103
 Abilities = CORROSION
 Height = 0.3
@@ -40,8 +39,7 @@ Weight = 3580.0
 [XATU,1]
 FormName = Mega Xatu
 MegaStone = XATUNITE
-Type1 = PSYCHIC
-Type2 = FIRE
+Types = PSYCHIC,FIRE
 BaseStats = 75,89,71,96,123,126
 Abilities = SOLARPOWER
 HiddenAbilities = PREMONITION
@@ -51,8 +49,7 @@ Weight = 16.7
 [FLYGON,1]
 FormName = Mega Flygon
 MegaStone = FLYGONITE
-Type1 = DRAGON
-Type2 = BUG
+Types = DRAGON,GROUND,BUG
 BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
 Height = 2.0
@@ -61,8 +58,7 @@ Weight = 81.6
 [MILOTIC,1]
 FormName = Mega Milotic
 MegaStone = MILOTITE
-Type1 = WATER
-Type2 = FAIRY
+Types = WATER,FAIRY
 BaseStats = 95,85,96,82,126,156
 Abilities = MISTYSURGE
 #-------------------------------
@@ -87,8 +83,7 @@ Abilities = PSYCHICSURGE
 [GOLURK,1]
 FormName = Mega Golurk
 MegaStone = GOLURKITE
-Type1 = GROUND
-Type2 = FLYING
+Types = GROUND,GHOST,FLYING
 BaseStats = 89,144,105,100,65,80
 Abilities = AERILATE
 #------------------------------- 
@@ -108,32 +103,28 @@ Abilities = SANDSTREAM
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
-Type1 = ICE
-Type2 = FIRE
+Types = ICE,FIRE
 BaseStats = 70,65,80,85,135,140
 Abilities = MAGICGUARD
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
 MegaStone = CHIMECHITE
-Type1 = PSYCHIC
-Type2 = STEEL
+Types = PSYCHIC,STEEL
 BaseStats = 75,50,100,65,115,150
 Abilities = SOUNDPROOF
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
-Type1 = NORMAL
-Type2 = QMARKS
+Types = NORMAL,QMARKS
 BaseStats = 85,128,80,102,155,85
 Abilities = OVERWRITE
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
 MegaStone = MAGCARGOITE
-Type1 = FIRE
-Type2 = STEEL
+Types = FIRE,STEEL
 BaseStats = 60,60,160,50,100,100
 Abilities = BULLETPROOF
 #------------------------------- 
@@ -164,16 +155,14 @@ Abilities = MOLDBREAKER
 [ZOLUPINE,1]
 FormName = Mega Zolupine
 MegaStone = ZOLUPINEITE
-Type1 = GHOST
-Type2 = WATER
+Types = GHOST,WATER
 BaseStats = 60,95,70,85,135,145
 Abilities = DRIZZLE
 #------------------------------- 
 [ROADRAPTOR,1]
 FormName = Mega Roadraptor
 MegaStone = ROADRAPTORITE
-Type1 = ELECTRIC
-Type2 = GROUND
+Types = ELECTRIC,GROUND
 BaseStats = 70,129,72,133,117,69
 Abilities = LIGHTNINGROD
 #------------------------------- 
@@ -192,16 +181,14 @@ Abilities = DROUGHT
 [LAGUNA,1]
 FormName = Mega Laguna
 MegaStone = LAGUNITE
-Type1 = ICE
-Type2 = FAIRY
+Types = ICE,FAIRY
 BaseStats = 50,72,55,103,110,130
 Abilities = FURCOAT
 #-------------------------------
 [LEDIAN,1]
 FormName = Mega Ledian
 MegaStone = LEDINITE
-Type1 = BUG
-Type2 = FIGHTING
+Types = BUG,FIGHTING
 BaseStats = 55,130,50,125,35,120
 Abilities = IRONFIST
 #---------------------------------------------------------------------------------------------
@@ -324,8 +311,7 @@ TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTE
 #-------------------------------
 [CROACROZEN,1]
 FormName = Frozen
-Type1 = POISON
-Type2 = ICE
+Types = POISON,ICE
 BaseStats = 95,45,145,25,65,130
 Weight = 10.4
 #------------------------------- # 490 bst
