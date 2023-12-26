@@ -1,6 +1,6 @@
 #######################Confirm Forget Move#######################
 #===============================================================================
-# Confirm Forget Move (Fear not a Misclick!)
+# Confirm Forget Move (Fear yes a Misclick!)
 #===============================================================================
 class PokemonSummary_Scene
   def pbChooseMoveToForget(move_to_learn)
