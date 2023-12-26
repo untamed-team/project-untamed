@@ -1,0 +1,25 @@
+v1.4
+- New feature: Berrydex Battle page. This page will show information pertaining to battles, like the Fling power, Natural Gift type and Power, and effect when used in battle. By default, the item description for the berry will show as the "effect when used in battle" portion. However, not all descriptions would fit this. You can customize what description to show here by including a BattleDescription for the berry in the berry_data.txt to show that, instead.
+- Added the option to show a berry's color in the Tag Page of the Berrydex.
+- Fixed an issue where the wrong color could be shown in the scene where you choose multiple berries.
+- Fixed crashes in the Berrydex when you turn off BERRYDEX_MUTATIONS_PAGE.
+- Fixed an issue where BERRYDEX_SHOW_NUMBER wasn't respected in the Berrydex entries.
+
+v1.3
+- Added a new setting BERRYDEX_SHOW_ENTIRE_LIST. Setting this to true will show the entire list of potential berries from the start, instead of only showing up through a berry that is registered. For instance, if you have 60 berries defined in the dex, but you only have berry #2 registered, instead of showing #1 as unregistered and #2 as registered, it would show all 60 in the list, with unregistered berries still appearingunregistered.
+-- Note: This also makes it so the player can view the Berrydex without having any berries registered! It will just show an empty list.
+- Added new function pbUnregisterBerry
+- Updated BerryColorData to use Color.new instead of the rgbToColor function
+
+v1.2
+- New feature: Mutation Data page in the Berry Dex (requires Berry Planting Improvements)
+- New feature: Tag page in the Berry Dex can now show the flavor of a berry in Pentagon Graph form (requires Marin's Better Bitmaps)
+- Fixed the name of the GANLONBERRY Tag Icon
+
+v1.1
+- New feature: pbChooseBerryMultiple, a command with a custom scene to choose multiple berries at once.
+- Added infrustructure for Preferred Zones (which comes with Berry Planting Improvements)
+- Added handling to prevent a crash when opening the Berrydex in a save file created from before plugin installation. 
+
+v1.0
+- Initial Release

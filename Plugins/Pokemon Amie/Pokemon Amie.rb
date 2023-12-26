@@ -17,12 +17,12 @@ PokemonAmieRefresh
 =end
 #=========================================================#
 # Plugin Manager Support
-PluginManager.register({
-  :name    => "Pokémon Amie",
-  :version => "1.6",
-  :link    => "https://www.pokecommunity.com/showthread.php?t=439558",
-  :credits => ["Bhagya Jyoti","Pizza Sun","rigbycwts","Gardenette"]
-})
+#PluginManager.register({
+#  :name    => "Pokémon Amie",
+#  :version => "1.6",
+#  :link    => "https://www.pokecommunity.com/showthread.php?t=439558",
+#  :credits => ["Bhagya Jyoti","Pizza Sun","rigbycwts","Gardenette"]
+#})
 
 #README
 #You will need to fix a typo in 'def static?' in Easy Mouse System
