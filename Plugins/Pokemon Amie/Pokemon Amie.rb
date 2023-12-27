@@ -16,14 +16,6 @@ pokemonAmieRefresh
 ==========================================================
 =end
 #=========================================================#
-# Plugin Manager Support
-#PluginManager.register({
-#  :name    => "Pokémon Amie",
-#  :version => "1.6",
-#  :link    => "https://www.pokecommunity.com/showthread.php?t=439558",
-#  :credits => ["Bhagya Jyoti","Pizza Sun","rigbycwts","Gardenette"]
-#})
-
 #README
 #You will need to fix a typo in 'def static?' in Easy Mouse System
 #Change 'unless @static_x.eql?(@x) && @static_y.eql(@y)' to 'unless @static_x.eql?(@x) && @static_y.eql?(@y)'
@@ -1089,7 +1081,6 @@ class PokeAmie_Essentials_Scene
 			#not holding food on the pokemon
 			@nibbleCooldown = 0
         end
-        #@sprites["mouse"].mask(@mask)
 		@sprites["mouse"].maskOLD(@mask)
       end
       #moves hand picture to mouse position
