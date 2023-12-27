@@ -154,8 +154,8 @@ class Battle::Battler
       @tookDamageThisRound = true
     end
     if survDmg
-      self.pbRecoverHP(self.totalhp,true)
       self.remaningHPBars-=1
+      self.pbRecoverHP(self.totalhp,true)
       pbEffectsOnHPBarBreak(self)
     end
     return amt
