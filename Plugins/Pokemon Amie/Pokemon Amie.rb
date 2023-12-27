@@ -8,11 +8,11 @@
 use the following script to set Pokemon Amie a specific Pokemon 
 beforehand:
 =============================================
-PokemonAmieRefresh(party index)
+pokemonAmieRefresh(party index)
 =============================================
 to begin Pokemon Amie/Refresh Scene use:
 =========================================================
-PokemonAmieRefresh
+pokemonAmieRefresh
 ==========================================================
 =end
 #=========================================================#
@@ -43,7 +43,7 @@ PokemonAmieRefresh
 # handled as an extension of the Sprite class
 class Sprite
   # function used to to mask the Sprite's current bitmap with another
-  def mask(mask = nil,xpush = 0,ypush = 0)
+  def maskOLD(mask = nil,xpush = 0,ypush = 0)
     # exits out of the function if the sprite currently has no bitmap to mask
     return false if !self.bitmap
     # backs up the Sprites current bitmap
@@ -1089,7 +1089,8 @@ class PokeAmie_Essentials_Scene
 			#not holding food on the pokemon
 			@nibbleCooldown = 0
         end
-        @sprites["mouse"].mask(@mask)
+        #@sprites["mouse"].mask(@mask)
+		@sprites["mouse"].maskOLD(@mask)
       end
       #moves hand picture to mouse position
       @sprites["mouse"].x=Mouse.x if defined?(Mouse.x)
