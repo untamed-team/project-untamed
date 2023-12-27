@@ -180,6 +180,8 @@ Pokemon = NOCTAVISPA,10
 	Moves = DARKPULSE,ATTACKORDER,POISONJAB,GRASSKNOT
 	MEM = true
 	BOSS = true
+Pokemon = PORYGONZ,10
+	Status = Sleep
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom

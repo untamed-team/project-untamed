@@ -231,6 +231,7 @@ class Battle::Scene
     while @sprites["dataBox_#{battler.index}"].animatingHP
       pbUpdate
     end
+    @sprites["dataBox_#{battler.index}"].refresh
   end
 
   def pbDamageAnimation(battler, effectiveness = 0)

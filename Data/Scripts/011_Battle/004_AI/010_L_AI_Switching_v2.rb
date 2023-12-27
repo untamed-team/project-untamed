@@ -158,7 +158,7 @@ class Battle::AI
 			shouldSwitch = true
 			echo("Switching because of perish song.\n")
 		end
-		#~ shouldSwitch = true # REMOVE THIS YOU PIECE OF SHIT BRAIDEAD MORRON - #by low
+		shouldSwitch = true # REMOVE THIS YOU PIECE OF SHIT BRAIDEAD MORRON - #by low
 		incoming = nil
 		weight = 1
 		canheswitch=false

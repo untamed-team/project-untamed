@@ -116,7 +116,7 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
       draw_level
       draw_gender
     end
-    draw_bossHPBars
+    draw_bossHPBars #by low
     draw_status
     draw_shiny_icon
     draw_special_form_icon

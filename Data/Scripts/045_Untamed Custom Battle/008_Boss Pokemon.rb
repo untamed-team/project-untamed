@@ -28,16 +28,23 @@ class Battle::Battler
     return (@pokemon) ? @pokemon.isBossPokemon? : false
   end
 	
+  ################################################################################
+
   def pbEffectsOnHPBarBreak(boss) 
     case boss.species
     when :NOCTAVISPA
       if boss.remaningHPBars == 1
         @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!",self.pbThis))
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
-        pbAddNewMoveMidturn(boss, :HEALORDER, 5)
+        pbCureMidTurn(boss, true, true)
       elsif boss.remaningHPBars == 2
         @battle.pbDisplayBrief(_INTL("{1}'s malice summoned a Dark Zone!",self.pbThis))
         @battle.field.typezone = :DARK
+        pbChangeUserItemMidTurn(boss, :STARFBERRY)
+        pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
+        boss.eachOpposing do |b|
+          pbLowerStatsMidTurn(b, [:SPECIAL_ATTACK, 2, :SPEED, 3])
+        end
       end
     end
   end
@@ -56,11 +63,74 @@ class Battle::Battler
     @battle.pbJudge
   end
 
-  def pbAddNewMoveMidturn(boss, move, moveid)
-    boss.pokemon.moves[moveid] = Pokemon::Move.new(move)                    # create new move
-    boss.pokemon.moves[moveid].ppup = 3                                     # increase its max pp
-    boss.pokemon.moves[moveid].pp = (boss.pokemon.moves[5].pp * 1.6).floor  # set the new move pp to max
+  def pbCureMidTurn(boss, status = false, stats = false)
+    if status
+      @battle.pbParty(boss.index).each_with_index do |pkmn, i|
+        next if !pkmn || !pkmn.able?
+        if pkmn.status != :NONE
+          if @battle.pbFindBattler(i, boss)
+            boss.pbCureStatus(true)
+          else
+            pkmn.status      = :NONE
+            pkmn.statusCount = 0
+            @battle.pbDisplay(_INTL("Opposing {1} was healed from its status!", pkmn.name))
+          end
+        end
+      end
+      @battle.allSameSideBattlers(boss).each do |b|
+        if b.effects[PBEffects::Confusion] > 0
+          b.effects[PBEffects::Confusion] = 0
+          @battle.pbDisplay(_INTL("{1} snapped out of its confusion!", b.pbThis))
+        end
+      end
+    end
+    if stats
+      @battle.allSameSideBattlers(boss).each do |b|
+        didsomething = false
+        GameData::Stat.each_battle do |s|
+          if @stages[s.id] < 0
+            @statsRaisedThisRound = true
+            @stages[s.id] = 0
+            didsomething = true
+          end
+        end
+        @battle.pbDisplay(_INTL("{1}'s negative stat changes were cleansed!", boss.pbThis)) if didsomething
+      end
+    end
   end
+
+  def pbChangeUserItemMidTurn(boss, item = :ORANBERRY)
+    if !boss.item # item was knocked off
+      boss.item = item
+      boss.pbHeldItemTriggerCheck
+      @battle.pbDisplay(_INTL("{1} gained the item {2}!", boss.pbThis, boss.itemName))
+    else
+      boss.pbHeldItemTriggerCheck(item) # force the usage of a specific item
+      @battle.pbDisplay(_INTL("{1} consumed the item {2}!", boss.pbThis, boss.itemName))
+    end
+  end
+
+  def pbRaiseStatsMidTurn(target, stat)
+    didanimonce = false
+    (stat.length / 2).times do |i|
+      if target.pbCanRaiseStatStage?(stat[i * 2], target)
+        target.pbRaiseStatStage(stat[i * 2], stat[(i * 2) + 1], target, !didanimonce, true)
+        didanimonce = true
+      end
+    end
+  end
+
+  def pbLowerStatsMidTurn(target, stat)
+    didanimonce = false
+    (stat.length / 2).times do |i|
+      if target.pbCanLowerStatStage?(stat[i * 2], target)
+        target.pbLowerStatStage(stat[i * 2], stat[(i * 2) + 1], target, !didanimonce)
+        didanimonce = true
+      end
+    end
+  end
+
+  ################################################################################
 
   def pbReduceHP(amt, anim = true, registerDamage = true, anyAnim = true)
     amt = amt.round
@@ -68,7 +138,7 @@ class Battle::Battler
     amt = 1 if amt < 1 && !fainted?
     survDmg = false
     if self.isBossPokemon?
-      if self.remaningHPBars>0
+      if self.remaningHPBars>0 && amt == @hp
         amt=amt-1
         survDmg=true
       end

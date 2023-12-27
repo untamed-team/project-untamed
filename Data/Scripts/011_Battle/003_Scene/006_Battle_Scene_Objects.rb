@@ -239,16 +239,15 @@ class Battle::Scene::PokemonDataBox < Sprite
 		end
   end
 
-  def draw_bossHPBars
+  def draw_bossHPBars #by low
+    return if !@battler.isBossPokemon?
     return if @battler.remaningHPBars == 0
-    if @battler.isBossPokemon?
-      i = 0
-      @battler.remaningHPBars.times do
-        pbDrawImagePositions(self.bitmap,
-          [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
-        )
-        i += 16
-      end
+    i = 0
+    @battler.remaningHPBars.times do
+      pbDrawImagePositions(self.bitmap,
+        [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
+      )
+      i += 16
     end
   end
 
@@ -341,6 +340,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
     hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
     @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
+    draw_bossHPBars
   end
 
   def refreshExp
@@ -363,7 +363,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     end
     # Refresh the HP bar/numbers
     refreshHP
-    draw_bossHPBars
+    draw_bossHPBars #by low
     @animatingHP = false if @currentHP == @endHP
   end
 

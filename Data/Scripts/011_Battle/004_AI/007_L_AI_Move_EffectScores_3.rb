@@ -965,7 +965,7 @@ class Battle::AI
 								score = (100-thisinitial)
 								# checking if the recepient can outspeed
 								enemycounter = 0
-								user.eachOpposing.each do |m|
+								user.eachOpposing do |m|
 									next unless target.pbSpeed < m.pbSpeed
 									enemycounter += 1
 								end
@@ -1050,7 +1050,7 @@ class Battle::AI
 							score = (100-thisinitial)
 							# checking if the recepient can outspeed
 							enemycounter = 0
-							user.eachOpposing.each do |m|
+							user.eachOpposing do |m|
 								next unless target.pbSpeed < m.pbSpeed
 								enemycounter += 1
 							end
