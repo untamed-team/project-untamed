@@ -134,13 +134,14 @@ class Battle
   # Turn order calculation (priority)
   #=============================================================================
   def pbCalculatePriority(fullCalc = false, indexArray = nil)
+    # consistent speed ties edits #by low
     needRearranging = false
     if fullCalc
       @priorityTrickRoom = (@field.effects[PBEffects::TrickRoom] > 0)
       # Recalculate everything from scratch
       randomOrder = Array.new(maxBattlerIndex + 1) { |i| i }
       (randomOrder.length - 1).times do |i|   # Can't use shuffle! here
-        r = i + pbRandom(randomOrder.length - i)
+        r = i #+ pbRandom(randomOrder.length - i) <- edited ->
         randomOrder[i], randomOrder[r] = randomOrder[r], randomOrder[i]
       end
       @priority.clear
@@ -149,6 +150,14 @@ class Battle
         next if !b
         # [battler, speed, sub-priority from ability, sub-priority from item,
         #  final sub-priority, priority, tie-breaker order]
+        
+        # <- edited ->
+        #echoln "for #{b.name}: #{randomOrder[i]}"
+        realTieBreaker = (b.pbOwnedByPlayer?) ? -1 : +2
+        randomOrder[i] += realTieBreaker
+        #echoln "(after tiebreaking) for #{b.name}: #{randomOrder[i]}"
+        # <- edited ->
+
         entry = [b, b.pbSpeed, 0, 0, 0, 0, randomOrder[i]]
         if @choices[b.index][0] == :UseMove || @choices[b.index][0] == :Shift
           # Calculate move's priority

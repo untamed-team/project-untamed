@@ -175,29 +175,32 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 Gimmick = BugZone
-Pokemon = NOCTAVISPA,10
+Pokemon = NOCTAVISPA,50
     AbilityIndex = 0
-	Moves = DARKPULSE,ATTACKORDER,POISONJAB,GRASSKNOT
-	MEM = true
+	Nature = QUIRKY
+	Moves = DEFENDORDER,SPLASH
 	BOSS = true
-Pokemon = PORYGONZ,10
-	Status = Sleep
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
-Gimmick = DragonZone
-Pokemon = PORYGONZ,10
-	IV  = 10,10,10,10,10,10
-	EV  = 0,0,0,0,0,0
-	AAM = true
-	MEM = true
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory,100]
 LoseText = kaboom
-Gimmick = DragonZone
-Pokemon = BEAKRAFT,10
-	MEM = true
-	Gender = Male
-Pokemon = BEAKRAFT,10
-	MEM = true
-	Gender = Female
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+	Moves = DEFENDORDER
+	Name = Nocta3
+#-------------------------------
+[HEXMANIAC,pory1]
+LoseText = kaboom
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+#-------------------------------
+[HEXMANIAC,pory1,100]
+LoseText = kaboom
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+	Moves = DEFENDORDER
+	Name = Nocta1

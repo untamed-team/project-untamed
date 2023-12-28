@@ -149,7 +149,7 @@ class Battle::AI
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
 				next if target_data.targets_foe && !user.opposes?(b)
 				# switch abuse prevention #by low
-				echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
+				#echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
 				if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
 					 move.function != "PursueSwitchingFoe"
 					echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}"
