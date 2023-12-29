@@ -1,0 +1,5 @@
+Name         = Marin's Scripting Utilities
+Version      = 2.0
+Essentials   = 20
+Credits      = Marin
+Link         = https://reliccastle.com/resources/165/

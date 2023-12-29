@@ -1,7 +1,7 @@
 Name       = TDW Berry Planting Improvements
 Version    = 1.8.1
-#Optional   = Arcky's Region Map,1.1
-#Optional   = TDW Berry Core and Dex,1.1
+Optional   = Arcky's Region Map,1.1
+Optional   = TDW Berry Core and Dex,1.1
 Optional   = BerryPots for Essentials,1.0
 Optional   = BerryPots for Essentials v20,1.0
 Essentials = 20.1
