@@ -6671,3 +6671,30 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[POKEBLOCKCASE]
+Name = Pokéblock Case
+NamePlural = Pokéblock Cases
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A case for holding Pokéblocks made with a Berry Blender.
+#-------------------------------
+[POKEBLOCKKIT]
+Name = Pokéblock Kit
+NamePlural = Pokéblock Kit
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A set containing a Berry Blender for making Pokéblocks and a Pokéblock Case for storing Pokéblocks.
+#-------------------------------
+[POKEBLOCKCONDITION]
+Name = Condition Checker
+NamePlural = Condition Checkers
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An item for checking a Pokémon's contest stats.

@@ -1,0 +1,7 @@
+Name      	= Pokeblocks v20.1
+Version  	= 1.1
+Essentials  	= 20.1
+Optional  	= Better Bitmaps
+Requires	= TDW Berry Core and Dex,1.0
+Website   	= https://github.com/Jack1324567/PE-Custom-Script
+Credits   	= wrigty12, bo4p5687 (original code), Richard PT (original graphics), Marin (Better Bitmaps plugin)
