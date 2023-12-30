@@ -26,7 +26,7 @@ module PokeblockSettings
 	# https://bulbapedia.bulbagarden.net/wiki/Berry_Blender#Pok.C3.A9mon_Ruby.2C_Sapphire.2C_and_Emerald
 	# https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9block
 	#--------------------------------------------------------------------------------
-	SIMPLIFIED_BERRY_BLENDING		= false 
+	SIMPLIFIED_BERRY_BLENDING		= true
 
 #====================================================================================
 #======================= Generation 3 Mode Specific Settings ========================

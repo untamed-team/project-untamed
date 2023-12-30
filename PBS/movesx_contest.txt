@@ -1,0 +1,4200 @@
+#-------------------------------
+[MEGAHORN]
+#Megahorn
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ATTACKORDER]
+#Attack Order
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BUGBUZZ]
+#Bug Buzz
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp 
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEECHLIFE]
+#Leech Life
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[XSCISSOR]
+#X-Scissor
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SIGNALBEAM]
+#Signal Beam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[UTURN]
+#U-turn
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BUGBITE]
+#Bug Bite
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SILVERWIND]
+#Silver Wind
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FURYCUTTER]
+#Fury Cutter
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PINMISSILE]
+#Pin Missile
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TWINEEDLE]
+#Twineedle
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DEFENDORDER]
+#Defend Order
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEALORDER]
+#Heal Order
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIDERWEB]
+#Spider Web
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRINGSHOT]
+#String Shot
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAILGLOW]
+#Tail Glow
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRUNCH]
+#Crunch
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DARKPULSE]
+#Dark Pulse
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NIGHTSLASH]
+#Night Slash
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUCKERPUNCH]
+#Sucker Punch
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[KNOCKOFF]
+#Knock Off
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ASSURANCE]
+#Assurance
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BITE]
+#Bite
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FEINTATTACK]
+#Feint Attack
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THIEF]
+#Thief
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PAYBACK]
+#Payback
+ContestType = COOL
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PURSUIT]
+#Pursuit
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BEATUP]
+#Beat Up
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLING]
+#Fling
+ContestType = TOUGH
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PUNISHMENT]
+#Punishment
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DARKVOID]
+#Dark Void
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EMBARGO]
+#Embargo
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FAKETEARS]
+#Fake Tears
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLATTER]
+#Flatter
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEMENTO]
+#Memento
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NASTYPLOT]
+#Nasty Plot
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SNATCH]
+#Snatch
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWITCHEROO]
+#Switcheroo
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAUNT]
+#Taunt
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TORMENT]
+#Torment
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROAROFTIME]
+#Roar of Time
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRACOMETEOR]
+#Draco Meteor
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OUTRAGE]
+#Outrage
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow 
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONRUSH]
+#Dragon Rush
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPACIALREND]
+#Spacial Rend
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONPULSE]
+#Dragon Pulse
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONCLAW]
+#Dragon Claw
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONBREATH]
+#Dragon Breath
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TWISTER]
+#Twister
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONRAGE]
+#Dragon Rage
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONDANCE]
+#Dragon Dance
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VOLTTACKLE]
+#Volt Tackle
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ZAPCANNON]
+#Zap Cannon
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDER]
+#Thunder
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERBOLT]
+#Thunderbolt
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DISCHARGE]
+#Discharge
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERPUNCH]
+#Thunder Punch
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPARK]
+#Spark
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERFANG]
+#Thunder Fang
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHOCKWAVE]
+#Shock Wave
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHARGEBEAM]
+#Charge Beam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERSHOCK]
+#Thunder Shock
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHARGE]
+#Charge
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGNETRISE]
+#Magnet Rise
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERWAVE]
+#Thunder Wave
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHARM]
+#Charm
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MOONLIGHT]
+#Moonlight
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWEETKISS]
+#Sweet Kiss
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FOCUSPUNCH]
+#Focus Punch
+ContestType = TOUGH
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HIGHJUMPKICK]
+#High Jump Kick
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CLOSECOMBAT]
+#Close Combat
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FOCUSBLAST]
+#Focus Blast
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUPERPOWER]
+#Superpower
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CROSSCHOP]
+#Cross Chop
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DYNAMICPUNCH]
+#Dynamic Punch
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HAMMERARM]
+#Hammer Arm
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[JUMPKICK]
+#Jump Kick
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKYUPPERCUT]
+#Sky Uppercut
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AURASPHERE]
+#Aura Sphere
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUBMISSION]
+#Submission
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BRICKBREAK]
+#Brick Break
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAINPUNCH]
+#Drain Punch
+ContestType = BEAUTY
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VITALTHROW]
+#Vital Throw
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WAKEUPSLAP]
+#Wake-Up Slap
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FORCEPALM]
+#Force Palm
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REVENGE]
+#Revenge
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROLLINGKICK]
+#Rolling Kick
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[KARATECHOP]
+#Karate Chop
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MACHPUNCH]
+#Mach Punch
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKSMASH]
+#Rock Smash
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VACUUMWAVE]
+#Vacuum Wave
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLEKICK]
+#Double Kick
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ARMTHRUST]
+#Arm Thrust
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRIPLEKICK]
+#Triple Kick
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COUNTER]
+#Counter
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LOWKICK]
+#Low Kick
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REVERSAL]
+#Reversal
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SEISMICTOSS]
+#Seismic Toss
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BULKUP]
+#Bulk Up
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DETECT]
+#Detect
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BLASTBURN]
+#Blast Burn
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ERUPTION]
+#Eruption
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OVERHEAT]
+#Overheat
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAREBLITZ]
+#Flare Blitz
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIREBLAST]
+#Fire Blast
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGMASTORM]
+#Magma Storm
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SACREDFIRE]
+#Sacred Fire
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEATWAVE]
+#Heat Wave
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAMETHROWER]
+#Flamethrower
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BLAZEKICK]
+#Blaze Kick
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LAVAPLUME]
+#Lava Plume
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIREPUNCH]
+#Fire Punch
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIREFANG]
+#Fire Fang
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAMEWHEEL]
+#Flame Wheel
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EMBER]
+#Ember
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIRESPIN]
+#Fire Spin
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUNNYDAY]
+#Sunny Day
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WILLOWISP]
+#Will-O-Wisp
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKYATTACK]
+#Sky Attack
+ContestType = COOL
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BRAVEBIRD]
+#Brave Bird
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AEROBLAST]
+#Aeroblast
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLY]
+#Fly
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BOUNCE]
+#Bounce
+ContestType = CUTE
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRILLPECK]
+#Drill Peck
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AIRSLASH]
+#Air Slash
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHATTER]
+#Chatter
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AERIALACE]
+#Aerial Ace
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AIRCUTTER]
+#Air Cutter
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PLUCK]
+#Pluck
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WINGATTACK]
+#Wing Attack
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GUST]
+#Gust
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PECK]
+#Peck
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DEFOG]
+#Defog
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FEATHERDANCE]
+#Feather Dance
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIRRORMOVE]
+#Mirror Move
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROOST]
+#Roost
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAILWIND]
+#Tailwind
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWFORCE]
+#Shadow Force
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWBALL]
+#Shadow Ball
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWCLAW]
+#Shadow Claw
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OMINOUSWIND]
+#Ominous Wind
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWPUNCH]
+#Shadow Punch
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWSNEAK]
+#Shadow Sneak
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ASTONISH]
+#Astonish
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LICK]
+#Lick
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NIGHTSHADE]
+#Night Shade
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONFUSERAY]
+#Confuse Ray
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CURSE]
+#Curse
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DESTINYBOND]
+#Destiny Bond
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRUDGE]
+#Grudge
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NIGHTMARE]
+#Nightmare
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPITE]
+#Spite
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FRENZYPLANT]
+#Frenzy Plant
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEAFSTORM]
+#Leaf Storm
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PETALDANCE]
+#Petal Dance
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERWHIP]
+#Power Whip
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SEEDFLARE]
+#Seed Flare
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SOLARBEAM]
+#Solar Beam
+ContestType = COOL
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WOODHAMMER]
+#Wood Hammer
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ENERGYBALL]
+#Energy Ball
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEAFBLADE]
+#Leaf Blade
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SEEDBOMB]
+#Seed Bomb
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GIGADRAIN]
+#Giga Drain
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGICALLEAF]
+#Magical Leaf
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NEEDLEARM]
+#Needle Arm
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAZORLEAF]
+#Razor Leaf
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VINEWHIP]
+#Vine Whip
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEGADRAIN]
+#Mega Drain
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BULLETSEED]
+#Bullet Seed
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ABSORB]
+#Absorb
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRASSKNOT]
+#Grass Knot
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AROMATHERAPY]
+#Aromatherapy
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COTTONSPORE]
+#Cotton Spore
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRASSWHISTLE]
+#Grass Whistle
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[INGRAIN]
+#Ingrain
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEECHSEED]
+#Leech Seed
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLEEPPOWDER]
+#Sleep Powder
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPORE]
+#Spore
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STUNSPORE]
+#Stun Spore
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SYNTHESIS]
+#Synthesis
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WORRYSEED]
+#Worry Seed
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EARTHQUAKE]
+#Earthquake
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EARTHPOWER]
+#Earth Power
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DIG]
+#Dig
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BONECLUB]
+#Bone Club
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MUDBOMB]
+#Mud Bomb
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MUDSHOT]
+#Mud Shot
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BONEMERANG]
+#Bonemerang
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SANDTOMB]
+#Sand Tomb
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BONERUSH]
+#Bone Rush
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MUDSLAP]
+#Mud-Slap
+ContestType = CUTE
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FISSURE]
+#Fissure
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGNITUDE]
+#Magnitude
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MUDSPORT]
+#Mud Sport
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SANDATTACK]
+#Sand Attack
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIKES]
+#Spikes
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BLIZZARD]
+#Blizzard
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEBEAM]
+#Ice Beam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEPUNCH]
+#Ice Punch
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AURORABEAM]
+#Aurora Beam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEFANG]
+#Ice Fang
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AVALANCHE]
+#Avalanche
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICYWIND]
+#Icy Wind
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICESHARD]
+#Ice Shard
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWDERSNOW]
+#Powder Snow
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEBALL]
+#Ice Ball
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICICLESPEAR]
+#Icicle Spear
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHEERCOLD]
+#Sheer Cold
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HAIL]
+#Hail
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HAZE]
+#Haze
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIST]
+#Mist
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EXPLOSION]
+#Explosion
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SELFDESTRUCT]
+#Self-Destruct
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GIGAIMPACT]
+#Giga Impact
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPERBEAM]
+#Hyper Beam
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LASTRESORT]
+#Last Resort
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKULLBASH]
+#Skull Bash
+ContestType = TOUGH
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLEEDGE]
+#Double-Edge
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEGAKICK]
+#Mega Kick
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast 
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THRASH]
+#Thrash
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EGGBOMB]
+#Egg Bomb
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[JUDGMENT]
+#Judgment
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPERVOICE]
+#Hyper Voice
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKCLIMB]
+#Rock Climb
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAKEDOWN]
+#Take Down
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[UPROAR]
+#Uproar
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BODYSLAM]
+#Body Slam
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EXTREMESPEED]
+#Extreme Speed
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPERFANG]
+#Hyper Fang
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEGAPUNCH]
+#Mega Punch
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAZORWIND]
+#Razor Wind
+ContestType = COOL
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLAM]
+#Slam
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRENGTH]
+#Strength
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRIATTACK]
+#Tri Attack
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRUSHCLAW]
+#Crush Claw
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DIZZYPUNCH]
+#Dizzy Punch
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FACADE]
+#Facade
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEADBUTT]
+#Headbutt
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SECRETPOWER]
+#Secret Power
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLASH]
+#Slash
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SMELLINGSALTS]
+#Smelling Salts
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HORNATTACK]
+#Horn Attack
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STOMP]
+#Stomp
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COVET]
+#Covet
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HIDDENPOWER]
+#Hidden Power
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWIFT]
+#Swift
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VISEGRIP]
+#Vise Grip
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CUT]
+#Cut
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAPIDSPIN]
+#Rapid Spin
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SNORE]
+#Snore
+ContestType = CUTE
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRUGGLE]
+#Struggle
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WEATHERBALL]
+#Weather Ball
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FAKEOUT]
+#Fake Out
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FALSESWIPE]
+#False Swipe
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PAYDAY]
+#Pay Day
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POUND]
+#Pound
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[QUICKATTACK]
+#Quick Attack
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCRATCH]
+#Scratch
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TACKLE]
+#Tackle
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLEHIT]
+#Double Hit
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FEINT]
+#Feint
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAGE]
+#Rage
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIKECANNON]
+#Spike Cannon
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COMETPUNCH]
+#Comet Punch
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FURYSWIPES]
+#Fury Swipes
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BARRAGE]
+#Barrage
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BIND]
+#Bind
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLESLAP]
+#Double Slap
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FURYATTACK]
+#Fury Attack
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WRAP]
+#Wrap
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONSTRICT]
+#Constrict
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BIDE]
+#Bide
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRUSHGRIP]
+#Crush Grip
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ENDEAVOR]
+#Endeavor
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAIL]
+#Flail
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FRUSTRATION]
+#Frustration
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GUILLOTINE]
+#Guillotine
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HORNDRILL]
+#Horn Drill
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NATURALGIFT]
+#Natural Gift
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PRESENT]
+#Present
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RETURN]
+#Return
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SONICBOOM]
+#Sonic Boom
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPITUP]
+#Spit Up
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUPERFANG]
+#Super Fang
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRUMPCARD]
+#Trump Card
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_PointsEqualToOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WRINGOUT]
+#Wring Out
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACUPRESSURE]
+#Acupressure
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ASSIST]
+#Assist
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ATTRACT]
+#Attract
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BATONPASS]
+#Baton Pass
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BELLYDRUM]
+#Belly Drum
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BLOCK]
+#Block
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CAMOUFLAGE]
+#Camouflage
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CAPTIVATE]
+#Captivate
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONVERSION]
+#Conversion
+ContestType = BEAUTY
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONVERSION2]
+#Conversion 2
+ContestType = BEAUTY
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COPYCAT]
+#Copycat
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DEFENSECURL]
+#Defense Curl
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DISABLE]
+#Disable
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLETEAM]
+#Double Team
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ENCORE]
+#Encore
+ContestType = CUTE
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ENDURE]
+#Endure
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLASH]
+#Flash
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FOCUSENERGY]
+#Focus Energy
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FOLLOWME]
+#Follow Me
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FORESIGHT]
+#Foresight
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GLARE]
+#Glare
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GROWL]
+#Growl
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GROWTH]
+#Growth
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HARDEN]
+#Harden
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEALBELL]
+#Heal Bell
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HELPINGHAND]
+#Helping Hand
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HOWL]
+#Howl
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEER]
+#Leer
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LOVELYKISS]
+#Lovely Kiss
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LUCKYCHANT]
+#Lucky Chant
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEFIRST]
+#Me First
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEANLOOK]
+#Mean Look
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METRONOME]
+#Metronome
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MILKDRINK]
+#Milk Drink
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIMIC]
+#Mimic
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MINDREADER]
+#Mind Reader
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MINIMIZE]
+#Minimize
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MORNINGSUN]
+#Morning Sun
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NATUREPOWER]
+#Nature Power
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ODORSLEUTH]
+#Odor Sleuth
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PAINSPLIT]
+#Pain Split
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PERISHSONG]
+#Perish Song
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PROTECT]
+#Protect
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHUP]
+#Psych Up
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RECOVER]
+#Recover
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RECYCLE]
+#Recycle
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REFRESH]
+#Refresh
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROAR]
+#Roar
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SAFEGUARD]
+#Safeguard
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCARYFACE]
+#Scary Face
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCREECH]
+#Screech
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHARPEN]
+#Sharpen
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SING]
+#Sing
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKETCH]
+#Sketch
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLACKOFF]
+#Slack Off
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLEEPTALK]
+#Sleep Talk
+ContestType = CUTE
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SMOKESCREEN]
+#Smokescreen
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SOFTBOILED]
+#Soft-Boiled
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPLASH]
+#Splash
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STOCKPILE]
+#Stockpile
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUBSTITUTE]
+#Substitute
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUPERSONIC]
+#Supersonic
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWAGGER]
+#Swagger
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWALLOW]
+#Swallow
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWEETSCENT]
+#Sweet Scent
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWORDSDANCE]
+#Swords Dance
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAILWHIP]
+#Tail Whip
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TEETERDANCE]
+#Teeter Dance
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TICKLE]
+#Tickle
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRANSFORM]
+#Transform
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WHIRLWIND]
+#Whirlwind
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WORKUP]
+#Work Up
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[YAWN]
+#Yawn
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GUNKSHOT]
+#Gunk Shot
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLUDGEBOMB]
+#Sludge Bomb
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONJAB]
+#Poison Jab
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CROSSPOISON]
+#Cross Poison
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLUDGE]
+#Sludge
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONFANG]
+#Poison Fang
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONTAIL]
+#Poison Tail
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACID]
+#Acid
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SMOG]
+#Smog
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONSTING]
+#Poison Sting
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACIDARMOR]
+#Acid Armor
+ContestType = TOUGH
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GASTROACID]
+#Gastro Acid
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONGAS]
+#Poison Gas
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POISONPOWDER]
+#Poison Powder
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TOXIC]
+#Toxic
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TOXICSPIKES]
+#Toxic Spikes
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHOBOOST]
+#Psycho Boost
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FUTURESIGHT]
+#Future Sight
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DREAMEATER]
+#Dream Eater
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHIC]
+#Psychic
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EXTRASENSORY]
+#Extrasensory
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ZENHEADBUTT]
+#Zen Headbutt
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LUSTERPURGE]
+#Luster Purge
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MISTBALL]
+#Mist Ball
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHOCUT]
+#Psycho Cut
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYBEAM]
+#Psybeam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONFUSION]
+#Confusion
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIRRORCOAT]
+#Mirror Coat
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYWAVE]
+#Psywave
+ContestType = SMART
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AGILITY]
+#Agility
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AMNESIA]
+#Amnesia
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BARRIER]
+#Barrier
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CALMMIND]
+#Calm Mind
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COSMICPOWER]
+#Cosmic Power
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRAVITY]
+#Gravity
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GUARDSWAP]
+#Guard Swap
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEALBLOCK]
+#Heal Block
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEALINGWISH]
+#Healing Wish
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEARTSWAP]
+#Heart Swap
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPNOSIS]
+#Hypnosis
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[IMPRISON]
+#Imprison
+ContestType = SMART
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[KINESIS]
+#Kinesis
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LIGHTSCREEN]
+#Light Screen
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LUNARDANCE]
+#Lunar Dance
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGICCOAT]
+#Magic Coat
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MEDITATE]
+#Meditate
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIRACLEEYE]
+#Miracle Eye
+ContestType = CUTE
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERSWAP]
+#Power Swap
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERTRICK]
+#Power Trick
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHOSHIFT]
+#Psycho Shift
+ContestType = COOL
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REFLECT]
+#Reflect
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REST]
+#Rest
+ContestType = CUTE
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROLEPLAY]
+#Role Play
+ContestType = CUTE
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKILLSWAP]
+#Skill Swap
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TELEPORT]
+#Teleport
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRICK]
+#Trick
+ContestType = SMART
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRICKROOM]
+#Trick Room
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_RandomOrder
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKWRECKER]
+#Rock Wrecker
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STONEEDGE]
+#Stone Edge
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERGEM]
+#Power Gem
+ContestType = BEAUTY
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKSLIDE]
+#Rock Slide
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ANCIENTPOWER]
+#Ancient Power
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKTOMB]
+#Rock Tomb
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKTHROW]
+#Rock Throw
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROLLOUT]
+#Rollout
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKBLAST]
+#Rock Blast
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROCKPOLISH]
+#Rock Polish
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SANDSTORM]
+#Sandstorm
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEALTHROCK]
+#Stealth Rock
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOOMDESIRE]
+#Doom Desire
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[IRONTAIL]
+#Iron Tail
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METEORMASH]
+#Meteor Mash
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLASHCANNON]
+#Flash Cannon
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[IRONHEAD]
+#Iron Head
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEELWING]
+#Steel Wing
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MIRRORSHOT]
+#Mirror Shot
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGNETBOMB]
+#Magnet Bomb
+ContestType = COOL
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METALCLAW]
+#Metal Claw
+ContestType = COOL
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BULLETPUNCH]
+#Bullet Punch
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GYROBALL]
+#Gyro Ball
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEAVYSLAM]
+#Heavy Slam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METALBURST]
+#Metal Burst
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[IRONDEFENSE]
+#Iron Defense
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METALSOUND]
+#Metal Sound
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYDROCANNON]
+#Hydro Cannon
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERSPOUT]
+#Water Spout
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYDROPUMP]
+#Hydro Pump
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRABHAMMER]
+#Crabhammer
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AQUATAIL]
+#Aqua Tail
+ContestType = CUTE
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MUDDYWATER]
+#Muddy Water
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SURF]
+#Surf
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DIVE]
+#Dive
+ContestType = BEAUTY
+ContestHearts = 1
+ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERFALL]
+#Waterfall
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BRINE]
+#Brine
+ContestType = SMART
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BUBBLEBEAM]
+#Bubble Beam
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OCTAZOOKA]
+#Octazooka
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERPULSE]
+#Water Pulse
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Plus2IfFirst
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AQUAJET]
+#Aqua Jet
+ContestType = BEAUTY
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next1
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BUBBLE]
+#Bubble
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_Next4
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERGUN]
+#Water Gun
+ContestType = CUTE
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CLAMP]
+#Clamp
+ContestType = TOUGH
+ContestHearts = 3
+ContestFunctionCode = Contest_Effect_Basic
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WHIRLPOOL]
+#Whirlpool
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AQUARING]
+#Aqua Ring
+ContestType = BEAUTY
+ContestHearts = 0
+ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAINDANCE]
+#Rain Dance
+ContestType = TOUGH
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERSPORT]
+#Water Sport
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WITHDRAW]
+#Withdraw
+ContestType = CUTE
+ContestHearts = 2
+ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
+ContestJam = 
+ContestFlags = 
+ContestDescription = 
