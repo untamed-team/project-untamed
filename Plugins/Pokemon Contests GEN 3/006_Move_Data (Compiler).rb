@@ -135,14 +135,28 @@ module Compiler
 				f.write("\#-------------------------------\r\n")
 				f.write("[#{move.id}]\r\n")
 				f.write("\##{move.real_name}\r\n")
-				if move.contest_type == nil then f.write("ContestType = NONE\r\n");
+				#if move.contest_type == nil then f.write("ContestType = NONE\r\n");
+				if move.contest_type == nil then f.write("ContestType = COOL\r\n");
 				else f.write("ContestType = #{move.contest_type}\r\n"); end
-				f.write("ContestHearts = #{move.contest_hearts}\r\n");
-				f.write("ContestJam = #{move.contest_jam}\r\n");
-				f.write("ContestFunctionCode = #{move.contest_function_code}\r\n");
+				
+				#f.write("ContestHearts = #{move.contest_hearts}\r\n");
+				if move.contest_hearts.nil? then f.write("ContestHearts = 3\r\n");
+				else f.write("ContestHearts = #{move.contest_hearts}\r\n"); end
+								
+				#f.write("ContestJam = #{move.contest_jam}\r\n");
+				if move.contest_jam.nil? then f.write("ContestJam = 0\r\n");
+				else f.write("ContestJam = #{move.contest_jam}\r\n"); end
+				
+				#f.write("ContestFunctionCode = #{move.contest_function_code}\r\n");
+				if move.contest_function_code.nil? then f.write("ContestFunctionCode = Contest_Effect_Basic\r\n");
+				else f.write("ContestFunctionCode = #{move.contest_function_code}\r\n"); end
+				
 				if move.contest_flags then f.write("ContestFlags = #{move.contest_flags.join(',')}\r\n");
 				else f.write("ContestFlags = \r\n"); end
-				f.write("ContestDescription = #{move.contest_description(true)}\r\n");
+				
+				#f.write("ContestDescription = #{move.contest_description(true)}\r\n");
+				if move.contest_description.nil? then f.write("ContestDescription = \r\n");
+				else f.write("ContestDescription = #{move.contest_description(true)}\r\n"); end
 			end
 		}
 		process_pbs_file_message_end

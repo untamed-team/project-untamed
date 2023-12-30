@@ -3,8 +3,8 @@
 #Megahorn
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -12,8 +12,8 @@ ContestDescription =
 #Attack Order
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -21,8 +21,26 @@ ContestDescription =
 #Bug Buzz
 ContestType = CUTE
 ContestHearts = 2
-ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp 
-ContestJam = 
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIRSTIMPRESSION]
+#First Impression
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POLLENPUFF]
+#Pollen Puff
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -30,8 +48,17 @@ ContestDescription =
 #Leech Life
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LUNGE]
+#Lunge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -39,8 +66,8 @@ ContestDescription =
 #X-Scissor
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -48,8 +75,17 @@ ContestDescription =
 #Signal Beam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKITTERSMACK]
+#Skitter Smack
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -57,8 +93,17 @@ ContestDescription =
 #U-turn
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEAMROLLER]
+#Steamroller
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -66,8 +111,8 @@ ContestDescription =
 #Bug Bite
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -75,8 +120,26 @@ ContestDescription =
 #Silver Wind
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FELLSTINGER]
+#Fell Stinger
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRUGGLEBUG]
+#Struggle Bug
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -84,8 +147,8 @@ ContestDescription =
 #Fury Cutter
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -93,8 +156,8 @@ ContestDescription =
 #Pin Missile
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -102,8 +165,17 @@ ContestDescription =
 #Twineedle
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[INFESTATION]
+#Infestation
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -111,8 +183,8 @@ ContestDescription =
 #Defend Order
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -120,8 +192,35 @@ ContestDescription =
 #Heal Order
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWDER]
+#Powder
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[QUIVERDANCE]
+#Quiver Dance
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAGEPOWDER]
+#Rage Powder
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -129,8 +228,17 @@ ContestDescription =
 #Spider Web
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STICKYWEB]
+#Sticky Web
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -138,8 +246,8 @@ ContestDescription =
 #String Shot
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -147,8 +255,53 @@ ContestDescription =
 #Tail Glow
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPERSPACEFURY]
+#Hyperspace Fury
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FOULPLAY]
+#Foul Play
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIERYWRATH]
+#Fiery Wrath
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DARKESTLARIAT]
+#Darkest Lariat
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NIGHTDAZE]
+#Night Daze
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -156,8 +309,8 @@ ContestDescription =
 #Crunch
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -165,8 +318,53 @@ ContestDescription =
 #Dark Pulse
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FALSESURRENDER]
+#False Surrender
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[JAWLOCK]
+#Jaw Lock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THROATCHOP]
+#Throat Chop
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WICKEDBLOW]
+#Wicked Blow
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LASHOUT]
+#Lash Out
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -174,8 +372,8 @@ ContestDescription =
 #Night Slash
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -183,8 +381,8 @@ ContestDescription =
 #Sucker Punch
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -192,8 +390,8 @@ ContestDescription =
 #Knock Off
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -201,8 +399,8 @@ ContestDescription =
 #Assurance
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -210,8 +408,17 @@ ContestDescription =
 #Bite
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BRUTALSWING]
+#Brutal Swing
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -219,8 +426,8 @@ ContestDescription =
 #Feint Attack
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -228,8 +435,17 @@ ContestDescription =
 #Thief
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SNARL]
+#Snarl
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -237,8 +453,8 @@ ContestDescription =
 #Payback
 ContestType = COOL
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -246,8 +462,8 @@ ContestDescription =
 #Pursuit
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -255,8 +471,8 @@ ContestDescription =
 #Beat Up
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -264,8 +480,17 @@ ContestDescription =
 #Fling
 ContestType = TOUGH
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERTRIP]
+#Power Trip
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -273,8 +498,8 @@ ContestDescription =
 #Punishment
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -282,8 +507,8 @@ ContestDescription =
 #Dark Void
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -291,8 +516,8 @@ ContestDescription =
 #Embargo
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -300,8 +525,8 @@ ContestDescription =
 #Fake Tears
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -309,8 +534,17 @@ ContestDescription =
 #Flatter
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HONECLAWS]
+#Hone Claws
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -318,8 +552,8 @@ ContestDescription =
 #Memento
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -327,8 +561,35 @@ ContestDescription =
 #Nasty Plot
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OBSTRUCT]
+#Obstruct
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PARTINGSHOT]
+#Parting Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[QUASH]
+#Quash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -336,8 +597,8 @@ ContestDescription =
 #Snatch
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -345,8 +606,8 @@ ContestDescription =
 #Switcheroo
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -354,8 +615,17 @@ ContestDescription =
 #Taunt
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TOPSYTURVY]
+#Topsy-Turvy
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -363,8 +633,26 @@ ContestDescription =
 #Torment
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ETERNABEAM]
+#Eternabeam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONENERGY]
+#Dragon Energy
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -372,8 +660,8 @@ ContestDescription =
 #Roar of Time
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -381,8 +669,8 @@ ContestDescription =
 #Draco Meteor
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -390,8 +678,26 @@ ContestDescription =
 #Outrage
 ContestType = COOL
 ContestHearts = 2
-ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow 
-ContestJam = 
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CLANGINGSCALES]
+#Clanging Scales
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COREENFORCER]
+#Core Enforcer
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -399,8 +705,17 @@ ContestDescription =
 #Dragon Rush
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DYNAMAXCANNON]
+#Dynamax Cannon
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -408,8 +723,17 @@ ContestDescription =
 #Spacial Rend
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONHAMMER]
+#Dragon Hammer
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -417,8 +741,8 @@ ContestDescription =
 #Dragon Pulse
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -426,8 +750,17 @@ ContestDescription =
 #Dragon Claw
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BREAKINGSWIPE]
+#Breaking Swipe
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -435,8 +768,35 @@ ContestDescription =
 #Dragon Breath
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONTAIL]
+#Dragon Tail
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONDARTS]
+#Dragon Darts
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DUALCHOP]
+#Dual Chop
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -444,8 +804,17 @@ ContestDescription =
 #Twister
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCALESHOT]
+#Scale Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -453,8 +822,17 @@ ContestDescription =
 #Dragon Rage
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CLANGOROUSSOUL]
+#Clangorous Soul
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -462,8 +840,17 @@ ContestDescription =
 #Dragon Dance
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BOLTSTRIKE]
+#Bolt Strike
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -471,8 +858,8 @@ ContestDescription =
 #Volt Tackle
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -480,8 +867,17 @@ ContestDescription =
 #Zap Cannon
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AURAWHEEL]
+#Aura Wheel
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -489,8 +885,26 @@ ContestDescription =
 #Thunder
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FUSIONBOLT]
+#Fusion Bolt
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PLASMAFISTS]
+#Plasma Fists
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -498,8 +912,26 @@ ContestDescription =
 #Thunderbolt
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WILDCHARGE]
+#Wild Charge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BOLTBEAK]
+#Bolt Beak
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -507,8 +939,35 @@ ContestDescription =
 #Discharge
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OVERDRIVE]
+#Overdrive
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDERCAGE]
+#Thunder Cage
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ZINGZAP]
+#Zing Zap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -516,8 +975,35 @@ ContestDescription =
 #Thunder Punch
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RISINGVOLTAGE]
+#Rising Voltage
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VOLTSWITCH]
+#Volt Switch
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PARABOLICCHARGE]
+#Parabolic Charge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -525,8 +1011,8 @@ ContestDescription =
 #Spark
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -534,8 +1020,8 @@ ContestDescription =
 #Thunder Fang
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -543,8 +1029,17 @@ ContestDescription =
 #Shock Wave
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ELECTROWEB]
+#Electroweb
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -552,8 +1047,8 @@ ContestDescription =
 #Charge Beam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -561,8 +1056,26 @@ ContestDescription =
 #Thunder Shock
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NUZZLE]
+#Nuzzle
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ELECTROBALL]
+#Electro Ball
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -570,8 +1083,44 @@ ContestDescription =
 #Charge
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EERIEIMPULSE]
+#Eerie Impulse
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ELECTRICTERRAIN]
+#Electric Terrain
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ELECTRIFY]
+#Electrify
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[IONDELUGE]
+#Ion Deluge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -579,8 +1128,17 @@ ContestDescription =
 #Magnet Rise
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGNETICFLUX]
+#Magnetic Flux
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -588,8 +1146,134 @@ ContestDescription =
 #Thunder Wave
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LIGHTOFRUIN]
+#Light of Ruin
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLEURCANNON]
+#Fleur Cannon
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MISTYEXPLOSION]
+#Misty Explosion
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MOONBLAST]
+#Moonblast
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PLAYROUGH]
+#Play Rough
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRANGESTEAM]
+#Strange Steam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DAZZLINGGLEAM]
+#Dazzling Gleam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIRITBREAK]
+#Spirit Break
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAININGKISS]
+#Draining Kiss
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DISARMINGVOICE]
+#Disarming Voice
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FAIRYWIND]
+#Fairy Wind
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NATURESMADNESS]
+#Nature's Madness
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AROMATICMIST]
+#Aromatic Mist
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BABYDOLLEYES]
+#Baby-Doll Eyes
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -597,8 +1281,71 @@ ContestDescription =
 #Charm
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRAFTYSHIELD]
+#Crafty Shield
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DECORATE]
+#Decorate
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FAIRYLOCK]
+#Fairy Lock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLORALHEALING]
+#Floral Healing
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLOWERSHIELD]
+#Flower Shield
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GEOMANCY]
+#Geomancy
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MISTYTERRAIN]
+#Misty Terrain
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -606,8 +1353,8 @@ ContestDescription =
 #Moonlight
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -615,8 +1362,8 @@ ContestDescription =
 #Sweet Kiss
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -624,8 +1371,17 @@ ContestDescription =
 #Focus Punch
 ContestType = TOUGH
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METEORASSAULT]
+#Meteor Assault
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -633,8 +1389,8 @@ ContestDescription =
 #High Jump Kick
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -642,8 +1398,8 @@ ContestDescription =
 #Close Combat
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -651,8 +1407,8 @@ ContestDescription =
 #Focus Blast
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -660,8 +1416,8 @@ ContestDescription =
 #Superpower
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -669,8 +1425,8 @@ ContestDescription =
 #Cross Chop
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -678,8 +1434,17 @@ ContestDescription =
 #Dynamic Punch
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLYINGPRESS]
+#Flying Press
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -687,8 +1452,8 @@ ContestDescription =
 #Hammer Arm
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -696,8 +1461,35 @@ ContestDescription =
 #Jump Kick
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SACREDSWORD]
+#Sacred Sword
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THUNDEROUSKICK]
+#Thunderous Kick
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SECRETSWORD]
+#Secret Sword
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -705,8 +1497,8 @@ ContestDescription =
 #Sky Uppercut
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -714,8 +1506,17 @@ ContestDescription =
 #Aura Sphere
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BODYPRESS]
+#Body Press
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -723,8 +1524,8 @@ ContestDescription =
 #Submission
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -732,8 +1533,8 @@ ContestDescription =
 #Brick Break
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -741,8 +1542,8 @@ ContestDescription =
 #Drain Punch
 ContestType = BEAUTY
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -750,8 +1551,8 @@ ContestDescription =
 #Vital Throw
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -759,8 +1560,26 @@ ContestDescription =
 #Wake-Up Slap
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LOWSWEEP]
+#Low Sweep
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CIRCLETHROW]
+#Circle Throw
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -768,8 +1587,8 @@ ContestDescription =
 #Force Palm
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -777,8 +1596,8 @@ ContestDescription =
 #Revenge
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -786,8 +1605,17 @@ ContestDescription =
 #Rolling Kick
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STORMTHROW]
+#Storm Throw
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -795,8 +1623,8 @@ ContestDescription =
 #Karate Chop
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -804,8 +1632,17 @@ ContestDescription =
 #Mach Punch
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERUPPUNCH]
+#Power-Up Punch
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -813,8 +1650,8 @@ ContestDescription =
 #Rock Smash
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -822,8 +1659,8 @@ ContestDescription =
 #Vacuum Wave
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -831,8 +1668,8 @@ ContestDescription =
 #Double Kick
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -840,8 +1677,8 @@ ContestDescription =
 #Arm Thrust
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -849,8 +1686,8 @@ ContestDescription =
 #Triple Kick
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -858,8 +1695,17 @@ ContestDescription =
 #Counter
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FINALGAMBIT]
+#Final Gambit
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -867,8 +1713,8 @@ ContestDescription =
 #Low Kick
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -876,8 +1722,8 @@ ContestDescription =
 #Reversal
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -885,8 +1731,8 @@ ContestDescription =
 #Seismic Toss
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -894,8 +1740,17 @@ ContestDescription =
 #Bulk Up
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COACHING]
+#Coaching
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -903,8 +1758,53 @@ ContestDescription =
 #Detect
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MATBLOCK]
+#Mat Block
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NORETREAT]
+#No Retreat
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OCTOLOCK]
+#Octolock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[QUICKGUARD]
+#Quick Guard
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VCREATE]
+#V-create
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -912,8 +1812,8 @@ ContestDescription =
 #Blast Burn
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -921,8 +1821,44 @@ ContestDescription =
 #Eruption
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MINDBLOWN]
+#Mind Blown
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHELLTRAP]
+#Shell Trap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BLUEFLARE]
+#Blue Flare
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BURNUP]
+#Burn Up
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -930,8 +1866,8 @@ ContestDescription =
 #Overheat
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -939,8 +1875,17 @@ ContestDescription =
 #Flare Blitz
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PYROBALL]
+#Pyro Ball
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -948,8 +1893,26 @@ ContestDescription =
 #Fire Blast
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FUSIONFLARE]
+#Fusion Flare
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[INFERNO]
+#Inferno
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -957,8 +1920,8 @@ ContestDescription =
 #Magma Storm
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -966,8 +1929,17 @@ ContestDescription =
 #Sacred Fire
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SEARINGSHOT]
+#Searing Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -975,8 +1947,8 @@ ContestDescription =
 #Heat Wave
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -984,8 +1956,8 @@ ContestDescription =
 #Flamethrower
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -993,8 +1965,35 @@ ContestDescription =
 #Blaze Kick
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIERYDANCE]
+#Fiery Dance
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIRELASH]
+#Fire Lash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FIREPLEDGE]
+#Fire Pledge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1002,8 +2001,8 @@ ContestDescription =
 #Lava Plume
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1011,8 +2010,35 @@ ContestDescription =
 #Fire Punch
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MYSTICALFIRE]
+#Mystical Fire
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BURNINGJEALOUSY]
+#Burning Jealousy
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAMEBURST]
+#Flame Burst
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1020,8 +2046,8 @@ ContestDescription =
 #Fire Fang
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1029,8 +2055,26 @@ ContestDescription =
 #Flame Wheel
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[INCINERATE]
+#Incinerate
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLAMECHARGE]
+#Flame Charge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1038,8 +2082,8 @@ ContestDescription =
 #Ember
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1047,8 +2091,17 @@ ContestDescription =
 #Fire Spin
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEATCRASH]
+#Heat Crash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1056,8 +2109,8 @@ ContestDescription =
 #Sunny Day
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1065,8 +2118,8 @@ ContestDescription =
 #Will-O-Wisp
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1074,8 +2127,8 @@ ContestDescription =
 #Sky Attack
 ContestType = COOL
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1083,8 +2136,26 @@ ContestDescription =
 #Brave Bird
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRAGONASCENT]
+#Dragon Ascent
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HURRICANE]
+#Hurricane
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1092,8 +2163,17 @@ ContestDescription =
 #Aeroblast
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BEAKBLAST]
+#Beak Blast
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1101,8 +2181,8 @@ ContestDescription =
 #Fly
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1110,8 +2190,8 @@ ContestDescription =
 #Bounce
 ContestType = CUTE
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1119,8 +2199,17 @@ ContestDescription =
 #Drill Peck
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OBLIVIONWING]
+#Oblivion Wing
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1128,8 +2217,8 @@ ContestDescription =
 #Air Slash
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1137,8 +2226,8 @@ ContestDescription =
 #Chatter
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1146,8 +2235,8 @@ ContestDescription =
 #Aerial Ace
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1155,8 +2244,8 @@ ContestDescription =
 #Air Cutter
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1164,8 +2253,17 @@ ContestDescription =
 #Pluck
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SKYDROP]
+#Sky Drop
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1173,8 +2271,26 @@ ContestDescription =
 #Wing Attack
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACROBATICS]
+#Acrobatics
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DUALWINGBEAT]
+#Dual Wingbeat
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1182,8 +2298,8 @@ ContestDescription =
 #Gust
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1191,8 +2307,8 @@ ContestDescription =
 #Peck
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1200,8 +2316,8 @@ ContestDescription =
 #Defog
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1209,8 +2325,8 @@ ContestDescription =
 #Feather Dance
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1218,8 +2334,8 @@ ContestDescription =
 #Mirror Move
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1227,8 +2343,8 @@ ContestDescription =
 #Roost
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1236,8 +2352,17 @@ ContestDescription =
 #Tailwind
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ASTRALBARRAGE]
+#Astral Barrage
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1245,8 +2370,53 @@ ContestDescription =
 #Shadow Force
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POLTERGEIST]
+#Poltergeist
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MOONGEISTBEAM]
+#Moongeist Beam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PHANTOMFORCE]
+#Phantom Force
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPECTRALTHIEF]
+#Spectral Thief
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHADOWBONE]
+#Shadow Bone
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1254,8 +2424,17 @@ ContestDescription =
 #Shadow Ball
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIRITSHACKLE]
+#Spirit Shackle
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1263,8 +2442,17 @@ ContestDescription =
 #Shadow Claw
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEX]
+#Hex
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1272,8 +2460,8 @@ ContestDescription =
 #Ominous Wind
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1281,8 +2469,8 @@ ContestDescription =
 #Shadow Punch
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1290,8 +2478,8 @@ ContestDescription =
 #Shadow Sneak
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1299,8 +2487,8 @@ ContestDescription =
 #Astonish
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1308,8 +2496,8 @@ ContestDescription =
 #Lick
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1317,8 +2505,8 @@ ContestDescription =
 #Night Shade
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1326,8 +2514,8 @@ ContestDescription =
 #Confuse Ray
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1335,8 +2523,8 @@ ContestDescription =
 #Curse
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1344,8 +2532,8 @@ ContestDescription =
 #Destiny Bond
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1353,8 +2541,8 @@ ContestDescription =
 #Grudge
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1362,8 +2550,8 @@ ContestDescription =
 #Nightmare
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1371,8 +2559,17 @@ ContestDescription =
 #Spite
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRICKORTREAT]
+#Trick-or-Treat
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1380,8 +2577,8 @@ ContestDescription =
 #Frenzy Plant
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1389,8 +2586,17 @@ ContestDescription =
 #Leaf Storm
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SOLARBLADE]
+#Solar Blade
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1398,8 +2604,8 @@ ContestDescription =
 #Petal Dance
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1407,8 +2613,8 @@ ContestDescription =
 #Power Whip
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1416,8 +2622,8 @@ ContestDescription =
 #Seed Flare
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1425,8 +2631,8 @@ ContestDescription =
 #Solar Beam
 ContestType = COOL
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1434,8 +2640,8 @@ ContestDescription =
 #Wood Hammer
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1443,8 +2649,8 @@ ContestDescription =
 #Energy Ball
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1452,8 +2658,53 @@ ContestDescription =
 #Leaf Blade
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PETALBLIZZARD]
+#Petal Blizzard
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[APPLEACID]
+#Apple Acid
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRUMBEATING]
+#Drum Beating
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRASSPLEDGE]
+#Grass Pledge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRAVAPPLE]
+#Grav Apple
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1461,8 +2712,8 @@ ContestDescription =
 #Seed Bomb
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1470,8 +2721,44 @@ ContestDescription =
 #Giga Drain
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HORNLEECH]
+#Horn Leech
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRASSYGLIDE]
+#Grassy Glide
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TROPKICK]
+#Trop Kick
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEAFTORNADO]
+#Leaf Tornado
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1479,8 +2766,8 @@ ContestDescription =
 #Magical Leaf
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1488,11 +2775,8 @@ ContestDescription =
 #Needle Arm
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
-ContestFlags = 
-ContestDescription = 
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1500,8 +2784,8 @@ ContestDescription =
 #Razor Leaf
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1509,8 +2793,26 @@ ContestDescription =
 #Vine Whip
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BRANCHPOKE]
+#Branch Poke
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LEAFAGE]
+#Leafage
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1518,8 +2820,17 @@ ContestDescription =
 #Mega Drain
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SNAPTRAP]
+#Snap Trap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1527,8 +2838,8 @@ ContestDescription =
 #Bullet Seed
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1536,8 +2847,8 @@ ContestDescription =
 #Absorb
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1545,8 +2856,8 @@ ContestDescription =
 #Grass Knot
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1554,8 +2865,17 @@ ContestDescription =
 #Aromatherapy
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COTTONGUARD]
+#Cotton Guard
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1563,8 +2883,17 @@ ContestDescription =
 #Cotton Spore
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FORESTSCURSE]
+#Forest's Curse
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1572,8 +2901,17 @@ ContestDescription =
 #Grass Whistle
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GRASSYTERRAIN]
+#Grassy Terrain
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1581,8 +2919,17 @@ ContestDescription =
 #Ingrain
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[JUNGLEHEALING]
+#Jungle Healing
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1590,8 +2937,8 @@ ContestDescription =
 #Leech Seed
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1599,8 +2946,17 @@ ContestDescription =
 #Sleep Powder
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPIKYSHIELD]
+#Spiky Shield
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1608,8 +2964,17 @@ ContestDescription =
 #Spore
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STRENGTHSAP]
+#Strength Sap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1617,8 +2982,8 @@ ContestDescription =
 #Stun Spore
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1626,8 +2991,8 @@ ContestDescription =
 #Synthesis
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1635,8 +3000,17 @@ ContestDescription =
 #Worry Seed
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PRECIPICEBLADES]
+#Precipice Blades
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1644,8 +3018,17 @@ ContestDescription =
 #Earthquake
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HIGHHORSEPOWER]
+#High Horsepower
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1653,8 +3036,35 @@ ContestDescription =
 #Earth Power
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LANDSWRATH]
+#Land's Wrath
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THOUSANDARROWS]
+#Thousand Arrows
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THOUSANDWAVES]
+#Thousand Waves
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1662,8 +3072,35 @@ ContestDescription =
 #Dig
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DRILLRUN]
+#Drill Run
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STOMPINGTANTRUM]
+#Stomping Tantrum
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCORCHINGSANDS]
+#Scorching Sands
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1671,8 +3108,8 @@ ContestDescription =
 #Bone Club
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1680,8 +3117,17 @@ ContestDescription =
 #Mud Bomb
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BULLDOZE]
+#Bulldoze
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1689,8 +3135,8 @@ ContestDescription =
 #Mud Shot
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1698,8 +3144,8 @@ ContestDescription =
 #Bonemerang
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1707,8 +3153,8 @@ ContestDescription =
 #Sand Tomb
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1716,8 +3162,8 @@ ContestDescription =
 #Bone Rush
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1725,8 +3171,8 @@ ContestDescription =
 #Mud-Slap
 ContestType = CUTE
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1734,8 +3180,8 @@ ContestDescription =
 #Fissure
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1743,8 +3189,8 @@ ContestDescription =
 #Magnitude
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1752,8 +3198,17 @@ ContestDescription =
 #Mud Sport
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROTOTILLER]
+#Rototiller
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1761,8 +3216,17 @@ ContestDescription =
 #Sand Attack
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHOREUP]
+#Shore Up
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1770,8 +3234,35 @@ ContestDescription =
 #Spikes
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FREEZESHOCK]
+#Freeze Shock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEBURN]
+#Ice Burn
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GLACIALLANCE]
+#Glacial Lance
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1779,8 +3270,17 @@ ContestDescription =
 #Blizzard
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICEHAMMER]
+#Ice Hammer
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1788,8 +3288,17 @@ ContestDescription =
 #Ice Beam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ICICLECRASH]
+#Icicle Crash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1797,8 +3306,17 @@ ContestDescription =
 #Ice Punch
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FREEZEDRY]
+#Freeze-Dry
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1806,8 +3324,17 @@ ContestDescription =
 #Aurora Beam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GLACIATE]
+#Glaciate
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1815,8 +3342,8 @@ ContestDescription =
 #Ice Fang
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1824,8 +3351,17 @@ ContestDescription =
 #Avalanche
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FROSTBREATH]
+#Frost Breath
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1833,8 +3369,8 @@ ContestDescription =
 #Icy Wind
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1842,8 +3378,8 @@ ContestDescription =
 #Ice Shard
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1851,8 +3387,8 @@ ContestDescription =
 #Powder Snow
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1860,8 +3396,8 @@ ContestDescription =
 #Ice Ball
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1869,8 +3405,17 @@ ContestDescription =
 #Icicle Spear
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TRIPLEAXEL]
+#Triple Axel
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1878,8 +3423,17 @@ ContestDescription =
 #Sheer Cold
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AURORAVEIL]
+#Aurora Veil
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1887,8 +3441,8 @@ ContestDescription =
 #Hail
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1896,8 +3450,8 @@ ContestDescription =
 #Haze
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1905,8 +3459,8 @@ ContestDescription =
 #Mist
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1914,8 +3468,8 @@ ContestDescription =
 #Explosion
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1923,8 +3477,8 @@ ContestDescription =
 #Self-Destruct
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1932,8 +3486,8 @@ ContestDescription =
 #Giga Impact
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1941,8 +3495,17 @@ ContestDescription =
 #Hyper Beam
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BOOMBURST]
+#Boomburst
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1950,8 +3513,8 @@ ContestDescription =
 #Last Resort
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1959,8 +3522,8 @@ ContestDescription =
 #Skull Bash
 ContestType = TOUGH
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1968,8 +3531,17 @@ ContestDescription =
 #Double-Edge
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEADCHARGE]
+#Head Charge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1977,8 +3549,26 @@ ContestDescription =
 #Mega Kick
 ContestType = COOL
 ContestHearts = 2
-ContestFunctionCode = Contest_Effect_Plus2IfLast 
-ContestJam = 
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Plus2IfLast
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MULTIATTACK]
+#Multi-Attack
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TECHNOBLAST]
+#Techno Blast
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1986,8 +3576,8 @@ ContestDescription =
 #Thrash
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -1995,8 +3585,8 @@ ContestDescription =
 #Egg Bomb
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2004,8 +3594,8 @@ ContestDescription =
 #Judgment
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2013,8 +3603,17 @@ ContestDescription =
 #Hyper Voice
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REVELATIONDANCE]
+#Revelation Dance
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2022,8 +3621,8 @@ ContestDescription =
 #Rock Climb
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2031,8 +3630,8 @@ ContestDescription =
 #Take Down
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2040,8 +3639,8 @@ ContestDescription =
 #Uproar
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2049,8 +3648,8 @@ ContestDescription =
 #Body Slam
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2058,8 +3657,8 @@ ContestDescription =
 #Extreme Speed
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2067,8 +3666,8 @@ ContestDescription =
 #Hyper Fang
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2076,8 +3675,8 @@ ContestDescription =
 #Mega Punch
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2085,8 +3684,8 @@ ContestDescription =
 #Razor Wind
 ContestType = COOL
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2094,8 +3693,8 @@ ContestDescription =
 #Slam
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2103,8 +3702,8 @@ ContestDescription =
 #Strength
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2112,8 +3711,8 @@ ContestDescription =
 #Tri Attack
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2121,8 +3720,26 @@ ContestDescription =
 #Crush Claw
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RELICSONG]
+#Relic Song
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHIPAWAY]
+#Chip Away
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2130,8 +3747,8 @@ ContestDescription =
 #Dizzy Punch
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2139,8 +3756,8 @@ ContestDescription =
 #Facade
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2148,8 +3765,17 @@ ContestDescription =
 #Headbutt
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RETALIATE]
+#Retaliate
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2157,8 +3783,8 @@ ContestDescription =
 #Secret Power
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2166,8 +3792,8 @@ ContestDescription =
 #Slash
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2175,8 +3801,8 @@ ContestDescription =
 #Smelling Salts
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2184,8 +3810,8 @@ ContestDescription =
 #Horn Attack
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2193,8 +3819,8 @@ ContestDescription =
 #Stomp
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2202,8 +3828,8 @@ ContestDescription =
 #Covet
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2211,8 +3837,17 @@ ContestDescription =
 #Hidden Power
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ROUND]
+#Round
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2220,8 +3855,8 @@ ContestDescription =
 #Swift
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2229,8 +3864,8 @@ ContestDescription =
 #Vise Grip
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2238,8 +3873,8 @@ ContestDescription =
 #Cut
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2247,8 +3882,8 @@ ContestDescription =
 #Rapid Spin
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2256,8 +3891,8 @@ ContestDescription =
 #Snore
 ContestType = CUTE
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2265,8 +3900,17 @@ ContestDescription =
 #Struggle
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TERRAINPULSE]
+#Terrain Pulse
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2274,8 +3918,17 @@ ContestDescription =
 #Weather Ball
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ECHOEDVOICE]
+#Echoed Voice
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2283,8 +3936,8 @@ ContestDescription =
 #Fake Out
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2292,8 +3945,17 @@ ContestDescription =
 #False Swipe
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HOLDBACK]
+#Hold Back
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2301,8 +3963,8 @@ ContestDescription =
 #Pay Day
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2310,8 +3972,8 @@ ContestDescription =
 #Pound
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2319,8 +3981,8 @@ ContestDescription =
 #Quick Attack
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2328,8 +3990,8 @@ ContestDescription =
 #Scratch
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2337,8 +3999,8 @@ ContestDescription =
 #Tackle
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2346,8 +4008,8 @@ ContestDescription =
 #Double Hit
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2355,8 +4017,17 @@ ContestDescription =
 #Feint
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TAILSLAP]
+#Tail Slap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2364,8 +4035,8 @@ ContestDescription =
 #Rage
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2373,8 +4044,8 @@ ContestDescription =
 #Spike Cannon
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2382,8 +4053,8 @@ ContestDescription =
 #Comet Punch
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2391,8 +4062,8 @@ ContestDescription =
 #Fury Swipes
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2400,8 +4071,8 @@ ContestDescription =
 #Barrage
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2409,8 +4080,8 @@ ContestDescription =
 #Bind
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2418,8 +4089,8 @@ ContestDescription =
 #Double Slap
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2427,8 +4098,8 @@ ContestDescription =
 #Fury Attack
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2436,8 +4107,8 @@ ContestDescription =
 #Wrap
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2445,8 +4116,8 @@ ContestDescription =
 #Constrict
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2454,8 +4125,8 @@ ContestDescription =
 #Bide
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2463,8 +4134,8 @@ ContestDescription =
 #Crush Grip
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2472,8 +4143,8 @@ ContestDescription =
 #Endeavor
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2481,8 +4152,8 @@ ContestDescription =
 #Flail
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2490,8 +4161,8 @@ ContestDescription =
 #Frustration
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2499,8 +4170,8 @@ ContestDescription =
 #Guillotine
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2508,8 +4179,8 @@ ContestDescription =
 #Horn Drill
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2517,8 +4188,8 @@ ContestDescription =
 #Natural Gift
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2526,8 +4197,8 @@ ContestDescription =
 #Present
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2535,8 +4206,8 @@ ContestDescription =
 #Return
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2544,8 +4215,8 @@ ContestDescription =
 #Sonic Boom
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2553,8 +4224,8 @@ ContestDescription =
 #Spit Up
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2562,8 +4233,8 @@ ContestDescription =
 #Super Fang
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2571,8 +4242,8 @@ ContestDescription =
 #Trump Card
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PointsEqualToOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2580,8 +4251,8 @@ ContestDescription =
 #Wring Out
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2589,8 +4260,17 @@ ContestDescription =
 #Acupressure
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AFTERYOU]
+#After You
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2598,8 +4278,8 @@ ContestDescription =
 #Assist
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2607,8 +4287,8 @@ ContestDescription =
 #Attract
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2616,8 +4296,8 @@ ContestDescription =
 #Baton Pass
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2625,11 +4305,17 @@ ContestDescription =
 #Belly Drum
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
-ContestJam = 
+#-------------------------------
+[BESTOW]
+#Bestow
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2637,8 +4323,8 @@ ContestDescription =
 #Block
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2646,8 +4332,8 @@ ContestDescription =
 #Camouflage
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2655,8 +4341,26 @@ ContestDescription =
 #Captivate
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CELEBRATE]
+#Celebrate
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CONFIDE]
+#Confide
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2664,8 +4368,8 @@ ContestDescription =
 #Conversion
 ContestType = BEAUTY
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2673,8 +4377,8 @@ ContestDescription =
 #Conversion 2
 ContestType = BEAUTY
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2682,8 +4386,17 @@ ContestDescription =
 #Copycat
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COURTCHANGE]
+#Court Change
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2691,8 +4404,8 @@ ContestDescription =
 #Defense Curl
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2700,8 +4413,8 @@ ContestDescription =
 #Disable
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2709,8 +4422,8 @@ ContestDescription =
 #Double Team
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2718,8 +4431,8 @@ ContestDescription =
 #Encore
 ContestType = CUTE
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2727,8 +4440,17 @@ ContestDescription =
 #Endure
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ENTRAINMENT]
+#Entrainment
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2736,8 +4458,8 @@ ContestDescription =
 #Flash
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2745,8 +4467,8 @@ ContestDescription =
 #Focus Energy
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2754,8 +4476,8 @@ ContestDescription =
 #Follow Me
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2763,8 +4485,8 @@ ContestDescription =
 #Foresight
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2772,8 +4494,8 @@ ContestDescription =
 #Glare
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2781,8 +4503,8 @@ ContestDescription =
 #Growl
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2790,8 +4512,17 @@ ContestDescription =
 #Growth
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HAPPYHOUR]
+#Happy Hour
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2799,8 +4530,8 @@ ContestDescription =
 #Harden
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2808,8 +4539,8 @@ ContestDescription =
 #Heal Bell
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2817,8 +4548,17 @@ ContestDescription =
 #Helping Hand
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HOLDHANDS]
+#Hold Hands
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2826,8 +4566,17 @@ ContestDescription =
 #Howl
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LASERFOCUS]
+#Laser Focus
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2835,8 +4584,17 @@ ContestDescription =
 #Leer
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LOCKON]
+#Lock-On
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2844,8 +4602,8 @@ ContestDescription =
 #Lovely Kiss
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2853,8 +4611,8 @@ ContestDescription =
 #Lucky Chant
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2862,8 +4620,8 @@ ContestDescription =
 #Me First
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2871,8 +4629,8 @@ ContestDescription =
 #Mean Look
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2880,8 +4638,8 @@ ContestDescription =
 #Metronome
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2889,8 +4647,8 @@ ContestDescription =
 #Milk Drink
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2898,8 +4656,8 @@ ContestDescription =
 #Mimic
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2907,8 +4665,8 @@ ContestDescription =
 #Mind Reader
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2916,8 +4674,8 @@ ContestDescription =
 #Minimize
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2925,8 +4683,8 @@ ContestDescription =
 #Morning Sun
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2934,8 +4692,17 @@ ContestDescription =
 #Nature Power
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[NOBLEROAR]
+#Noble Roar
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2943,8 +4710,8 @@ ContestDescription =
 #Odor Sleuth
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2952,8 +4719,8 @@ ContestDescription =
 #Pain Split
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2961,8 +4728,17 @@ ContestDescription =
 #Perish Song
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PLAYNICE]
+#Play Nice
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2970,8 +4746,8 @@ ContestDescription =
 #Protect
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2979,8 +4755,8 @@ ContestDescription =
 #Psych Up
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2988,8 +4764,8 @@ ContestDescription =
 #Recover
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -2997,8 +4773,17 @@ ContestDescription =
 #Recycle
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REFLECTTYPE]
+#Reflect Type
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3006,8 +4791,8 @@ ContestDescription =
 #Refresh
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3015,8 +4800,8 @@ ContestDescription =
 #Roar
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3024,8 +4809,8 @@ ContestDescription =
 #Safeguard
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3033,8 +4818,8 @@ ContestDescription =
 #Scary Face
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3042,8 +4827,8 @@ ContestDescription =
 #Screech
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3051,8 +4836,26 @@ ContestDescription =
 #Sharpen
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHELLSMASH]
+#Shell Smash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SIMPLEBEAM]
+#Simple Beam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3060,8 +4863,8 @@ ContestDescription =
 #Sing
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3069,8 +4872,8 @@ ContestDescription =
 #Sketch
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3078,8 +4881,8 @@ ContestDescription =
 #Slack Off
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3087,8 +4890,8 @@ ContestDescription =
 #Sleep Talk
 ContestType = CUTE
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3096,8 +4899,8 @@ ContestDescription =
 #Smokescreen
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3105,8 +4908,8 @@ ContestDescription =
 #Soft-Boiled
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3114,8 +4917,17 @@ ContestDescription =
 #Splash
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPOTLIGHT]
+#Spotlight
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3123,8 +4935,8 @@ ContestDescription =
 #Stockpile
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3132,8 +4944,8 @@ ContestDescription =
 #Substitute
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3141,8 +4953,8 @@ ContestDescription =
 #Supersonic
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3150,8 +4962,8 @@ ContestDescription =
 #Swagger
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3159,8 +4971,8 @@ ContestDescription =
 #Swallow
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3168,8 +4980,8 @@ ContestDescription =
 #Sweet Scent
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3177,8 +4989,8 @@ ContestDescription =
 #Swords Dance
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3186,8 +4998,26 @@ ContestDescription =
 #Tail Whip
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TEARFULLOOK]
+#Tearful Look
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TEATIME]
+#Teatime
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3195,8 +5025,8 @@ ContestDescription =
 #Teeter Dance
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3204,8 +5034,8 @@ ContestDescription =
 #Tickle
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3213,8 +5043,8 @@ ContestDescription =
 #Transform
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3222,8 +5052,17 @@ ContestDescription =
 #Whirlwind
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus15IfAllChoseSameJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WISH]
+#Wish
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3231,8 +5070,8 @@ ContestDescription =
 #Work Up
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3240,8 +5079,17 @@ ContestDescription =
 #Yawn
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BELCH]
+#Belch
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3249,8 +5097,26 @@ ContestDescription =
 #Gunk Shot
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLUDGEWAVE]
+#Sludge Wave
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHELLSIDEARM]
+#Shell Side Arm
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3258,8 +5124,8 @@ ContestDescription =
 #Sludge Bomb
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3267,8 +5133,8 @@ ContestDescription =
 #Poison Jab
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3276,8 +5142,8 @@ ContestDescription =
 #Cross Poison
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3285,8 +5151,26 @@ ContestDescription =
 #Sludge
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VENOSHOCK]
+#Venoshock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CLEARSMOG]
+#Clear Smog
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3294,8 +5178,8 @@ ContestDescription =
 #Poison Fang
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3303,8 +5187,8 @@ ContestDescription =
 #Poison Tail
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3312,8 +5196,17 @@ ContestDescription =
 #Acid
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACIDSPRAY]
+#Acid Spray
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3321,8 +5214,8 @@ ContestDescription =
 #Smog
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3330,8 +5223,8 @@ ContestDescription =
 #Poison Sting
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3339,8 +5232,35 @@ ContestDescription =
 #Acid Armor
 ContestType = TOUGH
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BANEFULBUNKER]
+#Baneful Bunker
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[COIL]
+#Coil
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CORROSIVEGAS]
+#Corrosive Gas
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3348,8 +5268,8 @@ ContestDescription =
 #Gastro Acid
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3357,8 +5277,8 @@ ContestDescription =
 #Poison Gas
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3366,8 +5286,17 @@ ContestDescription =
 #Poison Powder
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PURIFY]
+#Purify
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3375,8 +5304,8 @@ ContestDescription =
 #Toxic
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3384,8 +5313,35 @@ ContestDescription =
 #Toxic Spikes
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TOXICTHREAD]
+#Toxic Thread
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[VENOMDRENCH]
+#Venom Drench
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PRISMATICLASER]
+#Prismatic Laser
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3393,8 +5349,8 @@ ContestDescription =
 #Psycho Boost
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3402,8 +5358,17 @@ ContestDescription =
 #Future Sight
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SYNCHRONOISE]
+#Synchronoise
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3411,8 +5376,35 @@ ContestDescription =
 #Dream Eater
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PHOTONGEYSER]
+#Photon Geyser
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYSTRIKE]
+#Psystrike
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FREEZINGGLARE]
+#Freezing Glare
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3420,8 +5412,35 @@ ContestDescription =
 #Psychic
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHICFANGS]
+#Psychic Fangs
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EERIESPELL]
+#Eerie Spell
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EXPANDINGFORCE]
+#Expanding Force
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3429,8 +5448,26 @@ ContestDescription =
 #Extrasensory
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HYPERSPACEHOLE]
+#Hyperspace Hole
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYSHOCK]
+#Psyshock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3438,8 +5475,8 @@ ContestDescription =
 #Zen Headbutt
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3447,8 +5484,8 @@ ContestDescription =
 #Luster Purge
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3456,8 +5493,8 @@ ContestDescription =
 #Mist Ball
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3465,8 +5502,8 @@ ContestDescription =
 #Psycho Cut
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3474,8 +5511,17 @@ ContestDescription =
 #Psybeam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEARTSTAMP]
+#Heart Stamp
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3483,8 +5529,17 @@ ContestDescription =
 #Confusion
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STOREDPOWER]
+#Stored Power
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3492,8 +5547,8 @@ ContestDescription =
 #Mirror Coat
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3501,8 +5556,8 @@ ContestDescription =
 #Psywave
 ContestType = SMART
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3510,8 +5565,17 @@ ContestDescription =
 #Agility
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ALLYSWITCH]
+#Ally Switch
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3519,8 +5583,8 @@ ContestDescription =
 #Amnesia
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3528,8 +5592,8 @@ ContestDescription =
 #Barrier
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3537,8 +5601,8 @@ ContestDescription =
 #Calm Mind
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3546,8 +5610,8 @@ ContestDescription =
 #Cosmic Power
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3555,8 +5619,17 @@ ContestDescription =
 #Gravity
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GUARDSPLIT]
+#Guard Split
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3564,8 +5637,8 @@ ContestDescription =
 #Guard Swap
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3573,8 +5646,17 @@ ContestDescription =
 #Heal Block
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEALPULSE]
+#Heal Pulse
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3582,8 +5664,8 @@ ContestDescription =
 #Healing Wish
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3591,8 +5673,8 @@ ContestDescription =
 #Heart Swap
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3600,8 +5682,8 @@ ContestDescription =
 #Hypnosis
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageDownSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3609,8 +5691,17 @@ ContestDescription =
 #Imprison
 ContestType = SMART
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[INSTRUCT]
+#Instruct
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3618,8 +5709,8 @@ ContestDescription =
 #Kinesis
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3627,8 +5718,8 @@ ContestDescription =
 #Light Screen
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3636,8 +5727,8 @@ ContestDescription =
 #Lunar Dance
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3645,8 +5736,26 @@ ContestDescription =
 #Magic Coat
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGICPOWDER]
+#Magic Powder
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MAGICROOM]
+#Magic Room
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3654,8 +5763,8 @@ ContestDescription =
 #Meditate
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreNextTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3663,8 +5772,17 @@ ContestDescription =
 #Miracle Eye
 ContestType = CUTE
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3If2VoltageInARow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[POWERSPLIT]
+#Power Split
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3672,8 +5790,8 @@ ContestDescription =
 #Power Swap
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3681,8 +5799,17 @@ ContestDescription =
 #Power Trick
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCHICTERRAIN]
+#Psychic Terrain
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3690,8 +5817,8 @@ ContestDescription =
 #Psycho Shift
 ContestType = COOL
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RaiseScoreIfVoltageLow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3699,8 +5826,8 @@ ContestDescription =
 #Reflect
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3708,8 +5835,8 @@ ContestDescription =
 #Rest
 ContestType = CUTE
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3717,8 +5844,8 @@ ContestDescription =
 #Role Play
 ContestType = CUTE
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfGetLowestScore
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3726,8 +5853,26 @@ ContestDescription =
 #Skill Swap
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPEEDSWAP]
+#Speed Swap
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TELEKINESIS]
+#Telekinesis
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3735,8 +5880,8 @@ ContestDescription =
 #Teleport
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3744,8 +5889,8 @@ ContestDescription =
 #Trick
 ContestType = SMART
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_StealVoltagePreviousPokemon
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3753,8 +5898,26 @@ ContestDescription =
 #Trick Room
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_RandomOrder
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WONDERROOM]
+#Wonder Room
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HEADSMASH]
+#Head Smash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3762,8 +5925,26 @@ ContestDescription =
 #Rock Wrecker
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[METEORBEAM]
+#Meteor Beam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DIAMONDSTORM]
+#Diamond Storm
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3771,8 +5952,8 @@ ContestDescription =
 #Stone Edge
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3780,8 +5961,8 @@ ContestDescription =
 #Power Gem
 ContestType = BEAUTY
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3789,8 +5970,8 @@ ContestDescription =
 #Rock Slide
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3798,8 +5979,8 @@ ContestDescription =
 #Ancient Power
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3807,8 +5988,8 @@ ContestDescription =
 #Rock Tomb
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3816,8 +5997,26 @@ ContestDescription =
 #Rock Throw
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SMACKDOWN]
+#Smack Down
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ACCELEROCK]
+#Accelerock
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3825,8 +6024,8 @@ ContestDescription =
 #Rollout
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3834,8 +6033,8 @@ ContestDescription =
 #Rock Blast
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_CanPerformMoveTwiceInARow
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3843,8 +6042,8 @@ ContestDescription =
 #Rock Polish
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3852,8 +6051,8 @@ ContestDescription =
 #Sandstorm
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3861,8 +6060,26 @@ ContestDescription =
 #Stealth Rock
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TARSHOT]
+#Tar Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WIDEGUARD]
+#Wide Guard
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3870,8 +6087,44 @@ ContestDescription =
 #Doom Desire
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEELBEAM]
+#Steel Beam
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEELROLLER]
+#Steel Roller
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BEHEMOTHBASH]
+#Behemoth Bash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BEHEMOTHBLADE]
+#Behemoth Blade
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3879,8 +6132,17 @@ ContestDescription =
 #Iron Tail
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUNSTEELSTRIKE]
+#Sunsteel Strike
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3888,8 +6150,17 @@ ContestDescription =
 #Meteor Mash
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ANCHORSHOT]
+#Anchor Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3897,8 +6168,8 @@ ContestDescription =
 #Flash Cannon
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3906,8 +6177,17 @@ ContestDescription =
 #Iron Head
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SMARTSTRIKE]
+#Smart Strike
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3915,8 +6195,17 @@ ContestDescription =
 #Steel Wing
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[DOUBLEIRONBASH]
+#Double Iron Bash
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3924,8 +6213,8 @@ ContestDescription =
 #Mirror Shot
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3933,8 +6222,17 @@ ContestDescription =
 #Magnet Bomb
 ContestType = COOL
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GEARGRIND]
+#Gear Grind
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3942,8 +6240,8 @@ ContestDescription =
 #Metal Claw
 ContestType = COOL
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3951,8 +6249,8 @@ ContestDescription =
 #Bullet Punch
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3960,8 +6258,8 @@ ContestDescription =
 #Gyro Ball
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3969,8 +6267,8 @@ ContestDescription =
 #Heavy Slam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3978,8 +6276,26 @@ ContestDescription =
 #Metal Burst
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_DoubleScoreIfFinalTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[AUTOTOMIZE]
+#Autotomize
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GEARUP]
+#Gear Up
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3987,8 +6303,17 @@ ContestDescription =
 #Iron Defense
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[KINGSSHIELD]
+#King's Shield
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -3996,8 +6321,17 @@ ContestDescription =
 #Metal Sound
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_LowerVoltageOfAllJudges1
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SHIFTGEAR]
+#Shift Gear
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4005,8 +6339,8 @@ ContestDescription =
 #Hydro Cannon
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4014,8 +6348,8 @@ ContestDescription =
 #Water Spout
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4023,8 +6357,26 @@ ContestDescription =
 #Hydro Pump
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ORIGINPULSE]
+#Origin Pulse
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEAMERUPTION]
+#Steam Eruption
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4032,8 +6384,8 @@ ContestDescription =
 #Crabhammer
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4041,8 +6393,8 @@ ContestDescription =
 #Aqua Tail
 ContestType = CUTE
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4050,8 +6402,17 @@ ContestDescription =
 #Muddy Water
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfLast
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SPARKLINGARIA]
+#Sparkling Aria
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4059,8 +6420,26 @@ ContestDescription =
 #Surf
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FISHIOUSREND]
+#Fishious Rend
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LIQUIDATION]
+#Liquidation
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4068,8 +6447,35 @@ ContestDescription =
 #Dive
 ContestType = BEAUTY
 ContestHearts = 1
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus3IfNoPokemonChoseJudge
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCALD]
+#Scald
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SNIPESHOT]
+#Snipe Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERPLEDGE]
+#Water Pledge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4077,8 +6483,17 @@ ContestDescription =
 #Waterfall
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[RAZORSHELL]
+#Razor Shell
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4086,8 +6501,8 @@ ContestDescription =
 #Brine
 ContestType = SMART
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4095,8 +6510,8 @@ ContestDescription =
 #Bubble Beam
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4104,8 +6519,17 @@ ContestDescription =
 #Octazooka
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfVoltageUp
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FLIPTURN]
+#Flip Turn
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4113,8 +6537,8 @@ ContestDescription =
 #Water Pulse
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Plus2IfFirst
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4122,8 +6546,8 @@ ContestDescription =
 #Aqua Jet
 ContestType = BEAUTY
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next1
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4131,8 +6555,8 @@ ContestDescription =
 #Bubble
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Next4
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4140,8 +6564,8 @@ ContestDescription =
 #Water Gun
 ContestType = CUTE
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4149,8 +6573,8 @@ ContestDescription =
 #Clamp
 ContestType = TOUGH
 ContestHearts = 3
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4158,8 +6582,26 @@ ContestDescription =
 #Whirlpool
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_HigherScoreTheLaterPerforms
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SURGINGSTRIKES]
+#Surging Strikes
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[WATERSHURIKEN]
+#Water Shuriken
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4167,8 +6609,17 @@ ContestDescription =
 #Aqua Ring
 ContestType = BEAUTY
 ContestHearts = 0
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_IncreasedVoltageAddedToScore
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[LIFEDEW]
+#Life Dew
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4176,8 +6627,17 @@ ContestDescription =
 #Rain Dance
 ContestType = TOUGH
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SOAK]
+#Soak
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4185,8 +6645,8 @@ ContestDescription =
 #Water Sport
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
 ContestFlags = 
 ContestDescription = 
 #-------------------------------
@@ -4194,7 +6654,331 @@ ContestDescription =
 #Withdraw
 ContestType = CUTE
 ContestHearts = 2
+ContestJam = 0
 ContestFunctionCode = Contest_Effect_PreventVoltageUpSameTurn
-ContestJam = 
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SLIMESHOT]
+#Slime Shot
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[ZEALOUSDANCE]
+#Zealous Dance
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYSONIC]
+#Psysonic
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PSYCRUSH]
+#Psycrush
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[KINETICREND]
+#Kinetic Rend
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[JOLTKICK]
+#Jolt Kick
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FROSTKICK]
+#Frost Kick
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCOURINGWINDS]
+#Scouring Winds
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STUFFCHEEKS]
+#Stuff Cheeks
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[HAUNT]
+#Haunt
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[BITINGCOLD]
+#Biting Cold
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CHILLINGWAIL]
+#Chilling Wail
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MYSTICBLADE]
+#Mystic Blade
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FORCEWAVE]
+#Force Wave
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[GEODEBURST]
+#Geode Burst
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FORGEBREATH]
+#Forge Breath
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EXCITE]
+#Excite
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SCATTERDUST]
+#Scatterdust
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SWEETTOOTH]
+#Sweet Tooth
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUPERNOVA]
+#Impact Event
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SUPERNOVA_ALT]
+#Supernova
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PEPPERSPRAY]
+#Pepper Spray
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TITANSWRATH]
+#Titan's Wrath
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[SIRENSONG]
+#Siren Song
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[REBALANCING]
+#Rebalancing
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[FRIGIDMAW]
+#Frigid Maw
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[MANADRAIN]
+#Mana Drain
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[STEAMBURST]
+#Steam Burst
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[QUESOBLAST]
+#Queso Blast
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[PREMONITIONMOVE]
+#Premonition Dummy
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[CRIMSONSURGE]
+#Crimson Surge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[TOXIRAVAGE]
+#Venom Strike
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[EROSIONWAVE]
+#Failsafe Erosion Wave
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[OWTHEEDGE]
+#Failsafe Ow The Edge
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THINKFAST]
+#Failsafe Think Fast
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 
+#-------------------------------
+[THOUSANDFOLDS]
+#Failsafe Thousand Folds
+ContestType = COOL
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 

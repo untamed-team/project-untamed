@@ -163,20 +163,20 @@ class PokemonSummary_Scene
 			if move_to_learn || SUMMARY_B2W2_STYLE
 				textpos = [
 				  [_INTL("APPEAL"), 20, 128, 0, base, shadow],
-				  [_INTL("JAMMING"), 20, 160, 0, base, shadow]
+				  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
 				]
 			else
 				textpos = [
 				  [_INTL("MOVES"), 26, 14, 0, base, shadow],
 				  [_INTL("APPEAL"), 20, 128, 0, base, shadow],
-				  [_INTL("JAMMING"), 20, 160, 0, base, shadow]
+				  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
 				]
 			end
 		else
 			textpos = [
 			  [_INTL("MOVES"), 26, 22, 0, base, shadow],
 			  [_INTL("APPEAL"), 20, 128, 0, base, shadow],
-			  [_INTL("JAMMING"), 20, 160, 0, base, shadow]
+			  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
 			]
 		end
 		imagepos = []
@@ -252,7 +252,7 @@ class PokemonSummary_Scene
 		# Draw all text
 		pbDrawTextPositions(overlay, textpos)
 		# Draw selected move's information
-		imagepos.push(["Graphics/Pictures/Contest/move_heart#{hearts}", 166, 124]) if hearts > 0
+		imagepos.push(["Graphics/Pictures/Contest/move_heart#{hearts}", 166, 124+6]) if hearts > 0
 		#imagepos.push(["Graphics/Pictures/Contest/move_negaheart#{jam}", 166, 156]) if jam > 0
 		pbDrawImagePositions(overlay, imagepos)
 		# Draw selected move's description
@@ -617,7 +617,7 @@ class MoveRelearner_Scene
 		hearts = !selMoveData.contest_can_be_used? ? 0 : selMoveData.contest_hearts
 		jam = !selMoveData.contest_can_be_used? ? 0 : selMoveData.contest_jam
 		textpos.push([_INTL("APPEAL"), 272, 120, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)])
-		textpos.push([_INTL("JAMMING"), 272, 152, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)])
+		#textpos.push([_INTL("JAMMING"), 272, 152, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)])
 	else
 		basedamage = selMoveData.display_damage(@pokemon)
 		category = selMoveData.display_category(@pokemon)
