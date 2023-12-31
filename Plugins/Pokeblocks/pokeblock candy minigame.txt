@@ -1,0 +1,28 @@
+Looking for some feedback on this minigame before I start making it. This is for candy creation in camp which comes from this recipe - https://www.allrecipes.com/recipe/35842/hard-candy/
+
+**Stage 1:**
+A candy base (which you can buy for very very cheap) goes into a pot over a fire, and you stir it for a little while.
+I plan to use the stirring arrows from the poffin making minigame from gen 4.
+If you don't stir the mixture, or if you stir it the wrong direction when the direction you need to stir it changes, it sticks to the bottom of the pot.
+The game says "The candy mixture stuck to the bottom of the pot... The candy is lost..."
+The minigame ends and you lose a candy base (which again is very very cheap to get anyway, like maybe 10 pokedollars each. Literally just a water, corn syrup, and sugar mixture)
+
+If you succeed in stirring correctly, you move on to stage 2.
+
+**Stage 2:**
+No stirring (you can't fail by stirring it; you just literally don't get the option to stir it). Bring the temp of the pot up to 150 degrees celcius to boil the mixture and keep it there for a bit.
+Fan the flames of the fire to increase temp when it lowers on its own.
+Stop fanning the flames when it reaches the right temp. I'm thinking maybe something similar to Stardew Valley's fishing minigame where you keep your bobber in the highlighted area (though the area to keep it in wouldn't move around I guess).
+If the mixture gets to 160+ degrees or less than 140, you lose 1 pokeblock for every 3 seconds in the wrong temp range. Each time you make candy, you would get a few pokeblocks. Maybe 4 max.
+If over the desired temp range for too long, the screen says "Slow down! It's burning!"
+If under the desired temp range for too long, the screen says "Faster! It's not hot enough!"
+
+If you lose a pokeblock or more, but not all the pokeblocks that would be produced, the game assumes this stage is a success. If you lose all blocks that would be produced, the stage fails and the game says "The candy didn't turn out right..."
+
+**Before the last stage, you pick the berries you want to blend in. This is to add flavoring to the mixture.
+
+Stage 3 (final stage):**
+Cool the result so the mixture hardens. This stage cannot be failed, but you have to fan the candy mixture until it cools off and hardens, about 10 fans maybe?
+
+The result is anywhere from 1 to 4 pokeblocks.
+The game isn't really meant to be challenging at all. It's just meant to resemble making hard candy at home and meant to be a fun little thing.
