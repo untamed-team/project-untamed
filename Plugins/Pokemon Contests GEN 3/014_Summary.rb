@@ -5,10 +5,6 @@
 #====================================================================================
 #  Summary
 #====================================================================================
-
-
-
-
 class PokemonSummary_Scene
 	#Compatibility checks
 	BWSUMMARY = PluginManager.installed?("BW Summary Screen")
