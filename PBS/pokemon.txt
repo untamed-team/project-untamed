@@ -1076,7 +1076,7 @@ Generation = 3
 [ZEAZAYA]
 Name = Zea-Zaya
 Types = GRASS
-BaseStats = 40,35,35,45,50,45
+BaseStats = 40,45,45,45,60,45
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 64
@@ -1103,7 +1103,7 @@ Evolutions = ZHUSK,Level,17
 [ZHUSK]
 Name = Zhusk
 Types = GRASS
-BaseStats = 65,55,60,50,70,60
+BaseStats = 75,55,70,50,75,70
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 138
@@ -1124,7 +1124,7 @@ Habitat = Grassland
 Category = Kernel Cluster
 Pokedex = When multiple Zea-Zaya band together to live in a colony, they create a Zhusk. In a pinch, they will launch members of the colony at foes as a form of attack.
 Generation = 9
-Evolutions = MAYZMEN,ItemLevel35,SUNSTONE,BLAZEA,ItemLevel35,FIRESTONE
+Evolutions = MAYZMEN,Level,35,BLAZEA,Item,FIRESTONE
 #-------------------------------
 [MAYZMEN]
 Name = Mayzmen
