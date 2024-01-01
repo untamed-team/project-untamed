@@ -174,28 +174,33 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-#Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity_BugZone
-Gimmick = HarshSun
-Pokemon = PACUNA,10
-Pokemon = BLAZEA,10
-	Moves = SCALD,SPLASH
-	AAM = true
+Gimmick = BugZone
+Pokemon = NOCTAVISPA,50
+    AbilityIndex = 0
+	Nature = QUIRKY
+	Moves = DEFENDORDER,SPLASH
+	BOSS = true
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
-Gimmick = DragonZone
-Pokemon = PORYGONZ,10
-	IV  = 10,10,10,10,10,10
-	EV  = 0,0,0,0,0,0
-	AAM = true
-	MEM = true
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory,100]
 LoseText = kaboom
-Gimmick = DragonZone
-Pokemon = BEAKRAFT,10
-	MEM = true
-	Gender = Male
-Pokemon = BEAKRAFT,10
-	MEM = true
-	Gender = Female
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+	Moves = DEFENDORDER
+	Name = Nocta3
+#-------------------------------
+[HEXMANIAC,pory1]
+LoseText = kaboom
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+#-------------------------------
+[HEXMANIAC,pory1,100]
+LoseText = kaboom
+Pokemon = NOCTAVISPA,50
+	Nature = QUIRKY
+	Moves = DEFENDORDER
+	Name = Nocta1
