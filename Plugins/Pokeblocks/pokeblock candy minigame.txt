@@ -22,7 +22,36 @@ If you lose a pokeblock or more, but not all the pokeblocks that would be produc
 **Before the last stage, you pick the berries you want to blend in. This is to add flavoring to the mixture.
 
 Stage 3 (final stage):**
-Cool the result so the mixture hardens. This stage cannot be failed, but you have to fan the candy mixture until it cools off and hardens, about 10 fans maybe?
+Cool the result so the mixture hardens. This stage is not a challenge, but rather just a touch of realism to cool off the result. You press one button once and it fans off the mixture, hardening it.
 
 The result is anywhere from 1 to 4 pokeblocks.
 The game isn't really meant to be challenging at all. It's just meant to resemble making hard candy at home and meant to be a fun little thing.
+
+Berries I can make easy to farm because they don't impact battle balance much if at all:
+Blue:
+Bluk
+Cornn
+Pamtre
+Belue
+
+Green:
+Wepear
+Rabuta
+Watmel
+Durin
+
+Pink:
+Magost
+Spelon
+nanab
+qualot
+
+Red:
+razz
+pomeg
+tamato
+
+Yellow:
+Nomel
+pinap
+grepa

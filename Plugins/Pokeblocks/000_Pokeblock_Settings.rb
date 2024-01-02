@@ -34,7 +34,7 @@ module PokeblockSettings
 	#--------------------------------------------------------------------------------
 	# When true, Sheen will not be used, even in Generation 3 mode.
 	#--------------------------------------------------------------------------------
-	DONT_USE_SHEEN					= false
+	DONT_USE_SHEEN					= true
 	
 	#--------------------------------------------------------------------------------
 	# When true, contest stats in the Conditions sceen will use a bar graph. Instead
@@ -42,7 +42,7 @@ module PokeblockSettings
 	# The pentagon graph uses Marin's Better Bitmaps plugin, so it is required if true.
 	# https://reliccastle.com/resources/169/
 	#--------------------------------------------------------------------------------
-	STATS_BAR_GRAPH					= true
+	STATS_BAR_GRAPH					= false
 	
 	#--------------------------------------------------------------------------------
 	# When true, NPCs will use any random berry when Berry Blending. When false, they
