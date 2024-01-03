@@ -46,35 +46,41 @@ module GameData
   #-----------------------------------------------------------------------------
     alias aam_to_trainer to_trainer
     def to_trainer
-      trainer = aam_to_trainer
-			trainer.gimmick = self.gimmick # for TGT
-      trainer.party.each_with_index do |pkmn, i|
+    	trainer = aam_to_trainer
+		trainer.gimmick = self.gimmick # for TGT
+    	trainer.party.each_with_index do |pkmn, i|
         pkmn_data = @pokemon[i]
         pkmn.moves.each_with_index do |m, i| # maxing out their PP
-					pkmn.moves[i].ppup = 3
-					pkmn.moves[i].pp = (pkmn.moves[i].pp * 1.6).floor
-				end
+			pkmn.moves[i].ppup = 3
+			pkmn.moves[i].pp = (pkmn.moves[i].pp * 1.6).floor
+		end
         pkmn.abilityMutation = true if pkmn_data[:abilityMutation]
         pkmn.megaevoMutation = true if pkmn_data[:megaevoMutation]
         pkmn.bossmonMutation = true if pkmn_data[:bossmonMutation]
-				if pkmn_data[:status] && !pkmn_data[:status].empty?
-					case pkmn_data[:status]
-					when "Dizzy", "dizzy"
-						pkmn.status = :DIZZY
-						pkmn.statusCount = 2
-					when "Sleep", "sleep"
-						pkmn.status = :SLEEP
-						pkmn.statusCount = 2
-					when "Poison", "poison"
-						pkmn.status = :POISON
-					when "Burn", "burn"
-						pkmn.status = :BURN
-					when "Paralysis", "paralysis"
-						pkmn.status = :PARALYSIS
-					when "Frozen", "frozen", "Frostbite", "frostbite"
-						pkmn.status = :FROZEN
-					end
-				end
+		if pkmn_data[:status] && !pkmn_data[:status].empty?
+			case pkmn_data[:status]
+			when "Dizzy", "dizzy"
+				pkmn.status = :DIZZY
+				pkmn.statusCount = 2
+			when "Sleep", "sleep"
+				pkmn.status = :SLEEP
+				pkmn.statusCount = 2
+			when "Poison", "poison"
+				pkmn.status = :POISON
+			when "Burn", "burn"
+				pkmn.status = :BURN
+			when "Paralysis", "paralysis"
+				pkmn.status = :PARALYSIS
+			when "Frozen", "frozen", "Frostbite", "frostbite"
+				pkmn.status = :FROZEN
+			end
+		end
+		if pkmn.level >= 45 && !pkmn.abilityMutation
+			pkmn.nature = :SERIOUS
+			GameData::Stat.each_main do |s|
+				pkmn.iv[s.id] += 10 if s.id != :HP
+			end
+		end
         pkmn.calc_stats
       end
       return trainer

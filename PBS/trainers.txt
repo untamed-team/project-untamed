@@ -204,3 +204,4 @@ Pokemon = NOCTAVISPA,50
 	Nature = QUIRKY
 	Moves = DEFENDORDER
 	Name = Nocta1
+	AAM = true

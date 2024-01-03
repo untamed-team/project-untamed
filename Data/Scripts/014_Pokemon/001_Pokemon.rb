@@ -1116,8 +1116,12 @@ class Pokemon
     nature_mod = {}
     GameData::Stat.each_main { |s| nature_mod[s.id] = 100 }
     this_nature = self.nature_for_stats
-    if this_nature
-      this_nature.stat_changes.each { |change| nature_mod[change[0]] += change[1] }
+    if self.hasAbilityMutation? #"!pbOwnedByPlayer" would not work here #by low
+      GameData::Stat.each_main { |s| nature_mod[s.id] += 10 }
+    else
+      if this_nature
+        this_nature.stat_changes.each { |change| nature_mod[change[0]] += change[1] }
+      end
     end
     # Calculate stats
     stats = {}

@@ -6635,8 +6635,6 @@ Price = 0
 Flags = KeyItem
 Description = A set of camping equipment used to start camping.
 #-------------------------------
-# exp all is always active
-#-------------------------------
 [COLOGNECASE]
 Name = Cologne Case
 NamePlural = Cologne Cases
