@@ -1,5 +1,5 @@
 Name         = Pokémon Amie
-Version      = 1.7
+Version      = 1.8
 Website      = https://www.pokecommunity.com/threads/pokemon-amie-refresh-essentials-v18.439558/
-Credits      = BhagyaJyoti (Made for v18 with many fixes and made more Plug-n-Play), PizzaSun (Original Script for v17.2), rigbycwts (Concept for Essentials), Gardenette (v20.1 port), Luka S.J. (for the mask method)
+Credits      = BhagyaJyoti (Made for v18 with many fixes and made more Plug-n-Play), PizzaSun (Original Script for v17.2), rigbycwts (Concept for Essentials), Gardenette (v20.1 port), Luka S.J. (for the mask method), Victorcarvalhosp (reworking code, improved item compatibility)
 Essentials   = 20.1
