@@ -694,7 +694,7 @@ class Battle::AI
     end
 		# Zealous Dance
     if skill >= PBTrainerAI.mediumSkill &&
-       user.effects[PBEffects::ZealousDance] > 0 && type == :DRAGON
+       user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
       multipliers[:base_damage_multiplier] *= 1.5
     end
     # Mud Sport and Water Sport

@@ -387,7 +387,7 @@ class Battle::Move
       multipliers[:base_damage_multiplier] *= 2
     end
 		#by low
-    if user.effects[PBEffects::ZealousDance] > 0 && type == :DRAGON
+    if user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
       multipliers[:base_damage_multiplier] *= 1.5
 			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
     end

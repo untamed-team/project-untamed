@@ -29,6 +29,8 @@ BaseStats = 95,133,106,109,58,85
 Abilities = BAITEDLINE
 Height = 1.9
 Weight = 46.7
+Color = Yellow
+Shape = Finned
 #-------------------------------
 [CHIXULOB,1]
 FormName = Mega Chixulob
@@ -57,6 +59,7 @@ BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
 Height = 2.0
 Weight = 81.6
+Shape = MultiWinged
 #-------------------------------
 [MILOTIC,1]
 FormName = Mega Milotic
@@ -83,6 +86,7 @@ BaseStats = 65,135,145,95,40,85
 Abilities = BATTLEARMOR
 Height = 1.9
 Weight = 60.3
+Shape = MultiWinged
 #---------------------------------------------------------------------------------------------
 [BEHEEYEM,1]
 FormName = Mega Beheeyem

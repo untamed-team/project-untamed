@@ -406,7 +406,9 @@ def pbBerryPlant
     pbFadeOutIn {
       scene = PokemonBag_Scene.new
       screen = PokemonBagScreen.new(scene, $bag)
-      berry = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item).is_berry? })
+      berry = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item).is_berry? && 
+                                                      (![:CHERIBERRY, :CHESTOBERRY, :PECHABERRY, :RAWSTBERRY, :ASPEARBERRY, :PERSIMBERRY, :LUMBERRY, :LEPPABERRY, :SITRUSBERRY, :FIGYBERRY, :WIKIBERRY, :MAGOBERRY, :AGUAVBERRY, :IAPAPABERRY, :OCCABERRY, :PASSHOBERRY, :WACANBERRY, :RINDOBERRY, :YACHEBERRY, :CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, :TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, :BABIRIBERRY, :ROSELIBERRY, :CHILANBERRY, :KEEBERRY, :MARANGABERRY, :LIECHIBERRY, :GANLONBERRY, :SALACBERRY, :PETAYABERRY, :APICOTBERRY, :LANSATBERRY, :STARFBERRY, :MICLEBERRY, :CUSTAPBERRY, :JABOCABERRY, :ROWAPBERRY, :ENIGMABERRY].include?(item) && $game_variables[MECHANICSVAR] >= 3) })
+                                                      #berry farm blacklist, could be made better but it works so whatever #by low
     }
     if berry
       $stats.berries_planted += 1
