@@ -15,7 +15,7 @@ class CookingStage1
 		@sprites["pot_lower"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stewpot_base_lower - large")
 		@sprites["pot_lower"].x = Graphics.width/2 - @sprites["pot_lower"].width/2
 		@sprites["pot_lower"].y = 70
-		#always on top of other things
+		#always on top of the spoon when submerged
 		@sprites["pot_lower"].z = 999999
 		
 		@sprites["stove"] = IconSprite.new(0, 0, @viewport)
@@ -35,15 +35,66 @@ class CookingStage1
 		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon")
 		@sprites["spoon"].x = Graphics.width/2 - @sprites["spoon"].width/2
 		@sprites["spoon"].y = 0
-		@sprites["spoon"].z = 99999
+		@sprites["spoon"].z = 999999
+		@lastX = Graphics.width/2 - @sprites["spoon"].width/2
+		@lastY = 0
+		
+		@edgeOfPotLeft = @sprites["pot_lower"].x + (83+@sprites["spoon"].width/2)
+		@edgeOfPotRight = @sprites["pot_lower"].x + @sprites["pot_lower"].width - (83+@sprites["spoon"].width/2)
+		@edgeOfPotTop = @sprites["pot_lower"].y + 50
+		@edgeOfPotBottom = @sprites["pot_lower"].y + 270
+		
+		@sprites["boundaries"] = IconSprite.new(0, 0, @viewport)
+		@sprites["boundaries"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stewpot_stirring_boundaries")
+		@sprites["boundaries"].x = @sprites["pot_upper"].x
+		@sprites["boundaries"].y = @sprites["pot_upper"].y
+		@sprites["boundaries"].z = 99999999
 		
 		pbmain
 	end #def initialize
 	
+	def outOfBounds?
+		return true if !Mouse.over_pixel?(@sprites["boundaries"]) #if Mouse.x < @edgeOfPotLeft || Mouse.x > @edgeOfPotRight || Mouse.y < @edgeOfPotTop || Mouse.y > @edgeOfPotBottom
+		return false
+	end
+	
 	def updateCursorPos
-		@sprites["spoon"].x=Mouse.x-@sprites["spoon"].width/2 if defined?(Mouse.x)
-		@sprites["spoon"].y=Mouse.y-@sprites["spoon"].height+40 if defined?(Mouse.y)
+		@lastX = @sprites["spoon"].x
+		@lastY = @sprites["spoon"].y
+		
+		#if the mouse leaves the game window, put the spoon at its last X and Y rather than in the top left of the screen
+		if !System.mouse_in_window
+			@sprites["spoon"].x = @lastX
+			@sprites["spoon"].y = @lastY
+		elsif outOfBounds? && @spoonSubmerged #if the cursor goes outside of what's allowed for stirring and they are currently stirring, don't follow the cursor
+			@sprites["spoon"].x = @lastX
+			@sprites["spoon"].y = @lastY
+		else
+			@sprites["spoon"].x=Mouse.x-@sprites["spoon"].width/2 if defined?(Mouse.x)
+			@sprites["spoon"].y=Mouse.y-@sprites["spoon"].height+40 if defined?(Mouse.y)
+		end
 	end #updateCursorPos
+	
+	def submergeSpoon
+		@spoonSubmerged = true
+		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon_ submerged")
+		@sprites["spoon"].z = 99999
+	end #def submergeSpoon
+	
+	def pullSpoon
+		@spoonSubmerged = false
+		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon")
+		@sprites["spoon"].z = 999999
+	end #def pullSpoon
+	
+	def detectInput
+		if Mouse.press? && !outOfBounds?
+			submergeSpoon
+		end #if Mouse.press?
+		if Input.release?(Input::MOUSELEFT)
+			pullSpoon
+		end #Input.release?(Input::MOUSELEFT)
+	end #detectInput
 	
 	def pbmain
 		#pbMessage(_INTL("Adding candy base"))
@@ -54,6 +105,7 @@ class CookingStage1
 			Input.update
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
+			detectInput
 		end #loop do
 	end
 end #class CookingStage1
