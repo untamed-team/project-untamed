@@ -110,20 +110,19 @@ class CookingStage1
 	
 	def detectStirDirection
 		@lastQuadrant = @currentQuadrant
-		echo "hi"
 		getCurrentQuandrant
 		if @currentQuadrant != @lastQuadrant #needed so this doesn't invalidate the stir if staying still in the same quadrant
-			if @quadrantsStirredIn.include?(@currentQuadrant)
+			#detect whether we've gone completely around the pot
+			if @quadrantsStirredIn.include?(@currentQuadrant) && @quadrantsStirredIn.length >= 4 && @quadrantsStirredIn[0] == @currentQuadrant #complete circle
+				print "stir complete"
+			elsif @quadrantsStirredIn.include?(@currentQuadrant)
 				#if we've already been in this quadrant before completing a stir around the pot, we have not gone in a circle, and the array should start over with this quadrant
 				@quadrantsStirredIn = [@currentQuadrant]
-			else
+			elsif !@quadrantsStirredIn.include?(@currentQuadrant)
 				#if we weren't in this quadrant during this stir around the pot, add the quadrant number to the array of quadrants we've been through
 				@quadrantsStirredIn.push(@currentQuadrant)
 			end #if @quadrantsStirredIn.include?(@currentQuadrant)
 		end #if @currentQuadrant != @lastQuadrant
-		
-		#detect whether we've gone completely around the pot
-		print "stir complete" if @quadrantsStirredIn.length >= 4
 	end #detectStirDirection
 	
 	def getCurrentQuandrant
@@ -155,6 +154,7 @@ class CookingStage1
 	def detectInput
 		if Mouse.press? && !outOfBounds?
 			submergeSpoon
+			detectStirDirection
 		end #if Mouse.press?
 		if Input.release?(Input::MOUSELEFT)
 			pullSpoon
