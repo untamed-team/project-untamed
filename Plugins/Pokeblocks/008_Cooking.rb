@@ -49,12 +49,45 @@ class CookingStage1
 		@sprites["boundaries"].x = @sprites["pot_upper"].x
 		@sprites["boundaries"].y = @sprites["pot_upper"].y
 		@sprites["boundaries"].z = 99999999
+		@sprites["boundaries"].visible = false
+		
+		@sprites["boundaryQ1"] = IconSprite.new(0, 0, @viewport)
+		@sprites["boundaryQ1"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant1")
+		@sprites["boundaryQ1"].x = @sprites["pot_upper"].x
+		@sprites["boundaryQ1"].y = @sprites["pot_upper"].y
+		@sprites["boundaryQ1"].z = 99999999
+		#@sprites["boundaryQ1"].visible = false
+		
+		@sprites["boundaryQ2"] = IconSprite.new(0, 0, @viewport)
+		@sprites["boundaryQ2"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant2")
+		@sprites["boundaryQ2"].x = @sprites["pot_upper"].x
+		@sprites["boundaryQ2"].y = @sprites["pot_upper"].y
+		@sprites["boundaryQ2"].z = 99999999
+		#@sprites["boundaryQ2"].visible = false
+		
+		@sprites["boundaryQ3"] = IconSprite.new(0, 0, @viewport)
+		@sprites["boundaryQ3"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant3")
+		@sprites["boundaryQ3"].x = @sprites["pot_upper"].x
+		@sprites["boundaryQ3"].y = @sprites["pot_upper"].y
+		@sprites["boundaryQ3"].z = 99999999
+		#@sprites["boundaryQ3"].visible = false
+		
+		@sprites["boundaryQ4"] = IconSprite.new(0, 0, @viewport)
+		@sprites["boundaryQ4"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant4")
+		@sprites["boundaryQ4"].x = @sprites["pot_upper"].x
+		@sprites["boundaryQ4"].y = @sprites["pot_upper"].y
+		@sprites["boundaryQ4"].z = 99999999
+		#@sprites["boundaryQ4"].visible = false
+		
+		@lastQuadrant = nil
+		@currentQuadrant = nil
+		@quadrantsStirredIn = []
 		
 		pbmain
 	end #def initialize
 	
 	def outOfBounds?
-		return true if !Mouse.over_pixel?(@sprites["boundaries"]) #if Mouse.x < @edgeOfPotLeft || Mouse.x > @edgeOfPotRight || Mouse.y < @edgeOfPotTop || Mouse.y > @edgeOfPotBottom
+		return true if !Mouse.over_pixel?(@sprites["boundaries"])
 		return false
 	end
 	
@@ -75,16 +108,48 @@ class CookingStage1
 		end
 	end #updateCursorPos
 	
+	def detectStirDirection
+		@lastQuadrant = @currentQuadrant
+		echo "hi"
+		getCurrentQuandrant
+		if @currentQuadrant != @lastQuadrant #needed so this doesn't invalidate the stir if staying still in the same quadrant
+			if @quadrantsStirredIn.include?(@currentQuadrant)
+				#if we've already been in this quadrant before completing a stir around the pot, we have not gone in a circle, and the array should start over with this quadrant
+				@quadrantsStirredIn = [@currentQuadrant]
+			else
+				#if we weren't in this quadrant during this stir around the pot, add the quadrant number to the array of quadrants we've been through
+				@quadrantsStirredIn.push(@currentQuadrant)
+			end #if @quadrantsStirredIn.include?(@currentQuadrant)
+		end #if @currentQuadrant != @lastQuadrant
+		
+		#detect whether we've gone completely around the pot
+		print "stir complete" if @quadrantsStirredIn.length >= 4
+	end #detectStirDirection
+	
+	def getCurrentQuandrant
+		#get the current quadrant the spoon is submerged in
+		@currentQuadrant = 1 if Mouse.over_pixel?(@sprites["boundaryQ1"])
+		@currentQuadrant = 2 if Mouse.over_pixel?(@sprites["boundaryQ2"])
+		@currentQuadrant = 3 if Mouse.over_pixel?(@sprites["boundaryQ3"])
+		@currentQuadrant = 4 if Mouse.over_pixel?(@sprites["boundaryQ4"])
+	end #getCurrentQuandrant
+	
 	def submergeSpoon
 		@spoonSubmerged = true
 		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon_ submerged")
 		@sprites["spoon"].z = 99999
+		#getCurrentQuandrant
 	end #def submergeSpoon
 	
 	def pullSpoon
 		@spoonSubmerged = false
 		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon")
 		@sprites["spoon"].z = 999999
+		
+		#clear the current quadrant the spoon was submerged in
+		@currentQuadrant = nil
+		#clear the history of quadrants stirred in since we're starting over with stirring
+		@quadrantsStirredIn = []
 	end #def pullSpoon
 	
 	def detectInput
@@ -94,6 +159,8 @@ class CookingStage1
 		if Input.release?(Input::MOUSELEFT)
 			pullSpoon
 		end #Input.release?(Input::MOUSELEFT)
+		
+		detectStirDirection if @submerged
 	end #detectInput
 	
 	def pbmain
