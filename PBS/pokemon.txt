@@ -491,7 +491,7 @@ Weight = 0.9
 Color = White
 Shape = HeadArms
 Category = Single Bloom
-Pokedex = Floette is popular among Mazah school girls. They are often seen tending after the flowers in young girls' hair.
+Pokedex = Floette is popular among Mazah school girls. They are often seen tending to the flowers in young girls' hair.
 FormName = Red Flower
 Generation = 6
 Evolutions = FLORGES,Item,SHINYSTONE
@@ -699,7 +699,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Cave
 Category = Aqua Dog
-Pokedex = Zolupine makes it home in underwater caves and tunnels that run beneath the surface of the jungle, making it one of the rarest Pokémon in the Mazah region.
+Pokedex = Zolupine makes it home in underwater caves and tunnels that run beneath the surface of the jungle, making it one of the most elusive Pokémon in the Mazah region.
 Generation = 9
 #-------------------------------
 [BUDEW]
@@ -724,7 +724,7 @@ Weight = 1.2
 Color = Green
 Shape = Bipedal
 Category = Bud
-Pokedex = Budew help pollinate flowers used to celebrate and mourn the dead. When a Budew in the Mazah region is ready to evolve, its bud emits a supernatural energy.
+Pokedex = Budew help pollinate flowers used to celebrate and mourn the dead. When a Budew native to Mazah is ready to evolve, its bud emits a supernatural energy.
 Generation = 4
 WildItemUncommon = POISONBARB
 Evolutions = M_ROSELIA,HappinessNight,
@@ -2565,7 +2565,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Urban
 Category = Breezy
-Pokedex = It cheerfully prances among the clouds on sunny days, but become irritable during storms. They attack by diving towards the ground, shrouded in clouds.
+Pokedex = It cheerfully prances among the clouds on sunny days, but becomes irritable during storms. They attack by diving towards the ground, shrouded in clouds.
 #-------------------------------
 [WOOBAT]
 Name = Woobat
@@ -2696,7 +2696,7 @@ Color = Purple
 Shape = BipedalTail
 Habitat = Urban
 Category = Tiny Terror
-Pokedex = smol
+Pokedex = Despite their size, Gohila are quite confrontational. They prop themselves up on their thick tails to appear larger to their opponents.
 #-------------------------------
 [ATELANGLER]
 Name = Atelangler
@@ -4414,7 +4414,7 @@ Color = Green
 Shape = Winged
 Habitat = Forest
 Category = Mystic
-Pokedex = It has the enigmatic power of foreseeing the future. Some people in different lands have long believed that Xatu are emissaries from another world.
+Pokedex = While Xatu stand still, their young stack on top of their head, empowering the flock's prophetic abilities. It is said this behavior inspired totem poles.
 Generation = 2
 #-------------------------------
 [TRAPINCH]
