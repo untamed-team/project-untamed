@@ -491,7 +491,7 @@ class QuestData
   end
 
   #added by Gardenette - not needed though?
-  # Get array of quest stages
+  # Get array of quest tasks
   def getQuestTasks(quest)
     arr = []
     for key in QuestModule.const_get(quest).keys
@@ -516,6 +516,14 @@ class QuestData
   def getStageLocation(quest,stage)
     loc = ("Location" + "#{stage}").to_sym
     return "#{QuestModule.const_get(quest)[loc]}"
+  end  
+
+  # Get current stage turn-in condition
+  def getStageTurninCondition(quest,stage)
+    cond = ("TurninCondition" + "#{stage}").to_sym
+    condString = QuestModule.const_get(quest)[cond]
+    #print condString.call
+    return condString #"#{QuestModule.const_get(quest)[cond]}"
   end  
 
   # Get summary of current task
