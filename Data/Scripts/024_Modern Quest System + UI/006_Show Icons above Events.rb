@@ -73,6 +73,7 @@ class QuestIndicator
           questID = firstPage.list[i].parameters[0].split[1]
           giver   = firstPage.list[i].parameters[0].split[2]
           turnin  = firstPage.list[i].parameters[0].split[3]
+          stage = getCurrentStage(questID.to_sym)
         
           filename = nil
         
@@ -92,6 +93,15 @@ class QuestIndicator
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
               filename = "turnin"
+          end
+          
+          
+          
+          #is a preset turnin condition set?
+          if $quest_data.getStageTurninCondition(questID.to_sym, stage).call && turnin == "true"
+            #the quest in the comment we are checking is active
+            #show an ? if the NPC is the turnin
+            filename = "turnin"
           end
         
           if filename #if it's not nil, show ! or ?
