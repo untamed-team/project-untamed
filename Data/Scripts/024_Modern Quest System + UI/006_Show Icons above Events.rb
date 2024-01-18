@@ -175,12 +175,10 @@ EventHandlers.add(:on_new_spriteset_map, :add_quest_indicator,
 
 EventHandlers.add(:on_frame_update, :check_if_turnincondition_met,
 proc {
-  #actually check for all events on the page first to see who's a turn in
-
-
   for i in 0...$PokemonGlobal.quests.active_quests.length
     quest = $PokemonGlobal.quests.active_quests[i]
     activeStage = quest.stage
+    next if $quest_data.getStageTurninCondition(quest.id.to_sym, activeStage).nil? #go to next quest if there is no condition for this quest's active stage
 
     #turnin the quest if current stage's condition is met
     if !getTurninQuests.include?(quest.id.to_sym) && $quest_data.getStageTurninCondition(quest.id.to_sym, activeStage).call
