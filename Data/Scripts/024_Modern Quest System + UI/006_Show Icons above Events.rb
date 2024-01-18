@@ -68,14 +68,15 @@ class QuestIndicator
       next if event.list == nil
       #for all commands on the event's first page, check for a quest_marker comment
       for i in 0...firstPage.list.length - 1 #excludes the last command on the page, which is always blank
-        print firstPage.list[i].parameters[0]
-
         if firstPage.list[i].code == 108 && firstPage.list[i].parameters[0].split[0] == 'quest_marker'
+
           #split the comment into different parameters. This splits by spaces
           questID = firstPage.list[i].parameters[0].split[1]
           giver   = firstPage.list[i].parameters[0].split[2]
           turnin  = firstPage.list[i].parameters[0].split[3]
         
+          #put the stage in the comment to check if that stage is active and giver/turnin is true
+
           filename = nil
         
           if getReadyQuests.include?(questID.to_sym) && giver == "true"
@@ -98,10 +99,9 @@ class QuestIndicator
         
           if filename #if it's not nil, show ! or ?
             @event = $game_map.events[event.id]
-        
             @sprites["icon_#{event}"] = ChangelingSprite.new(0, 0, @viewport)
             @sprites["icon_#{event}"].bitmap = Bitmap.new("Graphics/Pictures/QuestUI/"+filename)
-        
+
             @sprites["icon_#{event}"].ox = @sprites["icon_#{event}"].bitmap.width / 2
             @sprites["icon_#{event}"].oy = (@sprites["icon_#{event}"].bitmap.height / 2) + 40
             @sprites["icon_#{event}"].opacity = 255
@@ -117,8 +117,10 @@ class QuestIndicator
               @sprites["icon_#{event}"].y = @event.screen_y - (Game_Map::TILE_HEIGHT / 2) + @bobY
             end
             @sprites["icon_#{event}"].tone = $game_screen.tone
+
           end #end of if filename
-          return if filename != nil #stop searching through quests if there is an active or ready quest for that NPC
+          
+          return if filename == "turnin" #prioritize showing a quest is ready for turn in when the NPC has multiple quests
         end #end of if firstPage.list[0].code == 108 && firstPage.list[0].parameters[0].split[0] == 'quest_marker'
       end
       
