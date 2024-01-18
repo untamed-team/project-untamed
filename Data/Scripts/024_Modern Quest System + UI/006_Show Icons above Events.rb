@@ -66,14 +66,15 @@ class QuestIndicator
     $game_map.events.values.each {|event|
       firstPage = event.event.pages[0]
       next if event.list == nil
-      #for all commands on the event's first page, check for i
+      #for all commands on the event's first page, check for a quest_marker comment
       for i in 0...firstPage.list.length - 1 #excludes the last command on the page, which is always blank
+        print firstPage.list[i].parameters[0]
+
         if firstPage.list[i].code == 108 && firstPage.list[i].parameters[0].split[0] == 'quest_marker'
           #split the comment into different parameters. This splits by spaces
           questID = firstPage.list[i].parameters[0].split[1]
           giver   = firstPage.list[i].parameters[0].split[2]
           turnin  = firstPage.list[i].parameters[0].split[3]
-          stage = getCurrentStage(questID.to_sym)
         
           filename = nil
         
