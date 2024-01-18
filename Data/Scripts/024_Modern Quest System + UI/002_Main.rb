@@ -164,6 +164,18 @@ class Player_Quests
     #refresh all icons above events
     QuestIndicator.initialize
   end
+
+  def removeTurninQuest(quest,color,story)
+    if !quest.is_a?(Symbol)
+      raise _INTL("The 'quest' argument should be a symbol, e.g. ':Quest1'.")
+      return
+    end
+    
+    deleteFromArray(quest, @turnin_quests)
+
+    #refresh all icons above events
+    QuestIndicator.initialize
+  end
   
   # questID should be the symbolic name of the quest, e.g. :Quest1
   def activateQuest(quest,color,story)
@@ -356,6 +368,11 @@ end
 def turninQuest(quest,color=nil,story=nil)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.turninQuest(quest,color,story)
+end
+
+def removeTurninQuest(quest,color=nil,story=nil)
+  return if !$PokemonGlobal
+  $PokemonGlobal.quests.removeTurninQuest(quest,color,story)
 end
 
 # Helper function for activating quests

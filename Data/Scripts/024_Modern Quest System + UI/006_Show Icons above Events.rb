@@ -94,15 +94,6 @@ class QuestIndicator
             #show an ? if the NPC is the turnin
               filename = "turnin"
           end
-          
-          
-          
-          #is a preset turnin condition set?
-          if $quest_data.getStageTurninCondition(questID.to_sym, stage).call && turnin == "true"
-            #the quest in the comment we are checking is active
-            #show an ? if the NPC is the turnin
-            filename = "turnin"
-          end
         
           if filename #if it's not nil, show ! or ?
             @event = $game_map.events[event.id]
@@ -181,3 +172,24 @@ EventHandlers.add(:on_new_spriteset_map, :add_quest_indicator,
     QuestIndicator.initialize
   }
 )
+
+EventHandlers.add(:on_frame_update, :check_if_turnincondition_met,
+proc {
+  #actually check for all events on the page first to see who's a turn in
+
+
+  for i in 0...$PokemonGlobal.quests.active_quests.length
+    quest = $PokemonGlobal.quests.active_quests[i]
+    activeStage = quest.stage
+
+    #turnin the quest if current stage's condition is met
+    if !getTurninQuests.include?(quest.id.to_sym) && $quest_data.getStageTurninCondition(quest.id.to_sym, activeStage).call
+      turninQuest(quest.id.to_sym)
+    end
+
+    #remove the quest from turn in if the current stage's condition is not met any more
+    if getTurninQuests.include?(quest.id.to_sym) && !$quest_data.getStageTurninCondition(quest.id.to_sym, activeStage).call
+      removeTurninQuest(quest.id.to_sym)
+    end
+  end #for i in all active quests
+})
