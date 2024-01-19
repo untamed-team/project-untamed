@@ -303,6 +303,9 @@ class Player_Quests
       questNew.stage = stageNum
       @active_quests.push(questNew)
     end
+
+    #refresh all icons above events
+    QuestIndicator.initialize
   end
   
   #added by Space

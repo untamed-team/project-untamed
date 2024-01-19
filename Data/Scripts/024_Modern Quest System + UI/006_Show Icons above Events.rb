@@ -9,14 +9,16 @@
 #To specify the quests an NPC will have, use comments on the event's first page
 #One quest per comment
 #Comments should look like this:
-#quest_marker Quest1 true true
+#quest_marker Quest1 true 1
 #"quest_marker" tells the game this is a quest
-#"questID" tells the game which quest the comment is about
-#the first of two true/false statements tells the game whether this NPC is the
+#"questID" tells the game which quest the comment is about. This should not be a symbol iwth ':' in front
+#the true/false statement tells the game whether this NPC is the
 #quest giver and therefore should have an ! when the quest is ready to be given
-#the second of two true/false statements tells the game whether this NPC is where
-#the player will turn in the quest there and therefore should have a ? when the
-#quest is ready to be turned in
+#the number at the end of the statement tells the game whether this NPC is where
+#the player will turn in the quest once the requirements are met
+#when you flag the quest for "turnin", the NPC should have a yellow ? above their head
+#The number itself signifies 'stage 1', and this is used when you have the plugin automatically detect
+#when the quest can be turned in at its stage
 
 #When you want to put an ! above an NPC's head, you need to ready the quest to
 #signal the game that quest is ready to be given out
@@ -25,7 +27,9 @@
 #you want quests 1, 5, 8, and 9 all to be available as soon as the player finds
 #the NPC, you can ready those quests
 #If you put :ReadyAtStart => true in the quest hash, it will automatically be
-#marked as ready when a new game is started
+#marked as ready when you run this line of code:
+#Player_Quests.readyQuestsAtStart
+#I recommend running this code at the start of your game.
 #I would avoid flagging quest as ready if you plan to activate them during
 #cutscenes, otherwise an ! will appear above the NPC's head during the cutscene
 
@@ -34,15 +38,24 @@
 #Example:            getReadyQuests.include?(:Quest1)
 #Unless you want to start a quest without displaying the ! over someone's head,
 #which is reasonable
+#Example:
+#if getReadyQuests.include?(:Quest1)
+#"I have a quest for you!"
+#else
+#"Come back later, and I might have something for you to do."
 
 #When the player completes all the requirements to turn in a quest, you need to
-#tell the game it is ready to be turned in so the NPC has a yellow/blue ? above
+#tell the game it is ready to be turned in so the NPC has a yellow ? above
 #them
 #Example:            turninQuest(:Quest1)
 
 #When you want to complete a quest, use a conditional statement to make sure the
 #quest is ready to be turned in first
-#Example:            getTurninQuests.include?(:Quest1)
+#Example:
+#if getTurninQuests.include?(:Quest1)
+#"You did it! Thanks!"
+#else
+#"I'm waiting for you to finish my quest."
 
 class QuestIndicator
   def self.initialize
@@ -73,10 +86,9 @@ class QuestIndicator
           #split the comment into different parameters. This splits by spaces
           questID = firstPage.list[i].parameters[0].split[1]
           giver   = firstPage.list[i].parameters[0].split[2]
-          turnin  = firstPage.list[i].parameters[0].split[3]
+          turninStage = firstPage.list[i].parameters[0].split[3]
+          currentStage = getCurrentStage(questID.to_sym)
         
-          #put the stage in the comment to check if that stage is active and giver/turnin is true
-
           filename = nil
         
           if getReadyQuests.include?(questID.to_sym) && giver == "true"
@@ -85,13 +97,13 @@ class QuestIndicator
               filename = "exclamation"
           end
         
-          if getActiveQuests.include?(questID.to_sym) && turnin == "true"
+          if getActiveQuests.include?(questID.to_sym) && turninStage == currentStage.to_s
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
             filename = "inprogress"
           end
         
-          if getTurninQuests.include?(questID.to_sym) && turnin == "true"
+          if getTurninQuests.include?(questID.to_sym) && turninStage == currentStage.to_s
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
               filename = "turnin"
