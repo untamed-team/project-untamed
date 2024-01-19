@@ -1863,7 +1863,7 @@ Weight = 8.4
 Color = Black
 Shape = HeadBase
 Category = Scatterdust
-Pokedex = It protects its body with sharp, bristled fur, building up the energy it needs to evolve. If it is attacked, it spews a poisonous black powder.
+Pokedex = It protects its body with sharp, bristled fur, building up the energy it needs to evolve. If attacked, it spews a poisonous black powder.
 Generation = 6
 Evolutions = VIVILLON,Level,12
 #-------------------------------
@@ -1888,7 +1888,7 @@ Weight = 17.0
 Color = White
 Shape = MultiWinged
 Category = Scale
-Pokedex = Vivillon with many different patterns are found all over the world. These patterns are affected by the climate of their habitat.
+Pokedex = Swarms of Vivillon are known to migrate to Mazah in the winter. This journey can take weeks, with some travelling as far as 4000 kilometers.
 FormName = Sun Pattern
 Generation = 6
 #-------------------------------
@@ -4388,7 +4388,7 @@ Color = Green
 Shape = Winged
 Habitat = Forest
 Category = Tiny Bird
-Pokedex = It runs up short trees that grow on the savanna to peck at new shoots. A Natu's eyes look as if they are always observing something.
+Pokedex = Natu have been observed burrowing holes in cactus plants to build their nests. These cacti provide them with both protection and nourishment.
 Generation = 2
 Evolutions = XATU,Level,25
 #-------------------------------
@@ -4681,7 +4681,7 @@ Color = Purple
 Shape = Bipedal
 Habitat = Cave
 Category = Darkness
-Pokedex = It digs branching holes in caves using its sharp claws in search of food--raw gems. A Sableye lurks in darkness and is seen only rarely.
+Pokedex = Sableye forage for crystals in the depths of mines. They frighten intruders away from their hoard which began a myth that they steal the souls of miners.
 Generation = 3
 WildItemUncommon = WIDELENS
 #-------------------------------
