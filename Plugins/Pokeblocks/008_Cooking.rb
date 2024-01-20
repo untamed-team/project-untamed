@@ -114,7 +114,33 @@ class CookingStage1
 		if @currentQuadrant != @lastQuadrant #needed so this doesn't invalidate the stir if staying still in the same quadrant
 			#detect whether we've gone completely around the pot
 			if @quadrantsStirredIn.include?(@currentQuadrant) && @quadrantsStirredIn.length >= 4 && @quadrantsStirredIn[0] == @currentQuadrant #complete circle
-				print "stir complete"
+				#print "stir complete"
+				case @quadrantsStirredIn[0]
+				when 1
+					if @quadrantsStirredIn[1] == 2
+						print "stirred right"
+					else
+						print "stirred left"
+					end
+				when 2
+					if @quadrantsStirredIn[1] == 3
+						print "stirred right"
+					else
+						print "stirred left"
+					end
+				when 3
+					if @quadrantsStirredIn[1] == 4
+						print "stirred right"
+					else
+						print "stirred left"
+					end
+				when 4
+					if @quadrantsStirredIn[1] == 1
+						print "stirred right"
+					else
+						print "stirred left"
+					end
+				end #case @quadrantsStirredIn[0]
 			elsif @quadrantsStirredIn.include?(@currentQuadrant)
 				#if we've already been in this quadrant before completing a stir around the pot, we have not gone in a circle, and the array should start over with this quadrant
 				@quadrantsStirredIn = [@currentQuadrant]
