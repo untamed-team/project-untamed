@@ -164,6 +164,18 @@ class Player_Quests
     #refresh all icons above events
     QuestIndicator.initialize
   end
+
+  def removeTurninQuest(quest,color,story)
+    if !quest.is_a?(Symbol)
+      raise _INTL("The 'quest' argument should be a symbol, e.g. ':Quest1'.")
+      return
+    end
+    
+    deleteFromArray(quest, @turnin_quests)
+
+    #refresh all icons above events
+    QuestIndicator.initialize
+  end
   
   # questID should be the symbolic name of the quest, e.g. :Quest1
   def activateQuest(quest,color,story)
@@ -291,6 +303,9 @@ class Player_Quests
       questNew.stage = stageNum
       @active_quests.push(questNew)
     end
+
+    #refresh all icons above events
+    QuestIndicator.initialize
   end
   
   #added by Space
@@ -356,6 +371,11 @@ end
 def turninQuest(quest,color=nil,story=nil)
   return if !$PokemonGlobal
   $PokemonGlobal.quests.turninQuest(quest,color,story)
+end
+
+def removeTurninQuest(quest,color=nil,story=nil)
+  return if !$PokemonGlobal
+  $PokemonGlobal.quests.removeTurninQuest(quest,color,story)
 end
 
 # Helper function for activating quests
@@ -491,7 +511,7 @@ class QuestData
   end
 
   #added by Gardenette - not needed though?
-  # Get array of quest stages
+  # Get array of quest tasks
   def getQuestTasks(quest)
     arr = []
     for key in QuestModule.const_get(quest).keys
@@ -516,6 +536,14 @@ class QuestData
   def getStageLocation(quest,stage)
     loc = ("Location" + "#{stage}").to_sym
     return "#{QuestModule.const_get(quest)[loc]}"
+  end  
+
+  # Get current stage turn-in condition
+  def getStageTurninCondition(quest,stage)
+    cond = ("TurninCondition" + "#{stage}").to_sym
+    condString = QuestModule.const_get(quest)[cond]
+    #print condString.call
+    return condString #"#{QuestModule.const_get(quest)[cond]}"
   end  
 
   # Get summary of current task
