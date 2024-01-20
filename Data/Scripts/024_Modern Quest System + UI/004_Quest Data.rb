@@ -79,7 +79,6 @@ module QuestModule
     :QuestGiverSprite => "NPC DAD",
     :QuestGiverDescSprite => "DAD",
     :Stage1 => "Meet with Professor Ceiba.",
-    :TurninCondition1 => proc { $player.has_species?(:PACUNA) },
     :Stage2 => "Bring the Pokémon to Professor Ceiba's lab.",
     :Location1 => "Veravalles Town",
     :Location2 => "Professor Ceiba's Lab",
