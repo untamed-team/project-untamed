@@ -1,4 +1,8 @@
 class CookingStage1
+
+STAGE_TIMER_SECONDS = 30
+BURN_TIMER_SECONDS = 5
+
 	def initialize
 		@sprites = {}
 		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
@@ -56,35 +60,77 @@ class CookingStage1
 		@sprites["boundaryQ1"].x = @sprites["pot_upper"].x
 		@sprites["boundaryQ1"].y = @sprites["pot_upper"].y
 		@sprites["boundaryQ1"].z = 99999999
-		#@sprites["boundaryQ1"].visible = false
+		@sprites["boundaryQ1"].visible = false
 		
 		@sprites["boundaryQ2"] = IconSprite.new(0, 0, @viewport)
 		@sprites["boundaryQ2"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant2")
 		@sprites["boundaryQ2"].x = @sprites["pot_upper"].x
 		@sprites["boundaryQ2"].y = @sprites["pot_upper"].y
 		@sprites["boundaryQ2"].z = 99999999
-		#@sprites["boundaryQ2"].visible = false
+		@sprites["boundaryQ2"].visible = false
 		
 		@sprites["boundaryQ3"] = IconSprite.new(0, 0, @viewport)
 		@sprites["boundaryQ3"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant3")
 		@sprites["boundaryQ3"].x = @sprites["pot_upper"].x
 		@sprites["boundaryQ3"].y = @sprites["pot_upper"].y
 		@sprites["boundaryQ3"].z = 99999999
-		#@sprites["boundaryQ3"].visible = false
+		@sprites["boundaryQ3"].visible = false
 		
 		@sprites["boundaryQ4"] = IconSprite.new(0, 0, @viewport)
 		@sprites["boundaryQ4"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/boundary_quadrant4")
 		@sprites["boundaryQ4"].x = @sprites["pot_upper"].x
 		@sprites["boundaryQ4"].y = @sprites["pot_upper"].y
 		@sprites["boundaryQ4"].z = 99999999
-		#@sprites["boundaryQ4"].visible = false
+		@sprites["boundaryQ4"].visible = false
+		
+		@sprites["stirDirectionArrow"] = IconSprite.new(0, 0, @viewport)
+		@sprites["stirDirectionArrow"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/arrow_left")
+		@sprites["stirDirectionArrow"].x = Graphics.width/2 - @sprites["stirDirectionArrow"].width/2
+		@sprites["stirDirectionArrow"].y = Graphics.height/2 - @sprites["stirDirectionArrow"].height/4 - 16
+		@sprites["stirDirectionArrow"].z = 99999
+		@sprites["stirDirectionArrow"].visible = false
 		
 		@lastQuadrant = nil
 		@currentQuadrant = nil
 		@quadrantsStirredIn = []
+		@requiredStirDir = nil
+		@stageTimer = Graphics.frame_rate * STAGE_TIMER_SECONDS
+		@burnTimer = Graphics.frame_rate * BURN_TIMER_SECONDS
+		@arrowBlinkTimer = 0
 		
 		pbmain
 	end #def initialize
+	
+	def stirArrowBlink
+		case @arrowBlinkTimer
+		when Graphics.frame_rate*3
+			@sprites["stirDirectionArrow"].visible = true
+		when Graphics.frame_rate*2.5
+			@sprites["stirDirectionArrow"].visible = false
+		when Graphics.frame_rate*2
+			@sprites["stirDirectionArrow"].visible = true
+		when Graphics.frame_rate*1.5
+			@sprites["stirDirectionArrow"].visible = false
+		when Graphics.frame_rate*1
+			@sprites["stirDirectionArrow"].visible = true
+		when Graphics.frame_rate*0.5
+			@sprites["stirDirectionArrow"].visible = false
+		end #case @arrowBlinkTimer
+	end #def stirArrowBlink
+	
+	def decideStirDir
+		dir = rand(1..2)
+		case dir
+		when 1
+			@requiredStirDir = "left"
+			@sprites["stirDirectionArrow"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/arrow_left")
+		when 2
+			@requiredStirDir = "right"
+			@sprites["stirDirectionArrow"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/arrow_right")
+		end #case dir
+		
+		@arrowBlinkTimer = Graphics.frame_rate * 3
+	end #def decideStirDir
 	
 	def outOfBounds?
 		return true if !Mouse.over_pixel?(@sprites["boundaries"])
@@ -141,6 +187,11 @@ class CookingStage1
 						print "stirred left"
 					end
 				end #case @quadrantsStirredIn[0]
+				#change stir direction since the stir was completed
+				decideStirDir
+				#reset burn timer
+				@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
+				
 			elsif @quadrantsStirredIn.include?(@currentQuadrant)
 				#if we've already been in this quadrant before completing a stir around the pot, we have not gone in a circle, and the array should start over with this quadrant
 				@quadrantsStirredIn = [@currentQuadrant]
@@ -189,9 +240,16 @@ class CookingStage1
 		detectStirDirection if @submerged
 	end #detectInput
 	
+	def burnedNotif
+		print "you burned the mixture"
+		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
+	end #def burnedNotif
+	
 	def pbmain
 		#pbMessage(_INTL("Adding candy base"))
 		@sprites["candy_base"].visible = true
+		#decide initial stir direction
+		decideStirDir
 		
 		loop do
 			Graphics.update
@@ -199,9 +257,21 @@ class CookingStage1
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
 			detectInput
+			
+			stirArrowBlink if @arrowBlinkTimer > 0
+			@arrowBlinkTimer -= 1
+			
+			burnedNotif if @burnTimer <= 0
+			@burnTimer -= 1
+			break if @stageTimer <= 0
+			@stageTimer -= 1
 		end #loop do
+		print "stage1 done"
 	end
 end #class CookingStage1
+
+
+
 
 class CookingStage2
 	def initialize
