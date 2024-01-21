@@ -4,6 +4,11 @@ STAGE_TIMER_SECONDS = 30
 BURN_TIMER_SECONDS = 5
 
 	def initialize
+		if !$bag.hasAnyBerry?
+			pbMessage(_INTL("You don't have any berries!"))
+			return
+		end
+	
 		@sprites = {}
 		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
 		@viewport.z = 99999
@@ -245,9 +250,17 @@ BURN_TIMER_SECONDS = 5
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
 	end #def burnedNotif
 	
-	def pbmain
+	def pbmain		
 		#pbMessage(_INTL("Adding candy base"))
 		@sprites["candy_base"].visible = true
+		Graphics.update
+		pbUpdateSpriteHash(@sprites)
+		
+		pbWait(1*Graphics.frame_rate)
+		
+		#add berries
+		pbBerryBlenderSimple
+		
 		#decide initial stir direction
 		decideStirDir
 		
