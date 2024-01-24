@@ -14,3 +14,16 @@
 61,East,0,48,West,5
 # Connection to Hacienda (61) - Hacienda Castaneda (79)
 61,West,0,79,East,27
+# Ice Cream Factory (28) - Calojarro Plaza (36)
+28,South,0,36,North,0
+# Papelbrook (31) - Melolado (39)
+31,South,35,39,North,0
+# Connection to Hacienda (61) - Route 1 (48)
+61,East,0,48,West,5
+# Connection to Hacienda (61) - Hacienda Castaneda (79)
+61,West,0,79,East,27
+# Caliendoro Ranch (45) - Route 4 - Top East (47)
+45,South,33,47,North,0
+# Route 3 (29) - Route 4 - Top East (47)
+29,West,49,47,East,0
+
