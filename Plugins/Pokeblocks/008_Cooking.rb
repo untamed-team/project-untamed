@@ -259,7 +259,13 @@ BURN_TIMER_SECONDS = 5
 		pbWait(1*Graphics.frame_rate)
 		
 		#add berries
-		pbBerryBlenderSimple
+		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
+		@berries = BerryPoffin.pbPickBerryForBlenderSimple
+		print "no berry selected" if @berries.nil? || @berries.empty?
+		print @berries
+		
+		
+		#pbBerryBlenderSimple
 		
 		#decide initial stir direction
 		decideStirDir

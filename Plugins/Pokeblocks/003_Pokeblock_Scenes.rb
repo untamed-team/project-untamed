@@ -1307,50 +1307,78 @@ class MultiBerrySelectionScreen
   end
 
   def pbStartScreen(proc = nil)
-    @scene.pbStartScene(@bag, true, proc)
-    item = nil
-	ready = false
-    loop do
-	  if ready
-		if @scene.pbConfirm(_INTL("Blend these berries?"))
-			break
-		elsif @scene.pbConfirm(_INTL("Give up on blending?"))
-			@scene.selectedBerries = []
-			break
-		end
-	  end
-      item = @scene.pbChooseItem #if !ready
-      break if !item && @scene.selectedBerries.empty?
-	  if !item 
-		if @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Blend this berry?") : _INTL("Blend these berries?")) 
-			break #@scene.selectedBerries 
-		elsif @scene.pbConfirm(_INTL("Give up on blending?"))
-			@scene.selectedBerries = []
-			break
-		end
-	  end
-      next if !item
-	  qty = item[1]
-	  item = item[0]
-	  itm = GameData::Item.get(item)
-	  next pbDisplay(_INTL("You don't have any more of these to throw in.")) if qty - @scene.selectedBerries.count(item) <= 0
-      cmdUse      = -1
-      commands = []
-      # Generate command list
-      commands[cmdUse = commands.length]    = _INTL("Throw In")
-      commands[commands.length]             = _INTL("Cancel")
-      # Show commands generated above
-      itemname = itm.name
-      command = @scene.pbShowCommands(_INTL("Throw {1} in the blender?", itemname), commands) if !ready
-      if cmdUse >= 0 && command == cmdUse   # Use item
-		@scene.selectedBerries.push(itm)
-        @scene.pbRefresh
-		if @scene.selectedBerries.length >= 4
-			ready = true
-		end
-        next
-      end
-    end
+	done = false
+	while done == false do
+		@scene.pbStartScene(@bag, true, proc)
+		item = nil
+		ready = false
+		loop do
+			if ready
+				if @scene.pbConfirm(_INTL("Cook these berries?"))
+					done = true
+					break
+				elsif @scene.pbConfirm(_INTL("Give up on cooking?"))
+					@scene.selectedBerries = []
+					done = true
+					break
+				end
+			end
+			item = @scene.pbChooseItem #if !ready
+	  
+			if !item 
+				if @scene.selectedBerries.length >= 1 && @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Cook this berry?") : _INTL("Cook these berries?")) 
+					done = true
+					break #@scene.selectedBerries
+				else
+					cmdUse      = -1
+					commands = []
+					# Generate command list
+					commands[cmdUse = commands.length]    = _INTL("Stop cooking")
+					commands[commands.length]             = _INTL("Take berries out of pot")
+					commands[commands.length]             = _INTL("Keep cooking")
+					# Show commands generated above
+					command = @scene.pbShowCommands(_INTL("Exit?"), commands)
+			
+					case command
+					when 0
+						#stop cooking
+						done = true
+						@scene.selectedBerries = []
+						break
+					when 1
+						#take berries out of pot
+						@scene.selectedBerries = []
+						break
+					end
+		
+				#elsif @scene.pbConfirm(_INTL("Give up on cooking?"))
+				#	@scene.selectedBerries = []
+				#	break
+				end
+			end
+			next if !item
+			qty = item[1]
+			item = item[0]
+			itm = GameData::Item.get(item)
+			next pbDisplay(_INTL("You don't have any more of these to throw in.")) if qty - @scene.selectedBerries.count(item) <= 0
+			cmdUse      = -1
+			commands = []
+			# Generate command list
+			commands[cmdUse = commands.length]    = _INTL("Throw In")
+			commands[commands.length]             = _INTL("Cancel")
+			# Show commands generated above
+			itemname = itm.name
+			command = @scene.pbShowCommands(_INTL("Throw {1} in the pot?", itemname), commands) if !ready
+			if cmdUse >= 0 && command == cmdUse   # Use item
+				@scene.selectedBerries.push(itm)
+				@scene.pbRefresh
+				if @scene.selectedBerries.length >= 4
+					ready = true
+				end
+				next
+			end
+		end #loop
+	end #while
 	@scene.pbEndScene
     return @scene.selectedBerries
   end

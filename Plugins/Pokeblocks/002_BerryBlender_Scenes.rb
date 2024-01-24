@@ -21,16 +21,16 @@ def pbBerryBlender(playerCount=0,specificNames=nil,forceFail=false)
 end
 
 def pbBerryBlenderSimple
-	if !$bag.hasAnyBerry?
-		pbMessage(_INTL("You don't have any berries!"))
-		return false
-	end
-	ret = false
-	pbFadeOutIn {
+	#if !$bag.hasAnyBerry?
+	#	pbMessage(_INTL("You don't have any berries!"))
+	#	return false
+	#end
+	#ret = false
+	#pbFadeOutIn {
 		scene = SimpleBerryBlender_Scene.new
 		screen = SimpleBerryBlender_Screen.new(scene)
 		ret = screen.pbStartScreen
-	}
+	#}
 	return ret
 end
 
@@ -186,8 +186,8 @@ class BerryBlender_Scene
 		berry   = nil
 		if @restarted then @restarted = nil;
 		else
-			pbMessage(_INTL("Starting up the Berry Blender...")) 
-			pbMessage(_INTL("Please select a berry from your bag to put in the Berry Blender."))
+			#pbMessage(_INTL("Starting up the Berry Blender...")) 
+			pbMessage(_INTL("Select a berry from your bag to put in the pot."))
 		end
 		loop do
 			berry = BerryPoffin.pbPickBerryForBlender
@@ -222,7 +222,7 @@ class BerryBlender_Scene
 			# Increase frames
 			@frames += 1
 		end
-		return true if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend another berry?"))
+		#return true if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend another berry?"))
 		return false
 	end
 	
@@ -1164,8 +1164,8 @@ class SimpleBerryBlender_Scene
 
 	def pbStartScene
 		# Viewport
-		@viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
-		@viewport.z = 99999
+		#@viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+		#@viewport.z = 99999
 		# Values
 		# Set number to define player, quantity of players
 		@playerCount = 0
@@ -1226,14 +1226,14 @@ class SimpleBerryBlender_Scene
 		# Create
 		create_scene
 		# Fade
-		pbFadeInAndShow(@sprites) { update } if !@restarted
+		#pbFadeInAndShow(@sprites) { update } if !@restarted
 		# Choose berry
 		notplay = false
 		@berries   = nil
 		if @restarted then @restarted = nil;
 		else
-			pbMessage(_INTL("Starting up the Berry Blender...")) 
-			pbMessage(_INTL("Please select some berries from your bag to put in the Berry Blender."))
+			#pbMessage(_INTL("Starting up the Berry Blender...")) 
+			pbMessage(_INTL("Select some berries from your bag to put in the pot."))
 		end
 		loop do
 			@berries = BerryPoffin.pbPickBerryForBlenderSimple
