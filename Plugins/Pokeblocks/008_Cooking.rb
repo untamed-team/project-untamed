@@ -1,7 +1,8 @@
 class CookingStage1
+	include BopModule
 
-STAGE_TIMER_SECONDS = 30
-BURN_TIMER_SECONDS = 5
+	STAGE_TIMER_SECONDS = 30
+	BURN_TIMER_SECONDS = 5
 
 	def initialize
 		if !$bag.hasAnyBerry?
@@ -250,6 +251,14 @@ BURN_TIMER_SECONDS = 5
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
 	end #def burnedNotif
 	
+	
+	
+	
+	
+	
+	
+	
+	
 	def pbmain		
 		#pbMessage(_INTL("Adding candy base"))
 		@sprites["candy_base"].visible = true
@@ -261,9 +270,11 @@ BURN_TIMER_SECONDS = 5
 		#add berries
 		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
 		@berries = BerryPoffin.pbPickBerryForBlenderSimple
-		print "no berry selected" if @berries.nil? || @berries.empty?
-		print @berries
 		
+		#print "no berry selected" if @berries.nil? || @berries.empty?
+		#then exit cooking
+		
+		animationBerry(@berries)
 		
 		#pbBerryBlenderSimple
 		
@@ -288,9 +299,6 @@ BURN_TIMER_SECONDS = 5
 		print "stage1 done"
 	end
 end #class CookingStage1
-
-
-
 
 class CookingStage2
 	def initialize
@@ -336,3 +344,80 @@ class CookingStage2
 		end #loop do
 	end
 end #class CookingStage2
+
+#########################
+#From Pokeblock Script
+#########################
+def animationBerry(berries)
+		b=[true,true,true,true]; x0=[]; y0=[]; d=[rand(10),rand(10),rand(10),rand(10)]
+		berries.each_with_index { |berry,pos|
+			if !@sprites["berry #{pos}"]
+				begin
+					filename = GameData::Item.icon_filename(berry)
+				rescue 
+					p "You have an error when choosing berry"
+					Kernel.exit!
+				end
+				@sprites["berry #{pos}"] = Sprite.new(@viewport)
+				@sprites["berry #{pos}"].bitmap = Bitmap.new(filename)
+				@sprites["berry #{pos}"].visible = false
+				@sprites["berry #{pos}"].z = 99999
+				ox = @sprites["berry #{pos}"].bitmap.width/2
+				oy = @sprites["berry #{pos}"].bitmap.height/2
+				set_oxoy_sprite("berry #{pos}",ox,oy)
+				x = Graphics.width / 2 + (pos==0 || pos==2 ? -Graphics.height/2 : Graphics.height/2)
+				y = pos==0 || pos==1 ? 0 : Graphics.height
+				set_xy_sprite("berry #{pos}",x,y)
+				b[pos]=false
+				x0[pos] = x
+				y0[pos] = y
+			end
+		}
+		t = time = 0
+		loop do
+			Graphics.update
+			#update
+			pbUpdateSpriteHash(@sprites)
+			r = Graphics.height/4*Math.sqrt(2)
+			t += 0.05
+			time += 1
+			cos = Math.cos(t)
+			sin = Math.sin(t)
+			if @sprites["berry 0"] && !b[0] && time>d[0]
+				@sprites["berry 0"].visible = true
+				@sprites["berry 0"].x =  r*(1-cos) + x0[0]
+				@sprites["berry 0"].y =  r*(t-sin) + y0[0]
+				if @sprites["berry 0"].y >= (Graphics.height/2-10)
+					b[0] = true; @sprites["berry 0"].visible = false; end
+			end
+			if @sprites["berry 1"] && !b[1] && time>d[1]
+				@sprites["berry 1"].visible = true
+				@sprites["berry 1"].x = -r*(1-cos) + x0[1]
+				@sprites["berry 1"].y =  r*(t-sin) + y0[1]
+				if @sprites["berry 1"].y >= (Graphics.height/2-10)
+					b[1] = true; @sprites["berry 1"].visible = false; end
+			end
+			if @sprites["berry 2"] && !b[2] && time>d[2]
+				@sprites["berry 2"].visible = true
+				@sprites["berry 2"].x =  r*(t-sin) + x0[2]
+				@sprites["berry 2"].y = -r*(1-cos) + y0[2]
+				if @sprites["berry 2"].y <= (Graphics.height/2+10)
+					b[2] = true; @sprites["berry 2"].visible = false; end
+			end
+			if @sprites["berry 3"] && !b[3] && time>d[3]
+				@sprites["berry 3"].visible = true
+				@sprites["berry 3"].x = -r*(t-sin) + x0[3]
+				@sprites["berry 3"].y = -r*(1-cos) + y0[3]
+				if @sprites["berry 3"].y <= (Graphics.height/2+10)
+					b[3] = true; @sprites["berry 3"].visible = false; end
+			end
+			break if (b[0]&&b[1]&&b[2]&&b[3])
+		end
+		dispose("berry 0"); dispose("berry 1"); dispose("berry 2"); dispose("berry 3");
+	end
+	
+	def dispose(id=nil)
+	  (id.nil?)? pbDisposeSpriteHash(@sprites) : pbDisposeSprite(@sprites,id)
+	end
+
+
