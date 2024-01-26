@@ -1313,16 +1313,7 @@ class MultiBerrySelectionScreen
 		item = nil
 		ready = false
 		loop do
-			if ready
-				if @scene.pbConfirm(_INTL("Cook these berries?"))
-					done = true
-					break
-				elsif @scene.pbConfirm(_INTL("Give up on cooking?"))
-					@scene.selectedBerries = []
-					done = true
-					break
-				end
-			end
+			
 			item = @scene.pbChooseItem #if !ready
 	  
 			if !item 
@@ -1348,6 +1339,7 @@ class MultiBerrySelectionScreen
 					when 1
 						#take berries out of pot
 						@scene.selectedBerries = []
+						ready = false
 						break
 					end
 		
@@ -1373,11 +1365,15 @@ class MultiBerrySelectionScreen
 				@scene.selectedBerries.push(itm)
 				@scene.pbRefresh
 				if @scene.selectedBerries.length >= 4
-					ready = true
+					if @scene.pbConfirm(_INTL("Cook these berries?"))
+						done = true
+						break
+					end
 				end
 				next
 			end
 		end #loop
+		@scene.pbEndScene
 	end #while
 	@scene.pbEndScene
     return @scene.selectedBerries

@@ -535,3 +535,11 @@ Flavor = 10,10,30,30,10
 Smoothness = 50
 Color = Yellow
 Description = Its outside is very bitter, but its inside tastes like a sweet drink.
+#-------------------------------
+[SHINYBERRY]
+Size = 24.1
+Firmness = Hard
+Flavor = 10,10,30,30,10
+Smoothness = 50
+Color = Yellow
+Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.

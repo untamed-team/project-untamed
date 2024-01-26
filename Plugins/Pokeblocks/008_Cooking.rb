@@ -104,6 +104,7 @@ class CookingStage1
 		@stageTimer = Graphics.frame_rate * STAGE_TIMER_SECONDS
 		@burnTimer = Graphics.frame_rate * BURN_TIMER_SECONDS
 		@arrowBlinkTimer = 0
+		@stirsCompleted = 0
 		
 		pbmain
 	end #def initialize
@@ -214,6 +215,8 @@ class CookingStage1
 			decideStirDir
 			#reset burn timer
 			@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
+			
+			@stirsCompleted += 1
 		end #if @requiredStirDir == @playerStirDir
 	end #def stirCompleted
 	
@@ -256,11 +259,16 @@ class CookingStage1
 	end #detectInput
 	
 	def burnedNotif
-		print "you burned the mixture"
+		#print "burn"
+		pbSEPlay("GUI Misc7")
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
 	end #def burnedNotif
 	
-	
+	def pbEndScene
+		pbFadeOutAndHide(@sprites)
+		pbDisposeSpriteHash(@sprites)
+		@viewport.dispose
+	end #def pbEndScene
 	
 	
 	
@@ -280,8 +288,11 @@ class CookingStage1
 		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
 		@berries = BerryPoffin.pbPickBerryForBlenderSimple
 		
-		#print "no berry selected" if @berries.nil? || @berries.empty?
-		#then exit cooking
+		#exit cooking if exiting selecting berries
+		if @berries.nil? || @berries.empty?
+			pbEndScene
+			return
+		end #if @berries.nil? || @berries.empty?
 		
 		animationBerry(@berries)
 		
@@ -305,7 +316,10 @@ class CookingStage1
 			break if @stageTimer <= 0
 			@stageTimer -= 1
 		end #loop do
-		print "stage1 done"
+		print "Stirs completed: #{@stirsCompleted}"
+		
+		#end cooking stage
+		pbEndScene
 	end
 end #class CookingStage1
 
