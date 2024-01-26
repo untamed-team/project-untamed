@@ -5,6 +5,10 @@ class CookingStage1
 	BURN_TIMER_SECONDS = 5
 
 	def initialize
+		#if !$bag.hasAnyBerry?
+		#	pbMessage(_INTL("You don't have any candy bases!"))
+		#	return
+		#end
 		if !$bag.hasAnyBerry?
 			pbMessage(_INTL("You don't have any berries!"))
 			return
@@ -262,6 +266,8 @@ class CookingStage1
 		#print "burn"
 		pbSEPlay("GUI Misc7")
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
+		
+		@numberOfBlocks -= 1
 	end #def burnedNotif
 	
 	def pbEndScene
@@ -270,7 +276,10 @@ class CookingStage1
 		@viewport.dispose
 	end #def pbEndScene
 	
-	
+	def failStage
+		pbMessage(_INTL("You burned the entire mixture..."))
+		pbEndScene
+	end #def failStage
 	
 	
 	
@@ -296,7 +305,11 @@ class CookingStage1
 		
 		animationBerry(@berries)
 		
-		#pbBerryBlenderSimple
+		@results = pbCalculateSimplePokeblock(@berries)
+		@numberOfBlocks = @results.length
+		@colorOfBlocks = @results[0].color_name
+		@qualityOfBlocks = (@results[0].plus ? " +" : "")
+		print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
 		
 		#decide initial stir direction
 		decideStirDir
@@ -312,6 +325,11 @@ class CookingStage1
 			@arrowBlinkTimer -= 1
 			
 			burnedNotif if @burnTimer <= 0
+			if @numberOfBlocks < 0
+				#you get 1 free burn (which is why this says '< 0'), so if you burn the mixture once, you will then after be losing a block from the output per burn. fail stage if no output blocks left
+				failStage
+				return
+			end #if @numberOfBlocks < 0
 			@burnTimer -= 1
 			break if @stageTimer <= 0
 			@stageTimer -= 1
@@ -443,4 +461,40 @@ def dispose(id=nil)
 	(id.nil?)? pbDisposeSpriteHash(@sprites) : pbDisposeSprite(@sprites,id)
 end
 
-
+def pbCalculateSimplePokeblock(berries)
+		probability = 0
+		posColors = []
+		@berries.each { |berry| 
+			data = GameData::BerryData.get(berry.id)
+			probability += data.plusProbability
+			posColors.push(data.block_color)
+		}
+		color = nil
+		uniqColors = posColors.uniq
+		if uniqColors.length >=4 then color = :Rainbow;
+		elsif uniqColors.length == 1 then color = uniqColors[0]; 
+		elsif uniqColors.length == posColors.length then color = posColors.sample;
+		else
+			c = []
+			uniqColors.each { |color| 
+				next c.push(color) if c.empty? || posColors.count(color) == posColors.count(c[0])
+				c[0] = color if posColors.count(color) > posColors.count(c[0])
+			}
+			color = c.sample
+		end
+		plus = rand(100)<probability
+		flavor = [0,0,0,0,0]
+		fVal = (plus ? 15 : 5 )
+		case color
+		when :Rainbow then flavor = [fVal,fVal,fVal,fVal,fVal]
+		when :Red then flavor[0] = fVal
+		when :Blue then flavor[1] = fVal
+		when :Pink then flavor[2] = fVal
+		when :Green then flavor[3] = fVal
+		when :Yellow then flavor[4] = fVal
+		end
+		results = []
+		qty = berries.length
+		qty.times { results.push(Pokeblock.new(color,flavor,0,plus)) }	
+		return results
+	end

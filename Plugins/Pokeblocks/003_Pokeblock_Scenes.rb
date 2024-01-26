@@ -1313,7 +1313,6 @@ class MultiBerrySelectionScreen
 		item = nil
 		ready = false
 		loop do
-			
 			item = @scene.pbChooseItem #if !ready
 	  
 			if !item 
