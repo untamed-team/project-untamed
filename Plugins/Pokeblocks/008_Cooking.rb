@@ -100,6 +100,7 @@ class CookingStage1
 		@currentQuadrant = nil
 		@quadrantsStirredIn = []
 		@requiredStirDir = nil
+		@playerStirDir = nil
 		@stageTimer = Graphics.frame_rate * STAGE_TIMER_SECONDS
 		@burnTimer = Graphics.frame_rate * BURN_TIMER_SECONDS
 		@arrowBlinkTimer = 0
@@ -166,38 +167,7 @@ class CookingStage1
 		if @currentQuadrant != @lastQuadrant #needed so this doesn't invalidate the stir if staying still in the same quadrant
 			#detect whether we've gone completely around the pot
 			if @quadrantsStirredIn.include?(@currentQuadrant) && @quadrantsStirredIn.length >= 4 && @quadrantsStirredIn[0] == @currentQuadrant #complete circle
-				#print "stir complete"
-				case @quadrantsStirredIn[0]
-				when 1
-					if @quadrantsStirredIn[1] == 2
-						print "stirred right"
-					else
-						print "stirred left"
-					end
-				when 2
-					if @quadrantsStirredIn[1] == 3
-						print "stirred right"
-					else
-						print "stirred left"
-					end
-				when 3
-					if @quadrantsStirredIn[1] == 4
-						print "stirred right"
-					else
-						print "stirred left"
-					end
-				when 4
-					if @quadrantsStirredIn[1] == 1
-						print "stirred right"
-					else
-						print "stirred left"
-					end
-				end #case @quadrantsStirredIn[0]
-				#change stir direction since the stir was completed
-				decideStirDir
-				#reset burn timer
-				@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
-				
+				stirCompleted
 			elsif @quadrantsStirredIn.include?(@currentQuadrant)
 				#if we've already been in this quadrant before completing a stir around the pot, we have not gone in a circle, and the array should start over with this quadrant
 				@quadrantsStirredIn = [@currentQuadrant]
@@ -207,6 +177,45 @@ class CookingStage1
 			end #if @quadrantsStirredIn.include?(@currentQuadrant)
 		end #if @currentQuadrant != @lastQuadrant
 	end #detectStirDirection
+	
+	def stirCompleted
+		case @quadrantsStirredIn[0]
+		when 1
+			if @quadrantsStirredIn[1] == 2
+				@playerStirDir = "right"
+			else
+				@playerStirDir = "left"
+			end
+		when 2
+			if @quadrantsStirredIn[1] == 3
+				@playerStirDir = "right"
+			else
+				@playerStirDir = "left"
+			end
+		when 3
+			if @quadrantsStirredIn[1] == 4
+				@playerStirDir = "right"
+			else
+				@playerStirDir = "left"
+			end
+		when 4
+			if @quadrantsStirredIn[1] == 1
+				@playerStirDir = "right"
+			else
+				@playerStirDir = "left"
+			end
+		end #case @quadrantsStirredIn[0]
+				
+		#if stirred the correct direction
+		if @requiredStirDir == @playerStirDir
+			#play chime to let player know a stir was complete
+			pbSEPlay("Mining reveal")
+			#change stir direction since the stir was completed
+			decideStirDir
+			#reset burn timer
+			@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
+		end #if @requiredStirDir == @playerStirDir
+	end #def stirCompleted
 	
 	def getCurrentQuandrant
 		#get the current quadrant the spoon is submerged in
@@ -361,7 +370,7 @@ def animationBerry(berries)
 				@sprites["berry #{pos}"] = Sprite.new(@viewport)
 				@sprites["berry #{pos}"].bitmap = Bitmap.new(filename)
 				@sprites["berry #{pos}"].visible = false
-				@sprites["berry #{pos}"].z = 99999
+				@sprites["berry #{pos}"].z = 999999
 				ox = @sprites["berry #{pos}"].bitmap.width/2
 				oy = @sprites["berry #{pos}"].bitmap.height/2
 				set_oxoy_sprite("berry #{pos}",ox,oy)
@@ -416,8 +425,8 @@ def animationBerry(berries)
 		dispose("berry 0"); dispose("berry 1"); dispose("berry 2"); dispose("berry 3");
 	end
 	
-	def dispose(id=nil)
-	  (id.nil?)? pbDisposeSpriteHash(@sprites) : pbDisposeSprite(@sprites,id)
-	end
+def dispose(id=nil)
+	(id.nil?)? pbDisposeSpriteHash(@sprites) : pbDisposeSprite(@sprites,id)
+end
 
 
