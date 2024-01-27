@@ -38,12 +38,16 @@ class CookingStage1
 		@sprites["stove"].y = @sprites["pot_upper"].y + 160
 		@sprites["stove"].z = 99998
 		
-		@sprites["candy_base"] = IconSprite.new(0, 0, @viewport)
-		@sprites["candy_base"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
+		
+		@sprites["candy_base"] = ChangelingSprite.new(0,0,@viewport)
+		@sprites["candy_base"].addBitmap("base","Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
+		@sprites["candy_base"].changeBitmap("base")
+		#@sprites["candy_base"] = IconSprite.new(0, 0, @viewport)
+		#@sprites["candy_base"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
 		@sprites["candy_base"].x = Graphics.width/2 - @sprites["candy_base"].width/2
 		@sprites["candy_base"].y = 70
 		@sprites["candy_base"].z = 99999
-		@sprites["candy_base"].visible = false
+		#@sprites["candy_base"].visible = false
 		
 		@sprites["spoon"] = IconSprite.new(0, 0, @viewport)
 		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon")
@@ -348,13 +352,15 @@ class CookingStage1
 			#@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 			#@sprites["candy_base"].tone = Tone.new(150,0,0,0)
 			#@sprites["candy_base"].start_tone_change(Tone.new(150,0,0,0), 1)
-			@sprites["candy_base"].color.set(150, 0, 0, 0)
+			@sprites["candy_base"].tone.set(150,0,0,0)
+			#@sprites["candy_base"].color.set(150, 0, 0, 0)
 			#@sprites["candy_base"].tone.red = @resultingBaseHue[0]
 			#@sprites["candy_base"].tone.green = @resultingBaseHue[1]
 			#@sprites["candy_base"].tone.blue = @resultingBaseHue[2]
 			
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
+			#$game_screen.start_tone_change(Tone.new(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2]), 1)
 		end
 		
 		#otherwise change tone overtime
@@ -592,13 +598,6 @@ def pbCalculateSimplePokeblock(berries)
 		qty.times { results.push(Pokeblock.new(color,flavor,0,plus)) }	
 		return results
 	end
-
-
-
-
-
-
-
 
 def pbPickCandyBase
 	ret = nil
