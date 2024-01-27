@@ -345,10 +345,13 @@ class CookingStage1
 		if @candyBase != :CANDYBASE
 			#if used a colored base, set candy base sprite tones to @resultingBaseHue immediately
 			print "setting hue immediately to #{@resultingBaseHue[0]}, #{@resultingBaseHue[1]}, #{@resultingBaseHue[2]}"
-			@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
-			#@sprites["candy_base"].tone.red == @resultingBaseHue[0]
-			#@sprites["candy_base"].tone.green == @resultingBaseHue[1]
-			#@sprites["candy_base"].tone.blue == @resultingBaseHue[2]
+			#@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
+			#@sprites["candy_base"].tone = Tone.new(150,0,0,0)
+			#@sprites["candy_base"].start_tone_change(Tone.new(150,0,0,0), 1)
+			@sprites["candy_base"].color.set(150, 0, 0, 0)
+			#@sprites["candy_base"].tone.red = @resultingBaseHue[0]
+			#@sprites["candy_base"].tone.green = @resultingBaseHue[1]
+			#@sprites["candy_base"].tone.blue = @resultingBaseHue[2]
 			
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
