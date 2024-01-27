@@ -38,16 +38,13 @@ class CookingStage1
 		@sprites["stove"].y = @sprites["pot_upper"].y + 160
 		@sprites["stove"].z = 99998
 		
-		
-		@sprites["candy_base"] = ChangelingSprite.new(0,0,@viewport)
-		@sprites["candy_base"].addBitmap("base","Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
-		@sprites["candy_base"].changeBitmap("base")
-		#@sprites["candy_base"] = IconSprite.new(0, 0, @viewport)
-		#@sprites["candy_base"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
+		@sprites["candy_base"] = IconSprite.new(0, 0, @viewport)
+		@sprites["candy_base"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot")
 		@sprites["candy_base"].x = Graphics.width/2 - @sprites["candy_base"].width/2
 		@sprites["candy_base"].y = 70
 		@sprites["candy_base"].z = 99999
-		#@sprites["candy_base"].visible = false
+		@sprites["candy_base"].opacity = 230
+		@sprites["candy_base"].visible = false
 		
 		@sprites["spoon"] = IconSprite.new(0, 0, @viewport)
 		@sprites["spoon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/spoon")
@@ -330,42 +327,35 @@ class CookingStage1
 				#get resulting color of pokeblock
 				return if @colorOfBlocks == "Rainbow"
 				@resultingBaseHue = @hues["#{@colorOfBlocks}"]
+				print @resultingBaseHue
 			else
 				#@resultingBaseHue is already set
+				print "already correct hue"
 				return
 			end
 		end #if @berries.nil? || @berries.empty?
-		
-		print "@resultingBaseHue is #{@resultingBaseHue}"
 	end #def decideBaseHue
 	
 	def changeBaseHue
 		#don't run this if already the resulting hue (used a colored base)
-		if @sprites["candy_base"].tone.red == @resultingBaseHue[0] && @sprites["candy_base"].tone.green == @resultingBaseHue[1] && @sprites["candy_base"].tone.blue == @resultingBaseHue[2]
-			print "already correct hue"
+		if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
+		print "done changing color"
 			return
 		end
 		
 		if @candyBase != :CANDYBASE
 			#if used a colored base, set candy base sprite tones to @resultingBaseHue immediately
-			print "setting hue immediately to #{@resultingBaseHue[0]}, #{@resultingBaseHue[1]}, #{@resultingBaseHue[2]}"
-			#@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
-			#@sprites["candy_base"].tone = Tone.new(150,0,0,0)
-			#@sprites["candy_base"].start_tone_change(Tone.new(150,0,0,0), 1)
-			@sprites["candy_base"].tone.set(150,0,0,0)
-			#@sprites["candy_base"].color.set(150, 0, 0, 0)
-			#@sprites["candy_base"].tone.red = @resultingBaseHue[0]
-			#@sprites["candy_base"].tone.green = @resultingBaseHue[1]
-			#@sprites["candy_base"].tone.blue = @resultingBaseHue[2]
-			
+			#print "setting hue immediately to #{@resultingBaseHue[0]}, #{@resultingBaseHue[1]}, #{@resultingBaseHue[2]}"
+			@sprites["candy_base"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
-			#$game_screen.start_tone_change(Tone.new(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2]), 1)
-		end
-		
-		#otherwise change tone overtime
-		#$game_screen.pictures[number].start_tone_change(@parameters[1], @parameters[2] * Graphics.frame_rate / 20)
-	end
+		else
+			#otherwise change color over the course of the minigame stage
+			#this will run every frame until the color is equal to the resultingBaseHue
+			#@sprites["candy_base"].color.set
+		end #if @candyBase != :CANDYBASE
+	end #def changeBaseHue
+	
 	
 	def pbmain
 		Graphics.update
@@ -403,13 +393,14 @@ class CookingStage1
 		
 		animationBerry(@berries)
 		
-		decideBaseHue
-		
 		@results = pbCalculateSimplePokeblock(@berries)
 		@numberOfBlocks = @results.length
 		@colorOfBlocks = @results[0].color_name
 		@qualityOfBlocks = (@results[0].plus ? " +" : "")
 		print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
+		
+		decideBaseHue
+		changeBaseHue
 		
 		#decide initial stir direction
 		decideStirDir
@@ -420,6 +411,8 @@ class CookingStage1
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
 			detectInput
+			
+			changeBaseHue
 			
 			stirArrowBlink if @arrowBlinkTimer > 0
 			@arrowBlinkTimer -= 1
@@ -609,3 +602,13 @@ def pbPickCandyBase
 	$bag.remove(ret) if !ret.nil?
 	return ret
 end
+
+class Sprite
+def start_color_change(color, duration)
+    @color_target   = color.clone
+    @color_duration = duration
+    if @color_duration == 0
+      @color = @color_target.clone
+    end
+  end
+end #class Sprite
