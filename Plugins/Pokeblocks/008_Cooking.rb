@@ -5,10 +5,10 @@ class CookingStage1
 	BURN_TIMER_SECONDS = 5
 
 	def initialize
-		#if !$bag.hasAnyBerry?
-		#	pbMessage(_INTL("You don't have any candy bases!"))
-		#	return
-		#end
+		if !$bag.has?(:CANDYBASE) && !$bag.has?(:REDCANDYBASE) && !$bag.has?(:BLUECANDYBASE) && !$bag.has?(:PINKCANDYBASE) && !$bag.has?(:GREENCANDYBASE) && !$bag.has?(:YELLOCANDYBASE)
+			pbMessage(_INTL("You don't have any candy bases!"))
+			return
+		end
 		if !$bag.hasAnyBerry?
 			pbMessage(_INTL("You don't have any berries!"))
 			return
@@ -109,6 +109,22 @@ class CookingStage1
 		@burnTimer = Graphics.frame_rate * BURN_TIMER_SECONDS
 		@arrowBlinkTimer = 0
 		@stirsCompleted = 0
+		@resultingBaseHue = []
+		@hues = {
+			"Black" => [60,60,60],
+			"Blue" => [6,155,216],
+			"Gold" => [194,154,42],
+			"Gray" => [158,158,158],
+			"Green" => [136,194,75],
+			"Indigo" => [124,115,251],
+			"LiteBlue" => [8,203,248],
+			"Olive" => [177,175,81],
+			"Pink" => [241,140,164],
+			"Purple" => [218,107,251],
+			"Red" => [235,113,80],
+			"White" => [224,224,224],
+			"Yellow" => [252,204,84]
+		}
 		
 		pbmain
 	end #def initialize
@@ -281,18 +297,91 @@ class CookingStage1
 		pbEndScene
 	end #def failStage
 	
+	def decideBaseHue
+		if @berries.nil? || @berries.empty?
+			#if we haven't picked berries yet, decide hue from base used
+			case @candyBase
+			when :CANDYBASE
+				#default candy base is just off white, same color as the white block
+				@resultingBaseHue = @hues["White"]
+			when :REDCANDYBASE
+				#make hue match base used
+				@resultingBaseHue = @hues["Red"]
+			when :BLUECANDYBASE
+				#make hue match base used
+				@resultingBaseHue = @hues["Blue"]
+			when :PINKCANDYBASE
+				#make hue match base used
+				@resultingBaseHue = @hues["Pink"]
+			when :GREENCANDYBASE
+				#make hue match base used
+				@resultingBaseHue = @hues["Green"]
+			when :YELLOWCANDYBASE		
+				#make hue match base used
+				@resultingBaseHue = @hues["Yellow"]
+			end
+		else
+			#if we have picked berries, decide hue from berries if a regular base was used
+			if @candyBase == :CANDYBASE
+				#get resulting color of pokeblock
+				return if @colorOfBlocks == "Rainbow"
+				@resultingBaseHue = @hues["#{@colorOfBlocks}"]
+			else
+				#@resultingBaseHue is already set
+				return
+			end
+		end #if @berries.nil? || @berries.empty?
+		
+		print "@resultingBaseHue is #{@resultingBaseHue}"
+	end #def decideBaseHue
 	
+	def changeBaseHue
+		#don't run this if already the resulting hue (used a colored base)
+		if @sprites["candy_base"].tone.red == @resultingBaseHue[0] && @sprites["candy_base"].tone.green == @resultingBaseHue[1] && @sprites["candy_base"].tone.blue == @resultingBaseHue[2]
+			print "already correct hue"
+			return
+		end
+		
+		if @candyBase != :CANDYBASE
+			#if used a colored base, set candy base sprite tones to @resultingBaseHue immediately
+			print "setting hue immediately"
+			@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
+			#@sprites["candy_base"].tone.red == @resultingBaseHue[0]
+			#@sprites["candy_base"].tone.green == @resultingBaseHue[1]
+			#@sprites["candy_base"].tone.blue == @resultingBaseHue[2]
+			
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+		end
+		
+		#otherwise change tone overtime
+		#$game_screen.pictures[number].start_tone_change(@parameters[1], @parameters[2] * Graphics.frame_rate / 20)
+	end
 	
-	
-	
-	def pbmain		
-		#pbMessage(_INTL("Adding candy base"))
-		@sprites["candy_base"].visible = true
+	def pbmain
 		Graphics.update
 		pbUpdateSpriteHash(@sprites)
 		
 		pbWait(1*Graphics.frame_rate)
 		
+		#choose a candy base
+		pbMessage(_INTL("Select a candy base from your bag to put in the pot."))
+		#@berries = BerryPoffin.pbPickBerryForBlenderSimple
+		
+		@candyBase = pbPickCandyBase
+		while @candyBase.nil? do
+			if pbConfirmMessage(_INTL("Give up on cooking?"))
+				pbEndScene
+				return
+			else
+				pbPickCandyBase
+			end
+		end #while @candyBase.nil? do
+		decideBaseHue
+		
+		changeBaseHue
+		@sprites["candy_base"].visible = true
+				
 		#add berries
 		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
 		@berries = BerryPoffin.pbPickBerryForBlenderSimple
@@ -304,6 +393,8 @@ class CookingStage1
 		end #if @berries.nil? || @berries.empty?
 		
 		animationBerry(@berries)
+		
+		decideBaseHue
 		
 		@results = pbCalculateSimplePokeblock(@berries)
 		@numberOfBlocks = @results.length
@@ -498,3 +589,21 @@ def pbCalculateSimplePokeblock(berries)
 		qty.times { results.push(Pokeblock.new(color,flavor,0,plus)) }	
 		return results
 	end
+
+
+
+
+
+
+
+
+def pbPickCandyBase
+	ret = nil
+	pbFadeOutIn {
+		scene = PokemonBag_Scene.new
+		screen = PokemonBagScreen.new(scene, $bag)
+		ret = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item) == :CANDYBASE || GameData::Item.get(item) == :REDCANDYBASE || GameData::Item.get(item) == :BLUECANDYBASE || GameData::Item.get(item) == :PINKCANDYBASE || GameData::Item.get(item) == :GREENCANDYBASE || GameData::Item.get(item) == :YELLOWCANDYBASE})
+	}
+	$bag.remove(ret) if !ret.nil?
+	return ret
+end

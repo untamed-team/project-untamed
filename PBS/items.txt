@@ -6698,3 +6698,45 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = An item for checking a Pokémon's contest stats.
+#-------------------------------
+[CANDYBASE]
+Name = Candy Base
+NamePlural = Candy Bases
+Pocket = 1
+Price = 100
+Description = A mixture to make candy.
+#-------------------------------
+[REDCANDYBASE]
+Name = Red Candy Base
+NamePlural = Red Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy red!
+#-------------------------------
+[BLUECANDYBASE]
+Name = Blue Candy Base
+NamePlural = Blue Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy blue!
+#-------------------------------
+[PINKCANDYBASE]
+Name = Pink Candy Base
+NamePlural = Pink Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy pink!
+#-------------------------------
+[GREENCANDYBASE]
+Name = Green Candy Base
+NamePlural = Green Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy green!
+#-------------------------------
+[YELLOWCANDYBASE]
+Name = Yellow Candy Base
+NamePlural = Yellow Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy yellow!
