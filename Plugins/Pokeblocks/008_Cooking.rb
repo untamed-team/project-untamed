@@ -344,7 +344,7 @@ class CookingStage1
 		
 		if @candyBase != :CANDYBASE
 			#if used a colored base, set candy base sprite tones to @resultingBaseHue immediately
-			print "setting hue immediately"
+			print "setting hue immediately to #{@resultingBaseHue[0]}, #{@resultingBaseHue[1]}, #{@resultingBaseHue[2]}"
 			@sprites["candy_base"].tone.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 			#@sprites["candy_base"].tone.red == @resultingBaseHue[0]
 			#@sprites["candy_base"].tone.green == @resultingBaseHue[1]
