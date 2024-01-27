@@ -8658,7 +8658,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = StartHealUserEachTurn
-Description = The user envelops itself in a veil made of water. It regains some HP on every turn.
+Description = Enveloping itself in a water ring, the user regains some HP every turn and is immune to burns.
 #-------------------------------
 [LIFEDEW]
 Name = Life Dew

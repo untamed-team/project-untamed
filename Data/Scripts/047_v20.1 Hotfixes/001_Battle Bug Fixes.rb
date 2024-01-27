@@ -295,6 +295,11 @@ class Battle::Battler
       @battle.pbDisplay(_INTL("It doesn't affect {1}...", pbThis(true))) if showMessages
       return false
     end
+    # Trying to inflict burn on a Pokémon with Aqua Ring set up #by low
+    if @effects[PBEffects::AquaRing] && newStatus == :BURN && !ignoreStatus
+      @battle.pbDisplay(_INTL("It doesn't affect {1}...", pbThis(true))) if showMessages
+      return false
+    end
     # Weather immunity
     #~ if newStatus == :FROZEN && [:Sun, :HarshSun].include?(effectiveWeather)
       #~ @battle.pbDisplay(_INTL("It doesn't affect {1}...", pbThis(true))) if showMessages

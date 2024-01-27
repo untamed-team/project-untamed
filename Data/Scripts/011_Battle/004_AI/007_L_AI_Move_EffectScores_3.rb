@@ -3105,6 +3105,9 @@ class Battle::AI
 				if hasAlly
 					score*=0.5
 				end
+				if user.status == :BURN
+					score*=1.3
+				end
 			else
 				score*=0
 			end

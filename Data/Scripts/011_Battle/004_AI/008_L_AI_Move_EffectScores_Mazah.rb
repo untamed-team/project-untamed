@@ -766,6 +766,9 @@ class Battle::AI
 				if target.hasActiveAbility?(:GUTS)
 					miniscore*=0.1
 				end
+				if target.effects[PBEffects::AquaRing]
+					miniscore*=0.01
+				end
 				if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
 					miniscore*=1.7
 				end
