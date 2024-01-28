@@ -126,6 +126,7 @@ class CookingStage1
 			"White" => [224,224,224],
 			"Yellow" => [252,204,84]
 		}
+		@gradualHueTimer = 0
 		
 		pbmain
 	end #def initialize
@@ -325,36 +326,74 @@ class CookingStage1
 			#if we have picked berries, decide hue from berries if a regular base was used
 			if @candyBase == :CANDYBASE
 				#get resulting color of pokeblock
-				return if @colorOfBlocks == "Rainbow"
+				print "rainbow" if @colorOfBlocks == "Rainbow"
 				@resultingBaseHue = @hues["#{@colorOfBlocks}"]
-				print @resultingBaseHue
+		
+				#how many frames are needed to go from White's hue to the resulting hue?
+				differenceRed = (@hues["White"][0] - @resultingBaseHue[0].abs)
+				differenceGreen = (@hues["White"][1] - @resultingBaseHue[1].abs)
+				differenceBlue = (@hues["White"][2] - @resultingBaseHue[2].abs)
+				differences = [differenceRed, differenceGreen, differenceBlue].sort
+				largestDifference = differences.last
+				#timeNeeded = (30*40)/218, which is 5.5, so we need to subtract 1 every 5 frames
+				if largestDifference != 0
+					@timeNeeded = ((STAGE_TIMER_SECONDS*Graphics.frame_rate)/largestDifference).floor
+					#print "Need to subtract every #{@timeNeeded} frames"
+				else
+					@timeNeeded = 1
+				end #if largestDifference != 0
 			else
 				#@resultingBaseHue is already set
-				print "already correct hue"
 				return
 			end
-		end #if @berries.nil? || @berries.empty?
+		end #if @berries.nil? || @berries.empty?		
 	end #def decideBaseHue
 	
-	def changeBaseHue
-		#don't run this if already the resulting hue (used a colored base)
-		if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
-		print "done changing color"
-			return
-		end
-		
+	def changeBaseHueImmediate
 		if @candyBase != :CANDYBASE
 			#if used a colored base, set candy base sprite tones to @resultingBaseHue immediately
-			#print "setting hue immediately to #{@resultingBaseHue[0]}, #{@resultingBaseHue[1]}, #{@resultingBaseHue[2]}"
-			@sprites["candy_base"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
-			Graphics.update
-			pbUpdateSpriteHash(@sprites)
 		else
-			#otherwise change color over the course of the minigame stage
-			#this will run every frame until the color is equal to the resultingBaseHue
-			#@sprites["candy_base"].color.set
+			#set the base color to the white hue immediately
+			@resultingBaseHue = @hues["White"]
 		end #if @candyBase != :CANDYBASE
-	end #def changeBaseHue
+		
+		@sprites["candy_base"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
+		Graphics.update
+		pbUpdateSpriteHash(@sprites)
+	end #def changeBaseHueImmediate
+	
+	def changeBaseHueGradual
+		#this happens too quickly, so it needs to be slowed down by about half the speed
+		@gradualHueTimer += 1
+		
+		
+		
+		if @gradualHueTimer >= @timeNeeded
+			#this will run every frame until the color is equal to the resultingBaseHue
+			if @sprites["candy_base"].color.red < @resultingBaseHue[0]
+				@sprites["candy_base"].color.red += 1
+			elsif @sprites["candy_base"].color.red > @resultingBaseHue[0]
+				@sprites["candy_base"].color.red -= 1
+			end
+			if @sprites["candy_base"].color.green < @resultingBaseHue[1]
+				@sprites["candy_base"].color.green += 1
+			elsif @sprites["candy_base"].color.green > @resultingBaseHue[1]
+				@sprites["candy_base"].color.green -= 1
+			end
+			if @sprites["candy_base"].color.blue < @resultingBaseHue[2]
+				@sprites["candy_base"].color.blue += 1
+			elsif @sprites["candy_base"].color.blue > @resultingBaseHue[2]
+				@sprites["candy_base"].color.blue -= 1
+			end
+			
+			#not sure why this is needed, but it doesn't update the sprite otherwise
+			@sprites["candy_base"].color.set(@sprites["candy_base"].color.red, @sprites["candy_base"].color.green, @sprites["candy_base"].color.blue)
+			#reset the timer
+			@gradualHueTimer = 0
+			
+			#print "color achieved" if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
+		end #if @gradualHueTimer >= @timeNeeded
+	end #changeBaseHueGradual
 	
 	
 	def pbmain
@@ -378,7 +417,7 @@ class CookingStage1
 		end #while @candyBase.nil? do
 		decideBaseHue
 		
-		changeBaseHue
+		changeBaseHueImmediate
 		@sprites["candy_base"].visible = true
 				
 		#add berries
@@ -397,10 +436,9 @@ class CookingStage1
 		@numberOfBlocks = @results.length
 		@colorOfBlocks = @results[0].color_name
 		@qualityOfBlocks = (@results[0].plus ? " +" : "")
-		print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
+		#print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
 		
 		decideBaseHue
-		changeBaseHue
 		
 		#decide initial stir direction
 		decideStirDir
@@ -412,7 +450,7 @@ class CookingStage1
 			pbUpdateSpriteHash(@sprites)
 			detectInput
 			
-			changeBaseHue
+			changeBaseHueGradual
 			
 			stirArrowBlink if @arrowBlinkTimer > 0
 			@arrowBlinkTimer -= 1
@@ -423,7 +461,7 @@ class CookingStage1
 				failStage
 				return
 			end #if @numberOfBlocks < 0
-			@burnTimer -= 1
+			########################################################################################@burnTimer -= 1
 			break if @stageTimer <= 0
 			@stageTimer -= 1
 		end #loop do
