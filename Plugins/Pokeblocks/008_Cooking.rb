@@ -1,7 +1,7 @@
-class CookingStage1
+class CookingMixing
 	include BopModule
 
-	STAGE_TIMER_SECONDS = 30
+	STAGE_TIMER_SECONDS = 1#30
 	BURN_TIMER_SECONDS = 5
 
 	def initialize
@@ -19,6 +19,13 @@ class CookingStage1
 		@viewport.z = 99999
 	
 		#Graphics
+		backdrop = pbBackdrop
+		@sprites["background"] = IconSprite.new(0, 0, @viewport)
+		@sprites["background"].setBitmap("Graphics/Pictures/Pokemon Amie/"+pbBackdrop)
+		@sprites["background"].x = 0
+		@sprites["background"].y = 0
+		@sprites["background"].z = 9999
+		
 		@sprites["pot_upper"] = IconSprite.new(0, 0, @viewport)
 		@sprites["pot_upper"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stewpot_base_upper - large")
 		@sprites["pot_upper"].x = Graphics.width/2 - @sprites["pot_upper"].width/2
@@ -395,10 +402,11 @@ class CookingStage1
 		end #if @gradualHueTimer >= @timeNeeded
 	end #changeBaseHueGradual
 	
-	
 	def pbmain
+		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
+		
 		Graphics.update
-		pbUpdateSpriteHash(@sprites)
+		#pbUpdateSpriteHash(@sprites)
 		
 		pbWait(1*Graphics.frame_rate)
 		
@@ -470,52 +478,7 @@ class CookingStage1
 		#end cooking stage
 		pbEndScene
 	end
-end #class CookingStage1
-
-class CookingStage2
-	def initialize
-		@sprites = {}
-		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
-		@viewport.z = 99999
-	
-		#Graphics
-		@sprites["firewood"] = IconSprite.new(0, 0, @viewport)
-		@sprites["firewood"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/firewood")
-		@sprites["firewood"].x = Graphics.width/2 - @sprites["firewood"].width/2
-		@sprites["firewood"].y = Graphics.height/2
-		@sprites["firewood"].z = 99999
-		
-		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["fire"] = AnimatedSprite.new("Graphics/Pictures/Pokeblock/Candy Making/fire_anim",3,274,201,4,@viewport)
-		@sprites["fire"].x = @sprites["firewood"].x + @sprites["firewood"].width/2 - @sprites["fire"].width/4
-		@sprites["fire"].y = @sprites["firewood"].y + @sprites["firewood"].height/2 - @sprites["fire"].height/3
-		@sprites["fire"].z = 99999
-		@sprites["fire"].zoom_x = 0.5
-		@sprites["fire"].zoom_y = 0.5
-		@sprites["fire"].play
-		
-		@sprites["stove"] = IconSprite.new(0, 0, @viewport)
-		@sprites["stove"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stove")
-		@sprites["stove"].x = Graphics.width/2 - @sprites["stove"].width/2
-		@sprites["stove"].y = @sprites["firewood"].y - @sprites["stove"].height/3
-		@sprites["stove"].z = 99999
-		
-		@sprites["pot"] = IconSprite.new(0, 0, @viewport)
-		@sprites["pot"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stewpot_base")
-		@sprites["pot"].x = Graphics.width/2 - @sprites["pot"].width/2
-		@sprites["pot"].y = @sprites["stove"].y - 80
-		@sprites["pot"].z = 99999
-		
-		pbmain
-	end #def initialize
-	
-	def pbmain
-		loop do
-			Graphics.update
-			pbUpdateSpriteHash(@sprites)
-		end #loop do
-	end
-end #class CookingStage2
+end #class CookingMixing
 
 #########################
 #From Pokeblock Script
@@ -641,12 +604,79 @@ def pbPickCandyBase
 	return ret
 end
 
-class Sprite
-def start_color_change(color, duration)
-    @color_target   = color.clone
-    @color_duration = duration
-    if @color_duration == 0
-      @color = @color_target.clone
+#########################
+#from the pokemon Amie Script
+def pbBackdrop #gets background based off location
+      environ=pbGetEnvironment
+      # Choose backdrop
+      backdrop="Field"
+      if environ==:Cave
+        backdrop="Cave"
+      elsif environ==:MovingWater
+        backdrop="Water"
+      elsif environ==:Underwater
+        backdrop="Underwater"
+      elsif environ==:Rock
+        backdrop="Mountain"
+      else
+          if !$game_map || !$game_map.metadata
+          backdrop="IndoorA"
+        end
+      end
+      if $game_map
+            back=$game_map.metadata.battle_background
+        if back && back!=""
+          backdrop=back
+        end
+      end
+      if $PokemonGlobal && $PokemonGlobal.nextBattleBack
+        backdrop=$PokemonGlobal.nextBattleBack
+      end
+      # Apply graphics
+      battlebg=backdrop
+      return battlebg
     end
-  end
-end #class Sprite
+
+class CookingCooling
+	def initialize
+		@sprites = {}
+		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+		@viewport.z = 99999
+	
+		#Graphics
+		backdrop = pbBackdrop
+		@sprites["background"] = IconSprite.new(0, 0, @viewport)
+		@sprites["background"].setBitmap("Graphics/Pictures/Pokemon Amie/"+pbBackdrop)
+		@sprites["background"].x = 0
+		@sprites["background"].y = 0
+		@sprites["background"].z = 99999
+		
+		@sprites["stump"] = IconSprite.new(0, 0, @viewport)
+		@sprites["stump"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/stumpStool")
+		@sprites["stump"].x = Graphics.width/2 - @sprites["stump"].width/2
+		@sprites["stump"].y = Graphics.height/2
+		@sprites["stump"].z = 99999
+		
+		@sprites["panBottom"] = IconSprite.new(0, 0, @viewport)
+		@sprites["panBottom"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/panBottom")
+		@sprites["panBottom"].x = Graphics.width/2 - @sprites["panBottom"].width/2
+		@sprites["panBottom"].y = Graphics.height/2 - @sprites["panBottom"].height/4
+		@sprites["panBottom"].z = 99999
+		
+		@sprites["panEdges"] = IconSprite.new(0, 0, @viewport)
+		@sprites["panEdges"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/panEdges")
+		@sprites["panEdges"].x = Graphics.width/2 - @sprites["panEdges"].width/2
+		@sprites["panEdges"].y = @sprites["panBottom"].y
+		@sprites["panEdges"].z = 999999
+		
+		pbmain
+	end #def initialize
+	
+	def pbmain
+		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+		end #loop do
+	end
+end #class CookingCooling
