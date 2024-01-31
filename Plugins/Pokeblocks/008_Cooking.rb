@@ -469,7 +469,7 @@ class CookingMixing
 		@colorOfBlocks = @results[0].color_name
 		@qualityOfBlocks = (@results[0].plus ? " +" : "")
 		
-		print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
+		#print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
 		#@results.each { |pb| pbGainPokeblock(pb) }
 		
 		decideBaseHue
@@ -499,7 +499,9 @@ class CookingMixing
 			break if @stageTimer <= 0
 			@stageTimer -= 1
 		end #loop do
-		print "Stirs completed: #{@stirsCompleted}"
+		#print "Stirs completed: #{@stirsCompleted}"
+		
+		#roll for possibility of getting extra pokeblocks based on @stirsCompleted
 		
 		#end cooking stage
 		pbEndScene
@@ -725,15 +727,41 @@ class CookingCooling
 		@sprites["candy_base_in_pot"].y = @sprites["pot"].y
 		@sprites["candy_base_in_pot"].z = 999999
 		@sprites["candy_base_in_pot"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
+		@sprites["panEdges"].z = 999999
+		
+		#(animname, framecount, framewidth, frameheight, frameskip)
+		@sprites["fan"] = AnimatedSprite.new("Graphics/Pictures/Pokeblock/Candy Making/fan",8,276,336,2,@viewport)
+		@sprites["fan"].x = Graphics.width/2 - @sprites["fan"].width/2
+		@sprites["fan"].y = Graphics.height/2 - @sprites["fan"].height/2
+		@sprites["fan"].z = 999999
 		
 		pbmain
 	end #def initialize
 	
 	def pbmain
 		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
+		
+		pbWait(Graphics.frame_rate*1)
+		
+		#flip pot and mixture upside down
+		@sprites["pot"].angle = 180
+		@sprites["pot"].x += @sprites["pot"].width
+		@sprites["pot"].y += @sprites["pot"].height
+		@sprites["candy_base_in_pot"].visible = false
+		
+		#change pan bottom to color of mixture
+		@sprites["panBottom"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
+		
+		pbUpdateSpriteHash(@sprites)
+		
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
+			
+			#only play when holding down left click
+			#@sprites["fan"].play
+			#make fan follow cursor
+
 		end #loop do
 	end
 end #class CookingCooling
