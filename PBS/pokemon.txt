@@ -3983,7 +3983,7 @@ Evolutions = CRUSTANG,Item,METALCOAT
 [CRUSTANG]
 Name = Crustang
 Types = GROUND,STEEL
-BaseStats = 90,93,132,86,44,43
+BaseStats = 90,93,122,86,44,53
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 167
@@ -4681,7 +4681,7 @@ Color = Purple
 Shape = Bipedal
 Habitat = Cave
 Category = Darkness
-Pokedex = Sableye forage for crystals in the depths of mines. They frighten intruders away from their hoard which began a myth that they steal the souls of miners.
+Pokedex = Sableye forage for crystals in the depths of mines. They frighten intruders away from their hoard. They are believed to steal the souls of miners.
 Generation = 3
 WildItemUncommon = WIDELENS
 #-------------------------------
