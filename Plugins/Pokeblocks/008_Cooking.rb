@@ -370,11 +370,12 @@ class CookingMixing
 	end #def changeBaseHueImmediate
 	
 	def changeBaseHueGradual
+		#return if candybase is a colored base
+		return if @candyBase != :CANDYBASE
+	
 		#this happens too quickly, so it needs to be slowed down by about half the speed
 		@gradualHueTimer += 1
-		
-		
-		
+			
 		if @gradualHueTimer >= @timeNeeded
 			#this will run every frame until the color is equal to the resultingBaseHue
 			if @sprites["candy_base"].color.red < @resultingBaseHue[0]
@@ -401,6 +402,26 @@ class CookingMixing
 			#print "color achieved" if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
 		end #if @gradualHueTimer >= @timeNeeded
 	end #changeBaseHueGradual
+	
+	def overridePokeblockColor
+		#override the resulting pokeblock colors
+		case @candyBase
+		when :REDCANDYBASE
+			color = "Red"
+		when :BLUECANDYBASE
+			color = "Blue"
+		when :PINKCANDYBASE
+			color = "Pink"
+		when :GREENCANDYBASE
+			color = "Green"
+		when :YELLOWCANDYBASE
+			color = "Yellow"
+		end #case @candyBase
+		
+		for i in 0...@results.length
+			@results[i].color = color.to_sym
+		end
+	end #def overridePokeblockColor
 	
 	def pbmain
 		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
@@ -441,10 +462,15 @@ class CookingMixing
 		animationBerry(@berries)
 		
 		@results = pbCalculateSimplePokeblock(@berries)
+		
+		overridePokeblockColor if @candyBase != :CANDYBASE
+		
 		@numberOfBlocks = @results.length
 		@colorOfBlocks = @results[0].color_name
 		@qualityOfBlocks = (@results[0].plus ? " +" : "")
-		#print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
+		
+		print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
+		#@results.each { |pb| pbGainPokeblock(pb) }
 		
 		decideBaseHue
 		
@@ -477,6 +503,17 @@ class CookingMixing
 		
 		#end cooking stage
 		pbEndScene
+		
+		#hash of variables we want to take with us to other stages
+		variables = {
+			"resultingBaseHue" => @resultingBaseHue,
+			"results"          => @results,
+			"numberOfBlocks"   => @numberOfBlocks,
+			"colorOfBlocks"    => @colorOfBlocks,
+			"qualityOfBlocks"  => @qualityOfBlocks
+		}
+		#next stage
+		CookingCooling.new(variables)
 	end
 end #class CookingMixing
 
@@ -638,10 +675,17 @@ def pbBackdrop #gets background based off location
     end
 
 class CookingCooling
-	def initialize
+	def initialize(cooking_variables)
 		@sprites = {}
 		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
 		@viewport.z = 99999
+	
+		#variables from other stage
+		@resultingBaseHue = cooking_variables["resultingBaseHue"]
+		@results = cooking_variables["results"]
+		@numberOfBlocks = cooking_variables["numberOfBlocks"]
+		@colorOfBlocks = cooking_variables["colorOfBlocks"]
+		@qualityOfBlocks = cooking_variables["qualityOfBlocks"]
 	
 		#Graphics
 		backdrop = pbBackdrop
@@ -668,6 +712,19 @@ class CookingCooling
 		@sprites["panEdges"].x = Graphics.width/2 - @sprites["panEdges"].width/2
 		@sprites["panEdges"].y = @sprites["panBottom"].y
 		@sprites["panEdges"].z = 999999
+		
+		@sprites["pot"] = IconSprite.new(0, 0, @viewport)
+		@sprites["pot"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/pot")
+		@sprites["pot"].x = Graphics.width/2 - @sprites["pot"].width/2
+		@sprites["pot"].y = -50
+		@sprites["pot"].z = 999999
+		
+		@sprites["candy_base_in_pot"] = IconSprite.new(0, 0, @viewport)
+		@sprites["candy_base_in_pot"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/candy_base_in_pot_small")
+		@sprites["candy_base_in_pot"].x = Graphics.width/2 - @sprites["candy_base_in_pot"].width/2
+		@sprites["candy_base_in_pot"].y = @sprites["pot"].y
+		@sprites["candy_base_in_pot"].z = 999999
+		@sprites["candy_base_in_pot"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 		
 		pbmain
 	end #def initialize
