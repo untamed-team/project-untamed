@@ -727,7 +727,25 @@ class CookingCooling
 		@sprites["candy_base_in_pot"].y = @sprites["pot"].y
 		@sprites["candy_base_in_pot"].z = 999999
 		@sprites["candy_base_in_pot"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
-		@sprites["panEdges"].z = 999999
+		
+		@sprites["heat_guage"] = IconSprite.new(0, 0, @viewport)
+		@sprites["heat_guage"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/gauge")
+		@sprites["heat_guage"].x = Graphics.width/2 - @sprites["heat_guage"].width/2
+		@sprites["heat_guage"].y = Graphics.height - 20 - @sprites["heat_guage"].height
+		@sprites["heat_guage"].z = 999999
+		
+		@sprites["heat_guage_fill"] = IconSprite.new(0, 0, @viewport)
+		@sprites["heat_guage_fill"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/gauge_fill")
+		@sprites["heat_guage_fill"].x = @sprites["heat_guage"].x
+		@sprites["heat_guage_fill"].y = @sprites["heat_guage"].y
+		@sprites["heat_guage_fill"].z = 99999
+		@sprites["heat_guage_fill"].src_rect.width = @sprites["heat_guage"].width
+		
+		@sprites["fire_icon"] = IconSprite.new(0, 0, @viewport)
+		@sprites["fire_icon"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/fire_icon")
+		@sprites["fire_icon"].x = @sprites["heat_guage_fill"].x + @sprites["heat_guage_fill"].width - @sprites["fire_icon"].width/2
+		@sprites["fire_icon"].y = @sprites["heat_guage"].y - @sprites["fire_icon"].height/2
+		@sprites["fire_icon"].z = 999999
 		
 		#(animname, framecount, framewidth, frameheight, frameskip)
 		@sprites["fan"] = AnimatedSprite.new("Graphics/Pictures/Pokeblock/Candy Making/fan",8,276,336,1,@viewport)
@@ -760,10 +778,6 @@ class CookingCooling
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
 			detectInput
-			
-			#only play when holding down left click
-			#@sprites["fan"].play
-			#make fan follow cursor
 
 		end #loop do
 	end
