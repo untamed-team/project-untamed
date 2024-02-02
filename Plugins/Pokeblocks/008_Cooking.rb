@@ -785,6 +785,7 @@ class CookingCooling
 	def detectInput
 		if Mouse.press?
 			@sprites["fan"].play if !@sprites["fan"].playing?
+			decreaseGauge
 		end #if Mouse.press?
 		if Input.release?(Input::MOUSELEFT)
 			@sprites["fan"].stop
@@ -805,5 +806,14 @@ class CookingCooling
 			@sprites["fan"].y=Mouse.y-@sprites["fan"].height/2-34 if defined?(Mouse.y)
 		end
 	end #updateCursorPos
+	
+	def decreaseGauge
+		if @sprites["heat_guage_fill"].src_rect.width <= 0
+			print "cooled"
+		else
+			@sprites["heat_guage_fill"].src_rect.width -= 2
+			@sprites["fire_icon"].x = @sprites["heat_guage_fill"].x + @sprites["heat_guage_fill"].width - @sprites["fire_icon"].width/2
+		end
+	end #def decreaseGauge
 	
 end #class CookingCooling
