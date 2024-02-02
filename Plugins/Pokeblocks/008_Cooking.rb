@@ -730,7 +730,7 @@ class CookingCooling
 		@sprites["panEdges"].z = 999999
 		
 		#(animname, framecount, framewidth, frameheight, frameskip)
-		@sprites["fan"] = AnimatedSprite.new("Graphics/Pictures/Pokeblock/Candy Making/fan",8,276,336,2,@viewport)
+		@sprites["fan"] = AnimatedSprite.new("Graphics/Pictures/Pokeblock/Candy Making/fan",8,276,336,1,@viewport)
 		@sprites["fan"].x = Graphics.width/2 - @sprites["fan"].width/2
 		@sprites["fan"].y = Graphics.height/2 - @sprites["fan"].height/2
 		@sprites["fan"].z = 999999
@@ -756,7 +756,10 @@ class CookingCooling
 		
 		loop do
 			Graphics.update
+			Input.update
+			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
+			detectInput
 			
 			#only play when holding down left click
 			#@sprites["fan"].play
@@ -764,4 +767,29 @@ class CookingCooling
 
 		end #loop do
 	end
+	
+	def detectInput
+		if Mouse.press?
+			@sprites["fan"].play if !@sprites["fan"].playing?
+		end #if Mouse.press?
+		if Input.release?(Input::MOUSELEFT)
+			@sprites["fan"].stop
+			@sprites["fan"].frame = 0
+		end #Input.release?(Input::MOUSELEFT)
+	end #detectInput
+	
+	def updateCursorPos
+		@lastX = @sprites["fan"].x
+		@lastY = @sprites["fan"].y
+		
+		#if the mouse leaves the game window, put the fan at its last X and Y rather than in the top left of the screen
+		if !System.mouse_in_window
+			@sprites["fan"].x = @lastX
+			@sprites["fan"].y = @lastY
+		else
+			@sprites["fan"].x=Mouse.x-@sprites["fan"].width/2-40 if defined?(Mouse.x)
+			@sprites["fan"].y=Mouse.y-@sprites["fan"].height/2-34 if defined?(Mouse.y)
+		end
+	end #updateCursorPos
+	
 end #class CookingCooling
