@@ -469,9 +469,6 @@ class CookingMixing
 		@colorOfBlocks = @results[0].color_name
 		@qualityOfBlocks = (@results[0].plus ? " +" : "")
 		
-		#print "this will make #{@numberOfBlocks} #{@colorOfBlocks} pokeblocks#{@qualityOfBlocks}!"
-		#@results.each { |pb| pbGainPokeblock(pb) }
-		
 		decideBaseHue
 		
 		#decide initial stir direction
@@ -688,6 +685,8 @@ class CookingCooling
 		@numberOfBlocks = cooking_variables["numberOfBlocks"]
 		@colorOfBlocks = cooking_variables["colorOfBlocks"]
 		@qualityOfBlocks = cooking_variables["qualityOfBlocks"]
+		
+		@cooled = false
 	
 		#Graphics
 		backdrop = pbBackdrop
@@ -778,9 +777,34 @@ class CookingCooling
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
 			detectInput
-
+			break if @cooled
 		end #loop do
+		
+		@sprites["fan"].stop
+		@sprites["fan"].frame = 0
+		Graphics.update
+		pbUpdateSpriteHash(@sprites)
+		
+		#end cooking stage
+		pbEndScene
+		
+		#hash of variables we want to take with us to other stages
+		variables = {
+			"resultingBaseHue" => @resultingBaseHue,
+			"results"          => @results,
+			"numberOfBlocks"   => @numberOfBlocks,
+			"colorOfBlocks"    => @colorOfBlocks,
+			"qualityOfBlocks"  => @qualityOfBlocks
+		}
+		#next stage
+		CookingResult.new(variables)
 	end
+	
+	def pbEndScene
+		pbFadeOutAndHide(@sprites)
+		pbDisposeSpriteHash(@sprites)
+		@viewport.dispose
+	end #def pbEndScene
 	
 	def detectInput
 		if Mouse.press?
@@ -809,7 +833,7 @@ class CookingCooling
 	
 	def decreaseGauge
 		if @sprites["heat_guage_fill"].src_rect.width <= 0
-			print "cooled"
+			@cooled = true
 		else
 			@sprites["heat_guage_fill"].src_rect.width -= 2
 			@sprites["fire_icon"].x = @sprites["heat_guage_fill"].x + @sprites["heat_guage_fill"].width - @sprites["fire_icon"].width/2
@@ -817,3 +841,68 @@ class CookingCooling
 	end #def decreaseGauge
 	
 end #class CookingCooling
+
+class CookingResult
+	def initialize(cooking_variables)
+		@sprites = {}
+		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+		@viewport.z = 99999
+	
+		#variables from other stage
+		@resultingBaseHue = cooking_variables["resultingBaseHue"]
+		@results = cooking_variables["results"]
+		@numberOfBlocks = cooking_variables["numberOfBlocks"]
+		@colorOfBlocks = cooking_variables["colorOfBlocks"]
+		@qualityOfBlocks = cooking_variables["qualityOfBlocks"]
+		
+		@timeNeeded = (255/Graphics.frame_rate).ceil
+	
+		#Graphics
+		backdrop = pbBackdrop
+		@sprites["background"] = IconSprite.new(0, 0, @viewport)
+		@sprites["background"].setBitmap("Graphics/Pictures/Pokemon Amie/"+pbBackdrop)
+		@sprites["background"].x = 0
+		@sprites["background"].y = 0
+		@sprites["background"].z = 99999
+		
+		#determine block sprite name
+		if @results[0].plus
+			blockSprite = "Block_#{@colorOfBlocks}_Plus"
+		else
+			blockSprite = "Block_#{@colorOfBlocks}"
+		end
+		
+		@sprites["block"] = IconSprite.new(0, 0, @viewport)
+		@sprites["block"].setBitmap("Graphics/Pictures/Pokeblock/Blocks/#{blockSprite}")
+		@sprites["block"].x = Graphics.width / 2 - @sprites["block"].width# / 2
+		@sprites["block"].y = Graphics.height / 2 - @sprites["block"].height + Graphics.frame_rate
+		@sprites["block"].z = 99999
+		@sprites["block"].zoom_x = 2.0
+		@sprites["block"].zoom_y = 2.0
+		@sprites["block"].opacity = 0
+		
+		pbmain
+	end #def initialize
+	
+	def pbmain
+		#play SE
+		#make candy appear on screen, fade in
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			@sprites["block"].y -= 3
+			@sprites["block"].opacity += @timeNeeded*3
+			break if @sprites["block"].y <= Graphics.height / 2 - @sprites["block"].height
+		end
+		
+		@results.each { |pb| pbGainPokeblock(pb) }
+		if @results.length > 1
+			pbMessage(_INTL("You created {1} {2} candies{3}!",@results.length,@results[0].color_name,(@results[0].plus ? " +" : "")))
+		else
+			pbMessage(_INTL("You created {1} {2} candy{3}!",@results.length,@results[0].color_name,(@results[0].plus ? " +" : "")))
+		end
+		
+		print "making more" if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend more berries?"))
+	end #def pbmain
+	
+end #class CookingResult
