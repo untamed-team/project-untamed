@@ -19,6 +19,8 @@
 #when you flag the quest for "turnin", the NPC should have a yellow ? above their head
 #The number itself signifies 'stage 1', and this is used when you have the plugin automatically detect
 #when the quest can be turned in at its stage
+#alternatively if you are going to have the same NPC be the turnin location for all stages of the quest, you can leave this number out
+#Example: quest_marker Quest1 true
 
 #When you want to put an ! above an NPC's head, you need to ready the quest to
 #signal the game that quest is ready to be given out
@@ -57,6 +59,13 @@
 #else
 #"I'm waiting for you to finish my quest."
 
+#to hide indicators like during a cutscene, run QuestIndicator.hideIndicators
+#to show indicators after hiding them, run QuestIndicator.showIndicators
+
+class Game_Event < Game_Character
+	attr_reader   :event
+end
+
 class QuestIndicator
   def self.initialize
     #this will be used for putting the quest indicators on the screen
@@ -91,19 +100,20 @@ class QuestIndicator
         
           filename = nil
         
-          if getReadyQuests.include?(questID.to_sym) && giver == "true"
+		
+		  if getReadyQuests.include?(questID.to_sym) && giver == "true"
             #the quest in the comment we are checking is active, and the NPC is the giver
             #show an ! if the NPC is the giver
-              filename = "exclamation"
+            filename = "exclamation"
           end
-        
-          if getActiveQuests.include?(questID.to_sym) && turninStage == currentStage.to_s
+		
+          if getActiveQuests.include?(questID.to_sym) && (turninStage == currentStage.to_s || turninStage.nil?)
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
             filename = "inprogress"
           end
         
-          if getTurninQuests.include?(questID.to_sym) && turninStage == currentStage.to_s
+          if getTurninQuests.include?(questID.to_sym) && (turninStage == currentStage.to_s || turninStage.nil?)
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
               filename = "turnin"
@@ -129,6 +139,13 @@ class QuestIndicator
               @sprites["icon_#{event}"].y = @event.screen_y - (Game_Map::TILE_HEIGHT / 2) + @bobY
             end
             @sprites["icon_#{event}"].tone = $game_screen.tone
+			
+			case @indicatorVisible
+			when true
+				@sprites["icon_#{event}"].visible = true
+			when false
+				@sprites["icon_#{event}"].visible = false
+			end
 
           end #end of if filename
           
@@ -170,6 +187,16 @@ class QuestIndicator
     @timer += 1
     @bobY = @bobY = Math.sin(@timer * @bobSpeed) * @bobDistance
   end
+  
+  def self.hideIndicators
+	@indicatorVisible = false
+	QuestIndicator.initialize
+  end #def self.hideIndicators
+  
+  def self.showIndicators
+	@indicatorVisible = true
+	QuestIndicator.initialize
+  end #def self.showIndicators
 
   EventHandlers.add(:on_frame_update, :indicator_bob,
   proc {

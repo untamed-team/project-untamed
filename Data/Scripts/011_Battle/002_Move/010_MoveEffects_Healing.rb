@@ -353,7 +353,7 @@ end
 
 #===============================================================================
 # Rings the user. Ringed Pokémon gain 1/16 of max HP at the end of each round.
-# (Aqua Ring)
+# (Aqua Ring) # they are also immune to burn #by low
 #===============================================================================
 class Battle::Move::StartHealUserEachTurn < Battle::Move
   def canSnatch?; return true; end
@@ -369,6 +369,7 @@ class Battle::Move::StartHealUserEachTurn < Battle::Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::AquaRing] = true
     @battle.pbDisplay(_INTL("{1} surrounded itself with a veil of water!", user.pbThis))
+    user.pbCureStatus if user.burned?
   end
 end
 

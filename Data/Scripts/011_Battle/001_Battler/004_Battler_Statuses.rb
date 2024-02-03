@@ -24,6 +24,7 @@ class Battle::Battler
   end
 
   def pbCanInflictStatus?(newStatus, user, showMessages, move = nil, ignoreStatus = false)
+    #^ rewriten in 001_Battle Bug Fixes.rb
     return false if fainted?
     selfInflicted = (user && user.index == @index)
     # Already have that status problem
