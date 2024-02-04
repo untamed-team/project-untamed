@@ -1,7 +1,7 @@
 class CookingMixing
 	include BopModule
 
-	STAGE_TIMER_SECONDS = 1#30
+	STAGE_TIMER_SECONDS = 30
 	BURN_TIMER_SECONDS = 5
 
 	def initialize
@@ -156,6 +156,7 @@ class CookingMixing
 	end #def stirArrowBlink
 	
 	def decideStirDir
+		@sprites["stirDirectionArrow"].visible = true
 		dir = rand(1..2)
 		case dir
 		when 1
@@ -166,7 +167,7 @@ class CookingMixing
 			@sprites["stirDirectionArrow"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/arrow_right")
 		end #case dir
 		
-		@arrowBlinkTimer = Graphics.frame_rate * 3
+		#@arrowBlinkTimer = Graphics.frame_rate * 3
 	end #def decideStirDir
 	
 	def outOfBounds?
@@ -333,28 +334,36 @@ class CookingMixing
 			#if we have picked berries, decide hue from berries if a regular base was used
 			if @candyBase == :CANDYBASE
 				#get resulting color of pokeblock
-				print "rainbow" if @colorOfBlocks == "Rainbow"
-				@resultingBaseHue = @hues["#{@colorOfBlocks}"]
-		
-				#how many frames are needed to go from White's hue to the resulting hue?
-				differenceRed = (@hues["White"][0] - @resultingBaseHue[0].abs)
-				differenceGreen = (@hues["White"][1] - @resultingBaseHue[1].abs)
-				differenceBlue = (@hues["White"][2] - @resultingBaseHue[2].abs)
-				differences = [differenceRed, differenceGreen, differenceBlue].sort
-				largestDifference = differences.last
-				#timeNeeded = (30*40)/218, which is 5.5, so we need to subtract 1 every 5 frames
-				if largestDifference != 0
-					@timeNeeded = ((STAGE_TIMER_SECONDS*Graphics.frame_rate)/largestDifference).floor
-					#print "Need to subtract every #{@timeNeeded} frames"
+				if @colorOfBlocks == "Rainbow"
+					#starting hue is red
+					@resultingBaseHue = @hues["Red"]
 				else
-					@timeNeeded = 1
-				end #if largestDifference != 0
-			else
-				#@resultingBaseHue is already set
-				return
+					@resultingBaseHue = @hues["#{@colorOfBlocks}"]
+				end
+				getTimeNeededForHueChange(@hues["White"])
 			end
 		end #if @berries.nil? || @berries.empty?		
 	end #def decideBaseHue
+	
+	def getTimeNeededForHueChange(startingHue)
+		#how many frames are needed to go from White's hue to the resulting hue?
+		differenceRed = (startingHue[0] - @resultingBaseHue[0].abs)
+		differenceGreen = (startingHue[1] - @resultingBaseHue[1].abs)
+		differenceBlue = (startingHue[2] - @resultingBaseHue[2].abs)
+		differences = [differenceRed, differenceGreen, differenceBlue].sort
+		largestDifference = differences.last
+		#timeNeeded = (30*40)/218, which is 5.5, so we need to subtract 1 every 5 frames
+		if largestDifference != 0
+			@timeNeeded = ((STAGE_TIMER_SECONDS*Graphics.frame_rate)/largestDifference).floor
+		else
+			@timeNeeded = 1
+		end #if largestDifference != 0
+		
+		if @colorOfBlocks == "Rainbow"
+			@timeNeeded = (@timeNeeded/7).floor
+		end
+		
+	end #getTimeNeededForHueChange
 	
 	def changeBaseHueImmediate
 		if @candyBase != :CANDYBASE
@@ -368,6 +377,38 @@ class CookingMixing
 		Graphics.update
 		pbUpdateSpriteHash(@sprites)
 	end #def changeBaseHueImmediate
+	
+	def changeResultingBaseHue
+		#this is run when the resultingBaseHue has been reached and the resultingBaseHue needs to be changed
+		#this is only for rainbow blocks
+		currentHue = @resultingBaseHue
+		
+		case @resultingBaseHue
+		when @hues["Red"]
+			@resultingBaseHue = @hues["Gold"]
+			return
+		when @hues["Gold"] #orange
+			@resultingBaseHue = @hues["Yellow"]
+			return
+		when @hues["Yellow"]
+			@resultingBaseHue = @hues["Green"]
+			return
+		when @hues["Green"]
+			@resultingBaseHue = @hues["Blue"]
+			return
+		when @hues["Blue"]
+			@resultingBaseHue = @hues["Indigo"]
+			return
+		when @hues["Indigo"]
+			@resultingBaseHue = @hues["Purple"]
+			return
+		when @hues["Purple"] #violet
+			@resultingBaseHue = @hues["Red"]
+			return
+		end
+		
+		getTimeNeededForHueChange(currentHue)
+	end #def changeResultingBaseHue
 	
 	def changeBaseHueGradual
 		#return if candybase is a colored base
@@ -399,7 +440,10 @@ class CookingMixing
 			#reset the timer
 			@gradualHueTimer = 0
 			
-			#print "color achieved" if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
+			#if this is a rainbow block, and we've reached the @resultingBaseHue, change hues
+			if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
+				changeResultingBaseHue
+			end
 		end #if @gradualHueTimer >= @timeNeeded
 	end #changeBaseHueGradual
 	
@@ -444,6 +488,7 @@ class CookingMixing
 				pbPickCandyBase
 			end
 		end #while @candyBase.nil? do
+		
 		decideBaseHue
 		
 		changeBaseHueImmediate
@@ -483,7 +528,7 @@ class CookingMixing
 			
 			changeBaseHueGradual
 			
-			stirArrowBlink if @arrowBlinkTimer > 0
+			#stirArrowBlink if @arrowBlinkTimer > 0
 			@arrowBlinkTimer -= 1
 			
 			burnedNotif if @burnTimer <= 0
@@ -492,7 +537,7 @@ class CookingMixing
 				failStage
 				return
 			end #if @numberOfBlocks < 0
-			########################################################################################@burnTimer -= 1
+			#################################################################################################################################@burnTimer -= 1
 			break if @stageTimer <= 0
 			@stageTimer -= 1
 		end #loop do
@@ -509,7 +554,8 @@ class CookingMixing
 			"results"          => @results,
 			"numberOfBlocks"   => @numberOfBlocks,
 			"colorOfBlocks"    => @colorOfBlocks,
-			"qualityOfBlocks"  => @qualityOfBlocks
+			"qualityOfBlocks"  => @qualityOfBlocks,
+			"hues"             => @hues
 		}
 		#next stage
 		CookingCooling.new(variables)
@@ -685,8 +731,11 @@ class CookingCooling
 		@numberOfBlocks = cooking_variables["numberOfBlocks"]
 		@colorOfBlocks = cooking_variables["colorOfBlocks"]
 		@qualityOfBlocks = cooking_variables["qualityOfBlocks"]
+		@hues = cooking_variables["hues"]
 		
 		@cooled = false
+		@gradualHueTimer = 0
+		@resultingBaseHue = @hues["White"] if @colorOfBlocks == "Rainbow"
 	
 		#Graphics
 		backdrop = pbBackdrop
@@ -752,6 +801,9 @@ class CookingCooling
 		@sprites["fan"].y = Graphics.height/2 - @sprites["fan"].height/2
 		@sprites["fan"].z = 999999
 		
+		@resultingBaseHue = @hues["Red"]
+		getTimeNeededForHueChange(@hues["White"])
+		
 		pbmain
 	end #def initialize
 	
@@ -777,6 +829,7 @@ class CookingCooling
 			updateCursorPos
 			pbUpdateSpriteHash(@sprites)
 			detectInput
+			changeBaseHueGradual if @colorOfBlocks == "Rainbow"
 			break if @cooled
 		end #loop do
 		
@@ -799,6 +852,91 @@ class CookingCooling
 		#next stage
 		CookingResult.new(variables)
 	end
+	
+	def changeResultingBaseHue
+		#this is run when the resultingBaseHue has been reached and the resultingBaseHue needs to be changed
+		#this is only for rainbow blocks
+		currentHue = @resultingBaseHue
+		
+		case @resultingBaseHue
+		when @hues["Red"]
+			@resultingBaseHue = @hues["Gold"]
+			return
+		when @hues["Gold"] #orange
+			@resultingBaseHue = @hues["Yellow"]
+			return
+		when @hues["Yellow"]
+			@resultingBaseHue = @hues["Green"]
+			return
+		when @hues["Green"]
+			@resultingBaseHue = @hues["Blue"]
+			return
+		when @hues["Blue"]
+			@resultingBaseHue = @hues["Indigo"]
+			return
+		when @hues["Indigo"]
+			@resultingBaseHue = @hues["Purple"]
+			return
+		when @hues["Purple"] #violet
+			@resultingBaseHue = @hues["Red"]
+			return
+		end
+		
+		getTimeNeededForHueChange(currentHue)
+	end #def changeResultingBaseHue
+	
+	def changeBaseHueGradual
+		#this happens too quickly, so it needs to be slowed down by about half the speed
+		@gradualHueTimer += 1
+			
+		if @gradualHueTimer >= @timeNeeded
+			#this will run every frame until the color is equal to the resultingBaseHue
+			if @sprites["panBottom"].color.red < @resultingBaseHue[0]
+				@sprites["panBottom"].color.red += 1
+			elsif @sprites["panBottom"].color.red > @resultingBaseHue[0]
+				@sprites["panBottom"].color.red -= 1
+			end
+			if @sprites["panBottom"].color.green < @resultingBaseHue[1]
+				@sprites["panBottom"].color.green += 1
+			elsif @sprites["panBottom"].color.green > @resultingBaseHue[1]
+				@sprites["panBottom"].color.green -= 1
+			end
+			if @sprites["panBottom"].color.blue < @resultingBaseHue[2]
+				@sprites["panBottom"].color.blue += 1
+			elsif @sprites["panBottom"].color.blue > @resultingBaseHue[2]
+				@sprites["panBottom"].color.blue -= 1
+			end
+			
+			#not sure why this is needed, but it doesn't update the sprite otherwise
+			@sprites["panBottom"].color.set(@sprites["panBottom"].color.red, @sprites["panBottom"].color.green, @sprites["panBottom"].color.blue)
+			#reset the timer
+			@gradualHueTimer = 0
+			
+			#if this is a rainbow block, and we've reached the @resultingBaseHue, change hues
+			if @sprites["panBottom"].color.red == @resultingBaseHue[0] && @sprites["panBottom"].color.green == @resultingBaseHue[1] && @sprites["panBottom"].color.blue == @resultingBaseHue[2]
+				changeResultingBaseHue
+			end
+		end #if @gradualHueTimer >= @timeNeeded
+	end #changeBaseHueGradual
+	
+	def getTimeNeededForHueChange(startingHue)
+		#how many frames are needed to go from White's hue to the resulting hue?
+		differenceRed = (startingHue[0] - @resultingBaseHue[0].abs)
+		differenceGreen = (startingHue[1] - @resultingBaseHue[1].abs)
+		differenceBlue = (startingHue[2] - @resultingBaseHue[2].abs)
+		differences = [differenceRed, differenceGreen, differenceBlue].sort
+		largestDifference = differences.last
+		#timeNeeded = (30*40)/218, which is 5.5, so we need to subtract 1 every 5 frames
+		if largestDifference != 0
+			@timeNeeded = ((CookingMixing::STAGE_TIMER_SECONDS*Graphics.frame_rate)/largestDifference).floor
+		else
+			@timeNeeded = 1
+		end #if largestDifference != 0
+		
+		#for rainbow since we are changing through 7 different colors
+		@timeNeeded = (@timeNeeded/7).floor
+		
+	end #getTimeNeededForHueChange
 	
 	def pbEndScene
 		pbFadeOutAndHide(@sprites)
