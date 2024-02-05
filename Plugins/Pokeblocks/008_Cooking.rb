@@ -240,7 +240,12 @@ class CookingMixing
 		#if stirred the correct direction
 		if @requiredStirDir == @playerStirDir
 			#play chime to let player know a stir was complete
-			pbSEPlay("Mining reveal")
+			if @stirsCompleted > 20
+				pbSEPlay("Mining reveal")
+			else
+				pbSEPlay("Mining reveal",100,95)
+			end
+			
 			#change stir direction since the stir was completed
 			decideStirDir
 			#reset burn timer
