@@ -493,6 +493,7 @@ class CookingMixing
 		
 		changeBaseHueImmediate
 		@sprites["candy_base"].visible = true
+		pbSEPlay("Pour Base")
 				
 		#add berries
 		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
@@ -591,6 +592,7 @@ def animationBerry(berries)
 			end
 		}
 		t = time = 0
+		pbSEPlay("Toss in Berries")
 		loop do
 			Graphics.update
 			#update
