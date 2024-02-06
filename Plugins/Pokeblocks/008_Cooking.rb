@@ -446,7 +446,7 @@ class CookingMixing
 			@gradualHueTimer = 0
 			
 			#if this is a rainbow block, and we've reached the @resultingBaseHue, change hues
-			if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2]
+			if @sprites["candy_base"].color.red == @resultingBaseHue[0] && @sprites["candy_base"].color.green == @resultingBaseHue[1] && @sprites["candy_base"].color.blue == @resultingBaseHue[2] && @colorOfBlocks == "Rainbow"
 				changeResultingBaseHue
 			end
 		end #if @gradualHueTimer >= @timeNeeded
@@ -476,13 +476,11 @@ class CookingMixing
 		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
 		
 		Graphics.update
-		#pbUpdateSpriteHash(@sprites)
 		
 		pbWait(1*Graphics.frame_rate)
 		
 		#choose a candy base
 		pbMessage(_INTL("Select a candy base from your bag to put in the pot."))
-		#@berries = BerryPoffin.pbPickBerryForBlenderSimple
 		
 		@candyBase = pbPickCandyBase
 		while @candyBase.nil? do
@@ -498,7 +496,7 @@ class CookingMixing
 		
 		changeBaseHueImmediate
 		@sprites["candy_base"].visible = true
-		pbSEPlay("Pour Base")
+		pbSEPlay("Cooking - Pour Base into Pot")
 				
 		#add berries
 		pbMessage(_INTL("Select some berries from your bag to put in the pot."))
@@ -525,6 +523,8 @@ class CookingMixing
 		#decide initial stir direction
 		decideStirDir
 		
+		pbBGMPlay("Cooking - Stirring")
+		
 		loop do
 			Graphics.update
 			Input.update
@@ -544,10 +544,20 @@ class CookingMixing
 				return
 			end #if @numberOfBlocks < 0
 			#################################################################################################################################@burnTimer -= 1
-			break if @stageTimer <= 0
+			if @stageTimer <= 0
+				pullSpoon
+				@sprites["stirDirectionArrow"].visible = false
+				break
+			end
 			@stageTimer -= 1
 		end #loop do
 		#print "Stirs completed: #{@stirsCompleted}"
+		
+		#stage complete
+		pbSEPlay("Cooking - Stage Complete")
+		
+		pbWait(Graphics.frame_rate * 3)
+		pbMessage(_INTL("Now to cool it off!"))
 		
 		#roll for possibility of getting extra pokeblocks based on @stirsCompleted
 		
@@ -597,7 +607,7 @@ def animationBerry(berries)
 			end
 		}
 		t = time = 0
-		pbSEPlay("Toss in Berries")
+		pbSEPlay("Cooking - Toss in Berries")
 		loop do
 			Graphics.update
 			#update
@@ -825,6 +835,8 @@ class CookingCooling
 		@sprites["pot"].y += @sprites["pot"].height
 		@sprites["candy_base_in_pot"].visible = false
 		
+		pbSEPlay("Cooking - Pour Base into Pan",80,80)
+		
 		#change pan bottom to color of mixture
 		@sprites["panBottom"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 		
@@ -844,6 +856,10 @@ class CookingCooling
 		@sprites["fan"].frame = 0
 		Graphics.update
 		pbUpdateSpriteHash(@sprites)
+		pbBGMFade(0.8)
+		pbSEPlay("Cooking - Stage Complete")
+		
+		pbWait(Graphics.frame_rate * 3)
 		
 		#end cooking stage
 		pbEndScene
@@ -955,6 +971,15 @@ class CookingCooling
 		if Mouse.press?
 			@sprites["fan"].play if !@sprites["fan"].playing?
 			decreaseGauge
+			
+			if @sprites["fan"].frame == 0 && @seLocked == true
+				@seLocked = false
+			end
+			
+			if @sprites["fan"].frame == 2 && @seLocked != true
+				pbSEPlay("Cooking - FanFwhip",80)
+				@seLocked = true
+			end
 		end #if Mouse.press?
 		if Input.release?(Input::MOUSELEFT)
 			@sprites["fan"].stop
