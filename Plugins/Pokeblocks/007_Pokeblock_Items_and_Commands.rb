@@ -132,7 +132,7 @@ module BerryPoffin
 		scene = MultiBerrySelection_Scene.new
 		screen = MultiBerrySelectionScreen.new(scene, $bag)
 		berries = screen.pbStartScreen(proc { |item| GameData::Item.get(item).pocket == PokeblockSettings::BERRY_POCKET_OF_BAG && 
-			GameData::Item.get(item).is_berry? })
+			GameData::Item.get(item).is_berry? && GameData::Item.get(item) != :SHINYBERRY })
 
 	  }
 	  return nil if !berries || berries.empty?
