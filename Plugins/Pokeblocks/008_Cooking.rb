@@ -823,8 +823,7 @@ class CookingCooling
 		@sprites["fan"].y = Graphics.height/2 - @sprites["fan"].height/2
 		@sprites["fan"].z = 999999
 		
-		@resultingBaseHue = @hues["Red"]
-		getTimeNeededForHueChange(@hues["White"])
+		getTimeNeededForHueChange(@hues["White"]) if @colorOfBlocks == "Rainbow"
 		
 		pbmain
 	end #def initialize
