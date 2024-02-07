@@ -295,7 +295,7 @@ class CookingMixing
 	
 	def burnedNotif
 		#print "burn"
-		pbSEPlay("GUI Misc7")
+		pbSEPlay("Cooking - Burn")
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
 		
 		@numberOfBlocks -= 1
@@ -308,8 +308,13 @@ class CookingMixing
 	end #def pbEndScene
 	
 	def failStage
+		pbBGMFade(0.8)
+		pbWait(Graphics.frame_rate/2)
+		pbSEPlay("Cooking - Fail")
+		pbWait(Graphics.frame_rate*2)
 		pbMessage(_INTL("You burned the entire mixture..."))
-		pbEndScene
+		
+		goAgain?
 	end #def failStage
 	
 	def decideBaseHue
@@ -543,7 +548,7 @@ class CookingMixing
 				failStage
 				return
 			end #if @numberOfBlocks < 0
-			#################################################################################################################################@burnTimer -= 1
+			@burnTimer -= 1
 			if @stageTimer <= 0
 				pullSpoon
 				@sprites["stirDirectionArrow"].visible = false
@@ -1056,6 +1061,8 @@ class CookingResult
 	
 	def pbmain
 		#play SE
+		pbSEPlay("Cooking - Results")
+		
 		#make candy appear on screen, fade in
 		loop do
 			Graphics.update
@@ -1072,7 +1079,25 @@ class CookingResult
 			pbMessage(_INTL("You created {1} {2} candy{3}!",@results.length,@results[0].color_name,(@results[0].plus ? " +" : "")))
 		end
 		
-		print "making more" if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend more berries?"))
+		goAgain?
+		#if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend more berries?"))
 	end #def pbmain
 	
+	def pbEndScene
+		pbFadeOutAndHide(@sprites)
+		pbDisposeSpriteHash(@sprites)
+		@viewport.dispose
+	end #def pbEndScene
+	
 end #class CookingResult
+
+def goAgain?
+	if $bag.hasAnyBerry? && ($bag.has?(:CANDYBASE) || $bag.has?(:REDCANDYBASE) || $bag.has?(:BLUECANDYBASE) || $bag.has?(:PINKCANDYBASE) || $bag.has?(:GREENCANDYBASE) || $bag.has?(:YELLOWCANDYBASE))
+		if pbConfirmMessage(_INTL("Would you like to make more candy?"))
+			pbEndScene
+			CookingMixing.new
+		end
+	else
+		pbEndScene
+	end
+end
