@@ -1,0 +1,4 @@
+Name         = Pokémon Camp
+Version      = 1.0
+Credits      = Gardenette, Micah
+Essentials   = 20.1
