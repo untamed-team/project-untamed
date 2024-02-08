@@ -32,7 +32,8 @@ class PokeblockCase_Scene
 		@sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
 		@sprites["overlay"].z=1000
 		pbSetSystemFont(@sprites["overlay"].bitmap)
-		pbDrawTextPositions(@sprites["overlay"].bitmap,[["Pokéblock Case",115,28,2,BASE_COLOR,SHADOW_COLOR]])
+		#pbDrawTextPositions(@sprites["overlay"].bitmap,[["Pokéblock Case",115,28,2,BASE_COLOR,SHADOW_COLOR]])
+		pbDrawTextPositions(@sprites["overlay"].bitmap,[["Candy Case",115,28,2,BASE_COLOR,SHADOW_COLOR]])
 		@sprites["blocktext"] = Window_UnformattedTextPokemon.newWithSize(
 		  "", 72, 272, Graphics.width - 72 - 24, 128, @viewport
 		)

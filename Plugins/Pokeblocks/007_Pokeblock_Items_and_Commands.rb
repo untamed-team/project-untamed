@@ -77,7 +77,7 @@ end
 
 def pbPokeblockCase
 	if !$player.hasPokeblocks?
-		pbMessage(_INTL("You don't have any Pokéblocks!"))
+		pbMessage(_INTL("You don't have any candy!"))
 		return false
 	end
 	pbFadeOutIn {

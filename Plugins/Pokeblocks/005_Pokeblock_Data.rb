@@ -14,7 +14,8 @@ class Pokeblock
 	end
 	
 	def color_name; return GameData::PokeblockColor.get(@color).name; end
-	def name; return color_name + " Pokéblock" + (@plus ? " +" : ""); end
+	#def name; return color_name + " Pokéblock" + (@plus ? " +" : ""); end
+	def name; return color_name + " Candy" + (@plus ? " +" : ""); end
 	def feel; return @smoothness; end
 
 end

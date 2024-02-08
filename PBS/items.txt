@@ -6673,13 +6673,13 @@ Flags = KeyItem
 Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
 #-------------------------------
 [POKEBLOCKCASE]
-Name = Pokéblock Case
-NamePlural = Pokéblock Cases
+Name = Candy Case
+NamePlural = Candy Cases
 Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = A case for holding Pokéblocks made with a Berry Blender.
+Description = A case for holding candy made in camp.
 #-------------------------------
 [POKEBLOCKKIT]
 Name = Pokéblock Kit

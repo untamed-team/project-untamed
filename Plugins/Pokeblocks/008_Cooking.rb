@@ -512,6 +512,14 @@ class CookingMixing
 		end
 	end #def overridePokeblockColor
 	
+	def chanceExtraCandy
+		chance = @stirsCompleted - 20
+		randNumber = rand(1..100)
+		if randNumber <= chance
+			@results.push(@results.last)
+		end
+	end #def chanceExtraCandy
+	
 	def pbmain
 		pbFadeInAndShow(@sprites) { pbUpdateSpriteHash(@sprites) }
 		
@@ -599,27 +607,7 @@ class CookingMixing
 		pbMessage(_INTL("Now to cool it off!"))
 		
 		#roll for possibility of getting extra pokeblocks based on @stirsCompleted
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		chanceExtraCandy
 		
 		#end cooking stage
 		pbEndScene
