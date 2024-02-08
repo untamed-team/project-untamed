@@ -108,6 +108,14 @@ class CookingMixing
 		@sprites["stirDirectionArrow"].z = 99999
 		@sprites["stirDirectionArrow"].visible = false
 		
+		@sprites["smoke"] = IconSprite.new(0, 0, @viewport)
+		@sprites["smoke"].setBitmap("Graphics/Pictures/Pokeblock/Candy Making/smoke")
+		@sprites["smoke"].x = Graphics.width/2 - @sprites["smoke"].width/2
+		@sprites["smoke"].y = Graphics.height/2 - @sprites["smoke"].height/2
+		#@sprites["smoke"].opacity = 200
+		@sprites["smoke"].z = 99999
+		@sprites["smoke"].visible = false
+		
 		@lastQuadrant = nil
 		@currentQuadrant = nil
 		@quadrantsStirredIn = []
@@ -134,9 +142,25 @@ class CookingMixing
 			"Yellow" => [252,204,84]
 		}
 		@gradualHueTimer = 0
+		@tone = 0
 		
 		pbmain
 	end #def initialize
+	
+	def smokeRise
+		@smokeRiseTimer += 1
+		@sprites["smoke"].opacity -= (255/(Graphics.frame_rate/3).ceil)
+		@sprites["smoke"].y -= 1
+		@sprites["smoke"].visible = false if @smokeRiseTimer >= Graphics.frame_rate*3
+	end #def smokeRise
+	
+	def resetSmoke
+		@sprites["smoke"].opacity = 255
+		@sprites["smoke"].tone.set(0, 0, 0, 0)
+		@sprites["smoke"].y = Graphics.height/2 - @sprites["smoke"].height/2
+		@sprites["smoke"].visible = true
+		@smokeRiseTimer = 0
+	end #def resetSmoke
 	
 	def stirArrowBlink
 		case @arrowBlinkTimer
@@ -293,12 +317,14 @@ class CookingMixing
 		detectStirDirection if @submerged
 	end #detectInput
 	
-	def burnedNotif
-		#print "burn"
+	def burnedNotif		
 		pbSEPlay("Cooking - Burn")
 		@burnTimer = BURN_TIMER_SECONDS * Graphics.frame_rate
-		
 		@numberOfBlocks -= 1
+		resetSmoke
+		#make smoke increasingly black with every burn
+		@tone -= 25
+		@sprites["smoke"].tone.set(@tone, @tone, @tone, 0)
 	end #def burnedNotif
 	
 	def pbEndScene
@@ -309,11 +335,20 @@ class CookingMixing
 	
 	def failStage
 		pbBGMFade(0.8)
-		pbWait(Graphics.frame_rate/2)
-		pbSEPlay("Cooking - Fail")
-		pbWait(Graphics.frame_rate*2)
-		pbMessage(_INTL("You burned the entire mixture..."))
+		tempTimer = 0
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			smokeRise if @sprites["smoke"].visible == true
+			pbSEPlay("Cooking - Fail") if tempTimer == Graphics.frame_rate/2
+			break if tempTimer == Graphics.frame_rate*2+(Graphics.frame_rate/2)
+			tempTimer += 1
+		end #loop do
 		
+		#pbWait(Graphics.frame_rate/2)
+		#pbSEPlay("Cooking - Fail")
+		#pbWait(Graphics.frame_rate*2)
+		pbMessage(_INTL("You burned the entire mixture..."))
 		goAgain?
 	end #def failStage
 	
@@ -538,7 +573,7 @@ class CookingMixing
 			detectInput
 			
 			changeBaseHueGradual
-			
+			smokeRise if @sprites["smoke"].visible == true
 			#stirArrowBlink if @arrowBlinkTimer > 0
 			@arrowBlinkTimer -= 1
 			
@@ -556,7 +591,6 @@ class CookingMixing
 			end
 			@stageTimer -= 1
 		end #loop do
-		#print "Stirs completed: #{@stirsCompleted}"
 		
 		#stage complete
 		pbSEPlay("Cooking - Stage Complete")
@@ -565,6 +599,27 @@ class CookingMixing
 		pbMessage(_INTL("Now to cool it off!"))
 		
 		#roll for possibility of getting extra pokeblocks based on @stirsCompleted
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		#end cooking stage
 		pbEndScene
