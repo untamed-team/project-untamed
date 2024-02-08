@@ -742,6 +742,9 @@ def pbBackdrop #gets background based off location
     end
 
 class CookingCooling
+	TEXT_BASE_COLOR        = Color.new(255, 255, 255, 255)
+	TEXT_SHADOW_COLOR      = Color.new(0, 0, 0, 100)
+	
 	def initialize(cooking_variables)
 		@sprites = {}
 		@viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
@@ -825,6 +828,14 @@ class CookingCooling
 		
 		getTimeNeededForHueChange(@hues["White"]) if @colorOfBlocks == "Rainbow"
 		
+		#make text appear letting the player know they can skip to results
+		@sprites["skip"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		pbSetSystemFont(@sprites["skip"].bitmap)
+		text = _INTL("#{$PokemonSystem.game_controls.find{|c| c.control_action=="Cancel"}.key_name}: Skip")
+		pbDrawTextPositions(@sprites["skip"].bitmap,[[text,20,@sprites["heat_guage"].y,0,TEXT_BASE_COLOR,TEXT_SHADOW_COLOR]])
+		@sprites["skip"].z = 999999
+		@sprites["skip"].visible = false
+		
 		pbmain
 	end #def initialize
 	
@@ -844,6 +855,7 @@ class CookingCooling
 		#change pan bottom to color of mixture
 		@sprites["panBottom"].color.set(@resultingBaseHue[0], @resultingBaseHue[1], @resultingBaseHue[2])
 		
+		@sprites["skip"].visible = true
 		pbUpdateSpriteHash(@sprites)
 		
 		loop do
@@ -989,6 +1001,10 @@ class CookingCooling
 			@sprites["fan"].stop
 			@sprites["fan"].frame = 0
 		end #Input.release?(Input::MOUSELEFT)
+		
+		#skip cooling
+		@cooled = true if Input.trigger?(Input::BACK)
+		
 	end #detectInput
 	
 	def updateCursorPos
@@ -1079,7 +1095,6 @@ class CookingResult
 		end
 		
 		goAgain?
-		#if $bag.hasAnyBerry? && pbConfirmMessage(_INTL("Would you like to blend more berries?"))
 	end #def pbmain
 	
 	def pbEndScene
@@ -1095,6 +1110,8 @@ def goAgain?
 		if pbConfirmMessage(_INTL("Would you like to make more candy?"))
 			pbEndScene
 			CookingMixing.new
+		else
+			pbEndScene
 		end
 	else
 		pbEndScene
