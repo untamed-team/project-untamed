@@ -159,13 +159,13 @@ class Camping
     
     #event = pbMapInterpreter.get_self
     for i in 0...$Trainer.pokemon_count
-      $game_map.events[i+1].clear_path_target
-      if i != @event.id - 1
+      #$game_map.events[i+1].clear_path_target
+      if i != @event.id - 1 #if not the pokemon we are playing tag with
         $game_map.events[i+1].moveto(@camperMovedX, @camperMovedY)
         @camperMovedX += 1
       end
     end
-  end
+  end #def moveCampersToSide
   
   def toggleOnCampEvents
     toggleOnPokemonBehavior
