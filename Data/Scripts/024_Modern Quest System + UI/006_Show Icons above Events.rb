@@ -92,10 +92,14 @@ class QuestIndicator
       for i in 0...firstPage.list.length - 1 #excludes the last command on the page, which is always blank
         if firstPage.list[i].code == 108 && firstPage.list[i].parameters[0].split[0] == 'quest_marker'
 
+			#quest_marker Quest1 giver? turninStage taskForStage#
+			#Example: quest_marker Quest1 true 1 1
+
           #split the comment into different parameters. This splits by spaces
           questID = firstPage.list[i].parameters[0].split[1]
           giver   = firstPage.list[i].parameters[0].split[2]
           turninStage = firstPage.list[i].parameters[0].split[3]
+          taskForStage = firstPage.list[i].parameters[0].split[4]
           currentStage = getCurrentStage(questID.to_sym)
         
           filename = nil
@@ -112,11 +116,23 @@ class QuestIndicator
             #show an ? if the NPC is the turnin
             filename = "inprogress"
           end
+		  
+          #is this event the place you need to go to complete the stage before turning it in? (is this event the "task"?)
+          if getActiveQuests.include?(questID.to_sym) && taskForStage.to_s == currentStage.to_s
+                #the quest in the comment we are checking is active
+                #show a ? if the NPC is the turnin
+                filename = "turnin"
+          end
         
           if getTurninQuests.include?(questID.to_sym) && (turninStage == currentStage.to_s || turninStage.nil?)
             #the quest in the comment we are checking is active
             #show an ? if the NPC is the turnin
               filename = "turnin"
+          end
+		  
+          if getTurninQuests.include?(questID.to_sym) && taskForStage.to_s == currentStage.to_s
+                  #if a quest is ready for turnin, get rid of the icon above the event that's the stage's task
+            filename = nil
           end
         
           if filename #if it's not nil, show ! or ?
@@ -149,7 +165,7 @@ class QuestIndicator
 
           end #end of if filename
           
-          return if filename == "turnin" #prioritize showing a quest is ready for turn in when the NPC has multiple quests
+          next if filename == "turnin" #prioritize showing a quest is ready for turn in when the NPC has multiple quests
         end #end of if firstPage.list[0].code == 108 && firstPage.list[0].parameters[0].split[0] == 'quest_marker'
       end
       

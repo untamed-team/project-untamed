@@ -139,6 +139,9 @@ class Player_Quests
       end
     end
     @ready_quests.push(Quest.new(quest,color,story))
+	
+    #refresh all icons above events
+    QuestIndicator.initialize
   end
   
   #added by Gardenette
