@@ -21,13 +21,13 @@ class Camping
 		@species = @pkmn.species.to_s
 		pbSEPlay("Cries/"+@species,100)
 		
-		cmds_new = [_INTL("Play Tag"),_INTL("Nevermind")]
+		cmds_new = [_INTL("Hide and Seek"),_INTL("Nevermind")]
 		choice = pbMessage(_INTL("What would you like to do with {1}?", @pkmn.name),cmds_new,2)
 		
 		case choice
 		when 0
 		#tag
-		playTag
+		findHidingSpots
 				
 		when 1
 		#nevermind
