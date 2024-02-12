@@ -26,8 +26,8 @@ class Camping
 		
 		case choice
 		when 0
-		#tag
-		findHidingSpots
+		#hide and seek
+		hideAndSeek
 				
 		when 1
 		#nevermind
@@ -59,16 +59,28 @@ class Camping
     return true
   end
   
-  #Place the pokemon on the map (change events 1-6 into the pokemon in the party)
-  def pbChangeCampers
-    @campers = []
+  def getCampers
+	@campers = []	
     
     #do for every pokemon in your party
     for i in 0...$Trainer.pokemon_count
       #get the pokemon in the party
       pkmn = $Trainer.pokemon_party[i]
       #add the species to the camper array
-      @campers[i] = pkmn.species
+      @campers[i] = pkmn#.species
+	end #for i in 0...$Trainer.pokemon_count
+  end #def getCampers
+  
+  #Place the pokemon on the map (change events 1-6 into the pokemon in the party)
+  def pbChangeCampers
+    #@campers = []
+    getCampers
+    #do for every pokemon in your party
+    for i in 0...$Trainer.pokemon_count
+      #get the pokemon in the party
+      pkmn = $Trainer.pokemon_party[i]
+      #add the species to the camper array
+      #@campers[i] = pkmn.species
   
       #if form is greater than 0, set pkmn_genderform to species_formNumber so the
       #file_path goes to the correct iteration of that species
