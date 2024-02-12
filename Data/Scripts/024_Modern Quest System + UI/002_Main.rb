@@ -299,7 +299,7 @@ class Player_Quests
         pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New task added!</c2>\nYour objective list <icon=menuObjectives> in the menu has been updated!</ac>",QUEST_JINGLE))
         
         #remove from turn-in
-		    removeTurninQuest(quest)
+		    removeTurninQuest(quest,nil,nil)
       end
       return if found
     end
