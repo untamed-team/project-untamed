@@ -5,7 +5,7 @@ class Camping
 
   def startCamping
     pbCommonEvent(9) #start camping 
-    toggleOnCampEvents
+    #toggleOnCampEvents
   end
 
   def endCamping
@@ -15,7 +15,7 @@ class Camping
   end
   
 	def interact
-		toggleOffCampEvents
+		#toggleOffCampEvents
 		@event = pbMapInterpreter.get_self
 		@pkmn = $player.pokemon_party[@event.id-1]
 		@species = @pkmn.species.to_s
@@ -34,30 +34,6 @@ class Camping
       
 		end #of case
 	end #def interact
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   # Whenever you add an event that you don't want to have pokemon behavior
-   # and encounters happen during please add to this.
-  def self.noInteraction?
-    return false if $game_variables[47] != 0
-    return true
-  end
   
   def getCampers
 	@campers = []	
@@ -117,7 +93,6 @@ class Camping
       ])
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
-
   
   def campFadeOut
     #screen tone dark
