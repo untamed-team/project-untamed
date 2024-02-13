@@ -24,23 +24,25 @@ class Camping
 	end #def assignHidingSpots
 
 	def self.checkHidingSpot(spotChecked)
-		self.getCampers
 		#print "checking if pkmn is hiding in #{spot}"
 		
 		#check all pokemon in the party, and if they haven't been found, check if this is their hiding spot
-		for i in 0...@campers.length
-			next if @campers[i].hideAndSeekFound
-			if @campers[i].hideAndSeekFound == false
+		
+		for i in 0...$Trainer.pokemon_count
+			#get the pokemon in the party
+			pkmn = $Trainer.pokemon_party[i]
+			next if pkmn.hideAndSeekFound
+			if pkmn.hideAndSeekFound == false
 				#is this @campers[i]'s hiding spot event?
-				print "found!" if spotChecked == @campers[i].hideAndSeekSpot
-			end #if @campers[i].hideAndSeekFound == false
-		end #for i in 0...@campers.length
+				print "found!" if spotChecked == pkmn.hideAndSeekSpot
+			end #if pkmn.hideAndSeekFound == false
+		end #for i in 0...$Trainer.pokemon_count
 		
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
-		howManyLeft
+		self.howManyLeft
 	end #def checkHidingSpot
 
-	def howManyLeft
+	def self.howManyLeft
 		#check all pkmn in the party and see if any are still not found
 		#for i in 0...@campers.length
 		#	if @campers[i].hideAndSeekFound == false
