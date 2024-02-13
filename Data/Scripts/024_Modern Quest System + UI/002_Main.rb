@@ -300,6 +300,8 @@ class Player_Quests
         
         #remove from turn-in
 		    removeTurninQuest(quest,nil,nil)
+        #refresh all icons above events
+        QuestIndicator.initialize
       end
       return if found
     end
@@ -308,10 +310,9 @@ class Player_Quests
       questNew = Quest.new(quest,color,story)
       questNew.stage = stageNum
       @active_quests.push(questNew)
+      #refresh all icons above events
+      QuestIndicator.initialize
     end
-
-    #refresh all icons above events
-    QuestIndicator.initialize
   end
   
   #added by Space
