@@ -1,3 +1,13 @@
+class PokemonGlobalMetadata
+  #variables to use while not in a loop
+  #to access these variables, do so like this: 
+  #$PokemonGlobal.variableName
+  #to assign the variables, do so like this:
+  #$PokemonGlobal.variableName = assignment
+  attr_accessor   :campers
+  
+end #class PokemonGlobalMetadata
+
 class Camping
   
   def initialize
@@ -36,14 +46,13 @@ class Camping
 	end #def interact
   
   def getCampers
-	@campers = []	
-    
+	$PokemonGlobal.campers = []
     #do for every pokemon in your party
     for i in 0...$Trainer.pokemon_count
       #get the pokemon in the party
       pkmn = $Trainer.pokemon_party[i]
       #add the species to the camper array
-      @campers[i] = pkmn#.species
+      $PokemonGlobal.campers[i] = pkmn#.species
 	end #for i in 0...$Trainer.pokemon_count
   end #def getCampers
   

@@ -10,16 +10,14 @@ class Camping
 	end
 	
 	def assignHidingSpots
-		getCampers
 		hidingSpotsAvailable = @hidingSpots.clone
-		for i in 0...@campers.length
+		for i in 0...$PokemonGlobal.campers.length
 			print "We need more hiding spots on this map" if hidingSpotsAvailable.length <= 0
 			spotChosen = hidingSpotsAvailable.sample
-			@campers[i].hideAndSeekSpot = spotChosen
-			@campers[i].hideAndSeekFound = false
+			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
+			$PokemonGlobal.campers[i].hideAndSeekFound = false
 			hidingSpotsAvailable.delete(spotChosen)
-			#print "#{@campers[i].name}'s hiding spot is event #{@campers[i].hideAndSeekSpot.id}"
-		end #for i in 0...@campers.length
+		end #for i in 0...$PokemonGlobal.campers.length
 		#print @hidingSpots
 	end #def assignHidingSpots
 
@@ -27,17 +25,17 @@ class Camping
 		#print "checking if pkmn is hiding in #{spot}"
 		
 		#check all pokemon in the party, and if they haven't been found, check if this is their hiding spot
-		for i in 0...$Trainer.pokemon_count
+		for i in 0...$PokemonGlobal.campers.length
 			#get the pokemon in the party
-			pkmn = $Trainer.pokemon_party[i]
+			pkmn = $PokemonGlobal.campers[i]
 			next if pkmn.hideAndSeekFound
 			if pkmn.hideAndSeekFound == false
-				#is this @campers[i]'s hiding spot event?
+				#is this $PokemonGlobal.campers[i]'s hiding spot event?
 				if spotChecked == pkmn.hideAndSeekSpot
 					self.foundPkmn(pkmn)
 				end #if spotChecked == pkmn.hideAndSeekSpot
 			end #if pkmn.hideAndSeekFound == false
-		end #for i in 0...$Trainer.pokemon_count
+		end #for i in 0...$PokemonGlobal.campers.length
 		
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
 		self.howManyLeft
@@ -86,10 +84,10 @@ class Camping
 		#say when we've found the whole team
 		print "found them all!"
 		EventHandlers.remove(:on_player_interact, :hideAndSeek_CheckSpot)
-		goAgain
+		self.goAgain
 	end #def howManyLeft
 
-	def goAgain
+	def self.goAgain
 	end #goAgain
 
 	def hideAndSeek
