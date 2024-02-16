@@ -36,20 +36,22 @@ class Camping
 				end #if spotChecked == pkmn.hideAndSeekSpot
 			end #if pkmn.hideAndSeekFound == false
 		end #for i in 0...$PokemonGlobal.campers.length
-		
-		#check how many pkmn are still hiding and end hide and seek round if none left hiding
-		self.howManyLeft
 	end #def checkHidingSpot
 	
 	def self.foundPkmn(pkmn)
 		print "you found #{pkmn.name}!"
 		pkmn.hideAndSeekFound = true
 		self.leapOut(pkmn)
+		#check how many pkmn are still hiding and end hide and seek round if none left hiding
+		self.howManyLeft
 	end #def self.foundPkmn(pkmn)
 	
 	def self.leapOut(pkmn)
 		#get the event we just talked to
-		event = $game_player.pbFacingEvent
+		hidingSpotEvent = $game_player.pbFacingEvent
+		
+		#set move route of corresponding camper event to move to hiding spot
+		pkmn.campEvent.moveto(hidingSpotEvent.x, hidingSpotEvent.y)
 		
 		#get direction player is facing
 		case $game_player.direction
@@ -69,15 +71,54 @@ class Camping
 		
 		#try going behind player if it's passable
 		#passable?(x, y, direction, strict=true)
-		if event.passable?(desiredX, desiredY, 2, true)
-			
-		end
+		#if behind the player is not passable
+		
+		
+		#$game_map.passable?(facing[1], facing[2], $game_player.direction, $game_player)
+		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try to the left of the player
+			desiredX = $game_player.x-1
+			desiredY = $game_player.y
+		end #if !pkmn.campEvent.passable? - behind player
+		
+		#if left of the player is not passable
+		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try to the right of the player
+			desiredX = $game_player.x+1
+			desiredY = $game_player.y
+		end #if !pkmn.campEvent.passable? - left of player
+		
+		#if right of the player is not passable
+		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try below the player
+			desiredX = $game_player.x
+			desiredY = $game_player.y+1
+		end #if !pkmn.campEvent.passable? - right of player
+		
+		#if below the player is not passable
+		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)3
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try above the player
+			desiredX = $game_player.x
+			desiredY = $game_player.y-1
+		end #if !pkmn.campEvent.passable? - below player
+		
+		distanceX = (hidingSpotEvent.x - desiredX) * -1
+		distanceY = (hidingSpotEvent.y - desiredY) * -1
+		
+		#make camper event jump from hiding spot to passable location
+		pbMoveRoute(pkmn.campEvent, [
+			PBMoveRoute::Jump, distanceX, distanceY
+		])
 	end #def self.leapOut(pkmn)
 	
 	def self.howManyLeft
 		#check all pkmn in the party and see if any are still not found
-		for i in 0...$Trainer.pokemon_count
-			pkmn = $Trainer.pokemon_party[i]
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
 			return if pkmn.hideAndSeekFound == false
 		end #for i in 0...$Trainer.pokemon_count
 		
@@ -102,8 +143,3 @@ class Camping
 	})
 
 end #class Camping
-
-class Pokemon
-  attr_accessor :hideAndSeekSpot
-  attr_accessor :hideAndSeekFound
-end

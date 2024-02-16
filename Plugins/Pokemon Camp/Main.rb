@@ -8,6 +8,12 @@ class PokemonGlobalMetadata
   
 end #class PokemonGlobalMetadata
 
+class Pokemon
+  attr_accessor :campEvent
+  attr_accessor :hideAndSeekSpot
+  attr_accessor :hideAndSeekFound
+end
+
 class Camping
   
   def initialize
@@ -100,6 +106,10 @@ class Camping
         PBMoveRoute::StepAnimeOn,
         PBMoveRoute::ThroughOff
       ])
+	  
+	  #put a reference to the pkmn's campEvent in $PokemonGlobal.campers[i]
+	  $PokemonGlobal.campers[i].campEvent = $game_map.events[i+1]
+	  #print "#{$PokemonGlobal.campers[i].name}'s campEvent is event #{$PokemonGlobal.campers[i].campEvent.id}"
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
   
