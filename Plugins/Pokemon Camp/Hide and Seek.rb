@@ -10,6 +10,9 @@ class Camping
 	end
 	
 	def assignHidingSpots
+		#fade to black
+		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
+		pbWait(Graphics.frame_rate)
 		hidingSpotsAvailable = @hidingSpots.clone
 		for i in 0...$PokemonGlobal.campers.length
 			print "We need more hiding spots on this map" if hidingSpotsAvailable.length <= 0
@@ -17,13 +20,17 @@ class Camping
 			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
 			$PokemonGlobal.campers[i].hideAndSeekFound = false
 			hidingSpotsAvailable.delete(spotChosen)
+			
+			#make the event opacity 0
+			pbMoveRoute($PokemonGlobal.campers[i].campEvent, [PBMoveRoute::Opacity, 0])
+			#move the event to the top left corner of the map
+			$PokemonGlobal.campers[i].campEvent.moveto(0, 0)
 		end #for i in 0...$PokemonGlobal.campers.length
-		#print @hidingSpots
+		
+		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	end #def assignHidingSpots
 
 	def self.checkHidingSpot(spotChecked)
-		#print "checking if pkmn is hiding in #{spot}"
-		
 		#check all pokemon in the party, and if they haven't been found, check if this is their hiding spot
 		for i in 0...$PokemonGlobal.campers.length
 			#get the pokemon in the party
@@ -39,7 +46,6 @@ class Camping
 	end #def checkHidingSpot
 	
 	def self.foundPkmn(pkmn)
-		print "you found #{pkmn.name}!"
 		pkmn.hideAndSeekFound = true
 		self.leapOut(pkmn)
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
@@ -52,6 +58,9 @@ class Camping
 		
 		#set move route of corresponding camper event to move to hiding spot
 		pkmn.campEvent.moveto(hidingSpotEvent.x, hidingSpotEvent.y)
+		
+		#make the event opacity 255
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 255])
 		
 		#get direction player is facing
 		case $game_player.direction
@@ -68,14 +77,7 @@ class Camping
 			desiredX = $game_player.x
 			desiredY = $game_player.y+1
 		end #case $game_player.direction
-		
-		#try going behind player if it's passable
-		#passable?(x, y, direction, strict=true)
-		#if behind the player is not passable
-		
-		
-		#$game_map.passable?(facing[1], facing[2], $game_player.direction, $game_player)
-		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
+
 		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
 			#try to the left of the player
 			desiredX = $game_player.x-1
@@ -83,7 +85,6 @@ class Camping
 		end #if !pkmn.campEvent.passable? - behind player
 		
 		#if left of the player is not passable
-		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
 		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
 			#try to the right of the player
 			desiredX = $game_player.x+1
@@ -91,7 +92,6 @@ class Camping
 		end #if !pkmn.campEvent.passable? - left of player
 		
 		#if right of the player is not passable
-		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)
 		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
 			#try below the player
 			desiredX = $game_player.x
@@ -99,7 +99,6 @@ class Camping
 		end #if !pkmn.campEvent.passable? - right of player
 		
 		#if below the player is not passable
-		#if !pkmn.campEvent.passable?(desiredX, desiredY, 2, true)3
 		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
 			#try above the player
 			desiredX = $game_player.x
@@ -120,6 +119,17 @@ class Camping
 		
 		#player faces pkmn
 		pbTurnTowardEvent($game_player, pkmn.campEvent)
+		
+		#fade to black
+		pbWait(Graphics.frame_rate)
+		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
+		pbWait(Graphics.frame_rate)
+		#make the event opacity 0
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
+		#move the event to the top left corner of the map
+		pkmn.campEvent.moveto(0, 0)
+		#fade in
+		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	end #def self.leapOut(pkmn)
 	
 	def self.howManyLeft
@@ -139,8 +149,11 @@ class Camping
 	end #goAgain
 
 	def hideAndSeek
+		pbBGMFade(1)
 		findHidingSpots
 		assignHidingSpots
+		pbBGMPlay("ORAS 088 The Trick House")
+		pbMessage(_INTL("Ready or not, here I come!"))
 	end #def hideAndSeek
 	
 	#on_player_interact with hiding spot
