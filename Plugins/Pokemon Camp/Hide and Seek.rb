@@ -137,6 +137,88 @@ class Camping
 		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	end #def self.leapOut(pkmn)
 	
+	def self.leapOutNotFound(pkmn)
+		hidingSpotEvent = pkmn.hideAndSeekSpot
+		
+		#set move route of corresponding camper event to move to hiding spot
+		pkmn.campEvent.moveto(hidingSpotEvent.x, hidingSpotEvent.y)
+		
+		#make the event opacity 255
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 255])
+		
+		#try to jump out to the right
+		desiredX = hidingSpotEvent.x+1
+		desiredY = hidingSpotEvent.y
+		
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try to the left of the hiding spot
+			desiredX = hidingSpotEvent.x-1
+			desiredY = hidingSpotEvent.y
+		end #if !pkmn.campEvent.passable?
+		
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try below the hiding spot
+			desiredX = hidingSpotEvent.x
+			desiredY = hidingSpotEvent.y+1
+		end #if !pkmn.campEvent.passable?
+		
+		if !$game_map.passable?(desiredX, desiredY, 2, pkmn.campEvent)
+			#try above the hiding spot
+			desiredX = hidingSpotEvent.x
+			desiredY = hidingSpotEvent.y-1
+		end #if !pkmn.campEvent.passable?
+		
+		distanceX = (hidingSpotEvent.x - desiredX) * -1
+		distanceY = (hidingSpotEvent.y - desiredY) * -1
+		
+		#play pkmn cry
+		pbSEPlay("Cries/"+pkmn.species.to_s,100)
+		
+		#make camper event jump from hiding spot to passable location
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Jump, distanceX, distanceY])
+		
+		#turn to face camera, so down, direction 2
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnDown])
+		
+		#fade to black
+		pbWait(Graphics.frame_rate)
+		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
+		pbWait(Graphics.frame_rate)
+		#make the event opacity 0
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
+		#move the event to the top left corner of the map
+		pkmn.campEvent.moveto(0, 0)
+		
+		#center screen back on player
+		speed = 0
+		distance = (pkmn.hideAndSeekSpot.x - $game_player.x).abs
+		if pkmn.hideAndSeekSpot.x < $game_player.x
+			#go right towards the player
+			direction = 6
+		else
+			#hiding spot X is either equal to or greater than where the player is
+			#go left towards the player
+			direction = 4
+		end
+			
+		pbScrollMap(direction, distance, speed)
+		
+		distance = (pkmn.hideAndSeekSpot.y - $game_player.y).abs
+		if pkmn.hideAndSeekSpot.y < $game_player.y
+			#go down towards the player
+			direction = 2
+		else
+			#hiding spot Y is either equal to or greater than where the player is
+			#go up towards the player
+			direction = 8
+		end
+			
+		pbScrollMap(direction, distance, speed)
+		
+		#fade in
+		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+	end #def self.leapOutNotFound(pkmn)
+	
 	def self.howManyLeft
 		#check all pkmn in the party and see if any are still not found
 		for i in 0...$PokemonGlobal.campers.length
@@ -170,12 +252,11 @@ class Camping
 			#scroll map to their hidingSpot event's X
 			speed = 5
 			distance = (pkmn.hideAndSeekSpot.x - $game_player.x).abs
-			print "distance is #{distance}"
 			if pkmn.hideAndSeekSpot.x < $game_player.x
 				#go left towards the hiding spot
 				direction = 4
 			else
-				#hiding spot X is either equal to or greater than where the map camera is
+				#hiding spot X is either equal to or greater than where the player is
 				#go right towards the hiding spot
 				direction = 6
 			end
@@ -185,24 +266,23 @@ class Camping
 			#scroll map to their hidingSpot event's Y
 			speed = 5
 			distance = (pkmn.hideAndSeekSpot.y - $game_player.y).abs
-			print "distance is #{distance}"
 			if pkmn.hideAndSeekSpot.y < $game_player.y
 				#go up towards the hiding spot
 				direction = 8
 			else
-				#hiding spot Y is either equal to or greater than where the map camera is
+				#hiding spot Y is either equal to or greater than where the player is
 				#go down towards the hiding spot
 				direction = 2
 			end
 			
 			pbScrollMap(direction, distance, speed)
 			
-			
-			
+			self.leapOutNotFound(pkmn)
+			pbWait(Graphics.frame_rate/2)
 		end #for i in 0...$PokemonGlobal.campers.length
 		
 		$PokemonGlobal.playingHideAndSeek = false
-		$game_system.menu_enabled
+		$game_system.menu_disabled = false
 	end #def self.revealHidingPkmn
 
 	def hideAndSeek
