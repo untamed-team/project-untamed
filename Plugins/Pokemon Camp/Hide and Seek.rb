@@ -110,9 +110,10 @@ class Camping
 		distanceY = (hidingSpotEvent.y - desiredY) * -1
 		
 		#make camper event jump from hiding spot to passable location
-		pbMoveRoute(pkmn.campEvent, [
-			PBMoveRoute::Jump, distanceX, distanceY
-		])
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Jump, distanceX, distanceY])
+		
+		#turn to face player
+		event_turn_toward_player(pkmn.campEvent)
 	end #def self.leapOut(pkmn)
 	
 	def self.howManyLeft
