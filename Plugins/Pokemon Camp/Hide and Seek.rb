@@ -20,7 +20,6 @@ class Camping
 			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
 			$PokemonGlobal.campers[i].hideAndSeekFound = false
 			hidingSpotsAvailable.delete(spotChosen)
-			
 			#make the event opacity 0
 			pbMoveRoute($PokemonGlobal.campers[i].campEvent, [PBMoveRoute::Opacity, 0])
 			#move the event to the top left corner of the map
@@ -140,12 +139,19 @@ class Camping
 		end #for i in 0...$Trainer.pokemon_count
 		
 		#say when we've found the whole team
-		print "found them all!"
-		EventHandlers.remove(:on_player_interact, :hideAndSeek_CheckSpot)
+		#print "found them all!"
 		self.goAgain
 	end #def howManyLeft
 
 	def self.goAgain
+		if pbConfirmMessage(_INTL("Play again?"))
+			camp = Camping.new
+			camp.findHidingSpots
+			camp.assignHidingSpots
+			pbMessage(_INTL("Ready or not, here I come!"))
+		else
+			#EventHandlers.remove(:on_player_interact, :hideAndSeek_CheckSpot)
+		end
 	end #goAgain
 
 	def hideAndSeek
