@@ -158,10 +158,55 @@ class Camping
 			$PokemonGlobal.playingHideAndSeek = true
 		else
 			$PokemonGlobal.playingHideAndSeek = false
+			$game_system.menu_enabled
 		end
 	end #goAgain
+	
+	def self.revealHidingPkmn
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			next if pkmn.hideAndSeekFound
+			
+			#scroll map to their hidingSpot event's X
+			speed = 5
+			distance = (pkmn.hideAndSeekSpot.x - $game_player.x).abs
+			print "distance is #{distance}"
+			if pkmn.hideAndSeekSpot.x < $game_player.x
+				#go left towards the hiding spot
+				direction = 4
+			else
+				#hiding spot X is either equal to or greater than where the map camera is
+				#go right towards the hiding spot
+				direction = 6
+			end
+			
+			pbScrollMap(direction, distance, speed)
+			
+			#scroll map to their hidingSpot event's Y
+			speed = 5
+			distance = (pkmn.hideAndSeekSpot.y - $game_player.y).abs
+			print "distance is #{distance}"
+			if pkmn.hideAndSeekSpot.y < $game_player.y
+				#go up towards the hiding spot
+				direction = 8
+			else
+				#hiding spot Y is either equal to or greater than where the map camera is
+				#go down towards the hiding spot
+				direction = 2
+			end
+			
+			pbScrollMap(direction, distance, speed)
+			
+			
+			
+		end #for i in 0...$PokemonGlobal.campers.length
+		
+		$PokemonGlobal.playingHideAndSeek = false
+		$game_system.menu_enabled
+	end #def self.revealHidingPkmn
 
 	def hideAndSeek
+		$game_system.menu_disabled
 		pbBGMFade(1)
 		findHidingSpots
 		assignHidingSpots
@@ -173,9 +218,20 @@ class Camping
 	#on_player_interact with hiding spot
 	EventHandlers.add(:on_player_interact, :hideAndSeek_CheckSpot, proc {
 		next if !$PokemonGlobal.playingHideAndSeek
-		print "checking"
 		facingEvent = $game_player.pbFacingEvent
 		self.checkHidingSpot(facingEvent) if facingEvent && facingEvent.name.match(/Hiding_Spot/i)
+	})
+	
+	#check if player wants t o give up on hide and seek
+	EventHandlers.add(:on_frame_update, :back_when_hideAndSeek, proc {
+		next if !$PokemonGlobal.playingHideAndSeek
+		if Input.trigger?(Input::BACK)
+			if pbConfirmMessage(_INTL("Give up?"))
+				pbMessage(_INTL("Come out, come out, wherever you are!"))
+				pbWait(Graphics.frame_rate/2)
+				self.revealHidingPkmn
+			end
+		end # if Input.trigger?(Input::BACK)
 	})
 
 end #class Camping
