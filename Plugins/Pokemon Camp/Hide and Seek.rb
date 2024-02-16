@@ -26,8 +26,14 @@ class Camping
 			$PokemonGlobal.campers[i].campEvent.moveto(0, 0)
 		end #for i in 0...$PokemonGlobal.campers.length
 		
+		resetPlayerPosition
+		
 		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	end #def assignHidingSpots
+
+	def resetPlayerPosition
+		pbTransferWithTransition(map_id=$game_map.map_id, x=$PokemonGlobal.campingPlayerStartX, y=$PokemonGlobal.campingPlayerStartY, transition = nil, dir = 2)
+	end #def resetPlayerPosition
 
 	def self.checkHidingSpot(spotChecked)
 		#check all pokemon in the party, and if they haven't been found, check if this is their hiding spot
@@ -149,8 +155,9 @@ class Camping
 			camp.findHidingSpots
 			camp.assignHidingSpots
 			pbMessage(_INTL("Ready or not, here I come!"))
+			$PokemonGlobal.playingHideAndSeek = true
 		else
-			#EventHandlers.remove(:on_player_interact, :hideAndSeek_CheckSpot)
+			$PokemonGlobal.playingHideAndSeek = false
 		end
 	end #goAgain
 
@@ -160,10 +167,13 @@ class Camping
 		assignHidingSpots
 		pbBGMPlay("ORAS 088 The Trick House")
 		pbMessage(_INTL("Ready or not, here I come!"))
+		$PokemonGlobal.playingHideAndSeek = true
 	end #def hideAndSeek
 	
 	#on_player_interact with hiding spot
 	EventHandlers.add(:on_player_interact, :hideAndSeek_CheckSpot, proc {
+		next if !$PokemonGlobal.playingHideAndSeek
+		print "checking"
 		facingEvent = $game_player.pbFacingEvent
 		self.checkHidingSpot(facingEvent) if facingEvent && facingEvent.name.match(/Hiding_Spot/i)
 	})

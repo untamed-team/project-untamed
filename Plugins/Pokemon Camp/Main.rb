@@ -5,6 +5,9 @@ class PokemonGlobalMetadata
   #to assign the variables, do so like this:
   #$PokemonGlobal.variableName = assignment
   attr_accessor   :campers
+  attr_accessor   :campingPlayerStartX
+  attr_accessor   :campingPlayerStartY
+  attr_accessor   :playingHideAndSeek
   
 end #class PokemonGlobalMetadata
 
@@ -12,6 +15,8 @@ class Pokemon
   attr_accessor :campEvent
   attr_accessor :hideAndSeekSpot
   attr_accessor :hideAndSeekFound
+  attr_accessor :campStartX
+  attr_accessor :campStartY
 end
 
 class Camping
@@ -21,6 +26,10 @@ class Camping
 
   def startCamping
     pbCommonEvent(9) #start camping 
+	#get the player's current X and Y position when they enter camp
+	$PokemonGlobal.campingPlayerStartX = $game_player.x
+	$PokemonGlobal.campingPlayerStartY = $game_player.y
+	
     #toggleOnCampEvents
   end
 
@@ -109,7 +118,11 @@ class Camping
 	  
 	  #put a reference to the pkmn's campEvent in $PokemonGlobal.campers[i]
 	  $PokemonGlobal.campers[i].campEvent = $game_map.events[i+1]
-	  #print "#{$PokemonGlobal.campers[i].name}'s campEvent is event #{$PokemonGlobal.campers[i].campEvent.id}"
+	  
+		#get pkmn events' current X and Y position when the player enters camp
+		$PokemonGlobal.campers[i].campStartX = $PokemonGlobal.campers[i].campEvent.x
+		$PokemonGlobal.campers[i].campStartY = $PokemonGlobal.campers[i].campEvent.y
+	  
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
   
