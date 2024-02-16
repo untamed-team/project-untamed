@@ -17,6 +17,7 @@ class Pokemon
   attr_accessor :hideAndSeekFound
   attr_accessor :campStartX
   attr_accessor :campStartY
+  attr_accessor :hideAndSeekGamesWon
 end
 
 class Camping

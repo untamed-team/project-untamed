@@ -53,6 +53,7 @@ class Camping
 	def self.foundPkmn(pkmn)
 		pkmn.hideAndSeekFound = true
 		self.leapOut(pkmn)
+		pbWait(Graphics.frame_rate/2)
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
 		self.howManyLeft
 	end #def self.foundPkmn(pkmn)
@@ -138,6 +139,10 @@ class Camping
 	end #def self.leapOut(pkmn)
 	
 	def self.leapOutNotFound(pkmn)
+		#add to the variable hideAndSeekGamesWon
+		pkmn.hideAndSeekGamesWon = 0 if pkmn.hideAndSeekGamesWon.nil?
+		pkmn.hideAndSeekGamesWon += 1
+	
 		hidingSpotEvent = pkmn.hideAndSeekSpot
 		
 		#set move route of corresponding camper event to move to hiding spot
