@@ -183,27 +183,3 @@ class Camping
     toggleOffCampEncounters
   end
 end #of class Camping
-
-def event_turn_toward_player(event)
-	#which coordinate is furthest from the player? that's the one we'll look towards
-	distanceX = (event.x - $game_player.x).abs
-	distanceY = (event.y - $game_player.y).abs
-	
-	if distanceX > distanceY
-		#compare the event and players' X coordinates
-		if event.x < $game_player.x
-			pbMoveRoute(event, [PBMoveRoute::TurnRight]) 
-		elsif event.x > $game_player.x
-			pbMoveRoute(event, [PBMoveRoute::TurnLeft]) 
-		end
-		return
-	else
-		#compare the event and players' Y coordinates
-		if event.y < $game_player.y
-			pbMoveRoute(event, [PBMoveRoute::TurnDown]) 
-		elsif event.y > $game_player.y
-			pbMoveRoute(event, [PBMoveRoute::TurnUp]) 
-		end
-		return
-	end #if distanceX > distanceY
-end #def event_turn_toward_player(event)
