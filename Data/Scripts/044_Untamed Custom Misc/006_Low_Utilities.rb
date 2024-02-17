@@ -863,3 +863,63 @@ end
 #===============================================================================
 #===============================================================================
 #===============================================================================
+
+class Player < Trainer
+  attr_accessor   :bin_array
+
+  alias initialize_bins initialize
+  def initialize(name, trainer_type)
+    initialize_bins(name, trainer_type)
+    super
+    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book"]
+  end
+end
+
+def pbTrashBin
+  if $player.bin_array.empty?
+    pbMessage(_INTL("A common trash bin."))
+    echoln "no bin 4 u"
+    return
+  end
+  bin_rng  = rand(100)
+  bin_rng2 = rand($player.bin_array.length)
+  if bin_rng >1#>= 25
+    echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
+    pbMEPlay("Item get")
+    case $player.bin_array[bin_rng2]
+    when "FakeStone"
+      fake_stonen = rand(4)
+      case fake_stonen
+      when 0 then fake_stone = "Gastronautite"
+      when 1 then fake_stone = "Quetzillianite"
+      when 2 then fake_stone = "Bathygigite"
+      when 3 then fake_stone = "Crustangite"
+      when 4 then fake_stone = "Peroxotalite"
+      end
+      pbMessage(_INTL("You found a \\c[1]{1}\\c[0]!",fake_stone))
+      pbMessage(_INTL("...\\n..."))
+      pbMessage(_INTL("You awkwardly put the trash back at the bin."))
+    when "Elena"
+      pbMessage(_INTL("You found a \\c[1]Rusty Note\\c[0]!"))
+      pbMessage(_INTL("It says:'\\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :('"))
+    when "Kanto"
+      pbMessage(_INTL("You found a \\c[1]Crumpled Photo\\c[0]!"))
+      pbMessage(_INTL("It's a photo of a little kid from KANTO0O, he is hugging a-"))
+      pbMessage(_INTL("...\\n..."))
+      pbMessage(_INTL("A motherfucking Eevee.\\nTruly repugnant."))
+      pbMessage(_INTL("With utter disgust of the horrid taste of KANTO0Onians, you put the trash back at the bin."))
+    when "Pop Culture"
+      pbMessage(_INTL("You found a \\c[1]Discarted Screenplay\\c[0]!"))
+      pbMessage(_INTL("It says something about dramatic entrances and eating garbage."))
+    when "Flygon"
+      pbMessage(_INTL("You found some \\c[1]Concept Art\\c[0]!"))
+      pbMessage(_INTL("It shows many weird looking Flygons. It seems the artist had a art block."))
+    when "Book"
+      pbMessage(_INTL("You found a \\c[1]Joke Book\\c[0]!"))
+      pbMessage(_INTL("'I had a good one but it was rubbish.' by Genedartee."))
+    else
+      msg = "A Trash bin."
+    end
+    $player.bin_array.delete_at(bin_rng2)
+  end
+end
