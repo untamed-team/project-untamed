@@ -1,6 +1,6 @@
 class Camping
 	#as long as event name contains "Hiding_Spot", it will be chosen as a hiding spot by the player's pokemon
-	def findHidingSpots
+	def self.findHidingSpots
 		@hidingSpots = []
 		#get map events
 		$game_map.events.values.each {|event|
@@ -9,16 +9,31 @@ class Camping
 		} #end of $game_map.events.values.each {|event|
 	end
 	
-	def assignHidingSpots
+	def self.assignHidingSpots
 		#fade to black
 		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
 		pbWait(Graphics.frame_rate)
 		hidingSpotsAvailable = @hidingSpots.clone
 		for i in 0...$PokemonGlobal.campers.length
+			#reset variables
+			$PokemonGlobal.campers[i].failedToHide = false
+			$PokemonGlobal.campers[i].hideAndSeekSpot = nil
+			$PokemonGlobal.campers[i].hideAndSeekFound = false
+			
 			print "We need more hiding spots on this map" if hidingSpotsAvailable.length <= 0
+			
+			#random chance for the pkmn not to find a hiding spot
+			chance = rand(1..33)
+			if chance == 1
+				#pkmn did not find a hiding spot
+				$PokemonGlobal.campers[i].failedToHide = true
+				#put the pkmn back in its starting spot when entering camp
+				$PokemonGlobal.campers[i].campEvent.moveto($PokemonGlobal.campers[i].campStartX, $PokemonGlobal.campers[i].campStartY)
+				next
+			end #if chance == 1
+			
 			spotChosen = hidingSpotsAvailable.sample
 			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
-			$PokemonGlobal.campers[i].hideAndSeekFound = false
 			hidingSpotsAvailable.delete(spotChosen)
 			#make the event opacity 0
 			pbMoveRoute($PokemonGlobal.campers[i].campEvent, [PBMoveRoute::Opacity, 0])
@@ -26,14 +41,10 @@ class Camping
 			$PokemonGlobal.campers[i].campEvent.moveto(0, 0)
 		end #for i in 0...$PokemonGlobal.campers.length
 		
-		resetPlayerPosition
+		self.resetPlayerPosition
 		
 		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	end #def assignHidingSpots
-
-	def resetPlayerPosition
-		pbTransferWithTransition(map_id=$game_map.map_id, x=$PokemonGlobal.campingPlayerStartX, y=$PokemonGlobal.campingPlayerStartY, transition = nil, dir = 2)
-	end #def resetPlayerPosition
 
 	def self.checkHidingSpot(spotChecked)
 		#check all pokemon in the party, and if they haven't been found, check if this is their hiding spot
@@ -238,14 +249,15 @@ class Camping
 
 	def self.goAgain
 		if pbConfirmMessage(_INTL("Play again?"))
-			camp = Camping.new
-			camp.findHidingSpots
-			camp.assignHidingSpots
+			self.findHidingSpots
+			self.assignHidingSpots
 			pbMessage(_INTL("Ready or not, here I come!"))
 			$PokemonGlobal.playingHideAndSeek = true
 		else
 			$PokemonGlobal.playingHideAndSeek = false
-			$game_system.menu_enabled
+			$game_system.menu_disabled = false
+			self.resetCamperPositions
+			pbBGMFade(1)
 		end
 	end #goAgain
 	
@@ -253,6 +265,7 @@ class Camping
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
 			next if pkmn.hideAndSeekFound
+			next if pkmn.hideAndSeekSpot.nil?
 			
 			#scroll map to their hidingSpot event's X
 			speed = 5
@@ -288,13 +301,15 @@ class Camping
 		
 		$PokemonGlobal.playingHideAndSeek = false
 		$game_system.menu_disabled = false
+		self.resetCamperPositions
+		pbBGMFade(1)
 	end #def self.revealHidingPkmn
 
-	def hideAndSeek
+	def self.hideAndSeek
 		$game_system.menu_disabled
 		pbBGMFade(1)
-		findHidingSpots
-		assignHidingSpots
+		self.findHidingSpots
+		self.assignHidingSpots
 		pbBGMPlay("ORAS 088 The Trick House")
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true

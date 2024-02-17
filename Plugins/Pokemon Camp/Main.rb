@@ -4,6 +4,7 @@ class PokemonGlobalMetadata
   #$PokemonGlobal.variableName
   #to assign the variables, do so like this:
   #$PokemonGlobal.variableName = assignment
+  attr_accessor   :camping
   attr_accessor   :campers
   attr_accessor   :campingPlayerStartX
   attr_accessor   :campingPlayerStartY
@@ -18,6 +19,7 @@ class Pokemon
   attr_accessor :campStartX
   attr_accessor :campStartY
   attr_accessor :hideAndSeekGamesWon
+  attr_accessor :failedToHide
 end
 
 class Camping
@@ -26,6 +28,7 @@ class Camping
   end
 
   def startCamping
+	$PokemonGlobal.camping = true
     pbCommonEvent(9) #start camping 
 	#get the player's current X and Y position when they enter camp
 	$PokemonGlobal.campingPlayerStartX = $game_player.x
@@ -38,22 +41,23 @@ class Camping
     toggleOffCampEvents
     pbTransferWithTransition($game_variables[45], $game_variables[31], $game_variables[32], nil, $game_variables[46])
     pbCommonEvent(10)
+	$PokemonGlobal.camping = false
   end
   
-	def interact
+	def self.interact
 		#toggleOffCampEvents
-		@event = pbMapInterpreter.get_self
-		@pkmn = $player.pokemon_party[@event.id-1]
-		@species = @pkmn.species.to_s
-		pbSEPlay("Cries/"+@species,100)
+		event = $game_player.pbFacingEvent
+		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
+		species = pkmn.species.to_s
+		pbSEPlay("Cries/"+species,100)
 		
 		cmds_new = [_INTL("Hide and Seek"),_INTL("Nevermind")]
-		choice = pbMessage(_INTL("What would you like to do with {1}?", @pkmn.name),cmds_new,2)
+		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,2)
 		
 		case choice
 		when 0
 		#hide and seek
-		hideAndSeek
+		self.hideAndSeek
 				
 		when 1
 		#nevermind
@@ -127,6 +131,21 @@ class Camping
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
   
+	def self.resetPlayerPosition
+		pbTransferWithTransition(map_id=$game_map.map_id, x=$PokemonGlobal.campingPlayerStartX, y=$PokemonGlobal.campingPlayerStartY, transition = nil, dir = 2)
+	end #def resetPlayerPosition
+  
+  def self.resetCamperPositions
+	$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
+	pbWait(Graphics.frame_rate)
+	for i in 0...$PokemonGlobal.campers.length
+		pkmn = $PokemonGlobal.campers[i]
+		pkmn.campEvent.moveto(pkmn.campStartX, pkmn.campStartY)
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 255])
+	end #for i in 0...$PokemonGlobal.campers.length
+	$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+  end #def resetCamperPositions
+  
   def campFadeOut
     #screen tone dark
     pbToneChangeAll(Tone.new(-255,-255,-255,-255),20)
@@ -139,54 +158,6 @@ class Camping
     pbWait(60)
   end
   
-  def getCamperCoords
-    #save campers' coordinates
-    @camper1X = $game_map.events[1].x
-    @camper1Y = $game_map.events[1].y
-    @camper2X = $game_map.events[2].x
-    @camper2Y = $game_map.events[2].y
-    @camper3X = $game_map.events[3].x
-    @camper3Y = $game_map.events[3].y
-    @camper4X = $game_map.events[4].x
-    @camper4Y = $game_map.events[4].y
-    @camper5X = $game_map.events[5].x
-    @camper5Y = $game_map.events[5].y
-    @camper6X = $game_map.events[6].x
-    @camper6Y = $game_map.events[6].y
-    
-    #save player's coords
-    @playerInCampX = $game_player.x
-    @playerInCampY = $game_player.y
-  end
-  
-  def restoreCampersToCoords
-    #move all the campers back to where they were before the last interaction
-    $game_map.events[1].moveto(@camper1X, @camper1Y)
-    $game_map.events[2].moveto(@camper2X, @camper2Y)
-    $game_map.events[3].moveto(@camper3X, @camper3Y)
-    $game_map.events[4].moveto(@camper4X, @camper4Y)
-    $game_map.events[5].moveto(@camper5X, @camper5Y)
-    $game_map.events[6].moveto(@camper6X, @camper6Y)
-    
-    #move the player back to where they were before the last interaction
-    $game_player.moveto(@playerInCampX, @playerInCampY)
-  end
-  
-  def moveCampersToSide
-    #move all other campers out of the way
-    @camperMovedX = 16
-    @camperMovedY = 8
-    
-    #event = pbMapInterpreter.get_self
-    for i in 0...$Trainer.pokemon_count
-      #$game_map.events[i+1].clear_path_target
-      if i != @event.id - 1 #if not the pokemon we are playing tag with
-        $game_map.events[i+1].moveto(@camperMovedX, @camperMovedY)
-        @camperMovedX += 1
-      end
-    end
-  end #def moveCampersToSide
-  
   def toggleOnCampEvents
     toggleOnPokemonBehavior
     toggleOnCampEncounters
@@ -196,4 +167,13 @@ class Camping
     toggleOffPokemonBehavior
     toggleOffCampEncounters
   end
+  
+  #on_player_interact with camper
+	EventHandlers.add(:on_player_interact, :interact_with_camper_pkmn, proc {
+		next if !$PokemonGlobal.camping
+		next if $PokemonGlobal.playingHideAndSeek
+		facingEvent = $game_player.pbFacingEvent
+		self.interact if facingEvent && facingEvent.name.match(/CamperPkmn/i)
+	})
 end #of class Camping
+
