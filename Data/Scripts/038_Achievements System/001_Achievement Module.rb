@@ -84,9 +84,15 @@ module Achievements
     },
     "FAINTED_POKEMON"=>{
       "id"=>13,
-      "name"=>"I Hope You're Not Doing a Nuzlocke",
+      "name"=>"Nuzlockers Begone",
       "description"=>"Have your Pokémon faint.",
       "goals"=>[100,250,500]
+    },
+    "EBIN_BINS"=>{
+      "id"=>14,
+      "name"=>"I Love Bins",
+      "description"=>"Interact with bins.",
+      "goals"=>[10,15,20]
     }
   }
   

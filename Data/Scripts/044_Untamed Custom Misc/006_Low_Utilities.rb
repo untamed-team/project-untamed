@@ -871,55 +871,93 @@ class Player < Trainer
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
     super
-    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book"]
+    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book", "AI Art", "Love Advice", "man.", "Hiccups", "RGB"]
   end
 end
 
-def pbTrashBin
+def pbTrashBin(eventID, specialBin = false)
+  if !specialBin
+    bin_rng  = rand(5)
+    case bin_rng
+    when 0 then msg = "A common trash bin."
+    when 1 then msg = "A interesting trash bin."
+    when 2 then msg = "A trash bin, it has paper in it."
+    when 3 then msg = "A trash bin. You wonder how they are made."
+    when 4 then msg = "One of the trash bins of all time."
+    when 5 then msg = "One of a variety of the mysterious Trash Bins."
+    end
+    pbMessage(msg)
+    return
+  end
   if $player.bin_array.empty?
     pbMessage(_INTL("A common trash bin."))
     echoln "no bin 4 u"
     return
   end
-  bin_rng  = rand(100)
   bin_rng2 = rand($player.bin_array.length)
-  if bin_rng >1#>= 25
-    echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
-    pbMEPlay("Item get")
-    case $player.bin_array[bin_rng2]
-    when "FakeStone"
-      fake_stonen = rand(4)
-      case fake_stonen
-      when 0 then fake_stone = "Gastronautite"
-      when 1 then fake_stone = "Quetzillianite"
-      when 2 then fake_stone = "Bathygigite"
-      when 3 then fake_stone = "Crustangite"
-      when 4 then fake_stone = "Peroxotalite"
-      end
-      pbMessage(_INTL("You found a \\c[1]{1}\\c[0]!",fake_stone))
-      pbMessage(_INTL("...\\n..."))
-      pbMessage(_INTL("You awkwardly put the trash back at the bin."))
-    when "Elena"
-      pbMessage(_INTL("You found a \\c[1]Rusty Note\\c[0]!"))
-      pbMessage(_INTL("It says:'\\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :('"))
-    when "Kanto"
-      pbMessage(_INTL("You found a \\c[1]Crumpled Photo\\c[0]!"))
-      pbMessage(_INTL("It's a photo of a little kid from KANTO0O, he is hugging a-"))
-      pbMessage(_INTL("...\\n..."))
-      pbMessage(_INTL("A motherfucking Eevee.\\nTruly repugnant."))
-      pbMessage(_INTL("With utter disgust of the horrid taste of KANTO0Onians, you put the trash back at the bin."))
-    when "Pop Culture"
-      pbMessage(_INTL("You found a \\c[1]Discarted Screenplay\\c[0]!"))
-      pbMessage(_INTL("It says something about dramatic entrances and eating garbage."))
-    when "Flygon"
-      pbMessage(_INTL("You found some \\c[1]Concept Art\\c[0]!"))
-      pbMessage(_INTL("It shows many weird looking Flygons. It seems the artist had a art block."))
-    when "Book"
-      pbMessage(_INTL("You found a \\c[1]Joke Book\\c[0]!"))
-      pbMessage(_INTL("'I had a good one but it was rubbish.' by Genedartee."))
-    else
-      msg = "A Trash bin."
+  echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
+  pbMEPlay("Item get")
+  pbSetSelfSwitch(eventID, "B", true)
+
+  case $player.bin_array[bin_rng2]
+  when "FakeStone"
+    fake_stonen = rand(4)
+    case fake_stonen
+    when 0 then fake_stone = "Gastronautite"
+    when 1 then fake_stone = "Quetzillianite"
+    when 2 then fake_stone = "Bathygigite"
+    when 3 then fake_stone = "Crustangite"
+    when 4 then fake_stone = "Peroxotalite"
     end
-    $player.bin_array.delete_at(bin_rng2)
+    pbMessage(_INTL("You found a \\c[1]{1}\\c[0]!",fake_stone))
+    pbMessage(_INTL("...\\n..."))
+    pbMessage(_INTL("You awkwardly put the trash back at the bin."))
+  when "Elena"
+    pbMessage(_INTL("You found a \\c[1]Rusty Note\\c[0]!"))
+    pbMessage(_INTL("It says:' \\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :('"))
+  when "Kanto"
+    pbMessage(_INTL("You found a \\c[1]Crumpled Photo\\c[0]!"))
+    pbMessage(_INTL("It's a photo of a little kid from KANTO0O0O0O0O, he is hugging a Eevee."))
+    pbMessage(_INTL("...\\n..."))
+    pbMessage(_INTL("Truly repugnant."))
+    pbMessage(_INTL("With utter disgust of the horrid taste of KANTO0Onians, you put the trash back at the bin."))
+  when "Pop Culture"
+    pbMessage(_INTL("You found a \\c[1]Discarted Screenplay\\c[0]!"))
+    pbMessage(_INTL("It says something about dramatic entrances and eating garbage."))
+  when "Flygon"
+    pbMessage(_INTL("You found some \\c[1]Concept Art\\c[0]!"))
+    pbMessage(_INTL("It shows many weird looking Flygons. It seems the artist had a art block."))
+  when "Book"
+    pbMessage(_INTL("You found a \\c[1]Joke Book\\c[0]!"))
+    pbMessage(_INTL("'I had a good one but it was rubbish.' by Genedartee."))
+  when "AI Art"
+    pbMessage(_INTL("You found a \\c[1]Picture\\c[0]!"))
+    if $Trainer.they == "he" && $player.gender == 0 # jesus christ this "they" shit is so fucking cringe
+      pbMessage(_INTL("It's your favorite PokeGirl trying to hug you."))
+      pbMessage(_INTL("It has a 'AI Generated' watermark."))
+      pbMessage(_INTL("You put the \\c[1]Picture\\c[0] in\\nyour Bag's \\c[1]Spare\\c[0] pocket for later."))
+    else
+      pbMessage(_INTL("It has a 'AI Generated' watermark."))
+      pbMessage(_INTL("It's your favorite PokeGirl trying to hug you."))
+      pbMessage(_INTL("You rip the \\c[1]Picture\\c[0] appart."))
+    end
+  when "Love Advice"
+    pbMessage(_INTL("You found stacks of \\c[1]Blank Crumpled Paper\\c[0]!"))
+    pbMessage(_INTL("You wish you had a heart as full as this trash bin."))
+  when "man."
+    pbMessage(_INTL("You found ...\\c[1]Nothing\\c[0]!"))
+    pbMessage(_INTL("This trash bin is more empty than you."))
+  when "Hiccups"
+    pbMessage(_INTL("You found a \\c[1]Thread\\c[0]!"))
+    pbMessage(_INTL("\\c[3]>be me\\n>have hiccups\\n>tell myself 'i am not a fish'\\n>hiccups gone\\n>why does it work?\\c[0]"))
+  when "RGB"
+    pbSetSelfSwitch(eventID, "B", false)
+    pbSetSelfSwitch(eventID, "D", true)
+    pbMessage(_INTL("You found a \\c[2]R\\c[3]G\\c[1]B Bin\\c[0]!"))
+    pbMessage(_INTL("She is not like other bins."))
+  else
+    pbMessage(_INTL("A Trash bin."))
   end
+  $player.bin_array.delete_at(bin_rng2)
+  Achievements.incrementProgress("EBIN_BINS",1)
 end
