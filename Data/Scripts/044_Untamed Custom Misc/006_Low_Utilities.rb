@@ -871,7 +871,7 @@ class Player < Trainer
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
     super
-    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book", "AI Art", "Love Advice", "man.", "Hiccups", "RGB"]
+    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book", "AI Art", "Love Advice", "man.", "Hiccups", "RGB", "Jynx", "Kanto 2", "Code"]
   end
 end
 
@@ -955,6 +955,15 @@ def pbTrashBin(eventID, specialBin = false)
     pbSetSelfSwitch(eventID, "D", true)
     pbMessage(_INTL("You found a \\c[2]R\\c[3]G\\c[1]B Bin\\c[0]!"))
     pbMessage(_INTL("She is not like other bins."))
+  when "Jynx"
+    pbMessage(_INTL("You found some \\c[1]Drafts Art\\c[0]!"))
+    pbMessage(_INTL("It shows Jynx evolving into a new cool looking Pokemon. Twitter might not like this."))
+  when "Kanto 2"
+    pbMessage(_INTL("You found some \\c[1]Doll\\c[0]!"))
+    pbMessage(_INTL("It's a Charizard Doll. Well, can't say it doesn't deserve to be there."))
+  when "Code"
+    pbMessage(_INTL("You found some ...\\c[1]Code\\c[0]?"))
+    pbMessage(_INTL("Your reality may be crumbling, but I am sure it is nothing to worry about."))
   else
     pbMessage(_INTL("A Trash bin."))
   end
