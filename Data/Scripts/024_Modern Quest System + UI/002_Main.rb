@@ -139,6 +139,9 @@ class Player_Quests
       end
     end
     @ready_quests.push(Quest.new(quest,color,story))
+	
+    #refresh all icons above events
+    QuestIndicator.initialize
   end
   
   #added by Gardenette
@@ -294,6 +297,11 @@ class Player_Quests
         @active_quests[i].new = true # Setting this back to true makes the "!" icon appear when the quest updates
         found = true
         pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New task added!</c2>\nYour objective list <icon=menuObjectives> in the menu has been updated!</ac>",QUEST_JINGLE))
+        
+        #remove from turn-in
+		removeTurninQuest(quest,nil,nil)
+        #refresh all icons above events
+        QuestIndicator.initialize
       end
       return if found
     end
@@ -302,10 +310,9 @@ class Player_Quests
       questNew = Quest.new(quest,color,story)
       questNew.stage = stageNum
       @active_quests.push(questNew)
+      #refresh all icons above events
+      QuestIndicator.initialize
     end
-
-    #refresh all icons above events
-    QuestIndicator.initialize
   end
   
   #added by Space
