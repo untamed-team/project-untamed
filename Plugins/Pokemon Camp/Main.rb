@@ -9,6 +9,9 @@ class PokemonGlobalMetadata
   attr_accessor   :campingPlayerStartX
   attr_accessor   :campingPlayerStartY
   attr_accessor   :playingHideAndSeek
+  attr_accessor   :hideAndSeekTimer
+  attr_accessor   :hideAndSeekViewport
+  attr_accessor   :sprites
   
 end #class PokemonGlobalMetadata
 

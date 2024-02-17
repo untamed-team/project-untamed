@@ -1,4 +1,6 @@
 class Camping
+	HIDE_AND_SEEK_TIMER_SECONDS = 60
+
 	#as long as event name contains "Hiding_Spot", it will be chosen as a hiding spot by the player's pokemon
 	def self.findHidingSpots
 		@hidingSpots = []
@@ -336,6 +338,41 @@ class Camping
 		self.pbOverworldAnimationNoPause(pkmn.hideAndSeekSpot, emoteID, tinting = false)
 	end #def self.emoteWhileHiding
 
+	def self.drawHUD
+		$PokemonGlobal.hideAndSeekViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+		@viewport = $PokemonGlobal.hideAndSeekViewport
+		$PokemonGlobal.sprites = {}
+		@sprites = $PokemonGlobal.sprites
+		#possible background with low opacity drawn here
+		
+		self.drawTimer
+		self.drawPkmnIcons
+	end #def self.drawTimer
+	
+	def self.drawTimer
+		@sprites["timer"] = BitmapSprite.new(Graphics.width,Graphics.height,@viewport)
+		base   = Color.new(248,248,248)
+        shadow = Color.new(104,104,104)
+		timerText = [[_INTL("#{$PokemonGlobal.hideAndSeekTimer}"),Graphics.width/2,Graphics.height-60,2,base,shadow]]
+		pbSetSystemFont(@sprites["timer"].bitmap)
+        pbDrawTextPositions(@sprites["timer"].bitmap,timerText)
+	end #def self.drawTimer
+
+	def self.drawPkmnIcons
+		@sprites["foundPkmnBitmap"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		overlay = @sprites["foundPkmnBitmap"].bitmap
+		imagepos = []
+		for i in 0...$PokemonGlobal.campers.length
+			@sprites["camper#{i}"] = PokemonIconSprite.new($PokemonGlobal.campers[i], @viewport)
+			@sprites["camper#{i}"].setOffset(PictureOrigin::CENTER)
+			iconImage = @sprites["camper#{i}"]#.bitmap
+			print i
+			imagepos.push(["#{iconImage}", i*70, 0])
+		end #for i in 0...$PokemonGlobal.campers.length
+		
+		pbDrawImagePositions(overlay, imagepos)
+	end #def self.drawPkmnIcons
+
 	def self.hideAndSeek
 		$game_system.menu_disabled
 		pbBGMFade(1)
@@ -344,6 +381,8 @@ class Camping
 		pbBGMPlay("ORAS 088 The Trick House")
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
+		$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
+		self.drawHUD
 	end #def hideAndSeek
 	
 	#on_player_interact with hiding spot
@@ -389,7 +428,6 @@ class Camping
 				chance = rand(1..100)
 				self.emoteWhileHiding(pkmn) if chance <= 5
 			end #if distanceX <= 8 && distanceY <= 8
-			
 		end #for i in 0...$Trainer.pokemon_count
 		#self.emoteWhileHiding
 	})
