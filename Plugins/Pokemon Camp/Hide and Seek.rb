@@ -23,14 +23,14 @@ class Camping
 			print "We need more hiding spots on this map" if hidingSpotsAvailable.length <= 0
 			
 			#random chance for the pkmn not to find a hiding spot
-			chance = rand(1..33)
-			if chance == 1
+			chance = rand(1..100)
+			if chance <= 10
 				#pkmn did not find a hiding spot
 				$PokemonGlobal.campers[i].failedToHide = true
 				#put the pkmn back in its starting spot when entering camp
 				$PokemonGlobal.campers[i].campEvent.moveto($PokemonGlobal.campers[i].campStartX, $PokemonGlobal.campers[i].campStartY)
 				next
-			end #if chance == 1
+			end #if chance <= 10
 			
 			spotChosen = hidingSpotsAvailable.sample
 			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
@@ -72,6 +72,7 @@ class Camping
 	def self.leapOut(pkmn)
 		#get the event we just talked to
 		hidingSpotEvent = $game_player.pbFacingEvent
+		return if hidingSpotEvent.nil? #a rescue for a crash
 		
 		#set move route of corresponding camper event to move to hiding spot
 		pkmn.campEvent.moveto(hidingSpotEvent.x, hidingSpotEvent.y)
@@ -249,6 +250,7 @@ class Camping
 
 	def self.goAgain
 		if pbConfirmMessage(_INTL("Play again?"))
+			self.resetCamperPositions
 			self.findHidingSpots
 			self.assignHidingSpots
 			pbMessage(_INTL("Ready or not, here I come!"))
@@ -305,6 +307,35 @@ class Camping
 		pbBGMFade(1)
 	end #def self.revealHidingPkmn
 
+	def self.interactHideAndSeek
+		#toggleOffCampEvents
+		event = $game_player.pbFacingEvent
+		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
+		species = pkmn.species.to_s
+		pbSEPlay("Cries/"+species,100)
+		pbTurnTowardEvent(pkmn.campEvent, $game_player)
+		pbMessage(_INTL("#{pkmn.name} couldn't find a hiding spot in time!"))
+		
+		#fade to black
+		pbWait(Graphics.frame_rate)
+		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
+		pbWait(Graphics.frame_rate)
+		#make the event opacity 0
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
+		#move the event to the top left corner of the map
+		pkmn.campEvent.moveto(0, 0)
+		#fade in
+		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+		pkmn.hideAndSeekFound = true
+		self.howManyLeft
+	end #def interactHideAndSeek
+
+	def self.emoteWhileHiding(pkmn)
+		emoteIDs = [3,4,9,10,11,12,13,18]
+		emoteID = emoteIDs.sample
+		self.pbOverworldAnimationNoPause(pkmn.hideAndSeekSpot, emoteID, tinting = false)
+	end #def self.emoteWhileHiding
+
 	def self.hideAndSeek
 		$game_system.menu_disabled
 		pbBGMFade(1)
@@ -322,8 +353,8 @@ class Camping
 		self.checkHidingSpot(facingEvent) if facingEvent && facingEvent.name.match(/Hiding_Spot/i)
 	})
 	
-	#check if player wants t o give up on hide and seek
-	EventHandlers.add(:on_frame_update, :back_when_hideAndSeek, proc {
+	#check if player wants to give up on hide and seek
+	EventHandlers.add(:on_frame_update, :pressed_back_during_hideAndSeek, proc {
 		next if !$PokemonGlobal.playingHideAndSeek
 		if Input.trigger?(Input::BACK)
 			if pbConfirmMessage(_INTL("Give up?"))
@@ -332,6 +363,35 @@ class Camping
 				self.revealHidingPkmn
 			end
 		end # if Input.trigger?(Input::BACK)
+	})
+	
+	#on_player_interact with camper
+	EventHandlers.add(:on_player_interact, :interact_with_camper_pkmn_during_hideAndSeek, proc {
+		next if !$PokemonGlobal.camping
+		next if !$PokemonGlobal.playingHideAndSeek
+		facingEvent = $game_player.pbFacingEvent
+		self.interactHideAndSeek if facingEvent && facingEvent.name.match(/CamperPkmn/i)
+	})
+	
+	EventHandlers.add(:on_step_taken, :interact_with_camper_pkmn_during_hideAndSeek, proc {
+		next if !$PokemonGlobal.camping
+		next if !$PokemonGlobal.playingHideAndSeek
+		#check all pkmn in the party and see if any are still not found
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			next if pkmn.hideAndSeekFound == true
+			next if pkmn.failedToHide == true
+			#if within a set amount of tiles from the player's X and Y
+			distanceX = (pkmn.hideAndSeekSpot.x - $game_player.x).abs
+			distanceY = (pkmn.hideAndSeekSpot.y - $game_player.y).abs
+			if distanceX <= 8 && distanceY <= 8
+				#if on screen, roll the dice to see if the pkmn emotes
+				chance = rand(1..100)
+				self.emoteWhileHiding(pkmn) if chance <= 5
+			end #if distanceX <= 8 && distanceY <= 8
+			
+		end #for i in 0...$Trainer.pokemon_count
+		#self.emoteWhileHiding
 	})
 
 end #class Camping

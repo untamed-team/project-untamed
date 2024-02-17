@@ -142,9 +142,26 @@ class Camping
 		pkmn = $PokemonGlobal.campers[i]
 		pkmn.campEvent.moveto(pkmn.campStartX, pkmn.campStartY)
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 255])
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnDown])
 	end #for i in 0...$PokemonGlobal.campers.length
 	$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
   end #def resetCamperPositions
+  
+	def self.pbOverworldAnimationNoPause(event, id, tinting = false)
+		if event.is_a?(Array)
+			sprite = nil
+			done = []
+			event.each do |i|
+				next if done.include?(i.id)
+				spriteset = $scene.spriteset(i.map_id)
+				sprite ||= spriteset&.addUserAnimation(id, i.x, i.y, tinting, 2)
+				done.push(i.id)
+			end
+		else
+			spriteset = $scene.spriteset(event.map_id)
+			sprite = spriteset&.addUserAnimation(id, event.x, event.y, tinting, 2)
+		end
+	end
   
   def campFadeOut
     #screen tone dark
