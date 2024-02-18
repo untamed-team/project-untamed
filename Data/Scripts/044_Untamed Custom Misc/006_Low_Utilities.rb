@@ -871,7 +871,10 @@ class Player < Trainer
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
     super
-    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", "Book", "AI Art", "Love Advice", "man.", "Hiccups", "RGB", "Jynx", "Kanto 2", "Code"]
+    @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", 
+                  "Book", "AI Art", "Love Advice", "man.", "Hiccups", 
+                  "RGB", "Jynx", "Kanto 2", "Code", "Walmart", 
+                  "Kettle"]
   end
 end
 
@@ -914,7 +917,7 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("You awkwardly put the trash back at the bin."))
   when "Elena"
     pbMessage(_INTL("You found a \\c[1]Rusty Note\\c[0]!"))
-    pbMessage(_INTL("It says:' \\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :('"))
+    pbMessage(_INTL("It says: &quot;\\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :(&quot;"))
   when "Kanto"
     pbMessage(_INTL("You found a \\c[1]Crumpled Photo\\c[0]!"))
     pbMessage(_INTL("It's a photo of a little kid from KANTO0O0O0O0O, he is hugging a Eevee."))
@@ -949,7 +952,7 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("This trash bin is more empty than you."))
   when "Hiccups"
     pbMessage(_INTL("You found a \\c[1]Thread\\c[0]!"))
-    pbMessage(_INTL("\\c[3]>be me\\n>have hiccups\\n>tell myself 'i am not a fish'\\n>hiccups gone\\n>why does it work?\\c[0]"))
+    pbMessage(_INTL("\\c[3]>be me\\n>have hiccups\\n>tell myself &quot;i am not a fish&quot;\\n>hiccups gone\\n\\c[0]why does it work?"))
   when "RGB"
     pbSetSelfSwitch(eventID, "B", false)
     pbSetSelfSwitch(eventID, "D", true)
@@ -964,6 +967,12 @@ def pbTrashBin(eventID, specialBin = false)
   when "Code"
     pbMessage(_INTL("You found some ...\\c[1]Code\\c[0]?"))
     pbMessage(_INTL("Your reality may be crumbling, but I am sure it is nothing to worry about."))
+  when "Walmart"
+    pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
+    pbMessage(_INTL("It seems that a unidentified pink bunny has been banned from a PokeMart\\n...in Minecraft."))
+  when "Kettle"
+    pbMessage(_INTL("You found a \\c[1]Cropped Ad\\c[0]!"))
+    pbMessage(_INTL("It's a yellow kettle. It seems to have a &quot;<i>Dynamically Adjustable Yield Operator</i>&quot; system, or DAYO for short."))
   else
     pbMessage(_INTL("A Trash bin."))
   end
