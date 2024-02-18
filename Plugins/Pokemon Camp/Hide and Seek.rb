@@ -26,13 +26,13 @@ class Camping
 			
 			#random chance for the pkmn not to find a hiding spot
 			chance = rand(1..100)
-			if chance <= 10
+			if chance <= 5
 				#pkmn did not find a hiding spot
 				$PokemonGlobal.campers[i].failedToHide = true
 				#put the pkmn back in its starting spot when entering camp
 				$PokemonGlobal.campers[i].campEvent.moveto($PokemonGlobal.campers[i].campStartX, $PokemonGlobal.campers[i].campStartY)
 				next
-			end #if chance <= 10
+			end #if chance <= 5
 			
 			spotChosen = hidingSpotsAvailable.sample
 			$PokemonGlobal.campers[i].hideAndSeekSpot = spotChosen
@@ -65,8 +65,10 @@ class Camping
 	
 	def self.foundPkmn(pkmn)
 		pkmn.hideAndSeekFound = true
+		self.updatePkmnIcon(pkmn)
 		self.leapOut(pkmn)
 		pbWait(Graphics.frame_rate/2)
+		
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
 		self.howManyLeft
 	end #def self.foundPkmn(pkmn)
@@ -140,16 +142,16 @@ class Camping
 		#player faces pkmn
 		pbTurnTowardEvent($game_player, pkmn.campEvent)
 		
+		pbWait(Graphics.frame_rate)
 		#fade to black
-		pbWait(Graphics.frame_rate)
-		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
-		pbWait(Graphics.frame_rate)
+		self.fadeToBlack
 		#make the event opacity 0
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
 		#move the event to the top left corner of the map
 		pkmn.campEvent.moveto(0, 0)
+		pbWait(Graphics.frame_rate)
 		#fade in
-		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+		self.fadeInFromBlack
 	end #def self.leapOut(pkmn)
 	
 	def self.leapOutNotFound(pkmn)
@@ -199,10 +201,9 @@ class Camping
 		#turn to face camera, so down, direction 2
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnDown])
 		
+		pbWait(Graphics.frame_rate)
 		#fade to black
-		pbWait(Graphics.frame_rate)
-		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
-		pbWait(Graphics.frame_rate)
+		self.fadeToBlack
 		#make the event opacity 0
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
 		#move the event to the top left corner of the map
@@ -234,8 +235,9 @@ class Camping
 			
 		pbScrollMap(direction, distance, speed)
 		
+		pbWait(Graphics.frame_rate)
 		#fade in
-		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+		self.fadeInFromBlack
 	end #def self.leapOutNotFound(pkmn)
 	
 	def self.howManyLeft
@@ -252,16 +254,9 @@ class Camping
 
 	def self.goAgain
 		if pbConfirmMessage(_INTL("Play again?"))
-			self.resetCamperPositions
-			self.findHidingSpots
-			self.assignHidingSpots
-			pbMessage(_INTL("Ready or not, here I come!"))
-			$PokemonGlobal.playingHideAndSeek = true
+			self.replayHideAndSeek
 		else
-			$PokemonGlobal.playingHideAndSeek = false
-			$game_system.menu_disabled = false
-			self.resetCamperPositions
-			pbBGMFade(1)
+			self.stopHideAndSeek
 		end
 	end #goAgain
 	
@@ -303,10 +298,7 @@ class Camping
 			pbWait(Graphics.frame_rate/2)
 		end #for i in 0...$PokemonGlobal.campers.length
 		
-		$PokemonGlobal.playingHideAndSeek = false
-		$game_system.menu_disabled = false
-		self.resetCamperPositions
-		pbBGMFade(1)
+		self.stopHideAndSeek
 	end #def self.revealHidingPkmn
 
 	def self.interactHideAndSeek
@@ -318,16 +310,18 @@ class Camping
 		pbTurnTowardEvent(pkmn.campEvent, $game_player)
 		pbMessage(_INTL("#{pkmn.name} couldn't find a hiding spot in time!"))
 		
+		self.updatePkmnIcon(pkmn)
+		
+		pbWait(Graphics.frame_rate)
 		#fade to black
-		pbWait(Graphics.frame_rate)
-		$game_screen.start_tone_change(Tone.new(-255,-255,-255,0), 6 * Graphics.frame_rate / 20)
-		pbWait(Graphics.frame_rate)
+		self.fadeToBlack
 		#make the event opacity 0
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Opacity, 0])
 		#move the event to the top left corner of the map
 		pkmn.campEvent.moveto(0, 0)
+		pbWait(Graphics.frame_rate)
 		#fade in
-		$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+		self.fadeInFromBlack
 		pkmn.hideAndSeekFound = true
 		self.howManyLeft
 	end #def interactHideAndSeek
@@ -337,13 +331,42 @@ class Camping
 		emoteID = emoteIDs.sample
 		self.pbOverworldAnimationNoPause(pkmn.hideAndSeekSpot, emoteID, tinting = false)
 	end #def self.emoteWhileHiding
+	
+	def self.fadeToBlack
+		@sprites = $PokemonGlobal.hideAndSeekSprites
+		framesOverDuration = 6 * Graphics.frame_rate / 20
+		opacityAmountChange = 255/framesOverDuration.ceil
 
+		loop do
+			Graphics.update
+			@sprites["black_screen"].opacity += opacityAmountChange
+			break if @sprites["black_screen"].opacity >= 255
+		end #loop do
+	end #def self.fadeToBlack
+	
+	def self.fadeInFromBlack
+		@sprites = $PokemonGlobal.hideAndSeekSprites
+		framesOverDuration = 6 * Graphics.frame_rate / 20
+		opacityAmountChange = 255/framesOverDuration.ceil
+
+		loop do
+			Graphics.update
+			@sprites["black_screen"].opacity -= opacityAmountChange
+			break if @sprites["black_screen"].opacity <= 0
+		end #loop do
+	end #def self.fadeInFromBlack
+	
 	def self.drawHUD
 		$PokemonGlobal.hideAndSeekViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
 		@viewport = $PokemonGlobal.hideAndSeekViewport
-		$PokemonGlobal.sprites = {}
-		@sprites = $PokemonGlobal.sprites
-		#possible background with low opacity drawn here
+		$PokemonGlobal.hideAndSeekSprites = {}
+		@sprites = $PokemonGlobal.hideAndSeekSprites
+		
+		#draw black screen so we can make the entire screen black including the HUD sprites
+		@sprites["black_screen"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		@sprites["black_screen"].bitmap.fill_rect(0, 0, Graphics.width, Graphics.height, Color.new(0, 0, 0))
+		@sprites["black_screen"].z = 9999999
+		@sprites["black_screen"].opacity = 0
 		
 		self.drawTimer
 		self.drawPkmnIcons
@@ -353,7 +376,7 @@ class Camping
 		@sprites["timer"] = BitmapSprite.new(Graphics.width,Graphics.height,@viewport)
 		base   = Color.new(248,248,248)
         shadow = Color.new(104,104,104)
-		timerText = [[_INTL("#{$PokemonGlobal.hideAndSeekTimer}"),Graphics.width/2,Graphics.height-60,2,base,shadow]]
+		timerText = [[_INTL("#{$PokemonGlobal.hideAndSeekTimer}"),Graphics.width/2,Graphics.height-70,2,base,shadow]]
 		pbSetSystemFont(@sprites["timer"].bitmap)
         pbDrawTextPositions(@sprites["timer"].bitmap,timerText)
 	end #def self.drawTimer
@@ -361,29 +384,95 @@ class Camping
 	def self.drawPkmnIcons
 		@sprites["foundPkmnBitmap"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
 		overlay = @sprites["foundPkmnBitmap"].bitmap
+		
 		imagepos = []
 		for i in 0...$PokemonGlobal.campers.length
 			@sprites["camper#{i}"] = PokemonIconSprite.new($PokemonGlobal.campers[i], @viewport)
-			@sprites["camper#{i}"].setOffset(PictureOrigin::CENTER)
-			iconImage = @sprites["camper#{i}"]#.bitmap
-			print i
-			imagepos.push(["#{iconImage}", i*70, 0])
+			@sprites["camper#{i}"].setOffset(PictureOrigin::TOP_LEFT)
+			@sprites["camper#{i}"].x = (Graphics.width/2 - @sprites["camper#{i}"].width/2) + i*@sprites["camper#{i}"].width/1.5
+			@sprites["camper#{i}"].y = Graphics.height-@sprites["camper#{i}"].height-3
+			@sprites["camper#{i}"].z = 99999
+			
+			#assign each pkmn their icon sprite
+			$PokemonGlobal.campers[i].hideAndSeekIcon = @sprites["camper#{i}"]
+			
+			#set tone for the icon to black
+			@sprites["camper#{i}"].tone = Tone.new(-255,-255,-255,0)
 		end #for i in 0...$PokemonGlobal.campers.length
 		
-		pbDrawImagePositions(overlay, imagepos)
+		#center the sprites by figuring out how much space they need to shift left
+		case $PokemonGlobal.campers.length
+		when 1
+			padding = 0
+		when 2
+			padding = (@sprites["camper0"].width/1.5) * 0.5
+		when 3
+			padding = (@sprites["camper0"].width/1.5)
+		when 4
+			padding = (@sprites["camper0"].width/1.5) * 1.5
+		when 5
+			padding = (@sprites["camper0"].width/1.5) * 2
+		when 6
+			padding = (@sprites["camper0"].width/1.5) * 2.5
+		end #case $PokemonGlobal.campers.length
+		
+		for i in 0...$PokemonGlobal.campers.length
+			@sprites["camper#{i}"].x -= padding
+		end #for i in 0...$PokemonGlobal.campers.length
 	end #def self.drawPkmnIcons
 
+	def self.updateTimer
+		if $PokemonGlobal.campGenericTimer <= 0
+			$PokemonGlobal.hideAndSeekTimer -= 1
+			$PokemonGlobal.hideAndSeekSprites
+			base   = Color.new(248,248,248)
+			shadow = Color.new(104,104,104)
+			timerText = [[_INTL("#{$PokemonGlobal.hideAndSeekTimer}"),Graphics.width/2,Graphics.height-70,2,base,shadow]]
+			@sprites["timer"].bitmap.clear
+			pbDrawTextPositions(@sprites["timer"].bitmap,timerText)
+		end #if $PokemonGlobal.campGenericTimer <= 0
+	end #def updateTimer
+
+	def self.updatePkmnIcon(pkmn)
+		pkmn.hideAndSeekIcon.tone = Tone.new(0,0,0,0)
+	end #def self.updatePkmnIcons
+
 	def self.hideAndSeek
-		$game_system.menu_disabled
 		pbBGMFade(1)
+		pbBGMPlay("ORAS 088 The Trick House")
+		self.startHideAndSeek
+	end #def hideAndSeek
+	
+	def self.startHideAndSeek
+		$game_system.menu_disabled
 		self.findHidingSpots
 		self.assignHidingSpots
-		pbBGMPlay("ORAS 088 The Trick House")
-		pbMessage(_INTL("Ready or not, here I come!"))
-		$PokemonGlobal.playingHideAndSeek = true
+		$PokemonGlobal.campGenericTimer = Graphics.frame_rate
 		$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
 		self.drawHUD
-	end #def hideAndSeek
+		pbMessage(_INTL("Ready or not, here I come!"))
+		$PokemonGlobal.playingHideAndSeek = true
+	end
+		
+	def self.stopHideAndSeek
+		$PokemonGlobal.playingHideAndSeek = false
+		$game_system.menu_disabled = false
+		$PokemonGlobal.hideAndSeekViewport.dispose
+		self.resetCamperPositions
+		pbBGMFade(1)
+	end
+	
+	def self.replayHideAndSeek
+		$PokemonGlobal.hideAndSeekViewport.dispose
+		self.resetCamperPositions
+		self.findHidingSpots
+		self.assignHidingSpots
+		$PokemonGlobal.campGenericTimer = Graphics.frame_rate
+		$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
+		self.drawHUD
+		pbMessage(_INTL("Ready or not, here I come!"))
+		$PokemonGlobal.playingHideAndSeek = true
+	end #def self.replayHideAndSeek
 	
 	#on_player_interact with hiding spot
 	EventHandlers.add(:on_player_interact, :hideAndSeek_CheckSpot, proc {
@@ -392,9 +481,9 @@ class Camping
 		self.checkHidingSpot(facingEvent) if facingEvent && facingEvent.name.match(/Hiding_Spot/i)
 	})
 	
-	#check if player wants to give up on hide and seek
 	EventHandlers.add(:on_frame_update, :pressed_back_during_hideAndSeek, proc {
 		next if !$PokemonGlobal.playingHideAndSeek
+		#check if player wants to give up on hide and seek
 		if Input.trigger?(Input::BACK)
 			if pbConfirmMessage(_INTL("Give up?"))
 				pbMessage(_INTL("Come out, come out, wherever you are!"))
@@ -402,6 +491,11 @@ class Camping
 				self.revealHidingPkmn
 			end
 		end # if Input.trigger?(Input::BACK)
+		
+		#subtract from hide and seek generic timer
+		$PokemonGlobal.campGenericTimer = Graphics.frame_rate if $PokemonGlobal.campGenericTimer <= 0
+		$PokemonGlobal.campGenericTimer -= 1
+		self.updateTimer
 	})
 	
 	#on_player_interact with camper
@@ -412,7 +506,7 @@ class Camping
 		self.interactHideAndSeek if facingEvent && facingEvent.name.match(/CamperPkmn/i)
 	})
 	
-	EventHandlers.add(:on_step_taken, :interact_with_camper_pkmn_during_hideAndSeek, proc {
+	EventHandlers.add(:on_step_taken, :emote_during_hideAndSeek, proc {
 		next if !$PokemonGlobal.camping
 		next if !$PokemonGlobal.playingHideAndSeek
 		#check all pkmn in the party and see if any are still not found
@@ -426,10 +520,9 @@ class Camping
 			if distanceX <= 8 && distanceY <= 8
 				#if on screen, roll the dice to see if the pkmn emotes
 				chance = rand(1..100)
-				self.emoteWhileHiding(pkmn) if chance <= 5
+				self.emoteWhileHiding(pkmn) if chance == 1
 			end #if distanceX <= 8 && distanceY <= 8
 		end #for i in 0...$Trainer.pokemon_count
-		#self.emoteWhileHiding
 	})
 
 end #class Camping

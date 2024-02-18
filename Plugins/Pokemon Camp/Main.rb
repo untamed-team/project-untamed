@@ -11,7 +11,8 @@ class PokemonGlobalMetadata
   attr_accessor   :playingHideAndSeek
   attr_accessor   :hideAndSeekTimer
   attr_accessor   :hideAndSeekViewport
-  attr_accessor   :sprites
+  attr_accessor   :hideAndSeekSprites
+  attr_accessor   :campGenericTimer
   
 end #class PokemonGlobalMetadata
 
@@ -23,6 +24,7 @@ class Pokemon
   attr_accessor :campStartY
   attr_accessor :hideAndSeekGamesWon
   attr_accessor :failedToHide
+  attr_accessor :hideAndSeekIcon
 end
 
 class Camping
