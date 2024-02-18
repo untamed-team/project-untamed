@@ -517,7 +517,7 @@ class PokemonSummary_Scene
         pbPlayCloseMenuSE
         break
       elsif Input.trigger?(Input::USE)
-        if @page == 3 && !$donteditEVs
+        if (@page == 3 && !$donteditEVs) && $bag.has?(:EVSALLOCATIONTOOL)
           pbPlayDecisionSE
 		  pbEVAllocation
           dorefresh = true
