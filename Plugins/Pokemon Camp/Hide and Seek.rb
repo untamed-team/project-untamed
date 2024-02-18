@@ -64,6 +64,7 @@ class Camping
 	end #def checkHidingSpot
 	
 	def self.foundPkmn(pkmn)
+		$PokemonGlobal.hideAndSeekPause = true
 		pkmn.hideAndSeekFound = true
 		self.updatePkmnIcon(pkmn)
 		self.leapOut(pkmn)
@@ -71,6 +72,7 @@ class Camping
 		
 		#check how many pkmn are still hiding and end hide and seek round if none left hiding
 		self.howManyLeft
+		$PokemonGlobal.hideAndSeekPause = false
 	end #def self.foundPkmn(pkmn)
 	
 	def self.leapOut(pkmn)
@@ -152,9 +154,11 @@ class Camping
 		pbWait(Graphics.frame_rate)
 		#fade in
 		self.fadeInFromBlack
+		$PokemonGlobal.hideAndSeekPause = false
 	end #def self.leapOut(pkmn)
 	
 	def self.leapOutNotFound(pkmn)
+		$PokemonGlobal.hideAndSeekPause = true
 		#add to the variable hideAndSeekGamesWon
 		pkmn.hideAndSeekGamesWon = 0 if pkmn.hideAndSeekGamesWon.nil?
 		pkmn.hideAndSeekGamesWon += 1
@@ -253,6 +257,7 @@ class Camping
 	end #def howManyLeft
 
 	def self.goAgain
+		$PokemonGlobal.hideAndSeekPause = true
 		if pbConfirmMessage(_INTL("Play again?"))
 			self.replayHideAndSeek
 		else
@@ -261,6 +266,7 @@ class Camping
 	end #goAgain
 	
 	def self.revealHidingPkmn
+		$PokemonGlobal.hideAndSeekPause = true
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
 			next if pkmn.hideAndSeekFound
@@ -302,7 +308,7 @@ class Camping
 	end #def self.revealHidingPkmn
 
 	def self.interactHideAndSeek
-		#toggleOffCampEvents
+		$PokemonGlobal.hideAndSeekPause = true
 		event = $game_player.pbFacingEvent
 		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
 		species = pkmn.species.to_s
@@ -324,6 +330,7 @@ class Camping
 		self.fadeInFromBlack
 		pkmn.hideAndSeekFound = true
 		self.howManyLeft
+		$PokemonGlobal.hideAndSeekPause = false
 	end #def interactHideAndSeek
 
 	def self.emoteWhileHiding(pkmn)
@@ -452,6 +459,7 @@ class Camping
 		self.drawHUD
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
+		$PokemonGlobal.hideAndSeekPause = false
 	end
 		
 	def self.stopHideAndSeek
@@ -472,6 +480,7 @@ class Camping
 		self.drawHUD
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
+		$PokemonGlobal.hideAndSeekPause = false
 	end #def self.replayHideAndSeek
 	
 	#on_player_interact with hiding spot
@@ -483,12 +492,16 @@ class Camping
 	
 	EventHandlers.add(:on_frame_update, :pressed_back_during_hideAndSeek, proc {
 		next if !$PokemonGlobal.playingHideAndSeek
+		next if $PokemonGlobal.hideAndSeekPause
 		#check if player wants to give up on hide and seek
 		if Input.trigger?(Input::BACK)
+			$PokemonGlobal.hideAndSeekPause = true
 			if pbConfirmMessage(_INTL("Give up?"))
 				pbMessage(_INTL("Come out, come out, wherever you are!"))
 				pbWait(Graphics.frame_rate/2)
 				self.revealHidingPkmn
+			else
+				$PokemonGlobal.hideAndSeekPause = false
 			end
 		end # if Input.trigger?(Input::BACK)
 		

@@ -13,6 +13,7 @@ class PokemonGlobalMetadata
   attr_accessor   :hideAndSeekViewport
   attr_accessor   :hideAndSeekSprites
   attr_accessor   :campGenericTimer
+  attr_accessor   :hideAndSeekPause
   
 end #class PokemonGlobalMetadata
 
