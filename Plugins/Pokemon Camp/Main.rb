@@ -14,6 +14,7 @@ class PokemonGlobalMetadata
   attr_accessor   :hideAndSeekSprites
   attr_accessor   :campGenericTimer
   attr_accessor   :hideAndSeekPause
+  attr_accessor   :hideAndSeekSuccessfulConsecutiveRounds
   
 end #class PokemonGlobalMetadata
 
@@ -84,7 +85,6 @@ class Camping
   
   #Place the pokemon on the map (change events 1-6 into the pokemon in the party)
   def pbChangeCampers
-    #@campers = []
     getCampers
     #do for every pokemon in your party
     for i in 0...$Trainer.pokemon_count
@@ -160,12 +160,12 @@ class Camping
 			event.each do |i|
 				next if done.include?(i.id)
 				spriteset = $scene.spriteset(i.map_id)
-				sprite ||= spriteset&.addUserAnimation(id, i.x, i.y, tinting, 2)
+				sprite ||= spriteset&.addUserAnimation(id, i.x, i.y, tinting, 5)
 				done.push(i.id)
 			end
 		else
 			spriteset = $scene.spriteset(event.map_id)
-			sprite = spriteset&.addUserAnimation(id, event.x, event.y, tinting, 2)
+			sprite = spriteset&.addUserAnimation(id, event.x, event.y, tinting, 5)
 		end
 	end
   

@@ -253,6 +253,7 @@ class Camping
 		
 		#say when we've found the whole team
 		#print "found them all!"
+		$PokemonGlobal.hideAndSeekSuccessfulConsecutiveRounds += 1
 		self.goAgain
 	end #def howManyLeft
 
@@ -444,9 +445,21 @@ class Camping
 		pkmn.hideAndSeekIcon.tone = Tone.new(0,0,0,0)
 	end #def self.updatePkmnIcons
 
+	def self.failHideAndSeek
+		$PokemonGlobal.hideAndSeekPause = true
+		#fade bgm
+		pbBGMFade(1)
+		#whistle blow
+		pbSEPlay("Whistle Blow")
+		pbWait(Graphics.frame_rate*2)
+		
+		pbMessage(_INTL("Come out, come out, wherever you are!"))
+		pbWait(Graphics.frame_rate/2)
+		self.revealHidingPkmn
+	end #def self.failHideAndSeek
+
 	def self.hideAndSeek
 		pbBGMFade(1)
-		pbBGMPlay("ORAS 088 The Trick House")
 		self.startHideAndSeek
 	end #def hideAndSeek
 	
@@ -454,9 +467,11 @@ class Camping
 		$game_system.menu_disabled
 		self.findHidingSpots
 		self.assignHidingSpots
+		$PokemonGlobal.hideAndSeekSuccessfulConsecutiveRounds = 0
 		$PokemonGlobal.campGenericTimer = Graphics.frame_rate
 		$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
 		self.drawHUD
+		pbBGMPlay("ORAS 088 The Trick House")
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
 		$PokemonGlobal.hideAndSeekPause = false
@@ -476,7 +491,12 @@ class Camping
 		self.findHidingSpots
 		self.assignHidingSpots
 		$PokemonGlobal.campGenericTimer = Graphics.frame_rate
-		$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
+		if $PokemonGlobal.hideAndSeekSuccessfulConsecutiveRounds <= HIDE_AND_SEEK_TIMER_SECONDS/10
+			$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS - ($PokemonGlobal.hideAndSeekSuccessfulConsecutiveRounds*10)
+		else
+			#don't subtract all time from the timer, starting the player with 0 seconds
+			$PokemonGlobal.hideAndSeekTimer = HIDE_AND_SEEK_TIMER_SECONDS
+		end
 		self.drawHUD
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
@@ -509,6 +529,11 @@ class Camping
 		$PokemonGlobal.campGenericTimer = Graphics.frame_rate if $PokemonGlobal.campGenericTimer <= 0
 		$PokemonGlobal.campGenericTimer -= 1
 		self.updateTimer
+		
+		#fail hide and seek if out of time
+		if $PokemonGlobal.hideAndSeekTimer <= 0
+			self.failHideAndSeek
+		end #if $PokemonGlobal.hideAndSeekTimer <= 0
 	})
 	
 	#on_player_interact with camper
