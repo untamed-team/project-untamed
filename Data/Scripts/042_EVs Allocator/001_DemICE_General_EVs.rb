@@ -216,60 +216,84 @@ end
 
 class Battle
 
-  alias mixed_ev_alloc_pbGainExpOne pbGainExpOne
-  def pbGainExpOne(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
+  def pbGainEVsDemICE(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
     pkmn = pbParty(0)[idxParty]   # The Pokémon gaining Exp from defeatedBattler
     current_level = pkmn.level
-
-    mixed_ev_alloc_pbGainExpOne(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages)
     
-    if pkmn.level > current_level
-      # DemICE edit
-      evpool=80+pkmn.level*8
-      evpool=(evpool.div(4))*4      
-      evpool=512 if evpool>512    
-      evcap=40+pkmn.level*4
-      evcap=(evcap.div(4))*4
-      evcap=252 if evcap>252
-      evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED] 	
-      evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
-        evarray=[]
-        GameData::Stat.each_main do |s|
-        evarray.push(pkmn.ev[s.id])
-        end
-      if evsum>0 && evpool>evsum && evarray.max<evcap && evarray.max_nth(2)<evcap
-        GameData::Stat.each_main do |s|
-          if pkmn.ev[s.id]==evarray.max
-            pkmn.ev[s.id]+=4
-            pkmn.calc_stats
-            pkmn.ev[s.id]+=4 if pkmn.ev[s.id]<evcap
-            pkmn.calc_stats
-          end
-        end	
-        evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED] 
-        evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+    evpool=80+pkmn.level*8
+    evpool=(evpool.div(4))*4      
+    evpool=512 if evpool>512    
+    evcap=40+pkmn.level*4
+    evcap=(evcap.div(4))*4
+    evcap=252 if evcap>252
+    evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED] 	
+    evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+
+    if $bag.has?(:EVSALLOCATIONTOOL) # this edit is stupid #by low
+      if pkmn.level > current_level
+        # DemICE edit
         evarray=[]
         GameData::Stat.each_main do |s|
           evarray.push(pkmn.ev[s.id])
         end
-        if evpool>evsum
+        if evsum>0 && evpool>evsum && evarray.max<evcap && evarray.max_nth(2)<evcap
           GameData::Stat.each_main do |s|
-            if pkmn.ev[s.id]==evarray.max_nth(2)
+            if pkmn.ev[s.id]==evarray.max
               pkmn.ev[s.id]+=4
+              pkmn.calc_stats
+              pkmn.ev[s.id]+=4 if pkmn.ev[s.id]<evcap
               pkmn.calc_stats
             end
           end	
-        end														
-      end	
-      pkmn.calc_stats
-      # DemICE end
-    elsif pkmn.level < current_level
-      GameData::Stat.each_main do |s|
-        if pkmn.ev[s.id]=0
-          pkmn.calc_stats
+          evsum=pkmn.ev[:HP]+pkmn.ev[:ATTACK]+pkmn.ev[:DEFENSE]+pkmn.ev[:SPECIAL_DEFENSE]+pkmn.ev[:SPEED] 
+          evsum+=pkmn.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE
+          evarray=[]
+          GameData::Stat.each_main do |s|
+            evarray.push(pkmn.ev[s.id])
+          end
+          if evpool>evsum
+            GameData::Stat.each_main do |s|
+              if pkmn.ev[s.id]==evarray.max_nth(2)
+                pkmn.ev[s.id]+=4
+                pkmn.calc_stats
+              end
+            end	
+          end														
         end
-      end	       
-    end  
+        pkmn.calc_stats
+        # DemICE end
+      elsif pkmn.level < current_level
+        GameData::Stat.each_main do |s|
+          if pkmn.ev[s.id]=0
+            pkmn.calc_stats
+          end
+        end	       
+      end
+    else
+      if $game_variables[MECHANICSVAR] < 3
+        evYield = defeatedBattler.pokemon.evYield
+        evYield.each_key { |stat| evYield[stat] = 4 if evYield[stat] > 0 }
+        if pkmn.pokerusStage >= 1   # Infected or cured
+          evYield.each_key { |stat| evYield[stat] *= 2 }
+        end
+        evYield[:ATTACK] += evYield[:SPECIAL_ATTACK]
+        evarray=[]
+        GameData::Stat.each_main do |s|
+          evarray.push(pkmn.ev[s.id])
+        end
+        if evpool>evsum && evarray.max<evcap && evarray.max_nth(2)<evcap
+          GameData::Stat.each_main do |s|
+            next if s.id == :SPECIAL_ATTACK
+            evGain = evYield[s.id].clamp(0, evcap - pkmn.ev[s.id])
+            evGain = evGain.clamp(0, evpool - evsum)
+            pkmn.ev[s.id] += evGain
+            #echoln "for #{GameData::Stat.get(s.id).name}: #{evGain} || #{pkmn.ev[s.id]}"
+            evsum += evGain
+            pkmn.calc_stats
+          end
+        end
+      end
+    end
   end
 
   def pbGainEVsOne(idxParty, defeatedBattler)

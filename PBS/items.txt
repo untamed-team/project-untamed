@@ -6669,3 +6669,11 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
+#-------------------------------
+[EVSALLOCATIONTOOL]
+Name = EVs Allocator
+NamePlural = EVs Allocator
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A machine to edit Pokemon EVs manually, outside of battle.

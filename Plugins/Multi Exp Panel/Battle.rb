@@ -84,9 +84,9 @@ class Battle
   def pbGainExpOne_Panel(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages = true)
     pkmn = pbParty(0)[idxParty]   # The Pokémon gaining Exp from defeatedBattler
     growth_rate = pkmn.growth_rate
-		if defeatedBattler.isSpecies?(:PHYTIDE) && pkmn.isSpecies?(:PHYTIDE) # Phytide evolution method
-			pkmn.evolution_steps += 1
-		end
+	if defeatedBattler.isSpecies?(:PHYTIDE) && pkmn.isSpecies?(:PHYTIDE) # Phytide evolution method
+		pkmn.evolution_steps += 1
+	end
     # Don't bother calculating if gainer is already at max Exp
     if pkmn.exp >= growth_rate.maximum_exp
       pkmn.calc_stats   # To ensure new EVs still have an effect
@@ -97,33 +97,34 @@ class Battle
     level = defeatedBattler.level
     # Main Exp calculation
     exp = 0
-		if !expAll # if someone has exp leech
-			haveexpshare = numPartic # number of mons with exp leech
-		else
-			haveexpshare = 1	
-		end
-		a = level * defeatedBattler.pokemon.base_exp
-		exp = (a/defeatedBattler.participants.length).floor * haveexpshare
+	if !expAll # if someone has exp leech
+		haveexpshare = numPartic # number of mons with exp leech
+	else
+		haveexpshare = 1	
+	end
+	a = level * defeatedBattler.pokemon.base_exp
+	exp = (a/defeatedBattler.participants.length).floor * haveexpshare
     return 0 if exp <= 0
-		# level cap #by low
-		truelevel = defeatedBattler.level															# stuff
-		truelevel -= 10 if $game_variables[MASTERMODEVARS][7]==true		# for
-		truelevel -= 20 if $game_variables[MASTERMODEVARS][22]==true	# master
-		truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true	# mode
-		truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true	# settings
-		exp = (exp / 3).floor
-		expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
-		exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
-		exp = 0 if pkmn.level - truelevel == 3
-		exp = (exp / 2).floor if pkmn.level>40
-		#exp = (exp * 0.2).floor if $game_switches[319] 				# custom wild
-		#exp = 0 if $game_switches[305] && pkmn.level>=level 		# leader rematch
-		# exp leech #by low
-		if !expAll
-			# exp is multiplied by (number of allies in party) / (number of allies with exp leech) 
-			# 100.0 so we get some not round numbers
-			exp *= ((defeatedBattler.participants.length)*100)/(numPartic*100.0)
-		end
+	# level cap #by low
+	truelevel = defeatedBattler.level															# stuff
+	truelevel -= 10 if $game_variables[MASTERMODEVARS][7]==true		# for
+	truelevel -= 20 if $game_variables[MASTERMODEVARS][22]==true	# master
+	truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true	# mode
+	truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true	# settings
+	exp = (exp / 3).floor
+	expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
+	exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
+	exp = 0 if pkmn.level - truelevel == 3
+	exp = (exp / 2).floor if pkmn.level>40
+	#exp = (exp * 0.2).floor if $game_switches[319] 				# custom wild
+	#exp = 0 if $game_switches[305] && pkmn.level>=level 		# leader rematch
+	# exp leech #by low
+	if !expAll
+		# exp is multiplied by (number of allies in party) / (number of allies with exp leech) 
+		# 100.0 so we get some not round numbers
+		exp *= ((defeatedBattler.participants.length)*100)/(numPartic*100.0)
+	end
+	pbGainEVsDemICE(idxParty, defeatedBattler, numPartic, expShare, expAll, showMessages)
     # Make sure Exp doesn't exceed the maximum
     expFinal = growth_rate.add_exp(pkmn.exp, exp)
     expGained = expFinal - pkmn.exp
