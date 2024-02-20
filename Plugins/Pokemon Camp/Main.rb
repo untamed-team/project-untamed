@@ -58,19 +58,28 @@ class Camping
 		species = pkmn.species.to_s
 		pbSEPlay("Cries/"+species,100)
 		
-		cmds_new = [_INTL("Hide and Seek"),_INTL("Nevermind")]
+		cmds_new = [_INTL("Amie"),_INTL("Hide and Seek"),_INTL("Nevermind")]
 		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,2)
 		
 		case choice
 		when 0
-		#hide and seek
-		self.hideAndSeek
+		#Amie
+		pokemonAmie(event.id-1)
 				
 		when 1
+		#hide and seek
+		self.hideAndSeek
+		
+		when 2
 		#nevermind
-      
 		end #of case
 	end #def interact
+  
+  def interactCookingPot
+	if pbConfirmMessage(_INTL("Do you want to make some candy?"))
+		CookingMixing.new
+	end
+  end #def self.interactCookingPot
   
   def getCampers
 	$PokemonGlobal.campers = []

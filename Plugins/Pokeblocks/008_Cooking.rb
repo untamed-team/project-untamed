@@ -1160,3 +1160,12 @@ def goAgain?
 		pbEndScene
 	end
 end
+
+#on_player_interact with cooking pot
+	EventHandlers.add(:on_player_interact, :interact_with_cooking_pot, proc {
+		next if !$PokemonGlobal.camping
+		next if $PokemonGlobal.playingHideAndSeek
+		facingEvent = $game_player.pbFacingEvent
+		camping = Camping.new
+		camping.interactCookingPot if facingEvent && facingEvent.name[/^CookingPot$/i]
+	})
