@@ -227,11 +227,16 @@ class Camping
 			pkmn.awakeness -= 1
 		end #for i in 0...$PokemonGlobal.campers.length
 		
+		#show sleep emote if pkmn is sleepy (0 or less awakeness)
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			if pkmn.awakeness <= 0
+				self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
+			end #if pkmn.awakeness <= 0
+		end #for i in 0...$PokemonGlobal.campers.length
 		
 		#check if each pkmn is hungry - pkmn.amie_fullness - range is 0 to 255
 		
 	})
-	
-	print "#{pkmn.name}'s fullness is #{pkmn.amie_fullness}"
 end #of class Camping
 

@@ -513,7 +513,7 @@ class Camping
 	
 	EventHandlers.add(:on_frame_update, :pressed_back_during_hideAndSeek, proc {
 		next if !$PokemonGlobal.camping
-		next if $PokemonGlobal.playingHideAndSeek
+		next if !$PokemonGlobal.playingHideAndSeek
 		next if $PokemonGlobal.hideAndSeekPause
 		#check if player wants to give up on hide and seek
 		if Input.trigger?(Input::BACK)
