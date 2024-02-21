@@ -505,13 +505,15 @@ class Camping
 	
 	#on_player_interact with hiding spot
 	EventHandlers.add(:on_player_interact, :hideAndSeek_CheckSpot, proc {
+		next if !$PokemonGlobal.camping
 		next if !$PokemonGlobal.playingHideAndSeek
 		facingEvent = $game_player.pbFacingEvent
 		self.checkHidingSpot(facingEvent) if facingEvent && facingEvent.name.match(/Hiding_Spot/i)
 	})
 	
 	EventHandlers.add(:on_frame_update, :pressed_back_during_hideAndSeek, proc {
-		next if !$PokemonGlobal.playingHideAndSeek
+		next if !$PokemonGlobal.camping
+		next if $PokemonGlobal.playingHideAndSeek
 		next if $PokemonGlobal.hideAndSeekPause
 		#check if player wants to give up on hide and seek
 		if Input.trigger?(Input::BACK)

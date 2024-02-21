@@ -27,6 +27,7 @@ class Pokemon
   attr_accessor :hideAndSeekGamesWon
   attr_accessor :failedToHide
   attr_accessor :hideAndSeekIcon
+  attr_accessor :awakeness
 end
 
 class Camping
@@ -200,6 +201,10 @@ class Camping
     toggleOffCampEncounters
   end
   
+  def self.resetAwakeness(pkmn)
+	pkmn.awakeness = Graphics.frame_rate * 120 #two minutes
+  end #def self.resetAwakeness(pkmn)
+  
   #on_player_interact with camper
 	EventHandlers.add(:on_player_interact, :interact_with_camper_pkmn, proc {
 		next if !$PokemonGlobal.camping
@@ -207,5 +212,26 @@ class Camping
 		facingEvent = $game_player.pbFacingEvent
 		self.interact if facingEvent && facingEvent.name.match(/CamperPkmn/i)
 	})
+	
+	#show hunger or sleep emote
+	EventHandlers.add(:on_frame_update, :pkmn_emote_in_camp, proc {
+		next if !$PokemonGlobal.camping
+		next if $PokemonGlobal.playingHideAndSeek
+		
+		#subtract from awakeness timer on each pkmn
+		#pkmn should fall asleep after 2 minutes of no interaction with the player or other pkmn
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			self.resetAwakeness(pkmn) if pkmn.awakeness.nil?
+			next if pkmn.awakeness <= 0
+			pkmn.awakeness -= 1
+		end #for i in 0...$PokemonGlobal.campers.length
+		
+		
+		#check if each pkmn is hungry - pkmn.amie_fullness - range is 0 to 255
+		
+	})
+	
+	print "#{pkmn.name}'s fullness is #{pkmn.amie_fullness}"
 end #of class Camping
 
