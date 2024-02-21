@@ -273,8 +273,10 @@ class Pokemon
         enjoyGain = 0
       end
       $bag.remove(GameData::Item.get(food).id)
-      @amie_affection = amie_affection+affGain
-      @amie_affection = [0, [amie_affection, MAXAMIEPOINTS].min].max
+	  #@amie_affection = amie_affection+affGain
+	  #increase happiness rather than Affection
+	  pkmn.happiness += affGain
+      #@amie_affection = [0, [amie_affection, MAXAMIEPOINTS].min].max
       @amie_fullness = amie_fullness+fullGain
       @amie_fullness = [0, [amie_fullness, MAXAMIEPOINTS].min].max
       @amie_enjoyment = amie_enjoyment+enjoyGain
