@@ -458,7 +458,7 @@ class PokeAmie_Essentials_Scene
           @selectedIndex = @partyIndex if @selectedIndex.nil?
           pkname = $player.party[@selectedIndex].name
           textpos1 = [
-            [_INTL("Affection"),32,70,0,base,shadow],
+            [_INTL("Happiness"),32,70,0,base,shadow],
             [_INTL("Fullness"),32,102,0,base,shadow],
             [_INTL("Enjoyment"),32,134,0,base,shadow],
             [_INTL("Select the Pokémon you'd like to play with!"),74,348,0,base,shadow],
@@ -572,7 +572,7 @@ class PokeAmie_Essentials_Scene
     shadow = Color.new(104,104,104)
     pkname = $player.party[@partyIndex].name
     textpos1 = [
-      [_INTL("Affection"),32,70,0,base,shadow],
+      [_INTL("Happiness"),32,70,0,base,shadow],
       [_INTL("Fullness"),32,102,0,base,shadow],
       [_INTL("Enjoyment"),32,134,0,base,shadow],
       [_INTL("Select the Pokémon you'd like to play with!"),74,348,0,base,shadow],
@@ -622,10 +622,11 @@ class PokeAmie_Essentials_Scene
     @sprites["active"].x = 68+76*@partyIndex+24
     @sprites["active"].y = 228+24
     @sprites["active"].z=2
-    #Draw Affection
+    
+	#Draw Affection
     for a in 1...6
       @sprites["affect#{a}"] = IconSprite.new(0,0)
-      if a<=@pokemon.getAffectionLevel
+      if a*51<=@pokemon.happiness
         @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
       else
         @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
@@ -1036,7 +1037,7 @@ class PokeAmie_Essentials_Scene
         if Mouse.click?(@sprites["pokeicon#{i}"])
           @selectedIndex = i
           for a in 1...6
-            if a<=$player.party[@selectedIndex].getAffectionLevel
+            if a<=$player.party[@selectedIndex].happiness#getAffectionLevel
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
             else
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
