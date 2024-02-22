@@ -20,6 +20,13 @@ class Camping
 		pkmn.campAwakeness = Graphics.frame_rate * 120 #two minutes
 	end #def self.resetAwakeness(pkmn)
 	
+	def self.pkmnStartNap(pkmn)
+		print "starting nap for #{pkmn.name}"
+		pkmn.campNapping = true
+		#turn off step animation
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
+	end #def self.pkmnStartNap
+	
 	#####################################
 	#####      Event Handlers       #####
 	#####################################
@@ -37,32 +44,62 @@ class Camping
 			pkmn.campAwakeness -= 1
 		end #for i in 0...$PokemonGlobal.campers.length
 		
+		#hunger emote
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
 			#show hunger emote if hungry instead of showing sleep emote
 			#can't go to bed hungry :)
 			#check if each pkmn is hungry - pkmn.amie_fullness - range is 0 to 255
 			next if pkmn.amie_fullness.nil?
-			next if pkmn.campEmoteTimer.nil?
-			if pkmn.amie_fullness <= 0 && pkmn.campEmoteTimer <= 0
+			next if pkmn.campHungerEmoteTimer.nil?
+			if pkmn.amie_fullness <= 0 && pkmn.campHungerEmoteTimer <= 0
 				self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=19, tinting = false)
 				next #don't show sleep timer if hungry. We don't want to show both hunger and sleep emotes within the emoteTimer window
 			end #if pkmn.amie_fullness <= 0
 		
-			#show sleep emote if pkmn is sleepy (0 or less awakeness) and the campEmoteTimer is <= 0, then reset the campEmoteTimer
-			if pkmn.campAwakeness <= 0 && pkmn.campEmoteTimer <= 0
-				self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
+			#pkmn starts napping if not already napping and awakeness is <= 0
+			if pkmn.campAwakeness <= 0 && !pkmn.campNapping && pkmn.amie_fullness <= 0
+				self.pkmnStartNap(pkmn)
 			end #if pkmn.campAwakeness <= 0
 		end #for i in 0...$PokemonGlobal.campers.length
 		
-		#subtract from emoteTimer
+		#subtract from campHungerEmoteTimer
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
-			next if pkmn.campEmoteTimer.nil?
+			next if pkmn.campHungerEmoteTimer.nil?
+			#don't subtract from hunger timer if napping
+			next if pkmn.campNapping
 			#reset emote timer if <= 0
-			pkmn.campEmoteTimer = pkmn.campEmoteTimerPermanent if pkmn.campEmoteTimer <= 0
-			pkmn.campEmoteTimer -= 1
+			pkmn.campHungerEmoteTimer = pkmn.campHungerEmoteTimerPermanent if pkmn.campHungerEmoteTimer.nil? || pkmn.campHungerEmoteTimer <= 0
+			pkmn.campHungerEmoteTimer -= 1
 		end #for i in 0...$PokemonGlobal.campers.length
+		
+		#subtract from campNappingEmoteTimer
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			next if pkmn.campNappingEmoteTimer.nil?                                         #this causes a problem with the emote timer never getting set
+			#don't subtract from napping emote timer if not napping
+			next if !pkmn.campNapping
+			#reset emote timer if <= 0
+			pkmn.campNappingEmoteTimer = Graphics.frame_rate*15 if pkmn.campNappingEmoteTimer.nil? || pkmn.campNappingEmoteTimer <= 0
+			pkmn.campNappingEmoteTimer -= 1
+		end #for i in 0...$PokemonGlobal.campers.length
+		
+		#show sleep emote if napping
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			next if !pkmn.campNapping
+			next if pkmn.campNappingEmoteTimer.nil?
+			self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false) if pkmn.campNappingEmoteTimer <= 0			
+		end #for i in 0...$PokemonGlobal.campers.length
+	})
+	
+	#pkmn roam around
+	EventHandlers.add(:on_frame_update, :pkmn_roam_in_camp, proc {
+		next if !$PokemonGlobal.camping
+		next if $PokemonGlobal.playingHideAndSeek
+		
+		
 	})
 
 end #class Camping

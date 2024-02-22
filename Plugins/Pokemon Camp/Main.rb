@@ -28,8 +28,10 @@ class Pokemon
   attr_accessor :failedToHide
   attr_accessor :hideAndSeekIcon
   attr_accessor :campAwakeness
-  attr_accessor :campEmoteTimerPermanent
-  attr_accessor :campEmoteTimer
+  attr_accessor :campHungerEmoteTimerPermanent
+  attr_accessor :campHungerEmoteTimer
+  attr_accessor :campNapping
+  attr_accessor :campNappingEmoteTimer
 end
 
 class Camping
@@ -149,8 +151,8 @@ class Camping
 		
 		#emote timer - amount of time needed to pass before the pkmn emotes again, sent to random between 2 values
 		#each pkmn has their own unique value for how often they emote
-		$PokemonGlobal.campers[i].campEmoteTimerPermanent = Graphics.frame_rate * rand(60..120) if $PokemonGlobal.campers[i].campEmoteTimerPermanent.nil?
-		$PokemonGlobal.campers[i].campEmoteTimer = $PokemonGlobal.campers[i].campEmoteTimerPermanent if $PokemonGlobal.campers[i].campEmoteTimer.nil?
+		$PokemonGlobal.campers[i].campHungerEmoteTimerPermanent = Graphics.frame_rate * rand(60..120) if $PokemonGlobal.campers[i].campHungerEmoteTimerPermanent.nil?
+		$PokemonGlobal.campers[i].campHungerEmoteTimer = $PokemonGlobal.campers[i].campHungerEmoteTimerPermanent if $PokemonGlobal.campers[i].campHungerEmoteTimer.nil?
 	  
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
