@@ -15,6 +15,7 @@ class PokemonGlobalMetadata
   attr_accessor   :campGenericTimer
   attr_accessor   :hideAndSeekPause
   attr_accessor   :hideAndSeekSuccessfulConsecutiveRounds
+  attr_accessor   :campProcesses
   
 end #class PokemonGlobalMetadata
 
@@ -40,13 +41,18 @@ class Camping
   end
 
   def startCamping
-	$PokemonGlobal.camping = true
     pbCommonEvent(9) #start camping 
 	#get the player's current X and Y position when they enter camp
 	$PokemonGlobal.campingPlayerStartX = $game_player.x
 	$PokemonGlobal.campingPlayerStartY = $game_player.y
 	
-    #toggleOnCampEvents
+	#set the pkmn events
+	pbChangeCampers
+    
+	#fade screen in
+	$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
+	
+	$PokemonGlobal.camping = true
   end
 
   def endCamping
