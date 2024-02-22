@@ -17,14 +17,15 @@ class Camping
 	end
 	
 	def self.resetAwakeness(pkmn)
-		pkmn.campAwakeness = Graphics.frame_rate * 120 #two minutes
+		pkmn.campAwakeness = Graphics.frame_rate * 5#120 #two minutes
 	end #def self.resetAwakeness(pkmn)
 	
 	def self.pkmnStartNap(pkmn)
-		print "starting nap for #{pkmn.name}"
 		pkmn.campNapping = true
 		#turn off step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
+		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
+		pbSEPlay("FollowEmote",100,80)
 	end #def self.pkmnStartNap
 	
 	#####################################
@@ -58,7 +59,7 @@ class Camping
 			end #if pkmn.amie_fullness <= 0
 		
 			#pkmn starts napping if not already napping and awakeness is <= 0
-			if pkmn.campAwakeness <= 0 && !pkmn.campNapping && pkmn.amie_fullness <= 0
+			if pkmn.campAwakeness <= 0 && !pkmn.campNapping && pkmn.amie_fullness > 0
 				self.pkmnStartNap(pkmn)
 			end #if pkmn.campAwakeness <= 0
 		end #for i in 0...$PokemonGlobal.campers.length
@@ -77,7 +78,7 @@ class Camping
 		#subtract from campNappingEmoteTimer
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
-			next if pkmn.campNappingEmoteTimer.nil?                                         #this causes a problem with the emote timer never getting set
+			#next if pkmn.campNappingEmoteTimer.nil?                                         #this causes a problem with the emote timer never getting set
 			#don't subtract from napping emote timer if not napping
 			next if !pkmn.campNapping
 			#reset emote timer if <= 0
