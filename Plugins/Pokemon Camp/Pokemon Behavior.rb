@@ -43,6 +43,7 @@ class Camping
 			#can't go to bed hungry :)
 			#check if each pkmn is hungry - pkmn.amie_fullness - range is 0 to 255
 			next if pkmn.amie_fullness.nil?
+			next if pkmn.campEmoteTimer.nil?
 			if pkmn.amie_fullness <= 0 && pkmn.campEmoteTimer <= 0
 				self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=19, tinting = false)
 				next #don't show sleep timer if hungry. We don't want to show both hunger and sleep emotes within the emoteTimer window

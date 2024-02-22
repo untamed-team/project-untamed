@@ -150,7 +150,6 @@ class Camping
 		#emote timer - amount of time needed to pass before the pkmn emotes again, sent to random between 2 values
 		#each pkmn has their own unique value for how often they emote
 		$PokemonGlobal.campers[i].campEmoteTimerPermanent = Graphics.frame_rate * rand(60..120) if $PokemonGlobal.campers[i].campEmoteTimerPermanent.nil?
-		print "#{pkmn.name}'s emote timer permanent is being set to #{pkmn.campEmoteTimerPermanent}"
 		$PokemonGlobal.campers[i].campEmoteTimer = $PokemonGlobal.campers[i].campEmoteTimerPermanent if $PokemonGlobal.campers[i].campEmoteTimer.nil?
 	  
     end #for i in 0...$Trainer.pokemon_count
