@@ -404,7 +404,7 @@ Generation = 6
 [GYARADOS,2]
 FormName = Mazian Gyarados
 Types = WATER,ROCK
-BaseStats = 85,74,125,60,106,90
+BaseStats = 95,60,100,81,125,79
 BaseExp = 189
 EVs = DEFENSE,2
 Abilities = MARVELSCALE
