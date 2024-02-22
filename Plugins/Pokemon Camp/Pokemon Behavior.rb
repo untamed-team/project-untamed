@@ -28,6 +28,15 @@ class Camping
 		pbSEPlay("FollowEmote",100,80)
 	end #def self.pkmnStartNap
 	
+	def self.pkmnStopNap(pkmn)
+		self.resetAwakeness(pkmn)
+		pkmn.campNapping = false
+		#turn on step animation
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOn])
+		#exclamation point emote
+		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=3, tinting = false)
+	end #self.pkmnStopNap(pkmn)
+	
 	#####################################
 	#####      Event Handlers       #####
 	#####################################

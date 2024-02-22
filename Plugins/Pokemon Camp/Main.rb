@@ -66,6 +66,13 @@ class Camping
 		#toggleOffCampEvents
 		event = $game_player.pbFacingEvent
 		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
+		
+		#wake the pkmn if napping
+		if pkmn.campNapping
+			self.pkmnStopNap(pkmn) 
+			pbWait(Graphics.frame_rate)
+		end
+		
 		species = pkmn.species.to_s
 		pbSEPlay("Cries/"+species,100)
 		
