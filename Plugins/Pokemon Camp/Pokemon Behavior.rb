@@ -17,7 +17,7 @@ class Camping
 	end
 	
 	def self.resetAwakeness(pkmn)
-		pkmn.campAwakeness = Graphics.frame_rate * 5#120 #two minutes
+		pkmn.campAwakeness = Graphics.frame_rate * 120 #two minutes
 	end #def self.resetAwakeness(pkmn)
 	
 	def self.pkmnStartNap(pkmn)

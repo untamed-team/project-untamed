@@ -1039,7 +1039,7 @@ class PokeAmie_Essentials_Scene
         if Mouse.click?(@sprites["pokeicon#{i}"])
           @selectedIndex = i
           for a in 1...6
-            if a<=$player.party[@selectedIndex].happiness#getAffectionLevel
+            if a*51<=$player.party[@selectedIndex].happiness#getAffectionLevel
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect")
             else
               @sprites["affect#{a}"].setBitmap("Graphics/Pictures/Pokemon Amie/affect_empty")
