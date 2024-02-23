@@ -17,11 +17,13 @@ class Camping
 	end
 	
 	def self.resetAwakeness(pkmn)
-		pkmn.campAwakeness = Graphics.frame_rate * 120 #two minutes
+		pkmn.campAwakeness = Graphics.frame_rate * 5#120 #two minutes
 	end #def self.resetAwakeness(pkmn)
 	
 	def self.pkmnStartNap(pkmn)
 		pkmn.campNapping = true
+		self.pbSetSelfSwitch(pkmn.campEvent.id, "A", true)
+		self.updatePkmnEventGraphic(pkmn)
 		#turn off step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
 		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
@@ -87,7 +89,6 @@ class Camping
 		#subtract from campNappingEmoteTimer
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
-			#next if pkmn.campNappingEmoteTimer.nil?                                         #this causes a problem with the emote timer never getting set
 			#don't subtract from napping emote timer if not napping
 			next if !pkmn.campNapping
 			#reset emote timer if <= 0
@@ -106,10 +107,15 @@ class Camping
 	
 	#pkmn roam around
 	EventHandlers.add(:on_frame_update, :pkmn_roam_in_camp, proc {
-		next if !$PokemonGlobal.camping
+		next# if !$PokemonGlobal.camping
 		next if $PokemonGlobal.playingHideAndSeek
 		
-		
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			next if pkmn.campNapping
+			chanceToMove = rand(1..100*Graphics.frame_rate)
+			pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Random]) if chanceToMove <= 1
+		end #for i in 0...$PokemonGlobal.campers.length
 	})
 
 end #class Camping

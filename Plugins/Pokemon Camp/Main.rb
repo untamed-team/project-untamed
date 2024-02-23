@@ -76,6 +76,8 @@ class Camping
 		species = pkmn.species.to_s
 		pbSEPlay("Cries/"+species,100)
 		
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnTowardPlayer])
+		
 		cmds_new = [_INTL("Amie"),_INTL("Hide and Seek"),_INTL("Nevermind")]
 		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,2)
 		
@@ -170,6 +172,39 @@ class Camping
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
   
+	def self.updatePkmnEventGraphic(pkmn)
+		#if form is greater than 0, set pkmn_genderform to species_formNumber so the
+		#file_path goes to the correct iteration of that species
+		if pkmn.form > 0
+			pkmn_genderform = (_INTL("{1}_{2}",pkmn.species,pkmn.form))
+		else
+			pkmn_genderform = pkmn.species
+		end
+		
+		#if the pokemon has a different form based on gender 
+		if pkmn.species == :M_ROSELIA || pkmn.species == :M_ROSERADE
+			if pkmn.gender > 0
+			#the pokemon is female
+			pkmn_genderform = (_INTL("{1}_female",pkmn.species))
+			else
+			pkmn_genderform = pkmn.species
+			end
+		end
+  
+		if pkmn.shiny?
+			#set path to followers shiny
+			file_path = sprintf("Followers Shiny/%s", pkmn_genderform)
+		else
+			#set path to followers
+			file_path = sprintf("Followers/%s", pkmn_genderform)
+		end
+
+		#changes the event number (like event 1, event 2, etc. on the map
+		#into the graphic specified
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Graphic, file_path, 0, 2, 0])
+	  
+  end #of pbChangeCampers
+  
 	def self.resetPlayerPosition
 		pbTransferWithTransition(map_id=$game_map.map_id, x=$PokemonGlobal.campingPlayerStartX, y=$PokemonGlobal.campingPlayerStartY, transition = nil, dir = 2)
 	end #def resetPlayerPosition
@@ -206,6 +241,15 @@ class Camping
   def toggleOffCampEvents
     toggleOffPokemonBehavior
     toggleOffCampEncounters
+  end
+  
+  def self.pbSetSelfSwitch(eventid, switch_name, value, mapid = -1)
+    mapid = $game_map.map_id if mapid < 0
+    old_value = $game_self_switches[[mapid, eventid, switch_name]]
+    $game_self_switches[[mapid, eventid, switch_name]] = value
+    if value != old_value && $map_factory.hasMap?(mapid)
+      $map_factory.getMap(mapid, false).need_refresh = true
+    end
   end
   
   #on_player_interact with camper
