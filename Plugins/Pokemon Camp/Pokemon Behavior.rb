@@ -13,6 +13,7 @@ class Camping
 		else
 			spriteset = $scene.spriteset(event.map_id)
 			sprite = spriteset&.addUserAnimation(id, event.x, event.y, tinting, 5)
+			event.campEventEmoteSprite = sprite
 		end
 	end
 	
@@ -33,35 +34,13 @@ class Camping
 	def self.pkmnStopNap(pkmn)
 		self.resetAwakeness(pkmn)
 		pkmn.campNapping = false
-		#set move type to fixed so the pkmn stops roaming
+		#set move type to fixed so the pkmn starts roaming
 		pkmn.campEvent.move_type = 1
 		#turn on step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOn])
 		#exclamation point emote
 		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=3, tinting = false)
 	end #self.pkmnStopNap(pkmn)
-	
-	def self.pkmnMoveRandom(pkmn)
-		#frequency of movement
-		# (assuming 40 fps):
-		# 1 => 190   # 4.75 seconds
-		# 2 => 144   # 3.6 seconds
-		# 3 => 102   # 2.55 seconds
-		# 4 => 64    # 1.6 seconds
-		# 5 => 30    # 0.75 seconds
-		# 6 => 0     # 0 seconds, i.e. continuous movement
-		
-		case pkmn.campEvent.move_frequency
-		when 1
-		when 2
-		when 3
-		when 4
-		when 5
-		when 6
-		end
-		
-		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Random])
-	end #def self.pkmnMoveRandom(pkmn)
 	
 	#####################################
 	#####      Event Handlers       #####
@@ -127,23 +106,17 @@ class Camping
 			next if pkmn.campNappingEmoteTimer.nil?
 			self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false) if pkmn.campNappingEmoteTimer <= 0			
 		end #for i in 0...$PokemonGlobal.campers.length
-	})
-	
-	#pkmn roam around
-	EventHandlers.add(:on_frame_update, :pkmn_roam_in_camp, proc {
-																									next
+		
+		#testing for emote sprite
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
-			next if !$PokemonGlobal.camping
-			next if $PokemonGlobal.playingHideAndSeek
-			next if pkmn.campNapping
-			self.pkmnMoveRandom(pkmn)
-		
+			next if pkmn.campEvent.campEventEmoteSprite.nil?
+			next if pkmn.campEvent.campEventEmoteSprite.disposed?
+			#print pkmn.campEvent.campEventEmoteSprite
+			#print pkmn.campEvent.x
+			#pkmn.campEvent.campEventEmoteSprite.x = pkmn.campEvent.x*14
+			#pkmn.campEvent.campEventEmoteSprite.y = pkmn.campEvent.y
 		end #for i in 0...$PokemonGlobal.campers.length
 	})
 
 end #class Camping
-
-class Game_Event < Game_Character
-	attr_accessor :move_type
-end

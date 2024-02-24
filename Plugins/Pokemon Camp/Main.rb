@@ -33,6 +33,7 @@ class Pokemon
   attr_accessor :campHungerEmoteTimer
   attr_accessor :campNapping
   attr_accessor :campNappingEmoteTimer
+  attr_accessor :campEventEmoteSprite
 end
 
 class Camping
@@ -230,3 +231,8 @@ class Camping
 	})
 end #of class Camping
 
+################ Game Event Class ################
+class Game_Event < Game_Character
+	attr_accessor :move_type
+	attr_accessor :campEventEmoteSprite
+end

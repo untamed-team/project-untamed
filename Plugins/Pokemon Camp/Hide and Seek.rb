@@ -22,7 +22,8 @@ class Camping
 			$PokemonGlobal.campers[i].hideAndSeekSpot = nil
 			$PokemonGlobal.campers[i].hideAndSeekFound = false
 			
-			print "We need more hiding spots on this map" if hidingSpotsAvailable.length <= 0
+			#for bug reporting purposes
+			print "We need more hiding spots on this map. Please report this as a bug." if hidingSpotsAvailable.length <= 0
 			
 			#random chance for the pkmn not to find a hiding spot
 			chance = rand(1..100)
@@ -475,12 +476,25 @@ class Camping
 		pbMessage(_INTL("Ready or not, here I come!"))
 		$PokemonGlobal.playingHideAndSeek = true
 		$PokemonGlobal.hideAndSeekPause = false
+		
+		#stop movement of all pkmn events
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			pkmn.campEvent.move_type = 0
+		end #for i in 0...$PokemonGlobal.campers.length
 	end
 		
 	def self.stopHideAndSeek
 		$PokemonGlobal.playingHideAndSeek = false
 		$game_system.menu_disabled = false
 		$PokemonGlobal.hideAndSeekViewport.dispose
+		
+		#resume movement of all pkmn events
+		for i in 0...$PokemonGlobal.campers.length
+			pkmn = $PokemonGlobal.campers[i]
+			pkmn.campEvent.move_type = 1
+		end #for i in 0...$PokemonGlobal.campers.length
+		
 		self.resetCamperPositions
 		pbBGMFade(1)
 	end
