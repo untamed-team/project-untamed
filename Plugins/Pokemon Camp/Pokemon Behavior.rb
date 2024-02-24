@@ -22,8 +22,8 @@ class Camping
 	
 	def self.pkmnStartNap(pkmn)
 		pkmn.campNapping = true
-		self.pbSetSelfSwitch(pkmn.campEvent.id, "A", true)
-		self.updatePkmnEventGraphic(pkmn)
+		#set move type to fixed so the pkmn stops roaming
+		pkmn.campEvent.move_type = 0
 		#turn off step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
 		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
@@ -33,11 +33,35 @@ class Camping
 	def self.pkmnStopNap(pkmn)
 		self.resetAwakeness(pkmn)
 		pkmn.campNapping = false
+		#set move type to fixed so the pkmn stops roaming
+		pkmn.campEvent.move_type = 1
 		#turn on step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOn])
 		#exclamation point emote
 		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=3, tinting = false)
 	end #self.pkmnStopNap(pkmn)
+	
+	def self.pkmnMoveRandom(pkmn)
+		#frequency of movement
+		# (assuming 40 fps):
+		# 1 => 190   # 4.75 seconds
+		# 2 => 144   # 3.6 seconds
+		# 3 => 102   # 2.55 seconds
+		# 4 => 64    # 1.6 seconds
+		# 5 => 30    # 0.75 seconds
+		# 6 => 0     # 0 seconds, i.e. continuous movement
+		
+		case pkmn.campEvent.move_frequency
+		when 1
+		when 2
+		when 3
+		when 4
+		when 5
+		when 6
+		end
+		
+		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Random])
+	end #def self.pkmnMoveRandom(pkmn)
 	
 	#####################################
 	#####      Event Handlers       #####
@@ -107,15 +131,19 @@ class Camping
 	
 	#pkmn roam around
 	EventHandlers.add(:on_frame_update, :pkmn_roam_in_camp, proc {
-		next# if !$PokemonGlobal.camping
-		next if $PokemonGlobal.playingHideAndSeek
-		
+																									next
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
+			next if !$PokemonGlobal.camping
+			next if $PokemonGlobal.playingHideAndSeek
 			next if pkmn.campNapping
-			chanceToMove = rand(1..100*Graphics.frame_rate)
-			pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Random]) if chanceToMove <= 1
+			self.pkmnMoveRandom(pkmn)
+		
 		end #for i in 0...$PokemonGlobal.campers.length
 	})
 
 end #class Camping
+
+class Game_Event < Game_Character
+	attr_accessor :move_type
+end

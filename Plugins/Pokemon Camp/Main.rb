@@ -168,41 +168,10 @@ class Camping
 		#each pkmn has their own unique value for how often they emote
 		$PokemonGlobal.campers[i].campHungerEmoteTimerPermanent = Graphics.frame_rate * rand(60..120) if $PokemonGlobal.campers[i].campHungerEmoteTimerPermanent.nil?
 		$PokemonGlobal.campers[i].campHungerEmoteTimer = $PokemonGlobal.campers[i].campHungerEmoteTimerPermanent if $PokemonGlobal.campers[i].campHungerEmoteTimer.nil?
-	  
-    end #for i in 0...$Trainer.pokemon_count
-  end #of pbChangeCampers
-  
-	def self.updatePkmnEventGraphic(pkmn)
-		#if form is greater than 0, set pkmn_genderform to species_formNumber so the
-		#file_path goes to the correct iteration of that species
-		if pkmn.form > 0
-			pkmn_genderform = (_INTL("{1}_{2}",pkmn.species,pkmn.form))
-		else
-			pkmn_genderform = pkmn.species
-		end
 		
-		#if the pokemon has a different form based on gender 
-		if pkmn.species == :M_ROSELIA || pkmn.species == :M_ROSERADE
-			if pkmn.gender > 0
-			#the pokemon is female
-			pkmn_genderform = (_INTL("{1}_female",pkmn.species))
-			else
-			pkmn_genderform = pkmn.species
-			end
-		end
-  
-		if pkmn.shiny?
-			#set path to followers shiny
-			file_path = sprintf("Followers Shiny/%s", pkmn_genderform)
-		else
-			#set path to followers
-			file_path = sprintf("Followers/%s", pkmn_genderform)
-		end
-
-		#changes the event number (like event 1, event 2, etc. on the map
-		#into the graphic specified
-		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::Graphic, file_path, 0, 2, 0])
-	  
+		#set move type to fixed so the pkmn starts roaming
+		pkmn.campEvent.move_type = 1
+    end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
   
 	def self.resetPlayerPosition
