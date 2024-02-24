@@ -213,13 +213,11 @@ class Camping
     toggleOffCampEncounters
   end
   
-  def self.pbSetSelfSwitch(eventid, switch_name, value, mapid = -1)
-    mapid = $game_map.map_id if mapid < 0
-    old_value = $game_self_switches[[mapid, eventid, switch_name]]
-    $game_self_switches[[mapid, eventid, switch_name]] = value
-    if value != old_value && $map_factory.hasMap?(mapid)
-      $map_factory.getMap(mapid, false).need_refresh = true
-    end
+  def self.showEventAnimation(eventID, animation_id)
+    character = $game_map.events[eventID]
+    return true if character.nil?
+    character.animation_id = animation_id
+    return true
   end
   
   #on_player_interact with camper

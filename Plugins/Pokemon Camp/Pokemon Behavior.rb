@@ -27,7 +27,7 @@ class Camping
 		pkmn.campEvent.move_type = 0
 		#turn off step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
-		self.pbOverworldAnimationNoPause(pkmn.campEvent, emoteID=20, tinting = false)
+		self.showEventAnimation(pkmn.campEvent.id, animation_id=20)
 		pbSEPlay("FollowEmote",100,80)
 	end #def self.pkmnStartNap
 	
