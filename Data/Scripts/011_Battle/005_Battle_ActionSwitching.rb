@@ -54,15 +54,13 @@ class Battle
     return true if battler.fainted?
     # Ability/item effects that allow switching *no matter what
 		# *except if the user has honorbound ability and effect #by low
-		if !(battler.hasActiveAbility?(:HONORBOUND) && battler.effects[PBEffects::HonorBound])
-			if battler.abilityActive? &&
-				 Battle::AbilityEffects.triggerCertainSwitching(battler.ability, battler, self)
-				return true
-			end
-			if battler.itemActive? &&
-				 Battle::ItemEffects.triggerCertainSwitching(battler.item, battler, self)
-				return true
-			end
+    if battler.abilityActive? &&
+        Battle::AbilityEffects.triggerCertainSwitching(battler.ability, battler, self)
+      return true
+    end
+    if battler.itemActive? &&
+        Battle::ItemEffects.triggerCertainSwitching(battler.item, battler, self)
+      return true
     end
     # Other certain switching effects
     return true if (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]) && battler.pbHasType?(:GHOST)

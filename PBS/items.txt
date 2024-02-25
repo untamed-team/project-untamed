@@ -4929,7 +4929,7 @@ Pocket = 5
 Price = 20
 BattleUse = OnBattler
 Flags = Berry,Fling_10,NaturalGift_GROUND_80
-Description = It may be used or held by a Pokémon to recover from confusion.
+Description = It may be used or held by a Pokémon to recover from confusion/dizziness.
 #-------------------------------
 [LUMBERRY]
 Name = Lum Berry

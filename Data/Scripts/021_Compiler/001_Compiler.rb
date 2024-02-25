@@ -761,15 +761,7 @@ module Compiler
     compile_types
     compile_abilities
 		if $game_variables
-			if $game_variables[MECHANICSVAR] >= 3 #by low
-				pbUpdatePBSFilesForDifficulty
-			else
-				compile_moves         # Depends on Type
-				compile_items         # Depends on Move
-				compile_pokemon       # Depends on Move, Item, Type, Ability
-				compile_pokemon_forms # Depends on Species, Move, Item, Type, Ability
-				compile_encounters    # Depends on Species
-			end
+      pbUpdatePBSFilesForDifficulty #by low
 		else
 			compile_moves           # Depends on Type
 			compile_items           # Depends on Move
@@ -782,7 +774,6 @@ module Compiler
     compile_shadow_pokemon    # Depends on Species
     compile_regional_dexes    # Depends on Species
     compile_ribbons
-    compile_encounters        # Depends on Species
     compile_trainer_types
     compile_trainers          # Depends on Species, Item, Move
     compile_trainer_lists     # Depends on TrainerType

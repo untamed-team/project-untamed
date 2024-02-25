@@ -1,43 +1,22 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[005] # San Cerigold Cemetery
-Land,21
-    20,DUSKULL,6,7
-    20,LILORINA,5,6
-    15,BUDEW,5,7
-    15,FLABEBE,5,7
-    10,LILORINA,4,7
-    10,FLABEBE,5,7
-#-------------------------------
 [022] # Veravalles Town
 Water,2
     60,LOTAD,8,11
     40,FEEBAS,8,11
 OldRod
-    60,LOTAD,6,6
-    40,FEEBAS,5,6
+    100,LOTAD,5,5
 GoodRod
     60,BARBOACH,12,17
     20,FEEBAS,10,16
     20,LOTAD,10,15
 #-------------------------------
-[026] # Route 2
-Land,21
-    20,SKIDDO,5
-    25,FLABEBE,5
-    25,M_EKANS,5
-    10,WRENNER,5
-    5,M_MEOWTH,5
-    15,BUNNELBY,5
-#-------------------------------
 [048] # Route 1
 Land,21
-    25,MINIMELO,2,4
-    25,PACUNA,2,4
-    20,WRENNER,2,4
-    10,FLABEBE,2,3
-    10,LEDYBA,2,3
-    10,BUDEW,2,3
+    30,MINIMELO,3,4
+    30,PACUNA,3,4
+    25,WRENNER,3,4
+    15,BUDEW,3,3
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
@@ -66,3 +45,21 @@ Corn,5
     75,PUMPKABOO,5
     20,WRENNER,3,5
     5,PACUNA,2,4
+#-------------------------------
+[005] # San Cerigold Cemetery
+Land,21
+    20,DUSKULL,6,7
+    20,LILORINA,5,6
+    15,BUDEW,5,7
+    15,FLABEBE,5,7
+    10,LILORINA,4,7
+    10,FLABEBE,5,7
+#-------------------------------
+[026] # Route 2
+Land,21
+    20,SKIDDO,5
+    25,FLABEBE,5
+    25,M_EKANS,5
+    10,WRENNER,5
+    5,M_MEOWTH,5
+    15,BUNNELBY,5

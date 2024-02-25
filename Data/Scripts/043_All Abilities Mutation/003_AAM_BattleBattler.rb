@@ -208,14 +208,25 @@ class Battle
     aam_switch =  aam_pbCanSwitch?(idxBattler, idxParty, partyScene)
 
     $aam_trapping=true
+    $aam_fleeing = false
     battler = @battlers[idxBattler]
     # Trapping abilities for All Abilities Mutation
+    if battler.abilityActive? &&
+       Battle::AbilityEffects.triggerCertainSwitching(battler.ability, battler, self)
+      $aam_fleeing = true
+    end
+    if battler.itemActive? &&
+       Battle::ItemEffects.triggerCertainSwitching(battler.item, battler, self)
+      $aam_fleeing = true
+    end
     allOtherSideBattlers(idxBattler).each do |b|
       next if !b.abilityActive?
-      if Battle::AbilityEffects.triggerTrappingByTarget(b.ability, battler, b, self)
-        partyScene&.pbDisplay(_INTL("{1}'s {2} prevents switching!",
-                                    b.pbThis, $aamName))
-        return false
+      if !$aam_fleeing
+        if Battle::AbilityEffects.triggerTrappingByTarget(b.ability, battler, b, self)
+          partyScene&.pbDisplay(_INTL("{1}'s {2} prevents switching!",
+                                      b.pbThis, $aamName))
+          return false
+        end
       end
     end
     return aam_switch

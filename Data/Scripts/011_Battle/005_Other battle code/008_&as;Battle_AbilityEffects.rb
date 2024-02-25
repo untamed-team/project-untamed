@@ -2809,8 +2809,12 @@ Battle::AbilityEffects::EndOfRoundGainItem.add(:PICKUP,
 #===============================================================================
 # CertainSwitching handlers
 #===============================================================================
-
-# There aren't any!
+#by low
+Battle::AbilityEffects::CertainSwitching.add(:RUNAWAY,
+  proc { |ability, battler, battle|
+    next true
+  }
+)
 
 #===============================================================================
 # TrappingByTarget handlers

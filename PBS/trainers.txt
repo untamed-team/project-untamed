@@ -1,33 +1,5 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[YOUNGSTER_F,Emma]
-LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,4
-Pokemon = FLABEBE,4
-#-------------------------------
-[YOUNGSTER_F,Emma,100]
-LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,4
-Pokemon = FLABEBE,4
-#-------------------------------
-[YOUNGSTER_M,Julián]
-LoseText = B-but, how did I lose?
-Pokemon = WRENNER,4
-#-------------------------------
-[YOUNGSTER_M,Julián,100]
-LoseText = B-but, how did I lose?
-Pokemon = WRENNER,4
-#-------------------------------
-[BUGCATCHER,Marco]
-LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
-Pokemon = LEDYBA,4
-#-------------------------------
-[BUGCATCHER,Marco,100]
-LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
-Pokemon = LEDYBA,4
-#-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
 Pokemon = MOLLUCOTTA,5
@@ -63,6 +35,34 @@ LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
 Pokemon = PORSITE,5
     Gender = male
     IV = 0,0,0,0,0,0
+#-------------------------------
+[YOUNGSTER_F,Emma]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
+#-------------------------------
+[YOUNGSTER_F,Emma,100]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,3
+Pokemon = FLABEBE,3
+#-------------------------------
+[YOUNGSTER_M,Julián]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,4
+#-------------------------------
+[YOUNGSTER_M,Julián,100]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,4
+#-------------------------------
+[BUGCATCHER,Marco]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,4
+Pokemon = LEDYBA,4
+#-------------------------------
+[BUGCATCHER,Marco,100]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,3
+Pokemon = LEDYBA,4
 #-------------------------------
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?

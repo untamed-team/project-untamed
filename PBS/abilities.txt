@@ -200,7 +200,7 @@ Description = Contact with the Pokémon may burn the attacker.
 #-------------------------------
 [RUNAWAY]
 Name = Run Away
-Description = Enables a sure getaway from wild Pokémon.
+Description = Enables a sure getaway from opposing Pokémon.
 #-------------------------------
 [KEENEYE]
 Name = Keen Eye
