@@ -254,8 +254,8 @@ def look_at_event(event_a,event_b)
   event_a = get_event_from_id(event_a) if event_a && event_a != $game_player
   event_b = get_event_from_id(event_b) if event_b && event_b != $game_player
   # Sets a default event if none is specified
-  event_a = get_character(0) if !event_a
-  event_b = get_character(1) if !event_b
+  event_a = pbMapInterpreter.get_character(0) if !event_a
+  event_b = pbMapInterpreter.get_character(1) if !event_b
   # Get distance between x values and y values
   distance_x = (event_a.x - event_b.x).abs
   distance_y = (event_a.y - event_b.y).abs
