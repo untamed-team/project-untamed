@@ -104,7 +104,7 @@ Pokemon = CAFECARACHA,6
 #-------------------------------
 [FARMER,Feliciano,100]
 LoseText = Corn is surprisingly shady!
-Pokemon = CAFECARACHA,5
+Pokemon = CAFECARACHA,6
 #-------------------------------
 [FARMER,Rafa]
 LoseText = I need some water...
@@ -113,18 +113,36 @@ Pokemon = DRILBUR,7
 #-------------------------------
 [FARMER,Rafa,100]
 LoseText = I need some water...
-Pokemon = ZEAZAYA,5
+Pokemon = ZEAZAYA,6
 Pokemon = DRILBUR,6
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,5
-Pokemon = PHANTUMP,6
+Pokemon = PUMPKABOO,6
+Pokemon = PHANTUMP,7
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
 LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,6
+Pokemon = LILORINA,6
+	Moves = HYPNOSIS,WATERGUN,DISARMINGVOICE
+    AbilityIndex = 0
 Pokemon = PHANTUMP,7
+	Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
+#-------------------------------
+[HEXMANIAC,Helena]
+LoseText = ..Is that a no?
+Pokemon = DUSKULL,6
+Pokemon = LITWICK,6
+    AbilityIndex = 0
+#-------------------------------
+[HEXMANIAC,Helena,100]
+LoseText = ..Is that a no?
+Pokemon = FLABEBE,6
+	Moves = FAIRYWIND,HIDDENPOWER,GRASSKNOT
+	HiddenPowerType = FIRE
+Pokemon = LITWICK,7
+	Moves = WILLOWISP,EMBER,NIGHTSHADE
+    AbilityIndex = 1
 #-------------------------------
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, whatever…
@@ -138,37 +156,38 @@ Pokemon = LITWICK,8
 Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
-#-------------------------------
+#------------------------------- MURKROW, CROMEN, DUNSPARCE, NATU
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, whatever…
-Pokemon = LILORINA,8
-	Nature = BOLD
-    Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
-    AbilityIndex = 2
-    EV = 20,20,72,10,,10
-    Ace = yes
 Pokemon = PACUNA,8
 	Nature = JOLLY
-    Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
-    EV = 10,20,10,72,,10
+    Moves = DOUBLEKICK,REFLECT,UTURN,LIGHTSCREEN
     AbilityIndex = 1
-Pokemon = M_ROSELIA,8
-	Nature = MODEST
-    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,POLLENPUFF
+	Item = LIGHTCLAY
+Pokemon = LILORINA,8
+	Nature = BOLD
+    Moves = DISARMINGVOICE,BITINGCOLD,NIGHTSHADE,BUBBLE
     AbilityIndex = 2
-    EV = 30,72,10,10,,10
-#-------------------------------
-[HEXMANIAC,Helena]
-LoseText = ..Is that a no?
-Pokemon = DUSKULL,7
-Pokemon = LITWICK,7
+	Item = RINDOBERRY
+Pokemon = FLABEBE,8
+	Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,SAFEGUARD
+    AbilityIndex = 2
+	HiddenPowerType = WATER
+	Item = WATERGEM
+Pokemon = MURKROW,8
+	Nature = JOLLY
+    Moves = GUST,ROOST,NIGHTSHADE,CONFUSERAY
+    AbilityIndex = 2
+Pokemon = NATU,8
+	Nature = TIMID
+    Moves = HEX,THUNDERWAVE,TELEPORT,PSYWAVE
     AbilityIndex = 0
-#-------------------------------
-[HEXMANIAC,Helena,100]
-LoseText = ..Is that a no?
-Pokemon = DUSKULL,7
-Pokemon = LITWICK,7
-    AbilityIndex = 0
+	Item = LEFTOVERS
+Pokemon = M_ROSELIA,9
+	Nature = MODEST
+    Moves = GROWTH,HEX,MEGADRAIN,GRASSWHISTLE
+    AbilityIndex = 2
+	Item = ORANBERRY
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex

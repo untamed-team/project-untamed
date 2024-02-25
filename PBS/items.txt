@@ -4297,7 +4297,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_80
 Move = SCALD
-Description = The user shoots boiling hot water at its target. This may also leave the target with a burn.
+Description = The user shoots boiling hot water at its target.
 #-------------------------------
 [TM59]
 Name = TM59
