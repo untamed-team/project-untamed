@@ -486,8 +486,16 @@ DerxwnaKapsyla
 BetterBitmaps:
 Marin
 
+Better Battle Animation Editor:
+KRLW890
+
 Better Item Finder:
 Kotaro
+
+Blukberry Phone:
+Gardenette
+Low
+Saltilton
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -580,6 +588,9 @@ ThatWelshOne_
 Ulithium_Dragon
 Vendily
 
+Multi Exp Panel:
+Swdfm
+
 Name-box:
 Gardenette
 Golisopod User
@@ -614,13 +625,35 @@ TechSkylander1518
 Pokémon Amie:
 BhagyaJyoti
 bo4p5687
+Gardenette
 Luka S.J
 PizzaSun
 rigbycwts
+Victorcarvalhosp
+
+Pokémon Camp:
+Gardenette
+Micah
+
+Pokémon Contests:
+bo4p5687
+FL
+Gardenette
+JV
+Luka S.J.
+Maruno
+mej71
+Saving Raven
+TastyRedTomato
+Umbreon/Hansiec
+wrigty12
 
 PokéVial
 Voltseon
 qin2500
+
+Polished Floors:
+TechSkylander1518
 
 Quicksave:
 Low
@@ -641,8 +674,19 @@ Phantombass
 Step on Spot OW Animation:
 Boonzeet
 
+Storage System Utilities:
+Swdfm
+
+Temporal Chains' Wardrobe:
+DarrylBD99
+StarWolff
+
 Tileset Rearranger:
 Maruno
+
+Time and Weather HUD Addon:
+Gardenette
+Locomotivo
 
 Tutor.net
 DemICE
@@ -937,3 +981,48 @@ Version      = 1.1
 Essentials   = 18
 Credits      = Marin
 Link         = https://reliccastle.com/resources/169/
+
+Name         = Pokémon Amie
+Version      = 1.7
+Website      = https://www.pokecommunity.com/threads/pokemon-amie-refresh-essentials-v18.439558/
+Credits      = BhagyaJyoti (Made for v18 with many fixes and made more Plug-n-Play), PizzaSun (Original Script for v17.2), rigbycwts (Concept for Essentials), Gardenette (v20.1 port), Luka S.J. (for the mask method), Victorcarvalhosp (reworking code, improved item compatibility)
+Essentials   = 20.1
+
+Name       = Polished Floors
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/1132/
+Credits    = TechSkylander1518
+
+Name         = Storage System Utilities
+Version      = 2023.07.07
+Website      = NONE
+Credits      = Swdfm
+Essentials   = 20
+
+Name       = Temporal Chains' Wardrobe
+Version    = 1.0
+Essentials = 20.1
+Credits    = DarrylBD99,StarWolff
+
+Name      = Time and Weather HUD Addon
+Version   = 1.0
+Essentials = 20.1
+Website   = None
+Credits   = Gardenette, Locomotivo
+
+Name         = Multi Exp Panel
+Version      = 2023.07.21
+Website      = NONE
+Credits      = Swdfm
+
+Name      = Extra Fogs & Panorama Lock
+Version   = 1.0
+Essentials = 20.1
+Website   = https://forum.chaos-project.com/index.php?topic=16015.0
+Credits   = Jaiden, Game_Guy (for helping with the parallax lock), Gardenette (minor editing to work with Pkmn Essentials)
+
+Name         = Better Battle Animation Editor
+Version      = 1.0
+Essentials   = 20.1
+Conflicts    = Move Animation Fixer
+Credits      = KRLW890
