@@ -5272,8 +5272,8 @@ class Battle::AI
 							break
 						end
 					end
+					miniscore=100
 					miniscore*=0.5 if healingmove
-          miniscore=100
           targetlivecount=@battle.pbAbleNonActiveCount(user.idxOpposingSide)
           if targetlivecount>1
             miniscore*=(targetlivecount-1)

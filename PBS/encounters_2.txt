@@ -18,13 +18,6 @@ Land,21
     25,WRENNER,3,4
     15,BUDEW,3,3
 #-------------------------------
-[078] # Hacienda Fields
-Corn,5
-    50,PUMPKABOO,5,6
-    20,MINIMELO,4,6
-    20,WRENNER,4,6
-    10,WORMOTE,3,4
-#-------------------------------
 [079] # Hacienda Castaneda
 Water,2
     60,LOTAD,8,11
@@ -37,14 +30,20 @@ GoodRod
     20,FEEBAS,10,16
     20,LOTAD,10,15
 Land,21
-    40,PACUNA,2,4
-    30,M_EKANS,3,6
-    15,MINIMELO,2,4
-    15,WRENNER,3,5
+    40,PACUNA,3,4
+    30,MINIMELO,3,4
+    30,WRENNER,3,4
 Corn,5
     75,PUMPKABOO,5
     20,WRENNER,3,5
     5,PACUNA,2,4
+#-------------------------------
+[078] # Hacienda Fields
+Corn,5
+    50,PUMPKABOO,5,6
+    20,MINIMELO,4,6
+    20,WRENNER,4,6
+    10,WORMOTE,3,4
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21

@@ -43,8 +43,8 @@ Pokemon = FLABEBE,4
 #-------------------------------
 [YOUNGSTER_F,Emma,100]
 LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,3
-Pokemon = FLABEBE,3
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
 #-------------------------------
 [YOUNGSTER_M,Julián]
 LoseText = B-but, how did I lose?
@@ -61,26 +61,39 @@ Pokemon = LEDYBA,4
 #-------------------------------
 [BUGCATCHER,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,3
+Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
 #-------------------------------
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = MURKROW,6
+Pokemon = MURKROW,5
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = MURKROW,6
+Pokemon = M_EKANS,4
+    AbilityIndex = 0
+	Moves = POISONFANG,BITE,LEER,WRAP
+	Nature = MODEST
+Pokemon = MURKROW,5
     AbilityIndex = 1
+	Moves = THIEF,GUST,TAUNT,HYPNOSIS
+	Nature = MODEST
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
-Pokemon = TECHUPPI,6
+Pokemon = TECHUPPI,5
 #-------------------------------
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.
-Pokemon = TECHUPPI,6
+Pokemon = CACNEA,4
     AbilityIndex = 2
+	Moves = POWERUPPUNCH,BULLETSEED,HIDDENPOWER,LEECHSEED
+	Nature = NAUGHTY
+	HiddenPowerType = WATER
+Pokemon = TECHUPPI,5
+    AbilityIndex = 1
+	Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
+	Nature = ADAMANT
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!

@@ -11,6 +11,7 @@ class Battle::Battler
 end
 
 def pbHiddenPower(pkmn)
+  #echoln "Hidden Power Type for #{pkmn.name}: #{pkmn.hptype}"
   return [pkmn.hptype, 60]
 end 
 
