@@ -15,7 +15,10 @@ class PokemonGlobalMetadata
   attr_accessor   :campGenericTimer
   attr_accessor   :hideAndSeekPause
   attr_accessor   :hideAndSeekSuccessfulConsecutiveRounds
-  attr_accessor   :campProcesses
+  attr_accessor   :beforeCampPlayerMapID
+  attr_accessor   :beforeCampPlayerMapX
+  attr_accessor   :beforeCampPlayerMapY
+  attr_accessor   :beforeCampPlayerDirection
   
 end #class PokemonGlobalMetadata
 
@@ -41,7 +44,14 @@ class Camping
   end
 
   def startCamping
-    pbCommonEvent(9) #start camping 
+	#save some variables about the player's current position and map before camp
+	$PokemonGlobal.beforeCampPlayerMapID = $game_map.map_id
+	$PokemonGlobal.beforeCampPlayerMapX = $game_player.x
+	$PokemonGlobal.beforeCampPlayerMapY = $game_player.y
+	$PokemonGlobal.beforeCampPlayerDirection = $game_player.direction
+	
+	pbCommonEvent(9) #start camping
+	
 	#get the player's current X and Y position when they enter camp
 	$PokemonGlobal.campingPlayerStartX = $game_player.x
 	$PokemonGlobal.campingPlayerStartY = $game_player.y
@@ -56,14 +66,12 @@ class Camping
   end
 
   def endCamping
-    toggleOffCampEvents
-    pbTransferWithTransition($game_variables[45], $game_variables[31], $game_variables[32], nil, $game_variables[46])
+    pbTransferWithTransition($PokemonGlobal.beforeCampPlayerMapID, $PokemonGlobal.beforeCampPlayerMapX, $PokemonGlobal.beforeCampPlayerMapY, nil, $PokemonGlobal.beforeCampPlayerDirection)
     pbCommonEvent(10)
 	$PokemonGlobal.camping = false
   end
   
 	def self.interact
-		#toggleOffCampEvents
 		event = $game_player.pbFacingEvent
 		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
 		
@@ -265,16 +273,6 @@ class Camping
     #screen tone dark
     pbToneChangeAll(Tone.new(0,0,0,0),20)
     pbWait(60)
-  end
-  
-  def toggleOnCampEvents
-    toggleOnPokemonBehavior
-    toggleOnCampEncounters
-  end
-  
-  def toggleOffCampEvents
-    toggleOffPokemonBehavior
-    toggleOffCampEncounters
   end
   
   def self.showEventAnimation(eventID, animation_id)
