@@ -7299,9 +7299,9 @@ Power = 1
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
-FunctionCode = FixedDamageUserLevelRandom
+FunctionCode = FixedDamageUserLevel
 Flags = CanProtect,CanMirrorMove
-Description = The target is attacked with an odd psychic wave. The attack varies in intensity.
+Description = The target is attacked with an odd psychic wave. It inflicts damage matching the user's level.
 #-------------------------------
 [AGILITY]
 Name = Agility
