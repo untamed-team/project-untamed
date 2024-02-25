@@ -19,6 +19,8 @@ class PokemonGlobalMetadata
   attr_accessor   :beforeCampPlayerMapX
   attr_accessor   :beforeCampPlayerMapY
   attr_accessor   :beforeCampPlayerDirection
+  attr_accessor   :campPkmnChasing
+  attr_accessor   :campPkmnRunning
   
 end #class PokemonGlobalMetadata
 
@@ -36,6 +38,7 @@ class Pokemon
   attr_accessor :campHungerEmoteTimer
   attr_accessor :campNapping
   attr_accessor :campNappingEmoteTimer
+  attr_accessor :interactingWithTrainer
 end
 
 class Camping
@@ -58,7 +61,7 @@ class Camping
 	
 	#set the pkmn events
 	pbChangeCampers
-    
+	
 	#fade screen in
 	$game_screen.start_tone_change(Tone.new(0,0,0,0), 6 * Graphics.frame_rate / 20)
 	
@@ -66,14 +69,43 @@ class Camping
   end
 
   def endCamping
-    pbTransferWithTransition($PokemonGlobal.beforeCampPlayerMapID, $PokemonGlobal.beforeCampPlayerMapX, $PokemonGlobal.beforeCampPlayerMapY, nil, $PokemonGlobal.beforeCampPlayerDirection)
+    self.resetVariables
+	
+	pbTransferWithTransition($PokemonGlobal.beforeCampPlayerMapID, $PokemonGlobal.beforeCampPlayerMapX, $PokemonGlobal.beforeCampPlayerMapY, nil, $PokemonGlobal.beforeCampPlayerDirection)
     pbCommonEvent(10)
 	$PokemonGlobal.camping = false
   end
   
+  def self.resetVariables
+	#make sure no pkmn are chasing each other
+	$PokemonGlobal.campPkmnChasing = nil
+	$PokemonGlobal.campPkmnRunning = nil
+	
+	for i in 0...$PokemonGlobal.campers.length
+		pkmn = $PokemonGlobal.campers[i]
+		pkmn.interactingWithTrainer = false
+		pkmn.campNapping = false
+		pkmn.campNappingEmoteTimer = nil
+		pkmn.campHungerEmoteTimer = nil
+		pkmn.campHungerEmoteTimerPermanent = nil
+	end #for i in 0...$PokemonGlobal.campers.length
+  end #def self.resetVariables
+  
 	def self.interact
 		event = $game_player.pbFacingEvent
 		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
+		pkmn.interactingWithTrainer = true
+		
+		#set chasingpkmn and runningpkmn to nil if the pkmn is either of these
+		if $PokemonGlobal.campPkmnChasing == pkmn
+			$PokemonGlobal.campPkmnChasing = nil
+			$PokemonGlobal.campPkmnRunning = nil
+		end
+		if $PokemonGlobal.campPkmnRunning == pkmn
+			$PokemonGlobal.campPkmnChasing = nil
+			$PokemonGlobal.campPkmnRunning = nil
+		end
+		
 		
 		#set move type to fixed so the pkmn stops roaming
 		pkmn.campEvent.move_type = 0
@@ -105,6 +137,8 @@ class Camping
 		when 3
 			#nevermind
 		end #of case
+		
+		pkmn.interactingWithTrainer = false
 		
 		#set move type to random so the pkmn roams again
 		pkmn.campEvent.move_type = 1
@@ -306,4 +340,6 @@ end #of class Camping
 ################ Game Event Class ################
 class Game_Event < Game_Character
 	attr_accessor :move_type
+	attr_accessor :move_route
+	attr_accessor :move_route_forcing
 end
