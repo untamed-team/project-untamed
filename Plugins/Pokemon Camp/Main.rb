@@ -81,21 +81,23 @@ class Camping
 		
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnTowardPlayer])
 		
-		cmds_new = [_INTL("Amie"),_INTL("Hide and Seek"),_INTL("Nevermind")]
+		cmds_new = [_INTL("Summary"),_INTL("Amie"),_INTL("Hide and Seek"),_INTL("Nevermind")]
 		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,-1)
 		
 		case choice
 		when 0
-		#Amie
-		pokemonAmie(event.id-1)
-				
+			#summary
+			self.callPkmnSummary(pkmn)
 		when 1
-		#hide and seek
-		self.hideAndSeek
-		
+			#Amie
+			pokemonAmie(event.id-1)	
 		when 2
-		#nevermind
+			#hide and seek
+			self.hideAndSeek
+		when 3
+			#nevermind
 		end #of case
+		
 		#set move type to random so the pkmn roams again
 		pkmn.campEvent.move_type = 1
 	end #def interact
@@ -281,6 +283,18 @@ class Camping
     character.animation_id = animation_id
     return true
   end
+
+	def self.callPkmnSummary(pkmn)
+		for i in 0...$Trainer.pokemon_party.length
+			pkmnPartyIndex = i if $Trainer.pokemon_party[i] == pkmn
+		end
+		
+		scene = PokemonSummary_Scene.new
+		screen = PokemonSummaryScreen.new(scene, inbattle=false)
+		#screen.pbStartScreen(@party, pkmnid)
+		screen.pbStartScreen($Trainer.pokemon_party, pkmnPartyIndex)
+		#scene.pbSummary(idxParty, true)
+	end #def callPkmnSummary
 
   #on_player_interact with camper
 	EventHandlers.add(:on_player_interact, :interact_with_camper_pkmn, proc {
