@@ -338,7 +338,7 @@ class Camping
 	def self.emoteWhileHiding(pkmn)
 		emoteIDs = [3,4,9,10,11,12,13,18]
 		emoteID = emoteIDs.sample
-		self.pbOverworldAnimationNoPause(pkmn.hideAndSeekSpot, emoteID, tinting = false)
+		self.showEventAnimation(pkmn.campEvent.id, animation_id=emoteID)
 	end #def self.emoteWhileHiding
 	
 	def self.fadeToBlack

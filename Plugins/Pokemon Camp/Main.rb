@@ -33,7 +33,6 @@ class Pokemon
   attr_accessor :campHungerEmoteTimer
   attr_accessor :campNapping
   attr_accessor :campNappingEmoteTimer
-  attr_accessor :campEventEmoteSprite
 end
 
 class Camping
@@ -68,6 +67,9 @@ class Camping
 		event = $game_player.pbFacingEvent
 		pkmn = $player.pokemon_party[event.id-1] #this means that events 1-6 MUST be reserved for the pkmn in the player's party
 		
+		#set move type to fixed so the pkmn stops roaming
+		pkmn.campEvent.move_type = 0
+		
 		#wake the pkmn if napping
 		if pkmn.campNapping
 			self.pkmnStopNap(pkmn) 
@@ -80,7 +82,7 @@ class Camping
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::TurnTowardPlayer])
 		
 		cmds_new = [_INTL("Amie"),_INTL("Hide and Seek"),_INTL("Nevermind")]
-		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,2)
+		choice = pbMessage(_INTL("What would you like to do with {1}?", pkmn.name),cmds_new,-1)
 		
 		case choice
 		when 0
@@ -94,6 +96,8 @@ class Camping
 		when 2
 		#nevermind
 		end #of case
+		#set move type to random so the pkmn roams again
+		pkmn.campEvent.move_type = 1
 	end #def interact
   
   def interactCookingPot
@@ -172,8 +176,66 @@ class Camping
 		
 		#set move type to fixed so the pkmn starts roaming
 		pkmn.campEvent.move_type = 1
+		
+		#set pkmn event move frequency
+		self.setPkmnEventFreq(pkmn)
     end #for i in 0...$Trainer.pokemon_count
   end #of pbChangeCampers
+  
+  def setPkmnEventFreq(pkmn)
+	case pkmn.nature.id
+	when :ADAMANT
+		pkmn.campEvent.move_frequency = 3
+	when :BASHFUL
+		pkmn.campEvent.move_frequency = 3
+	when :BOLD
+		pkmn.campEvent.move_frequency = 3
+	when :BRAVE
+		pkmn.campEvent.move_frequency = 2
+	when :CALM
+		pkmn.campEvent.move_frequency = 3
+	when :CAREFUL
+		pkmn.campEvent.move_frequency = 3
+	when :DOCILE
+		pkmn.campEvent.move_frequency = 3
+	when :GENTLE
+		pkmn.campEvent.move_frequency = 3
+	when :HARDY
+		pkmn.campEvent.move_frequency = 3
+	when :HASTY
+		pkmn.campEvent.move_frequency = 4
+	when :IMPISH
+		pkmn.campEvent.move_frequency = 3
+	when :JOLLY
+		pkmn.campEvent.move_frequency = 4
+	when :LAX
+		pkmn.campEvent.move_frequency = 3
+	when :LONELY
+		pkmn.campEvent.move_frequency = 3
+	when :MILD
+		pkmn.campEvent.move_frequency = 3
+	when :MODEST
+		pkmn.campEvent.move_frequency = 3
+	when :NAIVE
+		pkmn.campEvent.move_frequency = 4
+	when :NAUGHTY
+		pkmn.campEvent.move_frequency = 3
+	when :QUIET
+		pkmn.campEvent.move_frequency = 2
+	when :QUIRKY
+		pkmn.campEvent.move_frequency = 3
+	when :RASH
+		pkmn.campEvent.move_frequency = 3
+	when :RELAXED
+		pkmn.campEvent.move_frequency = 2
+	when :SASSY
+		pkmn.campEvent.move_frequency = 2
+	when :SERIOUS
+		pkmn.campEvent.move_frequency = 3
+	when :TIMID
+		pkmn.campEvent.move_frequency = 3
+	end
+  end #def self.setPkmnEventFreq
   
 	def self.resetPlayerPosition
 		pbTransferWithTransition(map_id=$game_map.map_id, x=$PokemonGlobal.campingPlayerStartX, y=$PokemonGlobal.campingPlayerStartY, transition = nil, dir = 2)
@@ -219,7 +281,7 @@ class Camping
     character.animation_id = animation_id
     return true
   end
-  
+
   #on_player_interact with camper
 	EventHandlers.add(:on_player_interact, :interact_with_camper_pkmn, proc {
 		next if !$PokemonGlobal.camping
@@ -232,5 +294,4 @@ end #of class Camping
 ################ Game Event Class ################
 class Game_Event < Game_Character
 	attr_accessor :move_type
-	attr_accessor :campEventEmoteSprite
 end
