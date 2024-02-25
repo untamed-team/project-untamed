@@ -192,6 +192,7 @@ WolfPP
 Music
 -----
 Soundtrack:
+ENLS's Pre-Looped Music Library
 EntityUnknown
 FNaF 6
 Jumpluff
@@ -481,6 +482,9 @@ Vendily
 Berry Pots:
 Caruban
 DerxwnaKapsyla
+
+BetterBitmaps:
+Marin
 
 Better Item Finder:
 Kotaro
@@ -927,3 +931,9 @@ Credits      = Marin
 Essentials   = 20
 Requires     = Marin's Scripting Utilities, 2.0
 Link         = https://reliccastle.com/resources/184/
+
+Name         = Better Bitmaps
+Version      = 1.1
+Essentials   = 18
+Credits      = Marin
+Link         = https://reliccastle.com/resources/169/
