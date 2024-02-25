@@ -3756,7 +3756,7 @@ Description = The user attacks the target by poking it with a sharply pointed br
 [LEAFAGE]
 Name = Leafage
 Type = GRASS
-Category = Physical
+Category = Special
 Power = 40
 Accuracy = 100
 TotalPP = 40

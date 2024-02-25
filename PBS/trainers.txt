@@ -73,11 +73,9 @@ LoseText = Yikes, what's up with kids these days?
 Pokemon = M_EKANS,4
     AbilityIndex = 0
 	Moves = POISONFANG,BITE,LEER,WRAP
-	Nature = MODEST
 Pokemon = MURKROW,5
     AbilityIndex = 1
-	Moves = THIEF,GUST,TAUNT,HYPNOSIS
-	Nature = MODEST
+	Moves = THIEF,GUST,HYPNOSIS
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
@@ -87,18 +85,41 @@ Pokemon = TECHUPPI,5
 LoseText = Right? This used to be so much easier.
 Pokemon = CACNEA,4
     AbilityIndex = 2
-	Moves = POWERUPPUNCH,BULLETSEED,HIDDENPOWER,LEECHSEED
-	Nature = NAUGHTY
-	HiddenPowerType = WATER
+	Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
 Pokemon = TECHUPPI,5
     AbilityIndex = 1
 	Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
-	Nature = ADAMANT
+#-------------------------------
+[FARMER,Abraham]
+LoseText = Zea-zaya's my best bud.
+Pokemon = ZEAZAYA,6
+#-------------------------------
+[FARMER,Abraham,100]
+LoseText = Zea-zaya's my best bud.
+Pokemon = ZEAZAYA,5
+#-------------------------------
+[FARMER,Feliciano]
+LoseText = Corn is surprisingly shady!
+Pokemon = CAFECARACHA,6
+#-------------------------------
+[FARMER,Feliciano,100]
+LoseText = Corn is surprisingly shady!
+Pokemon = CAFECARACHA,5
+#-------------------------------
+[FARMER,Rafa]
+LoseText = I need some water...
+Pokemon = SUNKERN,6
+Pokemon = DRILBUR,7
+#-------------------------------
+[FARMER,Rafa,100]
+LoseText = I need some water...
+Pokemon = ZEAZAYA,5
+Pokemon = DRILBUR,6
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,6
-Pokemon = PHANTUMP,7
+Pokemon = PUMPKABOO,5
+Pokemon = PHANTUMP,6
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
 LoseText = Wow, you’re pretty good!
@@ -136,32 +157,6 @@ Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,POLLENPUFF
     AbilityIndex = 2
     EV = 30,72,10,10,,10
-#-------------------------------
-[FARMER,Abraham]
-LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
-#-------------------------------
-[FARMER,Abraham,100]
-LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
-#-------------------------------
-[FARMER,Feliciano]
-LoseText = Corn is surprisingly shady!
-Pokemon = CAFECARACHA,6
-#-------------------------------
-[FARMER,Feliciano,100]
-LoseText = Corn is surprisingly shady!
-Pokemon = CAFECARACHA,6
-#-------------------------------
-[FARMER,Rafa]
-LoseText = I need some water...
-Pokemon = SUNKERN,6
-Pokemon = DRILBUR,7
-#-------------------------------
-[FARMER,Rafa,100]
-LoseText = I need some water...
-Pokemon = SUNKERN,6
-Pokemon = DRILBUR,7
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?

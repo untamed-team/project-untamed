@@ -40,19 +40,16 @@ Corn,5
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
-    50,PUMPKABOO,5,6
-    20,MINIMELO,4,6
-    20,WRENNER,4,6
-    10,WORMOTE,3,4
+    50,PUMPKABOO,4,5
+    30,MINIMELO,4,5
+    20,WRENNER,4,5
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
-    20,DUSKULL,6,7
-    20,LILORINA,5,6
-    15,BUDEW,5,7
-    15,FLABEBE,5,7
-    10,LILORINA,4,7
-    10,FLABEBE,5,7
+    35,PACUNA,4,5
+    30,BUDEW,5,5
+    25,FLABEBE,5,5
+    10,WORMOTE,5,5
 #-------------------------------
 [026] # Route 2
 Land,21
