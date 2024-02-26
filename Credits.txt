@@ -622,6 +622,11 @@ Wolf PP
 Poké Ball Swap:
 TechSkylander1518
 
+Pokeblocks v20.1:
+bo4p5687
+Richard PT
+wrigty12
+
 Pokémon Amie:
 BhagyaJyoti
 bo4p5687
@@ -1049,3 +1054,11 @@ Optional   = BerryPots for Essentials,1.0
 Optional   = BerryPots for Essentials v20,1.0
 Essentials = 20.1
 Credits    = wrigty12, Arcky, Ulithium_Dragon
+
+Name      	= Pokeblocks v20.1
+Version  	= 1.1
+Essentials  	= 20.1
+Optional  	= Better Bitmaps
+Requires	= TDW Berry Core and Dex,1.0
+Website   	= https://github.com/Jack1324567/PE-Custom-Script
+Credits   	= wrigty12, bo4p5687 (original code), Richard PT (original graphics), Marin (Better Bitmaps plugin)
