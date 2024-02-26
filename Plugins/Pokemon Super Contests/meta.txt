@@ -1,0 +1,5 @@
+﻿Name       = Pokémon Super Contests
+Version    = 1.0.0
+Essentials = 20.1
+Requires   = Easy Mouse System,2.0
+Credits    = Vendily, TechSkylander1518, Gardenette, Luka S.J., deadtaro 2.0, Maruno, ENLS’s Pre-Looped Music Library, Moses - for sprite ripping, wrigty12 for some code, bo4p5687 for some code
