@@ -218,7 +218,7 @@ class NewQuestHud < Component
     return false if !$PokemonGlobal.respond_to?(:quests)
     
     #added by Gardenette for camping menu
-    return false if $game_switches[83]
+    return false if $PokemonGlobal.camping
     
     return $PokemonGlobal.quests.active_quests.any? { |quest| quest.respond_to?(:new) && quest.new }
   end
