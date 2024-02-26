@@ -69,14 +69,14 @@ class Camping
   end
 
   def endCamping
-    self.resetVariables
+    resetVariables
 	
 	pbTransferWithTransition($PokemonGlobal.beforeCampPlayerMapID, $PokemonGlobal.beforeCampPlayerMapX, $PokemonGlobal.beforeCampPlayerMapY, nil, $PokemonGlobal.beforeCampPlayerDirection)
     pbCommonEvent(10)
 	$PokemonGlobal.camping = false
   end
   
-  def self.resetVariables
+  def resetVariables
 	#make sure no pkmn are chasing each other
 	$PokemonGlobal.campPkmnChasing = nil
 	$PokemonGlobal.campPkmnRunning = nil
