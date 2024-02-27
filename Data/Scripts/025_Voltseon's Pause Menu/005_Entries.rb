@@ -329,7 +329,11 @@ class MenuEntryWiki < MenuEntry
     @name = "Wiki"
   end
 
-  def selected(menu); pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }; end
+  def selected(menu)
+    if pbConfirmMessage(_INTL("Open your computer's browser to view the Wiki?"))
+      pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }
+    end
+  end
 
   def selectable?; return true; end
 end
