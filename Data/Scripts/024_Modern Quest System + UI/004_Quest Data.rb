@@ -173,6 +173,7 @@ module QuestModule
     :QuestGiver => "Alex",
     :QuestGiverSprite => "trchar019",
     :QuestGiverDescSprite => "PICNICKER",
+    :Stage1 => "Camp with your Pokémon.",
     :Task1 => ["Pet your Pokémon",1,false],
     :Task2 => ["Feed your Pokémon",1,false],
     :Task3 => ["Play hide and seek with your Pokémon",1,false],
