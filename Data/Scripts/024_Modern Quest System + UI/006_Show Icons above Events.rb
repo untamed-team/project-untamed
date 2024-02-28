@@ -103,7 +103,6 @@ class QuestIndicator
           currentStage = getCurrentStage(questID.to_sym)
         
           filename = nil
-        
 		
 		  if getReadyQuests.include?(questID.to_sym) && giver == "true"
             #the quest in the comment we are checking is active, and the NPC is the giver
@@ -134,7 +133,7 @@ class QuestIndicator
                   #if a quest is ready for turnin, get rid of the icon above the event that's the stage's task
             filename = nil
           end
-        
+          
           if filename #if it's not nil, show ! or ?
             @event = $game_map.events[event.id]
             @sprites["icon_#{event}"] = ChangelingSprite.new(0, 0, @viewport)
@@ -156,12 +155,12 @@ class QuestIndicator
             end
             @sprites["icon_#{event}"].tone = $game_screen.tone
 			
-			case @indicatorVisible
-			when true
-				@sprites["icon_#{event}"].visible = true
-			when false
-				@sprites["icon_#{event}"].visible = false
-			end
+			      case @indicatorVisible
+			      when true
+				      @sprites["icon_#{event}"].visible = true
+			      when false
+				      @sprites["icon_#{event}"].visible = false
+			      end
 
           end #end of if filename
           
