@@ -193,6 +193,11 @@ Name = Youngster
 Gender = Male
 BaseMoney = 16
 #-------------------------------
+[LAD]
+Name = Lad
+Gender = Male
+BaseMoney = 16
+#-------------------------------
 [LASS]
 Name = Lass
 Gender = Female
@@ -380,4 +385,9 @@ BaseMoney = 32
 [PSYCHIC_F2]
 Name = Psychic
 Gender = Female
+BaseMoney = 32
+#-------------------------------
+[TOURIST]
+Name = Tourist
+Gender = Unknown
 BaseMoney = 32
