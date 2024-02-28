@@ -386,3 +386,8 @@ BaseMoney = 32
 Name = Psychic
 Gender = Female
 BaseMoney = 32
+#-------------------------------
+[TOURIST]
+Name = Tourist
+Gender = Unknown
+BaseMoney = 32
