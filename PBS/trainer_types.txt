@@ -193,6 +193,11 @@ Name = Youngster
 Gender = Male
 BaseMoney = 16
 #-------------------------------
+[LAD]
+Name = Lad
+Gender = Male
+BaseMoney = 16
+#-------------------------------
 [LASS]
 Name = Lass
 Gender = Female
