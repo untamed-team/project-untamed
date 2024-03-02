@@ -3037,26 +3037,26 @@ class Battle::AI
 					miniscore*=0.5
 				end
 				if user.hasActiveAbility?([:SUPERLUCK, :SNIPER])
-					score*=2
+					miniscore*=2
 				end
 				if user.hasActiveItem?([:SCOPELENS, :RAZORCLAW]) #|| (user.hasActiveItem?(:STICK) && user.species==83) || (user.hasActiveItem?(:LUCKYPUNCH) && user.species==113)
-					score*=1.2
+					miniscore*=1.2
 				end
 				if user.hasActiveItem?(:LANSATBERRY)
-					score*=1.3
+					miniscore*=1.3
 				end
 				if target.hasActiveAbility?([:ANGERPOINT, :SHELLARMOR, :BATTLEARMOR])
-					score*=0.2
+					miniscore*=0.2
 				end
 				if user.pbHasMove?(:LASERFOCUS) || user.pbHasMove?(:FROSTBREATH) || user.pbHasMove?(:STORMTHROW)
-					score*=0.5
+					miniscore*=0.5
 				end
 				for j in user.moves
 					if j.highCriticalRate?
-						score*=2
+						miniscore*=2
 					end
 				end
-				score*=miniscore
+				score=miniscore
 			else
 				score = 0
 			end
@@ -4855,11 +4855,10 @@ class Battle::AI
 					end
 				end    
 				if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
-          miniscore/=100.0
-          score*=miniscore
+					miniscore/=100.0
+					score+=miniscore
 				end
 			end
-			score*=miniscore
 			miniscore=100
 			roles = pbGetPokemonRole(user, target)
 			if pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)
@@ -4891,7 +4890,7 @@ class Battle::AI
 			end 
 			if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 				miniscore/=100.0
-				score*=miniscore
+				score+=miniscore
 			end
 			movecheck=false
 			for m in target.moves
@@ -4905,7 +4904,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:UNAWARE)
 				miniscore=1
 			end
-			score*=miniscore
+			score+=miniscore
 			score=0 if user.statStageAtMax?(:SPECIAL_ATTACK) && user.statStageAtMax?(:SPECIAL_DEFENSE)
 			score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
@@ -5037,11 +5036,10 @@ class Battle::AI
 					end
 				end    
 				if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
-          miniscore/=100.0
-          score*=miniscore
+					miniscore/=100.0
+					score+=miniscore
 				end
 			end
-			score*=miniscore
 			miniscore=100
 			roles = pbGetPokemonRole(user, target)
 			if pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)
@@ -5073,7 +5071,7 @@ class Battle::AI
 			end 
 			if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 				miniscore/=100.0
-				score*=miniscore
+				score+=miniscore
 			end
 			miniscore=100
 			if user.stages[:SPECIAL_ATTACK]<0
@@ -5100,7 +5098,7 @@ class Battle::AI
 			end
 			if !user.statStageAtMax?(:SPEED)
 				miniscore/=100.0
-				score*=miniscore
+				score+=miniscore
 			end
 			movecheck=false
 			for m in target.moves
@@ -5114,7 +5112,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:UNAWARE)
 				miniscore=1
 			end
-			score*=miniscore
+			score+=miniscore
 			score=0 if user.statStageAtMax?(:SPEED) && user.statStageAtMax?(:SPECIAL_ATTACK) && user.statStageAtMax?(:SPECIAL_DEFENSE)
 			score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------

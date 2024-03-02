@@ -6,10 +6,10 @@ class Battle::AI
 	def pbChooseMoves(idxBattler)
 		user        = @battle.battlers[idxBattler]
 		wildBattler = user.wild?
-		skill       = 0
-		if !wildBattler
-			skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
-		end
+		skill       = 100
+		# if !wildBattler
+		# 	skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
+		# end
 		# Get scores and targets for each move
 		# NOTE: A move is only added to the choices array if it has a non-zero
 		#       score.
@@ -48,22 +48,34 @@ class Battle::AI
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
 				next if mirrored==nil
 				target = user.pbDirectOpposing
-				dmgValue = pbRoughDamage(mirrmove, user, target, skill, mirrmove.baseDamage)
-				if mirrmove.baseDamage == 0
-					dmgPercent = pbStatusDamage(mirrmove)
-				else
-					dmgPercent = (dmgValue*100)/(target.hp)
-					dmgPercent = 110 if dmgPercent > 110 
+				case mirrmove.category
+				when 0 then moveCateg = "Physical"
+				when 1 then moveCateg = "Special"
+				when 2 then moveCateg = "Status"
+				end
+				
+				score = 50 # for damaging moves
+				functionscore = pbGetMoveScoreFunctionCode(score, mirrmove, user, target, skill)
+				bsdam = mirrmove.baseDamage
+				bsdiv = 10.0/bsdam
+				functionscore *= bsdiv if mirrmove.baseDamage>50
+				score += functionscore
+				accuracy = pbRoughAccuracy(mirrmove, user, target, skill)
+				accuracy *= 1.15 if !user.pbOwnedByPlayer?
+				accuracy = 100 if accuracy>100
+				if mirrmove.damagingMove?
+					dmgScore = pbGetMoveScoreDamage(score, mirrmove, user, target, skill)
+					dmgScore -= 100-accuracy*1.33 if accuracy < 100
+				else   # Status moves
+					dmgScore = pbStatusDamage(mirrmove) # each status move now has a value tied to them #by low
+					dmgScore = pbGetMoveScoreFunctionCode(dmgScore, mirrmove, user, target, skill)
+					dmgScore *= accuracy / 100.0
 				end
 				File.open("AI_master_log.txt", "a") do |line|
-					line.puts "Move " + i.to_s + " aka " + mirrored.name.to_s + " has rough damage " + dmgValue.to_s + " and damage % " + dmgPercent.to_s + " has the function " + mirrmove.function
+					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + dmgScore.to_s
 				end
-				score = pbGetMoveScore(mirrmove, user, target, skill, dmgPercent)
-				File.open("AI_master_log.txt", "a") do |line|
-					line.puts "Move " + i.to_s + " aka " + mirrored.name.to_s + " has final score " + score.to_s
-				end
-				if bestscore[1] < score
-					bestscore[1] = score
+				if bestscore[1] < dmgScore
+					bestscore[1] = dmgScore
 					bestscore[0] = mirrored.name.to_s
 				end
 			end
@@ -145,29 +157,28 @@ class Battle::AI
 	# Get a score for the given move being used against the given target
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, roughdamage = 10)
-		PBDebug.log(sprintf("%s: initial score: %d",move.name,roughdamage)) if $INTERNAL
-		skill = PBTrainerAI.minimumSkill if skill < PBTrainerAI.minimumSkill
-		if roughdamage <= 1
-      roughdamage = 1
-    end
-		score = roughdamage
-		score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
-		accuracy = pbRoughAccuracy(move, user, target, skill)
-		accuracy *= 1.15 if !user.pbOwnedByPlayer?
-		accuracy = 100 if accuracy>100
+		skill = 100
+		score = 50 # for damaging moves
+		functionscore = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
+		bsdam = move.baseDamage
+		bsdiv = 10.0/bsdam
+		functionscore *= bsdiv if move.baseDamage>50
+		score += functionscore
 		# A score of 0 here means it absolutely should not be used
 		return 0 if score <= 0
 		# Adjust score based on how much damage it can deal
 		# DemICE moved damage calculation to the beginning
+		# Account for accuracy of move
+		accuracy = pbRoughAccuracy(move, user, target, skill)
+		accuracy *= 1.15 if !user.pbOwnedByPlayer?
+		accuracy = 100 if accuracy>100
 		if move.damagingMove?
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
+			score -= 100-accuracy*1.33 if accuracy < 100
 		else   # Status moves
-			# Don't prefer attacks which don't deal damage # <- why are you cringe?
-			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
-			# Account for accuracy of move
-			accuracy = pbRoughAccuracy(move, user, target, skill)
+			score = pbStatusDamage(mirrmove) # each status move now has a value tied to them #by low
+			score = pbGetMoveScoreFunctionCode(dmgScore, mirrmove, user, target, skill)
 			score *= accuracy / 100.0
-			score = 0 if score <= 10 && skill >= PBTrainerAI.highSkill
 		end
 		aspeed = pbRoughStat(user,:SPEED,100)
 		ospeed = pbRoughStat(target,:SPEED,100)
@@ -240,6 +251,11 @@ class Battle::AI
 		# Calculate how much damage the move will do (roughly)
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
+		if $INTERNAL
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "Move " + move.name + " damage on "+target.name+": "+realDamage.to_s
+			end
+		end
 		# Account for accuracy of move
 		accuracy = pbRoughAccuracy(move, user, target, skill)
 		accuracy *= 1.15 if !user.pbOwnedByPlayer?
