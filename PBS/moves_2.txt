@@ -3756,7 +3756,7 @@ Description = The user attacks the target by poking it with a sharply pointed br
 [LEAFAGE]
 Name = Leafage
 Type = GRASS
-Category = Physical
+Category = Special
 Power = 40
 Accuracy = 100
 TotalPP = 40
@@ -7299,9 +7299,9 @@ Power = 1
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
-FunctionCode = FixedDamageUserLevelRandom
+FunctionCode = FixedDamageUserLevel
 Flags = CanProtect,CanMirrorMove
-Description = The target is attacked with an odd psychic wave. The attack varies in intensity.
+Description = The target is attacked with an odd psychic wave. It inflicts damage matching the user's level.
 #-------------------------------
 [AGILITY]
 Name = Agility

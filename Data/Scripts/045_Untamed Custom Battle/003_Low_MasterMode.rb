@@ -96,14 +96,8 @@ class Battle::Battler
     amt = @totalhp - @hp if amt > @totalhp - @hp
     amt = 1 if amt < 1 && @hp < @totalhp
     oldHP = @hp
-		#~ print amt
-		if hasActiveItem?(:COLOGNECASE)
-			amt3 = (damagemove) ? 0.3 : 0.2
-			amt2 = ((10.0 - (amt/@totalhp))*amt3).floor
-			amt += amt2
-		end
+		amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
 		amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
-		#~ print amt
 		amt = @totalhp - @hp if amt > @totalhp - @hp
     self.hp += amt
     PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0

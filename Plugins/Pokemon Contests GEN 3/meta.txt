@@ -1,0 +1,6 @@
+Name      = Pokemon Contests Script
+Version   = 0.7.1
+Essentials = 20.1
+Optional     = BW Summary Screen,2.3
+Website   = https://github.com/Jack1324567/PE-Custom-Script
+Credits   = wrigty12, mej71, Maruno, FL, JV, Umbreon/Hansiec, Saving Raven, FL, Luka S.J., TastyRedTomato, bo4p5687

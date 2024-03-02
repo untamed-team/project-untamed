@@ -192,6 +192,7 @@ WolfPP
 Music
 -----
 Soundtrack:
+ENLS's Pre-Looped Music Library
 EntityUnknown
 FNaF 6
 Jumpluff
@@ -482,8 +483,19 @@ Berry Pots:
 Caruban
 DerxwnaKapsyla
 
+BetterBitmaps:
+Marin
+
+Better Battle Animation Editor:
+KRLW890
+
 Better Item Finder:
 Kotaro
+
+Blukberry Phone:
+Gardenette
+Low
+Saltilton
 
 DiegoWT's Starter Selection:
 DiegoWT
@@ -576,6 +588,9 @@ ThatWelshOne_
 Ulithium_Dragon
 Vendily
 
+Multi Exp Panel:
+Swdfm
+
 Name-box:
 Gardenette
 Golisopod User
@@ -607,16 +622,43 @@ Wolf PP
 Poké Ball Swap:
 TechSkylander1518
 
+Pokeblocks v20.1:
+bo4p5687
+Richard PT
+wrigty12
+
 Pokémon Amie:
 BhagyaJyoti
 bo4p5687
+Gardenette
 Luka S.J
 PizzaSun
 rigbycwts
+Victorcarvalhosp
+
+Pokémon Camp:
+Gardenette
+Micah
+
+Pokémon Contests:
+bo4p5687
+FL
+Gardenette
+JV
+Luka S.J.
+Maruno
+mej71
+Saving Raven
+TastyRedTomato
+Umbreon/Hansiec
+wrigty12
 
 PokéVial
 Voltseon
 qin2500
+
+Polished Floors:
+TechSkylander1518
 
 Quicksave:
 Low
@@ -637,8 +679,27 @@ Phantombass
 Step on Spot OW Animation:
 Boonzeet
 
+Storage System Utilities:
+Swdfm
+
+TDW Berry Core and Dex:
+wrigty12
+
+TDW Berry Planting Improvements:
+Arcky
+Ulithium_Dragon
+wrigty12
+
+Temporal Chains' Wardrobe:
+DarrylBD99
+StarWolff
+
 Tileset Rearranger:
 Maruno
+
+Time and Weather HUD Addon:
+Gardenette
+Locomotivo
 
 Tutor.net
 DemICE
@@ -927,3 +988,77 @@ Credits      = Marin
 Essentials   = 20
 Requires     = Marin's Scripting Utilities, 2.0
 Link         = https://reliccastle.com/resources/184/
+
+Name         = Better Bitmaps
+Version      = 1.1
+Essentials   = 18
+Credits      = Marin
+Link         = https://reliccastle.com/resources/169/
+
+Name         = Pokémon Amie
+Version      = 1.7
+Website      = https://www.pokecommunity.com/threads/pokemon-amie-refresh-essentials-v18.439558/
+Credits      = BhagyaJyoti (Made for v18 with many fixes and made more Plug-n-Play), PizzaSun (Original Script for v17.2), rigbycwts (Concept for Essentials), Gardenette (v20.1 port), Luka S.J. (for the mask method), Victorcarvalhosp (reworking code, improved item compatibility)
+Essentials   = 20.1
+
+Name       = Polished Floors
+Essentials = 20.1
+Website    = https://reliccastle.com/resources/1132/
+Credits    = TechSkylander1518
+
+Name         = Storage System Utilities
+Version      = 2023.07.07
+Website      = NONE
+Credits      = Swdfm
+Essentials   = 20
+
+Name       = Temporal Chains' Wardrobe
+Version    = 1.0
+Essentials = 20.1
+Credits    = DarrylBD99,StarWolff
+
+Name      = Time and Weather HUD Addon
+Version   = 1.0
+Essentials = 20.1
+Website   = None
+Credits   = Gardenette, Locomotivo
+
+Name         = Multi Exp Panel
+Version      = 2023.07.21
+Website      = NONE
+Credits      = Swdfm
+
+Name      = Extra Fogs & Panorama Lock
+Version   = 1.0
+Essentials = 20.1
+Website   = https://forum.chaos-project.com/index.php?topic=16015.0
+Credits   = Jaiden, Game_Guy (for helping with the parallax lock), Gardenette (minor editing to work with Pkmn Essentials)
+
+Name         = Better Battle Animation Editor
+Version      = 1.0
+Essentials   = 20.1
+Conflicts    = Move Animation Fixer
+Credits      = KRLW890
+
+Name       = TDW Berry Core and Dex
+Version    = 1.4
+Optional   = Better Bitmaps,1.0
+Essentials = 20.1
+Credits    = wrigty12
+
+Name       = TDW Berry Planting Improvements
+Version    = 1.8.1
+Optional   = Arcky's Region Map,1.1
+Optional   = TDW Berry Core and Dex,1.1
+Optional   = BerryPots for Essentials,1.0
+Optional   = BerryPots for Essentials v20,1.0
+Essentials = 20.1
+Credits    = wrigty12, Arcky, Ulithium_Dragon
+
+Name      	= Pokeblocks v20.1
+Version  	= 1.1
+Essentials  	= 20.1
+Optional  	= Better Bitmaps
+Requires	= TDW Berry Core and Dex,1.0
+Website   	= https://github.com/Jack1324567/PE-Custom-Script
+Credits   	= wrigty12, bo4p5687 (original code), Richard PT (original graphics), Marin (Better Bitmaps plugin)

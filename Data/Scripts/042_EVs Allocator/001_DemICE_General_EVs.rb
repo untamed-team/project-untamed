@@ -272,7 +272,7 @@ class Battle
     else
       if $game_variables[MECHANICSVAR] < 3
         evYield = defeatedBattler.pokemon.evYield
-        evYield.each_key { |stat| evYield[stat] = 4 if evYield[stat] > 0 }
+        evYield.each_key { |stat| evYield[stat] *= 4 if evYield[stat] > 0 }
         if pkmn.pokerusStage >= 1   # Infected or cured
           evYield.each_key { |stat| evYield[stat] *= 2 }
         end

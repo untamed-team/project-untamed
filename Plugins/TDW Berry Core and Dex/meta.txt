@@ -1,0 +1,5 @@
+Name       = TDW Berry Core and Dex
+Version    = 1.4
+Optional   = Better Bitmaps,1.0
+Essentials = 20.1
+Credits    = wrigty12

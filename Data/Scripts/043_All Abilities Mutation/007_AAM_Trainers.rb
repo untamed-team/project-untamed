@@ -12,6 +12,7 @@ module GameData
     SCHEMA["MEM"] = [:megaevoMutation, "b"] #low MEM edits
     SCHEMA["BOSS"] = [:bossmonMutation,"b"] #low MEM edits
     SCHEMA["Status"] = [:status,       "s"]
+    SCHEMA["HiddenPowerType"] = [:hp_type, "q"]
     SCHEMA["Gimmick"] = [:gimmick,     "q"] #note: this is a trait of the trainer, not a specific pokemon
 	
 	# for TGT
@@ -50,6 +51,30 @@ module GameData
 		trainer.gimmick = self.gimmick # for TGT
     	trainer.party.each_with_index do |pkmn, i|
         pkmn_data = @pokemon[i]
+		if pkmn_data[:hp_type] && !pkmn_data[:hp_type].empty?
+			# inefficient but whatever
+			case pkmn_data[:hp_type]
+			when "NORMAL" 	then pkmn.hptype = :NORMAL
+			when "FIGHTING" then pkmn.hptype = :FIGHTING
+			when "FLYING" 	then pkmn.hptype = :FLYING
+			when "POISON" 	then pkmn.hptype = :POISON
+			when "GROUND" 	then pkmn.hptype = :GROUND
+			when "ROCK" 	then pkmn.hptype = :ROCK
+			when "BUG" 		then pkmn.hptype = :BUG
+			when "GHOST" 	then pkmn.hptype = :GHOST
+			when "STEEL" 	then pkmn.hptype = :STEEL
+			when "QMARKS" 	then pkmn.hptype = :QMARKS
+			when "FIRE" 	then pkmn.hptype = :FIRE
+			when "WATER" 	then pkmn.hptype = :WATER
+			when "GRASS" 	then pkmn.hptype = :GRASS
+			when "ELECTRIC" then pkmn.hptype = :ELECTRIC
+			when "PSYCHIC" 	then pkmn.hptype = :PSYCHIC
+			when "ICE" 		then pkmn.hptype = :ICE
+			when "DRAGON" 	then pkmn.hptype = :DRAGON
+			when "DARK" 	then pkmn.hptype = :DARK
+			when "FAIRY" 	then pkmn.hptype = :FAIRY
+			end
+		end
         pkmn.moves.each_with_index do |m, i| # maxing out their PP
 			pkmn.moves[i].ppup = 3
 			pkmn.moves[i].pp = (pkmn.moves[i].pp * 1.6).floor

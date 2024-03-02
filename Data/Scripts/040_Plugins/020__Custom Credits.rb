@@ -55,723 +55,787 @@ class Scene_Credits
   # This next piece of code is the credits.
   # Start Editing
   CREDIT = <<_END_
-Main Development Team:
-BlueLightning
-Chespin_Craft
-Gardenette
-Kaloja
-Kutas Kitti
-Lovely Werewolf
-Low
-Merry
-mhm
-SpaceWestern
-Spork
-stygma
-
-
-
-
-
-
-
-
-
-
-Battle Animations
-----
-ardicoozer
-BellBlitzKing
-DarryBD99
-Reborn team
-riddlemeree
-StCooler
-WolfPP
-
-
-
-
-
-
-
-
-
-
-Graphics
---------
-Tilesets:
-aball
-Aveon Trainer
-Banana 'Eduardo' Toast
-BE_Infinity
-Cristata
-Derlo
-Donlawride
-Gearjuice
-GreenJellybean
-Griffin L.
-Jackeroni216
-Kaloja
-King Tapia
-Kutas Kitti
-Magiscarf
-Pint Sized Kiwi
-PokemonEclipse
-PrincessPhoenix
-Rider Dragon
-Saltilton
-Seiyouh
-ShadySheep
-stygma
-the.sizzlepanda
-Tinytrashing
-Tyler Jones
-VentesTheFloof
-
-Pokémon & Pokédex:
-8xviktor
-A Slime Psycho
-aball
-Akikaze
-Applesaucior
-Banana 'Eduardo' Toast
-Bean Soup
-Chespin_Craft
-Chromatech01
-Claire
-Cristata
-Dan Bacon
-Eshan
-Evelyn315
-farbol234
-Fikolyte
-Firedude
-Floriak
-GamerCroc11
-Griffin L.
-Grimrose
-HingisDingus
-Hub-Bub
-The Picky Pixel Artist
-Igor!
-I'm Para
-Jack
-Jeremy K
-KameOtaku
-Loretze
-Lorka_Grey
-LuckyBenjamin
-MadMillerMiller
-MasterMachi
-painT
-Pelican
-Regal-Turtwig
-RockTomb
-Saltilton
-ShadySheep
-SietseML
-Sodacat
-Solvaa
-SomeAllay
-SoundJack426
-Spork
-Venom_
-VentesTheFloof
-Waterleaf
-WillTheWall
-
-Trainers/NPCs:
-aball
-Akikaze
-BamBoshBubb
-Chespin_Craft
-Claire
-Cristata
-Gardenette
-Gearjuice
-HingisDingus
-HwiteHwale
-Jack
-KameOtaku
-Loretze
-MadMillerMiller
-MILKMAN
-Omegabroski2
-Owoodfin
-RockTomb
-Saltilton
-Spork
-TheFallenRoyal
-VentesTheFloof
-
-UI & Misc.:
-aball
-Adam B.
-Basalte
-Chespin_Craft
-Cristata
-Dan Bacon
-DomTom
-Fikolyte
-Gardenette
-HwiteHwale
-Jackster
-Jeremy K
-MadMillerMiller
-MasterMachi
-Owoodfin
-Random Talking Bush
-Riot
-Saltilton
-Tyler (MANGO) Jackson
-WolfPP
-
-
-
-
-
-
-
-
-
-
-Music
------
-Soundtrack:
-EntityUnknown
-FNaF 6
-Jumpluff
-Laminnanne
-Lovely Werewolf
-mhm
-Pokémon Clover
-Purple Hat of Awesome
-ReMX
-Rhythm Break
-
-
-
-Pokémon Cries:
-Gardenette
-Hummus
-mhm
-Text 206
-
-
-
-
-
-
-
-
-
-
-Mapping
--------
-Gardenette
-GreenJellybean
-ImaDeadMan
-Kaloja
-Kameleron
-Kutas Kitti
-MadMillerMiller
-Merry
-RISH
-Shadows
-stygma
-Tyler (MANGO) Jackson
-
-
-
-
-
-
-
-
-
-
-Eventing
---------
-Gardenette
-Kaloja
-Kutas Kitti
-Low
-SpaceWestern
-stygma
-
-
-
-
-
-
-
-
-
-
-Story & Quests
---------------
-Angel
-Bean Soup
-BlueLightning
-Deino
-Firedude
-Gardenette
-HwiteHwale
-Kameleron
-Kyl-E
-Luc_
-LuckyBenjamin
-MasterMachi
-Merry
-PaperTowelDealer
-Scandal
-Shilo
-sneakysnek
-stygma
-ThisGrainCharacter
-Tyler Bland
-Yadriel J. Vento (HypnosEmblem)
-
-
-
-
-
-
-
-
-
-
-Game Data & Balancing
----------------------
-Adam B.
-Amber W
-caesar
-DomTom
-Elm
-Empyrean
-FIE.F
-Gardenette
-Garreon
-Hare64
-HwiteHwale
-Kyl-E
-Low
-LuckyBenjamin
-MacheteMcGoo
-Malarkey
-Merry
-Midbus
-mSilk
-noahthenumbat
-PaperTowelDealer
-ParaBellum
-Robochef9000
-Scandal
-Señor Gallo de Caballo
-Shadows
-SpaceWestern
-stygma
-Waffler
-Zyuran
-
-
-
-
-
-
-
-
-
-
-Translating
------------
-Abstractpuppet
-Aelvric
-Basalte
-Cawa/Sasha
-Deli
-Elm
-Fitch
-Floriak
-Hey
-Myztic
-Slepoy
-stygma
-Truegear
-Wowo
-Zylber7
-
-
-
-
-
-
-
-
-
-
-Playtesting
------------
-B_Creative
-BlueLightning
-Cawa/Sasha
-Chespin_Craft
-das5198
-j
-Jamadxx
-Merry
-Saltilton
-stygma
-Tom Buenbarril
-VentesTheFloof
-
-
-
-
-
-
-
-
-
-
-Team Organization
------------------
-Firedude
-Gardenette
-HingisDingus
-Kutas Kitti
-Luc_
-MasterMachi
-stygma
-
-
-
-
-
-
-
-
-
-
-Wiki
-----
-B_Creative
-Chespin_Craft
-Chroma
-Low
-
-
-
-
-
-
-
-
-
-
-Mazah Region Created by
------------------------
-Claire
-Jack
-Subjectively Group
-
-
-
-
-
-
-
-
-
-
-Scripts & Coding
-----------------
-Advanced Map Transfers:
-Luka S.J.
-
-Advanced Pathfinder
-Blizzard
-khkramer
-
-Advanced Pokédex:
-FL
-
-Always in Bushes:
-KleinStudio
-Kotaro
-
-Ambient Pokémon Cries:
-SpaceWestern
-Vendily
-
-Arcky's Region Map:
-Arcky
-
-Astralneko's Scripting Utilities:
-Astralneko
-
-Auto Healing
-Dracarys
-
-Auto Multi Save
-http404error
-
-Automatic Level Scaling:
-Benitex
-
-Bag Screen with Interactable Party:
-DiegoWT
-Rose
-Vendily
-
-Berry Pots:
-Caruban
-DerxwnaKapsyla
-
-Better Item Finder:
-Kotaro
-
-Better Region Map:
-Boonzeet
-Marin
-
-DiegoWT's Starter Selection:
-DiegoWT
-
-DPPT Gender Selector Scene:
-A.Somersault
-
-Easy Text Skip:
-Amethyst
-ENLS
-Kurotsune
-
-Easy Mouse System:
-Luka S.J.
-
-Enhanced UI:
-BlueEye007
-Lucidious89
-Poq
-
-Evolve from Party:
-eriedaberrie
-IndianAnimator
-
-EVs and IVs in Summary:
-Deoxysprime
-
-Extra Fogs & Panorama Lock:
-Game_Guy
-Gardenette
-Jaiden
-
-Following Pokémon EX:
-Akizakura16
-Armin
-Gardenette
-Golisopod User
-Help-14
-Maruno
-mej71
-PurpleZaffre
-Rayd12smitty
-Thundaga
-Vendily
-Venom12
-zingzags
-
-Item Find:
-Boonzeet
-
-Location Signposts:
-carmaniac
-Golisopod User
-LostSoulsDev
-PurpleZaffre
-
-Luka's Scripting Utilities:
-
-Marin's Enhanced Staircases
-Marin
-
-Marin's Map Exporter:
-Marin
-
-Marin's Scripting Utilities:
-Marin
-
-Modern Quest System + UI:
-Black Mage
-derFischae
-drago2308
-Gardenette
-Marin
-mej71
-SpaceWestern
-ThatWelshOne_
-Vendily
-
-Monitor Icons:
-bo4p5687
-Gardenette
-Marin
-Maruno
-Nuri Yuri
-PurpleZaffre
-raZ
-Savordez
-SpaceWestern
-ThatWelshOne_
-Ulithium_Dragon
-Vendily
-
-Name-box:
-Gardenette
-Golisopod User
-mej71
-Mr.Gela (theo#7722)
-Vendily
-
-New DexNav:
-Low
-Marin
-NuriYuri
-Phantombass
-raZ
-Savordez
-suzerain
-ThatWelshOne_
-Vendily
-Zaffre
-
-No Auto Evolve:
-Gardenette
-TimeAxis
-
-Overworld Shadows EX:
-Golisopod User
-Marin
-Wolf PP
-
-Poké Ball Swap:
-TechSkylander1518
-
-Pokémon Amie:
-BhagyaJyoti
-bo4p5687
-Luka S.J
-PizzaSun
-rigbycwts
-
-PokéVial
-Voltseon
-qin2500
-
-Quicksave:
-Low
-
-Relearner from Party:
-Marin
-
-Save File Calls:
-TechSkylander1518
-
-Set the Controls Screen:
-FL
-
-Speed Up 2.0:
-Marin
-Phantombass
-
-Step on Spot OW Animation:
-Boonzeet
-
-Tileset Rearranger:
-Maruno
-
-Tutor.net
-DemICE
-
-Tweaks to Essentials:
-Derxwna Kapsyla
-
-Video with Using Gif:
-bo4p5687
-
-Voltseon's A-Star Pathfinding:
-ENLS
-Golisopod User
-Voltseon
-
-Voltseon's Pause Menu:
-ENLS
-Golisopod User
-Voltseon
-
-
-
-
-
-
-
-
-
-
-Special Thanks
---------------
-
-Chroma and all the other devs from the Kaskade Region
-
-Pokémon Essentials was created by:
-Flameguru
-Poccil (Peter O.)
-Maruno
-
-With contributions from:
-AvatarMonkeyKirby
-Marin
-Boushy
-MiDas Mike
-Brother1440
-Near Fantastica
-FL.
-PinkMan
-Genzai Kawakami
-Popper
-Golisopod User
-Rataime
-help-14
-Savordez
-IceGod64
-SoundSpawn
-Jacob O. Wobbrock
-the__end
-KitsuneKouta
-Venom12
-Lisa Anthony
-Wachunga
-Luka S.J.
-Derxwna Kapsyla
-and everyone else who helped out
-
-mkxp-z by:
-Roza
-Based on MKXP by Ancurio et al.
-
-RPG Maker XP by:
-Enterbrain
-
-Pokémon is owned by:
-The Pokémon Company
-Nintendo
-Affiliated with Game Freak
-
-
-
-This is a non-profit fan-made game.
-No copyright infringements intended.
-Please support the official games!
+  Main Development Team:
+  BlueLightning
+  Chespin_Craft
+  Gardenette
+  Kaloja
+  Kutas Kitti
+  Lovely Werewolf
+  Low
+  Merry
+  mhm
+  SpaceWestern
+  Spork
+  stygma
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Battle Animations
+  ----
+  ardicoozer
+  BellBlitzKing
+  DarryBD99
+  Reborn team
+  riddlemeree
+  StCooler
+  WolfPP
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Graphics
+  --------
+  Tilesets:
+  aball
+  Aveon Trainer
+  Banana 'Eduardo' Toast
+  BE_Infinity
+  Cristata
+  Derlo
+  Donlawride
+  Gearjuice
+  GreenJellybean
+  Griffin L.
+  Jackeroni216
+  Kaloja
+  King Tapia
+  Kutas Kitti
+  Magiscarf
+  Phyromatical
+  Pint Sized Kiwi
+  PokemonEclipse
+  PrincessPhoenix
+  Rider Dragon
+  Saltilton
+  Seiyouh
+  ShadySheep
+  stygma
+  the.sizzlepanda
+  Tinytrashing
+  Tyler Jones
+  VentesTheFloof
+  
+  Pokémon & Pokédex:
+  8xviktor
+  A Slime Psycho
+  aball
+  Akikaze
+  Applesaucior
+  Banana 'Eduardo' Toast
+  Bean Soup
+  Chespin_Craft
+  Chromatech01
+  Claire
+  Cristata
+  Dan Bacon
+  Eshan
+  Evelyn315
+  farbol234
+  Fikolyte
+  Firedude
+  Floriak
+  GamerCroc11
+  Griffin L.
+  Grimrose
+  HingisDingus
+  Hub-Bub
+  The Picky Pixel Artist
+  Igor!
+  I'm Para
+  Jack
+  Jeremy K
+  KameOtaku
+  Loretze
+  Lorka_Grey
+  LuckyBenjamin
+  MadMillerMiller
+  MasterMachi
+  painT
+  Pelican
+  Regal-Turtwig
+  RockTomb
+  Saltilton
+  ShadySheep
+  SietseML
+  Sodacat
+  Solvaa
+  SomeAllay
+  SoundJack426
+  Spork
+  Venom_
+  VentesTheFloof
+  Waterleaf
+  WillTheWall
+  
+  Trainers/NPCs:
+  aball
+  Akikaze
+  AtomicReactor
+  BamBoshBubb
+  Chespin_Craft
+  Claire
+  Cristata
+  DiegoWT
+  Gardenette
+  Gearjuice
+  HingisDingus
+  HwiteHwale
+  Jack
+  KameOtaku
+  Loretze
+  MadMillerMiller
+  Maicerochico
+  MILKMAN
+  Neo-Spriteman
+  Omegabroski2
+  Owoodfin
+  PurpleZaffre
+  RockTomb
+  Saltilton
+  Spork
+  TheFallenRoyal
+  VanillaSunshine
+  VentesTheFloof
+  
+  UI & Misc.:
+  aball
+  Adam B.
+  Basalte
+  Chespin_Craft
+  Cristata
+  Dan Bacon
+  DomTom
+  Fikolyte
+  Gardenette
+  HwiteHwale
+  Jackster
+  Jeremy K
+  MadMillerMiller
+  MasterMachi
+  Owoodfin
+  Random Talking Bush
+  Riot
+  Saltilton
+  Tyler (MANGO) Jackson
+  WolfPP
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Music
+  -----
+  Soundtrack:
+  ENLS's Pre-Looped Music Library
+  EntityUnknown
+  FNaF 6
+  Jumpluff
+  Laminnanne
+  Lovely Werewolf
+  mhm
+  Pokémon Clover
+  Purple Hat of Awesome
+  ReMX
+  Rhythm Break
+  
+  
+  
+  Pokémon Cries:
+  Gardenette
+  Hummus
+  mhm
+  Text 206
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Mapping
+  -------
+  Gardenette
+  GreenJellybean
+  ImaDeadMan
+  Kaloja
+  Kameleron
+  Kutas Kitti
+  MadMillerMiller
+  Merry
+  RISH
+  Shadows
+  stygma
+  Tyler (MANGO) Jackson
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Eventing
+  --------
+  Gardenette
+  Kaloja
+  Kutas Kitti
+  Low
+  SpaceWestern
+  stygma
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Story & Quests
+  --------------
+  Angel
+  Bean Soup
+  BlueLightning
+  Deino
+  Firedude
+  Gardenette
+  HwiteHwale
+  Kameleron
+  Kyl-E
+  Luc_
+  LuckyBenjamin
+  MasterMachi
+  Merry
+  PaperTowelDealer
+  Scandal
+  Shilo
+  sneakysnek
+  stygma
+  ThisGrainCharacter
+  Tyler Bland
+  Yadriel J. Vento (HypnosEmblem)
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Game Data & Balancing
+  ---------------------
+  Adam B.
+  Amber W
+  caesar
+  DomTom
+  Elm
+  Empyrean
+  FIE.F
+  Gardenette
+  Garreon
+  Hare64
+  HwiteHwale
+  Kyl-E
+  Low
+  LuckyBenjamin
+  MacheteMcGoo
+  Malarkey
+  Merry
+  Midbus
+  mSilk
+  noahthenumbat
+  PaperTowelDealer
+  ParaBellum
+  Robochef9000
+  Scandal
+  Señor Gallo de Caballo
+  Shadows
+  SpaceWestern
+  stygma
+  Waffler
+  Zyuran
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Translating
+  -----------
+  Abstractpuppet
+  Aelvric
+  Basalte
+  Cawa/Sasha
+  Deli
+  Elm
+  Fitch
+  Floriak
+  Hey
+  Myztic
+  Slepoy
+  stygma
+  Truegear
+  Wowo
+  Zylber7
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Playtesting
+  -----------
+  B_Creative
+  BlueLightning
+  Cawa/Sasha
+  Chespin_Craft
+  das5198
+  j
+  Jamadxx
+  Merry
+  Saltilton
+  stygma
+  Tom Buenbarril
+  VentesTheFloof
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Team Organization
+  -----------------
+  Firedude
+  Gardenette
+  HingisDingus
+  Kutas Kitti
+  Luc_
+  MasterMachi
+  stygma
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Wiki
+  ----
+  B_Creative
+  Chespin_Craft
+  Chroma
+  Low
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Mazah Region Created by
+  -----------------------
+  Claire
+  Jack
+  Subjectively Group
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Scripts & Coding
+  ----------------
+  Advanced Map Transfers:
+  Luka S.J.
+  
+  Advanced Pathfinder
+  Blizzard
+  khkramer
+  
+  Advanced Pokédex:
+  FL
+  
+  Always in Bushes:
+  KleinStudio
+  Kotaro
+  
+  Ambient Pokémon Cries:
+  SpaceWestern
+  Vendily
+  
+  Arcky's Region Map:
+  Arcky
+  
+  Astralneko's Scripting Utilities:
+  Astralneko
+  
+  Auto Healing
+  Dracarys
+  
+  Auto Multi Save
+  http404error
+  
+  Automatic Level Scaling:
+  Benitex
+  
+  Bag Screen with Interactable Party:
+  DiegoWT
+  Rose
+  Vendily
+  
+  Berry Pots:
+  Caruban
+  DerxwnaKapsyla
+  
+  BetterBitmaps:
+  Marin
+  
+  Better Battle Animation Editor:
+  KRLW890
+  
+  Better Item Finder:
+  Kotaro
+  
+  Blukberry Phone:
+  Gardenette
+  Low
+  Saltilton
+  
+  DiegoWT's Starter Selection:
+  DiegoWT
+  
+  DPPT Gender Selector Scene:
+  A.Somersault
+  
+  Easy Text Skip:
+  Amethyst
+  ENLS
+  Kurotsune
+  
+  Easy Mouse System:
+  Luka S.J.
+  
+  Enhanced UI:
+  BlueEye007
+  Lucidious89
+  Poq
+  
+  Evolve from Party:
+  eriedaberrie
+  IndianAnimator
+  
+  EVs and IVs in Summary:
+  Deoxysprime
+  
+  Extra Fogs & Panorama Lock:
+  Game_Guy
+  Gardenette
+  Jaiden
+  
+  Following Pokémon EX:
+  Akizakura16
+  Armin
+  Gardenette
+  Golisopod User
+  Help-14
+  Maruno
+  mej71
+  PurpleZaffre
+  Rayd12smitty
+  Thundaga
+  Vendily
+  Venom12
+  zingzags
+  
+  Item Find:
+  Boonzeet
+  
+  Location Signposts:
+  carmaniac
+  Golisopod User
+  LostSoulsDev
+  PurpleZaffre
+  
+  Luka's Scripting Utilities:
+  
+  Marin's Enhanced Staircases
+  Marin
+  
+  Marin's Map Exporter:
+  Marin
+  
+  Marin's Scripting Utilities:
+  Marin
+  
+  Modern Quest System + UI:
+  Black Mage
+  derFischae
+  drago2308
+  Gardenette
+  Marin
+  mej71
+  SpaceWestern
+  ThatWelshOne_
+  Vendily
+  
+  Monitor Icons:
+  bo4p5687
+  Gardenette
+  Marin
+  Maruno
+  Nuri Yuri
+  PurpleZaffre
+  raZ
+  Savordez
+  SpaceWestern
+  ThatWelshOne_
+  Ulithium_Dragon
+  Vendily
+  
+  Multi Exp Panel:
+  Swdfm
+  
+  Name-box:
+  Gardenette
+  Golisopod User
+  mej71
+  Mr.Gela (theo#7722)
+  Vendily
+  
+  New DexNav:
+  Low
+  Marin
+  NuriYuri
+  Phantombass
+  raZ
+  Savordez
+  suzerain
+  ThatWelshOne_
+  Vendily
+  Zaffre
+  
+  No Auto Evolve:
+  Gardenette
+  TimeAxis
+  
+  Overworld Shadows EX:
+  Golisopod User
+  Marin
+  Wolf PP
+  
+  Poké Ball Swap:
+  TechSkylander1518
+  
+  Pokeblocks v20.1:
+  bo4p5687
+  Richard PT
+  wrigty12
+  
+  Pokémon Amie:
+  BhagyaJyoti
+  bo4p5687
+  Gardenette
+  Luka S.J
+  PizzaSun
+  rigbycwts
+  Victorcarvalhosp
+  
+  Pokémon Camp:
+  Gardenette
+  Micah
+  
+  Pokémon Contests:
+  bo4p5687
+  FL
+  Gardenette
+  JV
+  Luka S.J.
+  Maruno
+  mej71
+  Saving Raven
+  TastyRedTomato
+  Umbreon/Hansiec
+  wrigty12
+  
+  PokéVial
+  Voltseon
+  qin2500
+  
+  Polished Floors:
+  TechSkylander1518
+  
+  Quicksave:
+  Low
+  
+  Relearner from Party:
+  Marin
+  
+  Save File Calls:
+  TechSkylander1518
+  
+  Set the Controls Screen:
+  FL
+  
+  Speed Up 2.0:
+  Marin
+  Phantombass
+  
+  Step on Spot OW Animation:
+  Boonzeet
+  
+  Storage System Utilities:
+  Swdfm
+  
+  TDW Berry Core and Dex:
+  wrigty12
+  
+  TDW Berry Planting Improvements:
+  Arcky
+  Ulithium_Dragon
+  wrigty12
+  
+  Temporal Chains' Wardrobe:
+  DarrylBD99
+  StarWolff
+  
+  Tileset Rearranger:
+  Maruno
+  
+  Time and Weather HUD Addon:
+  Gardenette
+  Locomotivo
+  
+  Tutor.net
+  DemICE
+  
+  Tweaks to Essentials:
+  Derxwna Kapsyla
+  
+  Video with Using Gif:
+  bo4p5687
+  
+  Voltseon's A-Star Pathfinding:
+  ENLS
+  Golisopod User
+  Voltseon
+  
+  Voltseon's Pause Menu:
+  ENLS
+  Golisopod User
+  Voltseon
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  Special Thanks
+  --------------
+  
+  Chroma and all the other devs from the Kaskade Region
+  
+  Pokémon Essentials was created by:
+  Flameguru
+  Poccil (Peter O.)
+  Maruno
+  
+  With contributions from:
+  AvatarMonkeyKirby
+  Marin
+  Boushy
+  MiDas Mike
+  Brother1440
+  Near Fantastica
+  FL.
+  PinkMan
+  Genzai Kawakami
+  Popper
+  Golisopod User
+  Rataime
+  help-14
+  Savordez
+  IceGod64
+  SoundSpawn
+  Jacob O. Wobbrock
+  the__end
+  KitsuneKouta
+  Venom12
+  Lisa Anthony
+  Wachunga
+  Luka S.J.
+  Derxwna Kapsyla
+  and everyone else who helped out
+  
+  mkxp-z by:
+  Roza
+  Based on MKXP by Ancurio et al.
+  
+  RPG Maker XP by:
+  Enterbrain
+  
+  Pokémon is owned by:
+  The Pokémon Company
+  Nintendo
+  Affiliated with Game Freak
+  
+  
+  
+  This is a non-profit fan-made game.
+  No copyright infringements intended.
+  Please support the official games!
 
 {INSERTS_PLUGIN_CREDITS_DO_NOT_REMOVE}
 _END_

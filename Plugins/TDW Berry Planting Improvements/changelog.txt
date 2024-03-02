@@ -1,0 +1,69 @@
+v1.8
+- New feature: Watering can traits. While there are several watering can options for the player in base essentials, they aren't really different from each other. Now, you can define traits that get applied to a berry plant when you water it at least once with a specific watering can. For instance, you could make the Sprayduck boost the final yield of the plant and the Sprinklotad lower the chance of weeds and pests interfering with the plant.
+- Added a BERRY_WATERING_USES_ALWAYS_FULL setting to allow setting some watering cans to always be considered full (if you are using watering can levels).
+- Added a BERRY_PREVENT_WATERING_IF_MAXED setting to prevent the player from watering a berry plant if it's already at max moisture.
+- Added a BERRY_WATER_IF_RAINING setting to control whether berry plants are watered when it's raining on the same map.
+- Added a water gauge graphic to appear in the BerryPots scene if using that plugin and have BERRY_PREVENT_WATERING_IF_MAXED active.
+- Added instructions to the Setup and Documentation document for how to add unique watering graphics for specific watering cans. For instance, if your base graphic is called "girl_watering" and you want to include a unique graphic while using the Sprayduck, add a graphic called “girl_watering_SPRAYDUCK”.
+-- This feature was technically available in v1.7, I just forgot to document it.
+- Fixed issue where if it was raining, the watering animation would occur constantly.
+- Fixed issue where berry plants would dry out very fast if they had weeds or pests.
+
+v1.7
+- Possible Incompatibility: Had to overwrite the pbBerryPlant function, so any plugin that also changes that function may be incompatible.
+- New feature: Watering animation. You can now show character animations when watering berry plants. You must provide your own graphics (I suggest Ulithium_Dragon's https://reliccastle.com/resources/342/)
+- New feature: Watering can fill levels. Watering cans can now run out of water. Have the player fill them up using the pbFillWateringCans command, such as via a well event (example in the Setup and Documentation document).
+-- Note: If using the BerryPots plugin, there is a manual change needed for it to support this feature (See the Setup and Documentation document).
+- Made some changes to allow choosing which watering can to use to water plants, if you have more than one.
+- Added Boost Mulch and Amaze Mulch.
+- Added new BERRY_REPEL_WORKS_ON_PESTS setting to allow active repels to chase away pests.
+- Made some changes to Persistence to allow for preplanted berry plants to have a chance of persisting. Added new BERRY_PERSISTENT_FOR_PREPLANTED setting to set whether to allow it or not.
+- Made some changes to some of the settings to allow more clear ways to fully turn on/off features. Changes:
+-- Renamed BERRY_ALLOW_DIGGING_UP to BERRY_ALLOW_DIGGING_UP_SWITCH_ID and allowed switch control and using booleans.
+-- ALLOW_BERRY_MUTATIONS_SWITCH_ID now allows using booleans.
+-- ALLOW_BERRY_PROPAGATION_SWITCH_ID now allows using booleans.
+-- SHOW_BERRIES_ON_MAP_SWITCH_ID now allows using booleans.
+
+v1.6
+- Possibly Incompatibility: Had to bypass the pbPickBerry function in the Overworld_BerryPlants script, so any plugin that also changes that function may not run.
+- New feature: Persistent Plant. Usually, berry plants will disappear after their berries are picked. You can make it so berry plants persist after picking, just like real fruit trees.
+
+v1.5
+- New feature: Withered Items. When a berry plant completely withers away by replanting itself the max number of times until it disappears, you can have a specific item or the original berry drop. The player will pick up the item when they go to plant a new berry.
+- New feature: Auto Planting Berries. Requires Berry Core and Dex. You can provide up to 6 berries to an event that will plant them for you in a set list of berry planting spots. This could be useful to give the player an option to plant multiple berries a bit faster than doing it themselves. Currently, there is no option to also put down mulch.
+- Added option to show a Town Map indicator for plants that have pests or weeds.
+- Changed the settings for determining icons that appear on Town Map. Now, you can list which specific icons you want to show and define your own priority for showing them using BERRIES_ON_MAP_SHOW_PRIORITY.
+- Fixed some handling of weed/pest data for plants to prevent crashes on existing BerryPlants
+- Changed up the BerryPlant update logic to accomodate dynamic traits without screwing up the growth stage of a plant. To go with this, added new BERRY_USE_NEW_UPDATE_LOGIC setting just in case an off switch is needed.
+
+v1.4
+- New feature: Digging up berries. If a berry is still in its first stage (has not sprouted yet), give the option to dig it up. You can make it so the berry is returned to the player.
+- New feature: Weeds can now grow around berry plants. You control what effects weeds have on a plant. You can define which mulches impact weed growth.
+- New feature: Pests (wild Pokemon) can now appear in berry plants, indicated by a fast-shaking plant. You control what effects pests have on a plant. You can define which mulches impact pest appearance. Interacting with a plant with pests will trigger a battle, using newly defined BerryPlantPest encounter types.
+- Made changes regarding how BerryPlantData is generated:
+-- When you pick a berry from an preplanted BerryPlant event (that uses pbPickBerry first), BerryPlantData will be created when picked (allowing for immediate Propogation without having to interact with it again first)
+-- BerryPlant events that are only set up with pbBerryPlant will have BerryPlantData created on map creation.
+
+v1.3
+- Possibly Incompatibility: Had to overwrite the update function in the BerryPlant class, so any plugin that also changes that function may be incompatible.
+- New feature: Mulch Composer. Using pbMulchComposter or pbComposer, you can turn berries into Mulch items. Requires Berry Core and Dex 1.1
+- New feature: Preferred and Unpreferred Zones. Similar to Preferred Weather, this feature allows you to set berry planting spots to have a "zone", and if a berry is planted in a Preferred (or Unpreferred) Zone, they will gain boosts (or penalties). Zones are defined by adding berryzone(<name>) to the Event Name of berry planting spots, where <name> is the name of the zone you wish to define.
+- Added more boost options for Preferred Weather.
+- Changed how Preferred Weather appears in the BerryDex (when using Berry Core and Dex) in order to accomodate also showing Zones. Instead of words, icons will be used. These icons are saved in the Plant Icons folder.
+
+v1.2.1
+- Added handling for a future update of Arcky's Region Map, since it changes the map mode Berry Info will appear in.
+
+v1.2
+- Added option for Preferred Weather, set in berry_data.txt. If at some point before reaching its mature stage the berry's plant has been exposed to one of its Preferred Weather, it will boost the berry yield.
+- Added some guardrails to prevent crashes when dealing with berry plants that may not be events (like the Berry Pots plugin)
+
+v1.1
+- Fix crash with PokemonGlobal when launching new game
+
+v1.0.1
+- Corrected all my misspellings of propagation throughout the code
+- Set searching UI instead of Pictures for berry map icons for version 21+
+
+v1.0
+- Initial Release

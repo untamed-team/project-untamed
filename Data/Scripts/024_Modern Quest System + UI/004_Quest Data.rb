@@ -167,6 +167,20 @@ module QuestModule
     :QuestDescription => "Jocobo is missing his Techuppi! Find it for him.",
     :ReadyAtStart => true,
   }
+  Quest8 = {
+    :ID => "8",
+    :Name => "Under the Stars",
+    :QuestGiver => "Alex",
+    :QuestGiverSprite => "trchar019",
+    :QuestGiverDescSprite => "PICNICKER",
+    :Stage1 => "Camp with your Pokémon.",
+    :Task1 => ["Pet your Pokémon",1,false],
+    :Task2 => ["Feed your Pokémon",1,false],
+    :Task3 => ["Play hide and seek with your Pokémon",1,false],
+    :Location1 => "Camp",
+    :QuestDescription => "Alex has loaned you her camping gear so you can experience camping with your Pokémon. Give it a try!",
+    :ReadyAtStart => true,
+  }
   
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
