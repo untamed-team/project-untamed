@@ -101,6 +101,69 @@ module Settings
                 :Text => _INTL("Highlight the Pokémon you want to heal from the party menu and press the button next to <c2=0999367C><b>Auto Heal</b></c2>."),
                 :Image => "auto heal2",
             },
+            :MULTISAVE1 => {
+                :Title => _INTL("Multi-save"),
+                :Text => _INTL("When saving for the first time, you will select a save slot."),
+                :ImagePosition => :Left,
+                :Image => "multi save1",
+            },
+            :MULTISAVE2 => {
+                :Title => _INTL("Multi-save"),
+                :Text => _INTL("If you have multiple save files, you can press <c2=0999367C><b>{1}</b></c2> or <c2=0999367C><b>{2}</b></c2> on the continue screen to change save files.",$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name,$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name),
+                :Image => "multi save2",
+            },
+            :MULTISAVE3 => {
+                :Title => _INTL("Multi-save"),
+                :Text => _INTL("To create another save file, you must save through the menu instead of using Quicksave. You must select a new slot."),
+                :Image => "multi save3",
+            },
+            :ADVDEX1 => {
+                :Title => _INTL("Advanced Dex"),
+                :Text => _INTL("Your Pokédex has an 'Advanced' page."),
+                :Image => "advanced dex1",
+            },
+            :ADVDEX2 => {
+                :Title => _INTL("Advanced Dex"),
+                :Text => _INTL("On this page, you will see advanced information about the selected Pokémon if you have caught it."),
+                :Image => "advanced dex2",
+            },
+            :ADVDEX3 => {
+                :Title => _INTL("Advanced Dex"),
+                :Text => _INTL("You can press <c2=0999367C><b>{1}</b></c2> to go to the next page.",$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name),
+                :Image => "advanced dex3",
+            },
+            :ADVDEX4 => {
+                :Title => _INTL("Advanced Dex"),
+                :Text => _INTL("This information is also on the Untamed Wiki; This provides an alternative to view the information in-game."),
+            },
+            :BATTLEINFO1 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("You can view information about a battle by pressing <c2=0999367C><b>{1}</b></c2>.",$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name),
+                :Image => "stats battle1",
+            },
+            :BATTLEINFO2 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("You can see information such as stat changes, used moves, abilities, etc."),
+                :Image => "stats battle2",
+            },
+            :BATTLEINFO3 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("You can see similar information about your opponent(s) too."),
+                :Image => "stats battle3",
+            },
+            :BATTLEINFO4 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("You can view information about the currently selected move by pressing <c2=0999367C><b>{1}</b></c2>.",$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name),
+                :Image => "stats battle4",
+            },
+            :BATTLEINFO5 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("For more information, view this tip again from the <c2=0999367C><b>Trainer Tips</b></c2> app on your phone."),
+            },
+            :BATTLEINFO6 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("About icons and stuff, more in depth"),
+            },
         }
 
         TIP_CARDS_GROUPS = {
@@ -123,6 +186,18 @@ module Settings
             :AUTOHEAL => {
                 :Title => _INTL("Auto Heal"),
                 :Tips => [:AUTOHEAL1, :AUTOHEAL2]
+            },
+            :MULTISAVE => {
+                :Title => _INTL("Multi-save"),
+                :Tips => [:MULTISAVE1, :MULTISAVE2, :MULTISAVE3]
+            },
+            :ADVDEX => {
+                :Title => _INTL("Advanced Dex"),
+                :Tips => [:ADVDEX1, :ADVDEX2, :ADVDEX3, :ADVDEX4]
+            },
+            :BATTLEINFO => {
+                :Title => _INTL("Battle Info"),
+                :Tips => [:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO6]
             },
         }
 
