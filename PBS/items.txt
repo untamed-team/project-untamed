@@ -6746,3 +6746,12 @@ NamePlural = Yellow Candy Bases
 Pocket = 1
 Price = 500
 Description = A mixture to make candy. This one turns the candy yellow!
+#-------------------------------
+[ADVENTUREGUIDE]
+Name = Adventure Guide
+NamePlural = Adventure Guides
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A convenient notebook that contains all the advice a Trainer receives out on an adventure.
