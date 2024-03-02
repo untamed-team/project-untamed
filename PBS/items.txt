@@ -4297,7 +4297,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_80
 Move = SCALD
-Description = The user shoots boiling hot water at its target. This may also leave the target with a burn.
+Description = The user shoots boiling hot water at its target.
 #-------------------------------
 [TM59]
 Name = TM59
@@ -4929,7 +4929,7 @@ Pocket = 5
 Price = 20
 BattleUse = OnBattler
 Flags = Berry,Fling_10,NaturalGift_GROUND_80
-Description = It may be used or held by a Pokémon to recover from confusion.
+Description = It may be used or held by a Pokémon to recover from confusion/dizziness.
 #-------------------------------
 [LUMBERRY]
 Name = Lum Berry
@@ -6677,3 +6677,81 @@ Pocket = 8
 Price = 0
 Flags = KeyItem
 Description = A machine to edit Pokemon EVs manually, outside of battle.
+#-------------------------------
+[POKEBLOCKCASE]
+Name = Candy Case
+NamePlural = Candy Cases
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A case for holding candy made in camp.
+#-------------------------------
+[POKEBLOCKKIT]
+Name = Pokéblock Kit
+NamePlural = Pokéblock Kit
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A set containing a Berry Blender for making Pokéblocks and a Pokéblock Case for storing Pokéblocks.
+#-------------------------------
+[POKEBLOCKCONDITION]
+Name = Condition Checker
+NamePlural = Condition Checkers
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An item for checking a Pokémon's contest stats.
+#-------------------------------
+[CANDYBASE]
+Name = Candy Base
+NamePlural = Candy Bases
+Pocket = 1
+Price = 100
+Description = A mixture to make candy.
+#-------------------------------
+[REDCANDYBASE]
+Name = Red Candy Base
+NamePlural = Red Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy red!
+#-------------------------------
+[BLUECANDYBASE]
+Name = Blue Candy Base
+NamePlural = Blue Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy blue!
+#-------------------------------
+[PINKCANDYBASE]
+Name = Pink Candy Base
+NamePlural = Pink Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy pink!
+#-------------------------------
+[GREENCANDYBASE]
+Name = Green Candy Base
+NamePlural = Green Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy green!
+#-------------------------------
+[YELLOWCANDYBASE]
+Name = Yellow Candy Base
+NamePlural = Yellow Candy Bases
+Pocket = 1
+Price = 500
+Description = A mixture to make candy. This one turns the candy yellow!
+#-------------------------------
+[ADVENTUREGUIDE]
+Name = Adventure Guide
+NamePlural = Adventure Guides
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A convenient notebook that contains all the advice a Trainer receives out on an adventure.

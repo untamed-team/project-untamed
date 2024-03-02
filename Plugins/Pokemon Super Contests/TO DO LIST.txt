@@ -1,0 +1,42 @@
+This is a list of everything I wanted to do with this plugin but just don't have the time to do so at the moment.
+I would love some help getting this done if anybody is capable and willing :)
+
+###################################
+#========= Reception Area =========
+###################################
+Make a togglable option for ribbons to have prerequisites. Like a pokemon can't enter a great rank competition if it doesn't have the normal rank ribbon for that category (cool, smart, etc.).
+
+Pokemon with only one move should not be able to join contests since you physically cannot choose a move more than once in a row (some exceptions, but limit is that same move twice in a row).
+
+###################################
+#============ Dressup ============
+###################################
+I need to say somewhere on the screen that you drag accessories with left click and drag the pokemon with right click.
+I'd like to be able to control the pokemon's z value so you can layer things. But how would I implement the UI for that?
+
+Implement scarves impacting condition points.
+
+###################################
+#============= Dance =============
+###################################
+Currently dancing lags. I've struggled with this for hours, and I don't know how to make it not lag. The main thing that makes it lag is playing sound effects I believe. If I comment out the Miss, Good, and Excellent sound effects, it lags much less, but still a tiny bit.
+This lag severely messes up the timing of the jigglypuff sprite with the music.
+
+###################################
+#============ Results ============
+###################################
+Currently when tallying results at the end of contests, the Acting portion FAR outweighs the other competitions in points, and I am unsure how to make it more like gen 4 where each competition appears to count the same amount.
+For example, now matter how large the point gap between competitions, the dressup portion at most takes up a third of the progress bar, and same is true for the other two competitions, making them all look like they matter equally. In reality, the Acting portion is where the real points are scored, but I think this is how it works in the gen 4 games too...
+I did my research, I promise.
+
+###################################
+#============= Other =============
+###################################
+Add a Pokemon summary page for viewing moves with contest descriptions.
+The descriptions are commented out in the Acting - Move Methods script.
+
+Support super shiny contestants. Currently the contest stage following characters do not account for super shiny sprites.
+
+I would like to make a debug function for selecting contestants' moves (will probably need to write to a PBS of some kind), but I would prefer to stray away from PBS because RPG Studio MK does not use PBS.
+
+I would like to make it much easier for developers to customize their contest experience and cut down on the amount of work it takes to understand and go through set up of this plugin.

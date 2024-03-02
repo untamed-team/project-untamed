@@ -25,7 +25,7 @@ class MenuEntryPokemon < MenuEntry
   def selectable?
     #return ($player.party_count > 0)
     #added by Gardenette for camping menu
-    return ($player.party_count > 0 && !$game_switches[83])
+    return ($player.party_count > 0 && !$PokemonGlobal.camping)
   end
 end
 #-------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ class MenuEntryPokedex < MenuEntry
   def selectable?
     #return ($Trainer.has_pokedex && $Trainer.pokedex.accessible_dexes.length > 0)
     #added by Gardenette for camping menu
-    return ($Trainer.has_pokedex && $Trainer.pokedex.accessible_dexes.length > 0 && !$game_switches[83])
+    return ($Trainer.has_pokedex && $Trainer.pokedex.accessible_dexes.length > 0 && !$PokemonGlobal.camping)
   end
 end
 #-------------------------------------------------------------------------------
@@ -87,7 +87,7 @@ class MenuEntryBag < MenuEntry
   def selectable?
     #return !pbInBugContest?
     #added by Gardenette for camping menu
-    return !pbInBugContest? && !$game_switches[83]
+    return !pbInBugContest? && !$PokemonGlobal.camping
   end
 end
 #-------------------------------------------------------------------------------
@@ -129,7 +129,7 @@ class MenuEntryTrainer < MenuEntry
   def selectable?
     return true
     #added by Gardenette for camping menu
-    #return !$game_switches[83]
+    #return !$PokemonGlobal.camping
   end
 end
 #-------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ class MenuEntrySave < MenuEntry
   def selectable?
     #return (!pbInBugContest? && $game_system && !$game_system.save_disabled && !pbInSafari?)
     #added by Gardenette for camping menu
-    return (!pbInBugContest? && $game_system && !$game_system.save_disabled && !pbInSafari? && !$game_switches[83])
+    return (!pbInBugContest? && $game_system && !$game_system.save_disabled && !pbInSafari? && !$PokemonGlobal.camping)
   end
 end
 #-------------------------------------------------------------------------------
@@ -171,7 +171,7 @@ class MenuEntryMap < MenuEntry # Play Pokémon Splice
   def selectable?
     #return $bag.has?(:TOWNMAP)
     #added by Gardenette for camping menu
-    return $bag.has?(:TOWNMAP) && !$game_switches[83]
+    return $bag.has?(:TOWNMAP) && !$PokemonGlobal.camping
   end
 end
 #-------------------------------------------------------------------------------
@@ -280,7 +280,7 @@ class MenuEntryQuit < MenuEntry
   def selectable?
     #return (!pbInBugContest? && !pbInSafari?)
     #added by Gardenette for camping menu
-    return (!pbInBugContest? && !pbInSafari? && !$game_switches[83])
+    return (!pbInBugContest? && !pbInSafari? && !$PokemonGlobal.camping)
   end
 end
 
@@ -298,7 +298,7 @@ class MenuEntryQuests < MenuEntry
   def selectable?
     #return defined?(hasAnyQuests?) && hasAnyQuests?
     #added by Gardenette for camping menu
-    return defined?(hasAnyQuests?) && hasAnyQuests? && !$game_switches[83]
+    return defined?(hasAnyQuests?) && hasAnyQuests? && !$PokemonGlobal.camping
   end
 end
 
@@ -316,7 +316,7 @@ class MenuEntryDexNav < MenuEntry
   def selectable?
     #return $Trainer.has_dexnav
     #added by Gardenette for camping menu
-    return $Trainer.has_dexnav && !$game_switches[83]
+    return $Trainer.has_dexnav && !$PokemonGlobal.camping
   end
 end
 
@@ -329,7 +329,11 @@ class MenuEntryWiki < MenuEntry
     @name = "Wiki"
   end
 
-  def selected(menu); pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }; end
+  def selected(menu)
+    if pbConfirmMessage(_INTL("Open your computer's browser to view the Wiki?"))
+      pbFadeOutIn(99999) { system("start https://pokemon-untamed.fandom.com/wiki/Pok%C3%A9mon_Untamed_Wiki") }
+    end
+  end
 
   def selectable?; return true; end
 end
@@ -360,7 +364,7 @@ class MenuEntryPC < MenuEntry
   def selectable?
 		#return $bag.has?(:PORTABLEPC)
     #added by Gardenette for camping menu
-    return $bag.has?(:PORTABLEPC) && !$game_switches[83]
+    return $bag.has?(:PORTABLEPC) && !$PokemonGlobal.camping
 	end
 end
 
@@ -380,7 +384,7 @@ class MenuEntryCamp < MenuEntry
 	end
 
   def selectable?
-    return $bag.has?(:CAMPINGGEAR) && !$game_switches[83]
+    return $bag.has?(:CAMPINGGEAR) && !$PokemonGlobal.camping
 	end
 end
 
@@ -400,7 +404,7 @@ class MenuEntryExitCamp < MenuEntry
 	end
 
   def selectable?
-    return $game_switches[83]
+    return $PokemonGlobal.camping
 	end
 end
 

@@ -2230,25 +2230,79 @@ class Battle::AI
 			end
     #---------------------------------------------------------------------------
     when "HealUserFullyAndFallAsleep" # rest
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam = tempdam if tempdam > maxdam
-			end
-			if maxdam>user.hp
-				if maxdam>(user.hp*1.5)
+			target=user.pbDirectOpposing(true)
+			aspeed = pbRoughStat(user,:SPEED,skill)
+			ospeed = pbRoughStat(target,:SPEED,skill)
+			fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE)    
+			if user.hasActiveItem?(:CHESTOBERRY) || user.hasActiveItem?(:LUMBERRY)
+				halfhealth=(user.totalhp*2/3)
+			else    
+				halfhealth=(user.totalhp/4)
+			end    
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0] 
+			maxmove=bestmove[1]
+			maxdam=0 if (target.status == :SLEEP && target.statusCount>1)		
+			#if maxdam>user.hp
+			if !targetSurvivesMove(maxmove,target,user)
+				if maxdam>(user.hp+halfhealth)
 					score=0
 				else
-					score*=5
+					if maxdam>=halfhealth
+						if fasterhealing
+							score*=0.5
+						else
+							score*=0.1
+						end
+					else
+						score*=2
+					end
 				end
 			else
 				if maxdam*1.5>user.hp
 					score*=2
 				end
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if !fastermon
 					if maxdam*2>user.hp
-						score*=5
-					end                
+						score*=2
+					end
+				end
+			end
+			hpchange=(EndofTurnHPChanges(user,target,false,false,true,false,true)) # what % of our hp will change after end of turn effects go through
+			opphpchange=(EndofTurnHPChanges(target,user,false,false,true)) # what % of our hp will change after end of turn effects go through
+			if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+				oppchipdamage=((target.totalhp*(1-hpchange)))
+			end
+			thisdam=maxdam#*1.1
+			hplost=(user.totalhp-user.hp)
+			hplost+=maxdam if !fasterhealing
+			if user.effects[PBEffects::LeechSeed]>=0 && !fastermon && canSleepTarget(target,user)
+				score *= 0.3 
+			end	
+			if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+				chipdamage=((user.totalhp*(1-hpchange)))
+				thisdam+=chipdamage
+			elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+				healing=((user.totalhp*(hpchange-1)))
+				thisdam-=healing if !(thisdam>user.hp)
+			elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+				score*=0
+			end
+			if thisdam>hplost
+				score*=0.1
+			else
+				if @battle.pbAbleNonActiveCount(user.idxOwnSide) == 0 && hplost<=(halfhealth)
+					score*=0.01
+				end
+				if thisdam<=(halfhealth)
+					score*=2
+				else
+					if fastermon
+						if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+							score*=0.3
+						end
+					end
 				end
 			end
 			if pbHasSetupMove?(target)
@@ -2303,6 +2357,10 @@ class Battle::AI
 			if user.hp*(1.0/user.totalhp)>=0.8
 				score*=0
 			end
+			score*=0.1 if ((user.hp.to_f)/user.totalhp)>0.8
+			score*=0.6 if ((user.hp.to_f)/user.totalhp)>0.6
+			score*=2 if ((user.hp.to_f)/user.totalhp)<0.25
+			score=0 if user.effects[PBEffects::Wish]>0	
 			if !user.hasActiveItem?([:CHESTOBERRY, :LUMBERRY]) && 
 				 !(user.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(user.effectiveWeather))
 				score*=0.8
@@ -2351,28 +2409,102 @@ class Battle::AI
 				score*=0
 			end
     #---------------------------------------------------------------------------
-    when "HealUserHalfOfTotalHP" # recover
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam = tempdam if tempdam > maxdam
-			end
-			if maxdam>user.hp
-				if maxdam>(user.hp*1.5)
+    when "HealUserHalfOfTotalHP", "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", "HealUserDependingOnWeather", "HealUserDependingOnSandstorm" # Recover, Roost, Synthesis, Shore Up
+			target=user.pbDirectOpposing(true)
+			aspeed = pbRoughStat(user,:SPEED,skill)
+			ospeed = pbRoughStat(target,:SPEED,skill)
+			fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE) 
+			if move.function == "HealUserDependingOnWeather" 
+				case user.effectiveWeather
+				when :Sun, :HarshSun
+					halfhealth=(user.totalhp*2/3)
+				when :None
+					halfhealth=(user.totalhp/2)
+				else
+					halfhealth=(user.totalhp/4)
+				end
+			elsif move.function == "HealUserDependingOnSandstorm" 
+				case user.effectiveWeather
+				when :Sandstorm
+					halfhealth=(user.totalhp*2/3)
+				else
+					halfhealth=(user.totalhp/2)
+				end   
+			else     
+				halfhealth=(user.totalhp/2)
+			end       
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0] 
+			maxmove=bestmove[1]
+			maxdam=0 if (target.status == :SLEEP && target.statusCount>1)		
+			#if maxdam>user.hp
+			if !targetSurvivesMove(maxmove,target,user)
+				if maxdam>(user.hp+halfhealth)
 					score=0
 				else
-					score*=5
+					if maxdam>=halfhealth
+						if fastermon
+							score*=0.5
+						else
+							score*=0.1
+						end
+					else
+						score*=2
+					end
 				end
 			else
 				if maxdam*1.5>user.hp
 					score*=2
 				end
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if !fastermon
 					if maxdam*2>user.hp
-						score*=5
-					end                
+						score*=2
+					end
 				end
 			end
+			hpchange=(EndofTurnHPChanges(user,target,false,false,true)) # what % of our hp will change after end of turn effects go through
+			opphpchange=(EndofTurnHPChanges(target,user,false,false,true)) # what % of our hp will change after end of turn effects go through
+			if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+				oppchipdamage=((target.totalhp*(1-hpchange)))
+			end
+			thisdam=maxdam#*1.1
+			hplost=(user.totalhp-user.hp)
+			hplost+=maxdam if !fasterhealing
+			if user.effects[PBEffects::LeechSeed]>=0 && !fastermon && canSleepTarget(target,user)
+				score *= 0.3 
+			end	
+			if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+				chipdamage=((user.totalhp*(1-hpchange)))
+				thisdam+=chipdamage
+			elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+				healing=((user.totalhp*(hpchange-1)))
+				thisdam-=healing if !(thisdam>user.hp)
+			elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+				score*=0
+			end
+			if thisdam>hplost
+				score*=0.1
+			else
+				if @battle.pbAbleNonActiveCount(user.idxOwnSide) == 0 && hplost<=(halfhealth)
+					score*=0.01
+				end
+				if thisdam<=(halfhealth)
+					score*=2
+				else
+					if fastermon
+						if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+							score*=0.3
+						end
+					end
+				end
+			end
+			if ((user.hp.to_f)<=halfhealth)
+				score*=1.5
+			else
+				score*=0.8
+			end
+			score*=0.8 if maxdam>halfhealth
 			if pbHasSetupMove?(target)
 				score*=0.7
 			end 
@@ -2399,12 +2531,6 @@ class Battle::AI
 				end          
 			else
 				score*=0.9
-			end  
-			if user.effects[PBEffects::Toxic]>0
-				score*=0.5
-				if user.effects[PBEffects::Toxic]>4
-					score*=0.5
-				end          
 			end
 			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
 				score*=1.1
@@ -2428,278 +2554,10 @@ class Battle::AI
 			else
 				score*=0.5
 			end
-			if ((user.hp.to_f)/user.totalhp)>0.8
-				score=0
-			elsif ((user.hp.to_f)/user.totalhp)>0.6
-				score*=0.6
-			elsif ((user.hp.to_f)/user.totalhp)<0.25
-				score*=2
-			end  
-			if user.effects[PBEffects::Wish]>0
-				score=0
-			end
-    #---------------------------------------------------------------------------
-    when "HealUserDependingOnWeather" # synthesis
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam = tempdam if tempdam > maxdam
-			end
-			if maxdam>user.hp
-				if maxdam>(user.hp*1.5)
-					score=0
-				else
-					score*=5
-				end
-			else
-				if maxdam*1.5>user.hp
-					score*=2
-				end
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
-					if maxdam*2>user.hp
-						score*=5
-					end                
-				end
-			end
-			if pbHasSetupMove?(target)
-				score*=0.7
-			end 
-			if (user.hp.to_f)/user.totalhp<0.5
-				score*=1.5
-				if user.effects[PBEffects::Curse]
-					score*=2
-				end
-				if user.hp*4<user.totalhp
-					if user.poisoned?
-						score*=1.5
-					end
-					if user.effects[PBEffects::LeechSeed]>=0
-						score*=2
-					end
-					if user.hp<user.totalhp*0.13
-						if user.burned?
-							score*=2
-						end
-						if user.takesHailDamage? || user.takesSandstormDamage?
-							score*=2
-						end  
-					end            
-				end          
-			else
-				score*=0.9
-			end  
-			if user.effects[PBEffects::Toxic]>0
-				score*=0.5
-				if user.effects[PBEffects::Toxic]>4
-					score*=0.5
-				end          
-			end
-			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
-				score*=1.1
-			end
-			if target.poisoned? || target.burned? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
-				score*=1.3
-				if target.effects[PBEffects::Toxic]>0
-					score*=1.3
-				end
-			end
-			for m in target.moves
-				score*=1.2 if [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(m.id)
-			end
-			if target.effects[PBEffects::HyperBeam]>0
-				score*=1.2
-			end
-			if ((user.hp.to_f)/user.totalhp)>0.8
-				score=0
-			elsif ((user.hp.to_f)/user.totalhp)>0.6
-				score*=0.6
-			elsif ((user.hp.to_f)/user.totalhp)<0.25
-				score*=2
-			end  
-			if user.effects[PBEffects::Wish]>0
-				score=0
-			end
-    #---------------------------------------------------------------------------
-    when "HealUserDependingOnSandstorm" # shore up
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam=tempdam if tempdam>maxdam
-			end
-			if maxdam>user.hp
-				if maxdam>(user.hp*1.5)
-					score=0
-				else
-					score*=5
-				end
-			else
-				if maxdam*1.5>user.hp
-					score*=2
-				end
-				if (user.pbSpeed<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
-					if maxdam*2>user.hp
-						score*=5
-					end 
-				end              
-			end
-			if pbHasSetupMove?(target, false)
-				score*=0.7
-			end 
-			if (user.hp.to_f)/user.totalhp<0.5
-				score*=1.5
-				if user.effects[PBEffects::Curse]
-					score*=2
-				end
-				if user.hp*4<user.totalhp
-					if user.poisoned?
-						score*=1.5
-					end
-					if user.effects[PBEffects::LeechSeed]>=0
-						score*=2
-					end
-					if user.hp<user.totalhp*0.13
-						if user.burned?
-							score*=2
-						end
-						if !user.takesHailDamage? || !user.takesSandstormDamage?
-							score*=2
-						end  
-					end            
-				end          
-			else
-				score*=0.9
-			end  
-			if user.effects[PBEffects::Toxic]>0
-				score*=0.5
-				if user.effects[PBEffects::Toxic]>4
-					score*=0.5
-				end          
-			end
-			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
-				score*=1.1
-			end
-			if target.poisoned? || target.burned? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
-				score*=1.3
-				if target.effects[PBEffects::Toxic]>0
-					score*=1.3
-				end
-			end
-			sleepcheck = false
-			for m in target.moves
-				score*=1.2 if [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(m.id)
-			end
-			if target.effects[PBEffects::HyperBeam]>0
-				score*=1.2
-			end
-			if user.effectiveWeather == :Sandstorm || user.hasActiveAbility?(:PRESAGE)
-				score*=1.5       
-			end
-			if ((user.hp.to_f)/user.totalhp)>0.8
-				score=0
-			elsif ((user.hp.to_f)/user.totalhp)>0.6
-				score*=0.6
-			elsif ((user.hp.to_f)/user.totalhp)<0.25
-				score*=2
-			end     
-			if user.effects[PBEffects::Wish]>0
-				score=0
-			end
-    #---------------------------------------------------------------------------
-    when "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn" # roost
-			maxdam = 0
-			besttype = -1
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				if tempdam > maxdam
-					maxdam = tempdam
-					besttype = m.type
-				end
-			end
-			if maxdam>user.hp
-				if maxdam>(user.hp*1.5)
-					score=0
-				else
-					score*=5
-				end
-			else
-				if maxdam*1.5>user.hp
-					score*=2
-				end
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
-					if maxdam*2>user.hp
-						score*=5
-					end                
-				end
-			end
-			if pbHasSetupMove?(target)
-				score*=0.7
-			end 
-			if (user.hp.to_f)/user.totalhp<0.5
-				score*=1.5
-				if user.effects[PBEffects::Curse]
-					score*=2
-				end
-				if user.hp*4<user.totalhp
-					if user.poisoned?
-						score*=1.5
-					end
-					if user.effects[PBEffects::LeechSeed]>=0
-						score*=2
-					end
-					if user.hp<user.totalhp*0.13
-						if user.burned?
-							score*=2
-						end
-						if user.takesHailDamage? || user.takesSandstormDamage?
-							score*=2
-						end  
-					end            
-				end          
-			else
-				score*=0.9
-			end  
-			if user.effects[PBEffects::Toxic]>0
-				score*=0.5
-				if user.effects[PBEffects::Toxic]>4
-					score*=0.5
-				end          
-			end
-			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
-				score*=1.1
-			end
-			if target.poisoned? || target.burned? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
-				score*=1.3
-				if target.effects[PBEffects::Toxic]>0
-					score*=1.3
-				end
-			end
-			for m in target.moves
-				score*=1.2 if [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(m.id)
-			end
-			if target.effects[PBEffects::HyperBeam]>0
-				score*=1.2
-			end
-			if besttype!=-1
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
-					if besttype == :ROCK || besttype == :ICE || besttype == :ELECTRIC
-						score*=1.5
-					else
-						if besttype == :BUG || besttype == :FIGHTING || besttype == :GRASS || besttype == :GROUND
-							score*=0.5
-						end
-					end
-				end
-			end
-			if ((user.hp.to_f)/user.totalhp)>0.8
-				score=0
-			elsif ((user.hp.to_f)/user.totalhp)>0.6
-				score*=0.6
-			elsif ((user.hp.to_f)/user.totalhp)<0.25
-				score*=2
-			end  
-			if user.effects[PBEffects::Wish]>0
-				score=0
-			end
+			score*=0.1 if ((user.hp.to_f)/user.totalhp)>0.8
+			score*=0.6 if ((user.hp.to_f)/user.totalhp)>0.6
+			score*=2 if ((user.hp.to_f)/user.totalhp)<0.25
+			score=0 if user.effects[PBEffects::Wish]>0	
     #---------------------------------------------------------------------------
     when "CureTargetStatusHealUserHalfOfTotalHP" # purify
 			if target.opposes?(user) && target.status == :NONE
@@ -3646,7 +3504,7 @@ class Battle::AI
 					target.item && !target.unlosableItem?(target.item)
 				miniscore = 1.2
 				case target.item_id
-					when :LEFTOVERS, :RECOVERYDISC,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+					when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 						miniscore*=1.5
 					when :ASSAULTVEST,  :ROCKYHELMET
 						miniscore*=1.3
@@ -3721,7 +3579,7 @@ class Battle::AI
 				minimini  = 0.8
 				if target.item && !target.unlosableItem?(target.item)
 					case target.item_id
-						when :LEFTOVERS, :RECOVERYDISC,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+						when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 							miniscore*=1.5
 						when :ASSAULTVEST,  :ROCKYHELMET
 							miniscore*=1.3
@@ -3751,7 +3609,7 @@ class Battle::AI
 				end
 				if user.item && !user.unlosableItem?(user.item)
 					case user.item_id
-						when :LEFTOVERS, :RECOVERYDISC,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+						when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 							minimini*=0.5
 						when :ASSAULTVEST,  :ROCKYHELMET
 							minimini*=0.7

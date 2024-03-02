@@ -669,10 +669,16 @@ def getCompletedTasks(quest)
   
 def isTaskComplete(quest,task)
   arr = getCompletedTasks(quest)
-  return true if arr.include?(task) #then it's active, so ret true
-  return false if !arr.include?(task) #then it's active, so ret true
+  return true if arr.include?(task) #then it's completed, so ret true
+  return false if !arr.include?(task) #then it's not completed, so ret false
 end
 
 def taskCompleteJingle
   pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Task completed!</c2>\nYour objective list has been updated!</ac>",QUEST_JINGLE))
+end
+
+def isQuestComplete(quest)
+  arr = getCompletedQuests(quest)
+  return true if arr.include?(quest) #then it's completed, so ret true
+  return false if !arr.include?(quest) #then it's not completed, so ret false
 end

@@ -305,6 +305,8 @@ module Battle::DebugMixin
     ret += "\r\n"
     # Held item
     ret += _INTL("Item: {1}", (battler.item) ? battler.itemName : "-")
+    ret += "\r\n"
+    ret += _INTL("Hidden Power: {1}", battler.hptype)
     return ret
   end
 

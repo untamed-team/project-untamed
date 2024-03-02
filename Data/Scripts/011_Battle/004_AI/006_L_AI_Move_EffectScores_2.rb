@@ -8,50 +8,46 @@ class Battle::AI
     case move.function
     #---------------------------------------------------------------------------
     when "SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm" # hypnosis
-			theresone=false
-			@battle.allBattlers.each do |j|
-				if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && !target.affectedByTerrain?) || 
-					 (j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && !target.affectedByTerrain?)
-					theresone=true
+		theresone=false
+		@battle.allBattlers.each do |j|
+			if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && !target.affectedByTerrain?) || 
+					(j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && !target.affectedByTerrain?)
+				theresone=true
+			end
+		end
+		if target.pbCanSleep?(user, false) && !theresone
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, 100)
+			ministat=0
+			ministat+=target.stages[:ATTACK]
+			ministat+=target.stages[:DEFENSE]
+			ministat+=target.stages[:SPECIAL_ATTACK]
+			ministat+=target.stages[:SPECIAL_DEFENSE]
+			ministat+=target.stages[:SPEED]
+			ministat+=target.stages[:ACCURACY]
+			ministat+=target.stages[:EVASION]
+			if ministat>0
+				minimini=5*ministat
+				minimini+=100
+				minimini/=100.0
+				miniscore*=minimini
+			end
+			if move.id == :SING
+				if target.hasActiveAbility?(:SOUNDPROOF)
+					miniscore=0
 				end
 			end
-      if target.pbCanSleep?(user, false) && !theresone
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, 100)
-				ministat=0
-				ministat+=target.stages[:ATTACK]
-				ministat+=target.stages[:DEFENSE]
-				ministat+=target.stages[:SPECIAL_ATTACK]
-				ministat+=target.stages[:SPECIAL_DEFENSE]
-				ministat+=target.stages[:SPEED]
-				ministat+=target.stages[:ACCURACY]
-				ministat+=target.stages[:EVASION]
-				if ministat>0
-					minimini=5*ministat
-					minimini+=100
-					minimini/=100.0
-					miniscore*=minimini
+			if move.id == :GRASSWHISTLE
+				if target.hasActiveAbility?(:SOUNDPROOF)
+					miniscore=0
 				end
-				if move.id == :SING
-					if target.hasActiveAbility?(:SOUNDPROOF)
-						miniscore=0
-					end
-				end
-				if move.id == :GRASSWHISTLE
-					if target.hasActiveAbility?(:SOUNDPROOF)
-						miniscore=0
-					end
-				end
-				if move.id == :SLEEPPOWDER
-					if target.hasActiveItem?(:SAFETYGOGGLES) || target.hasActiveAbility?(:OVERCOAT) || target.pbHasType?(:GRASS)
-						miniscore=0
-					end
-				end
-				if move.id == :SPORE
-					if target.hasActiveItem?(:SAFETYGOGGLES) || target.hasActiveAbility?(:OVERCOAT) || target.pbHasType?(:GRASS)
-						miniscore=0
-					end
-				end
-      end
+			end
+			if user.turnCount==0
+				miniscore *= 3
+			end
+			score = miniscore
+		else
+			score = 0
+		end
     #---------------------------------------------------------------------------
     when "SleepTargetNextTurn" # yawn
 			theresone=false
@@ -61,25 +57,26 @@ class Battle::AI
 					theresone=true
 				end
 			end
-      if target.effects[PBEffects::Yawn]<=0 && target.pbCanSleepYawn? && !theresone
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, 100)
-				ministat=0
-				ministat+=target.stages[:ATTACK]
-				ministat+=target.stages[:DEFENSE]
-				ministat+=target.stages[:SPECIAL_ATTACK]
-				ministat+=target.stages[:SPECIAL_DEFENSE]
-				ministat+=target.stages[:SPEED]
-				ministat+=target.stages[:ACCURACY]
-				ministat+=target.stages[:EVASION]
-				if ministat>0
-					minimini=5*ministat
-					minimini+=100
-					minimini/=100.0
-					miniscore*=minimini
-				end
-			else
-				score = 0
+		if target.effects[PBEffects::Yawn]<=0 && target.pbCanSleepYawn? && !theresone
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, 100)
+			ministat=0
+			ministat+=target.stages[:ATTACK]
+			ministat+=target.stages[:DEFENSE]
+			ministat+=target.stages[:SPECIAL_ATTACK]
+			ministat+=target.stages[:SPECIAL_DEFENSE]
+			ministat+=target.stages[:SPEED]
+			ministat+=target.stages[:ACCURACY]
+			ministat+=target.stages[:EVASION]
+			if ministat>0
+				minimini=5*ministat
+				minimini+=100
+				minimini/=100.0
+				miniscore*=minimini
 			end
+			score = miniscore
+		else
+			score = 0
+		end
     #---------------------------------------------------------------------------
     when "PoisonTarget", "BadPoisonTarget" # poison moves, toxic
       if target.pbCanPoison?(user, false)

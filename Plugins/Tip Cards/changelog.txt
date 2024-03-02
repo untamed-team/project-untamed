@@ -1,0 +1,12 @@
+v1.1
+- New feature: Image placement control. Now you can set images to be at the Top, Bottom, Left, or Right or text in each tip. By default, it will place wider images to Top, and taller images to Left.
+- New feature: Background overrides. Now you can set a custom background for tips. For example, if you want to show story-based tips, you can have it be a different background than tips about controls.
+- New feature: Groups. You can now define groups of tips in the TIP_CARDS_GROUPS setting. Groups have a slightly different UI, showing a group header and allowing you to move between groups using the JUMPUP and JUMPDOWN controls. Each group will hold a set of tips.
+- Added a TIP_CARDS_SINGLE_GROUP_SHOW_HEADER setting to control whether the group header also shows if only one group is being shown to the player.
+- New feature: Seen Tip Cards tracking. When you show a tip to the player, it gets marked as seen. You can check if a tip has been seen to be used in Conditional Branches to conditionally show tips, change NPC text, etc. Only tips that have been seen will be shown when "Revisiting" tips (see below).
+- New feature: Revisiting Tips. Added a number of functions that allow the player to revisit tips they have already seen.
+- New feature: Adventure Guide item. Added item handling and icon for the Adventure Guide item. It uses Groups and Revisiting to emulate how this item works in the mainline games. Just add a ADVENTUREGUIDE item to your items.txt PBS, and you're good to go!
+- Updated the Setup and Documentation document with all the new functions and Adventure Guide PBS entry if you wish to use it.
+
+v1.0
+- Initial Release

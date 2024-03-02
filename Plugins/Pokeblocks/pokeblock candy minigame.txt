@@ -1,0 +1,54 @@
+Looking for some feedback on this minigame before I start making it. This is for candy creation in camp which comes from this recipe - https://www.allrecipes.com/recipe/35842/hard-candy/
+
+**Stage 1:**
+Change burn notif timer to 3 seconds
+For every stir after 20, there's a 1% chance of getting another pokeblock
+The percentage does not stack in favor of getting one block
+The percentage stays at 1, and you are given an extra block for each successful roll
+
+**Stage 2:**
+No stirring (you can't fail by stirring it; you just literally don't get the option to stir it). Bring the temp of the pot up to 150 degrees celcius to boil the mixture and keep it there for a bit.
+Fan the flames of the fire to increase temp when it lowers on its own.
+Stop fanning the flames when it reaches the right temp. I'm thinking maybe something similar to Stardew Valley's fishing minigame where you keep your bobber in the highlighted area (though the area to keep it in wouldn't move around I guess).
+If the mixture gets to 160+ degrees or less than 140, you lose 1 pokeblock for every 3 seconds in the wrong temp range
+If over the desired temp range for too long, the screen says "Slow down! It's burning!"
+If under the desired temp range for too long, the screen says "Faster! It's not hot enough!"
+
+If you lose a pokeblock or more, but not all the pokeblocks that would be produced, the game assumes this stage is a success. If you lose all blocks that would be produced, the stage fails and the game says "The candy didn't turn out right..."
+
+**Before the last stage, you pick the berries you want to blend in. This is to add flavoring to the mixture.
+
+Stage 3 (final stage):**
+Cool the result so the mixture hardens. This stage is not a challenge, but rather just a touch of realism to cool off the result. You press one button once and it fans off the mixture, hardening it.
+
+The result is anywhere from 1 to 4 pokeblocks.
+The game isn't really meant to be challenging at all. It's just meant to resemble making hard candy at home and meant to be a fun little thing.
+
+Berries I can make easy to farm because they don't impact battle balance much if at all:
+Blue:
+Bluk
+Cornn
+Pamtre
+Belue
+
+Green:
+Wepear
+Rabuta
+Watmel
+Durin
+
+Pink:
+Magost
+Spelon
+nanab
+qualot
+
+Red:
+razz
+pomeg
+tamato
+
+Yellow:
+Nomel
+pinap
+grepa

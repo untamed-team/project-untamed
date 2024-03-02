@@ -1,33 +1,5 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[YOUNGSTER_F,Emma]
-LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,4
-Pokemon = FLABEBE,4
-#-------------------------------
-[YOUNGSTER_F,Emma,100]
-LoseText = I guess it's also double the chance to lose...
-Pokemon = PACUNA,4
-Pokemon = FLABEBE,4
-#-------------------------------
-[YOUNGSTER_M,Julián]
-LoseText = B-but, how did I lose?
-Pokemon = WRENNER,4
-#-------------------------------
-[YOUNGSTER_M,Julián,100]
-LoseText = B-but, how did I lose?
-Pokemon = WRENNER,4
-#-------------------------------
-[BUGCATCHER,Marco]
-LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
-Pokemon = LEDYBA,4
-#-------------------------------
-[BUGCATCHER,Marco,100]
-LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
-Pokemon = LEDYBA,4
-#-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
 Pokemon = MOLLUCOTTA,5
@@ -64,65 +36,59 @@ Pokemon = PORSITE,5
     Gender = male
     IV = 0,0,0,0,0,0
 #-------------------------------
+[YOUNGSTER_F,Emma]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
+#-------------------------------
+[YOUNGSTER_F,Emma,100]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
+#-------------------------------
+[YOUNGSTER_M,Julián]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,4
+#-------------------------------
+[YOUNGSTER_M,Julián,100]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,4
+#-------------------------------
+[BUGCATCHER,Marco]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,4
+Pokemon = LEDYBA,4
+#-------------------------------
+[BUGCATCHER,Marco,100]
+LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,4
+Pokemon = LEDYBA,4
+#-------------------------------
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = MURKROW,6
+Pokemon = MURKROW,5
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = MURKROW,6
+Pokemon = M_EKANS,4
+    AbilityIndex = 0
+	Moves = POISONFANG,BITE,LEER,WRAP
+Pokemon = MURKROW,5
     AbilityIndex = 1
+	Moves = THIEF,GUST,HYPNOSIS
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
-Pokemon = TECHUPPI,6
+Pokemon = TECHUPPI,5
 #-------------------------------
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.
-Pokemon = TECHUPPI,6
+Pokemon = CACNEA,4
     AbilityIndex = 2
-#-------------------------------
-[PSYCHIC_M2,Xavier]
-LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,6
-Pokemon = PHANTUMP,7
-#-------------------------------
-[PSYCHIC_M2,Xavier,100]
-LoseText = Wow, you’re pretty good!
-Pokemon = PUMPKABOO,6
-Pokemon = PHANTUMP,7
-#-------------------------------
-[LEADER_Valentina,Valentina]
-LoseText = Ugh, whatever…
-Pokemon = LILORINA,8
-    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
-    AbilityIndex = 2
-    Ace = yes
-Pokemon = LITWICK,8
-    Moves = EMBER,HEX,WILLOWISP,FIRESPIN
+	Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
+Pokemon = TECHUPPI,5
     AbilityIndex = 1
-Pokemon = M_ROSELIA,8
-    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
-    AbilityIndex = 2
-#-------------------------------
-[LEADER_Valentina,Valentina,100]
-LoseText = Ugh, whatever…
-Pokemon = LILORINA,8
-	Nature = BOLD
-    Moves = DISARMINGVOICE,BITINGCOLD,ASTONISH,BUBBLE
-    AbilityIndex = 2
-    EV = 20,20,72,10,,10
-    Ace = yes
-Pokemon = PACUNA,8
-	Nature = JOLLY
-    Moves = DOUBLEKICK,REFLECT,BITE,BABYDOLLEYES
-    EV = 10,20,10,72,,10
-    AbilityIndex = 1
-Pokemon = M_ROSELIA,8
-	Nature = MODEST
-    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,POLLENPUFF
-    AbilityIndex = 2
-    EV = 30,72,10,10,,10
+	Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
@@ -130,7 +96,7 @@ Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
+Pokemon = ZEAZAYA,5
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
@@ -147,20 +113,81 @@ Pokemon = DRILBUR,7
 #-------------------------------
 [FARMER,Rafa,100]
 LoseText = I need some water...
-Pokemon = SUNKERN,6
-Pokemon = DRILBUR,7
+Pokemon = ZEAZAYA,6
+Pokemon = DRILBUR,6
+#-------------------------------
+[PSYCHIC_M2,Xavier]
+LoseText = Wow, you’re pretty good!
+Pokemon = PUMPKABOO,6
+Pokemon = PHANTUMP,7
+#-------------------------------
+[PSYCHIC_M2,Xavier,100]
+LoseText = Wow, you’re pretty good!
+Pokemon = LILORINA,6
+	Moves = HYPNOSIS,WATERGUN,DISARMINGVOICE
+    AbilityIndex = 0
+Pokemon = PHANTUMP,7
+	Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?
-Pokemon = DUSKULL,7
-Pokemon = LITWICK,7
+Pokemon = DUSKULL,6
+Pokemon = LITWICK,6
     AbilityIndex = 0
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = ..Is that a no?
-Pokemon = DUSKULL,7
+Pokemon = FLABEBE,6
+	Moves = FAIRYWIND,HIDDENPOWER,GRASSKNOT
+	HiddenPowerType = FIRE
 Pokemon = LITWICK,7
+	Moves = WILLOWISP,EMBER,NIGHTSHADE
+    AbilityIndex = 1
+#-------------------------------
+[LEADER_Valentina,Valentina]
+LoseText = Ugh, whatever…
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
+    AbilityIndex = 2
+    Ace = yes
+Pokemon = LITWICK,8
+    Moves = EMBER,HEX,WILLOWISP,FIRESPIN
+    AbilityIndex = 1
+Pokemon = M_ROSELIA,8
+    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
+    AbilityIndex = 2
+#------------------------------- MURKROW, CROMEN, DUNSPARCE, NATU
+[LEADER_Valentina,Valentina,100]
+LoseText = Ugh, whatever…
+Pokemon = PACUNA,8
+	Nature = JOLLY
+    Moves = DOUBLEKICK,REFLECT,UTURN,LIGHTSCREEN
+    AbilityIndex = 1
+	Item = LIGHTCLAY
+Pokemon = LILORINA,8
+	Nature = BOLD
+    Moves = DISARMINGVOICE,BITINGCOLD,NIGHTSHADE,BUBBLE
+    AbilityIndex = 2
+	Item = RINDOBERRY
+Pokemon = FLABEBE,8
+	Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,SAFEGUARD
+    AbilityIndex = 2
+	HiddenPowerType = WATER
+	Item = WATERGEM
+Pokemon = MURKROW,8
+	Nature = JOLLY
+    Moves = GUST,ROOST,NIGHTSHADE,CONFUSERAY
+    AbilityIndex = 2
+Pokemon = NATU,8
+	Nature = TIMID
+    Moves = HEX,THUNDERWAVE,TELEPORT,PSYWAVE
     AbilityIndex = 0
+	Item = LEFTOVERS
+Pokemon = M_ROSELIA,9
+	Nature = MODEST
+    Moves = GROWTH,HEX,MEGADRAIN,GRASSWHISTLE
+    AbilityIndex = 2
+	Item = ORANBERRY
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex

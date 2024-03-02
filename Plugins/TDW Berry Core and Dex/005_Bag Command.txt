@@ -1,0 +1,19 @@
+class PokemonBagScreen in pbStartScreen
+  After "cmdGive     = -1" add new line:
+
+      cmdBerryDex = -1
+
+      
+  After "commands[cmdGive = commands.length] " line add new line:
+
+      commands[cmdBerryDex = commands.length]   = _INTL("Dex Entry") if pbCanViewBerryDex? && itm.is_berry? && pbBerryRegistered?(itm.id)
+
+
+  Before "elsif cmdToss >= 0 && command == cmdToss " add:
+
+       elsif cmdBerryDex >= 0 && command == cmdBerryDex 
+           pbFadeOutIn {
+               sscene = BerrydexInfo_Scene.new
+               sscreen = BerrydexInfoScreen.new(sscene)
+               sscreen.pbStartSceneSingle(item)
+           }
