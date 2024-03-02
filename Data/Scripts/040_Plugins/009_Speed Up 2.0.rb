@@ -18,16 +18,16 @@ module Input
 				$GameSpeed += 1
 				$GameSpeed = 0 if $GameSpeed >= SPEEDUP_STAGES.size
 				if $GameSpeed == 0
-					pbSEPlay("Gear_Low",80)
+					pbSEPlay("Gear_Low",100)
 				end
 				if $GameSpeed == 1
-					pbSEPlay("Gear_Mid",80)
+					pbSEPlay("Gear_Mid",100)
 				end
 				if $GameSpeed == 2
-					pbSEPlay("Gear_High",80)
+					pbSEPlay("Gear_High",100)
 				end
 				if $GameSpeed == 3 # ULTRA
-					pbSEPlay("Exclaim",80)
+					pbSEPlay("Exclaim",100)
 				end
 			end
     end
