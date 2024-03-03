@@ -489,12 +489,16 @@ class Camping
 		$game_system.menu_disabled = false
 		$PokemonGlobal.hideAndSeekViewport.dispose
 		
-		#resume movement of all pkmn events
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
+			#resume movement of all pkmn events
 			pkmn.campEvent.move_type = 1
+			#set all hide and seek icons to nil for pkmn to prevent a crash when saving
+			$PokemonGlobal.campers[i].hideAndSeekIcon = nil
 		end #for i in 0...$PokemonGlobal.campers.length
 		
+		$PokemonGlobal.hideAndSeekViewport = nil
+		$PokemonGlobal.hideAndSeekSprites = nil
 		self.resetCamperPositions
 		pbBGMFade(1)
 		
