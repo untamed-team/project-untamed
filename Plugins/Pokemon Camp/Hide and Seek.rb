@@ -497,6 +497,9 @@ class Camping
 		
 		self.resetCamperPositions
 		pbBGMFade(1)
+		
+		#if currently doing camp quest, mark task as complete it not complete already
+		markQuestTaskComplete(:Quest8, task=3) if getActiveQuests.include?(:Quest8) && !isTaskComplete(:Quest8,"Play hide and seek")
 	end
 	
 	def self.replayHideAndSeek
