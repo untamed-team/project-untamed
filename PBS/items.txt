@@ -4789,6 +4789,16 @@ Flags = Fling_80
 Move = DIVE
 Description = Diving on the first turn, the user floats up and attacks on the second. It can be used to dive underwater.
 #-------------------------------
+[TM108]
+Name = TM108
+NamePlural = TM108s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_65
+Move = HIDDENPOWER
+Description = A unique attack that varies in type depending on the Pokémon using it.
+#-------------------------------
 [HM01]
 Name = HM01
 NamePlural = HM01s

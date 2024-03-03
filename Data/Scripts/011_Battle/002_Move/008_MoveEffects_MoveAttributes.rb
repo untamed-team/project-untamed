@@ -372,7 +372,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
 
   def pbOnStartUse(user, targets)
     baseDmg = [10, 30, 50, 70, 90, 110, 130]
-		if attacker.level<=16
+		if user.level<=16
 			magnitudes=[
 				 4,
 				 5,5,
@@ -382,7 +382,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
 				 6,6,
 				 6
 			]			
-		elsif attacker.level<=24
+		elsif user.level<=24
 			magnitudes=[
 				 5,
 				 5,5,
@@ -392,7 +392,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
 				 7,7,
 				 7
 			]
-		elsif attacker.level<=33
+		elsif user.level<=33
 			magnitudes=[
 				 5,
 				 6,6,
@@ -402,7 +402,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
 				 7,7,
 				 8
 			]
-		elsif attacker.level<=44											
+		elsif user.level<=44											
 			magnitudes=[
 				 6,
 				 7,7,
