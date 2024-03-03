@@ -378,5 +378,7 @@ MenuHandlers.add(:pause_menu, :exit_camp, {
 		pbPlayDecisionSE
 		camp = Camping.new
 		camp.endCamping
+		menu.pbEndScene
+		next true
 	}
 })
