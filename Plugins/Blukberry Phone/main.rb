@@ -289,3 +289,93 @@ MenuHandlers.add(:pause_menu, :blukberry_phone, {
     }
   }
 })
+
+################################################################
+############# Override Default Option Menu Entries #############
+################################################################
+#this will be in the blukberry phone
+MenuHandlers.add(:pause_menu, :town_map, {
+  "name"      => _INTL("Town Map"),
+  "order"     => 40,
+  "condition" => proc { next false },#!$player.has_pokegear && $bag.has?(:TOWNMAP) },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonRegionMap_Scene.new(-1, false)
+      screen = PokemonRegionMapScreen.new(scene)
+      ret = screen.pbStartScreen
+      $game_temp.fly_destination = ret if ret
+      ($game_temp.fly_destination) ? menu.pbEndScene : menu.pbRefresh
+    }
+    next pbFlyToNewLocation
+  }
+})
+
+#this will be in the blukberry phone
+MenuHandlers.add(:pause_menu, :trainer_card, {
+  "name"      => proc { next $player.name },
+  "order"     => 50,
+  "condition" => proc { next false },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonTrainerCard_Scene.new
+      screen = PokemonTrainerCardScreen.new(scene)
+      screen.pbStartScreen
+      menu.pbRefresh
+    }
+    next false
+  }
+})
+
+#this will be in the blukberry phone
+MenuHandlers.add(:pause_menu, :options, {
+  "name"      => _INTL("Options"),
+  "order"     => 70,
+  "condition" => proc { next false },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonOption_Scene.new
+      screen = PokemonOptionScreen.new(scene)
+      screen.pbStartScreen
+      pbUpdateSceneMap
+      menu.pbRefresh
+    }
+    next false
+  }
+})
+
+#this will be in the blukberry phone
+MenuHandlers.add(:pause_menu, :pokedex, {
+  "name"      => _INTL("Pokédex"),
+  "order"     => 10,
+  "condition" => proc { next false },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    if Settings::USE_CURRENT_REGION_DEX
+      pbFadeOutIn {
+        scene = PokemonPokedex_Scene.new
+        screen = PokemonPokedexScreen.new(scene)
+        screen.pbStartScreen
+        menu.pbRefresh
+      }
+    elsif $player.pokedex.accessible_dexes.length == 1
+      $PokemonGlobal.pokedexDex = $player.pokedex.accessible_dexes[0]
+      pbFadeOutIn {
+        scene = PokemonPokedex_Scene.new
+        screen = PokemonPokedexScreen.new(scene)
+        screen.pbStartScreen
+        menu.pbRefresh
+      }
+    else
+      pbFadeOutIn {
+        scene = PokemonPokedexMenu_Scene.new
+        screen = PokemonPokedexMenuScreen.new(scene)
+        screen.pbStartScreen
+        menu.pbRefresh
+      }
+    end
+    next false
+  }
+})

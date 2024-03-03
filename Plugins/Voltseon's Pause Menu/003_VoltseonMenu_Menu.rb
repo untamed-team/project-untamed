@@ -289,55 +289,62 @@ class VoltseonsPauseMenu < Component
   end
 end
 
-################################################################
-############# Override Default Option Menu Entries #############
-################################################################
-MenuHandlers.add(:pause_menu, :town_map, {
-  "name"      => _INTL("Town Map"),
-  "order"     => 40,
-  "condition" => proc { next false },#!$player.has_pokegear && $bag.has?(:TOWNMAP) },
+#Hide while camping
+MenuHandlers.add(:pause_menu, :party, {
+  "name"      => _INTL("Pokémon"),
+  "order"     => 20,
+  "condition" => proc { next $player.party_count > 0 && !$PokemonGlobal.camping },
   "effect"    => proc { |menu|
     pbPlayDecisionSE
+    hidden_move = nil
     pbFadeOutIn {
-      scene = PokemonRegionMap_Scene.new(-1, false)
-      screen = PokemonRegionMapScreen.new(scene)
-      ret = screen.pbStartScreen
-      $game_temp.fly_destination = ret if ret
-      ($game_temp.fly_destination) ? menu.pbEndScene : menu.pbRefresh
+      sscene = PokemonParty_Scene.new
+      sscreen = PokemonPartyScreen.new(sscene, $player.party)
+      hidden_move = sscreen.pbPokemonScreen
+      (hidden_move) ? menu.pbEndScene : menu.pbRefresh
     }
-    next pbFlyToNewLocation
+    next false if !hidden_move
+    $game_temp.in_menu = false
+    pbUseHiddenMove(hidden_move[0], hidden_move[1])
+    next true
   }
 })
 
-MenuHandlers.add(:pause_menu, :trainer_card, {
-  "name"      => proc { next $player.name },
-  "order"     => 50,
-  "condition" => proc { next false },
+MenuHandlers.add(:pause_menu, :bag, {
+  "name"      => _INTL("Bag"),
+  "order"     => 30,
+  "condition" => proc { next !pbInBugContest? && !$PokemonGlobal.camping },
   "effect"    => proc { |menu|
     pbPlayDecisionSE
+    item = nil
     pbFadeOutIn {
-      scene = PokemonTrainerCard_Scene.new
-      screen = PokemonTrainerCardScreen.new(scene)
-      screen.pbStartScreen
-      menu.pbRefresh
+      scene = PokemonBag_Scene.new
+      screen = PokemonBagScreen.new(scene, $bag)
+      item = screen.pbStartScreen
+      (item) ? menu.pbEndScene : menu.pbRefresh
     }
-    next false
+    next false if !item
+    $game_temp.in_menu = false
+    pbUseKeyItemInField(item)
+    next true
   }
 })
 
-MenuHandlers.add(:pause_menu, :options, {
-  "name"      => _INTL("Options"),
-  "order"     => 70,
-  "condition" => proc { next false },
+MenuHandlers.add(:pause_menu, :save, {
+  "name"      => _INTL("Save"),
+  "order"     => 60,
+  "condition" => proc { next $game_system && !$game_system.save_disabled &&
+                             !pbInSafari? && !pbInBugContest? && !$PokemonGlobal.camping },
   "effect"    => proc { |menu|
-    pbPlayDecisionSE
-    pbFadeOutIn {
-      scene = PokemonOption_Scene.new
-      screen = PokemonOptionScreen.new(scene)
-      screen.pbStartScreen
-      pbUpdateSceneMap
-      menu.pbRefresh
-    }
+    menu.pbHideMenu
+    scene = PokemonSave_Scene.new
+    screen = PokemonSaveScreen.new(scene)
+    if screen.pbSaveScreen
+      menu.pbEndScene
+      next true
+    end
+    menu.pbRefresh
+    menu.pbShowMenu
     next false
   }
 })

@@ -344,42 +344,39 @@ class Game_Event < Game_Character
 	attr_accessor :move_route_forcing
 end
 
-#-------------------------------------------------------------------------------
-# Entry for Camping
-#-------------------------------------------------------------------------------
-class MenuEntryCamp < MenuEntry
-  def initialize
-    @icon = "menu_camp"
-    @name = "Camp"
-  end
-
-  def selected(menu)
-    menu.pbHideMenu
-		camp = Camping.new
-    camp.startCamping
-	end
-
-  def selectable?
-    return $bag.has?(:CAMPINGGEAR) && !$PokemonGlobal.camping
-	end
-end
-
-#-------------------------------------------------------------------------------
-# Entry for Exiting Camp
-#-------------------------------------------------------------------------------
-class MenuEntryExitCamp < MenuEntry
-	def initialize
-		@icon = "menu_quit_game"
-		@name = "Pack up"
-	end
-
-	def selected(menu)
+#---------------------------
+# Entry for Entering Camp
+#---------------------------
+MenuHandlers.add(:pause_menu, :camp, {
+	"name"      => _INTL("Camp"),
+	"order"     => 60,
+	"condition" => proc { next $bag.has?(:CAMPINGGEAR) && (!$PokemonGlobal.camping || $PokemonGlobal.camping.nil?) },
+	"effect"    => proc { |menu|
 		menu.pbHideMenu
 		camp = Camping.new
-		camp.endCamping
-	end
+		camp.startCamping
+		#if camp.startCamping
+		#print "test"
+			menu.pbEndScene
+			next true
+		#end
+		#menu.pbRefresh
+		#menu.pbShowMenu
+		#next false
+	}
+})
 
-	def selectable?
-		return $PokemonGlobal.camping
-	end
-end
+
+#---------------------------
+# Entry for Exiting Camp
+#---------------------------
+MenuHandlers.add(:pause_menu, :exit_camp, {
+	"name"      => _INTL("Pack up"),
+	"order"     => 60,
+	"condition" => proc { next $PokemonGlobal.camping },
+	"effect"    => proc {
+		pbPlayDecisionSE
+		camp = Camping.new
+		camp.endCamping
+	}
+})
