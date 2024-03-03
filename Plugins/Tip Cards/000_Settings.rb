@@ -44,32 +44,6 @@ module Settings
                     :YAdjustment => 0, # Adjust the vertical spacing of the tip's text (in pixels)
                     :HideRevisit => true # Set to true if you don't want the player to see the tip again when revisiting seen tips.
             },
-            :CATCH => {
-                :Title => _INTL("Catching Pokémon"),
-                :Text => _INTL("This is the text of the tip. You catch Pokémon by throwing a <c2=0999367C><b>Poké Ball</b></c2> at them."),
-                :Image => "catch",
-                :Background => "bg2"
-            },
-            :CATCH2 => {
-                :Title => _INTL("Catching Pokémon"),
-                :Text => _INTL("This is the text of the tip with a bottom picture. You catch Pokémon by throwing a <c2=0999367C><b>Poké Ball</b></c2> at them."),
-                :Image => "catch",
-                :ImagePosition => :Bottom,
-                :Background => "bg2"
-            },
-            :ITEMS => {
-                :Title => _INTL("Items"),
-                :Text => _INTL("This is the text of the other tip. You may find items lying around."),
-                :Image => "items",
-                :YAdjustment => 64
-            },
-            :ITEMS2 => {
-                :Title => _INTL("Items"),
-                :Text => _INTL("This is the text of the other tip with a right picture. You may find items lying around."),
-                :Image => "items",
-                :ImagePosition => :Right,
-                :YAdjustment => 64
-            },
             :BOOK1PAGE1 => {
                 :Title => _INTL("Page 1"),
                 :Text => _INTL("<al>This is the first page. <br>Introducing: all the characters!</al>"),
@@ -164,25 +138,31 @@ module Settings
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("About icons and stuff, more in depth"),
             },
+            :CAMP1 => {
+                :Title => _INTL("Camp"),
+                :Text => _INTL("With the <c2=0999367C><b>Camping Gear</b></c2>, you can access Camp from the pause menu. You can access Camp from many different places like on the grass, in a cave, etc."),
+            },
+            :CAMP2 => {
+                :Title => _INTL("Camp"),
+                :Text => _INTL("Inside Camp, you can interact with your Pokémon in several ways."),
+                :Image => "camp interact",
+            },
+            :COOKING1 => {
+                :Title => _INTL("Cooking Candy"),
+                :Text => _INTL("Inside Camp, you can create your own candy over the camp fire if you have candy bases and berries!"),
+            },
+            :COOKING2 => {
+                :Title => _INTL("Cooking Candy"),
+                :Text => _INTL("Feeding this candy to your Pokémon will increase its stats for Pokémon Contests."),
+            },
+            :COOKING3 => {
+                :Title => _INTL("Cooking Candy"),
+                :Text => _INTL("To make candy, hold the left mouse button with your spoon in the pot and drag the spoon around like the arrows indicate."),
+                :Image => "cooking1",
+            },
         }
 
         TIP_CARDS_GROUPS = {
-            :BEGINNER => {
-                :Title => _INTL("Beginner Tips"),
-                :Tips => [:CATCH, :CATCH2, :ITEMS, :ITEMS2]
-            },
-            :CATCHING => {
-                :Title => _INTL("Catching Tips"),
-                :Tips => [:CATCH, :CATCH2]
-            },
-            :ITEMS => {
-                :Title => _INTL("Item Tips"),
-                :Tips => [:ITEMS, :ITEMS2]
-            },
-            :BOOK1 => {
-                :Title => _INTL("Book Alpha"),
-                :Tips => [:BOOK1PAGE1, :BOOK1PAGE2, :BOOK1PAGE3, :BOOK1PAGE4]
-            },
             :AUTOHEAL => {
                 :Title => _INTL("Auto Heal"),
                 :Tips => [:AUTOHEAL1, :AUTOHEAL2]
@@ -199,6 +179,13 @@ module Settings
                 :Title => _INTL("Battle Info"),
                 :Tips => [:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO6]
             },
+            :CAMP => {
+                :Title => _INTL("Camp"),
+                :Tips => [:CAMP1, :CAMP2]
+            },
+            :COOKING => {
+                :Title => _INTL("Cooking Candy"),
+                :Tips => [:COOKING1, :COOKING2, :COOKING3]
+            },
         }
-
 end
