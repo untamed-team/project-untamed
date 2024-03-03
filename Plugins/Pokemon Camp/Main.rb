@@ -355,14 +355,8 @@ MenuHandlers.add(:pause_menu, :camp, {
 		menu.pbHideMenu
 		camp = Camping.new
 		camp.startCamping
-		#if camp.startCamping
-		#print "test"
-			menu.pbEndScene
-			next true
-		#end
-		#menu.pbRefresh
-		#menu.pbShowMenu
-		#next false
+		menu.pbEndScene
+		next true
 	}
 })
 
@@ -372,10 +366,10 @@ MenuHandlers.add(:pause_menu, :camp, {
 #---------------------------
 MenuHandlers.add(:pause_menu, :exit_camp, {
 	"name"      => _INTL("Pack up"),
-	"order"     => 60,
+	"order"     => 50,
 	"condition" => proc { next $PokemonGlobal.camping },
-	"effect"    => proc {
-		pbPlayDecisionSE
+	"effect"    => proc { |menu|
+		menu.pbHideMenu
 		camp = Camping.new
 		camp.endCamping
 		menu.pbEndScene
