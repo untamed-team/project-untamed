@@ -276,22 +276,16 @@ end
 #-------------------------------------------------------------------------------
 # Entry for Voltseon's Pause Menu
 #-------------------------------------------------------------------------------
-class MenuEntryBlukberryPhone < MenuEntry
-  def initialize
-    @icon = "menu_blukberry_phone"
-    @name = "Blukberry Phone"
-  end
-
-  def selected(menu)
+MenuHandlers.add(:pause_menu, :blukberry_phone, {
+  "name"      => _INTL("Blukberry Phone"),
+  "order"     => 10,
+  "condition" => proc { next true },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
     pbFadeOutIn {
-      scene = PokemonTutorNet_Scene.new
-      screen = PokemonTutorNetScreen.new(scene)
-      screen.pbStartScreen
+		scene = PhoneScene.new
+		screen = PhoneScreen.new(scene)
+		screen.pbStartScreen
     }
-	end
-
-  def selectable?
-    #return ($player.party_count > 0)
-    return false
-  end
-end
+  }
+})

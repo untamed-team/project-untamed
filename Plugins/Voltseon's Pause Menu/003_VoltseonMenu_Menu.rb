@@ -288,3 +288,56 @@ class VoltseonsPauseMenu < Component
     pbDrawTextPositions(@sprites["entrytext"].bitmap, [[text, Graphics.width / 4, 8, 2, base_color, shdw_color]])
   end
 end
+
+################################################################
+############# Override Default Option Menu Entries #############
+################################################################
+MenuHandlers.add(:pause_menu, :town_map, {
+  "name"      => _INTL("Town Map"),
+  "order"     => 40,
+  "condition" => proc { next false },#!$player.has_pokegear && $bag.has?(:TOWNMAP) },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonRegionMap_Scene.new(-1, false)
+      screen = PokemonRegionMapScreen.new(scene)
+      ret = screen.pbStartScreen
+      $game_temp.fly_destination = ret if ret
+      ($game_temp.fly_destination) ? menu.pbEndScene : menu.pbRefresh
+    }
+    next pbFlyToNewLocation
+  }
+})
+
+MenuHandlers.add(:pause_menu, :trainer_card, {
+  "name"      => proc { next $player.name },
+  "order"     => 50,
+  "condition" => proc { next false },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonTrainerCard_Scene.new
+      screen = PokemonTrainerCardScreen.new(scene)
+      screen.pbStartScreen
+      menu.pbRefresh
+    }
+    next false
+  }
+})
+
+MenuHandlers.add(:pause_menu, :options, {
+  "name"      => _INTL("Options"),
+  "order"     => 70,
+  "condition" => proc { next false },
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonOption_Scene.new
+      screen = PokemonOptionScreen.new(scene)
+      screen.pbStartScreen
+      pbUpdateSceneMap
+      menu.pbRefresh
+    }
+    next false
+  }
+})
