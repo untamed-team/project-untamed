@@ -544,7 +544,7 @@ class PokemonSaveScreen
     #added by Gardenette
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
-      $tips_log.tipMultiSave
+		pbTipCardsGrouped(:MULTISAVE)
     end
     
     ret = false
