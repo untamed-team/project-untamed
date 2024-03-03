@@ -51,7 +51,7 @@ class DateAndTimeHud < Component
 	end
 
 	if time >= 0
-	  imagepos.push(["Graphics/Pictures/Voltseon's Pause Menu/time_weather", Graphics.width/2 - textwidth - 36, 42, 0, 24 * time, 24, 24])
+	  imagepos.push(["Graphics/Pictures/VPM/time_weather", Graphics.width/2 - textwidth - 36, 42, 0, 24 * time, 24, 24])
 	end
 	
 	weather = -1
@@ -75,7 +75,7 @@ class DateAndTimeHud < Component
 	end
 
 	if weather >= 0
-	  imagepos.push(["Graphics/Pictures/Voltseon's Pause Menu/time_weather", Graphics.width/2 - textwidth - 64, 42, 0, 24 * weather, 24, 24])
+	  imagepos.push(["Graphics/Pictures/VPM/time_weather", Graphics.width/2 - textwidth - 64, 42, 0, 24 * weather, 24, 24])
 	end
 	
     pbDrawImagePositions(overlay, imagepos)

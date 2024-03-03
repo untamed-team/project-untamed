@@ -343,3 +343,43 @@ class Game_Event < Game_Character
 	attr_accessor :move_route
 	attr_accessor :move_route_forcing
 end
+
+#-------------------------------------------------------------------------------
+# Entry for Camping
+#-------------------------------------------------------------------------------
+class MenuEntryCamp < MenuEntry
+  def initialize
+    @icon = "menu_camp"
+    @name = "Camp"
+  end
+
+  def selected(menu)
+    menu.pbHideMenu
+		camp = Camping.new
+    camp.startCamping
+	end
+
+  def selectable?
+    return $bag.has?(:CAMPINGGEAR) && !$PokemonGlobal.camping
+	end
+end
+
+#-------------------------------------------------------------------------------
+# Entry for Exiting Camp
+#-------------------------------------------------------------------------------
+class MenuEntryExitCamp < MenuEntry
+	def initialize
+		@icon = "menu_quit_game"
+		@name = "Pack up"
+	end
+
+	def selected(menu)
+		menu.pbHideMenu
+		camp = Camping.new
+		camp.endCamping
+	end
+
+	def selectable?
+		return $PokemonGlobal.camping
+	end
+end

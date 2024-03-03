@@ -241,9 +241,9 @@ class VPM_NewQuestHud < Component
     @sprites["overlay"].bitmap.clear
     if quest_count > 0
       if quest_count == 1
-        text = _INTL("You have {1} new quest!",quest_count)
+        text = _INTL("You have {1} new objective!",quest_count)
       else
-        text = _INTL("You have {1} new quests!",quest_count)
+        text = _INTL("You have {1} new objectives!",quest_count)
       end
       pbSetSmallFont(@sprites["overlay"].bitmap)
       pbDrawTextPositions(@sprites["overlay"].bitmap, [[text, (Graphics.width / 2) - 8, 12, 1, @base_color, @shdw_color]])
