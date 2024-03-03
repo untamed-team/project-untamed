@@ -283,8 +283,8 @@ class VPM_GameSpeedHud < Component
     else
 		text = _INTL("")
     end
-    @sprites["overlay"].bitmap.clear
-    pbSetSmallFont(@sprites["overlay"].bitmap)
-    pbDrawTextPositions(@sprites["overlay"].bitmap,[[text,100,50,1,@base_color,@shdw_color]])
+    @sprites["overlay"].bitmap.clear if @sprites["overlay"]
+    pbSetSmallFont(@sprites["overlay"].bitmap) if @sprites["overlay"]
+    pbDrawTextPositions(@sprites["overlay"].bitmap,[[text,100,50,1,@base_color,@shdw_color]]) if @sprites["overlay"]
   end
 end
