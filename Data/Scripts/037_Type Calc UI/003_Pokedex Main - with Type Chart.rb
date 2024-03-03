@@ -346,7 +346,7 @@ class PokemonPokedex_Scene
     pbFadeInAndShow(@sprites)
     
     #added by Gardenette
-    $tips_log.tipAdvancedDex if !$tips_log.get_log.include?("Advanced Dex")
+    pbShowTipCardsGrouped(:ADVDEX) if !pbSeenTipCard?(:ADVDEX1)
   end
 
   def pbEndScene
