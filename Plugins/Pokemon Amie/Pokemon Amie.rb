@@ -285,6 +285,10 @@ class Pokemon
 	
 	#if currently doing camp quest, mark task as complete it not complete already
 	markQuestTaskComplete(:Quest8, task=2) if getActiveQuests.include?(:Quest8) && !isTaskComplete(:Quest8,"Feed your Pokémon")
+	if isTaskComplete(:Quest8,"Play hide and seek") && isTaskComplete(:Quest8,"Pet your Pokémon") && isTaskComplete(:Quest8,"Feed your Pokémon")
+		advanceQuestToStage(:Quest8,stageNum=2)
+		turninQuest(:Quest8)
+	end
   end
  
   # Changes the happiness of this Pokémon depending on what happened to change it.
@@ -322,6 +326,10 @@ class Pokemon
       enjoyGain=rand(20)+20
 		#if currently doing camp quest, mark task as complete it not complete already
 		markQuestTaskComplete(:Quest8, task=1) if getActiveQuests.include?(:Quest8) && !isTaskComplete(:Quest8,"Pet your Pokémon")
+		if isTaskComplete(:Quest8,"Play hide and seek") && isTaskComplete(:Quest8,"Pet your Pokémon") && isTaskComplete(:Quest8,"Feed your Pokémon")
+			advanceQuestToStage(:Quest8,stageNum=2)
+			turninQuest(:Quest8)
+		end
     else
       pbMessage(_INTL("Unknown stat-changing method."))
     end
