@@ -158,7 +158,7 @@ module Settings
             },
             :BATTLEINFO5 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("For more information, view this tip again from the <c2=0999367C><b>Trainer Tips</b></c2> app on your phone."),
+                :Text => _INTL("For more information, view this tip again from the <c2=0999367C><b>Adventure Guide</b></c2> app on your phone."),
             },
             :BATTLEINFO6 => {
                 :Title => _INTL("Battle Info"),
