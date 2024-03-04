@@ -44,7 +44,6 @@ class Camping
 			#set move routes to fixed
 			$PokemonGlobal.campPkmnChasing.campEvent.move_type = 0
 			$PokemonGlobal.campPkmnRunning.campEvent.move_type = 0
-			print "chasing"
 		end
 	end #def self.pkmnChasing
 	

@@ -80,7 +80,7 @@ class PokemonPokedexInfo_Scene
     @sprites["advancedicon"].visible = false
     
     #added by Gardenette
-    $tips_log.tipAdvancedDex if !$tips_log.get_log.include?("Advanced Dex")
+    pbShowTipCardsGrouped(:ADVDEX) if !pbSeenTipCard?(:ADVDEX1)
     
   end
   

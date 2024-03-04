@@ -1,0 +1,5 @@
+Name         = Voltseon's Pause Menu
+Essentials   = 20.1
+Version      = 2.1
+Website      = https://reliccastle.com/threads/3930
+Credits      = Voltseon, Golisopod User, ENLS

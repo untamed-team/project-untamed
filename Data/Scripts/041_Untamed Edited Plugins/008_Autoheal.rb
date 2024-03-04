@@ -137,9 +137,7 @@ class PokemonParty_Scene
     pbFadeInAndShow(@sprites) { update }
     
     #added by Gardenette
-    if !$game_temp.in_battle && !$tips_log.get_log.include?("Auto Heal")
-      $tips_log.tipAutoHeal
-    end
+    pbShowTipCardsGrouped(:AUTOHEAL) if !pbSeenTipCard?(:AUTOHEAL1)
     
   end
   

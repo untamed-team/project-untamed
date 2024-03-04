@@ -1747,3 +1747,7 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
     $game_screen.weather(new_weather[0], 9, 0) if rand(100) < new_weather[1]
   }
 )
+
+#to prevent a crash with save files that were created when my Tutorial Tips existed
+class Tips
+end

@@ -90,25 +90,7 @@ class MenuEntryBag < MenuEntry
     return !pbInBugContest? && !$PokemonGlobal.camping
   end
 end
-#-------------------------------------------------------------------------------
-# Entry for Pokegear Screen
-#-------------------------------------------------------------------------------
-class MenuEntryPokegear < MenuEntry
-  def initialize
-    @icon = "menuPokegear"
-    @name = "PokéGear"
-  end
 
-  def selected(menu)
-    pbFadeOutIn(99999) {
-      scene = PokemonPokegear_Scene.new
-      screen = PokemonPokegearScreen.new(scene)
-      screen.pbStartScreen
-    }
-  end
-
-  def selectable?; return $Trainer.has_pokegear; end
-end
 #-------------------------------------------------------------------------------
 # Entry for Trainer Card Screen
 #-------------------------------------------------------------------------------
@@ -368,65 +350,4 @@ class MenuEntryPC < MenuEntry
 	end
 end
 
-#-------------------------------------------------------------------------------
-# Entry for Camping
-#-------------------------------------------------------------------------------
-class MenuEntryCamp < MenuEntry
-  def initialize
-    @icon = "menuPokegear"
-    @name = "Camp"
-  end
 
-  def selected(menu)
-    menu.pbHideMenu
-		camp = Camping.new
-    camp.startCamping
-	end
-
-  def selectable?
-    return $bag.has?(:CAMPINGGEAR) && !$PokemonGlobal.camping
-	end
-end
-
-#-------------------------------------------------------------------------------
-# Entry for Exiting Camp
-#-------------------------------------------------------------------------------
-class MenuEntryExitCamp < MenuEntry
-  def initialize
-    @icon = "menuBack"
-    @name = "Pack up"
-  end
-
-  def selected(menu)
-    menu.pbHideMenu
-		camp = Camping.new
-    camp.endCamping
-	end
-
-  def selectable?
-    return $PokemonGlobal.camping
-	end
-end
-
-#-------------------------------------------------------------------------------
-# Entry for Achievements
-#-------------------------------------------------------------------------------
-class MenuEntryAchievements < MenuEntry
-  def initialize
-    @icon = "menuTrainer"
-    @name = "Achievements"
-  end
-
-  def selected(menu)
-    pbPlayDecisionSE
-      scene = PokemonAchievements_Scene.new
-      screen = PokemonAchievements.new(scene)
-      pbFadeOutIn(99999) { 
-      screen.pbStartScreen
-    }
-	end
-
-  def selectable?
-    return true
-	end
-end

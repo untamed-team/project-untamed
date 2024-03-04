@@ -106,13 +106,17 @@ class Battle
 	exp = (a/defeatedBattler.participants.length).floor * haveexpshare
     return 0 if exp <= 0
 	# level cap #by low
-	truelevel = defeatedBattler.level															# stuff
+	expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
+	truelevel = defeatedBattler.level								# stuff
 	truelevel -= 10 if $game_variables[MASTERMODEVARS][7]==true		# for
 	truelevel -= 20 if $game_variables[MASTERMODEVARS][22]==true	# master
 	truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true	# mode
 	truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true	# settings
+	if (pkmn.level - truelevel) >= 3 && $game_variables[MECHANICSVAR] == 0
+		truelevel += 1
+		expvariable = 75
+	end
 	exp = (exp / 3).floor
-	expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
 	exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
 	exp = 0 if pkmn.level - truelevel == 3
 	exp = (exp / 2).floor if pkmn.level>40

@@ -320,9 +320,7 @@ class Battle::Scene
     ret = -1
     
     #added by Gardenette
-    if !$tips_log.get_log.include?("Battle Info") && $game_variables[27] >= 9 #show only after rival battle
-      $tips_log.tipBattleInfo
-    end
+    pbShowTipCard(:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO5) if !pbSeenTipCard?(:BATTLEINFO1) && $game_variables[27] >= 9 #show only after rival battle
     
     loop do
       oldIndex = cw.index

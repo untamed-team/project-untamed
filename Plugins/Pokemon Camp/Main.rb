@@ -343,3 +343,36 @@ class Game_Event < Game_Character
 	attr_accessor :move_route
 	attr_accessor :move_route_forcing
 end
+
+#---------------------------
+# Entry for Entering Camp
+#---------------------------
+MenuHandlers.add(:pause_menu, :camp, {
+	"name"      => _INTL("Camp"),
+	"order"     => 60,
+	"condition" => proc { next $bag.has?(:CAMPINGGEAR) && (!$PokemonGlobal.camping || $PokemonGlobal.camping.nil?) },
+	"effect"    => proc { |menu|
+		menu.pbHideMenu
+		camp = Camping.new
+		camp.startCamping
+		menu.pbEndScene
+		next true
+	}
+})
+
+
+#---------------------------
+# Entry for Exiting Camp
+#---------------------------
+MenuHandlers.add(:pause_menu, :exit_camp, {
+	"name"      => _INTL("Pack up"),
+	"order"     => 50,
+	"condition" => proc { next $PokemonGlobal.camping },
+	"effect"    => proc { |menu|
+		menu.pbHideMenu
+		camp = Camping.new
+		camp.endCamping
+		menu.pbEndScene
+		next true
+	}
+})

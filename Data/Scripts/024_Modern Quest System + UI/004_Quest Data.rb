@@ -176,9 +176,11 @@ module QuestModule
     :Stage1 => "Camp with your Pokémon.",
     :Task1 => ["Pet your Pokémon",1,false],
     :Task2 => ["Feed your Pokémon",1,false],
-    :Task3 => ["Play hide and seek with your Pokémon",1,false],
+    :Task3 => ["Play hide and seek",1,false],
+    :Stage2 => "Return the Camping Gear to Alex.",
     :Location1 => "Camp",
-    :QuestDescription => "Alex has loaned you her camping gear so you can experience camping with your Pokémon. Give it a try!",
+    :Location1 => "Route 2",
+    :QuestDescription => "Alex has loaned you her camping gear so you can experience camping with your Pokémon.",
     :ReadyAtStart => true,
   }
   
