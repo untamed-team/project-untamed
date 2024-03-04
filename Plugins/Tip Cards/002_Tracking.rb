@@ -6,7 +6,7 @@ def pbRevisitTipCards
     pbShowTipCard(*arr)
 end
 
-def pbRevisitTipCardsGrouped(*groups)
+def pbRevisitTipCardsGrouped(*groups, continuous: false)
     groups = Settings::TIP_CARDS_GROUPS.keys if !groups || groups.empty?
     sections = []
     groups.each_with_index do |group, i|
@@ -20,7 +20,7 @@ def pbRevisitTipCardsGrouped(*groups)
         end
     end
     if sections.length > 1 || (sections.length == 1 && Settings::TIP_CARDS_SINGLE_GROUP_SHOW_HEADER)
-        scene = TipCardGroups_Scene.new(sections)
+        scene = TipCardGroups_Scene.new(sections, true, continuous)
         screen = TipCardGroups_Screen.new(scene)
         screen.pbStartScreen
     elsif sections[0]

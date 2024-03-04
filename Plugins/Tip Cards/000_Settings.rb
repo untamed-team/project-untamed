@@ -16,16 +16,24 @@ module Settings
         TIP_CARDS_SINGLE_GROUP_SHOW_HEADER = false
 
         #--------------------------------------------------------------------------------
+        #  If set to true, when the player uses the SPECIAL control, a list of all
+        #  groups available to view will appear for the player to jump to one.
+        #--------------------------------------------------------------------------------	
+        TIP_CARDS_GROUP_LIST = true
+
+        #--------------------------------------------------------------------------------
         #  Set the default text colors
         #--------------------------------------------------------------------------------	
         TIP_CARDS_TEXT_MAIN_COLOR       = Color.new(80, 80, 88)
         TIP_CARDS_TEXT_SHADOW_COLOR     = Color.new(160, 160, 168)
 
         #--------------------------------------------------------------------------------
-        #  Set the sound effect to play when showing and dismissing tip cards.
+        #  Set the sound effect to play when showing, dismissing, and switching tip cards.
+        #  For TIP_CARDS_SWITCH_SE, set to nil to use the default cursor sound effect.
         #--------------------------------------------------------------------------------	
         TIP_CARDS_SHOW_SE               = "GUI menu open"
         TIP_CARDS_DISMISS_SE            = "GUI menu close"
+        TIP_CARDS_SWITCH_SE             = nil
 
         #--------------------------------------------------------------------------------
         #  Define your tips in this hash. The :EXAMPLE describes what some of the 

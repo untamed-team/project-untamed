@@ -6,10 +6,10 @@ end
 
 alias pbTipCard pbShowTipCard
 
-def pbShowTipCardsGrouped(*groups)
+def pbShowTipCardsGrouped(*groups, continuous: false)
     sections = groups
     if sections.length > 1 || (sections.length == 1 && Settings::TIP_CARDS_SINGLE_GROUP_SHOW_HEADER)
-        scene = TipCardGroups_Scene.new(sections, false)
+        scene = TipCardGroups_Scene.new(sections, false, continuous)
         screen = TipCardGroups_Screen.new(scene)
         screen.pbStartScreen
     elsif sections[0]
@@ -93,7 +93,11 @@ class TipCard_Scene
             end
             if oldindex != @index
                 pbDrawTip
-                pbSEPlay("GUI sel cursor") 
+                if Settings::TIP_CARDS_SWITCH_SE
+                    pbSEPlay(Settings::TIP_CARDS_SWITCH_SE)
+                else
+                    pbPlayCursorSE
+                end
             end
         end
     end
@@ -192,9 +196,10 @@ class TipCardGroups_Screen
 end
   
 class TipCardGroups_Scene
-    def initialize(groups, revisit = true)
+    def initialize(groups, revisit = true, continuous = false)
         @groups = groups
         @revisit = revisit
+        @continuous = continuous
     end
 
     def pbStartScene
@@ -264,22 +269,45 @@ class TipCardGroups_Scene
                 pbSEPlay(Settings::TIP_CARDS_DISMISS_SE)
                 break
             elsif Input.trigger?(Input::LEFT)
-                @index -= 1 if @index > 0
+                if @index > 0
+                    @index -= 1 
+                elsif @continuous && @index <= 0 && @section > 0
+                    @section -= 1
+                    @last_index = true
+                end
             elsif Input.trigger?(Input::RIGHT)
-                @index += 1 if @index < @pages - 1
+                if @index < @pages - 1
+                    @index += 1 
+                elsif @continuous && @index >= @pages - 1 && @section < @sections - 1
+                    @section += 1
+                end
             elsif Input.trigger?(Input::JUMPUP)
                 @section -= 1 if @section > 0
             elsif Input.trigger?(Input::JUMPDOWN)
                 @section += 1 if @section < @sections - 1
+            elsif Input.trigger?(Input::SPECIAL) && Settings::TIP_CARDS_GROUP_LIST && @sections > 1
+                list = []
+                @groups.each { |group| list.push(Settings::TIP_CARDS_GROUPS[group][:Title]) }
+                val = pbShowCommands(nil, list, -1, @section)
+                @section = val unless val < 0
             end
             if oldsection != @section
-                @index = 0
+                @index = 0 unless @last_index
                 pbDrawGroup
-                pbSEPlay("GUI sel cursor") 
+                if Settings::TIP_CARDS_SWITCH_SE
+                    pbSEPlay(Settings::TIP_CARDS_SWITCH_SE)
+                else
+                    pbPlayCursorSE
+                end
             elsif oldindex != @index
                 pbDrawTip
-                pbSEPlay("GUI sel cursor") 
+                if Settings::TIP_CARDS_SWITCH_SE
+                    pbSEPlay(Settings::TIP_CARDS_SWITCH_SE)
+                else
+                    pbPlayCursorSE
+                end
             end
+            last_index = nil if last_index
         end
     end
     
@@ -335,6 +363,10 @@ class TipCardGroups_Scene
         pbSetSystemFont(overlay)
         base = Settings::TIP_CARDS_TEXT_MAIN_COLOR
         shadow = Settings::TIP_CARDS_TEXT_SHADOW_COLOR
+        if @last_index
+            @index = @pages - 1
+            @last_index = nil
+        end
         tip = @tips[@index]
         info = Settings::TIP_CARDS_CONFIGURATION[tip] || nil
         if info
