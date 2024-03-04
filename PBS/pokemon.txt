@@ -3758,7 +3758,7 @@ Pokedex = Stories about Maripome claim that it sacrified itself to a great preda
 [HYLARMOS]
 Name = Hylarmos
 Types = ICE,POISON
-BaseStats = 100,160,140,70,140,70
+BaseStats = 100,160,140,80,130,70
 GenderRatio = Genderless
 GrowthRate = Fluctuating
 BaseExp = 306
