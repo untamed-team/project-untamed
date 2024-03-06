@@ -5125,7 +5125,7 @@ TotalPP = 15
 Target = NearOther
 FunctionCode = TypeDependsOnUserIVs
 Flags = CanProtect,CanMirrorMove
-Description = A unique attack that varies in type and intensity depending on the Pokémon using it.
+Description = A unique attack that varies in type depending on the Pokémon using it.
 #-------------------------------
 [ROUND]
 Name = Round

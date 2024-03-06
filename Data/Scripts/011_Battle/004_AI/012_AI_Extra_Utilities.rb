@@ -581,7 +581,7 @@ class Battle::AI
 		return baseDmg
 	end
 	
-  def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
+  	def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
 		return true if !move
 		mold_broken=moldbroken(attacker,opponent,move)
 		damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
@@ -759,7 +759,68 @@ class Battle::AI
 		return pri
 	end
 	
-  def wasUserAbilityActivated?(user) 
+	def EndofTurnHPChanges(user,target,heal,chips,both,switching=false,rest=false)
+		#### Azery: function below sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
+		### the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
+		### thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
+		healing = 1  
+		chip = 0
+		oppitemworks = target.itemActive?
+		attitemworks = user.itemActive?
+		skill=100
+		if (user.effects[PBEffects::AquaRing])==true
+			subscore = 0
+			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
+			healing += subscore
+		end
+		if user.effects[PBEffects::Ingrain]
+			subscore = 0
+			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
+			healing += subscore
+		end
+		healing += 0.0625 if user.hasWorkingAbility(:DRYSKIN) &&  @battle.pbWeather==:Rain
+		healing += 0.0625 if attitemworks && (user.item == :LEFTOVERS || (user.item == :BLACKSLUDGE && user.pbHasType?(:POISON)))
+		healing += 0.0625 if user.hasWorkingAbility(:RAINDISH) && @battle.pbWeather==:Rain
+		healing += 0.0625 if user.hasWorkingAbility(:ICEBODY) && @battle.pbWeather==:Hail
+		healing += 0.125 if user.status == :POISON && user.hasWorkingAbility(:POISONHEAL)
+		healing += 0.125 if (target.effects[PBEffects::LeechSeed]>-1 && !target.hasWorkingAbility(:LIQUIDOOZE)) 
+		healing*=0 if user.effects[PBEffects::HealBlock]>0
+		return healing if heal
+		if !(user.hasWorkingAbility(:MAGICGUARD)) 
+			if !(attitemworks && user.item == :SAFETYGOGGLES) || !(user.hasWorkingAbility(:OVERCOAT)) 
+				weatherchip = 0
+				weatherchip += 0.0625 if @battle.pbWeather==:Sun && (user.hasWorkingAbility(:DRYSKIN))
+				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK) || user.pbHasType?(:STEEL) || user.pbHasType?(:GROUND)) && 
+					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility(:SANDFORCE) || user.hasWorkingAbility(:SANDRUSH))
+					weatherchip += 0.0625
+				end	
+				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE)) && 
+					!(user.hasWorkingAbility(:ICEBODY) || user.hasWorkingAbility(:SNOWCLOAK) || user.hasWorkingAbility(:SLUSHRUSH))
+					weatherchip += 0.0625
+				end	 
+				chip += weatherchip
+			end
+			if user.effects[PBEffects::Trapping]>0
+				multiturnchip = 0.125 
+				multiturnchip *= 1.3333 if (target.item == :BINDINGBAND)
+				chip+=multiturnchip
+			end
+			chip += 0.125 if (user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasWorkingAbility(:LIQUIDOOZE))) 
+			chip += 0.25  if (user.effects[PBEffects::Curse]) 
+			if user.status!=:NONE && !rest
+				statuschip = 0
+				statuschip += 0.0625 if user.status==:BURN 
+				statuschip += 0.125 if ((user.status==:POISON &&  (user.hasWorkingAbility(:POISONHEAL) || !(user.hasWorkingAbility(:POISONHEAL))) && (user.effects[PBEffects::Toxic]==0))) || (user.status == :SLEEP && target.hasWorkingAbility(:BADDREAMS)) 
+				statuschip += (0.0625*user.effects[PBEffects::Toxic]) if user.effects[PBEffects::Toxic]!=0 && !(user.hasWorkingAbility(:POISONHEAL)) 
+				chip+=statuschip
+			end
+		end
+		return chip if chips
+		diff=(healing-chip)
+		return diff if both
+	end
+
+  	def wasUserAbilityActivated?(user) 
 		return @battle.activedAbility[user.index & 1][user.pokemonIndex]
 	end
 end

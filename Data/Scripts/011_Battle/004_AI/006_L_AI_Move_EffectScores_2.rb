@@ -41,16 +41,6 @@ class Battle::AI
 					miniscore=0
 				end
 			end
-			if move.id == :SLEEPPOWDER
-				if target.hasActiveItem?(:SAFETYGOGGLES) || target.hasActiveAbility?(:OVERCOAT) || target.pbHasType?(:GRASS)
-					miniscore=0
-				end
-			end
-			if move.id == :SPORE
-				if target.hasActiveItem?(:SAFETYGOGGLES) || target.hasActiveAbility?(:OVERCOAT) || target.pbHasType?(:GRASS)
-					miniscore=0
-				end
-			end
 			if user.turnCount==0
 				miniscore *= 3
 			end

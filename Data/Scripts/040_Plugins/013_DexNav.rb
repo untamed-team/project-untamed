@@ -654,23 +654,23 @@ class DexNav
   end
 end
 
-MenuHandlers.add(:pause_menu, :dexnav, {
-  "name"      => _INTL("DexNav"),
-  "order"     => 45,
-  "condition" => proc { next Settings::DEXNAV_ACTIVE },
-  "effect"    => proc { |menu|
-    pbPlayDecisionSE
-    $viewport4.dispose if $viewport4 != nil
-    pbFadeOutIn {
-      if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
-        pbMessage(_INTL("<c2=7FE00000>You are already searching!</c2>"))
-        pbMessage(_INTL("<c2=7FE00000>Leave the route and return to search again!</c2>"))
-        pbShowMenu
-      else
-        @scene = NewDexNav.new
-      end
-      next false
-    }
-  }
-}
-)
+#MenuHandlers.add(:pause_menu, :dexnav, {
+#  "name"      => _INTL("Dex Nav"),
+#  "order"     => 45,
+#  "condition" => proc { next Settings::DEXNAV_ACTIVE },
+#  "effect"    => proc { |menu|
+#    pbPlayDecisionSE
+#    $viewport4.dispose if $viewport4 != nil
+#    pbFadeOutIn {
+#      if $currentDexSearch != nil && $currentDexSearch.is_a?(Array)
+#        pbMessage(_INTL("<c2=7FE00000>You are already searching!</c2>"))
+#        pbMessage(_INTL("<c2=7FE00000>Leave the route and return to search again!</c2>"))
+#        pbShowMenu
+#      else
+#        @scene = NewDexNav.new
+#      end
+#      next false
+#    }
+#  }
+#}
+#)

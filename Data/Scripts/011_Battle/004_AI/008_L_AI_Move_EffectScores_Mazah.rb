@@ -707,14 +707,14 @@ class Battle::AI
 			end
 		end
 		miniscore*=0.2 if theresone || @battle.field.terrain == :Misty
-		if target.hasActiveAbility?(:QUICKFEET) || (target.hasActiveAbility?(:GUTS) && status != :BURN)
+		if target.hasActiveAbility?([:QUICKFEET, :GUTS])
 			miniscore*=0.2
 		end
 		if target.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(target.effectiveWeather)
 			miniscore*=0.2
 		end
-		if target.hasActiveAbility?(:NATURALCURE);	miniscore*=0.3; end
-		if target.hasActiveAbility?(:MARVELSCALE);	miniscore*=0.5; end
+		if target.hasActiveAbility?(:NATURALCURE);		miniscore*=0.3; end
+		if target.hasActiveAbility?(:MARVELSCALE);		miniscore*=0.5; end
 		if target.hasActiveAbility?(:SHEDSKIN);			miniscore*=0.7; end
 		if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
 			miniscore*=0.4
@@ -753,9 +753,6 @@ class Battle::AI
 					 @battle.field.effects[PBEffects::TrickRoom] <= 0
 					miniscore*=1.5
 				end
-				if pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)
-					miniscore*=1.3
-				end
 			when :BURN
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanBurnSynchronize?(user)
 					miniscore*=0.5
@@ -767,7 +764,7 @@ class Battle::AI
 					miniscore*=0.1
 				end
 				if target.effects[PBEffects::AquaRing]
-					miniscore*=0.01
+					miniscore*=0.1
 				end
 				if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
 					miniscore*=1.7
@@ -835,7 +832,7 @@ class Battle::AI
 					end
 				end
 				miniscore*=0.1 if sleeptalk
-				if (move.id == :SPORE || move.id == :SLEEPPOWDER) && target.affectedByPowder?
+				if (move.id == :SPORE || move.id == :SLEEPPOWDER) && !target.affectedByPowder?
 					miniscore=0
 				end
 				if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
