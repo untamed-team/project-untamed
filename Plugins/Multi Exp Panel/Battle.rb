@@ -113,8 +113,8 @@ class Battle
 	truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true	# mode
 	truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true	# settings
 	if (pkmn.level - truelevel) >= 3 && $game_variables[MECHANICSVAR] == 0
-		truelevel += 1
-		expvariable = 75
+		truelevel = (pkmn.level - 5)
+		expvariable = 5
 	end
 	exp = (exp / 3).floor
 	exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
