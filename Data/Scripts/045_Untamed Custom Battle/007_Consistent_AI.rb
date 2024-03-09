@@ -1,4 +1,5 @@
 class Battle::AI
+	$AIMASTERLOG = false
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
@@ -30,7 +31,7 @@ class Battle::AI
 		maxScore   = 0
 		choices.each do |c|
 			totalScore += c[1]
-			echo(c[3]+": "+c[1].to_s+"\n")
+			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
@@ -43,7 +44,7 @@ class Battle::AI
 			end
 			PBDebug.log(logMsg)
 		end
-		if $INTERNAL # master debug by JZ, ported #by low
+		if $AIMASTERLOG # master debug by JZ, ported #by low
 			move_keys = GameData::Move.keys
 			bestscore = ["Splash",0]
 			move_keys.each do |i|
@@ -87,7 +88,7 @@ class Battle::AI
 			end
 		end
 		# Find any preferred moves and just choose from them
-		if !wildBattler && maxScore > 200
+		if !wildBattler && maxScore > 100
 			#stDev = pbStdDev(choices)
 			#if stDev >= 40 && pbAIRandom(100) < 90
 			# DemICE removing randomness of AI
@@ -115,7 +116,7 @@ class Battle::AI
 					(maxScore <= 60 && user.turnCount > 5)) #&& pbAIRandom(100) < 80  # DemICE removing randomness
 				badMoves = true
 			end
-			if !badMoves && totalScore < 200 && user.turnCount >= 1
+			if !badMoves && totalScore < 100 && user.turnCount >= 1
 				badMoves = true
 				choices.each do |c|
 					next if !user.moves[c[0]].damagingMove?
@@ -333,7 +334,7 @@ class Battle::AI
 				end
 			end
 		end
-		if $INTERNAL
+		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " real damage on "+target.name+": "+realDamage.to_s
 			end
@@ -342,8 +343,8 @@ class Battle::AI
 		damagePercentage = realDamage * 100.0 / target.hp
 		# Don't prefer weak attacks
 	    #damagePercentage /= 2 if damagePercentage<20
-		# Prefer damaging attack if level difference is significantly high
-		#damagePercentage *= 1.2 if user.level - 10 > target.level
+		# Prefer status moves if level difference is significantly high
+		damagePercentage *= 0.5 if user.level - 10 > target.level
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -363,7 +364,7 @@ class Battle::AI
 		#~ damagePercentage -= 1 if accuracy < 100  # DemICE
 		#damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal  # DemICE
 		score += damagePercentage.to_i
-		if $INTERNAL
+		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s
 			end

@@ -198,7 +198,7 @@ class Battle::AI
     when "ParalyzeTarget", "ParalyzeTargetIfNotTypeImmune",
          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ParalyzeFlinchTarget"
 			if move.id == :THUNDERWAVE &&
-         Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, target))
+         	   Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, target))
 				score = 0
 			end
 			if move.id == :THUNDER
@@ -224,10 +224,17 @@ class Battle::AI
 					end            
 				end
 			end
-      if target.pbCanParalyze?(user, false)
+      		if target.pbCanParalyze?(user, false)
 				miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 100, move, skill)
+				aspeed = pbRoughStat(user, :SPEED, skill)
+				ospeed = pbRoughStat(target, :SPEED, skill)
+				if aspeed < ospeed
+				  miniscore *= 1.2
+				elsif aspeed > ospeed
+				  miniscore *= 0.8
+				end
 				if pbHasSetupMove?(user, false)
-					score*=1.1
+					miniscore*=1.1
 				end
 				if target.hp==target.totalhp
 					miniscore*=1.2
@@ -267,7 +274,7 @@ class Battle::AI
 				end
 			else
 				score=0
-      end
+      		end
     #---------------------------------------------------------------------------
     when "BurnTarget", "BurnTargetIfTargetStatsRaisedThisTurn"
       if target.pbCanBurn?(user, false)

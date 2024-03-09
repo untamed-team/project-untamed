@@ -5186,7 +5186,7 @@ Target = NearOther
 FunctionCode = RemoveUserBindingAndEntryHazards
 Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 100
-Description = A spin attack that raises the user's Speed and eliminates the effects of Bind, Spikes, etc.
+Description = Eliminates the effects of Bind, Spikes, etc. and raises the user's Speed if successful.
 #-------------------------------
 [SNORE]
 Name = Snore
