@@ -131,14 +131,7 @@ class Battle::AI
 			totalScore = 0
 			@battle.allBattlers.each do |b|
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-				dmgValue = pbRoughDamage(move, user, b, 100, move.baseDamage)
-				if move.baseDamage == 0
-					dmgPercent = pbStatusDamage(move)
-				else
-					dmgPercent = (dmgValue*100)/(b.hp)
-					dmgPercent = 110 if dmgPercent > 110 
-				end
-				score = pbGetMoveScore(move, user, b, 100, dmgPercent)
+				score = pbGetMoveScore(move, user, b, skill)
 				totalScore += ((user.opposes?(b)) ? score : -score)
 			end
 			choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
@@ -148,23 +141,16 @@ class Battle::AI
 			@battle.allBattlers.each do |b|
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
 				next if target_data.targets_foe && !user.opposes?(b)
-				# switch abuse prevention #by low
+        # switch abuse prevention #by low
 				#echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
 				if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
 					 move.function != "PursueSwitchingFoe"
-					echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}"
+				  echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}"
 					realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.battle.choices[b.index][1]],false,b)
 				else
 					realTarget = b
 				end
-				dmgValue = pbRoughDamage(move, user, realTarget, 100, move.baseDamage)
-				if move.baseDamage == 0
-					dmgPercent = pbStatusDamage(move)
-				else
-					dmgPercent = (dmgValue*100)/(realTarget.hp)
-					dmgPercent = 110 if dmgPercent > 110 
-				end
-				score = pbGetMoveScore(move, user, realTarget, 100, dmgPercent)
+				score = pbGetMoveScore(move, user, realTarget, 100)
 				scoresAndTargets.push([score, realTarget.index]) if score > 0
 			end
 			if scoresAndTargets.length > 0

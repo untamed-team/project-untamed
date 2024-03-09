@@ -743,6 +743,7 @@ class Battle::AI
 				miniscore*=1.1
 			end
 		end
+		miniscore*=1.3 if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 		case status
 			when :PARALYSIS
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanParalyzeSynchronize?(user)
@@ -822,6 +823,9 @@ class Battle::AI
 					miniscore*=1.3
 				end
 				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveAbility?(:POISONHEAL) && user.poisoned?)
+					miniscore*=1.2
+				end
+				if pbHasSetupMove?(user, false)
 					miniscore*=1.2
 				end
 				sleeptalk = false

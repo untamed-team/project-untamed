@@ -2779,6 +2779,7 @@ Battle::AbilityEffects::EndOfRoundGainItem.add(:HARVEST,
 
 Battle::AbilityEffects::EndOfRoundGainItem.add(:PICKUP,
   proc { |ability, battler, battle|
+    next if $game_variables[MECHANICSVAR] >= 3 #by low
     next if battler.item
     foundItem = nil
     fromBattler = nil
