@@ -4855,7 +4855,7 @@ Weight = 9.0
 Color = Blue
 Shape = BipedalTail
 Category = Cerebral
-Pokedex = This Pokémon had never been seen until it appeared from far in the desert 50 years ago.
+Pokedex = > Elgyem have been observed communicating with nearby Cryoger using a series of flashing lights. Scientists have so far been unable to decipher their code.
 Generation = 5
 Evolutions = BEHEEYEM,Level,42
 #-------------------------------
