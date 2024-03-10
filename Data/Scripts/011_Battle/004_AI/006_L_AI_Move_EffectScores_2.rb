@@ -229,9 +229,9 @@ class Battle::AI
 				aspeed = pbRoughStat(user, :SPEED, skill)
 				ospeed = pbRoughStat(target, :SPEED, skill)
 				if aspeed < ospeed
-				  miniscore *= 1.2
+					miniscore *= 1.2
 				elsif aspeed > ospeed
-				  miniscore *= 0.8
+					miniscore *= 0.8
 				end
 				if pbHasSetupMove?(user, false)
 					miniscore*=1.1
@@ -267,11 +267,10 @@ class Battle::AI
 					end
 					miniscore+=100
 					miniscore/=100.0
-					score*=miniscore
 				else
 					miniscore/=100.0
-					score*=miniscore
 				end
+				score*=miniscore
 			else
 				score=0
       		end
