@@ -91,7 +91,7 @@ module Settings
             },
             :MULTISAVE2 => {
                 :Title => _INTL("Multi-save"),
-                :Text => _INTL("If you have multiple save files, you can press <c2=0999367C><b>{1}</b></c2> or <c2=0999367C><b>{2}</b></c2> on the continue screen to change save files.",$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name,$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name),
+                :Text => _INTL("If you have multiple save files, you can press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
                 :Image => "multi save2",
             },
             :MULTISAVE3 => {
@@ -111,7 +111,7 @@ module Settings
             },
             :ADVDEX3 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("You can press <c2=0999367C><b>{1}</b></c2> to go to the next page.",$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name),
+                :Text => _INTL("You can press the <c2=0999367C><b>Action</b></c2> key to go to the next page."),
                 :Image => "advanced dex3",
             },
             :ADVDEX4 => {
@@ -120,7 +120,7 @@ module Settings
             },
             :BATTLEINFO1 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about a battle by pressing <c2=0999367C><b>{1}</b></c2>.",$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name),
+                :Text => _INTL("You can view information about a battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
                 :Image => "stats battle1",
             },
             :BATTLEINFO2 => {
@@ -135,7 +135,7 @@ module Settings
             },
             :BATTLEINFO4 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about the currently selected move by pressing <c2=0999367C><b>{1}</b></c2>.",$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name),
+                :Text => _INTL("You can view information about the currently selected move by pressing the <c2=0999367C><b>Move Info</b></c2> key."),
                 :Image => "stats battle4",
             },
             :BATTLEINFO5 => {
