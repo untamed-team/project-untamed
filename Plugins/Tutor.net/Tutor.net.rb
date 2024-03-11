@@ -982,46 +982,4 @@ def pbTutorNetChangeMoveCost(move,cost=0,currency="$")
 			$Trainer.tutorlist[i][2]=currency 
 		end
 	end
-end  
-
-
-#===============================================================================
-# Enables TutorNet in the Pokegear.
-#===============================================================================
-MenuHandlers.add(:pokegear_menu, :tutornet, {
-		"name"      => _INTL("Tutor.net"),
-		"icon_name" => "tutornet",
-		"order"     => 50,
-		"condition" => proc { next $Trainer.tutornet==true },
-		"effect"    => proc { |menu|
-			pbFadeOutIn {
-				scene = PokemonTutorNet_Scene.new
-				screen = PokemonTutorNetScreen.new(scene)
-				screen.pbStartScreen
-			}
-			next false
-		}
-	})
-	
-#-------------------------------------------------------------------------------
-# Entry for Tutor.net in Voltseon's Pause Menu
-#-------------------------------------------------------------------------------
-class MenuEntryTutorNet < MenuEntry
-  def initialize
-    @icon = "menuPokegear"
-    @name = "Tutor.net"
-  end
-
-  def selected(menu)
-    pbFadeOutIn {
-      scene = PokemonTutorNet_Scene.new
-      screen = PokemonTutorNetScreen.new(scene)
-      screen.pbStartScreen
-    }
-	end
-
-  def selectable?
-    #return ($player.party_count > 0)
-    return false
-  end
 end

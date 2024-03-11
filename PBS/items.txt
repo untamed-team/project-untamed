@@ -4789,6 +4789,16 @@ Flags = Fling_80
 Move = DIVE
 Description = Diving on the first turn, the user floats up and attacks on the second. It can be used to dive underwater.
 #-------------------------------
+[TM108]
+Name = TM108
+NamePlural = TM108s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_65
+Move = HIDDENPOWER
+Description = A unique attack that varies in type depending on the Pokémon using it.
+#-------------------------------
 [HM01]
 Name = HM01
 NamePlural = HM01s
@@ -6746,3 +6756,12 @@ NamePlural = Yellow Candy Bases
 Pocket = 1
 Price = 500
 Description = A mixture to make candy. This one turns the candy yellow!
+#-------------------------------
+[ADVENTUREGUIDE]
+Name = Adventure Guide
+NamePlural = Adventure Guides
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A convenient notebook that contains all the advice a Trainer receives out on an adventure.

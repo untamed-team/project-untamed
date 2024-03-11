@@ -1,4 +1,5 @@
 class Battle::AI
+	$AIMASTERLOG = false
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
@@ -6,10 +7,10 @@ class Battle::AI
 	def pbChooseMoves(idxBattler)
 		user        = @battle.battlers[idxBattler]
 		wildBattler = user.wild?
-		skill       = 0
-		if !wildBattler
-			skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
-		end
+		skill       = 100
+		# if !wildBattler
+		# 	skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
+		# end
 		# Get scores and targets for each move
 		# NOTE: A move is only added to the choices array if it has a non-zero
 		#       score.
@@ -23,11 +24,14 @@ class Battle::AI
 			end
 		end
 		#~ Console.echo_h2(choices)
+		echo("\nChoices and scores:\n") #for: "+user.name+"\n")
+		echo("------------------------\n")#----------------\n")
 		# Figure out useful information about the choices
 		totalScore = 0
 		maxScore   = 0
 		choices.each do |c|
 			totalScore += c[1]
+			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
@@ -38,9 +42,9 @@ class Battle::AI
 				logMsg += " (target #{c[2]})" if c[2] >= 0
 				logMsg += ", " if i < choices.length - 1
 			end
-			Console.echo_h2(logMsg)
+			PBDebug.log(logMsg)
 		end
-		if $INTERNAL # master debug by JZ, ported #by low
+		if $AIMASTERLOG # master debug by JZ, ported #by low
 			move_keys = GameData::Move.keys
 			bestscore = ["Splash",0]
 			move_keys.each do |i|
@@ -48,22 +52,34 @@ class Battle::AI
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
 				next if mirrored==nil
 				target = user.pbDirectOpposing
-				dmgValue = pbRoughDamage(mirrmove, user, target, skill, mirrmove.baseDamage)
-				if mirrmove.baseDamage == 0
-					dmgPercent = pbStatusDamage(mirrmove)
-				else
-					dmgPercent = (dmgValue*100)/(target.hp)
-					dmgPercent = 110 if dmgPercent > 110 
+				case mirrmove.category
+				when 0 then moveCateg = "Physical"
+				when 1 then moveCateg = "Special"
+				when 2 then moveCateg = "Status"
+				end
+				
+				score = 50 # for damaging moves
+				functionscore = pbGetMoveScoreFunctionCode(score, mirrmove, user, target, skill)
+				bsdam = mirrmove.baseDamage
+				bsdiv = 10.0/bsdam
+				functionscore *= bsdiv if mirrmove.baseDamage>50
+				score += functionscore
+				accuracy = pbRoughAccuracy(mirrmove, user, target, skill)
+				accuracy *= 1.15 if !user.pbOwnedByPlayer?
+				accuracy = 100 if accuracy>100
+				if mirrmove.damagingMove?
+					dmgScore = pbGetMoveScoreDamage(score, mirrmove, user, target, skill)
+					dmgScore -= 100-accuracy*1.33 if accuracy < 100
+				else   # Status moves
+					dmgScore = pbStatusDamage(mirrmove) # each status move now has a value tied to them #by low
+					dmgScore = pbGetMoveScoreFunctionCode(dmgScore, mirrmove, user, target, skill)
+					dmgScore *= accuracy / 100.0
 				end
 				File.open("AI_master_log.txt", "a") do |line|
-					line.puts "Move " + i.to_s + " aka " + mirrored.name.to_s + " has rough damage " + dmgValue.to_s + " and damage % " + dmgPercent.to_s + " has the function " + mirrmove.function
+					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + dmgScore.to_s
 				end
-				score = pbGetMoveScore(mirrmove, user, target, skill, dmgPercent)
-				File.open("AI_master_log.txt", "a") do |line|
-					line.puts "Move " + i.to_s + " aka " + mirrored.name.to_s + " has final score " + score.to_s
-				end
-				if bestscore[1] < score
-					bestscore[1] = score
+				if bestscore[1] < dmgScore
+					bestscore[1] = dmgScore
 					bestscore[0] = mirrored.name.to_s
 				end
 			end
@@ -72,31 +88,32 @@ class Battle::AI
 			end
 		end
 		# Find any preferred moves and just choose from them
-		if !wildBattler && skill >= PBTrainerAI.highSkill && maxScore > 100
+		if !wildBattler && maxScore > 100
 			#stDev = pbStdDev(choices)
 			#if stDev >= 40 && pbAIRandom(100) < 90
 			# DemICE removing randomness of AI
-				preferredMoves = []
-				choices.each do |c|
-					next if c[1] < 200 && c[1] < maxScore * 0.8
-					#preferredMoves.push(c)
-					# DemICE prefer ONLY the best move
-					preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
-				end
-				if preferredMoves.length > 0
-					m = preferredMoves[pbAIRandom(preferredMoves.length)]
-					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
-					@battle.pbRegisterMove(idxBattler, m[0], false)
-					@battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
-					return
-				end
+			preferredMoves = []
+			choices.each do |c|
+				next if c[1] < 200 && c[1] < maxScore * 0.8
+				#preferredMoves.push(c)
+				# DemICE prefer ONLY the best move
+				preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
+				echoln(preferredMoves)
+			end
+			if preferredMoves.length > 0
+				m = preferredMoves[pbAIRandom(preferredMoves.length)]
+				PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
+				@battle.pbRegisterMove(idxBattler, m[0], false)
+				@battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
+				return
+			end
 			#end
 		end
 		# Decide whether all choices are bad, and if so, try switching instead
-		if !wildBattler && skill >= PBTrainerAI.highSkill
+		if !wildBattler
 			badMoves = false
-			if ((maxScore <= 20 && user.turnCount > 2) ||
-					(maxScore <= 40 && user.turnCount > 5)) #&& pbAIRandom(100) < 80  # DemICE removing randomness
+			if ((maxScore <= 40 && user.turnCount > 2) ||
+					(maxScore <= 60 && user.turnCount > 5)) #&& pbAIRandom(100) < 80  # DemICE removing randomness
 				badMoves = true
 			end
 			if !badMoves && totalScore < 100 && user.turnCount >= 1
@@ -126,14 +143,30 @@ class Battle::AI
 				@battle.pbAutoChooseMove(user.index)
 			end
 		end
-		# Randomly choose a move from the choices and register it
-		randNum = pbAIRandom(totalScore)
+		bestScore = ["Splash",0]
 		choices.each do |c|
-			randNum -= c[1]
-			next if randNum >= 0
-			@battle.pbRegisterMove(idxBattler, c[0], false)
-			@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
-			break
+			if bestScore[1] < c[1]
+				bestScore[1] = c[1]
+				bestScore[0] = c[0]
+			end
+		end
+		if bestScore[1] <= 60
+			# Randomly choose a move from the choices and register it (in case everything sucks)
+			randNum = pbAIRandom(totalScore)
+			choices.each do |c|
+				randNum -= c[1]
+				next if randNum >= 0
+				@battle.pbRegisterMove(idxBattler, c[0], false)
+				@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
+				break
+			end
+		else
+			# Choose the best move possible always (if one thing does not suck)
+			choices.each do |c|
+				next if bestScore[0] != c[0]
+				@battle.pbRegisterMove(idxBattler, c[0], false)
+				@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
+			end
 		end
 		# Log the result
 		if @battle.choices[idxBattler][2]
@@ -145,29 +178,28 @@ class Battle::AI
 	# Get a score for the given move being used against the given target
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, roughdamage = 10)
-		PBDebug.log(sprintf("%s: initial score: %d",move.name,roughdamage)) if $INTERNAL
-		skill = PBTrainerAI.minimumSkill if skill < PBTrainerAI.minimumSkill
-		if roughdamage <= 1
-      roughdamage = 1
-    end
-		score = roughdamage
-		score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
-		accuracy = pbRoughAccuracy(move, user, target, skill)
-		accuracy *= 1.15 if !user.pbOwnedByPlayer?
-		accuracy = 100 if accuracy>100
+		skill = 100
+		score = 50 # for damaging moves
+		functionscore = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
+		bsdam = move.baseDamage
+		bsdiv = 10.0/bsdam
+		functionscore *= bsdiv if move.baseDamage>50
+		score += functionscore
 		# A score of 0 here means it absolutely should not be used
 		return 0 if score <= 0
 		# Adjust score based on how much damage it can deal
 		# DemICE moved damage calculation to the beginning
+		# Account for accuracy of move
+		accuracy = pbRoughAccuracy(move, user, target, skill)
+		accuracy *= 1.15 if !user.pbOwnedByPlayer?
+		accuracy = 100 if accuracy>100
 		if move.damagingMove?
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
+			score -= 100-accuracy*1.33 if accuracy < 100
 		else   # Status moves
-			# Don't prefer attacks which don't deal damage # <- why are you cringe?
 			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
-			# Account for accuracy of move
-			accuracy = pbRoughAccuracy(move, user, target, skill)
+			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			score *= accuracy / 100.0
-			score = 0 if score <= 10 && skill >= PBTrainerAI.highSkill
 		end
 		aspeed = pbRoughStat(user,:SPEED,100)
 		ospeed = pbRoughStat(target,:SPEED,100)
@@ -302,12 +334,17 @@ class Battle::AI
 				end
 			end
 		end
+		if $AIMASTERLOG
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "Move " + move.name + " real damage on "+target.name+": "+realDamage.to_s
+			end
+		end
 		# Convert damage to percentage of target's remaining HP
 		damagePercentage = realDamage * 100.0 / target.hp
 		# Don't prefer weak attacks
-	  #   damagePercentage /= 2 if damagePercentage<20
-		# Prefer damaging attack if level difference is significantly high
-		#damagePercentage *= 1.2 if user.level - 10 > target.level
+	    #damagePercentage /= 2 if damagePercentage<20
+		# Prefer status moves if level difference is significantly high
+		damagePercentage *= 0.5 if user.level - 10 > target.level
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -327,6 +364,11 @@ class Battle::AI
 		#~ damagePercentage -= 1 if accuracy < 100  # DemICE
 		#damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal  # DemICE
 		score += damagePercentage.to_i
+		if $AIMASTERLOG
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s
+			end
+		end
 		return score
 	end
 end

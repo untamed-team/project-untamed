@@ -489,14 +489,25 @@ class Camping
 		$game_system.menu_disabled = false
 		$PokemonGlobal.hideAndSeekViewport.dispose
 		
-		#resume movement of all pkmn events
 		for i in 0...$PokemonGlobal.campers.length
 			pkmn = $PokemonGlobal.campers[i]
+			#resume movement of all pkmn events
 			pkmn.campEvent.move_type = 1
+			#set all hide and seek icons to nil for pkmn to prevent a crash when saving
+			$PokemonGlobal.campers[i].hideAndSeekIcon = nil
 		end #for i in 0...$PokemonGlobal.campers.length
 		
+		$PokemonGlobal.hideAndSeekViewport = nil
+		$PokemonGlobal.hideAndSeekSprites = nil
 		self.resetCamperPositions
 		pbBGMFade(1)
+		
+		#if currently doing camp quest, mark task as complete it not complete already
+		markQuestTaskComplete(:Quest8, task=3) if getActiveQuests.include?(:Quest8) && !isTaskComplete(:Quest8,"Play hide and seek")
+		if isTaskComplete(:Quest8,"Play hide and seek") && isTaskComplete(:Quest8,"Pet your Pokémon") && isTaskComplete(:Quest8,"Feed your Pokémon")
+			advanceQuestToStage(:Quest8,stageNum=2)
+			turninQuest(:Quest8)
+		end
 	end
 	
 	def self.replayHideAndSeek
