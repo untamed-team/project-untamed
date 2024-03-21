@@ -1121,7 +1121,7 @@ Description = Using the same move in succession raises its power.
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
-Description = Fully heals the next ally after fainting just once.
+Description = Heals the next ally after fainting just once.
 #-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit

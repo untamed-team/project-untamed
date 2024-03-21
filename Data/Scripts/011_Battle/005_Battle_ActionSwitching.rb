@@ -444,11 +444,9 @@ class Battle
       if battler.canHeal?
         pbCommonAnimation("HealingWish", battler)
         pbDisplay(_INTL("{1} healed a bit because of the candy!", battler.pbThis(true)))
-        battler.pbRecoverHP((battler.totalhp/3))
-        position.effects[PBEffects::PartyPopper] = false
-      elsif Settings::MECHANICS_GENERATION < 8
-        position.effects[PBEffects::PartyPopper] = false
+        battler.pbRecoverHP((battler.totalhp/2))
       end
+      position.effects[PBEffects::PartyPopper] = false
     end
   end
 

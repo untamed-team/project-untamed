@@ -2434,6 +2434,7 @@ class Battle::AI
 			else     
 				halfhealth=(user.totalhp/2)
 			end       
+			halfhealth=(halfhealth*1.5) if user.hasActiveItem?(:COLOGNECASE)
 			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 			maxdam=bestmove[0] 
 			maxmove=bestmove[1]

@@ -5186,7 +5186,7 @@ Target = NearOther
 FunctionCode = RemoveUserBindingAndEntryHazards
 Flags = Contact,CanProtect,CanMirrorMove
 EffectChance = 100
-Description = A spin attack that raises the user's Speed and eliminates the effects of Bind, Spikes, etc.
+Description = Eliminates the effects of Bind, Spikes, etc. and raises the user's Speed if successful.
 #-------------------------------
 [SNORE]
 Name = Snore
@@ -9048,7 +9048,6 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = HitThreeToFiveTimes
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 15
 Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
 #-------------------------------
 [PREMONITIONMOVE]

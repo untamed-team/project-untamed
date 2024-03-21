@@ -355,7 +355,9 @@ MenuHandlers.add(:pause_menu, :camp, {
 		menu.pbHideMenu
 		camp = Camping.new
 		camp.startCamping
-		menu.pbEndScene
+		menu.pbRefresh
+		#menu.pbEndScene
+		$game_temp.in_menu = false
 		next true
 	}
 })
@@ -372,7 +374,9 @@ MenuHandlers.add(:pause_menu, :exit_camp, {
 		menu.pbHideMenu
 		camp = Camping.new
 		camp.endCamping
-		menu.pbEndScene
+		menu.pbRefresh
+		#menu.pbEndScene
+		$game_temp.in_menu = false
 		next true
 	}
 })

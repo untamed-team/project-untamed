@@ -9105,7 +9105,6 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = HitThreeToFiveTimes
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 15
 Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
 #-------------------------------
 [PREMONITIONMOVE]
