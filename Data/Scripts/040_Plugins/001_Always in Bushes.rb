@@ -5,6 +5,11 @@
 # Updated to be fully compatible the Following Pokemon EX Plugin by Golisopod User [v20.1]
 #===================================================================================================================
 
+# this is kind of laggy
+# we should see what causes it later 
+#by low
+
+=begin
 module Always_in_Bush_in_Water
   # Constants to disable either AiB or AiW if you only want 1 of them to be active
   # Bush
@@ -156,5 +161,5 @@ if Always_in_Bush_in_Water::FOLLOWING_POKEMON
     end
   end
 end
-
+=end
 #===================================================================================================================

@@ -14,7 +14,7 @@ module Achievements
       "id"=>1,
       "name"=>"Tired Feet",
       "description"=>"Walk around the world.",
-      "goals"=>[10000,50000,100000]
+      "goals"=>[1,2,100000]
     },
     "POKEMON_CAUGHT"=>{
       "id"=>2,
@@ -58,12 +58,6 @@ module Achievements
       "description"=>"Mega Evolve Pokémon.",
       "goals"=>[250,500,1000]
     },
-    "PRIMAL_REVERSIONS"=>{
-      "id"=>9,
-      "name"=>"Primal Power",
-      "description"=>"Primal Revert Pokémon.",
-      "goals"=>[250,500,1000]
-    },
     "ITEM_BALL_ITEMS"=>{
       "id"=>10,
       "name"=>"Finding Treasure",
@@ -75,12 +69,6 @@ module Achievements
       "name"=>"Ferocious Fighting",
       "description"=>"Use moves in battle.",
       "goals"=>[500,1000,2500]
-    },
-    "ITEMS_USED_IN_BATTLE"=>{
-      "id"=>12,
-      "name"=>"Mid-Battle Maintenance",
-      "description"=>"Use items in battle.",
-      "goals"=>[100,250,500]
     },
     "FAINTED_POKEMON"=>{
       "id"=>13,
@@ -131,18 +119,20 @@ module Achievements
   end
   
   #fade out the achievemet that pops up
-  EventHandlers.add(:on_frame_update, :achpopup, proc {
-    if @sprites
-      #make a timer so the opacity does not start decreasing until timer is up
-      @timer += (1 * Graphics.frame_rate / 60) #increase by 1 per second
-      if @timer <= 5 * 60
-        #if timer is less than or equal to 5, start sliding the box onto the screen
-        self.slideAchIn
-      else
-        self.slideAchOut
+  EventHandlers.add(:on_frame_update, :ach_popup, 
+    proc {
+      if @sprites
+        #make a timer so the opacity does not start decreasing until timer is up
+        @timer += 5 #increase by 1 per second
+        if @timer <= 5 * 60
+          #if timer is less than or equal to 5, start sliding the box onto the screen
+          self.slideAchIn
+        else
+          self.slideAchOut
+        end
       end
-    end
-  })
+    }
+  )
   
   def self.list
     Achievements.fixAchievements

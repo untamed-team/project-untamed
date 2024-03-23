@@ -1098,7 +1098,7 @@ module Battle::CatchAndStoreMixin
 						naturenum+=1
 					end
 					commands.push(_INTL("Cancel"))
-					cmd = scene.pbShowCommands(_INTL("Choose an nature."), commands, cmd)
+					cmd = scene.pbShowCommands(_INTL("Choose a nature."), commands, cmd)
 					if cmd < 0
 						#nothing
 					else
