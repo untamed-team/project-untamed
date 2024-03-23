@@ -669,7 +669,7 @@ Shape = Bipedal
 Category = Bud
 Pokedex = Budew helps pollinate flowers used to celebrate and mourn the dead. This tradition makes Budew popular in the Mazah Region.
 Generation = 4
-Evolutions = M_ROSELIA,Happiness,
+Evolutions = M_ROSELIA,HappinessLevel,15
 Incense = ROSEINCENSE
 #-------------------------------
 [M_ROSELIA]
