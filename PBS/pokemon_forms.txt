@@ -325,13 +325,19 @@ TutorMoves = CUT,FLY,STRENGTH,DEFOG,WORKUP,HELPINGHAND,BULKUP,TAUNT,PROTECT,SAND
 FormName = Mega Beakraft ♂
 MegaStone = BEAKRAFTITE
 UnmegaForm = 0 # DO NOT CHANGE THIS
+Type1 = STEEL
+Type2 = ELECTRIC
+BaseStats = 75,125,150,88,70,70
 Abilities = MOTORDRIVE
 #-------------------------------
 [BEAKRAFT,3]
 FormName = Mega Beakraft ♀
 MegaStone = BEAKRAFTITE
 UnmegaForm = 1 # DO NOT CHANGE THIS
-Abilities = MOTORDRIVE
+Type1 = STEEL
+Type2 = ELECTRIC
+BaseStats = 75,150,88,125,70,70
+Abilities = MOTODRIVE
 #-------------------------------
 #-------------------------------
 [CROACROZEN,1]
