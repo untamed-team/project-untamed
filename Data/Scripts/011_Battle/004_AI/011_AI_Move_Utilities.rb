@@ -430,8 +430,6 @@ class Battle::AI
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
     baseDmg = move.baseDamage
-    baseDmg = 60 if baseDmg == 1
-    return baseDmg if skill < PBTrainerAI.mediumSkill
     # Covers all function codes which have their own def pbBaseDamage
     case move.function
     # Sonic Boom, Dragon Rage, Super Fang, Night Shade, Endeavor
@@ -557,6 +555,7 @@ class Battle::AI
 			scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
 			baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
     end
+    baseDmg = 60 if baseDmg == 1
     return baseDmg
   end
 

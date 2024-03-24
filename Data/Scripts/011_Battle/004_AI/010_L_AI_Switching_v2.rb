@@ -52,13 +52,14 @@ class Battle::AI
 					tickdamage=true if j.function=="SetTargetTypesToWater"
 					tickdamage=true if j.function=="StartDamageTargetEachTurnIfTargetAsleep" && battler.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn") && b.pbCanSleep?(battler,false,j)
 				end	
-				tempdam = pbRoughDamage(j,battler,b,skill,j.baseDamage)
+				tempdam = pbRoughDamage(j, battler, b, 100, j.baseDamage)
 				tempdam = 0 if pbCheckMoveImmunity(1,j,battler,b,100)
 				maxdam=tempdam if tempdam>maxdam
 			end 
+			echoln("#{j.name} = #{maxdampercent}")
 			maxdampercent = maxdam *100.0 / b.hp
 		end	
-		mindamage=10
+		mindamage=20
 		if battler.effects[PBEffects::LeechSeed]>=0 && (battler.hp > battler.totalhp*0.66)
 			mindamage=33 
 			if battler.status==:SLEEP && battler.statusCount>1
