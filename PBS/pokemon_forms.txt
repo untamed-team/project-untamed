@@ -337,7 +337,7 @@ UnmegaForm = 1 # DO NOT CHANGE THIS
 Type1 = STEEL
 Type2 = ELECTRIC
 BaseStats = 75,150,88,125,70,70
-Abilities = MOTODRIVE
+Abilities = MOTORDRIVE
 #-------------------------------
 #-------------------------------
 [CROACROZEN,1]
