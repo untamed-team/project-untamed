@@ -14,7 +14,7 @@ module Achievements
       "id"=>1,
       "name"=>"Tired Feet",
       "description"=>"Walk around the world.",
-      "goals"=>[1,2,100000]
+      "goals"=>[10000,50000,100000]
     },
     "POKEMON_CAUGHT"=>{
       "id"=>2,
