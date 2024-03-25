@@ -725,7 +725,6 @@ class Battle::AI
 						miniscore*=1.3
 					end
 				end
-				miniscore/=100.0
 				if move.baseDamage>0
 					miniscore-=100
 					miniscore*=(move.addlEffect.to_f/100)

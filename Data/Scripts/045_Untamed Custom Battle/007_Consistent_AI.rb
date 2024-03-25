@@ -192,8 +192,11 @@ class Battle::AI
 			score -= 100-accuracy*1.33 if accuracy < 100
 		else # Status moves
 			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
+			echoln("score1: #{score}") if move.id == :CONFUSERAY
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
+			echoln("score2: #{score}") if move.id == :CONFUSERAY
 			score *= accuracy / 100.0
+			echoln("score3: #{score}") if move.id == :CONFUSERAY
 		end
 		aspeed = pbRoughStat(user,:SPEED,100)
 		ospeed = pbRoughStat(target,:SPEED,100)
@@ -339,9 +342,9 @@ class Battle::AI
 	    damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
 		damagePercentage *= 0.5 if user.level - 3 > target.level
-		echo("\n-----------------------------")
-		echo("\n#{move.name} real dmg = #{realDamage}")
-		echo("\n#{move.name} dmg percent = #{damagePercentage}\n")
+		#echo("\n-----------------------------")
+		#echo("\n#{move.name} real dmg = #{realDamage}")
+		#echo("\n#{move.name} dmg percent = #{damagePercentage}\n")
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
