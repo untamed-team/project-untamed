@@ -688,7 +688,7 @@ class Battle::AI
 			end
 			if @battle.pbWeather==:Sandstorm
 				sum+=20 if pkmn.ability == :SANDRUSH
-				sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
+				sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE || pkmn.ability == :DUSTSENTINEL
 				sum+=10 if pkmn.hasType?(:ROCK)
 				sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
 				sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm") 
@@ -791,7 +791,7 @@ class Battle::AI
 				weatherchip = 0
 				weatherchip += 0.0625 if @battle.pbWeather==:Sun && (user.hasWorkingAbility(:DRYSKIN))
 				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK) || user.pbHasType?(:STEEL) || user.pbHasType?(:GROUND)) && 
-					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility(:SANDFORCE) || user.hasWorkingAbility(:SANDRUSH))
+					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility([:SANDFORCE, :DUSTSENTINEL]) || user.hasWorkingAbility(:SANDRUSH))
 					weatherchip += 0.0625
 				end	
 				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE)) && 

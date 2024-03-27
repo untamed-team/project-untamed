@@ -802,7 +802,7 @@ class Battle::AI
 					miniscore*=1.7
 				end
 			when :DIZZY
-				miniscore = getAbilityDisruptScore(move,user,target,skill)
+				miniscore*= getAbilityDisruptScore(move,user,target,skill)
 				miniscore*=0.95 if move.damagingMove?
 			when :SLEEP
 				if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
@@ -918,7 +918,7 @@ class Battle::AI
 			if pokemon.pbHasMoveFunction?("StartSunWeather", "StartRainWeather", "StartSandstormWeather", "StartHailWeather") || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
 					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE].include?(pokemon.ability) ||
+					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
 				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
 				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
@@ -1065,7 +1065,7 @@ class Battle::AI
 			if weathermove || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
 					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE].include?(pokemon.ability) ||
+					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
 				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
 				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
