@@ -6096,7 +6096,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = SleepTarget
 Flags = CanProtect,CanMirrorMove
-Description = With a scary face, the user tries to force a kiss on the target. If it suceeds, the target falls asleep.
+Description = With a scary face, the user tries to force a kiss on the target. If it succeeds, the target falls asleep.
 #-------------------------------
 [LUCKYCHANT]
 Name = Lucky Chant
