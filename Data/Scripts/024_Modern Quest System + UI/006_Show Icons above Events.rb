@@ -136,7 +136,7 @@ class QuestIndicator
           
           if filename #if it's not nil, show ! or ?
             @event = $game_map.events[event.id]
-            @sprites["icon_#{event}"] = ChangelingSprite.new(0, 0, @viewport)
+            @sprites["icon_#{event}"] = ChangelingSprite.new(0, 0, @viewport) if !@sprites["icon_#{event}"]
             @sprites["icon_#{event}"].bitmap = Bitmap.new("Graphics/Pictures/QuestUI/"+filename)
 
             @sprites["icon_#{event}"].ox = @sprites["icon_#{event}"].bitmap.width / 2
