@@ -94,7 +94,7 @@ MegaStone = BEHEEYEMITE
 Type1 = PSYCHIC
 Type2 = ELECTRIC
 BaseStats = 75,85,95,60,145,125
-Abilities = MAGNETPULL
+Abilities = LEVITATE
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
