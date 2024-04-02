@@ -150,7 +150,7 @@ class Battle::Battler
       next if b.fainted? || b.effects[PBEffects::SkyDrop] >= 0
       next if !b.opposes?(user)
       next if nearOnly && !b.near?(user)
-			if b.form == 1 && b.ability == :SHOWTIME && b.isSpecies?(:STRELAVISON)
+			if b.form == 1 && b.ability == :SHOWTIME && b.isSpecies?(:STRELAVISON) && b.turnCount > 0
 				newTarget = b
 				strength = 110
 			end
