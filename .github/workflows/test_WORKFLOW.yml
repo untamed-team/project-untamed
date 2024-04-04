@@ -1,23 +1,19 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
+name: Assigned Issues Are In Progress
 
-# GitHub recommends pinning actions to a commit SHA.
-# To get a newer version, you will need to update the SHA.
-# You can also reference a tag or branch, but the action may change without warning.
-
-name: Move assigned card
 on:
-  issues:
-    types:
-      - assigned
+  issue:
+    types: [assigned]
+
 jobs:
-  move-assigned-card:
+  move-to-in-progress:
     runs-on: ubuntu-latest
+    name: Move to In Progress Column
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.9.0
-        with:
-          project: Test
-          column: In Progress
-          repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
+      - name: Checkout
+        uses: actions/checkout@v2
+	  - name: Move to In Progress
+	    uses: kin/gh-action-move-issue-to-column@1.0
+		with:
+		  access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
+		  project-name: "Project Untamed Progress Overview"
+		  target-column: "Assigned"
