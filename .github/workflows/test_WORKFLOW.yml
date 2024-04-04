@@ -20,4 +20,4 @@ jobs:
         with:
           project: Project Untamed Progress Overview
           column: Assigned
-          repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
+          repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}s
