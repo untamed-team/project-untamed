@@ -19,5 +19,5 @@ jobs:
       - uses: alex-page/github-project-automation-plus@v0.9.0
         with:
           project: Project Untamed Progress Overview
-          column: Assigned
+          column: In Progress
           repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
