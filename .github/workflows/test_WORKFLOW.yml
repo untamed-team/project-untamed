@@ -1,18 +1,23 @@
-name: Label issues
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# GitHub recommends pinning actions to a commit SHA.
+# To get a newer version, you will need to update the SHA.
+# You can also reference a tag or branch, but the action may change without warning.
+
+name: Move assigned card
 on:
   issues:
     types:
-      - reopened
-      - opened
+      - assigned
 jobs:
-  label_issues:
+  move-assigned-card:
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
     steps:
-      - run: gh issue edit "$NUMBER" --add-label "$LABELS"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          NUMBER: ${{ github.event.issue.number }}
-          LABELS: asdfasd
+      - uses: alex-page/github-project-automation-plus@7ffb872c64bd809d23563a130a0a97d01dfa8f43
+        with:
+          project: Project Untamed Progress Overview
+          column: Assigned
+          repo-token: ${{ secrets.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 }}
