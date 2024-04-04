@@ -10,8 +10,7 @@ jobs:
     name: Move to In Progress Column
     steps:
        - uses: actions/checkout@v2
-       - uses: kin/gh-action-move-issue-to-column@1.0
-         with:
+       with:
                 access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
                 project-name: "Project Untamed Progress Overview"
                 target-column: "Assigned"
