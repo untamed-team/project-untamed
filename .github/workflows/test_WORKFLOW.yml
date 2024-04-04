@@ -8,9 +8,9 @@ jobs:
   move-to-in-progress:
     runs-on: ubuntu-latest
     steps:
-       name: Move to In Progress Column
-       - uses: actions/checkout@v2
-       with:
+    name: Move to In Progress Column
+    - uses: actions/checkout@v2
+    with:
                 access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
                 project-name: "Project Untamed Progress Overview"
                 target-column: "Assigned"
