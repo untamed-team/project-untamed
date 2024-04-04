@@ -20,4 +20,4 @@ jobs:
         with:
           project: Project Untamed Progress Overview
           column: Assigned
-          repo-token: ${{ secrets.ec2676fe76d408718fb7a48990fe5b688126a15f }}
+          repo-token: ${{ secrets.Pacuna-chan }}
