@@ -20,4 +20,4 @@ jobs:
         with:
           project: Project Untamed Progress Overview
           column: Assigned
-          repo-token: ${{ secrets.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 }}
+          repo-token: ${{ secrets.ec2676fe76d408718fb7a48990fe5b688126a15f }}
