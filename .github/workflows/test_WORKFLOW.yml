@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Move to In Progress Column
     steps:
-        uses: kin/gh-action-move-issue-to-column@1.0
+       - uses: kin/gh-action-move-issue-to-column@1.0
           with:
             access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
             project-name: "Project Untamed Progress Overview"
