@@ -7,10 +7,27 @@ on:
 jobs:
   move-to-in-progress:
     runs-on: ubuntu-latest
-    steps:
     name: Move to In Progress Column
-    - uses: actions/checkout@v2
-    with:
+    steps:
+       - uses: actions/checkout@v2
+       - uses: kin/gh-action-move-issue-to-column@1.0
+         with:
                 access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
                 project-name: "Project Untamed Progress Overview"
                 target-column: "Assigned"
+                
+                
+on:
+  issues:
+    types: [labeled]
+jobs:
+  Move_Labeled_Issue_On_Project_Board:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
+      with:
+        action-token: "${{ secrets.PROJECT_BOARD_AUTOMATION }}"
+        project-url: "https://github.com/orgs/untamed-team/projects/16"
+        column-name: "Assigned"
+        label-name: "code"
+        columns-to-ignore: "Done Recently"
