@@ -1,7 +1,7 @@
 name: Move new issues into Project Boards
 on:
   issues:
-    types: [ opened ]
+    types: [ labeled ]
 jobs:
   move-issue-to-organization-project-column:
     name: Move issues to organization project column
