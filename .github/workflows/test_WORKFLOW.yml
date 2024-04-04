@@ -1,5 +1,5 @@
 on:
-  pull requests:
+  issues:
     types: [labeled]
 jobs:
   Move_Labeled_Issue_On_Project_Board:
