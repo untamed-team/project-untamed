@@ -4,6 +4,11 @@ on:
 jobs:
   Move_Labeled_Issue_On_Project_Board:
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20.0]
+    
     steps:
     - uses: konradpabjan/move-labeled-or-milestoned-issue@v2.0
       with:
