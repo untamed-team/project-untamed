@@ -7,8 +7,8 @@ on:
 jobs:
   move-to-in-progress:
     runs-on: ubuntu-latest
-    name: Move to In Progress Column
     steps:
+       name: Move to In Progress Column
        - uses: actions/checkout@v2
        with:
                 access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
