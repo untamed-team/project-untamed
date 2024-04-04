@@ -1,7 +1,7 @@
 name: Assigned Issues Are In Progress
 
 on:
-  issue:
+  issues:
     types: [assigned]
 
 jobs:
