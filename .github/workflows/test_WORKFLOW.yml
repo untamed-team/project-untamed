@@ -1,22 +1,3 @@
-name: Assigned Issues Are In Progress
-
-on:
-  issues:
-    types: [assigned]
-
-jobs:
-  move-to-in-progress:
-    runs-on: ubuntu-latest
-    name: Move to In Progress Column
-    steps:
-       - uses: actions/checkout@v2
-       - uses: kin/gh-action-move-issue-to-column@1.0
-         with:
-                access-token: "#{{ secrets.PROJECT_BOARD_AUTOMATION }}"
-                project-name: "Project Untamed Progress Overview"
-                target-column: "Assigned"
-                
-                
 on:
   issues:
     types: [labeled]
