@@ -5,8 +5,8 @@ jobs:
   Move_Labeled_Issue_On_Project_Board:
     runs-on: ubuntu-latest
     steps:
-    - name: Ready for QA
-      uses: pauldruziak/move-labeled-or-milestoned-pull-request@v1.0.2
+    - name: Test
+      uses: Gardenette/move-labeled-issue@v1.0
       with:
         action-token: "${{ secrets.PROJECT_BOARD_AUTOMATION }}"
         project-url: "https://github.com/orgs/untamed-team/projects/16"
