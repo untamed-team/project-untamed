@@ -18,3 +18,14 @@ jobs:
           github-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
           labeled: art
           label-operator: OR
+  
+  add-to-column:
+    name: Add issue to column based on label
+    if: github.action.label == 'art'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: alex-page/github-project-automation-plus@v0.9.0
+        with:
+          project: Project Untamed Progress Overview
+          column: Art
+          repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
