@@ -21,7 +21,7 @@ jobs:
   
   add-to-column:
     name: Add issue to column based on label
-    if: github.action.label == 'art'
+    if: contains(github.event.issue.labels.*.name, 'art')
     runs-on: ubuntu-latest
     steps:
       - uses: alex-page/github-project-automation-plus@v0.9.0
