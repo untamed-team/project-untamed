@@ -616,13 +616,29 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
       end
     end    
     if battler.hasAbilityMutation?
-      battler.abilityMutationList[index] = fainted.ability.id
+      if fainted.hasAbilityMutation?
+        battler.abilityMutationList.delete(:SEANCE) # get rid of seance
+        fainted_abilist = []
+        for i in fainted.abilityMutationList
+          fainted_abilist.push(i)
+        end
+        fainted_abilist |= [] # remove dupes
+        for i in fainted_abilist
+          battler.abilityMutationList.push(i)
+        end
+      else
+        battler.abilityMutationList[index] = fainted.ability.id
+      end
     else
       battler.ability = fainted.ability
-    end    
+    end     
     $aamName=fainted.abilityName
-    battle.pbReplaceAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1}'s {2} was taken!",fainted.pbThis,fainted.abilityName))
+    if fainted.hasAbilityMutation?
+      battle.pbDisplay(_INTL("{1}'s abilities were taken!",fainted.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} was taken!",fainted.pbThis,fainted.abilityName))
+      battle.pbReplaceAbilitySplash(battler)
+    end
     battle.pbHideAbilitySplash(battler)
     #print battler.abilityMutationList
   }

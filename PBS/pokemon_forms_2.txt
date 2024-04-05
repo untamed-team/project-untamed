@@ -98,7 +98,7 @@ HiddenAbilities = WARRIORSPIRIT
 FormName = Mega Cacturne
 MegaStone = CACTURNITE
 BaseStats = 70,135,100,55,145,70
-Abilities = SANDSTREAM
+Abilities = DUSTSENTINEL
 #------------------------------- 
 [FROSMOTH,1]
 FormName = Mega Frosmoth

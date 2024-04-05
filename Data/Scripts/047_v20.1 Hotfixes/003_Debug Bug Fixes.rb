@@ -169,7 +169,7 @@ MenuHandlers.add(:debug_menu, :test_trainer_battle_advanced, {
     trainerCmd = 0
     loop do
       trainerCmds = []
-      trainers.each { |t| trainerCmds.push(sprintf("%s x%d", t[1].full_name, t[1].party_count)) }
+      trainers.each { |t| trainerCmds.push(sprintf("%s x%d", t[1], t[1].party_count)) }
       trainerCmds.push(_INTL("[Add trainer]"))
       trainerCmds.push(_INTL("[Set player side size]"))
       trainerCmds.push(_INTL("[Set opponent side size]"))

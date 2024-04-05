@@ -1397,6 +1397,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SANDFORCE,
     end
   }
 )
+Battle::AbilityEffects::DamageCalcFromUser.copy(:SANDFORCE, :DUSTSENTINEL)
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:SHEERFORCE,
   proc { |ability, user, target, move, mults, baseDmg, type|
@@ -3280,6 +3281,8 @@ Battle::AbilityEffects::OnSwitchIn.add(:SANDSTREAM,
     battle.pbStartWeatherAbility(:Sandstorm, battler)
   }
 )
+
+Battle::AbilityEffects::OnSwitchIn.copy(:SANDSTREAM, :DUSTSENTINEL)
 
 Battle::AbilityEffects::OnSwitchIn.add(:SCREENCLEANER,
   proc { |ability, battler, battle, switch_in|

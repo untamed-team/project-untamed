@@ -1191,3 +1191,7 @@ Description = Powers up Electric-type moves.
 Name = Showtime
 Description = Changes for the finale. Targeted during finale.
 #-------------------------------
+[DUSTSENTINEL]
+Name = Dust Sentinel
+Description = Creates Sandstorm, buffs itself during sand.
+#-------------------------------

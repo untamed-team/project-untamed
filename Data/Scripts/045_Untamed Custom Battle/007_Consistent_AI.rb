@@ -192,11 +192,8 @@ class Battle::AI
 			score -= 100-accuracy*1.33 if accuracy < 100
 		else # Status moves
 			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
-			echoln("score1: #{score}") if move.id == :CONFUSERAY
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
-			echoln("score2: #{score}") if move.id == :CONFUSERAY
 			score *= accuracy / 100.0
-			echoln("score3: #{score}") if move.id == :CONFUSERAY
 		end
 		aspeed = pbRoughStat(user,:SPEED,100)
 		ospeed = pbRoughStat(target,:SPEED,100)
