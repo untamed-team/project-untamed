@@ -1,14 +1,20 @@
+name: Add bugs to bugs project
+
 on:
   issues:
-    types: [labeled]
+    types:
+      - opened
+
 jobs:
-  Move_Labeled_Issue_On_Project_Board:
+  add-to-project:
+    name: Add issue to project
     runs-on: ubuntu-latest
     steps:
-    - uses: Gardenette/move-labeled-issue@v1.0
-      with:
-        action-token: "${{ secrets.PROJECT_BOARD_AUTOMATION }}"
-        project-url: "https://github.com/orgs/untamed-team/projects/16"
-        column-name: "Assigned"
-        label-name: "code"
-        columns-to-ignore: "Done Recently"
+      - uses: actions/add-to-project@RELEASE_VERSION
+        with:
+          # You can target a project in a different organization
+          # to the issue
+          project-url: https://github.com/orgs/untamed-team/projects/16
+          github-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
+          labeled: art
+          label-operator: OR
