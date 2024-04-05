@@ -24,8 +24,5 @@ jobs:
     if: contains(github.event.issue.labels.*.name, 'art')
     runs-on: ubuntu-latest
     steps:
-      - uses: alex-page/github-project-automation-plus@v0.9.0
-        with:
-          project: Project Untamed Progress Overview
-          column: Art
-          repo-token: ${{ secrets.PROJECT_BOARD_AUTOMATION }}
+      item-id: ${{ steps.add-to-project.outputs.itemId }} # Use the item-id output of the previous step
+      gh project item-edit --id item-id --field-id Status
