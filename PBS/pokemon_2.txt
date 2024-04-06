@@ -1115,56 +1115,6 @@ Pokedex = Gourgeist can vary wildly in size based on a range of environmental fa
 FormName = Small Size
 Generation = 6
 #-------------------------------
-[PURRLOIN]
-Name = Purrloin
-Types = DARK
-BaseStats = 41,50,37,66,50,37
-GenderRatio = Female50Percent
-GrowthRate = Erratic
-BaseExp = 56
-EVs = SPEED,1
-CatchRate = 255
-Happiness = 70
-Abilities = LIMBER,UNBURDEN
-HiddenAbilities = PRANKSTER
-Moves = 1,SCRATCH,3,GROWL,6,TAILWHIP,10,SANDATTACK,12,FURYSWIPES,15,PURSUIT,19,TORMENT,22,FAKEOUT,26,HONECLAWS,31,ASSURANCE,34,SLASH,38,TAUNT,43,NIGHTSLASH,47,SNATCH,50,NASTYPLOT,55,SUCKERPUNCH,58,PLAYROUGH
-TutorMoves = AERIALACE,ATTRACT,CUT,DARKPULSE,FACADE,FOULPLAY,GRASSKNOT,RAINDANCE,SHADOWCLAW,SNARL,SUBSTITUTE,SUNNYDAY,SWAGGER,TAUNT,THIEF,THUNDERWAVE,TORMENT,TOXIC,UTURN,METRONOME,SHADOWBALL,HEALBELL
-EggMoves = CHARM,COPYCAT,COVET,ENCORE,FAKETEARS,FEINTATTACK,FOULPLAY,PAYDAY,YAWN
-EggGroups = Field
-HatchSteps = 5120
-Height = 0.4
-Weight = 10.1
-Color = Purple
-Shape = Quadruped
-Category = Devious
-Pokedex = In this region, Purrloin competes with Techuppi for most popular pet. However, both them and their evolved forms are also known to fight viciously in the wild.
-Generation = 5
-Evolutions = LIEPARD,Level,20
-#-------------------------------
-[LIEPARD]
-Name = Liepard
-Types = DARK
-BaseStats = 64,88,50,106,88,50
-GenderRatio = Female50Percent
-GrowthRate = Erratic
-BaseExp = 156
-EVs = SPEED,2
-CatchRate = 90
-Happiness = 70
-Abilities = LIMBER,UNBURDEN
-HiddenAbilities = PRANKSTER
-Moves = 1,SCRATCH,1,GROWL,1,SANDATTACK,3,GROWL,6,TAILWHIP,10,SANDATTACK,12,FURYSWIPES,15,PURSUIT,19,TORMENT,22,FAKEOUT,26,HONECLAWS,31,ASSURANCE,34,SLASH,38,TAUNT,43,NIGHTSLASH,47,SNATCH,50,NASTYPLOT,55,SUCKERPUNCH,58,PLAYROUGH
-TutorMoves = AERIALACE,ATTRACT,CUT,DARKPULSE,FACADE,FOULPLAY,GRASSKNOT,RAINDANCE,SHADOWCLAW,SNARL,SUBSTITUTE,SUNNYDAY,SWAGGER,TAUNT,THIEF,THUNDERWAVE,TORMENT,TOXIC,UTURN,METRONOME,SHADOWBALL,HEALBELL
-EggGroups = Field
-HatchSteps = 5120
-Height = 1.1
-Weight = 37.5
-Color = Purple
-Shape = Quadruped
-Category = Cruel
-Pokedex = It is hypothesized that Liepard and Persian share a common ancestor. They mostly avoid each other in the jungle home that they share.
-Generation = 5
-#-------------------------------
 [DRILBUR]
 Name = Drilbur
 Types = GROUND
@@ -5189,3 +5139,48 @@ Shape = BipedalTail
 Category = Digging
 Pokedex = As powerful as an excavator, its ears can reduce dense bedrock to rubble. When it's finished digging, it lounges lazily.
 Generation = 6
+#-------------------------------
+[PURRLOIN]
+Name = Failsafe_Purrloin
+Types = DARK
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 56
+EVs = SPEED,1
+CatchRate = 255
+Happiness = 70
+Abilities = LIMBER,UNBURDEN
+Moves = 1,SPLASH
+EggGroups = Field
+HatchSteps = 5120
+Height = 0.4
+Weight = 10.1
+Color = Purple
+Shape = Quadruped
+Category = Devious
+Pokedex = In this region, Purrloin competes with Techuppi for most popular pet. However, both them and their evolved forms are also known to fight viciously in the wild.
+Generation = 5
+Evolutions = LIEPARD,Level,20
+#-------------------------------
+[LIEPARD]
+Name = Failsafe_Liepard
+Types = DARK
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 156
+EVs = SPEED,2
+CatchRate = 90
+Happiness = 70
+Abilities = LIMBER,UNBURDEN
+Moves = 1,SPLASH
+EggGroups = Field
+HatchSteps = 5120
+Height = 1.1
+Weight = 37.5
+Color = Purple
+Shape = Quadruped
+Category = Cruel
+Pokedex = It is hypothesized that Liepard and Persian share a common ancestor. They mostly avoid each other in the jungle home that they share.
+Generation = 5
