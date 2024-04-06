@@ -404,23 +404,44 @@ class DifficultySelectMenu_Scene
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
     pbSetSystemFont(@sprites["overlay"].bitmap)
+
+    @sprites["overlay"].x = @sprites["bg"].x
+    @sprites["overlay"].y = @sprites["bg"].y
+    @sprites["overlay"].z = 99999
+
     pbFadeInAndShow(@sprites) { pbUpdate }
+    page = 1
+    drawPage(page)
   end
 
   def drawPage(page)
     overlay = @sprites["overlay"].bitmap
     overlay.clear
+    base   = MessageConfig::DARK_TEXT_MAIN_COLOR
+    shadow = MessageConfig::DARK_TEXT_SHADOW_COLOR
+
 		# this could be more compact but whatever im gonna pull a yandev
     case page
     when 1 
 			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
+      difficultyName = _INTL("Casual")
+      difficultyDesc = _INTL("Casual description")
     when 2 
 			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
+      difficultyName = _INTL("Casual")
+      difficultyDesc = _INTL("Casual description")
     when 3 
 			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
+      difficultyName = _INTL("Casual")
+      difficultyDesc = _INTL("Casual description")
     when 4 
 			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
+      difficultyName = _INTL("Casual")
+      difficultyDesc = _INTL("Casual description")
     end
+
+    drawFormattedTextEx(bitmap=overlay, x=64, y=64, width=overlay.width-64, text=difficultyName, baseColor=base, shadowColor=shadow, lineheight=16)
+    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-64, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=16)
   end
 	
   def pbEndScene
