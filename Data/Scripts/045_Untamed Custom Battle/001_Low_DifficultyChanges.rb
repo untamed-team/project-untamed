@@ -409,9 +409,10 @@ class DifficultySelectMenu_Scene
     @sprites["overlay"].y = @sprites["bg"].y
     @sprites["overlay"].z = 99999
 
-    pbFadeInAndShow(@sprites) { pbUpdate }
     page = 1
     drawPage(page)
+
+    pbFadeInAndShow(@sprites) { pbUpdate }
   end
 
   def drawPage(page)
@@ -419,29 +420,61 @@ class DifficultySelectMenu_Scene
     overlay.clear
     base   = MessageConfig::DARK_TEXT_MAIN_COLOR
     shadow = MessageConfig::DARK_TEXT_SHADOW_COLOR
+    overlay.font.size = 22
 
 		# this could be more compact but whatever im gonna pull a yandev
     case page
-    when 1 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
-      difficultyName = _INTL("Casual")
-      difficultyDesc = _INTL("Casual description")
-    when 2 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
-      difficultyName = _INTL("Casual")
-      difficultyDesc = _INTL("Casual description")
-    when 3 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
-      difficultyName = _INTL("Casual")
-      difficultyDesc = _INTL("Casual description")
-    when 4 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
-      difficultyName = _INTL("Casual")
-      difficultyDesc = _INTL("Casual description")
-    end
+    when 1
+      #Freeze replaced with frostbite
+      #Hail buff
+      #Sleep no longer random
+      #EVs rework (post game)
+      #IVs removed
+      #Evasion boosting removed
+      #Bug SE against Fairy
+      #No level cap
+      #No item cap
+      #Set or switch style
+      #Pokemon type changes
+      #Pokemon stat changes
+      #Move Changes
+      #Ability Changes
+      #Evo Method changes
 
-    drawFormattedTextEx(bitmap=overlay, x=64, y=64, width=overlay.width-64, text=difficultyName, baseColor=base, shadowColor=shadow, lineheight=16)
-    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-64, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=16)
+			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
+      difficultyDesc = _INTL("Freeze replaced with Frostbite\nHail buff\nSleep no longer random\nEVs rework (post game)\nIVs reworked\nCheck the Project Untamed Wiki for more changes.")
+    when 2
+			#All of the above BUT
+			#Soft level cap (exp has diminishing returns)
+			#Soft item cap (10 items allowed)
+			#Select limited pokemon before gym battle
+
+      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
+      difficultyDesc = _INTL("All changes in Casual mode BUT\nSoft level cap (exp has diminishing returns)\nSoft item cap (10 items allowed per battle)\nSelect limited number of Pokémon before gym battles\nCheck the Project Untamed Wiki for more changes.")
+    when 3
+			#All of the above BUT
+			#Hard level cap (no exp above certain level)
+			#Hard item cap (no items in battle)
+			#Set style enforced
+			#Sleep clause
+			#More difficult trainers
+
+      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
+      difficultyDesc = _INTL("All changes in Normal mode BUT\nHard level cap (no exp above certain level)\nCannot use items in battle\nSet style enforced\nSleep clause\nMore difficult trainers\nCheck the Project Untamed Wiki for more changes.")
+    when 4
+      #notes to come
+
+			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
+      difficultyDesc = _INTL("NOTE: Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\nPokemon stats, abilities, learnset, distribution differences\nCertain move and battle effects changed or removed\nExtremely difficult trainers\nStatus effects changed\nAnd more")
+    end
+    #difficulty name, always present
+    drawFormattedTextEx(bitmap=overlay, x=52, y=52, width=overlay.width-58, text=_INTL("Casual"), baseColor=base, shadowColor=shadow, lineheight=16)
+    drawFormattedTextEx(bitmap=overlay, x=122, y=52, width=overlay.width-58, text=_INTL("Normal"), baseColor=base, shadowColor=shadow, lineheight=16)
+    drawFormattedTextEx(bitmap=overlay, x=198, y=52, width=overlay.width-58, text=_INTL("Hard"), baseColor=base, shadowColor=shadow, lineheight=16)
+    drawFormattedTextEx(bitmap=overlay, x=260, y=52, width=overlay.width-58, text=_INTL("Chaos"), baseColor=base, shadowColor=shadow, lineheight=16)
+
+    #difficulty description, changes per page
+    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=32)
   end
 	
   def pbEndScene
