@@ -484,7 +484,17 @@ class Battle::AI
     when "RandomlyDamageOrHealTarget"   # Present
       baseDmg = 50
     when "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
-      baseDmg = 71
+      if user.level<=16
+        baseDmg = 39
+      elsif user.level<=24
+        baseDmg = 50
+      elsif user.level<=33
+        baseDmg = 67
+      elsif user.level<=44
+        baseDmg = 77
+      else
+        baseDmg = 91
+      end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
     when "TypeAndPowerDependOnUserBerry"   # Natural Gift
       baseDmg = move.pbNaturalGiftBaseDamage(user.item_id)
@@ -500,7 +510,7 @@ class Battle::AI
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
-        baseDmg = (baseDmg * 31 / 10).floor   # Average damage dealt
+        baseDmg = (baseDmg * 3.45).floor   # Average damage dealt
       end
     when "HitTwoToFiveTimesOrThreeForAshGreninja"
       if user.isSpecies?(:GRENINJA) && user.form == 2
@@ -508,7 +518,7 @@ class Battle::AI
       elsif user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
-        baseDmg = (baseDmg * 31 / 10).floor   # Average damage dealt
+        baseDmg = (baseDmg * 3.45).floor   # Average damage dealt
       end
     when "HitOncePerUserTeamMember"   # Beat Up
       mult = 0
