@@ -1747,6 +1747,9 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
   }
 )
 
+#===============================================================================
+# Crash Prevention
+#===============================================================================
 #to prevent a crash with save files that were created when my Tutorial Tips existed
 class Tips
 end
