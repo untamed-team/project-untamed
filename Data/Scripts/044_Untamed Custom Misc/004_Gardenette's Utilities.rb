@@ -814,10 +814,9 @@ class PokemonEncounters
      else   # Land/Cave (can have both in the same map)
       if has_land_encounters? && $game_map.terrain_tag($game_player.x, $game_player.y).land_wild_encounters
         ret = :BugContest if pbInBugContest? && has_encounter_type?(:BugContest)
-      
         #added by Gardenette for EnCORNters
         if !ret && $game_map.terrain_tag($game_player.x, $game_player.y).id_number == 18
-        ret = find_valid_encounter_type_for_time(:Corn, time)
+          ret = find_valid_encounter_type_for_time(:Corn, time)
       end
         
       
