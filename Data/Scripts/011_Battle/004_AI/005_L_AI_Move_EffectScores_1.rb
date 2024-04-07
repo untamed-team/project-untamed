@@ -3861,7 +3861,8 @@ class Battle::AI
 				miniscore*=1.8
 			end
 			score*=miniscore
-			score = 0 if user.statStageAtMax?(:ATTACK) && user.statStageAtMax?(:SPECIAL_ATTACK)
+			score = 0 if user.statStageAtMax?(:ATTACK)
+			score = 0 if user.statStageAtMax?(:SPECIAL_ATTACK)
 			score = 0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash
@@ -4028,6 +4029,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:UNAWARE)
 				score=0
 			end
+			score/=2 if user.SetupMovesUsed.include?(move.id)
 			score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserAtkSpd1" # Dragon Dance

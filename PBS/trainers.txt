@@ -224,6 +224,11 @@ Pokemon = NOCTAVISPA,50
 #-------------------------------
 [HEXMANIAC,pory1,100]
 LoseText = kaboom
+Pokemon = BLAZEA,50
+    Moves = EMBER
+    AbilityIndex = 2
+    Nature = QUIRKY
+	AAM = true
 Pokemon = M_ROSERADE,50
     Moves = SPLASH
     AbilityIndex = 2
