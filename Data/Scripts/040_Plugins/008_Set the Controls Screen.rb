@@ -391,11 +391,11 @@ class Window_PokemonControls < Window_DrawableCommand
 
   def initialize(controls,x,y,width,height)
     @controls = controls
-    @name_base_color   = Color.new(0,0,0)
-    @name_shadow_color = Color.new(255,255,255)
+    @name_base_color   = Color.new(80, 80, 88)#Color.new(0,0,0)
+    @name_shadow_color = Color.new(160, 160, 168)#Color.new(255,255,255)
     #the key bound to the control
     @sel_base_color    = Color.new(24,112,216)
-    @sel_shadow_color  = Color.new(255,255,255)
+    @sel_shadow_color  = Color.new(104,192,255)
     @reading_input = false
     @changed = false
     super(x,y,width,height)
