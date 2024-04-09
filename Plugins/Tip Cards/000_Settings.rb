@@ -144,7 +144,13 @@ module Settings
             },
             :BATTLEINFO6 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("About icons and stuff, more in depth"),
+                :Text => _INTL("From left to right, the icons you'll see on moves are: Contact, Tramples Minimize, High Crit Rate, Sound, Punching..."),
+                :Image => "move_icons1",
+            },
+            :BATTLEINFO7 => {
+                :Title => _INTL("Battle Info"),
+                :Text => _INTL("Biting, Bomb, Pulse, Powder, Dance."),
+                :Image => "move_icons2",
             },
             :CAMP1 => {
                 :Title => _INTL("Camp"),
@@ -185,7 +191,7 @@ module Settings
             },
             :BATTLEINFO => {
                 :Title => _INTL("Battle Info"),
-                :Tips => [:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO6]
+                :Tips => [:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO6, :BATTLEINFO7]
             },
             :CAMP => {
                 :Title => _INTL("Camp"),

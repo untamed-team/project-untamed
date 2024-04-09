@@ -320,8 +320,12 @@ class Battle::Scene
     ret = -1
     
     #added by Gardenette
-    pbShowTipCard(:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO5) if !pbSeenTipCard?(:BATTLEINFO1) && $game_variables[27] >= 9 #show only after rival battle
-    
+    if !pbSeenTipCard?(:BATTLEINFO1) && $game_variables[27] >= 9 #show only after rival battle
+      pbShowTipCard(:BATTLEINFO1, :BATTLEINFO2, :BATTLEINFO3, :BATTLEINFO4, :BATTLEINFO5) 
+      pbSetTipCardSeen(:BATTLEINFO6)
+      pbSetTipCardSeen(:BATTLEINFO7)
+    end
+
     loop do
       oldIndex = cw.index
       pbUpdate(cw)
