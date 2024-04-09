@@ -42,20 +42,20 @@ Corn,5
 Corn,5
     50,PUMPKABOO,4,5
     30,MINIMELO,4,5
-    20,WRENNER,4,5
+    20,WRENNER,5
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
-    35,PACUNA,4,5
-    30,BUDEW,5,5
-    25,FLABEBE,5,5
-    10,WORMOTE,5,5
+    35,PACUNA,6,7
+    30,BUDEW,6,6
+    25,FLABEBE,6,7
+    10,WORMOTE,6,7
 #-------------------------------
 [026] # Route 2
 Land,21
-    20,SKIDDO,5
-    25,FLABEBE,5
-    25,M_EKANS,5
-    10,WRENNER,5
-    5,M_MEOWTH,5
-    15,BUNNELBY,5
+    20,SKIDDO,6,7
+    25,FLABEBE,6,7
+    25,M_EKANS,6,7
+    15,WORMOTE,6,7
+    10,WRENNER,6,7
+    5,M_MEOWTH,6,7

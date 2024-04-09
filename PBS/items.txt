@@ -6663,7 +6663,7 @@ Flags = KeyItem
 Description = An ancient manuscript text in book form, it details every notable change in Chaos Mode.
 #-------------------------------
 [EXPALL]
-Name = Exp. All
+Name = Exp. All (On)
 NamePlural = Exp. Alls
 Pocket = 8
 Price = 0
@@ -6672,7 +6672,7 @@ Flags = KeyItem
 Description = A device that gives experience to a trainer's entire party of Pokémon. It has a switch on it.
 #-------------------------------
 [EXPALLOFF]
-Name = Exp. All
+Name = Exp. All (Off)
 NamePlural = Exp. Alls
 Pocket = 8
 Price = 0

@@ -188,6 +188,92 @@ Pokemon = M_ROSELIA,9
     Item = ORANBERRY
     Nature = MODEST
 #-------------------------------
+[LASS,Juju]
+LoseText = Aren't my Pokémon so cute?
+Pokemon = SKIDDO,9
+Pokemon = FLABEBE,9
+#-------------------------------
+[LASS,Juju,100]
+LoseText = Aren't my Pokémon so cute?
+Pokemon = SKIDDO,9
+	Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
+    AbilityIndex = 1
+Pokemon = M_EKANS,9
+	Moves = POISONFANG,COIL,BITE
+    AbilityIndex = 0
+    Nature = IMPISH
+#-------------------------------
+[YOUNGSTER_M,Gabriel]
+LoseText = That was not so cool!
+Pokemon = M_EKANS,9
+Pokemon = BUNNELBY,9
+#-------------------------------
+[YOUNGSTER_M,Gabriel,100]
+LoseText = That was not so cool!
+Pokemon = M_MEOWTH,9
+	Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
+    AbilityIndex = 2
+    Nature = ADAMANT
+Pokemon = WRENNER,9
+	Moves = AERIALACE,SANDTOMB,DETECT
+    Nature = IMPISH
+    AbilityIndex = 0
+#-------------------------------
+[TOURIST,William]
+LoseText = She will come back, she always does.
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[TOURIST,William,100]
+LoseText = She will come back, she always does.
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    AbilityIndex = 1
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    AbilityIndex = 0
+#-------------------------------
+[LAD,Rainer]
+LoseText = Wait, I lost?
+Pokemon = LEDYBA,10
+Pokemon = BUDEW,10
+	Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
+#-------------------------------
+[LAD,Rainer,100]
+LoseText = Wait, I lost?
+Pokemon = BUDEW,10
+	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
+    Nature = CALM
+Pokemon = WORMOTE,9
+	Moves = STRUGGLEBUG,CONFUSION,SING
+    AbilityIndex = 1
+	Item = OCCABERRY
+    Nature = TIMID
+#-------------------------------
+[FISHERMAN,Ted]
+LoseText = Hold on, I don't think that was the catchphrase.
+Pokemon = MAGIKARP,1
+Pokemon = MAGIKARP,3
+Pokemon = MAGIKARP,5
+Pokemon = MAGIKARP,7
+Pokemon = MAGIKARP,9
+Pokemon = FEEBAS,10
+#-------------------------------
+[FISHERMAN,Ted,100]
+LoseText = Hold on, I don't think that was the catchphrase.
+Pokemon = LOTAD,10
+	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
+    AbilityIndex = 1
+	Item = ASPEARBERRY
+    Nature = MODEST
+Pokemon = GULPI,10
+	Moves = ASTONISH,BITE,SPARK,CHARGE
+    AbilityIndex = 0
+    Nature = TIMID
+#-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
 Pokemon = NOCTAVISPA,10
@@ -224,6 +310,11 @@ Pokemon = NOCTAVISPA,50
 #-------------------------------
 [HEXMANIAC,pory1,100]
 LoseText = kaboom
+Pokemon = BLAZEA,50
+    Moves = EMBER
+    AbilityIndex = 2
+    Nature = QUIRKY
+	AAM = true
 Pokemon = M_ROSERADE,50
     Moves = SPLASH
     AbilityIndex = 2

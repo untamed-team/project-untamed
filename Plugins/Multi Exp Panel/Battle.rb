@@ -15,7 +15,7 @@ class Battle
       next unless b.fainted? || b.captured
       # Count the number of participants
       numPartic = 0
-		if $game_variables[MECHANICSVAR] < 3
+		if $game_variables[MECHANICSVAR] >= 2
 			eachInTeam(0, 0) do |pkmn, i|
 				b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
 			end
@@ -35,7 +35,7 @@ class Battle
 			expleechtargets.push(i)
 		end
 		vanillaStuff = false
-		vanillaStuff = true if $bag.has?(:EXPALLOFF) && $game_variables[MECHANICSVAR] < 3
+		vanillaStuff = true if $bag.has?(:EXPALLOFF)
 		expAll = false if haveexpleech>0
 		expAll = false if vanillaStuff
       # Calculate EV and Exp gains for the participants

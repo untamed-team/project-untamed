@@ -3,68 +3,7 @@ class Battle
   # Gaining Experience
   #=============================================================================
   def pbGainExp #exp leech edits #by low
-    # Play wild victory music if it's the end of the battle (has to be here)
-    @scene.pbWildBattleSuccess if wildBattle? && pbAllFainted?(1) && !pbAllFainted?(0)
-    return if !@internalBattle || !@expGain
-    # Go through each battler in turn to find the Pokémon that participated in
-    # battle against it, and award those Pokémon Exp/EVs
-    expAll = true
-    p1 = pbParty(0)
-    @battlers.each do |b|
-      next unless b&.opposes?   # Can only gain Exp from fainted foes
-      next if b.participants.length == 0
-      next unless b.fainted? || b.captured
-      # Count the number of participants
-      numPartic = 0
-			if $game_variables[MECHANICSVAR] < 3
-				eachInTeam(0, 0) do |pkmn, i|
-					b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
-				end
-				b.participants.uniq! # removing repeats
-			end
-      b.participants.each do |partic|
-        next unless pbIsOwner?(0, partic)
-        numPartic += 1
-      end
-      # Find which Pokémon have an Exp Share
-      expShare = [] # filler
-			haveexpleech = 0
-			expleechtargets = []
-			eachInTeam(0, 0) do |pkmn, i|
-				next if !pkmn.hasItem?(:EXPSHARE)
-				haveexpleech += 1
-				expleechtargets.push(i)
-			end
-			vanillaStuff = false
-			vanillaStuff = true if $bag.has?(:EXPALLOFF) && $game_variables[MECHANICSVAR] < 3
-			expAll = false if haveexpleech>0
-			expAll = false if vanillaStuff
-      # Calculate EV and Exp gains for the participants
-			if expAll
-				# Gain Exp for all Pokémon due to no Exp Leech users
-				eachInTeam(0, 0) do |pkmn, i|
-					pbGainExpOne(i, b, numPartic, expShare, expAll, true)
-					pbGainEVsOne(i, b)
-				end
-			else
-				if !vanillaStuff
-					# Gain Exp for Exp Leech users
-					eachInTeam(0, 0) do |pkmn, i|
-						next unless expleechtargets.include?(i)
-						pbGainExpOne(i, b, haveexpleech, expleechtargets, expAll, !pkmn.shadowPokemon?)
-						pbGainEVsOne(i, b)
-					end
-				else
-					eachInTeam(0, 0) do |pkmn, i|
-						next unless b.participants.include?(i)
-						pbGainExpOne(i, b, numPartic, expShare, expAll, true)
-						pbGainEVsOne(i, b)
-					end
-				end
-			end
-      # Clear the participants array
-      b.participants = []
-    end
+    print "useless"
   end
 
   def pbGainEVsOne(idxParty, defeatedBattler)
