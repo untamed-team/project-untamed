@@ -169,15 +169,22 @@ module Settings
             :COOKING1 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Inside Camp, you can create your own candy over the camp fire if you have candy bases and berries!"),
+                :Image => "cooking1",
             },
             :COOKING2 => {
                 :Title => _INTL("Cooking Candy"),
-                :Text => _INTL("Feeding this candy to your Pokémon will increase its stats for Pokémon Contests."),
+                :Text => _INTL("To make candy, hold the left mouse button with the spoon in the pot and drag the spoon around like the arrows indicate. Don't let your candy burn from not being stirred!"),
+                :Image => "cooking2",
             },
             :COOKING3 => {
                 :Title => _INTL("Cooking Candy"),
-                :Text => _INTL("To make candy, hold the left mouse button with your spoon in the pot and drag the spoon around like the arrows indicate."),
-                :Image => "cooking1",
+                :Text => _INTL("Cool off the mixture."),
+                :Text => _INTL("cooking3"),
+            },
+            :COOKING4 => {
+                :Title => _INTL("Cooking Candy"),
+                :Text => _INTL("Feeding this candy to your Pokémon will increase its stats for Pokémon Contests! You can feed your Pokémon from your candy case."),
+                :Text => _INTL("cooking4"),
             },
         }
 
