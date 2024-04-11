@@ -430,8 +430,6 @@ class Battle::AI
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
     baseDmg = move.baseDamage
-    baseDmg = 60 if baseDmg == 1
-    return baseDmg if skill < PBTrainerAI.mediumSkill
     # Covers all function codes which have their own def pbBaseDamage
     case move.function
     # Sonic Boom, Dragon Rage, Super Fang, Night Shade, Endeavor
@@ -486,7 +484,17 @@ class Battle::AI
     when "RandomlyDamageOrHealTarget"   # Present
       baseDmg = 50
     when "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
-      baseDmg = 71
+      if user.level<=16
+        baseDmg = 39
+      elsif user.level<=24
+        baseDmg = 50
+      elsif user.level<=33
+        baseDmg = 67
+      elsif user.level<=44
+        baseDmg = 77
+      else
+        baseDmg = 91
+      end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
     when "TypeAndPowerDependOnUserBerry"   # Natural Gift
       baseDmg = move.pbNaturalGiftBaseDamage(user.item_id)
@@ -502,7 +510,7 @@ class Battle::AI
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
-        baseDmg = (baseDmg * 31 / 10).floor   # Average damage dealt
+        baseDmg = (baseDmg * 3.45).floor   # Average damage dealt
       end
     when "HitTwoToFiveTimesOrThreeForAshGreninja"
       if user.isSpecies?(:GRENINJA) && user.form == 2
@@ -510,7 +518,7 @@ class Battle::AI
       elsif user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
-        baseDmg = (baseDmg * 31 / 10).floor   # Average damage dealt
+        baseDmg = (baseDmg * 3.45).floor   # Average damage dealt
       end
     when "HitOncePerUserTeamMember"   # Beat Up
       mult = 0
@@ -557,6 +565,7 @@ class Battle::AI
 			scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
 			baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
     end
+    baseDmg = 60 if baseDmg == 1
     return baseDmg
   end
 
@@ -968,8 +977,9 @@ class Battle::AI
     return 125 if modifiers[:base_accuracy] == 0
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
-    accStage = 0 if accStage < 0
-    evaStage = 0 #[[modifiers[:evasion_stage], -6].max, 6].min + 6
+    evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
+    accStage = 6 if accStage < 6
+    evaStage = 6 if evaStage > 6
     stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
     stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]

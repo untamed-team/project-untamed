@@ -625,12 +625,21 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
   def multiHitMove?; return true; end
 
   def pbNumHits(user, targets)
-    hitChances = [
-      2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
-      3, 3, 3, 3, 3, 3, 3,
-      4, 4, 4,
-      5
-    ]
+    if user.pbOwnedByPlayer?
+      hitChances = [
+          2, 2, 2, 2, 2, 2, 2,
+          3, 3, 3, 3, 3, 3, 3,
+          4, 4, 4,
+          5, 5, 5
+      ]
+    else
+      hitChances = [
+          3, 3, 3, 3, 3, 3, 3,
+          3, 3, 3, 3, 3, 3, 3,
+          4, 4, 4,
+          5, 5, 5
+      ]
+    end
     r = @battle.pbRandom(hitChances.length)
     r = hitChances.length - 1 if user.hasActiveAbility?(:SKILLLINK)
     return hitChances[r]

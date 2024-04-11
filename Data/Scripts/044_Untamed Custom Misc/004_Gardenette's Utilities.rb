@@ -814,10 +814,9 @@ class PokemonEncounters
      else   # Land/Cave (can have both in the same map)
       if has_land_encounters? && $game_map.terrain_tag($game_player.x, $game_player.y).land_wild_encounters
         ret = :BugContest if pbInBugContest? && has_encounter_type?(:BugContest)
-      
         #added by Gardenette for EnCORNters
         if !ret && $game_map.terrain_tag($game_player.x, $game_player.y).id_number == 18
-        ret = find_valid_encounter_type_for_time(:Corn, time)
+          ret = find_valid_encounter_type_for_time(:Corn, time)
       end
         
       
@@ -1098,7 +1097,7 @@ module Battle::CatchAndStoreMixin
 						naturenum+=1
 					end
 					commands.push(_INTL("Cancel"))
-					cmd = scene.pbShowCommands(_INTL("Choose an nature."), commands, cmd)
+					cmd = scene.pbShowCommands(_INTL("Choose a nature."), commands, cmd)
 					if cmd < 0
 						#nothing
 					else
@@ -1748,6 +1747,9 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
   }
 )
 
+#===============================================================================
+# Crash Prevention
+#===============================================================================
 #to prevent a crash with save files that were created when my Tutorial Tips existed
 class Tips
 end

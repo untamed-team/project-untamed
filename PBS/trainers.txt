@@ -71,11 +71,11 @@ Pokemon = MURKROW,5
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
 Pokemon = M_EKANS,4
+    Moves = POISONFANG,BITE,LEER,WRAP
     AbilityIndex = 0
-	Moves = POISONFANG,BITE,LEER,WRAP
 Pokemon = MURKROW,5
+    Moves = THIEF,GUST,HYPNOSIS
     AbilityIndex = 1
-	Moves = THIEF,GUST,HYPNOSIS
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
@@ -84,11 +84,11 @@ Pokemon = TECHUPPI,5
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.
 Pokemon = CACNEA,4
+    Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
     AbilityIndex = 2
-	Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
 Pokemon = TECHUPPI,5
+    Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
     AbilityIndex = 1
-	Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
@@ -124,10 +124,10 @@ Pokemon = PHANTUMP,7
 [PSYCHIC_M2,Xavier,100]
 LoseText = Wow, you’re pretty good!
 Pokemon = LILORINA,6
-	Moves = HYPNOSIS,WATERGUN,DISARMINGVOICE
+    Moves = HYPNOSIS,WATERGUN,DISARMINGVOICE
     AbilityIndex = 0
 Pokemon = PHANTUMP,7
-	Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
+    Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?
@@ -138,10 +138,10 @@ Pokemon = LITWICK,6
 [HEXMANIAC,Helena,100]
 LoseText = ..Is that a no?
 Pokemon = FLABEBE,6
-	Moves = FAIRYWIND,HIDDENPOWER,GRASSKNOT
+    Moves = FAIRYWIND,HIDDENPOWER,GRASSKNOT
 	HiddenPowerType = FIRE
 Pokemon = LITWICK,7
-	Moves = WILLOWISP,EMBER,NIGHTSHADE
+    Moves = WILLOWISP,EMBER,NIGHTSHADE
     AbilityIndex = 1
 #-------------------------------
 [LEADER_Valentina,Valentina]
@@ -156,79 +156,172 @@ Pokemon = LITWICK,8
 Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
-#------------------------------- MURKROW, CROMEN, DUNSPARCE, NATU
+#-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, whatever…
 Pokemon = PACUNA,8
-	Nature = JOLLY
-    Moves = COVET,REFLECT,UTURN,LIGHTSCREEN
+    Moves = UTURN,REFLECT,COVET,LIGHTSCREEN
     AbilityIndex = 1
-	Item = LIGHTCLAY
+    Nature = JOLLY
 Pokemon = LILORINA,8
-	Nature = BOLD
     Moves = DISARMINGVOICE,BITINGCOLD,NIGHTSHADE,BUBBLE
     AbilityIndex = 2
-	Item = RINDOBERRY
+    Item = RINDOBERRY
+    Nature = BOLD
 Pokemon = FLABEBE,8
-	Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,SAFEGUARD
+    Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,SAFEGUARD
     AbilityIndex = 2
+    Item = WATERGEM
 	HiddenPowerType = WATER
-	Item = WATERGEM
 Pokemon = MURKROW,8
-	Nature = JOLLY
-    Moves = GUST,ROOST,NIGHTSHADE,CONFUSERAY
+    Moves = PECK,ROOST,NIGHTSHADE,CONFUSERAY
     AbilityIndex = 2
+    Nature = ADAMANT
 Pokemon = NATU,8
-	Nature = TIMID
     Moves = HEX,THUNDERWAVE,TELEPORT,PSYWAVE
     AbilityIndex = 0
-	Item = LEFTOVERS
+    Item = LEFTOVERS
+    Nature = TIMID
 Pokemon = M_ROSELIA,9
-	Nature = MODEST
     Moves = GROWTH,HEX,MEGADRAIN,GRASSWHISTLE
     AbilityIndex = 2
-	Item = ORANBERRY
+    Item = ORANBERRY
+    Nature = MODEST
+#-------------------------------
+[LASS,Juju]
+LoseText = Aren't my Pokémon so cute?
+Pokemon = SKIDDO,9
+Pokemon = FLABEBE,9
+#-------------------------------
+[LASS,Juju,100]
+LoseText = Aren't my Pokémon so cute?
+Pokemon = SKIDDO,9
+	Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
+    AbilityIndex = 1
+Pokemon = M_EKANS,9
+	Moves = POISONFANG,COIL,BITE
+    AbilityIndex = 0
+    Nature = IMPISH
+#-------------------------------
+[YOUNGSTER_M,Gabriel]
+LoseText = That was not so cool!
+Pokemon = M_EKANS,9
+Pokemon = BUNNELBY,9
+#-------------------------------
+[YOUNGSTER_M,Gabriel,100]
+LoseText = That was not so cool!
+Pokemon = M_MEOWTH,9
+	Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
+    AbilityIndex = 2
+    Nature = ADAMANT
+Pokemon = WRENNER,9
+	Moves = AERIALACE,SANDTOMB,DETECT
+    Nature = IMPISH
+    AbilityIndex = 0
+#-------------------------------
+[TOURIST,William]
+LoseText = She will come back, she always does.
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[TOURIST,William,100]
+LoseText = She will come back, she always does.
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    AbilityIndex = 1
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    AbilityIndex = 0
+#-------------------------------
+[LAD,Rainer]
+LoseText = Wait, I lost?
+Pokemon = LEDYBA,10
+Pokemon = BUDEW,10
+	Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
+#-------------------------------
+[LAD,Rainer,100]
+LoseText = Wait, I lost?
+Pokemon = BUDEW,10
+	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
+    Nature = CALM
+Pokemon = WORMOTE,9
+	Moves = STRUGGLEBUG,CONFUSION,SING
+    AbilityIndex = 1
+	Item = OCCABERRY
+    Nature = TIMID
+#-------------------------------
+[FISHERMAN,Ted]
+LoseText = Hold on, I don't think that was the catchphrase.
+Pokemon = MAGIKARP,1
+Pokemon = MAGIKARP,3
+Pokemon = MAGIKARP,5
+Pokemon = MAGIKARP,7
+Pokemon = MAGIKARP,9
+Pokemon = FEEBAS,10
+#-------------------------------
+[FISHERMAN,Ted,100]
+LoseText = Hold on, I don't think that was the catchphrase.
+Pokemon = LOTAD,10
+	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
+    AbilityIndex = 1
+	Item = ASPEARBERRY
+    Nature = MODEST
+Pokemon = GULPI,10
+	Moves = ASTONISH,BITE,SPARK,CHARGE
+    AbilityIndex = 0
+    Nature = TIMID
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
-Gimmick = HarshSun_GrassyTerrain_Tailwind_Spikes_Spikes_ToxicSpikes_LuckyChant_LightScreen_StatDropImmunity
 Pokemon = NOCTAVISPA,10
-	IV  = 10,10,10,10,10,10
-	EV  = 0,0,0,0,0,0
-	AAM = true
-	MEM = true
-	Status = Sleep
+    IV = 10,10,10,10,10,10
+    EV = 0,0,0,0,0,0
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-Gimmick = BugZone
-Pokemon = NOCTAVISPA,50
-    AbilityIndex = 0
-	Nature = QUIRKY
-	Moves = DEFENDORDER,SPLASH
-	BOSS = true
+Pokemon = M_ROSERADE,50
+    Moves = SPLASH
+    AbilityIndex = 2
+    Nature = QUIRKY
+Pokemon = SABLEYE,50
+    Moves = SPLASH
+    AbilityIndex = 2
+    Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
 Pokemon = NOCTAVISPA,50
-	Nature = QUIRKY
+    Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory,100]
 LoseText = kaboom
 Pokemon = NOCTAVISPA,50
-	Nature = QUIRKY
-	Moves = DEFENDORDER
-	Name = Nocta3
+    Name = Nocta3
+    Moves = DEFENDORDER
+    Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory1]
 LoseText = kaboom
 Pokemon = NOCTAVISPA,50
-	Nature = QUIRKY
+    Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory1,100]
 LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-	Nature = QUIRKY
-	Moves = DEFENDORDER
-	Name = Nocta1
+Pokemon = BLAZEA,50
+    Moves = EMBER
+    AbilityIndex = 2
+    Nature = QUIRKY
+	AAM = true
+Pokemon = M_ROSERADE,50
+    Moves = SPLASH
+    AbilityIndex = 2
+    Nature = QUIRKY
+	AAM = true
+Pokemon = SABLEYE,50
+    Moves = SPLASH
+    AbilityIndex = 2
+    Nature = QUIRKY
 	AAM = true

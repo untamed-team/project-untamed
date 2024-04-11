@@ -101,11 +101,7 @@ class PokemonPokedexInfo_Scene
     @sprites["advancedicon"].x = 82
     @sprites["advancedicon"].y = 328
     @sprites["advancedicon"].visible = false
-    
-    #added by Gardenette
-    $tips_log.tipAdvancedDex if !$tips_log.get_log.include?("Advanced Dex")
-	
-	
+
     pbSetSystemFont(@sprites["overlay"].bitmap)
     pbUpdateDummyPokemon
     @available = pbGetAvailableForms

@@ -94,7 +94,7 @@ MegaStone = BEHEEYEMITE
 Type1 = PSYCHIC
 Type2 = ELECTRIC
 BaseStats = 75,85,95,60,145,125
-Abilities = LEVITATE
+Abilities = MAGNETPULL
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
@@ -325,13 +325,19 @@ TutorMoves = CUT,FLY,STRENGTH,DEFOG,WORKUP,HELPINGHAND,BULKUP,TAUNT,PROTECT,SAND
 FormName = Mega Beakraft ♂
 MegaStone = BEAKRAFTITE
 UnmegaForm = 0 # DO NOT CHANGE THIS
-Abilities = MOLDBREAKER
+Type1 = STEEL
+Type2 = ELECTRIC
+BaseStats = 75,125,150,88,70,70
+Abilities = MOTORDRIVE
 #-------------------------------
 [BEAKRAFT,3]
 FormName = Mega Beakraft ♀
 MegaStone = BEAKRAFTITE
 UnmegaForm = 1 # DO NOT CHANGE THIS
-Abilities = INTIMIDATE
+Type1 = STEEL
+Type2 = ELECTRIC
+BaseStats = 75,150,88,125,70,70
+Abilities = MOTORDRIVE
 #-------------------------------
 #-------------------------------
 [CROACROZEN,1]

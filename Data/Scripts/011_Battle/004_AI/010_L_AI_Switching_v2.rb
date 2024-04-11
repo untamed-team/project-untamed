@@ -52,13 +52,14 @@ class Battle::AI
 					tickdamage=true if j.function=="SetTargetTypesToWater"
 					tickdamage=true if j.function=="StartDamageTargetEachTurnIfTargetAsleep" && battler.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn") && b.pbCanSleep?(battler,false,j)
 				end	
-				tempdam = pbRoughDamage(j,battler,b,skill,j.baseDamage)
+				tempdam = pbRoughDamage(j, battler, b, 100, j.baseDamage)
 				tempdam = 0 if pbCheckMoveImmunity(1,j,battler,b,100)
 				maxdam=tempdam if tempdam>maxdam
 			end 
+			echoln("#{j.name} = #{maxdampercent}")
 			maxdampercent = maxdam *100.0 / b.hp
 		end	
-		mindamage=10
+		mindamage=20
 		if battler.effects[PBEffects::LeechSeed]>=0 && (battler.hp > battler.totalhp*0.66)
 			mindamage=33 
 			if battler.status==:SLEEP && battler.statusCount>1
@@ -255,7 +256,7 @@ class Battle::AI
 					 @battle.pbWeather != :Sun && newenemy.item != :UTILITYUMBRELLA
 					ospeed *= 2 if newenemy.hasActiveAbility?(:CHLOROPHYLL)
 				end
-				if pokmon.hasActiveAbility?(:SANDSTREAM) && 
+				if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && 
 					 @battle.pbWeather != :Sandstorm 
 					ospeed *= 2 if newenemy.hasActiveAbility?(:SANDRUSH)
 				end
@@ -312,10 +313,10 @@ class Battle::AI
 							tempdam*=0.5 if j.type == :WATER
 							tempdam*=1.5 if newenemy.hasActiveAbility?(:SOLARPOWER) && j.specialMove?
 						end
-						if pokmon.hasActiveAbility?(:SANDSTREAM) && @battle.pbWeather != :Sandstorm 
+						if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
 							tempdam*=0.67 if pokmon.pbHasType?(:ROCK) && j.specialMove?
 							tempdam*=0.67 if pokmon.hasActiveAbility?(:SANDVEIL) && j.physicalMove?
-							tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(j.type) && newenemy.hasActiveAbility?(:SANDFORCE)
+							tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(j.type) && newenemy.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
 						end
 						if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
 							tempdam*=0.67 if pokmon.pbHasType?(:ICE) && j.physicalMove?
@@ -461,10 +462,10 @@ class Battle::AI
 						tempdam*=0.5 if m.type == :WATER
 						tempdam*=1.5 if pokmon.hasActiveAbility?(:SOLARPOWER) && m.specialMove?
 					end
-					if pokmon.hasActiveAbility?(:SANDSTREAM) && @battle.pbWeather != :Sandstorm 
+					if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
 						tempdam*=0.67 if b.pbHasType?(:ROCK) && m.specialMove?
 						tempdam*=0.67 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
-						tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?(:SANDFORCE)
+						tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
 					end
 					if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
 						tempdam*=0.67 if b.pbHasType?(:ICE) && m.physicalMove?
@@ -601,7 +602,7 @@ class Battle::AI
 					sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
 					sum+=5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "HigherDamageInRain") #untamed specifics
 				end
-				if pokmon.ability==:SANDSTREAM
+				if pokmon.ability==:SANDSTREAM || pokmon.ability==:DUSTSENTINEL
 					sum+=20 if pkmn.ability == :SANDRUSH
 					sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
 					sum+=10 if pkmn.hasType?(:ROCK)

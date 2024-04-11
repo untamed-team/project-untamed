@@ -137,8 +137,9 @@ class Battle::Move
     return true if modifiers[:base_accuracy] == 0
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
-    accStage = 0 if accStage < 0
-    evaStage = 0 #[[modifiers[:evasion_stage], -6].max, 6].min + 6
+    evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
+    accStage = 6 if accStage < 6
+    evaStage = 6 if evaStage > 6
     stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
     stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]

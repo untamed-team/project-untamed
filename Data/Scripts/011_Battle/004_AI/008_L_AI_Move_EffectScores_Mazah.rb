@@ -802,13 +802,8 @@ class Battle::AI
 					miniscore*=1.7
 				end
 			when :DIZZY
-				minimini = getAbilityDisruptScore(move,user,target,skill)
-				if target.opposes?(user)
-					miniscore = (10)*minimini
-				else
-					miniscore = (-10)*minimini
-					miniscore*=0.8 if move.damagingMove?
-				end
+				miniscore*= getAbilityDisruptScore(move,user,target,skill)
+				miniscore*=0.95 if move.damagingMove?
 			when :SLEEP
 				if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
 					miniscore*=1.5
@@ -923,7 +918,7 @@ class Battle::AI
 			if pokemon.pbHasMoveFunction?("StartSunWeather", "StartRainWeather", "StartSandstormWeather", "StartHailWeather") || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
 					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE].include?(pokemon.ability) ||
+					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
 				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
 				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
@@ -1070,7 +1065,7 @@ class Battle::AI
 			if weathermove || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
 					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE].include?(pokemon.ability) ||
+					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
 				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
 				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
@@ -1549,9 +1544,8 @@ class Battle::AI
 			PBDebug.log(sprintf("Wonder Guard Disrupt")) if $INTERNAL
 			wondervar=false
 			for i in user.moves
-				if Effectiveness.super_effective?(i.type)
-					wondervar=true
-				end
+				typeMod = pbCalcTypeMod(i.type, user, target)
+				wondervar=true if Effectiveness.super_effective?(typeMod)
 			end
 			if !wondervar
 				abilityscore*=5
