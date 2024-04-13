@@ -89,6 +89,7 @@ MapPosition = 0,20,3
 #-------------------------------
 [020]   # Test World
 Name = Test World
+Outdoor = true
 DiveMap = 38
 #-------------------------------
 [021]   # Hacienda Castaneda
