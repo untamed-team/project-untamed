@@ -3,7 +3,7 @@
 [001]   # Intro
 Name = Intro
 #-------------------------------
-[002]   # MausoleumLeft
+[002]   # Mausoleum
 Name = MausoleumLeft
 Outdoor = false
 ShowArea = false
@@ -69,7 +69,7 @@ MapPosition = 0,20,3
 Name = SE house-Orange
 MapPosition = 0,20,3
 #-------------------------------
-[016]   # Storage Shed
+[016]   # Hacienda Fields
 Name = Storage Shed
 MapPosition = 0,18,3
 #-------------------------------
@@ -78,7 +78,7 @@ Name = Hacienda Garden
 Outdoor = true
 MapPosition = 0,18,4
 #-------------------------------
-[018]   # GymInterior
+[018]   # San Cerigold Gym
 Name = GymInterior
 MapPosition = 0,20,3
 #-------------------------------
@@ -91,7 +91,7 @@ MapPosition = 0,20,3
 Name = Test World
 DiveMap = 38
 #-------------------------------
-[021]   # Teo's House
+[021]   # Hacienda Castaneda
 Name = Teo's House
 MapPosition = 0,18,4
 #-------------------------------
@@ -103,7 +103,7 @@ Bicycle = true
 MapPosition = 0,19,5
 BattleBack = city
 #-------------------------------
-[023]   # Alejandro's House
+[023]   # Route 5
 Name = Alejandro's House
 MapPosition = 0,18,4
 #-------------------------------
@@ -111,7 +111,7 @@ MapPosition = 0,18,4
 Name = Camp - Grassy
 Outdoor = true
 #-------------------------------
-[025]   # Pumpkaplace
+[025]   # Route 4 - South Face
 Name = Pumpkaplace
 MapPosition = 0,18,3
 #-------------------------------
@@ -135,6 +135,11 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,20,4
 BattleBack = field
+#-------------------------------
+[050]   # Dorado Mine Floor 1
+Name = Dorado Mine Floor 1
+Dungeon = false
+Environment = Cave
 #-------------------------------
 [065]   # Julian's House
 Name = Julian's House

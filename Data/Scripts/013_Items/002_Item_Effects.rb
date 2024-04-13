@@ -189,6 +189,7 @@ ItemHandlers::UseInField.add(:ESCAPEROPE, proc { |item|
     next false
   end
   pbUseItemMessage(item)
+  print "using item"
   pbFadeOutIn {
     $game_temp.player_new_map_id    = escape[0]
     $game_temp.player_new_x         = escape[1]
