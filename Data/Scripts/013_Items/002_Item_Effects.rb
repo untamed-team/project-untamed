@@ -26,7 +26,7 @@ ItemHandlers::UseFromBag.add(:ESCAPEROPE, proc { |item|
     next 0
   end
   if ($PokemonGlobal.escapePoint rescue false) && $PokemonGlobal.escapePoint.length > 0
-    next 2   # End screen and use item
+    next 2
   end
   pbMessage(_INTL("Can't use that here."))
   next 0
@@ -189,7 +189,6 @@ ItemHandlers::UseInField.add(:ESCAPEROPE, proc { |item|
     next false
   end
   pbUseItemMessage(item)
-  print "using item"
   pbFadeOutIn {
     $game_temp.player_new_map_id    = escape[0]
     $game_temp.player_new_x         = escape[1]
