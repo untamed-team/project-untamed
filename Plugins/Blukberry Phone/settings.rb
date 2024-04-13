@@ -10,7 +10,7 @@ class PhoneScene
 		Objectives   = {:functionName => "phoneObjectives", :name => "Objectives", :icon => "appObjectives", :condition => true},
 		Wiki         = {:functionName => "phoneWiki", :name => "Wiki", :icon => "appWiki", :condition => true},
 		TutorNet     = {:functionName => "phoneTutorNet", :name => "Tutor.net", :icon => "appTrainer", :condition => false},
-		Tutorials    = {:functionName => "phoneTutorials", :name => "Tutorials", :icon => "appTrainer", :condition => false},
 		Achievements = {:functionName => "phoneAchievements", :name => "Achievements", :icon => "appTrainer", :condition => true},
+		AdventureGuide = {:functionName => "phoneAdventureGuide", :name => "Adventure Guide", :icon => "appAdventureGuide", :condition => true},
 	]
 end #class PhoneScene
