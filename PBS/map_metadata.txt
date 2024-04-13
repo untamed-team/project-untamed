@@ -12,6 +12,7 @@ MapPosition = 0,20,3
 #-------------------------------
 [003]   # Sofía's house
 Name = San Cerigold Town
+Outdoor = false
 MapPosition = 0,19,5
 #-------------------------------
 [004]   # San Cerigold Town
@@ -35,42 +36,52 @@ BattleBack = graveyard
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [007]   # Library (Yellow)
 Name = Library (Yellow)
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [008]   # SW House (Cafe)
 Name = Cerigold Cafe
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [009]   # SE house-Purple
 Name = SE house-Purple
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [010]   # SE house-Green
 Name = SE house-Green
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [011]   # NW house-Pink
 Name = NW house-Pink
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [013]   # Hacienda Interior
 Name = Hacienda Interior
+Outdoor = false
 MapPosition = 0,18,4
 #-------------------------------
 [014]   # NE house-Cyan
 Name = NE house-Cyan
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [015]   # SE house-Orange
 Name = SE house-Orange
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [016]   # Hacienda Fields
 Name = Storage Shed
+Outdoor = false
 MapPosition = 0,18,3
 #-------------------------------
 [017]   # Hacienda Garden
@@ -80,10 +91,12 @@ MapPosition = 0,18,4
 #-------------------------------
 [018]   # San Cerigold Gym
 Name = GymInterior
+Outdoor = false
 MapPosition = 0,20,3
 #-------------------------------
 [019]   # San Cerigold PC
 Name = San Cerigold PC
+Outdoor = false
 HealingSpot = 4,22,22
 MapPosition = 0,20,3
 #-------------------------------
@@ -94,6 +107,7 @@ DiveMap = 38
 #-------------------------------
 [021]   # Hacienda Castaneda
 Name = Teo's House
+Outdoor = false
 MapPosition = 0,18,4
 #-------------------------------
 [022]   # Veravalles Town
@@ -116,17 +130,52 @@ Outdoor = true
 Name = Pumpkaplace
 MapPosition = 0,18,3
 #-------------------------------
+[026]   # Route 2
+Name = Route 2
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[031]   # Monarca
+Name = Monarca Woods
+Outdoor = true
+ShowArea = true
+#-------------------------------
 [032]   # Ceiba's Lab
 Name = Ceiba's Lab
+Outdoor = false
 MapPosition = 0,19,5
 BattleBack = lab
 #-------------------------------
 [033]   # \PN's house
 Name = \PN's house
+Outdoor = false
 MapPosition = 0,19,5
+#-------------------------------
+[034]   # Monarca Cave
+Name = Monarca Cave
+ShowArea = true
+#-------------------------------
+[035]   # Monarca Cave 2
+Name = Monarca Cave
+ShowArea = true
+#-------------------------------
+[037]   # BrookHouse
+Name = BrookHouse
+Outdoor = false
+#-------------------------------
+[039]   # Melolado
+Name = Melolado
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[040]   # Butterfly View
+Name = Monarca
+Outdoor = true
+ShowArea = true
 #-------------------------------
 [042]   # Emilio's House
 Name = Emilio's House
+Outdoor = false
 MapPosition = 0,19,5
 #-------------------------------
 [048]   # Route 1
@@ -138,12 +187,18 @@ MapPosition = 0,20,4
 BattleBack = field
 #-------------------------------
 [050]   # Dorado Mine Floor 1
-Name = Dorado Mine Floor 1
+Name = Dorado Mine F1
+ShowArea = true
 Dungeon = false
 Environment = Cave
 #-------------------------------
+[061]   # Connection to Hacienda
+Name = Connection to Hacienda
+Outdoor = true
+#-------------------------------
 [065]   # Julian's House
 Name = Julian's House
+Outdoor = false
 MapPosition = 0,19,5
 #-------------------------------
 [078]   # Hacienda Fields

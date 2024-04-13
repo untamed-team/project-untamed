@@ -353,7 +353,7 @@ MenuHandlers.add(:pause_menu, :camp, {
 	"condition" => proc { next $bag.has?(:CAMPINGGEAR) && (!$PokemonGlobal.camping || $PokemonGlobal.camping.nil?) },
 	"effect"    => proc { |menu|
 		#in what cases can you not use the camping gear?
-		if !GameData::MapMetadata.get($game_map.map_id).outdoor_map || $PokemonGlobal.diving || GameData::MapMetadata.get($game_map.map_id)&.has_flag?("CannotCamp")
+		if GameData::MapMetadata.get($game_map.map_id).outdoor_map == false || $PokemonGlobal.diving || GameData::MapMetadata.get($game_map.map_id)&.has_flag?("CannotCamp")
 			#if not outdoors or if underwater, you can't use the camping gear
 			pbMessage(_INTL("You can't use that here."))
 			next false #do not exit the pause menu
