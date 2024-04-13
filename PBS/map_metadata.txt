@@ -119,7 +119,9 @@ MapPosition = 0,19,5
 BattleBack = city
 #-------------------------------
 [023]   # Route 5
-Name = Alejandro's House
+Name = Route 5
+Outdoor = true
+ShowArea = true
 MapPosition = 0,18,4
 #-------------------------------
 [024]   # Camp - Grassy
@@ -127,11 +129,32 @@ Name = Camp - Grassy
 Outdoor = true
 #-------------------------------
 [025]   # Route 4 - South Face
-Name = Pumpkaplace
+Name = Route 4
+Outdoor = true
+ShowArea = true
 MapPosition = 0,18,3
 #-------------------------------
 [026]   # Route 2
 Name = Route 2
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[027]   # Route 4 - Bottom Vertical
+Name = Route 4
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[028]   # Daycare CenterInterior
+Name = Daycare CenterInterior
+Outdoor = false
+#-------------------------------
+[029]   # Route 3
+Name = Route 3
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[030]   # Butterfly Sanctuary
+Name = Butterfly Sanctuary
 Outdoor = true
 ShowArea = true
 #-------------------------------
@@ -159,6 +182,10 @@ ShowArea = true
 Name = Monarca Cave
 ShowArea = true
 #-------------------------------
+[036]   # Calojarro Plaza
+Name = Calojarro Plaza
+Outdoor = true
+#-------------------------------
 [037]   # BrookHouse
 Name = BrookHouse
 Outdoor = false
@@ -173,10 +200,32 @@ Name = Monarca
 Outdoor = true
 ShowArea = true
 #-------------------------------
+[041]   # Calojarro Gym Exterior 1
+Name = Calojarro Gym Exterior 1
+Outdoor = true
+#-------------------------------
 [042]   # Emilio's House
 Name = Emilio's House
 Outdoor = false
 MapPosition = 0,19,5
+#-------------------------------
+[043]   # Calojarro Resort Section
+Name = Calojarro Resort Section
+Outdoor = true
+#-------------------------------
+[044]   # Calojarro Shopping District
+Name = Calojarro Shopping District
+Outdoor = true
+#-------------------------------
+[045]   # Asterado Ranch
+Name = Asterado Ranch
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[047]   # Route 4 - Top East
+Name = Route 4
+Outdoor = true
+ShowArea = true
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
@@ -192,6 +241,36 @@ ShowArea = true
 Dungeon = false
 Environment = Cave
 #-------------------------------
+[051]   # Calojarro
+Name = Calojarro
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[052]   # Dorado Mine Floor 2 Main
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[053]   # Dorado Mine Floor 3
+Name = Dorado Mine F3
+ShowArea = true
+#-------------------------------
+[054]   # Dorado Mine Floor 2 Right Side Strength Room
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[055]   # Dorado Mine Floor 2 South Section
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[056]   # Dorado Mine Floor 4
+Name = Dorado Mine F4
+ShowArea = true
+#-------------------------------
+[058]   # Route 6
+Name = Route 6
+Outdoor = true
+ShowArea = true
+#-------------------------------
 [061]   # Connection to Hacienda
 Name = Connection to Hacienda
 Outdoor = true
@@ -200,6 +279,43 @@ Outdoor = true
 Name = Julian's House
 Outdoor = false
 MapPosition = 0,19,5
+#-------------------------------
+[066]   # Ferrera
+Name = Ferrera Town
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[069]   # Contest Reception
+Name = Contest Reception
+Outdoor = false
+#-------------------------------
+[071]   # Contest Room
+Name = Contest Room
+Outdoor = false
+#-------------------------------
+[072]   # Racing Track
+Name = Racing Track
+Outdoor = true
+#-------------------------------
+[073]   # Calojarro PC
+Name = Calojarro PC
+Outdoor = false
+#-------------------------------
+[074]   # Fancy Restaurant
+Name = Fancy Restaurant
+Outdoor = false
+#-------------------------------
+[075]   # Calojarro Gym Mansion
+Name = Calojarro Gym Mansion
+Outdoor = false
+#-------------------------------
+[076]   # Contest Reception
+Name = Contest Reception
+Outdoor = false
+#-------------------------------
+[077]   # Hair salon
+Name = Hair salon
+Outdoor = false
 #-------------------------------
 [078]   # Hacienda Fields
 Name = Hacienda Fields
@@ -216,3 +332,15 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,18,4
 BattleBack = field
+#-------------------------------
+[080]   # Calojarro Interiors
+Name = Calojarro Interiors
+Outdoor = false
+#-------------------------------
+[081]   # Barn Interior
+Name = Barn Interior
+Outdoor = false
+#-------------------------------
+[082]   # Favela Housing Interiors
+Name = Favela Housing Interiors
+Outdoor = false
