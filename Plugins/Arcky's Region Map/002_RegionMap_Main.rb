@@ -338,19 +338,20 @@ class PokemonRegionMap_Scene
   def convertButtonToString(button)
     case button 
     when 11
-      buttonName = "ACTION"
+      #{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}
+	  buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name}"
     when 13 
-      buttonName = "USE"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}"
     when 14 
-      buttonName = "JUMPUP"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Cycle Follower"}.key_name}"
     when 15
       buttonName = "JUMPDOWN"
     when 16
-      buttonName = "SPECIAL"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name}"
     when 17
       buttonName = "AUX1"
     when 18
-      buttonName = "AUX2"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Toggle Follower"}.key_name}"
     end 
     return buttonName
   end 
