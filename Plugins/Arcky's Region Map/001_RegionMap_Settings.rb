@@ -37,7 +37,7 @@ module RegionMapSettings
     # Possible buttons are: JUMPUP, JUMPDOWN, SPECIAL, AUX1 and AUX2. any other buttons are not recommended.
     # Press F1 in game to know which key a button is linked to.
     # IMPORTANT: only change the "JUMPUP" to SPECIAL for example so QUICK_FLY_BUTTON = Input::SPECIAL
-    QUICK_FLY_BUTTON = Input::AUX5
+    QUICK_FLY_BUTTON = Input::JUMPUP #overwritten in RegionMap_Main
 
     # Set this to true if you want to enable that the cursor moves automatically to the selected map from the Quick Fly Menu (on selecting, not confirming).
     # Set this to false if you don't want to enable this.
@@ -61,7 +61,7 @@ module RegionMapSettings
     # USE can be used this time because unlike with the fly map, it won't do anything.
     # Press F1 in game to know which key a button is linked to.
     # IMPORTANT: only change the "JUMPUP" to JUMPDOWN for example so SHOW_QUEST_BUTTON = Input::JUMPDOWN
-    SHOW_QUEST_BUTTON = Input::AUX5
+    SHOW_QUEST_BUTTON = Input::JUMPDOWN #irrelevant to Untamed
 
     # Set the max lines the quest preview can take (default is 4 lines). 
     # This includes the Task and Location information.

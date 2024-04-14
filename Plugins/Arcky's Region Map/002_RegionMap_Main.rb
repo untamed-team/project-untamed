@@ -343,7 +343,7 @@ class PokemonRegionMap_Scene
     when 13 
       buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}"
     when 14 
-      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Cycle Follower"}.key_name}"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Cycle Follower"}.key_name}" #AUX5 #quickfly menu
     when 15
       buttonName = "JUMPDOWN"
     when 16
@@ -351,7 +351,7 @@ class PokemonRegionMap_Scene
     when 17
       buttonName = "AUX1"
     when 18
-      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Toggle Follower"}.key_name}"
+      buttonName = "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Toggle Follower"}.key_name}" #AUX2
     end 
     return buttonName
   end 
@@ -837,8 +837,13 @@ class PokemonRegionMap_Scene
   end
 
   def canActivateQuickFly(lastChoiceFly, cursor)
-    if RegionMapSettings::CAN_QUICK_FLY && Input.trigger?(RegionMapSettings::QUICK_FLY_BUTTON) && @mode == 1 && 
+    #if RegionMapSettings::CAN_QUICK_FLY && Input.trigger?(RegionMapSettings::QUICK_FLY_BUTTON) && @mode == 1 && 
+	if RegionMapSettings::CAN_QUICK_FLY && Input.trigger?(Input::AUX5) && @mode == 1 && 
       (RegionMapSettings::SWITCH_TO_ENABLE_QUICK_FLY.nil? || $game_switches[RegionMapSettings::SWITCH_TO_ENABLE_QUICK_FLY])
+	  if @visitedMaps.empty? || @visitedMaps.nil?
+		pbMessageMap(_INTL("There are no destinations you can fly to."))
+		return
+	  end
       findChoice = @visitedMaps.find_index { |mapName| mapName[2] == pbGetMapLocation(@mapX, @mapY)}
       lastChoiceFly = findChoice if findChoice
       choice = pbMessageMap(_INTL("Quick Fly: Choose one of the available locations to fly to."), 
@@ -1102,7 +1107,7 @@ class PokemonRegionMap_Scene
   end
   
   def pbShowCommandsMap(msgwindow, commands = nil, cmdIfCancel = 0, defaultCmd = 0, choiceUpdate = true)
-    return 0 if !commands
+    return 0 if !commands || commands.empty? || commands.nil?
     cmdwindow = Window_CommandPokemonEx.new(commands)
     cmdwindow.z = 100002
     cmdwindow.visible = true
