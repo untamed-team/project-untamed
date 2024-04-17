@@ -153,6 +153,7 @@ MenuHandlers.add(:pause_menu, :pokedex, {
       }
     else
       pbFadeOutIn {
+        print "test1"
         scene = PokemonPokedexMenu_Scene.new
         screen = PokemonPokedexMenuScreen.new(scene)
         screen.pbStartScreen
