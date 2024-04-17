@@ -198,7 +198,7 @@ class Player_Quests
       end
     end
     @active_quests.push(Quest.new(quest,color,story))
-    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New objective discovered!</c2>\nCheck your objective list <icon=menuObjectives> in the menu for more details!</ac>",QUEST_JINGLE))
+    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New objective discovered!</c2>\nCheck the Objectives app <icon=menuObjectives> from your Blukberry Phone for more details!</ac>",QUEST_JINGLE))
     #update quest indicators
     QuestIndicator.initialize
   end

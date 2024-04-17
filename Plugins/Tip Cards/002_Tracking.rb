@@ -33,7 +33,8 @@ def pbRevisitTipCardsGrouped(*groups, continuous: false)
         end
         pbShowTipCard(*arr)
     else
-        Console.echo_warn "No available tips to show"
+		pbMessage(_INTL("The app is empty..."))
+		Console.echo_warn "No available tips to show"
     end
 end
 
