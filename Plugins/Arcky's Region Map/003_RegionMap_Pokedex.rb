@@ -25,6 +25,7 @@ class PokemonPokedexInfo_Scene
       @region = (mappos) ? mappos[0] : 0                      # Region 0 default
     end
     @sprites["areamap"] = IconSprite.new(0, 0, @viewportMap)
+	print @mapdata[@region][1]
     @sprites["areamap"].setBitmap("Graphics/Pictures/RegionMap/Regions/#{@mapdata[@region][1]}")
     Settings::REGION_MAP_EXTRAS.each do |hidden|
       next if hidden[0] != @region || hidden[1] <= 0 || !$game_switches[hidden[1]]
