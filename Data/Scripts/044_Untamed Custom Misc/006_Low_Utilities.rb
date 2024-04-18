@@ -461,7 +461,7 @@ class Pokemon
 		return false if species_data.species == :M_DITTO # ditto is unable to learn anything, just like me
     move_data = GameData::Move.try_get(move_id)	
 		# Universal TMs/Move Tutors #by low	
-		unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE]	
+		unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]	
 		unimovefullyevolvedlist = [:HYPERBEAM, :GIGAIMPACT]	
 		return true if move_data && unimovelist.include?(move_data.id)	
 		return true if move_data && unimovefullyevolvedlist.include?(move_data.id) && species_data.get_evolutions(true).length == 0	
