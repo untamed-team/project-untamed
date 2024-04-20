@@ -507,6 +507,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     @statArray = []
     GameData::Stat.each_battle do |s|
+      next if s.id == :EVASION
       @statArray.push(s.id) if target.pbCanRaiseStatStage?(s.id, user, self)
     end
     if @statArray.length == 0

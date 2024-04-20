@@ -107,8 +107,8 @@ class PhoneScene # The scene class
 	case @appHoveredOver[:functionName]
 	when "phonePokedex"
 		pbFadeOutIn(99999) {
-			scene = PokemonPokedexMenu_Scene.new
-			screen = PokemonPokedexMenuScreen.new(scene)
+			scene = PokemonPokedex_Scene.new
+			screen = PokemonPokedexScreen.new(scene)
 			screen.pbStartScreen
 		}
 	when "phoneMap"
