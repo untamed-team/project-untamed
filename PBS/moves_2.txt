@@ -17,7 +17,7 @@ Type = BUG
 Category = Physical
 Power = 100
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = None
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
@@ -5411,15 +5411,15 @@ Description = Sharp spikes are shot at the target in rapid succession. They hit 
 #-------------------------------
 [COMETPUNCH]
 Name = Comet Punch
-Type = NORMAL
+Type = BUG
 Category = Physical
 Power = 18
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
-FunctionCode = HitTwoToFiveTimes
+FunctionCode = HitThreeToFiveTimes
 Flags = Contact,CanProtect,CanMirrorMove,Punching
-Description = The target is hit with a flurry of punches that strike two to five times in a row.
+Description = The target is hit with a flurry of punches that strike three to five times in a row.
 #-------------------------------
 [FURYSWIPES]
 Name = Fury Swipes
