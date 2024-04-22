@@ -11,19 +11,10 @@ def adventureGuideApp(*groups, continuous: false)
             break
         end
     end
-    if sections.length > 1 || (sections.length == 1 && Settings::TIP_CARDS_SINGLE_GROUP_SHOW_HEADER)
+    if sections.length > 0
         scene = AdventureGuide_Scene.new(sections, true, continuous)
         screen = AdventureGuide_Screen.new(scene)
         screen.pbStartScreen
-    elsif sections[0]
-        tips = Settings::TIP_CARDS_GROUPS[sections[0]][:Tips]
-        arr = []
-        tips.each do |tip| 
-            next if !Settings::TIP_CARDS_CONFIGURATION[tip] || Settings::TIP_CARDS_CONFIGURATION[tip][:HideRevisit] || 
-            !pbSeenTipCard?(tip)
-            arr.push(tip)
-        end
-        pbShowTipCard(*arr)
     else
 		pbMessage(_INTL("The app is empty..."))
 		Console.echo_warn "No available tips to show"
