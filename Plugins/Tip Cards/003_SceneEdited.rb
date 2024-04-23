@@ -1,3 +1,6 @@
+#This is currently unfinished. Will need to come back to this once we have so many tips that not all of them can fit on the screen.
+#Then I will need to make the list of TipTitles scroll up and down
+
 #===============================================================================
 # Tip Card Groups Scene
 #===============================================================================  
@@ -79,10 +82,38 @@ class AdventureGuide_Scene
         @sprites["overlay_tip_text"].visible = true
         @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
         @sprites["overlay"].visible = true
-        pbSEPlay(Settings::TIP_CARDS_SHOW_SE)
-        pbDrawGroup
+		@sprites["overlay_tip_title"] = BitmapSprite.new(Graphics.width, 42+(@groups.length*32), @viewport)
+        @sprites["overlay_tip_title"].visible = true
+        
+		drawTipTitles
+		
+		pbSEPlay(Settings::TIP_CARDS_SHOW_SE)
+		pbDrawGroup
+		
+		#draw cursor
+		@sprites["cursor"] = IconSprite.new(0, 0, @viewport)
+        @sprites["cursor"].setBitmap(_INTL("Graphics/Pictures/Tip Cards/cursor"))
+        @sprites["cursor"].x = 4
+        @sprites["cursor"].y = 27
     end
-    
+	
+	def updateCursorPos
+		@sprites["cursor"].y = 27 + (@section*32)
+	end #def updateCursorPos
+	
+	def drawTipTitles
+		y = 42
+		@groups.each { |group|
+			base = Settings::TIP_CARDS_TEXT_MAIN_COLOR
+			shadow = Settings::TIP_CARDS_TEXT_SHADOW_COLOR
+			overlay = @sprites["overlay_tip_title"].bitmap
+			pbSetSystemFont(overlay)
+			title = Settings::TIP_CARDS_GROUPS[group][:Title]
+			drawFormattedTextEx(overlay, 20, y, @sprites["guide_background"].width/2, title, base, shadow)
+			y += 32
+		}
+	end #drawTipTitles
+	
     def pbScene
         loop do
             Graphics.update
@@ -109,10 +140,16 @@ class AdventureGuide_Scene
                 elsif @continuous && @index >= @pages - 1 && @section < @sections - 1
                     @section += 1
                 end
-            elsif Input.trigger?(Input::JUMPUP)
-                @section -= 1 if @section > 0
-            elsif Input.trigger?(Input::JUMPDOWN)
-                @section += 1 if @section < @sections - 1
+            elsif Input.trigger?(Input::UP)
+                if @section > 0
+					@section -= 1
+					updateCursorPos
+				end
+            elsif Input.trigger?(Input::DOWN)
+                if @section < @sections - 1
+					@section += 1
+					updateCursorPos
+				end
             elsif Input.trigger?(Input::SPECIAL) && Settings::TIP_CARDS_GROUP_LIST && @sections > 1
                 list = []
                 @groups.each { |group| list.push(Settings::TIP_CARDS_GROUPS[group][:Title]) }
