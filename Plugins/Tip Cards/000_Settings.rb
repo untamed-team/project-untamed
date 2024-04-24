@@ -129,38 +129,42 @@ module Settings
             :ADVDEX4 => {
                 :Title => _INTL("Advanced Dex"),
                 :Text => _INTL("This information is also on the Untamed Wiki."),
-                #:YAdjustmentAdvGuide => 20,
+                :YAdjustmentAdvGuide => 60,
             },
             :ADVDEX5 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("Press <c2=0999367C><b>BUTTON</b></c2> from the main Pokédex page to access the search function."),
+                :Text => _INTL("Press <c2=0999367C><b>BUTTON</b></c2> from the main Pokédex page to use the search function."),
                 :Image => "advanced dex5",
                 :ImageAdvGuide => "advanced dex5 - guide",
                 :YAdjustmentAdvGuide => -36,
             },
             :BATTLEINFO1 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about a battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
+                :Text => _INTL("View information about the battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
                 :Image => "stats battle1",
                 :ImageAdvGuide => "stats battle1 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :BATTLEINFO2 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("You can see information such as stat changes, used moves, abilities, etc."),
                 :Image => "stats battle2",
                 :ImageAdvGuide => "stats battle2 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO3 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("You can see similar information about your opponent(s) too."),
                 :Image => "stats battle3",
                 :ImageAdvGuide => "stats battle3 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO4 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about the currently selected move by pressing the <c2=0999367C><b>Move Info</b></c2> key."),
+                :Text => _INTL("View information about the selected move by pressing the <c2=0999367C><b>Move Info</b></c2> key."),
                 :Image => "stats battle4",
                 :ImageAdvGuide => "stats battle4 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO5 => {
                 :Title => _INTL("Battle Info"),
@@ -168,9 +172,10 @@ module Settings
             },
             :BATTLEINFO6 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("From left to right, the icons you'll see on moves are: Contact, Tramples Minimize, High Crit Rate, Sound, Punching..."),
+                :Text => _INTL("From left to right, these icons are: Contact, Tramples Minimize, High Crit Rate, Sound, Punching..."),
                 :Image => "move_icons1",
                 :ImageAdvGuide => "move_icons1 - guide",
+                :YAdjustmentAdvGuide => -12,
             },
             :BATTLEINFO7 => {
                 :Title => _INTL("Battle Info"),

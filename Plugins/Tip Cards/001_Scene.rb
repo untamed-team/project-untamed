@@ -167,15 +167,15 @@ class TipCard_Scene
             #added by Gardenette
             #$PokemonSystem.game_controls.find{|c| c.control_action=="Up"}.key_name
             if tip == :MULTISAVE2
-                info[:Text] = _INTL("If you have multiple save files, you can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name}</b></c2> or <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name}</b></c2> on the continue screen to change save files.")
+                info[:Text] = _INTL("If you have multiple save files, press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name}</b></c2> or <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name}</b></c2> on the continue screen to change save files.")
             elsif tip == :ADVDEX3
-                info[:Text] = _INTL("You can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}</b></c2> to go to the next page.")
+                info[:Text] = _INTL("Press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}</b></c2> to go to the next page.")
             elsif tip == :ADVDEX5
-                info[:Text] = _INTL("You can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name}</b></c2> from the main Pokédex page to access the search function.")
+                info[:Text] = _INTL("Press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name}</b></c2> from the main Pokédex page to use the search function.")
             elsif tip == :BATTLEINFO1
-                info[:Text] = _INTL("You can view information about a battle by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name}</b></c2>.")
+                info[:Text] = _INTL("View information about the battle by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name}</b></c2>.")
             elsif tip == :BATTLEINFO4
-                info[:Text] = _INTL("You can view information about the currently selected move by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name}</b></c2>.")
+                info[:Text] = _INTL("View information about the selected move by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name}</b></c2>.")
             end
 
             text = "<ac>" + info[:Text] + "</ac>"
@@ -425,15 +425,15 @@ class TipCardGroups_Scene
             #added by Gardenette
             #$PokemonSystem.game_controls.find{|c| c.control_action=="Up"}.key_name
             if tip == :MULTISAVE2
-                info[:Text] = _INTL("If you have multiple save files, you can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name}</b></c2> or <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name}</b></c2> on the continue screen to change save files.")
+                info[:Text] = _INTL("If you have multiple save files, press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name}</b></c2> or <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name}</b></c2> on the continue screen to change save files.")
             elsif tip == :ADVDEX3
-                info[:Text] = _INTL("You can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}</b></c2> to go to the next page.")
+                info[:Text] = _INTL("Press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}</b></c2> to go to the next page.")
             elsif tip == :ADVDEX5
-                info[:Text] = _INTL("You can press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name}</b></c2> from the main Pokédex page to access the search function.")
+                info[:Text] = _INTL("Press <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name}</b></c2> from the main Pokédex page to use the search function.")
             elsif tip == :BATTLEINFO1
-                info[:Text] = _INTL("You can view information about a battle by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name}</b></c2>.")
+                info[:Text] = _INTL("View information about the battle by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Battle Info"}.key_name}</b></c2>.")
             elsif tip == :BATTLEINFO4
-                info[:Text] = _INTL("You can view information about the currently selected move by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name}</b></c2>.")
+                info[:Text] = _INTL("View information about the selected move by pressing <c2=0999367C><b>#{$PokemonSystem.game_controls.find{|c| c.control_action=="Move Info"}.key_name}</b></c2>.")
             end
             
             text = "<ac>" + info[:Text] + "</ac>"
