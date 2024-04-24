@@ -6,7 +6,7 @@
 #===============================================================================  
 class AdventureGuide_Screen
     def initialize(scene)
-        @scene = scene
+		@scene = scene
     end
   
     def pbStartScreen

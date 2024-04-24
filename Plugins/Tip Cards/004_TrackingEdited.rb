@@ -1,4 +1,11 @@
 def adventureGuideApp(*groups, continuous: false)
+	#before opening the tips log, if this isn't the first time saving, set the tips for multisave as seen if they are not set to seen already
+	if SaveData.get_newest_save_slot && !pbSeenTipCard?(:MULTISAVE1)
+		pbSetTipCardSeen(:MULTISAVE1) 
+		pbSetTipCardSeen(:MULTISAVE2)
+		pbSetTipCardSeen(:MULTISAVE3)
+	end
+	
     groups = Settings::TIP_CARDS_GROUPS.keys if !groups || groups.empty?
     sections = []
     groups.each_with_index do |group, i|
