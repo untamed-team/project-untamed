@@ -138,7 +138,7 @@ class PhoneScene # The scene class
 			screen.pbStartScreen
 		}	
 	when "phoneAdventureGuide"
-		pbFadeOutIn(99999) { pbRevisitTipCardsGrouped }
+		pbFadeOutIn(99999) { adventureGuideApp }
 	when "phoneAchievements"
 		pbFadeOutIn(99999) { 
 			scene = PokemonAchievements_Scene.new
