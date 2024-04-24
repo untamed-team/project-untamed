@@ -92,18 +92,21 @@ module Settings
                 :Text => _INTL("When saving for the first time, you will select a save slot."),
                 :Image => "multi save1",
                 :ImageAdvGuide => "multi save1 - guide",
+                :YAdjustmentAdvGuide => -16,
             },
             :MULTISAVE2 => {
                 :Title => _INTL("Multi-save"),
                 :Text => _INTL("If you have multiple save files, you can press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
                 :Image => "multi save2",
                 :ImageAdvGuide => "multi save2 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :MULTISAVE3 => {
                 :Title => _INTL("Multi-save"),
                 :Text => _INTL("To create another save file, you must save through the menu instead of using Quicksave. You must select a new slot."),
                 :Image => "multi save3",
                 :ImageAdvGuide => "multi save3 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :ADVDEX1 => {
                 :Title => _INTL("Advanced Dex"),
