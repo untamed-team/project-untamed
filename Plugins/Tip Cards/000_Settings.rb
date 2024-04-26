@@ -96,7 +96,7 @@ module Settings
             },
             :MULTISAVE2 => {
                 :Title => _INTL("Multi-save"),
-                :Text => _INTL("If you have multiple save files, you can press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
+                :Text => _INTL("Press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
                 :Image => "multi save2",
                 :ImageAdvGuide => "multi save2 - guide",
                 :YAdjustmentAdvGuide => -36,
@@ -189,30 +189,35 @@ module Settings
             :CAMP1 => {
                 :Title => _INTL("Camp"),
                 :Text => _INTL("With the <c2=0999367C><b>Camping Gear</b></c2>, you can access Camp from the pause menu. You can access Camp from many different places like on the grass, in a cave, etc."),
+                :YAdjustmentAdvGuide => 60,
             },
             :CAMP2 => {
                 :Title => _INTL("Camp"),
                 :Text => _INTL("Inside Camp, you can interact with your Pokémon in several ways."),
                 :Image => "camp interact",
                 :ImageAdvGuide => "camp interact - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING1 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Inside Camp, you can create your own candy over the camp fire if you have candy bases and berries!"),
                 :Image => "cooking1",
                 :ImageAdvGuide => "cooking1 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING2 => {
                 :Title => _INTL("Cooking Candy"),
-                :Text => _INTL("To make candy, hold the left mouse button with the spoon in the pot and drag the spoon around like the arrows indicate. Don't let your candy burn from not being stirred!"),
+                :Text => _INTL("Hold the left mouse button with the spoon in the pot. Drag the spoon around like the arrows indicate."),
                 :Image => "cooking2",
                 :ImageAdvGuide => "cooking2 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING3 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Cool off the mixture."),
                 :Image => _INTL("cooking3"),
                 :ImageAdvGuide => _INTL("cooking3 - guide"),
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING4 => {
                 :Title => _INTL("Cooking Candy"),
