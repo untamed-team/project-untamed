@@ -8,14 +8,6 @@ MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
 
-def pbDemoDexCheck
-	dexnum=$player.pokedex.owned_count;maxdexnum=65
-	$game_variables[1]=dexnum
-	return true if dexnum>=maxdexnum
-	return false
-	#Kernel.pbMessage(_INTL(":TakoMan: {1}",dexnum))
-end
-
 def pbNatureChanger(pkmn)
 	commands = []
 	ids = []
@@ -861,12 +853,19 @@ def pbGiveDexReward
 end
 
 #===============================================================================
+# Bins
 #===============================================================================
-#===============================================================================
+
+def semiRandomRNG(x, y = 0)
+  funseed = $player.secret_ID.to_s[-3..-1].to_i + y # last 3 digits of secret id + predefined offset
+  srand(funseed) # temporarly sets a rng seed
+  srng = rand(x)
+  srand # reset rng
+  return srng 
+end
 
 class Player < Trainer
   attr_accessor   :bin_array
-
   alias initialize_bins initialize
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
@@ -897,7 +896,7 @@ def pbTrashBin(eventID, specialBin = false)
     echoln "no bin 4 u"
     return
   end
-  bin_rng2 = rand($player.bin_array.length)
+  bin_rng2 = semiRandomRNG($player.bin_array.length)
   echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
   pbMEPlay("Item get")
   pbSetSelfSwitch(eventID, "B", true)
