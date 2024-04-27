@@ -110,6 +110,12 @@ class DiegoWTsStarterSelection
           pkmn.calc_stats
           pkmn.reset_moves
         end
+        if semiRandomRNG(100) >= 25 # :^)
+          if pkmn.shiny?
+            pkmn.shiny = false
+            pkmn.item = :HONEY
+          end
+        end
       }
       @sprites["pkmn_#{i}"].setPokemonBitmap(@pokemon)
       @sprites["pkmn_#{i}"].opacity = 0
@@ -477,7 +483,7 @@ class DiegoWTsStarterSelection
     buffedColor = "F83820,E09890"
     debuffedColor = "1870D8,88A8D0"
     
-    if @buffedStat.to_s == "HP"
+    if @buffedStat.to_s == "HP" #... how would this even be possible ...?
       pkmninfotext += _INTL("<c3={2}>HP:<r>{1}</c3><br>",@pokemon.totalhp,buffedColor)
     elsif @debuffedStat.to_s == "HP"
       pkmninfotext += _INTL("<c3={2}>HP:<r>{1}</c3><br>",@pokemon.totalhp,debuffedColor)
