@@ -1,37 +1,17 @@
-def pbCheckEligibleSaves
-  
-    #change the save file letter - 'A' and start searching there
-    $game_variables[49] = "A"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "B"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "C"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "D"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "E"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "F"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "G"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "H"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
+
+
+def pbCheckEligibleSaves(saveFile)
+    #def pbSaveTest(name,test,param=nil,ver=20)
+	eligibleSaveFiles = []
+	eligibleSaveFiles.push(saveFile) if pbSaveTest("project-untamed","switch",82)
 end
 
 def pbCheckEternalFloette
   #if the player got Eternal floette in the save file
-  
+  #def pbSaveTest(name,test,param=nil,ver=20)
   if pbSaveTest("project-untamed","switch",82)
     #set the save file to search through
-    save = pbSaveFile("project-untamed")
+    save = pbSaveFile("project-untamed",ver=20)
     
     #search party for eternal floette
     party = save[:player].party
@@ -73,6 +53,8 @@ def bootTimeMachine
 	commands = []
 	#determine all saves that are eligible and push them into the variable "commands"
 	commands.push(_INTL("#{1}"))
+	
+	pbCheckEligibleSaves(saveFile) if $player.save_slot != saveFile
 	
 	commands.push(_INTL("Cancel"))
 	pbMessage(_INTL("Choose the Save File to access."), commands, -1, nil, 0)
