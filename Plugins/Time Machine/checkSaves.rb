@@ -1,19 +1,34 @@
 def timeMachineCheckSaves(name,ver=20)
   location = File.join(ENV['APPDATA'],name)
   return false unless File.directory?(location)
+  #find eligible save files
+  eligibleSaveFiles = []
   #replace "\" with "/"
   location.gsub!("\\", "\/")
-  Dir.glob("#{location}/*.rxdata") do |rxdata_filename|
-     # Do work on files & directories ending in .rxdata
-     print rxdata_filename
+  #Dir.each_child('/path/to/dir') do |filename|
+  #Dir.glob("#{location}/*.rxdata") do |rxdata_filename|
+  Dir.each_child(location) do |filename|
+	#next if file is not an rxdata File
+	next if File.extname(filename) != ".rxdata"
+     #check for a specific variable's value in the save File
+	 #if variable, variable number, value is NOT greater than or equal to number
+	 #if the variable for demo version is less than THIS number, push to eligibleSaveFiles
+	 #increase this number with every demo release
+	 filenameNoExt = filename.gsub(".rxdata", "")
+	 next if $player.save_slot == filenameNoExt
+	 file_path = File.join(location, filename)
+	 save_data = SaveData.get_data_from_file(file_path)
+	 eligibleSaveFiles.push(filename) if !pbSaveTest("project-untamed","Variable",[51,2],ver=20,save_data)
   end
-  return save_data
+  print eligibleSaveFiles
+  return eligibleSaveFiles
 end
 
 
 
-def pbSaveTest(name,test,param=nil,ver=20)
-  save = timeMachineCheckSaves(name,ver)
+def pbSaveTest(name,test,param=nil,ver=20, save_data)
+  print "testing for eligible saves"
+  save = save_data
   result = false
   test = test.capitalize
 	if save
