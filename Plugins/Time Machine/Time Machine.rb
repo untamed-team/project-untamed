@@ -2,19 +2,25 @@ def bootTimeMachine
 	#def pbMessage(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, &block)
 	commands = []
 	#determine all saves that are eligible and push them into the variable "commands"
-	commands.push(_INTL("#{1}"))
+	eligibleSaves = timeMachineCheckSaves
 	
-	pbCheckEligibleSaves(saveFile) if $player.save_slot != saveFile
+	for i in 0...eligibleSaves.length
+		commands.push(_INTL("#{eligibleSaves[i][0]}"))
+	end
 	
 	commands.push(_INTL("Cancel"))
-	pbMessage(_INTL("Choose the Save File to access."), commands, -1, nil, 0)
+	choice = pbMessage(_INTL("Choose the Save File to access."), commands, -1, nil, 0)
 	
-	#saveFileStorage = 
+	#get out of here if the user cancels
+	return if choice == -1 || choice == (commands.length-1)
+	
+	saveFileStorage = eligibleSaves[choice][1][:storage_system]
+	saveParty = eligibleSaves[choice][1][:player].party
+	print saveParty
 	pbFadeOutIn {
 		scene = TimeMachinePokemonStorageScene.new
-        #screen = TimeMachinePokemonStorageScreen.new(scene, $PokemonStorage)
-		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage)
-        screen.pbStartScreen(command)
+		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
+        screen.pbStartScreen(0)
     }
 end #def bootTimeMachine
 
@@ -927,10 +933,11 @@ class TimeMachinePokemonStorageScreen
   attr_reader :storage
   attr_accessor :heldpkmn
 
-  def initialize(scene, storage)
+  def initialize(scene, storage, saveParty)
     @scene = scene
     @storage = storage
     @pbHeldPokemon = nil
+	@saveParty = saveParty
   end
 
   def pbStartScreen(command)

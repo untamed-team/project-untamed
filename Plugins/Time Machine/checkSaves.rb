@@ -1,5 +1,5 @@
-def timeMachineCheckSaves(name,ver=20)
-  location = File.join(ENV['APPDATA'],name)
+def timeMachineCheckSaves
+  location = File.join(ENV['APPDATA'],"project-untamed")
   return false unless File.directory?(location)
   #find eligible save files
   eligibleSaveFiles = []
@@ -7,6 +7,8 @@ def timeMachineCheckSaves(name,ver=20)
   location.gsub!("\\", "\/")
   #Dir.each_child('/path/to/dir') do |filename|
   #Dir.glob("#{location}/*.rxdata") do |rxdata_filename|
+  pbSEPlay("Door Slide",80,70)
+  pbWait(Graphics.frame_rate)
   Dir.each_child(location) do |filename|
 	#next if file is not an rxdata File
 	next if File.extname(filename) != ".rxdata"
@@ -18,16 +20,12 @@ def timeMachineCheckSaves(name,ver=20)
 	 next if $player.save_slot == filenameNoExt
 	 file_path = File.join(location, filename)
 	 save_data = SaveData.get_data_from_file(file_path)
-	 eligibleSaveFiles.push(filename) if !pbSaveTest("project-untamed","Variable",[51,2],ver=20,save_data)
+	 eligibleSaveFiles.push([filenameNoExt,save_data]) if !timeMachineSaveTest("project-untamed","Variable",[51,2],ver=20,save_data)
   end
-  print eligibleSaveFiles
   return eligibleSaveFiles
 end
 
-
-
-def pbSaveTest(name,test,param=nil,ver=20, save_data)
-  print "testing for eligible saves"
+def timeMachineSaveTest(name,test,param=nil,ver=20, save_data)
   save = save_data
   result = false
   test = test.capitalize
