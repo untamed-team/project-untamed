@@ -1,3 +1,18 @@
+class PokemonGlobalMetadata
+	attr_accessor   :timeMachineParty
+	attr_accessor   :inTimeMachineSave
+end
+
+class PokemonStorage
+	def party
+		if $PokemonGlobal.inTimeMachineSave == true
+			$PokemonGlobal.timeMachineParty
+		else
+			$player.party
+		end
+	end
+end
+
 def bootTimeMachine
 	#def pbMessage(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, &block)
 	commands = []
@@ -17,12 +32,39 @@ def bootTimeMachine
 	saveFileStorage = eligibleSaves[choice][1][:storage_system]
 	saveParty = eligibleSaves[choice][1][:player].party
 	print saveParty
+	$PokemonGlobal.timeMachineParty = saveParty
+	$PokemonGlobal.inTimeMachineSave = true
 	pbFadeOutIn {
 		scene = TimeMachinePokemonStorageScene.new
 		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
         screen.pbStartScreen(0)
+		exitTimeMachineSave
     }
 end #def bootTimeMachine
+
+def exitTimeMachineSave(saveFileStorage)
+	commands = [_INTL("Save"),_INTL("Do not Save")]
+	choice = pbMessage(_INTL("Would you like to save your changes to the save file?"), commands, -1, nil, 0)
+	
+	#get out of here if the user says no
+	if choice == -1 || choice == (commands.length-1)
+		$PokemonGlobal.inTimeMachineSave = false
+		$PokemonGlobal.timeMachineParty = nil
+		return
+	else
+		#add those pokemon to the player
+		
+		#delete the pokemon from the save file they were received from
+		#saveFileStorage.delete blah blah blah
+		
+		$PokemonGlobal.inTimeMachineSave = false
+		$PokemonGlobal.timeMachineParty = nil
+	end
+	
+	#delete pokemon
+	
+	
+end #def exitTimeMachineSave
 
 class TimeMachinePokemonStorageScene
   attr_reader :quickswap
