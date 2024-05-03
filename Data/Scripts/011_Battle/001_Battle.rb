@@ -88,7 +88,28 @@ class Battle
   attr_accessor :moldBreaker      # True if Mold Breaker applies
   attr_reader   :struggle         # The Struggle move
 
-  def pbRandom(x); return rand(x); end
+  def pbRandom(x)
+    if trainerBattle?
+      #singles
+      convert1 = nameToNumberConvert(@opponent[0].trainer_type.to_s)
+      convert2 = nameToNumberConvert(@opponent[0].name.to_s)
+      haxxvalue = ((convert2 + convert1) * (@turnCount + 1))
+      haxxvalue = haxxvalue.to_s[-8..-1].to_i if haxxvalue.to_s.length > 8
+      #doubles
+      if !@opponent[1].nil?
+        convrt1 = nameToNumberConvert(@opponent[1].trainer_type.to_s)
+        convrt2 = nameToNumberConvert(@opponent[1].name.to_s)
+        hexvalue = ((convrt2 + convrt1) * (@turnCount + 1))
+        hexvalue = hexvalue.to_s[-8..-1].to_i if hexvalue.to_s.length > 8
+        haxxvalue += hexvalue
+        haxxvalue /= 2
+      end
+    else
+      #wild so who cares
+      haxxvalue = rand(100)
+    end
+    return semiRandomRNG(x, haxxvalue)
+  end
 
   #=============================================================================
   # Creating the battle class
@@ -171,11 +192,6 @@ class Battle
     end
     @mega_rings = []
     GameData::Item.each { |item| @mega_rings.push(item.id) if item.has_flag?("MegaRing") }
-		#for DDA #by low
-    @turnCountMin      = 0 
-		@opponentTotalHP 	 = 0 
-		@playerTotalHP   	 = 0 
-		#
   end
 
   #=============================================================================

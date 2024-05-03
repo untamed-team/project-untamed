@@ -1,0 +1,5 @@
+Name         = Time Machine
+Version      = 1.0
+Website      = NONE
+Credits      = Swdfm, Gardenette
+Essentials   = 20.1

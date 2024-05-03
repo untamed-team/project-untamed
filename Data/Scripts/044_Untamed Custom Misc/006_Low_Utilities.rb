@@ -8,14 +8,6 @@ MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
 
-def pbDemoDexCheck
-	dexnum=$player.pokedex.owned_count;maxdexnum=65
-	$game_variables[1]=dexnum
-	return true if dexnum>=maxdexnum
-	return false
-	#Kernel.pbMessage(_INTL(":TakoMan: {1}",dexnum))
-end
-
 def pbNatureChanger(pkmn)
 	commands = []
 	ids = []
@@ -861,12 +853,11 @@ def pbGiveDexReward
 end
 
 #===============================================================================
-#===============================================================================
+# Bins
 #===============================================================================
 
 class Player < Trainer
   attr_accessor   :bin_array
-
   alias initialize_bins initialize
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
@@ -897,7 +888,7 @@ def pbTrashBin(eventID, specialBin = false)
     echoln "no bin 4 u"
     return
   end
-  bin_rng2 = rand($player.bin_array.length)
+  bin_rng2 = semiRandomRNG($player.bin_array.length)
   echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
   pbMEPlay("Item get")
   pbSetSelfSwitch(eventID, "B", true)
@@ -978,4 +969,30 @@ def pbTrashBin(eventID, specialBin = false)
   end
   $player.bin_array.delete_at(bin_rng2)
   Achievements.incrementProgress("EBIN_BINS",1)
+end
+
+#===============================================================================
+# RNG seeds
+#===============================================================================
+
+def semiRandomRNG(x, y = 0)
+  funseed = $player.secret_ID.to_s[-3..-1].to_i + y # last 3 digits of secret id + predefined offset
+  srand(funseed) # temporarly sets a rng seed
+  srng = rand(x)
+  srand # reset rng
+  return srng 
+end
+
+def nameToNumberConvert(name)
+  letter_values = {
+    'A' => 1, 'B' => 2, 'C' => 3, 'D' => 4, 'E' => 5, 'F' => 6, 'G' => 7, 'H' => 8, 'I' => 9,
+    'J' => 10, 'K' => 11, 'L' => 12, 'M' => 13, 'N' => 14, 'O' => 15, 'P' => 16, 'Q' => 17, 'R' => 18,
+    'S' => 19, 'T' => 20, 'U' => 21, 'V' => 22, 'W' => 23, 'X' => 24, 'Y' => 25, 'Z' => 26
+  }
+  name = name.upcase
+  total = 0
+  name.each_char do |letter|
+    total += letter_values[letter]
+  end
+  return total
 end

@@ -4,18 +4,22 @@
 #edited, heavily(?) #by low
 COMMON 		 = [:POTION,:POKEBALL,:ANTIDOTE,:BURNHEAL,:PARALYZEHEAL,:ICEHEAL] # 50%
 UNCOMMON 	 = [:AWAKENING,:GREATBALL,:HPUP,:PROTEIN,:IRON,:CALCIUM,:ZINC,:CARBOS] # 25%
-RARE 			 = [:FULLHEAL,:ULTRABALL,:HYPERPOTION,:LUCKYEGG] # 14%
-SUPER_RARE = [:REVIVE,:QUICKBALL,:SHINYBERRY] # 7%
-ULTRA_RARE = [:SACREDASH,:MASTERBALL] # 3%
+RARE 			 = [:FULLHEAL,:ULTRABALL,:HYPERPOTION,:STARDUST] # 14%
+SUPER_RARE = [:REVIVE,:QUICKBALL,:SHINYBERRY,:STARPIECE] # 7%
+ULTRA_RARE = [:SACREDASH,:MASTERBALL,:COMETSHARD] # 3%
 PENIS_RARE = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB]] # 1% (pokeman, ability_index, item, form)
+GACHA_USED = 97
+
+# LootBox.new.pbStartMainScene on a npc
 
 class LootBox
   def pbStartMainScene
     viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     viewport.z = 99999
-    random1 = rand(100)
-    random2 = rand(100)
-    random3 = rand(100)
+
+    gachaamt = $game_variables[GACHA_USED]
+    random0 = semiRandomRNG(85..100, gachaamt)
+    
     common 		= COMMON
     uncommon 	= UNCOMMON
     rare 			= RARE
@@ -67,12 +71,14 @@ class LootBox
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
         
-				#~ print "#{random1}, #{random2}, #{random3}"
 				# item n1
+        gachaamt = $game_variables[GACHA_USED]
+        random1 = semiRandomRNG(random0, gachaamt)
+        $game_variables[GACHA_USED] += 1
 				if random1 == 1
 					sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
           pbWait(20)
-          pokeman1 = rand(p_rare.length)
+          pokeman1 = semiRandomRNG(p_rare.length, gachaamt)
 					pkmn = Pokemon.new(p_rare[pokeman1][0], (pbBalancedLevel($Trainer.party) - 1))
 					pkmn.ability_index = p_rare[pokeman1][1] if !p_rare[pokeman1][1].nil?
 					pkmn.item = p_rare[pokeman1][2] if !p_rare[pokeman1][2].nil?
@@ -82,40 +88,43 @@ class LootBox
 				elsif random1 >= 1 && random1 < 3
           sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
           pbWait(20)
-          item1=rand(u_rare.length)
+          item1=semiRandomRNG(u_rare.length, gachaamt)
 					sprites["icon1"].item = GameData::Item.get(u_rare[item1]).id
           pbReceiveItem(u_rare[item1])
 				elsif random1 >= 3 && random1 < 7
           sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
           pbWait(20)
-          item1=rand(s_rare.length)
+          item1=semiRandomRNG(s_rare.length, gachaamt)
 					sprites["icon1"].item = GameData::Item.get(s_rare[item1]).id
           pbReceiveItem(s_rare[item1])
 				elsif random1 >= 14  && random1 < 25
           sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
           pbWait(20)
-          item1=rand(rare.length)
+          item1=semiRandomRNG(rare.length, gachaamt)
 					sprites["icon1"].item = GameData::Item.get(rare[item1]).id
           pbReceiveItem(rare[item1])
 				elsif random1 >= 25  && random1 < 50
           sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
           pbWait(20)
-          item1=rand(uncommon.length)
+          item1=semiRandomRNG(uncommon.length, gachaamt)
 					sprites["icon1"].item = GameData::Item.get(uncommon[item1]).id
           pbReceiveItem(uncommon[item1])
 				else
           sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
           pbWait(20)
-          item1=rand(common.length)
+          item1=semiRandomRNG(common.length, gachaamt)
 					sprites["icon1"].item = GameData::Item.get(common[item1]).id
           pbReceiveItem(common[item1])
 				end
 				
+        gachaamt = $game_variables[GACHA_USED]
+        random2 = semiRandomRNG(random0, gachaamt)
+        $game_variables[GACHA_USED] += 1
 				# item n2
 				if random2 == 1
 					sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
           pbWait(20)
-          pokeman2 = rand(p_rare.length)
+          pokeman2 = semiRandomRNG(p_rare.length, gachaamt)
 					pkmn = Pokemon.new(p_rare[pokeman2][0], (pbBalancedLevel($Trainer.party) - 1))
 					pkmn.ability_index = p_rare[pokeman2][1] if !p_rare[pokeman2][1].nil?
 					pkmn.item = p_rare[pokeman2][2] if !p_rare[pokeman2][2].nil?
@@ -125,40 +134,43 @@ class LootBox
 				elsif random2 >= 1 && random2 < 3
           sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
           pbWait(20)
-          item2=rand(u_rare.length)
+          item2=semiRandomRNG(u_rare.length, gachaamt)
 					sprites["icon2"].item = GameData::Item.get(u_rare[item2]).id
           pbReceiveItem(u_rare[item2])
 				elsif random2 >= 3 && random2 < 7
           sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
           pbWait(20)
-          item2=rand(s_rare.length)
+          item2=semiRandomRNG(s_rare.length, gachaamt)
 					sprites["icon2"].item = GameData::Item.get(s_rare[item2]).id
           pbReceiveItem(s_rare[item2])
 				elsif random2 >= 14  && random2 < 25
           sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
           pbWait(20)
-          item2=rand(rare.length)
+          item2=semiRandomRNG(rare.length, gachaamt)
 					sprites["icon2"].item = GameData::Item.get(rare[item2]).id
           pbReceiveItem(rare[item2])
 				elsif random2 >= 25  && random2 < 50
           sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
           pbWait(20)
-          item2=rand(uncommon.length)
+          item2=semiRandomRNG(uncommon.length, gachaamt)
 					sprites["icon2"].item = GameData::Item.get(uncommon[item2]).id
           pbReceiveItem(uncommon[item2])
 				else
           sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
           pbWait(20)
-          item2=rand(common.length)
+          item2=semiRandomRNG(common.length, gachaamt)
 					sprites["icon2"].item = GameData::Item.get(common[item2]).id
           pbReceiveItem(common[item2])
 				end
 				
+        gachaamt = $game_variables[GACHA_USED]
+        random3 = semiRandomRNG(random0, gachaamt)
+        $game_variables[GACHA_USED] += 1
 				# item n3
 				if random3 == 1
 					sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
           pbWait(20)
-          pokeman3 = rand(p_rare.length)
+          pokeman3 = semiRandomRNG(p_rare.length, gachaamt)
 					pkmn = Pokemon.new(p_rare[pokeman3][0], (pbBalancedLevel($Trainer.party) - 1))
 					pkmn.ability_index = p_rare[pokeman3][1] if !p_rare[pokeman3][1].nil?
 					pkmn.item = p_rare[pokeman3][2] if !p_rare[pokeman3][2].nil?
@@ -168,31 +180,31 @@ class LootBox
 				elsif random3 >= 1 && random3 < 3
           sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
           pbWait(20)
-          item3=rand(u_rare.length)
+          item3=semiRandomRNG(u_rare.length, gachaamt)
 					sprites["icon3"].item = GameData::Item.get(u_rare[item3]).id
           pbReceiveItem(u_rare[item3])
 				elsif random3 >= 3 && random3 < 7
           sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
           pbWait(20)
-          item3=rand(s_rare.length)
+          item3=semiRandomRNG(s_rare.length, gachaamt)
 					sprites["icon3"].item = GameData::Item.get(s_rare[item3]).id
           pbReceiveItem(s_rare[item3])
 				elsif random3 >= 14  && random3 < 25
           sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
           pbWait(20)
-          item3=rand(rare.length)
+          item3=semiRandomRNG(rare.length, gachaamt)
 					sprites["icon3"].item = GameData::Item.get(rare[item3]).id
           pbReceiveItem(rare[item3])
 				elsif random3 >= 25  && random3 < 50
           sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
           pbWait(20)
-          item3=rand(uncommon.length)
+          item3=semiRandomRNG(uncommon.length, gachaamt)
 					sprites["icon3"].item = GameData::Item.get(uncommon[item3]).id
           pbReceiveItem(uncommon[item3])
 				else
           sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
           pbWait(20)
-          item3=rand(common.length)
+          item3=semiRandomRNG(common.length, gachaamt)
 					sprites["icon3"].item = GameData::Item.get(common[item3]).id
           pbReceiveItem(common[item3])
 				end
