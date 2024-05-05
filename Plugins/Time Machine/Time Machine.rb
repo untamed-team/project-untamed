@@ -29,20 +29,21 @@ def bootTimeMachine
 	#get out of here if the user cancels
 	return if choice == -1 || choice == (commands.length-1)
 	
+	file_path = eligibleSaves[choice][2]
+	saveData = eligibleSaves[choice]
 	saveFileStorage = eligibleSaves[choice][1][:storage_system]
 	saveParty = eligibleSaves[choice][1][:player].party
-	print saveParty
 	$PokemonGlobal.timeMachineParty = saveParty
 	$PokemonGlobal.inTimeMachineSave = true
 	pbFadeOutIn {
 		scene = TimeMachinePokemonStorageScene.new
 		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
         screen.pbStartScreen(0)
-		exitTimeMachineSave
+		exitTimeMachineSave(file_path, saveData, saveFileStorage)
     }
 end #def bootTimeMachine
 
-def exitTimeMachineSave(saveFileStorage)
+def exitTimeMachineSave(file_path, saveData, saveFileStorage)
 	commands = [_INTL("Save"),_INTL("Do not Save")]
 	choice = pbMessage(_INTL("Would you like to save your changes to the save file?"), commands, -1, nil, 0)
 	
@@ -54,8 +55,10 @@ def exitTimeMachineSave(saveFileStorage)
 	else
 		#add those pokemon to the player
 		
-		#delete the pokemon from the save file they were received from
-		#saveFileStorage.delete blah blah blah
+		#save the storage of the old save file to the old save File
+		#currently this is saving the loaded game to the old save file chosen
+		#I need code for saving the specific data to a save file
+		TimeMachineSaveData.save_to_file(file_path, saveData)
 		
 		$PokemonGlobal.inTimeMachineSave = false
 		$PokemonGlobal.timeMachineParty = nil
@@ -675,6 +678,7 @@ class TimeMachinePokemonStorageScene
   end
 
   def pbRelease(selected, heldpoke)
+  print "releasing"
     box = selected[0]
     index = selected[1]
     if heldpoke
@@ -1353,6 +1357,8 @@ class TimeMachinePokemonStorageScreen
     command = pbShowCommands(_INTL("Release this Pokémon?"), [_INTL("No"), _INTL("Yes")])
     if command == 1
       pkmnname = pokemon.name
+	  
+	  #the other pbRelease is called
       @scene.pbRelease(selected, heldpoke)
       if heldpoke
         @heldpkmn = nil
