@@ -306,7 +306,6 @@ module TimeMachineSaveData
   def self.save_to_file(file_path, save_data)
     validate file_path => String
     #save_data = self.compile_save_hash
-	print save_data[1]
 	#save file has no global metadata after saving to it. I suspect the save_data hash I'm passing to this method is missing stuff
     File.open(file_path, "wb") { |file| Marshal.dump(save_data[1], file) }
   end
@@ -613,7 +612,6 @@ module TimeMachineSaveData
   def self.compile_save_hash
     save_data = {}
     @values.each { |value| save_data[value.id] = value.save }
-    print save_data
 	return save_data
   end
 end
