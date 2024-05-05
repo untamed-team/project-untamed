@@ -1,6 +1,7 @@
 class PokemonGlobalMetadata
 	attr_accessor   :timeMachineParty
 	attr_accessor   :inTimeMachineSave
+	attr_accessor   :timeMachineTransferredPkmn
 end
 
 class PokemonStorage
@@ -35,6 +36,7 @@ def bootTimeMachine
 	saveParty = eligibleSaves[choice][1][:player].party
 	$PokemonGlobal.timeMachineParty = saveParty
 	$PokemonGlobal.inTimeMachineSave = true
+	$PokemonGlobal.timeMachineTransferredPkmn = []
 	pbFadeOutIn {
 		scene = TimeMachinePokemonStorageScene.new
 		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
@@ -54,14 +56,18 @@ def exitTimeMachineSave(file_path, saveData, saveFileStorage)
 		return
 	else
 		#add those pokemon to the player
+		for i in 0...$PokemonGlobal.timeMachineTransferredPkmn.length
+			pkmn = $PokemonGlobal.timeMachineTransferredPkmn[i]
+			print "adding #{pkmn.name}"
+			pbAddPokemonSilent(pkmn)
+		end
 		
-		#save the storage of the old save file to the old save File
-		#currently this is saving the loaded game to the old save file chosen
-		#I need code for saving the specific data to a save file
 		TimeMachineSaveData.save_to_file(file_path, saveData)
+		Game.save
 		
 		$PokemonGlobal.inTimeMachineSave = false
 		$PokemonGlobal.timeMachineParty = nil
+		$PokemonGlobal.timeMachineTransferredPkmn = []
 	end
 	
 	#delete pokemon
@@ -678,11 +684,10 @@ class TimeMachinePokemonStorageScene
   end
 
   def pbRelease(selected, heldpoke)
-  print "releasing"
     box = selected[0]
     index = selected[1]
     if heldpoke
-      sprite = @sprites["arrow"].heldPokemon
+		sprite = @sprites["arrow"].heldPokemon
     elsif box == -1
       sprite = @sprites["boxparty"].getPokemon(index)
     else
@@ -1358,10 +1363,13 @@ class TimeMachinePokemonStorageScreen
     if command == 1
       pkmnname = pokemon.name
 	  
+		#add the pokemon to a global variable to receive on the current save when done
+		$PokemonGlobal.timeMachineTransferredPkmn.push(pokemon)
+	  
 	  #the other pbRelease is called
       @scene.pbRelease(selected, heldpoke)
-      if heldpoke
-        @heldpkmn = nil
+      if heldpoke		
+	  	@heldpkmn = nil
       else
         @storage.pbDelete(box, index)
       end
