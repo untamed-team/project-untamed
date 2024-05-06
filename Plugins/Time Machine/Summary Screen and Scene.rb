@@ -529,57 +529,98 @@ class TimeMachinePokemonSummary_Scene
     drawFormattedTextEx(overlay, 232, 86, 268, memo)
   end
 
-  def drawPageThree
-    overlay = @sprites["overlay"].bitmap
-    base   = Color.new(248, 248, 248)
-    shadow = Color.new(104, 104, 104)
-    # Determine which stats are boosted and lowered by the Pokémon's nature
-    statshadows = {}
-    GameData::Stat.each_main { |s| statshadows[s.id] = shadow }
-    if !@pokemon.shadowPokemon? || @pokemon.heartStage <= 3
-      @pokemon.nature_for_stats.stat_changes.each do |change|
-        statshadows[change[0]] = Color.new(136, 96, 72) if change[1] > 0
-        statshadows[change[0]] = Color.new(64, 120, 152) if change[1] < 0
-      end
+  def drawPageThree #overhauled #by low
+		overlay = @sprites["overlay"].bitmap
+		base   = Color.new(248, 248, 248)
+		shadow = Color.new(104, 104, 104)
+		# Determine which stats are boosted and lowered by the Pokémon's nature
+		statshadows = {}
+		GameData::Stat.each_main { |s| statshadows[s.id] = shadow }
+		if !@pokemon.shadowPokemon? || @pokemon.heartStage <= 3
+			@pokemon.nature_for_stats.stat_changes.each do |change|
+			statshadows[change[0]] = Color.new(255, 0, 0) if change[1] > 0
+			statshadows[change[0]] = Color.new(0, 148, 255) if change[1] < 0
+			end
+		end
+    base_stats = @pokemon.baseStats
+    stats = {}
+    GameData::Stat.each_main do |s|
+      stats[s.id] = base_stats[s.id]
     end
+		# Write various bits of text		
+		if Settings::PURIST_MODE
+			spatk=:SPECIAL_ATTACK
+		else
+			spatk=:ATTACK
+		end
     # Write various bits of text
     textpos = [
-      [_INTL("HP"), 292, 82, 2, base, statshadows[:HP]],
-      [sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 462, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Attack"), 248, 126, 0, base, statshadows[:ATTACK]],
-      [sprintf("%d", @pokemon.attack), 456, 126, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Defense"), 248, 158, 0, base, statshadows[:DEFENSE]],
-      [sprintf("%d", @pokemon.defense), 456, 158, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Sp. Atk"), 248, 190, 0, base, statshadows[:SPECIAL_ATTACK]],
-      [sprintf("%d", @pokemon.spatk), 456, 190, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Sp. Def"), 248, 222, 0, base, statshadows[:SPECIAL_DEFENSE]],
-      [sprintf("%d", @pokemon.spdef), 456, 222, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Speed"), 248, 254, 0, base, statshadows[:SPEED]],
-      [sprintf("%d", @pokemon.speed), 456, 254, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
-      [_INTL("Ability"), 224, 290, 0, base, shadow]
+      [_INTL("HP"), 250, 82, 2, base, statshadows[:HP]],
+      [sprintf("%d/%d", @pokemon.hp, @pokemon.totalhp), 442, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:HP]), 496, 83, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Attack"), 238, 126, 0, base, statshadows[:ATTACK]],
+      [sprintf("%d", @pokemon.attack), 436, 126, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:ATTACK]), 496, 127, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Defense"), 238, 158, 0, base, statshadows[:DEFENSE]],
+      [sprintf("%d", @pokemon.defense),436, 158, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:DEFENSE]), 496, 159, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Sp. Atk"), 238, 190, 0, base, statshadows[:SPECIAL_ATTACK]],
+      [sprintf("%d", @pokemon.spatk), 436, 190, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:SPECIAL_ATTACK]), 496, 191, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Sp. Def"), 238, 222, 0, base, statshadows[:SPECIAL_DEFENSE]],
+      [sprintf("%d", @pokemon.spdef), 436, 222, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:SPECIAL_DEFENSE]), 496, 223, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+      [_INTL("Speed"), 238, 254, 0, base, statshadows[:SPEED]],
+      [sprintf("%d", @pokemon.speed), 436, 254, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+			[sprintf("%d", stats[:SPEED]), 496, 255, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)]
     ]
-    # Draw ability name and description
-    ability = @pokemon.ability
-    if ability
-      textpos.push([ability.name, 362, 290, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
-      drawTextEx(overlay, 224, 322, 282, 2, ability.description, Color.new(64, 64, 64), Color.new(176, 176, 176))
-    end
-    # Draw all text
-    pbDrawTextPositions(overlay, textpos)
-    # Draw HP bar
-    if @pokemon.hp > 0
-      w = @pokemon.hp * 96 / @pokemon.totalhp.to_f
-      w = 1 if w < 1
-      w = ((w / 2).round) * 2
-      hpzone = 0
-      hpzone = 1 if @pokemon.hp <= (@pokemon.totalhp / 2).floor
-      hpzone = 2 if @pokemon.hp <= (@pokemon.totalhp / 4).floor
-      imagepos = [
-        ["Graphics/Pictures/Summary/overlay_hp", 360, 110, 0, hpzone * 6, w, 6]
-      ]
-      pbDrawImagePositions(overlay, imagepos)
-    end
-  end
+		#DemICE adding the unused EVs
+		totalevs=80+@pokemon.level*8
+		totalevs=(totalevs.div(4))*4      
+		totalevs=512 if totalevs>512        
+		evpool=totalevs-@pokemon.ev[:HP]-@pokemon.ev[:ATTACK]-@pokemon.ev[:DEFENSE]-@pokemon.ev[:SPECIAL_DEFENSE]-@pokemon.ev[:SPEED]
+		evpool-=@pokemon.ev[:SPECIAL_ATTACK] if Settings::PURIST_MODE  
+		
+		#DemICE adding ev allocation instructions
+		if $evalloc
+			textpos.push(
+				[sprintf("%d", @pokemon.ev[:HP]), 348, 82, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				[sprintf("%d", @pokemon.ev[:ATTACK]), 374, 127, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				[sprintf("%d", @pokemon.ev[:DEFENSE]), 374, 159, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				[sprintf("%d", @pokemon.ev[spatk]), 374, 191, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				[sprintf("%d", @pokemon.ev[:SPECIAL_DEFENSE]), 374, 223, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)],
+				[sprintf("%d", @pokemon.ev[:SPEED]), 374, 255, 1, Color.new(64, 64, 64), Color.new(176, 176, 176)]
+			)
+			textpos.push(["EV Pool:",224,290,0,base, shadow])
+			textpos.push([sprintf("%d", evpool), 344, 290, 1, base, shadow])
+			textpos.push(["[S] resets EVs",362,290,0,Color.new(64,64,64),Color.new(176,176,176)])
+			drawTextEx(overlay,224,322,282,2,"When EV is 0:     [<-] to max.  When EV is max: [->] to 0.",Color.new(64,64,64),Color.new(176,176,176))
+		else
+			# Draw ability name and description
+			textpos.push([_INTL("Ability"), 224, 290, 0, base, shadow])
+			ability = @pokemon.ability
+			if ability
+				textpos.push([ability.name, 362, 290, 0, Color.new(64, 64, 64), Color.new(176, 176, 176)])
+				#abilitydesc = _INTL("Press {1} to view ability description.",$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name)
+				abilitydesc = @pokemon.ability.description
+        drawTextEx(overlay,224,320,282+12,2,abilitydesc,Color.new(64,64,64),Color.new(176,176,176))
+			end
+		end	
+		
+		# Draw all text
+		pbDrawTextPositions(overlay, textpos)
+		# Draw HP bar
+		if @pokemon.hp > 0	
+			w = @pokemon.hp * 96 / @pokemon.totalhp.to_f	
+			w = 1 if w < 1	
+			w = ((w / 2).round) * 2	
+			hpzone = 0	
+			hpzone = 1 if @pokemon.hp <= (@pokemon.totalhp / 2).floor	
+			hpzone = 2 if @pokemon.hp <= (@pokemon.totalhp / 4).floor	
+			imagepos = [["Graphics/Pictures/Summary/overlay_hp", 339, 111, 0, hpzone * 6, w, 6]]	
+			pbDrawImagePositions(overlay, imagepos)
+		end
+	end
 
   def drawPageFour
     overlay = @sprites["overlay"].bitmap
