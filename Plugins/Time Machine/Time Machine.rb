@@ -14,6 +14,14 @@ class PokemonStorage
 	end
 end
 
+MenuHandlers.add(:pc_menu, :time_machine, {
+  "name"      => _INTL("Mysterious Program"),
+  "order"     => 50,
+  "effect"    => proc { |menu|
+    bootTimeMachine
+  }
+})
+
 def bootTimeMachine
 	#def pbMessage(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, &block)
 	commands = []
