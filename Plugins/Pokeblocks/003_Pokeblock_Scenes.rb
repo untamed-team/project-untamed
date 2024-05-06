@@ -627,8 +627,6 @@ class PokeblockCondition_Scene
 				x = xBase - 255 + fea[i]
 				y = yBase + 48 * i
 				set_xy_sprite("#{arr[i]} bar", x, y)
-				print SIMPLE
-				print NO_SHEEN
 				next if (SIMPLE || NO_SHEEN) && i == 5
 				maxAdjust = 0
 				maxAdjust = 16 if i == 1
