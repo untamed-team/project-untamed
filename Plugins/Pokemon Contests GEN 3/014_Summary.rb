@@ -20,7 +20,8 @@ class PokemonSummary_Scene
 		if !@contestpage
 			tdw_contests_summary_page_three
 		else
-			simple = PokeblockSettings::SIMPLIFIED_BERRY_BLENDING
+			#simple = PokeblockSettings::SIMPLIFIED_BERRY_BLENDING
+			simple = false
 			noSheen = PokeblockSettings::DONT_USE_SHEEN
 			bargraph = (PluginManager.installed?("Better Bitmaps") ? PokeblockSettings::STATS_BAR_GRAPH : true)
 			if BWSUMMARY

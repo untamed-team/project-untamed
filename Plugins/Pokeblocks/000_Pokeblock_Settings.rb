@@ -34,7 +34,7 @@ module PokeblockSettings
 	#--------------------------------------------------------------------------------
 	# When true, Sheen will not be used, even in Generation 3 mode.
 	#--------------------------------------------------------------------------------
-	DONT_USE_SHEEN					= true
+	DONT_USE_SHEEN					= false
 	
 	#--------------------------------------------------------------------------------
 	# When true, contest stats in the Conditions sceen will use a bar graph. Instead
