@@ -20,6 +20,7 @@ def timeMachineCheckSaves
 	 next if $player.save_slot == filenameNoExt
 	 file_path = File.join(location, filename)
 	 save_data = SaveData.get_data_from_file(file_path)
+	 #a save is eligible if variable X is less than value Y in the statement below at the part "Variable",[X,Y]
 	 eligibleSaveFiles.push([filenameNoExt,save_data,file_path]) if !timeMachineSaveTest("project-untamed","Variable",[51,2],ver=20,save_data)
   end
   return eligibleSaveFiles
