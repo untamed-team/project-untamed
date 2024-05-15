@@ -36,7 +36,7 @@ end
 def pbCheckEternalFloette
   #if the player got Eternal floette in the save file
   
-  if pbSaveTest("project-untamed","switch",82)    
+  if pbSaveTest("project-untamed","switch",82)
     #set the save file to search through
     save = pbSaveFile("project-untamed")
     
