@@ -81,9 +81,11 @@ class NPCTrainer < Trainer
   attr_accessor :lose_text
   attr_accessor :win_text
   attr_accessor :gimmick #by low
+  attr_accessor :rngversion #by low
 
   def initialize(name, trainer_type)
     super
+    @rngversion = 0
     @items     = []
     @lose_text = nil
     @win_text  = nil
