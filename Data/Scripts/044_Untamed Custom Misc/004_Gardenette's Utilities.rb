@@ -817,7 +817,7 @@ class PokemonEncounters
         #added by Gardenette for EnCORNters
         if !ret && $game_map.terrain_tag($game_player.x, $game_player.y).id_number == 18
           ret = find_valid_encounter_type_for_time(:Corn, time)
-      end
+        end
         
       
         ret = find_valid_encounter_type_for_time(:Land, time) if !ret
