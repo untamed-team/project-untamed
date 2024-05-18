@@ -366,6 +366,7 @@ class PokemonRegionMap_Scene
 	  
 	  #added by Gardenette
 	  trainerIcon = "Graphics/Pictures/RegionMap/Icons/#{$player.trainer_type.to_s}"
+	  trainerIcon = trainerIcon + "_#{$player.outfit}" if $player.outfit > 0
 	  
       @spritesMap["player"].z = 60
       pbDrawImagePositions(
