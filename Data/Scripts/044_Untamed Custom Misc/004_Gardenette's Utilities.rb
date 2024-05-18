@@ -636,7 +636,7 @@ def pbFishing(hasEncounter, rodType = 1)
 #      hookChance += 15
     else
       pbFishingEnd {
-        pbMessageDisplay(msgWindow, _INTL("Reeled it in too fast..."))
+        pbMessageDisplay(msgWindow, _INTL("There seems to be nothing here..."))
       }
       break
     end
