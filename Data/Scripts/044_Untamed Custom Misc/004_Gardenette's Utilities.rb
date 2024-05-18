@@ -1748,6 +1748,82 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
 )
 
 #===============================================================================
+# Pokecenter Animations (to account for player outfits)
+#===============================================================================
+def playCenterAnimGivePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+    #turn up
+    PBMoveRoute::TurnUp,
+  ])
+end
+
+def playCenterAnimTakePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    #turn up
+    PBMoveRoute::TurnUp,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+  ])
+end
+
+#===============================================================================
 # Crash Prevention
 #===============================================================================
 #to prevent a crash with save files that were created when my Tutorial Tips existed
