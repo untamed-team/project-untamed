@@ -199,7 +199,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
         moveNameBase = button.bitmap.get_pixel(10, button.src_rect.y + 34)
       end
       #textPos.push([moves[i].short_name, x, y, 2, moveNameBase, TEXT_SHADOW_COLOR])
-      moveNameShadow = Color.new(0,0,0)
+      moveNameShadow = Color.new(44,42,52)
       textPos.push([moves[i].short_name, x, y, 2, moveNameBase, moveNameShadow])
       if PluginManager.installed?("PLA Battle Styles") && @battler.style_trigger > 0
         next if !moves[i].mastered?
