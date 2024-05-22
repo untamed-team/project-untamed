@@ -48,6 +48,16 @@ Corn,5
     15,PUMPKABOO,4,7
     10,MINIMELO,3,4
     5,DRILBUR,2,6
+Water,2
+    60,BANAGNAW,7,9
+    40,FINNEON,6,8
+OldRod
+    60,BANAGNAW,6,8
+    40,FINNEON,5,9
+GoodRod
+    60,FEEBAS,12,17
+    20,FINNEON,10,16
+    20,BANAGNAW,10,15
 #-------------------------------
 [079] # Hacienda Castaneda
 Water,2
