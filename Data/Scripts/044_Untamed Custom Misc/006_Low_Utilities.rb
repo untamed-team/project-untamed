@@ -1004,7 +1004,7 @@ def nameToNumberConvert(name)
   total = 0
   name.each_char do |letter|
     if letter_values[letter].nil?
-      print "RNG Error. Issue: #{name[letter]}; #{name}"
+      echoln "RNG Error. Issue: #{name[letter]}; #{name}"
       next
     end
     total += letter_values[letter]

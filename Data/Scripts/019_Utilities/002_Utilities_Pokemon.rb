@@ -34,7 +34,7 @@ end
 # setting initial values #by low
 def pbSetInitialValues(pkmn)
 	pokemon = pkmn
-	if $game_variables[MECHANICSVAR] >= 2
+	if $game_variables[MECHANICSVAR] > 2
 		if !$game_switches[NOINITIALVALUES]
 			if pbConfirmMessage(_INTL("Would you like to set initial values for {1}?", pkmn.name))
 				# choosing an ability
