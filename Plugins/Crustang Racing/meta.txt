@@ -1,0 +1,5 @@
+Name         = Crustang Racing
+Version      = 1.0
+Website      = NONE
+Credits      = Gardenette
+Essentials   = 20.1
