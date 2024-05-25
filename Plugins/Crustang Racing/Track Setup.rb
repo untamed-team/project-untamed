@@ -27,11 +27,21 @@ class CrustangRacing
 		i = 0
 		#3.times do
 			#draw the crustang sprite with step animation on
-			@sprites["racingPkmn#{i}"] = IconSprite.new(0, 0, @viewport)
-			characterBitmap = AnimatedBitmap.new("Graphics/Characters/Followers/FEEBAS")
-			@sprites["racingPkmn#{i}"].bitmap = characterBitmap
-			@sprites["racingPkmn#{i}"].x = racingPkmnStartingX + @sprites["racingPkmn#{i}"].width
-			@sprites["racingPkmn#{i}"].y = racingPkmnStartingY + @sprites["racingPkmn#{i}"].height
+			pokemon = Pokemon.new(:FEEBAS, 1)
+			@sprites["racingPkmn#{i}"] = TrainerWalkingCharSprite.new(pokemon.to_s, @viewport)
+			charwidth = @sprites["racingPkmn#{i}"].bitmap.width
+			charheight = @sprites["racingPkmn#{i}"].bitmap.height
+			@sprites["racingPkmn#{i}"].x = racingPkmnStartingX - (charwidth / 8)
+			@sprites["racingPkmn#{i}"].y = racingPkmnStartingY - (charheight / 4)
+			
+			filename = "Graphics/Characters/Followers/FEEBAS"
+			@sprites["racingPkmn#{i}"] = TrainerWalkingCharSprite.new(filename, @viewport)
+			charwidth  = @sprites["racingPkmn#{i}"].bitmap.width
+			charheight = @sprites["racingPkmn#{i}"].bitmap.height
+			@sprites["racingPkmn#{i}"].x        = racingPkmnStartingX - (charwidth / 8)
+			@sprites["racingPkmn#{i}"].y        = racingPkmnStartingY - (charheight / 8)
+			@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 0, charwidth / 4, charheight / 4)
+			
 			@sprites["racingPkmn#{i}"].z = 99999
 			
 			#change the sprite character
