@@ -1,5 +1,5 @@
 Name         = Crustang Racing
 Version      = 1.0
 Website      = NONE
-Credits      = Gardenette
+Credits      = Gardenette, Vendily
 Essentials   = 20.1

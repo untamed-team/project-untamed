@@ -17,7 +17,11 @@ class CrustangRacing
 		@sprites["test"].y = 0
 		@sprites["test"].z = 99998
 		
-		drawContestants
+		#set up racer hashes
+		@racer1 = {}
+		@racer2 = {}
+		@racer3 = {}
+		@racerPlayer = {}
 		
 	end #def setup
 	
@@ -27,28 +31,32 @@ class CrustangRacing
 		i = 0
 		#3.times do
 			#draw the crustang sprite with step animation on
-			pokemon = Pokemon.new(:FEEBAS, 1)
-			@sprites["racingPkmn#{i}"] = TrainerWalkingCharSprite.new(pokemon.to_s, @viewport)
-			charwidth = @sprites["racingPkmn#{i}"].bitmap.width
-			charheight = @sprites["racingPkmn#{i}"].bitmap.height
-			@sprites["racingPkmn#{i}"].x = racingPkmnStartingX - (charwidth / 8)
-			@sprites["racingPkmn#{i}"].y = racingPkmnStartingY - (charheight / 4)
-			
-			filename = "Graphics/Characters/Followers/FEEBAS"
+			filename = "Followers/FEEBAS"
 			@sprites["racingPkmn#{i}"] = TrainerWalkingCharSprite.new(filename, @viewport)
 			charwidth  = @sprites["racingPkmn#{i}"].bitmap.width
 			charheight = @sprites["racingPkmn#{i}"].bitmap.height
 			@sprites["racingPkmn#{i}"].x        = racingPkmnStartingX - (charwidth / 8)
 			@sprites["racingPkmn#{i}"].y        = racingPkmnStartingY - (charheight / 8)
-			@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 0, charwidth / 4, charheight / 4)
-			
 			@sprites["racingPkmn#{i}"].z = 99999
+			#sprite turn right
+			@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
+
+			#turn down
+			#@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 0, charwidth / 4, charheight / 4)
+			#turn left
+			#@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 64, charwidth / 4, charheight / 4)
+			#turn right
+			#@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
+			#turn up
+			#@sprites["racingPkmn#{i}"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 			
-			#change the sprite character
+			@racerPlayer.merge!({RacerSprite: @sprites["racingPkmn#{i}"]})
+			print @racerPlayer
 			
 			racingPkmnStartingY += 20 + 64 #size of each follower pkmn sprite
 			i += 1
 		#end #3.times do
+		
 	end #def drawContestants
 	
 	def self.main
@@ -56,6 +64,7 @@ class CrustangRacing
 		self.drawContestants
 		loop do
 			Graphics.update
+			pbUpdateSpriteHash(@sprites)
 		end
 	end #def self.main
 	
