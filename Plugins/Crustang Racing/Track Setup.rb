@@ -5,11 +5,17 @@ class CrustangRacing
 		@viewport.z = 99999
 		@sprites = {}
 		
-		@sprites["background"] = IconSprite.new(0, 0, @viewport)
-		@sprites["background"].setBitmap("Graphics/Pictures/Crustang Racing/track border")
-		@sprites["background"].x = 0
-		@sprites["background"].y = 0
-		@sprites["background"].z = 99999
+		@sprites["trackBorderTop"] = IconSprite.new(0, 0, @viewport)
+		@sprites["trackBorderTop"].setBitmap("Graphics/Pictures/Crustang Racing/track border top")
+		@sprites["trackBorderTop"].x = 0
+		@sprites["trackBorderTop"].y = 0
+		@sprites["trackBorderTop"].z = 99999
+		
+		@sprites["trackBorderBottom"] = IconSprite.new(0, 0, @viewport)
+		@sprites["trackBorderBottom"].setBitmap("Graphics/Pictures/Crustang Racing/track border bottom")
+		@sprites["trackBorderBottom"].x = 0
+		@sprites["trackBorderBottom"].y = 0
+		@sprites["trackBorderBottom"].z = 999999
 		
 		@sprites["track1"] = IconSprite.new(0, 0, @viewport)
 		@sprites["track1"].setBitmap("Graphics/Pictures/Crustang Racing/trackPart1")
@@ -35,7 +41,7 @@ class CrustangRacing
 		racingPkmnStartingX = 20
 		racingPkmnStartingY = 52
 		i = 0
-		4.times do
+		3.times do
 			#draw the crustang sprite with step animation on
 			filename = "Followers/BATHYGIGAS"
 			@sprites["racingPkmn#{i}"] = TrainerWalkingCharSprite.new(filename, @viewport)
@@ -65,12 +71,19 @@ class CrustangRacing
 	end #def drawContestants
 	
 	def self.trackMovementUpdate
-		@sprites["track1"].x -= 8
-		@sprites["track2"].x -= 8
+		@sprites["track1"].x -= 4
+		@sprites["track2"].x -= 4
+		
+		#track image looping logic
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
 		if @sprites["track2"].x <= 0 && @sprites["track1"].x < 0
 			@sprites["track1"].x = @sprites["track2"].x + @sprites["track2"].width - 1024
 		end
+		#if track2's X is < 0, move track2 to the end of track1 for a loop
+		if @sprites["track2"].x < 0
+			@sprites["track2"].x = @sprites["track1"].x + @sprites["track1"].width
+		end
+		
 	end #def trackMovementUpdate
 	
 	def self.main
