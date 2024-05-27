@@ -82,6 +82,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
       @overlay.x = self.x
       @overlay.y = self.y
       pbSetNarrowFont(@overlay.bitmap)
+      #pbSetSystemFont(@overlay.bitmap)
       addSprite("overlay", @overlay)
       @infoOverlay = BitmapSprite.new(Graphics.width, Graphics.height - self.y, viewport)
       @infoOverlay.x = self.x
@@ -197,7 +198,9 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
       if GET_MOVE_TEXT_COLOR_FROM_MOVE_BUTTON && moves[i].display_type(@battler)
         moveNameBase = button.bitmap.get_pixel(10, button.src_rect.y + 34)
       end
-      textPos.push([moves[i].short_name, x, y, 2, moveNameBase, TEXT_SHADOW_COLOR])
+      #textPos.push([moves[i].short_name, x, y, 2, moveNameBase, TEXT_SHADOW_COLOR])
+      moveNameShadow = Color.new(44,42,52)
+      textPos.push([moves[i].short_name, x, y, 2, moveNameBase, moveNameShadow])
       if PluginManager.installed?("PLA Battle Styles") && @battler.style_trigger > 0
         next if !moves[i].mastered?
         imagePos.push(["Graphics/Plugins/PLA Battle Styles/mastered_icon", button.x - self.x, button.y - self.y + 3])

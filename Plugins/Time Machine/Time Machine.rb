@@ -1,6 +1,7 @@
 class PokemonGlobalMetadata
 	attr_accessor   :timeMachineParty
 	attr_accessor   :inTimeMachineSave
+	attr_accessor   :timeMachineTransferredPkmn
 end
 
 class PokemonStorage
@@ -12,6 +13,14 @@ class PokemonStorage
 		end
 	end
 end
+
+MenuHandlers.add(:pc_menu, :time_machine, {
+  "name"      => _INTL("Mysterious Program"),
+  "order"     => 50,
+  "effect"    => proc { |menu|
+    bootTimeMachine
+  }
+})
 
 def bootTimeMachine
 	#def pbMessage(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, &block)
@@ -29,20 +38,22 @@ def bootTimeMachine
 	#get out of here if the user cancels
 	return if choice == -1 || choice == (commands.length-1)
 	
+	file_path = eligibleSaves[choice][2]
+	saveData = eligibleSaves[choice]
 	saveFileStorage = eligibleSaves[choice][1][:storage_system]
 	saveParty = eligibleSaves[choice][1][:player].party
-	print saveParty
 	$PokemonGlobal.timeMachineParty = saveParty
 	$PokemonGlobal.inTimeMachineSave = true
+	$PokemonGlobal.timeMachineTransferredPkmn = []
 	pbFadeOutIn {
 		scene = TimeMachinePokemonStorageScene.new
 		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
         screen.pbStartScreen(0)
-		exitTimeMachineSave
+		exitTimeMachineSave(file_path, saveData, saveFileStorage)
     }
 end #def bootTimeMachine
 
-def exitTimeMachineSave(saveFileStorage)
+def exitTimeMachineSave(file_path, saveData, saveFileStorage)
 	commands = [_INTL("Save"),_INTL("Do not Save")]
 	choice = pbMessage(_INTL("Would you like to save your changes to the save file?"), commands, -1, nil, 0)
 	
@@ -50,18 +61,22 @@ def exitTimeMachineSave(saveFileStorage)
 	if choice == -1 || choice == (commands.length-1)
 		$PokemonGlobal.inTimeMachineSave = false
 		$PokemonGlobal.timeMachineParty = nil
+		$PokemonGlobal.timeMachineTransferredPkmn = []
 		return
 	else
 		#add those pokemon to the player
-		
-		#delete the pokemon from the save file they were received from
-		#saveFileStorage.delete blah blah blah
+		for i in 0...$PokemonGlobal.timeMachineTransferredPkmn.length
+			pkmn = $PokemonGlobal.timeMachineTransferredPkmn[i]
+			pbAddPokemonSilent(pkmn)
+		end
 		
 		$PokemonGlobal.inTimeMachineSave = false
 		$PokemonGlobal.timeMachineParty = nil
+		$PokemonGlobal.timeMachineTransferredPkmn = []
+		
+		TimeMachineSaveData.save_to_file(file_path, saveData)
+		Game.save
 	end
-	
-	#delete pokemon
 	
 	
 end #def exitTimeMachineSave
@@ -350,14 +365,14 @@ class TimeMachinePokemonStorageScene
         pbSetMosaic(selection)
       end
       self.update
-      if Input.trigger?(Input::JUMPUP)
+      if Input.press?(Input::CTRL) && Input.trigger?(Input::LEFT)
         pbPlayCursorSE
         nextbox = (@storage.currentBox + @storage.maxBoxes - 1) % @storage.maxBoxes
         pbSwitchBoxToLeft(nextbox)
         @storage.currentBox = nextbox
         pbUpdateOverlay(selection)
         pbSetMosaic(selection)
-      elsif Input.trigger?(Input::JUMPDOWN)
+      elsif Input.press?(Input::CTRL) && Input.trigger?(Input::RIGHT)
         pbPlayCursorSE
         nextbox = (@storage.currentBox + 1) % @storage.maxBoxes
         pbSwitchBoxToRight(nextbox)
@@ -678,7 +693,7 @@ class TimeMachinePokemonStorageScene
     box = selected[0]
     index = selected[1]
     if heldpoke
-      sprite = @sprites["arrow"].heldPokemon
+		sprite = @sprites["arrow"].heldPokemon
     elsif box == -1
       sprite = @sprites["boxparty"].getPokemon(index)
     else
@@ -728,8 +743,8 @@ class TimeMachinePokemonStorageScene
 
   def pbSummary(selected, heldpoke)
     oldsprites = pbFadeOutAndHide(@sprites)
-    scene = PokemonSummary_Scene.new
-    screen = PokemonSummaryScreen.new(scene)
+    scene = TimeMachinePokemonSummary_Scene.new
+    screen = TimeMachinePokemonSummaryScreen.new(scene)
     if heldpoke
       screen.pbStartScreen([heldpoke], 0)
     elsif selected[0] == -1
@@ -1030,16 +1045,16 @@ class TimeMachinePokemonStorageScreen
             cmdDebug    = -1
             if heldpoke
               helptext = _INTL("{1} is selected.", heldpoke.name)
-              commands[cmdMove = commands.length] = (pokemon) ? _INTL("Shift") : _INTL("Place")
+              #commands[cmdMove = commands.length] = (pokemon) ? _INTL("Shift") : _INTL("Place")
             elsif pokemon
               helptext = _INTL("{1} is selected.", pokemon.name)
-              commands[cmdMove = commands.length] = _INTL("Move")
+              #commands[cmdMove = commands.length] = _INTL("Move")
             end
             commands[cmdSummary = commands.length]  = _INTL("Summary")
-            commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Store") : _INTL("Withdraw")
-            commands[cmdItem = commands.length]     = _INTL("Item")
-            commands[cmdMark = commands.length]     = _INTL("Mark")
-            commands[cmdRelease = commands.length]  = _INTL("Release")
+            #commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Store") : _INTL("Withdraw")
+            #commands[cmdItem = commands.length]     = _INTL("Item")
+            #commands[cmdMark = commands.length]     = _INTL("Mark")
+            commands[cmdRelease = commands.length]  = _INTL("Transfer")
             commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
             commands[commands.length]               = _INTL("Cancel")
             command = pbShowCommands(helptext, commands)
@@ -1057,7 +1072,7 @@ class TimeMachinePokemonStorageScreen
               pbItem(selected, @heldpkmn)
             elsif cmdMark >= 0 && command == cmdMark   # Mark
               pbMark(selected, @heldpkmn)
-            elsif cmdRelease >= 0 && command == cmdRelease   # Release
+            elsif cmdRelease >= 0 && command == cmdRelease   # Transfer
               pbRelease(selected, @heldpkmn)
             elsif cmdDebug >= 0 && command == cmdDebug   # Debug
               pbPokemonDebug((@heldpkmn) ? @heldpkmn : pokemon, selected, heldpoke)
@@ -1091,10 +1106,11 @@ class TimeMachinePokemonStorageScreen
           pokemon = @storage[selected[0], selected[1]]
           next if !pokemon
           command = pbShowCommands(_INTL("{1} is selected.", pokemon.name),
-                                   [_INTL("Withdraw"),
+                                   [
+								   #_INTL("Withdraw"),
                                     _INTL("Summary"),
-                                    _INTL("Mark"),
-                                    _INTL("Release"),
+                                    #_INTL("Mark"),
+                                    _INTL("Transfer"),
                                     _INTL("Cancel")])
           case command
           when 0 then pbWithdraw(selected, nil)
@@ -1122,10 +1138,11 @@ class TimeMachinePokemonStorageScreen
           pokemon = @storage[-1, selected]
           next if !pokemon
           command = pbShowCommands(_INTL("{1} is selected.", pokemon.name),
-                                   [_INTL("Store"),
+                                   [
+								   #_INTL("Store"),
                                     _INTL("Summary"),
-                                    _INTL("Mark"),
-                                    _INTL("Release"),
+                                    #_INTL("Mark"),
+                                    _INTL("Transfer"),
                                     _INTL("Cancel")])
           case command
           when 0 then pbStore([-1, selected], nil)
@@ -1211,10 +1228,11 @@ class TimeMachinePokemonStorageScreen
     if box != -1
       raise _INTL("Can't deposit from box...")
     end
-    if pbAbleCount <= 1 && pbAble?(@storage[box, index]) && !heldpoke
-      pbPlayBuzzerSE
-      pbDisplay(_INTL("That's your last Pokémon!"))
-    elsif heldpoke&.mail
+    #if pbAbleCount <= 1 && pbAble?(@storage[box, index]) && !heldpoke
+    #  pbPlayBuzzerSE
+    #  pbDisplay(_INTL("That's your last Pokémon!"))
+    #elsif heldpoke&.mail
+	if heldpoke&.mail
       pbDisplay(_INTL("Please remove the Mail."))
     elsif !heldpoke && @storage[box, index].mail
       pbDisplay(_INTL("Please remove the Mail."))
@@ -1259,6 +1277,7 @@ class TimeMachinePokemonStorageScreen
     if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
       pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Time Machine to deposit your last Pokémon!"))
       return
     end
     @scene.pbHold(selected)
@@ -1336,32 +1355,38 @@ class TimeMachinePokemonStorageScreen
     pokemon = (heldpoke) ? heldpoke : @storage[box, index]
     return if !pokemon
     if pokemon.egg?
-      pbDisplay(_INTL("You can't release an Egg."))
+      pbDisplay(_INTL("You can't transfer an Egg."))
       return false
     elsif pokemon.mail
       pbDisplay(_INTL("Please remove the mail."))
       return false
-    elsif pokemon.cannot_release
-      pbDisplay(_INTL("{1} refuses to leave you!", pokemon.name))
-      return false
+    #elsif pokemon.cannot_release
+    #  pbDisplay(_INTL("{1} refuses to leave you!", pokemon.name))
+    #  return false
     end
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
-      pbPlayBuzzerSE
+      #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-      return
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+      #return
     end
-    command = pbShowCommands(_INTL("Release this Pokémon?"), [_INTL("No"), _INTL("Yes")])
+    command = pbShowCommands(_INTL("Transfer this Pokémon?"), [_INTL("No"), _INTL("Yes")])
     if command == 1
       pkmnname = pokemon.name
+	  
+		#add the pokemon to a global variable to receive on the current save when done
+		$PokemonGlobal.timeMachineTransferredPkmn.push(pokemon)
+	  
+	  #the other pbRelease is called
       @scene.pbRelease(selected, heldpoke)
-      if heldpoke
-        @heldpkmn = nil
+      if heldpoke		
+	  	@heldpkmn = nil
       else
         @storage.pbDelete(box, index)
       end
       @scene.pbRefresh
-      pbDisplay(_INTL("{1} was released.", pkmnname))
-      pbDisplay(_INTL("Bye-bye, {1}!", pkmnname))
+      pbDisplay(_INTL("{1} was transferred.", pkmnname))
+      pbDisplay(_INTL("See you soon, {1}!", pkmnname))
       @scene.pbRefresh
     end
     return
@@ -1478,9 +1503,9 @@ class TimeMachinePokemonStorageScreen
         commands = [
           _INTL("Select"),
           _INTL("Summary"),
-          _INTL("Withdraw"),
-          _INTL("Item"),
-          _INTL("Mark")
+          #_INTL("Withdraw"),
+          #_INTL("Item"),
+          #_INTL("Mark")
         ]
         commands.push(_INTL("Cancel"))
         commands[2] = _INTL("Store") if selected[0] == -1

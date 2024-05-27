@@ -636,7 +636,7 @@ def pbFishing(hasEncounter, rodType = 1)
 #      hookChance += 15
     else
       pbFishingEnd {
-        pbMessageDisplay(msgWindow, _INTL("Reeled it in too fast..."))
+        pbMessageDisplay(msgWindow, _INTL("There seems to be nothing here..."))
       }
       break
     end
@@ -817,7 +817,7 @@ class PokemonEncounters
         #added by Gardenette for EnCORNters
         if !ret && $game_map.terrain_tag($game_player.x, $game_player.y).id_number == 18
           ret = find_valid_encounter_type_for_time(:Corn, time)
-      end
+        end
         
       
         ret = find_valid_encounter_type_for_time(:Land, time) if !ret
@@ -1052,7 +1052,7 @@ module Battle::CatchAndStoreMixin
       end
     end
 		# setting initial values #by low
-		if $game_variables[MECHANICSVAR] >= 2
+		if $game_variables[MECHANICSVAR] > 2
 			if !$game_switches[NOINITIALVALUES]
 				if pbDisplayConfirm(_INTL("Would you like to set initial values for {1}?", pkmn.name))
 					# choosing an ability
@@ -1746,6 +1746,82 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
     $game_screen.weather(new_weather[0], 9, 0) if rand(100) < new_weather[1]
   }
 )
+
+#===============================================================================
+# Pokecenter Animations (to account for player outfits)
+#===============================================================================
+def playCenterAnimGivePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+    #turn up
+    PBMoveRoute::TurnUp,
+  ])
+end
+
+def playCenterAnimTakePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    #turn up
+    PBMoveRoute::TurnUp,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+  ])
+end
 
 #===============================================================================
 # Crash Prevention

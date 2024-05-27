@@ -23,7 +23,8 @@ module GameData
 		@version        = hash[:version]      || 0
 		@items          = hash[:items]        || []
 		@real_lose_text = hash[:lose_text]    || "..."
-		@real_gimmick	  = hash[:gimmick]  	  || "None"
+		@real_gimmick	= hash[:gimmick]  	  || "None"
+		@rngversion     = hash[:version]      || 0
 		@pokemon        = hash[:pokemon]      || []
 		@pokemon.each do |pkmn|
 			GameData::Stat.each_main do |s|
@@ -34,6 +35,9 @@ module GameData
 	end
 	def gimmick
 		return @real_gimmick
+	end
+	def rngversion
+		return @rngversion
 	end
 	# for TGT
 

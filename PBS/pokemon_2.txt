@@ -107,7 +107,7 @@ Evolutions = QUEXCELL,Level,16
 [QUEXCELL]
 Name = Quexcell
 Types = FIRE
-BaseStats = 60,70,50,90,85,55
+BaseStats = 60,70,55,80,85,60
 GenderRatio = FemaleOneEighth
 GrowthRate = Erratic
 BaseExp = 147
@@ -133,7 +133,7 @@ Evolutions = QUETZILLIAN,Level,36
 [QUETZILLIAN]
 Name = Quetzillian
 Types = FIRE,DRAGON
-BaseStats = 90,95,60,100,125,65
+BaseStats = 80,100,70,100,105,80
 GenderRatio = FemaleOneEighth
 GrowthRate = Erratic
 BaseExp = 265
@@ -141,7 +141,7 @@ EVs = SPEED,1,SPECIAL_ATTACK,1
 CatchRate = 45
 Happiness = 70
 Abilities = BLAZE
-HiddenAbilities = DANCER
+HiddenAbilities = DANCER # still not sure if this is the correct approach, its either useless slop or game breaking in doubles with the correct setup
 Moves = 1,LEER,1,TACKLE,1,EMBER,1,PECK,12,FALSESWIPE,15,FLAMEWHEEL,20,DRAGONBREATH,25,FLAMEBURST,30,FEATHERDANCE,35,WILLOWISP,40,DRAGONPULSE,45,ACROBATICS,50,FLAREBLITZ,55,OUTRAGE,60,DRAGONDANCE
 TutorMoves = WORKUP,ROAR,SWAGGER,SUNNYDAY,FLAMETHROWER,FIREBLAST,TORMENT,THIEF,FALSESWIPE,WILLOWISP,FLAMEWHEEL,SCREECH,CUT,AERIALACE,STEELWING,FLY,ACROBATICS,DRAGONPULSE,DRAGONCLAW,POISONJAB,SCOURINGWINDS,METRONOME,FIREPUNCH,BLASTBURN,DRACOMETEOR,EXCITE,FIREPLEDGE,DEFOG
 EggGroups = Monster,Dragon

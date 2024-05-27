@@ -322,9 +322,9 @@ class Battle::Scene::PokemonDataBox < Sprite
     return if !@battler.pokemon
     # Show HP numbers
     if @showHP
-      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, 2, 1)
-      pbDrawNumber(-1, @hpNumbers.bitmap, 54, 2)   # / char
-      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, 2)
+      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, -2, 1) #stygma
+      pbDrawNumber(-1, @hpNumbers.bitmap, 54, -2)   # / char
+      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, -2)
     end
     # Resize HP bar
     w = 0

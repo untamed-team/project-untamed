@@ -93,13 +93,13 @@ class Battle
       #singles
       convert1 = nameToNumberConvert(@opponent[0].trainer_type.to_s)
       convert2 = nameToNumberConvert(@opponent[0].name.to_s)
-      haxxvalue = ((convert2 + convert1) * (@turnCount + 1))
+      haxxvalue = ((convert2 + convert1 + (@opponent[0].rngversion + 1)**2) * (@turnCount + 1))
       haxxvalue = haxxvalue.to_s[-8..-1].to_i if haxxvalue.to_s.length > 8
       #doubles
       if !@opponent[1].nil?
         convrt1 = nameToNumberConvert(@opponent[1].trainer_type.to_s)
         convrt2 = nameToNumberConvert(@opponent[1].name.to_s)
-        hexvalue = ((convrt2 + convrt1) * (@turnCount + 1))
+        hexvalue = ((convrt2 + convrt1 + (@opponent[1].rngversion + 1)**2) * (@turnCount + 1))
         hexvalue = hexvalue.to_s[-8..-1].to_i if hexvalue.to_s.length > 8
         haxxvalue += hexvalue
         haxxvalue /= 2
