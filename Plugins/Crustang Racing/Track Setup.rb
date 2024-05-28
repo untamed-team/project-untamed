@@ -51,17 +51,17 @@ class CrustangRacing
 		@sprites["lapLineCopy"].z = 99999
 		
 		@lapLineStartingX = @sprites["lapLine"].x
-		@trackSpeed = 4
+		@playerSpeed = 4
 		
 		#set up racer hashes
 		@racer1 = {}
 		@racer2 = {}
 		@racer3 = {}
-		@racerPlayer = {RacerSprite: nil, PositionOnTrack: nil, PointOnTrackOverview: nil, PositionOnTrackOverview: []}
+		@racerPlayer = {RacerSprite: nil, PositionOnTrack: nil, PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil}
 		
 		#track ellipses points
 		startingPointX = @sprites["trackOverviewEllipses"].x + 144 #center X of the ellipses
-		startingPointY = @sprites["trackOverviewEllipses"].y + 60 #bottom pixel of the ellipses
+		startingPointY = @sprites["trackOverviewEllipses"].y + 59 #bottom pixel of the ellipses
 		#there are 24 total elements in the array below, so 24 points on the ellipses
 		@trackEllipsesPoints = [
 		[startingPointX,startingPointY],
@@ -148,19 +148,28 @@ class CrustangRacing
 	end #def drawContestants
 	
 	def self.drawContestantsOnOverview
+		#draw the player racer's sprite over on the track overview (box sprite)
+		pokemon = Pokemon.new(:BATHYGIGAS, 1)
+		@sprites["racingPkmnPlayerOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
+        @sprites["racingPkmnPlayerOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racingPkmnPlayerOverview"].width/4
+        @sprites["racingPkmnPlayerOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racingPkmnPlayerOverview"].height/4
+		@sprites["racingPkmnPlayerOverview"].z = 99999
+		@sprites["racingPkmnPlayerOverview"].zoom_x = 0.5
+		@sprites["racingPkmnPlayerOverview"].zoom_y = 0.5
+		@racerPlayer["RacerTrackOverviewSprite"] = @sprites["racingPkmnPlayerOverview"]
 	end #def self.drawContestantsOnOverview
 	
 	def self.moveSpritesWithTrack
 		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
 		#lap line
-		@sprites["lapLine"].x -= @trackSpeed
-		@sprites["lapLineCopy"].x -= @trackSpeed
+		@sprites["lapLine"].x -= @playerSpeed
+		@sprites["lapLineCopy"].x -= @playerSpeed
 		
 	end #def self.moveSpritesWithTrack
 	
 	def self.trackMovementUpdate
-		@sprites["track1"].x -= @trackSpeed
-		@sprites["track2"].x -= @trackSpeed
+		@sprites["track1"].x -= @playerSpeed
+		@sprites["track2"].x -= @playerSpeed
 		
 		#track image looping logic
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
@@ -182,18 +191,22 @@ class CrustangRacing
 		#the array with the points on the track are @trackEllipsesPoints
 		#@trackDistanceBetweenPoints is currently 256 pixels
 		
+		#PositionXOnTrackOverview
+		#PositionYOnTrackOverview
+		
 		#player point on overview
-		@racerPlayer["PointOnTrackOverview"] = (@racerPlayer["PositionOnTrack"] / 256).floor
+		@racerPlayer["PointOnTrackOverview"] = (@racerPlayer["PositionOnTrack"] / @trackDistanceBetweenPoints).floor
 		#print @racerPlayer["PointOnTrackOverview"] #####this is 0 to 23
 		
-		#PositionOnTrackOverview #######the exact [X, Y] of the icon on the screen
-		#@racerPlayer["PositionOnTrackOverview"][0] -= 1 if @racerPlayer["PositionOnTrackOverview"][0] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]  #the X of the next point to get to on the overview
-		#@racerPlayer["PositionOnTrackOverview"][0] += 1 if @racerPlayer["PositionOnTrackOverview"][0] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]
-		#@racerPlayer["PositionOnTrackOverview"][1] -= 1 if @racerPlayer["PositionOnTrackOverview"][1] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]  #the Y of the next point to get to on the overview
-		#@racerPlayer["PositionOnTrackOverview"][1] += 1 if @racerPlayer["PositionOnTrackOverview"][1] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]
+		########################the problem with the below is that it will move a pixel every frame, so I need to throttle it somehow
+		########################like if DistanceInPixelsPassedSinceLastUpdate >= @playerSpeed / pixelsLeftToNextX then move a pixel on the X axis or something
+		@racerPlayer["PositionXOnTrackOverview"] -= 1 if @racerPlayer["PositionXOnTrackOverview"] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]  #the X of the next point to get to on the overview
+		@racerPlayer["PositionXOnTrackOverview"] += 1 if @racerPlayer["PositionXOnTrackOverview"] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]
+		@racerPlayer["PositionYOnTrackOverview"] -= 1 if @racerPlayer["PositionYOnTrackOverview"] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]  #the Y of the next point to get to on the overview
+		@racerPlayer["PositionYOnTrackOverview"] += 1 if @racerPlayer["PositionYOnTrackOverview"] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]
 		
-		#trackOverviewSprite for player .x = @racerPlayer["PositionOnTrackOverview"][0]
-		#trackOverviewSprite for player .y = @racerPlayer["PositionOnTrackOverview"][1]
+		#trackOverviewSprite for player .x = @racerPlayer["PositionXOnTrackOverview"]
+		#trackOverviewSprite for player .y = @racerPlayer["PositionYOnTrackOverview"]
 		
 	end #def self.trackOverviewMovementUpdate
 	
