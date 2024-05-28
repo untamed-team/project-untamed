@@ -51,12 +51,13 @@ class CrustangRacing
 		@sprites["lapLineCopy"].z = 99999
 		
 		@lapLineStartingX = @sprites["lapLine"].x
-			
+		@trackSpeed = 4
+		
 		#set up racer hashes
 		@racer1 = {}
 		@racer2 = {}
 		@racer3 = {}
-		@racerPlayer = {}
+		@racerPlayer = {RacerSprite: nil, PositionOnTrack: nil, PointOnTrackOverview: nil, PositionOnTrackOverview: []}
 		
 		#track ellipses points
 		startingPointX = @sprites["trackOverviewEllipses"].x + 144 #center X of the ellipses
@@ -141,14 +142,25 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racingPkmnPlayer"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		
-		@racerPlayer.merge!({RacerSprite: @sprites["racingPkmnPlayer"]})
-		@racerPlayer.merge!({PositionOnTrack: @playerFixedX})
+		@racerPlayer["RacerSprite"] = @sprites["racingPkmnPlayer"]
+		@racerPlayer["PositionOnTrack"] = @playerFixedX
 		
 	end #def drawContestants
 	
+	def self.drawContestantsOnOverview
+	end #def self.drawContestantsOnOverview
+	
+	def self.moveSpritesWithTrack
+		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
+		#lap line
+		@sprites["lapLine"].x -= @trackSpeed
+		@sprites["lapLineCopy"].x -= @trackSpeed
+		
+	end #def self.moveSpritesWithTrack
+	
 	def self.trackMovementUpdate
-		@sprites["track1"].x -= 4
-		@sprites["track2"].x -= 4
+		@sprites["track1"].x -= @trackSpeed
+		@sprites["track2"].x -= @trackSpeed
 		
 		#track image looping logic
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
@@ -167,25 +179,33 @@ class CrustangRacing
 	end #def trackMovementUpdate
 	
 	def self.trackOverviewMovementUpdate
-		#the first element in @trackEllipsesPoints is equal to @lapLineStartingX (at this time, that's 140)
+		#the array with the points on the track are @trackEllipsesPoints
 		#@trackDistanceBetweenPoints is currently 256 pixels
 		
-		#calculate player's position on the track based on @playerFixedX
-		#print "player's current position on overview is #{} into the track"
+		#player point on overview
+		@racerPlayer["PointOnTrackOverview"] = (@racerPlayer["PositionOnTrack"] / 256).floor
+		#print @racerPlayer["PointOnTrackOverview"] #####this is 0 to 23
+		
+		#PositionOnTrackOverview #######the exact [X, Y] of the icon on the screen
+		#@racerPlayer["PositionOnTrackOverview"][0] -= 1 if @racerPlayer["PositionOnTrackOverview"][0] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]  #the X of the next point to get to on the overview
+		#@racerPlayer["PositionOnTrackOverview"][0] += 1 if @racerPlayer["PositionOnTrackOverview"][0] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]
+		#@racerPlayer["PositionOnTrackOverview"][1] -= 1 if @racerPlayer["PositionOnTrackOverview"][1] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]  #the Y of the next point to get to on the overview
+		#@racerPlayer["PositionOnTrackOverview"][1] += 1 if @racerPlayer["PositionOnTrackOverview"][1] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]
+		
+		#trackOverviewSprite for player .x = @racerPlayer["PositionOnTrackOverview"][0]
+		#trackOverviewSprite for player .y = @racerPlayer["PositionOnTrackOverview"][1]
+		
 	end #def self.trackOverviewMovementUpdate
 	
 	def self.updateRacerPositionOnTrack
 		#this is the position on the entire track, not the track overview
 		#player position
-		#@racerPlayer["PositionOnTrack"]
-		#if player sprite is touching track1, calculate position relative to X of track1
-		#print "track1" if self.collides_with?(@sprites["racingPkmnPlayer"], @sprites["track1"])
-		print "track2" if self.collides_with?(@sprites["racingPkmnPlayer"], @sprites["track2"])
+		@racerPlayer["PositionOnTrack"] = @sprites["track1"].x.abs
 		
-		#when touching track2, you will also be touching track1. Not an issue, just a heads up
-		
-		#if player sprite is touching track2, calculate position relative to X of track2
-		
+		#calculate the position of the other racers differently. It would involve their X and the X of the track
+		#racer1 position		
+		#racer2 position
+		#racer3 position
 		
 	end #def self.updateRacerPositionOnTrack
 	
@@ -199,10 +219,12 @@ class CrustangRacing
 	def self.main
 		self.setup
 		self.drawContestants
+		self.drawContestantsOnOverview
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
 			self.trackMovementUpdate
+			self.moveSpritesWithTrack
 			self.updateRacerPositionOnTrack
 			self.trackOverviewMovementUpdate
 		end
