@@ -191,22 +191,69 @@ class CrustangRacing
 		#the array with the points on the track are @trackEllipsesPoints
 		#@trackDistanceBetweenPoints is currently 256 pixels
 		
-		#PositionXOnTrackOverview
-		#PositionYOnTrackOverview
-		
 		#player point on overview
 		@racerPlayer["PointOnTrackOverview"] = (@racerPlayer["PositionOnTrack"] / @trackDistanceBetweenPoints).floor
-		#print @racerPlayer["PointOnTrackOverview"] #####this is 0 to 23
+		#PositionXOnTrackOverview
+		#PositionYXOnTrackOverview
 		
-		########################the problem with the below is that it will move a pixel every frame, so I need to throttle it somehow
-		########################like if DistanceInPixelsPassedSinceLastUpdate >= @playerSpeed / pixelsLeftToNextX then move a pixel on the X axis or something
-		@racerPlayer["PositionXOnTrackOverview"] -= 1 if @racerPlayer["PositionXOnTrackOverview"] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]  #the X of the next point to get to on the overview
-		@racerPlayer["PositionXOnTrackOverview"] += 1 if @racerPlayer["PositionXOnTrackOverview"] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]
-		@racerPlayer["PositionYOnTrackOverview"] -= 1 if @racerPlayer["PositionYOnTrackOverview"] > @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]  #the Y of the next point to get to on the overview
-		@racerPlayer["PositionYOnTrackOverview"] += 1 if @racerPlayer["PositionYOnTrackOverview"] < @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]
+		#calculate overX and Y like so:
+		#Current overviewX is the number of pixels in distance between current point and next point on the X axis. We'll say we are at point 0 and the next point is at 1.
+		#Regardless of where we are, we want to use the distance in pixels between those points to calculate.
+		#If we are at point 0.9, that's 90% of the distance between points.
+		#Let's say 72 pixels are between the points on the X axis.
+		#90% of 72 pixels is 66.6 so we put the current X of the overview icon at the X of the current point PLUS 66.6 (use floor)
+		#to get the percentage of the distance we are into the point, use this:
+		#DistanceCurrentToNextPointX = blah blah blah, we'll say it's 74 pixels, the amount between point 0 and point 1
+		#PercentageIntoCurrentPoint = pointOnTrack / @distanceBetweenPoints (get remainder, and the remainder is the PercentageIntoCurrentPoint)
 		
-		#trackOverviewSprite for player .x = @racerPlayer["PositionXOnTrackOverview"]
-		#trackOverviewSprite for player .y = @racerPlayer["PositionYOnTrackOverview"]
+		#get the amount of pixels past the point we are at on the overview
+		remainder = @racerPlayer["PositionOnTrack"] % @trackDistanceBetweenPoints
+		#get the percentage we have traveled into the point, 100% being when we reach the next point
+		percentageIntoCurrentPoint = remainder.percent_of(@trackDistanceBetweenPoints)
+		percentageIntoCurrentPoint = percentageIntoCurrentPoint / 100
+		
+		if @racerPlayer["PointOnTrackOverview"] >= @trackEllipsesPoints.length-1
+			nextPoint = @trackEllipsesPoints[0]
+		else
+			nextPoint = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1]
+		end
+		
+		#how many pixels in distance is it on the X axis between this point and the next one coming up?
+		distanceBetweenPixelsX = (@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] - nextPoint[0]).abs
+		distanceBetweenPixelsY = (@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] - nextPoint[1]).abs
+		#how many pixels away are we on the overview from the current point e.g. @racerPlayer["PointOnTrackOverview"]
+		pixelsAwayFromCurrentPointX = distanceBetweenPixelsX * percentageIntoCurrentPoint
+		pixelsAwayFromCurrentPointY = distanceBetweenPixelsY * percentageIntoCurrentPoint
+		
+		
+		#calculate whether we need to increase X or decrease X for the overview icon sprite
+		if @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] > nextPoint[0]
+			#decrease X
+			currentOverviewX = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] - (pixelsAwayFromCurrentPointX.floor)
+		elsif @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] < nextPoint[0]
+			#increase X
+			currentOverviewX = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] + (pixelsAwayFromCurrentPointX.floor)
+		end
+		
+		#calculate whether we need to increase Y or decrease Y for the overview icon sprite
+		if @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] > nextPoint[1]
+			#decrease Y
+			currentOverviewY = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] - (pixelsAwayFromCurrentPointY.floor)
+		elsif @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] < nextPoint[1]
+			#increase Y
+			currentOverviewY = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] + (pixelsAwayFromCurrentPointY.floor)
+		end
+		
+		
+		#print "current point is at X #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0]}, overview sprite should be at X #{currentOverviewX}, and the next point to reach is at X #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]}"
+		#print "current point is at Y #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1]}, overview sprite should be at Y #{currentOverviewY}, and the next point to reach is at Y #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]}"
+		
+		@racerPlayer["PositionXOnTrackOverview"] = currentOverviewX - @sprites["racingPkmnPlayerOverview"].width/4
+		@racerPlayer["PositionYOnTrackOverview"] = currentOverviewY - @sprites["racingPkmnPlayerOverview"].height/4
+		
+		#put the overview icon sprite where it should be
+		@sprites["racingPkmnPlayerOverview"].x = @racerPlayer["PositionXOnTrackOverview"]
+		@sprites["racingPkmnPlayerOverview"].y = @racerPlayer["PositionYOnTrackOverview"]
 		
 	end #def self.trackOverviewMovementUpdate
 	
@@ -244,3 +291,10 @@ class CrustangRacing
 	end #def self.main
 	
 end #class CrustangRacing
+
+#from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby
+class Numeric
+  def percent_of(n)
+    self.to_f / n.to_f * 100.0
+  end
+end
