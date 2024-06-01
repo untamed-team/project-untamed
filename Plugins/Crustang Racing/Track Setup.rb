@@ -150,7 +150,7 @@ class CrustangRacing
 	def self.drawMovesUI
 		#draw boost button
 		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, self.viewport)
+		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, @viewport)
 		#@sprites["boostButton"].setBitmap("Graphics/Pictures/Crustang Racing/boost button")
 		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
@@ -165,7 +165,11 @@ class CrustangRacing
 	end
 	
 	def self.detectInput
-		#Input.trigger?(BOOST_BUTTON)
+		Input.update
+		#if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON)
+		if Input.trigger?(Input::SPECIAL)
+			
+		end
 	end #self.detectInput
 	
 	def self.drawContestantsOnOverview

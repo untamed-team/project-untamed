@@ -3,7 +3,7 @@ class CrustangRacingSettings
 #==================== BUTTON SETTINGS ====================#
 #========================================================#
 #Input.trigger?(BOOST_BUTTON)
-BOOST_BUTTON = Input::0x20
+BOOST_BUTTON = Input::SPECIAL
 
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#
