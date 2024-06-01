@@ -1,5 +1,10 @@
-class CrustangRacingContestantSettings
-  
+class CrustangRacingSettings
+#========================================================#
+#==================== BUTTON SETTINGS ====================#
+#========================================================#
+#Input.trigger?(BOOST_BUTTON)
+BOOST_BUTTON = Input::0x20
+
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#
 #========================================================#
@@ -10,4 +15,4 @@ CONTESTANTS = [
 {TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnName: "Polly"},
 ]
 
-end #class CrustangRacingContestantSettings
+end #class CrustangRacingSettings

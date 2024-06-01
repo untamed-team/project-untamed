@@ -147,6 +147,27 @@ class CrustangRacing
 		
 	end #def drawContestants
 	
+	def self.drawMovesUI
+		#draw boost button
+		#animname, framecount, framewidth, frameheight, frameskip
+		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, self.viewport)
+		#@sprites["boostButton"].setBitmap("Graphics/Pictures/Crustang Racing/boost button")
+		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
+		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
+		@sprites["boostButton"].z = 999999
+		
+		#draw text over button saying how to use it
+		
+		
+		#draw moves depending on what racer knows
+		#for now, draw specific moves, 4 at a time for testing
+		#will hold off until other racers are in the game
+	end
+	
+	def self.detectInput
+		#Input.trigger?(BOOST_BUTTON)
+	end #self.detectInput
+	
 	def self.drawContestantsOnOverview
 		#draw the player racer's sprite over on the track overview (box sprite)
 		pokemon = Pokemon.new(:BATHYGIGAS, 1)
@@ -280,6 +301,7 @@ class CrustangRacing
 		self.setup
 		self.drawContestants
 		self.drawContestantsOnOverview
+		self.drawMovesUI
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
@@ -287,6 +309,7 @@ class CrustangRacing
 			self.moveSpritesWithTrack
 			self.updateRacerPositionOnTrack
 			self.trackOverviewMovementUpdate
+			self.detectInput
 		end
 	end #def self.main
 	
