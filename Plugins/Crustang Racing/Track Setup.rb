@@ -10,23 +10,26 @@ class CrustangRacing
 		@sprites["trackBorderTop"].x = 0
 		@sprites["trackBorderTop"].y = 0
 		@sprites["trackBorderTop"].z = 99999
+		@sprites["trackBorderTop"].visible = false
 		
 		@sprites["trackBorderBottom"] = IconSprite.new(0, 0, @viewport)
 		@sprites["trackBorderBottom"].setBitmap("Graphics/Pictures/Crustang Racing/track border bottom")
 		@sprites["trackBorderBottom"].x = 0
 		@sprites["trackBorderBottom"].y = 0
 		@sprites["trackBorderBottom"].z = 999999
+		@sprites["trackBorderBottom"].visible = false
 		
 		#the track length should be something divisible by the number of points on the track overview, which is currently 24
 		#set the x of track1 to where the player would start so the starting point of the track matches up with the starting point on the track overview
+		trackFilename = "desertTrack"
 		@sprites["track1"] = IconSprite.new(0, 0, @viewport)
-		@sprites["track1"].setBitmap("Graphics/Pictures/Crustang Racing/track")
+		@sprites["track1"].setBitmap("Graphics/Pictures/Crustang Racing/" + trackFilename)
 		@sprites["track1"].x = 0
 		@sprites["track1"].y = 0
 		@sprites["track1"].z = 99998
 		
 		@sprites["track2"] = IconSprite.new(0, 0, @viewport)
-		@sprites["track2"].setBitmap("Graphics/Pictures/Crustang Racing/track")
+		@sprites["track2"].setBitmap("Graphics/Pictures/Crustang Racing/#{trackFilename}")
 		@sprites["track2"].x = @sprites["track1"].width
 		@sprites["track2"].y = 0
 		@sprites["track2"].z = 99998
