@@ -158,7 +158,11 @@ class CrustangRacing
 		@racerPlayer["BoostButtonCooldownMaskSprite"].y = @racerPlayer["BoostButtonSprite"].y
 		@racerPlayer["BoostButtonCooldownMaskSprite"].z = 999999
 		@racerPlayer["BoostButtonCooldownMaskSprite"].opacity = 100
-		@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 10, @racerPlayer["BoostButtonCooldownMaskSprite"].width, @racerPlayer["BoostButtonCooldownMaskSprite"].height)
+		@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 0, @racerPlayer["BoostButtonCooldownMaskSprite"].width, 0)
+		
+		#numbers for cooldown mask
+		number = @racerPlayer["BoostButtonSprite"].height.percent_of(CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		@boostCooldownPixelsToMovePerFrame = number / 100
 		
 		#draw text over button saying how to use it
 		
@@ -170,7 +174,7 @@ class CrustangRacing
 	
 	def self.detectInput
 		Input.update
-		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON)
+		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@sprites["boostButton"].frame = 1
 			self.beginCooldown(@racerPlayer, 0)
 		end
@@ -186,7 +190,7 @@ class CrustangRacing
 		when 0
 			#boost
 			#start cooldown timer
-			racer["BoostCooldownTimer"] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+			racer[:BoostCooldownTimer] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 			#show that button is cooling down
 			#racer["BoostButtonSprite"] ........ draw a black rect with opacity 50 or 100 or something at the x and y of the button, with a width and height of the button
 		when 1
@@ -199,10 +203,19 @@ class CrustangRacing
 	
 	def self.updateCooldownTimers
 		#player moves' cooldown timers
-		@racerPlayer["BoostCooldownTimer"] -= 1 if !@racerPlayer["BoostCooldownTimer"].nil? && @racerPlayer["BoostCooldownTimer"] > 0
-		#player moves' cooldown rect sprites decrease in height and Y
+		if @racerPlayer[:BoostCooldownTimer] > 0
+			@racerPlayer[:BoostCooldownTimer] -= 1 
+			#cooldown mask over move
+			@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 0, @racerPlayer["BoostButtonCooldownMaskSprite"].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
+		end #if @racerPlayer[:BoostCooldownTimer] > 0
+		
+		#move1
+		#move2
+		#move3
+		#move4
 		
 		#do not update cooldown sprites for non-player racers because they don't have any
+		#racer1 moves' cooldown timers
 	end
 	
 	def self.drawContestantsOnOverview
@@ -342,9 +355,9 @@ class CrustangRacing
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
-			BoostButtonSprite: nil, BoostCooldownTimer: nil, BoostButtonCooldownMaskSprite: nil,
+			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1Effect: nil, Move1CooldownTimer: nil, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: nil, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: nil, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: nil, Move4ButtonSprite: nil, 
+			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
 			PositionOnTrack: nil, CurrentSpeed: CrustangRacingSettings::STARTING_SPEED,
 			#track overview positioning
