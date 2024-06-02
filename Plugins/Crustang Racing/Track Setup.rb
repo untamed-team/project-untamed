@@ -51,13 +51,6 @@ class CrustangRacing
 		@sprites["lapLineCopy"].z = 99999
 		
 		@lapLineStartingX = @sprites["lapLine"].x
-		@playerSpeed = 4
-		
-		#set up racer hashes
-		@racer1 = {}
-		@racer2 = {}
-		@racer3 = {}
-		@racerPlayer = {RacerSprite: nil, PositionOnTrack: nil, PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil}
 		
 		#track ellipses points
 		startingPointX = @sprites["trackOverviewEllipses"].x + 144 #center X of the ellipses
@@ -155,6 +148,17 @@ class CrustangRacing
 		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
+
+		@racerPlayer["BoostButtonSprite"] = @sprites["boostButton"]
+		
+		#draw cooldown mask
+		@racerPlayer["BoostButtonCooldownMaskSprite"] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer["BoostButtonCooldownMaskSprite"].setBitmap("Graphics/Pictures/Crustang Racing/boost button mask")
+		@racerPlayer["BoostButtonCooldownMaskSprite"].x = @racerPlayer["BoostButtonSprite"].x
+		@racerPlayer["BoostButtonCooldownMaskSprite"].y = @racerPlayer["BoostButtonSprite"].y
+		@racerPlayer["BoostButtonCooldownMaskSprite"].z = 999999
+		@racerPlayer["BoostButtonCooldownMaskSprite"].opacity = 100
+		@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 10, @racerPlayer["BoostButtonCooldownMaskSprite"].width, @racerPlayer["BoostButtonCooldownMaskSprite"].height)
 		
 		#draw text over button saying how to use it
 		
@@ -166,11 +170,40 @@ class CrustangRacing
 	
 	def self.detectInput
 		Input.update
-		#if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON)
-		if Input.trigger?(Input::SPECIAL)
-			
+		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON)
+			@sprites["boostButton"].frame = 1
+			self.beginCooldown(@racerPlayer, 0)
+		end
+		if Input.release?(Input::SPECIAL)
+			@sprites["boostButton"].frame = 0
 		end
 	end #self.detectInput
+	
+	def self.beginCooldown(racer, moveNumber)
+		#move number 0 is boost
+		#Move1: nil, Move1Effect: nil, Move1CooldownTimer: nil, Move1ButtonSprite: nil
+		case moveNumber
+		when 0
+			#boost
+			#start cooldown timer
+			racer["BoostCooldownTimer"] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+			#show that button is cooling down
+			#racer["BoostButtonSprite"] ........ draw a black rect with opacity 50 or 100 or something at the x and y of the button, with a width and height of the button
+		when 1
+		when 2
+		when 3
+		when 4
+		end #case moveNumber
+		
+	end #def self.beginCooldown(move)
+	
+	def self.updateCooldownTimers
+		#player moves' cooldown timers
+		@racerPlayer["BoostCooldownTimer"] -= 1 if !@racerPlayer["BoostCooldownTimer"].nil? && @racerPlayer["BoostCooldownTimer"] > 0
+		#player moves' cooldown rect sprites decrease in height and Y
+		
+		#do not update cooldown sprites for non-player racers because they don't have any
+	end
 	
 	def self.drawContestantsOnOverview
 		#draw the player racer's sprite over on the track overview (box sprite)
@@ -187,14 +220,14 @@ class CrustangRacing
 	def self.moveSpritesWithTrack
 		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
 		#lap line
-		@sprites["lapLine"].x -= @playerSpeed
-		@sprites["lapLineCopy"].x -= @playerSpeed
+		@sprites["lapLine"].x -= @racerPlayer[:CurrentSpeed]
+		@sprites["lapLineCopy"].x -= @racerPlayer[:CurrentSpeed]
 		
 	end #def self.moveSpritesWithTrack
 	
 	def self.trackMovementUpdate
-		@sprites["track1"].x -= @playerSpeed
-		@sprites["track2"].x -= @playerSpeed
+		@sprites["track1"].x -= @racerPlayer[:CurrentSpeed]
+		@sprites["track2"].x -= @racerPlayer[:CurrentSpeed]
 		
 		#track image looping logic
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
@@ -286,7 +319,6 @@ class CrustangRacing
 		#this is the position on the entire track, not the track overview
 		#player position
 		@racerPlayer["PositionOnTrack"] = @sprites["track1"].x.abs
-		
 		#calculate the position of the other racers differently. It would involve their X and the X of the track
 		#racer1 position		
 		#racer2 position
@@ -301,8 +333,28 @@ class CrustangRacing
 		end
 	end
 	
+	def self.setupRacerHashes
+		#set up racer hashes
+		@racer1 = {}
+		@racer2 = {}
+		@racer3 = {}
+		@racerPlayer = {
+			#racer sprite
+			RacerSprite: nil,
+			#boost button sprites & cooldown timer
+			BoostButtonSprite: nil, BoostCooldownTimer: nil, BoostButtonCooldownMaskSprite: nil,
+			#moves, move effects, cooldown timers, & move sprites
+			Move1: nil, Move1Effect: nil, Move1CooldownTimer: nil, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: nil, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: nil, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: nil, Move4ButtonSprite: nil, 
+			#track positioning & speed
+			PositionOnTrack: nil, CurrentSpeed: CrustangRacingSettings::STARTING_SPEED,
+			#track overview positioning
+			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
+		}
+	end #def self.setupRacerHashes
+	
 	def self.main
 		self.setup
+		self.setupRacerHashes
 		self.drawContestants
 		self.drawContestantsOnOverview
 		self.drawMovesUI
@@ -314,6 +366,7 @@ class CrustangRacing
 			self.updateRacerPositionOnTrack
 			self.trackOverviewMovementUpdate
 			self.detectInput
+			self.updateCooldownTimers
 		end
 	end #def self.main
 	
