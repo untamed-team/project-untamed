@@ -4,6 +4,8 @@ class CrustangRacingSettings
 #========================================================#
 TOP_BASE_SPEED = 12
 SECONDS_TO_NORMALIZE_SPEED = 3
+BASE_STRAFE_SPEED = 6
+SLOWED_STRAFE_SPEED = 4
 
 #========================================================#
 #==================== BUTTON SETTINGS ====================#

@@ -153,7 +153,7 @@ class CrustangRacing
 		@sprites["racingPkmnPlayer"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		
 		@racerPlayer[:RacerSprite] = @sprites["racingPkmnPlayer"]
-		@racerPlayer["PositionOnTrack"] = @playerFixedX
+		@racerPlayer[:PositionOnTrack] = @playerFixedX
 		
 	end #def drawContestants
 	
@@ -166,19 +166,19 @@ class CrustangRacing
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
 
-		@racerPlayer["BoostButtonSprite"] = @sprites["boostButton"]
+		@racerPlayer[:BoostButtonSprite] = @sprites["boostButton"]
 		
 		#draw cooldown mask
-		@racerPlayer["BoostButtonCooldownMaskSprite"] = IconSprite.new(0, 0, @viewport)
-		@racerPlayer["BoostButtonCooldownMaskSprite"].setBitmap("Graphics/Pictures/Crustang Racing/boost button mask")
-		@racerPlayer["BoostButtonCooldownMaskSprite"].x = @racerPlayer["BoostButtonSprite"].x
-		@racerPlayer["BoostButtonCooldownMaskSprite"].y = @racerPlayer["BoostButtonSprite"].y
-		@racerPlayer["BoostButtonCooldownMaskSprite"].z = 999999
-		@racerPlayer["BoostButtonCooldownMaskSprite"].opacity = 100
-		@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 0, @racerPlayer["BoostButtonCooldownMaskSprite"].width, 0)
+		@racerPlayer[:BoostButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer[:BoostButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/boost button mask")
+		@racerPlayer[:BoostButtonCooldownMaskSprite].x = @racerPlayer[:BoostButtonSprite].x
+		@racerPlayer[:BoostButtonCooldownMaskSprite].y = @racerPlayer[:BoostButtonSprite].y
+		@racerPlayer[:BoostButtonCooldownMaskSprite].z = 999999
+		@racerPlayer[:BoostButtonCooldownMaskSprite].opacity = 100
+		@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, 0)
 		
 		#numbers for cooldown mask
-		number = @racerPlayer["BoostButtonSprite"].height.percent_of(CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		number = @racerPlayer[:BoostButtonSprite].height.percent_of(CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
 		@boostCooldownPixelsToMovePerFrame = number / 100
 		
 		#draw text over button saying how to use it
@@ -196,9 +196,9 @@ class CrustangRacing
 		#@trackBorderTopY
 		#@trackBorderBottomY
 		if Input.press?(Input::UP)
-			@racerPlayer[:RacerSprite].y -= 4 if @racerPlayer[:RacerSprite].y > @trackBorderTopY
+			@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY
 		elsif Input.press?(Input::DOWN)
-			@racerPlayer[:RacerSprite].y += 4 if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
+			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
 		end
 		
 		#moves
@@ -237,7 +237,7 @@ class CrustangRacing
 		if @racerPlayer[:BoostCooldownTimer] > 0
 			@racerPlayer[:BoostCooldownTimer] -= 1
 			#cooldown mask over move
-			@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 0, @racerPlayer["BoostButtonCooldownMaskSprite"].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
+			@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
 		end #if @racerPlayer[:BoostCooldownTimer] > 0
 		
 		#move1
@@ -258,7 +258,7 @@ class CrustangRacing
 		@sprites["racingPkmnPlayerOverview"].z = 99999
 		@sprites["racingPkmnPlayerOverview"].zoom_x = 0.5
 		@sprites["racingPkmnPlayerOverview"].zoom_y = 0.5
-		@racerPlayer["RacerTrackOverviewSprite"] = @sprites["racingPkmnPlayerOverview"]
+		@racerPlayer[:RacerTrackOverviewSprite] = @sprites["racingPkmnPlayerOverview"]
 	end #def self.drawContestantsOnOverview
 	
 	def self.moveSpritesWithTrack
@@ -302,7 +302,7 @@ class CrustangRacing
 		#@trackDistanceBetweenPoints is currently 256 pixels
 		
 		#player point on overview
-		@racerPlayer["PointOnTrackOverview"] = (@racerPlayer["PositionOnTrack"] / @trackDistanceBetweenPoints).floor
+		@racerPlayer[:PointOnTrackOverview] = (@racerPlayer[:PositionOnTrack] / @trackDistanceBetweenPoints).floor
 		#PositionXOnTrackOverview
 		#PositionYXOnTrackOverview
 		
@@ -317,60 +317,60 @@ class CrustangRacing
 		#PercentageIntoCurrentPoint = pointOnTrack / @distanceBetweenPoints (get remainder, and the remainder is the PercentageIntoCurrentPoint)
 		
 		#get the amount of pixels past the point we are at on the overview
-		remainder = @racerPlayer["PositionOnTrack"] % @trackDistanceBetweenPoints
+		remainder = @racerPlayer[:PositionOnTrack] % @trackDistanceBetweenPoints
 		#get the percentage we have traveled into the point, 100% being when we reach the next point
 		percentageIntoCurrentPoint = remainder.percent_of(@trackDistanceBetweenPoints)
 		percentageIntoCurrentPoint = percentageIntoCurrentPoint / 100
 		
-		if @racerPlayer["PointOnTrackOverview"] >= @trackEllipsesPoints.length-1
+		if @racerPlayer[:PointOnTrackOverview] >= @trackEllipsesPoints.length-1
 			nextPoint = @trackEllipsesPoints[0]
 		else
-			nextPoint = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1]
+			nextPoint = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]+1]
 		end
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
-		distanceBetweenPixelsX = (@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] - nextPoint[0]).abs
-		distanceBetweenPixelsY = (@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] - nextPoint[1]).abs
-		#how many pixels away are we on the overview from the current point e.g. @racerPlayer["PointOnTrackOverview"]
+		distanceBetweenPixelsX = (@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0] - nextPoint[0]).abs
+		distanceBetweenPixelsY = (@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+		#how many pixels away are we on the overview from the current point e.g. @racerPlayer[:PointOnTrackOverview]
 		pixelsAwayFromCurrentPointX = distanceBetweenPixelsX * percentageIntoCurrentPoint
 		pixelsAwayFromCurrentPointY = distanceBetweenPixelsY * percentageIntoCurrentPoint
 		
 		
 		#calculate whether we need to increase X or decrease X for the overview icon sprite
-		if @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] > nextPoint[0]
+		if @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0] > nextPoint[0]
 			#decrease X
-			currentOverviewX = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] - (pixelsAwayFromCurrentPointX.floor)
-		elsif @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] < nextPoint[0]
+			currentOverviewX = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0] - (pixelsAwayFromCurrentPointX.floor)
+		elsif @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0] < nextPoint[0]
 			#increase X
-			currentOverviewX = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0] + (pixelsAwayFromCurrentPointX.floor)
+			currentOverviewX = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0] + (pixelsAwayFromCurrentPointX.floor)
 		end
 		
 		#calculate whether we need to increase Y or decrease Y for the overview icon sprite
-		if @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] > nextPoint[1]
+		if @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] > nextPoint[1]
 			#decrease Y
-			currentOverviewY = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] - (pixelsAwayFromCurrentPointY.floor)
-		elsif @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] < nextPoint[1]
+			currentOverviewY = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] - (pixelsAwayFromCurrentPointY.floor)
+		elsif @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] < nextPoint[1]
 			#increase Y
-			currentOverviewY = @trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1] + (pixelsAwayFromCurrentPointY.floor)
+			currentOverviewY = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
 		end
 		
 		
-		#print "current point is at X #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][0]}, overview sprite should be at X #{currentOverviewX}, and the next point to reach is at X #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][0]}"
-		#print "current point is at Y #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]][1]}, overview sprite should be at Y #{currentOverviewY}, and the next point to reach is at Y #{@trackEllipsesPoints[@racerPlayer["PointOnTrackOverview"]+1][1]}"
+		#print "current point is at X #{@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][0]}, overview sprite should be at X #{currentOverviewX}, and the next point to reach is at X #{@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]+1][0]}"
+		#print "current point is at Y #{@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1]}, overview sprite should be at Y #{currentOverviewY}, and the next point to reach is at Y #{@trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]+1][1]}"
 		
-		@racerPlayer["PositionXOnTrackOverview"] = currentOverviewX - @sprites["racingPkmnPlayerOverview"].width/4
-		@racerPlayer["PositionYOnTrackOverview"] = currentOverviewY - @sprites["racingPkmnPlayerOverview"].height/4
+		@racerPlayer[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racingPkmnPlayerOverview"].width/4
+		@racerPlayer[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racingPkmnPlayerOverview"].height/4
 		
 		#put the overview icon sprite where it should be
-		@sprites["racingPkmnPlayerOverview"].x = @racerPlayer["PositionXOnTrackOverview"]
-		@sprites["racingPkmnPlayerOverview"].y = @racerPlayer["PositionYOnTrackOverview"]
+		@sprites["racingPkmnPlayerOverview"].x = @racerPlayer[:PositionXOnTrackOverview]
+		@sprites["racingPkmnPlayerOverview"].y = @racerPlayer[:PositionYOnTrackOverview]
 		
 	end #def self.trackOverviewMovementUpdate
 	
 	def self.updateRacerPositionOnTrack
 		#this is the position on the entire track, not the track overview
 		#player position
-		@racerPlayer["PositionOnTrack"] = @sprites["track1"].x.abs
+		@racerPlayer[:PositionOnTrack] = @sprites["track1"].x.abs
 		#calculate the position of the other racers differently. It would involve their X and the X of the track
 		#racer1 position		
 		#racer2 position
@@ -386,14 +386,42 @@ class CrustangRacing
 	end
 	
 	def self.accelerateDecelerate
-		#@racerPlayer[:CurrentSpeed]
-		@racerPlayer[:CurrentSpeed] = @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeed]
+		if @racerPlayer[:CurrentSpeed] < @racerPlayer[:DesiredSpeed]
+			#accelerate
+			#@racerPlayer[:CurrentSpeedFloat] += @accelerationAmountPerFrame
+			#@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
+			@racerPlayer[:CurrentSpeed] += @accelerationAmountPerFrame
+			#print (@racerPlayer[:CurrentSpeed] += @accelerationAmountPerFrame).to_f
+			#print @accelerationAmountPerFrame
+		end
+		
+		#if @racerPlayer[:CurrentSpeed] > @racerPlayer[:DesiredSpeed]
+			#decelerate
+		#	@racerPlayer[:CurrentSpeedFloat] += @accelerationAmountPerFrame
+		#	@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
+		#end
+		
+		
+		
+		#decelerate
+		#if @racerPlayer[:CurrentSpeed] > CrustangRacingSettings::TOP_BASE_SPEED
+		#	@racerPlayer[:CurrentSpeedFloat] -= @normalizeSpeedAmountPerFrame
+		#	@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
+		#else
+		#	print @racerPlayer[:CurrentSpeed]
+		#end
+		
+		#@racerPlayer[:CurrentSpeedFloat] += @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeedFloat]
+		#@racerPlayer[:CurrentSpeed] = @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeed]
 	end #def self.accelerateDecelerate
 	
 	def self.setMiscVariables
 		#TOP_BASE_SPEED percent of SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate
-		number = CrustangRacingSettings::TOP_BASE_SPEED.percent_of(CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate)
-		@normalizeSpeedAmountPerFrame = number / 100 #how much speed per frame you accelerate or decelerate to normalize your speed
+		#number = CrustangRacingSettings::TOP_BASE_SPEED.percent_of(CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate)
+		#@accelerationAmountPerFrame = number / 100 #how much speed per frame you accelerate to normalize your speed
+		@accelerationAmountPerFrame = CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+		print @accelerationAmountPerFrame
+		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -409,7 +437,7 @@ class CrustangRacing
 			#moves, move effects, cooldown timers, & move sprites
 			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
-			PositionOnTrack: nil, CurrentSpeed: 0,
+			PositionOnTrack: nil, CurrentSpeed: 0, CurrentSpeedFloat: 0, DesiredSpeed: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 		}
@@ -422,6 +450,10 @@ class CrustangRacing
 		self.drawContestantsOnOverview
 		self.drawMovesUI
 		self.setMiscVariables
+		
+		#set beginning desired speed
+		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
+		
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
