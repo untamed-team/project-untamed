@@ -142,7 +142,7 @@ class CrustangRacing
 		#end #3.times do
 		
 		#draw the player racer
-		filename = "Followers/BATHYGIGAS"
+		filename = "Followers/CRUSTANG"
 		@sprites["racingPkmnPlayer"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racingPkmnPlayer"].bitmap.width
 		charheight = @sprites["racingPkmnPlayer"].bitmap.height
