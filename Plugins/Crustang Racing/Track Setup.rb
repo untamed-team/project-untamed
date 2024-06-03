@@ -204,6 +204,8 @@ class CrustangRacing
 		#moves
 		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@sprites["boostButton"].frame = 1
+			@racerPlayer[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED
+			@racerPlayer[:BoostTimer] = CrustangRacingSettings::BOOST_LENGTH_SECONDS * Graphics.frame_rate
 			self.beginCooldown(@racerPlayer, 0)
 		end
 		if Input.release?(Input::SPECIAL)
@@ -386,41 +388,30 @@ class CrustangRacing
 	end
 	
 	def self.accelerateDecelerate
-		if @racerPlayer[:CurrentSpeed] < @racerPlayer[:DesiredSpeed]
+		if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
 			#accelerate
-			#@racerPlayer[:CurrentSpeedFloat] += @accelerationAmountPerFrame
-			#@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
 			@racerPlayer[:CurrentSpeed] += @accelerationAmountPerFrame
-			#print (@racerPlayer[:CurrentSpeed] += @accelerationAmountPerFrame).to_f
-			#print @accelerationAmountPerFrame
 		end
 		
-		#if @racerPlayer[:CurrentSpeed] > @racerPlayer[:DesiredSpeed]
-			#decelerate
-		#	@racerPlayer[:CurrentSpeedFloat] += @accelerationAmountPerFrame
-		#	@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
-		#end
-		
-		
-		
 		#decelerate
-		#if @racerPlayer[:CurrentSpeed] > CrustangRacingSettings::TOP_BASE_SPEED
-		#	@racerPlayer[:CurrentSpeedFloat] -= @normalizeSpeedAmountPerFrame
-		#	@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeedFloat].floor
-		#else
-		#	print @racerPlayer[:CurrentSpeed]
-		#end
+		if @racerPlayer[:CurrentSpeed].floor > @racerPlayer[:DesiredSpeed] && @racerPlayer[:BoostTimer] <= 0
+			#decelerate
+			@racerPlayer[:CurrentSpeed] -= @decelerationAmountPerFrame
+		end
 		
-		#@racerPlayer[:CurrentSpeedFloat] += @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeedFloat]
-		#@racerPlayer[:CurrentSpeed] = @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeed]
+		#update boost timers for racers
+		@racerPlayer[:BoostTimer] -= 1
+		
 	end #def self.accelerateDecelerate
 	
 	def self.setMiscVariables
-		#TOP_BASE_SPEED percent of SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate
-		#number = CrustangRacingSettings::TOP_BASE_SPEED.percent_of(CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate)
-		#@accelerationAmountPerFrame = number / 100 #how much speed per frame you accelerate to normalize your speed
+		#the below is how much to decrease speed per frame to reach the desired speed in 3 seconds
 		@accelerationAmountPerFrame = CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
-		print @accelerationAmountPerFrame
+		#print @accelerationAmountPerFrame
+		
+		#the below is how much to increase speed per frame to reach the desired speed in 3 seconds
+		@decelerationAmountPerFrame = CrustangRacingSettings::BOOST_SPEED / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+		print @decelerationAmountPerFrame
 		
 	end #def self.setMiscVariables
 	
@@ -437,7 +428,7 @@ class CrustangRacing
 			#moves, move effects, cooldown timers, & move sprites
 			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
-			PositionOnTrack: nil, CurrentSpeed: 0, CurrentSpeedFloat: 0, DesiredSpeed: 0,
+			PositionOnTrack: nil, CurrentSpeed: 0, DesiredSpeed: 0, BoostTimer: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 		}

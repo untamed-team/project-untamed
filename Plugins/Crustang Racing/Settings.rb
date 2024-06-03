@@ -12,6 +12,8 @@ SLOWED_STRAFE_SPEED = 4
 #========================================================#
 BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
+BOOST_LENGTH_SECONDS = 3
+BOOST_SPEED = 18
 
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#
