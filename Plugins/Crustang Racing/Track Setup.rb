@@ -11,6 +11,7 @@ class CrustangRacing
 		@sprites["trackBorderTop"].y = 0
 		@sprites["trackBorderTop"].z = 99999
 		@sprites["trackBorderTop"].visible = false
+		@trackBorderTopY = 52
 		
 		@sprites["trackBorderBottom"] = IconSprite.new(0, 0, @viewport)
 		@sprites["trackBorderBottom"].setBitmap("Graphics/Pictures/Crustang Racing/track border bottom")
@@ -18,6 +19,7 @@ class CrustangRacing
 		@sprites["trackBorderBottom"].y = 0
 		@sprites["trackBorderBottom"].z = 999999
 		@sprites["trackBorderBottom"].visible = false
+		@trackBorderBottomY = Graphics.height - 110
 		
 		#the track length should be something divisible by the number of points on the track overview, which is currently 24
 		#set the x of track1 to where the player would start so the starting point of the track matches up with the starting point on the track overview
@@ -27,6 +29,12 @@ class CrustangRacing
 		@sprites["track1"].x = 0
 		@sprites["track1"].y = 0
 		@sprites["track1"].z = 99998
+		#bottom of the track where objects appear over the player
+		@sprites["track1Bottom"] = IconSprite.new(0, 0, @viewport)
+		@sprites["track1Bottom"].setBitmap("Graphics/Pictures/Crustang Racing/" + trackFilename + "Bottom")
+		@sprites["track1Bottom"].x = 0
+		@sprites["track1Bottom"].y = Graphics.height - @sprites["track1Bottom"].height
+		@sprites["track1Bottom"].z = 999991
 		
 		@sprites["track2"] = IconSprite.new(0, 0, @viewport)
 		@sprites["track2"].setBitmap("Graphics/Pictures/Crustang Racing/#{trackFilename}")
@@ -34,6 +42,12 @@ class CrustangRacing
 		@sprites["track2"].y = 0
 		@sprites["track2"].z = 99998
 		@sprites["track2"].src_rect = Rect.new(0, 0, 1024, @sprites["track1"].height)
+		#bottom of the track where objects appear over the player
+		@sprites["track2Bottom"] = IconSprite.new(0, 0, @viewport)
+		@sprites["track2Bottom"].setBitmap("Graphics/Pictures/Crustang Racing/" + trackFilename + "Bottom")
+		@sprites["track2Bottom"].x = 0
+		@sprites["track2Bottom"].y = Graphics.height - @sprites["track2Bottom"].height
+		@sprites["track2Bottom"].z = 999991
 		
 		@sprites["trackOverviewEllipses"] = IconSprite.new(0, 0, @viewport)
 		@sprites["trackOverviewEllipses"].setBitmap("Graphics/Pictures/Crustang Racing/trackOverviewEllipses")
@@ -138,7 +152,7 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racingPkmnPlayer"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		
-		@racerPlayer["RacerSprite"] = @sprites["racingPkmnPlayer"]
+		@racerPlayer[:RacerSprite] = @sprites["racingPkmnPlayer"]
 		@racerPlayer["PositionOnTrack"] = @playerFixedX
 		
 	end #def drawContestants
@@ -177,6 +191,17 @@ class CrustangRacing
 	
 	def self.detectInput
 		Input.update
+		
+		#movement up and down
+		#@trackBorderTopY
+		#@trackBorderBottomY
+		if Input.press?(Input::UP)
+			@racerPlayer[:RacerSprite].y -= 4 if @racerPlayer[:RacerSprite].y > @trackBorderTopY
+		elsif Input.press?(Input::DOWN)
+			@racerPlayer[:RacerSprite].y += 4 if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
+		end
+		
+		#moves
 		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@sprites["boostButton"].frame = 1
 			self.beginCooldown(@racerPlayer, 0)
@@ -184,6 +209,7 @@ class CrustangRacing
 		if Input.release?(Input::SPECIAL)
 			@sprites["boostButton"].frame = 0
 		end
+		
 	end #self.detectInput
 	
 	def self.beginCooldown(racer, moveNumber)
@@ -192,6 +218,8 @@ class CrustangRacing
 		case moveNumber
 		when 0
 			#boost
+			#un-press button
+			@sprites["boostButton"].frame = 0
 			#start cooldown timer
 			racer[:BoostCooldownTimer] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 			#show that button is cooling down
@@ -236,8 +264,8 @@ class CrustangRacing
 	def self.moveSpritesWithTrack
 		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
 		#lap line
-		@sprites["lapLine"].x -= @racerPlayer[:CurrentSpeed]
-		@sprites["lapLineCopy"].x -= @racerPlayer[:CurrentSpeed]
+		#@sprites["lapLine"].x -= @racerPlayer[:CurrentSpeed]
+		#@sprites["lapLineCopy"].x -= @racerPlayer[:CurrentSpeed]
 		
 	end #def self.moveSpritesWithTrack
 	
@@ -249,8 +277,6 @@ class CrustangRacing
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
 		if @sprites["track2"].x <= 0 && @sprites["track1"].x < 0
 			@sprites["track1"].x = @sprites["track2"].x + @sprites["track2"].width - 1024
-			#any racers off screen teleport to their same positions on the track when it teleports
-			
 		end
 		#if track2's X is < 0, move track2 to the end of track1 for a loop
 		if @sprites["track2"].x < 0
@@ -258,6 +284,16 @@ class CrustangRacing
 			#any racers off screen teleport to their same positions on the track when it teleports
 			
 		end
+		
+		#bottom of the tracks
+		@sprites["track1Bottom"].x = @sprites["track1"].x
+		@sprites["track2Bottom"].x = @sprites["track2"].x
+		
+		#lap line
+		@sprites["lapLine"].x = @sprites["track1"].x + @lapLineStartingX
+		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX
+		
+		#any racers off screen teleport to their same positions on the track when it teleports
 		
 	end #def trackMovementUpdate
 	
