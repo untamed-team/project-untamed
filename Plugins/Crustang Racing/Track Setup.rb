@@ -235,7 +235,7 @@ class CrustangRacing
 	def self.updateCooldownTimers
 		#player moves' cooldown timers
 		if @racerPlayer[:BoostCooldownTimer] > 0
-			@racerPlayer[:BoostCooldownTimer] -= 1 
+			@racerPlayer[:BoostCooldownTimer] -= 1
 			#cooldown mask over move
 			@racerPlayer["BoostButtonCooldownMaskSprite"].src_rect = Rect.new(0, 0, @racerPlayer["BoostButtonCooldownMaskSprite"].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
 		end #if @racerPlayer[:BoostCooldownTimer] > 0
@@ -385,6 +385,17 @@ class CrustangRacing
 		end
 	end
 	
+	def self.accelerateDecelerate
+		#@racerPlayer[:CurrentSpeed]
+		@racerPlayer[:CurrentSpeed] = @normalizeSpeedAmountPerFrame*@racerPlayer[:CurrentSpeed]
+	end #def self.accelerateDecelerate
+	
+	def self.setMiscVariables
+		#TOP_BASE_SPEED percent of SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate
+		number = CrustangRacingSettings::TOP_BASE_SPEED.percent_of(CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate)
+		@normalizeSpeedAmountPerFrame = number / 100 #how much speed per frame you accelerate or decelerate to normalize your speed
+	end #def self.setMiscVariables
+	
 	def self.setupRacerHashes
 		#set up racer hashes
 		@racer1 = {}
@@ -398,7 +409,7 @@ class CrustangRacing
 			#moves, move effects, cooldown timers, & move sprites
 			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
-			PositionOnTrack: nil, CurrentSpeed: CrustangRacingSettings::STARTING_SPEED,
+			PositionOnTrack: nil, CurrentSpeed: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 		}
@@ -410,6 +421,7 @@ class CrustangRacing
 		self.drawContestants
 		self.drawContestantsOnOverview
 		self.drawMovesUI
+		self.setMiscVariables
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
@@ -419,6 +431,7 @@ class CrustangRacing
 			self.trackOverviewMovementUpdate
 			self.detectInput
 			self.updateCooldownTimers
+			self.accelerateDecelerate
 		end
 	end #def self.main
 	
