@@ -107,6 +107,19 @@ class CrustangRacing
 		#track overview has 24 points
 		#6144 / 24 is 256, so every 256 pixels traveled should equal one point on the track overview traveled
 		
+		#overlay text bitmap
+		@sprites["kphOverlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		@sprites["kphOverlay"].x = 0
+		@sprites["kphOverlay"].y = 0
+		@sprites["kphOverlay"].z = 999999
+		@khpOverlay = @sprites["kphOverlay"].bitmap
+		pbSetSystemFont(@khpOverlay)
+		@khpOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		
+		@overlayBaseColor   = MessageConfig::DARK_TEXT_MAIN_COLOR
+		@overlayShadowColor = MessageConfig::DARK_TEXT_SHADOW_COLOR
+		@lastCurrentSpeed = 0
+		
 	end #def setup
 	
 	def self.drawContestants
@@ -213,6 +226,17 @@ class CrustangRacing
 		end
 		
 	end #self.detectInput
+	
+	def self.updateOverlayText
+		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
+			@lastCurrentSpeed = @racerPlayer[:CurrentSpeed].truncate(1).to_f
+			#print "clearing"
+			@khpOverlay.clear
+		end
+		
+		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
+		drawFormattedTextEx(@khpOverlay, 100, 20, Graphics.width, "KPH: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
+	end #def self.updateOverlayText
 	
 	def self.beginCooldown(racer, moveNumber)
 		#move number 0 is boost
@@ -399,9 +423,13 @@ class CrustangRacing
 			@racerPlayer[:CurrentSpeed] -= @decelerationAmountPerFrame
 		end
 		
+		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
+		if @racerPlayer[:CurrentSpeed].floor == @racerPlayer[:DesiredSpeed]
+			@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeed].floor
+		end
+		
 		#update boost timers for racers
 		@racerPlayer[:BoostTimer] -= 1
-		
 	end #def self.accelerateDecelerate
 	
 	def self.setMiscVariables
@@ -410,9 +438,7 @@ class CrustangRacing
 		#print @accelerationAmountPerFrame
 		
 		#the below is how much to increase speed per frame to reach the desired speed in 3 seconds
-		@decelerationAmountPerFrame = CrustangRacingSettings::BOOST_SPEED / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
-		print @decelerationAmountPerFrame
-		
+		@decelerationAmountPerFrame = CrustangRacingSettings::BOOST_SPEED / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -443,7 +469,7 @@ class CrustangRacing
 		self.setMiscVariables
 		
 		#set beginning desired speed
-		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
+		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
 		
 		loop do
 			Graphics.update
@@ -455,6 +481,7 @@ class CrustangRacing
 			self.detectInput
 			self.updateCooldownTimers
 			self.accelerateDecelerate
+			self.updateOverlayText
 		end
 	end #def self.main
 	
