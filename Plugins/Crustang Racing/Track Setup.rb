@@ -238,8 +238,12 @@ class CrustangRacing
 		#Laps and Placement
 		#@lapsAndPlaceOverlay
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
+		if @lastLapCount != @racerPlayer[:LapCount]
+			@lastLapCount = @racerPlayer[:LapCount]
+			@lapsAndPlaceOverlay.clear
+		end
 		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 8, Graphics.width, "Place: 4th", @overlayBaseColor, @overlayShadowColor)
-		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 40, Graphics.width, "Lap: 00", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 40, Graphics.width, "Lap: #{@lastLapCount}", @overlayBaseColor, @overlayShadowColor)
 		
 		#KPH
 		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
@@ -406,6 +410,17 @@ class CrustangRacing
 		
 	end #def self.trackOverviewMovementUpdate
 	
+	def self.checkForLap
+		#Lapping: true, LapCount: 0, CurrentPlacement: 1,
+		#if the racer is touching the lap line and not currently 'lapping', add a lap to the racer's count
+		if self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"]) && @racerPlayer[:Lapping] != true
+			@racerPlayer[:LapCount] += 1
+			@racerPlayer[:Lapping] = true
+		end
+		@racerPlayer[:Lapping] = false if !self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"])
+		
+	end #def self.checkForLap
+	
 	def self.updateRacerPositionOnTrack
 		#this is the position on the entire track, not the track overview
 		#player position
@@ -470,6 +485,8 @@ class CrustangRacing
 			PositionOnTrack: nil, CurrentSpeed: 0, DesiredSpeed: 0, BoostTimer: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
+			#laps and Placement
+			Lapping: true, LapCount: 0, CurrentPlacement: 1,
 		}
 	end #def self.setupRacerHashes
 	
@@ -495,6 +512,7 @@ class CrustangRacing
 			self.updateCooldownTimers
 			self.accelerateDecelerate
 			self.updateOverlayText
+			self.checkForLap
 		end
 	end #def self.main
 	
