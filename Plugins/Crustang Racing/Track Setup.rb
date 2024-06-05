@@ -10,7 +10,7 @@ class CrustangRacing
 		@sprites["trackBorderTop"].x = 0
 		@sprites["trackBorderTop"].y = 0
 		@sprites["trackBorderTop"].z = 99999
-		@sprites["trackBorderTop"].visible = false
+		#@sprites["trackBorderTop"].visible = false
 		@trackBorderTopY = 52
 		
 		@sprites["trackBorderBottom"] = IconSprite.new(0, 0, @viewport)
@@ -18,7 +18,7 @@ class CrustangRacing
 		@sprites["trackBorderBottom"].x = 0
 		@sprites["trackBorderBottom"].y = 0
 		@sprites["trackBorderBottom"].z = 999999
-		@sprites["trackBorderBottom"].visible = false
+		#@sprites["trackBorderBottom"].visible = false
 		@trackBorderBottomY = Graphics.height - 110
 		
 		#the track length should be something divisible by the number of points on the track overview, which is currently 24
@@ -107,18 +107,25 @@ class CrustangRacing
 		#track overview has 24 points
 		#6144 / 24 is 256, so every 256 pixels traveled should equal one point on the track overview traveled
 		
-		#overlay text bitmap
-		@sprites["kphOverlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		#overlay text bitmaps
+		@sprites["kphOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
 		@sprites["kphOverlay"].x = 0
 		@sprites["kphOverlay"].y = 0
 		@sprites["kphOverlay"].z = 999999
 		@khpOverlay = @sprites["kphOverlay"].bitmap
 		pbSetSystemFont(@khpOverlay)
 		@khpOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		
-		@overlayBaseColor   = MessageConfig::DARK_TEXT_MAIN_COLOR
-		@overlayShadowColor = MessageConfig::DARK_TEXT_SHADOW_COLOR
 		@lastCurrentSpeed = 0
+		
+		@sprites["lapsAndPlaceOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["lapsAndPlaceOverlay"].x = 0
+		@sprites["lapsAndPlaceOverlay"].y = 0
+		@sprites["lapsAndPlaceOverlay"].z = 999999
+		@lapsAndPlaceOverlay = @sprites["lapsAndPlaceOverlay"].bitmap
+		pbSetSystemFont(@lapsAndPlaceOverlay)
+		
+		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
+		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
 		
 	end #def setup
 	
@@ -228,14 +235,20 @@ class CrustangRacing
 	end #self.detectInput
 	
 	def self.updateOverlayText
+		#Laps and Placement
+		#@lapsAndPlaceOverlay
+		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 8, Graphics.width, "Place: 4th", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 40, Graphics.width, "Lap: 00", @overlayBaseColor, @overlayShadowColor)
+		
+		#KPH
 		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
 			@lastCurrentSpeed = @racerPlayer[:CurrentSpeed].truncate(1).to_f
-			#print "clearing"
 			@khpOverlay.clear
 		end
 		
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
-		drawFormattedTextEx(@khpOverlay, 100, 20, Graphics.width, "KPH: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KPH: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 	
 	def self.beginCooldown(racer, moveNumber)
