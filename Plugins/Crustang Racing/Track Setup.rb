@@ -246,7 +246,7 @@ class CrustangRacing
 		end
 		
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
-		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KPH: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 	
 	def self.beginCooldown(racer, moveNumber)
