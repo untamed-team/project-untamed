@@ -107,8 +107,8 @@ class PhoneScene # The scene class
 	case @appHoveredOver[:functionName]
 	when "phonePokedex"
 		pbFadeOutIn(99999) {
-			scene = PokemonPokedexMenu_Scene.new
-			screen = PokemonPokedexMenuScreen.new(scene)
+			scene = PokemonPokedex_Scene.new
+			screen = PokemonPokedexScreen.new(scene)
 			screen.pbStartScreen
 		}
 	when "phoneMap"
@@ -137,8 +137,8 @@ class PhoneScene # The scene class
 			screen = PokemonTutorNetScreen.new(scene)
 			screen.pbStartScreen
 		}	
-	when "phoneTutorials"
-		pbFadeOutIn(99999) { pbViewTips }
+	when "phoneAdventureGuide"
+		pbFadeOutIn(99999) { adventureGuideApp }
 	when "phoneAchievements"
 		pbFadeOutIn(99999) { 
 			scene = PokemonAchievements_Scene.new

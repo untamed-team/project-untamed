@@ -8,14 +8,6 @@ MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
 
-def pbDemoDexCheck
-	dexnum=$player.pokedex.owned_count;maxdexnum=65
-	$game_variables[1]=dexnum
-	return true if dexnum>=maxdexnum
-	return false
-	#Kernel.pbMessage(_INTL(":TakoMan: {1}",dexnum))
-end
-
 def pbNatureChanger(pkmn)
 	commands = []
 	ids = []
@@ -461,7 +453,7 @@ class Pokemon
 		return false if species_data.species == :M_DITTO # ditto is unable to learn anything, just like me
     move_data = GameData::Move.try_get(move_id)	
 		# Universal TMs/Move Tutors #by low	
-		unimovelist = [:ATTRACT,:ENDURE,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]	
+		unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]	
 		unimovefullyevolvedlist = [:HYPERBEAM, :GIGAIMPACT]	
 		return true if move_data && unimovelist.include?(move_data.id)	
 		return true if move_data && unimovefullyevolvedlist.include?(move_data.id) && species_data.get_evolutions(true).length == 0	
@@ -861,12 +853,11 @@ def pbGiveDexReward
 end
 
 #===============================================================================
-#===============================================================================
+# Bins
 #===============================================================================
 
 class Player < Trainer
   attr_accessor   :bin_array
-
   alias initialize_bins initialize
   def initialize(name, trainer_type)
     initialize_bins(name, trainer_type)
@@ -897,7 +888,7 @@ def pbTrashBin(eventID, specialBin = false)
     echoln "no bin 4 u"
     return
   end
-  bin_rng2 = rand($player.bin_array.length)
+  bin_rng2 = semiRandomRNG($player.bin_array.length)
   echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
   pbMEPlay("Item get")
   pbSetSelfSwitch(eventID, "B", true)
@@ -978,4 +969,45 @@ def pbTrashBin(eventID, specialBin = false)
   end
   $player.bin_array.delete_at(bin_rng2)
   Achievements.incrementProgress("EBIN_BINS",1)
+end
+
+#===============================================================================
+# RNG seeds
+#===============================================================================
+
+def semiRandomRNG(x, y = 0)
+  funseed = $player.secret_ID.to_s[-3..-1].to_i + y # last 3 digits of secret id + predefined offset
+  srand(funseed) # temporarly sets a rng seed
+  srng = rand(x)
+  srand # reset rng
+  return srng 
+end
+
+def nameToNumberConvert(name)
+  letter_values = {
+    #alphabet
+    'A' => 1,  'B' => 2,  'C' => 3,  'D' => 4,  'E' => 5,  'F' => 6,  'G' => 7,  'H' => 8,  'I' => 9,
+    'J' => 10, 'K' => 11, 'L' => 12, 'M' => 13, 'N' => 14, 'O' => 15, 'P' => 16, 'Q' => 17, 'R' => 18,
+    'S' => 19, 'T' => 20, 'U' => 21, 'V' => 22, 'W' => 23, 'X' => 24, 'Y' => 25, 'Z' => 26,
+
+    #numbers
+    '0' => 27, '1' => 28, '2' => 29, '3' => 30, '4' => 31, 
+    '5' => 32, '6' => 33, '7' => 34, '8' => 35, '9' => 36,
+
+    #symbols
+    ' ' => 37, '!' => 38, '"' => 39, '#' => 40, '$' => 41, '%' => 42, '&' => 43, '\'' => 44, '(' => 45, 
+    ')' => 46, '*' => 47, '+' => 48, ',' => 49, '-' => 50, '.' => 51, '/' => 52, ':' => 53, ';' => 54, 
+    '<' => 55, '=' => 56, '>' => 57, '?' => 58, '@' => 59, '[' => 60, '\\' => 61, ']' => 62, '^' => 63, 
+    '_' => 64, '`' => 65, '{' => 66, '|' => 67, '}' => 68, '~' => 69 #heh nice
+  }
+  name = name.upcase
+  total = 0
+  name.each_char do |letter|
+    if letter_values[letter].nil?
+      echoln "RNG Error. Issue: #{name[letter]}; #{name}"
+      next
+    end
+    total += letter_values[letter]
+  end
+  return total
 end

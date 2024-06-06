@@ -471,12 +471,12 @@ class PokemonPokedex_Scene
     iconspecies = nil if !$player.seen?(iconspecies)
     # Write various bits of text
     dexname = _INTL("Pokédex")
-    if $player.pokedex.dexes_count > 1
-      thisdex = Settings.pokedex_names[pbGetSavePositionIndex]
-      if thisdex
-        dexname = (thisdex.is_a?(Array)) ? thisdex[0] : thisdex
-      end
-    end
+    #if $player.pokedex.dexes_count > 1
+    #  thisdex = Settings.pokedex_names[pbGetSavePositionIndex]
+    #  if thisdex
+    #    dexname = (thisdex.is_a?(Array)) ? thisdex[0] : thisdex
+    #  end
+    #end
     textpos = [
       [dexname, Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
       ["Type Chart", Graphics.width - Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)]

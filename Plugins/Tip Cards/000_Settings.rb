@@ -19,7 +19,7 @@ module Settings
         #  If set to true, when the player uses the SPECIAL control, a list of all
         #  groups available to view will appear for the player to jump to one.
         #--------------------------------------------------------------------------------	
-        TIP_CARDS_GROUP_LIST = true
+        TIP_CARDS_GROUP_LIST = false
 
         #--------------------------------------------------------------------------------
         #  Set the default text colors
@@ -76,72 +76,98 @@ module Settings
                 :Title => _INTL("Auto Heal"),
                 :Text => _INTL("The Auto Heal feature will automatically select items from your bag and use them to heal your Pokémon."),
                 :Image => "auto heal1",
-                :YAdjustment => 64
+				:ImageAdvGuide => "auto heal1",
+                :YAdjustment => 64,
+                :YAdjustmentAdvGuide => -20,
             },
             :AUTOHEAL2 => {
                 :Title => _INTL("Auto Heal"),
                 :Text => _INTL("Highlight the Pokémon you want to heal from the party menu and press the button next to <c2=0999367C><b>Auto Heal</b></c2>."),
                 :Image => "auto heal2",
+                :ImageAdvGuide => "auto heal2 - guide",
+                :YAdjustmentAdvGuide => -20,
             },
             :MULTISAVE1 => {
                 :Title => _INTL("Multi-save"),
                 :Text => _INTL("When saving for the first time, you will select a save slot."),
-                :ImagePosition => :Left,
                 :Image => "multi save1",
+                :ImageAdvGuide => "multi save1 - guide",
+                :YAdjustmentAdvGuide => -16,
             },
             :MULTISAVE2 => {
                 :Title => _INTL("Multi-save"),
-                :Text => _INTL("If you have multiple save files, you can press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
+                :Text => _INTL("Press the <c2=0999367C><b>Left</b></c2> or <c2=0999367C><b>Right</b></c2> key on the continue screen to change save files."),
                 :Image => "multi save2",
+                :ImageAdvGuide => "multi save2 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :MULTISAVE3 => {
                 :Title => _INTL("Multi-save"),
                 :Text => _INTL("To create another save file, you must save through the menu instead of using Quicksave. You must select a new slot."),
                 :Image => "multi save3",
+                :ImageAdvGuide => "multi save3 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :ADVDEX1 => {
                 :Title => _INTL("Advanced Dex"),
                 :Text => _INTL("Your Pokédex has an 'Advanced' page."),
                 :Image => "advanced dex1",
+                :ImageAdvGuide => "advanced dex1 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :ADVDEX2 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("On this page, you will see advanced information about the selected Pokémon if you have caught it."),
+                :Text => _INTL("It shows advanced information about the selected Pokémon."),
                 :Image => "advanced dex2",
+                :ImageAdvGuide => "advanced dex2 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :ADVDEX3 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("You can press <c2=0999367C><b>Action</b></c2> to go to the next page."),
+                :Text => _INTL("Press <c2=0999367C><b>Action</b></c2> to go to the next page."),
                 :Image => "advanced dex3",
+                :ImageAdvGuide => "advanced dex3 - guide",
+                :YAdjustmentAdvGuide => -26,
             },
             :ADVDEX4 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("This information is also on the Untamed Wiki; This provides an alternative to view the information in-game."),
+                :Text => _INTL("This information is also on the Untamed Wiki."),
+                :YAdjustmentAdvGuide => 60,
             },
             :ADVDEX5 => {
                 :Title => _INTL("Advanced Dex"),
-                :Text => _INTL("You can press <c2=0999367C><b>BUTTON</b></c2> from the main Pokédex page to access the search function."),
+                :Text => _INTL("Press <c2=0999367C><b>BUTTON</b></c2> from the main Pokédex page to use the search function."),
                 :Image => "advanced dex5",
+                :ImageAdvGuide => "advanced dex5 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :BATTLEINFO1 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about a battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
+                :Text => _INTL("View information about the battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
                 :Image => "stats battle1",
+                :ImageAdvGuide => "stats battle1 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :BATTLEINFO2 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("You can see information such as stat changes, used moves, abilities, etc."),
                 :Image => "stats battle2",
+                :ImageAdvGuide => "stats battle2 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO3 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("You can see similar information about your opponent(s) too."),
                 :Image => "stats battle3",
+                :ImageAdvGuide => "stats battle3 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO4 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("You can view information about the currently selected move by pressing the <c2=0999367C><b>Move Info</b></c2> key."),
+                :Text => _INTL("View information about the selected move by pressing the <c2=0999367C><b>Move Info</b></c2> key."),
                 :Image => "stats battle4",
+                :ImageAdvGuide => "stats battle4 - guide",
+                :YAdjustmentAdvGuide => -42,
             },
             :BATTLEINFO5 => {
                 :Title => _INTL("Battle Info"),
@@ -149,42 +175,55 @@ module Settings
             },
             :BATTLEINFO6 => {
                 :Title => _INTL("Battle Info"),
-                :Text => _INTL("From left to right, the icons you'll see on moves are: Contact, Tramples Minimize, High Crit Rate, Sound, Punching..."),
+                :Text => _INTL("From left to right, these icons are: Contact, Tramples Minimize, High Crit Rate, Sound, Punching..."),
                 :Image => "move_icons1",
+                :ImageAdvGuide => "move_icons1 - guide",
+                :YAdjustmentAdvGuide => -12,
             },
             :BATTLEINFO7 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("Biting, Bomb, Pulse, Powder, Dance."),
                 :Image => "move_icons2",
+                :ImageAdvGuide => "move_icons2 - guide",
             },
             :CAMP1 => {
                 :Title => _INTL("Camp"),
                 :Text => _INTL("With the <c2=0999367C><b>Camping Gear</b></c2>, you can access Camp from the pause menu. You can access Camp from many different places like on the grass, in a cave, etc."),
+                :YAdjustmentAdvGuide => 60,
             },
             :CAMP2 => {
                 :Title => _INTL("Camp"),
                 :Text => _INTL("Inside Camp, you can interact with your Pokémon in several ways."),
                 :Image => "camp interact",
+                :ImageAdvGuide => "camp interact - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING1 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Inside Camp, you can create your own candy over the camp fire if you have candy bases and berries!"),
                 :Image => "cooking1",
+                :ImageAdvGuide => "cooking1 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING2 => {
                 :Title => _INTL("Cooking Candy"),
-                :Text => _INTL("To make candy, hold the left mouse button with the spoon in the pot and drag the spoon around like the arrows indicate. Don't let your candy burn from not being stirred!"),
+                :Text => _INTL("Hold the left mouse button with the spoon in the pot. Drag the spoon around like the arrows indicate."),
                 :Image => "cooking2",
+                :ImageAdvGuide => "cooking2 - guide",
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING3 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Cool off the mixture."),
-                :Text => _INTL("cooking3"),
+                :Image => _INTL("cooking3"),
+                :ImageAdvGuide => _INTL("cooking3 - guide"),
+                :YAdjustmentAdvGuide => -36,
             },
             :COOKING4 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Feeding this candy to your Pokémon will increase its stats for Pokémon Contests! You can feed your Pokémon from your candy case."),
-                :Text => _INTL("cooking4"),
+                :Image => _INTL("cooking4"),
+                :ImageAdvGuide => _INTL("cooking4 - guide"),
             },
         }
 

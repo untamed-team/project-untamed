@@ -1,18 +1,21 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
+[020]   # Test World
+Name = Test World
+Outdoor = true
+DiveMap = 38
+#-------------------------------
 [001]   # Intro
 Name = Intro
 #-------------------------------
-[002]   # MausoleumLeft
-Name = MausoleumLeft
-Outdoor = false
-ShowArea = false
-Bicycle = false
-MapPosition = 0,20,3
-#-------------------------------
-[003]   # Sofía's house
-Name = San Cerigold Town
+[022]   # Veravalles Town
+Name = Veravalles Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
 MapPosition = 0,19,5
+BattleBack = city
+MapSize = 1,1
 #-------------------------------
 [004]   # San Cerigold Town
 Name = San Cerigold Town
@@ -22,6 +25,14 @@ Bicycle = true
 Weather = Marigolds,100
 MapPosition = 0,20,3
 BattleBack = city
+MapSize = 1,1
+#-------------------------------
+[019]   # San Cerigold PC
+Name = San Cerigold PC
+Outdoor = false
+HealingSpot = 4,22,22
+MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [005]   # San Cerigold Cemetery
 Name = San Cerigold Cemetery
@@ -32,113 +43,349 @@ Weather = Marigolds,100
 MapPosition = 0,20,3
 SnapEdges = true
 BattleBack = graveyard
+MapSize = 1,1
+#-------------------------------
+[018]   # San Cerigold Gym
+Name = GymInterior
+Outdoor = false
+MapPosition = 0,20,3
+MapSize = 1,1
+#-------------------------------
+[002]   # Mausoleum
+Name = MausoleumLeft
+Outdoor = false
+ShowArea = false
+Bicycle = false
+MapPosition = 0,20,3
+MapSize = 1,1
+#-------------------------------
+[003]   # Sofía's house
+Name = San Cerigold Town
+Outdoor = false
+MapPosition = 0,19,5
+MapSize = 1,1
 #-------------------------------
 [006]   # NW house-Blue
 Name = NW house-blue
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [007]   # Library (Yellow)
 Name = Library (Yellow)
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [008]   # SW House (Cafe)
 Name = Cerigold Cafe
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [009]   # SE house-Purple
 Name = SE house-Purple
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [010]   # SE house-Green
 Name = SE house-Green
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [011]   # NW house-Pink
 Name = NW house-Pink
+Outdoor = false
 MapPosition = 0,20,3
-#-------------------------------
-[013]   # Hacienda Interior
-Name = Hacienda Interior
-MapPosition = 0,18,4
+MapSize = 1,1
 #-------------------------------
 [014]   # NE house-Cyan
 Name = NE house-Cyan
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
 [015]   # SE house-Orange
 Name = SE house-Orange
+Outdoor = false
 MapPosition = 0,20,3
+MapSize = 1,1
 #-------------------------------
-[016]   # Storage Shed
+[016]   # Hacienda Fields
 Name = Storage Shed
+Outdoor = false
 MapPosition = 0,18,3
+MapSize = 1,1
+#-------------------------------
+[013]   # Hacienda Interior
+Name = Hacienda Interior
+Outdoor = false
+MapPosition = 0,18,4
+MapSize = 1,1
 #-------------------------------
 [017]   # Hacienda Garden
 Name = Hacienda Garden
 Outdoor = true
 MapPosition = 0,18,4
+MapSize = 1,1
 #-------------------------------
-[018]   # GymInterior
-Name = GymInterior
-MapPosition = 0,20,3
-#-------------------------------
-[019]   # San Cerigold PC
-Name = San Cerigold PC
-HealingSpot = 4,22,22
-MapPosition = 0,20,3
-#-------------------------------
-[020]   # Test World
-Name = Test World
-DiveMap = 38
-#-------------------------------
-[021]   # Teo's House
+[021]   # Hacienda Castaneda
 Name = Teo's House
+Outdoor = false
 MapPosition = 0,18,4
+MapSize = 1,1
 #-------------------------------
-[022]   # Veravalles Town
-Name = Veravalles Town
+[023]   # Route 5
+Name = Route 5
 Outdoor = true
 ShowArea = true
-Bicycle = true
-MapPosition = 0,19,5
-BattleBack = city
-#-------------------------------
-[023]   # Alejandro's House
-Name = Alejandro's House
 MapPosition = 0,18,4
 #-------------------------------
 [024]   # Camp - Grassy
 Name = Camp - Grassy
 Outdoor = true
 #-------------------------------
-[025]   # Pumpkaplace
-Name = Pumpkaplace
+[025]   # Route 4 - South Face
+Name = Route 4
+Outdoor = true
+ShowArea = true
 MapPosition = 0,18,3
+#-------------------------------
+[026]   # Route 2
+Name = Route 2
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,3
+MapSize = 4,01111100
+#-------------------------------
+[027]   # Route 4 - Bottom Vertical
+Name = Route 4
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[028]   # Daycare CenterInterior
+Name = Daycare CenterInterior
+Outdoor = false
+#-------------------------------
+[029]   # Route 3
+Name = Route 3
+Outdoor = true
+ShowArea = true
+MapPosition = 0,24,6
+#-------------------------------
+[030]   # Butterfly Sanctuary
+Name = Butterfly Sanctuary
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[031]   # Monarca
+Name = Monarca Woods
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,1
+MapSize = 1,1
 #-------------------------------
 [032]   # Ceiba's Lab
 Name = Ceiba's Lab
+Outdoor = false
 MapPosition = 0,19,5
 BattleBack = lab
+MapSize = 1,1
 #-------------------------------
 [033]   # \PN's house
 Name = \PN's house
+Outdoor = false
 MapPosition = 0,19,5
+MapSize = 1,1
+#-------------------------------
+[034]   # Monarca Cave
+Name = Monarca Cave
+ShowArea = true
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[035]   # Monarca Cave 2
+Name = Monarca Cave
+ShowArea = true
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[036]   # Calojarro Plaza
+Name = Calojarro Plaza
+Outdoor = true
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[037]   # BrookHouse
+Name = BrookHouse
+Outdoor = false
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[039]   # Melolado
+Name = Melolado
+Outdoor = true
+ShowArea = true
+MapPosition = 0,12,1
+MapSize = 1,1
+#-------------------------------
+[040]   # Butterfly View
+Name = Monarca
+Outdoor = true
+ShowArea = true
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[041]   # Calojarro Gym Exterior 1
+Name = Calojarro Gym Exterior 1
+Outdoor = true
+MapPosition = 0,25,2
+MapSize = 1,1
 #-------------------------------
 [042]   # Emilio's House
 Name = Emilio's House
+Outdoor = false
 MapPosition = 0,19,5
+MapSize = 1,1
+#-------------------------------
+[043]   # Calojarro Resort Section
+Name = Calojarro Resort Section
+Outdoor = true
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[044]   # Calojarro Shopping District
+Name = Calojarro Shopping District
+Outdoor = true
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[045]   # Asterado Ranch
+Name = Asterado Ranch
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[046]   # Route 3 Cave
+Name = Route 3 Cave
+MapPosition = 0,24,5
+#-------------------------------
+[047]   # Route 4 - Top East
+Name = Route 4
+Outdoor = true
+ShowArea = true
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
 Outdoor = true
 ShowArea = true
 Bicycle = true
-MapPosition = 0,20,4
+MapPosition = 0,19,4
 BattleBack = field
+MapSize = 2,1101
+#-------------------------------
+[050]   # Dorado Mine Floor 1
+Name = Dorado Mine F1
+ShowArea = true
+Dungeon = false
+Environment = Cave
+#-------------------------------
+[051]   # Calojarro
+Name = Calojarro
+Outdoor = true
+ShowArea = true
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[052]   # Dorado Mine Floor 2 Main
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[053]   # Dorado Mine Floor 3
+Name = Dorado Mine F3
+ShowArea = true
+#-------------------------------
+[054]   # Dorado Mine Floor 2 Right Side Strength Room
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[055]   # Dorado Mine Floor 2 South Section
+Name = Dorado Mine F2
+ShowArea = true
+#-------------------------------
+[056]   # Dorado Mine Floor 4
+Name = Dorado Mine F4
+ShowArea = true
+#-------------------------------
+[058]   # Route 6
+Name = Route 6
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[061]   # Connection to Hacienda
+Name = Connection to Hacienda
+Outdoor = true
 #-------------------------------
 [065]   # Julian's House
 Name = Julian's House
+Outdoor = false
 MapPosition = 0,19,5
+MapSize = 1,1
+#-------------------------------
+[066]   # Ferrera
+Name = Ferrera Town
+Outdoor = true
+ShowArea = true
+#-------------------------------
+[069]   # Contest Reception
+Name = Contest Reception
+Outdoor = false
+MapSize = 1,1
+#-------------------------------
+[070]   # A Monarca Experiment
+Name = A Monarca Experiment
+MapPosition = 0,22,1
+MapSize = 1,1
+#-------------------------------
+[071]   # Contest Room
+Name = Contest Room
+Outdoor = false
+#-------------------------------
+[072]   # Racing Track
+Name = Racing Track
+Outdoor = true
+#-------------------------------
+[073]   # Calojarro PC
+Name = Calojarro PC
+Outdoor = false
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[074]   # Fancy Restaurant
+Name = Fancy Restaurant
+Outdoor = false
+MapPosition = 0,25,2
+#-------------------------------
+[075]   # Calojarro Gym Mansion
+Name = Calojarro Gym Mansion
+Outdoor = false
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[076]   # Contest Reception
+Name = Contest Reception
+Outdoor = false
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[077]   # Hair salon
+Name = Hair salon
+Outdoor = false
+MapPosition = 0,25,2
+MapSize = 1,1
 #-------------------------------
 [078]   # Hacienda Fields
 Name = Hacienda Fields
@@ -147,6 +394,7 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,18,3
 BattleBack = field
+MapSize = 1,1
 #-------------------------------
 [079]   # Hacienda Castaneda
 Name = Hacienda Castaneda
@@ -155,3 +403,19 @@ ShowArea = true
 Bicycle = true
 MapPosition = 0,18,4
 BattleBack = field
+MapSize = 1,1
+#-------------------------------
+[080]   # Calojarro Interiors
+Name = Calojarro Interiors
+Outdoor = false
+MapPosition = 0,25,2
+MapSize = 1,1
+#-------------------------------
+[081]   # Barn Interior
+Name = Barn Interior
+Outdoor = false
+#-------------------------------
+[082]   # Favela Housing Interiors
+Name = Favela Housing Interiors
+Outdoor = false
+MapPosition = 0,25,2

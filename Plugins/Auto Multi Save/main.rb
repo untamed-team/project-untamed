@@ -502,20 +502,12 @@ class PokemonSave_Scene
            "#{dex}" +
            "#{datetime_str}"
 	
-	
-	
-	
-	
-	
-	
     @sprites["locwindow"] = Window_AdvancedTextPokemon.new(loctext)
     @sprites["locwindow"].viewport = @viewport
     @sprites["locwindow"].x = 0
     @sprites["locwindow"].y = 0
     @sprites["locwindow"].width = 228 if @sprites["locwindow"].width < 228
     @sprites["locwindow"].visible = true
-	
-	
   end
 
   def pbEndScreen
@@ -545,7 +537,7 @@ class PokemonSaveScreen
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
 		pbTipCardsGrouped(:MULTISAVE)
-    end
+	end
     
     ret = false
     loop do
@@ -599,6 +591,10 @@ class PokemonSaveScreen
         pbSEPlay('GUI save choice')
         ret = doSave(slot)
       end
+	else
+		pbPlayCancelSE
+        canceled = true
+		return canceled
     end
     pbPlayCloseMenuSE if !ret
     return ret
