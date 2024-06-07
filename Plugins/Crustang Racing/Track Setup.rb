@@ -353,7 +353,7 @@ class CrustangRacing
 			###################################
 			#============= Racer3 =============
 			###################################
-			@racer3[:RacerSprite].x -= @sprites["track2"].width - 1024
+			#@racer3[:RacerSprite].x -= @sprites["track2"].width - 1024
 			
 			
 			
@@ -377,6 +377,10 @@ class CrustangRacing
 		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX
 		
 		#any racers off screen teleport to their same positions on the track when it teleports
+		
+		#make racers move backwards as the track moves backwards
+		@racer3[:RacerSprite].x = @sprites["track1"].x + @racer3[:PositionOnTrack]
+		
 		
 	end #def trackMovementUpdate
 	
@@ -550,8 +554,10 @@ class CrustangRacing
 		end
 		
 		#@racer3[:PositionOnTrack] = @sprites["track1"].x + @racer3[:RacerSprite].x
-		@racer3[:PositionOnTrack] = @sprites["track1"].x.abs + @racer3[:RacerSprite].x + 24
-		@racer3[:RacerSprite].x += @racer3[:CurrentSpeed]
+		#@racer3[:PositionOnTrack] = @sprites["track1"].x.abs# + @racer3[:RacerSprite].x + 24
+		
+		
+		
 		
 	end #def self.updateRacerPositionOnTrack
 	
