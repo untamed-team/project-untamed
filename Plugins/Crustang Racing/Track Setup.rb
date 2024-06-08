@@ -220,12 +220,13 @@ class CrustangRacing
 		
 		#KPH
 		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
-			@lastCurrentSpeed = @racerPlayer[:CurrentSpeed].truncate(1).to_f
+			#@lastCurrentSpeed = @racerPlayer[:CurrentSpeed].truncate(1).to_f      #draw with a decimal place
+			@lastCurrentSpeed = @racerPlayer[:CurrentSpeed].floor     #draw with no decimal place
 			@khpOverlay.clear
 		end
 		
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
-		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KPH: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 	
 	def self.beginCooldown(racer, moveNumber)
