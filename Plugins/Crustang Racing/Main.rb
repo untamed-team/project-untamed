@@ -181,12 +181,11 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
+		@racer1[:PositionOnTrack] += @racer1[:CurrentSpeed].floor
+		#@racer1[:PositionOnTrack] = 0 if          #####this needs to be a remainder
 		
-		#make it based on the amount INTO the track, not the racer's X on the screen or track1's X
-		
-		#@racer1[:PositionOnTrack] -= @racerPlayer[:CurrentSpeed] #because the track moves based on the player's current speed
-		#then make the racer go FORWARD however fast their current speed is
-		#@racer1[:PositionOnTrack] += @racer1[:CurrentSpeed]
+		#print "player pos is #{@racerPlayer[:PositionOnTrack]}"
+		#print "racer1 pos is #{@racer1[:PositionOnTrack]}"
 		
 		#racer2 position
 		#racer3 position
@@ -199,6 +198,7 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+
 		#then make the racer go FORWARD however fast their current speed is
 		#@racer1[:RacerSprite].x += @racer1[:CurrentSpeed]
 		
@@ -248,6 +248,7 @@ class CrustangRacing
 		
 		#update boost timers for racers
 		@racerPlayer[:BoostTimer] -= 1
+		
 	end #def self.accelerateDecelerate
 	
 	def self.main
@@ -259,15 +260,16 @@ class CrustangRacing
 		self.setMiscVariables
 		
 		#set beginning desired speed
+		@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
 		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
 		
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
 			self.trackMovementUpdate
-			self.updateRacerPositionOnScreen
 			self.moveSpritesWithTrack
 			self.updateRacerPositionOnTrack
+			self.updateRacerPositionOnScreen
 			self.trackOverviewMovementUpdate
 			self.detectInput
 			self.updateCooldownTimers

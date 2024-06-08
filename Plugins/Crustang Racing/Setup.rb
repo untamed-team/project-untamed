@@ -150,6 +150,7 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racer1Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer1[:RacerSprite] = @sprites["racer1Pkmn"]
+		@racingPkmnStartingY += 72
 		
 		###################################
 		#============= Player =============
