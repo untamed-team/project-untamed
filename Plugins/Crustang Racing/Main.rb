@@ -182,10 +182,12 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		@racer1[:PositionOnTrack] += @racer1[:CurrentSpeed].floor
-		#@racer1[:PositionOnTrack] = 0 if          #####this needs to be a remainder
+		#reset position to near the beginning of the track when we get to the end of it
+		if @racer1[:PositionOnTrack] > @sprites["track1"].width
+			amountOverTrackLength = @racer1[:PositionOnTrack] - @sprites["track1"].width
+			@racer1[:PositionOnTrack] = amountOverTrackLength
+		end		
 		
-		#print "player pos is #{@racerPlayer[:PositionOnTrack]}"
-		#print "racer1 pos is #{@racer1[:PositionOnTrack]}"
 		
 		#racer2 position
 		#racer3 position
@@ -197,10 +199,12 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
-
-		#then make the racer go FORWARD however fast their current speed is
-		#@racer1[:RacerSprite].x += @racer1[:CurrentSpeed]
+		if @trackSpriteInUse == @sprites["track1"]
+			@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		else
+			@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + (@racer1[:PositionOnTrack] - @sprites["track1"].width) #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		end
+		
 		
 	end #def self.updateRacerPositionOnTrack
 	

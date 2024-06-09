@@ -13,8 +13,8 @@ KPH_MULTIPLIER = 10
 #========================================================#
 BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
-BOOST_LENGTH_SECONDS = 3
-BOOST_SPEED = 18
+BOOST_LENGTH_SECONDS = 1#3
+BOOST_SPEED = 13#18
 
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#
