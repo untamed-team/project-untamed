@@ -112,20 +112,11 @@ class CrustangRacing
 		@sprites["track2"].x -= @racerPlayer[:CurrentSpeed]
 		
 		#track image looping logic
-		#if track2 is now on screen
-		if @sprites["track2"].x.between?(0,Graphics.width-1)
-			@trackSpriteInUse = @sprites["track2"] if @trackSpriteInUse != @sprites["track2"]
-		end
-		
 		#if track2 is now on the screen, track2's X is now 0 or less, and track1's X is still < 0, move track1 to the end of track2 for a loop
 		if @sprites["track2"].x <= 0 && @sprites["track1"].x < 0
-			@sprites["track1"].x = @sprites["track2"].x + @sprites["track2"].width - 1024
-		end
-		#if track2's X is < 0, move track2 to the end of track1 for a loop
-		if @sprites["track2"].x < 0
+			@sprites["track1"].x = @sprites["track2"].x
+			#send track2 to the back of track1
 			@sprites["track2"].x = @sprites["track1"].x + @sprites["track1"].width
-			@trackSpriteInUse = @sprites["track1"] if @trackSpriteInUse != @sprites["track1"]
-			#any racers off screen teleport to their same positions on the track when it teleports
 		end
 		
 		#hotfix for track2 not being at the correct X
@@ -199,11 +190,29 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		if @trackSpriteInUse == @sprites["track1"]
-			@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
-		else
-			@racer1[:RacerSprite].x = @trackSpriteInUse.x + @racerStartingX + (@racer1[:PositionOnTrack] - @sprites["track1"].width) #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
-		end
+		
+		#if the racer is ahead of us on the screen and touching track2, set its X according to track2
+		
+		#if the racer is behind us still touching track1 and we are touching track2, 
+		
+		
+		@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		
+		#if @racer1[:PositionOnTrack] <= @sprites["track1"].width - 1024
+			#@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		#else
+			#@racer1[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + (@racer1[:PositionOnTrack] - @sprites["track1"].width) #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		#end
+		
+		#make sure the racer does not go off go to a crazy X when changing tracks between 1 and 2
+		#if racer is behind the player and the player will reach the beginning of track1 first
+		@racer1[:RacerSprite].x -= @sprites["track1"].width if @racer1[:RacerSprite].x > @sprites["track1"].width - @racer1[:RacerSprite].width && @racer1[:RacerSprite].x < @racerPlayer[:RacerSprite].x
+		#if racer is in front of the player and the racer will reach the beginning of track1 first
+		#@racer1[:RacerSprite].x += @sprites["track1"].width if @racer1[:RacerSprite].x < @sprites["track1"].width*-1 && @racer1[:RacerSprite].x > @racerPlayer[:RacerSprite].x
+		#@racer1[:RacerSprite].x += @sprites["track1"].width if @racer1[:RacerSprite].x > @racerPlayer[:RacerSprite].x && @racer1[:RacerSprite].x < @sprites["track1"].width + @racer1[:RacerSprite].width
+		print @racer1[:RacerSprite].x if !@racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width-1)
+		
+		
 		
 		
 	end #def self.updateRacerPositionOnTrack

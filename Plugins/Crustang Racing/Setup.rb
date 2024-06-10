@@ -42,8 +42,7 @@ class CrustangRacing
 		@sprites["track2"].y = 0
 		@sprites["track2"].z = 99998
 		@sprites["track2"].src_rect = Rect.new(0, 0, 1024, @sprites["track1"].height)
-		
-		@trackSpriteInUse = @sprites["track1"]
+		@sprites["track2"].opacity = 25
 		
 		#bottom of the track where objects appear over the player
 		@sprites["track2Bottom"] = IconSprite.new(0, 0, @viewport)
