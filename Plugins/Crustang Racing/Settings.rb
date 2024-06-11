@@ -11,9 +11,9 @@ KPH_MULTIPLIER = 10
 #========================================================#
 #==================== BUTTON SETTINGS ====================#
 #========================================================#
-BUTTON_COOLDOWN_SECONDS = 200
+BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
-BOOST_LENGTH_SECONDS = 24.5#3
+BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18
 
 #========================================================#

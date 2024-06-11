@@ -196,21 +196,25 @@ class CrustangRacing
 		#if the racer is behind us still touching track1 and we are touching track2, 
 		
 		
-		@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
+		@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack]
 		
-		#if @racer1[:PositionOnTrack] <= @sprites["track1"].width - 1024
-			#@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack] #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
-		#else
-			#@racer1[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + (@racer1[:PositionOnTrack] - @sprites["track1"].width) #sprite X should be their starting position relative to track1's x + their distance into the track (position on track)
-		#end
+		#keep the racer on screen if they reach track2 before we do
+		#if track2 is on the screen, and the racer's position on the track is <= the width of track2, set the racer's position on the track relative to track2's x
+		if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer1[:PositionOnTrack] <= @sprites["track2"].width
+			#make the racer's X relative to track2's x
+			@racer1[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + @racer1[:PositionOnTrack]
+			
+			
+			
+		end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer1[:PositionOnTrack] <= @sprites["track2"].width
 		
-		#make sure the racer does not go off go to a crazy X when changing tracks between 1 and 2
-		#if racer is behind the player and the player will reach the beginning of track1 first
-		@racer1[:RacerSprite].x -= @sprites["track1"].width if @racer1[:RacerSprite].x > @sprites["track1"].width - @racer1[:RacerSprite].width && @racer1[:RacerSprite].x < @racerPlayer[:RacerSprite].x
-		#if racer is in front of the player and the racer will reach the beginning of track1 first
-		#@racer1[:RacerSprite].x += @sprites["track1"].width if @racer1[:RacerSprite].x < @sprites["track1"].width*-1 && @racer1[:RacerSprite].x > @racerPlayer[:RacerSprite].x
-		#@racer1[:RacerSprite].x += @sprites["track1"].width if @racer1[:RacerSprite].x > @racerPlayer[:RacerSprite].x && @racer1[:RacerSprite].x < @sprites["track1"].width + @racer1[:RacerSprite].width
-		print @racer1[:RacerSprite].x if !@racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width-1)
+		#keep the racer on screen if we reach track2 before they do
+		if @racer1[:RacerSprite].x > @sprites["track1"].width - @racer1[:RacerSprite].width
+			@racer1[:RacerSprite].x -= @sprites["track1"].width
+		end
+		
+		#if the racer's sprite is not on the screen, where is it?
+		#print @racer1[:RacerSprite].x if !@racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width-1)
 		
 		
 		
@@ -279,7 +283,7 @@ class CrustangRacing
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
-			self.trackMovementUpdate
+			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
 			self.moveSpritesWithTrack
 			self.updateRacerPositionOnTrack
 			self.updateRacerPositionOnScreen
