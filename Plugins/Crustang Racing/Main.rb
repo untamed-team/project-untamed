@@ -19,8 +19,14 @@ class CrustangRacing
 			@racerPlayer[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED
 			@racerPlayer[:BoostTimer] = CrustangRacingSettings::BOOST_LENGTH_SECONDS * Graphics.frame_rate
 			self.beginCooldown(@racerPlayer, 0)
+			
+			#give other racers temporary boost for testing purposes
+			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
+			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 2
+			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
+			
 		end
-		if Input.release?(Input::SPECIAL)
+		if Input.release?(CrustangRacingSettings::BOOST_BUTTON)
 			@sprites["boostButton"].frame = 0
 		end
 		
@@ -120,6 +126,7 @@ class CrustangRacing
 		if self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"]) && @racerPlayer[:Lapping] != true
 			@racerPlayer[:LapCount] += 1
 			@racerPlayer[:Lapping] = true
+			print "racer1 has gone #{@racer1[:LapCount]} laps, racer2 has gone #{@racer2[:LapCount]} laps, and racer3 has gone #{@racer3[:LapCount]} laps"
 		end
 		@racerPlayer[:Lapping] = false if !self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"])
 	end #def self.checkForLap
@@ -321,12 +328,6 @@ class CrustangRacing
 		self.drawContestantsOnOverview
 		self.drawMovesUI
 		self.setMiscVariables
-		
-		#set beginning desired speed
-		#@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
-		#@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
-		#@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
-		#@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
 		
 		loop do
 			Graphics.update
