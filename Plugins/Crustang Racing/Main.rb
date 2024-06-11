@@ -47,58 +47,7 @@ class CrustangRacing
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
 		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
-	
-	def self.beginCooldown(racer, moveNumber)
-		#move number 0 is boost
-		#Move1: nil, Move1Effect: nil, Move1CooldownTimer: nil, Move1ButtonSprite: nil
-		case moveNumber
-		when 0
-			#boost
-			#un-press button
-			@sprites["boostButton"].frame = 0 if racer == @racerPlayer
-			#start cooldown timer
-			racer[:BoostCooldownTimer] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-			#show that button is cooling down
-			#racer["BoostButtonSprite"] ........ draw a black rect with opacity 50 or 100 or something at the x and y of the button, with a width and height of the button
-		when 1
-		when 2
-		when 3
-		when 4
-		end #case moveNumber
 		
-	end #def self.beginCooldown(move)
-	
-	def self.updateCooldownTimers
-		###################################
-		#============= Racer1 =============
-		###################################
-		#do not update cooldown sprites for non-player racers because they don't have any
-		#boost timer
-		@racer1[:BoostCooldownTimer] -= 1 if @racer1[:BoostCooldownTimer] > 0
-		
-		#move1 timer
-		#move2 timer
-		#move3 timer
-		#move4 timer
-		
-		###################################
-		#============= Player =============
-		###################################
-		#player moves' cooldown timers
-		#boost timer
-		if @racerPlayer[:BoostCooldownTimer] > 0
-			@racerPlayer[:BoostCooldownTimer] -= 1
-			#cooldown mask over move
-			@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
-		end #if @racerPlayer[:BoostCooldownTimer] > 0
-		
-		#move1 timer
-		#move2 timer
-		#move3 timer
-		#move4 timer
-		
-	end
-	
 	def self.moveSpritesWithTrack
 		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
 		#lap line
@@ -107,7 +56,7 @@ class CrustangRacing
 		
 	end #def self.moveSpritesWithTrack
 	
-	def self.trackMovementUpdate
+	def self.trackMovementUpdate #no need to modify
 		@sprites["track1"].x -= @racerPlayer[:CurrentSpeed]
 		@sprites["track2"].x -= @racerPlayer[:CurrentSpeed]
 		
@@ -132,13 +81,10 @@ class CrustangRacing
 		
 		#lap line
 		@sprites["lapLine"].x = @sprites["track1"].x + @lapLineStartingX
-		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX
-		
-		#any racers off screen teleport to their same positions on the track when it teleports
-		
+		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX		
 	end #def trackMovementUpdate
 	
-	def self.checkForLap
+	def self.checkForLap #################do I need to check if the racers come in contact with the copy lap line?
 		#Lapping: true, LapCount: 0, CurrentPlacement: 1,
 		###################################
 		#============= Racer1 =============
@@ -150,6 +96,24 @@ class CrustangRacing
 		@racer1[:Lapping] = false if !self.collides_with?(@racer1[:RacerSprite],@sprites["lapLine"])
 		
 		###################################
+		#============= Racer2 =============
+		###################################
+		if self.collides_with?(@racer2[:RacerSprite],@sprites["lapLine"]) && @racer2[:Lapping] != true
+			@racer2[:LapCount] += 1
+			@racer2[:Lapping] = true
+		end
+		@racer2[:Lapping] = false if !self.collides_with?(@racer2[:RacerSprite],@sprites["lapLine"])
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		if self.collides_with?(@racer3[:RacerSprite],@sprites["lapLine"]) && @racer3[:Lapping] != true
+			@racer3[:LapCount] += 1
+			@racer3[:Lapping] = true
+		end
+		@racer3[:Lapping] = false if !self.collides_with?(@racer3[:RacerSprite],@sprites["lapLine"])
+		
+		###################################
 		#============= Player =============
 		###################################
 		#if the racer is touching the lap line and not currently 'lapping', add a lap to the racer's count
@@ -158,7 +122,6 @@ class CrustangRacing
 			@racerPlayer[:Lapping] = true
 		end
 		@racerPlayer[:Lapping] = false if !self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"])
-		
 	end #def self.checkForLap
 	
 	def self.updateRacerPositionOnTrack
@@ -179,10 +142,25 @@ class CrustangRacing
 			@racer1[:PositionOnTrack] = amountOverTrackLength
 		end		
 		
+		###################################
+		#============= Racer2 =============
+		###################################
+		@racer2[:PositionOnTrack] += @racer2[:CurrentSpeed].floor
+		#reset position to near the beginning of the track when we get to the end of it
+		if @racer2[:PositionOnTrack] > @sprites["track1"].width
+			amountOverTrackLength = @racer2[:PositionOnTrack] - @sprites["track1"].width
+			@racer2[:PositionOnTrack] = amountOverTrackLength
+		end		
 		
-		#racer2 position
-		#racer3 position
-		
+		###################################
+		#============= Racer3 =============
+		###################################
+		@racer3[:PositionOnTrack] += @racer3[:CurrentSpeed].floor
+		#reset position to near the beginning of the track when we get to the end of it
+		if @racer3[:PositionOnTrack] > @sprites["track1"].width
+			amountOverTrackLength = @racer3[:PositionOnTrack] - @sprites["track1"].width
+			@racer3[:PositionOnTrack] = amountOverTrackLength
+		end
 	end #def self.updateRacerPositionOnTrack
 	
 	def self.updateRacerPositionOnScreen
@@ -190,12 +168,7 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		
-		#if the racer is ahead of us on the screen and touching track2, set its X according to track2
-		
-		#if the racer is behind us still touching track1 and we are touching track2, 
-		
-		
+		#calculate normally based on track1's X
 		@racer1[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer1[:PositionOnTrack]
 		
 		#keep the racer on screen if they reach track2 before we do
@@ -203,9 +176,6 @@ class CrustangRacing
 		if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer1[:PositionOnTrack] <= @sprites["track2"].width
 			#make the racer's X relative to track2's x
 			@racer1[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + @racer1[:PositionOnTrack]
-			
-			
-			
 		end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer1[:PositionOnTrack] <= @sprites["track2"].width
 		
 		#keep the racer on screen if we reach track2 before they do
@@ -216,9 +186,41 @@ class CrustangRacing
 		#if the racer's sprite is not on the screen, where is it?
 		#print @racer1[:RacerSprite].x if !@racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width-1)
 		
+		###################################
+		#============= Racer2 =============
+		###################################
+		#calculate normally based on track1's X
+		@racer2[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer2[:PositionOnTrack]
 		
+		#keep the racer on screen if they reach track2 before we do
+		#if track2 is on the screen, and the racer's position on the track is <= the width of track2, set the racer's position on the track relative to track2's x
+		if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer2[:PositionOnTrack] <= @sprites["track2"].width
+			#make the racer's X relative to track2's x
+			@racer2[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + @racer2[:PositionOnTrack]
+		end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer2[:PositionOnTrack] <= @sprites["track2"].width
 		
+		#keep the racer on screen if we reach track2 before they do
+		if @racer2[:RacerSprite].x > @sprites["track1"].width - @racer2[:RacerSprite].width
+			@racer2[:RacerSprite].x -= @sprites["track1"].width
+		end
 		
+		###################################
+		#============= Racer3 =============
+		###################################
+		#calculate normally based on track1's X
+		@racer3[:RacerSprite].x = @sprites["track1"].x + @racerStartingX + @racer3[:PositionOnTrack]
+		
+		#keep the racer on screen if they reach track2 before we do
+		#if track2 is on the screen, and the racer's position on the track is <= the width of track2, set the racer's position on the track relative to track2's x
+		if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer3[:PositionOnTrack] <= @sprites["track2"].width
+			#make the racer's X relative to track2's x
+			@racer3[:RacerSprite].x = @sprites["track2"].x + @racerStartingX + @racer3[:PositionOnTrack]
+		end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && @racer3[:PositionOnTrack] <= @sprites["track2"].width
+		
+		#keep the racer on screen if we reach track2 before they do
+		if @racer3[:RacerSprite].x > @sprites["track1"].width - @racer3[:RacerSprite].width
+			@racer3[:RacerSprite].x -= @sprites["track1"].width
+		end
 	end #def self.updateRacerPositionOnTrack
 	
 	def self.accelerateDecelerate
@@ -243,6 +245,50 @@ class CrustangRacing
 		
 		#update boost timers for racers
 		@racer1[:BoostTimer] -= 1
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		if @racer2[:CurrentSpeed].floor < @racer2[:DesiredSpeed]
+			#accelerate
+			@racer2[:CurrentSpeed] += @accelerationAmountPerFrame
+		end
+		
+		#decelerate
+		if @racer2[:CurrentSpeed].floor > @racer2[:DesiredSpeed] && @racer2[:BoostTimer] <= 0
+			#decelerate
+			@racer2[:CurrentSpeed] -= @decelerationAmountPerFrame
+		end
+		
+		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
+		if @racer2[:CurrentSpeed].floor == @racer2[:DesiredSpeed]
+			@racer2[:CurrentSpeed] = @racer2[:CurrentSpeed].floor
+		end
+		
+		#update boost timers for racers
+		@racer2[:BoostTimer] -= 1
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		if @racer3[:CurrentSpeed].floor < @racer3[:DesiredSpeed]
+			#accelerate
+			@racer3[:CurrentSpeed] += @accelerationAmountPerFrame
+		end
+		
+		#decelerate
+		if @racer3[:CurrentSpeed].floor > @racer3[:DesiredSpeed] && @racer3[:BoostTimer] <= 0
+			#decelerate
+			@racer3[:CurrentSpeed] -= @decelerationAmountPerFrame
+		end
+		
+		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
+		if @racer3[:CurrentSpeed].floor == @racer3[:DesiredSpeed]
+			@racer3[:CurrentSpeed] = @racer3[:CurrentSpeed].floor
+		end
+		
+		#update boost timers for racers
+		@racer3[:BoostTimer] -= 1
 		
 		###################################
 		#============= Player =============
@@ -277,8 +323,10 @@ class CrustangRacing
 		self.setMiscVariables
 		
 		#set beginning desired speed
-		@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
-		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
+		#@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
+		#@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
+		#@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
+		#@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED.floor
 		
 		loop do
 			Graphics.update

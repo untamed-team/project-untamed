@@ -42,7 +42,6 @@ class CrustangRacing
 		@sprites["track2"].y = 0
 		@sprites["track2"].z = 99998
 		@sprites["track2"].src_rect = Rect.new(0, 0, 1024, @sprites["track1"].height)
-		#@sprites["track2"].opacity = 25
 		
 		#bottom of the track where objects appear over the player
 		@sprites["track2Bottom"] = IconSprite.new(0, 0, @viewport)
@@ -152,6 +151,36 @@ class CrustangRacing
 		@racingPkmnStartingY += 72
 		
 		###################################
+		#============= Racer2 =============
+		###################################
+		filename = "Followers/CRUSTANG"
+		@sprites["racer2Pkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
+		charwidth  = @sprites["racer2Pkmn"].bitmap.width
+		charheight = @sprites["racer2Pkmn"].bitmap.height
+		@sprites["racer2Pkmn"].x        = @racerStartingX# - (charwidth / 8)
+		@sprites["racer2Pkmn"].y        = @racingPkmnStartingY# - (charheight / 8)
+		@sprites["racer2Pkmn"].z = 99999
+		#sprite turn right
+		@sprites["racer2Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
+		@racer2[:RacerSprite] = @sprites["racer2Pkmn"]
+		@racingPkmnStartingY += 72
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		filename = "Followers/CRUSTANG"
+		@sprites["racer3Pkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
+		charwidth  = @sprites["racer3Pkmn"].bitmap.width
+		charheight = @sprites["racer3Pkmn"].bitmap.height
+		@sprites["racer3Pkmn"].x        = @racerStartingX# - (charwidth / 8)
+		@sprites["racer3Pkmn"].y        = @racingPkmnStartingY# - (charheight / 8)
+		@sprites["racer3Pkmn"].z = 99999
+		#sprite turn right
+		@sprites["racer3Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
+		@racer3[:RacerSprite] = @sprites["racer3Pkmn"]
+		@racingPkmnStartingY += 72
+		
+		###################################
 		#============= Player =============
 		###################################
 		filename = "Followers/CRUSTANG"
@@ -218,14 +247,40 @@ class CrustangRacing
 			#moves, move effects, cooldown timers, & move sprites
 			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
-			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: 0, BoostTimer: 0,
+			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
 			Lapping: true, LapCount: 0, CurrentPlacement: 1,
 		}
-		@racer2 = {}
-		@racer3 = {}
+		@racer2 = {
+			#racer sprite
+			RacerSprite: nil,
+			#boost button sprites & cooldown timer
+			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			#moves, move effects, cooldown timers, & move sprites
+			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
+			#track positioning & speed
+			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
+			#track overview positioning
+			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
+			#laps and Placement
+			Lapping: true, LapCount: 0, CurrentPlacement: 1,
+		}
+		@racer3 = {
+			#racer sprite
+			RacerSprite: nil,
+			#boost button sprites & cooldown timer
+			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			#moves, move effects, cooldown timers, & move sprites
+			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
+			#track positioning & speed
+			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
+			#track overview positioning
+			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
+			#laps and Placement
+			Lapping: true, LapCount: 0, CurrentPlacement: 1,
+		}
 		@racerPlayer = {
 			#racer sprite
 			RacerSprite: nil,
@@ -234,7 +289,7 @@ class CrustangRacing
 			#moves, move effects, cooldown timers, & move sprites
 			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
 			#track positioning & speed
-			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: 0, BoostTimer: 0,
+			PositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
