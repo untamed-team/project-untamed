@@ -9,7 +9,7 @@ class CrustangRacing
 			#un-press button
 			@sprites["boostButton"].frame = 0 if racer == @racerPlayer
 			#start cooldown timer
-			racer[:BoostCooldownTimer] = CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+			racer[:BoostCooldownTimer] = CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 			#show that button is cooling down
 			#racer["BoostButtonSprite"] ........ draw a black rect with opacity 50 or 100 or something at the x and y of the button, with a width and height of the button
 		when 1

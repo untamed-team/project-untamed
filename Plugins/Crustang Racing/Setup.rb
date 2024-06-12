@@ -197,10 +197,11 @@ class CrustangRacing
 	end #def drawContestants
 	
 	def self.drawMovesUI
-		#draw boost button
+		###################################
+		#========== Boost Button ==========
+		###################################
 		#animname, framecount, framewidth, frameheight, frameskip
 		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, @viewport)
-		#@sprites["boostButton"].setBitmap("Graphics/Pictures/Crustang Racing/boost button")
 		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
@@ -217,15 +218,156 @@ class CrustangRacing
 		@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, 0)
 		
 		#numbers for cooldown mask
-		number = @racerPlayer[:BoostButtonSprite].height.percent_of(CrustangRacingSettings::BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		number = @racerPlayer[:BoostButtonSprite].height.percent_of(CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
 		@boostCooldownPixelsToMovePerFrame = number / 100
 		
 		#draw text over button saying how to use it
-		
+		@sprites["boostButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+		@sprites["boostButtonTextOverlay"].x = @racerPlayer[:BoostButtonSprite].x + @racerPlayer[:BoostButtonSprite].width/2 + 8
+		@sprites["boostButtonTextOverlay"].y = @racerPlayer[:BoostButtonSprite].y + @racerPlayer[:BoostButtonSprite].height - 14
+		@sprites["boostButtonTextOverlay"].z = 999999
+		@boostButtonTextOverlay = @sprites["boostButtonTextOverlay"].bitmap
+		pbSetSystemFont(@boostButtonTextOverlay)
+		@boostButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		drawFormattedTextEx(@boostButtonTextOverlay, 0, 4, Graphics.width, "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name}", @overlayBaseColor, @overlayShadowColor)
 		
 		#draw moves depending on what racer knows
 		#for now, draw specific moves, 4 at a time for testing
-		#will hold off until other racers are in the game
+		###################################
+		#============= Move 1 =============
+		###################################
+		#animname, framecount, framewidth, frameheight, frameskip
+		@sprites["move1Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
+		@sprites["move1Button"].x = @racerPlayer[:BoostButtonSprite].x + @racerPlayer[:BoostButtonSprite].width + @sprites["move1Button"].width/3
+		@sprites["move1Button"].y = Graphics.height - @sprites["move1Button"].height - 4
+		@sprites["move1Button"].z = 999999
+
+		@racerPlayer[:Move1ButtonSprite] = @sprites["move1Button"]
+		
+		#draw cooldown mask
+		@racerPlayer[:Move1ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].x = @racerPlayer[:Move1ButtonSprite].x
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].y = @racerPlayer[:Move1ButtonSprite].y
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].z = 999999
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].opacity = 100
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move1ButtonCooldownMaskSprite].width, 0)
+		
+		#numbers for cooldown mask
+		number = @racerPlayer[:Move1ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		@boostCooldownPixelsToMovePerFrame = number / 100
+		
+		#draw text over button saying how to use it
+		@sprites["move1ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+		@sprites["move1ButtonTextOverlay"].x = @racerPlayer[:Move1ButtonSprite].x + @racerPlayer[:Move1ButtonSprite].width/2 + 8
+		@sprites["move1ButtonTextOverlay"].y = @racerPlayer[:Move1ButtonSprite].y + @racerPlayer[:Move1ButtonSprite].height - 14
+		@sprites["move1ButtonTextOverlay"].z = 999999
+		@move1ButtonTextOverlay = @sprites["move1ButtonTextOverlay"].bitmap
+		pbSetSystemFont(@move1ButtonTextOverlay)
+		@move1ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		drawFormattedTextEx(@move1ButtonTextOverlay, 0, 4, Graphics.width, "Z", @overlayBaseColor, @overlayShadowColor)
+		
+		###################################
+		#============= Move 2 =============
+		###################################
+		#animname, framecount, framewidth, frameheight, frameskip
+		@sprites["move2Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
+		@sprites["move2Button"].x = @racerPlayer[:Move1ButtonSprite].x + @racerPlayer[:Move1ButtonSprite].width + @sprites["move2Button"].width/3
+		@sprites["move2Button"].y = Graphics.height - @sprites["move2Button"].height - 4
+		@sprites["move2Button"].z = 999999
+
+		@racerPlayer[:Move2ButtonSprite] = @sprites["move2Button"]
+		
+		#draw cooldown mask
+		@racerPlayer[:Move1ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].x = @racerPlayer[:Move2ButtonSprite].x
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].y = @racerPlayer[:Move2ButtonSprite].y
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].z = 999999
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].opacity = 100
+		@racerPlayer[:Move1ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move1ButtonCooldownMaskSprite].width, 0)
+		
+		#numbers for cooldown mask
+		number = @racerPlayer[:Move2ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		@boostCooldownPixelsToMovePerFrame = number / 100
+		
+		#draw text over button saying how to use it
+		@sprites["move2ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+		@sprites["move2ButtonTextOverlay"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width/2 + 8
+		@sprites["move2ButtonTextOverlay"].y = @racerPlayer[:Move2ButtonSprite].y + @racerPlayer[:Move2ButtonSprite].height - 14
+		@sprites["move2ButtonTextOverlay"].z = 999999
+		@move2ButtonTextOverlay = @sprites["move2ButtonTextOverlay"].bitmap
+		pbSetSystemFont(@move2ButtonTextOverlay)
+		@move2ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		drawFormattedTextEx(@move2ButtonTextOverlay, 0, 4, Graphics.width, "X", @overlayBaseColor, @overlayShadowColor)
+		
+		###################################
+		#============= Move 3 =============
+		###################################
+		#animname, framecount, framewidth, frameheight, frameskip
+		@sprites["move3Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
+		@sprites["move3Button"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width + @sprites["move3Button"].width/3
+		@sprites["move3Button"].y = Graphics.height - @sprites["move3Button"].height - 4
+		@sprites["move3Button"].z = 999999
+
+		@racerPlayer[:Move3ButtonSprite] = @sprites["move3Button"]
+		
+		#draw cooldown mask
+		@racerPlayer[:Move3ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].x = @racerPlayer[:Move3ButtonSprite].x
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].y = @racerPlayer[:Move3ButtonSprite].y
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].z = 999999
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].opacity = 100
+		@racerPlayer[:Move3ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move3ButtonCooldownMaskSprite].width, 0)
+		
+		#numbers for cooldown mask
+		number = @racerPlayer[:Move3ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		@boostCooldownPixelsToMovePerFrame = number / 100
+		
+		#draw text over button saying how to use it
+		@sprites["move3ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+		@sprites["move3ButtonTextOverlay"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width/2 + 8
+		@sprites["move3ButtonTextOverlay"].y = @racerPlayer[:Move3ButtonSprite].y + @racerPlayer[:Move3ButtonSprite].height - 14
+		@sprites["move3ButtonTextOverlay"].z = 999999
+		@move3ButtonTextOverlay = @sprites["move3ButtonTextOverlay"].bitmap
+		pbSetSystemFont(@move3ButtonTextOverlay)
+		@move3ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		drawFormattedTextEx(@move3ButtonTextOverlay, 0, 4, Graphics.width, "C", @overlayBaseColor, @overlayShadowColor)
+		
+		###################################
+		#============= Move 4 =============
+		###################################
+		#animname, framecount, framewidth, frameheight, frameskip
+		@sprites["move4Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
+		@sprites["move4Button"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width + @sprites["move4Button"].width/3
+		@sprites["move4Button"].y = Graphics.height - @sprites["move4Button"].height - 4
+		@sprites["move4Button"].z = 999999
+
+		@racerPlayer[:Move4ButtonSprite] = @sprites["move4Button"]
+		
+		#draw cooldown mask
+		@racerPlayer[:Move4ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].x = @racerPlayer[:Move4ButtonSprite].x
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].y = @racerPlayer[:Move4ButtonSprite].y
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].z = 999999
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].opacity = 100
+		@racerPlayer[:Move4ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move4ButtonCooldownMaskSprite].width, 0)
+		
+		#numbers for cooldown mask
+		number = @racerPlayer[:Move4ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+		@boostCooldownPixelsToMovePerFrame = number / 100
+		
+		#draw text over button saying how to use it
+		@sprites["move4ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+		@sprites["move4ButtonTextOverlay"].x = @racerPlayer[:Move4ButtonSprite].x + @racerPlayer[:Move4ButtonSprite].width/2 + 8
+		@sprites["move4ButtonTextOverlay"].y = @racerPlayer[:Move4ButtonSprite].y + @racerPlayer[:Move4ButtonSprite].height - 14
+		@sprites["move4ButtonTextOverlay"].z = 999999
+		@move4ButtonTextOverlay = @sprites["move4ButtonTextOverlay"].bitmap
+		pbSetSystemFont(@move4ButtonTextOverlay)
+		@move4ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		drawFormattedTextEx(@move4ButtonTextOverlay, 0, 4, Graphics.width, "V", @overlayBaseColor, @overlayShadowColor)
 	end
 	
 	def self.setMiscVariables
@@ -287,7 +429,7 @@ class CrustangRacing
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
+			Move1: nil, Move1Effect: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move1ButtonCooldownMaskSprite: nil, Move2: nil, Move2Effect: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move2ButtonCooldownMaskSprite: nil, Move3: nil, Move3Effect: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move3ButtonCooldownMaskSprite: nil, Move4: nil, Move4Effect: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, Move4ButtonCooldownMaskSprite: nil,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
