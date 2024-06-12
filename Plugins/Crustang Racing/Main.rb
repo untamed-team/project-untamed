@@ -22,7 +22,7 @@ class CrustangRacing
 			
 			#give other racers temporary boost for testing purposes
 			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
-			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 2
+			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
 			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
 			
 		end
@@ -87,48 +87,31 @@ class CrustangRacing
 		
 		#lap line
 		@sprites["lapLine"].x = @sprites["track1"].x + @lapLineStartingX
-		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX		
+		@sprites["lapLineCopy"].x = @sprites["track2"].x + @lapLineStartingX
 	end #def trackMovementUpdate
 	
-	def self.checkForLap #################do I need to check if the racers come in contact with the copy lap line?
+	def self.checkForLap
 		#Lapping: true, LapCount: 0, CurrentPlacement: 1,
 		###################################
 		#============= Racer1 =============
 		###################################
-		if self.collides_with?(@racer1[:RacerSprite],@sprites["lapLine"]) && @racer1[:Lapping] != true
-			@racer1[:LapCount] += 1
-			@racer1[:Lapping] = true
-		end
-		@racer1[:Lapping] = false if !self.collides_with?(@racer1[:RacerSprite],@sprites["lapLine"])
+		@racer1[:LapCount] += 1 if @racer1[:PreviousPositionOnTrack] > @racer1[:PositionOnTrack]
 		
 		###################################
 		#============= Racer2 =============
 		###################################
-		if self.collides_with?(@racer2[:RacerSprite],@sprites["lapLine"]) && @racer2[:Lapping] != true
-			@racer2[:LapCount] += 1
-			@racer2[:Lapping] = true
-		end
-		@racer2[:Lapping] = false if !self.collides_with?(@racer2[:RacerSprite],@sprites["lapLine"])
+		@racer2[:LapCount] += 1 if @racer2[:PreviousPositionOnTrack] > @racer2[:PositionOnTrack]
 		
 		###################################
 		#============= Racer3 =============
 		###################################
-		if self.collides_with?(@racer3[:RacerSprite],@sprites["lapLine"]) && @racer3[:Lapping] != true
-			@racer3[:LapCount] += 1
-			@racer3[:Lapping] = true
-		end
-		@racer3[:Lapping] = false if !self.collides_with?(@racer3[:RacerSprite],@sprites["lapLine"])
+		@racer3[:LapCount] += 1 if @racer3[:PreviousPositionOnTrack] > @racer3[:PositionOnTrack]
 		
 		###################################
 		#============= Player =============
 		###################################
-		#if the racer is touching the lap line and not currently 'lapping', add a lap to the racer's count
-		if self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"]) && @racerPlayer[:Lapping] != true
-			@racerPlayer[:LapCount] += 1
-			@racerPlayer[:Lapping] = true
-			print "racer1 has gone #{@racer1[:LapCount]} laps, racer2 has gone #{@racer2[:LapCount]} laps, and racer3 has gone #{@racer3[:LapCount]} laps"
-		end
-		@racerPlayer[:Lapping] = false if !self.collides_with?(@racerPlayer[:RacerSprite],@sprites["lapLine"])
+		@racerPlayer[:LapCount] += 1 if @racerPlayer[:PreviousPositionOnTrack] > @racerPlayer[:PositionOnTrack]
+		
 	end #def self.checkForLap
 	
 	def self.updateRacerPositionOnTrack
@@ -136,12 +119,14 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
+		@racerPlayer[:PreviousPositionOnTrack] = @racerPlayer[:PositionOnTrack]
 		@racerPlayer[:PositionOnTrack] = @sprites["track1"].x.abs
 
 		#calculate the position of the other racers differently than the player. It would involve their X and the X of the track
 		###################################
 		#============= Racer1 =============
 		###################################
+		@racer1[:PreviousPositionOnTrack] = @racer1[:PositionOnTrack]
 		@racer1[:PositionOnTrack] += @racer1[:CurrentSpeed].floor
 		#reset position to near the beginning of the track when we get to the end of it
 		if @racer1[:PositionOnTrack] > @sprites["track1"].width
@@ -152,6 +137,7 @@ class CrustangRacing
 		###################################
 		#============= Racer2 =============
 		###################################
+		@racer2[:PreviousPositionOnTrack] = @racer2[:PositionOnTrack]
 		@racer2[:PositionOnTrack] += @racer2[:CurrentSpeed].floor
 		#reset position to near the beginning of the track when we get to the end of it
 		if @racer2[:PositionOnTrack] > @sprites["track1"].width
@@ -162,6 +148,7 @@ class CrustangRacing
 		###################################
 		#============= Racer3 =============
 		###################################
+		@racer3[:PreviousPositionOnTrack] = @racer3[:PositionOnTrack]
 		@racer3[:PositionOnTrack] += @racer3[:CurrentSpeed].floor
 		#reset position to near the beginning of the track when we get to the end of it
 		if @racer3[:PositionOnTrack] > @sprites["track1"].width
