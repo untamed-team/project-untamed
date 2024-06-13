@@ -125,12 +125,24 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
-		#move1
-		if @enteredCrustang.moves[0].id == :RAPIDSPIN || @enteredCrustang.moves[0].id == :FLAMEWHEEL || @enteredCrustang.moves[0].id == :HIGHHORSEPOWER || @enteredCrustang.moves[0].id == :SHIFTGEAR
-			print "assigning move1 the effect 'secondBoost'"
-		end
-		
-		
+		for i in 0...@enteredCrustang.moves.length
+			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+				if valueHash[:AssignedMoves].include?(@enteredCrustang.moves[i].id)
+					#print "found #{@enteredCrustang.moves[i].id} in #{valueHash}"
+					case i
+					when 0
+						@racerPlayer[:Move1] = valueHash
+					when 1
+						@racerPlayer[:Move2] = valueHash
+					when 2
+						@racerPlayer[:Move3] = valueHash
+					when 3
+						@racerPlayer[:Move4] = valueHash
+					end
+				end #if valueHash[:AssignedMoves].include?(@enteredCrustang.moves[i].id)
+			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		end #for i in 0...@enteredCrustang.moves.length
 	end #def self.assignMoveEffects
 	
 end #class CrustangRacing
