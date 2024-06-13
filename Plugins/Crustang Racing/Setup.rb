@@ -239,7 +239,8 @@ class CrustangRacing
 		#============= Move 1 =============
 		###################################
 		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["move1Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
+		filename = "button_#{@racerPlayer[:Move1][:EffectCode]}"
+		@sprites["move1Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/#{filename}", 2, 38, @viewport)
 		@sprites["move1Button"].x = @racerPlayer[:BoostButtonSprite].x + @racerPlayer[:BoostButtonSprite].width + @sprites["move1Button"].width/3
 		@sprites["move1Button"].y = Graphics.height - @sprites["move1Button"].height - 4
 		@sprites["move1Button"].z = 999999
@@ -272,105 +273,114 @@ class CrustangRacing
 		###################################
 		#============= Move 2 =============
 		###################################
-		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["move2Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
-		@sprites["move2Button"].x = @racerPlayer[:Move1ButtonSprite].x + @racerPlayer[:Move1ButtonSprite].width + @sprites["move2Button"].width/3
-		@sprites["move2Button"].y = Graphics.height - @sprites["move2Button"].height - 4
-		@sprites["move2Button"].z = 999999
+		if !@racerPlayer[:Move2].nil?
+			#animname, framecount, framewidth, frameheight, frameskip
+			filename = "button_#{@racerPlayer[:Move2][:EffectCode]}"
+			@sprites["move2Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/#{filename}", 2, 38, @viewport)
+			@sprites["move2Button"].x = @racerPlayer[:Move1ButtonSprite].x + @racerPlayer[:Move1ButtonSprite].width + @sprites["move2Button"].width/3
+			@sprites["move2Button"].y = Graphics.height - @sprites["move2Button"].height - 4
+			@sprites["move2Button"].z = 999999
 
-		@racerPlayer[:Move2ButtonSprite] = @sprites["move2Button"]
+			@racerPlayer[:Move2ButtonSprite] = @sprites["move2Button"]
 		
-		#draw cooldown mask
-		@racerPlayer[:Move2ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].x = @racerPlayer[:Move2ButtonSprite].x
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].y = @racerPlayer[:Move2ButtonSprite].y
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].z = 999999
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].opacity = 100
-		@racerPlayer[:Move2ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move2ButtonCooldownMaskSprite].width, 0)
+			#draw cooldown mask
+			@racerPlayer[:Move2ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].x = @racerPlayer[:Move2ButtonSprite].x
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].y = @racerPlayer[:Move2ButtonSprite].y
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].z = 999999
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].opacity = 100
+			@racerPlayer[:Move2ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move2ButtonCooldownMaskSprite].width, 0)
 		
-		#numbers for cooldown mask
-		number = @racerPlayer[:Move2ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
-		@move2CooldownPixelsToMovePerFrame = number / 100
+			#numbers for cooldown mask
+			number = @racerPlayer[:Move2ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+			@move2CooldownPixelsToMovePerFrame = number / 100
 		
-		#draw text over button saying how to use it
-		@sprites["move2ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
-		@sprites["move2ButtonTextOverlay"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width/2 + 8
-		@sprites["move2ButtonTextOverlay"].y = @racerPlayer[:Move2ButtonSprite].y + @racerPlayer[:Move2ButtonSprite].height - 14
-		@sprites["move2ButtonTextOverlay"].z = 999999
-		@move2ButtonTextOverlay = @sprites["move2ButtonTextOverlay"].bitmap
-		pbSetSystemFont(@move2ButtonTextOverlay)
-		@move2ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		drawFormattedTextEx(@move2ButtonTextOverlay, 0, 4, Graphics.width, "X", @overlayBaseColor, @overlayShadowColor)
+			#draw text over button saying how to use it
+			@sprites["move2ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+			@sprites["move2ButtonTextOverlay"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width/2 + 8
+			@sprites["move2ButtonTextOverlay"].y = @racerPlayer[:Move2ButtonSprite].y + @racerPlayer[:Move2ButtonSprite].height - 14
+			@sprites["move2ButtonTextOverlay"].z = 999999
+			@move2ButtonTextOverlay = @sprites["move2ButtonTextOverlay"].bitmap
+			pbSetSystemFont(@move2ButtonTextOverlay)
+			@move2ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+			drawFormattedTextEx(@move2ButtonTextOverlay, 0, 4, Graphics.width, "X", @overlayBaseColor, @overlayShadowColor)
+		end #if !@racerPlayer[:Move2].nil?
 		
 		###################################
 		#============= Move 3 =============
 		###################################
-		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["move3Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
-		@sprites["move3Button"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width + @sprites["move3Button"].width/3
-		@sprites["move3Button"].y = Graphics.height - @sprites["move3Button"].height - 4
-		@sprites["move3Button"].z = 999999
+		if !@racerPlayer[:Move3].nil?
+			#animname, framecount, framewidth, frameheight, frameskip
+			filename = "button_#{@racerPlayer[:Move3][:EffectCode]}"
+			@sprites["move3Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/#{filename}", 2, 38, @viewport)
+			@sprites["move3Button"].x = @racerPlayer[:Move2ButtonSprite].x + @racerPlayer[:Move2ButtonSprite].width + @sprites["move3Button"].width/3
+			@sprites["move3Button"].y = Graphics.height - @sprites["move3Button"].height - 4
+			@sprites["move3Button"].z = 999999
 
-		@racerPlayer[:Move3ButtonSprite] = @sprites["move3Button"]
+			@racerPlayer[:Move3ButtonSprite] = @sprites["move3Button"]
 		
-		#draw cooldown mask
-		@racerPlayer[:Move3ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].x = @racerPlayer[:Move3ButtonSprite].x
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].y = @racerPlayer[:Move3ButtonSprite].y
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].z = 999999
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].opacity = 100
-		@racerPlayer[:Move3ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move3ButtonCooldownMaskSprite].width, 0)
+			#draw cooldown mask
+			@racerPlayer[:Move3ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].x = @racerPlayer[:Move3ButtonSprite].x
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].y = @racerPlayer[:Move3ButtonSprite].y
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].z = 999999
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].opacity = 100
+			@racerPlayer[:Move3ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move3ButtonCooldownMaskSprite].width, 0)
 		
-		#numbers for cooldown mask
-		number = @racerPlayer[:Move3ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
-		@move3CooldownPixelsToMovePerFrame = number / 100
+			#numbers for cooldown mask
+			number = @racerPlayer[:Move3ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+			@move3CooldownPixelsToMovePerFrame = number / 100
 		
-		#draw text over button saying how to use it
-		@sprites["move3ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
-		@sprites["move3ButtonTextOverlay"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width/2 + 8
-		@sprites["move3ButtonTextOverlay"].y = @racerPlayer[:Move3ButtonSprite].y + @racerPlayer[:Move3ButtonSprite].height - 14
-		@sprites["move3ButtonTextOverlay"].z = 999999
-		@move3ButtonTextOverlay = @sprites["move3ButtonTextOverlay"].bitmap
-		pbSetSystemFont(@move3ButtonTextOverlay)
-		@move3ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		drawFormattedTextEx(@move3ButtonTextOverlay, 0, 4, Graphics.width, "C", @overlayBaseColor, @overlayShadowColor)
+			#draw text over button saying how to use it
+			@sprites["move3ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+			@sprites["move3ButtonTextOverlay"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width/2 + 8
+			@sprites["move3ButtonTextOverlay"].y = @racerPlayer[:Move3ButtonSprite].y + @racerPlayer[:Move3ButtonSprite].height - 14
+			@sprites["move3ButtonTextOverlay"].z = 999999
+			@move3ButtonTextOverlay = @sprites["move3ButtonTextOverlay"].bitmap
+			pbSetSystemFont(@move3ButtonTextOverlay)
+			@move3ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+			drawFormattedTextEx(@move3ButtonTextOverlay, 0, 4, Graphics.width, "C", @overlayBaseColor, @overlayShadowColor)
+		end #if !@racerPlayer[:Move3].nil?
 		
 		###################################
 		#============= Move 4 =============
 		###################################
-		#animname, framecount, framewidth, frameheight, frameskip
-		@sprites["move4Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/button_test", 2, 38, @viewport)
-		@sprites["move4Button"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width + @sprites["move4Button"].width/3
-		@sprites["move4Button"].y = Graphics.height - @sprites["move4Button"].height - 4
-		@sprites["move4Button"].z = 999999
+		if !@racerPlayer[:Move4].nil?
+			#animname, framecount, framewidth, frameheight, frameskip
+			filename = "button_#{@racerPlayer[:Move4][:EffectCode]}"
+			@sprites["move4Button"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/#{filename}", 2, 38, @viewport)
+			@sprites["move4Button"].x = @racerPlayer[:Move3ButtonSprite].x + @racerPlayer[:Move3ButtonSprite].width + @sprites["move4Button"].width/3
+			@sprites["move4Button"].y = Graphics.height - @sprites["move4Button"].height - 4
+			@sprites["move4Button"].z = 999999
 
-		@racerPlayer[:Move4ButtonSprite] = @sprites["move4Button"]
+			@racerPlayer[:Move4ButtonSprite] = @sprites["move4Button"]
 		
-		#draw cooldown mask
-		@racerPlayer[:Move4ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].x = @racerPlayer[:Move4ButtonSprite].x
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].y = @racerPlayer[:Move4ButtonSprite].y
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].z = 999999
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].opacity = 100
-		@racerPlayer[:Move4ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move4ButtonCooldownMaskSprite].width, 0)
+			#draw cooldown mask
+			@racerPlayer[:Move4ButtonCooldownMaskSprite] = IconSprite.new(0, 0, @viewport)
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].setBitmap("Graphics/Pictures/Crustang Racing/move_button_msak")
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].x = @racerPlayer[:Move4ButtonSprite].x
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].y = @racerPlayer[:Move4ButtonSprite].y
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].z = 999999
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].opacity = 100
+			@racerPlayer[:Move4ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move4ButtonCooldownMaskSprite].width, 0)
 		
-		#numbers for cooldown mask
-		number = @racerPlayer[:Move4ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
-		@move4CooldownPixelsToMovePerFrame = number / 100
+			#numbers for cooldown mask
+			number = @racerPlayer[:Move4ButtonSprite].height.percent_of(CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate)
+			@move4CooldownPixelsToMovePerFrame = number / 100
 		
-		#draw text over button saying how to use it
-		@sprites["move4ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
-		@sprites["move4ButtonTextOverlay"].x = @racerPlayer[:Move4ButtonSprite].x + @racerPlayer[:Move4ButtonSprite].width/2 + 8
-		@sprites["move4ButtonTextOverlay"].y = @racerPlayer[:Move4ButtonSprite].y + @racerPlayer[:Move4ButtonSprite].height - 14
-		@sprites["move4ButtonTextOverlay"].z = 999999
-		@move4ButtonTextOverlay = @sprites["move4ButtonTextOverlay"].bitmap
-		pbSetSystemFont(@move4ButtonTextOverlay)
-		@move4ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		drawFormattedTextEx(@move4ButtonTextOverlay, 0, 4, Graphics.width, "V", @overlayBaseColor, @overlayShadowColor)
-	end
+			#draw text over button saying how to use it
+			@sprites["move4ButtonTextOverlay"] = BitmapSprite.new(Graphics.width/2, Graphics.height/2, @viewport)
+			@sprites["move4ButtonTextOverlay"].x = @racerPlayer[:Move4ButtonSprite].x + @racerPlayer[:Move4ButtonSprite].width/2 + 8
+			@sprites["move4ButtonTextOverlay"].y = @racerPlayer[:Move4ButtonSprite].y + @racerPlayer[:Move4ButtonSprite].height - 14
+			@sprites["move4ButtonTextOverlay"].z = 999999
+			@move4ButtonTextOverlay = @sprites["move4ButtonTextOverlay"].bitmap
+			pbSetSystemFont(@move4ButtonTextOverlay)
+			@move4ButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+			drawFormattedTextEx(@move4ButtonTextOverlay, 0, 4, Graphics.width, "V", @overlayBaseColor, @overlayShadowColor)
+		end #if !@racerPlayer[:Move4].nil?
+	end #def self.drawMovesUI
 	
 	def self.setMiscVariables
 		#the below is how much to decrease speed per frame to reach the desired speed in 3 seconds
