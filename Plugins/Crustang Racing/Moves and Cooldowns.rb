@@ -3,38 +3,64 @@ class CrustangRacing
 	def self.beginCooldown(racer, moveNumber)
 		#move number 0 is boost
 		#Move1: nil, Move1Effect: nil, Move1CooldownTimer: nil, Move1ButtonSprite: nil
-		case moveNumber
-		when 0
+		#case moveNumber
+		#when 0
 			#boost
+			#un-press button
+		#	@racerPlayer[:BoostButtonSprite].frame = 0 if racer == @racerPlayer
+		#	#start cooldown timer
+		#	racer[:BoostCooldownTimer] = CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		#when 1
+			#move1
+			#un-press button
+		#	@racerPlayer[:Move1ButtonSprite].frame = 0 if racer == @racerPlayer
+			#start cooldown timer
+		#	racer[:Move1CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		#when 2
+			#move2
+			#un-press button
+		#	@racerPlayer[:Move2ButtonSprite].frame = 0 if racer == @racerPlayer
+			#start cooldown timer
+		#	racer[:Move2CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		#when 3
+			#move3
+			#un-press button
+		#	@racerPlayer[:Move3ButtonSprite].frame = 0 if racer == @racerPlayer
+			#start cooldown timer
+		#	racer[:Move3CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		#when 4
+			#move4
+			#un-press button
+		#	@racerPlayer[:Move4ButtonSprite].frame = 0 if racer == @racerPlayer
+			#start cooldown timer
+		#	racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		#end #case moveNumber
+		
+		#all moves except boost share a cooldown
+		if moveNumber == 0
 			#un-press button
 			@racerPlayer[:BoostButtonSprite].frame = 0 if racer == @racerPlayer
 			#start cooldown timer
 			racer[:BoostCooldownTimer] = CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-		when 1
+		else
 			#move1
-			#un-press button
 			@racerPlayer[:Move1ButtonSprite].frame = 0 if racer == @racerPlayer
 			#start cooldown timer
 			racer[:Move1CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-		when 2
 			#move2
-			#un-press button
-			@racerPlayer[:Move2ButtonSprite].frame = 0 if racer == @racerPlayer
+			@racerPlayer[:Move2ButtonSprite].frame = 0 if racer == @racerPlayer && @racerPlayer[:Move2ButtonSprite]
 			#start cooldown timer
 			racer[:Move2CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-		when 3
 			#move3
-			#un-press button
-			@racerPlayer[:Move3ButtonSprite].frame = 0 if racer == @racerPlayer
+			@racerPlayer[:Move3ButtonSprite].frame = 0 if racer == @racerPlayer && @racerPlayer[:Move3ButtonSprite]
 			#start cooldown timer
 			racer[:Move3CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-		when 4
 			#move4
-			#un-press button
-			@racerPlayer[:Move4ButtonSprite].frame = 0 if racer == @racerPlayer
+			@racerPlayer[:Move4ButtonSprite].frame = 0 if racer == @racerPlayer && @racerPlayer[:Move4ButtonSprite]
 			#start cooldown timer
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
-		end #case moveNumber
+		end #if moveNumber == 0
+		
 	end #def self.beginCooldown(move)
 	
 	def self.updateCooldownTimers
@@ -100,24 +126,24 @@ class CrustangRacing
 			@racerPlayer[:Move1ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move1ButtonCooldownMaskSprite].width, @move1CooldownPixelsToMovePerFrame*@racerPlayer[:Move1CooldownTimer].ceil)
 		end
 		#move2 timer
-		if @racerPlayer[:Move2CooldownTimer] > 0
+		if @racerPlayer[:Move2CooldownTimer] > 0 && @racerPlayer[:Move2ButtonSprite]
 			@racerPlayer[:Move2CooldownTimer] -= 1
 			@racerPlayer[:Move2ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move2ButtonCooldownMaskSprite].width, @move2CooldownPixelsToMovePerFrame*@racerPlayer[:Move2CooldownTimer].ceil)
 		end
 		#move3 timer
-		if @racerPlayer[:Move3CooldownTimer] > 0
+		if @racerPlayer[:Move3CooldownTimer] > 0 && @racerPlayer[:Move3ButtonSprite]
 			@racerPlayer[:Move3CooldownTimer] -= 1
 			@racerPlayer[:Move3ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move3ButtonCooldownMaskSprite].width, @move3CooldownPixelsToMovePerFrame*@racerPlayer[:Move3CooldownTimer].ceil)
 		end
 		#move4 timer
-		if @racerPlayer[:Move4CooldownTimer] > 0
+		if @racerPlayer[:Move4CooldownTimer] > 0 && @racerPlayer[:Move4ButtonSprite]
 			@racerPlayer[:Move4CooldownTimer] -= 1
 			@racerPlayer[:Move4ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move4ButtonCooldownMaskSprite].width, @move4CooldownPixelsToMovePerFrame*@racerPlayer[:Move4CooldownTimer].ceil)
 		end
 	end
 	
 	def self.moveEffect(racer, moveNumber)
-		#print "move number is #{moveNumber}"
+		#print "#{racer} used #{moveNumber}"
 	end #def self.moveEffect(racer, move)
 	
 	def self.assignMoveEffects
