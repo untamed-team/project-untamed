@@ -120,4 +120,17 @@ class CrustangRacing
 		#print "move number is #{moveNumber}"
 	end #def self.moveEffect(racer, move)
 	
+	def self.assignMoveEffects
+		#assign move effects based on the moves the racer has
+		###################################
+		#============= Player =============
+		###################################
+		#move1
+		if @enteredCrustang.moves[0].id == :RAPIDSPIN || @enteredCrustang.moves[0].id == :FLAMEWHEEL || @enteredCrustang.moves[0].id == :HIGHHORSEPOWER || @enteredCrustang.moves[0].id == :SHIFTGEAR
+			print "assigning move1 the effect 'secondBoost'"
+		end
+		
+		
+	end #def self.assignMoveEffects
+	
 end #class CrustangRacing

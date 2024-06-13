@@ -183,6 +183,8 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
+		@enteredCrustang = Pokemon.new(:CRUSTANG, 1)
+		@enteredCrustang.moves = [Pokemon::Move.new(:VISEGRIP),Pokemon::Move.new(:IRONDEFENSE),Pokemon::Move.new(:FLAMEWHEEL),Pokemon::Move.new(:RAPIDSPIN)]
 		filename = "Followers/CRUSTANG"
 		@sprites["racerPlayerPkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racerPlayerPkmn"].bitmap.width

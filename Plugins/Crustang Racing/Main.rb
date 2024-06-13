@@ -353,6 +353,7 @@ class CrustangRacing
 		self.setupRacerHashes
 		self.drawContestants
 		self.drawContestantsOnOverview
+		self.assignMoveEffects
 		self.drawMovesUI
 		self.setMiscVariables
 		
