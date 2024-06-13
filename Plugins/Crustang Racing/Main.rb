@@ -4,18 +4,20 @@ class CrustangRacing
 	def self.detectInput
 		Input.update
 		
-		#movement up and down
-		#@trackBorderTopY
-		#@trackBorderBottomY
+		###################################
+		#============ Movement ============
+		###################################
 		if Input.press?(Input::UP)
 			@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY
 		elsif Input.press?(Input::DOWN)
 			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
 		end
 		
-		#moves
+		###################################
+		#============= Boost =============
+		###################################
 		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
-			@sprites["boostButton"].frame = 1
+			@racerPlayer[:BoostButtonSprite].frame = 1
 			@racerPlayer[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED
 			@racerPlayer[:BoostTimer] = CrustangRacingSettings::BOOST_LENGTH_SECONDS * Graphics.frame_rate
 			self.beginCooldown(@racerPlayer, 0)
@@ -24,12 +26,50 @@ class CrustangRacing
 			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
 			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
 			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
-			
 		end
 		if Input.release?(CrustangRacingSettings::BOOST_BUTTON)
-			@sprites["boostButton"].frame = 0
+			@racerPlayer[:BoostButtonSprite].frame = 0
 		end
 		
+		###################################
+		#============= Moves =============
+		###################################
+		#move1
+		if Input.triggerex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@racerPlayer[:Move1ButtonSprite].frame = 1
+			self.moveEffect(@racerPlayer, 1)
+			self.beginCooldown(@racerPlayer, 1)
+		end
+		if Input.release?(CrustangRacingSettings::MOVE1_BUTTON)
+			@racerPlayer[:Move1ButtonSprite].frame = 0
+		end
+		#move2
+		if Input.triggerex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@racerPlayer[:Move2ButtonSprite].frame = 1
+			self.moveEffect(@racerPlayer, 2)
+			self.beginCooldown(@racerPlayer, 2)
+		end
+		if Input.release?(CrustangRacingSettings::MOVE2_BUTTON)
+			@racerPlayer[:Move2ButtonSprite].frame = 0
+		end
+		#move3
+		if Input.triggerex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@racerPlayer[:Move3ButtonSprite].frame = 1
+			self.moveEffect(@racerPlayer, 3)
+			self.beginCooldown(@racerPlayer, 3)
+		end
+		if Input.release?(CrustangRacingSettings::MOVE3_BUTTON)
+			@racerPlayer[:Move3ButtonSprite].frame = 0
+		end
+		#move4
+		if Input.triggerex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@racerPlayer[:Move4ButtonSprite].frame = 1
+			self.moveEffect(@racerPlayer, 4)
+			self.beginCooldown(@racerPlayer, 4)
+		end
+		if Input.release?(CrustangRacingSettings::MOVE4_BUTTON)
+			@racerPlayer[:Move4ButtonSprite].frame = 0
+		end
 	end #self.detectInput
 	
 	def self.updateOverlayText

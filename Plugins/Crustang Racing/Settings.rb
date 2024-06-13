@@ -30,9 +30,9 @@ BOOST_SPEED = 18
 #==================== MOVE SETTINGS ====================#
 #========================================================#
 MOVE_BUTTON_COOLDOWN_SECONDS = 20
-MOVE1_BUTTON = Input.triggerex?(:Z)
-MOVE2_BUTTON = Input.triggerex?(:X)
-MOVE3_BUTTON = Input.triggerex?(:C)
-MOVE4_BUTTON = Input.triggerex?(:V)
+MOVE1_BUTTON = :Z
+MOVE2_BUTTON = :X
+MOVE3_BUTTON = :C
+MOVE4_BUTTON = :V
 
 end #class CrustangRacingSettings
