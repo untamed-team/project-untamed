@@ -69,7 +69,7 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer1[:BoostCooldownTimer] -= 1 if @racer1[:BoostCooldownTimer] > 0
+		@racer1[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer1[:BoostCooldownTimer] > 0
 		#move1 timer
 		@racer1[:Move1CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -84,7 +84,7 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer2[:BoostCooldownTimer] -= 1 if @racer2[:BoostCooldownTimer] > 0
+		@racer2[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer2[:BoostCooldownTimer] > 0
 		#move1 timer
 		@racer2[:Move1CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -99,7 +99,7 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer3[:BoostCooldownTimer] -= 1 if @racer3[:BoostCooldownTimer] > 0
+		@racer3[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer3[:BoostCooldownTimer] > 0
 		#move1 timer
 		@racer3[:Move1CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -115,7 +115,7 @@ class CrustangRacing
 		#player moves' cooldown timers
 		#boost
 		if @racerPlayer[:BoostCooldownTimer] > 0
-			@racerPlayer[:BoostCooldownTimer] -= 1
+			@racerPlayer[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier]
 			#cooldown mask over move
 			@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
 		end #if @racerPlayer[:BoostCooldownTimer] > 0
