@@ -142,6 +142,25 @@ class CrustangRacing
 		end
 	end
 	
+	def self.updateCooldownMultipliers
+		if @startingCooldownMultiplier == true
+			@initialCooldownMultiplierTimer = CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate if !@initialCooldownMultiplierTimer
+			@initialCooldownMultiplierTimer -= 1
+			if @initialCooldownMultiplierTimer <= 0
+				@startingCooldownMultiplier = false
+				#set all cooldownmultipliers to 1
+				@racer1[:BoostCoolDownMultiplier] = 1
+				@racer1[:MoveCoolDownMultiplier] = 1
+				@racer2[:BoostCoolDownMultiplier] = 1
+				@racer2[:MoveCoolDownMultiplier] = 1
+				@racer3[:BoostCoolDownMultiplier] = 1
+				@racer3[:MoveCoolDownMultiplier] = 1
+				@racerPlayer[:BoostCoolDownMultiplier] = 1
+				@racerPlayer[:MoveCoolDownMultiplier] = 1
+			end
+		end
+	end #def self.updateCooldownMultipliers
+	
 	def self.moveEffect(racer, moveNumber)
 		#print "#{racer} used #{moveNumber}"
 	end #def self.moveEffect(racer, move)

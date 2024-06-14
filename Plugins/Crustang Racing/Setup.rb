@@ -184,7 +184,7 @@ class CrustangRacing
 		#============= Player =============
 		###################################
 		@enteredCrustang = Pokemon.new(:CRUSTANG, 1)
-		@enteredCrustang.moves = [Pokemon::Move.new(:VISEGRIP),Pokemon::Move.new(:IRONDEFENSE),Pokemon::Move.new(:FLAMEWHEEL)]
+		@enteredCrustang.moves = [Pokemon::Move.new(:LEER),Pokemon::Move.new(:HELPINGHAND),Pokemon::Move.new(:REST),Pokemon::Move.new(:RAPIDSPIN)]
 		filename = "Followers/CRUSTANG"
 		@sprites["racerPlayerPkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racerPlayerPkmn"].bitmap.width
@@ -389,6 +389,8 @@ class CrustangRacing
 		
 		#the below is how much to increase speed per frame to reach the desired speed in 3 seconds
 		@decelerationAmountPerFrame = CrustangRacingSettings::BOOST_SPEED / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+		
+		@startingCooldownMultiplier = true
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes

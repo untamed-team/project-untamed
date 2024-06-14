@@ -369,6 +369,7 @@ class CrustangRacing
 			self.updateRacerPositionOnScreen
 			self.trackOverviewMovementUpdate
 			self.detectInput
+			self.updateCooldownMultipliers
 			self.updateCooldownTimers
 			self.accelerateDecelerate
 			self.updateOverlayText
