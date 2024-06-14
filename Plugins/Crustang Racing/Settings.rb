@@ -29,7 +29,7 @@ BOOST_SPEED = 18
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 2
+MOVE_BUTTON_COOLDOWN_SECONDS = 16
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C

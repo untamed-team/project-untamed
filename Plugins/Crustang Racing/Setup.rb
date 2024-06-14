@@ -397,9 +397,9 @@ class CrustangRacing
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
-			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 2,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
@@ -411,9 +411,9 @@ class CrustangRacing
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
-			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil,  
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 2,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
@@ -425,9 +425,9 @@ class CrustangRacing
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
-			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, 
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 2,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
@@ -439,9 +439,9 @@ class CrustangRacing
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
-			BoostButtonSprite: nil, BoostCooldownTimer: 0, BoostButtonCooldownMaskSprite: nil,
+			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: 0, Move1ButtonSprite: nil, Move1ButtonCooldownMaskSprite: nil, Move2: nil, Move2CooldownTimer: 0, Move2ButtonSprite: nil, Move2ButtonCooldownMaskSprite: nil, Move3: nil, Move3CooldownTimer: 0, Move3ButtonSprite: nil, Move3ButtonCooldownMaskSprite: nil, Move4: nil, Move4CooldownTimer: 0, Move4ButtonSprite: nil, Move4ButtonCooldownMaskSprite: nil,
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move1ButtonSprite: nil, Move1ButtonCooldownMaskSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move2ButtonSprite: nil, Move2ButtonCooldownMaskSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move3ButtonSprite: nil, Move3ButtonCooldownMaskSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS, Move4ButtonSprite: nil, Move4ButtonCooldownMaskSprite: nil,  MoveCoolDownMultiplier: 2,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0,
 			#track overview positioning
