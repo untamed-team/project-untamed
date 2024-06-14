@@ -153,7 +153,7 @@ class CrustangRacing
 		@racerPlayer[:LapCount] += 1 if @racerPlayer[:PreviousPositionOnTrack] > @racerPlayer[:PositionOnTrack]
 		
 	end #def self.checkForLap
-	
+		
 	def self.updateRacerPositionOnTrack
 		#this is the position on the entire track, not the track overview
 		###################################
@@ -357,6 +357,9 @@ class CrustangRacing
 		self.drawMovesUI
 		self.setMiscVariables
 		
+		#set initial cooldown for moves and boost
+		#self.beginCooldown(racer, moveNumber)
+		
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
@@ -366,6 +369,7 @@ class CrustangRacing
 			self.updateRacerPositionOnScreen
 			self.trackOverviewMovementUpdate
 			self.detectInput
+			self.updateCooldownMultipliers
 			self.updateCooldownTimers
 			self.accelerateDecelerate
 			self.updateOverlayText
