@@ -1,9 +1,27 @@
 class CrustangRacing
-	def self.collides_with?(player,object)
-		if (object.x + object.width  >= player.x) && (object.x <= player.x + player.width) &&
-			 (object.y + object.height >= player.y) && (object.y <= player.y + player.height)
+	def self.collides_with?(racer,object)
+		if (object.x + object.width-object.width >= racer.x) && (object.x <= racer.x + racer.width) &&
+			 (object.y + object.height >= racer.y) && (object.y <= racer.y + racer.height)
 			return true
 		end
+	end
+	
+	#colliding with something in a direction
+	def self.collides_with_object_above?(racer,object)
+		#is the racer colliding with something above them?
+		return true if self.collides_with?(racer,object) && object.y < racer.y
+	end
+	def self.collides_with_object_below?(racer,object)
+		#is the racer colliding with something below them?
+		return true if self.collides_with?(racer,object) && object.y > racer.y
+	end
+	def self.collides_with_object_behind?(racer,object)
+		#is the racer colliding with something behind them?
+		return true if self.collides_with?(racer,object) && object.x < racer.x
+	end
+	def self.collides_with_object_front?(racer,object)
+		#is the racer colliding with something in front of them?
+		return true if self.collides_with?(racer,object) && object.x > racer.x
 	end
 end #class CrustangRacing
 

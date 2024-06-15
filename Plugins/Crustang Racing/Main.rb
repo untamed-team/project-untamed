@@ -7,9 +7,9 @@ class CrustangRacing
 		###################################
 		#============ Movement ============
 		###################################
-		if Input.press?(Input::UP)
+		if Input.press?(Input::UP) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 			@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY
-		elsif Input.press?(Input::DOWN)
+		elsif Input.press?(Input::DOWN) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
 		end
 		
@@ -70,6 +70,7 @@ class CrustangRacing
 		if Input.release?(CrustangRacingSettings::MOVE4_BUTTON)
 			@racerPlayer[:Move4ButtonSprite].frame = 0
 		end
+		
 	end #self.detectInput
 	
 	def self.updateOverlayText
@@ -356,9 +357,6 @@ class CrustangRacing
 		self.assignMoveEffects
 		self.drawMovesUI
 		self.setMiscVariables
-		
-		#set initial cooldown for moves and boost
-		#self.beginCooldown(racer, moveNumber)
 		
 		loop do
 			Graphics.update
