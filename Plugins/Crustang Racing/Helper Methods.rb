@@ -17,11 +17,11 @@ class CrustangRacing
 	end
 	def self.collides_with_object_behind?(racer,object)
 		#is the racer colliding with something behind them?
-		return true if self.collides_with?(racer,object) && object.x < racer.x
+		return true if object.x < racer.x && racer.x.between?(object.x, object.x + object.width) && (racer.y.between?(object.y, object.y + object.height-object.height/4) || object.y.between?(racer.y, racer.y + racer.height-racer.height/4))
 	end
-	def self.collides_with_object_front?(racer,object)
+	def self.collides_with_object_in_front?(racer,object)
 		#is the racer colliding with something in front of them?
-		return true if self.collides_with?(racer,object) && object.x > racer.x
+		return true if object.x > racer.x && object.x.between?(racer.x, racer.x + racer.width) && (object.y.between?(racer.y, racer.y + racer.height-racer.height/4) || racer.y.between?(object.y, object.y + object.height-object.height/4))
 	end
 end #class CrustangRacing
 
