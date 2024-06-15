@@ -52,6 +52,11 @@ class CrustangRacing
 	end #def self.drawContestantsOnOverview
 	
 	def self.trackOverviewMovementUpdate
+	
+	if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0].nil?
+		print "racer1" if
+	end
+	
 		###################################
 		#============= Racer1 =============
 		###################################

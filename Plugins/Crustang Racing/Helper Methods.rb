@@ -9,7 +9,7 @@ class CrustangRacing
 	#colliding with something in a direction
 	def self.collides_with_object_above?(racer,object)
 		#is the racer colliding with something above them?
-		return true if self.collides_with?(racer,object) && object.y < racer.y
+		return true if object.y < racer.y && racer.y.between?(object.y, object.y + object.height) && (racer.x.between?(object.x, object.x + object.width) || object.x.between?(racer.x, racer.x + racer.width))
 	end
 	def self.collides_with_object_below?(racer,object)
 		#is the racer colliding with something below them?
