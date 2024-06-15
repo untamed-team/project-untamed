@@ -13,7 +13,7 @@ class CrustangRacing
 	end
 	def self.collides_with_object_below?(racer,object)
 		#is the racer colliding with something below them?
-		return true if self.collides_with?(racer,object) && object.y > racer.y
+		return true if object.y > racer.y && object.y.between?(racer.y, racer.y + racer.height) && (object.x.between?(racer.x, racer.x + racer.width) || racer.x.between?(object.x, object.x + object.width))
 	end
 	def self.collides_with_object_behind?(racer,object)
 		#is the racer colliding with something behind them?
