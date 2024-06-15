@@ -24,7 +24,7 @@ class CrustangRacing
 		@sprites["racer2PkmnOverview"].z = 99999
 		@sprites["racer2PkmnOverview"].zoom_x = 0.5
 		@sprites["racer2PkmnOverview"].zoom_y = 0.5
-		@racer1[:RacerTrackOverviewSprite] = @sprites["racer2PkmnOverview"]
+		@racer2[:RacerTrackOverviewSprite] = @sprites["racer2PkmnOverview"]
 		
 		###################################
 		#============= Racer3 =============
@@ -36,7 +36,7 @@ class CrustangRacing
 		@sprites["racer3PkmnOverview"].z = 99999
 		@sprites["racer3PkmnOverview"].zoom_x = 0.5
 		@sprites["racer3PkmnOverview"].zoom_y = 0.5
-		@racer1[:RacerTrackOverviewSprite] = @sprites["racer3PkmnOverview"]
+		@racer3[:RacerTrackOverviewSprite] = @sprites["racer3PkmnOverview"]
 		
 		###################################
 		#============= Player =============
@@ -51,25 +51,17 @@ class CrustangRacing
 		@racerPlayer[:RacerTrackOverviewSprite] = @sprites["racerPlayerPkmnOverview"]
 	end #def self.drawContestantsOnOverview
 	
-	def self.trackOverviewMovementUpdate
-	
-	if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0].nil?
-		print "racer1" if
-	end
-	
+	def self.trackOverviewMovementUpdate	
 		###################################
 		#============= Racer1 =============
 		###################################
-		#player point on overview
+		#racer point on overview
 		@racer1[:PointOnTrackOverview] = (@racer1[:PositionOnTrack] / @trackDistanceBetweenPoints).floor
-		
 		#get the amount of pixels past the point we are at on the overview
 		remainder = @racer1[:PositionOnTrack] % @trackDistanceBetweenPoints
-
 		#get the percentage we have traveled into the point, 100% being when we reach the next point
 		percentageIntoCurrentPoint = remainder.percent_of(@trackDistanceBetweenPoints)
 		percentageIntoCurrentPoint = percentageIntoCurrentPoint / 100
-		
 		if @racer1[:PointOnTrackOverview] >= @trackEllipsesPoints.length-1
 			nextPoint = @trackEllipsesPoints[0]
 		else
@@ -77,33 +69,40 @@ class CrustangRacing
 		end
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
-		distanceBetweenPixelsX = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] - nextPoint[0]).abs
-		distanceBetweenPixelsY = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+		if @trackEllipsesPoints[@racer1[:PointOnTrackOverview]].nil?
+			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer1 pointOnTrackOverview is #{@racer1[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer1[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer1[:PointOnTrackOverview]]}"
+			print @trackEllipsesPoints[@racer1[:PointOnTrackOverview]]
+			print @trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1]
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1]
+		else
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]]
+		end
+		
 		#how many pixels away are we on the overview from the current point e.g. @racer1[:PointOnTrackOverview]
 		pixelsAwayFromCurrentPointX = distanceBetweenPixelsX * percentageIntoCurrentPoint
 		pixelsAwayFromCurrentPointY = distanceBetweenPixelsY * percentageIntoCurrentPoint
-		
 		#calculate whether we need to increase X or decrease X for the overview icon sprite
-		if @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] > nextPoint[0]
+		if overflowProtectionPointOnTrack[0] > nextPoint[0]
 			#decrease X
-			currentOverviewX = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] - (pixelsAwayFromCurrentPointX.floor)
-		elsif @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] < nextPoint[0]
+			currentOverviewX = overflowProtectionPointOnTrack[0] - (pixelsAwayFromCurrentPointX.floor)
+		elsif overflowProtectionPointOnTrack[0] < nextPoint[0]
 			#increase X
-			currentOverviewX = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][0] + (pixelsAwayFromCurrentPointX.floor)
+			currentOverviewX = overflowProtectionPointOnTrack[0] + (pixelsAwayFromCurrentPointX.floor)
 		end
-		
 		#calculate whether we need to increase Y or decrease Y for the overview icon sprite
-		if @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] > nextPoint[1]
+		if overflowProtectionPointOnTrack[1] > nextPoint[1]
 			#decrease Y
-			currentOverviewY = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] - (pixelsAwayFromCurrentPointY.floor)
-		elsif @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] < nextPoint[1]
+			currentOverviewY = overflowProtectionPointOnTrack[1] - (pixelsAwayFromCurrentPointY.floor)
+		elsif overflowProtectionPointOnTrack[1] < nextPoint[1]
 			#increase Y
-			currentOverviewY = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
-		end
-				
+			currentOverviewY = overflowProtectionPointOnTrack[1] + (pixelsAwayFromCurrentPointY.floor)
+		end	
 		@racer1[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer1PkmnOverview"].width/4
 		@racer1[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer1PkmnOverview"].height/4
-		
 		#put the overview icon sprite where it should be
 		@sprites["racer1PkmnOverview"].x = @racer1[:PositionXOnTrackOverview]
 		@sprites["racer1PkmnOverview"].y = @racer1[:PositionYOnTrackOverview]
@@ -111,7 +110,7 @@ class CrustangRacing
 		###################################
 		#============= Racer2 =============
 		###################################
-		#player point on overview
+		#racer point on overview
 		@racer2[:PointOnTrackOverview] = (@racer2[:PositionOnTrack] / @trackDistanceBetweenPoints).floor
 		#get the amount of pixels past the point we are at on the overview
 		remainder = @racer2[:PositionOnTrack] % @trackDistanceBetweenPoints
@@ -123,27 +122,39 @@ class CrustangRacing
 		else
 			nextPoint = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]+1]
 		end
+		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
-		distanceBetweenPixelsX = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] - nextPoint[0]).abs
-		distanceBetweenPixelsY = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+		if @trackEllipsesPoints[@racer2[:PointOnTrackOverview]].nil?
+			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer2 pointOnTrackOverview is #{@racer2[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer2[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer2[:PointOnTrackOverview]]}"
+			print @trackEllipsesPoints[@racer2[:PointOnTrackOverview]]
+			print @trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1]
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1]
+		else
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]]
+		end
+		
 		#how many pixels away are we on the overview from the current point e.g. @racer2[:PointOnTrackOverview]
 		pixelsAwayFromCurrentPointX = distanceBetweenPixelsX * percentageIntoCurrentPoint
 		pixelsAwayFromCurrentPointY = distanceBetweenPixelsY * percentageIntoCurrentPoint
 		#calculate whether we need to increase X or decrease X for the overview icon sprite
-		if @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] > nextPoint[0]
+		if overflowProtectionPointOnTrack[0] > nextPoint[0]
 			#decrease X
-			currentOverviewX = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] - (pixelsAwayFromCurrentPointX.floor)
-		elsif @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] < nextPoint[0]
+			currentOverviewX = overflowProtectionPointOnTrack[0] - (pixelsAwayFromCurrentPointX.floor)
+		elsif overflowProtectionPointOnTrack[0] < nextPoint[0]
 			#increase X
-			currentOverviewX = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][0] + (pixelsAwayFromCurrentPointX.floor)
+			currentOverviewX = overflowProtectionPointOnTrack[0] + (pixelsAwayFromCurrentPointX.floor)
 		end
 		#calculate whether we need to increase Y or decrease Y for the overview icon sprite
-		if @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] > nextPoint[1]
+		if overflowProtectionPointOnTrack[1] > nextPoint[1]
 			#decrease Y
-			currentOverviewY = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] - (pixelsAwayFromCurrentPointY.floor)
-		elsif @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] < nextPoint[1]
+			currentOverviewY = overflowProtectionPointOnTrack[1] - (pixelsAwayFromCurrentPointY.floor)
+		elsif overflowProtectionPointOnTrack[1] < nextPoint[1]
 			#increase Y
-			currentOverviewY = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
+			currentOverviewY = overflowProtectionPointOnTrack[1] + (pixelsAwayFromCurrentPointY.floor)
 		end	
 		@racer2[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer2PkmnOverview"].width/4
 		@racer2[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer2PkmnOverview"].height/4
@@ -154,7 +165,7 @@ class CrustangRacing
 		###################################
 		#============= Racer3 =============
 		###################################
-		#player point on overview
+		#racer point on overview
 		@racer3[:PointOnTrackOverview] = (@racer3[:PositionOnTrack] / @trackDistanceBetweenPoints).floor
 		#get the amount of pixels past the point we are at on the overview
 		remainder = @racer3[:PositionOnTrack] % @trackDistanceBetweenPoints
@@ -166,27 +177,39 @@ class CrustangRacing
 		else
 			nextPoint = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]+1]
 		end
+		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
-		distanceBetweenPixelsX = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] - nextPoint[0]).abs
-		distanceBetweenPixelsY = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+		if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]].nil?
+			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer3 pointOnTrackOverview is #{@racer3[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer3[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer3[:PointOnTrackOverview]]}"
+			print @trackEllipsesPoints[@racer3[:PointOnTrackOverview]]
+			print @trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1]
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1]
+		else
+			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] - nextPoint[0]).abs
+			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] - nextPoint[1]).abs
+			overflowProtectionPointOnTrack = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]]
+		end
+		
 		#how many pixels away are we on the overview from the current point e.g. @racer3[:PointOnTrackOverview]
 		pixelsAwayFromCurrentPointX = distanceBetweenPixelsX * percentageIntoCurrentPoint
 		pixelsAwayFromCurrentPointY = distanceBetweenPixelsY * percentageIntoCurrentPoint
 		#calculate whether we need to increase X or decrease X for the overview icon sprite
-		if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] > nextPoint[0]
+		if overflowProtectionPointOnTrack[0] > nextPoint[0]
 			#decrease X
-			currentOverviewX = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] - (pixelsAwayFromCurrentPointX.floor)
-		elsif @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] < nextPoint[0]
+			currentOverviewX = overflowProtectionPointOnTrack[0] - (pixelsAwayFromCurrentPointX.floor)
+		elsif overflowProtectionPointOnTrack[0] < nextPoint[0]
 			#increase X
-			currentOverviewX = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][0] + (pixelsAwayFromCurrentPointX.floor)
+			currentOverviewX = overflowProtectionPointOnTrack[0] + (pixelsAwayFromCurrentPointX.floor)
 		end
 		#calculate whether we need to increase Y or decrease Y for the overview icon sprite
-		if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] > nextPoint[1]
+		if overflowProtectionPointOnTrack[1] > nextPoint[1]
 			#decrease Y
-			currentOverviewY = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] - (pixelsAwayFromCurrentPointY.floor)
-		elsif @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] < nextPoint[1]
+			currentOverviewY = overflowProtectionPointOnTrack[1] - (pixelsAwayFromCurrentPointY.floor)
+		elsif overflowProtectionPointOnTrack[1] < nextPoint[1]
 			#increase Y
-			currentOverviewY = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
+			currentOverviewY = overflowProtectionPointOnTrack[1] + (pixelsAwayFromCurrentPointY.floor)
 		end	
 		@racer3[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer3PkmnOverview"].width/4
 		@racer3[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer3PkmnOverview"].height/4
