@@ -69,7 +69,10 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer1[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer1[:BoostCooldownTimer] > 0
+		@racer1[:BoostCooldownTimer] -= 1 * @racer1[:BoostCooldownMultiplier] if @racer1[:BoostCooldownTimer] > 0
+		#update boost timer
+		@racer1[:BoostTimer] -= 1 if @racer1[:BoostTimer] > 0
+		
 		#move1 timer
 		@racer1[:Move1CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -84,7 +87,10 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer2[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer2[:BoostCooldownTimer] > 0
+		@racer2[:BoostCooldownTimer] -= 1 * @racer2[:BoostCooldownMultiplier] if @racer2[:BoostCooldownTimer] > 0
+		#update boost timer
+		@racer2[:BoostTimer] -= 1 if @racer2[:BoostTimer] > 0
+		
 		#move1 timer
 		@racer2[:Move1CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -99,7 +105,10 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		#boost timer
-		@racer3[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier] if @racer3[:BoostCooldownTimer] > 0
+		@racer3[:BoostCooldownTimer] -= 1 * @racer3[:BoostCooldownMultiplier] if @racer3[:BoostCooldownTimer] > 0
+		#update boost timer
+		@racer3[:BoostTimer] -= 1 if @racer3[:BoostTimer] > 0
+		
 		#move1 timer
 		@racer3[:Move1CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move1CooldownTimer] > 0
 		#move2 timer
@@ -115,10 +124,21 @@ class CrustangRacing
 		#player moves' cooldown timers
 		#boost
 		if @racerPlayer[:BoostCooldownTimer] > 0
-			@racerPlayer[:BoostCooldownTimer] -= 1 * @racer1[:BoostCoolDownMultiplier]
+			@racerPlayer[:BoostCooldownTimer] -= 1 * @racerPlayer[:BoostCooldownMultiplier]
 			#cooldown mask over move
 			@racerPlayer[:BoostButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:BoostButtonCooldownMaskSprite].width, @boostCooldownPixelsToMovePerFrame*@racerPlayer[:BoostCooldownTimer].ceil)
 		end #if @racerPlayer[:BoostCooldownTimer] > 0
+		
+		#update boost timer
+		if @racerPlayer[:BoostTimer] > 0
+			@racerPlayer[:BoostTimer] -= 1
+		else
+			if @racerPlayer[:BoostingStatus] == true
+				@racerPlayer[:BoostingStatus] = false
+				@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
+				@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED #if also not being boosted by another racer, etc.
+			end
+		end
 		
 		#move1 timer
 		if @racerPlayer[:Move1CooldownTimer] > 0
@@ -149,20 +169,42 @@ class CrustangRacing
 			if @initialCooldownMultiplierTimer <= 0
 				@startingCooldownMultiplier = false
 				#set all cooldownmultipliers to 1
-				@racer1[:BoostCoolDownMultiplier] = 1
+				@racer1[:BoostCooldownMultiplier] = 1
 				@racer1[:MoveCoolDownMultiplier] = 1
-				@racer2[:BoostCoolDownMultiplier] = 1
+				@racer2[:BoostCooldownMultiplier] = 1
 				@racer2[:MoveCoolDownMultiplier] = 1
-				@racer3[:BoostCoolDownMultiplier] = 1
+				@racer3[:BoostCooldownMultiplier] = 1
 				@racer3[:MoveCoolDownMultiplier] = 1
-				@racerPlayer[:BoostCoolDownMultiplier] = 1
+				@racerPlayer[:BoostCooldownMultiplier] = 1
 				@racerPlayer[:MoveCoolDownMultiplier] = 1
 			end
 		end
 	end #def self.updateCooldownMultipliers
 	
 	def self.moveEffect(racer, moveNumber)
-		#print "#{racer} used #{moveNumber}"
+		if moveNumber == 0
+			###################################
+			#============= Boost =============
+			###################################
+			racer[:BoostingStatus] = true
+			racer[:PreviousDesiredSpeed] = racer[:DesiredSpeed]
+			racer[:DesiredSpeed] = CrustangRacingSettings::BOOST_SPEED
+			racer[:BoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
+			self.beginCooldown(racer, 0)
+			
+			#give other racers temporary boost for testing purposes
+			#@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
+			#@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
+			#@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
+		else
+			#find out what move it is based on the racer and move number
+		end
+		
+		
+		#make speeding up gradual
+		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
+		
+		
 	end #def self.moveEffect(racer, move)
 	
 	def self.assignMoveEffects

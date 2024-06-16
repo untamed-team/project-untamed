@@ -18,14 +18,7 @@ class CrustangRacing
 		###################################
 		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@racerPlayer[:BoostButtonSprite].frame = 1
-			@racerPlayer[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED
-			@racerPlayer[:BoostTimer] = CrustangRacingSettings::BOOST_LENGTH_SECONDS * Graphics.frame_rate
-			self.beginCooldown(@racerPlayer, 0)
-			
-			#give other racers temporary boost for testing purposes
-			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
-			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
-			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
+			self.moveEffect(@racerPlayer, 0)
 		end
 		if Input.release?(CrustangRacingSettings::BOOST_BUTTON)
 			@racerPlayer[:BoostButtonSprite].frame = 0
@@ -262,15 +255,21 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		if @racer1[:CurrentSpeed].floor < @racer1[:DesiredSpeed]
+		if @racer1[:BoostingStatus] == true #boosting
+			if @racer1[:CurrentSpeed].floor < @racer1[:DesiredSpeed]
+				#accelerate
+				@racer1[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
+		else #not boosting
 			#accelerate
-			@racer1[:CurrentSpeed] += @accelerationAmountPerFrame
+			if @racer1[:CurrentSpeed].floor < @racer1[:DesiredSpeed]
+				@racer1[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
 		end
 		
 		#decelerate
-		if @racer1[:CurrentSpeed].floor > @racer1[:DesiredSpeed] && @racer1[:BoostTimer] <= 0
-			#decelerate
-			@racer1[:CurrentSpeed] -= @decelerationAmountPerFrame
+		if @racer1[:CurrentSpeed].floor > @racer1[:DesiredSpeed]
+			@racer1[:CurrentSpeed] -= @racer1[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -278,21 +277,24 @@ class CrustangRacing
 			@racer1[:CurrentSpeed] = @racer1[:CurrentSpeed].floor
 		end
 		
-		#update boost timers for racers
-		@racer1[:BoostTimer] -= 1
-		
 		###################################
 		#============= Racer2 =============
 		###################################
-		if @racer2[:CurrentSpeed].floor < @racer2[:DesiredSpeed]
+		if @racer2[:BoostingStatus] == true #boosting
+			if @racer2[:CurrentSpeed].floor < @racer2[:DesiredSpeed]
+				#accelerate
+				@racer2[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
+		else #not boosting
 			#accelerate
-			@racer2[:CurrentSpeed] += @accelerationAmountPerFrame
+			if @racer2[:CurrentSpeed].floor < @racer2[:DesiredSpeed]
+				@racer2[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
 		end
 		
 		#decelerate
-		if @racer2[:CurrentSpeed].floor > @racer2[:DesiredSpeed] && @racer2[:BoostTimer] <= 0
-			#decelerate
-			@racer2[:CurrentSpeed] -= @decelerationAmountPerFrame
+		if @racer2[:CurrentSpeed].floor > @racer2[:DesiredSpeed]
+			@racer2[:CurrentSpeed] -= @racer2[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -300,21 +302,24 @@ class CrustangRacing
 			@racer2[:CurrentSpeed] = @racer2[:CurrentSpeed].floor
 		end
 		
-		#update boost timers for racers
-		@racer2[:BoostTimer] -= 1
-		
 		###################################
 		#============= Racer3 =============
 		###################################
-		if @racer3[:CurrentSpeed].floor < @racer3[:DesiredSpeed]
+		if @racer3[:BoostingStatus] == true #boosting
+			if @racer3[:CurrentSpeed].floor < @racer3[:DesiredSpeed]
+				#accelerate
+				@racer3[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
+		else #not boosting
 			#accelerate
-			@racer3[:CurrentSpeed] += @accelerationAmountPerFrame
+			if @racer3[:CurrentSpeed].floor < @racer3[:DesiredSpeed]
+				@racer3[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
 		end
 		
 		#decelerate
-		if @racer3[:CurrentSpeed].floor > @racer3[:DesiredSpeed] && @racer3[:BoostTimer] <= 0
-			#decelerate
-			@racer3[:CurrentSpeed] -= @decelerationAmountPerFrame
+		if @racer3[:CurrentSpeed].floor > @racer3[:DesiredSpeed]
+			@racer3[:CurrentSpeed] -= @racer3[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -322,30 +327,30 @@ class CrustangRacing
 			@racer3[:CurrentSpeed] = @racer3[:CurrentSpeed].floor
 		end
 		
-		#update boost timers for racers
-		@racer3[:BoostTimer] -= 1
-		
 		###################################
 		#============= Player =============
 		###################################
-		if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
+		if @racerPlayer[:BoostingStatus] == true #boosting
+			if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
+				#accelerate
+				@racerPlayer[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
+		else #not boosting
 			#accelerate
-			@racerPlayer[:CurrentSpeed] += @accelerationAmountPerFrame
+			if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
+				@racerPlayer[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			end
 		end
 		
 		#decelerate
-		if @racerPlayer[:CurrentSpeed].floor > @racerPlayer[:DesiredSpeed] && @racerPlayer[:BoostTimer] <= 0
-			#decelerate
-			@racerPlayer[:CurrentSpeed] -= @decelerationAmountPerFrame
+		if @racerPlayer[:CurrentSpeed].floor > @racerPlayer[:DesiredSpeed]
+			@racerPlayer[:CurrentSpeed] -= @racerPlayer[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
 		if @racerPlayer[:CurrentSpeed].floor == @racerPlayer[:DesiredSpeed]
 			@racerPlayer[:CurrentSpeed] = @racerPlayer[:CurrentSpeed].floor
 		end
-		
-		#update boost timers for racers
-		@racerPlayer[:BoostTimer] -= 1
 		
 	end #def self.accelerateDecelerate
 	

@@ -19,12 +19,13 @@ CONTESTANTS = [
 ]
 
 #========================================================#
-#==================== BUTTON SETTINGS ====================#
+#==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = SECONDS_TO_NORMALIZE_SPEED#20
+BOOST_BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18
+SECONDS_TO_REACH_BOOST_SPEED = 3
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
