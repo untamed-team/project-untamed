@@ -21,7 +21,7 @@ CONTESTANTS = [
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 20
+BOOST_BUTTON_COOLDOWN_SECONDS = 3
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18

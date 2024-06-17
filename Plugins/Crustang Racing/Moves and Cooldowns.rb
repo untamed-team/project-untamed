@@ -200,11 +200,6 @@ class CrustangRacing
 			#find out what move it is based on the racer and move number
 		end
 		
-		
-		#make speeding up gradual
-		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
-		
-		
 	end #def self.moveEffect(racer, move)
 	
 	def self.assignMoveEffects

@@ -7,10 +7,26 @@ class CrustangRacing
 		###################################
 		#============ Movement ============
 		###################################
-		if Input.press?(Input::UP) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+		if Input.press?(Input::UP)
+			#if colliding with any racer in front or behind
+			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+				#don't restrict up and DOWN
+			else
+				#if colliding with something above you and not in front or behind, restrict movement
+				return if self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+			end
 			@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY
-		elsif Input.press?(Input::DOWN) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+			
+		elsif Input.press?(Input::DOWN)
+			#if colliding with any racer in front or behind
+			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+				#don't restrict up and DOWN
+			else
+				#if colliding with something below you and not in front or behind, restrict movement
+				return if self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+			end
 			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
+			
 		end
 		
 		###################################
@@ -354,6 +370,45 @@ class CrustangRacing
 		
 	end #def self.accelerateDecelerate
 	
+	def self.checkForCollisions
+		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
+		###################################
+		#============= Racer1 =============
+		###################################
+		
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		
+		
+		###################################
+		#============= Player =============
+		###################################
+		#crash into another racer in front of this racer
+		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite])
+			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
+			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
+			@racerPlayer[:CurrentSpeed] = @racer1[:CurrentSpeed]
+		end
+		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite])
+			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
+			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
+			@racerPlayer[:CurrentSpeed] = @racer2[:CurrentSpeed]
+		end
+		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
+			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
+			@racerPlayer[:CurrentSpeed] = @racer3[:CurrentSpeed]
+		end
+		
+	end #def self.checkForCollisions
+	
 	def self.main
 		self.setup
 		self.setupRacerHashes
@@ -375,6 +430,7 @@ class CrustangRacing
 			self.updateCooldownMultipliers
 			self.updateCooldownTimers
 			self.accelerateDecelerate
+			self.checkForCollisions
 			self.updateOverlayText
 			self.checkForLap
 		end
