@@ -74,13 +74,37 @@ class CrustangRacing
 		@racer1[:BoostTimer] -= 1 if @racer1[:BoostTimer] > 0
 		
 		#move1 timer
-		@racer1[:Move1CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move1CooldownTimer] > 0
+		if @racer1[:Move1CooldownTimer] > 0
+			if @racer1[:ReduceCooldownCount] > 0 && @racer1[:Move1][:EffectCode] == "reduceCooldown"
+				#do not allow cool down if this move is a reduceCooldown move, and the racer still has cooldown reduction active (this is to prevent stacking)
+			else
+				#reduceCooldownCount is > 0 and move1 effect is NOT reduce cooldown or
+				#reduceCooldownCount is <= 0 and move1 effect IS reduce cooldown or
+				#reduce cooldownCount is <= 0 and move1 effect is NOT reduce cooldown
+				@racer1[:Move1CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier]
+			end
+		end
 		#move2 timer
-		@racer1[:Move2CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move2CooldownTimer] > 0
+		if @racer1[:Move2CooldownTimer] > 0
+			if @racer1[:ReduceCooldownCount] > 0 && @racer1[:Move2][:EffectCode] == "reduceCooldown"
+			else
+				@racer1[:Move2CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier]
+			end
+		end
 		#move3 timer
-		@racer1[:Move3CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move3CooldownTimer] > 0
+		if @racer1[:Move3CooldownTimer] > 0
+			if @racer1[:ReduceCooldownCount] > 0 && @racer1[:Move3][:EffectCode] == "reduceCooldown"
+			else
+				@racer1[:Move3CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier]
+			end
+		end
 		#move4 timer
-		@racer1[:Move4CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier] if @racer1[:Move4CooldownTimer] > 0
+		if @racer1[:Move4CooldownTimer] > 0
+			if @racer1[:ReduceCooldownCount] > 0 && @racer1[:Move4][:EffectCode] == "reduceCooldown"
+			else
+				@racer1[:Move4CooldownTimer] -= 1 * @racer1[:MoveCoolDownMultiplier]
+			end
+		end
 		
 		###################################
 		#============= Racer2 =============
@@ -92,13 +116,37 @@ class CrustangRacing
 		@racer2[:BoostTimer] -= 1 if @racer2[:BoostTimer] > 0
 		
 		#move1 timer
-		@racer2[:Move1CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move1CooldownTimer] > 0
+		if @racer2[:Move1CooldownTimer] > 0
+			if @racer2[:ReduceCooldownCount] > 0 && @racer2[:Move1][:EffectCode] == "reduceCooldown"
+				#do not allow cool down if this move is a reduceCooldown move, and the racer still has cooldown reduction active (this is to prevent stacking)
+			else
+				#reduceCooldownCount is > 0 and move1 effect is NOT reduce cooldown or
+				#reduceCooldownCount is <= 0 and move1 effect IS reduce cooldown or
+				#reduce cooldownCount is <= 0 and move1 effect is NOT reduce cooldown
+				@racer2[:Move1CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier]
+			end
+		end
 		#move2 timer
-		@racer2[:Move2CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move2CooldownTimer] > 0
+		if @racer2[:Move2CooldownTimer] > 0
+			if @racer2[:ReduceCooldownCount] > 0 && @racer2[:Move2][:EffectCode] == "reduceCooldown"
+			else
+				@racer2[:Move2CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier]
+			end
+		end
 		#move3 timer
-		@racer2[:Move3CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move3CooldownTimer] > 0
+		if @racer2[:Move3CooldownTimer] > 0
+			if @racer2[:ReduceCooldownCount] > 0 && @racer2[:Move3][:EffectCode] == "reduceCooldown"
+			else
+				@racer2[:Move3CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier]
+			end
+		end
 		#move4 timer
-		@racer2[:Move4CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier] if @racer2[:Move4CooldownTimer] > 0
+		if @racer2[:Move4CooldownTimer] > 0
+			if @racer2[:ReduceCooldownCount] > 0 && @racer2[:Move4][:EffectCode] == "reduceCooldown"
+			else
+				@racer2[:Move4CooldownTimer] -= 1 * @racer2[:MoveCoolDownMultiplier]
+			end
+		end
 		
 		###################################
 		#============= Racer3 =============
@@ -110,13 +158,37 @@ class CrustangRacing
 		@racer3[:BoostTimer] -= 1 if @racer3[:BoostTimer] > 0
 		
 		#move1 timer
-		@racer3[:Move1CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move1CooldownTimer] > 0
+		if @racer3[:Move1CooldownTimer] > 0
+			if @racer3[:ReduceCooldownCount] > 0 && @racer3[:Move1][:EffectCode] == "reduceCooldown"
+				#do not allow cool down if this move is a reduceCooldown move, and the racer still has cooldown reduction active (this is to prevent stacking)
+			else
+				#reduceCooldownCount is > 0 and move1 effect is NOT reduce cooldown or
+				#reduceCooldownCount is <= 0 and move1 effect IS reduce cooldown or
+				#reduce cooldownCount is <= 0 and move1 effect is NOT reduce cooldown
+				@racer3[:Move1CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier]
+			end
+		end
 		#move2 timer
-		@racer3[:Move2CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move2CooldownTimer] > 0
+		if @racer3[:Move2CooldownTimer] > 0
+			if @racer3[:ReduceCooldownCount] > 0 && @racer3[:Move2][:EffectCode] == "reduceCooldown"
+			else
+				@racer3[:Move2CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier]
+			end
+		end
 		#move3 timer
-		@racer3[:Move3CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move3CooldownTimer] > 0
+		if @racer3[:Move3CooldownTimer] > 0
+			if @racer3[:ReduceCooldownCount] > 0 && @racer3[:Move3][:EffectCode] == "reduceCooldown"
+			else
+				@racer3[:Move3CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier]
+			end
+		end
 		#move4 timer
-		@racer3[:Move4CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier] if @racer3[:Move4CooldownTimer] > 0
+		if @racer3[:Move4CooldownTimer] > 0
+			if @racer3[:ReduceCooldownCount] > 0 && @racer3[:Move4][:EffectCode] == "reduceCooldown"
+			else
+				@racer3[:Move4CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier]
+			end
+		end
 		
 		###################################
 		#============= Player =============
@@ -141,24 +213,36 @@ class CrustangRacing
 		end
 		
 		#move1 timer
-		if @racerPlayer[:Move1CooldownTimer] > 0
-			@racerPlayer[:Move1CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
+		if @racerPlayer[:Move1CooldownTimer] > 0 && @racerPlayer[:Move1ButtonSprite]
 			@racerPlayer[:Move1ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move1ButtonCooldownMaskSprite].width, @move1CooldownPixelsToMovePerFrame*@racerPlayer[:Move1CooldownTimer].ceil)
+			if @racerPlayer[:ReduceCooldownCount] > 0 && @racerPlayer[:Move1][:EffectCode] == "reduceCooldown"
+			else
+				@racerPlayer[:Move1CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
+			end
 		end
 		#move2 timer
 		if @racerPlayer[:Move2CooldownTimer] > 0 && @racerPlayer[:Move2ButtonSprite]
-			@racerPlayer[:Move2CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
 			@racerPlayer[:Move2ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move2ButtonCooldownMaskSprite].width, @move2CooldownPixelsToMovePerFrame*@racerPlayer[:Move2CooldownTimer].ceil)
+			if @racerPlayer[:ReduceCooldownCount] > 0 && @racerPlayer[:Move2][:EffectCode] == "reduceCooldown"
+			else
+				@racerPlayer[:Move2CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
+			end
 		end
 		#move3 timer
 		if @racerPlayer[:Move3CooldownTimer] > 0 && @racerPlayer[:Move3ButtonSprite]
-			@racerPlayer[:Move3CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
 			@racerPlayer[:Move3ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move3ButtonCooldownMaskSprite].width, @move3CooldownPixelsToMovePerFrame*@racerPlayer[:Move3CooldownTimer].ceil)
+			if @racerPlayer[:ReduceCooldownCount] > 0 && @racerPlayer[:Move3][:EffectCode] == "reduceCooldown"
+			else
+				@racerPlayer[:Move3CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
+			end
 		end
 		#move4 timer
 		if @racerPlayer[:Move4CooldownTimer] > 0 && @racerPlayer[:Move4ButtonSprite]
-			@racerPlayer[:Move4CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
 			@racerPlayer[:Move4ButtonCooldownMaskSprite].src_rect = Rect.new(0, 0, @racerPlayer[:Move4ButtonCooldownMaskSprite].width, @move4CooldownPixelsToMovePerFrame*@racerPlayer[:Move4CooldownTimer].ceil)
+			if @racerPlayer[:ReduceCooldownCount] > 0 && @racerPlayer[:Move4][:EffectCode] == "reduceCooldown"
+			else
+				@racerPlayer[:Move4CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
+			end
 		end
 	end
 	
@@ -197,7 +281,39 @@ class CrustangRacing
 			#@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
 			#@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
 		else
-			#find out what move it is based on the racer and move number
+			#do something based on the racer's move's effect
+			case moveNumber
+			when 1
+				move = racer[:Move1]
+			when 2
+				move = racer[:Move2]
+			when 3
+				move = racer[:Move3]
+			when 4
+				move = racer[:Move4]
+			end
+			
+			if racer[:ReduceCooldownCount] > 0
+				racer[:ReduceCooldownCount] -= 1
+			else
+				#reached the end of the reduceCooldownCount, so set cooldownMultiplier back to normal
+				racer[:MoveCoolDownMultiplier] = 1
+			end
+			
+			case move[:EffectCode]
+			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
+			when "spinOut" #Racers around you spin out, slowing them down temporarily.
+			when "speedUpTarget" #Speed up another racer around you, making them more likely to hit obstacles.
+			when "reduceCooldown" #Move cooldowns are reduced by half for 3 uses.
+				racer[:ReduceCooldownCount] = 3
+				racer[:MoveCoolDownMultiplier] = 8
+			when "secondBoost" #Gain a little speed for a short time.
+			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
+			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.
+			when "push" #Push racers nearby further away to your left or right.
+			when "destroyObstacle" #Destory an obstacle in front of you.
+			end
+			
 		end
 		
 	end #def self.moveEffect(racer, move)

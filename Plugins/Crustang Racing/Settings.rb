@@ -21,7 +21,7 @@ CONTESTANTS = [
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 3
+BOOST_BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18
@@ -30,7 +30,7 @@ SECONDS_TO_REACH_BOOST_SPEED = 3
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 16
+MOVE_BUTTON_COOLDOWN_SECONDS = 20
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
