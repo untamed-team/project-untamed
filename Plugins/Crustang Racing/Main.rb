@@ -26,7 +26,6 @@ class CrustangRacing
 				return if self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 			end
 			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
-			
 		end
 		
 		###################################

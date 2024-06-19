@@ -72,6 +72,7 @@ class CrustangRacing
 		@racer1[:BoostCooldownTimer] -= 1 * @racer1[:BoostCooldownMultiplier] if @racer1[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer1[:BoostTimer] -= 1 if @racer1[:BoostTimer] > 0
+		@racer1[:SecondaryBoostTimer] -= 1 if @racer1[:SecondaryBoostTimer] > 0
 		
 		#move1 timer
 		if @racer1[:Move1CooldownTimer] > 0
@@ -114,6 +115,7 @@ class CrustangRacing
 		@racer2[:BoostCooldownTimer] -= 1 * @racer2[:BoostCooldownMultiplier] if @racer2[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer2[:BoostTimer] -= 1 if @racer2[:BoostTimer] > 0
+		@racer2[:SecondaryBoostTimer] -= 1 if @racer2[:SecondaryBoostTimer] > 0
 		
 		#move1 timer
 		if @racer2[:Move1CooldownTimer] > 0
@@ -156,6 +158,7 @@ class CrustangRacing
 		@racer3[:BoostCooldownTimer] -= 1 * @racer3[:BoostCooldownMultiplier] if @racer3[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer3[:BoostTimer] -= 1 if @racer3[:BoostTimer] > 0
+		@racer3[:SecondaryBoostTimer] -= 1 if @racer3[:SecondaryBoostTimer] > 0
 		
 		#move1 timer
 		if @racer3[:Move1CooldownTimer] > 0
@@ -202,9 +205,10 @@ class CrustangRacing
 		end #if @racerPlayer[:BoostCooldownTimer] > 0
 		
 		#update boost timer
-		if @racerPlayer[:BoostTimer] > 0
-			@racerPlayer[:BoostTimer] -= 1
-		else
+		@racerPlayer[:BoostTimer] -= 1 if @racerPlayer[:BoostTimer] > 0
+		@racerPlayer[:SecondaryBoostTimer] -= 1 if @racerPlayer[:SecondaryBoostTimer] > 0
+		
+		if @racerPlayer[:BoostTimer] <= 0 && @racerPlayer[:SecondaryBoostTimer] <= 0
 			if @racerPlayer[:BoostingStatus] == true
 				@racerPlayer[:BoostingStatus] = false
 				@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
@@ -305,8 +309,12 @@ class CrustangRacing
 			when "speedUpTarget" #Speed up another racer around you, making them more likely to hit obstacles.
 			when "reduceCooldown" #Move cooldowns are reduced by half for 3 uses.
 				racer[:ReduceCooldownCount] = 4
-				racer[:MoveCoolDownMultiplier] = 8
+				racer[:MoveCoolDownMultiplier] = 2
 			when "secondBoost" #Gain a little speed for a short time.
+				racer[:BoostingStatus] = true
+				racer[:PreviousDesiredSpeed] = racer[:DesiredSpeed]
+				racer[:DesiredSpeed] = CrustangRacingSettings::SECONDARY_BOOST_SPEED
+				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
 			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
 			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.
 			when "push" #Push racers nearby further away to your left or right.

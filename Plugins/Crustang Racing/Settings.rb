@@ -26,6 +26,7 @@ BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18
 SECONDS_TO_REACH_BOOST_SPEED = 3
+SECONDARY_BOOST_SPEED = 15
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
