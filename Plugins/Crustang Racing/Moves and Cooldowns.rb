@@ -281,9 +281,9 @@ class CrustangRacing
 			self.beginCooldown(racer, 0)
 			
 			#give other racers temporary boost for testing purposes
-			#@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
-			#@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 12
-			#@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
+			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
+			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 1
+			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 1
 		else
 			#do something based on the racer's move's effect
 			case moveNumber
@@ -306,6 +306,10 @@ class CrustangRacing
 			case move[:EffectCode]
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
+				self.spinOut(racer, @racer1) if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
+				self.spinOut(racer, @racer2) if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
+				self.spinOut(racer, @racer3) if racer != @racer3 && self.withinSpinOutRange?(racer, @racer3)
+				self.spinOut(racer, @racerPlayer) if racer != @racerPlayer && self.withinSpinOutRange?(racer, @racerPlayer)
 			when "speedUpTarget" #Speed up another racer around you, making them more likely to hit obstacles.
 			when "reduceCooldown" #Move cooldowns are reduced by half for 3 uses.
 				racer[:ReduceCooldownCount] = 4
@@ -324,6 +328,62 @@ class CrustangRacing
 		end
 		
 	end #def self.moveEffect(racer, move)
+	
+	def self.withinSpinOutRange?(attacker, recipient)
+		spinOutRange = CrustangRacingSettings::SPINOUT_RANGE_X
+		
+		###### Checking behind attacker
+		if attacker[:PositionOnTrack] < spinOutRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackBehindAttacker = []
+			positionOnTrackBehindAttacker.push([0, attacker[:PositionOnTrack]])
+			amountHittingEndOfTrack = spinOutRange - attacker[:PositionOnTrack]
+			positionOnTrackBehindAttacker.push(@sprites["track1"].width - amountHittingEndOfTrack, @sprites["track1"].width)
+			#the above will result in something like this:
+			#positionOnTrackBehindAttacker is an array with these elements: [[0, 106], [6100, 6144]]
+			#so if the recipient is between positionOnTrackBehindAttacker[0][0] and positionOnTrackBehindAttacker[0][1]
+			#or between positionOnTrackBehindAttacker[1][0] and positionOnTrackBehindAttacker[1][1], they are within range
+		else
+			positionOnTrackBehindAttacker = attacker[:PositionOnTrack] - spinOutRange
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackBehindAttacker.kind_of?(Array)
+			return true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[0][0], positionOnTrackBehindAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[1][0], positionOnTrackBehindAttacker[1][1])
+		else
+			return true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker, attacker[:PositionOnTrack])
+		end
+		
+		###### Checking in front of attacker
+		if attacker[:PositionOnTrack] > @sprites["track1"].width - spinOutRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfAttacker = []
+			positionOnTrackInFrontOfAttacker.push([attacker[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = spinOutRange - (@sprites["track1"].width - attacker[:PositionOnTrack])
+			positionOnTrackInFrontOfAttacker.push(0, amountHittingBeginningOfTrack)
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfAttacker is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfAttacker = attacker[:PositionOnTrack] + spinOutRange
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackInFrontOfAttacker.kind_of?(Array)
+			return true if recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[0][0], positionOnTrackInFrontOfAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[1][0], positionOnTrackInFrontOfAttacker[1][1])
+		else
+			return true if recipient[:PositionOnTrack].between?(attacker[:PositionOnTrack], positionOnTrackInFrontOfAttacker)
+		end
+
+		#if all checks have been made and the recipient is not within range of any of them, return false
+		return false
+	end #def self.withinSpinOutRange?
+	
+	def self.spinOut(attacker, recipient)
+		print "Spinning out racer1" if recipient == @racer1
+		print "Spinning out racer2" if recipient == @racer2
+		print "Spinning out racer3" if recipient == @racer3
+		print "Spinning out player" if recipient == @racerPlayer
+	end #self.spinOut
 	
 	def self.assignMoveEffects
 		#assign move effects based on the moves the racer has

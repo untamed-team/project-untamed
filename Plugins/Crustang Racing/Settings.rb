@@ -21,21 +21,23 @@ CONTESTANTS = [
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 20
+BOOST_BUTTON_COOLDOWN_SECONDS = 1#20
 BOOST_BUTTON = Input::SPECIAL
-BOOST_LENGTH_SECONDS = 3
-BOOST_SPEED = 18
-SECONDS_TO_REACH_BOOST_SPEED = 3
-SECONDARY_BOOST_SPEED = 15
+BOOST_LENGTH_SECONDS = 1#3
+BOOST_SPEED = 13#18
+SECONDS_TO_REACH_BOOST_SPEED = 1#3
+SECONDARY_BOOST_SPEED = 13#15
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 20
+MOVE_BUTTON_COOLDOWN_SECONDS = 1#20
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
 MOVE4_BUTTON = :V
+
+SPINOUT_RANGE_X = 150 #in pixels on the track
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#
