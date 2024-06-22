@@ -281,9 +281,9 @@ class CrustangRacing
 			self.beginCooldown(racer, 0)
 			
 			#give other racers temporary boost for testing purposes
-			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 2
-			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 1
-			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 1
+			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 5
+			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 4
+			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 1
 		else
 			#do something based on the racer's move's effect
 			case moveNumber
@@ -338,7 +338,7 @@ class CrustangRacing
 			positionOnTrackBehindAttacker = []
 			positionOnTrackBehindAttacker.push([0, attacker[:PositionOnTrack]])
 			amountHittingEndOfTrack = spinOutRange - attacker[:PositionOnTrack]
-			positionOnTrackBehindAttacker.push(@sprites["track1"].width - amountHittingEndOfTrack, @sprites["track1"].width)
+			positionOnTrackBehindAttacker.push([@sprites["track1"].width - amountHittingEndOfTrack, @sprites["track1"].width])
 			#the above will result in something like this:
 			#positionOnTrackBehindAttacker is an array with these elements: [[0, 106], [6100, 6144]]
 			#so if the recipient is between positionOnTrackBehindAttacker[0][0] and positionOnTrackBehindAttacker[0][1]
@@ -360,7 +360,7 @@ class CrustangRacing
 			positionOnTrackInFrontOfAttacker = []
 			positionOnTrackInFrontOfAttacker.push([attacker[:PositionOnTrack], @sprites["track1"].width])
 			amountHittingBeginningOfTrack = spinOutRange - (@sprites["track1"].width - attacker[:PositionOnTrack])
-			positionOnTrackInFrontOfAttacker.push(0, amountHittingBeginningOfTrack)
+			positionOnTrackInFrontOfAttacker.push([0, amountHittingBeginningOfTrack])
 			#the above array will look something like this:
 			#positionOnTrackInFrontOfAttacker is an array with these elements: [[6100, 6144], [0, 106]]
 		else
@@ -374,6 +374,8 @@ class CrustangRacing
 			return true if recipient[:PositionOnTrack].between?(attacker[:PositionOnTrack], positionOnTrackInFrontOfAttacker)
 		end
 
+
+		print "recipient[:PositionOnTrack] is #{recipient[:PositionOnTrack]} and positionOnTrackBehindAttacker is #{positionOnTrackBehindAttacker}"
 		#if all checks have been made and the recipient is not within range of any of them, return false
 		return false
 	end #def self.withinSpinOutRange?
