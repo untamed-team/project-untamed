@@ -150,6 +150,12 @@ class CrustangRacing
 		@racer1[:RacerSprite] = @sprites["racer1Pkmn"]
 		@racingPkmnStartingY += 72
 		
+		@sprites["racer1SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_X*2, CrustangRacingSettings::SPINOUT_RANGE_X*2, @viewport)
+		@sprites["racer1SpinOutRange"].x = 0
+		@sprites["racer1SpinOutRange"].y = 0
+		@sprites["racer1SpinOutRange"].z = 999999
+		@racer1SpinOutRangeSprite = @sprites["racer1SpinOutRange"].bitmap
+		
 		###################################
 		#============= Racer2 =============
 		###################################
@@ -164,6 +170,12 @@ class CrustangRacing
 		@sprites["racer2Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer2[:RacerSprite] = @sprites["racer2Pkmn"]
 		@racingPkmnStartingY += 72
+		
+		@sprites["racer2SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_X*2, CrustangRacingSettings::SPINOUT_RANGE_X*2, @viewport)
+		@sprites["racer2SpinOutRange"].x = 0
+		@sprites["racer2SpinOutRange"].y = 0
+		@sprites["racer2SpinOutRange"].z = 999999
+		@racer2SpinOutRangeSprite = @sprites["racer2SpinOutRange"].bitmap
 		
 		###################################
 		#============= Racer3 =============
@@ -180,6 +192,12 @@ class CrustangRacing
 		@racer3[:RacerSprite] = @sprites["racer3Pkmn"]
 		@racingPkmnStartingY += 72
 		
+		@sprites["racer3SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_X*2, CrustangRacingSettings::SPINOUT_RANGE_X*2, @viewport)
+		@sprites["racer3SpinOutRange"].x = 0
+		@sprites["racer3SpinOutRange"].y = 0
+		@sprites["racer3SpinOutRange"].z = 999999
+		@racer3SpinOutRangeSprite = @sprites["racer3SpinOutRange"].bitmap
+		
 		###################################
 		#============= Player =============
 		###################################
@@ -195,6 +213,12 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racerPlayerPkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racerPlayer[:RacerSprite] = @sprites["racerPlayerPkmn"]
+		
+		@sprites["racerPlayerSpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_X*2, CrustangRacingSettings::SPINOUT_RANGE_X*2, @viewport)
+		@sprites["racerPlayerSpinOutRange"].x = 0
+		@sprites["racerPlayerSpinOutRange"].y = 0
+		@sprites["racerPlayerSpinOutRange"].z = 999999
+		@racerPlayerSpinOutRangeSprite = @sprites["racerPlayerSpinOutRange"].bitmap
 		
 	end #def drawContestants
 	

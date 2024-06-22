@@ -306,6 +306,14 @@ class CrustangRacing
 			case move[:EffectCode]
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
+				#put a rectangle around the racer showing the range
+				Square.new(
+				x: 100, y: 200,
+				size: 125,
+				color: 'blue',
+				z: 10
+				)
+				
 				self.spinOut(racer, @racer1) if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 				self.spinOut(racer, @racer2) if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
 				self.spinOut(racer, @racer3) if racer != @racer3 && self.withinSpinOutRange?(racer, @racer3)
