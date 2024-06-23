@@ -281,8 +281,8 @@ class CrustangRacing
 			self.beginCooldown(racer, 0)
 			
 			#give other racers temporary boost for testing purposes
-			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 5
-			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 4
+			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 1
+			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 4
 			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 1
 		else
 			#do something based on the racer's move's effect
@@ -307,12 +307,8 @@ class CrustangRacing
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				#put a rectangle around the racer showing the range
-				Square.new(
-				x: 100, y: 200,
-				size: 125,
-				color: 'blue',
-				z: 10
-				)
+				
+				#make the racer's SpinOutRangeSprite visible for a few seconds
 				
 				self.spinOut(racer, @racer1) if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 				self.spinOut(racer, @racer2) if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
