@@ -437,6 +437,7 @@ class CrustangRacing
 			self.updateCooldownTimers
 			self.accelerateDecelerate
 			self.checkForCollisions
+			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
 		end

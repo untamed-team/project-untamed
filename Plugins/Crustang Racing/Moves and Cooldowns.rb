@@ -283,7 +283,7 @@ class CrustangRacing
 			#give other racers temporary boost for testing purposes
 			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
 			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 4
-			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 1
+			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 6
 		else
 			#do something based on the racer's move's effect
 			case moveNumber
@@ -344,7 +344,7 @@ class CrustangRacing
 		withinRangeX = true if attacker[:PositionOnTrack] == recipient[:PositionOnTrack]
 		
 		###### Checking behind attacker
-		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_HEIGHT + recipient[:RacerSprite].width/2
+		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_WIDTH + recipient[:RacerSprite].width/2
 		
 		if attacker[:PositionOnTrack] < spinOutRangeX
 			#there will be some overlap between the end of the track and the beginning of the track
@@ -368,7 +368,7 @@ class CrustangRacing
 		end
 		
 		###### Checking in front of attacker
-		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_HEIGHT + recipient[:RacerSprite].width/2
+		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_WIDTH + recipient[:RacerSprite].width/2
 		
 		if attacker[:PositionOnTrack] > @sprites["track1"].width - spinOutRangeX
 			#there will be some overlap between the end of the track and the beginning of the track
@@ -413,11 +413,122 @@ class CrustangRacing
 	end #def self.withinSpinOutRange?
 	
 	def self.spinOut(attacker, recipient)
-		print "Spinning out racer1" if recipient == @racer1
-		print "Spinning out racer2" if recipient == @racer2
-		print "Spinning out racer3" if recipient == @racer3
-		print "Spinning out player" if recipient == @racerPlayer
+		#print "Spinning out racer1" if recipient == @racer1
+		#print "Spinning out racer2" if recipient == @racer2
+		#print "Spinning out racer3" if recipient == @racer3
+		#print "Spinning out player" if recipient == @racerPlayer
+		
+		#SPINOUT_DURATION_IN_SECONDS = 3
+		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
+		
+		#maybe lock input / AI movement if being spun out?
+		
+		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
+		
 	end #self.spinOut
+	
+	def self.updateSpinOutAnimation
+		#right now, @framesBetweenSpinOutDirections is 10, so every 10 frames, we switch directions
+		racer = @racer1
+		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
+			case racer[:RacerSprite].src_rect.y
+			when 0 #currently facing down
+				racer[:RacerSprite].src_rect.y = 64 #spin left
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 64 #currently facing left
+				racer[:RacerSprite].src_rect.y = 192 #spin up
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 128 #currently facing right
+				racer[:RacerSprite].src_rect.y = 0 #spin down
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 192 #currently facing up
+				racer[:RacerSprite].src_rect.y = 128 #spin right
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			end
+		end
+		
+		racer = @racer2
+		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
+			case racer[:RacerSprite].src_rect.y
+			when 0 #currently facing down
+				racer[:RacerSprite].src_rect.y = 64 #spin left
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 64 #currently facing left
+				racer[:RacerSprite].src_rect.y = 192 #spin up
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 128 #currently facing right
+				racer[:RacerSprite].src_rect.y = 0 #spin down
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 192 #currently facing up
+				racer[:RacerSprite].src_rect.y = 128 #spin right
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			end
+		end
+		
+		racer = @racer3
+		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
+			case racer[:RacerSprite].src_rect.y
+			when 0 #currently facing down
+				racer[:RacerSprite].src_rect.y = 64 #spin left
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 64 #currently facing left
+				racer[:RacerSprite].src_rect.y = 192 #spin up
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 128 #currently facing right
+				racer[:RacerSprite].src_rect.y = 0 #spin down
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			when 192 #currently facing up
+				racer[:RacerSprite].src_rect.y = 128 #spin right
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			end
+		end
+		
+		racer = @racerPlayer
+		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
+			case racer[:RacerSprite].src_rect.y
+			when 0 #currently facing down
+				racer[:RacerSprite].src_rect.y = 64 #spin left
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections
+			when 64 #currently facing left
+				racer[:RacerSprite].src_rect.y = 192 #spin up
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections
+			when 128 #currently facing right
+				racer[:RacerSprite].src_rect.y = 0 #spin down
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections
+			when 192 #currently facing up
+				racer[:RacerSprite].src_rect.y = 128 #spin right
+				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
+			end
+		end
+		
+		#subtract from the SpinOutTimer
+		if @racer1[:SpinOutTimer] > 0
+			@racer1[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer1[:SpinOutTimer] <= 0
+		end
+		if @racer2[:SpinOutTimer] > 0
+			@racer2[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer2[:SpinOutTimer] <= 0
+		end
+		if @racer3[:SpinOutTimer] > 0
+			@racer3[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer3[:SpinOutTimer] <= 0
+		end
+		if @racerPlayer[:SpinOutTimer] > 0
+			@racerPlayer[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racerPlayer[:SpinOutTimer] <= 0
+		end
+		
+		#subtract the SpinOutDirectionTimer, which signals the game to do the next rotation if <= 0, then it's set back to the full amount if the SpinOutTimer is still > 0
+		@racer1[:SpinOutDirectionTimer] -= 1 if @racer1[:SpinOutDirectionTimer] > 0
+		@racer2[:SpinOutDirectionTimer] -= 1 if @racer2[:SpinOutDirectionTimer] > 0
+		@racer3[:SpinOutDirectionTimer] -= 1 if @racer3[:SpinOutDirectionTimer] > 0
+		@racerPlayer[:SpinOutDirectionTimer] -= 1 if @racerPlayer[:SpinOutDirectionTimer] > 0
+	end #def self.updateSpinOutAnimation
 	
 	def self.assignMoveEffects
 		#assign move effects based on the moves the racer has
