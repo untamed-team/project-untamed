@@ -37,7 +37,8 @@ MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
 MOVE4_BUTTON = :V
 
-SPINOUT_RANGE_X = 150 #in pixels on the track
+SPINOUT_RANGE_WIDTH = 100 #in pixels on the track to the left AND right of attacker's sprite's center
+SPINOUT_RANGE_HEIGHT = 100 #in pixels on the track up AND down from attacker's sprite's center
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#

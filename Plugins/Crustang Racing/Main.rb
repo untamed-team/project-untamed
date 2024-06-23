@@ -103,13 +103,20 @@ class CrustangRacing
 		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 		
-	def self.moveSpritesWithTrack
-		#move sprites like the lap line, any obstacles, etc. along with the track as it passes by
-		#lap line
-		#@sprites["lapLine"].x -= @racerPlayer[:CurrentSpeed]
-		#@sprites["lapLineCopy"].x -= @racerPlayer[:CurrentSpeed]
+	def self.moveMiscSprites
+		###################################
+		#===== Spin Out Range Sprite =====
+		###################################
+		@racer1[:SpinOutRangeSprite].x = @racer1[:RacerSprite].x - @racer1[:SpinOutRangeSprite].width/2 + @racer1[:RacerSprite].width/2
+		@racer1[:SpinOutRangeSprite].y = @racer1[:RacerSprite].y - @racer1[:SpinOutRangeSprite].height/2 + @racer1[:RacerSprite].height/2
+		@racer2[:SpinOutRangeSprite].x = @racer2[:RacerSprite].x - @racer2[:SpinOutRangeSprite].width/2 + @racer2[:RacerSprite].width/2
+		@racer2[:SpinOutRangeSprite].y = @racer2[:RacerSprite].y - @racer2[:SpinOutRangeSprite].height/2 + @racer2[:RacerSprite].height/2
+		@racer3[:SpinOutRangeSprite].x = @racer3[:RacerSprite].x - @racer3[:SpinOutRangeSprite].width/2 + @racer3[:RacerSprite].width/2
+		@racer3[:SpinOutRangeSprite].y = @racer3[:RacerSprite].y - @racer3[:SpinOutRangeSprite].height/2 + @racer3[:RacerSprite].height/2
+		@racerPlayer[:SpinOutRangeSprite].x = @racerPlayer[:RacerSprite].x - @racerPlayer[:SpinOutRangeSprite].width/2 + @racerPlayer[:RacerSprite].width/2
+		@racerPlayer[:SpinOutRangeSprite].y = @racerPlayer[:RacerSprite].y - @racerPlayer[:SpinOutRangeSprite].height/2 + @racerPlayer[:RacerSprite].height/2
 		
-	end #def self.moveSpritesWithTrack
+	end #def self.moveMiscSprites
 	
 	def self.trackMovementUpdate #no need to modify
 		@sprites["track1"].x -= @racerPlayer[:CurrentSpeed]
@@ -421,7 +428,7 @@ class CrustangRacing
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
 			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
-			self.moveSpritesWithTrack
+			self.moveMiscSprites
 			self.updateRacerPositionOnTrack
 			self.updateRacerPositionOnScreen
 			self.trackOverviewMovementUpdate
