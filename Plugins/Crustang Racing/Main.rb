@@ -423,6 +423,7 @@ class CrustangRacing
 		self.assignMoveEffects
 		self.drawMovesUI
 		self.setMiscVariables
+		self.drawSpinOutRangeCircle
 		
 		loop do
 			Graphics.update

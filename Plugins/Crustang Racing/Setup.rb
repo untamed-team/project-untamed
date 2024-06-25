@@ -488,4 +488,56 @@ class CrustangRacing
 		}
 	end #def self.setupRacerHashes
 	
+	def self.drawSpinOutRangeCircle
+		@sprites["racerPlayerSpinOutRangeCircle"] = SpinOutRangeSprite.new
+		@sprites["racerPlayerSpinOutRangeCircle"].x = 10
+		@sprites["racerPlayerSpinOutRangeCircle"].y = 10
+		@sprites["racerPlayerSpinOutRangeCircle"].z = 999999
+        @sprites["racerPlayerSpinOutRangeCircle"].radius = 64 #@sprites["racerPlayerSpinOutRangeCircle"].radiusMax
+	end #def self.drawSpinOutRangeCircle
+	
+	
+	
 end #class CrustangRacing
+
+class SpinOutRangeSprite < Sprite
+  attr_reader :radius
+
+  def initialize(viewport = nil)
+    super(viewport)
+    @darkness = BitmapWrapper.new(Graphics.width, Graphics.height)
+    @radius = radiusMin
+    self.bitmap = @darkness
+    self.z      = 99998
+    refresh
+  end
+
+  def dispose
+    @darkness.dispose
+    super
+  end
+
+  def radiusMin; return 64;  end   # Before using Flash
+  def radiusMax; return 176; end   # After using Flash
+
+  def radius=(value)
+    @radius = value
+    refresh
+  end
+
+  def refresh
+    #@darkness.fill_rect(0, 0, Graphics.width/2, Graphics.height/2, Color.new(0, 0, 0, 255))
+    cx = Graphics.width / 2
+    cy = Graphics.height / 2
+    cradius = @radius
+    numfades = 2
+    (1..numfades).each do |i|
+      (cx - cradius..cx + cradius).each do |j|
+        diff2 = (cradius * cradius) - ((j - cx) * (j - cx))
+        diff = Math.sqrt(diff2)
+        @darkness.fill_rect(j, cy - diff, 1, diff * 2, Color.new(200, 0, 0, 255.0 * (numfades - i) / numfades))
+      end
+      cradius = (cradius * 0.9).floor
+    end
+  end
+end
