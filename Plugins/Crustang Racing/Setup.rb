@@ -493,7 +493,7 @@ class CrustangRacing
 		@sprites["racerPlayerSpinOutRangeCircle"].x = 10
 		@sprites["racerPlayerSpinOutRangeCircle"].y = 10
 		@sprites["racerPlayerSpinOutRangeCircle"].z = 999999
-        @sprites["racerPlayerSpinOutRangeCircle"].radius = 64 #@sprites["racerPlayerSpinOutRangeCircle"].radiusMax
+        @sprites["racerPlayerSpinOutRangeCircle"].radius = 64
 	end #def self.drawSpinOutRangeCircle
 	
 	

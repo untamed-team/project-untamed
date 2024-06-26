@@ -441,6 +441,7 @@ class CrustangRacing
 			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
+			@sprites["racerPlayerSpinOutRangeCircle"].radius
 		end
 	end #def self.main
 	
