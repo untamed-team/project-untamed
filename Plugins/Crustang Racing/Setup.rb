@@ -150,15 +150,6 @@ class CrustangRacing
 		@racer1[:RacerSprite] = @sprites["racer1Pkmn"]
 		@racingPkmnStartingY += 72
 		
-		@sprites["racer1SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_WIDTH*2, CrustangRacingSettings::SPINOUT_RANGE_HEIGHT*2, @viewport)
-		@sprites["racer1SpinOutRange"].x = 0
-		@sprites["racer1SpinOutRange"].y = 0
-		@sprites["racer1SpinOutRange"].z = 999999
-		@sprites["racer1SpinOutRange"].visible = false
-		@sprites["racer1SpinOutRange"].opacity = 100
-		@sprites["racer1SpinOutRange"].bitmap.fill_rect(@sprites["racer1SpinOutRange"].x, @sprites["racer1SpinOutRange"].y, @sprites["racer1SpinOutRange"].width, @sprites["racer1SpinOutRange"].height, Color.red)
-		@racer1[:SpinOutRangeSprite] = @sprites["racer1SpinOutRange"]
-		
 		###################################
 		#============= Racer2 =============
 		###################################
@@ -174,15 +165,6 @@ class CrustangRacing
 		@racer2[:RacerSprite] = @sprites["racer2Pkmn"]
 		@racingPkmnStartingY += 72
 		
-		@sprites["racer2SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_WIDTH*2, CrustangRacingSettings::SPINOUT_RANGE_HEIGHT*2, @viewport)
-		@sprites["racer2SpinOutRange"].x = 0
-		@sprites["racer2SpinOutRange"].y = 0
-		@sprites["racer2SpinOutRange"].z = 999999
-		@sprites["racer2SpinOutRange"].visible = false
-		@sprites["racer2SpinOutRange"].opacity = 100
-		@sprites["racer2SpinOutRange"].bitmap.fill_rect(@sprites["racer2SpinOutRange"].x, @sprites["racer2SpinOutRange"].y, @sprites["racer2SpinOutRange"].width, @sprites["racer2SpinOutRange"].height, Color.red)
-		@racer2[:SpinOutRangeSprite] = @sprites["racer2SpinOutRange"]
-		
 		###################################
 		#============= Racer3 =============
 		###################################
@@ -197,15 +179,6 @@ class CrustangRacing
 		@sprites["racer3Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer3[:RacerSprite] = @sprites["racer3Pkmn"]
 		@racingPkmnStartingY += 72
-		
-		@sprites["racer3SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_RANGE_WIDTH*2, CrustangRacingSettings::SPINOUT_RANGE_HEIGHT*2, @viewport)
-		@sprites["racer3SpinOutRange"].x = 0
-		@sprites["racer3SpinOutRange"].y = 0
-		@sprites["racer3SpinOutRange"].z = 999999
-		@sprites["racer3SpinOutRange"].visible = false
-		@sprites["racer3SpinOutRange"].opacity = 100
-		@sprites["racer3SpinOutRange"].bitmap.fill_rect(@sprites["racer3SpinOutRange"].x, @sprites["racer3SpinOutRange"].y, @sprites["racer3SpinOutRange"].width, @sprites["racer3SpinOutRange"].height, Color.red)
-		@racer3[:SpinOutRangeSprite] = @sprites["racer3SpinOutRange"]
 		
 		###################################
 		#============= Player =============
@@ -487,57 +460,5 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1,
 		}
 	end #def self.setupRacerHashes
-	
-	def self.drawSpinOutRangeCircle
-		@sprites["racerPlayerSpinOutRangeCircle"] = SpinOutRangeSprite.new
-		@sprites["racerPlayerSpinOutRangeCircle"].x = 10
-		@sprites["racerPlayerSpinOutRangeCircle"].y = 10
-		@sprites["racerPlayerSpinOutRangeCircle"].z = 999999
-        @sprites["racerPlayerSpinOutRangeCircle"].radius = 64
-	end #def self.drawSpinOutRangeCircle
-	
-	
-	
+
 end #class CrustangRacing
-
-class SpinOutRangeSprite < Sprite
-  attr_reader :radius
-
-  def initialize(viewport = nil)
-    super(viewport)
-    @darkness = BitmapWrapper.new(Graphics.width, Graphics.height)
-    @radius = radiusMin
-    self.bitmap = @darkness
-    self.z      = 99998
-    refresh
-  end
-
-  def dispose
-    @darkness.dispose
-    super
-  end
-
-  def radiusMin; return 64;  end   # Before using Flash
-  def radiusMax; return 176; end   # After using Flash
-
-  def radius=(value)
-    @radius = value
-    refresh
-  end
-
-  def refresh
-    #@darkness.fill_rect(0, 0, Graphics.width/2, Graphics.height/2, Color.new(0, 0, 0, 255))
-    cx = Graphics.width / 2
-    cy = Graphics.height / 2
-    cradius = @radius
-    numfades = 2
-    (1..numfades).each do |i|
-      (cx - cradius..cx + cradius).each do |j|
-        diff2 = (cradius * cradius) - ((j - cx) * (j - cx))
-        diff = Math.sqrt(diff2)
-        @darkness.fill_rect(j, cy - diff, 1, diff * 2, Color.new(200, 0, 0, 255.0 * (numfades - i) / numfades))
-      end
-      cradius = (cradius * 0.9).floor
-    end
-  end
-end

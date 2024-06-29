@@ -39,6 +39,8 @@ MOVE4_BUTTON = :V
 
 SPINOUT_RANGE_WIDTH = 100 #in pixels on the track to the left AND right of attacker's sprite's center
 SPINOUT_RANGE_HEIGHT = 100 #in pixels on the track up AND down from attacker's sprite's center
+SPINOUT_MIN_RANGE = 30
+SPINOUT_MAX_RANGE = 200
 SPINOUT_ROTATIONS_PER_SECOND = 2
 SPINOUT_DURATION_IN_SECONDS = 3
 SPINOUT_DESIRED_SPEED = 10
