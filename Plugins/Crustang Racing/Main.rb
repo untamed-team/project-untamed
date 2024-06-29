@@ -441,8 +441,6 @@ class CrustangRacing
 			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
-			@sprites["racerPlayerSpinOutRangeCircle"].radius += 1
-			print "touching racer1" if self.collides_with?(@racer1[:RacerSprite],@sprites["racerPlayerSpinOutRangeCircle"])
 		end
 	end #def self.main
 	
