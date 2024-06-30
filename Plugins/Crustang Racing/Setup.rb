@@ -197,8 +197,8 @@ class CrustangRacing
 		@racerPlayer[:RacerSprite] = @sprites["racerPlayerPkmn"]
 		
 		@sprites["racerPlayerSpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
-		@sprites["racerPlayerSpinOutRange"].x = @racerPlayer[:RacerSprite].x - @sprites["racerPlayerSpinOutRange"].width / 2
-		@sprites["racerPlayerSpinOutRange"].y = @racerPlayer[:RacerSprite].y - @sprites["racerPlayerSpinOutRange"].height / 2
+		@sprites["racerPlayerSpinOutRange"].x = 0#@racerPlayer[:RacerSprite].x - @sprites["racerPlayerSpinOutRange"].width / 2
+		@sprites["racerPlayerSpinOutRange"].y = 0#@racerPlayer[:RacerSprite].y - @sprites["racerPlayerSpinOutRange"].height / 2
 		@sprites["racerPlayerSpinOutRange"].z = 999999
 		@sprites["racerPlayerSpinOutRange"].visible = true
 		@sprites["racerPlayerSpinOutRange"].opacity = 100
