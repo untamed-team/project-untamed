@@ -48,7 +48,8 @@ class CrustangRacing
 			self.moveEffect(@racerPlayer, 1)
 			self.beginCooldown(@racerPlayer, 1)
 		end
-		if Input.release?(CrustangRacingSettings::MOVE1_BUTTON)
+		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON)
+			Console.echo_warn "not pressing move1"
 			@racerPlayer[:Move1ButtonSprite].frame = 0
 		end
 		#move2
@@ -57,7 +58,8 @@ class CrustangRacing
 			self.moveEffect(@racerPlayer, 2)
 			self.beginCooldown(@racerPlayer, 2)
 		end
-		if Input.release?(CrustangRacingSettings::MOVE2_BUTTON)
+		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON)
+			Console.echo_warn "not pressing move2"
 			@racerPlayer[:Move2ButtonSprite].frame = 0
 		end
 		#move3
@@ -66,7 +68,8 @@ class CrustangRacing
 			self.moveEffect(@racerPlayer, 3)
 			self.beginCooldown(@racerPlayer, 3)
 		end
-		if Input.release?(CrustangRacingSettings::MOVE3_BUTTON)
+		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON)
+			Console.echo_warn "not pressing move3"
 			@racerPlayer[:Move3ButtonSprite].frame = 0
 		end
 		#move4
@@ -75,7 +78,8 @@ class CrustangRacing
 			self.moveEffect(@racerPlayer, 4)
 			self.beginCooldown(@racerPlayer, 4)
 		end
-		if Input.release?(CrustangRacingSettings::MOVE4_BUTTON)
+		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON)
+			Console.echo_warn "not pressing move4"
 			@racerPlayer[:Move4ButtonSprite].frame = 0
 		end
 		
@@ -440,6 +444,7 @@ class CrustangRacing
 			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
+			Console.echo_warn "pressing move1" if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON)
 		end
 	end #def self.main
 	
