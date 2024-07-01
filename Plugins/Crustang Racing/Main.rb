@@ -31,11 +31,11 @@ class CrustangRacing
 		###################################
 		#============= Boost =============
 		###################################
-		if Input.trigger?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@racerPlayer[:BoostButtonSprite].frame = 1
-			self.moveEffect(@racerPlayer, 0)
 		end
-		if Input.release?(CrustangRacingSettings::BOOST_BUTTON)
+		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+			self.moveEffect(@racerPlayer, 0)
 			@racerPlayer[:BoostButtonSprite].frame = 0
 		end
 		
@@ -43,44 +43,48 @@ class CrustangRacing
 		#============= Moves =============
 		###################################
 		#move1
-		if Input.triggerex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
 			@racerPlayer[:Move1ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 1)
 			self.beginCooldown(@racerPlayer, 1)
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON)
-			Console.echo_warn "not pressing move1"
 			@racerPlayer[:Move1ButtonSprite].frame = 0
+			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 		end
 		#move2
 		if Input.triggerex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
 			@racerPlayer[:Move2ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 2)
 			self.beginCooldown(@racerPlayer, 2)
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON)
-			Console.echo_warn "not pressing move2"
 			@racerPlayer[:Move2ButtonSprite].frame = 0
+			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 		end
 		#move3
 		if Input.triggerex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
 			@racerPlayer[:Move3ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 3)
 			self.beginCooldown(@racerPlayer, 3)
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON)
-			Console.echo_warn "not pressing move3"
 			@racerPlayer[:Move3ButtonSprite].frame = 0
+			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 		end
 		#move4
 		if Input.triggerex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
 			@racerPlayer[:Move4ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 4)
 			self.beginCooldown(@racerPlayer, 4)
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON)
-			Console.echo_warn "not pressing move4"
 			@racerPlayer[:Move4ButtonSprite].frame = 0
+			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 		end
 		
 	end #self.detectInput
@@ -444,7 +448,7 @@ class CrustangRacing
 			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
-			Console.echo_warn "pressing move1" if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON)
+			Console.echo_warn @racerPlayer[:SpinOutCharge]
 		end
 	end #def self.main
 	

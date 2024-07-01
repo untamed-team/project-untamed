@@ -269,6 +269,21 @@ class CrustangRacing
 		end
 	end #def self.updateCooldownMultipliers
 	
+	def self.getMoveEffect(moveNumber)
+		case moveNumber
+		when 1
+			move = @racerPlayer[:Move1]
+		when 2
+			move = @racerPlayer[:Move2]
+		when 3
+			move = @racerPlayer[:Move3]
+		when 4
+			move = @racerPlayer[:Move4]
+		end
+		
+		return move[:EffectCode]
+	end #def self.getMoveEffect
+	
 	def self.moveEffect(racer, moveNumber)
 		if moveNumber == 0
 			###################################

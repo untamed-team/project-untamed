@@ -31,7 +31,7 @@ SECONDARY_BOOST_SPEED = 13#15
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 1#20
+MOVE_BUTTON_COOLDOWN_SECONDS = 20
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
