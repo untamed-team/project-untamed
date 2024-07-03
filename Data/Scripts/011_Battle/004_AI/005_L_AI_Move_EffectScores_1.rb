@@ -140,6 +140,115 @@ class Battle::AI
 				end
 			end      
 		end
+
+		if user.hasWorkingAbility(:ECHOCHAMBER) && move.soundMove?
+			skill = 100
+			aspeed = pbRoughStat(user,:SPEED,skill)
+			ospeed = pbRoughStat(target,:SPEED,skill)
+			fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE)
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0] 
+			maxmove=bestmove[1]
+			halfhealth=(user.totalhp/2)
+			if !targetSurvivesMove(maxmove,target,user)
+				if maxdam>(user.hp+halfhealth)
+					#score=0
+				else
+					if maxdam>=halfhealth
+						if fastermon
+							score*=0.7
+						else
+							score*=0.9
+						end
+					else
+						score*=1.2
+					end
+				end
+			else
+				if maxdam*1.5>user.hp
+					score*=1.2
+				end
+				if !fastermon
+					if maxdam*2>user.hp
+						score*=1.2
+					end
+				end
+			end
+
+			hpchange=(EndofTurnHPChanges(user,target,false,false,true,false,true)) # what % of our hp will change after end of turn effects go through
+			hpchange += 0.0625
+			opphpchange=(EndofTurnHPChanges(target,user,false,false,true)) # what % of our hp will change after end of turn effects go through
+			if opphpchange<1
+				oppchipdamage=((target.totalhp*(1-hpchange)))
+			end
+			thisdam=maxdam#*1.1
+			hplost=(user.totalhp-user.hp)
+			hplost+=maxdam if !fasterhealing
+			if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+				chipdamage=((user.totalhp*(1-hpchange)))
+				thisdam+=chipdamage
+			elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+				healing=((user.totalhp*(hpchange-1)))
+				thisdam-=healing if !(thisdam>user.hp)
+			end
+			if thisdam>hplost
+				#score*=0.1
+			else
+				if thisdam<=(halfhealth)
+					score*=1.2
+				else
+					if fastermon
+						if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+							score*=0.8
+						end
+					end
+				end
+			end
+			if ((user.hp.to_f)<=halfhealth)
+				score*=1.2
+			end
+			if pbHasSetupMove?(target) && move.statusMove?
+				score*=0.8
+			end 
+			if (user.hp.to_f)/user.totalhp<0.5
+				score*=1.15
+				if user.effects[PBEffects::Curse]
+					score*=1.2
+				end
+				if user.hp*4<user.totalhp
+					if user.poisoned?
+						score*=1.15
+					end
+					if user.effects[PBEffects::LeechSeed]>=0
+						score*=1.2
+					end
+					if user.hp<user.totalhp*0.13
+						if user.burned?
+							score*=1.2
+						end
+						if user.takesHailDamage? || user.takesSandstormDamage?
+							score*=1.2
+						end  
+					end            
+				end
+			end
+			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
+				score*=1.1
+			end
+			if target.poisoned? || target.burned? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
+				score*=1.15
+				if target.effects[PBEffects::Toxic]>0
+					score*=1.15
+				end
+			end
+			for m in target.moves
+				score*=1.15 if [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(m.id)
+			end
+			if target.effects[PBEffects::HyperBeam]>0
+				score*=1.15
+			end
+		end
 		
     case move.function
     #---------------------------------------------------------------------------

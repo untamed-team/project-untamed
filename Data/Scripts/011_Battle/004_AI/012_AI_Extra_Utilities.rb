@@ -756,6 +756,7 @@ class Battle::AI
 		pri +=1 if move.baseDamage==0 && user.hasActiveAbility?(:PRANKSTER) 
 		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
+		pri +=1 if move.soundMove? && move.baseDamage==0 && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)
 		return pri
 	end
 	
@@ -783,8 +784,9 @@ class Battle::AI
 		healing += 0.0625 if user.hasWorkingAbility(:RAINDISH) && @battle.pbWeather==:Rain
 		healing += 0.0625 if user.hasWorkingAbility(:ICEBODY) && @battle.pbWeather==:Hail
 		healing += 0.125 if user.status == :POISON && user.hasWorkingAbility(:POISONHEAL)
-		healing += 0.125 if (target.effects[PBEffects::LeechSeed]>-1 && !target.hasWorkingAbility(:LIQUIDOOZE)) 
+		healing += 0.125 if (target.effects[PBEffects::LeechSeed]>-1 && !target.hasWorkingAbility(:LIQUIDOOZE))
 		healing*=0 if user.effects[PBEffects::HealBlock]>0
+		healing*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
 		return healing if heal
 		if !(user.hasWorkingAbility(:MAGICGUARD)) 
 			if !(attitemworks && user.item == :SAFETYGOGGLES) || !(user.hasWorkingAbility(:OVERCOAT)) 
@@ -815,6 +817,7 @@ class Battle::AI
 				chip+=statuschip
 			end
 		end
+		chip*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
 		return chip if chips
 		diff=(healing-chip)
 		return diff if both

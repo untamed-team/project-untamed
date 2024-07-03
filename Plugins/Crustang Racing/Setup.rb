@@ -202,7 +202,7 @@ class CrustangRacing
 		@sprites["racerPlayerSpinOutRange"].z = 999999
 		@sprites["racerPlayerSpinOutRange"].visible = true
 		@sprites["racerPlayerSpinOutRange"].opacity = 100
-		@sprites["racerPlayerSpinOutRange"].bitmap.fill_rect(@sprites["racerPlayerSpinOutRange"].x, @sprites["racerPlayerSpinOutRange"].y, @sprites["racerPlayerSpinOutRange"].width, @sprites["racerPlayerSpinOutRange"].height, Color.red)
+		#@sprites["racerPlayerSpinOutRange"].bitmap.fill_rect(@sprites["racerPlayerSpinOutRange"].x, @sprites["racerPlayerSpinOutRange"].y, @sprites["racerPlayerSpinOutRange"].width, @sprites["racerPlayerSpinOutRange"].height, Color.red)
 		@racerPlayer[:SpinOutRangeSprite] = @sprites["racerPlayerSpinOutRange"]
 		
 	end #def drawContestants

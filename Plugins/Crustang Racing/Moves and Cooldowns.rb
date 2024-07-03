@@ -269,6 +269,20 @@ class CrustangRacing
 		end
 	end #def self.updateCooldownMultipliers
 	
+	def self.updateSpinOutRangeSprites
+		###################################
+		#============= Player =============
+		###################################
+		sprite = @racerPlayer[:SpinOutRangeSprite]
+		if @racerPlayer[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+			#outline
+			Console.echo_warn "updating bitmap"
+			sprite.bitmap.fill_rect(sprite.x + sprite.width/2 - @racerPlayer[:SpinOutCharge], sprite.y + sprite.height - @racerPlayer[:SpinOutCharge], @racerPlayer[:SpinOutCharge], @racerPlayer[:SpinOutCharge], Color.red)
+			#inside outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racerPlayer[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+	end #def self.updateSpinOutRangeSprites
+	
 	def self.getMoveEffect(moveNumber)
 		case moveNumber
 		when 1

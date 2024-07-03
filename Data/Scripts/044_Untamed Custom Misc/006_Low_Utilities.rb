@@ -369,16 +369,19 @@ def pbFieldEvolutionCheck(hm_used)
     next if !pkmn || pkmn.egg?
     next if pkmn.fainted?
     new_species = nil
-		if pkmn.isSpecies?(:MAGIKARP) && pkmn.level >= 20 && index == 0
+    decoder = PersonalNumberGenerator.new
+    evo1 = decoder.decode_personal_number("045033039041043033050048")
+    evo2 = decoder.decode_personal_number("039057033050033036047051")
+		if pkmn.isSpecies?(evo1.to_sym) && pkmn.level >= 20 && index == 0
 			case pkmn.form
-			when 0 # basic bitch
-				if hm_used == "waterfall"
-					new_species = :GYARADOS
+			when 0
+				if hm_used == "087065084069082070065076076"
+					new_species = evo2.to_sym
 				end
 #			when 1 # mega basic bitch
-			when 2 # jack's powertrip
-				if hm_used == "dive" && pkmn.happiness >= 200
-					new_species = :GYARADOS
+			when 2
+				if hm_used == "068073086069" && pkmn.happiness >= 200
+					new_species = evo2.to_sym
 				end
 			end
 		end
@@ -404,7 +407,7 @@ def pbAscendWaterfall
     $game_player.move_up
     terrain = $game_player.pbTerrainTag
 		if !terrain.waterfall && !terrain.waterfall_crest
-			pbFieldEvolutionCheck("waterfall")
+			pbFieldEvolutionCheck("087065084069082070065076076")
 			break
 		end
   end
@@ -438,7 +441,7 @@ def pbDive
       $scene.transfer_player(false)
       $game_map.autoplay
       $game_map.refresh
-			pbFieldEvolutionCheck("dive")
+			pbFieldEvolutionCheck("068073086069")
     }
     return true
   end
@@ -1010,4 +1013,56 @@ def nameToNumberConvert(name)
     total += letter_values[letter]
   end
   return total
+end
+
+def build_char_map
+  char_map = {}
+  (' '..'~').each_with_index do |char, index|
+    char_map[char] = format('%03d', index)
+  end
+  ('À'..'ÿ').each_with_index do |char, index|
+    char_map[char] = format('%04d', index + 1000)
+  end
+  char_map.invert
+end
+
+# look brah i got lazy
+class PersonalNumberGenerator
+  def initialize
+    @char_map = build_char_map
+    @reverse_char_map = @char_map.invert
+  end
+
+  def build_char_map
+    char_map = {}
+    (' '..'~').each_with_index do |char, index|
+      char_map[char] = format('%03d', index)
+    end
+    ('À'..'ÿ').each_with_index do |char, index|
+      char_map[char] = format('%04d', index + 1000)
+    end
+    char_map
+  end
+  
+  def decode_personal_number(encoded_text)
+    decoded_text = ''
+    i = 0
+    while i < encoded_text.length
+      if encoded_text[i..i+3].to_i <= 999
+        code = encoded_text[i..i+2]
+        i += 3
+      else
+        code = encoded_text[i..i+3]
+        i += 4
+      end
+
+      decoded_char = @reverse_char_map[code]
+      if decoded_char.nil?
+        #raise "Error: No mapping found for code #{code}"
+      else
+        decoded_text += decoded_char
+      end
+    end
+    decoded_text
+  end
 end

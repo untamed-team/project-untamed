@@ -286,6 +286,7 @@ class Battle::Battler
     @effects[PBEffects::Momentum]       		 = 0
     @effects[PBEffects::SlipperyPeel]        = false
     @effects[PBEffects::MoodyMemory]     		 = -1
+    @effects[PBEffects::PrioEchoChamber]     = -1
     @SetupMovesUsed             						 = []
   end
 

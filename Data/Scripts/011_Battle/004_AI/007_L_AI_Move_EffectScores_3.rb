@@ -2424,6 +2424,7 @@ class Battle::AI
 				else
 					halfhealth=(user.totalhp/4)
 				end
+				halfhealth=(user.totalhp*2/3) if user.hasWorkingAbility(:PRESAGE)
 			elsif move.function == "HealUserDependingOnSandstorm" 
 				case user.effectiveWeather
 				when :Sandstorm
@@ -2547,13 +2548,6 @@ class Battle::AI
 			end
 			if target.effects[PBEffects::HyperBeam]>0
 				score*=1.2
-			end
-			if [:Sun, :HarshSun].include?(user.effectiveWeather) || user.hasActiveAbility?(:PRESAGE)
-				score*=1.3
-			elsif [:None, :StrongWinds].include?(user.effectiveWeather)
-				score*=1.1
-			else
-				score*=0.5
 			end
 			score*=0.1 if ((user.hp.to_f)/user.totalhp)>0.8
 			score*=0.6 if ((user.hp.to_f)/user.totalhp)>0.6

@@ -872,6 +872,13 @@ Battle::AbilityEffects::PriorityChange.add(:TRIAGE,
   }
 )
 
+Battle::AbilityEffects::PriorityChange.add(:ECHOCHAMBER,
+  proc { |ability, battler, move, pri|
+    next pri + 1 if battler.effects[PBEffects::PrioEchoChamber] > 0 && 
+                    move.statusMove? && move.soundMove?
+  }
+)
+
 #===============================================================================
 # PriorityBracketChange handlers
 #===============================================================================
@@ -2213,6 +2220,14 @@ Battle::AbilityEffects::OnBeingHit.add(:ANGELICBEAUTY,
     battle.pbHideAbilitySplash(target)
   }
 )
+
+Battle::AbilityEffects::OnBeingHit.add(:ECHOCHAMBER,
+  proc { |ability, user, target, move, battle|
+    next if !move.soundMove?
+    target.effects[PBEffects::PrioEchoChamber] = 2 if target.effects[PBEffects::PrioEchoChamber] <= 0
+    battle.pbCalculatePriority(false, [target.index])
+  }
+)
 #===============================================================================
 # OnDealingHit handlers
 #===============================================================================
@@ -2347,6 +2362,31 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:MOXIE,
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
     next if numFainted == 0 || !user.pbCanRaiseStatStage?(:ATTACK, user)
     user.pbRaiseStatStageByAbility(:ATTACK, numFainted, user)
+  }
+)
+
+#by low
+Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
+  proc { |ability, user, targets, move, battle|
+    next if !move.soundMove?
+    hpGain = 0
+    if move.statusMove?
+      hpGain += (user.totalhp / 16.0).round
+      next if hpGain == 0 # not sure how that would happen but lets be safe
+      battle.pbShowAbilitySplash(user)
+      user.pbRecoverHP(hpGain)
+      battle.pbHideAbilitySplash(user)
+    else
+      targets.each { |b| hpGain += (b.damageState.hpLost / 2.0).round }
+      next if hpGain == 0 # just to check if it did any worthwhile damage
+      battle.pbShowAbilitySplash(user)
+      targets.each { |b|
+        hpGain = (b.damageState.hpLost / 2.0).round
+        user.pbRecoverHPFromDrain(hpGain, b)
+      }
+      user.effects[PBEffects::PrioEchoChamber] = 2 if user.effects[PBEffects::PrioEchoChamber] <= 0
+      battle.pbHideAbilitySplash(user)
+    end
   }
 )
 

@@ -112,7 +112,7 @@ FormName = Mega Chimecho
 MegaStone = CHIMECHITE
 Types = PSYCHIC,STEEL
 BaseStats = 75,50,100,65,115,150
-Abilities = SOUNDPROOF
+Abilities = ECHOCHAMBER
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z

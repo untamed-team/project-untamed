@@ -448,6 +448,7 @@ class CrustangRacing
 			self.updateSpinOutAnimation
 			self.updateOverlayText
 			self.checkForLap
+			self.updateSpinOutRangeSprites
 			Console.echo_warn @racerPlayer[:SpinOutCharge]
 		end
 	end #def self.main
