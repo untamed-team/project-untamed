@@ -8531,13 +8531,13 @@ Description = A spray of bubbles is forcefully ejected at the target. It may als
 Name = Octazooka
 Type = WATER
 Category = Special
-Power = 100
+Power = 60
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-FunctionCode = None
+FunctionCode = SuperEffectiveAgainstSteel
 Flags = CanProtect,CanMirrorMove,Bomb
-Description = The user attacks by spraying ink in the foe's face with enormous force.
+Description = The user attacks by spraying ink with enormous force. It's super-effective on Steel-types.
 #-------------------------------
 [FLIPTURN]
 Name = Flip Turn
@@ -8732,13 +8732,13 @@ Description = The user crushes their foe with a telekinetic force. Damage increa
 Name = Kinetic Rend
 Type = PSYCHIC
 Category = Special
-Power = 70
+Power = 60
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = SuperEffectiveAgainstSteel
 Flags = CanProtect,CanMirrorMove
-Description = The user deforms the space around the target. Is super-effective on Steel-types.
+Description = The user deforms the space around the target. It's super-effective on Steel-types.
 #-------------------------------
 [JOLTKICK]
 Name = Jolt Kick

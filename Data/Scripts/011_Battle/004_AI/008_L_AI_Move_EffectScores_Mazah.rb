@@ -500,6 +500,11 @@ class Battle::AI
 						noprio = false
 						break
 					end
+					if target.hasActiveAbility?(:ECHOCHAMBER) && target.effects[PBEffects::PrioEchoChamber] > 0 && 
+						 m.statusMove? && m.soundMove?
+						noprio = false
+						break
+					end
 					if target.hasActiveAbility?(:TRIAGE) && m.healingMove?
 						noprio = false
 						break
@@ -1731,6 +1736,23 @@ class Battle::AI
 			if user.speed>target.speed
 				abilityscore*=1.5
 			end      
+		end
+		if target.hasActiveAbility?(:ECHOCHAMBER)
+			PBDebug.log(sprintf("Echo Chamber Disrupt")) if $INTERNAL
+			echohealcheck=false
+			echopriocheck=false
+			for i in target.moves
+				if i.soundMove?
+					echohealcheck=true
+					echopriocheck=true if i.statusMove?
+				end
+			end
+			if echohealcheck
+				abilityscore*=1.15
+			end
+			if echopriocheck && user.speed>target.speed
+				abilityscore*=1.5
+			end
 		end
 		if target.hasActiveAbility?(:SNOWCLOAK)
 			PBDebug.log(sprintf("Snow Cloak Disrupt")) if $INTERNAL

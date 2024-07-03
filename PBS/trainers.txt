@@ -282,10 +282,12 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-Pokemon = M_ROSERADE,50
-    Moves = SPLASH
+Pokemon = CHIMECHO,50
+    Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
     AbilityIndex = 2
     Nature = QUIRKY
+	Form = 1
+	AAM = True
 Pokemon = SABLEYE,50
     Moves = SPLASH
     AbilityIndex = 2

@@ -820,6 +820,7 @@ class Battle
 			# new effects #by low
       battler.effects[PBEffects::NoFlinch]         -= 1 if battler.effects[PBEffects::NoFlinch] > 0
       battler.effects[PBEffects::ZealousDance]     -= 1 if battler.effects[PBEffects::ZealousDance] > 0
+      battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
 			battler.pokemon.willmega 										 = false
       battler.lastHPLost                           = 0
       battler.lastHPLostFromFoe                    = 0

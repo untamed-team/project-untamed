@@ -1195,3 +1195,7 @@ Description = Changes for the finale. Targeted during finale.
 Name = Dust Sentinel
 Description = Creates Sandstorm, buffs itself during sand.
 #-------------------------------
+[ECHOCHAMBER]
+Name = Echo Chamber
+Description = Heals w/ sound; next sound status moves: +1 prio.
+#-------------------------------

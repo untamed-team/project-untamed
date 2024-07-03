@@ -127,6 +127,7 @@ module PBEffects
   MoodyMemory	        = 121
   RemaningHPBars     	= 122
   HonorBound          = 123
+  PrioEchoChamber     = 124
 
   #=============================================================================
   # These effects apply to a battler position
