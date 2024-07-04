@@ -273,13 +273,20 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
+		#@sprites["racerPlayerSpinOutRange"].bitmap.fill_rect(@sprites["racerPlayerSpinOutRange"].x, @sprites["racerPlayerSpinOutRange"].y, @sprites["racerPlayerSpinOutRange"].width, @sprites["racerPlayerSpinOutRange"].height, Color.red)
 		sprite = @racerPlayer[:SpinOutRangeSprite]
-		if @racerPlayer[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+		charge = @racerPlayer[:SpinOutCharge]
+		if charge > CrustangRacingSettings::SPINOUT_MIN_RANGE
+			sprite.visible = true
 			#outline
-			Console.echo_warn "updating bitmap"
-			sprite.bitmap.fill_rect(sprite.x + sprite.width/2 - @racerPlayer[:SpinOutCharge], sprite.y + sprite.height - @racerPlayer[:SpinOutCharge], @racerPlayer[:SpinOutCharge], @racerPlayer[:SpinOutCharge], Color.red)
-			#inside outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
 			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
 		end #if @racerPlayer[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
 	end #def self.updateSpinOutRangeSprites
 	
@@ -371,9 +378,10 @@ class CrustangRacing
 		###################################
 		###### Checking next to attacker (same exact X)
 		withinRangeX = true if attacker[:PositionOnTrack] == recipient[:PositionOnTrack]
+		charge = attacker[:SpinOutCharge]
 		
 		###### Checking behind attacker
-		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_WIDTH + recipient[:RacerSprite].width/2
+		spinOutRangeX = charge/2 + recipient[:RacerSprite].width/2
 		
 		if attacker[:PositionOnTrack] < spinOutRangeX
 			#there will be some overlap between the end of the track and the beginning of the track
@@ -397,7 +405,7 @@ class CrustangRacing
 		end
 		
 		###### Checking in front of attacker
-		spinOutRangeX = CrustangRacingSettings::SPINOUT_RANGE_WIDTH + recipient[:RacerSprite].width/2
+		spinOutRangeX = charge/2 + recipient[:RacerSprite].width/2
 		
 		if attacker[:PositionOnTrack] > @sprites["track1"].width - spinOutRangeX
 			#there will be some overlap between the end of the track and the beginning of the track
@@ -425,7 +433,7 @@ class CrustangRacing
 		withinRangeY = true if attacker[:RacerSprite].y == recipient[:RacerSprite].y
 		
 		#checking above attacker
-		spinOutRangeY = CrustangRacingSettings::SPINOUT_RANGE_HEIGHT - attacker[:RacerSprite].height/2
+		spinOutRangeY = charge/2 - attacker[:RacerSprite].height/2
 		
 		withinRangeAbove = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y - recipient[:RacerSprite].height - spinOutRangeY + 1, attacker[:RacerSprite].y)
 		
@@ -442,10 +450,10 @@ class CrustangRacing
 	end #def self.withinSpinOutRange?
 	
 	def self.spinOut(attacker, recipient)
-		#print "Spinning out racer1" if recipient == @racer1
-		#print "Spinning out racer2" if recipient == @racer2
-		#print "Spinning out racer3" if recipient == @racer3
-		#print "Spinning out player" if recipient == @racerPlayer
+		print "Spinning out racer1" if recipient == @racer1
+		print "Spinning out racer2" if recipient == @racer2
+		print "Spinning out racer3" if recipient == @racer3
+		print "Spinning out player" if recipient == @racerPlayer
 		
 		#SPINOUT_DURATION_IN_SECONDS = 3
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames

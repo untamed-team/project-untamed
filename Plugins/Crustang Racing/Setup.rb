@@ -49,6 +49,7 @@ class CrustangRacing
 		@sprites["track2Bottom"].x = 0
 		@sprites["track2Bottom"].y = Graphics.height - @sprites["track2Bottom"].height
 		@sprites["track2Bottom"].z = 999991
+		#@sprites["track2Bottom"].visible = false
 		
 		@sprites["trackOverviewEllipses"] = IconSprite.new(0, 0, @viewport)
 		@sprites["trackOverviewEllipses"].setBitmap("Graphics/Pictures/Crustang Racing/trackOverviewEllipses")
@@ -197,12 +198,11 @@ class CrustangRacing
 		@racerPlayer[:RacerSprite] = @sprites["racerPlayerPkmn"]
 		
 		@sprites["racerPlayerSpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
-		@sprites["racerPlayerSpinOutRange"].x = 0#@racerPlayer[:RacerSprite].x - @sprites["racerPlayerSpinOutRange"].width / 2
-		@sprites["racerPlayerSpinOutRange"].y = 0#@racerPlayer[:RacerSprite].y - @sprites["racerPlayerSpinOutRange"].height / 2
+		@sprites["racerPlayerSpinOutRange"].x = @racerPlayer[:RacerSprite].x - @sprites["racerPlayerSpinOutRange"].width / 2
+		@sprites["racerPlayerSpinOutRange"].y = @racerPlayer[:RacerSprite].y - @sprites["racerPlayerSpinOutRange"].height / 2
 		@sprites["racerPlayerSpinOutRange"].z = 999999
-		@sprites["racerPlayerSpinOutRange"].visible = true
+		@sprites["racerPlayerSpinOutRange"].visible = false
 		@sprites["racerPlayerSpinOutRange"].opacity = 100
-		#@sprites["racerPlayerSpinOutRange"].bitmap.fill_rect(@sprites["racerPlayerSpinOutRange"].x, @sprites["racerPlayerSpinOutRange"].y, @sprites["racerPlayerSpinOutRange"].width, @sprites["racerPlayerSpinOutRange"].height, Color.red)
 		@racerPlayer[:SpinOutRangeSprite] = @sprites["racerPlayerSpinOutRange"]
 		
 	end #def drawContestants
