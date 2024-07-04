@@ -149,6 +149,15 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racer1Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer1[:RacerSprite] = @sprites["racer1Pkmn"]
+		
+		@sprites["racer1SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
+		@sprites["racer1SpinOutRange"].x = @racer1[:RacerSprite].x - @sprites["racer1SpinOutRange"].width / 2
+		@sprites["racer1SpinOutRange"].y = @racer1[:RacerSprite].y - @sprites["racer1SpinOutRange"].height / 2
+		@sprites["racer1SpinOutRange"].z = 999999
+		@sprites["racer1SpinOutRange"].visible = false
+		@sprites["racer1SpinOutRange"].opacity = 100
+		@racer1[:SpinOutRangeSprite] = @sprites["racer1SpinOutRange"]
+		
 		@racingPkmnStartingY += 72
 		
 		###################################
@@ -164,6 +173,15 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racer2Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer2[:RacerSprite] = @sprites["racer2Pkmn"]
+		
+		@sprites["racer2SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
+		@sprites["racer2SpinOutRange"].x = @racer2[:RacerSprite].x - @sprites["racer2SpinOutRange"].width / 2
+		@sprites["racer2SpinOutRange"].y = @racer2[:RacerSprite].y - @sprites["racer2SpinOutRange"].height / 2
+		@sprites["racer2SpinOutRange"].z = 999999
+		@sprites["racer2SpinOutRange"].visible = false
+		@sprites["racer2SpinOutRange"].opacity = 100
+		@racer2[:SpinOutRangeSprite] = @sprites["racer2SpinOutRange"]
+		
 		@racingPkmnStartingY += 72
 		
 		###################################
@@ -179,6 +197,15 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racer3Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer3[:RacerSprite] = @sprites["racer3Pkmn"]
+		
+		@sprites["racer3SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
+		@sprites["racer3SpinOutRange"].x = @racer3[:RacerSprite].x - @sprites["racer3SpinOutRange"].width / 2
+		@sprites["racer3SpinOutRange"].y = @racer3[:RacerSprite].y - @sprites["racer3SpinOutRange"].height / 2
+		@sprites["racer3SpinOutRange"].z = 999999
+		@sprites["racer3SpinOutRange"].visible = false
+		@sprites["racer3SpinOutRange"].opacity = 100
+		@racer3[:SpinOutRangeSprite] = @sprites["racer3SpinOutRange"]
+		
 		@racingPkmnStartingY += 72
 		
 		###################################

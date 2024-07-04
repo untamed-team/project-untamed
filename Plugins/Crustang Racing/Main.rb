@@ -51,7 +51,7 @@ class CrustangRacing
 			self.moveEffect(@racerPlayer, 1)
 			self.beginCooldown(@racerPlayer, 1)
 			@racerPlayer[:Move1ButtonSprite].frame = 0
-			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE #it doesn't matter if the move is not a spinout move
 		end
 		#move2
 		if Input.triggerex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
@@ -115,14 +115,14 @@ class CrustangRacing
 		###################################
 		#===== Spin Out Range Sprite =====
 		###################################
-		#@racer1[:SpinOutRangeSprite].x = @racer1[:RacerSprite].x - @racer1[:SpinOutRangeSprite].width/2 + @racer1[:RacerSprite].width/2
-		#@racer1[:SpinOutRangeSprite].y = @racer1[:RacerSprite].y - @racer1[:SpinOutRangeSprite].height/2 + @racer1[:RacerSprite].height/2
-		#@racer2[:SpinOutRangeSprite].x = @racer2[:RacerSprite].x - @racer2[:SpinOutRangeSprite].width/2 + @racer2[:RacerSprite].width/2
-		#@racer2[:SpinOutRangeSprite].y = @racer2[:RacerSprite].y - @racer2[:SpinOutRangeSprite].height/2 + @racer2[:RacerSprite].height/2
-		#@racer3[:SpinOutRangeSprite].x = @racer3[:RacerSprite].x - @racer3[:SpinOutRangeSprite].width/2 + @racer3[:RacerSprite].width/2
-		#@racer3[:SpinOutRangeSprite].y = @racer3[:RacerSprite].y - @racer3[:SpinOutRangeSprite].height/2 + @racer3[:RacerSprite].height/2
-		@racerPlayer[:SpinOutRangeSprite].x = @racerPlayer[:RacerSprite].x - @sprites["racerPlayerSpinOutRange"].width / 2 + @racerPlayer[:RacerSprite].width / 2
-		@racerPlayer[:SpinOutRangeSprite].y = @racerPlayer[:RacerSprite].y - @sprites["racerPlayerSpinOutRange"].height / 2 + @racerPlayer[:RacerSprite].height / 2
+		@racer1[:SpinOutRangeSprite].x = @racer1[:RacerSprite].x - @racer1[:SpinOutRangeSprite].width / 2 + @racer1[:RacerSprite].width / 2
+		@racer1[:SpinOutRangeSprite].y = @racer1[:RacerSprite].y - @racer1[:SpinOutRangeSprite].height / 2 + @racer1[:RacerSprite].height / 2
+		@racer2[:SpinOutRangeSprite].x = @racer2[:RacerSprite].x - @racer2[:SpinOutRangeSprite].width / 2 + @racer2[:RacerSprite].width / 2
+		@racer2[:SpinOutRangeSprite].y = @racer2[:RacerSprite].y - @racer2[:SpinOutRangeSprite].height / 2 + @racer2[:RacerSprite].height / 2
+		@racer3[:SpinOutRangeSprite].x = @racer3[:RacerSprite].x - @racer3[:SpinOutRangeSprite].width / 2 + @racer3[:RacerSprite].width / 2
+		@racer3[:SpinOutRangeSprite].y = @racer3[:RacerSprite].y - @racer3[:SpinOutRangeSprite].height / 2 + @racer3[:RacerSprite].height / 2
+		@racerPlayer[:SpinOutRangeSprite].x = @racerPlayer[:RacerSprite].x - @racerPlayer[:SpinOutRangeSprite].width / 2 + @racerPlayer[:RacerSprite].width / 2
+		@racerPlayer[:SpinOutRangeSprite].y = @racerPlayer[:RacerSprite].y - @racerPlayer[:SpinOutRangeSprite].height / 2 + @racerPlayer[:RacerSprite].height / 2
 		
 	end #def self.moveMiscSprites
 	
