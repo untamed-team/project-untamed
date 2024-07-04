@@ -12,20 +12,16 @@ class CrustangRacing
 			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 				#don't restrict up and DOWN
 			else
-				#if colliding with something above you and not in front or behind, restrict movement
-				return if self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+				#if not colliding with something below you and not in front or behind, allow movement
+				@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 			end
-			@racerPlayer[:RacerSprite].y -= CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y > @trackBorderTopY
-			
 		elsif Input.press?(Input::DOWN)
 			#if colliding with any racer in front or behind
 			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-				#don't restrict up and DOWN
 			else
-				#if colliding with something below you and not in front or behind, restrict movement
-				return if self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+				#if not colliding with something below you and not in front or behind, allow movement
+				@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
 			end
-			@racerPlayer[:RacerSprite].y += CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:RacerSprite].y < @trackBorderBottomY
 		end
 		
 		###################################
