@@ -342,10 +342,6 @@ class CrustangRacing
 			case move[:EffectCode]
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
-				#put a rectangle around the racer showing the range
-				
-				#make the racer's SpinOutRangeSprite visible for a few seconds
-				
 				self.spinOut(racer, @racer1) if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 				self.spinOut(racer, @racer2) if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
 				self.spinOut(racer, @racer3) if racer != @racer3 && self.withinSpinOutRange?(racer, @racer3)
@@ -360,14 +356,39 @@ class CrustangRacing
 				racer[:DesiredSpeed] = CrustangRacingSettings::SECONDARY_BOOST_SPEED
 				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
 			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
+				self.placeHazard(racer, "rock")
 			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.
 			when "push" #Push racers nearby further away to your left or right.
 			when "destroyObstacle" #Destory an obstacle in front of you.
 			end
 			
 		end
-		
 	end #def self.moveEffect(racer, move)
+	
+	def self.placeHazard(racer, hazard)
+		#self.placeHazard(racer, "rock")
+		#@sprites["RACER-HASH_hazard_rock"]
+		#place hazard on the track behind the racer
+		###################################
+		#===== Hazard Sprite on Track =====
+		###################################
+		@sprites["#{racer}_hazard_#{hazard}"] = IconSprite.new(0, 0, @viewport)
+		@sprites["#{racer}_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
+		@sprites["#{racer}_hazard_#{hazard}"].x = racer[:PositionOnTrack] + @sprites["track1"].x
+		@sprites["#{racer}_hazard_#{hazard}"].y = racer[:RacerSprite].y
+		@sprites["#{racer}_hazard_#{hazard}"].z = 99999
+		
+		###################################
+		# Hazard Sprite on Track Overview
+		###################################
+		@sprites["#{racer}_overview_hazard_#{hazard}"] = IconSprite.new(0, 0, @viewport)
+		@sprites["#{racer}_overview_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
+		@sprites["#{racer}_overview_hazard_#{hazard}"].x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/4
+		@sprites["#{racer}_overview_hazard_#{hazard}"].y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/4
+		
+		@sprites["#{racer}_overview_hazard_#{hazard}"].z = 99999
+		
+	end #def self.placeHazard
 	
 	def self.withinSpinOutRange?(attacker, recipient)
 		withinRangeX = false
