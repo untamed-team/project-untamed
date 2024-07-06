@@ -1,0 +1,3 @@
+Notes to self:
+Only one type of hazard per person - player only gets 1 rock hazard and 1 mud hazard on the track at a time. When spawning another one, the previous one disappears if it is still on the track
+This is the same for AI racers

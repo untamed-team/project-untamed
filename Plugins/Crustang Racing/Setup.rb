@@ -425,7 +425,7 @@ class CrustangRacing
 		@startingCooldownMultiplier = true
 		
 		@framesBetweenSpinOutDirections = (Graphics.frame_rate / CrustangRacingSettings::SPINOUT_ROTATIONS_PER_SECOND) / 4
-		#CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS = 3
+		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -443,6 +443,8 @@ class CrustangRacing
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
+			#hazards
+			RockHazard: nil, MudHazard: nil,
 		}
 		@racer2 = {
 			#racer sprite
@@ -457,6 +459,8 @@ class CrustangRacing
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
+			#hazards
+			RockHazard: nil, MudHazard: nil,
 		}
 		@racer3 = {
 			#racer sprite
@@ -471,6 +475,8 @@ class CrustangRacing
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
+			#hazards
+			RockHazard: nil, MudHazard: nil,
 		}
 		@racerPlayer = {
 			#racer sprite
@@ -485,6 +491,8 @@ class CrustangRacing
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
+			#hazards
+			RockHazard: nil, MudHazard: nil,
 		}
 	end #def self.setupRacerHashes
 

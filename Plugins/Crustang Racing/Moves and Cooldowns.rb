@@ -366,20 +366,41 @@ class CrustangRacing
 	end #def self.moveEffect(racer, move)
 	
 	def self.placeHazard(racer, hazard)
+		###################################
+		#Remove Racer's Hazard of Same Type
+		###################################
+		
+		
+		
+		
+		
+		
+		
 		#self.placeHazard(racer, "rock")
 		#@sprites["RACER-HASH_hazard_rock"]
 		#place hazard on the track behind the racer
 		###################################
-		#===== Hazard Sprite on Track =====
+		#== Spawn Hazard Sprite on Track ==
 		###################################
-		@sprites["#{racer}_hazard_#{hazard}"] = IconSprite.new(0, 0, @viewport)
+		case racer
+		when @racer1
+			number = 1
+		when @racer2
+			number = 2
+		when @racer3
+			number = 3
+		when @racerPlayer
+			number = 4
+		end
+		
+		@sprites["hazard_#{hazard}#{number}"] = IconSprite.new(0, 0, @viewport)
 		@sprites["#{racer}_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
 		@sprites["#{racer}_hazard_#{hazard}"].x = racer[:PositionOnTrack] + @sprites["track1"].x
 		@sprites["#{racer}_hazard_#{hazard}"].y = racer[:RacerSprite].y
 		@sprites["#{racer}_hazard_#{hazard}"].z = 99999
 		
 		###################################
-		# Hazard Sprite on Track Overview
+		# Spawn Hazard Sprite on Overview =
 		###################################
 		@sprites["#{racer}_overview_hazard_#{hazard}"] = IconSprite.new(0, 0, @viewport)
 		@sprites["#{racer}_overview_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
