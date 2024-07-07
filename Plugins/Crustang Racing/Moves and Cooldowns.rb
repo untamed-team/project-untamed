@@ -63,16 +63,24 @@ class CrustangRacing
 		
 	end #def self.beginCooldown(move)
 	
-	def self.updateCooldownTimers
+	def self.updateTimers
 		###################################
 		#============= Racer1 =============
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
-		#boost timer
-		@racer1[:BoostCooldownTimer] -= 1 * @racer1[:BoostCooldownMultiplier] if @racer1[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer1[:BoostTimer] -= 1 if @racer1[:BoostTimer] > 0
 		@racer1[:SecondaryBoostTimer] -= 1 if @racer1[:SecondaryBoostTimer] > 0
+		
+		if @racer1[:BoostTimer] <= 0 && @racer1[:SecondaryBoostTimer] <= 0
+			if @racer1[:BoostingStatus] == true
+				@racer1[:BoostingStatus] = false
+			end
+		end
+		
+		#update bumped recovery timer
+		@racer1[:BumpedRecoveryTimer] -= 1 if @racer1[:BumpedRecoveryTimer] > 0
+		@racer1[:Bumped] = false if @racer1[:Bumped] == true && @racer1[:BumpedRecoveryTimer] <= 0
 		
 		#move1 timer
 		if @racer1[:Move1CooldownTimer] > 0
@@ -111,11 +119,19 @@ class CrustangRacing
 		#============= Racer2 =============
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
-		#boost timer
-		@racer2[:BoostCooldownTimer] -= 1 * @racer2[:BoostCooldownMultiplier] if @racer2[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer2[:BoostTimer] -= 1 if @racer2[:BoostTimer] > 0
 		@racer2[:SecondaryBoostTimer] -= 1 if @racer2[:SecondaryBoostTimer] > 0
+		
+		if @racer2[:BoostTimer] <= 0 && @racer2[:SecondaryBoostTimer] <= 0
+			if @racer2[:BoostingStatus] == true
+				@racer2[:BoostingStatus] = false
+			end
+		end
+		
+		#update bumped recovery timer
+		@racer2[:BumpedRecoveryTimer] -= 1 if @racer2[:BumpedRecoveryTimer] > 0
+		@racer2[:Bumped] = false if @racer2[:Bumped] == true && @racer2[:BumpedRecoveryTimer] <= 0
 		
 		#move1 timer
 		if @racer2[:Move1CooldownTimer] > 0
@@ -154,11 +170,19 @@ class CrustangRacing
 		#============= Racer3 =============
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
-		#boost timer
-		@racer3[:BoostCooldownTimer] -= 1 * @racer3[:BoostCooldownMultiplier] if @racer3[:BoostCooldownTimer] > 0
 		#update boost timer
 		@racer3[:BoostTimer] -= 1 if @racer3[:BoostTimer] > 0
 		@racer3[:SecondaryBoostTimer] -= 1 if @racer3[:SecondaryBoostTimer] > 0
+		
+		if @racer3[:BoostTimer] <= 0 && @racer3[:SecondaryBoostTimer] <= 0
+			if @racer3[:BoostingStatus] == true
+				@racer3[:BoostingStatus] = false
+			end
+		end
+		
+		#update bumped recovery timer
+		@racer3[:BumpedRecoveryTimer] -= 1 if @racer3[:BumpedRecoveryTimer] > 0
+		@racer3[:Bumped] = false if @racer3[:Bumped] == true && @racer3[:BumpedRecoveryTimer] <= 0
 		
 		#move1 timer
 		if @racer3[:Move1CooldownTimer] > 0
@@ -211,10 +235,12 @@ class CrustangRacing
 		if @racerPlayer[:BoostTimer] <= 0 && @racerPlayer[:SecondaryBoostTimer] <= 0
 			if @racerPlayer[:BoostingStatus] == true
 				@racerPlayer[:BoostingStatus] = false
-				@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
-				@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED #if also not being boosted by another racer, etc.
 			end
 		end
+		
+		#update bumped recovery timer
+		@racerPlayer[:BumpedRecoveryTimer] -= 1 if @racerPlayer[:BumpedRecoveryTimer] > 0
+		@racerPlayer[:Bumped] = false if @racerPlayer[:Bumped] == true && @racerPlayer[:BumpedRecoveryTimer] <= 0
 		
 		#move1 timer
 		if @racerPlayer[:Move1CooldownTimer] > 0 && @racerPlayer[:Move1ButtonSprite]
@@ -504,19 +530,12 @@ class CrustangRacing
 		return false
 	end #def self.withinSpinOutRange?
 	
-	def self.spinOut(attacker, recipient)
-		#print "Spinning out racer1" if recipient == @racer1
-		#print "Spinning out racer2" if recipient == @racer2
-		#print "Spinning out racer3" if recipient == @racer3
-		#print "Spinning out player" if recipient == @racerPlayer
-		
+	def self.spinOut(attacker, recipient)		
 		#SPINOUT_DURATION_IN_SECONDS = 3
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
 		
-		#maybe lock input / AI movement if being spun out?
-		
+		#maybe lock input / AI movement if being spun out?		
 		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
-		
 	end #self.spinOut
 	
 	def self.updateSpinOutAnimation
