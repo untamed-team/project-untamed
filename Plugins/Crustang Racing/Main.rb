@@ -299,7 +299,8 @@ class CrustangRacing
 				racer[:RockHazard][:Sprite].x -= @sprites["track1"].width
 			end
 		end #if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed?
-	end
+		
+	end #def self.updateHazardPositionOnScreen
 	
 	def self.accelerateDecelerate
 		###################################
@@ -385,7 +386,7 @@ class CrustangRacing
 				#accelerate
 				@racerPlayer[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED.to_f * Graphics.frame_rate.to_f)
 			end
-		else #not boosting
+		else #not boosting and not recovering from bump
 			#accelerate
 			if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
 				@racerPlayer[:CurrentSpeed] += CrustangRacingSettings::TOP_BASE_SPEED.to_f / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
@@ -426,22 +427,39 @@ class CrustangRacing
 		###################################
 		#crash into another racer in front of this racer
 		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite])
-			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
-			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
-			@racerPlayer[:CurrentSpeed] = @racer1[:CurrentSpeed]
+			#play SE for collision
+			pbSEPlay(CrustangRacingSettings::COLLISION_SE)
+			self.bumpedIntoSomeone(@racerPlayer, @racer1)
 		end
 		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite])
+			#play SE for collision
+			pbSEPlay(CrustangRacingSettings::COLLISION_SE)
 			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
 			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
 			@racerPlayer[:CurrentSpeed] = @racer2[:CurrentSpeed]
 		end
 		if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
+			#play SE for collision
+			pbSEPlay(CrustangRacingSettings::COLLISION_SE)
 			@racerPlayer[:PreviousDesiredSpeed] = @racerPlayer[:DesiredSpeed]
 			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED
 			@racerPlayer[:CurrentSpeed] = @racer3[:CurrentSpeed]
 		end
 		
 	end #def self.checkForCollisions
+	
+	def self.bumpedIntoSomeone(racerBehind, racerInFront)
+		racerBehind[:BumpRecoveryTimer] = CrustangRacingSettings::SECONDS_TO_RECOVER_FROM_BUMP
+		racerInFront[:BumpRecoveryTimer] = CrustangRacingSettings::SECONDS_TO_RECOVER_FROM_BUMP
+		
+		#the racer in behind should immediately go the same speed as the racer they bumped into in front of them
+		racerBehind[:PreviousDesiredSpeed] = racerBehind[:DesiredSpeed]
+		racerBehind[:DesiredSpeed] = racerInFront[:CurrentSpeed] if racerBehind[:DesiredSpeed] >= racerInFront[:CurrentSpeed]
+		racerBehind[:CurrentSpeed] = racerInFront[:CurrentSpeed] if racerBehind[:CurrentSpeed] >= racerInFront[:CurrentSpeed]
+		#the racer in front should immediately stop slowing down if they were spinning out, but they should not stop gaining speed if they were in the middle of gaining speed
+		racerInFront[:CurrentSpeed] += 3
+	
+	end #def self.bumpedIntoSomeone
 	
 	def self.main
 		self.setup

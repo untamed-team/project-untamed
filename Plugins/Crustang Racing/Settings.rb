@@ -2,11 +2,13 @@ class CrustangRacingSettings
 #========================================================#
 #=================== GENERAL SETTINGS ===================#
 #========================================================#
-TOP_BASE_SPEED = 1#12
+TOP_BASE_SPEED = 12
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 6
 SLOWED_STRAFE_SPEED = 4
 KPH_MULTIPLIER = 10
+COLLISION_SE = "Battle damage weak"
+SECONDS_TO_RECOVER_FROM_BUMP = 1
 
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#
@@ -23,9 +25,9 @@ CONTESTANTS = [
 #========================================================#
 BOOST_BUTTON_COOLDOWN_SECONDS = 1#20
 BOOST_BUTTON = Input::SPECIAL
-BOOST_LENGTH_SECONDS = 10#3
+BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 18
-SECONDS_TO_REACH_BOOST_SPEED = 1#3
+SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 13#15
 
 #========================================================#
