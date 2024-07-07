@@ -277,6 +277,31 @@ class CrustangRacing
 		end
 	end #def self.updateRacerPositionOnTrack
 	
+	def self.updateHazardPositionOnScreen
+		###################################
+		#===== Racer Player's Hazards =====
+		###################################
+		racer = @racerPlayer
+		
+		#this is the X on the screen, not the track or track overview		
+		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
+			#calculate normally based on track1's X
+			racer[:RacerSprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]############ + @racerStartingX
+		
+			#keep the hazard on screen
+			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
+			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
+				#make the hazard's X relative to track2's x
+				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:PositionXOnTrack]############ + @racerStartingX ############### might need to save the original X on screen when the sprite is spawned?
+			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
+		
+			#keep the hazard on screen if we reach track2
+			if racer[:RockHazard][:Sprite].x > @sprites["track1"].width - racer[:RockHazard][:Sprite].width
+				racer[:RockHazard][:Sprite].x -= @sprites["track1"].width
+			end
+		end #if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed?
+	end
+	
 	def self.accelerateDecelerate
 		###################################
 		#============= Racer1 =============

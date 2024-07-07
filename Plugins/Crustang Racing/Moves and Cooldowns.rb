@@ -369,19 +369,10 @@ class CrustangRacing
 		###################################
 		#Remove Racer's Hazard of Same Type
 		###################################
-		
-		
-		
-		
-		
-		
-		
 		#self.placeHazard(racer, "rock")
 		#@sprites["RACER-HASH_hazard_rock"]
 		#place hazard on the track behind the racer
-		###################################
-		#== Spawn Hazard Sprite on Track ==
-		###################################
+		
 		case racer
 		when @racer1
 			number = 1
@@ -393,21 +384,38 @@ class CrustangRacing
 			number = 4
 		end
 		
-		@sprites["hazard_#{hazard}#{number}"] = IconSprite.new(0, 0, @viewport)
-		@sprites["#{racer}_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
-		@sprites["#{racer}_hazard_#{hazard}"].x = racer[:PositionOnTrack] + @sprites["track1"].x
-		@sprites["#{racer}_hazard_#{hazard}"].y = racer[:RacerSprite].y
-		@sprites["#{racer}_hazard_#{hazard}"].z = 99999
+		
+		
+		
+		
+		
+		###################################
+		#== Spawn Hazard Sprite on Track ==
+		###################################	
+		#@sprites["hazard_rock_1"]
+		@sprites["hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
+		sprite = @sprites["hazard_#{hazard}_#{number}"]
+		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
+		sprite.x = racer[:PositionOnTrack] + @sprites["track1"].x
+		sprite.y = racer[:RacerSprite].y
+		sprite.z = 99999
+		racer[:RockHazard][:Sprite] = sprite
+		racer[:RockHazard][:PositionXOnTrack] = sprite.x
+		racer[:RockHazard][:PositionYOnTrack] = sprite.y
 		
 		###################################
 		# Spawn Hazard Sprite on Overview =
 		###################################
-		@sprites["#{racer}_overview_hazard_#{hazard}"] = IconSprite.new(0, 0, @viewport)
-		@sprites["#{racer}_overview_hazard_#{hazard}"].setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
-		@sprites["#{racer}_overview_hazard_#{hazard}"].x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/4
-		@sprites["#{racer}_overview_hazard_#{hazard}"].y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/4
-		
-		@sprites["#{racer}_overview_hazard_#{hazard}"].z = 99999
+		#@sprites["overview_hazard_rock_1"]		
+		@sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
+		overviewSprite = @sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
+		overviewSprite.setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
+		overviewSprite.x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/4
+		overviewSprite.y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/4
+		overviewSprite.z = 99999
+		racer[:RockHazard][:OverviewSprite] = overviewSprite
+		racer[:RockHazard][:PositionXOnTrackOverview] = overviewSprite.x
+		racer[:RockHazard][:PositionYOnTrackOverview] = overviewSprite.y
 		
 	end #def self.placeHazard
 	
