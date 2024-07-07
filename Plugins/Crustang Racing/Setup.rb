@@ -444,7 +444,7 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
 			#hazards
-			RockHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 		@racer2 = {
 			#racer sprite
@@ -460,7 +460,7 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
 			#hazards
-			RockHazard: nil, MudHazard: nil,
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 		@racer3 = {
 			#racer sprite
@@ -476,7 +476,7 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
 			#hazards
-			RockHazard: nil, MudHazard: nil,
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 		@racerPlayer = {
 			#racer sprite
@@ -492,7 +492,7 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1,
 			#hazards
-			RockHazard: nil, MudHazard: nil,
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 	end #def self.setupRacerHashes
 

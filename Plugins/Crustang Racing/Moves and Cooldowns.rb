@@ -317,9 +317,9 @@ class CrustangRacing
 			self.beginCooldown(racer, 0)
 			
 			#give other racers temporary boost for testing purposes
-			@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
-			@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 4
-			@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 6
+			#@racer1[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 3
+			#@racer2[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED - 4
+			#@racer3[:CurrentSpeed] = CrustangRacingSettings::BOOST_SPEED + 6
 		else
 			#do something based on the racer's move's effect
 			case moveNumber
@@ -369,9 +369,18 @@ class CrustangRacing
 		###################################
 		#Remove Racer's Hazard of Same Type
 		###################################
-		#self.placeHazard(racer, "rock")
-		#@sprites["RACER-HASH_hazard_rock"]
-		#place hazard on the track behind the racer
+		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
+			racer[:RockHazard][:Sprite].dispose
+			racer[:RockHazard][:Sprite] = nil
+			racer[:RockHazard][:PositionXOnTrack] = nil
+			racer[:RockHazard][:OriginalPositionXOnScreen] = nil
+			racer[:RockHazard][:PositionYOnTrack] = nil
+			
+			racer[:RockHazard][:OverviewSprite].dispose
+			racer[:RockHazard][:OverviewSprite] = nil
+			racer[:RockHazard][:PositionXOnTrackOverview] = nil
+			racer[:RockHazard][:PositionYOnTrackOverview] = nil
+		end
 		
 		case racer
 		when @racer1
@@ -383,12 +392,7 @@ class CrustangRacing
 		when @racerPlayer
 			number = 4
 		end
-		
-		
-		
-		
-		
-		
+
 		###################################
 		#== Spawn Hazard Sprite on Track ==
 		###################################	
@@ -396,17 +400,18 @@ class CrustangRacing
 		@sprites["hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		sprite = @sprites["hazard_#{hazard}_#{number}"]
 		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
-		sprite.x = racer[:PositionOnTrack] + @sprites["track1"].x
-		sprite.y = racer[:RacerSprite].y
+		sprite.x = racer[:RacerSprite].x-sprite.width######### + @sprites["track1"].x#racer[:RacerSprite].x# + racer[:PositionOnTrack] + @sprites["track1"].x
+		sprite.y = racer[:RacerSprite].y + racer[:RacerSprite].height/2 - sprite.height/2
 		sprite.z = 99999
 		racer[:RockHazard][:Sprite] = sprite
-		racer[:RockHazard][:PositionXOnTrack] = sprite.x
+		racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:RockHazard][:Sprite].width#-racer[:RacerSprite].width-racer[:RockHazard][:Sprite].width
+		racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 		racer[:RockHazard][:PositionYOnTrack] = sprite.y
 		
 		###################################
 		# Spawn Hazard Sprite on Overview =
 		###################################
-		#@sprites["overview_hazard_rock_1"]		
+		#@sprites["overview_hazard_rock_1"]
 		@sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite = @sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite.setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
