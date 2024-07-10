@@ -725,17 +725,28 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # Battler info for player-owned Pokemon.
     if battler.pbOwnedByPlayer?
-      imagePos.push(
-        [@path + "battler_owner", xpos + 36, iconY + 11],
-        [@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24],
-        [@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24]
+      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
+      textPos.push(
+        [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
+        [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
       )
+      imagePos.push([@path + "battler_owner", xpos + 36, iconY + 11])
+      textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
+    end
+    if battler.hasAbilityMutation?
+      for i in 0..battler.abilityMutationList.length
+        next if battler.abilityMutationList[i].nil?
+        imagePos.push([@path + "battle_info_panel", panelX, (65 + (i * 24)), 0, 0, 218, 24])
+        textPos.push(
+          [_INTL("Abil."), xpos + 272, ypos + (44 + (i * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
+          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (i * 24)), 2, BASE_DARK, SHADOW_DARK]
+        )
+      end
+    else
+      imagePos.push([@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24])
       textPos.push(
         [_INTL("Abil."), xpos + 272, ypos + 44, 2, BASE_LIGHT, SHADOW_LIGHT],
-        [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
-        [_INTL("{1}", battler.abilityName), xpos + 375, ypos + 44, 2, BASE_DARK, SHADOW_DARK],
-        [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
-        [sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT]
+        [_INTL("{1}", battler.abilityName), xpos + 375, ypos + 44, 2, BASE_DARK, SHADOW_DARK]
       )
     end
     #---------------------------------------------------------------------------
@@ -814,8 +825,7 @@ class Battle::Scene
       $player.pokedex.owned?(poke.species) ||
       $player.pokedex.battled_count(poke.species) > 0
     )
-    unknown_species = false #if Settings::ALWAYS_DISPLAY_TYPES
-    #~ unknown_species = true if battler.celestial?
+    unknown_species = false
     # Displays the "???" type on newly encountered species, or battlers with no typing.
     displayTypes = [:QMARKS] if unknown_species || displayTypes.empty?
 		case displayTypes.length #triple type UI #by low

@@ -122,6 +122,9 @@ class Battle
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
 		if battler.hasMegaEvoMutation?
 			#nothing
+      battler.pokemon.ability = nil
+      battler.pokemon.ability_index = nil
+      @scene.pbRefreshOne(idxBattler)
 		else
 			side  = battler.idxOwnSide
 			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)

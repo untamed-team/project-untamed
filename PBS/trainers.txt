@@ -286,12 +286,14 @@ Pokemon = CHIMECHO,50
     Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
     AbilityIndex = 2
     Nature = QUIRKY
-	Form = 1
 	AAM = True
+	MEM = True
 Pokemon = SABLEYE,50
     Moves = SPLASH
-    AbilityIndex = 2
+    Ability = PRANKSTER
     Nature = QUIRKY
+	AAM = True
+	MEM = True
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom

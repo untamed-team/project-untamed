@@ -526,3 +526,8 @@ FormName = Blue Flower
 [FLORGES,4]
 FormName = White Flower
 #-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 75,75,125,20,65,115
+Abilities = MAGICBOUNCE

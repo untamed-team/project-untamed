@@ -220,7 +220,7 @@ class Battle::AI
 			end
 		end
 		#mastersex type zones #by low
-		multipliers[:base_damage_multiplier] *= 1.5 if @battle.field.typezone != :None && type == @battle.field.typezone
+		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
 		# DemICE adding resist berries
 		if Effectiveness.super_effective?(typeMod)
 			if user.hasActiveItem?(:EXPERTBELT)

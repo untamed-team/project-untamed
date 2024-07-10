@@ -430,7 +430,7 @@ class Battle::Move
       multipliers[:base_damage_multiplier] /= t_damage_divider if type == :DRAGON && target.affectedByTerrain?
     end
 		#mastersex type zones #by low
-		multipliers[:base_damage_multiplier] *= 1.5 if @battle.field.typezone != :None && type == @battle.field.typezone
+		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
     # Multi-targeting attacks
     if numTargets > 1
       multipliers[:final_damage_multiplier] *= 0.75

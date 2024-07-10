@@ -180,7 +180,7 @@ MenuHandlers.add(:battle_guide, :wtz_page_z_whatisthis, {
   "name"        => _INTL("What are Type Zones?"),
   "parent"      => :wtz_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[3]Type Zones affect the entire battlefield and boost the damage of moves of their corresponding type by 1.5x. Only one type zone can be active at once."))
+		pbMessage(_INTL("\\l[3]Type Zones affect the entire battlefield and boost the damage of moves of their corresponding type by 1.25x. Only one type zone can be active at once."))
 	}
 })
 

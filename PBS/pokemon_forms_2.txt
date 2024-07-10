@@ -191,6 +191,12 @@ Abilities = FURCOAT
 #Types = BUG,FIGHTING
 #BaseStats = 55,130,50,125,35,120
 #Abilities = IRONFIST
+#-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 75,75,125,20,65,115
+Abilities = MAGICBOUNCE
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
