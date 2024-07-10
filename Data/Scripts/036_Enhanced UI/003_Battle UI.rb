@@ -717,9 +717,9 @@ class Battle::Scene
       textPos.push([@battle.pbGetOwnerFromBattlerIndex(battler.index).name, xpos + 32, ypos + 6, 2, BASE_LIGHT, SHADOW_LIGHT])
     end
     # Battler's last move used.
-    if battler.lastMoveUsed
+    if battler.lastMoveUsed && !battler.hasAbilityMutation?
       movename = GameData::Move.get(battler.lastMoveUsed).name
-	  movename = movename[0..12] + "..." if movename.length > 16
+	    movename = movename[0..12] + "..." if movename.length > 16
       textPos.push([_INTL("Used: #{movename}"), xpos + 348, ypos + 106, 2, BASE_LIGHT, SHADOW_LIGHT])
     end
     #---------------------------------------------------------------------------
