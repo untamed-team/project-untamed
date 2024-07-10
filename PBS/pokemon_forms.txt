@@ -107,7 +107,7 @@ Abilities = AERILATE
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
 MegaStone = HAWLUCHITE
-BaseStats = 78,120,85,143,94,83
+BaseStats = 78,120,85,140,94,83
 Abilities = VOLTAICSPIRIT
 #------------------------------- 
 [CACTURNE,1]
@@ -177,7 +177,7 @@ FormName = Mega Zolupine
 MegaStone = ZOLUPINEITE
 Type1 = GHOST
 Type2 = WATER
-BaseStats = 60,80,70,125,135,125
+BaseStats = 60,95,70,125,135,125
 Abilities = NOGUARD
 #------------------------------- 
 [ROADRAPTOR,1]
@@ -205,7 +205,7 @@ FormName = Mega Laguna
 MegaStone = LAGUNITE
 Type1 = ICE
 Type2 = FAIRY
-BaseStats = 50,55,80,95,110,130
+BaseStats = 50,60,80,95,110,130
 Abilities = FURCOAT
 #-------------------------------
 [LEDIAN,1]
