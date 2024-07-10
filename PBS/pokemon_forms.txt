@@ -121,7 +121,7 @@ FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
 Type1 = ICE
 Type2 = FIRE
-BaseStats = 70,75,100,145,100,95
+BaseStats = 70,65,100,95,145,100
 Abilities = ICESCALES
 #------------------------------- 
 [CHIMECHO,1]
@@ -129,7 +129,7 @@ FormName = Mega Chimecho
 MegaStone = CHIMECHITE
 Type1 = PSYCHIC
 Type2 = STEEL
-BaseStats = 75,60,100,80,120,130
+BaseStats = 75,50,100,80,120,130
 Abilities = LEVITATE
 #------------------------------- 
 [PORYGONZ,1]
@@ -149,7 +149,7 @@ Abilities = REGENERATOR
 [SPECTERZAL,1]
 FormName = Mega Specterzal
 MegaStone = SPECTERZITE
-BaseStats = 120,145,86,96,115,95
+BaseStats = 120,145,86,96,105,95
 Abilities = TOUGHCLAWS
 #------------------------------- 
 [TREVENANT,1]
