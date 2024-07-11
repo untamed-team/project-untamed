@@ -115,6 +115,9 @@ class CrustangRacing
 			end
 		end
 		
+		#subtract the SpinOutDirectionTimer, which signals the game to do the next rotation if <= 0, then it's set back to the full amount if the SpinOutTimer is still > 0
+		@racer1[:SpinOutDirectionTimer] -= 1 if @racer1[:SpinOutDirectionTimer] > 0
+		
 		###################################
 		#============= Racer2 =============
 		###################################
@@ -166,6 +169,9 @@ class CrustangRacing
 			end
 		end
 		
+		#subtract the SpinOutDirectionTimer
+		@racer2[:SpinOutDirectionTimer] -= 1 if @racer2[:SpinOutDirectionTimer] > 0
+		
 		###################################
 		#============= Racer3 =============
 		###################################
@@ -216,6 +222,9 @@ class CrustangRacing
 				@racer3[:Move4CooldownTimer] -= 1 * @racer3[:MoveCoolDownMultiplier]
 			end
 		end
+		
+		#subtract the SpinOutDirectionTimer
+		@racer3[:SpinOutDirectionTimer] -= 1 if @racer3[:SpinOutDirectionTimer] > 0
 		
 		###################################
 		#============= Player =============
@@ -274,6 +283,10 @@ class CrustangRacing
 				@racerPlayer[:Move4CooldownTimer] -= 1 * @racerPlayer[:MoveCoolDownMultiplier]
 			end
 		end
+		
+		#subtract the SpinOutDirectionTimer
+		@racerPlayer[:SpinOutDirectionTimer] -= 1 if @racerPlayer[:SpinOutDirectionTimer] > 0
+
 	end
 	
 	def self.updateCooldownMultipliers
@@ -540,6 +553,9 @@ class CrustangRacing
 	
 	def self.updateSpinOutAnimation
 		#right now, @framesBetweenSpinOutDirections is 10, so every 10 frames, we switch directions
+		###################################
+		#============ Racer 1 ============
+		###################################
 		racer = @racer1
 		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
 			case racer[:RacerSprite].src_rect.y
@@ -557,7 +573,23 @@ class CrustangRacing
 				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
 			end
 		end
+		#subtract from the SpinOutTimer
+		if @racer1[:SpinOutTimer] > 0
+			@racer1[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer1[:SpinOutTimer] <= 0
+		end
 		
+		#update overview sprite spinning
+		if @racer1[:SpinOutTimer] > 0
+			@racer1[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
+		elsif @racer1[:SpinOutTimer] <= 0 && @racer1[:RacerTrackOverviewSprite].angle > 0
+			@racer1[:RacerTrackOverviewSprite].angle = 0
+		end
+		
+		###################################
+		#============ Racer 2 ============
+		###################################
 		racer = @racer2
 		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
 			case racer[:RacerSprite].src_rect.y
@@ -575,7 +607,23 @@ class CrustangRacing
 				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
 			end
 		end
+		#subtract from the SpinOutTimer
+		if @racer2[:SpinOutTimer] > 0
+			@racer2[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer2[:SpinOutTimer] <= 0
+		end
 		
+		#update overview sprite spinning
+		if @racer2[:SpinOutTimer] > 0
+			@racer2[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
+		elsif @racer2[:SpinOutTimer] <= 0 && @racer2[:RacerTrackOverviewSprite].angle > 0
+			@racer2[:RacerTrackOverviewSprite].angle = 0
+		end
+		
+		###################################
+		#============ Racer 3 ============
+		###################################
 		racer = @racer3
 		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
 			case racer[:RacerSprite].src_rect.y
@@ -593,7 +641,23 @@ class CrustangRacing
 				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
 			end
 		end
+		#subtract from the SpinOutTimer
+		if @racer3[:SpinOutTimer] > 0
+			@racer3[:SpinOutTimer] -= 1
+			#set the racer's desired speed back to the top base speed when spinning out is over
+			@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer3[:SpinOutTimer] <= 0
+		end
 		
+		#update overview sprite spinning
+		if @racer3[:SpinOutTimer] > 0
+			@racer3[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
+		elsif @racer3[:SpinOutTimer] <= 0 && @racer3[:RacerTrackOverviewSprite].angle > 0
+			@racer3[:RacerTrackOverviewSprite].angle = 0
+		end
+		
+		###################################
+		#============= Player =============
+		###################################
 		racer = @racerPlayer
 		if racer[:SpinOutTimer] > 0 && racer[:SpinOutDirectionTimer] <= 0
 			case racer[:RacerSprite].src_rect.y
@@ -610,35 +674,21 @@ class CrustangRacing
 				racer[:RacerSprite].src_rect.y = 128 #spin right
 				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
 			end
-		end
-		
+		end		
 		#subtract from the SpinOutTimer
-		if @racer1[:SpinOutTimer] > 0
-			@racer1[:SpinOutTimer] -= 1
-			#set the racer's desired speed back to the top base speed when spinning out is over
-			@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer1[:SpinOutTimer] <= 0
-		end
-		if @racer2[:SpinOutTimer] > 0
-			@racer2[:SpinOutTimer] -= 1
-			#set the racer's desired speed back to the top base speed when spinning out is over
-			@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer2[:SpinOutTimer] <= 0
-		end
-		if @racer3[:SpinOutTimer] > 0
-			@racer3[:SpinOutTimer] -= 1
-			#set the racer's desired speed back to the top base speed when spinning out is over
-			@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer3[:SpinOutTimer] <= 0
-		end
 		if @racerPlayer[:SpinOutTimer] > 0
 			@racerPlayer[:SpinOutTimer] -= 1
 			#set the racer's desired speed back to the top base speed when spinning out is over
 			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racerPlayer[:SpinOutTimer] <= 0
 		end
 		
-		#subtract the SpinOutDirectionTimer, which signals the game to do the next rotation if <= 0, then it's set back to the full amount if the SpinOutTimer is still > 0
-		@racer1[:SpinOutDirectionTimer] -= 1 if @racer1[:SpinOutDirectionTimer] > 0
-		@racer2[:SpinOutDirectionTimer] -= 1 if @racer2[:SpinOutDirectionTimer] > 0
-		@racer3[:SpinOutDirectionTimer] -= 1 if @racer3[:SpinOutDirectionTimer] > 0
-		@racerPlayer[:SpinOutDirectionTimer] -= 1 if @racerPlayer[:SpinOutDirectionTimer] > 0
+		#update overview sprite spinning
+		if @racerPlayer[:SpinOutTimer] > 0
+			@racerPlayer[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
+		elsif @racerPlayer[:SpinOutTimer] <= 0 && @racerPlayer[:RacerTrackOverviewSprite].angle > 0
+			@racerPlayer[:RacerTrackOverviewSprite].angle = 0
+		end
+
 	end #def self.updateSpinOutAnimation
 	
 	def self.assignMoveEffects

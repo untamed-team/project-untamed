@@ -13,6 +13,8 @@ class CrustangRacing
 		@sprites["racer1PkmnOverview"].zoom_x = 0.5
 		@sprites["racer1PkmnOverview"].zoom_y = 0.5
 		@racer1[:RacerTrackOverviewSprite] = @sprites["racer1PkmnOverview"]
+		@racer1[:RacerTrackOverviewSprite].ox = @racer1[:RacerTrackOverviewSprite].width/2
+		@racer1[:RacerTrackOverviewSprite].oy = @racer1[:RacerTrackOverviewSprite].height/2
 		
 		###################################
 		#============= Racer2 =============
@@ -25,6 +27,8 @@ class CrustangRacing
 		@sprites["racer2PkmnOverview"].zoom_x = 0.5
 		@sprites["racer2PkmnOverview"].zoom_y = 0.5
 		@racer2[:RacerTrackOverviewSprite] = @sprites["racer2PkmnOverview"]
+		@racer2[:RacerTrackOverviewSprite].ox = @racer2[:RacerTrackOverviewSprite].width/2
+		@racer2[:RacerTrackOverviewSprite].oy = @racer2[:RacerTrackOverviewSprite].height/2
 		
 		###################################
 		#============= Racer3 =============
@@ -37,6 +41,8 @@ class CrustangRacing
 		@sprites["racer3PkmnOverview"].zoom_x = 0.5
 		@sprites["racer3PkmnOverview"].zoom_y = 0.5
 		@racer3[:RacerTrackOverviewSprite] = @sprites["racer3PkmnOverview"]
+		@racer3[:RacerTrackOverviewSprite].ox = @racer3[:RacerTrackOverviewSprite].width/2
+		@racer3[:RacerTrackOverviewSprite].oy = @racer3[:RacerTrackOverviewSprite].height/2
 		
 		###################################
 		#============= Player =============
@@ -49,6 +55,8 @@ class CrustangRacing
 		@sprites["racerPlayerPkmnOverview"].zoom_x = 0.5
 		@sprites["racerPlayerPkmnOverview"].zoom_y = 0.5
 		@racerPlayer[:RacerTrackOverviewSprite] = @sprites["racerPlayerPkmnOverview"]
+		@racerPlayer[:RacerTrackOverviewSprite].ox = @racerPlayer[:RacerTrackOverviewSprite].width/2
+		@racerPlayer[:RacerTrackOverviewSprite].oy = @racerPlayer[:RacerTrackOverviewSprite].height/2
 	end #def self.drawContestantsOnOverview
 	
 	def self.trackOverviewMovementUpdate	
@@ -105,8 +113,8 @@ class CrustangRacing
 			#increase Y
 			currentOverviewY = @trackEllipsesPoints[@racer1[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
 		end	
-		@racer1[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer1PkmnOverview"].width/4
-		@racer1[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer1PkmnOverview"].height/4
+		@racer1[:PositionXOnTrackOverview] = currentOverviewX
+		@racer1[:PositionYOnTrackOverview] = currentOverviewY
 		#put the overview icon sprite where it should be
 		#print @sprites["racer1PkmnOverview"].x if @racer1[:PointOnTrackOverview] == 0
 		@sprites["racer1PkmnOverview"].x = @racer1[:PositionXOnTrackOverview]
@@ -165,8 +173,8 @@ class CrustangRacing
 			#increase Y
 			currentOverviewY = @trackEllipsesPoints[@racer2[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
 		end	
-		@racer2[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer2PkmnOverview"].width/4
-		@racer2[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer2PkmnOverview"].height/4
+		@racer2[:PositionXOnTrackOverview] = currentOverviewX
+		@racer2[:PositionYOnTrackOverview] = currentOverviewY
 		#put the overview icon sprite where it should be
 		#print @sprites["racer2PkmnOverview"].x if @racer2[:PointOnTrackOverview] == 0
 		@sprites["racer2PkmnOverview"].x = @racer2[:PositionXOnTrackOverview]
@@ -225,8 +233,8 @@ class CrustangRacing
 			#increase Y
 			currentOverviewY = @trackEllipsesPoints[@racer3[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
 		end	
-		@racer3[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racer3PkmnOverview"].width/4
-		@racer3[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racer3PkmnOverview"].height/4
+		@racer3[:PositionXOnTrackOverview] = currentOverviewX
+		@racer3[:PositionYOnTrackOverview] = currentOverviewY
 		#put the overview icon sprite where it should be
 		#print @sprites["racer3PkmnOverview"].x if @racer3[:PointOnTrackOverview] == 0
 		@sprites["racer3PkmnOverview"].x = @racer3[:PositionXOnTrackOverview]
@@ -289,8 +297,8 @@ class CrustangRacing
 			currentOverviewY = @trackEllipsesPoints[@racerPlayer[:PointOnTrackOverview]][1] + (pixelsAwayFromCurrentPointY.floor)
 		end
 				
-		@racerPlayer[:PositionXOnTrackOverview] = currentOverviewX - @sprites["racerPlayerPkmnOverview"].width/4
-		@racerPlayer[:PositionYOnTrackOverview] = currentOverviewY - @sprites["racerPlayerPkmnOverview"].height/4
+		@racerPlayer[:PositionXOnTrackOverview] = currentOverviewX
+		@racerPlayer[:PositionYOnTrackOverview] = currentOverviewY
 		
 		#put the overview icon sprite where it should be
 		@sprites["racerPlayerPkmnOverview"].x = @racerPlayer[:PositionXOnTrackOverview]

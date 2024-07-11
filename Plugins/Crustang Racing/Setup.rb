@@ -426,6 +426,10 @@ class CrustangRacing
 		
 		@framesBetweenSpinOutDirections = (Graphics.frame_rate / CrustangRacingSettings::SPINOUT_ROTATIONS_PER_SECOND) / 4
 		
+		#for spinout animation
+		@totalSpins = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS + CrustangRacingSettings::SPINOUT_ROTATIONS_PER_SECOND
+		@amountToSpin = 360/(CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate)
+		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes

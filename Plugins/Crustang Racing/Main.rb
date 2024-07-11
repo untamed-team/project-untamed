@@ -494,7 +494,6 @@ class CrustangRacing
 			self.updateOverlayText
 			self.checkForLap
 			self.updateSpinOutRangeSprites
-			Console.echo_warn @racerPlayer[:BumpedRecoveryTimer]
 		end
 	end #def self.main
 	
