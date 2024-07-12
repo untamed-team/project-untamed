@@ -9,6 +9,7 @@ SLOWED_STRAFE_SPEED = 4
 KPH_MULTIPLIER = 10
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
+ROCK_COLLISION_SE = "Battle damage weak"
 
 #========================================================#
 #================= CONTESTANTS SETTINGS =================#

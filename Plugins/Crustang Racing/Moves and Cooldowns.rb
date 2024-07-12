@@ -381,10 +381,22 @@ class CrustangRacing
 			case move[:EffectCode]
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
-				self.spinOut(racer, @racer1) if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
-				self.spinOut(racer, @racer2) if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
-				self.spinOut(racer, @racer3) if racer != @racer3 && self.withinSpinOutRange?(racer, @racer3)
-				self.spinOut(racer, @racerPlayer) if racer != @racerPlayer && self.withinSpinOutRange?(racer, @racerPlayer)
+				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
+					self.spinOut(racer, @racer1)
+					self.announceAttack(racer, @racer1, "spin")
+				end
+				if racer != @racer2 && self.withinSpinOutRange?(racer, @racer2)
+					self.spinOut(racer, @racer2)
+					self.announceAttack(racer, @racer2, "spin")
+				end
+				if racer != @racer3 && self.withinSpinOutRange?(racer, @racer3)
+					self.spinOut(racer, @racer3)
+					self.announceAttack(racer, @racer3, "spin")
+				end
+				if racer != @racerPlayer && self.withinSpinOutRange?(racer, @racerPlayer)
+					self.spinOut(racer, @racerPlayer)
+					self.announceAttack(racer, @racerPlayer, "spin")
+				end
 			when "speedUpTarget" #Speed up another racer around you, making them more likely to hit obstacles.
 			when "reduceCooldown" #Move cooldowns are reduced by half for 3 uses.
 				racer[:ReduceCooldownCount] = 4
@@ -405,22 +417,6 @@ class CrustangRacing
 	end #def self.moveEffect(racer, move)
 	
 	def self.placeHazard(racer, hazard)
-		###################################
-		#Remove Racer's Hazard of Same Type
-		###################################
-		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
-			racer[:RockHazard][:Sprite].dispose
-			racer[:RockHazard][:Sprite] = nil
-			racer[:RockHazard][:PositionXOnTrack] = nil
-			racer[:RockHazard][:OriginalPositionXOnScreen] = nil
-			racer[:RockHazard][:PositionYOnTrack] = nil
-			
-			racer[:RockHazard][:OverviewSprite].dispose
-			racer[:RockHazard][:OverviewSprite] = nil
-			racer[:RockHazard][:PositionXOnTrackOverview] = nil
-			racer[:RockHazard][:PositionYOnTrackOverview] = nil
-		end
-		
 		case racer
 		when @racer1
 			number = 1
@@ -431,21 +427,55 @@ class CrustangRacing
 		when @racerPlayer
 			number = 4
 		end
-
+		
+		###################################
+		#Remove Racer's Hazard of Same Type
+		###################################
+		if hazard == "rock" && racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
+			racer[:RockHazard][:Sprite].dispose
+			racer[:RockHazard][:Sprite] = nil
+			racer[:RockHazard][:PositionXOnTrack] = nil
+			racer[:RockHazard][:OriginalPositionXOnScreen] = nil
+			racer[:RockHazard][:PositionYOnTrack] = nil
+			
+			racer[:RockHazard][:OverviewSprite].dispose
+			racer[:RockHazard][:OverviewSprite] = nil
+			racer[:RockHazard][:PositionXOnTrackOverview] = nil
+			racer[:RockHazard][:PositionYOnTrackOverview] = nil
+		elsif hazard == "mud" && racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
+			racer[:MudHazard][:Sprite].dispose
+			racer[:MudHazard][:Sprite] = nil
+			racer[:MudHazard][:PositionXOnTrack] = nil
+			racer[:MudHazard][:OriginalPositionXOnScreen] = nil
+			racer[:MudHazard][:PositionYOnTrack] = nil
+			
+			racer[:MudHazard][:OverviewSprite].dispose
+			racer[:MudHazard][:OverviewSprite] = nil
+			racer[:MudHazard][:PositionXOnTrackOverview] = nil
+			racer[:MudHazard][:PositionYOnTrackOverview] = nil
+		end
+		
 		###################################
 		#== Spawn Hazard Sprite on Track ==
-		###################################	
-		#@sprites["hazard_rock_1"]
+		###################################
 		@sprites["hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		sprite = @sprites["hazard_#{hazard}_#{number}"]
 		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
-		sprite.x = racer[:RacerSprite].x-sprite.width######### + @sprites["track1"].x#racer[:RacerSprite].x# + racer[:PositionOnTrack] + @sprites["track1"].x
+		sprite.x = racer[:RacerSprite].x-sprite.width
 		sprite.y = racer[:RacerSprite].y + racer[:RacerSprite].height/2 - sprite.height/2
 		sprite.z = 99999
-		racer[:RockHazard][:Sprite] = sprite
-		racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:RockHazard][:Sprite].width#-racer[:RacerSprite].width-racer[:RockHazard][:Sprite].width
-		racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
-		racer[:RockHazard][:PositionYOnTrack] = sprite.y
+		
+		if hazard == "rock"
+			racer[:RockHazard][:Sprite] = sprite
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:RockHazard][:Sprite].width#-racer[:RacerSprite].width-racer[:RockHazard][:Sprite].width
+			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
+			racer[:RockHazard][:PositionYOnTrack] = sprite.y
+		elsif hazard == "mud"
+			racer[:MudHazard][:Sprite] = sprite
+			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:MudHazard][:Sprite].width
+			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
+			racer[:MudHazard][:PositionYOnTrack] = sprite.y
+		end
 		
 		###################################
 		# Spawn Hazard Sprite on Overview =
@@ -454,12 +484,21 @@ class CrustangRacing
 		@sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite = @sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite.setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
-		overviewSprite.x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/4
-		overviewSprite.y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/4
+		overviewSprite.ox = sprite.width/2
+		overviewSprite.oy = sprite.height/2
+		overviewSprite.x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/8
+		overviewSprite.y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/8
 		overviewSprite.z = 99999
-		racer[:RockHazard][:OverviewSprite] = overviewSprite
-		racer[:RockHazard][:PositionXOnTrackOverview] = overviewSprite.x
-		racer[:RockHazard][:PositionYOnTrackOverview] = overviewSprite.y
+		
+		if hazard == "rock"
+			racer[:RockHazard][:OverviewSprite] = overviewSprite
+			racer[:RockHazard][:PositionXOnTrackOverview] = overviewSprite.x
+			racer[:RockHazard][:PositionYOnTrackOverview] = overviewSprite.y
+		elsif hazard == "mud"
+			racer[:MudHazard][:OverviewSprite] = overviewSprite
+			racer[:MudHazard][:PositionXOnTrackOverview] = overviewSprite.x
+			racer[:MudHazard][:PositionYOnTrackOverview] = overviewSprite.y
+		end
 		
 	end #def self.placeHazard
 	
@@ -543,7 +582,7 @@ class CrustangRacing
 		return false
 	end #def self.withinSpinOutRange?
 	
-	def self.spinOut(attacker, recipient)		
+	def self.spinOut(attacker, recipient)
 		#SPINOUT_DURATION_IN_SECONDS = 3
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
 		
@@ -580,6 +619,9 @@ class CrustangRacing
 			@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer1[:SpinOutTimer] <= 0
 		end
 		
+		#add to the spinoutTimer if it's <= 0 and the racer is not facing forward
+		racer[:SpinOutTimer] += 1 if racer[:SpinOutTimer] <= 0 && racer[:RacerSprite].src_rect.y != 128
+		
 		#update overview sprite spinning
 		if @racer1[:SpinOutTimer] > 0
 			@racer1[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
@@ -613,6 +655,9 @@ class CrustangRacing
 			#set the racer's desired speed back to the top base speed when spinning out is over
 			@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer2[:SpinOutTimer] <= 0
 		end
+		
+		#add to the spinoutTimer if it's <= 0 and the racer is not facing forward
+		racer[:SpinOutTimer] += 1 if racer[:SpinOutTimer] <= 0 && racer[:RacerSprite].src_rect.y != 128
 		
 		#update overview sprite spinning
 		if @racer2[:SpinOutTimer] > 0
@@ -648,6 +693,9 @@ class CrustangRacing
 			@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer3[:SpinOutTimer] <= 0
 		end
 		
+		#add to the spinoutTimer if it's <= 0 and the racer is not facing forward
+		racer[:SpinOutTimer] += 1 if racer[:SpinOutTimer] <= 0 && racer[:RacerSprite].src_rect.y != 128
+		
 		#update overview sprite spinning
 		if @racer3[:SpinOutTimer] > 0
 			@racer3[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
@@ -674,13 +722,16 @@ class CrustangRacing
 				racer[:RacerSprite].src_rect.y = 128 #spin right
 				racer[:SpinOutDirectionTimer] = @framesBetweenSpinOutDirections #reset direction timer
 			end
-		end		
+		end
 		#subtract from the SpinOutTimer
 		if @racerPlayer[:SpinOutTimer] > 0
 			@racerPlayer[:SpinOutTimer] -= 1
 			#set the racer's desired speed back to the top base speed when spinning out is over
 			@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racerPlayer[:SpinOutTimer] <= 0
 		end
+		
+		#add to the spinoutTimer if it's <= 0 and the racer is not facing forward
+		racer[:SpinOutTimer] += 1 if racer[:SpinOutTimer] <= 0 && racer[:RacerSprite].src_rect.y != 128
 		
 		#update overview sprite spinning
 		if @racerPlayer[:SpinOutTimer] > 0
@@ -715,5 +766,31 @@ class CrustangRacing
 			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 		end #for i in 0...@enteredCrustang.moves.length
 	end #def self.assignMoveEffects
+	
+	def self.announceAttack(attacker, recipient, action)
+		case attacker
+		when @racer1
+			attacker = "Racer1"
+		when @racer2
+			attacker = "Racer2"
+		when @racer3
+			attacker = "Racer3"
+		when @racerPlayer
+			attacker = "RacerPlayer"
+		end
+		
+		case recipient
+		when @racer1
+			recipient = "Racer1"
+		when @racer2
+			recipient = "Racer2"
+		when @racer3
+			recipient = "Racer3"
+		when @racerPlayer
+			recipient = "RacerPlayer"
+		end
+		
+		Console.echo_warn "#{attacker} -> #{action} -> #{recipient}"
+	end #def self.announceAttack
 	
 end #class CrustangRacing
