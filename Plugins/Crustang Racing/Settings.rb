@@ -4,9 +4,10 @@ class CrustangRacingSettings
 #========================================================#
 TOP_BASE_SPEED = 12
 SECONDS_TO_NORMALIZE_SPEED = 5
-BASE_STRAFE_SPEED = 6
+BASE_STRAFE_SPEED = 8
+BOOSTED_STRAFE_SPEED = 10
 SLOWED_STRAFE_SPEED = 4
-KPH_MULTIPLIER = 10
+KPH_MULTIPLIER = 5
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
