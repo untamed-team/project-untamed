@@ -57,7 +57,7 @@ invincible:      {EffectName: "Invincible", EffectCode: "invincible", Descriptio
 
 spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
 
-speedUpTarget:   {EffectName: "Speed Up", EffectCode: "speedUpTarget", Description: "Speed up another racer around you, making them more likely to hit obstacles.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
+speedUpTarget:   {EffectName: "Speed Up", EffectCode: "speedUpTarget", Description: "Speed up another racer around you, making them more likely to hit obstacles.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],}, #MIGHT CHANGE TO SLOW STRAFE SPEED INSTEAD
 
 reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced by half for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
 
