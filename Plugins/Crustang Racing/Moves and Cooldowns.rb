@@ -431,29 +431,7 @@ class CrustangRacing
 		###################################
 		#Remove Racer's Hazard of Same Type
 		###################################
-		if hazard == "rock" && racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
-			racer[:RockHazard][:Sprite].dispose
-			racer[:RockHazard][:Sprite] = nil
-			racer[:RockHazard][:PositionXOnTrack] = nil
-			racer[:RockHazard][:OriginalPositionXOnScreen] = nil
-			racer[:RockHazard][:PositionYOnTrack] = nil
-			
-			racer[:RockHazard][:OverviewSprite].dispose
-			racer[:RockHazard][:OverviewSprite] = nil
-			racer[:RockHazard][:PositionXOnTrackOverview] = nil
-			racer[:RockHazard][:PositionYOnTrackOverview] = nil
-		elsif hazard == "mud" && racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
-			racer[:MudHazard][:Sprite].dispose
-			racer[:MudHazard][:Sprite] = nil
-			racer[:MudHazard][:PositionXOnTrack] = nil
-			racer[:MudHazard][:OriginalPositionXOnScreen] = nil
-			racer[:MudHazard][:PositionYOnTrack] = nil
-			
-			racer[:MudHazard][:OverviewSprite].dispose
-			racer[:MudHazard][:OverviewSprite] = nil
-			racer[:MudHazard][:PositionXOnTrackOverview] = nil
-			racer[:MudHazard][:PositionYOnTrackOverview] = nil
-		end
+		self.disposeHazard(racer, hazard)
 		
 		###################################
 		#== Spawn Hazard Sprite on Track ==
@@ -501,6 +479,35 @@ class CrustangRacing
 		end
 		
 	end #def self.placeHazard
+	
+	def self.disposeHazard(racer, hazard)
+		###################################
+		#Remove Racer's Hazard of Same Type
+		###################################
+		if hazard == "rock" && racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
+			racer[:RockHazard][:Sprite].dispose
+			racer[:RockHazard][:Sprite] = nil
+			racer[:RockHazard][:PositionXOnTrack] = nil
+			racer[:RockHazard][:OriginalPositionXOnScreen] = nil
+			racer[:RockHazard][:PositionYOnTrack] = nil
+			
+			racer[:RockHazard][:OverviewSprite].dispose
+			racer[:RockHazard][:OverviewSprite] = nil
+			racer[:RockHazard][:PositionXOnTrackOverview] = nil
+			racer[:RockHazard][:PositionYOnTrackOverview] = nil
+		elsif hazard == "mud" && racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
+			racer[:MudHazard][:Sprite].dispose
+			racer[:MudHazard][:Sprite] = nil
+			racer[:MudHazard][:PositionXOnTrack] = nil
+			racer[:MudHazard][:OriginalPositionXOnScreen] = nil
+			racer[:MudHazard][:PositionYOnTrack] = nil
+			
+			racer[:MudHazard][:OverviewSprite].dispose
+			racer[:MudHazard][:OverviewSprite] = nil
+			racer[:MudHazard][:PositionXOnTrackOverview] = nil
+			racer[:MudHazard][:PositionYOnTrackOverview] = nil
+		end
+	end #def self.disposeHazard
 	
 	def self.withinSpinOutRange?(attacker, recipient)
 		withinRangeX = false
