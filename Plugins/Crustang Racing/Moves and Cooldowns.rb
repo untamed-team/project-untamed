@@ -409,6 +409,7 @@ class CrustangRacing
 			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
 				self.placeHazard(racer, "rock")
 			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.
+				self.placeHazard(racer, "mud")
 			when "push" #Push racers nearby further away to your left or right.
 			when "destroyObstacle" #Destory an obstacle in front of you.
 			end
@@ -448,11 +449,15 @@ class CrustangRacing
 			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:RockHazard][:Sprite].width#-racer[:RacerSprite].width-racer[:RockHazard][:Sprite].width
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
+			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
+			offsetH = @sprites["racerPlayerPkmnOverview"].height/8
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
 			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:MudHazard][:Sprite].width
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
+			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45
+			offsetH = @sprites["racerPlayerPkmnOverview"].height/1.45
 		end
 		
 		###################################
@@ -462,10 +467,10 @@ class CrustangRacing
 		@sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite = @sprites["overview_hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		overviewSprite.setBitmap("Graphics/Pictures/Crustang Racing/overview_hazard_#{hazard}")
+		overviewSprite.x = racer[:PositionXOnTrackOverview] + offsetW
+		overviewSprite.y = racer[:PositionYOnTrackOverview] + offsetH
 		overviewSprite.ox = sprite.width/2
 		overviewSprite.oy = sprite.height/2
-		overviewSprite.x = racer[:PositionXOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].width/8
-		overviewSprite.y = racer[:PositionYOnTrackOverview] + @sprites["racerPlayerPkmnOverview"].height/8
 		overviewSprite.z = 99999
 		
 		if hazard == "rock"

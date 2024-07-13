@@ -300,6 +300,23 @@ class CrustangRacing
 			end
 		end #if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed?
 		
+		#this is the X on the screen, not the track or track overview		
+		if racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
+			#calculate normally based on track1's X
+			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack] + racer[:MudHazard][:OriginalPositionXOnScreen] + racer[:MudHazard][:Sprite].width
+			#keep the hazard on screen
+			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
+			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:MudHazard][:PositionXOnTrack] <= @sprites["track2"].width
+				#make the hazard's X relative to track2's x
+				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack] + racer[:MudHazard][:OriginalPositionXOnScreen] + racer[:MudHazard][:Sprite].width
+			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
+		
+			#keep the hazard on screen if we reach track2
+			if racer[:MudHazard][:Sprite].x > @sprites["track1"].width - racer[:MudHazard][:Sprite].width
+				racer[:MudHazard][:Sprite].x -= @sprites["track1"].width
+			end
+		end #if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed?
+		
 	end #def self.updateHazardPositionOnScreen
 	
 	def self.accelerateDecelerate
@@ -636,25 +653,25 @@ class CrustangRacing
 			self.disposeHazard(@racer1, "mud")
 			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
 			self.spinOut(@racer1, @racerPlayer)
-			self.announceAttack(@racer1, @racerPlayer, "rock")
+			self.announceAttack(@racer1, @racerPlayer, "mud")
 		end
 		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer2[:MudHazard][:Sprite])
 			self.disposeHazard(@racer2, "mud")
 			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
 			self.spinOut(@racer2, @racerPlayer)
-			self.announceAttack(@racer2, @racerPlayer, "rock")
+			self.announceAttack(@racer2, @racerPlayer, "mud")
 		end
 		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer3[:MudHazard][:Sprite])
 			self.disposeHazard(@racer3, "mud")
 			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
 			self.spinOut(@racer3, @racerPlayer)
-			self.announceAttack(@racer3, @racerPlayer, "rock")
+			self.announceAttack(@racer3, @racerPlayer, "mud")
 		end
 		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
 			self.disposeHazard(@racerPlayer, "mud")
 			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
 			self.spinOut(@racerPlayer, @racerPlayer)
-			self.announceAttack(@racerPlayer, @racerPlayer, "rock")
+			self.announceAttack(@racerPlayer, @racerPlayer, "mud")
 		end
 
 	end #def self.checkForCollisions
