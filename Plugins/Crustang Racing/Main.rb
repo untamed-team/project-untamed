@@ -453,18 +453,26 @@ class CrustangRacing
 		
 		#collide with mud hazard
 		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer1[:MudHazard][:Sprite])
+			self.disposeHazard(@racer1, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer1, @racer1)
 			self.announceAttack(@racer1, @racer1, "mud")
 		end
 		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer2[:MudHazard][:Sprite])
+			self.disposeHazard(@racer2, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer2, @racer1)
 			self.announceAttack(@racer2, @racer1, "mud")
 		end
 		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer3[:MudHazard][:Sprite])
+			self.disposeHazard(@racer3, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer3, @racer1)
 			self.announceAttack(@racer3, @racer1, "mud")
 		end
 		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
+			self.disposeHazard(@racerPlayer, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racerPlayer, @racer1)
 			self.announceAttack(@racerPlayer, @racer1, "mud")
 		end
@@ -505,18 +513,26 @@ class CrustangRacing
 		
 		#collide with mud hazard
 		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer1[:MudHazard][:Sprite])
+			self.disposeHazard(@racer1, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer1, @racer2)
 			self.announceAttack(@racer1, @racer2, "mud")
 		end
 		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer2[:MudHazard][:Sprite])
+			self.disposeHazard(@racer2, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer2, @racer2)
 			self.announceAttack(@racer2, @racer2, "mud")
 		end
 		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer3[:MudHazard][:Sprite])
+			self.disposeHazard(@racer3, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer3, @racer2)
 			self.announceAttack(@racer3, @racer2, "mud")
 		end
 		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
+			self.disposeHazard(@racerPlayer, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racerPlayer, @racer2)
 			self.announceAttack(@racerPlayer, @racer2, "mud")
 		end
@@ -557,18 +573,26 @@ class CrustangRacing
 		
 		#collide with mud hazard
 		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer1[:MudHazard][:Sprite])
+			self.disposeHazard(@racer1, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer1, @racer3)
 			self.announceAttack(@racer1, @racer3, "mud")
 		end
 		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer2[:MudHazard][:Sprite])
+			self.disposeHazard(@racer2, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer2, @racer3)
 			self.announceAttack(@racer2, @racer3, "mud")
 		end
 		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer3[:MudHazard][:Sprite])
+			self.disposeHazard(@racer3, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racer3, @racer3)
 			self.announceAttack(@racer3, @racer3, "mud")
 		end
 		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
+			self.disposeHazard(@racerPlayer, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0,Graphics.width)
 			self.spinOut(@racerPlayer, @racer3)
 			self.announceAttack(@racerPlayer, @racer3, "mud")
 		end
@@ -609,18 +633,26 @@ class CrustangRacing
 		
 		#collide with mud hazard
 		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer1[:MudHazard][:Sprite])
+			self.disposeHazard(@racer1, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
 			self.spinOut(@racer1, @racerPlayer)
 			self.announceAttack(@racer1, @racerPlayer, "rock")
 		end
 		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer2[:MudHazard][:Sprite])
+			self.disposeHazard(@racer2, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
 			self.spinOut(@racer2, @racerPlayer)
 			self.announceAttack(@racer2, @racerPlayer, "rock")
 		end
 		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer3[:MudHazard][:Sprite])
+			self.disposeHazard(@racer3, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
 			self.spinOut(@racer3, @racerPlayer)
 			self.announceAttack(@racer3, @racerPlayer, "rock")
 		end
 		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
+			self.disposeHazard(@racerPlayer, "mud")
+			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
 			self.spinOut(@racerPlayer, @racerPlayer)
 			self.announceAttack(@racerPlayer, @racerPlayer, "rock")
 		end
