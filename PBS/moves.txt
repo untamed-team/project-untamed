@@ -9149,10 +9149,10 @@ Description = The user lashes toward the opponent and bites with venomous fangs.
 #----------------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------------
 [EROSIONWAVE]
-Name = Failsafe Erosion Wave
+Name = Erosion Wave
 Type = ROCK
 Category = Special
-Power = 95
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -9162,7 +9162,7 @@ EffectChance = 20
 Description = Pummels the foe with a dust storm. May also lower the foe’s Sp. Def.
 #-------------------------------
 [OWTHEEDGE]
-Name = Failsafe Ow The Edge
+Name = Ow The Edge
 Type = DARK
 Category = Physical
 Power = 120
@@ -9174,7 +9174,7 @@ Flags = Contact,CanProtect,CanMirrorMove
 Description = The user teleports behind the target and slices, cutting itself as well.
 #-------------------------------
 [THINKFAST]
-Name = Failsafe Think Fast
+Name = Think Fast
 Type = PSYCHIC
 Category = Physical
 Power = 40
@@ -9187,7 +9187,7 @@ Flags = Contact,CanProtect,CanMirrorMove
 Description = The user quickly thinks up a weak psychic attack.
 #-------------------------------
 [THOUSANDFOLDS]
-Name = Failsafe Thousand Folds
+Name = Thousand Folds
 Type = STEEL
 Category = Physical
 Power = 90

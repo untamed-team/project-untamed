@@ -4799,6 +4799,16 @@ Flags = Fling_65
 Move = HIDDENPOWER
 Description = A unique attack that varies in type depending on the Pokémon using it.
 #-------------------------------
+[TM109]
+Name = TM109
+NamePlural = TM109s
+Pocket = 4
+Price = 3000
+FieldUse = TM
+Flags = Fling_70
+Move = SECRETPOWER
+Description = An attack move with effects that vary depending on the user's environment.
+#-------------------------------
 [HM01]
 Name = HM01
 NamePlural = HM01s

@@ -1147,10 +1147,6 @@ Description = User moves are Super Effective on Dragon-types.
 Name = Premonition
 Description = STAB moves hit again weaker. Boosts Future Sight.
 #-------------------------------
-[ANGELICBEAUTY]
-Name = Angelic Beauty
-Description = Indirect contact with it may confuse the attacker.
-#-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
 Description = Boosts Fire-type moves in a hailstorm.
@@ -1167,25 +1163,31 @@ Description = Gradually regains HP in sunshine.
 Name = Presage
 Description = Changes the weather for a turn before attacking.
 #-------------------------------
-[HONORBOUND]
-Name = Honor-bound
-Description = User cannot switch-out when below half health.
-#-------------------------------
-[OVERWRITE]
-Name = Overwrite
-Description = The user's first move determines the user's type.
-#-------------------------------
-[SPOOPERAURA]
-Name = Spooper Aura
-Description = Powers up each Pokémon's Ghost-type moves.
+[VOLTAICSPIRIT]
+Name = Voltaic Spirit
+Description = Powers up Electric-type moves.
 #-------------------------------
 [ARTILLERIST]
 Name = Artillerist
 Description = Powers up ball and bomb moves.
 #-------------------------------
-[VOLTAICSPIRIT]
-Name = Voltaic Spirit
-Description = Powers up Electric-type moves.
+[OVERWRITE]
+Name = Overwrite
+Description = The user's first move determines the user's type.
+#-------------------------------
+# 
+#-------------------------------
+[ANGELICBEAUTY]
+Name = Angelic Beauty
+Description = Indirect contact with it may confuse the attacker.
+#-------------------------------
+[HONORBOUND]
+Name = Honor-bound
+Description = User cannot switch-out when below half health.
+#-------------------------------
+[SPOOPERAURA]
+Name = Spooper Aura
+Description = Powers up each Pokémon's Ghost-type moves.
 #-------------------------------
 [SHOWTIME]
 Name = Showtime
