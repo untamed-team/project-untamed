@@ -98,10 +98,9 @@ class CrustangRacing
 			
 			case move[:EffectCode]
 			when "invincible" #Gain invincibility. The next obstacle that hits you does not affect you.
-				print "invinc"
 				racer[:DesiredHue] = @hues[:Red]
 				racer[:InvincibilityStatus] = true
-				racer[:InvincibilityTimer] = CrustangRacingSettings::INVINCIBILITY_DURATION_SECONDS * Graphics.frame_rate if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+				racer[:InvincibilityTimer] = CrustangRacingSettings::INVINCIBILITY_DURATION_SECONDS * Graphics.frame_rate if !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 					self.spinOut(racer, @racer1)

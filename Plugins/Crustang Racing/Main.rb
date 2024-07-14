@@ -457,7 +457,6 @@ class CrustangRacing
 			self.updateOverlayText
 			self.checkForLap
 			self.updateSpinOutRangeSprites
-			
 			self.updateRacerHue
 		end
 	end #def self.main

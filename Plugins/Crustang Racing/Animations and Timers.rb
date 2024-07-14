@@ -58,8 +58,7 @@ class CrustangRacing
 		
 		#update invincibility timer
 		if racer[:InvincibilityTimer] <= 0 && !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			racer[:InvincibilityStatus] = false
-			racer[:DesiredHue] = nil
+			self.endInvincibility(racer)
 		end
 		racer[:InvincibilityTimer] -= 1 if racer[:InvincibilityTimer] > 0 #the timer will not be above 0 if INVINCIBLE_UNTIL_HIT is true
 		
@@ -121,8 +120,7 @@ class CrustangRacing
 		
 		#update invincibility timer
 		if racer[:InvincibilityTimer] <= 0 && !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			racer[:InvincibilityStatus] = false
-			racer[:DesiredHue] = nil
+			self.endInvincibility(racer)
 		end
 		racer[:InvincibilityTimer] -= 1 if racer[:InvincibilityTimer] > 0 #the timer will not be above 0 if INVINCIBLE_UNTIL_HIT is true
 		
@@ -184,8 +182,7 @@ class CrustangRacing
 		
 		#update invincibility timer
 		if racer[:InvincibilityTimer] <= 0 && !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			racer[:InvincibilityStatus] = false
-			racer[:DesiredHue] = nil
+			self.endInvincibility(racer)
 		end
 		racer[:InvincibilityTimer] -= 1 if racer[:InvincibilityTimer] > 0 #the timer will not be above 0 if INVINCIBLE_UNTIL_HIT is true
 		
@@ -254,8 +251,7 @@ class CrustangRacing
 		
 		#update invincibility timer
 		if racer[:InvincibilityTimer] <= 0 && !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			racer[:InvincibilityStatus] = false
-			racer[:DesiredHue] = nil
+			self.endInvincibility(racer)
 		end
 		racer[:InvincibilityTimer] -= 1 if racer[:InvincibilityTimer] > 0 #the timer will not be above 0 if INVINCIBLE_UNTIL_HIT is true
 	end
@@ -592,6 +588,9 @@ class CrustangRacing
 
 			racer[:RacerSprite].tone.set(racer[:RacerSprite].color.red, racer[:RacerSprite].color.green, racer[:RacerSprite].color.blue, 0)
 			racer[:RacerTrackOverviewSprite].tone.set(racer[:RacerSprite].color.red, racer[:RacerSprite].color.green, racer[:RacerSprite].color.blue, 0)
+		else
+			racer[:RacerSprite].tone.set(0,0,0,0)
+			racer[:RacerTrackOverviewSprite].tone.set(0,0,0,0)
 		end #if !racer[:DesiredHue].nil?
 	end #self.updateRacerHue
 end
