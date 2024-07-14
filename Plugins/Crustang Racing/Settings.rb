@@ -2,7 +2,7 @@ class CrustangRacingSettings
 #========================================================#
 #=================== GENERAL SETTINGS ===================#
 #========================================================#
-TOP_BASE_SPEED = 12
+TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
@@ -14,22 +14,12 @@ ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 
 #========================================================#
-#================= CONTESTANTS SETTINGS =================#
-#========================================================#
-CONTESTANTS = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "Sparky"},
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Webster"},
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Snake"},
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnName: "Polly"},
-]
-
-#========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
 BOOST_BUTTON_COOLDOWN_SECONDS = 1#20
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
-BOOST_SPEED = 18
+BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 13#15
 
@@ -74,4 +64,14 @@ push:            {EffectName: "Push", EffectCode: "push", Description: "Push rac
 
 destroyObstacle: {EffectName: "Destroy Obstacle", EffectCode: "destroyObstacle", Description: "Destory an obstacle in front of you.", AssignedMoves: [:VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],}, #destroy obstacle - not as good as invincibility because this just gets rid of an obstacle in front of you
 }
+
+#========================================================#
+#================= CONTESTANTS SETTINGS =================#
+#========================================================#
+CONTESTANTS = [
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "Sparky"},
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Webster"},
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Snake"},
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnName: "Polly"},
+]
 end #class CrustangRacingSettings
