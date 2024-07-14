@@ -49,6 +49,9 @@ SPINOUT_ROTATIONS_PER_SECOND = 2
 SPINOUT_DURATION_IN_SECONDS = 3
 SPINOUT_DESIRED_SPEED = 10
 
+INVINCIBLE_UNTIL_HIT = false
+INVINCIBILITY_DURATION_SECONDS = 10
+
 #========================================================#
 #===================== MOVE EFFECTS =====================#
 #========================================================#
