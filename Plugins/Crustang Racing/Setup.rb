@@ -440,6 +440,13 @@ class CrustangRacing
 			Indigo: [80, 0, 130],#Indigo: [75, 0, 130],
 			Violet: [150, 0, 210]#Violet: [148, 0, 211]
 		}
+		
+		#for helping us cancel a move if pressing more than one button at once
+		@pressingMove1 = false
+		@pressingMove2 = false
+		@pressingMove3 = false
+		@pressingMove4 = false
+		@cancellingMove = nil
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes

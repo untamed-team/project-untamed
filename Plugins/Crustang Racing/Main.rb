@@ -46,47 +46,63 @@ class CrustangRacing
 		###################################
 		#move1
 		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@pressingMove1 = true
 			@racerPlayer[:Move1ButtonSprite].frame = 1
 			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
-			self.moveEffect(@racerPlayer, 1)
-			self.beginCooldown(@racerPlayer, 1)
 			@racerPlayer[:Move1ButtonSprite].frame = 0
-			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE #it doesn't matter if the move is not a spinout move
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 1)
+				self.beginCooldown(@racerPlayer, 1)
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE #it doesn't matter if the move is not a spinout move
+			end #if !self.cancellingMove?
+			@pressingMove1 = false
 		end
 		#move2
 		if Input.triggerex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@pressingMove2 = true
 			@racerPlayer[:Move2ButtonSprite].frame = 1
 			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
-			self.moveEffect(@racerPlayer, 2)
-			self.beginCooldown(@racerPlayer, 2)
 			@racerPlayer[:Move2ButtonSprite].frame = 0
-			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 2)
+				self.beginCooldown(@racerPlayer, 2)
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			end #if !self.cancellingMove?
+			@pressingMove2 = false
 		end
 		#move3
 		if Input.triggerex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@pressingMove3 = true
 			@racerPlayer[:Move3ButtonSprite].frame = 1
 			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
-			self.moveEffect(@racerPlayer, 3)
-			self.beginCooldown(@racerPlayer, 3)
 			@racerPlayer[:Move3ButtonSprite].frame = 0
-			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 3)
+				self.beginCooldown(@racerPlayer, 3)
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			end #if !self.cancellingMove?
+			@pressingMove3 = false
 		end
 		#move4
 		if Input.triggerex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@pressingMove4 = true
 			@racerPlayer[:Move4ButtonSprite].frame = 1
 			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
-			self.moveEffect(@racerPlayer, 4)
-			self.beginCooldown(@racerPlayer, 4)
 			@racerPlayer[:Move4ButtonSprite].frame = 0
-			@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 4)
+				self.beginCooldown(@racerPlayer, 4)
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			end #if !self.cancellingMove?
+			@pressingMove4 = false
 		end
 		
 	end #self.detectInput
@@ -458,6 +474,8 @@ class CrustangRacing
 			self.checkForLap
 			self.updateSpinOutRangeSprites
 			self.updateRacerHue
+			
+			Console.echo_warn self.cancellingMove?
 		end
 	end #def self.main
 	

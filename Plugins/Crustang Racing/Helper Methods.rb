@@ -415,6 +415,18 @@ class CrustangRacing
 		racer[:InvincibilityStatus] = false
 	end #def self.endInvincibility
 	
+	def self.cancellingMove?
+		@cancellingMove = true if @pressingMove1 && @pressingMove2
+		@cancellingMove = true if @pressingMove1 && @pressingMove3
+		@cancellingMove = true if @pressingMove1 && @pressingMove4
+		@cancellingMove = true if @pressingMove2 && @pressingMove3
+		@cancellingMove = true if @pressingMove2 && @pressingMove4
+		@cancellingMove = true if @pressingMove3 && @pressingMove4
+		@cancellingMove = false if !@pressingMove1 && !@pressingMove2 && !@pressingMove3 && !@pressingMove4
+		
+		return @cancellingMove
+	end #def self.cancellingMove?
+	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby
