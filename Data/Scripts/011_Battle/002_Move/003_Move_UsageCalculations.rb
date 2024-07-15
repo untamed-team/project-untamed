@@ -126,11 +126,18 @@ class Battle::Move
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
 		# acc and evasion murder / sleep moves acc buff #by low
-    modifiers[:accuracy_stage] = 0 if user.stages[:ACCURACY] < 0
+    if user.stages[:ACCURACY] < 0
+      case $game_variables[MECHANICSVAR]
+      when 2, 3
+        modifiers[:accuracy_stage] = 0
+      else
+        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer? 
+      end
+    end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
-		modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
+    modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
     modifiers[:accuracy_multiplier] = 1.0
-		modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
+    modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers)
     # Check if move can't miss

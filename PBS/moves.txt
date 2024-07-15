@@ -5882,7 +5882,7 @@ Accuracy = 0
 TotalPP = 15
 Target = User
 FunctionCode = RaiseUserEvasion1
-Description = By moving rapidly, the user makes illusory copies of itself to raise its evasiveness.
+Description = By moving rapidly, the user raises its accuracy and speed by 1 stage.
 #-------------------------------
 [ENCORE]
 Name = Encore
@@ -6180,7 +6180,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = RaiseUserEvasion2MinimizeUser
-Description = The user compresses its body to make itself look smaller, which sharply raises its evasiveness.
+Description = The user compresses its body, which sharply raises its accuracy and raises its speed.
 #-------------------------------
 [MORNINGSUN]
 Name = Morning Sun

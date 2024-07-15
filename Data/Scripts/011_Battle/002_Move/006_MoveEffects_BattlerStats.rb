@@ -292,10 +292,10 @@ end
 #===============================================================================
 # Increases the user's evasion by 1 stage. (Double Team)
 #===============================================================================
-class Battle::Move::RaiseUserEvasion1 < Battle::Move::StatUpMove
+class Battle::Move::RaiseUserEvasion1 < Battle::Move::MultiStatUpMove
   def initialize(battle, move)
     super
-    @statUp = [:EVASION, 1]
+    @statUp = [:ACCURACY, 1, :SPEED, 1]
   end
 end
 
@@ -312,10 +312,10 @@ end
 #===============================================================================
 # Increases the user's evasion by 2 stages. Minimizes the user. (Minimize)
 #===============================================================================
-class Battle::Move::RaiseUserEvasion2MinimizeUser < Battle::Move::StatUpMove
+class Battle::Move::RaiseUserEvasion2MinimizeUser < Battle::Move::MultiStatUpMove
   def initialize(battle, move)
     super
-    @statUp = [:EVASION, 2]
+    @statUp = [:ACCURACY, 2, :SPEED, 1]
   end
 
   def pbEffectGeneral(user)

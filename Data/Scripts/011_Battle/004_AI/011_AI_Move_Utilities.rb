@@ -966,9 +966,19 @@ class Battle::AI
     # Calculate all modifier effects
     modifiers = {}
     modifiers[:base_accuracy]  = baseAcc
+    # acc and evasion murder / sleep moves acc buff #by low
     modifiers[:base_accuracy]  = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(move.id)
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
+    if user.stages[:ACCURACY] < 0
+      case $game_variables[MECHANICSVAR]
+      when 2, 3
+        modifiers[:accuracy_stage] = 0
+      else
+        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer? 
+      end
+    end
+    modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:accuracy_multiplier] = 1.0
     # innate acc boost is handled elsewhere
     modifiers[:evasion_multiplier]  = 1.0
