@@ -360,13 +360,10 @@ class CrustangRacing
 		end
 		
 		#strafe speed
-		if @racer1[:BoostingStatus] == true
-			@racer1[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED
-		elsif @racer1[:Overloaded] == true
-			@racer1[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED
-		else
-			@racer1[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED
-		end
+		@racer1[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED if @racer1[:BoostingStatus] == true
+		#prioritize being slowed by overload rather than speeding up strafe while boosting
+		@racer1[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED if @racer1[:Overloaded] == true
+		@racer1[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED if @racer1[:Overloaded] != true && @racer1[:BoostingStatus] != true
 		
 		###################################
 		#============= Racer2 =============
@@ -396,13 +393,10 @@ class CrustangRacing
 		end
 		
 		#strafe speed
-		if @racer2[:BoostingStatus] == true
-			@racer2[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED
-		elsif @racer2[:Overloaded] == true
-			@racer2[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED
-		else
-			@racer2[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED
-		end
+		@racer2[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED if @racer2[:BoostingStatus] == true
+		#prioritize being slowed by overload rather than speeding up strafe while boosting
+		@racer2[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED if @racer2[:Overloaded] == true
+		@racer2[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED if @racer2[:Overloaded] != true && @racer2[:BoostingStatus] != true
 		
 		###################################
 		#============= Racer3 =============
@@ -432,13 +426,10 @@ class CrustangRacing
 		end
 		
 		#strafe speed
-		if @racer3[:BoostingStatus] == true
-			@racer3[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED
-		elsif @racer3[:Overloaded] == true
-			@racer3[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED
-		else
-			@racer3[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED
-		end
+		@racer3[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED if @racer3[:BoostingStatus] == true
+		#prioritize being slowed by overload rather than speeding up strafe while boosting
+		@racer3[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED if @racer3[:Overloaded] == true
+		@racer3[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED if @racer3[:Overloaded] != true && @racer1[:BoostingStatus] != true
 		
 		###################################
 		#============= Player =============
@@ -468,13 +459,10 @@ class CrustangRacing
 		end
 		
 		#strafe speed
-		if @racerPlayer[:BoostingStatus] == true
-			@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED
-		elsif @racerPlayer[:Overloaded] == true
-			@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED
-		else
-			@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED
-		end
+		@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::BOOSTED_STRAFE_SPEED if @racerPlayer[:BoostingStatus] == true
+		#prioritize being slowed by overload rather than speeding up strafe while boosting
+		@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::OVERLOADED_STRAFE_SPEED if @racerPlayer[:Overloaded] == true
+		@racerPlayer[:StrafeSpeed] = CrustangRacingSettings::BASE_STRAFE_SPEED if @racerPlayer[:Overloaded] != true && @racerPlayer[:BoostingStatus] != true
 		
 	end #def self.accelerateDecelerate
 	
@@ -526,7 +514,7 @@ class CrustangRacing
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
 			
-			#Console.echo_warn @racerPlayer[:OverloadCharge]
+			#Console.echo_warn @racerPlayer[:StrafeSpeed]
 		end
 	end #def self.main
 	
