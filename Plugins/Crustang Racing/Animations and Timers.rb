@@ -276,6 +276,27 @@ class CrustangRacing
 			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
 		end #if @racerPlayer[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
 	end #def self.updateSpinOutRangeSprites
+
+	def self.updateOverloadRangeSprites
+		outlineWidth = CrustangRacingSettings::OVERLOAD_OUTLINE_WIDTH
+		###################################
+		#============= Player =============
+		###################################
+		sprite = @racerPlayer[:OverloadRangeSprite]
+		charge = @racerPlayer[:OverloadCharge]
+		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racerPlayer[:OverloadCharge] > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+	end #def self.updateOverloadRangeSprites
 	
 	def self.updateSpinOutAnimation
 		#right now, @framesBetweenSpinOutDirections is 10, so every 10 frames, we switch directions
@@ -315,6 +336,12 @@ class CrustangRacing
 		elsif @racer1[:SpinOutTimer] <= 0 && @racer1[:RacerTrackOverviewSprite].angle > 0
 			@racer1[:RacerTrackOverviewSprite].angle = 0
 		end
+
+		#subtract from the OverloadTimer
+		if @racer1[:OverloadTimer] > 0
+			@racer1[:OverloadTimer] -= 1
+			@racer1[:Overloaded] = false if @racer1[:OverloadTimer] <= 0
+		end
 		
 		###################################
 		#============ Racer 2 ============
@@ -351,6 +378,12 @@ class CrustangRacing
 			@racer2[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
 		elsif @racer2[:SpinOutTimer] <= 0 && @racer2[:RacerTrackOverviewSprite].angle > 0
 			@racer2[:RacerTrackOverviewSprite].angle = 0
+		end
+
+		#subtract from the OverloadTimer
+		if @racer2[:OverloadTimer] > 0
+			@racer2[:OverloadTimer] -= 1
+			@racer2[:Overloaded] = false if @racer2[:OverloadTimer] <= 0
 		end
 		
 		###################################
@@ -389,6 +422,12 @@ class CrustangRacing
 		elsif @racer3[:SpinOutTimer] <= 0 && @racer3[:RacerTrackOverviewSprite].angle > 0
 			@racer3[:RacerTrackOverviewSprite].angle = 0
 		end
+
+		#subtract from the OverloadTimer
+		if @racer3[:OverloadTimer] > 0
+			@racer3[:OverloadTimer] -= 1
+			@racer3[:Overloaded] = false if @racer3[:OverloadTimer] <= 0
+		end
 		
 		###################################
 		#============= Player =============
@@ -425,6 +464,12 @@ class CrustangRacing
 			@racerPlayer[:RacerTrackOverviewSprite].angle += @amountToSpin * @totalSpins
 		elsif @racerPlayer[:SpinOutTimer] <= 0 && @racerPlayer[:RacerTrackOverviewSprite].angle > 0
 			@racerPlayer[:RacerTrackOverviewSprite].angle = 0
+		end
+
+		#subtract from the OverloadTimer
+		if @racerPlayer[:OverloadTimer] > 0
+			@racerPlayer[:OverloadTimer] -= 1
+			@racerPlayer[:Overloaded] = false if @racerPlayer[:OverloadTimer] <= 0
 		end
 
 	end #def self.updateSpinOutAnimation

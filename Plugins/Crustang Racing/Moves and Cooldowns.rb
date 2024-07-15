@@ -118,7 +118,23 @@ class CrustangRacing
 					self.spinOut(racer, @racerPlayer)
 					self.announceAttack(racer, @racerPlayer, "spin")
 				end
-			when "speedUpTarget" #Speed up another racer around you, making them more likely to hit obstacles.
+			when "overload" #Burden racers around you, decreasing their ability to strafe quickly.
+				if racer != @racer1 && self.withinOverloadRange?(racer, @racer1)
+					self.overload(racer, @racer1)
+					self.announceAttack(racer, @racer1, "overload")
+				end
+				if racer != @racer2 && self.withinOverloadRange?(racer, @racer2)
+					self.overload(racer, @racer2)
+					self.announceAttack(racer, @racer2, "overload")
+				end
+				if racer != @racer3 && self.withinOverloadRange?(racer, @racer3)
+					self.overload(racer, @racer3)
+					self.announceAttack(racer, @racer3, "overload")
+				end
+				if racer != @racerPlayer && self.withinOverloadRange?(racer, @racerPlayer)
+					self.overload(racer, @racerPlayer)
+					self.announceAttack(racer, @racerPlayer, "overload")
+				end
 			when "reduceCooldown" #Move cooldowns are reduced by half for 3 uses.
 				racer[:ReduceCooldownCount] = 4
 				racer[:MoveCoolDownMultiplier] = 2
@@ -236,11 +252,17 @@ class CrustangRacing
 	end #def self.disposeHazard
 	
 	def self.spinOut(attacker, recipient)
-		#SPINOUT_DURATION_IN_SECONDS = 3
+		#SPINOUT_DURATION_IN_SECONDS
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
 		
 		#maybe lock input / AI movement if being spun out?		
 		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
+	end #self.spinOut
+	
+	def self.overload(attacker, recipient)
+		#OVERLOAD_DURATION_IN_SECONDS
+		recipient[:OverloadTimer] = CrustangRacingSettings::OVERLOAD_DURATION_IN_SECONDS * Graphics.frame_rate	
+		recipient[:Overloaded] = true
 	end #self.spinOut
 	
 	def self.assignMoveEffects

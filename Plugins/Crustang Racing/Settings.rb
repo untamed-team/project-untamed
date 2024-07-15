@@ -6,7 +6,6 @@ TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
-SLOWED_STRAFE_SPEED = 4
 KPH_MULTIPLIER = 5
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
@@ -21,7 +20,7 @@ BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
-SECONDARY_BOOST_SPEED = 13#15
+SECONDARY_BOOST_SPEED = 15
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -37,10 +36,16 @@ SPINOUT_MAX_RANGE = 200
 SPINOUT_OUTLINE_WIDTH = 6
 SPINOUT_ROTATIONS_PER_SECOND = 2
 SPINOUT_DURATION_IN_SECONDS = 3
-SPINOUT_DESIRED_SPEED = 10
+SPINOUT_DESIRED_SPEED = 8
 
 INVINCIBLE_UNTIL_HIT = false
 INVINCIBILITY_DURATION_SECONDS = 10
+
+OVERLOAD_MIN_RANGE = 70
+OVERLOAD_MAX_RANGE = 200
+OVERLOAD_OUTLINE_WIDTH = 6
+OVERLOAD_DURATION_IN_SECONDS = 5
+OVERLOADED_STRAFE_SPEED = 4
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#
@@ -50,7 +55,7 @@ invincible:      {EffectName: "Invincible", EffectCode: "invincible", Descriptio
 
 spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
 
-speedUpTarget:   {EffectName: "Speed Up", EffectCode: "speedUpTarget", Description: "Speed up another racer around you, making them more likely to hit obstacles.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],}, #MIGHT CHANGE TO SLOW STRAFE SPEED INSTEAD
+overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burden racers around you, decreasing their ability to strafe quickly.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
 
 reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced by half for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
 

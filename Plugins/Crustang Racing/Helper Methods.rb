@@ -107,6 +107,86 @@ class CrustangRacing
 		return false
 	end #def self.withinSpinOutRange?
 	
+	def self.withinOverloadRange?(attacker, recipient)
+		withinRangeX = false
+		withinRangeY = false
+		
+		###################################
+		#========== WithinRangeX ==========
+		###################################
+		###### Checking next to attacker (same exact X)
+		withinRangeX = true if attacker[:PositionOnTrack] == recipient[:PositionOnTrack]
+		charge = attacker[:OverloadCharge]
+		
+		###### Checking behind attacker
+		overloadRangeX = charge/2 + recipient[:RacerSprite].width/2
+		
+		if attacker[:PositionOnTrack] < overloadRangeX
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackBehindAttacker = []
+			positionOnTrackBehindAttacker.push([0, attacker[:PositionOnTrack]])
+			amountHittingEndOfTrack = overloadRangeX - attacker[:PositionOnTrack]
+			positionOnTrackBehindAttacker.push([@sprites["track1"].width - amountHittingEndOfTrack, @sprites["track1"].width])
+			#the above will result in something like this:
+			#positionOnTrackBehindAttacker is an array with these elements: [[0, 106], [6100, 6144]]
+			#so if the recipient is between positionOnTrackBehindAttacker[0][0] and positionOnTrackBehindAttacker[0][1]
+			#or between positionOnTrackBehindAttacker[1][0] and positionOnTrackBehindAttacker[1][1], they are within range
+		else
+			positionOnTrackBehindAttacker = attacker[:PositionOnTrack] - overloadRangeX
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackBehindAttacker.kind_of?(Array)
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[0][0], positionOnTrackBehindAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[1][0], positionOnTrackBehindAttacker[1][1])
+		else
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker, attacker[:PositionOnTrack])
+		end
+		
+		###### Checking in front of attacker
+		overloadRangeX = charge/2 + recipient[:RacerSprite].width/2
+		
+		if attacker[:PositionOnTrack] > @sprites["track1"].width - overloadRangeX
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfAttacker = []
+			positionOnTrackInFrontOfAttacker.push([attacker[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = overloadRangeX - (@sprites["track1"].width - attacker[:PositionOnTrack])
+			positionOnTrackInFrontOfAttacker.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfAttacker is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfAttacker = attacker[:PositionOnTrack] + overloadRangeX
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackInFrontOfAttacker.kind_of?(Array)
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[0][0], positionOnTrackInFrontOfAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[1][0], positionOnTrackInFrontOfAttacker[1][1])
+		else
+			withinRangeX = true if recipient[:PositionOnTrack].between?(attacker[:PositionOnTrack], positionOnTrackInFrontOfAttacker)
+		end
+		
+		###################################
+		#========== WithinRangeY ==========
+		###################################
+		###### Checking in front of or behind attacker (same exact Y)
+		withinRangeY = true if attacker[:RacerSprite].y == recipient[:RacerSprite].y
+		
+		#checking above attacker
+		overloadRangeY = charge/2 - attacker[:RacerSprite].height/2
+		
+		withinRangeAbove = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y - recipient[:RacerSprite].height - overloadRangeY + 1, attacker[:RacerSprite].y)
+		
+		#checking above attacker
+		withinRangeBelow = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y, attacker[:RacerSprite].y+attacker[:RacerSprite].height + overloadRangeY - 1)
+		
+		withinRangeY = true if withinRangeAbove || withinRangeBelow
+
+		return true if withinRangeX && withinRangeY
+
+		#print "recipient[:PositionOnTrack] is #{recipient[:PositionOnTrack]} and positionOnTrackBehindAttacker is #{positionOnTrackBehindAttacker}"
+		#if all checks have been made and the recipient is not within range of any of them, return false
+		return false
+	end #def self.withinOverloadRange?
+	
 	def self.checkForLap
 		#Lapping: true, LapCount: 0, CurrentPlacement: 1,
 		###################################
