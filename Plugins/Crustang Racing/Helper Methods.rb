@@ -211,6 +211,21 @@ class CrustangRacing
 		
 	end #def self.checkForLap
 
+	def self.updateRacerPlacement
+		@racer1[:LapAndPlacement] = (@racer1[:LapCount] * 1000000) + @racer1[:PositionOnTrack]
+		@racer2[:LapAndPlacement] = (@racer2[:LapCount] * 1000000) + @racer2[:PositionOnTrack]
+		@racer3[:LapAndPlacement] = (@racer3[:LapCount] * 1000000) + @racer3[:PositionOnTrack]
+		@racerPlayer[:LapAndPlacement] = (@racerPlayer[:LapCount] * 1000000) + @racerPlayer[:PositionOnTrack]
+		
+		racersArray = [@racer1, @racer2, @racer3, @racerPlayer]
+		racersSorted = racersArray.sort_by { |hsh| hsh[:LapAndPlacement] }.reverse
+		@racer1[:CurrentPlacement] = (racersSorted.index(@racer1) + 1)
+		@racer2[:CurrentPlacement] = (racersSorted.index(@racer2) + 1)
+		@racer3[:CurrentPlacement] = (racersSorted.index(@racer3) + 1)
+		@racerPlayer[:CurrentPlacement] = (racersSorted.index(@racerPlayer) + 1)
+		Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
+	end #def self.updateRacerPlacement
+
 	def self.checkForCollisions
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
 		###################################

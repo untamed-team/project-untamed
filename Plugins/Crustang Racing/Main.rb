@@ -117,7 +117,22 @@ class CrustangRacing
 			@lastLapCount = @racerPlayer[:LapCount]
 			@lapsAndPlaceOverlay.clear
 		end
-		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 8, Graphics.width, "Place: 4th", @overlayBaseColor, @overlayShadowColor)
+		if @lastPlacement != @racerPlayer[:CurrentPlacement]
+			@lastPlacement = @racerPlayer[:CurrentPlacement]
+			@lapsAndPlaceOverlay.clear
+		end
+		case @racerPlayer[:CurrentPlacement]
+		when 1
+			place = "1st"
+		when 2
+			place = "2nd"
+		when 3
+			place = "3rd"
+		when 4
+			place = "4th"
+		end
+		
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 8, Graphics.width, "Place: #{place}", @overlayBaseColor, @overlayShadowColor)
 		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 40, Graphics.width, "Lap: #{@lastLapCount}", @overlayBaseColor, @overlayShadowColor)
 		
 		#KPH
@@ -508,6 +523,7 @@ class CrustangRacing
 			self.accelerateDecelerate
 			self.checkForCollisions
 			self.updateSpinOutAnimation
+			self.updateRacerPlacement
 			self.updateOverlayText
 			self.checkForLap
 			self.updateSpinOutRangeSprites
