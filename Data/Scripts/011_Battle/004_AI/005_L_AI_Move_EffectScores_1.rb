@@ -156,11 +156,6 @@ class Battle::AI
 					#score=0
 				else
 					if maxdam>=halfhealth
-						if fastermon
-							score*=0.7
-						else
-							score*=0.9
-						end
 					else
 						score*=1.2
 					end
@@ -197,12 +192,6 @@ class Battle::AI
 			else
 				if thisdam<=(halfhealth)
 					score*=1.2
-				else
-					if fastermon
-						if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
-							score*=0.8
-						end
-					end
 				end
 			end
 			if ((user.hp.to_f)<=halfhealth)
