@@ -7,7 +7,7 @@ class Battle::Move::HealUserFullyAndFallAsleep < Battle::Move::HealingMove
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    return true if !user.pbCanSleep?(user, true, self, true)
+    return true if !user.pbCanSleep?(user, true, self, true, true)
     return true if super
     return false
   end

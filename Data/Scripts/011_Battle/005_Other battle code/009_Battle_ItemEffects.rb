@@ -428,6 +428,27 @@ Battle::ItemEffects::HPHeal.add(:SITRUSBERRY,
   }
 )
 
+Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
+  proc { |item, battler, battle, forced|
+    next false if !battler.canHeal?
+    next false if !forced && !battler.canConsumePinchBerry?(true)
+    next false if !battler.pbCanSleep?(battler, true, nil, true, true)
+		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+    battle.pbCommonAnimation("EatBerry", battler) if !forced
+    amt = battler.totalhp
+    amt *= 1 / 2.0 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
+    battler.pbRecoverHP(amt)
+    itemName = GameData::Item.get(item).name
+    if forced
+      PBDebug.log("[Item triggered] Forced consuming of #{itemName}")
+      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
+    else
+      battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
+    end
+    next true
+  }
+)
+
 Battle::ItemEffects::HPHeal.add(:STARFBERRY,
   proc { |item, battler, battle, forced|
     stats = []
@@ -1113,6 +1134,12 @@ Battle::ItemEffects::DamageCalcFromUser.add(:WISEGLASSES,
 Battle::ItemEffects::DamageCalcFromTarget.add(:ASSAULTVEST,
   proc { |item, user, target, move, mults, baseDmg, type|
     mults[:defense_multiplier] *= 1.5 if move.specialMove?
+  }
+)
+
+Battle::ItemEffects::DamageCalcFromTarget.add(:MELEEVEST,
+  proc { |item, user, target, move, mults, baseDmg, type|
+    mults[:defense_multiplier] *= 1.5 if move.physicalMove?
   }
 )
 

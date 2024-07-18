@@ -21,7 +21,7 @@ class Battle::Scene::PokemonDataBox < Sprite
 
   def draw_mutation_icon
     filename = nil
-    specialX = (@battler.opposes?(0)) ? 198 : -18
+    specialX = (@battler.opposes?(0)) ? 222 : -18
     ypos = 30
     if @battler.hasAbilityMutation? && Settings::AAM_MUTATION_ICON
       if Settings::GLOBAL_MUTATION

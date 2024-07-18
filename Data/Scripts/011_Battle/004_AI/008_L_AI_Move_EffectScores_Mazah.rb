@@ -869,7 +869,7 @@ class Battle::AI
 					roles.push("Special Wall")
 				end
 			else
-				if pokemon.item_id == :ASSAULTVEST
+				if pokemon.item_id == :ASSAULTVEST || pokemon.item_id == :MELEEVEST
 					roles.push("Tank")
 				end
 			end
@@ -972,7 +972,7 @@ class Battle::AI
 					roles.push("Special Wall")
 				end
 			else
-				if pokemon.item_id == :ASSAULTVEST
+				if pokemon.item_id == :ASSAULTVEST || pokemon.item_id == :MELEEVEST
 					roles.push("Tank")
 				end
 			end

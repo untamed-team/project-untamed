@@ -1037,7 +1037,8 @@ class Battle::AI
     end
     # Other effects, inc. ones that set accuracy_multiplier or evasion_stage to specific values
     if skill >= PBTrainerAI.mediumSkill
-      if @battle.field.effects[PBEffects::Gravity] > 0
+      # float stone changes #by low
+      if @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
         modifiers[:accuracy_multiplier] *= 5 / 3.0
       end
       if user.effects[PBEffects::MicleBerry]

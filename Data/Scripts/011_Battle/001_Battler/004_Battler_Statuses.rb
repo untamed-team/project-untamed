@@ -290,8 +290,8 @@ class Battle::Battler
     return pbHasStatus?(:SLEEP)
   end
 
-  def pbCanSleep?(user, showMessages, move = nil, ignoreStatus = false)
-    if pbHasStatusPokemon?(:SLEEP) #by low
+  def pbCanSleep?(user, showMessages, move = nil, ignoreStatus = false, restcheck = false)
+    if pbHasStatusPokemon?(:SLEEP) && !restcheck #by low
       @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true))) if showMessages
       return false
     end

@@ -392,7 +392,7 @@ class Battle::AI
 			if target.hasActiveItem?([:LAXINCENSE, :BRIGHTPOWDER])
 				score*=0.7
 			end
-			if @battle.field.effects[PBEffects::Gravity] > 0
+			if @battle.field.effects[PBEffects::Gravity] > 0 && !user.hasActiveItem?(:FLOATSTONE)
 				score = 0
 			end
     #---------------------------------------------------------------------------

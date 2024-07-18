@@ -191,7 +191,8 @@ class Battle::Move
     end
     # Other effects, inc. ones that set accuracy_multiplier or evasion_stage to
     # specific values
-    if @battle.field.effects[PBEffects::Gravity] > 0
+    # float stone changes #by low
+    if @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
       modifiers[:accuracy_multiplier] *= 5 / 3.0
     end
     if user.effects[PBEffects::MicleBerry]
@@ -480,7 +481,8 @@ class Battle::Move
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Gravity Boost #by low 
-		if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0
+    # float stone changes
+		if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
 			multipliers[:base_damage_multiplier] *= 4 / 3.0
 		end
     # Critical hits

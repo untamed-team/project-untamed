@@ -354,7 +354,8 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Gravity Boost #by low 
-		if move.boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0
+		# float stone changes
+		if move.boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
 			multipliers[:base_damage_multiplier] *= 4 / 3.0
 		end
 		# Critical hits - n/a

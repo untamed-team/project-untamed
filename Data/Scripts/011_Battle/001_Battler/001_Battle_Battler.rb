@@ -563,7 +563,8 @@ class Battle::Battler
     return false if hasActiveItem?(:IRONBALL)
     return false if @effects[PBEffects::Ingrain]
     return false if @effects[PBEffects::SmackDown]
-    return false if @battle.field.effects[PBEffects::Gravity] > 0
+    # float stone changes #by low
+    return false if @battle.field.effects[PBEffects::Gravity] > 0 && !hasActiveItem?(:FLOATSTONE)
     return true if pbHasType?(:FLYING)
     return true if hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
     return true if hasActiveItem?(:AIRBALLOON)

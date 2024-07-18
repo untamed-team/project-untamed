@@ -711,7 +711,7 @@ Pocket = 1
 Price = 3000
 SellPrice = 2000
 Flags = Fling_30
-Description = A very light stone. It reduces the weight of a Pokémon when held.
+Description = A very light stone. Halves the users weight and makes them immune to opposing Gravity effects.
 #-------------------------------
 [DESTINYKNOT]
 Name = Destiny Knot
@@ -738,6 +738,14 @@ Pocket = 1
 Price = 1000
 Flags = Fling_80
 Description = An item to be held by a Pokémon. This offensive vest raises Sp. Def but prevents the use of status moves.
+#-------------------------------
+[MELEEVEST]
+Name = Melee Vest
+NamePlural = Melee Vests
+Pocket = 1
+Price = 1000
+Flags = Fling_80
+Description = An item to be held by a Pokémon. This defensive vest raises Defense but prevents the use of status moves.
 #-------------------------------
 [SAFETYGOGGLES]
 Name = Safety Goggles
@@ -1068,7 +1076,7 @@ NamePlural = Adrenaline Orbs
 Pocket = 1
 Price = 300
 Flags = Fling_30
-Description = An item to be held by a Pokémon. It boosts Speed when intimidated. It can be used only once.
+Description = An item to be held by a Pokémon. It boosts Speed when Intimidated or "Grim Tears"ed, once.
 #-------------------------------
 [ROOMSERVICE]
 Name = Room Service
@@ -4970,6 +4978,16 @@ FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
 Description = It may be used or held by a Pokémon to heal the user's HP a little.
+#-------------------------------
+[NYLOBERRY]
+Name = Nylo Berry
+NamePlural = Nylo Berries
+Pocket = 5
+Price = 20
+FieldUse = OnPokemon
+BattleUse = OnPokemon
+Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
+Description = If held by a Pokémon, it fully restores the user in a pinch and make them fall asleep.
 #-------------------------------
 [FIGYBERRY]
 Name = Figy Berry

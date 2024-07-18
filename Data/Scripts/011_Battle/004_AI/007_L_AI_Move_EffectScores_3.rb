@@ -602,7 +602,7 @@ class Battle::AI
 			if target.effects[PBEffects::Minimize]
 				score*=2
 			end
-			if @battle.field.effects[PBEffects::Gravity]>0
+			if @battle.field.effects[PBEffects::Gravity]>0 && !user.hasActiveItem?(:FLOATSTONE)
 				score*=0
 			end
     #---------------------------------------------------------------------------
@@ -1858,7 +1858,7 @@ class Battle::AI
 			for m in target.moves
 				score*=0.3 if [:THUNDER, :HURRICANE].include?(m.id)
 			end
-			if @battle.field.effects[PBEffects::Gravity]>0
+			if @battle.field.effects[PBEffects::Gravity]>0 && !user.hasActiveItem?(:FLOATSTONE)
 				score*=0
 			end
     #---------------------------------------------------------------------------
@@ -1939,7 +1939,7 @@ class Battle::AI
 			for m in target.moves
 				score*=0.3 if [:THUNDER, :HURRICANE].include?(m.id)
 			end
-			if @battle.field.effects[PBEffects::Gravity]>0
+			if @battle.field.effects[PBEffects::Gravity]>0 && !user.hasActiveItem?(:FLOATSTONE)
 				score*=0
 			end
     #---------------------------------------------------------------------------
@@ -1995,7 +1995,7 @@ class Battle::AI
 			for m in target.moves
 				score*=0.3 if [:THUNDER, :HURRICANE].include?(m.id)
 			end
-			if @battle.field.effects[PBEffects::Gravity]>0
+			if @battle.field.effects[PBEffects::Gravity]>0 && !user.hasActiveItem?(:FLOATSTONE)
 				score*=0
 			end
     #---------------------------------------------------------------------------
@@ -3501,7 +3501,7 @@ class Battle::AI
 				case target.item_id
 					when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 						miniscore*=1.5
-					when :ASSAULTVEST,  :ROCKYHELMET
+					when :ASSAULTVEST, :MELEEVEST, :ROCKYHELMET
 						miniscore*=1.3
 					when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 						miniscore*=1.2
@@ -3576,7 +3576,7 @@ class Battle::AI
 					case target.item_id
 						when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 							miniscore*=1.5
-						when :ASSAULTVEST,  :ROCKYHELMET
+						when :ASSAULTVEST, :MELEEVEST,  :ROCKYHELMET
 							miniscore*=1.3
 						when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 							miniscore*=1.2
@@ -3606,7 +3606,7 @@ class Battle::AI
 					case user.item_id
 						when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
 							minimini*=0.5
-						when :ASSAULTVEST,  :ROCKYHELMET
+						when :ASSAULTVEST, :MELEEVEST,  :ROCKYHELMET
 							minimini*=0.7
 						when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 							minimini*=0.8
@@ -3706,7 +3706,7 @@ class Battle::AI
 					if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
 						score*=1.2
 					end    
-					if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST])
+					if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
 						score*=1.1
 					end        
 				end
@@ -3734,7 +3734,7 @@ class Battle::AI
 						if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
 							score*=1.2
 						end    
-						if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST])
+						if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
 							score*=1.1
 						end        
 					end
@@ -3752,7 +3752,7 @@ class Battle::AI
 						#~ score*=1.1
 					#~ end
 					case target.item_id
-						when :LAXINCENSE, :SYNTHETICSEED, :TELLURICSEED, :ELEMENTALSEED, :MAGICALSEED, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST
+						when :LAXINCENSE, :SYNTHETICSEED, :TELLURICSEED, :ELEMENTALSEED, :MAGICALSEED, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST, :MELEEVEST
 							score*=1.2
 						when :LEFTOVERS, :BLACKSLUDGE
 							score*=1.3
@@ -3777,7 +3777,7 @@ class Battle::AI
 					#~ end
 					case target.item_id
 						when :LAXINCENSE, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, 
-								 :LIFEORB, :EVIOLITE, :ASSAULTVEST
+								 :LIFEORB, :EVIOLITE, :ASSAULTVEST, :MELEEVEST
 							score*=1.2
 						when :LEFTOVERS, :BLACKSLUDGE
 							score*=1.3
@@ -3793,7 +3793,7 @@ class Battle::AI
 					#~ end
 					case user.item_id
 						when :LAXINCENSE, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, 
-								 :LIFEORB, :EVIOLITE, :ASSAULTVEST
+								 :LIFEORB, :EVIOLITE, :ASSAULTVEST, :MELEEVEST
 							score*=0.6
 						when :LEFTOVERS, :BLACKSLUDGE
 							score*=0.4
@@ -3922,7 +3922,7 @@ class Battle::AI
 						score*=0
 					when :LAXINCENSE, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, 
 							 :EXPERTBELT, :FOCUSSASH, :LEFTOVERS, :MUSCLEBAND, 
-							 :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST, :BLACKSLUDGE
+							 :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST, :BLACKSLUDGE, :MELEEVEST
 						score*=0
 					when :STICKYBARB
 						score*=1.2
