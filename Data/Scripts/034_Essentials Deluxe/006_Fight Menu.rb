@@ -431,7 +431,7 @@ class Battle::Scene
   def pbUpdateMegaEvolutionMove(idxBattler) #by low
     megaBattler = @battle.battlers[idxBattler]
     return if !MEGA_EVO_MOVESET.key?(megaBattler.pokemon.species)
-    return if $game_switches[MECHANICSVAR] <= 2
+    return if $game_variables[MECHANICSVAR] <= 1
     oldmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][0]
     newmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][1]
     return if !oldmove || !newmove

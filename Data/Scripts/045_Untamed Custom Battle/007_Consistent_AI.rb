@@ -17,14 +17,23 @@ class Battle::AI
 		choices     = []
 		user.eachMoveWithIndex do |_m, i|
 			next if !@battle.pbCanChooseMove?(idxBattler, i, false)
+			if MEGA_EVO_MOVESET.key?(user.species) && $game_variables[MECHANICSVAR] >= 2
+				oldmove = MEGA_EVO_MOVESET[user.species][0]
+				newmove = MEGA_EVO_MOVESET[user.species][1]
+				if _m.id == oldmove
+					user.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
+					user.moves[i].pp       = 5
+					user.moves[i].total_pp = 5
+				end
+			end
 			if wildBattler
 				pbRegisterMoveWild(user, i, choices)
 			else
 				pbRegisterMoveTrainer(user, i, choices, skill)
 			end
 		end
-		#~ Console.echo_h2(choices)
 		echo("\nChoices and scores:\n") #for: "+user.name+"\n")
+		Console.echo_h2(choices)
 		echo("------------------------\n")#----------------\n")
 		# Figure out useful information about the choices
 		totalScore = 0
