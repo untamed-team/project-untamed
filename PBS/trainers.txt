@@ -294,6 +294,10 @@ Pokemon = SABLEYE,50
     Nature = QUIRKY
 	AAM = True
 	MEM = True
+Pokemon = HUMMIPUMMEL,50
+    Moves = FOCUSENERGY,WORKUP,GROWL
+    Ability = LEVITATE
+    Nature = QUIRKY
 #-------------------------------
 [HEXMANIAC,pory]
 LoseText = kaboom
