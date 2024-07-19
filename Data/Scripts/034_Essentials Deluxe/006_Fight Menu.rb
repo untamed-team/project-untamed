@@ -248,6 +248,7 @@ class Battle
     @scene.pbFightMenu(idxBattler, *mechanics) { |cmd|
       case cmd
       when DXTriggers::MENU_TRIGGER_CANCEL           # Cancel
+        @battlers[idxBattler].pokemon.willmega = false #by low
       when DXTriggers::MENU_TRIGGER_MEGA_EVOLUTION   # Mega Evolution
         pbToggleRegisteredMegaEvolution(idxBattler)
         next false
@@ -389,6 +390,7 @@ class Battle::Scene
       #-------------------------------------------------------------------------
       # Cancel Selection
       elsif Input.trigger?(Input::BACK)
+        battler.display_base_moves #by low
         break if yield pbFightMenu_Cancel(mechanic, battler, cw)
         needRefresh = true
       #-------------------------------------------------------------------------
@@ -432,7 +434,7 @@ class Battle::Scene
     oldmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][0]
     newmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][1]
     return if !oldmove || !newmove
-    if megaBattler.willmega
+    if megaBattler.willmega || megaBattler.mega?
       megaBattler.moves.each_with_index do |m, i|
         megaBattler.base_moves.push(megaBattler.moves[i])
         next if m.id != oldmove
