@@ -9197,3 +9197,15 @@ Target = NearOther
 FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
 Description = A folded blade that tears through a target using Protect or Detect.
+#-------------------------------
+[HARDDRIVECRASH]
+Name = Hard Drive Crash
+Type = QMARKS
+Category = Special
+Power = 60
+Accuracy = 0
+TotalPP = 5
+Target = NearOther
+FunctionCode = LowerPPOfTargetLastMoveBy3
+Flags = CanProtect,CanMirrorMove
+Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.

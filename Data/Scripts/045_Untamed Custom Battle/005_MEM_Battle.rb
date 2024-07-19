@@ -45,7 +45,30 @@ class Battle::FakeBattler
     return @pokemon.willmega
   end
 end
+
+MEGA_EVO_MOVESET = {
+  :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH]
+}
+
 class Battle
+  def pbGetMegaEvolutionMove(battler)
+    return if !MEGA_EVO_MOVESET.key?(battler.species)
+    oldmove = MEGA_EVO_MOVESET[battler.species][0]
+    newmove = MEGA_EVO_MOVESET[battler.species][1]
+    return if !oldmove || !newmove
+    if battler.mega?
+      moveslot = 0
+      battler.moves.each_with_index do |m, i|
+        battler.base_moves.push(battler.moves[i])
+        if m.id == oldmove
+          battler.moves[i] = Battle::Move.from_pokemon_move(battler.battle, Pokemon::Move.new(newmove))
+          battler.moves[i].pp       = 5
+          battler.moves[i].total_pp = 5
+        end
+      end
+    end
+  end
+
   def pbCanMegaEvolve?(idxBattler)
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
     return true if $DEBUG && Input.press?(Input::CTRL)
@@ -63,7 +86,7 @@ class Battle
 		######################
     return true
   end
-	
+
 	def pbMegaEvolve(idxBattler)
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon

@@ -356,6 +356,7 @@ class Battle::Scene
         pbSelectBattler(idxBattler)
         needFullRefresh = false
       end
+      pbUpdateMegaEvolutionMove(idxBattler) #by low
       if needRefresh
         pbFightMenu_RefreshMechanic(mechanic, idxBattler, cw)
         needRefresh = false
@@ -425,6 +426,27 @@ class Battle::Scene
     @lastMove[idxBattler] = cw.index
   end
   
+  def pbUpdateMegaEvolutionMove(idxBattler) #by low
+    megaBattler = @battle.battlers[idxBattler]
+    return if !MEGA_EVO_MOVESET.key?(megaBattler.pokemon.species)
+    oldmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][0]
+    newmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][1]
+    return if !oldmove || !newmove
+    if megaBattler.willmega
+      megaBattler.moves.each_with_index do |m, i|
+        megaBattler.base_moves.push(megaBattler.moves[i])
+        next if m.id != oldmove
+        megaBattler.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
+        megaBattler.moves[i].pp       = 5
+        megaBattler.moves[i].total_pp = 5
+        needRefresh = true 
+      end
+    else
+      megaBattler.display_base_moves
+      needRefresh = true 
+    end
+  end
+
   #-----------------------------------------------------------------------------
   # Returns an available battle mechanic, if any.
   #-----------------------------------------------------------------------------
