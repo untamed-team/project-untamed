@@ -506,7 +506,7 @@ class Battle::AI
       baseDmg *= 2
     when "HitThreeTimesPowersUpWithEachHit"   # Triple Kick
       baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
-    when "HitTwoToFiveTimes", "HitThreeToFiveTimes"   # Fury Attack
+    when "HitTwoToFiveTimes", "HitThreeToFiveTimes", "HitTwoTimesReload"   # Fury Attack
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else

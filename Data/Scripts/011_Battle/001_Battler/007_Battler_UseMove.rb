@@ -492,10 +492,13 @@ class Battle::Battler
             move.pbEffectivenessMessage(user, b, targets.length)
           end
         end
-        if realNumHits == 1
-          @battle.pbDisplay(_INTL("Hit 1 time!"))
-        elsif realNumHits > 1
-          @battle.pbDisplay(_INTL("Hit {1} times!", realNumHits))
+        # ignore the normal multi hit text Splinter Shot #by low
+        if move.function != "HitTwoTimesReload"
+          if realNumHits == 1
+            @battle.pbDisplay(_INTL("Hit 1 time!"))
+          elsif realNumHits > 1
+            @battle.pbDisplay(_INTL("Hit {1} times!", realNumHits))
+          end
         end
       end
       # Magic Coat's bouncing back (move has targets)
@@ -829,6 +832,12 @@ class Battle::Battler
         next if !b.hasActiveAbility?(:STEAMENGINE)
         b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
       end
+    end
+    # redundant text for Splinter Shot #by low
+    if move.function == "HitTwoTimesReload"
+      mimicHitNum = hitNum + 1
+      roundnabout = (mimicHitNum > 1) ? "rounds" : "round"
+      @battle.pbDisplay(_INTL("{1} {2}!", mimicHitNum, roundnabout))
     end
     # Fainting
     targets.each { |b| b.pbFaint if b&.fainted? }

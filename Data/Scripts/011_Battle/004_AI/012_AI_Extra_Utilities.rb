@@ -269,7 +269,9 @@ class Battle::AI
 			end
 		end
 		# Multi-targeting attacks
-		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user)
+		# Splinter Shot #by low
+		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) &&
+			 move.function != "HitTwoTimesReload"
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Weather
@@ -281,31 +283,6 @@ class Battle::AI
 			else
 				w_damage_multiplier = 1.5
 				w_damage_divider    = 2
-			end
-			case user.effectiveWeather
-			when :Sun, :HarshSun
-				case type
-				when :FIRE
-					multipliers[:final_damage_multiplier] *= w_damage_multiplier
-				when :WATER
-					multipliers[:final_damage_multiplier] /= w_damage_divider
-				end
-			when :Rain, :HeavyRain
-				case type
-				when :FIRE
-					multipliers[:final_damage_multiplier] /= w_damage_divider
-				when :WATER
-					multipliers[:final_damage_multiplier] *= w_damage_multiplier
-				end
-			when :Sandstorm
-				if target.pbHasType?(:ROCK) && move.specialMove?(type) &&
-					move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
-					multipliers[:defense_multiplier] *= 1.5
-				end
-			when :Hail # hail buff #by low
-				if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
-					multipliers[:final_damage_multiplier] *= 0.75
-				end
 			end
 			# specific weather checks #by low
 			theressun=false
@@ -319,33 +296,61 @@ class Battle::AI
 				thereshal=true if (j.isSpecies?(:FRIZZARD) && j.item == :FRIZZARDITE && j.willmega)
 			end
 			if theressun # sunny day
-        case type
-        when :FIRE
-          multipliers[:final_damage_multiplier] *= 1.25
-        when :WATER
-          multipliers[:final_damage_multiplier] /= 1.5
-        end
+				case type
+				when :FIRE
+					multipliers[:final_damage_multiplier] *= 1.25
+				when :WATER
+					multipliers[:final_damage_multiplier] /= 1.5
+				end
 				if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
 					multipliers[:attack_multiplier] *= 1.5
 				end
 			end
 			if thereswet # rain dance
-        case type
-        when :FIRE
-          multipliers[:final_damage_multiplier] /= 1.5
-        when :WATER
-          multipliers[:final_damage_multiplier] *= 1.25
-        end
+				case type
+				when :FIRE
+					multipliers[:final_damage_multiplier] /= 1.5
+				when :WATER
+					multipliers[:final_damage_multiplier] *= 1.25
+				end
 			end
 			if theressad # sandstorm
-        if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
-           move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
-          multipliers[:defense_multiplier] *= 1.5
-        end
+				if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
+					 move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
+					multipliers[:defense_multiplier] *= 1.5
+				end
 			end
 			if thereshal # hail
 				if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
 					multipliers[:final_damage_multiplier] *= 0.75
+				end
+			end
+			
+			if !theressun && !thereswet && !theresad && !thereshal
+				case user.effectiveWeather
+				when :Sun, :HarshSun
+					case type
+					when :FIRE
+						multipliers[:final_damage_multiplier] *= w_damage_multiplier
+					when :WATER
+						multipliers[:final_damage_multiplier] /= w_damage_divider
+					end
+				when :Rain, :HeavyRain
+					case type
+					when :FIRE
+						multipliers[:final_damage_multiplier] /= w_damage_divider
+					when :WATER
+						multipliers[:final_damage_multiplier] *= w_damage_multiplier
+					end
+				when :Sandstorm
+					if target.pbHasType?(:ROCK) && move.specialMove?(type) &&
+						move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
+						multipliers[:defense_multiplier] *= 1.5
+					end
+				when :Hail # hail buff #by low
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+						multipliers[:final_damage_multiplier] *= 0.75
+					end
 				end
 			end
 		end
@@ -597,7 +602,7 @@ class Battle::AI
 		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.turnCount==0	
 			if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
 					"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-					"HitThreeToFiveTimes"].include?(move.function)
+					"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(move.function)
 				damage*=0.6
 			else
 				damage=1

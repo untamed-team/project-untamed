@@ -296,7 +296,7 @@ class Battle::AI
 						if !mold_broken && pokmon.hasActiveAbility?(:DISGUISE) && pokmon.turnCount==0	
 							if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
 									"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-									"HitThreeToFiveTimes"].include?(j.function) #untamed specifics
+									"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(j.function) #untamed specifics
 								tempdam*=0.6
 							else
 								tempdam=1

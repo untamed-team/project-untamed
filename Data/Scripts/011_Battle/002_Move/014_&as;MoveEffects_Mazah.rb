@@ -342,3 +342,16 @@ class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
     return baseDmg
   end
 end
+
+
+#===============================================================================
+# Hits two times, ignores multi target debuff. (Splinter Shot)
+#===============================================================================
+class Battle::Move::HitTwoTimesReload < Battle::Move
+  def pbDisplayChargeMessage(user)
+    @battle.pbCommonAnimation("FocusPunch", user)
+    @battle.pbDisplay(_INTL("{1} is reloading!", user.pbThis))
+  end
+  def multiHitMove?;            return true; end
+  def pbNumHits(user, targets); return 2;    end
+end

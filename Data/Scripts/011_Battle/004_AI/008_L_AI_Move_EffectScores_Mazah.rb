@@ -564,7 +564,7 @@ class Battle::AI
 				score += 30
 			end
     #---------------------------------------------------------------------------
-		when "HitThreeToFiveTimes"
+		when "HitThreeToFiveTimes", "HitTwoTimesReload"
 			if (target.hasActiveItem?(:ROCKYHELMET) || target.hasActiveAbility?([:IRONBARBS, :ROUGHSKIN])) && user.affectedByContactEffect? && move.pbContactMove?(user)
 				score*=0.9
 			end
@@ -580,7 +580,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 		when "OverrideTargetStatusWithPoison"
 			if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
-				score *= 0.7
+				score *= 0.3
 			elsif target.asleep? && (target.statusCount <= 2 && target.pbSpeed < user.pbSpeed)
 				score = 0
 			elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
@@ -947,13 +947,13 @@ class Battle::AI
 				roles.push("Second")
 			end
 		elsif pokemon.class == Pokemon # used for the whole party
-      movelist = []
-      for i in pokemon.moves
-        next if i.nil?
+			movelist = []
+			for i in pokemon.moves
+				next if i.nil?
 				movedummy = Pokemon::Move.new(i.id)
 				movedummy = Battle::Move.from_pokemon_move(@battle, movedummy)
-        movelist.push(movedummy)
-      end
+				movelist.push(movedummy)
+			end
 			if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
 				 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
 				roles.push("Sweeper")
@@ -1778,56 +1778,56 @@ class Battle::AI
 			PBDebug.log(sprintf("Tough Claws Disrupt")) if $INTERNAL
 			abilityscore*=1.2
 		end 
-    if target.hasActiveAbility?(:BEASTBOOST)
-      PBDebug.log(sprintf("Beast Boost Disrupt")) if $INTERNAL
-      abilityscore*=1.1
-    end 
-    if target.hasActiveAbility?(:COMATOSE)
-      PBDebug.log(sprintf("Comatose Disrupt")) if $INTERNAL
-      abilityscore*=1.3
-    end 
-    if target.hasActiveAbility?(:FLUFFY)
-      PBDebug.log(sprintf("Fluffy Disrupt")) if $INTERNAL
-      abilityscore*=1.5
-      firevar = false
-      for i in user.moves
-        if i.type == :FIRE
-          firevar=true
-        end
-      end
-      if firevar
-        abilityscore*=0.5
-      end      
-    end
-    if target.hasActiveAbility?(:MERCILESS)
-      PBDebug.log(sprintf("Merciless Disrupt")) if $INTERNAL
-      abilityscore*=1.3
-    end 
-    if target.hasActiveAbility?(:WATERBUBBLE)
-      PBDebug.log(sprintf("Water Bubble Disrupt")) if $INTERNAL
-      abilityscore*=1.5
-      firevar = false
-      for i in user.moves
-        if i.type == :FIRE
-          firevar=true
-        end
-      end
-      if firevar
-        abilityscore*=1.3
-      end      
-    end
+		if target.hasActiveAbility?(:BEASTBOOST)
+		PBDebug.log(sprintf("Beast Boost Disrupt")) if $INTERNAL
+		abilityscore*=1.1
+		end 
+		if target.hasActiveAbility?(:COMATOSE)
+		PBDebug.log(sprintf("Comatose Disrupt")) if $INTERNAL
+		abilityscore*=1.3
+		end 
+		if target.hasActiveAbility?(:FLUFFY)
+		PBDebug.log(sprintf("Fluffy Disrupt")) if $INTERNAL
+		abilityscore*=1.5
+		firevar = false
+		for i in user.moves
+			if i.type == :FIRE
+			firevar=true
+			end
+		end
+		if firevar
+			abilityscore*=0.5
+		end      
+		end
+		if target.hasActiveAbility?(:MERCILESS)
+		PBDebug.log(sprintf("Merciless Disrupt")) if $INTERNAL
+		abilityscore*=1.3
+		end 
+		if target.hasActiveAbility?(:WATERBUBBLE)
+		PBDebug.log(sprintf("Water Bubble Disrupt")) if $INTERNAL
+		abilityscore*=1.5
+		firevar = false
+		for i in user.moves
+			if i.type == :FIRE
+			firevar=true
+			end
+		end
+		if firevar
+			abilityscore*=1.3
+		end      
+		end
 		if target.unstoppableAbility?
 			PBDebug.log(sprintf("Unstoppable Ability Disrupt")) if $INTERNAL
 			abilityscore*=0
 		end 
 		# Disrupt scores for Untamed abilities
-    if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :MICROSTRIKE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY])
+		if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :MICROSTRIKE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY])
 			abilityscore*=1.2
 		end
-    if target.hasActiveAbility?([:BAITEDLINE, :FERVOR, :CRYSTALJAW, :JUNGLEFURY, :ENIGMIZE])
+		if target.hasActiveAbility?([:BAITEDLINE, :FERVOR, :CRYSTALJAW, :JUNGLEFURY, :ENIGMIZE])
 			abilityscore*=1.3
 		end
-    if target.hasActiveAbility?([:PARTYPOPPER, :WARRIORSPIRIT, :SLIPPERYPEEL, :TRICKSTER, :MASSEXTINCTION, :PREMONITION, :PRESAGE])
+		if target.hasActiveAbility?([:PARTYPOPPER, :WARRIORSPIRIT, :SLIPPERYPEEL, :TRICKSTER, :MASSEXTINCTION, :PREMONITION, :PRESAGE])
 			abilityscore*=1.6
 		end
 		abilityscore*=0.01
@@ -1844,6 +1844,8 @@ class Battle::AI
 		c+=1 if attacker.hasActiveAbility?(:SUPERLUCK)
 		c+=1 if attacker.hasActiveItem?(:RAZORCLAW)
 		c+=1 if attacker.hasActiveItem?(:SCOPELENS)
+		c+=1 if attacker.hasActiveAbility?(:BLADEMASTER) && move.bladeMove?
+		c+=2 if attacker.hasActiveAbility?(:JUNGLEFURY) && attacker.battle.field.terrain == :Grassy
 		c=50 if attacker.hasActiveAbility?(:MERCILESS) && opponent.poisoned?
 		c=3 if c>3
 		return c

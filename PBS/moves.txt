@@ -9209,3 +9209,15 @@ Target = NearOther
 FunctionCode = LowerPPOfTargetLastMoveBy3
 Flags = CanProtect,CanMirrorMove
 Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.
+#-------------------------------
+[SPLINTERSHOT]
+Name = Splinter Shot
+Type = GRASS
+Category = Physical
+Power = 35
+Accuracy = 100
+TotalPP = 5
+Target = AllNearFoes
+FunctionCode = HitTwoTimesReload
+Flags = Contact,CanProtect,CanMirrorMove
+Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.

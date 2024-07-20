@@ -440,7 +440,8 @@ class Battle::Move
 		#mastersex type zones #by low
 		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
     # Multi-targeting attacks
-    if numTargets > 1
+    # Splinter Shot #by low
+    if numTargets > 1 && @function != "HitTwoTimesReload"
       multipliers[:final_damage_multiplier] *= 0.75
     end
 		# abilityWeather #by low
