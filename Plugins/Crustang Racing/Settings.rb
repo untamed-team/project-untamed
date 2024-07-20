@@ -53,7 +53,9 @@ OVERLOADED_STRAFE_SPEED = 4
 MOVE_EFFECTS = {
 invincible:      {EffectName: "Invincible", EffectCode: "invincible", Description: "Gain invincibility. The next obstacle that hits you does not affect you.", AssignedMoves: [:IRONDEFENSE, :PROTECT, :SUBSTITUTE, :DIG],}, #does not stack if you get to use again before hitting something
 
-spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
+#spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
+
+spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECHSEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL, :VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],},
 
 overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burden racers around you, decreasing their ability to strafe quickly.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
 
@@ -65,9 +67,9 @@ rockHazard:      {EffectName: "Rock Hazard", EffectCode: "rockHazard", Descripti
 
 mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description: "Place a mud pit where you are, leaving it behind for another racer to hit.", AssignedMoves: [:MUDSLAP, :MUDBOMB, :SANDSTORM, :SCORCHINGSANDS],}, #put a mud pit on the screen where you are, leaving it behind. It stays there for a set amount of time and is slightly larger than rock hazards
 
-push:            {EffectName: "Push", EffectCode: "push", Description: "Push racers nearby further away to your left or right.", AssignedMoves: [:SEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL],}, #push enemies away to your left or right (up or down)
+###########push:            {EffectName: "Push", EffectCode: "push", Description: "Push racers nearby further away to your left or right.", AssignedMoves: [:SEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL],}, #push enemies away to your left or right (up or down)
 
-destroyObstacle: {EffectName: "Destroy Obstacle", EffectCode: "destroyObstacle", Description: "Destory an obstacle in front of you.", AssignedMoves: [:VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],}, #destroy obstacle - not as good as invincibility because this just gets rid of an obstacle in front of you
+###########destroyObstacle: {EffectName: "Destroy Obstacle", EffectCode: "destroyObstacle", Description: "Destory an obstacle in front of you.", AssignedMoves: [:VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],}, #destroy obstacle - not as good as invincibility because this just gets rid of an obstacle in front of you
 }
 
 #========================================================#
