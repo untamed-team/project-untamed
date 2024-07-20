@@ -55,7 +55,7 @@ invincible:      {EffectName: "Invincible", EffectCode: "invincible", Descriptio
 
 #spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
 
-spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECHSEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL, :VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],},
+spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH, :SEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL, :VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],},
 
 overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burden racers around you, decreasing their ability to strafe quickly.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
 
@@ -76,9 +76,8 @@ mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description
 #================= CONTESTANTS SETTINGS =================#
 #========================================================#
 CONTESTANTS = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "Sparky"},
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Webster"},
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Snake"},
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnName: "Polly"},
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "Vroom", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Tiny", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Crusty", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
 end #class CrustangRacingSettings

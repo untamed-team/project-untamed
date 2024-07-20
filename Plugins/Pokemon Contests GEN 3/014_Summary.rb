@@ -12,6 +12,7 @@ class PokemonSummary_Scene
 	alias tdw_contests_summary_start_scene pbStartScene
 	def pbStartScene(party, partyindex, inbattle = false)
 		@contestpage = false
+		@crustangRacingPage = false #added by Gardenette
 		tdw_contests_summary_start_scene(party, partyindex, inbattle)
 	end
 
@@ -39,9 +40,77 @@ class PokemonSummary_Scene
 	
 	alias tdw_contests_summary_page_four drawPageFour
 	def drawPageFour
-		if !@contestpage
+		#if !@contestpage
+		if !@contestpage && !@crustangRacingPage #added by Gardenette
 			tdw_contests_summary_page_four
-		else
+		elsif @contestpage
+			overlay = @sprites["overlay"].bitmap
+			if BWSUMMARY
+				moveBase   = Color.new(255, 255, 255)
+				moveShadow = Color.new(123, 123, 123)
+				ppBase   = [moveBase,                # More than 1/2 of total PP
+						  Color.new(255, 214, 0),    # 1/2 of total PP or less
+						  Color.new(255, 115, 0),   # 1/4 of total PP or less
+						  Color.new(255, 8, 72)]    # Zero PP
+				ppShadow = [moveShadow,             # More than 1/2 of total PP
+						  Color.new(123, 99, 0),   # 1/2 of total PP or less
+						  Color.new(115, 57, 0),   # 1/4 of total PP or less
+						  Color.new(123, 8, 49)]   # Zero PP
+			else
+				moveBase   = Color.new(64, 64, 64)
+				moveShadow = Color.new(176, 176, 176)
+				ppBase   = [moveBase,                # More than 1/2 of total PP
+							Color.new(248, 192, 0),    # 1/2 of total PP or less
+							Color.new(248, 136, 32),   # 1/4 of total PP or less
+							Color.new(248, 72, 72)]    # Zero PP
+				ppShadow = [moveShadow,             # More than 1/2 of total PP
+							Color.new(144, 104, 0),   # 1/2 of total PP or less
+							Color.new(144, 72, 24),   # 1/4 of total PP or less
+							Color.new(136, 48, 48)]   # Zero PP
+			end
+			@sprites["pokemon"].visible  = true
+			@sprites["pokeicon"].visible = false
+			@sprites["itemicon"].visible = true
+			textpos  = []
+			imagepos = []
+			# Write move names, types and PP amounts for each known move
+			if BWSUMMARY
+				xPos = 32
+				yPos = 76
+				yAdj = 12
+			else
+				xPos = 248
+				yPos = 104
+				yAdj = 0
+			end
+			Pokemon::MAX_MOVES.times do |i|
+			  move = @pokemon.moves[i]
+			  if move
+				type_number = GameData::Move.get(move.id).contest_type_position
+				imagepos.push(["Graphics/Pictures/Contest/contesttype", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
+				textpos.push([move.name, xPos+68, yPos + yAdj, 0, moveBase, moveShadow])
+				if move.total_pp > 0
+				  textpos.push([_INTL("PP"), xPos+94, yPos + yAdj + 32, 0, moveBase, moveShadow])
+				  ppfraction = 0
+				  if move.pp == 0
+					ppfraction = 3
+				  elsif move.pp * 4 <= move.total_pp
+					ppfraction = 2
+				  elsif move.pp * 2 <= move.total_pp
+					ppfraction = 1
+				  end
+				  textpos.push([sprintf("%d/%d", move.pp, move.total_pp), xPos+212, yPos + yAdj + 32, 1, ppBase[ppfraction], ppShadow[ppfraction]])
+				end
+			  else
+				textpos.push(["-", xPos+68, yPos, 0, moveBase, moveShadow])
+				textpos.push(["--", xPos+194, yPos + yAdj + 32, 1, moveBase, moveShadow])
+			  end
+			  yPos += 64
+			end
+			# Draw all text and images
+			pbDrawTextPositions(overlay, textpos)
+			pbDrawImagePositions(overlay, imagepos)
+		elsif @crustangRacingPage #######################################added by Gardenette
 			overlay = @sprites["overlay"].bitmap
 			if BWSUMMARY
 				moveBase   = Color.new(255, 255, 255)

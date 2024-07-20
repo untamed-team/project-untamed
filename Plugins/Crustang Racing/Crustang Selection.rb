@@ -1,5 +1,6 @@
 class CrustangRacing
-#selecting a crustand if you want to borrow one
-	def self.borrowCrustang
+	#selecting a crustang if you want to rent one for a race
+	def self.rentCrustang
 	end
+	
 end
