@@ -153,8 +153,34 @@ class PokemonSummary_Scene
 			Pokemon::MAX_MOVES.times do |i|
 			  move = @pokemon.moves[i]
 			  if move
-				type_number = GameData::Move.get(move.id).contest_type_position
-				imagepos.push(["Graphics/Pictures/Contest/contesttype", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
+				#####type_number = GameData::Move.get(move.id).contest_type_position
+				
+				CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+					#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+					if valueHash[:AssignedMoves].include?(GameData::Move.get(move.id))
+						print "found #{GameData::Move.get(move.id)} in #{valueHash}"
+						#case i
+						#when 0
+					#		@racerPlayer[:Move1] = valueHash
+					#	when 1
+					#		@racerPlayer[:Move2] = valueHash
+					#	when 2
+					#		@racerPlayer[:Move3] = valueHash
+					#	when 3
+					#		@racerPlayer[:Move4] = valueHash
+					#	end
+					print "#{GameData::Move.get(move.id)} effect code is #{valueHash[:EffectCode]}"
+					
+					#once I test this, I can do a case statement for the move effect
+					
+					end #if valueHash[:AssignedMoves].include?
+				end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				
+				
+				type_number = 0
+				
+				
+				imagepos.push(["Graphics/Pictures/Contest/moveEffectType", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
 				textpos.push([move.name, xPos+68, yPos + yAdj, 0, moveBase, moveShadow])
 				if move.total_pp > 0
 				  textpos.push([_INTL("PP"), xPos+94, yPos + yAdj + 32, 0, moveBase, moveShadow])
@@ -358,7 +384,22 @@ class PokemonSummary_Scene
 			  dorefresh = true
 			end
 			if @page == 4# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  @contestpage = !@contestpage
+			  #####@contestpage = !@contestpage
+			  #added by Gardenette
+			  if @contestpage
+				print "currently on contest page, moving to crustang racing page"
+				@crustangRacingPage = true
+				@contestpage = false
+			  elsif @crustangRacingPage
+				print "currently on crustangRacingPage, moving to normal page"
+				@crustangRacingPage = false
+				@contestpage = false
+			  else #on normal page
+				print "currently on normal page, moving to contest page"
+				@contestpage = true
+				@crustangRacingPage = false
+			  end
+			  
 			  pbPlayDecisionSE
 			  dorefresh = true
 			end
