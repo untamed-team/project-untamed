@@ -153,34 +153,34 @@ class PokemonSummary_Scene
 			Pokemon::MAX_MOVES.times do |i|
 			  move = @pokemon.moves[i]
 			  if move
-				#####type_number = GameData::Move.get(move.id).contest_type_position
-				
+				type_number = 0#GameData::Move.get(move.id).contest_type_position
+				moveSymbol = GameData::Move.get(move.id).id
+				#print moveSymbol
 				CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 					#valueHash is the move's hash containing the effect name, effect code, moves, etc.
-					if valueHash[:AssignedMoves].include?(GameData::Move.get(move.id))
-						print "found #{GameData::Move.get(move.id)} in #{valueHash}"
-						#case i
-						#when 0
-					#		@racerPlayer[:Move1] = valueHash
-					#	when 1
-					#		@racerPlayer[:Move2] = valueHash
-					#	when 2
-					#		@racerPlayer[:Move3] = valueHash
-					#	when 3
-					#		@racerPlayer[:Move4] = valueHash
-					#	end
-					print "#{GameData::Move.get(move.id)} effect code is #{valueHash[:EffectCode]}"
-					
-					#once I test this, I can do a case statement for the move effect
-					
+					if valueHash[:AssignedMoves].include?(moveSymbol)
+						#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
+						case valueHash[:EffectCode]
+						when "invincible"
+							type_number = 5
+						when "spinOut"
+							type_number = 6
+						when "overload"
+							type_number = 0
+						when "reduceCooldown"
+							type_number = 3
+						when "secondBoost"
+							type_number = 4
+						when "rockHazard"
+							type_number = 2
+						when "mudHazard"
+							type_number = 1
+						end
 					end #if valueHash[:AssignedMoves].include?
 				end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 				
 				
-				type_number = 0
-				
-				
-				imagepos.push(["Graphics/Pictures/Contest/moveEffectType", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
+				imagepos.push(["Graphics/Pictures/Crustang Racing/moveEffectType", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
 				textpos.push([move.name, xPos+68, yPos + yAdj, 0, moveBase, moveShadow])
 				if move.total_pp > 0
 				  textpos.push([_INTL("PP"), xPos+94, yPos + yAdj + 32, 0, moveBase, moveShadow])
@@ -323,7 +323,150 @@ class PokemonSummary_Scene
 		  overlay.blt(type_x, 78, @typebitmap.bitmap, type_rect)
 		end
 	end
-		
+	
+	#added by Gardenette
+	def drawPageFourCrustandRacingPageSelecting(move_to_learn)
+		overlay = @sprites["overlay"].bitmap
+		overlay.clear
+		if BWSUMMARY
+			base   = Color.new(255, 255, 255)
+			shadow = Color.new(123, 123, 123)
+			moveBase   = Color.new(255, 255, 255)
+			moveShadow = Color.new(123, 123, 123)
+			ppBase   = [moveBase,                # More than 1/2 of total PP
+					  Color.new(255, 214, 0),    # 1/2 of total PP or less
+					  Color.new(255, 115, 0),   # 1/4 of total PP or less
+					  Color.new(255, 8, 74)]    # Zero PP
+			ppShadow = [moveShadow,             # More than 1/2 of total PP
+					  Color.new(123, 99, 0),   # 1/2 of total PP or less
+					  Color.new(115, 57, 0),   # 1/4 of total PP or less
+					  Color.new(123, 8, 49)]   # Zero PP
+		else
+			base   = Color.new(248, 248, 248)
+			shadow = Color.new(104, 104, 104)
+			moveBase   = Color.new(64, 64, 64)
+			moveShadow = Color.new(176, 176, 176)
+			ppBase   = [moveBase,                # More than 1/2 of total PP
+						Color.new(248, 192, 0),    # 1/2 of total PP or less
+						Color.new(248, 136, 32),   # 1/4 of total PP or less
+						Color.new(248, 72, 72)]    # Zero PP
+			ppShadow = [moveShadow,             # More than 1/2 of total PP
+						Color.new(144, 104, 0),   # 1/2 of total PP or less
+						Color.new(144, 72, 24),   # 1/4 of total PP or less
+						Color.new(136, 48, 48)]   # Zero PP
+		end
+		# Set background image
+		if move_to_learn
+		  @sprites["background"].setBitmap("Graphics/Pictures/Summary/bg_learnmove")
+		else
+		  if BWSUMMARY
+		    if SUMMARY_B2W2_STYLE
+			  @sprites["menuoverlay"].setBitmap("Graphics/Pictures/Summary/bg_movedetail_B2W2")
+			else
+			  @sprites["menuoverlay"].setBitmap("Graphics/Pictures/Summary/bg_movedetail")
+			end
+		  else
+			@sprites["background"].setBitmap("Graphics/Pictures/Summary/bg_movedetail")
+		  end
+		end
+		# Write various bits of text
+		if BWSUMMARY
+			if move_to_learn || SUMMARY_B2W2_STYLE
+				textpos = [
+				  #[_INTL("APPEAL"), 20, 128, 0, base, shadow],
+				  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
+				]
+			else
+				textpos = [
+				  [_INTL("MOVES"), 26, 14, 0, base, shadow],
+				  #[_INTL("APPEAL"), 20, 128, 0, base, shadow],
+				  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
+				]
+			end
+		else
+			textpos = [
+			  [_INTL("MOVES"), 26, 22, 0, base, shadow],
+			  #[_INTL("APPEAL"), 20, 128, 0, base, shadow],
+			  #[_INTL("JAMMING"), 20, 160, 0, base, shadow]
+			]
+		end
+		imagepos = []
+		# Write move names, types and PP amounts for each known move
+		if BWSUMMARY
+			xPos = 260
+			yPos = 92
+			yAdj = 12
+		else
+			xPos = 248
+			yPos = 104
+			yAdj = 0
+		end
+		yPos -= 76 if move_to_learn
+		limit = (move_to_learn) ? Pokemon::MAX_MOVES + 1 : Pokemon::MAX_MOVES
+		limit.times do |i|
+		  move = @pokemon.moves[i]
+		  if i == Pokemon::MAX_MOVES
+			move = move_to_learn
+			yPos += 20
+		  end
+		  if move
+			type_number = 0#GameData::Move.get(move.id).contest_type_position
+			moveSymbol = GameData::Move.get(move.id).id
+			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+				if valueHash[:AssignedMoves].include?(moveSymbol)
+					#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
+					case valueHash[:EffectCode]
+					when "invincible"
+						type_number = 5
+					when "spinOut"
+						type_number = 6
+					when "overload"
+						type_number = 0
+					when "reduceCooldown"
+						type_number = 3
+					when "secondBoost"
+						type_number = 4
+					when "rockHazard"
+						type_number = 2
+					when "mudHazard"
+						type_number = 1
+					end
+				end #if valueHash[:AssignedMoves].include?
+			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+			
+			imagepos.push(["Graphics/Pictures/Crustang Racing/moveEffectType", xPos, yPos + yAdj - 4, 0, type_number * 28, 64, 28])
+			textpos.push([move.name, xPos + 68, yPos + yAdj, 0, moveBase, moveShadow])
+			if move.total_pp > 0
+			  textpos.push([_INTL("PP"), xPos + 94, yPos + yAdj + 32, 0, moveBase, moveShadow])
+			  ppfraction = 0
+			  if move.pp == 0
+				ppfraction = 3
+			  elsif move.pp * 4 <= move.total_pp
+				ppfraction = 2
+			  elsif move.pp * 2 <= move.total_pp
+				ppfraction = 1
+			  end
+			  textpos.push([sprintf("%d/%d", move.pp, move.total_pp), xPos + 212, yPos + yAdj + 32, 1, ppBase[ppfraction], ppShadow[ppfraction]])
+			end
+		  else
+			textpos.push(["-", xPos + 68, yPos + yAdj, 0, moveBase, moveShadow])
+			textpos.push(["--", xPos + 194, yPos + yAdj + 32, 1, moveBase, moveShadow])
+		  end
+		  yPos += 64
+		end
+		# Draw all text and images
+		pbDrawTextPositions(overlay, textpos)
+		pbDrawImagePositions(overlay, imagepos)
+		# Draw Pokémon's type icon(s)
+		@pokemon.types.each_with_index do |type, i|
+		  type_number = GameData::Type.get(type).icon_position
+		  type_rect = Rect.new(0, type_number * 28, 64, 28)
+		  type_x = (@pokemon.types.length == 1) ? 130 : 96 + (70 * i)
+		  overlay.blt(type_x, 78, @typebitmap.bitmap, type_rect)
+		end
+	end
+	
 	def drawSelectedContestMove(move_to_learn, selected_move)
 		# Draw all of page four, except selected move's details
 		drawPageFourContestSelecting(move_to_learn)
@@ -345,6 +488,44 @@ class PokemonSummary_Scene
 		pbDrawTextPositions(overlay, textpos)
 		# Draw selected move's information
 		imagepos.push(["Graphics/Pictures/Contest/move_heart#{hearts}", 166, 124+6]) if hearts > 0
+		#imagepos.push(["Graphics/Pictures/Contest/move_negaheart#{jam}", 166, 156]) if jam > 0
+		pbDrawImagePositions(overlay, imagepos)
+		# Draw selected move's description
+		drawTextEx(overlay, 4, 224, 230, 5, description, base, shadow)
+	end
+	
+	#added by Gardenette
+	def drawSelectedCrustangRacingMove(move_to_learn, selected_move)
+		# Draw all of page four, except selected move's details
+		drawPageFourCrustandRacingPageSelecting(move_to_learn)
+		move = GameData::Move.get(selected_move.id)
+		# Set various values
+		overlay = @sprites["overlay"].bitmap
+		base = Color.new(64, 64, 64)
+		shadow = Color.new(176, 176, 176)
+		@sprites["pokemon"].visible = false if @sprites["pokemon"]
+		@sprites["pokeicon"].pokemon = @pokemon
+		@sprites["pokeicon"].visible = true
+		@sprites["itemicon"].visible = false if @sprites["itemicon"]
+		#hearts = !move.contest_can_be_used? ? 0 : move.contest_hearts
+		#jam = !move.contest_can_be_used? ? 0 : move.contest_jam
+		
+		#get description of move
+		description = "" #failsafe in case the crustang learns any moves that are not set
+		
+		moveSymbol = GameData::Move.get(move.id).id
+		CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+			#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+			description = valueHash[:Description] if valueHash[:AssignedMoves].include?(moveSymbol)
+		end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		
+		#description = move.contest_description###################################################################
+		textpos = []
+		imagepos = []
+		# Draw all text
+		pbDrawTextPositions(overlay, textpos)
+		# Draw selected move's information
+		#imagepos.push(["Graphics/Pictures/Contest/move_heart#{hearts}", 166, 124+6]) if hearts > 0
 		#imagepos.push(["Graphics/Pictures/Contest/move_negaheart#{jam}", 166, 156]) if jam > 0
 		pbDrawImagePositions(overlay, imagepos)
 		# Draw selected move's description
@@ -450,10 +631,19 @@ class PokemonSummary_Scene
 	
 	alias tdw_contests_summary_move_select drawSelectedMove
 	def drawSelectedMove(move_to_learn, selected_move)
-		if !@contestpage
-			tdw_contests_summary_move_select(move_to_learn, selected_move)
-		else
+		#if !@contestpage
+		#	tdw_contests_summary_move_select(move_to_learn, selected_move)
+		#else
+		#	drawSelectedContestMove(move_to_learn, selected_move)
+		#end
+		
+		#edited by Gardenette
+		if @contestpage
 			drawSelectedContestMove(move_to_learn, selected_move)
+		elsif @crustangRacingPage
+			drawSelectedCrustangRacingMove(move_to_learn, selected_move)
+		else
+			tdw_contests_summary_move_select(move_to_learn, selected_move)
 		end
 	end
 
@@ -725,6 +915,8 @@ class MoveRelearner_Scene
 		jam = !selMoveData.contest_can_be_used? ? 0 : selMoveData.contest_jam
 		textpos.push([_INTL("APPEAL"), 272, 120, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)])
 		#textpos.push([_INTL("JAMMING"), 272, 152, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)])
+	elsif @crustangRacingPage #added by Gardenette
+		#nothing needs to go here for now
 	else
 		basedamage = selMoveData.display_damage(@pokemon)
 		category = selMoveData.display_category(@pokemon)
@@ -741,6 +933,8 @@ class MoveRelearner_Scene
 	if @contestinfo
 		imagepos.push(["Graphics/Pictures/Contest/move_heart#{hearts}", 436, 116]) if hearts > 0
 		imagepos.push(["Graphics/Pictures/Contest/move_negaheart#{jam}", 436, 148]) if jam > 0
+	elsif @crustangRacingPage #added by Gardenette
+		#nothing needs to go here for now
 	else
 		imagepos.push(["Graphics/Pictures/category", 436, 116, 0, category * 28, 64, 28])
 	end
@@ -751,7 +945,18 @@ class MoveRelearner_Scene
       imagepos.push(["Graphics/Pictures/reminderButtons", 134, 350, 76, 0, 76, 32])
     end
     pbDrawImagePositions(overlay, imagepos)
-	description = (@contestinfo ? selMoveData.contest_description : selMoveData.description)
+	#######description = (@contestinfo ? selMoveData.contest_description : selMoveData.description)
+	#added by Gardenette
+	print @contestinfo
+	print @crustangRacingPage
+	if @contestinfo
+		description = selMoveData.contest_description
+	elsif @crustangRacingPage
+		print selMoveData #####################################################################################################################
+		#case 
+	else
+		description = selMoveData.description
+	end
     drawTextEx(overlay, 272, 216, 230, 5, description,
                Color.new(64, 64, 64), Color.new(176, 176, 176))
   end
@@ -775,8 +980,22 @@ class MoveRelearner_Scene
         elsif Input.trigger?(Input::USE)
           return @moves[@sprites["commands"].index]
 		elsif Input.trigger?(Input::SPECIAL) 
-			if $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  @contestinfo = !@contestinfo
+			if true#$game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+			  #@contestinfo = !@contestinfo
+			  #added by Gardenette
+			  if @contestinfo
+				@contestinfo = false
+				@crustangRacingPage = true
+				print "going to crustang racing page"
+			  elsif @crustangRacingPage
+				@contestinfo = false
+				@crustangRacingPage = false
+				print "going to normal page"
+			  else
+				@crustangRacingPage = false
+				@contestinfo = true
+				print "going to contest page"
+			  end
 			  pbPlayDecisionSE
 			  pbDrawMoveList
 			end
