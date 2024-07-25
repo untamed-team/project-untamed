@@ -1,19 +1,40 @@
 class CrustangRacing
 	def self.chooseCrustang
+		choices = [_INTL("Rent a Crustang"), _INTL("Use my Crustang"), _INTL("Nevermind")]
+		choice = pbMessage(_INTL("Do you want to rent a Crustang or use your own?"), choices, -1)
 		
-		############################################## if $game_variables[36] == -1 then back out
-		enteredCrustang = $game_variables[36]
-		self.main(enteredCrustang)
+		case choice
+		when -1
+			return
+		when 0
+			self.rentCrustang
+		when 1
+			self.chooseOwnCrustang
+		end
 	end
 	
 	#selecting a crustang if you want to rent one for a race
 	def self.rentCrustang
 		#save the player's current party
-		#replace the player's party with rentable crustang
-		self.pbChooseCrustang
-		#get the crustang that was chosen and pass it to main.rb
-		#restore user's original party
+		@currentParty = $player.party.clone
+		#remove all party members
+		$player.party.length.times do
+			$player.party.delete_at(0)
+		end
 		
+		#fill the player's party with rentable crustang
+		for i in 0...CrustangRacingSettings::RENTABLE_CRUSTANG.length
+			pkmn = Pokemon.new(:CRUSTANG, 20)
+			pkmn.name = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:PkmnName]
+			pkmn.owner.gender = 3
+			pkmn.owner.name = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:TrainerName]
+			pbAddToPartySilent(pkmn)
+			for j in 0...CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves].length
+				pkmn.learn_move(CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves][i])
+			end
+		end
+		
+		self.chooseOwnCrustang		
 	end
 	
 	def self.chooseOwnCrustang
@@ -21,6 +42,11 @@ class CrustangRacing
 		pbChooseTradablePokemon(36, 37,
 			proc { |pkmn| pkmn.isSpecies?(:CRUSTANG) }
 		)
+		
+		enteredCrustang = $game_variables[36]
+		#restore user's original party if rented a Crustang
+		$player.party = @currentParty if !@currentParty.nil?
+		self.main(enteredCrustang) if enteredCrustang != -1
 	end
 end
 
