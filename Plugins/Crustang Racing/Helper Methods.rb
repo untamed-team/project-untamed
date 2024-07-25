@@ -223,7 +223,7 @@ class CrustangRacing
 		@racer2[:CurrentPlacement] = (racersSorted.index(@racer2) + 1)
 		@racer3[:CurrentPlacement] = (racersSorted.index(@racer3) + 1)
 		@racerPlayer[:CurrentPlacement] = (racersSorted.index(@racerPlayer) + 1)
-		Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
+		#Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
 	end #def self.updateRacerPlacement
 
 	def self.checkForCollisions

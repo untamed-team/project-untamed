@@ -29,8 +29,9 @@ class CrustangRacing
 			pkmn.owner.gender = 3
 			pkmn.owner.name = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:TrainerName]
 			pbAddToPartySilent(pkmn)
+			pkmn.moves = []
 			for j in 0...CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves].length
-				pkmn.learn_move(CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves][i])
+				pkmn.learn_move(CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves][j])
 			end
 		end
 		
@@ -43,7 +44,7 @@ class CrustangRacing
 			proc { |pkmn| pkmn.isSpecies?(:CRUSTANG) }
 		)
 		
-		enteredCrustang = $game_variables[36]
+		enteredCrustang = $player.party[$game_variables[36]]
 		#restore user's original party if rented a Crustang
 		$player.party = @currentParty if !@currentParty.nil?
 		self.main(enteredCrustang) if enteredCrustang != -1

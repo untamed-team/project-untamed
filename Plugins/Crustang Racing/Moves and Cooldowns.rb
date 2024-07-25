@@ -274,7 +274,6 @@ class CrustangRacing
 			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 				#valueHash is the move's hash containing the effect name, effect code, moves, etc.
 				if valueHash[:AssignedMoves].include?(@enteredCrustang.moves[i].id)
-					#print "found #{@enteredCrustang.moves[i].id} in #{valueHash}"
 					case i
 					when 0
 						@racerPlayer[:Move1] = valueHash

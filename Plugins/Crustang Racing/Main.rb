@@ -499,7 +499,8 @@ class CrustangRacing
 	
 	end #def self.bumpedIntoSomeone
 	
-	def self.main
+	def self.main(enteredCrustang)
+		@enteredCrustang = enteredCrustang
 		self.setup
 		self.setupRacerHashes
 		self.drawContestants

@@ -15,7 +15,7 @@ MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 1#20
+BOOST_BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 16
@@ -25,7 +25,7 @@ SECONDARY_BOOST_SPEED = 15
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 2#20
+MOVE_BUTTON_COOLDOWN_SECONDS = 20
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
