@@ -890,8 +890,35 @@ class MoveRelearner_Scene
         moveData = GameData::Move.get(moveobject)
         type_number = GameData::Type.get(moveData.display_type(@pokemon)).icon_position
         contest_type_number = GameData::ContestType.get(moveData.contest_type).icon_index
+		#added by Gardenette
+		moveSymbol = GameData::Move.get(moveData).id
+		CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+			#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+			if valueHash[:AssignedMoves].include?(moveSymbol)
+				#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
+				case valueHash[:EffectCode]
+				when "invincible"
+					@cr_type_number = 5
+				when "spinOut"
+					@cr_type_number = 6
+				when "overload"
+					@cr_type_number = 0
+				when "reduceCooldown"
+					@cr_type_number = 3
+				when "secondBoost"
+					@cr_type_number = 4
+				when "rockHazard"
+					@cr_type_number = 2
+				when "mudHazard"
+					@cr_type_number = 1
+				end
+			end #if valueHash[:AssignedMoves].include?
+		end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		
 		if @contestinfo
 			imagepos.push(["Graphics/Pictures/Contest/contesttype", 12, yPos - 4, 0, contest_type_number * 28, 64, 28])
+		elsif @crustangRacingPage
+			imagepos.push(["Graphics/Pictures/Crustang Racing/moveEffectType", 12, yPos - 4, 0, @cr_type_number * 28, 64, 28])
 		else
 			imagepos.push(["Graphics/Pictures/types", 12, yPos - 4, 0, type_number * 28, 64, 28])
 		end
