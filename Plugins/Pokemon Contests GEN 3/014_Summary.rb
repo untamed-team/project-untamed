@@ -21,7 +21,7 @@ class PokemonSummary_Scene
 		if !@contestpage
 			tdw_contests_summary_page_three
 		else
-			#simple = PokeblockSettings::SIMPLIFIED_BERRY_BLENDING
+			#simple = PokeblockSettings::SIMPLIFIED_BERRY_BLENDING ######################### edited by Gardenette
 			simple = false
 			noSheen = PokeblockSettings::DONT_USE_SHEEN
 			bargraph = (PluginManager.installed?("Better Bitmaps") ? PokeblockSettings::STATS_BAR_GRAPH : true)
@@ -155,11 +155,9 @@ class PokemonSummary_Scene
 			  if move
 				type_number = 0#GameData::Move.get(move.id).contest_type_position
 				moveSymbol = GameData::Move.get(move.id).id
-				#print moveSymbol
 				CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 					#valueHash is the move's hash containing the effect name, effect code, moves, etc.
 					if valueHash[:AssignedMoves].include?(moveSymbol)
-						#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
 						case valueHash[:EffectCode]
 						when "invincible"
 							type_number = 5
@@ -415,7 +413,6 @@ class PokemonSummary_Scene
 			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 				#valueHash is the move's hash containing the effect name, effect code, moves, etc.
 				if valueHash[:AssignedMoves].include?(moveSymbol)
-					#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
 					case valueHash[:EffectCode]
 					when "invincible"
 						type_number = 5
@@ -565,18 +562,17 @@ class PokemonSummary_Scene
 			  dorefresh = true
 			end
 			if @page == 4# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  #####@contestpage = !@contestpage
+			  #if we switch to a different pokemon while looking at the CR page, turn off CR page
+			  @crustangRacingPage = false if @pokemon.species != :CRUSTANG
+			  
 			  #added by Gardenette
 			  if @contestpage
-				print "currently on contest page, moving to crustang racing page"
-				@crustangRacingPage = true
+				@crustangRacingPage = true if @pokemon.species == :CRUSTANG
 				@contestpage = false
 			  elsif @crustangRacingPage
-				print "currently on crustangRacingPage, moving to normal page"
 				@crustangRacingPage = false
 				@contestpage = false
 			  else #on normal page
-				print "currently on normal page, moving to contest page"
 				@contestpage = true
 				@crustangRacingPage = false
 			  end
@@ -590,6 +586,10 @@ class PokemonSummary_Scene
 			if @partyindex != oldindex
 			  pbChangePokemon
 			  @ribbonOffset = 0
+			  
+				#if we switch to a different pokemon while looking at the CR page, turn off CR page
+				@crustangRacingPage = false if @pokemon.species != :CRUSTANG
+				
 			  dorefresh = true
 			end
 		  elsif Input.trigger?(Input::DOWN) && @partyindex < @party.length - 1
@@ -598,6 +598,10 @@ class PokemonSummary_Scene
 			if @partyindex != oldindex
 			  pbChangePokemon
 			  @ribbonOffset = 0
+			  
+				#if we switch to a different pokemon while looking at the CR page, turn off CR page
+				@crustangRacingPage = false if @pokemon.species != :CRUSTANG
+			  
 			  dorefresh = true
 			end
 		  elsif Input.trigger?(Input::LEFT) && !@pokemon.egg?
@@ -708,13 +712,23 @@ class PokemonSummary_Scene
 			pbPlayCursorSE
 			drawSelectedMove(nil, @pokemon.moves[selmove])
 		  elsif Input.trigger?(Input::SPECIAL) 
-			if @page == 3 && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+			if @page == 3# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
 			  @contestpage = !@contestpage
 			  pbPlayDecisionSE
 			  drawSelectedMove(nil, @pokemon.moves[selmove])
 			end
-			if @page == 4 && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  @contestpage = !@contestpage
+			if @page == 4# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+			#added by Gardenette
+			  if @contestpage
+				@crustangRacingPage = true if @pokemon.species == :CRUSTANG
+				@contestpage = false
+			  elsif @crustangRacingPage
+				@crustangRacingPage = false
+				@contestpage = false
+			  else #on normal page
+				@contestpage = true
+				@crustangRacingPage = false
+			  end
 			  pbPlayDecisionSE
 			  drawSelectedMove(nil, @pokemon.moves[selmove])
 			end
@@ -758,11 +772,23 @@ class PokemonSummary_Scene
 			selected_move = (selmove == Pokemon::MAX_MOVES) ? new_move : @pokemon.moves[selmove]
 			drawSelectedMove(new_move, selected_move)
 		  elsif Input.trigger?(Input::SPECIAL) 
-			if $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  @contestpage = !@contestpage
-			  pbPlayDecisionSE
-			  selected_move = (selmove == Pokemon::MAX_MOVES) ? new_move : @pokemon.moves[selmove]
-			  drawSelectedMove(new_move, selected_move)
+			if @contestpage
+				@contestpage = false
+				@crustangRacingPage = true if @pokemon.species == :CRUSTANG
+				pbPlayDecisionSE
+				selected_move = (selmove == Pokemon::MAX_MOVES) ? new_move : @pokemon.moves[selmove]
+				drawSelectedMove(new_move, selected_move)
+			elsif @crustangRacingPage
+				@contestpage = false
+				@crustangRacingPage = false
+				pbPlayDecisionSE
+				selected_move = (selmove == Pokemon::MAX_MOVES) ? new_move : @pokemon.moves[selmove]
+				drawSelectedMove(new_move, selected_move)
+			else
+				@contestpage = true
+				pbPlayDecisionSE
+				selected_move = (selmove == Pokemon::MAX_MOVES) ? new_move : @pokemon.moves[selmove]
+				drawSelectedMove(new_move, selected_move)
 			end
 		  end
 		end
@@ -895,7 +921,6 @@ class MoveRelearner_Scene
 		CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 			#valueHash is the move's hash containing the effect name, effect code, moves, etc.
 			if valueHash[:AssignedMoves].include?(moveSymbol)
-				#print "#{moveSymbol} effect code is #{valueHash[:EffectCode]}"
 				case valueHash[:EffectCode]
 				when "invincible"
 					@cr_type_number = 5
@@ -1007,26 +1032,23 @@ class MoveRelearner_Scene
           return nil
         elsif Input.trigger?(Input::USE)
           return @moves[@sprites["commands"].index]
-		elsif Input.trigger?(Input::SPECIAL) 
-			if true#$game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+		elsif Input.trigger?(Input::SPECIAL)
+			#if $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
 			  #@contestinfo = !@contestinfo
 			  #added by Gardenette
 			  if @contestinfo
 				@contestinfo = false
-				@crustangRacingPage = true
-				print "going to crustang racing page"
+				@crustangRacingPage = true if @pokemon.species == :CRUSTANG
 			  elsif @crustangRacingPage
 				@contestinfo = false
 				@crustangRacingPage = false
-				print "going to normal page"
 			  else
 				@crustangRacingPage = false
 				@contestinfo = true
-				print "going to contest page"
 			  end
 			  pbPlayDecisionSE
 			  pbDrawMoveList
-			end
+			#end
         end
       end
     }
