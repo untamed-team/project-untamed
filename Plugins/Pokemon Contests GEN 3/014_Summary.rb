@@ -947,13 +947,14 @@ class MoveRelearner_Scene
     pbDrawImagePositions(overlay, imagepos)
 	#######description = (@contestinfo ? selMoveData.contest_description : selMoveData.description)
 	#added by Gardenette
-	print @contestinfo
-	print @crustangRacingPage
 	if @contestinfo
 		description = selMoveData.contest_description
 	elsif @crustangRacingPage
-		print selMoveData #####################################################################################################################
-		#case 
+		move = selMoveData.id
+		CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+			#valueHash is the move's hash containing the effect name, effect code, moves, etc.
+			description = valueHash[:Description] if valueHash[:AssignedMoves].include?(move)
+		end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 	else
 		description = selMoveData.description
 	end
