@@ -24,6 +24,11 @@ class CrustangRacing
 			@racerPlayer[:Move4ButtonSprite].frame = 0 if racer == @racerPlayer && @racerPlayer[:Move4ButtonSprite]
 			#start cooldown timer
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		
+			#reset racer's spinout and overload ranges regardless of what move they just "released", as if they let go of the move button
+			racer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+		
 		end #if moveNumber == 0
 		
 	end #def self.beginCooldown(move)
@@ -47,16 +52,16 @@ class CrustangRacing
 		end
 	end #def self.updateCooldownMultipliers
 	
-	def self.getMoveEffect(moveNumber)
+	def self.getMoveEffect(racer, moveNumber)
 		case moveNumber
 		when 1
-			move = @racerPlayer[:Move1]
+			move = racer[:Move1]
 		when 2
-			move = @racerPlayer[:Move2]
+			move = racer[:Move2]
 		when 3
-			move = @racerPlayer[:Move3]
+			move = racer[:Move3]
 		when 4
-			move = @racerPlayer[:Move4]
+			move = racer[:Move4]
 		end
 		
 		return move[:EffectCode]
