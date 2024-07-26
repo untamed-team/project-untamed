@@ -531,6 +531,8 @@ class CrustangRacing
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
 			
+			self.aiBoostWhenPossible
+			
 			#Console.echo_warn @racerPlayer[:StrafeSpeed]
 		end
 	end #def self.main

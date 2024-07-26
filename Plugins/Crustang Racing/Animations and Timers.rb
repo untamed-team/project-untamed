@@ -6,6 +6,9 @@ class CrustangRacing
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer1
 		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
+		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
 		racer[:SecondaryBoostTimer] -= 1 if racer[:SecondaryBoostTimer] > 0
@@ -68,6 +71,9 @@ class CrustangRacing
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer2
 		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
+		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
 		racer[:SecondaryBoostTimer] -= 1 if racer[:SecondaryBoostTimer] > 0
@@ -129,6 +135,9 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer3
+		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
 		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
