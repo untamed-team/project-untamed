@@ -240,7 +240,7 @@ class CrustangRacing
 		#this method of checking for collisions does not account for weird sprite placement
 		#spin out racer 1 (recipient) with racerPlayer as the attacher if racer1 hits racerPlayer's hazard
 		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer1[:RockHazard][:Sprite])
-			############################################################################################################################self.disposeHazard(@racer1, "rock")
+			self.disposeHazard(@racer1, "rock")
 			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
 			self.spinOut(@racer1, @racer1) if @racer1[:InvincibilityStatus] == false
 			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT

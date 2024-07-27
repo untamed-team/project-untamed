@@ -182,20 +182,20 @@ class CrustangRacing
 		@sprites["hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		sprite = @sprites["hazard_#{hazard}_#{number}"]
 		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
-		sprite.x = racer[:RacerSprite].x-sprite.width
+		sprite.x = racer[:RacerSprite].x-sprite.width - 30
 		sprite.y = racer[:RacerSprite].y + racer[:RacerSprite].height/2 - sprite.height/2
 		sprite.z = 99999
 		
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
-			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]######################-racer[:RockHazard][:Sprite].width-racer[:RacerSprite].width#-racer[:RockHazard][:Sprite].width
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
 			offsetH = @sprites["racerPlayerPkmnOverview"].height/8
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
-			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:MudHazard][:Sprite].width
+			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45

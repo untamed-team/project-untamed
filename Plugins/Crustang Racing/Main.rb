@@ -645,8 +645,7 @@ class CrustangRacing
 			self.aiMove1
 			
 			Console.echo_warn "racer1 PositionOnTrack is #{@racer1[:PositionOnTrack]}"
-			Console.echo_warn "racerPlayer PositionOnTrack is #{@racerPlayer[:PositionOnTrack]}"
-			print ""
+			Console.echo_warn "rock PositionOnTrack is #{@racer1[:RockHazard][:PositionXOnTrack]}"
 		end
 	end #def self.main
 	
