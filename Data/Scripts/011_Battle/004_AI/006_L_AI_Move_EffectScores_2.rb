@@ -16,7 +16,7 @@ class Battle::AI
 			end
 		end
 		if target.pbCanSleep?(user, false) && !theresone
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, 100)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, score, move, 100)
 			ministat=0
 			ministat+=target.stages[:ATTACK]
 			ministat+=target.stages[:DEFENSE]
@@ -31,18 +31,11 @@ class Battle::AI
 				minimini/=100.0
 				miniscore*=minimini
 			end
-			if move.id == :SING
-				if target.hasActiveAbility?(:SOUNDPROOF)
-					miniscore=0
-				end
-			end
-			if move.id == :GRASSWHISTLE
-				if target.hasActiveAbility?(:SOUNDPROOF)
-					miniscore=0
-				end
-			end
-			if user.turnCount==0
-				miniscore *= 3
+			@battle.pbParty(target.index).each do |i|
+				next if i.nil?
+				next if !i || i.egg?
+				next if pkmn.status != :SLEEP
+				miniscore*=0.5
 			end
 			score = miniscore
 		else

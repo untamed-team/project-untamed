@@ -1146,7 +1146,7 @@ class Battle::AI
 			return 5
 		elsif (move.id == :ACUPRESSURE || move.id == :CAMOUFLAGE ||      
 				move.id == :CHARM || move.id == :CONFIDE ||
-				move.id == :DEFENSECURL || move.id == :GROWTH ||
+				move.id == :DEFENSECURL ||
 				move.id == :EMBARGO || move.id == :FLASH ||
 				move.id == :FOCUSENERGY || move.id == :GROWL ||
 				move.id == :HARDEN || move.id == :HAZE ||
@@ -1216,7 +1216,7 @@ class Battle::AI
 				move.id == :RAGEPOWDER || move.id == :ROCKPOLISH ||
 				move.id == :STOCKPILE || move.id == :SUBSTITUTE ||
 				move.id == :SWITCHEROO ||  move.id == :SWALLOW ||
-				move.id == :TAUNT || 
+				move.id == :TAUNT || move.id == :GROWTH ||
 				move.id == :OCTOLOCK || 
 				move.id == :TOPSYTURVY ||
 				move.id == :TRICK)

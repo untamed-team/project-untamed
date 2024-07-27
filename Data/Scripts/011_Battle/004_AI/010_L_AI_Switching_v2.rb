@@ -498,7 +498,7 @@ class Battle::AI
 					if !mold_broken && b.hasActiveAbility?(:DISGUISE) && b.turnCount==0	
 						if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
 								"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-								"HitThreeToFiveTimes"].include?(m.function) #untamed specifics
+								"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(m.function) #untamed specifics
 							tempdam*=2.2
 						end
 					end	

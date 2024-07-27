@@ -319,7 +319,7 @@ Battle::ItemEffects::HPHeal.add(:LANSATBERRY,
     next false if !forced && !battler.canConsumePinchBerry?
     next false if battler.effects[PBEffects::FocusEnergy] >= 2
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.effects[PBEffects::FocusEnergy] = 2
     itemName = GameData::Item.get(item).name
     if forced
@@ -350,7 +350,7 @@ Battle::ItemEffects::HPHeal.add(:MICLEBERRY,
     next false if !forced && !battler.canConsumePinchBerry?
     next false if !battler.effects[PBEffects::MicleBerry]
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.effects[PBEffects::MicleBerry] = true
     itemName = GameData::Item.get(item).name
     if forced
@@ -370,7 +370,7 @@ Battle::ItemEffects::HPHeal.add(:ORANBERRY,
     next false if !forced && !battler.canConsumePinchBerry?(false)
     amt = 10
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2
@@ -408,7 +408,7 @@ Battle::ItemEffects::HPHeal.add(:SITRUSBERRY,
     next false if !forced && !battler.canConsumePinchBerry?(false)
     amt = battler.totalhp / 4
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2
@@ -433,7 +433,7 @@ Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
     next false if !battler.canHeal?
     next false if !forced && !battler.canConsumePinchBerry?(true)
     next false if !battler.pbCanSleep?(battler, true, nil, true, true)
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battle.pbCommonAnimation("EatBerry", battler) if !forced
     amt = battler.totalhp
     amt *= 1 / 2.0 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
@@ -507,7 +507,7 @@ Battle::ItemEffects::StatusCure.add(:ASPEARBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} defrosted it!", battler.pbThis, itemName)) if !forced
     next true
@@ -521,7 +521,7 @@ Battle::ItemEffects::StatusCure.add(:CHERIBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} cured its paralysis!", battler.pbThis, itemName)) if !forced
     next true
@@ -535,7 +535,7 @@ Battle::ItemEffects::StatusCure.add(:CHESTOBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} woke it up!", battler.pbThis, itemName)) if !forced
     next true
@@ -550,7 +550,7 @@ Battle::ItemEffects::StatusCure.add(:LUMBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     oldStatus = battler.status
     oldConfusion = (battler.effects[PBEffects::Confusion] > 0)
     battler.pbCureStatus(forced)
@@ -620,7 +620,7 @@ Battle::ItemEffects::StatusCure.add(:PECHABERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} cured its poisoning!", battler.pbThis, itemName)) if !forced
     next true
@@ -634,7 +634,7 @@ Battle::ItemEffects::StatusCure.add(:PERSIMBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureConfusion
     if forced
       battle.pbDisplay(_INTL("{1} snapped out of its confusion.", battler.pbThis))
@@ -653,7 +653,7 @@ Battle::ItemEffects::StatusCure.add(:PERSIMBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} healed its dizziness!", battler.pbThis, itemName)) if !forced
     next true
@@ -667,7 +667,7 @@ Battle::ItemEffects::StatusCure.add(:RAWSTBERRY,
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     battle.pbCommonAnimation("EatBerry", battler) if !forced
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battler.pbCureStatus(forced)
     battle.pbDisplay(_INTL("{1}'s {2} healed its burn!", battler.pbThis, itemName)) if !forced
     next true
@@ -705,7 +705,7 @@ Battle::ItemEffects::PriorityBracketChange.add(:QUICKCLAW,
 Battle::ItemEffects::PriorityBracketUse.add(:CUSTAPBERRY,
   proc { |item, battler, battle|
     battle.pbCommonAnimation("EatBerry", battler)
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     battle.pbDisplay(_INTL("{1}'s {2} let it move first!", battler.pbThis, battler.itemName))
     battler.pbConsumeItem
   }
@@ -1375,7 +1375,7 @@ Battle::ItemEffects::OnBeingHit.add(:JABOCABERRY,
     next if !user.takesIndirectDamage?
     amt = user.totalhp / 8
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler)
       amt *= 2
@@ -1446,7 +1446,7 @@ Battle::ItemEffects::OnBeingHit.add(:ROWAPBERRY,
     next if !user.takesIndirectDamage?
     amt = user.totalhp / 8
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler)
       amt *= 2
@@ -1523,7 +1523,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:ENIGMABERRY,
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     amt = battler.totalhp / 4
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2
@@ -1548,7 +1548,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:KEEBERRY,
     itemName = GameData::Item.get(item).name
     amt = 1
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2
@@ -1569,7 +1569,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:MARANGABERRY,
     itemName = GameData::Item.get(item).name
     amt = 1
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2
@@ -1704,7 +1704,7 @@ Battle::ItemEffects::OnEndOfUsingMove.add(:LEPPABERRY,
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
     amt = 10
     ripening = false
-		$game_temp.party_berries_eaten_number[battler.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
       battle.pbShowAbilitySplash(battler, forced)
       amt *= 2

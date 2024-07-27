@@ -397,7 +397,7 @@ class Battle::Battler
     end
     amt = @totalhp / fraction_to_heal
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self, forced)
       amt *= 2
@@ -429,7 +429,7 @@ class Battle::Battler
     return false if !pbCanRaiseStatStage?(stat, self)
     used_item_name = GameData::Item.get(item_to_use).name
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self, forced)
       increment *= 2
@@ -448,7 +448,7 @@ class Battle::Battler
     mults[:final_damage_multiplier] /= 2
     @damageState.berryWeakened = true
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self)
       mults[:final_damage_multiplier] /= 2

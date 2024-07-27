@@ -3902,13 +3902,6 @@ class Battle::AI
 			if roles.include?("Sweeper")
 				miniscore*=1.3
 			end
-			specmove=false
-			for j in user.moves
-				if j.specialMove?(j.type)
-					specmove=true
-				end
-			end    
-			score=0 if !specmove
 			if user.burned? || user.frozen?
 				miniscore*=0.5
 			end
@@ -3938,6 +3931,12 @@ class Battle::AI
 					physmove=true
 				end
 			end    
+			specmove=false
+			for j in user.moves
+				if j.specialMove?(j.type)
+					specmove=true
+				end
+			end    
 			if (physmove && !user.statStageAtMax?(:ATTACK)) ||
 				 (specmove && !user.statStageAtMax?(:SPECIAL_ATTACK))
 				miniscore/=100.0
@@ -3956,11 +3955,9 @@ class Battle::AI
 				miniscore=1
 			end
 			if ([:Sun, :HarshSun].include?(user.effectiveWeather) || user.hasActiveAbility?(:PRESAGE))
-				miniscore*=1.8
+				miniscore*=2
 			end
 			score*=miniscore
-			score = 0 if user.statStageAtMax?(:ATTACK)
-			score = 0 if user.statStageAtMax?(:SPECIAL_ATTACK)
 			score = 0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash

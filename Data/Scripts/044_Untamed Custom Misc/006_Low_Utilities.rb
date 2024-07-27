@@ -268,14 +268,20 @@ GameData::Evolution.register({ # the big funny
 		end	
   }	
 })	
+
+def pbRaiseTropiusEvolutionStep(pkmn)
+  if pkmn.isSpecies?(:TROPIUS)
+    pkmn.evolution_steps += 1
+    return
+  end
+end
+
 GameData::Evolution.register({ # the big funny 2: revengeance	
   :id            => :Titanotrop,	
   :parameter     => Integer,	
   :after_battle_proc => proc { |pkmn, party_index, parameter|	
 		if pkmn.level >= parameter	
-			next $game_temp.party_berries_eaten_number &&	
-					 $game_temp.party_berries_eaten_number[party_index] &&	
-					 $game_temp.party_berries_eaten_number[party_index] >= 10	
+			next pkmn.evolution_steps >= 10	
 		end	
   }	
 })	

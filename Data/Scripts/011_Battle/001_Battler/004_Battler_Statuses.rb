@@ -291,7 +291,7 @@ class Battle::Battler
   end
 
   def pbCanSleep?(user, showMessages, move = nil, ignoreStatus = false, restcheck = false)
-    if pbHasStatusPokemon?(:SLEEP) && !restcheck #by low
+    if pbHasStatusPokemon?(:SLEEP) && !restcheck && user.pbOwnedByPlayer? #by low
       @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true))) if showMessages
       return false
     end
@@ -300,7 +300,7 @@ class Battle::Battler
 
   def pbCanSleepYawn?
     if pbHasStatusPokemon?(:SLEEP) #by low
-      @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true))) if showMessages
+      @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true)))
       return false
     end
     return false if self.status != :NONE
