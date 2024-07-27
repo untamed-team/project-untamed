@@ -580,15 +580,15 @@ def pbDrawTrainerCardFront
 end
 
 #===============================================================================
-# Max out AI for all Trainer Types
+# (actually) Max out AI for all Trainer Types
 #===============================================================================
 module PBTrainerAI
   # Minimum skill level to be in each AI category.
-  def self.minimumSkill; return 255;   end
-  def self.mediumSkill;  return 255;  end
-  def self.highSkill;    return 255;  end
-  def self.bestSkill;    return 255; end
-  end
+  def self.minimumSkill; return 0;   end
+  def self.mediumSkill;  return 0;  end
+  def self.highSkill;    return 0;  end
+  def self.bestSkill;    return 0; end
+end
   
   
   

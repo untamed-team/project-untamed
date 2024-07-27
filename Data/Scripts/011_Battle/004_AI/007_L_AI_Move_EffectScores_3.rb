@@ -4131,9 +4131,6 @@ class Battle::AI
           if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?([:WIMPOUT, :EMERGENCYEXIT]) || user.hasActiveItem?(:EJECTBUTTON))
             miniscore*=0.3
           end
-          if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-            miniscore*=0.3
-          end     
           if target.effects[PBEffects::HyperBeam]>0
             miniscore*=1.3
           end

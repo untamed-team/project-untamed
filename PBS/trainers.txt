@@ -159,36 +159,11 @@ Pokemon = M_ROSELIA,8
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, whatever…
-Pokemon = PACUNA,8
-    Moves = UTURN,REFLECT,COVET,LIGHTSCREEN
-    AbilityIndex = 1
-    Nature = JOLLY
-Pokemon = LILORINA,8
-    Moves = DISARMINGVOICE,BITINGCOLD,OMINOUSWIND,BUBBLE
-    AbilityIndex = 2
-    Item = RINDOBERRY
-    Nature = BOLD
-Pokemon = FLABEBE,8
-    Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,SAFEGUARD
-    AbilityIndex = 2
-    Item = WATERGEM
-	HiddenPowerType = WATER
 Pokemon = MURKROW,8
-    Moves = PECK,ROOST,NIGHTSHADE,TOXIC
+    Moves = PECK,NIGHTSHADE
     AbilityIndex = 2
     Item = EVIOLITE
     Nature = ADAMANT
-Pokemon = LITWICK,9
-    Moves = FIRESPIN,HEX,WILLOWISP,HIDDENPOWER
-    AbilityIndex = 1
-    Item = PASSHOBERRY
-    Nature = TIMID
-	HiddenPowerType = ELECTRIC
-Pokemon = M_ROSELIA,9
-    Moves = GROWTH,HEX,MEGADRAIN,GRASSWHISTLE
-    AbilityIndex = 2
-    Item = ORANBERRY
-    Nature = MODEST
 #-------------------------------
 [LASS,Juju]
 LoseText = Aren't my Pokémon so cute?

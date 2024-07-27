@@ -16,7 +16,7 @@ class Battle::AI
 			end
 		end
 		if target.pbCanSleep?(user, false) && !theresone
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, score, move, 100)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 140, move, 100)
 			ministat=0
 			ministat+=target.stages[:ATTACK]
 			ministat+=target.stages[:DEFENSE]
@@ -34,7 +34,7 @@ class Battle::AI
 			@battle.pbParty(target.index).each do |i|
 				next if i.nil?
 				next if !i || i.egg?
-				next if pkmn.status != :SLEEP
+				next if i.status != :SLEEP
 				miniscore*=0.5
 			end
 			score = miniscore
@@ -73,7 +73,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "PoisonTarget", "BadPoisonTarget" # poison moves, toxic
       if target.pbCanPoison?(user, false)
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 120, move, 100)
+        miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 115, move, 100)
 				ministat=0
 				ministat+=target.stages[:DEFENSE]
 				ministat+=target.stages[:SPECIAL_DEFENSE]
@@ -84,6 +84,11 @@ class Battle::AI
 					minimini/=100.0
 					miniscore*=minimini
 				end
+				healmove=false
+				for j in user.moves
+					healmove=true if j.healingMove?
+				end
+				miniscore*=1.2 if healmove
 				if move.baseDamage>0
 					miniscore-=100
 					miniscore*=(move.addlEffect.to_f/100)
@@ -102,7 +107,7 @@ class Battle::AI
     when "PoisonTargetLowerTargetSpeed1" # Toxic Thread
 			roles = pbGetPokemonRole(user, target)
 			if target.pbCanPoison?(user, false)
-				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 100, move, skill)
+				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 125, move, skill)
 				miniscore*=1.2
 				ministat=0
 				ministat+=target.stages[:DEFENSE]
@@ -270,7 +275,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "BurnTarget", "BurnTargetIfTargetStatsRaisedThisTurn"
       if target.pbCanBurn?(user, false)
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, 100)
+        miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 120, move, 100)
 				ministat=0
 				ministat+=target.stages[:SPECIAL_ATTACK]
 				ministat+=target.stages[:SPECIAL_DEFENSE]
@@ -298,7 +303,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "BurnFlinchTarget"
       if target.pbCanBurn?(user, false)
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, 100)
+        miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 120, move, 100)
 				ministat=0
 				ministat+=target.stages[:SPECIAL_ATTACK]
 				ministat+=target.stages[:SPECIAL_DEFENSE]
@@ -320,6 +325,7 @@ class Battle::AI
 					score*=miniscore
 				else
 					miniscore/=100.0
+					echoln miniscore
 					score*=miniscore
 				end
       end
@@ -334,7 +340,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetSuperEffectiveAgainstWater"
       if target.pbCanFreeze?(user, false)
-        miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 110, move, 100)
+        miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 120, move, 100)
 				ministat=0
 				ministat+=target.stages[:SPECIAL_ATTACK]
 				ministat+=target.stages[:SPECIAL_DEFENSE]
