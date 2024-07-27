@@ -279,7 +279,7 @@ class Battle::AI
 		accuracy = pbRoughAccuracy(move, user, target, skill)
 		accuracy *= 1.15 if !user.pbOwnedByPlayer?
 		accuracy = 100 if accuracy > 100
-		#realDamage *= accuracy / 100.0 # DemICE
+		realDamage *= accuracy / 100.0 # DemICE
 		# Two-turn attacks waste 2 turns to deal one lot of damage
 		if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", 
 			  "TwoTurnAttackBurnTarget", "TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttack", 
@@ -350,7 +350,7 @@ class Battle::AI
 		damagePercentage *= 0.5 if user.level - 3 > target.level
 		#echo("\n-----------------------------")
 		#echo("\n#{move.name} real dmg = #{realDamage}")
-		#echo("\n#{move.name} dmg percent = #{damagePercentage}\n")
+		#echo("\n#{move.name} dmg percent = #{damagePercentage}")
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -367,13 +367,10 @@ class Battle::AI
 				damagePercentage += missinghp*0.5
 			end
 		end  
-		#~ damagePercentage -= 1 if accuracy < 100  # DemICE
+		damagePercentage -= 1 if accuracy < 100  # DemICE
 		damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal  # DemICE
-		if ["None", "TypeDependsOnUserIVs", "TypeIsUserFirstType"].include?(move.function)
-			score = damagePercentage.to_i
-		else
-			score += damagePercentage.to_i
-		end
+		score += damagePercentage.to_i
+		#echo("\n#{move.name} score = #{score}")
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s

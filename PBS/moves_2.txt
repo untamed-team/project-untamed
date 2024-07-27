@@ -8827,13 +8827,13 @@ Description = The user chills their target to the bone to inflict frostbite.
 Name = Chilling Wail
 Type = GHOST
 Category = Special
-Power = 90
+Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = FreezeTarget
-Flags = CanProtect
+Flags = CanProtect,Sound
 EffectChance = 10
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------

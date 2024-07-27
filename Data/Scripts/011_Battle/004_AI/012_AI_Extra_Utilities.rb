@@ -28,11 +28,12 @@ class Battle::AI
 	
 	
 	def pbRoughDamage(move, user, target, skill, baseDmg=0)
-		baseDmg = pbMoveBaseDamage(move, user, target, skill)
+		skill=0
+		baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
 		# Fixed damage moves
 		return baseDmg if move.is_a?(Battle::Move::FixedDamageMove)
 		# Get the move's type
-		type = pbRoughType(move, user, skill)
+    	type = pbRoughType(move, user, skill)
 		typeMod = pbCalcTypeMod(type,user,target)
 		##### Calculate user's attack stat #####
 		atk = pbRoughStat(user, :ATTACK, skill)
@@ -198,7 +199,7 @@ class Battle::AI
 			when :Psychic
 				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
 			when :Misty
-				multipliers[:base_damage_multiplier] /= t_damage_divider 		if type == :DRAGON && target.affectedByTerrain?
+				multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
 			end
 			thereselec=false
 			theresmisty=false
@@ -210,7 +211,7 @@ class Battle::AI
 				theresgrassy=true if (j.isSpecies?(:TREVENANT) && j.item == :TREVENANTITE && j.willmega && user.affectedByTerrain?)
 				therespsychic=true if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega && user.affectedByTerrain?)
 			end
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :ELECTRIC && thereselec
+			multipliers[:base_damage_multiplier] *= 1.25 if type == :ELECTRIC 	&& thereselec
 			multipliers[:base_damage_multiplier] /= 1.5  if type == :DRAGON 	&& theresmisty
 			multipliers[:base_damage_multiplier] *= 1.25 if type == :GRASS 		&& theresgrassy
 			multipliers[:base_damage_multiplier] *= 1.25 if type == :PSYCHIC 	&& therespsychic
@@ -326,7 +327,7 @@ class Battle::AI
 				end
 			end
 			
-			if !theressun && !thereswet && !theresad && !thereshal
+			if !theressun && !thereswet && !theressad && !thereshal
 				case user.effectiveWeather
 				when :Sun, :HarshSun
 					case type
@@ -394,10 +395,10 @@ class Battle::AI
 				move.function == "DoublePowerIfUserPoisonedBurnedParalyzed")   # Facade
 			multipliers[:final_damage_multiplier] *= damagenerf
 		end
-    # Frostbite #by low
-    if user.status == :FREEZE && move.specialMove?(type) && skill >= PBTrainerAI.highSkill
-      multipliers[:final_damage_multiplier] *= damagenerf
-    end
+		# Frostbite #by low
+		if user.status == :FREEZE && move.specialMove?(type) && skill >= PBTrainerAI.highSkill
+		multipliers[:final_damage_multiplier] *= damagenerf
+		end
 		# Aurora Veil, Reflect, Light Screen
 		if skill >= PBTrainerAI.highSkill && !move.ignoresReflect? && !user.hasActiveAbility?(:INFILTRATOR)
 			if target.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
