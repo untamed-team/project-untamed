@@ -137,7 +137,7 @@ class Battle::AI
         @battle.allBattlers.each do |b|
           next if !user.opposes?(b)
           score = pbGetMoveScore(move, user, b, skill)
-          totalScore += score / (1 / oppcounter)
+          totalScore += (score * (1 / oppcounter))
         end
         choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
       end
