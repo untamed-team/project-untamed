@@ -24,6 +24,11 @@ class CrustangRacing
 			@racerPlayer[:Move4ButtonSprite].frame = 0 if racer == @racerPlayer && @racerPlayer[:Move4ButtonSprite]
 			#start cooldown timer
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
+		
+			#reset racer's spinout and overload ranges regardless of what move they just "released", as if they let go of the move button
+			racer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+		
 		end #if moveNumber == 0
 		
 	end #def self.beginCooldown(move)
@@ -47,16 +52,16 @@ class CrustangRacing
 		end
 	end #def self.updateCooldownMultipliers
 	
-	def self.getMoveEffect(moveNumber)
+	def self.getMoveEffect(racer, moveNumber)
 		case moveNumber
 		when 1
-			move = @racerPlayer[:Move1]
+			move = racer[:Move1]
 		when 2
-			move = @racerPlayer[:Move2]
+			move = racer[:Move2]
 		when 3
-			move = @racerPlayer[:Move3]
+			move = racer[:Move3]
 		when 4
-			move = @racerPlayer[:Move4]
+			move = racer[:Move4]
 		end
 		
 		return move[:EffectCode]
@@ -268,6 +273,66 @@ class CrustangRacing
 	def self.assignMoveEffects
 		#assign move effects based on the moves the racer has
 		###################################
+		#============= Racer1 =============
+		###################################
+		for i in 0...@racer1[:EnteredCrustangContestant][:Moves].length
+			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				if valueHash[:AssignedMoves].include?(@racer1[:EnteredCrustangContestant][:Moves][i])
+					case i
+					when 0
+						@racer1[:Move1] = valueHash
+					when 1
+						@racer1[:Move2] = valueHash
+					when 2
+						@racer1[:Move3] = valueHash
+					when 3
+						@racer1[:Move4] = valueHash
+					end
+				end #if valueHash[:AssignedMoves].include?
+			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		end #for i in 0...
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		for i in 0...@racer2[:EnteredCrustangContestant][:Moves].length
+			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				if valueHash[:AssignedMoves].include?(@racer2[:EnteredCrustangContestant][:Moves][i])
+					case i
+					when 0
+						@racer2[:Move1] = valueHash
+					when 1
+						@racer2[:Move2] = valueHash
+					when 2
+						@racer2[:Move3] = valueHash
+					when 3
+						@racer2[:Move4] = valueHash
+					end
+				end #if valueHash[:AssignedMoves].include?
+			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		end #for i in 0...
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		for i in 0...@racer3[:EnteredCrustangContestant][:Moves].length
+			CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+				if valueHash[:AssignedMoves].include?(@racer3[:EnteredCrustangContestant][:Moves][i])
+					case i
+					when 0
+						@racer3[:Move1] = valueHash
+					when 1
+						@racer3[:Move2] = valueHash
+					when 2
+						@racer3[:Move3] = valueHash
+					when 3
+						@racer3[:Move4] = valueHash
+					end
+				end #if valueHash[:AssignedMoves].include?
+			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+		end #for i in 0...
+		
+		###################################
 		#============= Player =============
 		###################################
 		for i in 0...@enteredCrustang.moves.length
@@ -287,6 +352,7 @@ class CrustangRacing
 				end #if valueHash[:AssignedMoves].include?(@enteredCrustang.moves[i].id)
 			end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
 		end #for i in 0...@enteredCrustang.moves.length
+
 	end #def self.assignMoveEffects
 	
 	def self.announceAttack(attacker, recipient, action)

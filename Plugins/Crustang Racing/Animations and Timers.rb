@@ -6,6 +6,9 @@ class CrustangRacing
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer1
 		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
+		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
 		racer[:SecondaryBoostTimer] -= 1 if racer[:SecondaryBoostTimer] > 0
@@ -68,6 +71,9 @@ class CrustangRacing
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer2
 		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
+		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
 		racer[:SecondaryBoostTimer] -= 1 if racer[:SecondaryBoostTimer] > 0
@@ -129,6 +135,9 @@ class CrustangRacing
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any
 		racer = @racer3
+		
+		#boost
+		racer[:BoostCooldownTimer] -= 1 * racer[:BoostCooldownMultiplier] if racer[:BoostCooldownTimer] > 0
 		
 		#update boost timer
 		racer[:BoostTimer] -= 1 if racer[:BoostTimer] > 0
@@ -259,6 +268,60 @@ class CrustangRacing
 	def self.updateSpinOutRangeSprites
 		outlineWidth = CrustangRacingSettings::SPINOUT_OUTLINE_WIDTH
 		###################################
+		#============= Racer1 =============
+		###################################
+		sprite = @racer1[:SpinOutRangeSprite]
+		charge = @racer1[:SpinOutCharge]
+		if charge > CrustangRacingSettings::SPINOUT_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer1[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		sprite = @racer2[:SpinOutRangeSprite]
+		charge = @racer2[:SpinOutCharge]
+		if charge > CrustangRacingSettings::SPINOUT_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer2[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		sprite = @racer3[:SpinOutRangeSprite]
+		charge = @racer3[:SpinOutCharge]
+		if charge > CrustangRacingSettings::SPINOUT_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer3[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
+		
+		###################################
 		#============= Player =============
 		###################################
 		sprite = @racerPlayer[:SpinOutRangeSprite]
@@ -279,6 +342,60 @@ class CrustangRacing
 
 	def self.updateOverloadRangeSprites
 		outlineWidth = CrustangRacingSettings::OVERLOAD_OUTLINE_WIDTH
+		###################################
+		#============= Racer1 =============
+		###################################
+		sprite = @racer1[:OverloadRangeSprite]
+		charge = @racer1[:OverloadCharge]
+		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer1[:OverloadCharge] > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		sprite = @racer2[:OverloadRangeSprite]
+		charge = @racer2[:OverloadCharge]
+		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer2[:OverloadCharge] > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		sprite = @racer3[:OverloadRangeSprite]
+		charge = @racer3[:OverloadCharge]
+		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			sprite.visible = true
+			#outline
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#inside of the outline
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
+		else
+			sprite.visible = false
+			#clear bitmap
+			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
+		end #if @racer3[:OverloadCharge] > CrustangRacingSettings::OVERLOAD_MIN_RANGE
+		
 		###################################
 		#============= Player =============
 		###################################

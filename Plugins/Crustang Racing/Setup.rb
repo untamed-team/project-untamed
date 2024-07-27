@@ -482,6 +482,7 @@ class CrustangRacing
 	def self.setupRacerHashes
 		#set up racer hashes
 		@racer1 = {
+			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[0],
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
@@ -498,6 +499,7 @@ class CrustangRacing
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 		@racer2 = {
+			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
@@ -514,6 +516,7 @@ class CrustangRacing
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil,}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil,},
 		}
 		@racer3 = {
+			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer

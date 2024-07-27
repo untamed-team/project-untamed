@@ -42,16 +42,14 @@ class CrustangRacing
 		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
 			@pressingMove1 = true
 			@racerPlayer[:Move1ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(1) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
 			@racerPlayer[:Move1ButtonSprite].frame = 0
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 1)
 				self.beginCooldown(@racerPlayer, 1)
-				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE #it doesn't matter if the move is not a spinout move
-				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE #it doesn't matter if the move is not overload
 			end #if !self.cancellingMove?
 			@pressingMove1 = false
 		end
@@ -59,16 +57,14 @@ class CrustangRacing
 		if Input.pressex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
 			@pressingMove2 = true
 			@racerPlayer[:Move2ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(2) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
 			@racerPlayer[:Move2ButtonSprite].frame = 0
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 2)
 				self.beginCooldown(@racerPlayer, 2)
-				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
-				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove2 = false
 		end
@@ -76,16 +72,14 @@ class CrustangRacing
 		if Input.pressex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
 			@pressingMove3 = true
 			@racerPlayer[:Move3ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(3) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
 			@racerPlayer[:Move3ButtonSprite].frame = 0
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 3)
 				self.beginCooldown(@racerPlayer, 3)
-				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
-				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove3 = false
 		end
@@ -93,16 +87,14 @@ class CrustangRacing
 		if Input.pressex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
 			@pressingMove4 = true
 			@racerPlayer[:Move4ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(4) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 		end
 		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
 			@racerPlayer[:Move4ButtonSprite].frame = 0
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 4)
 				self.beginCooldown(@racerPlayer, 4)
-				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
-				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove4 = false
 		end
@@ -530,6 +522,9 @@ class CrustangRacing
 			self.updateSpinOutRangeSprites
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
+			
+			self.aiBoost
+			self.aiMove1
 			
 			#Console.echo_warn @racerPlayer[:StrafeSpeed]
 		end
