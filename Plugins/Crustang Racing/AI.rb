@@ -24,31 +24,40 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		case self.getMoveEffect(racer, 1)
-		#using 'case' so I can add conditions here since we don't want racers using the effect 100% of the time
-		when "invincible"
-			
-		when "spinOut"
-			if racer[:Move1CooldownTimer] <= 0
+		if racer[:Move1CooldownTimer] <= 0
+			case self.getMoveEffect(racer, 1)
+			#using 'case' so I can add conditions here since we don't want racers using the effect 100% of the time
+			when "invincible"
+				self.moveEffect(racer, 1) 
+				self.beginCooldown(racer, 1)
+			when "spinOut"
 				racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 				if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
 					self.moveEffect(racer, 1) 
 					self.beginCooldown(racer, 1)
 				end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-			end
-		when "overload"
-			if racer[:Move1CooldownTimer] <= 0
+				
+			when "overload"
 				racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 				if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE #get to the max range
 					self.moveEffect(racer, 1) 
 					self.beginCooldown(racer, 1)
 				end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-			end
-		when "reduceCooldown"
-		when "secondBoost"
-		when "rockHazard"
-		when "mudHazard"
-		end
+
+			when "reduceCooldown"
+				self.moveEffect(racer, 1) 
+				self.beginCooldown(racer, 1)
+			when "secondBoost"
+				self.moveEffect(racer, 1) 
+				self.beginCooldown(racer, 1)
+			when "rockHazard"
+				self.moveEffect(racer, 1) 
+				self.beginCooldown(racer, 1)
+			when "mudHazard"
+				self.moveEffect(racer, 1) 
+				self.beginCooldown(racer, 1)
+			end #case self.getMoveEffect(racer, 1)
+		end #if racer[:Move1CooldownTimer] <= 0
 		
 	end #def self.useMove1
 
