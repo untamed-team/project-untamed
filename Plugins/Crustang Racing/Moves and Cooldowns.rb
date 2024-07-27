@@ -188,7 +188,7 @@ class CrustangRacing
 		
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
-			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:RockHazard][:Sprite].width#-racer[:RacerSprite].width-racer[:RockHazard][:Sprite].width
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]######################-racer[:RockHazard][:Sprite].width-racer[:RacerSprite].width#-racer[:RockHazard][:Sprite].width
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8

@@ -305,7 +305,8 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + racer[:RockHazard][:OriginalPositionXOnScreen] + racer[:RockHazard][:Sprite].width
+			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]##################### + racer[:RockHazard][:OriginalPositionXOnScreen] + racer[:RockHazard][:Sprite].width
+
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
@@ -643,7 +644,9 @@ class CrustangRacing
 			self.aiBoost
 			self.aiMove1
 			
-			#Console.echo_warn @racerPlayer[:StrafeSpeed]
+			Console.echo_warn "racer1 PositionOnTrack is #{@racer1[:PositionOnTrack]}"
+			Console.echo_warn "racerPlayer PositionOnTrack is #{@racerPlayer[:PositionOnTrack]}"
+			print ""
 		end
 	end #def self.main
 	
