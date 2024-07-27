@@ -34,7 +34,7 @@ class Battle::AI
 			@battle.pbParty(target.index).each do |i|
 				next if i.nil?
 				next if !i || i.egg?
-				next if pkmn.status != :SLEEP
+				next if i.status != :SLEEP
 				miniscore*=0.5
 			end
 			score = miniscore

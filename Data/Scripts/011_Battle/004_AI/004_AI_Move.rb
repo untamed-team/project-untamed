@@ -119,9 +119,31 @@ class Battle::AI
 	def pbRegisterMoveTrainer(user, idxMove, choices, skill)
 		move = user.moves[idxMove]
 		target_data = move.pbTarget(user)
-		if [:UserAndAllies, :AllAllies, :AllBattlers].include?(target_data.id) ||
-			target_data.num_targets == 0
-			# If move has no targets, affects the user, a side or the whole field, or
+    if target_data.id == :User
+      # logic specifically implemented for setup moves
+      oppcounter = 0
+			@battle.allBattlers.each do |b|
+				next if !user.opposes?(b)
+        oppcounter += 1
+      end
+      if oppcounter == 1
+        @battle.allBattlers.each do |b|
+          next if !user.opposes?(b)
+          score = pbGetMoveScore(move, user, b, skill)
+          choices.push([idxMove, score, -1, move.name]) if score > 0
+        end
+      else
+        totalScore = 0
+        @battle.allBattlers.each do |b|
+          next if !user.opposes?(b)
+          score = pbGetMoveScore(move, user, b, skill)
+          totalScore += score / (1 / oppcounter)
+        end
+        choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
+      end
+    elsif [:UserAndAllies, :AllAllies, :AllBattlers].include?(target_data.id) ||
+          target_data.num_targets == 0
+			# If move has no targets, a side or the whole field, or
 			# specially affects multiple Pokémon and the AI calculates an overall
 			# score at once instead of per target
 			score = pbGetMoveScore(move, user, user, skill)

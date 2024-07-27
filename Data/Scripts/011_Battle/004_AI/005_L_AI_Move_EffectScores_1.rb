@@ -89,10 +89,10 @@ class Battle::AI
 				end
 				if !fastermon && 
 						opponent.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-																			"TwoTurnAttackInvulnerableUnderground",
-																			"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-																			"TwoTurnAttackInvulnerableUnderwater",
-																			"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+													"TwoTurnAttackInvulnerableUnderground",
+													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+													"TwoTurnAttackInvulnerableUnderwater",
+													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 					echo("Player Pokemon is invulnerable. Score-300. \n")
 					score-=300
 				end
@@ -130,113 +130,15 @@ class Battle::AI
 				score*=0.9
 				if move.baseDamage>0
 					if opponent.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-																			 "TwoTurnAttackInvulnerableUnderground",
-																			 "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-																			 "TwoTurnAttackInvulnerableUnderwater",
-																			 "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+													"TwoTurnAttackInvulnerableUnderground",
+													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+													"TwoTurnAttackInvulnerableUnderwater",
+													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 						echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
 						score*=2
 					end
 				end
 			end      
-		end
-
-		if user.hasWorkingAbility(:ECHOCHAMBER) && move.soundMove?
-			skill = 100
-			aspeed = pbRoughStat(user,:SPEED,skill)
-			ospeed = pbRoughStat(target,:SPEED,skill)
-			fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-			fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE)
-			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-			maxdam=bestmove[0] 
-			maxmove=bestmove[1]
-			halfhealth=(user.totalhp/2)
-			if !targetSurvivesMove(maxmove,target,user)
-				if maxdam>(user.hp+halfhealth)
-					#score=0
-				else
-					if maxdam>=halfhealth
-					else
-						score*=1.2
-					end
-				end
-			else
-				if maxdam*1.5>user.hp
-					score*=1.2
-				end
-				if !fastermon
-					if maxdam*2>user.hp
-						score*=1.2
-					end
-				end
-			end
-
-			hpchange=(EndofTurnHPChanges(user,target,false,false,true,false,true)) # what % of our hp will change after end of turn effects go through
-			hpchange += 0.0625
-			opphpchange=(EndofTurnHPChanges(target,user,false,false,true)) # what % of our hp will change after end of turn effects go through
-			if opphpchange<1
-				oppchipdamage=((target.totalhp*(1-hpchange)))
-			end
-			thisdam=maxdam#*1.1
-			hplost=(user.totalhp-user.hp)
-			hplost+=maxdam if !fasterhealing
-			if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
-				chipdamage=((user.totalhp*(1-hpchange)))
-				thisdam+=chipdamage
-			elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
-				healing=((user.totalhp*(hpchange-1)))
-				thisdam-=healing if !(thisdam>user.hp)
-			end
-			if thisdam>hplost
-				#score*=0.1
-			else
-				if thisdam<=(halfhealth)
-					score*=1.2
-				end
-			end
-			if ((user.hp.to_f)<=halfhealth)
-				score*=1.2
-			end
-			if pbHasSetupMove?(target) && move.statusMove?
-				score*=0.8
-			end 
-			if (user.hp.to_f)/user.totalhp<0.5
-				score*=1.15
-				if user.effects[PBEffects::Curse]
-					score*=1.2
-				end
-				if user.hp*4<user.totalhp
-					if user.poisoned?
-						score*=1.15
-					end
-					if user.effects[PBEffects::LeechSeed]>=0
-						score*=1.2
-					end
-					if user.hp<user.totalhp*0.13
-						if user.burned?
-							score*=1.2
-						end
-						if user.takesHailDamage? || user.takesSandstormDamage?
-							score*=1.2
-						end  
-					end            
-				end
-			end
-			if user.paralyzed? || user.effects[PBEffects::Attract]>=0 || user.effects[PBEffects::Confusion]>0
-				score*=1.1
-			end
-			if target.poisoned? || target.burned? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
-				score*=1.15
-				if target.effects[PBEffects::Toxic]>0
-					score*=1.15
-				end
-			end
-			for m in target.moves
-				score*=1.15 if [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(m.id)
-			end
-			if target.effects[PBEffects::HyperBeam]>0
-				score*=1.15
-			end
 		end
 		
     case move.function
@@ -247,13 +149,13 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "DoesNothingCongratulations", "DoesNothingFailsIfNoAlly", # Hold Hands, Celebrate
          "DoesNothingUnusableInGravity","AddMoneyGainedFromBattle", # Splash, Pay Day
-				 "DoubleMoneyGainedFromBattle" # Happy Hour
+		 "DoubleMoneyGainedFromBattle" # Happy Hour
       score = 0
     #---------------------------------------------------------------------------
     when "FailsIfNotUserFirstTurn" # first impression
 			if user.turnCount > 0
 				score=0
-			end     
+			end
 			if score==110
 				score*=1.1
 			end
@@ -339,11 +241,13 @@ class Battle::AI
 				if setupcheck
 					score*=0.8
 				end
+				if @battle.choices[target.index][0] == :UseMove &&
+				  !@battle.choices[target.index][2].statusMove?
+					score*=1.5
+				else
+					score=0
+				end
 				if user.lastMoveUsed == :SUCKERPUNCH # Sucker Punch last turn
-					check = rand(3)
-					if check != 1 # huh, this RNG is used both in URMUMium and EoE
-						score*=0.3
-					end
 					if setupvar
 						score*=0.5
 					end
@@ -360,18 +264,12 @@ class Battle::AI
 			end
     #---------------------------------------------------------------------------
     when "CrashDamageIfFailsUnusableInGravity" # high jump kick
-      if score < 100 
+      		if score < 100 
 				score * 0.8
 			end
 			protectmove = false
 			protectmove = true if pbHasSingleTargetProtectMove?(target)
 			score*=0.5 if protectmove
-			ministat=target.stages[:EVASION]
-			ministat=0 if user.stages[:EVASION]>0
-			ministat*=(-10)
-			ministat+=100
-			ministat/=100.0
-			score*=ministat
 			ministat=user.stages[:ACCURACY]
 			ministat=0 if user.stages[:ACCURACY]<0
 			ministat*=(10)
@@ -398,16 +296,16 @@ class Battle::AI
 				 theressun
         score = 0
       else
-				score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
-				score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
-					 !user.takesHailDamage? && !user.takesSandstormDamage?)
-					score*=1.3
-				end
-				roles = pbGetPokemonRole(user, target)
-				if roles.include?("Lead")
-					score*=1.2
-				end
+		score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
+		score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
+		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
+				!user.takesHailDamage? && !user.takesSandstormDamage?)
+			score*=1.3
+		end
+		roles = pbGetPokemonRole(user, target)
+		if roles.include?("Lead")
+			score*=1.2
+		end
         if user.hasActiveItem?(:HEATROCK)
           score*=1.3
         end
@@ -481,16 +379,16 @@ class Battle::AI
 				 thereswet
         score = 0
       else
-				score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
-				score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
-					 !user.takesHailDamage? && !user.takesSandstormDamage?)
-					score*=1.3
-				end
-				roles = pbGetPokemonRole(user, target)
-				if roles.include?("Lead")
-					score*=1.2
-				end
+		score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
+		score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
+		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
+				!user.takesHailDamage? && !user.takesSandstormDamage?)
+			score*=1.3
+		end
+		roles = pbGetPokemonRole(user, target)
+		if roles.include?("Lead")
+			score*=1.2
+		end
         if user.hasActiveItem?(:DAMPROCK)
           score*=1.3
         end
@@ -523,12 +421,12 @@ class Battle::AI
         if user.hasActiveAbility?(:DRYSKIN)
           score*=1.3
         end
-				firevar=false
-				@battle.pbParty(user.index).each_with_index do |m, i|
-					next if m.fainted?
-					next if [:XOLSMOL, :AMPHIBARK, :PEROXOTAL].include?(m.species)
-					firevar=true if m.hasType?(:FIRE)
-				end
+		firevar=false
+		@battle.pbParty(user.index).each_with_index do |m, i|
+			next if m.fainted?
+			next if [:XOLSMOL, :AMPHIBARK, :PEROXOTAL].include?(m.species)
+			firevar=true if m.hasType?(:FIRE)
+		end
         if firevar
           score*=0.5
         end 
@@ -559,16 +457,16 @@ class Battle::AI
 				 theressad
         score = 0
       else
-				score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
-				score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
-					 !user.takesHailDamage? && !user.takesSandstormDamage?)
-					score*=1.3
-				end
-				roles = pbGetPokemonRole(user, target)
-				if roles.include?("Lead")
-					score*=1.2
-				end
+		score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
+		score*=0.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
+		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
+				!user.takesHailDamage? && !user.takesSandstormDamage?)
+			score*=1.3
+		end
+		roles = pbGetPokemonRole(user, target)
+		if roles.include?("Lead")
+			score*=1.2
+		end
         if user.hasActiveItem?(:SMOOTHROCK)
           score*=1.3
         end
@@ -626,15 +524,15 @@ class Battle::AI
 				 thereshal
         score = 0
       else
-				score*=1.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
-					 !user.takesHailDamage? && !user.takesSandstormDamage?)
-					score*=1.3
-				end
-				roles = pbGetPokemonRole(user, target)
-				if roles.include?("Lead")
-					score*=1.2
-				end
+		score*=1.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
+		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
+				!user.takesHailDamage? && !user.takesSandstormDamage?)
+			score*=1.3
+		end
+		roles = pbGetPokemonRole(user, target)
+		if roles.include?("Lead")
+			score*=1.2
+		end
         if user.hasActiveItem?(:ICYROCK)
           score*=1.3
         end
@@ -1454,10 +1352,7 @@ class Battle::AI
 			end
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
-			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
+			end    
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -1624,10 +1519,7 @@ class Battle::AI
 			end
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
-			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
+			end  
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -1777,9 +1669,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -1923,9 +1812,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2068,9 +1954,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2234,9 +2117,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2373,9 +2253,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2529,9 +2406,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2653,17 +2527,6 @@ class Battle::AI
 					miniscore=1
 				end
 			end
-			elecmove=false
-			for j in user.moves
-				if j.type == :ELECTRIC
-					if j.baseDamage>0
-						elecmove=true
-					end            
-				end
-			end
-			if elecmove && user.effects[PBEffects::Charge]==0
-				miniscore*=1.5
-			end
 			score*=miniscore
 			score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
@@ -2685,9 +2548,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -2854,9 +2714,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -3083,9 +2940,6 @@ class Battle::AI
 				if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 					miniscore*=0.3
 				end
-				if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-					miniscore*=0.3
-				end        
 				if target.effects[PBEffects::HyperBeam]>0
 					miniscore*=1.3
 				end
@@ -3177,9 +3031,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -3406,9 +3257,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -3660,9 +3508,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -3817,10 +3662,7 @@ class Battle::AI
 			end
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
-			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
+			end     
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -3849,7 +3691,7 @@ class Battle::AI
 			if target.pbHasAnyStatus?
 				miniscore*=1.2
 			end
-			if target.asleep?
+			if target.asleep? || target.battle.choices[target.index][0] == :SwitchOut
 				miniscore*=1.3
 			end
 			if target.effects[PBEffects::Encore]>0
@@ -3937,10 +3779,9 @@ class Battle::AI
 					specmove=true
 				end
 			end    
-			if (physmove && !user.statStageAtMax?(:ATTACK)) ||
-				 (specmove && !user.statStageAtMax?(:SPECIAL_ATTACK))
+			if (physmove && user.statStageAtMax?(:ATTACK)) ||
+				 (specmove && user.statStageAtMax?(:SPECIAL_ATTACK))
 				miniscore/=100.0
-				score*=miniscore
 			end
 			movecheck=false
 			for m in target.moves
@@ -3957,7 +3798,7 @@ class Battle::AI
 			if ([:Sun, :HarshSun].include?(user.effectiveWeather) || user.hasActiveAbility?(:PRESAGE))
 				miniscore*=2
 			end
-			score*=miniscore
+			score = miniscore
 			score = 0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash
@@ -3978,9 +3819,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end     
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -4032,9 +3870,6 @@ class Battle::AI
 			if hasAlly
 				miniscore*=0.5
 			end
-			miniscore/=100.0
-			score*=miniscore
-			miniscore=100
 			movecheck=false
 			for j in target.moves
 				movecheck=true if j.healingMove?
@@ -4145,9 +3980,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -4331,9 +4163,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -4517,9 +4346,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -4713,9 +4539,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -4842,9 +4665,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -5023,9 +4843,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
@@ -5808,9 +5625,6 @@ class Battle::AI
 			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 				miniscore*=0.3
 			end
-			if user.pbOpposingSide.effects[PBEffects::LastRoundFainted] == (@battle.turnCount - 1) # Retaliate
-				miniscore*=0.3
-			end        
 			if target.effects[PBEffects::HyperBeam]>0
 				miniscore*=1.3
 			end
