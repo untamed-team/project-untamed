@@ -263,6 +263,12 @@ class CrustangRacing
 			self.endInvincibility(racer)
 		end
 		racer[:InvincibilityTimer] -= 1 if racer[:InvincibilityTimer] > 0 #the timer will not be above 0 if INVINCIBLE_UNTIL_HIT is true
+		
+		###################################
+		#============= Misc =============
+		###################################
+		@currentlyPlayingSETimer -= 1
+		@currentlyPlayingSE = nil if @currentlyPlayingSETimer <= 0
 	end
 
 	def self.updateSpinOutRangeSprites
