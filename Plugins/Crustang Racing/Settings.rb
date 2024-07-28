@@ -2,7 +2,7 @@ class CrustangRacingSettings
 #========================================================#
 #=================== GENERAL SETTINGS ===================#
 #========================================================#
-TOP_BASE_SPEED = 1#10
+TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
@@ -18,7 +18,7 @@ MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 BOOST_BUTTON_COOLDOWN_SECONDS = 20
 BOOST_BUTTON = Input::SPECIAL
 BOOST_LENGTH_SECONDS = 3
-BOOST_SPEED = 2#16
+BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 15
 
