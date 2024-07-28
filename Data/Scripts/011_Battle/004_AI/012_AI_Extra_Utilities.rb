@@ -548,7 +548,8 @@ class Battle::AI
 		return true if move.soundMove? && (target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken) || 
 																			(target.isSpecies?(:CHIMECHO) && target.willmega && !mold_broken))
 		return true if move.bombMove? && target.hasActiveAbility?(:BULLETPROOF,false,mold_broken)
-		return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(move.id) && thereselec
+		return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
+						:SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && thereselec
 		if move.powderMove?
 			return true if target.pbHasType?(:GRASS)
 			return true if target.hasActiveAbility?(:OVERCOAT,false,mold_broken)
@@ -612,7 +613,10 @@ class Battle::AI
 		return true if damage < opponent.hp
 		return false if priodamage>0
 		if (opponent.hasActiveItem?(:FOCUSSASH) || (!mold_broken && opponent.hasActiveAbility?(:STURDY))) && opponent.hp==opponent.totalhp
-			return false if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes" ,"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", "HitTenTimesPopulationBomb"].include?(move.function)
+			return false if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
+							 "HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
+							 "HitTenTimesPopulationBomb", "HitThreeToFiveTimes", 
+							 "HitTwoTimesReload"].include?(move.function)
 			return true
 		end	
 		return false
