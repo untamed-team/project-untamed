@@ -182,7 +182,7 @@ class CrustangRacing
 		@sprites["hazard_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
 		sprite = @sprites["hazard_#{hazard}_#{number}"]
 		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_#{hazard}")
-		sprite.x = racer[:RacerSprite].x-sprite.width - 30
+		sprite.x = racer[:RacerSprite].x-sprite.width
 		sprite.y = racer[:RacerSprite].y + racer[:RacerSprite].height/2 - sprite.height/2
 		sprite.z = 99999
 		
