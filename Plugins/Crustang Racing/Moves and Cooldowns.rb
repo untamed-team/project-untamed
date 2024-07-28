@@ -73,6 +73,11 @@ class CrustangRacing
 			#============= Boost =============
 			###################################
 			racer[:BoostingStatus] = true
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::BOOST_SE
+				pbSEPlay(CrustangRacingSettings::BOOST_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::BOOST_SE
+				CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
 			racer[:PreviousDesiredSpeed] = racer[:DesiredSpeed]
 			racer[:DesiredSpeed] = CrustangRacingSettings::BOOST_SPEED
 			racer[:BoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
@@ -106,6 +111,7 @@ class CrustangRacing
 				racer[:DesiredHue] = @hues[:Red]
 				racer[:InvincibilityStatus] = true
 				racer[:InvincibilityTimer] = CrustangRacingSettings::INVINCIBILITY_DURATION_SECONDS * Graphics.frame_rate if !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+				pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS) if racer == @racerPlayer
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 					self.spinOut(racer, @racer1)
@@ -188,14 +194,14 @@ class CrustangRacing
 		
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
-			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack]######################-racer[:RockHazard][:Sprite].width-racer[:RacerSprite].width#-racer[:RockHazard][:Sprite].width
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
 			offsetH = @sprites["racerPlayerPkmnOverview"].height/8
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
-			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack]-racer[:MudHazard][:Sprite].width
+			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45
@@ -262,12 +268,22 @@ class CrustangRacing
 		
 		#maybe lock input / AI movement if being spun out?		
 		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
+		if self.racerOnScreen?(recipient) && @currentlyPlayingSE != CrustangRacingSettings::SPINOUT_SE
+			pbSEPlay(CrustangRacingSettings::SPINOUT_SE)
+			@currentlyPlayingSE = CrustangRacingSettings::SPINOUT_SE
+			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+		end
 	end #self.spinOut
 	
 	def self.overload(attacker, recipient)
 		#OVERLOAD_DURATION_IN_SECONDS
 		recipient[:OverloadTimer] = CrustangRacingSettings::OVERLOAD_DURATION_IN_SECONDS * Graphics.frame_rate	
 		recipient[:Overloaded] = true
+		if self.racerOnScreen?(recipient) && @currentlyPlayingSE != CrustangRacingSettings::OVERLOADED_SE
+			pbSEPlay(CrustangRacingSettings::OVERLOADED_SE)
+			@currentlyPlayingSE = CrustangRacingSettings::OVERLOADED_SE
+			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+		end
 	end #self.spinOut
 	
 	def self.assignMoveEffects

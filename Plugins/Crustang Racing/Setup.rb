@@ -477,6 +477,10 @@ class CrustangRacing
 		@pressingMove3 = false
 		@pressingMove4 = false
 		@cancellingMove = nil
+		
+		#so we don't overlap SEs and get a very loud noise if multiple of the same SE are played at the same time
+		@currentlyPlayingSETimer = 0
+		@currentlyPlayingSE = nil
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes

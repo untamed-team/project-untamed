@@ -1,7 +1,8 @@
 class CrustangRacing
 	def self.collides_with?(racer,object)
-		if (object.x + object.width-object.width >= racer.x) && (object.x <= racer.x + racer.width) &&
-			 (object.y + object.height >= racer.y) && (object.y <= racer.y + racer.height)
+	collisionGrace = 1
+		#if (object.x + object.width-object.width >= racer.x) && (object.x <= racer.x + racer.width) && (object.y + object.height >= racer.y) && (object.y <= racer.y + racer.height)
+		if object.x.between?(racer.x - object.width + collisionGrace, racer.x + racer.width + collisionGrace) && object.y.between?(racer.y - object.height + collisionGrace, racer.y + racer.height - collisionGrace)
 			return true
 		end
 	end
@@ -226,289 +227,119 @@ class CrustangRacing
 		#Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
 	end #def self.updateRacerPlacement
 
-	def self.checkForCollisions
+	def self.checkForCollisions(racer)
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
 		###################################
 		#============= Racer1 =============
 		###################################
 		#collide with racers
-		self.bumpedIntoSomeone(@racer1, @racerPlayer) if self.collides_with_object_in_front?(@racer1[:RacerSprite],@racerPlayer[:RacerSprite])
-		self.bumpedIntoSomeone(@racer1, @racer2) if self.collides_with_object_in_front?(@racer1[:RacerSprite],@racer2[:RacerSprite])
-		self.bumpedIntoSomeone(@racer1, @racer3) if self.collides_with_object_in_front?(@racer1[:RacerSprite],@racer3[:RacerSprite])
+		self.bumpedIntoSomeone(racer, @racer1) if racer != @racer1 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer1[:RacerSprite])
+		self.bumpedIntoSomeone(racer, @racer2) if racer != @racer2 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer2[:RacerSprite])
+		self.bumpedIntoSomeone(racer, @racer3) if racer != @racer3 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer3[:RacerSprite])
+		self.bumpedIntoSomeone(racer, @racerPlayer) if racer != @racerPlayer && self.collides_with_object_in_front?(racer[:RacerSprite],@racerPlayer[:RacerSprite])
 		
 		#collide with rock hazard
 		#this method of checking for collisions does not account for weird sprite placement
 		#spin out racer 1 (recipient) with racerPlayer as the attacher if racer1 hits racerPlayer's hazard
-		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer1[:RockHazard][:Sprite])
-			############################################################################################################################self.disposeHazard(@racer1, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer1, "rock")
-		end
-		if @racer2[:RockHazard][:Sprite] && !@racer2[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer2[:RockHazard][:Sprite])
-			self.disposeHazard(@racer2, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer1, "rock")
-		end
-		if @racer3[:RockHazard][:Sprite] && !@racer3[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer3[:RockHazard][:Sprite])
-			self.disposeHazard(@racer3, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer1, "rock")
-		end
-		if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racerPlayer[:RockHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer1, "rock")
-		end
-		
-		#collide with mud hazard
-		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer1[:MudHazard][:Sprite])
-			self.disposeHazard(@racer1, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer1, "mud")
-		end
-		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer2[:MudHazard][:Sprite])
-			self.disposeHazard(@racer2, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer1, "mud")
-		end
-		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racer3[:MudHazard][:Sprite])
-			self.disposeHazard(@racer3, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer1, "mud")
-		end
-		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer1[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer1[:RacerSprite].x.between?(0-@racer1[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer1) if @racer1[:InvincibilityStatus] == false
-			self.endInvincibility(@racer1) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer1, "mud")
-		end
-		
-		###################################
-		#============= Racer2 =============
-		###################################
-		#collide with racers
-		self.bumpedIntoSomeone(@racer2, @racer1) if self.collides_with_object_in_front?(@racer2[:RacerSprite],@racer1[:RacerSprite])
-		self.bumpedIntoSomeone(@racer2, @racerPlayer) if self.collides_with_object_in_front?(@racer2[:RacerSprite],@racerPlayer[:RacerSprite])
-		self.bumpedIntoSomeone(@racer2, @racer3) if self.collides_with_object_in_front?(@racer2[:RacerSprite],@racer3[:RacerSprite])
-		
-		#collide with rock hazard
-		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer1[:RockHazard][:Sprite])
+		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer1[:RockHazard][:Sprite])
 			self.disposeHazard(@racer1, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer2, "rock")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCK_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::ROCK_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer1, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer1, racer, "rock")
 		end
-		if @racer2[:RockHazard][:Sprite] && !@racer2[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer2[:RockHazard][:Sprite])
+		if @racer2[:RockHazard][:Sprite] && !@racer2[:RockHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer2[:RockHazard][:Sprite])
 			self.disposeHazard(@racer2, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer2, "rock")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCK_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::ROCK_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer2, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer2, racer, "rock")
 		end
-		if @racer3[:RockHazard][:Sprite] && !@racer3[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer3[:RockHazard][:Sprite])
+		if @racer3[:RockHazard][:Sprite] && !@racer3[:RockHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer3[:RockHazard][:Sprite])
 			self.disposeHazard(@racer3, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer2, "rock")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCK_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::ROCK_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer3, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer3, racer, "rock")
 		end
-		if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racerPlayer[:RockHazard][:Sprite])
+		if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racerPlayer[:RockHazard][:Sprite])
 			self.disposeHazard(@racerPlayer, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer2, "rock")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCK_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::ROCK_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racerPlayer, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racerPlayer, racer, "rock")
 		end
 		
 		#collide with mud hazard
-		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer1[:MudHazard][:Sprite])
+		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer1[:MudHazard][:Sprite])
 			self.disposeHazard(@racer1, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer2, "mud")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::MUD_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::MUD_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer1, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer1, racer, "mud")
 		end
-		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer2[:MudHazard][:Sprite])
+		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer2[:MudHazard][:Sprite])
 			self.disposeHazard(@racer2, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer2, "mud")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::MUD_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::MUD_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer2, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer2, racer, "mud")
 		end
-		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racer3[:MudHazard][:Sprite])
+		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racer3[:MudHazard][:Sprite])
 			self.disposeHazard(@racer3, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer2, "mud")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::MUD_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::MUD_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racer3, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racer3, racer, "mud")
 		end
-		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer2[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
+		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(racer[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
 			self.disposeHazard(@racerPlayer, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer2[:RacerSprite].x.between?(0-@racer2[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer2) if @racer2[:InvincibilityStatus] == false
-			self.endInvincibility(@racer2) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer2, "mud")
-		end
-		
-		###################################
-		#============= Racer3 =============
-		###################################
-		#collide with racers
-		self.bumpedIntoSomeone(@racer3, @racer1) if self.collides_with_object_in_front?(@racer3[:RacerSprite],@racer1[:RacerSprite])
-		self.bumpedIntoSomeone(@racer3, @racer2) if self.collides_with_object_in_front?(@racer3[:RacerSprite],@racer2[:RacerSprite])
-		self.bumpedIntoSomeone(@racer3, @racerPlayer) if self.collides_with_object_in_front?(@racer3[:RacerSprite],@racerPlayer[:RacerSprite])
-		
-		#collide with rock hazard
-		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer1[:RockHazard][:Sprite])
-			self.disposeHazard(@racer1, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer3, "rock")
-		end
-		if @racer2[:RockHazard][:Sprite] && !@racer2[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer2[:RockHazard][:Sprite])
-			self.disposeHazard(@racer2, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer3, "rock")
-		end
-		if @racer3[:RockHazard][:Sprite] && !@racer3[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer3[:RockHazard][:Sprite])
-			self.disposeHazard(@racer3, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer3, "rock")
-		end
-		if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racerPlayer[:RockHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer3, "rock")
-		end
-		
-		#collide with mud hazard
-		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer1[:MudHazard][:Sprite])
-			self.disposeHazard(@racer1, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer1, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racer3, "mud")
-		end
-		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer2[:MudHazard][:Sprite])
-			self.disposeHazard(@racer2, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer2, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racer3, "mud")
-		end
-		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racer3[:MudHazard][:Sprite])
-			self.disposeHazard(@racer3, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racer3, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racer3, "mud")
-		end
-		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racer3[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE) if @racer3[:RacerSprite].x.between?(0-@racer3[:RacerSprite].width,Graphics.width)
-			self.spinOut(@racerPlayer, @racer3) if @racer3[:InvincibilityStatus] == false
-			self.endInvincibility(@racer3) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racer3, "mud")
-		end
-		
-		###################################
-		#============= Player =============
-		###################################
-		#collide with racers
-		self.bumpedIntoSomeone(@racerPlayer, @racer1) if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite])
-		self.bumpedIntoSomeone(@racerPlayer, @racer2) if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite])
-		self.bumpedIntoSomeone(@racerPlayer, @racer3) if self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-		
-		#collide with rock hazard
-		if @racer1[:RockHazard][:Sprite] && !@racer1[:RockHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer1[:RockHazard][:Sprite])
-			self.disposeHazard(@racer1, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
-			self.spinOut(@racer1, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racerPlayer, "rock")
-		end
-		if @racer2[:RockHazard][:Sprite] && !@racer2[:RockHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer2[:RockHazard][:Sprite])
-			self.disposeHazard(@racer2, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
-			self.spinOut(@racer2, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racerPlayer, "rock")
-		end
-		if @racer3[:RockHazard][:Sprite] && !@racer3[:RockHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer3[:RockHazard][:Sprite])
-			self.disposeHazard(@racer3, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
-			self.spinOut(@racer3, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racerPlayer, "rock")
-		end
-		if @racerPlayer[:RockHazard][:Sprite] && !@racerPlayer[:RockHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racerPlayer[:RockHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "rock")
-			pbSEPlay(CrustangRacingSettings::ROCK_COLLISION_SE)
-			self.spinOut(@racerPlayer, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racerPlayer, "rock")
-		end
-		
-		#collide with mud hazard
-		if @racer1[:MudHazard][:Sprite] && !@racer1[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer1[:MudHazard][:Sprite])
-			self.disposeHazard(@racer1, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
-			self.spinOut(@racer1, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer1, @racerPlayer, "mud")
-		end
-		if @racer2[:MudHazard][:Sprite] && !@racer2[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer2[:MudHazard][:Sprite])
-			self.disposeHazard(@racer2, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
-			self.spinOut(@racer2, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer2, @racerPlayer, "mud")
-		end
-		if @racer3[:MudHazard][:Sprite] && !@racer3[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racer3[:MudHazard][:Sprite])
-			self.disposeHazard(@racer3, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
-			self.spinOut(@racer3, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racer3, @racerPlayer, "mud")
-		end
-		if @racerPlayer[:MudHazard][:Sprite] && !@racerPlayer[:MudHazard][:Sprite].disposed? && self.collides_with?(@racerPlayer[:RacerSprite],@racerPlayer[:MudHazard][:Sprite])
-			self.disposeHazard(@racerPlayer, "mud")
-			pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
-			self.spinOut(@racerPlayer, @racerPlayer) if @racerPlayer[:InvincibilityStatus] == false
-			self.endInvincibility(@racerPlayer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-			self.announceAttack(@racerPlayer, @racerPlayer, "mud")
+			if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::MUD_COLLISION_SE
+				pbSEPlay(CrustangRacingSettings::MUD_COLLISION_SE)
+				@currentlyPlayingSE = CrustangRacingSettings::MUD_COLLISION_SE
+				@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+			end
+			self.spinOut(@racerPlayer, racer) if racer[:InvincibilityStatus] == false
+			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
+			self.announceAttack(@racerPlayer, racer, "mud")
 		end
 
 	end #def self.checkForCollisions
-	
+
 	def self.endInvincibility(racer)
 		Console.echo_warn "ending invincibility" if racer == @racer1
 		racer[:InvincibilityTimer] = 0
 		racer[:DesiredHue] = nil
 		racer[:InvincibilityStatus] = false
+		pbBGSStop(1) if racer == @racerPlayer #stop bgs in 1 second, fading out
 	end #def self.endInvincibility
 	
 	def self.cancellingMove?
@@ -522,6 +353,12 @@ class CrustangRacing
 		
 		return @cancellingMove
 	end #def self.cancellingMove?
+	
+	def self.racerOnScreen?(racer)
+		if racer[:RacerSprite].x.between?(0-racer[:RacerSprite].width, Graphics.width)
+			return true
+		end
+	end #self.racerOnScreen?(racer)
 	
 end #class CrustangRacing
 
