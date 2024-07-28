@@ -3,7 +3,6 @@ class CrustangRacing
 	
 	def self.detectInput
 		Input.update
-		
 		###################################
 		#============ Movement ============
 		###################################
@@ -592,8 +591,12 @@ class CrustangRacing
 	end #def self.accelerateDecelerate
 	
 	def self.bumpedIntoSomeone(racerBehind, racerInFront)
-		#play SE for collision
-		pbSEPlay(CrustangRacingSettings::COLLISION_SE)
+		#play SE for collision if on screen
+		if (self.racerOnScreen?(racerBehind) || self.racerOnScreen?(racerInFront)) && @currentlyPlayingSE != CrustangRacingSettings::COLLISION_SE
+			pbSEPlay(CrustangRacingSettings::COLLISION_SE)
+			@currentlyPlayingSE = CrustangRacingSettings::COLLISION_SE
+			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+		end
 		
 		racerBehind[:Bumped] = true
 		racerBehind[:BumpedRecoveryTimer] = Graphics.frame_rate * CrustangRacingSettings::SECONDS_TO_RECOVER_FROM_BUMP
@@ -632,7 +635,10 @@ class CrustangRacing
 			self.updateCooldownMultipliers
 			self.updateTimers
 			self.accelerateDecelerate
-			self.checkForCollisions
+			self.checkForCollisions(@racer1)
+			self.checkForCollisions(@racer2)
+			self.checkForCollisions(@racer3)
+			self.checkForCollisions(@racerPlayer)
 			self.updateSpinOutAnimation
 			self.updateRacerPlacement
 			self.updateOverlayText

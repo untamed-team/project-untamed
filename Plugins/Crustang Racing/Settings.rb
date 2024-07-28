@@ -11,6 +11,8 @@ COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
+HAZARD_ALARM_SE = "CR_Hazard_Alarm"
+SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
@@ -21,6 +23,7 @@ BOOST_LENGTH_SECONDS = 3
 BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 15
+BOOST_SE = "CR_Boost"
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -37,15 +40,18 @@ SPINOUT_OUTLINE_WIDTH = 6
 SPINOUT_ROTATIONS_PER_SECOND = 2
 SPINOUT_DURATION_IN_SECONDS = 3
 SPINOUT_DESIRED_SPEED = 8
+SPINOUT_SE = "CR_Spinout"
 
 INVINCIBLE_UNTIL_HIT = false
 INVINCIBILITY_DURATION_SECONDS = 10
+INVINCIBLE_BGS = "CR_Invincible"
 
 OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200
 OVERLOAD_OUTLINE_WIDTH = 6
 OVERLOAD_DURATION_IN_SECONDS = 5
-OVERLOADED_STRAFE_SPEED = 4
+OVERLOADED_STRAFE_SPEED = 2
+OVERLOADED_SE = "CR_Overloaded"
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#
@@ -77,7 +83,7 @@ mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description
 #========================================================#
 CONTESTANTS = [
 #{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:ROCKTOMB, :VISEGRIP, :IRONDEFENSE]},
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:MUDSLAP, :VISEGRIP, :IRONDEFENSE]},
 {TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Santa Claws", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
 {TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Crusty", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
