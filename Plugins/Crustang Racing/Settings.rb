@@ -45,7 +45,7 @@ OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200
 OVERLOAD_OUTLINE_WIDTH = 6
 OVERLOAD_DURATION_IN_SECONDS = 5
-OVERLOADED_STRAFE_SPEED = 4
+OVERLOADED_STRAFE_SPEED = 2
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#
@@ -77,7 +77,7 @@ mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description
 #========================================================#
 CONTESTANTS = [
 #{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:ROCKTOMB, :VISEGRIP, :IRONDEFENSE]},
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:MUDSLAP, :VISEGRIP, :IRONDEFENSE]},
 {TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Santa Claws", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
 {TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Crusty", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
