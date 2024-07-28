@@ -3,7 +3,6 @@ class CrustangRacing
 	collisionGrace = 1
 		#if (object.x + object.width-object.width >= racer.x) && (object.x <= racer.x + racer.width) && (object.y + object.height >= racer.y) && (object.y <= racer.y + racer.height)
 		if object.x.between?(racer.x - object.width + collisionGrace, racer.x + racer.width + collisionGrace) && object.y.between?(racer.y - object.height + collisionGrace, racer.y + racer.height - collisionGrace)
-		#print "object x is #{object.x}, racer x is #{racer.x}, object y is #{object.y}, racer y is #{object.y}, "
 			return true
 		end
 	end
