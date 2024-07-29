@@ -111,7 +111,13 @@ class CrustangRacing
 				racer[:DesiredHue] = @hues[:Red]
 				racer[:InvincibilityStatus] = true
 				racer[:InvincibilityTimer] = CrustangRacingSettings::INVINCIBILITY_DURATION_SECONDS * Graphics.frame_rate if !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-				pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS) if racer == @racerPlayer
+				if racer == @racerPlayer
+					#pause bgm
+					@playingBGM = $game_system.getPlayingBGM
+					$game_system.bgm_pause(0.5) #pause over course of 0.5 seconds
+					#play invinc SE
+					pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS)
+				end
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 					self.spinOut(racer, @racer1)
