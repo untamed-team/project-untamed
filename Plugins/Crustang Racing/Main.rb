@@ -647,6 +647,7 @@ class CrustangRacing
 			self.updateSpinOutRangeSprites
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
+			self.monitorUpcomingHazards
 			
 			self.aiBoost
 			self.aiMove1
