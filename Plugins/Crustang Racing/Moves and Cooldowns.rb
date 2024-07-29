@@ -403,4 +403,22 @@ class CrustangRacing
 		Console.echo_warn "#{attacker} -> #{action} -> #{recipient}"
 	end #def self.announceAttack
 	
+	def self.monitorUpcomingHazards
+		pixelsAwayFromEndOfScreen = Graphics.width - @racerPlayer[:RacerSprite].x - @racerPlayer[:RacerSprite].width
+		if @racerPlayer[:PositionOnTrack] < @sprites["track1"].width - pixelsAwayFromEndOfScreen
+		#position X on track just off the screen from player's perspective, NOT taking into account if player is close to end of track
+		positionXOnTrackOffScreenBegin = Graphics.width - @racerPlayer[:RacerSprite].x
+		
+		###################################
+		#============ Racer 1 =============
+		###################################
+		racer = @racer1
+		#if racer[:RockHazard][:PositionXOnTrack].between?(edgeOfScreenFromPlayer, )
+		
+	end #def self.monitorUpcomingHazards
+	
+	def self.createHazardAlarm(racer, hazard)
+		
+	end
+	
 end #class CrustangRacing
