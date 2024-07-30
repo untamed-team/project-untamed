@@ -13,6 +13,7 @@ ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 HAZARD_ALARM_SE = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
+UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#

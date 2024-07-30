@@ -1,5 +1,5 @@
 Name         = Crustang Racing
 Version      = 1.0
 Website      = NONE
-Credits      = Gardenette, Vendily
+Credits      = Gardenette, Vendily, https://downloads.khinsider.com/game-soundtracks/album/mario-kart-8-full-gamerip
 Essentials   = 20.1

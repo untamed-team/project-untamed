@@ -111,7 +111,13 @@ class CrustangRacing
 				racer[:DesiredHue] = @hues[:Red]
 				racer[:InvincibilityStatus] = true
 				racer[:InvincibilityTimer] = CrustangRacingSettings::INVINCIBILITY_DURATION_SECONDS * Graphics.frame_rate if !CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
-				pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS) if racer == @racerPlayer
+				if racer == @racerPlayer
+					#pause bgm
+					@playingBGM = $game_system.getPlayingBGM
+					$game_system.bgm_pause(0.5) #pause over course of 0.5 seconds
+					#play invinc SE
+					pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS)
+				end
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
 					self.spinOut(racer, @racer1)
@@ -396,5 +402,40 @@ class CrustangRacing
 		
 		Console.echo_warn "#{attacker} -> #{action} -> #{recipient}"
 	end #def self.announceAttack
+	
+	def self.monitorUpcomingHazards
+		detectionDistance = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
+		pixelsAwayFromEndOfScreen = Graphics.width - @racerPlayer[:RacerSprite].x #between the back edge of the player sprite and Graphics.width
+		
+		###################################
+		#============ Racer 1 =============
+		###################################
+		racer = @racer1
+		
+		#player pos is 5000
+		#detection distance is 600
+		#begin detecting at 5600
+		#track width is 6144
+
+		if @racerPlayer[:PositionOnTrack] < @sprites["track1"].width - (pixelsAwayFromEndOfScreen + @racerPlayer[:RacerSprite].width + detectionDistance) #not near enough to end of track to cause a problem with overflowing to beginning of track
+			#position X on track just off the screen from player's perspective, NOT taking into account if player is close to end of track
+			if !racer[:RockHazard][:PositionXOnTrack].nil? && racer[:RockHazard][:PositionXOnTrack].between?(@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, @racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance)
+				Console.echo_warn "racer1 rock within detection distance"
+			end #if racer[:RockHazard][:PositionXOnTrack].between?
+			if !racer[:MudHazard][:PositionXOnTrack].nil? && racer[:MudHazard][:PositionXOnTrack].between?(@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, @racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance)
+				Console.echo_warn "racer1 mud within detection distance"
+			end #if racer[:RockHazard][:PositionXOnTrack].between?
+		elsif @racerPlayer[:PositionOnTrack] >= @sprites["track1"].width - (pixelsAwayFromEndOfScreen + @racerPlayer[:RacerSprite].width) #near enough to end of track to cause a problem with overflowing to beginning of track
+			
+			amountBetweenDetectionDistanceAndEndOfTrack = @sprites["track1"].width - detectionDistance
+			amountBetweenEndOfTrackAndRemainingDetectionDistance = (@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance - @sprites["track1"].width).abs
+			
+	
+		end #if @racerPlayer[:PositionOnTrack] <
+	end #def self.monitorUpcomingHazards
+	
+	def self.createHazardAlarm(racer, hazard)
+		
+	end
 	
 end #class CrustangRacing
