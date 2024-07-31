@@ -156,7 +156,7 @@ Abilities = TOUGHCLAWS
 FormName = Mega Trevenant
 MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
-Abilities = TRIAGE
+Abilities = GRASSYSURGE
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
