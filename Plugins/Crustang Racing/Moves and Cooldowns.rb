@@ -201,6 +201,12 @@ class CrustangRacing
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
 			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
+			#if the racer is at position 0, and we put the hazard at 0 - the width of the sprite (16px), then the PositionXOnTrack is -16
+			if racer[:RockHazard][:PositionXOnTrack] < 0
+				#new position is (-16 + 6144).abs which is 6128
+				newPosOnTrack = (racer[:RockHazard][:PositionXOnTrack] + @sprites["track1"].width).abs
+				racer[:RockHazard][:PositionXOnTrack] = newPosOnTrack
+			end
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
@@ -208,6 +214,12 @@ class CrustangRacing
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
 			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
+			#if the racer is at position 0, and we put the hazard at 0 - the width of the sprite (16px), then the PositionXOnTrack is -16
+			if racer[:MudHazard][:PositionXOnTrack] < 0
+				#new position is (-16 + 6144).abs which is 6128
+				newPosOnTrack = (racer[:MudHazard][:PositionXOnTrack] + @sprites["track1"].width).abs
+				racer[:MudHazard][:PositionXOnTrack] = newPosOnTrack
+			end
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45
