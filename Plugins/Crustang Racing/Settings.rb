@@ -2,7 +2,7 @@ class CrustangRacingSettings
 #========================================================#
 #=================== GENERAL SETTINGS ===================#
 #========================================================#
-TOP_BASE_SPEED = 10
+TOP_BASE_SPEED = 1#10
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
@@ -83,8 +83,7 @@ mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description
 #================= CONTESTANTS SETTINGS =================#
 #========================================================#
 CONTESTANTS = [
-#{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:MUDSLAP, :VISEGRIP, :IRONDEFENSE]},
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 {TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Santa Claws", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
 {TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Crusty", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
