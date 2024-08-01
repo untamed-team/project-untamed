@@ -116,7 +116,7 @@ class CrustangRacing
 					@playingBGM = $game_system.getPlayingBGM
 					$game_system.bgm_pause(0.5) #pause over course of 0.5 seconds
 					#play invinc SE
-					pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS)
+					pbBGMPlay(CrustangRacingSettings::INVINCIBLE_BGM)
 				end
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
@@ -418,9 +418,24 @@ class CrustangRacing
 	def self.monitorUpcomingHazards
 		if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
 			Console.echo_warn "racerPlayer rock in range!"
-			print "rock position on track is #{@racerPlayer[:RockHazard][:PositionXOnTrack]}, and player position on track is #{@racerPlayer[:PositionOnTrack]}"
-			pbSEPlay(CrustangRacingSettings::HAZARD_ALARM_SE)
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 		end
+		
+		
+		
+		
+		########################################
+		# Stop Alarm if No Upcoming Hazards ====
+		########################################
+		anyUpcomingHazards = false
+
+		anyUpcomingHazards = true if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		anyUpcomingHazards = true if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+		anyUpcomingHazards = true if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+		anyUpcomingHazards = true if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+		
+		pbBGSStop(0) if !anyUpcomingHazards
+		
 	end #def self.monitorUpcomingHazards
 	
 	def self.createHazardAlarm(racer, hazard)

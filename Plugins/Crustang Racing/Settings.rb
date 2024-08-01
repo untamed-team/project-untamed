@@ -11,9 +11,9 @@ COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
-HAZARD_ALARM_SE = "CR_Hazard_Alarm"
+HAZARD_ALARM_BGS = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
-UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them)
+UPCOMING_HAZARD_DETECTION_DISTANCE = 1000 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them) #1000 distance at 10 base speed produces 4 chimes when a hazard is coming
 TRACK_BGM = "Bone-Dry Dunes"
 
 #========================================================#
@@ -46,7 +46,7 @@ SPINOUT_SE = "CR_Spinout"
 
 INVINCIBLE_UNTIL_HIT = false
 INVINCIBILITY_DURATION_SECONDS = 10
-INVINCIBLE_BGS = "CR_Invincible"
+INVINCIBLE_BGM = "CR_Invincible"
 
 OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200

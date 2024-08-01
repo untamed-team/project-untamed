@@ -340,7 +340,7 @@ class CrustangRacing
 		racer[:DesiredHue] = nil
 		racer[:InvincibilityStatus] = false
 		if racer == @racerPlayer
-			pbBGSStop(0.5) #stop bgs in 1 second, fading out
+			pbBGMStop(0.5) #stop bgm in 0.5 seconds, fading out
 			#resume bgm
 			$game_system.bgm_resume(@playingBGM)
 		end
