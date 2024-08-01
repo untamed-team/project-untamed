@@ -2,7 +2,7 @@ class CrustangRacingSettings
 #========================================================#
 #=================== GENERAL SETTINGS ===================#
 #========================================================#
-TOP_BASE_SPEED = 1#10
+TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
@@ -13,7 +13,8 @@ ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 HAZARD_ALARM_SE = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
-UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels off the screen (does not include pixels between player sprite and edge of screen)
+UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them)
+TRACK_BGM = "Bone-Dry Dunes"
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#

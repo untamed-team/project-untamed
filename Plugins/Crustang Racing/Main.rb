@@ -622,7 +622,7 @@ class CrustangRacing
 		self.drawMovesUI
 		self.setMiscVariables
 		
-		pbBGMPlay("Bone-Dry Dunes")
+		pbBGMPlay(CrustangRacingSettings::TRACK_BGM)
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)

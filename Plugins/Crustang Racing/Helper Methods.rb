@@ -368,8 +368,6 @@ class CrustangRacing
 		#hazard will be the entire hazard hash passed in like so:
 		#self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
 		
-		pixelsAwayFromEndOfScreen = Graphics.width - @racerPlayer[:RacerSprite].x #between the back edge of the player sprite and Graphics.width
-
 		withinRangeX = false
 			
 		###### Checking in front of player
@@ -393,6 +391,9 @@ class CrustangRacing
 		else
 			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
 		end
+		
+		#crude way of saying it's no longer in range when on the screen
+		withinRangeX = false if hazard[:Sprite].x.between?(0, Graphics.width)
 
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?
