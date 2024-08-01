@@ -200,14 +200,14 @@ class CrustangRacing
 		
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
-			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
 			offsetH = @sprites["racerPlayerPkmnOverview"].height/8
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
-			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
+			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45
@@ -406,6 +406,7 @@ class CrustangRacing
 	def self.monitorUpcomingHazards
 		if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
 			Console.echo_warn "racerPlayer rock in range!"
+			print "rock position on track is #{@racerPlayer[:RockHazard][:PositionXOnTrack]}, and player position on track is #{@racerPlayer[:PositionOnTrack]}"
 			pbSEPlay(CrustangRacingSettings::HAZARD_ALARM_SE)
 		end
 	end #def self.monitorUpcomingHazards

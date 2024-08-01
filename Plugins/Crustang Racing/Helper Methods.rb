@@ -375,23 +375,23 @@ class CrustangRacing
 		###### Checking in front of player
 		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
 		
-		if racer[:PositionOnTrack] + pixelsAwayFromEndOfScreen > @sprites["track1"].width - detectionRange
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
 			#there will be some overlap between the end of the track and the beginning of the track
 			positionOnTrackInFrontOfRacer = []
-			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, @sprites["track1"].width])
-			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack] + pixelsAwayFromEndOfScreen))
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
 			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
 			#the above array will look something like this:
 			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
 		else
-			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionRange
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
 		end
 		
 		#if positionOnTrackInFrontOfRacer is an array or not
 		if positionOnTrackInFrontOfRacer.kind_of?(Array)
 			withinRangeX = true if hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
 		else
-			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, positionOnTrackInFrontOfRacer)
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
 		end
 
 		return withinRangeX

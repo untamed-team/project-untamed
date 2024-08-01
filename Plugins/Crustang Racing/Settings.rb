@@ -13,7 +13,7 @@ ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 HAZARD_ALARM_SE = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
-UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels
+UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels off the screen (does not include pixels between player sprite and edge of screen)
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
@@ -92,8 +92,8 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 {TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
+{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 {TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
 
