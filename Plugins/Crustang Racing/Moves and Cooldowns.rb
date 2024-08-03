@@ -405,29 +405,47 @@ class CrustangRacing
 	end #def self.assignMoveEffects
 	
 	def self.announceAttack(attacker, recipient, action)
+		#attacker is an entire racer hash
+		#need to set entered crustang value on each racer so I can use "attacker[:EnteredCrustang][:TrainerName]"
+		
 		case attacker
 		when @racer1
-			attacker = "Racer1"
+			#attacker = "Racer1"
 		when @racer2
-			attacker = "Racer2"
+			#attacker = "Racer2"
 		when @racer3
-			attacker = "Racer3"
+			#attacker = "Racer3"
 		when @racerPlayer
-			attacker = "RacerPlayer"
+			#attacker = "RacerPlayer"
 		end
 		
 		case recipient
 		when @racer1
-			recipient = "Racer1"
+			#recipient = "Racer1"
 		when @racer2
-			recipient = "Racer2"
+			#recipient = "Racer2"
 		when @racer3
-			recipient = "Racer3"
+			#recipient = "Racer3"
 		when @racerPlayer
-			recipient = "RacerPlayer"
+			#recipient = "RacerPlayer"
+		end
+		announcement = "#{attacker[:EnteredCrustangContestant][:TrainerName]} -> #{action} -> #{recipient[:EnteredCrustangContestant][:TrainerName]}"
+		Console.echo_warn announcement
+		#keep the feed at 3 elements at most
+		if @announcementsFeed.length >= 3
+			@announcementsFeed.delete_at(0)
+		end
+		@announcementsFeed.push(announcement)
+		case @announcementsFeed.length
+		when 1
+			@announcementsFeedString = "#{@announcementsFeed[0]}"
+		when 2
+			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}"
+		when 3
+			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}\n#{@announcementsFeed[2]}"
 		end
 		
-		Console.echo_warn "#{attacker} -> #{action} -> #{recipient}"
+		print @announcementsFeedString
 	end #def self.announceAttack
 	
 	def self.monitorUpcomingHazards

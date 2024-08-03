@@ -137,6 +137,17 @@ class CrustangRacing
 		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 		
+	def self.updateAnnouncementsText
+		#@announcementsFeed
+		if @lastAnnouncementsFeed != @announcementsFeed
+			@lastAnnouncementsFeed = @announcementsFeed
+			@announcementsOverlay.clear
+		end
+		
+		drawFormattedTextEx(@announcementsOverlay, 20, 8, Graphics.width, @announcementsFeedString, @overlayBaseColor, @overlayShadowColor) if !@announcementsFeedString.nil?
+
+	end #def self.updateOverlayText
+	
 	def self.moveMiscSprites
 		###################################
 		#===== Spin Out Range Sprite =====
@@ -648,6 +659,7 @@ class CrustangRacing
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
 			self.monitorUpcomingHazards
+			self.updateAnnouncementsText
 			
 			self.aiBoost
 			self.aiMove1

@@ -126,6 +126,14 @@ class CrustangRacing
 		@lapsAndPlaceOverlay = @sprites["lapsAndPlaceOverlay"].bitmap
 		pbSetSystemFont(@lapsAndPlaceOverlay)
 		
+		@sprites["announcementsPane"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["announcementsPane"].x = 0
+		@sprites["announcementsPane"].y = Graphics.height - @sprites["announcementsPane"].height
+		@sprites["announcementsPane"].z = 999999
+		@announcementsOverlay = @sprites["announcementsPane"].bitmap
+		pbSetSystemFont(@announcementsOverlay)
+		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
 		
@@ -481,6 +489,8 @@ class CrustangRacing
 		#so we don't overlap SEs and get a very loud noise if multiple of the same SE are played at the same time
 		@currentlyPlayingSETimer = 0
 		@currentlyPlayingSE = nil
+		
+		@announcementsFeed = []
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -537,6 +547,7 @@ class CrustangRacing
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 		}
 		@racerPlayer = {
+			EnteredCrustangContestant: nil,
 			#racer sprite
 			RacerSprite: nil,
 			#boost button sprites & cooldown timer
@@ -552,6 +563,24 @@ class CrustangRacing
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 		}
+		
+		#modify player's selected Crustang to match hashes of AI crustang contestants
+		#template: {TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}
+		move1 = nil
+		move2 = nil
+		move3 = nil
+		move4 = nil
+		
+		move1 = @enteredCrustang.moves[0].id.to_sym if !@enteredCrustang.moves[0].nil?
+		move2 = @enteredCrustang.moves[1].id.to_sym if !@enteredCrustang.moves[1].nil?
+		move3 = @enteredCrustang.moves[2].id.to_sym if !@enteredCrustang.moves[2].nil?
+		move4 = @enteredCrustang.moves[3].id.to_sym if !@enteredCrustang.moves[3].nil?
+		
+		@racerPlayer[:EnteredCrustangContestant] = {TrainerName: "#{$Trainer.name}", PkmnName: "#{@enteredCrustang.name}", Moves: []}
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move1) if !move1.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move2) if !move2.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move3) if !move3.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move4) if !move4.nil?
 	end #def self.setupRacerHashes
 
 end #class CrustangRacing
