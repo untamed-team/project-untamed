@@ -287,7 +287,7 @@ class CrustangRacing
 			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
 		else
 			sprite.visible = false
-			#clear bitmap
+			#clear bitmap of color
 			sprite.bitmap.fill_rect(0, 0, sprite.width, sprite.height, Color.new(0,0,0,0))
 		end #if @racer1[:SpinOutCharge] > CrustangRacingSettings::SPINOUT_MIN_RANGE
 		

@@ -340,7 +340,7 @@ class CrustangRacing
 		racer[:DesiredHue] = nil
 		racer[:InvincibilityStatus] = false
 		if racer == @racerPlayer
-			pbBGSStop(0.5) #stop bgs in 1 second, fading out
+			pbBGMStop(0.5) #stop bgm in 0.5 seconds, fading out
 			#resume bgm
 			$game_system.bgm_resume(@playingBGM)
 		end
@@ -363,6 +363,40 @@ class CrustangRacing
 			return true
 		end
 	end #self.racerOnScreen?(racer)
+	
+	def self.withinHazardDetectionRange?(racer, hazard)
+		#hazard will be the entire hazard hash passed in like so:
+		#self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		
+		withinRangeX = false
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+		
+		#crude way of saying it's no longer in range when on the screen
+		withinRangeX = false if hazard[:Sprite].x.between?(0, Graphics.width)
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRange?
 	
 end #class CrustangRacing
 

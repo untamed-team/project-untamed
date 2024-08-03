@@ -11,9 +11,10 @@ COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
 MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
-HAZARD_ALARM_SE = "CR_Hazard_Alarm"
+HAZARD_ALARM_BGS = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
-UPCOMING_HAZARD_DETECTION_DISTANCE = 600 #in pixels
+UPCOMING_HAZARD_DETECTION_DISTANCE = 1000 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them) #1000 distance at 10 base speed produces 4 chimes when a hazard is coming
+TRACK_BGM = "Bone-Dry Dunes"
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
@@ -45,7 +46,7 @@ SPINOUT_SE = "CR_Spinout"
 
 INVINCIBLE_UNTIL_HIT = false
 INVINCIBILITY_DURATION_SECONDS = 10
-INVINCIBLE_BGS = "CR_Invincible"
+INVINCIBLE_BGM = "CR_Invincible"
 
 OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200
@@ -58,19 +59,19 @@ OVERLOADED_SE = "CR_Overloaded"
 #===================== MOVE EFFECTS =====================#
 #========================================================#
 MOVE_EFFECTS = {
-invincible:      {EffectName: "Invincible", EffectCode: "invincible", Description: "Gain invincibility. The next obstacle that hits you does not affect you.", AssignedMoves: [:IRONDEFENSE, :PROTECT, :SUBSTITUTE, :DIG],}, #does not stack if you get to use again before hitting something
+invincible:      {EffectName: "Invincible", EffectCode: "invincible", Description: "Gain invincibility for a short time, making you unaffected by obstacles.", AssignedMoves: [:IRONDEFENSE, :PROTECT, :SUBSTITUTE, :DIG],}, #does not stack if you get to use again before hitting something
 
 #spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH],},
 
 spinOut:         {EffectName: "Spin Out", EffectCode: "spinOut", Description: "Racers around you spin out, slowing them down temporarily.", AssignedMoves: [:LEER, :BULLDOZE, :EARTHQUAKE, :THUNDERWAVE, :BRUTALSWING, :SCREECH, :SEISMICTOSS, :EXPLOSION, :PURSUIT, :UTURN, :FLAMECHARGE, :SNARL, :VISEGRIP, :CRABHAMMER, :IRONHEAD, :HEAVYSLAM, :CUT, :STRENGTH, :METALCLAW, :RETURN, :BRICKBREAK, :FLASHCANNON, :BODYPRESS, :BODYSLAM, :XSCISSOR, :SUPERPOWER],},
 
-overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burden racers around you, decreasing their ability to strafe quickly.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
+overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burden racers around you, hindering their ability to strafe quickly.", AssignedMoves: [:HELPINGHAND, :SWAGGER, :TAUNT, :FOULPLAY],},
 
-reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced by half for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
+reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
 
-secondBoost:     {EffectName: "Second Boost", EffectCode: "secondBoost", Description: "Gain a little speed for a short time.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
+secondBoost:     {EffectName: "Second Boost", EffectCode: "secondBoost", Description: "Stabilize your speed for a short time. Faster than base speed, slower than boost.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
 
-rockHazard:      {EffectName: "Rock Hazard", EffectCode: "rockHazard", Description: "Place a hazard where you are, leaving it behind for another racer to hit.", AssignedMoves: [:ROCKTOMB, :ROCKSLIDE, :STONEEDGE, :STEALTHROCK],}, #put a hazard on the screen where you are, leaving it behind. It stays there until someone hits it. This is like a rock that causes someone to spin out if they hit it. This one you leave where you are when triggered
+rockHazard:      {EffectName: "Rock Hazard", EffectCode: "rockHazard", Description: "Place a rock where you are, leaving it behind for another racer to hit.", AssignedMoves: [:ROCKTOMB, :ROCKSLIDE, :STONEEDGE, :STEALTHROCK],}, #put a hazard on the screen where you are, leaving it behind. It stays there until someone hits it. This is like a rock that causes someone to spin out if they hit it. This one you leave where you are when triggered
 
 mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description: "Place a mud pit where you are, leaving it behind for another racer to hit.", AssignedMoves: [:MUDSLAP, :MUDBOMB, :SANDSTORM, :SCORCHINGSANDS],}, #put a mud pit on the screen where you are, leaving it behind. It stays there for a set amount of time and is slightly larger than rock hazards
 
@@ -83,8 +84,7 @@ mudHazard:       {EffectName: "Mud Hazard", EffectCode: "mudHazard", Description
 #================= CONTESTANTS SETTINGS =================#
 #========================================================#
 CONTESTANTS = [
-#{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:MUDSLAP, :VISEGRIP, :IRONDEFENSE]},
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnName: "King Crab", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 {TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnName: "Santa Claws", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
 {TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnName: "Crusty", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
@@ -93,9 +93,10 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
+#{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
 
 end #class CrustangRacingSettings
