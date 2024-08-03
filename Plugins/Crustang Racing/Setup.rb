@@ -130,9 +130,11 @@ class CrustangRacing
 		@sprites["announcementsPane"].x = 0
 		@sprites["announcementsPane"].y = Graphics.height - @sprites["announcementsPane"].height
 		@sprites["announcementsPane"].z = 999999
+		@sprites["announcementsPane"].opacity = 70
 		@announcementsOverlay = @sprites["announcementsPane"].bitmap
+		@announcementsOverlay.fill_rect(0, 0, Graphics.width, Graphics.height, Color.black)
 		pbSetSystemFont(@announcementsOverlay)
-		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE - 1
 		
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR

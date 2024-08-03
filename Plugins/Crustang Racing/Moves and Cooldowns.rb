@@ -438,9 +438,9 @@ class CrustangRacing
 		@announcementsFeed.push(announcement)
 		case @announcementsFeed.length
 		when 1
-			@announcementsFeedString = "#{@announcementsFeed[0]}"
+			@announcementsFeedString = "\n\n#{@announcementsFeed[0]}"
 		when 2
-			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}"
+			@announcementsFeedString = "\n#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}"
 		when 3
 			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}\n#{@announcementsFeed[2]}"
 		end
