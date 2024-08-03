@@ -93,9 +93,10 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
+#{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
 {TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 ]
 
 end #class CrustangRacingSettings

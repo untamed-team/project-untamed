@@ -278,6 +278,21 @@ class CrustangRacing
 			racer[:MudHazard][:PositionXOnTrackOverview] = nil
 			racer[:MudHazard][:PositionYOnTrackOverview] = nil
 		end
+		
+		self.disposeHazardAlarm(racer, hazard)
+	end #def self.disposeHazard
+	
+	def self.disposeHazardAlarm(racer, hazard)
+		###################################
+		#Remove Racer's Hazard Alarm of Same Type
+		###################################
+		if hazard == "rock" && racer[:RockHazard][:AlarmSprite] && !racer[:RockHazard][:AlarmSprite].disposed?
+			racer[:RockHazard][:AlarmSprite].dispose
+			racer[:RockHazard][:AlarmSprite] = nil
+		elsif hazard == "mud" && racer[:MudHazard][:AlarmSprite] && !racer[:MudHazard][:AlarmSprite].disposed?
+			racer[:MudHazard][:AlarmSprite].dispose
+			racer[:MudHazard][:AlarmSprite] = nil
+		end
 	end #def self.disposeHazard
 	
 	def self.spinOut(attacker, recipient)
@@ -416,14 +431,48 @@ class CrustangRacing
 	end #def self.announceAttack
 	
 	def self.monitorUpcomingHazards
+		if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+			Console.echo_warn "racer1 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer1, "rock")
+		end
+		if !@racer1[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+			Console.echo_warn "racer1 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer1, "mud")
+		end
+		if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+			Console.echo_warn "racer2 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer2, "rock")
+		endateHazardAlarmSprite(@racer1, "rock")
+		end
+		if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+			Console.echo_warn "racer2 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer2, "mud")
+		end
+		if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+			Console.echo_warn "racer3 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer3, "rock")
+		end
+		if !@racer3[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+			Console.echo_warn "racer3 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer3, "mud")
+		end
 		if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
 			Console.echo_warn "racerPlayer rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racerPlayer, "rock")
 		end
-		
-		
-		
-		
+		if !@racerPlayer[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
+			Console.echo_warn "racerPlayer mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racerPlayer, "mud")
+		end
+			
 		########################################
 		# Stop Alarm if No Upcoming Hazards ====
 		########################################
@@ -433,13 +482,57 @@ class CrustangRacing
 		anyUpcomingHazards = true if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
 		anyUpcomingHazards = true if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
 		anyUpcomingHazards = true if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+		anyUpcomingHazards = true if !@racer1[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+		anyUpcomingHazards = true if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+		anyUpcomingHazards = true if !@racer3[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+		anyUpcomingHazards = true if !@racerPlayer[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
 		
 		pbBGSStop(0) if !anyUpcomingHazards
 		
+		#dispose the alarm sprite if no longer in range
+		self.disposeHazardAlarm(@racer1, "rock") if !@racer1[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		self.disposeHazardAlarm(@racer1, "mud") if !@racer1[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+		self.disposeHazardAlarm(@racer2, "rock") if !@racer2[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+		self.disposeHazardAlarm(@racer2, "mud") if !@racer2[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+		self.disposeHazardAlarm(@racer3, "rock") if !@racer3[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+		self.disposeHazardAlarm(@racer3, "mud") if !@racer3[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+		self.disposeHazardAlarm(@racerPlayer, "rock") if !@racerPlayer[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+		self.disposeHazardAlarm(@racerPlayer, "mud") if !@racerPlayer[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
+		
 	end #def self.monitorUpcomingHazards
 	
-	def self.createHazardAlarm(racer, hazard)
+	def self.createHazardAlarmSprite(racer, hazard)
+		case racer
+		when @racer1
+			number = 1
+		when @racer2
+			number = 2
+		when @racer3
+			number = 3
+		when @racerPlayer
+			number = 4
+		end
 		
+		###################################
+		#Remove Racer's Hazard Alarm of Same Type
+		###################################
+		self.disposeHazardAlarm(racer, hazard)
+		
+		#hazard_alarm_rock
+		#hazard_alarm_mud
+		@sprites["hazard_alarm_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
+		sprite = @sprites["hazard_alarm_#{hazard}_#{number}"]
+		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_alarm_#{hazard}")
+		sprite.x = Graphics.width - sprite.width
+		sprite.z = 99999
+		
+		if hazard == "rock"
+			sprite.y = racer[:RockHazard][:PositionYOnTrack] - 45 + racer[:RockHazard][:Sprite].height/2
+			racer[:RockHazard][:AlarmSprite] = sprite
+		elsif hazard == "mud"
+			sprite.y = racer[:MudHazard][:PositionYOnTrack] - 45 + racer[:MudHazard][:Sprite].height/2
+			racer[:MudHazard][:AlarmSprite] = sprite
+		end
 	end
 	
 end #class CrustangRacing
