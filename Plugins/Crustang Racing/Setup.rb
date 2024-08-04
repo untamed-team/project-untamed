@@ -134,7 +134,7 @@ class CrustangRacing
 		@announcementsOverlay = @sprites["announcementsPane"].bitmap
 		@announcementsOverlay.fill_rect(0, 0, Graphics.width, Graphics.height, Color.black)
 		pbSetSystemFont(@announcementsOverlay)
-		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE - 1
+		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE - 3
 		
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
@@ -280,7 +280,8 @@ class CrustangRacing
 		###################################
 		#animname, framecount, framewidth, frameheight, frameskip
 		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, @viewport)
-		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
+		#@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
+		@sprites["boostButton"].x = Graphics.width/2 + 10
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
 

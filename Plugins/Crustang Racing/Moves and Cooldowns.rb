@@ -444,8 +444,6 @@ class CrustangRacing
 		when 3
 			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}\n#{@announcementsFeed[2]}"
 		end
-		
-		print @announcementsFeedString
 	end #def self.announceAttack
 	
 	def self.monitorUpcomingHazards
@@ -463,7 +461,6 @@ class CrustangRacing
 			Console.echo_warn "racer2 rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer2, "rock")
-		endateHazardAlarmSprite(@racer1, "rock")
 		end
 		if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
 			Console.echo_warn "racer2 mud in range!"

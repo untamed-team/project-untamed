@@ -139,13 +139,14 @@ class CrustangRacing
 		
 	def self.updateAnnouncementsText
 		#@announcementsFeed
-		if @lastAnnouncementsFeed != @announcementsFeed
-			@lastAnnouncementsFeed = @announcementsFeed
+		if @lastAnnouncementsFeedString != @announcementsFeedString
+			#Console.echo_warn "updating announcements feed, clearing overlay"
+			@lastAnnouncementsFeedString = @announcementsFeedString
 			@announcementsOverlay.clear
 			@announcementsOverlay.fill_rect(0, 0, Graphics.width, Graphics.height, Color.black)
 		end
 		
-		drawFormattedTextEx(@announcementsOverlay, 20, 8, Graphics.width, @announcementsFeedString, @overlayBaseColor, @overlayShadowColor) if !@announcementsFeedString.nil?
+		drawFormattedTextEx(@announcementsOverlay, 6, 12, Graphics.width, @announcementsFeedString, @overlayBaseColor, @overlayShadowColor) if !@announcementsFeedString.nil?
 
 	end #def self.updateOverlayText
 	
