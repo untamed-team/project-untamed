@@ -4,17 +4,17 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		self.moveEffect(@racer1, 0) if @racer1[:BoostCooldownTimer] <= 0 && rand(100*Graphics.frame_rate).between?(1,CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
+		self.moveEffect(@racer1, 0) if @racer1[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 		###################################
 		#============= Racer2 =============
 		###################################
-		self.moveEffect(@racer2, 0) if @racer2[:BoostCooldownTimer] <= 0
+		self.moveEffect(@racer2, 0) if @racer2[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 		###################################
 		#============= Racer3 =============
 		###################################
-		self.moveEffect(@racer3, 0) if @racer3[:BoostCooldownTimer] <= 0
+		self.moveEffect(@racer3, 0) if @racer3[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 	end #def self.aiBoost
 	
@@ -61,5 +61,12 @@ class CrustangRacing
 		
 	end #def self.useMove1
 
+	def self.aiAvoidObstacles
+		###################################
+		#============= Racer1 =============
+		###################################
+		
+
+	end #def self.aiBoost
 
 end #class CrustangRacing

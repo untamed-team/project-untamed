@@ -398,6 +398,65 @@ class CrustangRacing
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?
 	
+	def self.willCollideWithHazard?(racer, hazard)
+		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming hazard
+		collisionGrace = 1
+		
+		###################################
+		#==== Detecting Racer1 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer1[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer1[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Racer2 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer2[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer2[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Racer3 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer3[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer3[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Player Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racerPlayer[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racerPlayer[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+
+		return false
+	end #def self.withinHazardDetectionRange?
+	
 	def self.rngRoll(chance=nil)
 		return if @rngRollsTimer > 0 #if not able to roll rng yet
 		return if chance.nil? #if not rolling rng for anything at the moment
