@@ -665,7 +665,6 @@ class CrustangRacing
 			
 			self.aiBoost
 			self.aiMove1
-
 		end
 	end #def self.main
 	

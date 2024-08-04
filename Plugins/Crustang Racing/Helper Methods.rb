@@ -398,6 +398,14 @@ class CrustangRacing
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?
 	
+	def self.rngRoll(chance=nil)
+		return if @rngRollsTimer > 0 #if not able to roll rng yet
+		return if chance.nil? #if not rolling rng for anything at the moment
+		
+		#otherwise, roll rng
+		return rand(100).between?(1, chance)
+	end #self.rngRoll(chance)
+	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

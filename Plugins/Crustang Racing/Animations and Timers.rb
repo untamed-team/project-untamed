@@ -269,6 +269,13 @@ class CrustangRacing
 		###################################
 		@currentlyPlayingSETimer -= 1
 		@currentlyPlayingSE = nil if @currentlyPlayingSETimer <= 0
+		if @rngRollsTimer < 0
+			@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS 
+			Console.echo_warn "resetting rng roll timer"
+		else
+			@rngRollsTimer -= 1
+		end
+		
 	end
 
 	def self.updateSpinOutRangeSprites

@@ -494,6 +494,9 @@ class CrustangRacing
 		@currentlyPlayingSE = nil
 		
 		@announcementsFeed = []
+		
+		#for rng rolls
+		@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
