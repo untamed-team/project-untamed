@@ -335,7 +335,7 @@ class CrustangRacing
 	end #def self.checkForCollisions
 
 	def self.endInvincibility(racer)
-		Console.echo_warn "ending invincibility" if racer == @racer1
+		#Console.echo_warn "ending invincibility" if racer == @racer1
 		racer[:InvincibilityTimer] = 0
 		racer[:DesiredHue] = nil
 		racer[:InvincibilityStatus] = false

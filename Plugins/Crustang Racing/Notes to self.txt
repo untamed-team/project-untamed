@@ -1,5 +1,42 @@
 Notes to self:
-Only one type of hazard per person - player only gets 1 rock hazard and 1 mud hazard on the track at a time. When spawning another one, the previous one disappears if it is still on the track
-This is the same for AI racers
-
 Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
+
+
+For RNG rolls, either each racer needs its own individual rng timers so checks can only be made every half a second or so, or there needs to be a global timer that runs out and resets every half second, and when that timer resets, a check CAN be made with individual odds
+def self.rngRoll(chance) #chance being maybe 50 (out of 100 is assumed)
+this can only be called when the global timer resets, making all checks that require rng will do nothing unless it's been half a second
+return rand(100).between?(1..chance) <- this would return true if you hit a number between 1 and 50 if using the example above
+
+
+Alright, organizing my thoughts for AI:
+When to boost:
+Use when ready, but rng if they use it or not
+
+When to use invincible:
+Use if available and there's a hazard coming up?
+
+When to use spinOut:
+Use when in max range of another racer if it's ready, rng very likely to use if ready
+
+When to use overload:
+Use when in max range of another racer if it's ready, rng very likely to use if ready
+
+When to use reduceCooldown:
+Use whenever, unlikely to use
+
+When to use secondBoost:
+Use if boost cooldown greater than 0 but speed is less than what stabilize would give?
+
+When to use rockHazard:
+Use whenever, rolling RNG to use if they have it readied
+Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
+
+When to use mudHazard:
+Use whenever, rolling RNG to use if they have it readied
+Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
+
+When to strafe:
+Try to strafe out of the way of a hazard if it's within range
+Roll rng with a change of not moving out of the way
+Do not bother moving if invincible
+Strafe towards someone if within max range X of an attack and they just need to get closer to use it

@@ -26,6 +26,7 @@ BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 15
 BOOST_SE = "CR_Boost"
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 100 #this is the chance about every second
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#

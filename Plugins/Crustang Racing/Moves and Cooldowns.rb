@@ -448,42 +448,42 @@ class CrustangRacing
 	
 	def self.monitorUpcomingHazards
 		if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
-			Console.echo_warn "racer1 rock in range!"
+			#Console.echo_warn "racer1 rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer1, "rock")
 		end
 		if !@racer1[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
-			Console.echo_warn "racer1 mud in range!"
+			#Console.echo_warn "racer1 mud in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer1, "mud")
 		end
 		if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
-			Console.echo_warn "racer2 rock in range!"
+			#Console.echo_warn "racer2 rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer2, "rock")
 		end
 		if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
-			Console.echo_warn "racer2 mud in range!"
+			#Console.echo_warn "racer2 mud in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer2, "mud")
 		end
 		if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
-			Console.echo_warn "racer3 rock in range!"
+			#Console.echo_warn "racer3 rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer3, "rock")
 		end
 		if !@racer3[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
-			Console.echo_warn "racer3 mud in range!"
+			#Console.echo_warn "racer3 mud in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racer3, "mud")
 		end
 		if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
-			Console.echo_warn "racerPlayer rock in range!"
+			#Console.echo_warn "racerPlayer rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racerPlayer, "rock")
 		end
 		if !@racerPlayer[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
-			Console.echo_warn "racerPlayer mud in range!"
+			#Console.echo_warn "racerPlayer mud in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
 			self.createHazardAlarmSprite(@racerPlayer, "mud")
 		end

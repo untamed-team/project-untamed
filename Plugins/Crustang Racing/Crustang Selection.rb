@@ -50,4 +50,3 @@ class CrustangRacing
 		self.main(enteredCrustang) if enteredCrustang != -1
 	end
 end
-

@@ -4,7 +4,7 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		self.moveEffect(@racer1, 0) if @racer1[:BoostCooldownTimer] <= 0
+		self.moveEffect(@racer1, 0) if @racer1[:BoostCooldownTimer] <= 0 && rand(100*Graphics.frame_rate).between?(1,CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 		###################################
 		#============= Racer2 =============
