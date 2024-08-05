@@ -122,25 +122,43 @@ class CrustangRacing
 			
 			if centerYOfHazardSprite > centerYOfRacerSprite ##################but what if the racer doesn't have enough room to dodge it by going in that direction? Go other direction
 				directionToStrafe = "up"
-			else
+			elsif centerYOfHazardSprite < centerYOfRacerSprite
 				directionToStrafe = "down"
 			end
 			
 			#but if the racer does not have enough room between them and the wall (or maybe another racer as well), go the other direction
+			#room needed to move should be the hazard's height/2
+			roomNeededToMove = hazardToAvoid[:Sprite].height + CrustangRacingSettings::BOOSTED_STRAFE_SPEED
 			
-			Console.echo_warn directionToStrafe
-			
+			#how many pixels between the racer and the upper wall?
+			#@trackBorderTopY
+			pixelsBetweenRacerAndTrackTop = (racer[:RacerSprite].y - @trackBorderTopY).abs
+			#how many pixels between the racer and the upper wall?
+			pixelsBetweenRacerAndTrackBottom = (@trackBorderTopY - (racer[:RacerSprite].y + racer[:RacerSprite].height)).abs
 			
 			case directionToStrafe
 			when "up"
+				if pixelsBetweenRacerAndTrackTop < roomNeededToMove
+					Console.echo_warn "not enough room to move up!"
+					directionToStrafe = "down"
+				end
+			when "down"
+				if pixelsBetweenRacerAndTrackBottom < roomNeededToMove
+					Console.echo_warn "not enough room to move down!"
+					directionToStrafe = "up"
+				end
+			end
+			
+			case directionToStrafe
+			when "up"
+				Console.echo_warn "strafing up"
 				self.strafeUp(racer)
 			when "down"
 				self.strafeDown(racer)
+				Console.echo_warn "strafing down"
 			end
 			
-			
 		end #if !hazardToAvoid.nil?
-
 	end #def self.aiBoost
 
 end #class CrustangRacing

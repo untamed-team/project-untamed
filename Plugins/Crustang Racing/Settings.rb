@@ -16,7 +16,7 @@ SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
 UPCOMING_HAZARD_DETECTION_DISTANCE = 1000 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them) #1000 distance at 10 base speed produces 4 chimes when a hazard is coming
 TRACK_BGM = "Bone-Dry Dunes"
 RNG_ROLLS_TIMER_IN_SECONDS = 1 #rng rolls happen every X seconds
-PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100
+PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################currently not used
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
@@ -28,7 +28,7 @@ BOOST_SPEED = 16
 SECONDS_TO_REACH_BOOST_SPEED = 3
 SECONDARY_BOOST_SPEED = 15
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 10
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 10#30
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
