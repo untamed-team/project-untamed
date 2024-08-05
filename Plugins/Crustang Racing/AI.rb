@@ -59,13 +59,13 @@ class CrustangRacing
 			end #case self.getMoveEffect(racer, 1)
 		end #if racer[:Move1CooldownTimer] <= 0
 		
-	end #def self.useMove1
+	end #def self.useMove1	
 
 	def self.aiAvoidObstacles
 		###################################
 		#============= Racer1 =============
 		###################################
-		
+		#############if self.willCollideWithHazard?(@racer3, "rock")
 
 	end #def self.aiBoost
 

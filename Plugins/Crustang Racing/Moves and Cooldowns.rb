@@ -1,4 +1,148 @@
 class CrustangRacing
+	def self.detectInput
+		Input.update
+		###################################
+		#============ Movement ============
+		###################################
+		if Input.press?(Input::UP)
+			self.strafeUp(@racerPlayer)
+		elsif Input.press?(Input::DOWN)
+			self.strafeDown(@racerPlayer)
+		end
+		
+		###################################
+		#============= Boost =============
+		###################################
+		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+			@racerPlayer[:BoostButtonSprite].frame = 1
+		end
+		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+			self.moveEffect(@racerPlayer, 0)
+			@racerPlayer[:BoostButtonSprite].frame = 0
+		end
+		
+		###################################
+		#============= Moves =============
+		###################################
+		#move1
+		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@pressingMove1 = true
+			@racerPlayer[:Move1ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@racerPlayer[:Move1ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 1)
+				self.beginCooldown(@racerPlayer, 1)
+			end #if !self.cancellingMove?
+			@pressingMove1 = false
+		end
+		#move2
+		if Input.pressex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@pressingMove2 = true
+			@racerPlayer[:Move2ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@racerPlayer[:Move2ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 2)
+				self.beginCooldown(@racerPlayer, 2)
+			end #if !self.cancellingMove?
+			@pressingMove2 = false
+		end
+		#move3
+		if Input.pressex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@pressingMove3 = true
+			@racerPlayer[:Move3ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@racerPlayer[:Move3ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 3)
+				self.beginCooldown(@racerPlayer, 3)
+			end #if !self.cancellingMove?
+			@pressingMove3 = false
+		end
+		#move4
+		if Input.pressex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@pressingMove4 = true
+			@racerPlayer[:Move4ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@racerPlayer[:Move4ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 4)
+				self.beginCooldown(@racerPlayer, 4)
+			end #if !self.cancellingMove?
+			@pressingMove4 = false
+		end
+		
+	end #self.detectInput
+	
+	def self.strafeUp(racer)
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+		
+		#if colliding with any racer in front or behind
+		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			#don't restrict up and DOWN
+		else
+			#if not colliding with something below you and not in front or behind, allow movement
+			racer[:RacerSprite].y -= racer[:StrafeSpeed] if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		end
+	end #def self.strafeUp
+	
+	def self.strafeDown(racer)
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+	
+		#if colliding with any racer in front or behind
+		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		else
+			#if not colliding with something below you and not in front or behind, allow movement
+			racer[:RacerSprite].y += racer[:StrafeSpeed] if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		end
+	end #def self.strafeDown
 	
 	def self.beginCooldown(racer, moveNumber)
 		#all moves except boost share a cooldown
