@@ -565,7 +565,7 @@ class CrustangRacing
 			
 			self.aiBoost
 			self.aiMove1
-			
+			self.aiAvoidObstacles
 			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
 		end
 	end #def self.main

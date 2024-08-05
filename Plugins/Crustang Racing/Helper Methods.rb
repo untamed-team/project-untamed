@@ -393,7 +393,7 @@ class CrustangRacing
 		end
 		
 		#crude way of saying it's no longer in range when on the screen
-		withinRangeX = false if hazard[:Sprite].x.between?(0, Graphics.width)
+		withinRangeX = false if hazard[:Sprite].x.between?(0, Graphics.width) && racer == @racerPlayer #we don't want a hazard alarm happening for the player if the hazard is on screen, but we do want AI to detect upcoming hazards that are on the screen and beyond
 
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?

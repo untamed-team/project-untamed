@@ -591,6 +591,7 @@ class CrustangRacing
 	end #def self.announceAttack
 	
 	def self.monitorUpcomingHazards
+		#this is just for monitoring hazards the PLAYER is approaching
 		if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
 			#Console.echo_warn "racer1 rock in range!"
 			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)

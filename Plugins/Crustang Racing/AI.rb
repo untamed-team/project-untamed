@@ -65,7 +65,81 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		#############if self.willCollideWithHazard?(@racer3, "rock")
+		racer = @racer1
+		
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+		
+		hazardToAvoid = nil #this will get overwritten if another hazard further down in the code is closer than the current hazard to avoid (by using PositionXOnTrack)
+		#I don't need to worry about oldHazard PositionXOnTrack < newHazard PositionXOnTrack after the racer passes oldHazard PositionXOnTrack because once the oldHazard is behind the racer, hazardToAvoid is set to nil,
+		#and the oldHazard is no longer a thought for this chunk of code
+		
+		if !opposingRacerA[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerA[:RockHazard]) && self.willCollideWithHazard?(racer, opposingRacerA[:RockHazard])
+			#within range of rock hazard and will collide with it
+			hazardToAvoid = opposingRacerA[:RockHazard]
+		end
+		if !opposingRacerA[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerA[:MudHazard]) && self.willCollideWithHazard?(racer, opposingRacerA[:MudHazard])
+			#within range of mud hazard and will collide with it
+			hazardToAvoid = opposingRacerA[:MudHazard] if opposingRacerA[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+		end
+		if !opposingRacerB[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerB[:RockHazard]) && self.willCollideWithHazard?(racer, opposingRacerB[:RockHazard])
+			#within range of rock hazard and will collide with it
+			hazardToAvoid = opposingRacerB[:RockHazard] if opposingRacerB[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+		end
+		if !opposingRacerB[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerB[:MudHazard]) && self.willCollideWithHazard?(racer, opposingRacerB[:MudHazard])
+			#within range of mud hazard and will collide with it
+			hazardToAvoid = opposingRacerB[:MudHazard] if opposingRacerB[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+		end
+		if !opposingRacerC[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerC[:RockHazard]) && self.willCollideWithHazard?(racer, opposingRacerC[:RockHazard])
+			#within range of rock hazard and will collide with it
+			hazardToAvoid = opposingRacerC[:RockHazard] if opposingRacerC[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+		end
+		if !opposingRacerC[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(racer, opposingRacerC[:MudHazard]) && self.willCollideWithHazard?(racer, opposingRacerC[:MudHazard])
+			#within range of mud hazard and will collide with it
+			hazardToAvoid = opposingRacerC[:MudHazard] if opposingRacerC[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+		end
+		
+		#should the racer strafe up or down to avoid the upcoming hazard?
+		if !hazardToAvoid.nil?
+			centerYOfHazardSprite = hazardToAvoid[:PositionYOnTrack] + hazardToAvoid[:Sprite].height/2
+			centerYOfRacerSprite = racer[:RacerSprite].y + racer[:RacerSprite].height/2
+			
+			if centerYOfHazardSprite > centerYOfRacerSprite ##################but what if the racer doesn't have enough room to dodge it by going in that direction? Go other direction
+				directionToStrafe = "up"
+			else
+				directionToStrafe = "down"
+			end
+			
+			#but if the racer does not have enough room between them and the wall (or maybe another racer as well), go the other direction
+			
+			Console.echo_warn directionToStrafe
+			
+			
+			case directionToStrafe
+			when "up"
+				self.strafeUp(racer)
+			when "down"
+				self.strafeDown(racer)
+			end
+			
+			
+		end #if !hazardToAvoid.nil?
 
 	end #def self.aiBoost
 
