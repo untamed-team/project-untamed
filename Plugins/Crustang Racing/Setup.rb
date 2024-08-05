@@ -504,7 +504,7 @@ class CrustangRacing
 		@racer1 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[0],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -521,7 +521,7 @@ class CrustangRacing
 		@racer2 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -538,7 +538,7 @@ class CrustangRacing
 		@racer3 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -555,7 +555,7 @@ class CrustangRacing
 		@racerPlayer = {
 			EnteredCrustangContestant: nil,
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites

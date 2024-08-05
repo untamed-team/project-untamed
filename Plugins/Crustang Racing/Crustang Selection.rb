@@ -47,6 +47,6 @@ class CrustangRacing
 		enteredCrustang = $player.party[$game_variables[36]]
 		#restore user's original party if rented a Crustang
 		$player.party = @currentParty if !@currentParty.nil?
-		self.main(enteredCrustang) if enteredCrustang != -1
+		self.main(enteredCrustang) if $game_variables[36] != -1
 	end
 end
