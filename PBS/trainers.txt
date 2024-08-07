@@ -335,3 +335,13 @@ Pokemon = SABLEYE,50
     AbilityIndex = 2
     Nature = QUIRKY
 	AAM = true
+#-------------------------------
+[WAREHOUSEWORKER,Donna]
+LoseText = Okay, the way out is easy, but don't tell my boss.
+Pokemon = EEVEE,11
+Pokemon = M_VANILLITE,12
+#-------------------------------
+[WAREHOUSEWORKER,Donna,100]
+LoseText = Okay, the way out is easy, but don't tell my boss.
+Pokemon = EEVEE,11
+Pokemon = M_VANILLITE,12
