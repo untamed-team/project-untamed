@@ -1,4 +1,148 @@
 class CrustangRacing
+	def self.detectInput
+		Input.update
+		###################################
+		#============ Movement ============
+		###################################
+		if Input.press?(Input::UP)
+			self.strafeUp(@racerPlayer)
+		elsif Input.press?(Input::DOWN)
+			self.strafeDown(@racerPlayer)
+		end
+		
+		###################################
+		#============= Boost =============
+		###################################
+		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+			@racerPlayer[:BoostButtonSprite].frame = 1
+		end
+		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+			self.moveEffect(@racerPlayer, 0)
+			@racerPlayer[:BoostButtonSprite].frame = 0
+		end
+		
+		###################################
+		#============= Moves =============
+		###################################
+		#move1
+		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@pressingMove1 = true
+			@racerPlayer[:Move1ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
+			@racerPlayer[:Move1ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 1)
+				self.beginCooldown(@racerPlayer, 1)
+			end #if !self.cancellingMove?
+			@pressingMove1 = false
+		end
+		#move2
+		if Input.pressex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@pressingMove2 = true
+			@racerPlayer[:Move2ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
+			@racerPlayer[:Move2ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 2)
+				self.beginCooldown(@racerPlayer, 2)
+			end #if !self.cancellingMove?
+			@pressingMove2 = false
+		end
+		#move3
+		if Input.pressex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@pressingMove3 = true
+			@racerPlayer[:Move3ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
+			@racerPlayer[:Move3ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 3)
+				self.beginCooldown(@racerPlayer, 3)
+			end #if !self.cancellingMove?
+			@pressingMove3 = false
+		end
+		#move4
+		if Input.pressex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@pressingMove4 = true
+			@racerPlayer[:Move4ButtonSprite].frame = 1
+			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end
+		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
+			@racerPlayer[:Move4ButtonSprite].frame = 0
+			if !self.cancellingMove?
+				self.moveEffect(@racerPlayer, 4)
+				self.beginCooldown(@racerPlayer, 4)
+			end #if !self.cancellingMove?
+			@pressingMove4 = false
+		end
+		
+	end #self.detectInput
+	
+	def self.strafeUp(racer)
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+		
+		#if colliding with any racer in front or behind
+		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			#don't restrict up and DOWN
+		else
+			#if not colliding with something below you and not in front or behind, allow movement
+			racer[:RacerSprite].y -= racer[:StrafeSpeed] if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		end
+	end #def self.strafeUp
+	
+	def self.strafeDown(racer)
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+	
+		#if colliding with any racer in front or behind
+		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		else
+			#if not colliding with something below you and not in front or behind, allow movement
+			racer[:RacerSprite].y += racer[:StrafeSpeed] if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+		end
+	end #def self.strafeDown
 	
 	def self.beginCooldown(racer, moveNumber)
 		#all moves except boost share a cooldown
@@ -116,7 +260,7 @@ class CrustangRacing
 					@playingBGM = $game_system.getPlayingBGM
 					$game_system.bgm_pause(0.5) #pause over course of 0.5 seconds
 					#play invinc SE
-					pbBGSPlay(CrustangRacingSettings::INVINCIBLE_BGS)
+					pbBGMPlay(CrustangRacingSettings::INVINCIBLE_BGM)
 				end
 			when "spinOut" #Racers around you spin out, slowing them down temporarily.
 				if racer != @racer1 && self.withinSpinOutRange?(racer, @racer1)
@@ -200,14 +344,26 @@ class CrustangRacing
 		
 		if hazard == "rock"
 			racer[:RockHazard][:Sprite] = sprite
-			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
+			racer[:RockHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
+			#if the racer is at position 0, and we put the hazard at 0 - the width of the sprite (16px), then the PositionXOnTrack is -16
+			if racer[:RockHazard][:PositionXOnTrack] < 0
+				#new position is (-16 + 6144).abs which is 6128
+				newPosOnTrack = (racer[:RockHazard][:PositionXOnTrack] + @sprites["track1"].width).abs
+				racer[:RockHazard][:PositionXOnTrack] = newPosOnTrack
+			end
 			racer[:RockHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:RockHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/8
 			offsetH = @sprites["racerPlayerPkmnOverview"].height/8
 		elsif hazard == "mud"
 			racer[:MudHazard][:Sprite] = sprite
-			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] + @racerStartingX - sprite.width
+			racer[:MudHazard][:PositionXOnTrack] = racer[:PositionOnTrack] - sprite.width
+			#if the racer is at position 0, and we put the hazard at 0 - the width of the sprite (16px), then the PositionXOnTrack is -16
+			if racer[:MudHazard][:PositionXOnTrack] < 0
+				#new position is (-16 + 6144).abs which is 6128
+				newPosOnTrack = (racer[:MudHazard][:PositionXOnTrack] + @sprites["track1"].width).abs
+				racer[:MudHazard][:PositionXOnTrack] = newPosOnTrack
+			end
 			racer[:MudHazard][:OriginalPositionXOnScreen] = sprite.x
 			racer[:MudHazard][:PositionYOnTrack] = sprite.y
 			offsetW = @sprites["racerPlayerPkmnOverview"].width/1.45
@@ -265,6 +421,21 @@ class CrustangRacing
 			racer[:MudHazard][:OverviewSprite] = nil
 			racer[:MudHazard][:PositionXOnTrackOverview] = nil
 			racer[:MudHazard][:PositionYOnTrackOverview] = nil
+		end
+		
+		self.disposeHazardAlarm(racer, hazard)
+	end #def self.disposeHazard
+	
+	def self.disposeHazardAlarm(racer, hazard)
+		###################################
+		#Remove Racer's Hazard Alarm of Same Type
+		###################################
+		if hazard == "rock" && racer[:RockHazard][:AlarmSprite] && !racer[:RockHazard][:AlarmSprite].disposed?
+			racer[:RockHazard][:AlarmSprite].dispose
+			racer[:RockHazard][:AlarmSprite] = nil
+		elsif hazard == "mud" && racer[:MudHazard][:AlarmSprite] && !racer[:MudHazard][:AlarmSprite].disposed?
+			racer[:MudHazard][:AlarmSprite].dispose
+			racer[:MudHazard][:AlarmSprite] = nil
 		end
 	end #def self.disposeHazard
 	
@@ -378,64 +549,150 @@ class CrustangRacing
 	end #def self.assignMoveEffects
 	
 	def self.announceAttack(attacker, recipient, action)
+		#attacker is an entire racer hash
+		#need to set entered crustang value on each racer so I can use "attacker[:EnteredCrustang][:TrainerName]"
+		
 		case attacker
 		when @racer1
-			attacker = "Racer1"
+			#attacker = "Racer1"
 		when @racer2
-			attacker = "Racer2"
+			#attacker = "Racer2"
 		when @racer3
-			attacker = "Racer3"
+			#attacker = "Racer3"
 		when @racerPlayer
-			attacker = "RacerPlayer"
+			#attacker = "RacerPlayer"
 		end
 		
 		case recipient
 		when @racer1
-			recipient = "Racer1"
+			#recipient = "Racer1"
 		when @racer2
-			recipient = "Racer2"
+			#recipient = "Racer2"
 		when @racer3
-			recipient = "Racer3"
+			#recipient = "Racer3"
 		when @racerPlayer
-			recipient = "RacerPlayer"
+			#recipient = "RacerPlayer"
 		end
-		
-		Console.echo_warn "#{attacker} -> #{action} -> #{recipient}"
+		announcement = "#{attacker[:EnteredCrustangContestant][:TrainerName]} -> #{action} -> #{recipient[:EnteredCrustangContestant][:TrainerName]}"
+		Console.echo_warn announcement
+		#keep the feed at 3 elements at most
+		if @announcementsFeed.length >= 3
+			@announcementsFeed.delete_at(0)
+		end
+		@announcementsFeed.push(announcement)
+		case @announcementsFeed.length
+		when 1
+			@announcementsFeedString = "\n\n#{@announcementsFeed[0]}"
+		when 2
+			@announcementsFeedString = "\n#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}"
+		when 3
+			@announcementsFeedString = "#{@announcementsFeed[0]}\n#{@announcementsFeed[1]}\n#{@announcementsFeed[2]}"
+		end
 	end #def self.announceAttack
 	
 	def self.monitorUpcomingHazards
-		detectionDistance = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
-		pixelsAwayFromEndOfScreen = Graphics.width - @racerPlayer[:RacerSprite].x #between the back edge of the player sprite and Graphics.width
-		
-		###################################
-		#============ Racer 1 =============
-		###################################
-		racer = @racer1
-		
-		#player pos is 5000
-		#detection distance is 600
-		#begin detecting at 5600
-		#track width is 6144
+		#this is just for monitoring hazards the PLAYER is approaching
+		if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+			#Console.echo_warn "racer1 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer1, "rock")
+		end
+		if !@racer1[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+			#Console.echo_warn "racer1 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer1, "mud")
+		end
+		if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+			#Console.echo_warn "racer2 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer2, "rock")
+		end
+		if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+			#Console.echo_warn "racer2 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer2, "mud")
+		end
+		if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+			#Console.echo_warn "racer3 rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer3, "rock")
+		end
+		if !@racer3[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+			#Console.echo_warn "racer3 mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racer3, "mud")
+		end
+		if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+			#Console.echo_warn "racerPlayer rock in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racerPlayer, "rock")
+		end
+		if !@racerPlayer[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
+			#Console.echo_warn "racerPlayer mud in range!"
+			pbBGSPlay(CrustangRacingSettings::HAZARD_ALARM_BGS)
+			self.createHazardAlarmSprite(@racerPlayer, "mud")
+		end
+			
+		########################################
+		# Stop Alarm if No Upcoming Hazards ====
+		########################################
+		anyUpcomingHazards = false
 
-		if @racerPlayer[:PositionOnTrack] < @sprites["track1"].width - (pixelsAwayFromEndOfScreen + @racerPlayer[:RacerSprite].width + detectionDistance) #not near enough to end of track to cause a problem with overflowing to beginning of track
-			#position X on track just off the screen from player's perspective, NOT taking into account if player is close to end of track
-			if !racer[:RockHazard][:PositionXOnTrack].nil? && racer[:RockHazard][:PositionXOnTrack].between?(@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, @racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance)
-				Console.echo_warn "racer1 rock within detection distance"
-			end #if racer[:RockHazard][:PositionXOnTrack].between?
-			if !racer[:MudHazard][:PositionXOnTrack].nil? && racer[:MudHazard][:PositionXOnTrack].between?(@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen, @racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance)
-				Console.echo_warn "racer1 mud within detection distance"
-			end #if racer[:RockHazard][:PositionXOnTrack].between?
-		elsif @racerPlayer[:PositionOnTrack] >= @sprites["track1"].width - (pixelsAwayFromEndOfScreen + @racerPlayer[:RacerSprite].width) #near enough to end of track to cause a problem with overflowing to beginning of track
-			
-			amountBetweenDetectionDistanceAndEndOfTrack = @sprites["track1"].width - detectionDistance
-			amountBetweenEndOfTrackAndRemainingDetectionDistance = (@racerPlayer[:PositionOnTrack] + pixelsAwayFromEndOfScreen + detectionDistance - @sprites["track1"].width).abs
-			
-	
-		end #if @racerPlayer[:PositionOnTrack] <
+		anyUpcomingHazards = true if !@racer1[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		anyUpcomingHazards = true if !@racer2[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+		anyUpcomingHazards = true if !@racer3[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+		anyUpcomingHazards = true if !@racerPlayer[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+		anyUpcomingHazards = true if !@racer1[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+		anyUpcomingHazards = true if !@racer2[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+		anyUpcomingHazards = true if !@racer3[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+		anyUpcomingHazards = true if !@racerPlayer[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
+		
+		pbBGSStop(0) if !anyUpcomingHazards
+		
+		#dispose the alarm sprite if no longer in range
+		self.disposeHazardAlarm(@racer1, "rock") if !@racer1[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		self.disposeHazardAlarm(@racer1, "mud") if !@racer1[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer1[:MudHazard])
+		self.disposeHazardAlarm(@racer2, "rock") if !@racer2[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer2[:RockHazard])
+		self.disposeHazardAlarm(@racer2, "mud") if !@racer2[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer2[:MudHazard])
+		self.disposeHazardAlarm(@racer3, "rock") if !@racer3[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer3[:RockHazard])
+		self.disposeHazardAlarm(@racer3, "mud") if !@racer3[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racer3[:MudHazard])
+		self.disposeHazardAlarm(@racerPlayer, "rock") if !@racerPlayer[:RockHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:RockHazard])
+		self.disposeHazardAlarm(@racerPlayer, "mud") if !@racerPlayer[:MudHazard][:AlarmSprite].nil? && !self.withinHazardDetectionRange?(@racerPlayer, @racerPlayer[:MudHazard])
+		
 	end #def self.monitorUpcomingHazards
 	
-	def self.createHazardAlarm(racer, hazard)
+	def self.createHazardAlarmSprite(racer, hazard)
+		case racer
+		when @racer1
+			number = 1
+		when @racer2
+			number = 2
+		when @racer3
+			number = 3
+		when @racerPlayer
+			number = 4
+		end
 		
+		###################################
+		#Remove Racer's Hazard Alarm of Same Type
+		###################################
+		self.disposeHazardAlarm(racer, hazard)
+		
+		#hazard_alarm_rock
+		#hazard_alarm_mud
+		@sprites["hazard_alarm_#{hazard}_#{number}"] = IconSprite.new(0, 0, @viewport)
+		sprite = @sprites["hazard_alarm_#{hazard}_#{number}"]
+		sprite.setBitmap("Graphics/Pictures/Crustang Racing/hazard_alarm_#{hazard}")
+		sprite.x = Graphics.width - sprite.width
+		sprite.z = 99999
+		
+		if hazard == "rock"
+			sprite.y = racer[:RockHazard][:PositionYOnTrack] - 45 + racer[:RockHazard][:Sprite].height/2
+			racer[:RockHazard][:AlarmSprite] = sprite
+		elsif hazard == "mud"
+			sprite.y = racer[:MudHazard][:PositionYOnTrack] - 45 + racer[:MudHazard][:Sprite].height/2
+			racer[:MudHazard][:AlarmSprite] = sprite
+		end
 	end
 	
 end #class CrustangRacing

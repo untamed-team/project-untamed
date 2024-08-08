@@ -126,6 +126,16 @@ class CrustangRacing
 		@lapsAndPlaceOverlay = @sprites["lapsAndPlaceOverlay"].bitmap
 		pbSetSystemFont(@lapsAndPlaceOverlay)
 		
+		@sprites["announcementsPane"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["announcementsPane"].x = 0
+		@sprites["announcementsPane"].y = Graphics.height - @sprites["announcementsPane"].height
+		@sprites["announcementsPane"].z = 999999
+		@sprites["announcementsPane"].opacity = 70
+		@announcementsOverlay = @sprites["announcementsPane"].bitmap
+		@announcementsOverlay.fill_rect(0, 0, Graphics.width, Graphics.height, Color.black)
+		pbSetSystemFont(@announcementsOverlay)
+		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE - 3
+		
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
 		
@@ -270,7 +280,8 @@ class CrustangRacing
 		###################################
 		#animname, framecount, framewidth, frameheight, frameskip
 		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, @viewport)
-		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
+		#@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
+		@sprites["boostButton"].x = Graphics.width/2 + 10
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
 
@@ -481,6 +492,11 @@ class CrustangRacing
 		#so we don't overlap SEs and get a very loud noise if multiple of the same SE are played at the same time
 		@currentlyPlayingSETimer = 0
 		@currentlyPlayingSE = nil
+		
+		@announcementsFeed = []
+		
+		#for rng rolls
+		@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -488,7 +504,7 @@ class CrustangRacing
 		@racer1 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[0],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -500,12 +516,12 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
-			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil}
 		}
 		@racer2 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -522,7 +538,7 @@ class CrustangRacing
 		@racer3 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -537,8 +553,9 @@ class CrustangRacing
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 		}
 		@racerPlayer = {
+			EnteredCrustangContestant: nil,
 			#racer sprite
-			RacerSprite: nil,
+			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: CrustangRacingSettings::BOOST_BUTTON_COOLDOWN_SECONDS / CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -552,6 +569,24 @@ class CrustangRacing
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 		}
+		
+		#modify player's selected Crustang to match hashes of AI crustang contestants
+		#template: {TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}
+		move1 = nil
+		move2 = nil
+		move3 = nil
+		move4 = nil
+		
+		move1 = @enteredCrustang.moves[0].id.to_sym if !@enteredCrustang.moves[0].nil?
+		move2 = @enteredCrustang.moves[1].id.to_sym if !@enteredCrustang.moves[1].nil?
+		move3 = @enteredCrustang.moves[2].id.to_sym if !@enteredCrustang.moves[2].nil?
+		move4 = @enteredCrustang.moves[3].id.to_sym if !@enteredCrustang.moves[3].nil?
+		
+		@racerPlayer[:EnteredCrustangContestant] = {TrainerName: "#{$Trainer.name}", PkmnName: "#{@enteredCrustang.name}", Moves: []}
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move1) if !move1.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move2) if !move2.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move3) if !move3.nil?
+		@racerPlayer[:EnteredCrustangContestant][:Moves].push(move4) if !move4.nil?
 	end #def self.setupRacerHashes
 
 end #class CrustangRacing

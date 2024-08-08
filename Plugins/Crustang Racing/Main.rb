@@ -1,105 +1,5 @@
 #Track Setup
 class CrustangRacing
-	
-	def self.detectInput
-		Input.update
-		###################################
-		#============ Movement ============
-		###################################
-		if Input.press?(Input::UP)
-			#if colliding with any racer in front or behind
-			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-				#don't restrict up and DOWN
-			else
-				#if not colliding with something below you and not in front or behind, allow movement
-				@racerPlayer[:RacerSprite].y -= @racerPlayer[:StrafeSpeed] if @racerPlayer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_above?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-			end
-		elsif Input.press?(Input::DOWN)
-			#if colliding with any racer in front or behind
-			if self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) || self.collides_with_object_behind?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite]) || self.collides_with_object_in_front?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-			else
-				#if not colliding with something below you and not in front or behind, allow movement
-				@racerPlayer[:RacerSprite].y += @racerPlayer[:StrafeSpeed] if @racerPlayer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer1[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer2[:RacerSprite]) && !self.collides_with_object_below?(@racerPlayer[:RacerSprite],@racer3[:RacerSprite])
-			end
-		end
-		
-		###################################
-		#============= Boost =============
-		###################################
-		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
-			@racerPlayer[:BoostButtonSprite].frame = 1
-		end
-		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
-			self.moveEffect(@racerPlayer, 0)
-			@racerPlayer[:BoostButtonSprite].frame = 0
-		end
-		
-		###################################
-		#============= Moves =============
-		###################################
-		#move1
-		if Input.pressex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
-			@pressingMove1 = true
-			@racerPlayer[:Move1ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 1) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE1_BUTTON) && @racerPlayer[:Move1CooldownTimer] <= 0
-			@racerPlayer[:Move1ButtonSprite].frame = 0
-			if !self.cancellingMove?
-				self.moveEffect(@racerPlayer, 1)
-				self.beginCooldown(@racerPlayer, 1)
-			end #if !self.cancellingMove?
-			@pressingMove1 = false
-		end
-		#move2
-		if Input.pressex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
-			@pressingMove2 = true
-			@racerPlayer[:Move2ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 2) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE2_BUTTON) && @racerPlayer[:Move2CooldownTimer] <= 0
-			@racerPlayer[:Move2ButtonSprite].frame = 0
-			if !self.cancellingMove?
-				self.moveEffect(@racerPlayer, 2)
-				self.beginCooldown(@racerPlayer, 2)
-			end #if !self.cancellingMove?
-			@pressingMove2 = false
-		end
-		#move3
-		if Input.pressex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
-			@pressingMove3 = true
-			@racerPlayer[:Move3ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 3) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE3_BUTTON) && @racerPlayer[:Move3CooldownTimer] <= 0
-			@racerPlayer[:Move3ButtonSprite].frame = 0
-			if !self.cancellingMove?
-				self.moveEffect(@racerPlayer, 3)
-				self.beginCooldown(@racerPlayer, 3)
-			end #if !self.cancellingMove?
-			@pressingMove3 = false
-		end
-		#move4
-		if Input.pressex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
-			@pressingMove4 = true
-			@racerPlayer[:Move4ButtonSprite].frame = 1
-			@racerPlayer[:SpinOutCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "spinOut" && @racerPlayer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			@racerPlayer[:OverloadCharge] += 1 if self.getMoveEffect(@racerPlayer, 4) == "overload" && @racerPlayer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
-		end
-		if Input.releaseex?(CrustangRacingSettings::MOVE4_BUTTON) && @racerPlayer[:Move4CooldownTimer] <= 0
-			@racerPlayer[:Move4ButtonSprite].frame = 0
-			if !self.cancellingMove?
-				self.moveEffect(@racerPlayer, 4)
-				self.beginCooldown(@racerPlayer, 4)
-			end #if !self.cancellingMove?
-			@pressingMove4 = false
-		end
-		
-	end #self.detectInput
-	
 	def self.updateOverlayText
 		#Laps and Placement
 		#@lapsAndPlaceOverlay
@@ -137,6 +37,19 @@ class CrustangRacing
 		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 		
+	def self.updateAnnouncementsText
+		#@announcementsFeed
+		if @lastAnnouncementsFeedString != @announcementsFeedString
+			#Console.echo_warn "updating announcements feed, clearing overlay"
+			@lastAnnouncementsFeedString = @announcementsFeedString
+			@announcementsOverlay.clear
+			@announcementsOverlay.fill_rect(0, 0, Graphics.width, Graphics.height, Color.black)
+		end
+		
+		drawFormattedTextEx(@announcementsOverlay, 6, 12, Graphics.width, @announcementsFeedString, @overlayBaseColor, @overlayShadowColor) if !@announcementsFeedString.nil?
+
+	end #def self.updateOverlayText
+	
 	def self.moveMiscSprites
 		###################################
 		#===== Spin Out Range Sprite =====
@@ -304,13 +217,13 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]
+			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack]
+				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -322,12 +235,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack]
+			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:MudHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack]
+				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -344,12 +257,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]
+			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack]
+				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -361,12 +274,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack]
+			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:MudHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack]
+				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -383,12 +296,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]
+			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack]
+				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -400,12 +313,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack]
+			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:MudHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack]
+				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -422,12 +335,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack]
+			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:RockHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack]
+				racer[:RockHazard][:Sprite].x = @sprites["track2"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -439,12 +352,12 @@ class CrustangRacing
 		#this is the X on the screen, not the track or track overview		
 		if racer[:MudHazard][:Sprite] && !racer[:MudHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
-			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack]
+			racer[:MudHazard][:Sprite].x = @sprites["track1"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			#keep the hazard on screen
 			#if track2 is on the screen, and the hazard's position on the track is <= the width of track2, set the hazard's position on the track relative to track2's x
 			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && racer[:MudHazard][:PositionXOnTrack] <= @sprites["track2"].width
 				#make the hazard's X relative to track2's x
-				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack]
+				racer[:MudHazard][:Sprite].x = @sprites["track2"].x + racer[:MudHazard][:PositionXOnTrack] + @racerStartingX
 			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
 		
 			#keep the hazard on screen if we reach track2
@@ -622,7 +535,7 @@ class CrustangRacing
 		self.drawMovesUI
 		self.setMiscVariables
 		
-		pbBGMPlay("Bone-Dry Dunes")
+		pbBGMPlay(CrustangRacingSettings::TRACK_BGM)
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
@@ -648,9 +561,12 @@ class CrustangRacing
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
 			self.monitorUpcomingHazards
+			self.updateAnnouncementsText
 			
 			self.aiBoost
 			self.aiMove1
+			self.aiAvoidObstacles
+			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
 		end
 	end #def self.main
 	

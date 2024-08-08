@@ -335,12 +335,12 @@ class CrustangRacing
 	end #def self.checkForCollisions
 
 	def self.endInvincibility(racer)
-		Console.echo_warn "ending invincibility" if racer == @racer1
+		#Console.echo_warn "ending invincibility" if racer == @racer1
 		racer[:InvincibilityTimer] = 0
 		racer[:DesiredHue] = nil
 		racer[:InvincibilityStatus] = false
 		if racer == @racerPlayer
-			pbBGSStop(0.5) #stop bgs in 1 second, fading out
+			pbBGMStop(0.5) #stop bgm in 0.5 seconds, fading out
 			#resume bgm
 			$game_system.bgm_resume(@playingBGM)
 		end
@@ -363,6 +363,107 @@ class CrustangRacing
 			return true
 		end
 	end #self.racerOnScreen?(racer)
+	
+	def self.withinHazardDetectionRange?(racer, hazard)
+		#hazard will be the entire hazard hash passed in like so:
+		#self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		
+		withinRangeX = false
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+		
+		#crude way of saying it's no longer in range when on the screen
+		withinRangeX = false if hazard[:Sprite].x.between?(0, Graphics.width) && racer == @racerPlayer #we don't want a hazard alarm happening for the player if the hazard is on screen, but we do want AI to detect upcoming hazards that are on the screen and beyond
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRange?
+	
+	def self.willCollideWithHazard?(racer, hazard)
+		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming hazard
+		collisionGrace = 1
+		
+		###################################
+		#==== Detecting Racer1 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer1[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer1[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Racer2 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer2[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer2[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Racer3 Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racer3[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racer3[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+		
+		###################################
+		#==== Detecting Player Hazards ====
+		###################################
+		if hazard == "rock"
+			hazard = @racerPlayer[:RockHazard]
+		elsif hazard == "mud"
+			hazard = @racerPlayer[:RockHazard]
+		end
+		
+		if !hazard[:Sprite].nil? && hazard[:Sprite].y.between?(racer[:RacerSprite].y - hazard[:Sprite].height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+
+		return false
+	end #def self.withinHazardDetectionRange?
+	
+	def self.rngRoll(chance=nil)
+		return if @rngRollsTimer > 0 #if not able to roll rng yet
+		return if chance.nil? #if not rolling rng for anything at the moment
+		
+		#otherwise, roll rng
+		return rand(100).between?(1, chance)
+	end #self.rngRoll(chance)
 	
 end #class CrustangRacing
 
