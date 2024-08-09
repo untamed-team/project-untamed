@@ -30,7 +30,7 @@ Evolutions = EXPURSUM,Level,16
 [EXPURSUM]
 Name = Expursum
 Types = GRASS
-BaseStats = 80,50,90,45,75,70
+BaseStats = 70,50,90,45,85,70
 GenderRatio = FemaleOneEighth
 GrowthRate = Parabolic
 BaseExp = 147
@@ -186,7 +186,7 @@ Evolutions = CETTOEKKO,Level,16
 [CETTOEKKO]
 Name = Cettoekko
 Types = WATER,PSYCHIC
-BaseStats = 70,70,55,75,70,70
+BaseStats = 80,60,65,55,70,80
 GenderRatio = FemaleOneEighth
 GrowthRate = Parabolic
 BaseExp = 147
@@ -1076,7 +1076,7 @@ Generation = 3
 [ZEAZAYA]
 Name = Zea-Zaya
 Types = GRASS
-BaseStats = 40,45,45,45,60,45
+BaseStats = 60,45,45,45,60,45
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 64
@@ -2223,7 +2223,7 @@ Pokedex = Due to the resemblance to a Great Ball, Dupedillo are subjected to unw
 [CROMEN]
 Name = Cromen
 Types = PSYCHIC,FLYING
-BaseStats = 45,40,40,45,45,50
+BaseStats = 55,40,40,45,60,50
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 49
@@ -2249,7 +2249,7 @@ Evolutions = CORVOYANT,Level,26
 [CORVOYANT]
 Name = Corvoyant
 Types = PSYCHIC,FLYING
-BaseStats = 55,50,60,70,80,70
+BaseStats = 65,50,60,70,80,70
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 128
@@ -2947,7 +2947,7 @@ Pokedex = Lethargic and sedentary, Potassopod evolve from Banagnaw who's diet co
 [SUCHIP]
 Name = Suchip
 Types = DRAGON
-BaseStats = 65,70,50,50,40,55
+BaseStats = 75,75,55,50,40,55
 GenderRatio = FemaleOneEighth
 GrowthRate = Slow
 BaseExp = 72
@@ -3112,7 +3112,7 @@ Pokedex = When it evolves, a supernatural energy surges through it. It regains t
 [XOLSMOL]
 Name = Xolsmol
 Types = WATER
-BaseStats = 60,45,39,24,65,60
+BaseStats = 60,45,49,34,65,67
 GenderRatio = Female50Percent
 GrowthRate = Fluctuating
 BaseExp = 60
@@ -3236,7 +3236,7 @@ WildItemUncommon = POISONBARB
 [ELEGOOP]
 Name = Elegoop
 Types = ROCK,POISON
-BaseStats = 50,50,75,40,40,60
+BaseStats = 65,70,80,40,40,60
 GenderRatio = FemaleOneEighth
 GrowthRate = Medium
 BaseExp = 71
@@ -3284,7 +3284,7 @@ Pokedex = Once thought to be one of the largest Pokémon, much of Tartusk's body
 [CHARCOPAL]
 Name = Charcopal
 Types = ROCK,FAIRY
-BaseStats = 40,45,50,75,85,60
+BaseStats = 40,50,50,75,85,60
 GenderRatio = FemaleOneEighth
 GrowthRate = Medium
 BaseExp = 72
@@ -4007,7 +4007,7 @@ WildItemUncommon = METALCOAT
 [COSMET]
 Name = Cosmet
 Types =  ICE,STEEL
-BaseStats = 30,20,50,45,60,65
+BaseStats = 50,20,50,45,75,65
 GenderRatio = Female50Percent
 GrowthRate = Parabolic
 BaseExp = 60
@@ -4082,7 +4082,7 @@ WildItemUncommon = NEVERMELTICE
 [GULPI]
 Name = Gulpi
 Types = GHOST,ELECTRIC
-BaseStats = 60,50,45,50,40,50
+BaseStats = 60,65,45,75,40,50
 GenderRatio = Female75Percent
 GrowthRate = Slow
 BaseExp = 45
@@ -4130,7 +4130,7 @@ Pokedex =
 [WRRAZAL]
 Name = Wrrazal
 Types = GHOST,ROCK
-BaseStats = 70,60,45,65,50,40
+BaseStats = 70,75,45,65,50,40
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 70
@@ -4499,7 +4499,7 @@ Generation = 3
 [MINGOT]
 Name = Mingot
 Types = NORMAL
-BaseStats = 30,55,55,77,28,35
+BaseStats = 40,65,55,77,28,35
 GenderRatio = Female50Percent
 GrowthRate = Medium
 BaseExp = 55
