@@ -391,3 +391,8 @@ BaseMoney = 32
 Name = Tourist
 Gender = Unknown
 BaseMoney = 32
+#-------------------------------
+[WAREHOUSEWORKER]
+Name = Warehouse Worker
+Gender = Unknown
+BaseMoney = 32
