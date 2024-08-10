@@ -9,8 +9,6 @@ return rand(100).between?(1..chance) <- this would return true if you hit a numb
 
 
 Alright, organizing my thoughts for AI:
-When to boost:
-Use when ready, but rng if they use it or not
 
 When to use invincible:
 Use if available and there's a hazard coming up?
@@ -40,3 +38,13 @@ Try to strafe out of the way of a hazard if it's within range
 Roll rng with a change of not moving out of the way
 Do not bother moving if invincible
 Strafe towards someone if within max range X of an attack and they just need to get closer to use it
+
+
+
+
+
+
+
+change spinout speed to be -2 or something and then add the spinout speed to the current base speed or current boosting speed depending on what they are doing
+need to move buttons back to the left because there can be up to 4 moves
+separate boost length in seconds and stabilize boost length in seconds so stabilize lasts longer

@@ -21,19 +21,19 @@ PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################curr
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 20
+BOOST_BUTTON_COOLDOWN_SECONDS = 3
 BOOST_BUTTON = Input::SPECIAL
-BOOST_LENGTH_SECONDS = 3
+BOOST_LENGTH_SECONDS = 0.5
 BOOST_SPEED = 16
-SECONDS_TO_REACH_BOOST_SPEED = 3
-SECONDARY_BOOST_SPEED = 15
+SECONDS_TO_REACH_BOOST_SPEED = 0.1
+SECONDARY_BOOST_SPEED = 14
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 10#30
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 5#30
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
 #========================================================#
-MOVE_BUTTON_COOLDOWN_SECONDS = 20
+MOVE_BUTTON_COOLDOWN_SECONDS = 12
 MOVE1_BUTTON = :Z
 MOVE2_BUTTON = :X
 MOVE3_BUTTON = :C
