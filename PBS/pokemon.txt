@@ -1403,7 +1403,7 @@ Habitat = WatersEdge
 Category = Weeping
 Pokedex = By nature, Liloriña are skittish, and are afraid of water and adult humans. They hover around small children apparently looking for someone to play with.
 Generation = 9
-Evolutions = YAQUENA,Level,39
+Evolutions = YAQUENA,Level,25
 #-------------------------------
 [YAQUENA]
 Name = Yaquena
