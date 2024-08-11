@@ -281,7 +281,7 @@ class CrustangRacing
 		#animname, framecount, framewidth, frameheight, frameskip
 		@sprites["boostButton"] = AnimatedSprite.create("Graphics/Pictures/Crustang Racing/boost button", 2, 86, @viewport)
 		#@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
-		@sprites["boostButton"].x = Graphics.width/2 + 10
+		@sprites["boostButton"].x = Graphics.width/2 - @sprites["boostButton"].width/2
 		@sprites["boostButton"].y = Graphics.height - @sprites["boostButton"].height - 4
 		@sprites["boostButton"].z = 999999
 
