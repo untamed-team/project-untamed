@@ -444,7 +444,7 @@ class CrustangRacing
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
 		
 		#maybe lock input / AI movement if being spun out?		
-		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
+		recipient[:DesiredSpeed] -= CrustangRacingSettings::SPINOUT_REDUCE_SPEED_BY
 		if self.racerOnScreen?(recipient) && @currentlyPlayingSE != CrustangRacingSettings::SPINOUT_SE
 			pbSEPlay(CrustangRacingSettings::SPINOUT_SE)
 			@currentlyPlayingSE = CrustangRacingSettings::SPINOUT_SE
