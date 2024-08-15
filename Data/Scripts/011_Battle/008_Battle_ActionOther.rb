@@ -96,17 +96,19 @@ class Battle
     return @megaEvolution[side][owner] == -1
   end
 
+  # willmega true/false edits #by low
+
   def pbRegisterMegaEvolution(idxBattler)
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-    @battlers[idxBattler].pokemon.willmega = true #by low
+    @battlers[idxBattler].pokemon.willmega = true if !@battlers[idxBattler].pokemon.nil?
     @megaEvolution[side][owner] = idxBattler
   end
 
   def pbUnregisterMegaEvolution(idxBattler)
     side  = @battlers[idxBattler].idxOwnSide
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-    @battlers[idxBattler].pokemon.willmega = false
+    @battlers[idxBattler].pokemon.willmega = false if !@battlers[idxBattler].pokemon.nil?
     @megaEvolution[side][owner] = -1 if @megaEvolution[side][owner] == idxBattler
   end
 
@@ -115,9 +117,9 @@ class Battle
     owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
     if @megaEvolution[side][owner] == idxBattler
       @megaEvolution[side][owner] = -1
-      @battlers[idxBattler].pokemon.willmega = false
+      @battlers[idxBattler].pokemon.willmega = false if !@battlers[idxBattler].pokemon.nil?
     else
-      @battlers[idxBattler].pokemon.willmega = true #by low
+      @battlers[idxBattler].pokemon.willmega = true if !@battlers[idxBattler].pokemon.nil?
       @megaEvolution[side][owner] = idxBattler
     end
   end
