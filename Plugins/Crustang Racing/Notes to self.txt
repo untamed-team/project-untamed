@@ -11,7 +11,7 @@ return rand(100).between?(1..chance) <- this would return true if you hit a numb
 Alright, organizing my thoughts for AI:
 
 When to use invincible:
-Use if available and there's a hazard coming up?
+Use if available and there's a hazard coming up or if someone is within range of them and charging their spin out move
 
 When to use spinOut:
 Use when in max range of another racer if it's ready, rng very likely to use if ready
@@ -34,7 +34,7 @@ Use whenever, rolling RNG to use if they have it readied
 Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
 
 When to strafe:
-Do not bother moving if invincible
+Do not bother avoiding obstacles if invincible
 Strafe towards someone if within max range X of an attack and they just need to get closer to use it
 
 

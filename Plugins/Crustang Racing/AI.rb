@@ -19,6 +19,7 @@ class CrustangRacing
 	end #def self.aiBoost
 	
 	def self.aiMove1
+		#this handles actually using the move, not WHEN to use the move
 		###################################
 		#============= Racer1 =============
 		###################################
@@ -390,5 +391,47 @@ class CrustangRacing
 			racer[:CannotGoDown] = false
 		end #if !hazardToAvoid.nil?
 	end #def self.aiBoost
+
+	def self.targetAnotherRacer
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+		
+		case racer
+		when @racer1
+			opposingRacerA = @racerPlayer
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		when @racer2
+			opposingRacerA = @racer1
+			opposingRacerB = @racer3
+			opposingRacerC = @racerPlayer
+		when @racer3
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racerPlayer
+		when @racerPlayer
+			opposingRacerA = @racer1
+			opposingRacerB = @racer2
+			opposingRacerC = @racer3
+		end
+		
+		#if the racer has a move with the effect 'spinout', target a nearby racer who is within MAX_RANGE on the X axis
+		#set a value on the racer hash that this racer is targeting another racer
+		#if racer is targeting someone, do not use any moves in aiMove1
+		
+		#does the racer have a move with the effect 'spinout'?
+		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+			#set a value on the racer hash that this racer is targeting another racer
+			 racer[:TargetingRacer] = opposingRacerA
+		end #if self.hasMoveEffect?(racer, "spinOut")
+		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+			 racer[:TargetingRacer] = opposingRacerB
+		end #if self.hasMoveEffect?(racer, "spinOut")
+		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+			 racer[:TargetingRacer] = opposingRacerC
+		end #if self.hasMoveEffect?(racer, "spinOut")
+	end
 
 end #class CrustangRacing

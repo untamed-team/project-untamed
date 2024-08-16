@@ -108,6 +108,68 @@ class CrustangRacing
 		return false
 	end #def self.withinSpinOutRange?
 	
+	def self.withinMaxSpinOutRangeX?(attacker, recipient)
+		#used to check if someone is within max range of the attacker so the attacker knows they should start charging and strafe towards recipient
+		withinRangeX = false
+		
+		###################################
+		#========== WithinRangeX ==========
+		###################################
+		###### Checking next to attacker (same exact X)
+		withinRangeX = true if attacker[:PositionOnTrack] == recipient[:PositionOnTrack]
+		charge = CrustangRacingSettings::SPINOUT_MAX_RANGE
+		
+		###### Checking behind attacker
+		spinOutRangeX = charge/2 + recipient[:RacerSprite].width/2
+		
+		if attacker[:PositionOnTrack] < spinOutRangeX
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackBehindAttacker = []
+			positionOnTrackBehindAttacker.push([0, attacker[:PositionOnTrack]])
+			amountHittingEndOfTrack = spinOutRangeX - attacker[:PositionOnTrack]
+			positionOnTrackBehindAttacker.push([@sprites["track1"].width - amountHittingEndOfTrack, @sprites["track1"].width])
+			#the above will result in something like this:
+			#positionOnTrackBehindAttacker is an array with these elements: [[0, 106], [6100, 6144]]
+			#so if the recipient is between positionOnTrackBehindAttacker[0][0] and positionOnTrackBehindAttacker[0][1]
+			#or between positionOnTrackBehindAttacker[1][0] and positionOnTrackBehindAttacker[1][1], they are within range
+		else
+			positionOnTrackBehindAttacker = attacker[:PositionOnTrack] - spinOutRangeX
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackBehindAttacker.kind_of?(Array)
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[0][0], positionOnTrackBehindAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker[1][0], positionOnTrackBehindAttacker[1][1])
+		else
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackBehindAttacker, attacker[:PositionOnTrack])
+		end
+		
+		###### Checking in front of attacker
+		spinOutRangeX = charge/2 + recipient[:RacerSprite].width/2
+		
+		if attacker[:PositionOnTrack] > @sprites["track1"].width - spinOutRangeX
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfAttacker = []
+			positionOnTrackInFrontOfAttacker.push([attacker[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = spinOutRangeX - (@sprites["track1"].width - attacker[:PositionOnTrack])
+			positionOnTrackInFrontOfAttacker.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfAttacker is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfAttacker = attacker[:PositionOnTrack] + spinOutRangeX
+		end
+		
+		#if positionOnTrackBehindAttacker is an array or not
+		if positionOnTrackInFrontOfAttacker.kind_of?(Array)
+			withinRangeX = true if recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[0][0], positionOnTrackInFrontOfAttacker[0][1]) || recipient[:PositionOnTrack].between?(positionOnTrackInFrontOfAttacker[1][0], positionOnTrackInFrontOfAttacker[1][1])
+		else
+			withinRangeX = true if recipient[:PositionOnTrack].between?(attacker[:PositionOnTrack], positionOnTrackInFrontOfAttacker)
+		end
+
+		return true if withinRangeX
+
+		return false
+	end #def self.withinSpinOutRange?
+	
 	def self.withinOverloadRange?(attacker, recipient)
 		withinRangeX = false
 		withinRangeY = false
@@ -464,6 +526,22 @@ class CrustangRacing
 		#otherwise, roll rng
 		return rand(100).between?(1, chance)
 	end #self.rngRoll(chance)
+	
+	def self.hasMoveEffect?(racer, effect)
+		if self.getMoveEffect(racer, 1) == effect
+			return true
+		end
+		if self.getMoveEffect(racer, 2) == effect
+			return true
+		end
+		if self.getMoveEffect(racer, 3) == effect
+			return true
+		end
+		if self.getMoveEffect(racer, 4) == effect
+			return true
+		end
+		return false
+	end #def self.hasMoveEffect?(racer, effect)
 	
 end #class CrustangRacing
 
