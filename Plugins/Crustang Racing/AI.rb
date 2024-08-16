@@ -25,7 +25,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if racer[:Move1CooldownTimer] <= 0
+		if racer[:Move1CooldownTimer] <= 0 && racer[:TargetingRacer].nil?
 			case self.getMoveEffect(racer, 1)
 			#using 'case' so I can add conditions here since we don't want racers using the effect 100% of the time
 			when "invincible"
@@ -398,43 +398,75 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		case racer
-		when @racer1
-			opposingRacerA = @racerPlayer
-			opposingRacerB = @racer2
-			opposingRacerC = @racer3
-		when @racer2
-			opposingRacerA = @racer1
-			opposingRacerB = @racer3
-			opposingRacerC = @racerPlayer
-		when @racer3
-			opposingRacerA = @racer1
-			opposingRacerB = @racer2
-			opposingRacerC = @racerPlayer
-		when @racerPlayer
-			opposingRacerA = @racer1
-			opposingRacerB = @racer2
-			opposingRacerC = @racer3
-		end
+		if racer[:TargetingRacer].nil?
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
 		
-		#if the racer has a move with the effect 'spinout', target a nearby racer who is within MAX_RANGE on the X axis
-		#set a value on the racer hash that this racer is targeting another racer
-		#if racer is targeting someone, do not use any moves in aiMove1
-		
-		#does the racer have a move with the effect 'spinout'?
-		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+			#if the racer has a move with the effect 'spinout', target a nearby racer who is within MAX_RANGE on the X axis
 			#set a value on the racer hash that this racer is targeting another racer
-			 racer[:TargetingRacer] = opposingRacerA
-			 racer[:TargetingMoveEffect] = "spinOut"
-		end #if self.hasMoveEffect?(racer, "spinOut")
-		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
-			 racer[:TargetingMoveEffect] = "spinOut"
-			 racer[:TargetingRacer] = opposingRacerB
-		end #if self.hasMoveEffect?(racer, "spinOut")
-		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
-			 racer[:TargetingMoveEffect] = "spinOut"
-			 racer[:TargetingRacer] = opposingRacerC
-		end #if self.hasMoveEffect?(racer, "spinOut")
+			#if racer is targeting someone, do not use any moves in aiMove1
+		
+			#does the racer have a move with the effect 'spinout'?
+			if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceBetweenRacerAndTarget = (opposingRacerA[:RacerSprite].x - racer[:RacerSprite].x).abs
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceBetweenRacerAndPreviousTarget = (racer[:TargetingRacer][:RacerSprite].x - racer[:RacerSprite].x).abs
+				end
+				if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					Console.echo_warn "ditching previous target for new target"
+					racer[:TargetingRacer] = opposingRacerA
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceBetweenRacerAndTarget = (opposingRacerB[:RacerSprite].x - racer[:RacerSprite].x).abs
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceBetweenRacerAndPreviousTarget = (racer[:TargetingRacer][:RacerSprite].x - racer[:RacerSprite].x).abs
+				end
+				if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					Console.echo_warn "ditching previous target for new target"
+					racer[:TargetingRacer] = opposingRacerB
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceBetweenRacerAndTarget = (opposingRacerC[:RacerSprite].x - racer[:RacerSprite].x).abs
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceBetweenRacerAndPreviousTarget = (racer[:TargetingRacer][:RacerSprite].x - racer[:RacerSprite].x).abs
+				end
+				if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					Console.echo_warn "ditching previous target for new target"
+					racer[:TargetingRacer] = opposingRacerC
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")			
+		end #if racer[:TargetingRacer].nil?
 	end #def self.aiTargetAnotherRacer
+	
+	def self.aiStrafeTowardTarget
+		
+	end #def self.aiStrafeTowardTarget
 
 end #class CrustangRacing
