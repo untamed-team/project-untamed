@@ -392,7 +392,7 @@ class CrustangRacing
 		end #if !hazardToAvoid.nil?
 	end #def self.aiBoost
 
-	def self.targetAnotherRacer
+	def self.aiTargetAnotherRacer
 		###################################
 		#============= Racer1 =============
 		###################################
@@ -425,13 +425,16 @@ class CrustangRacing
 		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
 			#set a value on the racer hash that this racer is targeting another racer
 			 racer[:TargetingRacer] = opposingRacerA
+			 racer[:TargetingMoveEffect] = "spinOut"
 		end #if self.hasMoveEffect?(racer, "spinOut")
 		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+			 racer[:TargetingMoveEffect] = "spinOut"
 			 racer[:TargetingRacer] = opposingRacerB
 		end #if self.hasMoveEffect?(racer, "spinOut")
 		if self.hasMoveEffect?(racer, "spinOut") && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+			 racer[:TargetingMoveEffect] = "spinOut"
 			 racer[:TargetingRacer] = opposingRacerC
 		end #if self.hasMoveEffect?(racer, "spinOut")
-	end
+	end #def self.aiTargetAnotherRacer
 
 end #class CrustangRacing
