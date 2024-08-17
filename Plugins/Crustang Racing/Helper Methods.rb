@@ -170,6 +170,56 @@ class CrustangRacing
 		return false
 	end #def self.withinSpinOutRange?
 	
+	def self.withinMaxSpinOutRangeY?(attacker, recipient)
+		withinRangeY = false
+		charge = CrustangRacingSettings::SPINOUT_MAX_RANGE
+		
+		###################################
+		#========== WithinRangeY ==========
+		###################################
+		###### Checking in front of or behind attacker (same exact Y)
+		withinRangeY = true if attacker[:RacerSprite].y == recipient[:RacerSprite].y
+		
+		#checking above attacker
+		spinOutRangeY = charge/2 - attacker[:RacerSprite].height/2
+		
+		withinRangeAbove = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y - recipient[:RacerSprite].height - spinOutRangeY + 1, attacker[:RacerSprite].y)
+		
+		#checking above attacker
+		withinRangeBelow = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y, attacker[:RacerSprite].y+attacker[:RacerSprite].height + spinOutRangeY - 1)
+		
+		withinRangeY = true if withinRangeAbove || withinRangeBelow
+
+		return true if withinRangeY
+
+		return false
+	end #def self.withinSpinOutRange?
+	
+	def self.withinSpecifiedRangeY?(attacker, recipient, range)
+		withinRangeY = false
+		charge = range
+		
+		###################################
+		#========== WithinRangeY ==========
+		###################################
+		###### Checking in front of or behind attacker (same exact Y)
+		withinRangeY = true if attacker[:RacerSprite].y == recipient[:RacerSprite].y
+		
+		#checking above attacker
+		spinOutRangeY = charge/2 - attacker[:RacerSprite].height/2
+		
+		withinRangeAbove = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y - recipient[:RacerSprite].height - spinOutRangeY + 1, attacker[:RacerSprite].y)
+		
+		#checking above attacker
+		withinRangeBelow = true if recipient[:RacerSprite].y.between?(attacker[:RacerSprite].y, attacker[:RacerSprite].y+attacker[:RacerSprite].height + spinOutRangeY - 1)
+		
+		withinRangeY = true if withinRangeAbove || withinRangeBelow
+
+		return true if withinRangeY
+
+		return false
+	end #def self.withinSpinOutRange?
+	
 	def self.withinOverloadRange?(attacker, recipient)
 		withinRangeX = false
 		withinRangeY = false
@@ -529,16 +579,16 @@ class CrustangRacing
 	
 	def self.hasMoveEffect?(racer, effect)
 		if self.getMoveEffect(racer, 1) == effect
-			return true
+			return 1
 		end
 		if self.getMoveEffect(racer, 2) == effect
-			return true
+			return 2
 		end
 		if self.getMoveEffect(racer, 3) == effect
-			return true
+			return 3
 		end
 		if self.getMoveEffect(racer, 4) == effect
-			return true
+			return 4
 		end
 		return false
 	end #def self.hasMoveEffect?(racer, effect)

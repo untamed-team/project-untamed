@@ -566,8 +566,9 @@ class CrustangRacing
 			self.aiBoost
 			#self.aiMove1
 			#self.aiAvoidObstacles
-			
+			self.aiTargetAnotherRacer
 			self.aiStrafeTowardTarget
+			self.aiExecuteSpinOutMove #this monitors for AIs using spin out
 			
 			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
 		end
