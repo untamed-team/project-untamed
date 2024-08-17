@@ -593,6 +593,36 @@ class CrustangRacing
 		return false
 	end #def self.hasMoveEffect?(racer, effect)
 	
+	def self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "spinOut") != false
+			moveNumber = self.hasMoveEffect?(racer, "spinOut")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		if self.hasMoveEffect?(racer, "overload") != false
+			moveNumber = self.hasMoveEffect?(racer, "overload")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.hasMoveEffectThatRequiresTarget
+	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

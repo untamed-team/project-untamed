@@ -18,7 +18,7 @@ class CrustangRacing
 
 	end #def self.aiBoost
 	
-	def self.aiMove1 #might not be used anymore or might be used for things that don't require targets
+	def self.aiMove1 #might not be used anymore or might be used for things that don't require targets like spinout and overload
 		#this handles actually using the move, not WHEN to use the move
 		###################################
 		#============= Racer1 =============
@@ -397,7 +397,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		#if racer[:TargetingRacer].nil?
+		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -468,7 +468,7 @@ class CrustangRacing
 				racer[:TargetingMoveEffect] = nil
 			end
 		
-		#end #if racer[:TargetingRacer].nil?
+		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
 		
 		
 		

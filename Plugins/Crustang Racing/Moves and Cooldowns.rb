@@ -453,6 +453,7 @@ class CrustangRacing
 	end #self.spinOut
 	
 	def self.aiExecuteSpinOutMove
+		#used to hold down (charge) spinOut since I can't use loops
 		###################################
 		#============= Racer1 =============
 		###################################
