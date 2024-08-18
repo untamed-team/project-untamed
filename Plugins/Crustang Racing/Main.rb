@@ -545,7 +545,7 @@ class CrustangRacing
 			self.updateRacerPositionOnScreen
 			self.updateHazardPositionOnScreen
 			self.trackOverviewMovementUpdate
-			self.detectInput
+			self.detectInput if @racerPlayer[:SpinOutTimer] <= 0
 			self.updateCooldownMultipliers
 			self.updateTimers
 			self.accelerateDecelerate
