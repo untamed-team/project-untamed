@@ -578,16 +578,16 @@ class CrustangRacing
 	end #self.rngRoll(chance)
 	
 	def self.hasMoveEffect?(racer, effect)
-		if self.getMoveEffect(racer, 1) == effect
+		if !racer[:Move1].nil? && self.getMoveEffect(racer, 1) == effect
 			return 1
 		end
-		if self.getMoveEffect(racer, 2) == effect
+		if !racer[:Move2].nil? && self.getMoveEffect(racer, 2) == effect
 			return 2
 		end
-		if self.getMoveEffect(racer, 3) == effect
+		if !racer[:Move3].nil? && self.getMoveEffect(racer, 3) == effect
 			return 3
 		end
-		if self.getMoveEffect(racer, 4) == effect
+		if !racer[:Move4].nil? && self.getMoveEffect(racer, 4) == effect
 			return 4
 		end
 		return false
