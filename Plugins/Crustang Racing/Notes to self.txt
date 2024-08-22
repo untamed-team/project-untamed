@@ -11,10 +11,7 @@ return rand(100).between?(1..chance) <- this would return true if you hit a numb
 Alright, organizing my thoughts for AI:
 
 When to use invincible:
-Use if available and there's a hazard coming up?
-
-When to use spinOut:
-Use when in max range of another racer if it's ready, rng very likely to use if ready
+Use if available and there's a hazard coming up or if someone is within range of them and charging their spin out move
 
 When to use overload:
 Use when in max range of another racer if it's ready, rng very likely to use if ready
@@ -34,17 +31,11 @@ Use whenever, rolling RNG to use if they have it readied
 Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
 
 When to strafe:
-Try to strafe out of the way of a hazard if it's within range
-Roll rng with a change of not moving out of the way
-Do not bother moving if invincible
-Strafe towards someone if within max range X of an attack and they just need to get closer to use it
+Do not bother avoiding obstacles if invincible
 
 
 
 
+Add part of the track that slow you down, and make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
 
-
-
-change spinout speed to be -2 or something and then add the spinout speed to the current base speed or current boosting speed depending on what they are doing
-need to move buttons back to the left because there can be up to 4 moves
 separate boost length in seconds and stabilize boost length in seconds so stabilize lasts longer

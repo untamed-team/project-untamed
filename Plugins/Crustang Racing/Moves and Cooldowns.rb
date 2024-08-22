@@ -170,8 +170,8 @@ class CrustangRacing
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 		
 			#reset racer's spinout and overload ranges regardless of what move they just "released", as if they let go of the move button
-			racer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
-			racer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			racer[:SpinOutCharge] = 0#CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] = 0#CrustangRacingSettings::OVERLOAD_MIN_RANGE
 		
 		end #if moveNumber == 0
 		
@@ -444,13 +444,31 @@ class CrustangRacing
 		recipient[:SpinOutTimer] = CrustangRacingSettings::SPINOUT_DURATION_IN_SECONDS * Graphics.frame_rate #with this set to 3 seconds, that gives a value of 3*40 = 120 frames
 		
 		#maybe lock input / AI movement if being spun out?		
-		recipient[:DesiredSpeed] = CrustangRacingSettings::SPINOUT_DESIRED_SPEED
+		recipient[:DesiredSpeed] -= CrustangRacingSettings::SPINOUT_REDUCE_SPEED_BY
 		if self.racerOnScreen?(recipient) && @currentlyPlayingSE != CrustangRacingSettings::SPINOUT_SE
 			pbSEPlay(CrustangRacingSettings::SPINOUT_SE)
 			@currentlyPlayingSE = CrustangRacingSettings::SPINOUT_SE
 			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
 		end
 	end #self.spinOut
+	
+	def self.aiExecuteSpinOutMove
+		#used to hold down (charge) spinOut since I can't use loops
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+		#if AI decided to use spinOut
+		if racer[:SpinOutCharge] > 0
+			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
+				#get the move number that spinout is tied to
+				moveNumber = self.hasMoveEffect?(racer, "spinOut")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end #if racer[:SpinOutCharge] > 0
+	end #def self.executeSpinOutMove
 	
 	def self.overload(attacker, recipient)
 		#OVERLOAD_DURATION_IN_SECONDS

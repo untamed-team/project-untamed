@@ -545,7 +545,7 @@ class CrustangRacing
 			self.updateRacerPositionOnScreen
 			self.updateHazardPositionOnScreen
 			self.trackOverviewMovementUpdate
-			self.detectInput
+			self.detectInput if @racerPlayer[:SpinOutTimer] <= 0
 			self.updateCooldownMultipliers
 			self.updateTimers
 			self.accelerateDecelerate
@@ -564,8 +564,12 @@ class CrustangRacing
 			self.updateAnnouncementsText
 			
 			self.aiBoost
-			self.aiMove1
-			self.aiAvoidObstacles
+			#self.aiMove1
+			#self.aiAvoidObstacles
+			self.aiTargetAnotherRacer
+			self.aiStrafeTowardTarget
+			self.aiExecuteSpinOutMove #this monitors for AIs using spin out
+			
 			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
 		end
 	end #def self.main
