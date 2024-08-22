@@ -56,8 +56,8 @@ class Battle::AI
 				tempdam = 0 if pbCheckMoveImmunity(1,j,battler,b,100)
 				maxdam=tempdam if tempdam>maxdam
 			end 
-			echoln("#{j.name} = #{maxdampercent}")
 			maxdampercent = maxdam *100.0 / b.hp
+			echoln("#{j.name} = #{maxdampercent}")
 		end	
 		mindamage=20
 		if battler.effects[PBEffects::LeechSeed]>=0 && (battler.hp > battler.totalhp*0.66)
