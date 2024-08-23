@@ -39,8 +39,3 @@ Do not bother avoiding obstacles if invincible
 Add part of the track that slow you down, and make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
 
 separate boost length in seconds and stabilize boost length in seconds so stabilize lasts longer
-
-
-BUGS:
-AI needs to stop using charged moves if they start spinning out
-When targeting someone, we need to switch targets if someone is closer by a distance combining both X and Y away from attacker

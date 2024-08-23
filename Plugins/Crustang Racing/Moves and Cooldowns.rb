@@ -458,18 +458,19 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		racer = @racer1
-		#if AI decided to use spinOut
-		
+
+		Console.echo_warn self.spinOutMoveIsReady?(racer)
 		if self.spinOutMoveIsReady?(racer)
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
 				moveNumber = self.hasMoveEffect?(racer, "spinOut")
 				self.moveEffect(racer, moveNumber)
+				print "begin Cooldown"
 				self.beginCooldown(racer, moveNumber)
 			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-		end #if racer[:SpinOutCharge] > 0
-	end #def self.executeSpinOutMove
+		end #if self.spinOutMoveIsReady?(racer)
+	end #def self.aiChargeSpinOutMove
 	
 	def self.overload(attacker, recipient)
 		#OVERLOAD_DURATION_IN_SECONDS
