@@ -563,13 +563,16 @@ class CrustangRacing
 			self.monitorUpcomingHazards
 			self.updateAnnouncementsText
 			
-			self.aiBoost
+			#AI
 			#self.aiMove1
 			#self.aiAvoidObstacles
-			self.aiTargetAnotherRacer
 			self.aiStrafeTowardTarget
 			self.aiExecuteSpinOutMove #this monitors for AIs using spin out
-			self.aiLookForOpportunityToUseRockHazard
+			
+			#priority of AI using moves
+			self.aiTargetAnotherRacer #spinOut and overload
+			self.aiLookForOpportunityToUseRockHazard #rock hazard
+			self.aiLookForOpportunityToUseMudHazard #mud hazard
 			
 			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
 		end
