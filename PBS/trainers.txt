@@ -67,7 +67,6 @@ Pokemon = LEDYBA,4
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?
 Pokemon = MURKROW,5
-    Moves = REBALANCING,SIMPLEBEAM,ENTRAINMENT,SKILLSWAP,SWAGGER,FLATTER
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
@@ -81,7 +80,6 @@ Pokemon = MURKROW,5
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
 Pokemon = TECHUPPI,5
-    Moves = SURGINGSTRIKES,PURIFY,SPOTLIGHT,POLLENPUFF,MAGICCOAT,SNATCH
 #-------------------------------
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.

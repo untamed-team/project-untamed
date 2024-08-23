@@ -5160,11 +5160,13 @@ class Battle::AI
 			score*=3
 		end
 		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].canMagicCoat? &&
-		   target.battle.choices[target.index][3] == user.index
+		   target.battle.choices[target.index][2].canMagicCoat?
 			score *= 3.0
 		else
 			score *= 0.3
+		end
+		if user.lastMoveUsed == :MAGICCOAT
+			score*=0.8
 		end
     #---------------------------------------------------------------------------
     when "StealAndUseBeneficialStatusMove" # snatch
@@ -5194,6 +5196,9 @@ class Battle::AI
 			score *= 3.0
 		else
 			score *= 0.3
+		end
+		if user.lastMoveUsed == :SNATCH
+			score*=0.8
 		end
     #---------------------------------------------------------------------------
     when "ReplaceMoveThisBattleWithTargetLastMoveUsed"

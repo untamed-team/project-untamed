@@ -1158,8 +1158,7 @@ class Battle::AI
 				move.id == :POWERTRICK || move.id == :QUICKGUARD ||
 				move.id == :RECYCLE || move.id == :REFLECTTYPE ||
 				move.id == :ROTOTILLER || move.id == :SANDATTACK ||
-				move.id == :SKILLSWAP || move.id == :SNATCH ||
-				move.id == :MAGICCOAT || 
+				move.id == :SKILLSWAP || 
 				move.id == :FAIRYLOCK || 
 				move.id == :COACHING || 
 				move.id == :SPOTLIGHT || 
@@ -1227,6 +1226,7 @@ class Battle::AI
 				move.id == :POISONGAS || 
 				move.id == :TOXICTHREAD || 
 				move.id == :REBALANCING || 
+				move.id == :MAGICCOAT || move.id == :SNATCH ||
 				move.id == :TRANSFORM || move.id == :WHIRLWIND ||
 				move.id == :WORRYSEED || move.id == :YAWN)
 			return 20
