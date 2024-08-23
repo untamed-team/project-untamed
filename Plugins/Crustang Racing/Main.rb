@@ -567,7 +567,7 @@ class CrustangRacing
 			#self.aiMove1
 			#self.aiAvoidObstacles
 			self.aiStrafeTowardTarget
-			self.aiExecuteSpinOutMove #this monitors for AIs using spin out
+			self.aiChargeSpinOutMove #this monitors for AIs using spin out
 			
 			#priority of AI using moves
 			self.aiTargetAnotherRacer #spinOut and overload

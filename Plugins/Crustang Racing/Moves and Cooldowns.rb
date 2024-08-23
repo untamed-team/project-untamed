@@ -452,14 +452,15 @@ class CrustangRacing
 		end
 	end #self.spinOut
 	
-	def self.aiExecuteSpinOutMove
+	def self.aiChargeSpinOutMove
 		#used to hold down (charge) spinOut since I can't use loops
 		###################################
 		#============= Racer1 =============
 		###################################
 		racer = @racer1
 		#if AI decided to use spinOut
-		if racer[:SpinOutCharge] > 0
+		
+		if self.spinOutMoveIsReady?(racer)
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
 				#get the move number that spinout is tied to

@@ -399,6 +399,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
+		#Console.echo_warn self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
 		if racer[:SpinOutTimer] <= 0 #cannot target racer if spinning out
 			if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
 				case racer
@@ -423,16 +424,21 @@ class CrustangRacing
 				#if the racer has a move with certain move effects, target a nearby racer who is within MAX_RANGE on the X axis
 				#set a value on the racer hash that this racer is targeting another racer
 				#if racer is targeting someone, do not use any moves in aiMove1
-		
+				
 				#does the racer have a move with the effect 'spinout'?
 				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
 					#set a value on the racer hash that this racer is targeting another racer
-					distanceBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceXBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].y + (opposingRacerA[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
 					#set the target if this target is closer than a target that is already set, or if there is no target already
 					if !racer[:TargetingRacer].nil?
-						distanceBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
 					end
-					if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+						#Console.echo_warn "distance between racer1 and player is #{combinedDistanceBetweenRacerAndTarget}"
 						Console.echo_warn "target is racerPlayer"
 						racer[:TargetingRacer] = opposingRacerA
 						racer[:TargetingMoveEffect] = "spinOut"
@@ -440,12 +446,17 @@ class CrustangRacing
 				end #if self.hasMoveEffect?(racer, "spinOut")
 				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
 					#set a value on the racer hash that this racer is targeting another racer
-					distanceBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceXBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].y + (opposingRacerB[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
 					#set the target if this target is closer than a target that is already set, or if there is no target already
 					if !racer[:TargetingRacer].nil?
-						distanceBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
 					end
-					if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+						#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer2 is #{combinedDistanceBetweenRacerAndTarget}"
 						Console.echo_warn "target is racer2"
 						racer[:TargetingRacer] = opposingRacerB
 						racer[:TargetingMoveEffect] = "spinOut"
@@ -453,12 +464,17 @@ class CrustangRacing
 				end #if self.hasMoveEffect?(racer, "spinOut")
 				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
 					#set a value on the racer hash that this racer is targeting another racer
-					distanceBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceXBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].y + (opposingRacerC[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
 					#set the target if this target is closer than a target that is already set, or if there is no target already
 					if !racer[:TargetingRacer].nil?
-						distanceBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
 					end
-					if racer[:TargetingRacer].nil? || (distanceBetweenRacerAndPreviousTarget && distanceBetweenRacerAndPreviousTarget < distanceBetweenRacerAndTarget)
+					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+						#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer3 is #{combinedDistanceBetweenRacerAndTarget}"
 						Console.echo_warn "target is racer3"
 						racer[:TargetingRacer] = opposingRacerC
 						racer[:TargetingMoveEffect] = "spinOut"
@@ -466,7 +482,9 @@ class CrustangRacing
 				end #if self.hasMoveEffect?(racer, "spinOut")
 			
 				#if no longer within X range of target, lose the target to find another
+				#Console.echo_warn self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
 				if !racer[:TargetingRacer].nil? && !self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+					Console.echo_warn "target is no longer in range, so setting target to nil"
 					racer[:TargetingRacer] = nil
 					racer[:TargetingMoveEffect] = nil
 				end
@@ -507,14 +525,6 @@ class CrustangRacing
 				elsif racer[:RacerSprite].y > racer[:TargetingRacer][:RacerSprite].y
 					#strafe up closer to target
 					self.strafeUp(racer)
-				end
-			else
-				#within range, start using move!
-				case racer[:TargetingMoveEffect]
-				when "spinOut"
-					#set the racer's spinout charge to something over 0 so it keeps charging
-					racer[:SpinOutCharge] = 1 if racer[:SpinOutCharge] < 1
-				when "overload"
 				end
 			end
 			
