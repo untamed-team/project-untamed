@@ -459,14 +459,13 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 
-		Console.echo_warn self.spinOutMoveIsReady?(racer)
-		if self.spinOutMoveIsReady?(racer)
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
 				moveNumber = self.hasMoveEffect?(racer, "spinOut")
 				self.moveEffect(racer, moveNumber)
-				print "begin Cooldown"
 				self.beginCooldown(racer, moveNumber)
 			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end #if self.spinOutMoveIsReady?(racer)
@@ -482,6 +481,25 @@ class CrustangRacing
 			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
 		end
 	end #self.spinOut
+	
+	def self.aiChargeOverloadMove
+		#used to hold down (charge) overload since I can't use loops
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+	end #def self.aiChargeOverloadMove
 	
 	def self.assignMoveEffects
 		#assign move effects based on the moves the racer has
@@ -594,7 +612,7 @@ class CrustangRacing
 			#recipient = "RacerPlayer"
 		end
 		announcement = "#{attacker[:EnteredCrustangContestant][:TrainerName]} -> #{action} -> #{recipient[:EnteredCrustangContestant][:TrainerName]}"
-		Console.echo_warn announcement
+		#Console.echo_warn announcement
 		#keep the feed at 3 elements at most
 		if @announcementsFeed.length >= 3
 			@announcementsFeed.delete_at(0)

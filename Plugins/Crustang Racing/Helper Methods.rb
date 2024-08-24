@@ -632,7 +632,41 @@ class CrustangRacing
 			end
 		end
 		return false
-	end #def self.hasMoveEffectThatRequiresTarget
+	end #def self.spinOutMoveIsReady?(racer)
+	
+	def self.overloadMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "overload") != false
+			moveNumber = self.hasMoveEffect?(racer, "overload")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.overloadMoveIsReady?(racer)
+	
+	def self.reduceCooldownMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false
+			moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.reduceCooldownMoveIsReady?(racer)
 	
 end #class CrustangRacing
 

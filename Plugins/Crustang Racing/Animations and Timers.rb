@@ -165,21 +165,21 @@ class CrustangRacing
 			end
 		end
 		#move2 timer
-		if racer[:Move2CooldownTimer] > 0
+		if !racer[:Move2].nil? && racer[:Move2CooldownTimer] > 0
 			if racer[:ReduceCooldownCount].between?(1,3) && racer[:Move2][:EffectCode] == "reduceCooldown"
 			else
 				racer[:Move2CooldownTimer] -= 1 * racer[:MoveCoolDownMultiplier]
 			end
 		end
 		#move3 timer
-		if racer[:Move3CooldownTimer] > 0
+		if !racer[:Move3].nil? && racer[:Move3CooldownTimer] > 0
 			if racer[:ReduceCooldownCount].between?(1,3) && racer[:Move3][:EffectCode] == "reduceCooldown"
 			else
 				racer[:Move3CooldownTimer] -= 1 * racer[:MoveCoolDownMultiplier]
 			end
 		end
 		#move4 timer
-		if racer[:Move4CooldownTimer] > 0
+		if !racer[:Move4].nil? && racer[:Move4CooldownTimer] > 0
 			if racer[:ReduceCooldownCount].between?(1,3) && racer[:Move4][:EffectCode] == "reduceCooldown"
 			else
 				racer[:Move4CooldownTimer] -= 1 * racer[:MoveCoolDownMultiplier]
@@ -362,8 +362,8 @@ class CrustangRacing
 		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			sprite.visible = true
 			#outline
-			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
-			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.blue)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.blue)
 			#inside of the outline
 			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
 		else
@@ -380,8 +380,8 @@ class CrustangRacing
 		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			sprite.visible = true
 			#outline
-			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
-			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.blue)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.blue)
 			#inside of the outline
 			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
 		else
@@ -398,8 +398,8 @@ class CrustangRacing
 		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			sprite.visible = true
 			#outline
-			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
-			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.blue)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.blue)
 			#inside of the outline
 			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
 		else
@@ -416,8 +416,8 @@ class CrustangRacing
 		if charge > CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			sprite.visible = true
 			#outline
-			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.red)
-			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.red)
+			#sprite.bitmap.fill_rect(sprite.x, sprite.y, sprite.width, sprite.height, Color.blue)
+			sprite.bitmap.fill_rect(sprite.width/2 - charge/2, sprite.height/2 - charge/2, charge, charge, Color.blue)
 			#inside of the outline
 			sprite.bitmap.fill_rect(sprite.width/2 - charge/2 + outlineWidth, sprite.height/2 - charge/2 + outlineWidth, charge - outlineWidth*2, charge - outlineWidth*2, Color.new(0,0,0,0))
 		else

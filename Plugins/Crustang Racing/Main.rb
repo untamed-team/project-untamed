@@ -563,11 +563,17 @@ class CrustangRacing
 			self.monitorUpcomingHazards
 			self.updateAnnouncementsText
 			
-			#AI
-			#self.aiMove1
+			###################################
+			#=============== AI ===============
+			###################################
 			#self.aiAvoidObstacles
+			
+			#AI - the order in which these methods run determines what types of moves the AI will prioritize using when available
+			#self.aiMove1
+			self.aiLookForOpportunityToUseReduceCooldown
 			self.aiStrafeTowardTarget
 			self.aiChargeSpinOutMove #this monitors for AIs using spin out
+			self.aiChargeOverloadMove #this monitors for AIs using overload
 			
 			#priority of AI using moves
 			self.aiTargetAnotherRacer #spinOut and overload
