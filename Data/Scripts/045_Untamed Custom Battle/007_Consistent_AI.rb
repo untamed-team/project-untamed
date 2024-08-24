@@ -1,5 +1,6 @@
 class Battle::AI
 	$AIMASTERLOG = false
+	$AIGENERALLOG = true
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
@@ -44,7 +45,7 @@ class Battle::AI
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
-		if $INTERNAL
+		if $INTERNAL || $AIGENERALLOG
 			logMsg = "[AI] Move choices for #{user.pbThis(true)} (#{user.index}): "
 			choices.each_with_index do |c, i|
 				logMsg += "#{user.moves[c[0]].name}=#{c[1]}"
@@ -55,7 +56,7 @@ class Battle::AI
 		end
 		if $AIMASTERLOG # master debug by JZ, ported #by low
 			move_keys = GameData::Move.keys
-			bestscore = ["Splash",0]
+			bestscore = [["Splash",0]]
 			move_keys.each do |i|
 				mirrored = Pokemon::Move.new(i)
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
@@ -87,13 +88,14 @@ class Battle::AI
 				File.open("AI_master_log.txt", "a") do |line|
 					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + dmgScore.to_s
 				end
-				if bestscore[1] < dmgScore
-					bestscore[1] = dmgScore
-					bestscore[0] = mirrored.name.to_s
-				end
+				bestscore.push([mirrored.name.to_s, dmgScore])
 			end
-			File.open("AI_master_log.txt", "a") do |line|
-				line.puts "Move " + bestscore[0].to_s + " has the best final score " + bestscore[1].to_s
+			sortedscores = bestscore.sort { |a, b| b[1] <=> a[1] }
+			File.open("AI_scoreboard.txt", "a") do |line|
+				for i in 0..sortedscores.length
+					next if sortedscores[i].nil?
+					line.puts "Move " + sortedscores[i][0].to_s + " has the final score " + sortedscores[i][1].to_s
+				end
 			end
 		end
 		# Find any preferred moves and just choose from them
@@ -348,9 +350,11 @@ class Battle::AI
 	    damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
 		damagePercentage *= 0.5 if user.level - 3 > target.level
-		#echo("\n-----------------------------")
-		#echo("\n#{move.name} real dmg = #{realDamage}")
-		#echo("\n#{move.name} dmg percent = #{damagePercentage}")
+		if $AIGENERALLOG
+			echo("\n-----------------------------")
+			echo("\n#{move.name} real dmg = #{realDamage}")
+			echo("\n#{move.name} dmg percent = #{damagePercentage}")
+		end
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -370,7 +374,7 @@ class Battle::AI
 		damagePercentage -= 1 if accuracy < 100  # DemICE
 		damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal  # DemICE
 		score += damagePercentage.to_i
-		#echo("\n#{move.name} score = #{score}")
+		echo("\n#{move.name} score = #{score}") if $AIGENERALLOG
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s

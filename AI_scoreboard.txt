@@ -1,0 +1,1558 @@
+Move Crimson Surge has the final score 10076
+Move Scale Shot has the final score 5054
+Move Fake Out has the final score 1554
+Move Dragon Rage has the final score 370
+Move Bide has the final score 226.0
+Move Final Gambit has the final score 216.25
+Move Metal Burst has the final score 212.0
+Move Mirror Coat has the final score 212.0
+Move Nature's Madness has the final score 201
+Move Super Fang has the final score 201
+Move Frost Breath has the final score 200.83333333333334
+Move Counter has the final score 200.18
+Move Sing has the final score 197.06399999999996
+Move Hypnosis has the final score 197.06399999999996
+Move Lovely Kiss has the final score 197.06399999999996
+Move Grass Whistle has the final score 197.06399999999996
+Move Triple Axel has the final score 190
+Move Yawn has the final score 187.2
+Move Light Screen has the final score 175.0
+Move Ice Ball has the final score 166.0
+Move Icicle Spear has the final score 164
+Move Sonic Boom has the final score 164
+Move Echoed Voice has the final score 150.5
+Move Dual Wingbeat has the final score 148
+Move Ice Beam has the final score 146.13333333333333
+Move Blue Flare has the final score 146.0075
+Move Powder Snow has the final score 143.2
+Move Fire Spin has the final score 141.2
+Move Trump Card has the final score 140.5
+Move Fire Blast has the final score 139.64386363636362
+Move Poison Fang has the final score 138.5
+Move Infestation has the final score 138.2
+Move Aeroblast has the final score 138.0
+Move Ice Shard has the final score 138
+Move Gust has the final score 138
+Move Rage has the final score 137.5
+Move Whirlpool has the final score 135.2
+Move Freeze-Dry has the final score 134.8857142857143
+Move Aurora Beam has the final score 134.69230769230768
+Move Fury Cutter has the final score 134.0
+Move Icicle Crash has the final score 133.41176470588235
+Move Clamp has the final score 133.2
+Move Snap Trap has the final score 133.2
+Move Sand Tomb has the final score 132.2
+Move Bind has the final score 132.2
+Move Wrap has the final score 132.2
+Move Endeavor has the final score 132
+Move Pin Missile has the final score 132
+Move Blizzard has the final score 131.00590909090909
+Move Rollout has the final score 131.0
+Move Ice Hammer has the final score 130.78
+Move Hurricane has the final score 130.61045454545456
+Move Smog has the final score 130.0
+Move Clangorous Soul has the final score 130.0
+Move Megahorn has the final score 127.17416666666665
+Move Ice Fang has the final score 126.6923076923077
+Move Frost Kick has the final score 126.49411764705883
+Move Air Slash has the final score 126.26666666666667
+Move Wicked Blow has the final score 123.6325
+Move Oblivion Wing has the final score 123.25
+Move Scouring Winds has the final score 123.1764705882353
+Move Poison Sting has the final score 122.5
+Move Twineedle has the final score 122.0
+Move Ice Punch has the final score 121.36
+Move Acid Spray has the final score 121.0
+Move Brave Bird has the final score 120.75
+Move Pyro Ball has the final score 120.64386363636363
+Move Frigid Maw has the final score 120.25
+Move Fiery Dance has the final score 118.16
+Move Acrobatics has the final score 117.0909090909091
+Move Rock Smash has the final score 116.5
+Move Glaciate has the final score 115.6923076923077
+Move Chatter has the final score 115.6923076923077
+Move V-create has the final score 115.63333333333333
+Move Magma Storm has the final score 115.63250000000001
+Move Fly has the final score 114.11111111111111
+Move Wring Out has the final score 114
+Move Peck has the final score 114
+Move Burn Up has the final score 114.0
+Move Ember has the final score 113.0
+Move Glacial Lance has the final score 113.0
+Move Poison Tail has the final score 112.5
+Move Growth has the final score 112.32
+Move Fell Stinger has the final score 112
+Move Grass Knot has the final score 112
+Move Struggle Bug has the final score 112.0
+Move Comet Punch has the final score 112
+Move Overheat has the final score 111.75
+Move Crush Grip has the final score 111
+Move Avalanche has the final score 111.0
+Move Sweet Tooth has the final score 110.5
+Move Dragon Ascent has the final score 110.40545454545455
+Move Mind Blown has the final score 110.395
+Move Power-Up Punch has the final score 110.16
+Move Beak Blast has the final score 109.05
+Move Low Kick has the final score 109
+Move Gear Grind has the final score 109
+Move Heat Crash has the final score 109
+Move Scatterdust has the final score 109.0
+Move Punishment has the final score 109
+Move Queso Blast has the final score 109
+Move Payback has the final score 109
+Move Astonish has the final score 108.5
+Move Premonition Dummy has the final score 108
+Move Clear Smog has the final score 108.0
+Move Pursuit has the final score 108.0
+Move Tail Slap has the final score 108
+Move Water Shuriken has the final score 108
+Move Night Shade has the final score 108
+Move Psywave has the final score 108
+Move Double Hit has the final score 108
+Move Frustration has the final score 108
+Move Seismic Toss has the final score 108
+Move Splinter Shot has the final score 108
+Move Draining Kiss has the final score 108
+Move Mega Drain has the final score 108.0
+Move Dual Chop has the final score 108
+Move Bullet Seed has the final score 108
+Move Terrain Pulse has the final score 108
+Move Weather Ball has the final score 108
+Move Knock Off has the final score 108
+Move Spike Cannon has the final score 108
+Move Confusion has the final score 108.0
+Move Eruption has the final score 107.33333333333334
+Move Icy Wind has the final score 107.0909090909091
+Move Metal Claw has the final score 106.61599999999999
+Move Acid has the final score 106.5
+Move Double Kick has the final score 106
+Move Triple Kick has the final score 106
+Move Struggle has the final score 106
+Move Rapid Spin has the final score 106
+Move Fusion Flare has the final score 106.0
+Move Double Slap has the final score 106
+Move Arm Thrust has the final score 106
+Move Fishious Rend has the final score 106
+Move Vine Whip has the final score 106
+Move Failsafe Steam Burst has the final score 106
+Move Dragon Darts has the final score 106
+Move Karate Chop has the final score 106
+Move Fairy Wind has the final score 106
+Move Vacuum Wave has the final score 106
+Move Failsafe Zealous Dance has the final score 106
+Move Barrage has the final score 106
+Move Fury Swipes has the final score 106
+Move Leafage has the final score 106
+Move Present has the final score 106
+Move Corrosive Gas has the final score 106
+Move Water Gun has the final score 106
+Move Fury Attack has the final score 106
+Move Bounce has the final score 105.8604705882353
+Move Charge Beam has the final score 105.31199999999998
+Move Lick has the final score 104.84
+Move Drill Peck has the final score 104.25
+Move Shell Trap has the final score 104.024
+Move Think Fast has the final score 104
+Move Spectral Thief has the final score 104
+Move Feint has the final score 104
+Move Twister has the final score 104
+Move Mach Punch has the final score 104
+Move Rock Blast has the final score 104
+Move Disarming Voice has the final score 104
+Move Shadow Sneak has the final score 104
+Move Bubble has the final score 104
+Move Bone Rush has the final score 104
+Move Tackle has the final score 104
+Move Heavy Slam has the final score 104
+Move Supernova has the final score 104
+Move Scratch has the final score 104
+Move Quick Attack has the final score 104
+Move Branch Poke has the final score 104
+Move Pound has the final score 104
+Move Power Trip has the final score 104
+Move Bonemerang has the final score 104
+Move Beat Up has the final score 104
+Move Absorb has the final score 104.0
+Move Stored Power has the final score 104
+Move False Swipe has the final score 104
+Move Bullet Punch has the final score 104
+Move Aqua Jet has the final score 104
+Move Hold Back has the final score 104
+Move Nuzzle has the final score 103.80000000000001
+Move Failsafe Psysonic has the final score 103
+Move Rock Throw has the final score 103
+Move Smack Down has the final score 103.0
+Move Return has the final score 103
+Move Flail has the final score 103
+Move Constrict has the final score 103
+Move Gyro Ball has the final score 103
+Move Accelerock has the final score 103
+Move Mud-Slap has the final score 103
+Move Reversal has the final score 103
+Move Flame Charge has the final score 102.19999999999999
+Move Thunder Shock has the final score 101.28
+Move Fire Pledge has the final score 101.25
+Move Bolt Beak has the final score 101
+Move Electro Ball has the final score 101
+Move Supernova has the final score 101
+Move Failsafe Slime Shot has the final score 101
+Move Rising Voltage has the final score 101
+Move Magnitude has the final score 101
+Move Bug Buzz has the final score 100.83333333333334
+Move Flamethrower has the final score 100.66666666666666
+Move No Retreat has the final score 100.0
+Move Titan's Wrath has the final score 99.16666666666666
+Move Flare Blitz has the final score 98.825
+Move Dark Pulse has the final score 98.625
+Move Seed Flare has the final score 97.67416666666665
+Move Sky Drop has the final score 97.16666666666667
+Move Pluck has the final score 96.33333333333333
+Move Aerial Ace has the final score 96.33333333333333
+Move Air Cutter has the final score 96.33333333333333
+Move Wing Attack has the final score 96.33333333333333
+Move Flame Burst has the final score 96.21428571428572
+Move Attack Order has the final score 96.0
+Move Pollen Puff has the final score 95.14285714285714
+Move Mystical Fire has the final score 94.66666666666666
+Move Signal Beam has the final score 94.66666666666666
+Move Steel Beam has the final score 94.28571428571428
+Move Power Whip has the final score 94.17416666666665
+Move Baneful Bunker has the final score 93.60000000000001
+Move Rage Powder has the final score 93.6
+Move Follow Me has the final score 93.6
+Move First Impression has the final score 93.55555555555556
+Move Sacred Fire has the final score 93.5
+Move Heat Wave has the final score 93.36842105263158
+Move Dragon Rush has the final score 93.30749999999999
+Move Searing Shot has the final score 93.3
+Move Lava Plume has the final score 91.625
+Move Fire Lash has the final score 91.375
+Move Silver Wind has the final score 91.16666666666667
+Move Blaze Kick has the final score 91.0
+Move Night Daze has the final score 90.88235294117646
+Move Revelation Dance has the final score 90.55555555555556
+Move Flying Press has the final score 90.0
+Move Geomancy has the final score 89.856
+Move U-turn has the final score 89.14285714285714
+Move Skitter Smack has the final score 89.14285714285714
+Move Hydro Pump has the final score 88.90545454545456
+Move Fire Punch has the final score 88.8
+Move Ow The Edge has the final score 88.75
+Move Focus Blast has the final score 88.73500000000001
+Move X-Scissor has the final score 88.25
+Move Lunge has the final score 88.25
+Move Leech Life has the final score 88.25
+Move Light of Ruin has the final score 88.0
+Move Gunk Shot has the final score 87.15166666666667
+Move Focus Energy has the final score 86.39999999999999
+Move Siren Song has the final score 85.88
+Move Draco Meteor has the final score 85.46153846153845
+Move Explosion has the final score 85.30080000000001
+Move Relic Song has the final score 84.88
+Move Cross Chop has the final score 84.36000000000001
+Move Bolt Strike has the final score 83.89673076923077
+Move Geode Burst has the final score 81.36000000000001
+Move Toxic has the final score 80.5
+Move Stone Edge has the final score 80.36000000000001
+Move Memento has the final score 80.0
+Move Head Smash has the final score 79.36000000000001
+Move Mega Kick has the final score 76.87916666666666
+Move Egg Bomb has the final score 76.7125
+Move Jaw Lock has the final score 74.0
+Move Burning Jealousy has the final score 72.57142857142857
+Move Double Iron Bash has the final score 72.40833333333333
+Move Obstruct has the final score 72.0
+Move Spiky Shield has the final score 72.0
+Move Fire Fang has the final score 71.23076923076923
+Move Flame Wheel has the final score 70.5
+Move Steamroller has the final score 70.38461538461539
+Move Apple Acid has the final score 70.375
+Move Bug Bite has the final score 70.33333333333333
+Move Taunt has the final score 69.7125
+Move Sludge has the final score 69.6923076923077
+Move Foul Play has the final score 69.26315789473685
+Move Night Slash has the final score 69.14285714285714
+Move Steam Eruption has the final score 68.9090909090909
+Move Crunch has the final score 68.875
+Move Sludge Bomb has the final score 68.72222222222223
+Move Lash Out has the final score 68.66666666666666
+Move Incinerate has the final score 68.66666666666666
+Move Throat Chop has the final score 68.25
+Move False Surrender has the final score 68.25
+Move Techno Blast has the final score 68.16666666666666
+Move Snarl has the final score 68.0909090909091
+Move Bite has the final score 68.08333333333334
+Move Shell Side Arm has the final score 68.0
+Move Luster Purge has the final score 67.92857142857143
+Move Chilling Wail has the final score 67.9
+Move Fiery Wrath has the final score 67.88888888888889
+Move Darkest Lariat has the final score 67.88235294117646
+Move Shadow Ball has the final score 67.875
+Move Leaf Storm has the final score 67.75
+Move Psycho Boost has the final score 67.75
+Move Fleur Cannon has the final score 67.75
+Move Tri Attack has the final score 67.75
+Move Flash Cannon has the final score 67.5625
+Move Extrasensory has the final score 67.4375
+Move Grav Apple has the final score 67.33333333333333
+Move Thunderous Kick has the final score 67.33333333333333
+Move Assurance has the final score 67.33333333333333
+Move Feint Attack has the final score 67.33333333333333
+Move Misty Explosion has the final score 67.25200000000001
+Move Scald has the final score 67.25
+Move Aura Sphere has the final score 67.25
+Move Snipe Shot has the final score 67.25
+Move Eerie Spell has the final score 67.25
+Move Hyperspace Hole has the final score 67.25
+Move Water Pledge has the final score 67.25
+Move Grass Pledge has the final score 67.25
+Move Ominous Wind has the final score 67.16666666666667
+Move Freezing Glare has the final score 67.13333333333333
+Move Judgment has the final score 67.0
+Move Dynamax Cannon has the final score 67.0
+Move Photon Geyser has the final score 67.0
+Move Spacial Rend has the final score 67.0
+Move Mana Drain has the final score 67.0
+Move Moongeist Beam has the final score 67.0
+Move Forge Breath has the final score 67.0
+Move Dragon Pulse has the final score 66.88235294117646
+Move Psychic has the final score 66.83333333333334
+Move Energy Ball has the final score 66.83333333333334
+Move Petal Dance has the final score 66.72708333333333
+Move Leaf Tornado has the final score 66.6923076923077
+Move Bubble Beam has the final score 66.6923076923077
+Move Psybeam has the final score 66.6923076923077
+Move Mirror Shot has the final score 66.6923076923077
+Move Brine has the final score 66.6923076923077
+Move Venoshock has the final score 66.6923076923077
+Move Poison Jab has the final score 66.6875
+Move Strange Steam has the final score 66.55555555555556
+Move Uproar has the final score 66.55555555555556
+Move Moonblast has the final score 66.55555555555556
+Move Dragon Breath has the final score 66.47333333333333
+Move Crush Claw has the final score 66.33333333333334
+Move Razor Shell has the final score 66.33333333333334
+Move Expanding Force has the final score 66.33333333333333
+Move Round has the final score 66.33333333333333
+Move Octazooka has the final score 66.33333333333333
+Move Water Pulse has the final score 66.33333333333333
+Move Hard Drive Crash has the final score 66.33333333333333
+Move Hex has the final score 66.33333333333333
+Move Magical Leaf has the final score 66.33333333333333
+Move Brutal Swing has the final score 66.33333333333333
+Move Kinetic Rend has the final score 66.33333333333333
+Move Hidden Power has the final score 66.33333333333333
+Move Mist Ball has the final score 66.14285714285714
+Move Self-Destruct has the final score 66.126
+Move Cross Poison has the final score 66.07142857142857
+Move Revenge has the final score 66.0
+Move Headbutt has the final score 65.78571428571428
+Move Needle Arm has the final score 65.78571428571428
+Move Giga Drain has the final score 65.66666666666666
+Move Shadow Force has the final score 65.58333333333334
+Move Boomburst has the final score 65.57142857142857
+Move Origin Pulse has the final score 65.54545454545455
+Move Water Spout has the final score 65.33333333333334
+Move Dragon Energy has the final score 65.33333333333334
+Move Astral Barrage has the final score 65.16666666666666
+Move Multi-Attack has the final score 65.16666666666666
+Move Psycho Cut has the final score 65.14285714285714
+Move Trop Kick has the final score 65.14285714285714
+Move Toxiravage has the final score 65.14285714285714
+Move Dizzy Punch has the final score 65.14285714285714
+Move Retaliate has the final score 65.14285714285714
+Move Chip Away has the final score 65.14285714285714
+Move Wake-Up Slap has the final score 65.14285714285714
+Move Smart Strike has the final score 65.14285714285714
+Move Shadow Claw has the final score 65.14285714285714
+Move Secret Power has the final score 65.14285714285714
+Move Slash has the final score 65.14285714285714
+Move Vital Throw has the final score 65.14285714285714
+Move Facade has the final score 65.14285714285714
+Move Smelling Salts has the final score 65.14285714285714
+Move Grassy Glide has the final score 65.0909090909091
+Move Vise Grip has the final score 65.0909090909091
+Move Heart Stamp has the final score 65.08333333333334
+Move Steel Wing has the final score 65.04571428571428
+Move Nature Power has the final score 65.0
+Move Sludge Wave has the final score 64.94736842105263
+Move Dive has the final score 64.875
+Move Rolling Kick has the final score 64.83333333333333
+Move Iron Head has the final score 64.8125
+Move Double-Edge has the final score 64.75
+Move Head Charge has the final score 64.75
+Move Iron Tail has the final score 64.75
+Move Wood Hammer has the final score 64.75
+Move Meteor Mash has the final score 64.69244444444445
+Move Horn Leech has the final score 64.66666666666666
+Move Haunt has the final score 64.66666666666666
+Move Brick Break has the final score 64.66666666666666
+Move Spirit Break has the final score 64.66666666666666
+Move Drain Punch has the final score 64.66666666666666
+Move Pepper Spray has the final score 64.66666666666666
+Move Zen Headbutt has the final score 64.625
+Move Waterfall has the final score 64.625
+Move Dragon Hammer has the final score 64.55555555555556
+Move Thousand Folds has the final score 64.55555555555556
+Move Aqua Tail has the final score 64.55555555555556
+Move Rock Climb has the final score 64.55555555555556
+Move Play Rough has the final score 64.55555555555556
+Move Sacred Sword has the final score 64.55555555555556
+Move Leaf Blade has the final score 64.55555555555556
+Move Poltergeist has the final score 64.55555555555556
+Move Phantom Force has the final score 64.5
+Move Force Palm has the final score 64.47333333333333
+Move Liquidation has the final score 64.47058823529412
+Move Shadow Bone has the final score 64.47058823529412
+Move Hyper Fang has the final score 64.4375
+Move Stomp has the final score 64.38461538461539
+Move Magnet Bomb has the final score 64.33333333333333
+Move Circle Throw has the final score 64.33333333333333
+Move Flip Turn has the final score 64.33333333333333
+Move Dragon Tail has the final score 64.33333333333333
+Move Swift has the final score 64.33333333333333
+Move Shadow Punch has the final score 64.33333333333333
+Move Spirit Shackle has the final score 64.25
+Move Mystic Blade has the final score 64.25
+Move Dragon Claw has the final score 64.25
+Move Dazzling Gleam has the final score 64.25
+Move Slam has the final score 64.25
+Move Mega Punch has the final score 64.25
+Move Psyshock has the final score 64.25
+Move Psycrush has the final score 64.25
+Move Seed Bomb has the final score 64.25
+Move Extreme Speed has the final score 64.25
+Move Drum Beating has the final score 64.25
+Move Anchor Shot has the final score 64.25
+Move Take Down has the final score 64.0
+Move Behemoth Blade has the final score 64.0
+Move Behemoth Bash has the final score 64.0
+Move Belch has the final score 64.0
+Move Crabhammer has the final score 64.0
+Move Psystrike has the final score 64.0
+Move Strength has the final score 64.0
+Move Sunsteel Strike has the final score 64.0
+Move Body Slam has the final score 63.98117647058824
+Move Psychic Fangs has the final score 63.88235294117647
+Move Secret Sword has the final score 63.88235294117647
+Move Sky Uppercut has the final score 63.88235294117647
+Move Thrash has the final score 63.72708333333333
+Move Outrage has the final score 63.72708333333333
+Move Low Sweep has the final score 63.69230769230769
+Move Horn Attack has the final score 63.69230769230769
+Move Cut has the final score 63.69230769230769
+Move Submission has the final score 63.625
+Move Surf has the final score 63.55555555555556
+Move Sparkling Aria has the final score 63.55555555555556
+Move Petal Blizzard has the final score 63.55555555555556
+Move Force Wave has the final score 63.55555555555556
+Move Muddy Water has the final score 63.55555555555556
+Move Hyper Voice has the final score 63.55555555555556
+Move Ancient Power has the final score 63.16666666666667
+Move Mud Shot has the final score 63.09090909090909
+Move Razor Leaf has the final score 63.09090909090909
+Move Wide Guard has the final score 63.0
+Move High Jump Kick has the final score 62.92307692307692
+Move Hammer Arm has the final score 62.78
+Move Superpower has the final score 62.575
+Move Focus Punch has the final score 62.4
+Move Breaking Swipe has the final score 62.33333333333333
+Move Power Gem has the final score 62.25
+Move Body Press has the final score 62.25
+Move Erosion Wave has the final score 62.111111111111114
+Move Last Resort has the final score 62.0
+Move Dream Eater has the final score 62.0
+Move Earth Power has the final score 61.833333333333336
+Move Storm Throw has the final score 61.833333333333336
+Move Mud Bomb has the final score 61.69230769230769
+Move Thunder has the final score 61.6868181818182
+Move Biting Cold has the final score 61.58250000000001
+Move Scorching Sands has the final score 61.57142857142857
+Move Core Enforcer has the final score 61.5
+Move Jump Kick has the final score 61.5
+Move Close Combat has the final score 61.405454545454546
+Move Rock Tomb has the final score 61.33333333333333
+Move Bulldoze has the final score 61.33333333333333
+Move Clanging Scales has the final score 61.0
+Move Synchronoise has the final score 61.0
+Move Steel Roller has the final score 61.0
+Move Bone Club has the final score 60.92307692307692
+Move Thunder Cage has the final score 60.9
+Move Dig has the final score 60.875
+Move Stomping Tantrum has the final score 60.666666666666664
+Move Rock Slide has the final score 60.266666666666666
+Move Drill Run has the final score 60.25
+Move Electroweb has the final score 60.09090909090909
+Move Toxic Thread has the final score 60.0
+Move High Horsepower has the final score 59.88235294117647
+Move Shock Wave has the final score 59.33333333333333
+Move Thunder Fang has the final score 59.12307692307692
+Move Surging Strikes has the final score 59.0
+Move Hyperspace Fury has the final score 59.0
+Move Thief has the final score 59.0
+Move Spark has the final score 58.82153846153846
+Move Parabolic Charge has the final score 58.69230769230769
+Move Thousand Waves has the final score 58.55555555555556
+Move Land's Wrath has the final score 58.55555555555556
+Move Thousand Arrows has the final score 58.55555555555556
+Move Precipice Blades has the final score 58.166666666666664
+Move Volt Switch has the final score 58.14285714285714
+Move Earthquake has the final score 58.0
+Move Snore has the final score 58
+Move Zing Zap has the final score 57.8125
+Move Thunder Punch has the final score 57.704
+Move King's Shield has the final score 57.6
+Move Aura Wheel has the final score 57.36363636363637
+Move Discharge has the final score 57.355
+Move Overdrive has the final score 57.25
+Move Jolt Kick has the final score 56.91529411764706
+Move Diamond Storm has the final score 56.688
+Move Thunderbolt has the final score 56.586666666666666
+Move Covet has the final score 56.0
+Move Fusion Bolt has the final score 56.0
+Move Wild Charge has the final score 56.0
+Move Volt Tackle has the final score 55.0185
+Move Fling has the final score 54
+Move Pay Day has the final score 54
+Move Plasma Fists has the final score 53.5
+Move Spit Up has the final score 53
+Move Tailwind has the final score 52.5
+Move Future Sight has the final score 51.47
+Move Doom Desire has the final score 51.26
+Move Razor Wind has the final score 50.625
+Move Frenzy Plant has the final score 50.458333333333336
+Move Meteor Assault has the final score 50.458333333333336
+Move Giga Impact has the final score 50.458333333333336
+Move Hyper Beam has the final score 50.458333333333336
+Move Rock Wrecker has the final score 50.458333333333336
+Move Roar of Time has the final score 50.458333333333336
+Move Blast Burn has the final score 50.458333333333336
+Move Hydro Cannon has the final score 50.458333333333336
+Move Freeze Shock has the final score 50.43385714285714
+Move Prismatic Laser has the final score 50.4296875
+Move Eternabeam has the final score 50.4296875
+Move Meteor Beam has the final score 50.416666666666664
+Move Solar Blade has the final score 50.416666666666664
+Move Solar Beam has the final score 50.416666666666664
+Move Sky Attack has the final score 50.396153846153844
+Move Skull Bash has the final score 50.38461538461539
+Move Ice Burn has the final score 50.378571428571426
+Move Poison Gas has the final score 46.0
+Move Inferno has the final score 45.474999999999994
+Move Encore has the final score 45.0
+Move Coaching has the final score 45.0
+Move Pain Split has the final score 44.28571428571429
+Move Quiver Dance has the final score 44.1232
+Move Will-O-Wisp has the final score 42.0
+Move Nasty Plot has the final score 39.312
+Move Swords Dance has the final score 39.312
+Move Tail Glow has the final score 39.312
+Move Parting Shot has the final score 38.22
+Move Glare has the final score 36.96
+Move Stun Spore has the final score 36.96
+Move Protect has the final score 36.0
+Move Dynamic Punch has the final score 35.474999999999994
+Move Reflect has the final score 35.0
+Move Poison Powder has the final score 34.5
+Move Confuse Ray has the final score 34.21249999999999
+Move Zap Cannon has the final score 30.874999999999993
+Move Calm Mind has the final score 30.022464
+Move Electric Terrain has the final score 30.0
+Move Disable has the final score 30.0
+Move Psychic Terrain has the final score 30.0
+Move Misty Terrain has the final score 30.0
+Move Wonder Room has the final score 30.0
+Move Mist has the final score 28.6
+Move Amnesia has the final score 28.08
+Move Belly Drum has the final score 28.08
+Move Strength Sap has the final score 27.999999999999996
+Move Substitute has the final score 27.500000000000004
+Move Gravity has the final score 25.0
+Move Octolock has the final score 25.0
+Move Perish Song has the final score 24.0
+Move Metronome has the final score 24.0
+Move Curse has the final score 23.78376
+Move Screech has the final score 22.5
+Move Cosmic Power has the final score 21.599999999999998
+Move Defend Order has the final score 21.599999999999998
+Move Mean Look has the final score 20.0
+Move Rebalancing has the final score 20.0
+Move Block has the final score 20.0
+Move Swagger has the final score 20.0
+Move Spider Web has the final score 20.0
+Move Gastro Acid has the final score 20.0
+Move Worry Seed has the final score 20.0
+Move Transform has the final score 19.8
+Move Fake Tears has the final score 19.5
+Move Heal Block has the final score 18.75
+Move Aqua Ring has the final score 17.279999999999998
+Move Sweet Kiss has the final score 17.25
+Move Charge has the final score 16.848
+Move Meditate has the final score 16.848
+Move Natural Gift has the final score 16
+Move Sunny Day has the final score 15.0
+Move Magnet Rise has the final score 15.0
+Move Grassy Terrain has the final score 15.0
+Move Gear Up has the final score 15.0
+Move Leer has the final score 15.0
+Move Tail Whip has the final score 15.0
+Move Instruct has the final score 15.0
+Move Rain Dance has the final score 15.0
+Move Eerie Impulse has the final score 15.0
+Move Role Play has the final score 15.0
+Move Captivate has the final score 15.0
+Move Metal Sound has the final score 13.0
+Move Ingrain has the final score 12.959999999999999
+Move Torment has the final score 12.0
+Move Iron Defense has the final score 11.88
+Move Acid Armor has the final score 11.88
+Move Cotton Guard has the final score 11.88
+Move Barrier has the final score 11.88
+Move Detect has the final score 11.25
+Move Sharpen has the final score 11.232
+Move Excite has the final score 11.232
+Move Work Up has the final score 11.232
+Move Embargo has the final score 11.0
+Move Hail has the final score 10.5
+Move Sandstorm has the final score 10.5
+Move Camouflage has the final score 10.0
+Move Confide has the final score 10.0
+Move Smokescreen has the final score 10.0
+Move Ion Deluge has the final score 10.0
+Move Flash has the final score 10.0
+Move Tickle has the final score 9.75
+Move Mat Block has the final score 9.555
+Move Kinesis has the final score 9.200000000000001
+Move Me First has the final score 9.0
+Move Harden has the final score 8.639999999999999
+Move Defense Curl has the final score 8.639999999999999
+Move Withdraw has the final score 8.639999999999999
+Move Acupressure has the final score 8.639999999999999
+Move Sticky Web has the final score 7.2
+Move Destiny Bond has the final score 6.5
+Move Rock Polish has the final score 6.4799999999999995
+Move Autotomize has the final score 6.4799999999999995
+Move Supersonic has the final score 6.324999999999999
+Move Flatter has the final score 6.0
+Move Shell Smash has the final score 5.272800000000001
+Move Teeter Dance has the final score 5.0
+Move Water Sport has the final score 5.0
+Move Tearful Look has the final score 5.0
+Move Fairy Lock has the final score 5.0
+Move Laser Focus has the final score 5.0
+Move Mud Sport has the final score 5.0
+Move Reflect Type has the final score 5.0
+Move Sand Attack has the final score 5.0
+Move Lock-On has the final score 5.0
+Move Entrainment has the final score 5.0
+Move Court Change has the final score 5.0
+Move Defog has the final score 5.0
+Move Mind Reader has the final score 5.0
+Move Noble Roar has the final score 5.0
+Move Skill Swap has the final score 5.0
+Move Grudge has the final score 5.0
+Move Helping Hand has the final score 4.85
+Move Magic Room has the final score 4.4
+Move Spikes has the final score 4.2
+Move Stealth Rock has the final score 4.2
+Move Toxic Spikes has the final score 4.2
+Move Agility has the final score 3.888
+Move Quick Guard has the final score 3.75
+Move Guard Split has the final score 2.5
+Move Power Split has the final score 2.5
+Move Magic Coat has the final score 2.25
+Move Snatch has the final score 1.3499999999999999
+Move Sucker Punch has the final score 1
+Move Power Trick has the final score 0.5
+Move Recover has the final score 0.18144000000000002
+Move Slack Off has the final score 0.18144000000000002
+Move Soft-Boiled has the final score 0.18144000000000002
+Move Synthesis has the final score 0.18144000000000002
+Move Heal Order has the final score 0.18144000000000002
+Move Moonlight has the final score 0.18144000000000002
+Move Morning Sun has the final score 0.18144000000000002
+Move Milk Drink has the final score 0.18144000000000002
+Move Roost has the final score 0.18144000000000002
+Move Shore Up has the final score 0.18144000000000002
+Move Stockpile has the final score 0.09982500000000002
+Move Shift Gear has the final score 0.005668018716671998
+Move Dragon Dance has the final score 0.005668018716671998
+Move Bulk Up has the final score 4.2510140375039986e-05
+Move Hone Claws has the final score 6.00101481627648e-11
+Move Coil has the final score 5.143726985379839e-11
+Move Dark Void has the final score 0.0
+Move Magic Powder has the final score 0.0
+Move Psycho Shift has the final score 0.0
+Move Lunar Dance has the final score 0.0
+Move Attract has the final score 0.0
+Move Spore has the final score 0.0
+Move Sleep Powder has the final score 0.0
+Move Leech Seed has the final score 0.0
+Move Imprison has the final score 0.0
+Move Baton Pass has the final score 0.0
+Move Heart Swap has the final score 0.0
+Move Forest's Curse has the final score 0.0
+Move Cotton Spore has the final score 0.0
+Move Healing Wish has the final score 0.0
+Move Aromatherapy has the final score 0.0
+Move Heal Pulse has the final score 0.0
+Move Guard Swap has the final score 0.0
+Move Rototiller has the final score 0.0
+Move Bestow has the final score 0.0
+Move Celebrate has the final score 0.0
+Move Trick-or-Treat has the final score 0.0
+Move Copycat has the final score 0.0
+Move Rest has the final score 0.0
+Move Spite has the final score 0.0
+Move Nightmare has the final score 0.0
+Move Double Team has the final score 0.0
+Move Endure has the final score 0.0
+Move String Shot has the final score 0.0
+Move Tar Shot has the final score 0.0
+Move Speed Swap has the final score 0.0
+Move Mirror Move has the final score 0.0
+Move Feather Dance has the final score 0.0
+Move Happy Hour has the final score 0.0
+Move Heal Bell has the final score 0.0
+Move Venom Drench has the final score 0.0
+Move Hold Hands has the final score 0.0
+Move Purify has the final score 0.0
+Move Ally Switch has the final score 0.0
+Move Lucky Chant has the final score 0.0
+Move Telekinesis has the final score 0.0
+Move Minimize has the final score 0.0
+Move Teleport has the final score 0.0
+Move Power Swap has the final score 0.0
+Move Play Nice has the final score 0.0
+Move Wish has the final score 0.0
+Move Trick has the final score 0.0
+Move Whirlwind has the final score 0.0
+Move Flower Shield has the final score 0.0
+Move Floral Healing has the final score 0.0
+Move Trick Room has the final score 0.0
+Move Sweet Scent has the final score 0.0
+Move Crafty Shield has the final score 0.0
+Move Charm has the final score 0.0
+Move Swallow has the final score 0.0
+Move Quash has the final score 0.0
+Move Aurora Veil has the final score 0.0
+Move Soak has the final score 0.0
+Move Spotlight has the final score 0.0
+Move Splash has the final score 0.0
+Move Baby-Doll Eyes has the final score 0.0
+Move Aromatic Mist has the final score 0.0
+Move Thunder Wave has the final score 0.0
+Move Magnetic Flux has the final score 0.0
+Move Assist has the final score 0.0
+Move Sleep Talk has the final score 0.0
+Move Haze has the final score 0.0
+Move Electrify has the final score 0.0
+Move Psych Up has the final score 0.0
+Move Simple Beam has the final score 0.0
+Move Scary Face has the final score 0.0
+Move Safeguard has the final score 0.0
+Move Growl has the final score 0.0
+Move Roar has the final score 0.0
+Move Refresh has the final score 0.0
+Move Recycle has the final score 0.0
+Move Topsy-Turvy has the final score 0.0
+Move Switcheroo has the final score 0.0
+Move After You has the final score 0.0
+Move Splash has the final score 0
+Move Jungle Healing has the final score -20.0
+Move Life Dew has the final score -25.0
+Move Odor Sleuth has the final score -55.0
+Move Foresight has the final score -55.0
+Move Miracle Eye has the final score -55.0
+Move Conversion 2 has the final score -70.0
+Move Sketch has the final score -75.0
+Move Mimic has the final score -75.0
+Move Howl has the final score -80.0
+Move Conversion has the final score -85.0
+Move Stuff Cheeks has the final score -85.0
+Move Powder has the final score -90.0
+Move Decorate has the final score -90.0
+Move Fissure has the final score -91.0
+Move Sheer Cold has the final score -91.0
+Move Guillotine has the final score -91.0
+Move Horn Drill has the final score -91.0
+Move Teatime has the final score -95.0
+Move Crimson Surge has the final score 5071
+Move Scale Shot has the final score 3551.0
+Move Fake Out has the final score 1851.0
+Move Shadow Sneak has the final score 272.0
+Move Accelerock has the final score 272.0
+Move Bullet Punch has the final score 271.0
+Move Aqua Jet has the final score 271.0
+Move Quick Attack has the final score 271.0
+Move Ice Shard has the final score 271.0
+Move Think Fast has the final score 270.0
+Move Vacuum Wave has the final score 270.0
+Move Mach Punch has the final score 270.0
+Move Spore has the final score 262.08
+Move Hypnosis has the final score 256.18319999999994
+Move Grass Whistle has the final score 256.18319999999994
+Move Lovely Kiss has the final score 256.18319999999994
+Move Sing has the final score 256.18319999999994
+Move Yawn has the final score 243.36
+Move Endeavor has the final score 228
+Move Sleep Powder has the final score 226.044
+Move Super Fang has the final score 200
+Move Nature's Madness has the final score 200
+Move Guillotine has the final score 160
+Move Fissure has the final score 160
+Move Sheer Cold has the final score 160
+Move Horn Drill has the final score 160
+Move Smack Down has the final score 153.0
+Move Final Gambit has the final score 148.75
+Move Echoed Voice has the final score 148.5
+Move Dragon Rage has the final score 145
+Move Metal Burst has the final score 142.0
+Move Pain Split has the final score 138.94736842105263
+Move Trump Card has the final score 135.5
+Move Infestation has the final score 131.2
+Move Fire Spin has the final score 131.2
+Move Whirlpool has the final score 130.2
+Move Clamp has the final score 130.2
+Move Bind has the final score 130.2
+Move Nuzzle has the final score 130.2
+Move Wrap has the final score 130.2
+Move Fury Cutter has the final score 130.0
+Move Clangorous Soul has the final score 130.0
+Move Snap Trap has the final score 129.2
+Move Sand Tomb has the final score 129.2
+Move Rage has the final score 129.0
+Move Counter has the final score 125.2
+Move Mirror Coat has the final score 119.2
+Move Bide has the final score 115.0
+Move Rollout has the final score 112.0
+Move Ice Ball has the final score 111.0
+Move Lick has the final score 110.75999999999999
+Move Powder Snow has the final score 106.2
+Move Flail has the final score 106.0
+Move Punishment has the final score 105
+Move Payback has the final score 105
+Move Reversal has the final score 105.0
+Move Poison Fang has the final score 104.75
+Move Smog has the final score 104.0
+Move Thunder Shock has the final score 103.92
+Move Poison Sting has the final score 103.25
+Move Power Trip has the final score 103
+Move Pin Missile has the final score 103
+Move Fell Stinger has the final score 103
+Move Ember has the final score 103.0
+Move Beat Up has the final score 103
+Move Pursuit has the final score 103.0
+Move Dual Wingbeat has the final score 103
+Move Rock Blast has the final score 103
+Move Knock Off has the final score 103
+Move Comet Punch has the final score 103
+Move Rock Throw has the final score 103
+Move Twineedle has the final score 103.0
+Move Failsafe Steam Burst has the final score 102
+Move Seismic Toss has the final score 102
+Move Failsafe Zealous Dance has the final score 102
+Move Sweet Tooth has the final score 102
+Move Crush Grip has the final score 102
+Move Heat Crash has the final score 102
+Move Gust has the final score 102
+Move Peck has the final score 102
+Move Triple Axel has the final score 102
+Move Spectral Thief has the final score 102
+Move Astonish has the final score 102
+Move Psywave has the final score 102
+Move Queso Blast has the final score 102
+Move Night Shade has the final score 102
+Move Gyro Ball has the final score 102
+Move Gear Grind has the final score 102
+Move Poison Tail has the final score 101.75
+Move Constrict has the final score 101.5
+Move Bubble has the final score 101.5
+Move Trick Room has the final score 101.4
+Move Tackle has the final score 101
+Move Present has the final score 101
+Move Bonemerang has the final score 101
+Move Acid Spray has the final score 101
+Move Return has the final score 101
+Move Acid has the final score 101
+Move Scratch has the final score 101
+Move Premonition Dummy has the final score 101
+Move Bullet Seed has the final score 101
+Move Double Hit has the final score 101
+Move Bone Rush has the final score 101
+Move Heavy Slam has the final score 101
+Move Bolt Beak has the final score 101
+Move Splinter Shot has the final score 101
+Move Frustration has the final score 101
+Move Twister has the final score 101
+Move Pound has the final score 101
+Move Feint has the final score 101
+Move Rising Voltage has the final score 101
+Move Icicle Spear has the final score 101
+Move Supernova has the final score 101
+Move Hold Back has the final score 101
+Move False Swipe has the final score 101
+Move Tail Slap has the final score 101
+Move Fishious Rend has the final score 101
+Move Dual Chop has the final score 101
+Move Spike Cannon has the final score 101
+Move Wring Out has the final score 101
+Move Electro Ball has the final score 101
+Move Rapid Spin has the final score 101
+Move Fury Swipes has the final score 101
+Move Struggle has the final score 101
+Move Barrage has the final score 101
+Move Struggle Bug has the final score 101.0
+Move Fury Attack has the final score 101
+Move Clear Smog has the final score 101.0
+Move Terrain Pulse has the final score 101
+Move Supernova has the final score 101
+Move Dragon Darts has the final score 101
+Move Water Gun has the final score 101
+Move Weather Ball has the final score 101
+Move Double Slap has the final score 101
+Move Water Shuriken has the final score 101
+Move Corrosive Gas has the final score 101
+Move Fairy Wind has the final score 101
+Move Draining Kiss has the final score 101.0
+Move Disarming Voice has the final score 101
+Move Mud-Slap has the final score 100
+Move Failsafe Slime Shot has the final score 100
+Move No Retreat has the final score 100.0
+Move Low Kick has the final score 100
+Move Triple Kick has the final score 100
+Move Arm Thrust has the final score 100
+Move Double Kick has the final score 100
+Move Rock Smash has the final score 100.0
+Move Karate Chop has the final score 100
+Move Vine Whip has the final score 100
+Move Branch Poke has the final score 100
+Move Leafage has the final score 100
+Move Absorb has the final score 100
+Move Magnitude has the final score 100
+Move Failsafe Psysonic has the final score 100
+Move Mega Drain has the final score 100
+Move Confusion has the final score 100
+Move Stored Power has the final score 100
+Move Grass Knot has the final score 100
+Move Metal Claw has the final score 98.16
+Move Obstruct has the final score 93.60000000000001
+Move Spiky Shield has the final score 93.60000000000001
+Move Rage Powder has the final score 93.6
+Move Follow Me has the final score 93.6
+Move Pyro Ball has the final score 87.64386363636363
+Move Wicked Blow has the final score 87.6325
+Move Megahorn has the final score 87.17416666666665
+Move Fire Blast has the final score 86.64386363636363
+Move Dragon Rush has the final score 86.0075
+Move Blue Flare has the final score 86.0075
+Move Siren Song has the final score 85.94399999999999
+Move Relic Song has the final score 85.94399999999999
+Move Bolt Strike has the final score 85.30288461538461
+Move Power Whip has the final score 84.17416666666665
+Move Seed Flare has the final score 84.17416666666665
+Move Toxiravage has the final score 82.42857142857143
+Move Charge Beam has the final score 81.12
+Move Stone Edge has the final score 80.36000000000001
+Move Memento has the final score 80.0
+Move Geode Burst has the final score 79.36000000000001
+Move Head Smash has the final score 79.36000000000001
+Move Extreme Speed has the final score 78.5
+Move Gunk Shot has the final score 77.71416666666667
+Move First Impression has the final score 77.44444444444444
+Move Cross Chop has the final score 77.36000000000001
+Move Hydro Pump has the final score 76.90545454545456
+Move Focus Blast has the final score 76.52666666666667
+Move King's Shield has the final score 74.88000000000001
+Move Geomancy has the final score 74.88
+Move Magma Storm has the final score 73.63250000000001
+Move Flame Charge has the final score 73.6
+Move Fiery Dance has the final score 73.6
+Move Power-Up Punch has the final score 71.6
+Move Egg Bomb has the final score 69.7125
+Move Mega Kick has the final score 68.87916666666666
+Move Ice Fang has the final score 67.6923076923077
+Move Foul Play has the final score 66.26315789473685
+Move Jaw Lock has the final score 65.0
+Move Bite has the final score 64.33333333333333
+Move Thunder Fang has the final score 64.18461538461538
+Move Feint Attack has the final score 63.33333333333333
+Move Assurance has the final score 63.33333333333333
+Move Fire Fang has the final score 63.23076923076923
+Move Acrobatics has the final score 63.09090909090909
+Move Wide Guard has the final score 63.0
+Move Hurricane has the final score 62.61045454545456
+Move Thunder has the final score 62.406818181818196
+Move Dark Pulse has the final score 62.25
+Move Rock Tomb has the final score 62.16666666666667
+Move Night Slash has the final score 62.14285714285714
+Move Blizzard has the final score 62.0059090909091
+Move Steamroller has the final score 61.69230769230769
+Move Lash Out has the final score 61.666666666666664
+Move Biting Cold has the final score 61.58250000000001
+Move Flame Wheel has the final score 61.5
+Move Beak Blast has the final score 61.5
+Move Bug Bite has the final score 61.33333333333333
+Move Wing Attack has the final score 61.33333333333333
+Move Aerial Ace has the final score 61.33333333333333
+Move Pluck has the final score 61.33333333333333
+Move Brutal Swing has the final score 61.33333333333333
+Move Double Iron Bash has the final score 61.33333333333333
+Move Shadow Punch has the final score 61.33333333333333
+Move Throat Chop has the final score 61.25
+Move Crunch has the final score 61.25
+Move False Surrender has the final score 61.25
+Move Ancient Power has the final score 61.16666666666667
+Move Ominous Wind has the final score 61.16666666666667
+Move Silver Wind has the final score 61.16666666666667
+Move Thousand Arrows has the final score 61.111111111111114
+Move Snarl has the final score 61.09090909090909
+Move Electroweb has the final score 61.0
+Move Avalanche has the final score 61.0
+Move Icy Wind has the final score 61.0
+Move Thunder Cage has the final score 60.9
+Move Night Daze has the final score 60.88235294117647
+Move Darkest Lariat has the final score 60.88235294117647
+Move Baneful Bunker has the final score 60.84000000000001
+Move Dragon Breath has the final score 60.79333333333334
+Move Air Slash has the final score 60.666666666666664
+Move Revelation Dance has the final score 60.55555555555556
+Move Hidden Power has the final score 60.33333333333333
+Move Hex has the final score 60.33333333333333
+Move Steel Beam has the final score 60.285714285714285
+Move Flame Burst has the final score 60.214285714285715
+Move U-turn has the final score 60.14285714285714
+Move Skitter Smack has the final score 60.14285714285714
+Move Shadow Claw has the final score 60.14285714285714
+Move Grassy Glide has the final score 60.09090909090909
+Move Vise Grip has the final score 60.09090909090909
+Move Spark has the final score 60.04
+Move Revenge has the final score 60.0
+Move Electric Terrain has the final score 60.0
+Move Mud Shot has the final score 60.0
+Move Chilling Wail has the final score 59.9
+Move Fire Punch has the final score 59.8
+Move Force Palm has the final score 59.79333333333334
+Move Ow The Edge has the final score 59.75
+Move Chatter has the final score 59.69230769230769
+Move Stomp has the final score 59.69230769230769
+Move Rock Slide has the final score 59.666666666666664
+Move Signal Beam has the final score 59.666666666666664
+Move Sky Drop has the final score 59.666666666666664
+Move Mystical Fire has the final score 59.666666666666664
+Move Haunt has the final score 59.666666666666664
+Move Burning Jealousy has the final score 59.57142857142857
+Move Fiery Wrath has the final score 59.55555555555556
+Move Sacred Fire has the final score 59.5
+Move Glaciate has the final score 59.46153846153847
+Move Dragon Tail has the final score 59.33333333333333
+Move Shock Wave has the final score 59.33333333333333
+Move Flip Turn has the final score 59.33333333333333
+Move Heart Stamp has the final score 59.33333333333333
+Move Air Cutter has the final score 59.33333333333333
+Move Swift has the final score 59.33333333333333
+Move Octazooka has the final score 59.33333333333333
+Move Round has the final score 59.33333333333333
+Move Water Pulse has the final score 59.33333333333333
+Move Breaking Swipe has the final score 59.33333333333333
+Move Magnet Bomb has the final score 59.33333333333333
+Move Fire Lash has the final score 59.25
+Move Oblivion Wing has the final score 59.25
+Move X-Scissor has the final score 59.25
+Move Spirit Shackle has the final score 59.25
+Move Shadow Ball has the final score 59.25
+Move Lunge has the final score 59.25
+Move Leech Life has the final score 59.25
+Move Drill Peck has the final score 59.25
+Move Power Gem has the final score 59.25
+Move Fire Pledge has the final score 59.25
+Move Misty Explosion has the final score 59.21
+Move Bulldoze has the final score 59.16666666666667
+Move Titan's Wrath has the final score 59.166666666666664
+Move Mind Blown has the final score 59.15
+Move Pollen Puff has the final score 59.14285714285714
+Move Headbutt has the final score 59.14285714285714
+Move Razor Leaf has the final score 59.09090909090909
+Move Sludge has the final score 59.03846153846154
+Move Blaze Kick has the final score 59.0
+Move Attack Order has the final score 59.0
+Move Freeze-Dry has the final score 58.885714285714286
+Move Scouring Winds has the final score 58.88235294117647
+Move Shadow Bone has the final score 58.88235294117647
+Move Bubble Beam has the final score 58.769230769230774
+Move Bounce has the final score 58.71670588235294
+Move Cut has the final score 58.69230769230769
+Move Venoshock has the final score 58.69230769230769
+Move Mirror Shot has the final score 58.69230769230769
+Move Aurora Beam has the final score 58.69230769230769
+Move Brine has the final score 58.69230769230769
+Move Parabolic Charge has the final score 58.69230769230769
+Move Bone Club has the final score 58.69230769230769
+Move Horn Attack has the final score 58.69230769230769
+Move Flamethrower has the final score 58.666666666666664
+Move Lava Plume has the final score 58.625
+Move Erosion Wave has the final score 58.55555555555556
+Move Bug Buzz has the final score 58.55555555555556
+Move Poltergeist has the final score 58.55555555555556
+Move Low Sweep has the final score 58.46153846153847
+Move Aura Wheel has the final score 58.36363636363637
+Move Ice Punch has the final score 58.36
+Move Discharge has the final score 58.345
+Move Expanding Force has the final score 58.33333333333333
+Move Magical Leaf has the final score 58.33333333333333
+Move Kinetic Rend has the final score 58.33333333333333
+Move Circle Throw has the final score 58.33333333333333
+Move Rolling Kick has the final score 58.33333333333333
+Move Hyper Fang has the final score 58.25
+Move Cross Poison has the final score 58.25
+Move Iron Head has the final score 58.25
+Move Waterfall has the final score 58.25
+Move Zing Zap has the final score 58.25
+Move Facade has the final score 58.14285714285714
+Move Dizzy Punch has the final score 58.14285714285714
+Move Chip Away has the final score 58.14285714285714
+Move Smart Strike has the final score 58.14285714285714
+Move Needle Arm has the final score 58.14285714285714
+Move Secret Power has the final score 58.14285714285714
+Move Retaliate has the final score 58.14285714285714
+Move Smelling Salts has the final score 58.14285714285714
+Move Psycho Cut has the final score 58.14285714285714
+Move Trop Kick has the final score 58.14285714285714
+Move Slash has the final score 58.14285714285714
+Move Volt Switch has the final score 58.14285714285714
+Move Dragon Ascent has the final score 58.123636363636365
+Move Thunder Punch has the final score 58.056
+Move Phantom Force has the final score 58.0
+Move Fusion Flare has the final score 58.0
+Move Aeroblast has the final score 58.0
+Move Moongeist Beam has the final score 58.0
+Move Scatterdust has the final score 58.0
+Move Steel Wing has the final score 57.94285714285714
+Move Body Slam has the final score 57.91294117647059
+Move Icicle Crash has the final score 57.88235294117647
+Move Frigid Maw has the final score 57.875
+Move Drum Beating has the final score 57.875
+Move Flare Blitz has the final score 57.825
+Move Brave Bird has the final score 57.75
+Move Tri Attack has the final score 57.75
+Move Mud Bomb has the final score 57.69230769230769
+Move Psybeam has the final score 57.69230769230769
+Move Leaf Tornado has the final score 57.69230769230769
+Move Crush Claw has the final score 57.666666666666664
+Move Incinerate has the final score 57.666666666666664
+Move Spirit Break has the final score 57.666666666666664
+Move Razor Shell has the final score 57.666666666666664
+Move Stomping Tantrum has the final score 57.666666666666664
+Move Giga Drain has the final score 57.666666666666664
+Move Horn Leech has the final score 57.666666666666664
+Move Focus Energy has the final score 57.599999999999994
+Move Scorching Sands has the final score 57.57142857142857
+Move Poison Jab has the final score 57.53125
+Move Frost Kick has the final score 57.49411764705882
+Move Fly has the final score 57.44444444444444
+Move Heat Wave has the final score 57.368421052631575
+Move Shadow Force has the final score 57.333333333333336
+Move Searing Shot has the final score 57.3
+Move Dragon Claw has the final score 57.25
+Move Hyperspace Hole has the final score 57.25
+Move Psyshock has the final score 57.25
+Move Zen Headbutt has the final score 57.25
+Move Drill Run has the final score 57.25
+Move Seed Bomb has the final score 57.25
+Move Grass Pledge has the final score 57.25
+Move Anchor Shot has the final score 57.25
+Move Dazzling Gleam has the final score 57.25
+Move Water Pledge has the final score 57.25
+Move Snipe Shot has the final score 57.25
+Move Scald has the final score 57.25
+Move Extrasensory has the final score 57.25
+Move Slam has the final score 57.25
+Move Mystic Blade has the final score 57.25
+Move Flash Cannon has the final score 57.25
+Move Apple Acid has the final score 57.25
+Move Overdrive has the final score 57.25
+Move Mega Punch has the final score 57.25
+Move Jolt Kick has the final score 57.22588235294118
+Move Ice Hammer has the final score 57.197500000000005
+Move Luster Purge has the final score 57.14285714285714
+Move Mist Ball has the final score 57.14285714285714
+Move Vital Throw has the final score 57.14285714285714
+Move Wake-Up Slap has the final score 57.14285714285714
+Move Ice Beam has the final score 57.13333333333333
+Move Freezing Glare has the final score 57.13333333333333
+Move V-create has the final score 57.123333333333335
+Move Forge Breath has the final score 57.0
+Move Crabhammer has the final score 57.0
+Move Sunsteel Strike has the final score 57.0
+Move Behemoth Bash has the final score 57.0
+Move Fusion Bolt has the final score 57.0
+Move Iron Tail has the final score 57.0
+Move Behemoth Blade has the final score 57.0
+Move Strength has the final score 57.0
+Move High Horsepower has the final score 56.88235294117647
+Move Dragon Pulse has the final score 56.88235294117647
+Move Liquidation has the final score 56.88235294117647
+Move Psychic Fangs has the final score 56.88235294117647
+Move Thunderbolt has the final score 56.88
+Move Sludge Bomb has the final score 56.80555555555556
+Move Overheat has the final score 56.75
+Move Shell Side Arm has the final score 56.72222222222222
+Move Brick Break has the final score 56.666666666666664
+Move Drain Punch has the final score 56.666666666666664
+Move Pepper Spray has the final score 56.666666666666664
+Move Grav Apple has the final score 56.55555555555556
+Move Dragon Hammer has the final score 56.55555555555556
+Move Earth Power has the final score 56.55555555555556
+Move Uproar has the final score 56.55555555555556
+Move Thousand Folds has the final score 56.55555555555556
+Move Leaf Blade has the final score 56.55555555555556
+Move Energy Ball has the final score 56.55555555555556
+Move Strange Steam has the final score 56.55555555555556
+Move Psychic has the final score 56.55555555555556
+Move Play Rough has the final score 56.55555555555556
+Move Surf has the final score 56.55555555555556
+Move Sparkling Aria has the final score 56.55555555555556
+Move Moonblast has the final score 56.55555555555556
+Move Muddy Water has the final score 56.55555555555556
+Move Hyper Voice has the final score 56.55555555555556
+Move Aqua Tail has the final score 56.55555555555556
+Move Rock Climb has the final score 56.55555555555556
+Move Diamond Storm has the final score 56.49
+Move Sludge Wave has the final score 56.34210526315789
+Move Body Press has the final score 56.25
+Move Psycrush has the final score 56.25
+Move Aura Sphere has the final score 56.25
+Move Multi-Attack has the final score 56.166666666666664
+Move Astral Barrage has the final score 56.166666666666664
+Move Self-Destruct has the final score 56.105
+Move Volt Tackle has the final score 56.0185
+Move Surging Strikes has the final score 56.0
+Move Take Down has the final score 56.0
+Move Mana Drain has the final score 56.0
+Move Flying Press has the final score 56.0
+Move Core Enforcer has the final score 56.0
+Move Wild Charge has the final score 56.0
+Move Psystrike has the final score 56.0
+Move Judgment has the final score 56.0
+Move Glacial Lance has the final score 56.0
+Move Photon Geyser has the final score 56.0
+Move Spacial Rend has the final score 56.0
+Move Dynamax Cannon has the final score 56.0
+Move Dig has the final score 56.0
+Move Dive has the final score 56.0
+Move Earthquake has the final score 56.0
+Move Meteor Mash has the final score 55.92444444444445
+Move Steam Eruption has the final score 55.90909090909091
+Move Outrage has the final score 55.895833333333336
+Move Thrash has the final score 55.895833333333336
+Move Sky Uppercut has the final score 55.88235294117647
+Move Secret Sword has the final score 55.88235294117647
+Move Head Charge has the final score 55.75
+Move Double-Edge has the final score 55.75
+Move Submission has the final score 55.625
+Move Sacred Sword has the final score 55.55555555555556
+Move Thunderous Kick has the final score 55.55555555555556
+Move Force Wave has the final score 55.55555555555556
+Move Thousand Waves has the final score 55.55555555555556
+Move Land's Wrath has the final score 55.55555555555556
+Move Petal Blizzard has the final score 55.55555555555556
+Move Origin Pulse has the final score 55.54545454545455
+Move Thunder Wave has the final score 55.440000000000005
+Move Stun Spore has the final score 55.440000000000005
+Move Glare has the final score 55.440000000000005
+Move Explosion has the final score 55.284
+Move Hammer Arm has the final score 55.197500000000005
+Move Techno Blast has the final score 55.166666666666664
+Move Precipice Blades has the final score 55.166666666666664
+Move Hard Drive Crash has the final score 55.166666666666664
+Move Thief has the final score 55.0
+Move Nature Power has the final score 55.0
+Move Light of Ruin has the final score 55.0
+Move Petal Dance has the final score 54.895833333333336
+Move Fleur Cannon has the final score 54.75
+Move Leaf Storm has the final score 54.75
+Move Psycho Boost has the final score 54.75
+Move Wood Hammer has the final score 54.75
+Move Eruption has the final score 54.666666666666664
+Move Clanging Scales has the final score 54.64
+Move Boomburst has the final score 54.57142857142857
+Move Plasma Fists has the final score 54.5
+Move Draco Meteor has the final score 54.46153846153846
+Move Eerie Spell has the final score 54.125
+Move Close Combat has the final score 54.123636363636365
+Move Superpower has the final score 53.78
+Move Shell Trap has the final score 53.48
+Move Burn Up has the final score 53.0
+Move Fling has the final score 53
+Move Dragon Energy has the final score 52.666666666666664
+Move Water Spout has the final score 52.666666666666664
+Move Jump Kick has the final score 52.5
+Move Tailwind has the final score 52.5
+Move Steel Roller has the final score 52.0
+Move Last Resort has the final score 52.0
+Move High Jump Kick has the final score 51.92307692307692
+Move Frost Breath has the final score 51.833333333333336
+Move Future Sight has the final score 51.47
+Move Doom Desire has the final score 51.26
+Move Belch has the final score 51.0
+Move Dream Eater has the final score 51.0
+Move Spit Up has the final score 51
+Move Sonic Boom has the final score 51
+Move Pay Day has the final score 51
+Move Hyperspace Fury has the final score 51.0
+Move Snore has the final score 51
+Move Covet has the final score 51.0
+Move Rock Wrecker has the final score 50.916666666666664
+Move Roar of Time has the final score 50.916666666666664
+Move Hydro Cannon has the final score 50.916666666666664
+Move Blast Burn has the final score 50.916666666666664
+Move Meteor Assault has the final score 50.916666666666664
+Move Giga Impact has the final score 50.916666666666664
+Move Hyper Beam has the final score 50.916666666666664
+Move Frenzy Plant has the final score 50.916666666666664
+Move Eternabeam has the final score 50.859375
+Move Prismatic Laser has the final score 50.859375
+Move Storm Throw has the final score 50.833333333333336
+Move Focus Punch has the final score 50.4
+Move Razor Wind has the final score 50.15625
+Move Freeze Shock has the final score 50.108464285714284
+Move Meteor Beam has the final score 50.104166666666664
+Move Solar Blade has the final score 50.104166666666664
+Move Solar Beam has the final score 50.104166666666664
+Move Sky Attack has the final score 50.09615384615385
+Move Skull Bash has the final score 50.09615384615385
+Move Ice Burn has the final score 50.09464285714286
+Move Synchronoise has the final score 50.0
+Move Protect has the final score 46.800000000000004
+Move Coaching has the final score 45.0
+Move Reflect has the final score 45.0
+Move Transform has the final score 45.0
+Move Strength Sap has the final score 43.578947368421055
+Move Quiver Dance has the final score 43.0
+Move Will-O-Wisp has the final score 42.0
+Move Toxic has the final score 40.25
+Move Leech Seed has the final score 39.6
+Move Psychic Terrain has the final score 39.0
+Move Parting Shot has the final score 38.22
+Move Light Screen has the final score 35.0
+Move Growth has the final score 34.559999999999995
+Move Zap Cannon has the final score 33.074999999999996
+Move Inferno has the final score 32.474999999999994
+Move Mat Block has the final score 31.849999999999998
+Move Dynamic Punch has the final score 31.474999999999994
+Move Calm Mind has the final score 30.006912
+Move Wonder Room has the final score 30.0
+Move Grassy Terrain has the final score 30.0
+Move Misty Terrain has the final score 30.0
+Move Toxic Thread has the final score 30.0
+Move Mist has the final score 28.6
+Move Taunt has the final score 25.025000000000002
+Move Gravity has the final score 25.0
+Move Octolock has the final score 25.0
+Move Metronome has the final score 24.0
+Move Perish Song has the final score 24.0
+Move Poison Gas has the final score 23.0
+Move Worry Seed has the final score 20.0
+Move Block has the final score 20.0
+Move Simple Beam has the final score 20.0
+Move Mean Look has the final score 20.0
+Move Rebalancing has the final score 20.0
+Move Spider Web has the final score 20.0
+Move Amnesia has the final score 18.72
+Move Poison Powder has the final score 17.25
+Move Scary Face has the final score 15.0
+Move Gear Up has the final score 15.0
+Move Destiny Bond has the final score 15.0
+Move Rain Dance has the final score 15.0
+Move Screech has the final score 15.0
+Move Cotton Spore has the final score 15.0
+Move Captivate has the final score 15.0
+Move Instruct has the final score 15.0
+Move Eerie Impulse has the final score 15.0
+Move Sunny Day has the final score 15.0
+Move Tar Shot has the final score 15.0
+Move Detect has the final score 14.625
+Move Cosmic Power has the final score 14.399999999999999
+Move Defend Order has the final score 14.399999999999999
+Move Aqua Ring has the final score 14.399999999999999
+Move Substitute has the final score 13.750000000000002
+Move Tail Glow has the final score 12.095999999999998
+Move Swords Dance has the final score 12.095999999999998
+Move Nasty Plot has the final score 12.095999999999998
+Move Charge has the final score 11.232
+Move Natural Gift has the final score 11
+Move Embargo has the final score 11.0
+Move Ingrain has the final score 10.799999999999999
+Move Sandstorm has the final score 10.5
+Move Hail has the final score 10.5
+Move Entrainment has the final score 10.0
+Move Ion Deluge has the final score 10.0
+Move Leer has the final score 10.0
+Move Tail Whip has the final score 10.0
+Move Camouflage has the final score 10.0
+Move Smokescreen has the final score 10.0
+Move Flash has the final score 10.0
+Move String Shot has the final score 10.0
+Move Skill Swap has the final score 10.0
+Move Confide has the final score 10.0
+Move Curse has the final score 9.9
+Move Kinesis has the final score 9.200000000000001
+Move Quick Guard has the final score 9.0
+Move Rock Polish has the final score 8.639999999999999
+Move Autotomize has the final score 8.639999999999999
+Move Acid Armor has the final score 7.919999999999999
+Move Iron Defense has the final score 7.919999999999999
+Move Cotton Guard has the final score 7.919999999999999
+Move Barrier has the final score 7.919999999999999
+Move Tickle has the final score 7.5
+Move Disable has the final score 7.5
+Move Sticky Web has the final score 7.2
+Move Torment has the final score 7.0
+Move Helping Hand has the final score 6.18
+Move Encore has the final score 6.0
+Move Withdraw has the final score 5.76
+Move Defense Curl has the final score 5.76
+Move Harden has the final score 5.76
+Move Acupressure has the final score 5.76
+Move Shell Smash has the final score 5.408000000000001
+Move Agility has the final score 5.183999999999999
+Move Meditate has the final score 5.183999999999999
+Move Defog has the final score 5.0
+Move Heal Block has the final score 5.0
+Move Water Sport has the final score 5.0
+Move Court Change has the final score 5.0
+Move Laser Focus has the final score 5.0
+Move Reflect Type has the final score 5.0
+Move Lock-On has the final score 5.0
+Move Tearful Look has the final score 5.0
+Move Conversion has the final score 5.0
+Move Sand Attack has the final score 5.0
+Move Grudge has the final score 5.0
+Move Mind Reader has the final score 5.0
+Move Noble Roar has the final score 5.0
+Move Fairy Lock has the final score 5.0
+Move Mud Sport has the final score 5.0
+Move Magnet Rise has the final score 5.0
+Move Magic Room has the final score 4.4
+Move Toxic Spikes has the final score 4.2
+Move Stealth Rock has the final score 4.2
+Move Spikes has the final score 4.2
+Move Sharpen has the final score 3.4559999999999995
+Move Guard Split has the final score 2.5
+Move Power Split has the final score 2.5
+Move Magic Coat has the final score 2.25
+Move Belly Drum has the final score 1.44
+Move Snatch has the final score 1.3499999999999999
+Move Sucker Punch has the final score 1
+Move Power Trick has the final score 0.5
+Move Stockpile has the final score 0.07260000000000001
+Move Shift Gear has the final score 0.00016511297126399992
+Move Dragon Dance has the final score 0.00016511297126399992
+Move Bulk Up has the final score 1.2383472844799992e-06
+Move Hone Claws has the final score 1.7481335832575994e-12
+Move Coil has the final score 1.4984002142207995e-12
+Move After You has the final score 0.0
+Move Assist has the final score 0.0
+Move Attract has the final score 0.0
+Move Aurora Veil has the final score 0.0
+Move Baton Pass has the final score 0.0
+Move Bestow has the final score 0.0
+Move Refresh has the final score 0.0
+Move Shore Up has the final score 0.0
+Move Trick has the final score 0.0
+Move Rototiller has the final score 0.0
+Move Teleport has the final score 0.0
+Move Telekinesis has the final score 0.0
+Move Synthesis has the final score 0.0
+Move Speed Swap has the final score 0.0
+Move Role Play has the final score 0.0
+Move Psycho Shift has the final score 0.0
+Move Power Swap has the final score 0.0
+Move Magic Powder has the final score 0.0
+Move Forest's Curse has the final score 0.0
+Move Lunar Dance has the final score 0.0
+Move Imprison has the final score 0.0
+Move Aromatherapy has the final score 0.0
+Move Heart Swap has the final score 0.0
+Move Healing Wish has the final score 0.0
+Move Trick-or-Treat has the final score 0.0
+Move Heal Pulse has the final score 0.0
+Move Guard Swap has the final score 0.0
+Move Ally Switch has the final score 0.0
+Move Spite has the final score 0.0
+Move Metal Sound has the final score 0.0
+Move Celebrate has the final score 0.0
+Move Nightmare has the final score 0.0
+Move Copycat has the final score 0.0
+Move Double Team has the final score 0.0
+Move Endure has the final score 0.0
+Move Confuse Ray has the final score 0.0
+Move Roost has the final score 0.0
+Move Mirror Move has the final score 0.0
+Move Feather Dance has the final score 0.0
+Move Growl has the final score 0.0
+Move Happy Hour has the final score 0.0
+Move Heal Bell has the final score 0.0
+Move Hold Hands has the final score 0.0
+Move Venom Drench has the final score 0.0
+Move Purify has the final score 0.0
+Move Gastro Acid has the final score 0.0
+Move Haze has the final score 0.0
+Move Lucky Chant has the final score 0.0
+Move Me First has the final score 0.0
+Move Milk Drink has the final score 0.0
+Move Minimize has the final score 0.0
+Move Morning Sun has the final score 0.0
+Move Powder has the final score 0.0
+Move Sweet Kiss has the final score 0.0
+Move Moonlight has the final score 0.0
+Move Play Nice has the final score 0.0
+Move Flower Shield has the final score 0.0
+Move Floral Healing has the final score 0.0
+Move Psych Up has the final score 0.0
+Move Dark Void has the final score 0.0
+Move Crafty Shield has the final score 0.0
+Move Recover has the final score 0.0
+Move Recycle has the final score 0.0
+Move Work Up has the final score 0.0
+Move Soak has the final score 0.0
+Move Wish has the final score 0.0
+Move Whirlwind has the final score 0.0
+Move Charm has the final score 0.0
+Move Baby-Doll Eyes has the final score 0.0
+Move Aromatic Mist has the final score 0.0
+Move Magnetic Flux has the final score 0.0
+Move Teeter Dance has the final score 0.0
+Move Fake Tears has the final score 0.0
+Move Heal Order has the final score 0.0
+Move Electrify has the final score 0.0
+Move Sweet Scent has the final score 0.0
+Move Swallow has the final score 0.0
+Move Swagger has the final score 0.0
+Move Supersonic has the final score 0.0
+Move Spotlight has the final score 0.0
+Move Excite has the final score 0.0
+Move Splash has the final score 0.0
+Move Topsy-Turvy has the final score 0.0
+Move Soft-Boiled has the final score 0.0
+Move Switcheroo has the final score 0.0
+Move Sleep Talk has the final score 0.0
+Move Slack Off has the final score 0.0
+Move Quash has the final score 0.0
+Move Safeguard has the final score 0.0
+Move Roar has the final score 0.0
+Move Rest has the final score 0.0
+Move Flatter has the final score 0.0
+Move Splash has the final score 0
+Move Jungle Healing has the final score -20.0
+Move Life Dew has the final score -25.0
+Move Odor Sleuth has the final score -55.0
+Move Miracle Eye has the final score -55.0
+Move Foresight has the final score -55.0
+Move Conversion 2 has the final score -70.0
+Move Mimic has the final score -75.0
+Move Sketch has the final score -75.0
+Move Howl has the final score -80.0
+Move Stuff Cheeks has the final score -85.0
+Move Decorate has the final score -90.0
+Move Teatime has the final score -95.0

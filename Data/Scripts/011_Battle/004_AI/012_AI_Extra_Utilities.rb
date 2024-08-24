@@ -191,16 +191,6 @@ class Battle::AI
 				t_damage_multiplier = 1.3
 				t_damage_divider    = 2
 			end
-			case @battle.field.terrain
-			when :Electric
-				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
-			when :Grassy
-				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
-			when :Psychic
-				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
-			when :Misty
-				multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
-			end
 			thereselec=false
 			theresmisty=false
 			theresgrassy=false
@@ -215,8 +205,20 @@ class Battle::AI
 			multipliers[:base_damage_multiplier] /= 1.5  if type == :DRAGON 	&& theresmisty
 			multipliers[:base_damage_multiplier] *= 1.25 if type == :GRASS 		&& theresgrassy
 			multipliers[:base_damage_multiplier] *= 1.25 if type == :PSYCHIC 	&& therespsychic
+			if !thereselec && !theresmisty && !theresgrassy && !therespsychic
+				case @battle.field.terrain
+				when :Electric
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
+				when :Grassy
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
+				when :Psychic
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
+				when :Misty
+					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
+				end
+			end
 			# Specific Field Effect Boosts
-			if theresgrassy && [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
+			if (@battle.field.terrain == :Grassy || theresgrassy) && [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
 				multipliers[:base_damage_multiplier] /= 2.0
 			end
 		end

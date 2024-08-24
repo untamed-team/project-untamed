@@ -30,7 +30,7 @@ class CrustangRacing
 			case self.getMoveEffect(racer, 1)
 			#using 'case' so I can add conditions here since we don't want racers using the effect 100% of the time
 			when "invincible"
-				self.moveEffect(racer, 1) 
+				self.moveEffect(racer, 1)
 				self.beginCooldown(racer, 1)
 			when "spinOut"
 				racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
@@ -520,5 +520,76 @@ class CrustangRacing
 			
 		end
 	end #def self.aiStrafeTowardTarget
+
+	def self.aiLookForOpportunityToUseRockHazard
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard if spinning out and has specific move and doesn't have a rock out already
+				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard if spinning out and has specific move and doesn't have a rock out already
+				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard if spinning out and has specific move and doesn't have a rock out already
+				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+	end #def self.aiLookForOpportunityToUseRockHazard
 
 end #class CrustangRacing

@@ -502,11 +502,11 @@ class Battle::AI
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
       baseDmg *= 2 if Settings::MECHANICS_GENERATION >= 7 && skill >= PBTrainerAI.mediumSkill &&
                       target.effects[PBEffects::Minimize]
-    when "AlwaysCriticalHit", "HitTwoTimes", "HitTwoTimesPoisonTarget"   # Frost Breath, Double Kick, Twineedle
+    when "AlwaysCriticalHit", "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload"   # Frost Breath, Double Kick, Twineedle
       baseDmg *= 2
     when "HitThreeTimesPowersUpWithEachHit"   # Triple Kick
       baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
-    when "HitTwoToFiveTimes", "HitThreeToFiveTimes", "HitTwoTimesReload"   # Fury Attack
+    when "HitTwoToFiveTimes", "HitThreeToFiveTimes"   # Fury Attack
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else

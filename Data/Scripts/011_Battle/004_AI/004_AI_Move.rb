@@ -162,18 +162,27 @@ class Battle::AI
 			scoresAndTargets = []
 			@battle.allBattlers.each do |b|
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-				next if target_data.targets_foe && !user.opposes?(b)
-        # switch abuse prevention #by low
-				#echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
-				if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
-					 move.function != "PursueSwitchingFoe"
-				  echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}"
-					realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.battle.choices[b.index][1]],false,b)
-				else
-					realTarget = b
-				end
-				score = pbGetMoveScore(move, user, realTarget, 100)
-				scoresAndTargets.push([score, realTarget.index]) if score > 0
+        next if target_data.targets_foe && !user.opposes?(b)
+				if !user.opposes?(b) # is ally
+          # wip, allows for the AI to target allies if its good to do so (polen puff/swagger/etc)
+          #score = pbGetMoveScore(move, user, b, 100)
+          #score *= -1
+          #echo("\n###") if $AIGENERALLOG
+          #echoln "targeting #{move.name} ally score #{score}" if $AIGENERALLOG
+          #scoresAndTargets.push([score, b.index])
+        else
+          # switch abuse prevention #by low
+          #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
+          if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
+            move.function != "PursueSwitchingFoe"
+            echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}" if $AIGENERALLOG
+            realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.battle.choices[b.index][1]],false,b)
+          else
+            realTarget = b
+          end
+          score = pbGetMoveScore(move, user, realTarget, 100)
+          scoresAndTargets.push([score, realTarget.index]) if score > 0
+        end
 			end
 			if scoresAndTargets.length > 0
 				# Get the one best target for the move

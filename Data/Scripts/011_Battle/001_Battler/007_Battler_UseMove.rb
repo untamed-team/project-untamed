@@ -224,7 +224,8 @@ class Battle::Battler
 				"StartUserSideDoubleSpeed"			=> :StrongWinds,  # tailwind
 				"ConfuseTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # hurricane
 				"ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # thunder
-				"HigherDamageInRain"														=> :Rain  # stream burst
+				"HigherDamageInRain"														=> :Rain, # stream burst
+				"HigherDamageInSunVSNonFireTypes"	              => :Rain  # scald
 			}
 			if move.function != "TypeAndPowerDependOnWeather"
 				new_weather = weather_hash[move.function]

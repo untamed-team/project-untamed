@@ -52,7 +52,7 @@ MenuHandlers.add(:battle_guide, :status_page_sleep, {
   "name"        => _INTL(" - Sleep"),
   "parent"      => :status_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]When <b>asleep</b>, a Pokémon will be unable to do anything for 2 turns. No more than 1 Pokémon per team can be put asleep at a time. \\nStatus moves are the most common way of causing sleep, however, most of them are inaccurate."))
+		pbMessage(_INTL("\\l[5]When <b>asleep</b>, a Pokémon will be unable to do anything for 2 turns. No more than 1 Pokémon on the AI's side can be put asleep at a time. \\nStatus moves are the most common way of causing sleep, however, most of them are inaccurate."))
 	}
 })
 
@@ -132,7 +132,7 @@ MenuHandlers.add(:battle_guide, :wtz_page_w_winds, {
   "name"        => _INTL(" - Strong Winds"),
   "parent"      => :wtz_page,
 	"effect"      => proc {
-		pbMessage(_INTL("During Strong Winds, Flying-type Pokémon have no Flying related weaknesses."))
+		pbMessage(_INTL("\\l[5]During Strong Winds, Flying-type Pokémon have no Flying related weaknesses."))
 	}
 })
 
