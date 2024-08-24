@@ -5459,6 +5459,7 @@ class Battle::AI
 					miniscore*=0.3
 				end
 			end
+			miniscore/=100
 			score *= miniscore
 		end
     #---------------------------------------------------------------------------
@@ -5509,7 +5510,7 @@ class Battle::AI
 			else
 				score = 0
 			end
-		else
+		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
 				miniscore*=0.5
@@ -5547,6 +5548,7 @@ class Battle::AI
 					miniscore*=0.7
 				end
 			end
+			miniscore/=100
 			score *= miniscore
 		end
     #---------------------------------------------------------------------------

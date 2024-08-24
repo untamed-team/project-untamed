@@ -123,13 +123,8 @@ class Battle::AI
     type = pbRoughType(move, user, skill)
     typeMod = pbCalcTypeMod(type, user, target)
     # Type effectiveness
-    return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || score <= 0
-		#~ theresone=false
-		#~ @battle.allBattlers.each do |j|
-			#~ if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega && target.affectedByTerrain?)
-				#~ theresone=true
-			#~ end
-		#~ end
+    return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || 
+                   (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
     # Immunity due to ability/item/other effects
     if skill >= PBTrainerAI.mediumSkill
       case type

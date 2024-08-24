@@ -1,6 +1,12 @@
 class Battle::AI
 	$AIMASTERLOG = false
 	$AIGENERALLOG = true
+	$movesToTargetAllies = ["HealTargetHalfOfTotalHP", "RaiseTargetAttack2ConfuseTarget", 
+							"RaiseTargetSpAtk1ConfuseTarget",
+							"SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
+							"UserTargetSwapAbilities", "HitThreeTimesAlwaysCriticalHit",
+							"HitOncePerUserTeamMember", "CureTargetStatusHealUserHalfOfTotalHP",
+							"RedirectAllMovesToTarget", "HealAllyOrDamageFoe"] 
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
@@ -33,15 +39,17 @@ class Battle::AI
 				pbRegisterMoveTrainer(user, i, choices, skill)
 			end
 		end
-		echo("\nChoices and scores:\n") #for: "+user.name+"\n")
-		Console.echo_h2(choices)
-		echo("------------------------\n")#----------------\n")
+		if $AIGENERALLOG
+			echo("\nChoices and scores:\n") #for: "+user.name+"\n")
+			Console.echo_h2(choices)
+			echo("------------------------\n")#----------------\n")
+		end
 		# Figure out useful information about the choices
 		totalScore = 0
 		maxScore   = 0
 		choices.each do |c|
 			totalScore += c[1]
-			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler
+			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler && $AIGENERALLOG
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
@@ -191,7 +199,7 @@ class Battle::AI
 		skill = 100
 		score = pbGetMoveScoreFunctionCode(50, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
-		return 0 if score <= 0
+		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# Adjust score based on how much damage it can deal
 		#DemICE moved damage calculation to the beginning
 		# Account for accuracy of move
@@ -263,8 +271,10 @@ class Battle::AI
 		end
 		# Don't prefer moves that are ineffective because of abilities or effects
 		return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
-		score = score.to_i
-		score = 0 if score < 0
+		if !$movesToTargetAllies.include?(move.function)
+			score = score.to_i
+			score = 0 if score < 0
+		end
 		return score
 	end
 
@@ -273,7 +283,7 @@ class Battle::AI
 	# of the target's current HP)
 	#=============================================================================
 	def pbGetMoveScoreDamage(score, move, user, target, skill)
-		return 0 if score <= 0
+		return 0 if (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
 		# Calculate how much damage the move will do (roughly)
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)

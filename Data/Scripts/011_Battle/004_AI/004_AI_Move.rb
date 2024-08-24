@@ -162,14 +162,13 @@ class Battle::AI
 			scoresAndTargets = []
 			@battle.allBattlers.each do |b|
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-        next if target_data.targets_foe && !user.opposes?(b)
+				next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
 				if !user.opposes?(b) # is ally
           # wip, allows for the AI to target allies if its good to do so (polen puff/swagger/etc)
-          #score = pbGetMoveScore(move, user, b, 100)
-          #score *= -1
-          #echo("\n###") if $AIGENERALLOG
-          #echoln "targeting #{move.name} ally score #{score}" if $AIGENERALLOG
-          #scoresAndTargets.push([score, b.index])
+          score = pbGetMoveScore(move, user, b, 100)
+          score *= -1
+          echoln "targeting ally #{b.name} with #{move.name} score #{score}" if $AIGENERALLOG
+          scoresAndTargets.push([score, b.index])
         else
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
