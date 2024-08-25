@@ -1,23 +1,31 @@
 class CrustangRacing
 
-	def self.aiBoost
+	def self.aiLookForOpportunityToUseBoost
 		###################################
 		#============= Racer1 =============
 		###################################
+		racer = @racer1
+		
 		#cannot boost if spinning out
-		self.moveEffect(@racer1, 0) if @racer1[:SpinOutTimer] <= 0 && @racer1[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
+		self.moveEffect(racer, 0) if racer[:SpinOutTimer] <= 0 && racer[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 		###################################
 		#============= Racer2 =============
 		###################################
-		self.moveEffect(@racer2, 0) if @racer2[:SpinOutTimer] <= 0 && @racer2[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
+		racer = @racer2
+		
+		#cannot boost if spinning out
+		self.moveEffect(racer, 0) if racer[:SpinOutTimer] <= 0 && racer[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 		###################################
 		#============= Racer3 =============
 		###################################
-		self.moveEffect(@racer3, 0) if @racer3[:SpinOutTimer] <= 0 && @racer3[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
+		racer = @racer3
+		
+		#cannot boost if spinning out
+		self.moveEffect(racer, 0) if racer[:SpinOutTimer] <= 0 && racer[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
-	end #def self.aiBoost
+	end #def self.aiLookForOpportunityToUseBoost
 	
 	def self.aiMove1 #might not be used anymore or might be used for things that don't require targets like spinout and overload
 		#this handles actually using the move, not WHEN to use the move
@@ -747,5 +755,77 @@ class CrustangRacing
 				#Console.echo_warn "Racer3 just used reduceCooldown"
 		end #if racer[:SpinOutTimer] <= 0
 	end #def self.aiLookForOpportunityToUseReduceCooldown
+	
+	def self.aiLookForOpportunityToUseSecondBoost
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				Console.echo_warn "racer2 - secondBoost"
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+		
+		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+		end #if racer[:SpinOutTimer] <= 0
+	end #def self.aiLookForOpportunityToUseSecondBoost
 
 end #class CrustangRacing

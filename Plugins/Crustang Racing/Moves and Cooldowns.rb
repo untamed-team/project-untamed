@@ -176,25 +176,6 @@ class CrustangRacing
 		end #if moveNumber == 0
 		
 	end #def self.beginCooldown(move)
-		
-	def self.updateCooldownMultipliers
-		if @startingCooldownMultiplier == true
-			@initialCooldownMultiplierTimer = CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate if !@initialCooldownMultiplierTimer
-			@initialCooldownMultiplierTimer -= 1
-			if @initialCooldownMultiplierTimer <= 0
-				@startingCooldownMultiplier = false
-				#set all cooldownmultipliers to 1
-				@racer1[:BoostCooldownMultiplier] = 1
-				@racer1[:MoveCoolDownMultiplier] = 1
-				@racer2[:BoostCooldownMultiplier] = 1
-				@racer2[:MoveCoolDownMultiplier] = 1
-				@racer3[:BoostCooldownMultiplier] = 1
-				@racer3[:MoveCoolDownMultiplier] = 1
-				@racerPlayer[:BoostCooldownMultiplier] = 1
-				@racerPlayer[:MoveCoolDownMultiplier] = 1
-			end
-		end
-	end #def self.updateCooldownMultipliers
 	
 	def self.getMoveEffect(racer, moveNumber)
 		case moveNumber
@@ -303,7 +284,10 @@ class CrustangRacing
 				racer[:BoostingStatus] = true
 				racer[:PreviousDesiredSpeed] = racer[:DesiredSpeed]
 				racer[:DesiredSpeed] = CrustangRacingSettings::SECONDARY_BOOST_SPEED
-				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
+				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDARY_BOOST_LENGTH_SECONDS) * Graphics.frame_rate
+				#make Boost cooldown as well
+				racer[:BoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
+				self.beginCooldown(racer, 0)
 			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
 				self.placeHazard(racer, "rock")
 			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.

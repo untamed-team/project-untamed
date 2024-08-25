@@ -668,6 +668,24 @@ class CrustangRacing
 		return false
 	end #def self.reduceCooldownMoveIsReady?(racer)
 	
+	
+	def self.secondBoostMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "secondBoost") != false
+			moveNumber = self.hasMoveEffect?(racer, "secondBoost")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.reduceCooldownMoveIsReady?(racer)
+	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby
