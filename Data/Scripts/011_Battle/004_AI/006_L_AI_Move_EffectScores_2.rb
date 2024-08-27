@@ -35,7 +35,7 @@ class Battle::AI
 				next if i.nil?
 				next if !i || i.egg?
 				next if i.status != :SLEEP
-				miniscore*=0.5
+				miniscore*=0.6
 			end
 			score = miniscore
 		else
@@ -46,7 +46,7 @@ class Battle::AI
 		theresone=false
 		@battle.allBattlers.each do |j|
 			if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && !target.affectedByTerrain?) || 
-					(j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && !target.affectedByTerrain?)
+				(j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && !target.affectedByTerrain?)
 				theresone=true
 			end
 		end
@@ -74,7 +74,7 @@ class Battle::AI
     when "PoisonTarget", "BadPoisonTarget", "CategoryDependsOnHigherDamagePoisonTarget" 
 		# poison moves, toxic, shell side arm
 		if target.pbCanPoison?(user, false)
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 115, move, 100)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 100, move, 100)
 			ministat=0
 			ministat+=target.stages[:DEFENSE]
 			ministat+=target.stages[:SPECIAL_DEFENSE]
@@ -103,7 +103,9 @@ class Battle::AI
 				miniscore/=100.0
 				score*=miniscore
 			end
-      end
+		else
+			score = 0 if move.statusMove?
+    	end
     #---------------------------------------------------------------------------
     when "PoisonTargetLowerTargetSpeed1" # Toxic Thread
 		roles = pbGetPokemonRole(user, target)
@@ -123,8 +125,8 @@ class Battle::AI
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				miniscore*=1.5
 			end
-			if user.pbHasMove?(:VENOSHOCK) || user.pbHasMove?(:VENOMDRENCH) || 
-				user.hasActiveAbility?(:MERCILESS)
+			if user.pbHasMove?(:VENOSHOCK) || user.pbHasMove?(:VENOMDRENCH) || user.pbHasMove?(:HEX) || 
+			   user.hasActiveAbility?(:MERCILESS)
 				miniscore*=1.6
 			end
 			miniscore/=100.0
@@ -176,10 +178,10 @@ class Battle::AI
 				miniscore*=0.1
 			end
 			movecheckelectroball	= false
-			movecheckgyroball			= false
+			movecheckgyroball		= false
 			for j in target.moves
 				movecheckelectroball = true if j.id == :ELECTROBALL
-				movecheckgyroball		 = true if j.id == :GYROBALL
+				movecheckgyroball	 = true if j.id == :GYROBALL
 			end
 			miniscore*=1.3 if movecheckelectroball
 			miniscore*=0.5 if movecheckgyroball
@@ -192,33 +194,6 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "ParalyzeTarget", "ParalyzeTargetIfNotTypeImmune",
          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ParalyzeFlinchTarget"
-		if move.id == :THUNDERWAVE &&
-		   Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, target))
-			score = 0
-		end
-		if move.id == :THUNDER
-			if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0) && 
-				target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-										"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-										"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-				score *= 1.5
-			end
-			movecheck=false
-			for m in target.moves
-				movecheck=true if [:BOUNCE,:FLY,:SKYDROP].include?(move.id)
-			end
-			score*=1.2 if movecheck
-		end
-		if move.id == :THUNDERFANG
-			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
-					score*=1.1
-				end
-				if target.hasActiveAbility?(:STEADFAST)
-					score*=0.3
-				end            
-			end
-		end
 		if target.pbCanParalyze?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 100, move, skill)
 			aspeed = pbRoughStat(user, :SPEED, skill)
@@ -267,7 +242,34 @@ class Battle::AI
 			end
 			score*=miniscore
 		else
-			score=0
+			score = 0 if move.statusMove?
+		end
+		if move.function == "ParalyzeTargetIfNotTypeImmune" &&
+		   Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, target))
+			score = 0
+		end
+		if move.function == "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"
+			if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0) && 
+				target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+										"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+										"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+				score *= 1.5
+			end
+			movecheck=false
+			for m in target.moves
+				movecheck=true if [:BOUNCE,:FLY,:SKYDROP].include?(move.id)
+			end
+			score*=1.2 if movecheck
+		end
+		if move.function == "ParalyzeFlinchTarget"
+			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
+				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					score*=1.1
+				end
+				if target.hasActiveAbility?(:STEADFAST)
+					score*=0.3
+				end            
+			end
 		end
     #---------------------------------------------------------------------------
     when "BurnTarget", "BurnTargetIfTargetStatsRaisedThisTurn","BurnFlinchTarget"
@@ -296,6 +298,8 @@ class Battle::AI
 				miniscore/=100.0
 				score*=miniscore
 			end
+		else
+			score = 0 if move.statusMove?
      	end
 		if move.function == "BurnFlinchTarget"
 			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
@@ -308,7 +312,9 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetSuperEffectiveAgainstWater"
+    when "FreezeTarget", "FreezeFlinchTarget", 
+		 "FreezeTargetSuperEffectiveAgainstWater", "FreezeTargetAlwaysHitsInHail" 
+		 # biting cold, ice fang, freeze dry, blizzard
 		if target.pbCanFreeze?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 120, move, 100)
 			ministat=0
@@ -334,6 +340,8 @@ class Battle::AI
 				miniscore/=100.0
 				score*=miniscore
 			end
+		else
+			score = 0 if move.statusMove?
       	end
 		if move.function == "FreezeFlinchTarget"
 			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
@@ -345,34 +353,6 @@ class Battle::AI
 				end            
 			end
 		end
-    #---------------------------------------------------------------------------
-    when "FreezeTargetAlwaysHitsInHail" # blizzard
-		if target.pbCanFreeze?(user, false)
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 110, move, 100)
-			ministat=0
-			ministat+=target.stages[:SPECIAL_ATTACK]
-			ministat+=target.stages[:SPECIAL_DEFENSE]
-			ministat+=target.stages[:SPEED]
-			if ministat>0
-				minimini=5*ministat
-				minimini+=100
-				minimini/=100.0
-				miniscore*=minimini
-			end
-			if move.baseDamage>0
-				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
-				if user.hasActiveAbility?(:SERENEGRACE)
-					miniscore*=2
-				end
-				miniscore+=100
-				miniscore/=100.0
-				score*=miniscore
-			else
-				miniscore/=100.0
-				score*=miniscore
-			end
-     	end
     #---------------------------------------------------------------------------
     when "ParalyzeBurnOrFreezeTarget" # tri attack
 		if target.status == :NONE
@@ -406,11 +386,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "GiveUserStatusToTarget" # Psycho Shift
-		if user.status == :NONE
-			score -= 90
-		else
-			score += 40
-		end
 		if user.pbHasAnyStatus? && target.status==:NONE && target.effects[PBEffects::Yawn]==0
 			score*=1.3
 			if target.status==0 && target.effects[PBEffects::Yawn]==0
@@ -448,7 +423,7 @@ class Battle::AI
 					score*=miniscore
 				end          
 			end
-			if user.pbHasMoveFunction("DoublePowerIfTargetStatusProblem")
+			if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 				score*=1.3
 			end
 		else
@@ -470,11 +445,9 @@ class Battle::AI
 			score*=0.1
 		end      
 		maxdam=0
-		movecheck=false
 		for m in target.moves
 			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
 			maxdam = tempdam if tempdam > maxdam
-			movecheck=true if m.id == :HEX
 		end
 		if maxdam>user.hp
 			score*=0.1
@@ -482,7 +455,7 @@ class Battle::AI
 		if target.effects[PBEffects::Toxic]>2
 			score*=1.3
 		end   
-		score*=1.3 if movecheck
+		score*=1.3 if target.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
     #---------------------------------------------------------------------------
     when "CureUserPartyStatus" # aromatherapy
 		statuses = 0
@@ -700,7 +673,8 @@ class Battle::AI
 				end
 				miniscore+=100
 				miniscore/=100.0
-				score*=miniscore
+				# confusion/dizzy with hurricane is aggressively unlikely for chaos mode, so skip applying the calc
+				score*=miniscore if move.function != "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $game_variables[MECHANICSVAR] >= 3
 			else
 				miniscore/=100.0
 				score*=miniscore
@@ -719,39 +693,39 @@ class Battle::AI
 			new_type = nil
 			case @battle.field.terrain
 			when :Electric
-			new_type = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
+				new_type = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
 			when :Grassy
-			new_type = :GRASS if GameData::Type.exists?(:GRASS)
+				new_type = :GRASS if GameData::Type.exists?(:GRASS)
 			when :Misty
-			new_type = :FAIRY if GameData::Type.exists?(:FAIRY)
+				new_type = :FAIRY if GameData::Type.exists?(:FAIRY)
 			when :Psychic
-			new_type = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
+				new_type = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
 			end
 			if !new_type
-			envtypes = {
-				:None        => :NORMAL,
-				:Grass       => :GRASS,
-				:TallGrass   => :GRASS,
-				:MovingWater => :WATER,
-				:StillWater  => :WATER,
-				:Puddle      => :WATER,
-				:Underwater  => :WATER,
-				:Cave        => :ROCK,
-				:Rock        => :GROUND,
-				:Sand        => :GROUND,
-				:Forest      => :BUG,
-				:ForestGrass => :BUG,
-				:Snow        => :ICE,
-				:Ice         => :ICE,
-				:Volcano     => :FIRE,
-				:Graveyard   => :GHOST,
-				:Sky         => :FLYING,
-				:Space       => :DRAGON,
-				:UltraSpace  => :PSYCHIC
-			}
-			new_type = envtypes[@battle.environment]
-			new_type = nil if !GameData::Type.exists?(new_type)
-			new_type ||= :NORMAL
+				envtypes = {
+					:None        => :NORMAL,
+					:Grass       => :GRASS,
+					:TallGrass   => :GRASS,
+					:MovingWater => :WATER,
+					:StillWater  => :WATER,
+					:Puddle      => :WATER,
+					:Underwater  => :WATER,
+					:Cave        => :ROCK,
+					:Rock        => :GROUND,
+					:Sand        => :GROUND,
+					:Forest      => :BUG,
+					:ForestGrass => :BUG,
+					:Snow        => :ICE,
+					:Ice         => :ICE,
+					:Volcano     => :FIRE,
+					:Graveyard   => :GHOST,
+					:Sky         => :FLYING,
+					:Space       => :DRAGON,
+					:UltraSpace  => :PSYCHIC
+				}
+				new_type = envtypes[@battle.environment]
+				new_type = nil if !GameData::Type.exists?(new_type)
+				new_type ||= :NORMAL
 			end
 			score -= 90 if !user.pbHasOtherType?(new_type)
 		end
@@ -795,11 +769,11 @@ class Battle::AI
 		if user.canChangeType?
 			has_possible_type = false
 			user.eachMoveWithIndex do |m, i|
-			break if Settings::MECHANICS_GENERATION >= 6 && i > 0
-			next if GameData::Type.get(m.type).pseudo_type
-			next if user.pbHasType?(m.type)
-			has_possible_type = true
-			break
+				break if Settings::MECHANICS_GENERATION >= 6 && i > 0
+				next if GameData::Type.get(m.type).pseudo_type
+				next if user.pbHasType?(m.type)
+				has_possible_type = true
+				break
 			end
 			score -= 90 if !has_possible_type
 		else
@@ -995,6 +969,14 @@ class Battle::AI
 					score*=0.5
 				end
 			end
+			effcheck = Effectiveness.calculate(targetTypes[2], :FIRE, :FIRE, :FIRE)
+			if effcheck > 4
+				score*=1.5
+			else            
+				if effcheck<4
+					score*=0.5
+				end
+			end
 			if maxtype!=-1
 				effcheck = Effectiveness.calculate(maxtype, :FIRE, :FIRE, :FIRE)
 				if effcheck > 4
@@ -1018,7 +1000,10 @@ class Battle::AI
 				(target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			score = 0
 		else
-			miniscore = getAbilityDisruptScore(move,user,target,skill)
+			miniscore=100
+			minimi = getAbilityDisruptScore(move,user,target,skill)
+			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			miniscore*=minimi
 			if user.opposes?(target) # is enemy
 				if miniscore < 2
 					miniscore = 2 - miniscore
@@ -1047,7 +1032,9 @@ class Battle::AI
 			score = 0
 		else
 			miniscore = 100
-			miniscore *= getAbilityDisruptScore(move,user,target,skill)
+			minimi = getAbilityDisruptScore(move,user,target,skill)
+			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			miniscore*=minimi
 			restcheck=false
 			snorecheck=false
 			for m in target.moves
@@ -1077,19 +1064,19 @@ class Battle::AI
 				:TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((minimini-miniscore)/100))
+			score *= (1 + ((minimini-miniscore)/10))
 		end
     #---------------------------------------------------------------------------
-    when "SetTargetAbilityToUserAbility" # ENTRAINMENT (Tetra's moto!)
+    when "SetTargetAbilityToUserAbility" # EEEEEEEEE-ntertainment !!
 		if target.effects[PBEffects::Substitute] > 0
 			score = 0
 		elsif !user.ability || user.ability == target.ability ||
-				![:MULTITYPE, :RKSSYSTEM, :TRUANT].include?(target.ability_id) ||
+				![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
 				![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
 				:TRACE, :ZENMODE].include?(user.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((miniscore-minimini)/100))
+			score *= (1 + ((miniscore-minimini)/10))
 			if user.opposes?(target) # is enemy
 				if user.ability == :TRUANT
 					score*=3
@@ -1097,7 +1084,9 @@ class Battle::AI
 					score*=3
 				elsif user.ability == :DEFEATIST
 					score*=2
-				elsif user.ability == :WONDERGUARD
+				end
+				if target.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]) ||
+				   user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
 					score=0
 				end
 			else                    # is ally
@@ -1114,7 +1103,7 @@ class Battle::AI
 		if target.effects[PBEffects::Substitute] > 0
 			score = 0
 		elsif !user.ability || user.ability == target.ability ||
-				![:MULTITYPE, :RKSSYSTEM, :TRUANT].include?(target.ability_id) ||
+				![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
 				![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
 				:TRACE, :ZENMODE].include?(user.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
@@ -1128,7 +1117,7 @@ class Battle::AI
 				end
 			end 
 =end
-			score *= (1 + ((miniscore-minimini)/100))
+			score *= (1 + ((miniscore-minimini)/10))
 			if user.opposes?(target) # is enemy
 				if user.ability == :TRUANT
 					score*=3
@@ -1136,9 +1125,9 @@ class Battle::AI
 					score*=3
 				elsif user.ability == :DEFEATIST
 					score*=2
-				elsif user.ability == :WONDERGUARD
-					score=0
-				elsif user.ability == :SPEEDBOOST
+				end
+				if target.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]) ||
+				   user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
 					score=0
 				end
 			else                    # is ally
@@ -1156,7 +1145,9 @@ class Battle::AI
 		   target.effects[PBEffects::GastroAcid]
 			score = 0
 		elsif !target.unstoppableAbility?
-			score*=getAbilityDisruptScore(move,user,target,skill)
+			minimi = getAbilityDisruptScore(move,user,target,skill)
+			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			score*=minimi
 		else
 			score = 0 if move.statusMove?
 		end
@@ -1264,11 +1255,6 @@ class Battle::AI
 			if move.type==:FIRE
 				score*=0.5
 			end
-		elsif target.hasActiveAbility?(:WATERBUBBLE)
-			score*=1.5
-			#~ if move.type==:FIRE
-				#~ score*=1.3
-			#~ end
 		end
     #---------------------------------------------------------------------------
     when "StartUserAirborne" # Magnet Rise
@@ -1318,8 +1304,8 @@ class Battle::AI
     when "HitsTargetInSky" # sky uppercut
 		if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0) && 
 			target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-										"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-										"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+									"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+									"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 			score *= 1.5
 		end
 		movecheck=false

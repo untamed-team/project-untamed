@@ -5384,7 +5384,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetAttack2ConfuseTarget" # swagger
-		if target.opposes?(user)
+		if target.opposes?(user) # is enemy
 			if target.pbCanConfuse?(user, false)
 				if $game_variables[MECHANICSVAR] >= 3
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, skill)
@@ -5433,11 +5433,17 @@ class Battle::AI
 			if target.effects[PBEffects::Attract]>=0 || target.paralyzed? || target.effects[PBEffects::Yawn]>0 || target.asleep?
 				miniscore*=0.3
 			end    
+			if $game_variables[MECHANICSVAR] >= 3
+				minimi = getAbilityDisruptScore(move,user,target,skill)
+				minimi = 1 / minimi
+				miniscore*=minimi
+			else
+				if target.hasActiveAbility?(:CONTRARY)
+					miniscore = 0
+				end
+			end
 			if target.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
 				miniscore*=1.2
-			end
-			if target.hasActiveAbility?(:CONTRARY)
-				miniscore = 0
 			end
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
@@ -5449,13 +5455,13 @@ class Battle::AI
 			end
 			if targetAlly.length > 0
 				if target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed && 
-				   target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed
+				   target.pbSpeed > @battle.battlers[targetAlly[1]].pbSpeed
 					miniscore*=1.3
 				else
 					miniscore*=0.7
 				end
 				if @battle.battlers[targetAlly[0]].pbHasMove?(:FOULPLAY) || 
-					@battle.battlers[targetAlly[0]].pbHasMove?(:FOULPLAY)
+					@battle.battlers[targetAlly[1]].pbHasMove?(:FOULPLAY)
 					miniscore*=0.3
 				end
 			end
@@ -5464,7 +5470,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetSpAtk1ConfuseTarget" # flatter
-		if target.opposes?(user)
+		if target.opposes?(user) # is enemy
 			if target.pbCanConfuse?(user, false)
 				if $game_variables[MECHANICSVAR] >= 3
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, skill)
@@ -5526,11 +5532,17 @@ class Battle::AI
 			if target.effects[PBEffects::Attract]>=0 || target.paralyzed? || target.effects[PBEffects::Yawn]>0 || target.asleep?
 				miniscore*=0.3
 			end    
+			if $game_variables[MECHANICSVAR] >= 3
+				minimi = getAbilityDisruptScore(move,user,target,skill)
+				minimi = 1 / minimi
+				miniscore*=minimi
+			else
+				if target.hasActiveAbility?(:CONTRARY)
+					miniscore = 0
+				end
+			end
 			if target.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
 				miniscore*=1.2
-			end
-			if target.hasActiveAbility?(:CONTRARY)
-				miniscore = 0
 			end
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
@@ -5542,7 +5554,7 @@ class Battle::AI
 			end
 			if targetAlly.length > 0
 				if target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed && 
-				   target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed
+				   target.pbSpeed > @battle.battlers[targetAlly[1]].pbSpeed
 					miniscore*=1.3
 				else
 					miniscore*=0.7
@@ -5554,10 +5566,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseTargetSpDef1" # Aromatic Mist
 		hasAlly = !user.allAllies.empty?
-		if hasAlly && !target.opposes?(user) && target.statStageAtMax?(:SPECIAL_DEFENSE)
-			if $game_variables[MECHANICSVAR] >= 3 && target.SetupMovesUsed.include?(move.id)
-				score=0
-			end
+		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
 			hasAlly = !target.allAllies.empty?
 			if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
 				miniscore*=2
@@ -5581,6 +5590,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:CONTRARY)
 				score=0
 			end
+			score=0 if $game_variables[MECHANICSVAR] >= 3 && target.SetupMovesUsed.include?(move.id)
 		else
 			score=0
 		end
@@ -5707,8 +5717,8 @@ class Battle::AI
     when "RaiseTargetAtkSpAtk2"
 		if target.opposes?(user) || ($game_variables[MECHANICSVAR] >= 3 && target.SetupMovesUsed.include?(move.id))
 			score -= 100
-		elsif skill >= PBTrainerAI.mediumSkill && target.hasActiveAbility?(:CONTRARY)
-			score -= 90
+		elsif target.hasActiveAbility?(:CONTRARY)
+			score -= 100
 		else
 			score -= target.stages[:ATTACK] * 20
 			score -= target.stages[:SPECIAL_ATTACK] * 20
@@ -6304,7 +6314,16 @@ class Battle::AI
 				end
 			end
 			miniscore*=0.5 if gyroballin
-			miniscore*=0.7 if move.id == :BULLDOZE && @battle.field.terrain == :Grassy
+			
+			theresone=false
+			@battle.allBattlers.each do |j|
+				if (j.isSpecies?(:TREVENANT) && j.item == :TREVENANTITE && j.willmega)
+					theresone=true
+				end
+			end
+			miniscore*=0.7 if move.function == "LowerTargetSpeed1WeakerInGrassyTerrain" && 
+							 (@battle.field.terrain == :Grassy || theresone)
+			
 			miniscore-=100
 			if move.addlEffect.to_f != 100
 				miniscore*=(move.addlEffect.to_f/100)
@@ -6396,14 +6415,14 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "LowerTargetAccuracy1", "LowerTargetAccuracy2", "LowerTargetAccuracy3"
-    	score -= 0 # they do jackshit
+    	score = 0 if move.statusMove? # they do jackshit
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion1"
 		if move.statusMove?
 			if target.pbCanLowerStatStage?(:EVASION, user)
-			score += target.stages[:EVASION] * 10
+				score += target.stages[:EVASION] * 10
 			else
-			score -= 90
+				score -= 90
 			end
 		elsif target.stages[:EVASION] > 0
 			score += 20
@@ -6444,7 +6463,7 @@ class Battle::AI
 		miniscore/=100.0
 		score*=miniscore
 		if target.pbOwnSide.effects[PBEffects::AuroraVeil]>0
-			score*=3
+			score*=1.8
 		end
 		if target.pbOwnSide.effects[PBEffects::Reflect]>0
 			score*=2
@@ -6652,7 +6671,7 @@ class Battle::AI
 			if (!target.pbCanLowerStatStage?(:ATTACK) && !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)) ||
 					(target.stages[:ATTACK]==-6 && target.stages[:SPECIAL_ATTACK]==-6) || 
 					(target.stages[:ATTACK]>0 && target.stages[:SPECIAL_ATTACK]>0)
-				score*=0.5
+				score=0
 			else
 				miniscore=100
 				roles = pbGetPokemonRole(user, target)
@@ -6702,7 +6721,7 @@ class Battle::AI
 			end  
 			if (pbRoughStat(target,:SPEED,skill)<user.pbSpeed) || target.stages[:SPEED]>0 || 
 					!target.pbCanLowerStatStage?(:SPEED)
-				score*=0.5
+				score=0
 			else
 				miniscore=100            
 				if target.hasActiveAbility?(:SPEEDBOOST)
@@ -7086,7 +7105,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UserStealTargetPositiveStatStages" # Spectral Thief
-		if target.effects[PBEffects::Substitute] > 0
+		if target.effects[PBEffects::Substitute]<=0
 			ministat = 0
 			GameData::Stat.each_battle do |s|
 				next if target.stages[s.id] <= 0
@@ -7105,7 +7124,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "InvertTargetStatStages" # Topsy-Turvy
-		if target.effects[PBEffects::Substitute] > 0
+		if target.effects[PBEffects::Substitute]<=0
 			ministat=0
 			ministat+=target.stages[:ATTACK] 
 			ministat+=target.stages[:DEFENSE]
@@ -7117,9 +7136,11 @@ class Battle::AI
 			# if ally,  higher score so it inverts negative stat changes
 			# if enemy, higher score so it inverts positive stat changes
 			if ministat>0
-				ministat = (user.opposes?(target)) ? ministat + 100 : 0
+				ministat = 0   if !user.opposes?(target) # ally
+				ministat+= 100 if user.opposes?(target) # enemy
 			else
-				ministat = (user.opposes?(target)) ? 0 : ministat - 100
+				ministat-= 100 if !user.opposes?(target) # ally
+				ministat = 0   if user.opposes?(target) # enemy
 			end
 			ministat/=100.0
 			score*=ministat
@@ -7405,6 +7426,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints" # Fell Stinger
 		if !user.statStageAtMax?(:ATTACK)
+			score*=2 if !targetSurvivesMove(move,attacker,opponent)
 			if score>=100
 				score*=2
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)

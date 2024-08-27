@@ -293,7 +293,7 @@ MenuHandlers.add(:pokemon_debug_menu, :hidden_values, {
           break if cmd2 < 0
           if cmd2 < iv_id.length
             params = ChooseNumberParams.new
-            params.setRange(0, 31)
+            params.setRange(0, 0)
             params.setDefaultValue(pkmn.iv[iv_id[cmd2]])
             params.setCancelValue(pkmn.iv[iv_id[cmd2]])
             f = pbMessageChooseNumber(_INTL("Set the IV for {1} (max. ??).",
@@ -304,7 +304,7 @@ MenuHandlers.add(:pokemon_debug_menu, :hidden_values, {
               screen.pbRefreshSingle(pkmnid)
             end
           else   # Randomise all
-            GameData::Stat.each_main { |s| pkmn.iv[s.id] = rand(31 + 1) }
+            GameData::Stat.each_main { |s| pkmn.iv[s.id] = rand(0 + 1) }
             pkmn.calc_stats
             screen.pbRefreshSingle(pkmnid)
           end
