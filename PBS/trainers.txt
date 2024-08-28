@@ -199,10 +199,10 @@ Pokemon = FLABEBE,9
 LoseText = Aren't my Pokémon so cute?
 Pokemon = SKIDDO,9
 	Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
-    AbilityIndex = 1
+    Ability = GRASSPELT
 Pokemon = M_EKANS,9
 	Moves = POISONFANG,COIL,BITE
-    AbilityIndex = 0
+    Ability = INTIMIDATE
     Nature = IMPISH
 #-------------------------------
 [YOUNGSTER_M,Gabriel]
@@ -214,12 +214,13 @@ Pokemon = BUNNELBY,9
 LoseText = That was not so cool!
 Pokemon = M_MEOWTH,9
 	Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
-    AbilityIndex = 2
+    Ability = UNNERVE
     Nature = ADAMANT
 Pokemon = WRENNER,9
 	Moves = AERIALACE,SANDTOMB,DETECT
+	Item = BINDINGBAND
+    Ability = RUNAWAY
     Nature = IMPISH
-    AbilityIndex = 0
 #-------------------------------
 [TOURIST,William]
 LoseText = She will come back, she always does.
@@ -231,12 +232,12 @@ Pokemon = WRENNER,9
 LoseText = She will come back, she always does.
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    AbilityIndex = 1
+    Ability = INTIMIDATE
     Nature = TIMID
 Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
-    AbilityIndex = 0
+    Ability = POISONTOUCH
 #-------------------------------
 [LAD,Rainer]
 LoseText = Wait, I lost?
@@ -249,9 +250,9 @@ LoseText = Wait, I lost?
 Pokemon = BUDEW,10
 	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
     Nature = CALM
-Pokemon = WORMOTE,9
+Pokemon = WORMOTE,10
 	Moves = STRUGGLEBUG,CONFUSION,SING
-    AbilityIndex = 1
+    Ability = TRACE
 	Item = OCCABERRY
     Nature = TIMID
 #-------------------------------
@@ -268,13 +269,13 @@ Pokemon = FEEBAS,10
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = LOTAD,10
 	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
-    AbilityIndex = 1
+    Ability = RAINDISH
 	Item = ASPEARBERRY
     Nature = MODEST
 Pokemon = GULPI,10
 	Moves = ASTONISH,BITE,SPARK,CHARGE
-    AbilityIndex = 0
-    Nature = TIMID
+    Ability = SWIFTSWIM
+    Nature = CALM
 #-------------------------------
 [WAREHOUSEWORKER,Donna]
 LoseText = Okay, the way out is easy, but don't tell my boss.
