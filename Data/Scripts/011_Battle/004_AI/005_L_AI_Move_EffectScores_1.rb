@@ -5715,13 +5715,19 @@ class Battle::AI
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseTargetAtkSpAtk2"
-		if target.opposes?(user) || ($game_variables[MECHANICSVAR] >= 3 && target.SetupMovesUsed.include?(move.id))
-			score -= 100
-		elsif target.hasActiveAbility?(:CONTRARY)
+		if target.hasActiveAbility?(:CONTRARY)
+			if target.opposes?(user) && target.battle.choices[target.index][0] != :SwitchOut
+				score -= target.stages[:ATTACK] * 20
+				score -= target.stages[:SPECIAL_ATTACK] * 20
+			else
+				score -= 100
+			end
+		elsif target.opposes?(user) || ($game_variables[MECHANICSVAR] >= 3 && target.SetupMovesUsed.include?(move.id))
 			score -= 100
 		else
 			score -= target.stages[:ATTACK] * 20
 			score -= target.stages[:SPECIAL_ATTACK] * 20
+			score *= -1
 		end
     #---------------------------------------------------------------------------
     when "LowerTargetAttack1" # growl

@@ -1,15 +1,16 @@
 class Battle::AI
-	$AIMASTERLOG = true
+	$AIMASTERLOG = false
 	$AIGENERALLOG = true
-	# need testing:
-	# topsy turby, instruct, gastro acid, floral healing, frost breath
-	$movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
+	# game dies when instruct is used
+	# gastro acid can sometimes make the ai skip turns?
+	# crit moves are off, they dont check if the foe is an ally
+	$movesToTargetAllies = [#"HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
 							"RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
 							"RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
-							"TargetUsesItsLastUsedMoveAgain",
+							#"TargetUsesItsLastUsedMoveAgain",
 							"SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
 							"SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
-							"UserTargetSwapAbilities", "NegateTargetAbility", 
+							"UserTargetSwapAbilities", #"NegateTargetAbility", 
 							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
 							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
 							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 

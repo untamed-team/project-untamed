@@ -1146,7 +1146,10 @@ class Battle::AI
 			score = 0
 		elsif !target.unstoppableAbility?
 			minimi = getAbilityDisruptScore(move,user,target,skill)
-			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			if !user.opposes?(target) # is ally
+				minimi = 1 / minimi
+				minimi *= -1 
+			end
 			score*=minimi
 		else
 			score = 0 if move.statusMove?
