@@ -641,7 +641,7 @@ class Battle::AI
     when "StartNegateTargetEvasionStatStageAndGhostImmunity"
 		if target.effects[PBEffects::Foresight]
 			score -= 90
-		elsif target.pbHasType?(:GHOST)
+		elsif target.pbHasType?(:GHOST, true)
 			score += 70
 		elsif target.stages[:EVASION] <= 0
 			score -= 60
@@ -650,7 +650,7 @@ class Battle::AI
     when "StartNegateTargetEvasionStatStageAndDarkImmunity"
 		if target.effects[PBEffects::MiracleEye]
 			score -= 90
-		elsif target.pbHasType?(:DARK)
+		elsif target.pbHasType?(:DARK, true)
 			score += 70
 		elsif target.stages[:EVASION] <= 0
 			score -= 60
@@ -704,7 +704,7 @@ class Battle::AI
 		end
 		if (@battle.field.terrain == :Electric || thereselec) && user.affectedByTerrain? && 
 		   (target.hasActiveAbility?([:MOTORDRIVE, :LIGHTNINGROD, :VOLTABSORB]) ||
-		    target.pbHasType?(:GROUND))
+		    target.pbHasType?(:GROUND, true))
 			score*=0.1
 		end
 		if (@battle.field.terrain == :Grassy || theresgrassy) && user.affectedByTerrain? && 
@@ -712,7 +712,7 @@ class Battle::AI
 			score*=0.1
 		end
 		if (@battle.field.terrain == :Psychic || therespsychic) && user.affectedByTerrain? && 
-		   target.pbHasType?(:DARK)
+		   target.pbHasType?(:DARK, true)
 			score*=0.1
 		end
     #---------------------------------------------------------------------------
@@ -744,7 +744,7 @@ class Battle::AI
 					score*=0.1
 				end
 			end
-			if user.pbHasType?(:GROUND)
+			if user.pbHasType?(:GROUND, true)
 				score*=1.3
 			end
 			if score==initialscores
@@ -783,14 +783,14 @@ class Battle::AI
 				end
 			end
 		end
-		if user.pbHasType?(:GROUND)
+		if user.pbHasType?(:GROUND, true)
 			score*=1.1
 		end
 		user.allAllies.each do |b|
 			if b.hasActiveAbility?([:MOTORDRIVE, :LIGHTNINGROD, :VOLTABSORB])
 				score*=1.2
 			end
-			if b.pbHasType?(:GROUND)
+			if b.pbHasType?(:GROUND, true)
 				score*=1.1
 			end
 		end
@@ -1646,7 +1646,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -1804,7 +1804,7 @@ class Battle::AI
 			miniscore*=0.3
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || 
-			(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+			(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		for m in user.moves
@@ -1986,7 +1986,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2033,7 +2033,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2080,7 +2080,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2158,7 +2158,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2196,7 +2196,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "TwoTurnAttackInvulnerableInSkyTargetCannotAct" # sky drop
-		if target.pbHasType?(:FLYING)
+		if target.pbHasType?(:FLYING, true)
 			score = 0         
 		end
 		targetlivecount=@battle.pbAbleNonActiveCount(user.idxOpposingSide)
@@ -2211,7 +2211,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2261,7 +2261,7 @@ class Battle::AI
 		if user.pbHasAnyStatus? || user.effects[PBEffects::Curse] || user.effects[PBEffects::Attract]>-1 || user.effects[PBEffects::Confusion]>0
 			score*=0.5
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if user.pbOwnSide.effects[PBEffects::Tailwind]>0 || user.pbOwnSide.effects[PBEffects::Reflect]>0 || user.pbOwnSide.effects[PBEffects::LightScreen]>0
@@ -2452,7 +2452,7 @@ class Battle::AI
 		if user.hp*3<user.totalhp
 			score*=0.7
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
 		if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
@@ -3177,7 +3177,7 @@ class Battle::AI
 					(user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(user.effectiveWeather)) || 
 					(user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(user.effectiveWeather)) || 
 					user.effects[PBEffects::Ingrain] || 
-					(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+					(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 					(@battle.field.terrain == :Grass && user.affectedByTerrain?)
 				score*=1.2
 			end
@@ -3232,7 +3232,7 @@ class Battle::AI
 					(user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(user.effectiveWeather)) || 
 					(user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(user.effectiveWeather)) || 
 					user.effects[PBEffects::AquaRing] || 
-					(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+					(user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 					(@battle.field.terrain == :Grass && user.affectedByTerrain?)
 				score*=1.2
 			end
@@ -3299,7 +3299,7 @@ class Battle::AI
 		for m in target.moves
 			movecheck = true if m.id == :RAPIDSPIN
 		end
-		if target.effects[PBEffects::LeechSeed]<0 && !target.pbHasType?(:GRASS) && target.effects[PBEffects::Substitute]<=0
+		if target.effects[PBEffects::LeechSeed]<0 && !target.pbHasType?(:GRASS, true) && target.effects[PBEffects::Substitute]<=0
 			if movecheck
 				score*=0.2
 			end
@@ -3312,7 +3312,7 @@ class Battle::AI
 				score*=(target.hp*(1.0/target.totalhp))
 			end
 			if target.hasActiveItem?([:LEFTOVERS, :BIGROOT, :COLOGNECASE]) || 
-					(target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
+					(target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
 				score*=1.2
 			end
 			if target.paralyzed? || target.asleep?
@@ -3698,8 +3698,8 @@ class Battle::AI
 				score*=1.5
 			end
 			if user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0 ||
-			   (user.hasActiveAbility?(:BAITEDLINE) && target.pbHasType?(:WATER)) || 
-			   (user.hasActiveAbility?(:MAGNETPULL) && target.pbHasType?(:STEEL))
+			   (user.hasActiveAbility?(:BAITEDLINE) && target.pbHasType?(:WATER, true)) || 
+			   (user.hasActiveAbility?(:MAGNETPULL) && target.pbHasType?(:STEEL, true))
 				score*=3
 			end
 			if pbHasSingleTargetProtectMove?(user)
@@ -3754,8 +3754,8 @@ class Battle::AI
 			score*=miniscore
 			
 			if target.hasActiveAbility?(:SHADOWTAG) || user.effects[PBEffects::MeanLook]>0
-			   (target.hasActiveAbility?(:BAITEDLINE) && user.pbHasType?(:WATER)) || 
-			   (target.hasActiveAbility?(:MAGNETPULL) && user.pbHasType?(:STEEL))
+			   (target.hasActiveAbility?(:BAITEDLINE) && user.pbHasType?(:WATER, true)) || 
+			   (target.hasActiveAbility?(:MAGNETPULL) && user.pbHasType?(:STEEL, true))
 				score*=0.1
 			end
 			score*=0.5 if pbHasPivotMove?(target)
@@ -3856,7 +3856,7 @@ class Battle::AI
 						miniscore*=1.1
 					end
 				when :BLACKSLUDGE
-					if user.pbHasType?(:POISON)
+					if user.pbHasType?(:POISON, true)
 						miniscore*=1.5
 					else
 						miniscore*=0.5
@@ -3887,7 +3887,7 @@ class Battle::AI
 						score+=35
 					end
 				when :BLACKSLUDGE
-					if target.pbHasType?(:POISON)
+					if target.pbHasType?(:POISON, true)
 						score+=35
 					else
 						score*=0.5
@@ -3931,7 +3931,7 @@ class Battle::AI
 							miniscore*=1.1
 						end
 					when :BLACKSLUDGE
-						if user.pbHasType?(:POISON)
+						if user.pbHasType?(:POISON, true)
 							miniscore*=1.5
 						else
 							miniscore*=0.5
@@ -3978,12 +3978,12 @@ class Battle::AI
 							minimini*=1.3
 						end
 					when :BLACKSLUDGE
-						if user.pbHasType?(:POISON)
+						if user.pbHasType?(:POISON, true)
 							minimini*=1.5
 						else
 							minimini*=0.5
 						end
-						if !target.pbHasType?(:POISON)
+						if !target.pbHasType?(:POISON, true)
 							minimini*=1.3
 						end
 					when :TOXICORB,  :FLAMEORB,  :LAGGINGTAIL,  :IRONBALL,  :STICKYBARB
@@ -4040,7 +4040,7 @@ class Battle::AI
 			if !target.hasActiveAbility?(:STICKYHOLD) &&
 					target.item && !target.unlosableItem?(target.item)
 				score*=1.1
-				if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
+				if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
 					score*=1.2
 				end    
 				if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
@@ -4067,7 +4067,7 @@ class Battle::AI
 				if !target.hasActiveAbility?(:STICKYHOLD) &&
 						target.item && !target.unlosableItem?(target.item)
 					score*=1.1
-					if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
+					if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
 						score*=1.2
 					end    
 					if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
@@ -4400,7 +4400,7 @@ class Battle::AI
 			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
 			maxdam = tempdam if tempdam > maxdam
 		end
-		if user.pbHasType?(:GHOST) && $game_variables[MECHANICSVAR] < 3
+		if user.pbHasType?(:GHOST, true) && $game_variables[MECHANICSVAR] < 3
 			if target.effects[PBEffects::Curse] || user.hp*2<user.totalhp
 				score = 0
 			else
@@ -4558,7 +4558,7 @@ class Battle::AI
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				miniscore*=1.1
 			end
-			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 				miniscore*=1.1
 			end
 			healmove=false
@@ -4615,14 +4615,14 @@ class Battle::AI
 			end
 			firecheck = true if m.type == :FIRE
 		end
-		if !(target.pbHasType?(:GRASS) || target.hasActiveAbility?(:OVERCOAT) || target.hasActiveItem?(:SAFETYGOGGLES))
+		if !(target.pbHasType?(:GRASS, true) || target.hasActiveAbility?(:OVERCOAT) || target.hasActiveItem?(:SAFETYGOGGLES))
 			if (user.pbSpeed<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 				score*=1.2
 			end
 			if maxtype == :FIRE
 				score*=3
 			else
-				if target.pbHasType?(:FIRE)
+				if target.pbHasType?(:FIRE, true)
 					score*=2
 				else
 					score*=0.2
@@ -4900,7 +4900,7 @@ class Battle::AI
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				miniscore*=1.5
 			end   
-			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 				miniscore*=1.2
 			end        
 			healmove=false
@@ -6047,7 +6047,7 @@ class Battle::AI
 			score=0
 		else
 			if ((user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
+					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.2
 			else
 				score*=0.3
@@ -6090,7 +6090,7 @@ class Battle::AI
 			score=0
 		else
 			if ((user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
+					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.2
 			else
 				score*=0.7
@@ -6136,7 +6136,7 @@ class Battle::AI
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=1.5
 				else
-					if (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
+					if (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 						score*=2
 					else              
 						score*=0.2
@@ -6147,7 +6147,7 @@ class Battle::AI
 						score*=0.3
 					else
 						if target.stages[:SPEED]>0
-							if (target.pbHasType?(:DARK) || !user.hasActiveAbility?(:PRANKSTER)) || 
+							if (target.pbHasType?(:DARK, true) || !user.hasActiveAbility?(:PRANKSTER)) || 
 									target.hasActiveAbility?(:SPEEDBOOST)
 								score*=0.5
 							else
@@ -6171,7 +6171,7 @@ class Battle::AI
 			score=0
 		else
 			if ((user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
+					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
 			else
 				score*=0.7
@@ -6197,7 +6197,7 @@ class Battle::AI
 			score=0
 		else
 			if ((user.pbSpeed>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK))
+					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
 			end
 			for m in target.moves

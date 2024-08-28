@@ -8,52 +8,9 @@ class Battle::Move::UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack < Ba
 end
 
 #===============================================================================
-# Future Sight but complicated (Supernova)
-# why did i agree to this
-#===============================================================================
-# doesnt impact crater imply that the attacker already landed? 
-# wouldnt something like meteor crash make more sense since its the action and not the aftermath?
-#===============================================================================
-class Battle::Move::Supernova < Battle::Move
-  def targetsPosition?; return true; end
-
-  def pbAccuracyCheck(user, target)
-    return true if !@battle.futureSight
-    return super
-  end
-
-  def pbDisplayUseMessage(user)
-    super if !@battle.futureSight
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    if !@battle.futureSight &&
-       @battle.positions[target.index].effects[PBEffects::FutureSightCounter] > 0
-      @battle.pbDisplay(_INTL("But it failed!")) if show_message
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    return if @battle.futureSight   # Attack is hitting
-    effects = @battle.positions[target.index].effects
-    effects[PBEffects::FutureSightCounter]        = 3
-    effects[PBEffects::FutureSightMove]           = :SUPERNOVA_ALT
-    effects[PBEffects::FutureSightUserIndex]      = user.index
-    effects[PBEffects::FutureSightUserPartyIndex] = user.pokemonIndex
-    @battle.pbDisplay(_INTL("{1} chose Doom Desire as its destiny!", user.pbThis))
-  end
-
-  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    hitNum = 1 if !@battle.futureSight   # Charging anim
-    super
-  end
-end
-
-#===============================================================================
-# The damage is based on the user's highest attacking stat. 
+# The damage is based on the user's highest plain, non-HP stat. 
 # The move's type is set by the user's type.
+# The move's animation is set by the user's type.
 # (Titan's Wrath)
 #===============================================================================
 class Battle::Move::TitanWrath < Battle::Move
@@ -98,6 +55,40 @@ class Battle::Move::TitanWrath < Battle::Move
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
+  end
+  
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    userTypes = user.pbTypes(true)
+    # some of these are not actually possible given the regi's stats spreads
+    # but they were added anyway for consistency 
+    if @calcCategory == 1 # special
+      id = :TERRAINPULSE  # type specific anim
+      case userTypes[0]
+      when :NORMAL    then id = :HYPERBEAM      if GameData::Move.exists?(:HYPERBEAM)      # gigas
+      when :ROCK      then id = :POWERGEM       if GameData::Move.exists?(:POWERGEM)       # rock
+      when :ICE       then id = :SHEERCOLD      if GameData::Move.exists?(:SHEERCOLD)      # ce
+      when :STEEL     then id = :STEELBEAM      if GameData::Move.exists?(:STEELBEAM)      # steel
+      when :ELECTRIC  then id = :THUNDER        if GameData::Move.exists?(:THUNDER)        # eleki
+      when :DRAGON    then id = :ETERNABEAM     if GameData::Move.exists?(:ETERNABEAM)     # drago
+      when :GRASS     then id = :SOLARBEAM      if GameData::Move.exists?(:SOLARBEAM)      # wood
+      when :FIGHTING  then id = :FOCUSBLAST     if GameData::Move.exists?(:FOCUSBLAST)     # brute
+      when :FAIRY     then id = :LIGHTOFRUIN    if GameData::Move.exists?(:LIGHTOFRUIN)    # ternal
+      end
+    else                  # physical
+      id = :SECRETPOWER   # type specific anim
+      case userTypes[0]
+      when :NORMAL    then id = :GIGAIMPACT     if GameData::Move.exists?(:GIGAIMPACT)     # gigas
+      when :ROCK      then id = :STONEEDGE      if GameData::Move.exists?(:STONEEDGE)      # rock
+      when :ICE       then id = :ICICLECRASH    if GameData::Move.exists?(:POWERGEM)       # ce
+      when :STEEL     then id = :STEELROLLER    if GameData::Move.exists?(:STEELROLLER)    # steel
+      when :ELECTRIC  then id = :FUSIONBOLT     if GameData::Move.exists?(:FUSIONBOLT)     # eleki
+      when :DRAGON    then id = :OUTRAGE        if GameData::Move.exists?(:OUTRAGE)        # drago
+      when :GRASS     then id = :POWERWHIP      if GameData::Move.exists?(:POWERWHIP)      # wood
+      when :FIGHTING  then id = :CLOSECOMBAT    if GameData::Move.exists?(:CLOSECOMBAT)    # brute
+      when :FAIRY     then id = :NATURESMADNESS if GameData::Move.exists?(:NATURESMADNESS) # ternal
+      end
+    end
+    super
   end
 end
 

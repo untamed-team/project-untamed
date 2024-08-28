@@ -1,5 +1,5 @@
 class Battle::AI
-	$AIMASTERLOG = false
+	$AIMASTERLOG = true
 	$AIGENERALLOG = true
 	# need testing:
 	# topsy turby, instruct, gastro acid, floral healing, frost breath
@@ -89,7 +89,6 @@ class Battle::AI
 				functionscore *= bsdiv if mirrmove.baseDamage>50
 				score += functionscore
 				accuracy = pbRoughAccuracy(mirrmove, user, target, skill)
-				accuracy *= 1.15 if !user.pbOwnedByPlayer?
 				accuracy = 100 if accuracy>100
 				if mirrmove.damagingMove?
 					dmgScore = pbGetMoveScoreDamage(score, mirrmove, user, target, skill)
@@ -210,7 +209,6 @@ class Battle::AI
 		#DemICE moved damage calculation to the beginning
 		# Account for accuracy of move
 		accuracy = pbRoughAccuracy(move, user, target, skill)
-		accuracy *= 1.15 if !user.pbOwnedByPlayer?
 		accuracy = 100 if accuracy>100
 		if move.damagingMove?
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
@@ -293,7 +291,6 @@ class Battle::AI
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
 		# Account for accuracy of move
 		accuracy = pbRoughAccuracy(move, user, target, skill)
-		accuracy *= 1.15 if !user.pbOwnedByPlayer?
 		accuracy = 100 if accuracy > 100
 		realDamage *= accuracy / 100.0 # DemICE
 		# Two-turn attacks waste 2 turns to deal one lot of damage

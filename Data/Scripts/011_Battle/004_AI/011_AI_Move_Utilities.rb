@@ -978,6 +978,7 @@ class Battle::AI
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:accuracy_multiplier] = 1.0
+		modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     # innate acc boost is handled elsewhere
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers, move, type, skill)
@@ -1045,7 +1046,6 @@ class Battle::AI
       modifiers[:evasion_stage] = 0 if target.effects[PBEffects::Foresight] && modifiers[:evasion_stage] > 0
       modifiers[:evasion_stage] = 0 if target.effects[PBEffects::MiracleEye] && modifiers[:evasion_stage] > 0
     end
-		modifiers[:accuracy_multiplier] *= 1.1 if !target.pbOwnedByPlayer?
     # "AI-specific calculations below"
     if skill >= PBTrainerAI.mediumSkill
       modifiers[:evasion_stage] = 0 if move.function == "IgnoreTargetDefSpDefEvaStatStages"   # Chip Away
@@ -1059,7 +1059,7 @@ class Battle::AI
       end
       if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(move.function)
         modifiers[:base_accuracy] = move.accuracy + user.level - target.level
-        modifiers[:accuracy_multiplier] = 0 if target.level > user.level
+        modifiers[:accuracy_multiplier] = 0 if target.level >= user.level
         if skill >= PBTrainerAI.bestSkill && target.hasActiveAbility?(:STURDY)
           modifiers[:accuracy_multiplier] = 0
         end

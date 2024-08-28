@@ -28,7 +28,7 @@ class Battle::AI
 	
 	
 	def pbRoughDamage(move, user, target, skill, baseDmg=0)
-		skill=0
+		skill=100
 		baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
 		# Fixed damage moves
 		return baseDmg if move.is_a?(Battle::Move::FixedDamageMove)
@@ -364,7 +364,7 @@ class Battle::AI
 						multipliers[:final_damage_multiplier] *= w_damage_multiplier
 					end
 				when :Sandstorm
-					if target.pbHasType?(:ROCK) && move.specialMove?(type) &&
+					if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
 						move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
 						multipliers[:defense_multiplier] *= 1.5
 					end
@@ -394,7 +394,7 @@ class Battle::AI
 			#~ end
 		#~ end
 		# STAB
-		if skill >= PBTrainerAI.mediumSkill && type && user.pbHasType?(type)
+		if skill >= PBTrainerAI.mediumSkill && type && user.pbHasType?(type, true)
 			if user.hasActiveAbility?(:ADAPTABILITY)
 				multipliers[:final_damage_multiplier] *= 2
 			else
@@ -569,7 +569,7 @@ class Battle::AI
 		return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
 						:SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && thereselec
 		if move.powderMove?
-			return true if target.pbHasType?(:GRASS)
+			return true if target.pbHasType?(:GRASS, true)
 			return true if target.hasActiveAbility?(:OVERCOAT,false,mold_broken)
 			return true if target.hasActiveItem?(:SAFETYGOGGLES)
 		end
@@ -624,7 +624,7 @@ class Battle::AI
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
-				return false if move.powderMove? && opponent.pbHasType?(:GRASS)
+				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)
 				return true	
 			end	
 		end	
@@ -675,7 +675,8 @@ class Battle::AI
 					sum -= 5
 				end   
 				sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun")
-				sum+=5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun") 
+				sum+=5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") 
+				sum-=5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky")
 			end
 			if @battle.pbWeather==:Rain
 				sum+=20 if pkmn.ability == :SWIFTSWIM
@@ -701,6 +702,7 @@ class Battle::AI
 			if @battle.pbWeather==:Hail
 				sum+=20 if pkmn.ability == :SLUSHRUSH
 				sum+=10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
+				sum+=10 if pkmn.hasType?(:ICE)
 				sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
 				sum+=5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail") 
 				sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail") 
@@ -785,7 +787,7 @@ class Battle::AI
 			healing += subscore
 		end
 		healing += 0.0625 if user.hasWorkingAbility(:DRYSKIN) &&  @battle.pbWeather==:Rain
-		healing += 0.0625 if attitemworks && (user.item == :LEFTOVERS || (user.item == :BLACKSLUDGE && user.pbHasType?(:POISON)))
+		healing += 0.0625 if attitemworks && (user.item == :LEFTOVERS || (user.item == :BLACKSLUDGE && user.pbHasType?(:POISON, true)))
 		healing += 0.0625 if user.hasWorkingAbility(:RAINDISH) && @battle.pbWeather==:Rain
 		healing += 0.0625 if user.hasWorkingAbility(:ICEBODY) && @battle.pbWeather==:Hail
 		healing += 0.125 if user.status == :POISON && user.hasWorkingAbility(:POISONHEAL)
@@ -797,11 +799,11 @@ class Battle::AI
 			if !(attitemworks && user.item == :SAFETYGOGGLES) || !(user.hasWorkingAbility(:OVERCOAT)) 
 				weatherchip = 0
 				weatherchip += 0.0625 if @battle.pbWeather==:Sun && (user.hasWorkingAbility(:DRYSKIN))
-				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK) || user.pbHasType?(:STEEL) || user.pbHasType?(:GROUND)) && 
+				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK, true) || user.pbHasType?(:STEEL, true) || user.pbHasType?(:GROUND, true)) && 
 					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility([:SANDFORCE, :DUSTSENTINEL]) || user.hasWorkingAbility(:SANDRUSH))
 					weatherchip += 0.0625
 				end	
-				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE)) && 
+				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE, true)) && 
 					!(user.hasWorkingAbility(:ICEBODY) || user.hasWorkingAbility(:SNOWCLOAK) || user.hasWorkingAbility(:SLUSHRUSH))
 					weatherchip += 0.0625
 				end	 
@@ -841,6 +843,7 @@ class Battle::Battler
 		mults[:final_damage_multiplier] /= 2
 		@damageState.berryWeakened = true
 		ripening = false
+		pbRaiseTropiusEvolutionStep(self) #by low
 		if hasActiveAbility?(:RIPEN)
 			@battle.pbShowAbilitySplash(self)
 			mults[:final_damage_multiplier] /= 2
@@ -890,15 +893,17 @@ class Battle
 		battler = Battler.new(self,@index)
 		battler.pbInitPokemon(pokemon,@index)
 		battler.pbInitEffects(batonpass)#,false,effectnegate)
-		#~ if batonpass
-			#~ battler.stages[:ATTACK]          = currentmon.stages[:ATTACK]
-			#~ battler.stages[:DEFENSE]         = currentmon.stages[:DEFENSE]
-			#~ battler.stages[:SPEED]           = currentmon.stages[:SPEED]
-			#~ battler.stages[:SPECIAL_ATTACK]  = currentmon.stages[:SPECIAL_ATTACK]
-			#~ battler.stages[:SPECIAL_DEFENSE] = currentmon.stages[:SPECIAL_DEFENSE]
-			#~ battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
-			#~ battler.stages[:EVASION]         = currentmon.stages[:EVASION]
-		#~ end	
+=begin
+		if batonpass
+			battler.stages[:ATTACK]          = currentmon.stages[:ATTACK]
+			battler.stages[:DEFENSE]         = currentmon.stages[:DEFENSE]
+			battler.stages[:SPEED]           = currentmon.stages[:SPEED]
+			battler.stages[:SPECIAL_ATTACK]  = currentmon.stages[:SPECIAL_ATTACK]
+			battler.stages[:SPECIAL_DEFENSE] = currentmon.stages[:SPECIAL_DEFENSE]
+			battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
+			battler.stages[:EVASION]         = currentmon.stages[:EVASION]
+		end	
+=end
 		return battler
 	end	
 

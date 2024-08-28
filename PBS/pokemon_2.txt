@@ -2786,6 +2786,7 @@ Shape = Finned
 Category = Whorl Tooth
 Pokedex = Eons ago, Geocoprion used its unique teeth like a saw. Revived today, it spins its jaw to charge blasts of energy it fires from the crystals on its snout.
 #-------------------------------
+# this fucker is denser than every known metal on earth, holy harem protag
 [CHIXULOB]
 Name = Chixulob
 Types = ROCK,FIRE

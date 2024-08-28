@@ -746,7 +746,7 @@ class Battle::AI
 			if aType
 			has_possible_type = false
 			GameData::Type.each do |t|
-				next if t.pseudo_type || user.pbHasType?(t.id) ||
+				next if t.pseudo_type || user.pbHasType?(t.id, true) ||
 						!Effectiveness.resistant_type?(target.lastMoveUsedType, t.id)
 				has_possible_type = true
 				break
@@ -771,7 +771,7 @@ class Battle::AI
 			user.eachMoveWithIndex do |m, i|
 				break if Settings::MECHANICS_GENERATION >= 6 && i > 0
 				next if GameData::Type.get(m.type).pseudo_type
-				next if user.pbHasType?(m.type)
+				next if user.pbHasType?(m.type, true)
 				has_possible_type = true
 				break
 			end
@@ -795,7 +795,7 @@ class Battle::AI
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			if user.pbHasMove?(:TOXIC)
-				if target.pbHasType?(:STEEL) || target.pbHasType?(:POISON)
+				if target.pbHasType?(:STEEL, true) || target.pbHasType?(:POISON, true)
 					score*=1.5
 				end
 			end
@@ -831,7 +831,7 @@ class Battle::AI
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			if user.pbHasMove?(:TOXIC)
-				if target.pbHasType?(:STEEL) || target.pbHasType?(:POISON)
+				if target.pbHasType?(:STEEL, true) || target.pbHasType?(:POISON, true)
 					score*=1.5
 				end
 			end
@@ -871,7 +871,7 @@ class Battle::AI
 		end
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
-			if user.pbHasMove?(:TOXIC) && (target.pbHasType?(:STEEL) || target.pbHasType?(:POISON))
+			if user.pbHasMove?(:TOXIC) && (target.pbHasType?(:STEEL, true) || target.pbHasType?(:POISON, true))
 				score*=1.5
 			end
 		end
@@ -880,7 +880,7 @@ class Battle::AI
 		else
 			score*=1.1
 		end
-		if target.pbHasType?(:GHOST) || target.canChangeType? || 
+		if target.pbHasType?(:GHOST, true) || target.canChangeType? || 
 				target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
 			score*=0
 		end
@@ -904,7 +904,7 @@ class Battle::AI
 		end
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
-			if user.pbHasMove?(:TOXIC) && (target.pbHasType?(:STEEL) || target.pbHasType?(:POISON))
+			if user.pbHasMove?(:TOXIC) && (target.pbHasType?(:STEEL, true) || target.pbHasType?(:POISON, true))
 				score*=1.5
 			end
 		end
@@ -913,7 +913,7 @@ class Battle::AI
 		else
 			score*=1.1
 		end
-		if target.pbHasType?(:GRASS) || target.canChangeType? || 
+		if target.pbHasType?(:GRASS, true) || target.canChangeType? || 
 				target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
 			score*=0
 		end
@@ -930,7 +930,7 @@ class Battle::AI
 				maxtype = m.type
 			end  
 		end
-		if !user.pbHasType?(:FIRE)
+		if !user.pbHasType?(:FIRE, true)
 			score = 0
 		else
 			userlivecount 	= @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -1275,7 +1275,7 @@ class Battle::AI
 			if maxtype == :GROUND # Highest expected dam from a ground move
 				score*=3
 			end
-			if target.pbHasType?(:GROUND)
+			if target.pbHasType?(:GROUND, true)
 				score*=3
 			end
 		end
@@ -1331,7 +1331,7 @@ class Battle::AI
 			end
 		end
 		miniscore*=1.3 if groundmove
-		if target.pbHasType?(:FLYING) || target.hasActiveAbility?(:LEVITATE) || target.hasActiveItem?(:AIRBALLOON)
+		if target.pbHasType?(:FLYING, true) || target.hasActiveAbility?(:LEVITATE) || target.hasActiveItem?(:AIRBALLOON)
 			miniscore*=2
 		end
 		miniscore/=100.0
@@ -1376,7 +1376,8 @@ class Battle::AI
 					end
 				end
 			end
-			if user.pbHasType?(:GROUND) && target.airborne?
+			mold_broken=moldbroken(user,target,move)
+			if user.pbHasType?(:GROUND, true) && target.airborneAI(mold_broken)
 				score*=2
 			end
 		end

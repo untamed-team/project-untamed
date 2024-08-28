@@ -31,7 +31,7 @@ class Battle::AI
 		   user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 		   @battle.field.terrain == :Grassy
 			score*=1.2
@@ -99,7 +99,7 @@ class Battle::AI
 			score*=4
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || 
-		   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 		   @battle.field.terrain == :Grassy
 			score*=1.2
@@ -179,7 +179,7 @@ class Battle::AI
 				user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 				user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 				@battle.field.terrain == :Grassy
 			score*=1.2
@@ -280,7 +280,7 @@ class Battle::AI
 				if setupcheck && healcheck
 					score*=0.3
 				end
-				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 						user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 						@battle.field.terrain == :Grassy
 					score*=1.2
@@ -362,7 +362,7 @@ class Battle::AI
 					noprio = false
 					break
 				end
-				if target.hasActiveAbility?(:PRANKSTER) && !user.pbHasType?(:DARK) && m.statusMove?
+				if target.hasActiveAbility?(:PRANKSTER) && !user.pbHasType?(:DARK, true) && m.statusMove?
 					noprio = false
 					break
 				end
@@ -826,7 +826,7 @@ class Battle::AI
 				end
 				miniscore*=2 if healingmove
 				if move.id == :TOXIC
-					miniscore*=1.1 if user.pbHasType?(:POISON)
+					miniscore*=1.1 if user.pbHasType?(:POISON, true)
 				end
 			when :FREEZE
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
@@ -1328,17 +1328,17 @@ class Battle::AI
 		if @battle.field.terrain == :Electric # Electric Terrain
 			PBDebug.log(sprintf("Electric Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:ELECTRIC)
+				if target.pbHasType?(:ELECTRIC, true)
 					fieldscore*=1.5
 				end
 			end
-			if user.pbHasType?(:ELECTRIC)
+			if user.pbHasType?(:ELECTRIC, true)
 				fieldscore*=0.5
 			end
 			partyelec=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyelec=true if m.pbHasType?(:ELECTRIC)
+				partyelec=true if m.pbHasType?(:ELECTRIC, true)
 				for z in m.moves
 					sleepmove = true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(z.id)
 				end
@@ -1359,17 +1359,17 @@ class Battle::AI
 		if @battle.field.terrain == :Grassy # Grassy Terrain
 			PBDebug.log(sprintf("Grassy Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:GRASS)
+				if target.pbHasType?(:GRASS, true)
 					fieldscore*=1.5
 				end
 			end
-			if user.pbHasType?(:GRASS)
+			if user.pbHasType?(:GRASS, true)
 				fieldscore*=0.5
 			end
 			partygrass=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partygrass=true if m.pbHasType?(:GRASS)
+				partygrass=true if m.pbHasType?(:GRASS, true)
 			end
 			if partygrass
 				fieldscore*=0.5
@@ -1385,26 +1385,26 @@ class Battle::AI
 			PBDebug.log(sprintf("Misty Terrain Disrupt")) if $INTERNAL
 			if user.spatk>user.attack
 				target.eachAlly do |b|
-					if target.pbHasType?(:FAIRY)
+					if target.pbHasType?(:FAIRY, true)
 						fieldscore*=1.3
 					end
 				end
 			end
 			if target.spatk>target.attack
-				if user.pbHasType?(:FAIRY)
+				if user.pbHasType?(:FAIRY, true)
 				fieldscore*=0.7
 				end
 			end
-			if target.pbHasType?(:DRAGON) || target.pbPartner.pbHasType?(:DRAGON)
+			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
 				fieldscore*=0.5
 			end
-			if user.pbHasType?(:DRAGON)
+			if user.pbHasType?(:DRAGON, true)
 				fieldscore*=1.5
 			end
 			partyfairy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyfairy=true if m.pbHasType?(:FAIRY)
+				partyfairy=true if m.pbHasType?(:FAIRY, true)
 			end
 			if partyfairy
 				fieldscore*=0.7
@@ -1412,7 +1412,7 @@ class Battle::AI
 			partydragon=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partydragon=true if m.pbHasType?(:DRAGON)
+				partydragon=true if m.pbHasType?(:DRAGON, true)
 			end
 			if partydragon
 				fieldscore*=1.5
@@ -1421,17 +1421,17 @@ class Battle::AI
 		if @battle.field.terrain == :Psychic # Psychic Terrain
 			PBDebug.log(sprintf("Psychic Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:PSYCHIC)
+				if target.pbHasType?(:PSYCHIC, true)
 					fieldscore*=1.7
 				end
 			end
-			if user.pbHasType?(:PSYCHIC)
+			if user.pbHasType?(:PSYCHIC, true)
 				fieldscore*=0.3
 			end
 			partypsy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partypsy=true if m.pbHasType?(:PSYCHIC)
+				partypsy=true if m.pbHasType?(:PSYCHIC, true)
 			end
 			if partypsy
 				fieldscore*=0.3
@@ -1581,7 +1581,8 @@ class Battle::AI
 		end    
 		if target.hasActiveAbility?(:ARENATRAP)
 			PBDebug.log(sprintf("Arena Trap Disrupt")) if $INTERNAL
-			if !user.airborne?
+			mold_broken=moldbroken(user,target,move)
+			if !user.airborneAI(mold_broken)
 				abilityscore*=1.5
 			end
 		end  

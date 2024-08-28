@@ -225,12 +225,12 @@ class Battle::AI
 				echo("\n----------------------------------------\n")
 			end	
 			sum  = 0
-			if PluginManager.installed?("Mid Battle Dialogue")
-				if BattleScripting.hasAceData?
-					aceId = BattleScripting.getAceOf(idxBattler)
-					next if aceId > -1 && i == aceId && @battle.pbAbleCount(idxBattler) != 1
-				end
-			end
+			#if PluginManager.installed?("Mid Battle Dialogue")
+			#	if BattleScripting.hasAceData?
+			#		aceId = BattleScripting.getAceOf(idxBattler)
+			#		next if aceId > -1 && i == aceId && @battle.pbAbleCount(idxBattler) != 1
+			#	end
+			#end
 			maxdam=0
 			aspeed = pbRoughStat(pokmon,:SPEED,100)
 			maxspeed = 0
@@ -241,6 +241,16 @@ class Battle::AI
 			death=false	
 			roomturn=0
 			roomturn=1 if sack
+			if $game_variables[MECHANICSVAR] >= 3
+				# no need to do abilityWeather or abilityTerrain checks here
+				w_damage_multiplier = 1.25
+				t_damage_multiplier = 1.15
+				w_damage_divider = t_damage_divider = 1.5
+			else
+				w_damage_multiplier = 1.5
+				t_damage_multiplier = 1.3
+				w_damage_divider = t_damage_divider = 2.0
+			end
 			pokmon.eachOpposing do |newenemy|
 				# speed checks
 				ospeed = pbRoughStat(newenemy,:SPEED,100)
@@ -268,8 +278,8 @@ class Battle::AI
 					 @battle.field.terrain != :Electric
 					ospeed *= 2 if newenemy.hasActiveAbility?(:SURGESURFER)
 				end
-				if pokmon.pbOwnSide.effects[PBEffects::StickyWeb]>0 && !pokmon.hasActiveItem?(:HEAVYDUTYBOOTS)
-					aspeed = (aspeed.to_f * 2 / 3).floor # speed drop
+				if pokmon.pbOwnSide.effects[PBEffects::StickyWeb]>0 && !newenemy.hasActiveItem?(:HEAVYDUTYBOOTS)
+					ospeed = (ospeed.to_f * 2 / 3).floor # speed drop
 				end
 				###############
 				for j in newenemy.moves
@@ -304,13 +314,13 @@ class Battle::AI
 						end	
 						if pokmon.hasActiveAbility?(:DRIZZLE) && @battle.pbWeather != :Rain &&
 							newenemy.item != :UTILITYUMBRELLA
-							tempdam*=1.5 if j.type == :WATER
-							tempdam*=0.5 if j.type == :FIRE
+							tempdam*=w_damage_multiplier if j.type == :WATER
+							tempdam/=w_damage_divider if j.type == :FIRE
 						end
 						if pokmon.hasActiveAbility?(:DROUGHT) && @battle.pbWeather != :Sun &&
 							newenemy.item != :UTILITYUMBRELLA
-							tempdam*=1.5 if j.type == :FIRE
-							tempdam*=0.5 if j.type == :WATER
+							tempdam*=w_damage_multiplier if j.type == :FIRE
+							tempdam/=w_damage_divider if j.type == :WATER
 							tempdam*=1.5 if newenemy.hasActiveAbility?(:SOLARPOWER) && j.specialMove?
 						end
 						if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
@@ -319,30 +329,34 @@ class Battle::AI
 							tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(j.type) && newenemy.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
 						end
 						if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
-							tempdam*=0.67 if pokmon.pbHasType?(:ICE) && j.physicalMove?
+							if pokmon.pbHasType?(:ICE)
+								moveType = j.type
+								typeMod = pbCalcTypeMod(moveType, newenemy, pokmon)
+								tempdam*=0.75 if Effectiveness.super_effective?(typeMod)
+							end
 							tempdam*=0.67 if pokmon.hasActiveAbility?(:SNOWCLOAK) && j.specialMove?
 						end
 						if pokmon.hasActiveAbility?(:ELECTRICSURGE) && @battle.field.terrain != :Electric
-							tempdam*=1.5 if newenemy.affectedByTerrain? && j.type == :ELECTRIC
+							tempdam*=t_damage_multiplier if newenemy.affectedByTerrain? && j.type == :ELECTRIC
 							tempdam*=1.6 if j.function=="DoublePowerInElectricTerrain" && newenemy.affectedByTerrain?
 							tempdam*=0.67 if pokmon.hasActiveItem?(:ELECTRICSEED) && j.physicalMove?
 						end
 						if pokmon.hasActiveAbility?(:GRASSYSURGE) && @battle.field.terrain != :Grassy
-							tempdam*=1.5 if j.type == :GRASS && newenemy.affectedByTerrain?
-							if ["DoublePowerIfTargetUnderground","LowerTargetSpeed1WeakerInGrassyTerrain",
-									"RandomPowerDoublePowerIfTargetUnderground"].include?(j.function) && newenemy.affectedByTerrain?
-								tempdam*=0.5
-							end
+							tempdam*=t_damage_multiplier if j.type == :GRASS && newenemy.affectedByTerrain?
 							thispriority +=1 if j.function=="HigherPriorityInGrassyTerrain" && newenemy.affectedByTerrain?
 							tempdam*=0.67 if pokmon.hasActiveItem?(:GRASSYSEED) && j.physicalMove?
+							if ["DoublePowerIfTargetUnderground","LowerTargetSpeed1WeakerInGrassyTerrain",
+								"RandomPowerDoublePowerIfTargetUnderground"].include?(j.function) && newenemy.affectedByTerrain?
+								tempdam*=0.5
+							end
 						end
 						if pokmon.hasActiveAbility?(:PSYCHICSURGE) && @battle.field.terrain != :Psychic
-							tempdam*=1.5 if j.type == :PSYCHIC && newenemy.affectedByTerrain?
+							tempdam*=t_damage_multiplier if j.type == :PSYCHIC && newenemy.affectedByTerrain?
 							tempdam*=1.3 if j.function=="HitsAllFoesAndPowersUpInPsychicTerrain" && newenemy.affectedByTerrain?
 							tempdam*=0.67 if pokmon.hasActiveItem?(:PSYCHICSEED) && j.specialMove?
 						end
 						if pokmon.hasActiveAbility?(:MISTYSURGE) && @battle.field.terrain != :Misty
-							tempdam*=0.5 if j.type == :DRAGON && pokmon.affectedByTerrain?
+							tempdam/=t_damage_divider if j.type == :DRAGON && pokmon.affectedByTerrain?
 							tempdam*=1.5 if j.function=="UserFaintsPowersUpInMistyTerrainExplosive" && newenemy.affectedByTerrain?
 							tempdam*=0.67 if pokmon.hasActiveItem?(:MISTYSEED) && j.specialMove?
 						end
@@ -454,12 +468,12 @@ class Battle::AI
 					maxprio=thispriority if tempdam>=b.hp && thispriority>0
 					tempdam = 0 if pbCheckMoveImmunity(1,m,pokmon,b,100)
 					if pokmon.hasActiveAbility?(:DRIZZLE) && @battle.pbWeather != :Rain && pokmon.item != :UTILITYUMBRELLA
-						tempdam*=1.5 if m.type == :WATER
-						tempdam*=0.5 if m.type == :FIRE
+						tempdam*=w_damage_multiplier if m.type == :WATER
+						tempdam/=w_damage_divider if m.type == :FIRE
 					end
 					if pokmon.hasActiveAbility?(:DROUGHT) && @battle.pbWeather != :Sun && pokmon.item != :UTILITYUMBRELLA
-						tempdam*=1.5 if m.type == :FIRE
-						tempdam*=0.5 if m.type == :WATER
+						tempdam*=w_damage_multiplier if m.type == :FIRE
+						tempdam/=w_damage_divider if m.type == :WATER
 						tempdam*=1.5 if pokmon.hasActiveAbility?(:SOLARPOWER) && m.specialMove?
 					end
 					if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
@@ -468,44 +482,48 @@ class Battle::AI
 						tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
 					end
 					if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
-						tempdam*=0.67 if b.pbHasType?(:ICE) && m.physicalMove?
+						if b.pbHasType?(:ICE)
+							moveType = m.type
+							typeMod = pbCalcTypeMod(moveType, b, pokmon)
+							tempdam*=0.75 if Effectiveness.super_effective?(typeMod)
+						end
 						tempdam*=0.67 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
 					end
 					if pokmon.hasActiveAbility?(:ELECTRICSURGE) && @battle.field.terrain != :Electric
-						tempdam*=1.5 if pokmon.affectedByTerrain? if m.type == :ELECTRIC
+						tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC
 						tempdam*=1.6 if m.function=="DoublePowerInElectricTerrain" && pokmon.affectedByTerrain?
 						tempdam*=0.67 if b.hasActiveItem?(:ELECTRICSEED) && m.physicalMove?
 					end
 					if pokmon.hasActiveAbility?(:GRASSYSURGE) && @battle.field.terrain != :Grassy
-						tempdam*=1.5 if m.type == :GRASS && pokmon.affectedByTerrain?
-						if ["DoublePowerIfTargetUnderground", "LowerTargetSpeed1WeakerInGrassyTerrain",
-								"RandomPowerDoublePowerIfTargetUnderground"].include?(m.function) && pokmon.affectedByTerrain?
-							tempdam*=0.5
-						end
+						tempdam*=t_damage_multiplier if m.type == :GRASS && pokmon.affectedByTerrain?
 						tempdam*=0.67 if b.hasActiveItem?(:GRASSYSEED) && m.physicalMove?
 						tempdam*=0.67 if b.hasActiveAbility?(:GRASSPELT) && m.physicalMove?
+						if ["DoublePowerIfTargetUnderground", "LowerTargetSpeed1WeakerInGrassyTerrain",
+							"RandomPowerDoublePowerIfTargetUnderground"].include?(m.function) && pokmon.affectedByTerrain?
+							tempdam*=0.5
+						end
 					end
 					if pokmon.hasActiveAbility?(:PSYCHICSURGE) && @battle.field.terrain != :Psychic
-						tempdam*=1.5 if m.type == :PSYCHIC && pokmon.affectedByTerrain?
+						tempdam*=t_damage_multiplier if m.type == :PSYCHIC && pokmon.affectedByTerrain?
 						tempdam*=1.3 if m.function=="HitsAllFoesAndPowersUpInPsychicTerrain" && pokmon.affectedByTerrain?
 						tempdam*=0.67 if b.hasActiveItem?(:PSYCHICSEED) && m.specialMove?
 					end
 					if pokmon.hasActiveAbility?(:MISTYSURGE) && @battle.field.terrain != :Misty
-						tempdam*=0.5 if m.type == :DRAGON && b.affectedByTerrain?
+						tempdam/=t_damage_divider if m.type == :DRAGON && b.affectedByTerrain?
 						tempdam*=1.5 if m.function=="UserFaintsPowersUpInMistyTerrainExplosive" && pokmon.affectedByTerrain?
 						tempdam*=0.67 if b.hasActiveItem?(:MISTYSEED) && m.specialMove?
 					end
 					if !mold_broken && b.hasActiveAbility?(:DISGUISE) && b.turnCount==0	
 						if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
-								"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-								"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(m.function) #untamed specifics
+							"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
+							"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(m.function) #untamed specifics
 							tempdam*=2.2
 						end
 					end	
 					if m.function=="FlinchTargetFailsIfNotUserFirstTurn" && tempdam>1 && 
 						 !b.hasActiveAbility?(:INNERFOCUS) && (b.effects[PBEffects::Substitute] == 0)
 						fakedmg = tempdam *100.0 / b.hp
-						fakedmg =100 if fakedmg>100
+						fakedmg = 100 if fakedmg>100
 					end
 					ownmaxdmg=tempdam if tempdam>ownmaxdmg
 					ownmaxmove=m
@@ -529,9 +547,9 @@ class Battle::AI
 				end
 			end
 			sum+=maxscore+(scoresum*0.01) #if damagesum>0 || tickdamage
-			if $consoleenabled
+			#if $consoleenabled
 				echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AIGENERALLOG
-			end	
+			#end	
 			if ownmaxmove
 				sum-=100 if (ownmaxmove.physicalMove? && pokmon.stages[:SPECIAL_ATTACK]>0) || (ownmaxmove.specialMove? && pokmon.stages[:ATTACK]>0)
 			end	
@@ -586,7 +604,8 @@ class Battle::AI
 						sum -= 5
 					end   
 					sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun")
-					sum+=5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun") 
+					sum+=5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") 
+					sum-=5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky") && @battle.field.weather == :Rain
 				end
 				if pokmon.ability==:DRIZZLE
 					sum+=20 if pkmn.ability == :SWIFTSWIM
@@ -676,13 +695,14 @@ class Battle::AI
 			hazarddamage=0
 			if !pokmon.hasActiveItem?(:HEAVYDUTYBOOTS)
 				if pokmon.takesIndirectDamage?
-					if !pokmon.airborne?
+					if !pokmon.airborneAI(false)
 						if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0
 							spikesDiv = [8, 6, 4][pokmon.pbOwnSide.effects[PBEffects::Spikes] - 1]
 							hazarddamage += pokmon.totalhp/spikesDiv
 						end
 						if pokmon.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
-							if pokmon.pbHasType?(:POISON)
+							if pokmon.pbHasType?(:POISON) ||
+							   pokmon.ability == :TILEWORKER
 								sum+=5
 								sum+=20 if sack && i!=activemon
 							elsif pokmon.pbCanPoison?(nil, false)
@@ -691,17 +711,19 @@ class Battle::AI
 						end
 					end
 					if pokmon.pbOwnSide.effects[PBEffects::StealthRock]
-						airdamage = (pokmon.airborne?) ? 4 : 8
+						airdamage = (pokmon.airborneAI(false)) ? 4 : 8
 						hazarddamage += (pokmon.totalhp/airdamage)
 					end
 				end
 			end	
 			sum=0 if damagetakenPercent>33 && sack && i!=activemon
-			if hazarddamage > pokmon.hp
-				if !wasUserAbilityActivated?(pokmon) && pokmon.hasActiveAbility?(:TILEWORKER)
-					sum+=10
-					sum+=20 if sack && i!=activemon
-				else
+			if pokmon.ability == :TILEWORKER
+				if hazarddamage > 0
+					sum+=20
+					sum=2010 if sack && i!=activemon
+				end
+			else
+				if hazarddamage > pokmon.hp
 					sum=0
 					sum=2000 if sack && i!=activemon
 				end

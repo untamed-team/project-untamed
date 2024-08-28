@@ -121,7 +121,7 @@ class Battle::AI
 		target_data = move.pbTarget(user)
        # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers].include?(target_data.id)
-			# If move affects just the user or multiple Pokémon the AI will calc
+			# If move does not have a defined target the AI will calculate
 			# a average of every enemy currently active
       oppcounter = 0
 			@battle.allBattlers.each do |b|
@@ -165,12 +165,23 @@ class Battle::AI
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
 				next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
 				if !user.opposes?(b) # is ally
-          # wip, allows for the AI to target allies if its good to do so (polen puff/swagger/etc)
+          # wip, allows for the AI to target allies if its good to do so (polen puff/swag/etc)
           score = pbGetMoveScore(move, user, b, 100)
           score *= -1
           echoln "targeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
         else
+          if b.effects[PBEffects::Illusion] #&& $AIGENERALLOG
+            echo_h2 "---------------------------"
+            echoln "AI knowns target (#{b.name}) has illusion effect"
+            echoln "AI THINKS target (#{b.name}) has the following types:"
+            tTypes = target.pbTypes(true, true)
+            tTypes.each_with_index do |type, i|
+              echoln "#{type.name}"
+            end
+            echoln "AI THINKS target (#{b.name}) has the ability: #{b.ability.name}"
+            echo_h2 "---------------------------"
+          end
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
           if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 

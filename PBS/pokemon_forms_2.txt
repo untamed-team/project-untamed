@@ -33,8 +33,10 @@ MegaStone = CHIXULITE
 BaseStats = 75,156,96,148,89,71
 Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
-Height = 72.0
-Weight = 3580.0
+Height = 20.9
+Weight = 35799.0
+# given the 20.9m/35799kg stats, this meteor would have a similar density to iron or steel
+# not as grand as the original meteor it was based off of, but it isnt a replica in lore so it should be fine 
 #-------------------------------
 [XATU,1]
 FormName = Mega Xatu

@@ -184,8 +184,8 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "FailsUnlessTargetSharesTypeWithUser" # synchronoise
-      if !(user.types[0] && target.pbHasType?(user.types[0])) &&
-         !(user.types[1] && target.pbHasType?(user.types[1]))
+      if !(user.types[0] && target.pbHasType?(user.types[0], true)) &&
+         !(user.types[1] && target.pbHasType?(user.types[1], true))
         score = 0
       end
     #---------------------------------------------------------------------------
@@ -319,7 +319,7 @@ class Battle::AI
 			   user.pbHasMove?(:GROWTH) || user.pbHasMove?(:SOLARBEAM) || user.pbHasMove?(:SOLARBLADE)
 				score*=1.5
 			end
-			if user.pbHasType?(:FIRE)
+			if user.pbHasType?(:FIRE, true)
 				score*=1.5
 			end
 			if user.hasActiveAbility?([:CHLOROPHYLL, :FLOWERGIFT])
@@ -359,7 +359,7 @@ class Battle::AI
 			end
 			if @battle.field.weather == :Rain || thereswet
 				miniscore = getFieldDisruptScore(user,target,skill)
-				if user.pbHasType?(:NORMAL)
+				if user.pbHasType?(:NORMAL, true)
 					miniscore*=1.2
 				end
 				score*=miniscore
@@ -401,7 +401,7 @@ class Battle::AI
 			if user.pbHasMove?(:THUNDER) || user.pbHasMove?(:HURRICANE) || user.pbHasMove?(:STEAMBURST)
 				score*=1.5
 			end
-			if user.pbHasType?(:WATER)
+			if user.pbHasType?(:WATER, true)
 				score*=1.5
 			end
 			if user.hasActiveAbility?(:SWIFTSWIM)
@@ -439,7 +439,7 @@ class Battle::AI
 			end
 			if @battle.field.weather == :Sun || theressun
 				miniscore = getFieldDisruptScore(user,target,skill)
-				if user.pbHasType?(:NORMAL)
+				if user.pbHasType?(:NORMAL, true)
 					miniscore*=1.2
 				end
 				score*=miniscore
@@ -481,7 +481,7 @@ class Battle::AI
 			else
 				score*=1.3
 			end
-			if user.pbHasType?(:ROCK)
+			if user.pbHasType?(:ROCK, true)
 				score*=1.5
 			end
 			if user.hasActiveAbility?(:SANDRUSH)
@@ -547,7 +547,7 @@ class Battle::AI
 			else
 				score*=1.3
 			end
-			if user.pbHasType?(:ICE)
+			if user.pbHasType?(:ICE, true)
 				score*=5 # jeez thats a fat boost
 			end
 			if user.hasActiveAbility?(:SLUSHRUSH)
@@ -593,7 +593,7 @@ class Battle::AI
 			if user.hasActiveAbility?(:SURGESURFER)
 				miniscore*=1.5
 			end
-			if user.pbHasType?(:ELECTRIC)
+			if user.pbHasType?(:ELECTRIC, true)
 				miniscore*=1.5
 			end
 			elecvar=false
@@ -604,7 +604,7 @@ class Battle::AI
 			if elecvar
 				miniscore*=2
 			end
-			if target.pbHasType?(:ELECTRIC)
+			if target.pbHasType?(:ELECTRIC, true)
 				miniscore*=0.5
 			end
 			miniscore*=0.5 if user.pbHasMoveFunction?("SleepTarget","SleepTargetIfUserDarkrai")
@@ -644,7 +644,7 @@ class Battle::AI
 			if healvar
 				miniscore*=0.5
 			end
-			if user.pbHasType?(:GRASS)
+			if user.pbHasType?(:GRASS, true)
 				miniscore*=2
 			end
 			if grassvar
@@ -685,16 +685,16 @@ class Battle::AI
 			if fairyvar
 				miniscore*=2
 			end
-			if !user.pbHasType?(:FAIRY) && target.pbHasType?(:DRAGON)
+			if !user.pbHasType?(:FAIRY, true) && target.pbHasType?(:DRAGON, true)
 				miniscore*=2
 			end
-			if user.pbHasType?(:DRAGON)
+			if user.pbHasType?(:DRAGON, true)
 				miniscore*=0.5
 			end
-			if target.pbHasType?(:FAIRY)
+			if target.pbHasType?(:FAIRY, true)
 				miniscore*=0.5
 			end
-			if user.pbHasType?(:FAIRY) && target.spatk>target.attack
+			if user.pbHasType?(:FAIRY, true) && target.spatk>target.attack
 				miniscore*=2
 			end
 			if user.hasActiveItem?(:TERRAINEXTENDER)
@@ -731,7 +731,7 @@ class Battle::AI
 			if user.hasActiveAbility?(:TELEPATHY)
 				miniscore*=1.5
 			end  
-			if user.pbHasType?(:PSYCHIC)
+			if user.pbHasType?(:PSYCHIC, true)
 				miniscore*=1.5
 			end  
 			if psyvar
@@ -760,7 +760,7 @@ class Battle::AI
 				if target.hasActiveAbility?(:SURGESURFER)
 					miniscore*=1.5
 				end
-				if target.pbHasType?(:ELECTRIC)
+				if target.pbHasType?(:ELECTRIC, true)
 					miniscore*=1.5
 				end
 				elecvar=false
@@ -771,7 +771,7 @@ class Battle::AI
 				if elecvar
 					miniscore*=2
 				end
-				if user.pbHasType?(:ELECTRIC)
+				if user.pbHasType?(:ELECTRIC, true)
 					miniscore*=0.5
 				end
 				miniscore*=0.5 if target.pbHasMoveFunction?("SleepTarget","SleepTargetIfUserDarkrai")
@@ -797,7 +797,7 @@ class Battle::AI
 				if healvar
 					miniscore*=0.5
 				end
-				if target.pbHasType?(:GRASS)
+				if target.pbHasType?(:GRASS, true)
 					miniscore*=2
 				end
 				if grassvar
@@ -825,16 +825,16 @@ class Battle::AI
 				if fairyvar
 					miniscore*=2
 				end
-				if !target.pbHasType?(:FAIRY) && user.pbHasType?(:DRAGON)
+				if !target.pbHasType?(:FAIRY, true) && user.pbHasType?(:DRAGON, true)
 					miniscore*=2
 				end
-				if target.pbHasType?(:DRAGON)
+				if target.pbHasType?(:DRAGON, true)
 					miniscore*=0.5
 				end
-				if user.pbHasType?(:FAIRY)
+				if user.pbHasType?(:FAIRY, true)
 					miniscore*=0.5
 				end
-				if target.pbHasType?(:FAIRY) && user.spatk>user.attack
+				if target.pbHasType?(:FAIRY, true) && user.spatk>user.attack
 					miniscore*=2
 				end
 				if target.hasActiveItem?(:TERRAINEXTENDER)
@@ -858,7 +858,7 @@ class Battle::AI
 				if target.hasActiveAbility?(:TELEPATHY)
 					miniscore*=1.5
 				end  
-				if target.pbHasType?(:PSYCHIC)
+				if target.pbHasType?(:PSYCHIC, true)
 					miniscore*=1.5
 				end  
 				if psyvar
@@ -1738,7 +1738,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -1880,7 +1880,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -2321,7 +2321,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -2476,7 +2476,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -3166,7 +3166,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -3391,7 +3391,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -4588,7 +4588,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -4753,7 +4753,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -4942,7 +4942,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -5584,7 +5584,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:SIMPLE)
 				score*=2
 			end
-			if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON))
+			if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
 				score*=1.2
 			end
 			if target.hasActiveAbility?(:CONTRARY)
@@ -5668,7 +5668,7 @@ class Battle::AI
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			miniscore*=1.2
 		end
 		healmove=false
@@ -6877,7 +6877,7 @@ class Battle::AI
 				if roles.include?("Physical Wall") || roles.include?("Special Wall")
 					miniscore*=1.5
 				end
-				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON))
+				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 					miniscore*=1.2
 				end
 				healmove=false
@@ -6906,7 +6906,8 @@ class Battle::AI
 		movecheck = true if pbHasPhazingMove?(target)
 		count = 0
 		@battle.allBattlers.each do |b|
-			if b.pbHasType?(:GRASS) && !b.airborne? &&
+			mold_broken=moldbroken(user,b,move)
+			if b.pbHasType?(:GRASS, true) && !b.airborneAI(mold_broken) &&
 			   (!b.statStageAtMax?(:ATTACK) || !b.statStageAtMax?(:SPECIAL_ATTACK)) && ($game_variables[MECHANICSVAR] >= 3 && !b.SetupMovesUsed.include?(move.id))
 				count += 1
 				if user.opposes?(b)
@@ -6938,7 +6939,7 @@ class Battle::AI
 		movecheck = true if pbHasPhazingMove?(target)
 		count = 0
 		@battle.allBattlers.each do |b|
-			if b.pbHasType?(:GRASS) && !b.statStageAtMax?(:DEFENSE) && ($game_variables[MECHANICSVAR] >= 3 && !b.SetupMovesUsed.include?(move.id))
+			if b.pbHasType?(:GRASS, true) && !b.statStageAtMax?(:DEFENSE) && ($game_variables[MECHANICSVAR] >= 3 && !b.SetupMovesUsed.include?(move.id))
 				count += 1
 				if user.opposes?(b)
 					score *= 0.5
