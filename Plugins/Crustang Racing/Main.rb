@@ -574,6 +574,7 @@ class CrustangRacing
 			self.aiChargeOverloadMove #this monitors for AIs using overload
 			
 			#priority of AI using moves
+			self.aiLookForOpportunityToUseInvincibility #invincibility
 			self.aiLookForOpportunityToUseBoost
 			self.aiLookForOpportunityToUseSecondBoost
 			self.aiLookForOpportunityToUseReduceCooldown

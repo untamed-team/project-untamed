@@ -7,9 +7,6 @@ Alright, organizing my thoughts for AI:
 When to use invincible:
 Use if available and there's a hazard coming up or if someone is within range of them and charging their spin out move
 
-When to use secondBoost:
-AI uses secondBoost when possible
-
 When to strafe:
 Do not bother avoiding obstacles if invincible
 
@@ -22,6 +19,8 @@ To do:
 throttle use of all AI moves with RNG
 add AI for racer2 and racer3
 Change boost button to spacebar
+
+Bugs:
 
 
 After events (polish):

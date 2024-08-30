@@ -408,99 +408,94 @@ class CrustangRacing
 		racer = @racer1
 		
 		#Console.echo_warn self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
-		if racer[:SpinOutTimer] <= 0 #cannot target racer if spinning out
-			if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
-				case racer
-				when @racer1
-					opposingRacerA = @racerPlayer
-					opposingRacerB = @racer2
-					opposingRacerC = @racer3
-				when @racer2
-					opposingRacerA = @racer1
-					opposingRacerB = @racer3
-					opposingRacerC = @racerPlayer
-				when @racer3
-					opposingRacerA = @racer1
-					opposingRacerB = @racer2
-					opposingRacerC = @racerPlayer
-				when @racerPlayer
-					opposingRacerA = @racer1
-					opposingRacerB = @racer2
-					opposingRacerC = @racer3
-				end
+		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
 		
-				#if the racer has a move with certain move effects, target a nearby racer who is within MAX_RANGE on the X axis
-				#set a value on the racer hash that this racer is targeting another racer
-				#if racer is targeting someone, do not use any moves in aiMove1
+			#if the racer has a move with certain move effects, target a nearby racer who is within MAX_RANGE on the X axis
+			#set a value on the racer hash that this racer is targeting another racer
+			#if racer is targeting someone, do not use any moves in aiMove1
 				
-				#does the racer have a move with the effect 'spinout'?
-				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
-					#set a value on the racer hash that this racer is targeting another racer
-					distanceXBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-					distanceYBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].y + (opposingRacerA[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
-					#set the target if this target is closer than a target that is already set, or if there is no target already
-					if !racer[:TargetingRacer].nil?
-						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
-					end
-					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
-						#Console.echo_warn "distance between racer1 and player is #{combinedDistanceBetweenRacerAndTarget}"
-						Console.echo_warn "target is racerPlayer"
-						racer[:TargetingRacer] = opposingRacerA
-						racer[:TargetingMoveEffect] = "spinOut"
-					end
-				end #if self.hasMoveEffect?(racer, "spinOut")
-				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
-					#set a value on the racer hash that this racer is targeting another racer
-					distanceXBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-					distanceYBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].y + (opposingRacerB[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
-					#set the target if this target is closer than a target that is already set, or if there is no target already
-					if !racer[:TargetingRacer].nil?
-						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
-					end
-					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
-						#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer2 is #{combinedDistanceBetweenRacerAndTarget}"
-						Console.echo_warn "target is racer2"
-						racer[:TargetingRacer] = opposingRacerB
-						racer[:TargetingMoveEffect] = "spinOut"
-					end
-				end #if self.hasMoveEffect?(racer, "spinOut")
-				if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
-					#set a value on the racer hash that this racer is targeting another racer
-					distanceXBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-					distanceYBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].y + (opposingRacerC[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-					combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
-					#set the target if this target is closer than a target that is already set, or if there is no target already
-					if !racer[:TargetingRacer].nil?
-						distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
-						distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
-						combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
-					end
-					if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
-						#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer3 is #{combinedDistanceBetweenRacerAndTarget}"
-						Console.echo_warn "target is racer3"
-						racer[:TargetingRacer] = opposingRacerC
-						racer[:TargetingMoveEffect] = "spinOut"
-					end
-				end #if self.hasMoveEffect?(racer, "spinOut")
-			
-				#if no longer within X range of target, lose the target to find another
-				#Console.echo_warn self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
-				if !racer[:TargetingRacer].nil? && !self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
-					Console.echo_warn "target is no longer in range, so setting target to nil"
-					racer[:TargetingRacer] = nil
-					racer[:TargetingMoveEffect] = nil
+			#does the racer have a move with the effect 'spinout'?
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].y + (opposingRacerA[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
 				end
-		
-			end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
-		end #if racer[:SpinOutTimer] <= 0
-		
-		
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and player is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racerPlayer"
+					racer[:TargetingRacer] = opposingRacerA
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].y + (opposingRacerB[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer2 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer2"
+					racer[:TargetingRacer] = opposingRacerB
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].y + (opposingRacerC[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer3 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer3"
+					racer[:TargetingRacer] = opposingRacerC
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			
+			#if no longer within X range of target, lose the target to find another
+			#Console.echo_warn self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+			if !racer[:TargetingRacer].nil? && !self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+				Console.echo_warn "target is no longer in range, so setting target to nil"
+				racer[:TargetingRacer] = nil
+				racer[:TargetingMoveEffect] = nil
+			end
+		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
 	end #def self.aiTargetAnotherRacer
 	
 	def self.aiStrafeTowardTarget
@@ -545,7 +540,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard unless not spinning out and has specific move and doesn't have a rock out already
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard unless not spinning out and has specific move and doesn't have a rock out already
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -568,7 +563,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil?
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -591,7 +586,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "rockHazard") != false && racer[:RockHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil?
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -616,7 +611,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "mudHazard") != false && racer[:MudHazard][:Sprite].nil? #cannot use mud hazard unless not spinning out and has specific move and doesn't have a mud pit out already
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil? #cannot use mud hazard unless not spinning out and has specific move and doesn't have a mud pit out already
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -639,7 +634,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "mudHazard") != false && racer[:MudHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil?
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -662,7 +657,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "mudHazard") != false && racer[:MudHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil?
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -687,7 +682,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -711,7 +706,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -735,8 +730,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		#Console.echo_warn racer[:ReduceCooldownCount]
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -762,7 +756,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -785,7 +779,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -809,7 +803,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if racer[:SpinOutTimer] <= 0 && self.hasMoveEffect?(racer, "secondBoost") != false && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -827,5 +821,214 @@ class CrustangRacing
 				self.beginCooldown(racer, moveNumber) if timer <= 0
 		end #if racer[:SpinOutTimer] <= 0
 	end #def self.aiLookForOpportunityToUseSecondBoost
+
+	def self.aiLookForOpportunityToUseInvincibility
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+		
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
+		
+			hazardToAvoid = nil #this will get overwritten if another hazard further down in the code is closer than the current hazard to avoid (by using PositionXOnTrack)
+			#I don't need to worry about oldHazard PositionXOnTrack < newHazard PositionXOnTrack after the racer passes oldHazard PositionXOnTrack because once the oldHazard is behind the racer, hazardToAvoid is set to nil,
+			#and the oldHazard is no longer a thought for this chunk of code
+			
+			if !opposingRacerA[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:RockHazard], 64)
+				hazardToAvoid = opposingRacerA[:RockHazard]
+			end
+			if !opposingRacerA[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:MudHazard], 64)
+				hazardToAvoid = opposingRacerA[:MudHazard] if hazardToAvoid.nil? || opposingRacerA[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] || hazardToAvoid.nil? #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:RockHazard], 64)
+				hazardToAvoid = opposingRacerB[:RockHazard] if hazardToAvoid.nil? || opposingRacerB[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:MudHazard], 64)
+				hazardToAvoid = opposingRacerB[:MudHazard] if hazardToAvoid.nil? || opposingRacerB[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:RockHazard], 64)
+				hazardToAvoid = opposingRacerC[:RockHazard] if hazardToAvoid.nil? || opposingRacerC[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:MudHazard], 64)
+				hazardToAvoid = opposingRacerC[:MudHazard] if hazardToAvoid.nil? || opposingRacerC[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+		
+			#should the racer strafe up or down to avoid the upcoming hazard?
+			if !hazardToAvoid.nil?
+				#use invincibility
+				moveNumber = self.hasMoveEffect?(racer, "invincible")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+			end #if !hazardToAvoid.nil?
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+		
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
+		
+			hazardToAvoid = nil #this will get overwritten if another hazard further down in the code is closer than the current hazard to avoid (by using PositionXOnTrack)
+			#I don't need to worry about oldHazard PositionXOnTrack < newHazard PositionXOnTrack after the racer passes oldHazard PositionXOnTrack because once the oldHazard is behind the racer, hazardToAvoid is set to nil,
+			#and the oldHazard is no longer a thought for this chunk of code
+			
+			if !opposingRacerA[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:RockHazard], 64)
+				hazardToAvoid = opposingRacerA[:RockHazard]
+			end
+			if !opposingRacerA[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:MudHazard], 64)
+				hazardToAvoid = opposingRacerA[:MudHazard] if hazardToAvoid.nil? || opposingRacerA[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] || hazardToAvoid.nil? #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:RockHazard], 64)
+				hazardToAvoid = opposingRacerB[:RockHazard] if hazardToAvoid.nil? || opposingRacerB[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:MudHazard], 64)
+				hazardToAvoid = opposingRacerB[:MudHazard] if hazardToAvoid.nil? || opposingRacerB[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:RockHazard], 64)
+				hazardToAvoid = opposingRacerC[:RockHazard] if hazardToAvoid.nil? || opposingRacerC[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:MudHazard], 64)
+				hazardToAvoid = opposingRacerC[:MudHazard] if hazardToAvoid.nil? || opposingRacerC[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+		
+			#should the racer strafe up or down to avoid the upcoming hazard?
+			if !hazardToAvoid.nil?
+				#use invincibility
+				moveNumber = self.hasMoveEffect?(racer, "invincible")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+			end #if !hazardToAvoid.nil?
+		end #if racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+		
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
+		
+			hazardToAvoid = nil #this will get overwritten if another hazard further down in the code is closer than the current hazard to avoid (by using PositionXOnTrack)
+			#I don't need to worry about oldHazard PositionXOnTrack < newHazard PositionXOnTrack after the racer passes oldHazard PositionXOnTrack because once the oldHazard is behind the racer, hazardToAvoid is set to nil,
+			#and the oldHazard is no longer a thought for this chunk of code
+			
+			if !opposingRacerA[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:RockHazard], 64)
+				hazardToAvoid = opposingRacerA[:RockHazard]
+			end
+			if !opposingRacerA[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerA[:MudHazard], 64)
+				hazardToAvoid = opposingRacerA[:MudHazard] if hazardToAvoid.nil? || opposingRacerA[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] || hazardToAvoid.nil? #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:RockHazard], 64)
+				hazardToAvoid = opposingRacerB[:RockHazard] if hazardToAvoid.nil? || opposingRacerB[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerB[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerB[:MudHazard], 64)
+				hazardToAvoid = opposingRacerB[:MudHazard] if hazardToAvoid.nil? || opposingRacerB[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:RockHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:RockHazard], 64)
+				hazardToAvoid = opposingRacerC[:RockHazard] if hazardToAvoid.nil? || opposingRacerC[:RockHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+			if !opposingRacerC[:MudHazard][:PositionXOnTrack].nil? && self.withinHazardDetectionRangePlusGrace?(racer, opposingRacerC[:MudHazard], 64)
+				hazardToAvoid = opposingRacerC[:MudHazard] if hazardToAvoid.nil? || opposingRacerC[:MudHazard][:PositionXOnTrack] < hazardToAvoid[:PositionXOnTrack] #overwrite as the current hazard to avoid if closer than other hazard
+			end
+		
+			#should the racer strafe up or down to avoid the upcoming hazard?
+			if !hazardToAvoid.nil?
+				#use invincibility
+				moveNumber = self.hasMoveEffect?(racer, "invincible")
+				
+				case moveNumber
+				when 1
+					timer = racer[:Move1CooldownTimer]
+				when 2
+					timer = racer[:Move2CooldownTimer]
+				when 3
+					timer = racer[:Move3CooldownTimer]
+				when 4
+					timer = racer[:Move4CooldownTimer]
+				end
+				
+				self.moveEffect(racer, moveNumber) if timer <= 0
+				self.beginCooldown(racer, moveNumber) if timer <= 0
+			end #if !hazardToAvoid.nil?
+		end #if racer[:SpinOutTimer] <= 0
+	end #def self.aiLookForOpportunityToUseInvincibility
 
 end #class CrustangRacing

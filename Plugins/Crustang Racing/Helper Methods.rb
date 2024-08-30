@@ -504,6 +504,37 @@ class CrustangRacing
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?
 	
+	def self.withinHazardDetectionRangePlusGrace?(racer, hazard, grace)
+		#hazard will be the entire hazard hash passed in like so:
+		#self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		
+		withinRangeX = false
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE + grace
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRange?
+
 	def self.willCollideWithHazard?(racer, hazard)
 		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming hazard
 		collisionGrace = 1
@@ -668,7 +699,6 @@ class CrustangRacing
 		return false
 	end #def self.reduceCooldownMoveIsReady?(racer)
 	
-	
 	def self.secondBoostMoveIsReady?(racer)
 		if self.hasMoveEffect?(racer, "secondBoost") != false
 			moveNumber = self.hasMoveEffect?(racer, "secondBoost")
@@ -685,6 +715,23 @@ class CrustangRacing
 		end
 		return false
 	end #def self.reduceCooldownMoveIsReady?(racer)
+	
+	def self.invincibilityMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "invincible") != false
+			moveNumber = self.hasMoveEffect?(racer, "invincible")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.invincibilityMoveIsReady?(racer)
 	
 end #class CrustangRacing
 
