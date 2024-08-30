@@ -451,7 +451,7 @@ class Battle::AI
 						if target.burned? && !target.hasActiveAbility?(:GUTS)
 							miniscore*=0.5
 						end       
-						if livecounttarget==1
+						if livecountuser==1
 							miniscore*=0.5
 						end
 					when :SPECIAL_ATTACK
@@ -1254,7 +1254,7 @@ class Battle::AI
 				move.id == :RAGEPOWDER || move.id == :ROCKPOLISH ||
 				move.id == :STOCKPILE || move.id == :SUBSTITUTE ||
 				move.id == :SWITCHEROO ||  move.id == :SWALLOW ||
-				move.id == :TAUNT || 
+				move.id == :TAUNT || move.id == :POLLENPUFF ||
 				move.id == :OCTOLOCK || 
 				move.id == :REBALANCING || 
 				move.id == :TOPSYTURVY ||
@@ -1328,7 +1328,7 @@ class Battle::AI
 		if @battle.field.terrain == :Electric # Electric Terrain
 			PBDebug.log(sprintf("Electric Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:ELECTRIC, true)
+				if b.pbHasType?(:ELECTRIC, true)
 					fieldscore*=1.5
 				end
 			end
@@ -1359,7 +1359,7 @@ class Battle::AI
 		if @battle.field.terrain == :Grassy # Grassy Terrain
 			PBDebug.log(sprintf("Grassy Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:GRASS, true)
+				if b.pbHasType?(:GRASS, true)
 					fieldscore*=1.5
 				end
 			end
@@ -1385,7 +1385,7 @@ class Battle::AI
 			PBDebug.log(sprintf("Misty Terrain Disrupt")) if $INTERNAL
 			if user.spatk>user.attack
 				target.eachAlly do |b|
-					if target.pbHasType?(:FAIRY, true)
+					if b.pbHasType?(:FAIRY, true)
 						fieldscore*=1.3
 					end
 				end
@@ -1421,7 +1421,7 @@ class Battle::AI
 		if @battle.field.terrain == :Psychic # Psychic Terrain
 			PBDebug.log(sprintf("Psychic Terrain Disrupt")) if $INTERNAL
 			target.eachAlly do |b|
-				if target.pbHasType?(:PSYCHIC, true)
+				if b.pbHasType?(:PSYCHIC, true)
 					fieldscore*=1.7
 				end
 			end

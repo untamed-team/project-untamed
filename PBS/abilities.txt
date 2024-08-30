@@ -1175,6 +1175,10 @@ Description = Powers up ball and bomb moves.
 Name = Overwrite
 Description = The user's first move determines the user's type.
 #-------------------------------
+[DUBIOUS]
+Name = Dubious
+Description = The user transforms into a random non-fainted ally.
+#-------------------------------
 # 
 #-------------------------------
 [ANGELICBEAUTY]

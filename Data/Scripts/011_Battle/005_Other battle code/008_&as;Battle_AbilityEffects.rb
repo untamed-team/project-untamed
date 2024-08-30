@@ -3510,6 +3510,40 @@ Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
   }
 )
 
+Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
+  proc { |ability, battler, battle, switch_in|
+    next if !switch_in || battler.effects[PBEffects::Transform]
+    choices_blacklist = [:MOLLUCOTTA, :EXPURSUM, :GASTRONAUT,
+                         :QUETZALIL, :QUEXCELL, :QUETZILLIAN,
+                         :PORSITE, :CETTOEKKO, :BATHYGIGAS,
+                         :BURBRAWL, :HUMMIPUMMEL, :DRAGTACO,
+                         :CHIXULOB, :SPECTERZAL, :M_DITTO]
+    choices = []
+    battle.pbParty(battler.index).each_with_index do |pkmn, idxPkmn|
+      next if idxPkmn == battler.index
+      next if pkmn.fainted?
+      next if choices_blacklist.include?(pkmn.species)
+      iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler)
+      next if iFake.ungainableAbility? || iFake.unstoppableAbility? || iFake.mega?
+      iBaseStats = iFake.pokemon.baseStats
+      bstTotal = iBaseStats[:HP] + iBaseStats[:ATTACK] + iBaseStats[:DEFENSE] + iBaseStats[:SPECIAL_ATTACK] + iBaseStats[:SPECIAL_DEFENSE] + iBaseStats[:SPEED]
+      next if bstTotal <= 0 || bstTotal >= 580
+      choices.push(iFake)
+    end
+    next if choices.empty?
+    choice = choices[rand(choices.length)] # rand instead of pbRandom intentionally
+    next if choice.nil?
+
+    battle.pbShowAbilitySplash(battler, true)
+    battle.pbHideAbilitySplash(battler)
+    battler.effects[PBEffects::TransformPokemon] = choice.pokemon
+    battle.pbAnimation(:TRANSFORM, battler, choice)
+    battle.scene.pbChangePokemon(battler, choice.pokemon)
+    battler.pbTransform(choice)
+    battler.effects[PBEffects::Type3] = :DARK
+  }
+)
+
 #===============================================================================
 # OnSwitchOut handlers
 #===============================================================================

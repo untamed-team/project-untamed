@@ -979,7 +979,6 @@ class Battle::AI
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:accuracy_multiplier] = 1.0
 		modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
-    # innate acc boost is handled elsewhere
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers, move, type, skill)
     # Check if move can't miss

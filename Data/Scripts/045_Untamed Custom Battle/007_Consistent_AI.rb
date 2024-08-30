@@ -1,16 +1,17 @@
 class Battle::AI
+	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
 	$AIMASTERLOG = false
 	$AIGENERALLOG = true
 	# game dies when instruct is used
 	# gastro acid can sometimes make the ai skip turns?
 	# crit moves are off, they dont check if the foe is an ally
-	$movesToTargetAllies = [#"HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
+	$movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
 							"RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
 							"RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
-							#"TargetUsesItsLastUsedMoveAgain",
+							"TargetUsesItsLastUsedMoveAgain",
 							"SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
 							"SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
-							"UserTargetSwapAbilities", #"NegateTargetAbility", 
+							"UserTargetSwapAbilities", "NegateTargetAbility", 
 							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
 							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
 							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 
@@ -47,9 +48,9 @@ class Battle::AI
 			end
 		end
 		if $AIGENERALLOG
-			echo("\nChoices and scores:\n") #for: "+user.name+"\n")
+			echo("\nChoices and scores for: "+user.name+" \n")
 			Console.echo_h2(choices)
-			echo("------------------------\n")#----------------\n")
+			echo("----------------------------------------\n")
 		end
 		# Figure out useful information about the choices
 		totalScore = 0
@@ -69,45 +70,53 @@ class Battle::AI
 			end
 			PBDebug.log(logMsg)
 		end
-		if $AIMASTERLOG # master debug by JZ, ported #by low
+		if $AIMASTERLOG # master debug by JZ, ported (and edited) #by low
+			fakeTarget = nil
+			if $AIMASTERLOG_TARGET == 1 # ally
+				user.allAllies.each do |b|
+					next if !b.near?(user.index)
+					fakeTarget = @battle.battlers[b.index]
+				end
+			else						# enemy
+				fakeTarget = user.pbDirectOpposing
+			end
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "-----------------------------------------------------------------------"
+				line.puts "                      Score Board for #{user.name}"
+				line.puts "-----------------------------------------------------------------------"
+			end
 			move_keys = GameData::Move.keys
-			bestscore = [["Splash",0]]
+			bestscore = [["Atomic Splash",-991987]]
 			move_keys.each do |i|
+				break if fakeTarget.nil?
 				mirrored = Pokemon::Move.new(i)
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
 				next if mirrored==nil
-				target = user.pbDirectOpposing
+				next if !$movesToTargetAllies.include?(mirrmove.function) && $AIMASTERLOG_TARGET == 1
 				case mirrmove.category
 				when 0 then moveCateg = "Physical"
 				when 1 then moveCateg = "Special"
 				when 2 then moveCateg = "Status"
 				end
+				next if moveCateg.nil?
 				
-				score = 50 # for damaging moves
-				functionscore = pbGetMoveScoreFunctionCode(score, mirrmove, user, target, skill)
-				bsdam = mirrmove.baseDamage
-				bsdiv = 10.0/bsdam
-				functionscore *= bsdiv if mirrmove.baseDamage>50
-				score += functionscore
-				accuracy = pbRoughAccuracy(mirrmove, user, target, skill)
-				accuracy = 100 if accuracy>100
-				if mirrmove.damagingMove?
-					dmgScore = pbGetMoveScoreDamage(score, mirrmove, user, target, skill)
-					dmgScore -= 100-accuracy*1.33 if accuracy < 100
-				else   # Status moves
-					dmgScore = pbStatusDamage(mirrmove) # each status move now has a value tied to them #by low
-					dmgScore = pbGetMoveScoreFunctionCode(dmgScore, mirrmove, user, target, skill)
-					dmgScore *= accuracy / 100.0
-				end
+				fakeScore = pbGetMoveScore(mirrmove, user, fakeTarget, 100, true)
+				fakeScore -= 1
+				fakeScore *= -1 if $AIMASTERLOG_TARGET == 1
 				File.open("AI_master_log.txt", "a") do |line|
-					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + dmgScore.to_s
+					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + fakeScore.to_s
 				end
-				bestscore.push([mirrored.name.to_s, dmgScore])
+				bestscore.push([mirrored.name.to_s, fakeScore])
 			end
+
 			sortedscores = bestscore.sort { |a, b| b[1] <=> a[1] }
 			File.open("AI_scoreboard.txt", "a") do |line|
+				line.puts "-----------------------------------------------------------------------"
+				line.puts "                   High Score Board for #{user.name}"
+				line.puts "-----------------------------------------------------------------------"
 				for i in 0..sortedscores.length
 					next if sortedscores[i].nil?
+					next if sortedscores[i][0]=="Atomic Splash"
 					line.puts "Move " + sortedscores[i][0].to_s + " has the final score " + sortedscores[i][1].to_s
 				end
 			end
@@ -135,10 +144,11 @@ class Battle::AI
 			#end
 		end
 		# Decide whether all choices are bad, and if so, try switching instead
-		if !wildBattler
+		if !user.wild? #!wildBattler
 			badMoves = false
+			attemptedSwitching = false
 			if ((maxScore <= 20 && user.turnCount >= 1) ||
-				(maxScore <= 45 && user.turnCount > 3))
+				(maxScore <= 40 && user.turnCount > 3))
 				badMoves = true
 			end
 			if !badMoves && totalScore < 100
@@ -150,8 +160,9 @@ class Battle::AI
 				end
 			end
 			if badMoves && pbEnemyShouldWithdrawEx?(idxBattler, true)
+				attemptedSwitching = true
 				if $INTERNAL
-					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves")
+					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves 1")
 				end
 				return
 			end
@@ -175,7 +186,15 @@ class Battle::AI
 			end
 		end
 		if bestScore[1] <= 40
-			# Randomly choose a move from the choices and register it (in case everything sucks)
+			# in case everything sucks, try switching (again)
+			if !user.wild? && !attemptedSwitching && pbEnemyShouldWithdrawEx?(idxBattler, true)
+				if $INTERNAL
+					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves 2")
+				end
+				return
+			end
+			
+			# if switching isnt a option, randomly choose a move from the choices and register it 
 			randNum = pbAIRandom(totalScore)
 			choices.each do |c|
 				randNum -= c[1]
@@ -201,17 +220,18 @@ class Battle::AI
 	#=============================================================================
 	# Get a score for the given move being used against the given target
 	#=============================================================================
-	def pbGetMoveScore(move, user, target, skill = 100, roughdamage = 10)
+	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
 		score = pbGetMoveScoreFunctionCode(50, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
+		score += 1 if aigenlog
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# Adjust score based on how much damage it can deal
 		#DemICE moved damage calculation to the beginning
 		# Account for accuracy of move
 		accuracy = pbRoughAccuracy(move, user, target, skill)
 		accuracy = 100 if accuracy>100
-		if move.damagingMove?
+		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
 			score -= 100-accuracy*1.33 if accuracy < 100
 		else # Status moves

@@ -168,19 +168,20 @@ class Battle::AI
           # wip, allows for the AI to target allies if its good to do so (polen puff/swag/etc)
           score = pbGetMoveScore(move, user, b, 100)
           score *= -1
-          echoln "targeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
+          echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
         else
-          if b.effects[PBEffects::Illusion] #&& $AIGENERALLOG
-            echo_h2 "---------------------------"
+          if b.effects[PBEffects::Illusion] && $AIGENERALLOG
+            # it seems the AI isnt fooled by illusion, thats pretty neat actually
+            Console.echo_h2 "---------------------------"
             echoln "AI knowns target (#{b.name}) has illusion effect"
             echoln "AI THINKS target (#{b.name}) has the following types:"
-            tTypes = target.pbTypes(true, true)
+            tTypes = b.pbTypes(true, true)
             tTypes.each_with_index do |type, i|
               echoln "#{type.name}"
             end
             echoln "AI THINKS target (#{b.name}) has the ability: #{b.ability.name}"
-            echo_h2 "---------------------------"
+            Console.echo_h2 "---------------------------"
           end
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
