@@ -22,7 +22,7 @@ PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################curr
 #==================== BOOST SETTINGS ====================#
 #========================================================#
 BOOST_BUTTON_COOLDOWN_SECONDS = 3
-BOOST_BUTTON = Input::SPECIAL
+BOOST_BUTTON = 0x20#Input::SPECIAL
 BOOST_LENGTH_SECONDS = 0.5
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"

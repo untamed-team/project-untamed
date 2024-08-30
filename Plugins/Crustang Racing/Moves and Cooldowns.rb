@@ -13,10 +13,10 @@ class CrustangRacing
 		###################################
 		#============= Boost =============
 		###################################
-		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+		if Input.pressex?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@racerPlayer[:BoostButtonSprite].frame = 1
 		end
-		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+		if Input.releaseex?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 0)
 			@racerPlayer[:BoostButtonSprite].frame = 0
 		end

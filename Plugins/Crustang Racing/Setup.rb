@@ -308,7 +308,7 @@ class CrustangRacing
 		@boostButtonTextOverlay = @sprites["boostButtonTextOverlay"].bitmap
 		pbSetSystemFont(@boostButtonTextOverlay)
 		@boostButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		drawFormattedTextEx(@boostButtonTextOverlay, 0, 4, Graphics.width, "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@boostButtonTextOverlay, 0, 4, Graphics.width, "Space", @overlayBaseColor, @overlayShadowColor)
 		
 		#draw moves depending on what racer knows
 		#for now, draw specific moves, 4 at a time for testing
