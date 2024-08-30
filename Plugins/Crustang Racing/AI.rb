@@ -76,7 +76,7 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		racer = @racer1
-		if racer[:SpinOutTimer] <= 0 #cannot avoid obstacles if spinning out
+		if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -180,14 +180,14 @@ class CrustangRacing
 				racer[:CannotGoUp] = false
 				racer[:CannotGoDown] = false
 			end #if !hazardToAvoid.nil?
-		end #if racer[:SpinOutTimer] <= 0
+		end #if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 		
 		###################################
 		#============= Racer2 =============
 		###################################
 		racer = @racer2
 		
-		if racer[:SpinOutTimer] <= 0
+		if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -289,14 +289,14 @@ class CrustangRacing
 				racer[:CannotGoUp] = false
 				racer[:CannotGoDown] = false
 			end #if !hazardToAvoid.nil?
-		end #if racer[:SpinOutTimer] <= 0
+		end #if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 		
 		###################################
 		#============= Racer3 =============
 		###################################
 		racer = @racer3
 		
-		if racer[:SpinOutTimer] <= 0
+		if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -398,7 +398,7 @@ class CrustangRacing
 				racer[:CannotGoUp] = false
 				racer[:CannotGoDown] = false
 			end #if !hazardToAvoid.nil?
-		end #if racer[:SpinOutTimer] <= 0
+		end #if racer[:InvincibilityTimer] <= 0 && racer[:SpinOutTimer] <= 0
 	end #def self.aiBoost
 
 	def self.aiTargetAnotherRacer

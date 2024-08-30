@@ -565,7 +565,7 @@ class CrustangRacing
 			###################################
 			#=============== AI ===============
 			###################################
-			#self.aiAvoidObstacles
+			self.aiAvoidObstacles
 			
 			#AI - the order in which these methods run determines what types of moves the AI will prioritize using when available
 			#self.aiMove1
@@ -574,15 +574,13 @@ class CrustangRacing
 			self.aiChargeOverloadMove #this monitors for AIs using overload
 			
 			#priority of AI using moves
-			self.aiLookForOpportunityToUseInvincibility #invincibility
 			self.aiLookForOpportunityToUseBoost
 			self.aiLookForOpportunityToUseSecondBoost
 			self.aiLookForOpportunityToUseReduceCooldown
 			self.aiTargetAnotherRacer #spinOut and overload
 			self.aiLookForOpportunityToUseRockHazard #rock hazard
 			self.aiLookForOpportunityToUseMudHazard #mud hazard
-			
-			#Console.echo_warn "racer 3 will collide with a rock!" if self.willCollideWithHazard?(@racer3, "rock")
+			self.aiLookForOpportunityToUseInvincibility #invincibility
 		end
 	end #def self.main
 	
