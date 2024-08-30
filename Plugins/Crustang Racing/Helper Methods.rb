@@ -595,7 +595,7 @@ class CrustangRacing
 		return if chance.nil? #if not rolling rng for anything at the moment
 		#otherwise, roll rng
 		chance = rand(100).between?(1, chance)
-		Console.echo_warn "successful roll" if chance
+		#Console.echo_warn "successful roll" if chance
 		return chance
 	end #self.rngRoll(chance)
 	
