@@ -26,50 +26,6 @@ class CrustangRacing
 		self.moveEffect(racer, 0) if racer[:SpinOutTimer] <= 0 && racer[:BoostCooldownTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE)
 
 	end #def self.aiLookForOpportunityToUseBoost
-	
-	def self.aiMove1 #might not be used anymore or might be used for things that don't require targets like spinout and overload
-		#this handles actually using the move, not WHEN to use the move
-		###################################
-		#============= Racer1 =============
-		###################################
-		racer = @racer1
-		
-		if racer[:Move1CooldownTimer] <= 0
-			case self.getMoveEffect(racer, 1)
-			#using 'case' so I can add conditions here since we don't want racers using the effect 100% of the time
-			when "invincible"
-				self.moveEffect(racer, 1)
-				self.beginCooldown(racer, 1)
-			when "spinOut"
-				racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-				if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
-					self.moveEffect(racer, 1) 
-					self.beginCooldown(racer, 1)
-				end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-				
-			when "overload"
-				racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
-				if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE #get to the max range
-					self.moveEffect(racer, 1) 
-					self.beginCooldown(racer, 1)
-				end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-
-			when "reduceCooldown"
-				self.moveEffect(racer, 1) 
-				self.beginCooldown(racer, 1)
-			when "secondBoost"
-				self.moveEffect(racer, 1) 
-				self.beginCooldown(racer, 1)
-			when "rockHazard"
-				self.moveEffect(racer, 1) 
-				self.beginCooldown(racer, 1)
-			when "mudHazard"
-				self.moveEffect(racer, 1) 
-				self.beginCooldown(racer, 1)
-			end #case self.getMoveEffect(racer, 1)
-		end #if racer[:Move1CooldownTimer] <= 0
-		
-	end #def self.useMove1	
 
 	def self.aiAvoidObstacles
 		###################################
@@ -408,7 +364,197 @@ class CrustangRacing
 		racer = @racer1
 		
 		#Console.echo_warn self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
-		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
+		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_TARGET_RACER)
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
+		
+			#if the racer has a move with certain move effects, target a nearby racer who is within MAX_RANGE on the X axis
+			#set a value on the racer hash that this racer is targeting another racer
+			#if racer is targeting someone, do not use any moves in aiMove1
+				
+			#does the racer have a move with the effect 'spinout'?
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].y + (opposingRacerA[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and player is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racerPlayer"
+					racer[:TargetingRacer] = opposingRacerA
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].y + (opposingRacerB[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer2 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer2"
+					racer[:TargetingRacer] = opposingRacerB
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].y + (opposingRacerC[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer3 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer3"
+					racer[:TargetingRacer] = opposingRacerC
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			
+			#if no longer within X range of target, lose the target to find another
+			#Console.echo_warn self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+			if !racer[:TargetingRacer].nil? && !self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+				Console.echo_warn "target is no longer in range, so setting target to nil"
+				racer[:TargetingRacer] = nil
+				racer[:TargetingMoveEffect] = nil
+			end
+		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+		
+		#Console.echo_warn self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
+		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_TARGET_RACER)
+			case racer
+			when @racer1
+				opposingRacerA = @racerPlayer
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			when @racer2
+				opposingRacerA = @racer1
+				opposingRacerB = @racer3
+				opposingRacerC = @racerPlayer
+			when @racer3
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racerPlayer
+			when @racerPlayer
+				opposingRacerA = @racer1
+				opposingRacerB = @racer2
+				opposingRacerC = @racer3
+			end
+		
+			#if the racer has a move with certain move effects, target a nearby racer who is within MAX_RANGE on the X axis
+			#set a value on the racer hash that this racer is targeting another racer
+			#if racer is targeting someone, do not use any moves in aiMove1
+				
+			#does the racer have a move with the effect 'spinout'?
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerA)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].x + (opposingRacerA[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerA[:RacerSprite].y + (opposingRacerA[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and player is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racerPlayer"
+					racer[:TargetingRacer] = opposingRacerA
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerB)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].x + (opposingRacerB[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerB[:RacerSprite].y + (opposingRacerB[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer2 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer2"
+					racer[:TargetingRacer] = opposingRacerB
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			if self.hasMoveEffect?(racer, "spinOut") != false && self.withinMaxSpinOutRangeX?(racer, opposingRacerC)
+				#set a value on the racer hash that this racer is targeting another racer
+				distanceXBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].x + (opposingRacerC[:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+				distanceYBetweenRacerAndTarget = ((opposingRacerC[:RacerSprite].y + (opposingRacerC[:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+				combinedDistanceBetweenRacerAndTarget = distanceXBetweenRacerAndTarget + distanceYBetweenRacerAndTarget
+				#set the target if this target is closer than a target that is already set, or if there is no target already
+				if !racer[:TargetingRacer].nil?
+					distanceXBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].x + (racer[:TargetingRacer][:RacerSprite].width/2)) - (racer[:RacerSprite].x + (racer[:RacerSprite].width/2))).abs
+					distanceYBetweenRacerAndPreviousTarget = ((racer[:TargetingRacer][:RacerSprite].y + (racer[:TargetingRacer][:RacerSprite].height/2)) - (racer[:RacerSprite].y + (racer[:RacerSprite].height/2))).abs
+					combinedDistanceBetweenRacerAndPreviousTarget = distanceXBetweenRacerAndPreviousTarget + distanceYBetweenRacerAndPreviousTarget
+				end
+				if racer[:TargetingRacer].nil? || (combinedDistanceBetweenRacerAndPreviousTarget && combinedDistanceBetweenRacerAndTarget < combinedDistanceBetweenRacerAndPreviousTarget)
+					#Console.echo_warn "distance between racer1 and previous target is #{combinedDistanceBetweenRacerAndPreviousTarget} and distance between racer1 and racer3 is #{combinedDistanceBetweenRacerAndTarget}"
+					Console.echo_warn "target is racer3"
+					racer[:TargetingRacer] = opposingRacerC
+					racer[:TargetingMoveEffect] = "spinOut"
+				end
+			end #if self.hasMoveEffect?(racer, "spinOut")
+			
+			#if no longer within X range of target, lose the target to find another
+			#Console.echo_warn self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+			if !racer[:TargetingRacer].nil? && !self.withinMaxSpinOutRangeX?(racer, racer[:TargetingRacer])
+				Console.echo_warn "target is no longer in range, so setting target to nil"
+				racer[:TargetingRacer] = nil
+				racer[:TargetingMoveEffect] = nil
+			end
+		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+		
+		#Console.echo_warn self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer)
+		if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0 && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_TARGET_RACER)
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -528,10 +674,75 @@ class CrustangRacing
 				elsif racer[:RacerSprite].y > racer[:TargetingRacer][:RacerSprite].y
 					#strafe up closer to target
 					self.strafeUp(racer)
-				end
+				end #if racer[:RacerSprite].y < racer[:TargetingRacer][:RacerSprite].y
+			end #if !self.withinSpecifiedRangeY?(racer, racer[:TargetingRacer], minimumDistanceToTarget)
+		end #if !racer[:TargetingRacer].nil?
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+		
+		if !racer[:TargetingRacer].nil?
+			#the racer has a target they want to strafe towards
+			
+			#temporary distance to get away from target - example: 20 would mean the racer gets 20 pixels away from the target then stop strafing to get closer
+			@minimumDistanceToTarget = 20
+			
+			case racer[:TargetingMoveEffect]
+			when "spinOut"
+				#set range to max spin out range
+				minimumDistanceToTarget = CrustangRacingSettings::SPINOUT_MAX_RANGE
+				#Console.echo_warn "targetingmoveeffect is spinOut"
+			when "overload"
+				#set range to max spin out range
+				minimumDistanceToTarget = CrustangRacingSettings::OVERLOAD_MAX_RANGE
 			end
 			
-		end
+			if !self.withinSpecifiedRangeY?(racer, racer[:TargetingRacer], minimumDistanceToTarget)
+				#Console.echo_warn "not yet within range"
+				if racer[:RacerSprite].y < racer[:TargetingRacer][:RacerSprite].y
+					#strafe down closer to target
+					self.strafeDown(racer)
+				elsif racer[:RacerSprite].y > racer[:TargetingRacer][:RacerSprite].y
+					#strafe up closer to target
+					self.strafeUp(racer)
+				end #if racer[:RacerSprite].y < racer[:TargetingRacer][:RacerSprite].y
+			end #if !self.withinSpecifiedRangeY?(racer, racer[:TargetingRacer], minimumDistanceToTarget)
+		end #if !racer[:TargetingRacer].nil?
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+		
+		if !racer[:TargetingRacer].nil?
+			#the racer has a target they want to strafe towards
+			
+			#temporary distance to get away from target - example: 20 would mean the racer gets 20 pixels away from the target then stop strafing to get closer
+			@minimumDistanceToTarget = 20
+			
+			case racer[:TargetingMoveEffect]
+			when "spinOut"
+				#set range to max spin out range
+				minimumDistanceToTarget = CrustangRacingSettings::SPINOUT_MAX_RANGE
+				#Console.echo_warn "targetingmoveeffect is spinOut"
+			when "overload"
+				#set range to max spin out range
+				minimumDistanceToTarget = CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			end
+			
+			if !self.withinSpecifiedRangeY?(racer, racer[:TargetingRacer], minimumDistanceToTarget)
+				#Console.echo_warn "not yet within range"
+				if racer[:RacerSprite].y < racer[:TargetingRacer][:RacerSprite].y
+					#strafe down closer to target
+					self.strafeDown(racer)
+				elsif racer[:RacerSprite].y > racer[:TargetingRacer][:RacerSprite].y
+					#strafe up closer to target
+					self.strafeUp(racer)
+				end #if racer[:RacerSprite].y < racer[:TargetingRacer][:RacerSprite].y
+			end #if !self.withinSpecifiedRangeY?(racer, racer[:TargetingRacer], minimumDistanceToTarget)
+		end #if !racer[:TargetingRacer].nil?
 	end #def self.aiStrafeTowardTarget
 
 	def self.aiLookForOpportunityToUseRockHazard
@@ -540,7 +751,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil? #cannot use rock hazard unless not spinning out and has specific move and doesn't have a rock out already
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_ROCKHAZARD) #cannot use rock hazard unless not spinning out and has specific move and doesn't have a rock out already
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -563,7 +774,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_ROCKHAZARD)
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -586,7 +797,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "rockHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:RockHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_ROCKHAZARD)
 				moveNumber = self.hasMoveEffect?(racer, "rockHazard")
 				
 				case moveNumber
@@ -611,7 +822,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil? #cannot use mud hazard unless not spinning out and has specific move and doesn't have a mud pit out already
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_MUDHAZARD) #cannot use mud hazard unless not spinning out and has specific move and doesn't have a mud pit out already
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -634,7 +845,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_MUDHAZARD)
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -657,7 +868,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil?
+		if self.hasMoveEffect?(racer, "mudHazard") != false && racer[:SpinOutTimer] <= 0 && racer[:MudHazard][:Sprite].nil? && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_MUDHAZARD)
 				moveNumber = self.hasMoveEffect?(racer, "mudHazard")
 				
 				case moveNumber
@@ -682,7 +893,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_REDUCECOOLDOWN) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -706,7 +917,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_REDUCECOOLDOWN) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -730,7 +941,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) #cannot use reduce cooldown unless not spinning out and has specific move
+		if self.hasMoveEffect?(racer, "reduceCooldown") != false && racer[:SpinOutTimer] <= 0 && racer[:ReduceCooldownCount] <= 0 && self.reduceCooldownMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_REDUCECOOLDOWN) #cannot use reduce cooldown unless not spinning out and has specific move
 				moveNumber = self.hasMoveEffect?(racer, "reduceCooldown")
 				
 				case moveNumber
@@ -756,7 +967,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_SECONDBOOST) #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -779,7 +990,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_SECONDBOOST) #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -803,7 +1014,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
+		if self.hasMoveEffect?(racer, "secondBoost") != false && racer[:SpinOutTimer] <= 0 && self.secondBoostMoveIsReady?(racer) && racer[:CurrentSpeed] < CrustangRacingSettings::SECONDARY_BOOST_SPEED && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_SECONDBOOST) #cannot use second boost unless not spinning out and has specific move and speed from secondBoost is higher than currentSpeed
 				moveNumber = self.hasMoveEffect?(racer, "secondBoost")
 				
 				case moveNumber
@@ -828,7 +1039,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_INVINCIBLE)
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -897,7 +1108,7 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 		
-		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_INVINCIBLE)
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer
@@ -966,7 +1177,7 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 		
-		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "invincible") != false && racer[:SpinOutTimer] <= 0 && racer[:InvincibilityTimer] <= 0 && self.invincibilityMoveIsReady?(racer) && self.rngRoll(CrustangRacingSettings::PERCENT_CHANCE_TO_USE_INVINCIBLE)
 			case racer
 			when @racer1
 				opposingRacerA = @racerPlayer

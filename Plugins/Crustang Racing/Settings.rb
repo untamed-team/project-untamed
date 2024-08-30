@@ -26,7 +26,7 @@ BOOST_BUTTON = 0x20#Input::SPECIAL
 BOOST_LENGTH_SECONDS = 0.5
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 100#5#30
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 90
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -59,6 +59,13 @@ OVERLOAD_OUTLINE_WIDTH = 6
 OVERLOAD_DURATION_IN_SECONDS = 5
 OVERLOADED_STRAFE_SPEED = 2
 OVERLOADED_SE = "CR_Overloaded"
+
+PERCENT_CHANCE_TO_TARGET_RACER = 25
+PERCENT_CHANCE_TO_USE_INVINCIBLE = 25
+PERCENT_CHANCE_TO_USE_REDUCECOOLDOWN = 25
+PERCENT_CHANCE_TO_USE_SECONDBOOST = 25
+PERCENT_CHANCE_TO_USE_ROCKHAZARD = 25
+PERCENT_CHANCE_TO_USE_MUDHAZARD = 25
 
 #========================================================#
 #===================== MOVE EFFECTS =====================#
@@ -98,9 +105,8 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-#{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
 

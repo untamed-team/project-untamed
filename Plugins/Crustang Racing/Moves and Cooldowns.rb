@@ -453,6 +453,38 @@ class CrustangRacing
 				self.beginCooldown(racer, moveNumber)
 			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
 		end #if self.spinOutMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that spinout is tied to
+				moveNumber = self.hasMoveEffect?(racer, "spinOut")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end #if self.spinOutMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that spinout is tied to
+				moveNumber = self.hasMoveEffect?(racer, "spinOut")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end #if self.spinOutMoveIsReady?(racer)
 	end #def self.aiChargeSpinOutMove
 	
 	def self.overload(attacker, recipient)
@@ -472,6 +504,38 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		racer = @racer1
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
 
 		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
 		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0

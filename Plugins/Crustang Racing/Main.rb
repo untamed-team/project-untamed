@@ -568,15 +568,14 @@ class CrustangRacing
 			self.aiAvoidObstacles
 			
 			#AI - the order in which these methods run determines what types of moves the AI will prioritize using when available
-			#self.aiMove1
 			self.aiStrafeTowardTarget
 			self.aiChargeSpinOutMove #this monitors for AIs using spin out
 			self.aiChargeOverloadMove #this monitors for AIs using overload
 			
 			#priority of AI using moves
-			self.aiLookForOpportunityToUseBoost
-			self.aiLookForOpportunityToUseSecondBoost
-			self.aiLookForOpportunityToUseReduceCooldown
+			self.aiLookForOpportunityToUseBoost #primary boost
+			self.aiLookForOpportunityToUseSecondBoost #secondBoost / stabilize
+			self.aiLookForOpportunityToUseReduceCooldown #reduceCooldown
 			self.aiTargetAnotherRacer #spinOut and overload
 			self.aiLookForOpportunityToUseRockHazard #rock hazard
 			self.aiLookForOpportunityToUseMudHazard #mud hazard

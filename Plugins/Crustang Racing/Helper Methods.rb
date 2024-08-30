@@ -335,9 +335,6 @@ class CrustangRacing
 
 	def self.checkForCollisions(racer)
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
-		###################################
-		#============= Racer1 =============
-		###################################
 		#collide with racers
 		self.bumpedIntoSomeone(racer, @racer1) if racer != @racer1 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer1[:RacerSprite])
 		self.bumpedIntoSomeone(racer, @racer2) if racer != @racer2 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer2[:RacerSprite])
@@ -437,7 +434,6 @@ class CrustangRacing
 			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
 			self.announceAttack(@racerPlayer, racer, "mud")
 		end
-
 	end #def self.checkForCollisions
 
 	def self.endInvincibility(racer)
@@ -597,9 +593,10 @@ class CrustangRacing
 	def self.rngRoll(chance=nil)
 		return if @rngRollsTimer > 0 #if not able to roll rng yet
 		return if chance.nil? #if not rolling rng for anything at the moment
-		
 		#otherwise, roll rng
-		return rand(100).between?(1, chance)
+		chance = rand(100).between?(1, chance)
+		Console.echo_warn "successful roll" if chance
+		return chance
 	end #self.rngRoll(chance)
 	
 	def self.hasMoveEffect?(racer, effect)
