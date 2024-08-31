@@ -6,11 +6,8 @@ Alright, organizing my thoughts for AI:
 
 
 To do:
-Put in rocky patches and have AI avoid it when possible
-make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
-patches are put in random spots on the track at least X amount of pixels apart
-they slow you down if you're touching them
-make the rock patch set your current speed so you slow down immediately
+have AI avoid rocky patches when possible
+make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?), but they should still try to avoid them so it simulates wandering up and down
 
 Bugs:
 

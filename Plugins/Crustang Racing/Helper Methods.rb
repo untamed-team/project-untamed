@@ -434,6 +434,23 @@ class CrustangRacing
 			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
 			self.announceAttack(@racerPlayer, racer, "mud")
 		end
+		
+		#collide with rocky patch
+		if racer[:InvincibilityStatus] == false
+			for i in 0...@rockyPatches.length
+				sprite = @rockyPatches[i][0]
+			
+				if self.collides_with?(racer[:RacerSprite], sprite)
+					if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE 
+						pbSEPlay(CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE)
+						@currentlyPlayingSE = CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE 
+						@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+					end
+					#set current speed of racer to ROCKY_PATCH_SPEED
+					racer[:CurrentSpeed] = CrustangRacingSettings::ROCKY_PATCH_SPEED
+				end
+			end #for i in 0...@rockyPatches.length
+		end #if racer[:InvincibilityStatus] == false
 	end #def self.checkForCollisions
 
 	def self.endInvincibility(racer)

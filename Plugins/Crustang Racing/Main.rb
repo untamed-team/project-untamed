@@ -214,7 +214,7 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 		
-		#this is the X on the screen, not the track or track overview		
+		#this is the X on the screen, not the track or track overview
 		if racer[:RockHazard][:Sprite] && !racer[:RockHazard][:Sprite].disposed?
 			#calculate normally based on track1's X
 			racer[:RockHazard][:Sprite].x = @sprites["track1"].x + racer[:RockHazard][:PositionXOnTrack] + @racerStartingX
@@ -368,6 +368,32 @@ class CrustangRacing
 		
 	end #def self.updateHazardPositionOnScreen
 	
+	def self.updateRockyPatchPositionOnScreen
+		#for i in 0...@rockyPatches.length
+		#	print @rockyPatches[i].x
+		#end
+		
+		for i in 0...@rockyPatches.length
+			sprite = @rockyPatches[i][0]
+			positionXOnTrack = @rockyPatches[i][1]
+		
+			#calculate normally based on track1's X
+			sprite.x = @sprites["track1"].x + positionXOnTrack + @racerStartingX
+
+			#keep the patch on screen
+			#if track2 is on the screen, and the patch's position on the track is <= the width of track2, set the patch's position on the track relative to track2's x
+			if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1) && positionXOnTrack <= @sprites["track2"].width
+				#make the patch's X relative to track2's x
+				sprite.x = @sprites["track2"].x + positionXOnTrack + @racerStartingX
+			end #if @sprites["track2"].x.between?(1-@sprites["track2"].width,Graphics.width-1)
+		
+			#keep the patch on screen if we reach track2
+			if sprite.x > @sprites["track1"].width - sprite.width
+				sprite.x -= @sprites["track1"].width
+			end
+		end #for i in 0...@rockyPatches.length
+	end #def self.updateRockyPatchPositionOnScreen
+
 	def self.accelerateDecelerate
 		###################################
 		#============= Racer1 =============
@@ -544,6 +570,7 @@ class CrustangRacing
 			self.updateRacerPositionOnTrack
 			self.updateRacerPositionOnScreen
 			self.updateHazardPositionOnScreen
+			self.updateRockyPatchPositionOnScreen
 			self.trackOverviewMovementUpdate
 			self.detectInput if @racerPlayer[:SpinOutTimer] <= 0
 			self.updateTimers

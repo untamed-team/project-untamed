@@ -21,7 +21,8 @@ NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
 ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
 MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
 SOONEST_ROCKY_PATCH_CAN_APPEAR = 100
-LATEST_ROCKY_PATCH_CAN_APPEAR = 0#100 #end of track minus this gives you the latest the patch can appear
+LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
+ROCKY_PATCH_COLLISION_SE = "CR_RockyPatch"
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
