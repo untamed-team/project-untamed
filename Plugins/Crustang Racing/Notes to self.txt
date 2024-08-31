@@ -6,8 +6,10 @@ Alright, organizing my thoughts for AI:
 
 
 To do:
-have AI avoid rocky patches when possible
-make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?), but they should still try to avoid them so it simulates wandering up and down
+make AI wander a bit at random if not targeting someone or avoiding something
+
+
+
 
 Bugs:
 

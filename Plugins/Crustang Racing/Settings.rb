@@ -20,9 +20,10 @@ PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################curr
 NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
 ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
 MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
-SOONEST_ROCKY_PATCH_CAN_APPEAR = 100
+SOONEST_ROCKY_PATCH_CAN_APPEAR = 500
 LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
 ROCKY_PATCH_COLLISION_SE = "CR_RockyPatch"
+CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME = 80
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
@@ -32,7 +33,7 @@ BOOST_BUTTON = 0x20#Input::SPECIAL
 BOOST_LENGTH_SECONDS = 0.5
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 90
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 70
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#

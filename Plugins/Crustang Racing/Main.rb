@@ -604,8 +604,8 @@ class CrustangRacing
 			self.aiLookForOpportunityToUseSecondBoost #secondBoost / stabilize
 			self.aiLookForOpportunityToUseReduceCooldown #reduceCooldown
 			self.aiTargetAnotherRacer #spinOut and overload
-			self.aiLookForOpportunityToUseRockHazard #rock hazard
-			self.aiLookForOpportunityToUseMudHazard #mud hazard
+			#self.aiLookForOpportunityToUseRockHazard #rock hazard
+			#self.aiLookForOpportunityToUseMudHazard #mud hazard
 			self.aiLookForOpportunityToUseInvincibility #invincibility
 		end
 	end #def self.main

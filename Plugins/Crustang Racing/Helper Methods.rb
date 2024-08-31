@@ -546,8 +546,43 @@ class CrustangRacing
 		end
 
 		return withinRangeX
-	end #def self.withinHazardDetectionRange?
+	end #def self.withinHazardDetectionRangePlusGrace?
 
+	def self.withinRockyPatchDetectionRange?(racer, patch)
+		withinRangeX = false
+		
+		sprite = patch[0]
+		positionXOnTrack = patch[1]
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if positionXOnTrack.between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || positionXOnTrack.between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if positionXOnTrack.between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+		
+		################# MIGHT NOT NEED THIS SINCE WE AREN'T NOTIFYING THE PLAYER FOR ROCKY PATCHES WITH AN ALARM
+		#crude way of saying it's no longer in range when on the screen
+		withinRangeX = false if sprite.x.between?(0, Graphics.width) && racer == @racerPlayer #we don't want a hazard alarm happening for the player if the hazard is on screen, but we do want AI to detect upcoming hazards that are on the screen and beyond
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRange?
+	
 	def self.willCollideWithHazard?(racer, hazard)
 		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming hazard
 		collisionGrace = 1
@@ -605,16 +640,34 @@ class CrustangRacing
 		end
 
 		return false
-	end #def self.withinHazardDetectionRange?
+	end #def self.willCollideWithHazard?
 	
-	def self.rngRoll(chance=nil)
+	def self.willCollideWithRockyPatch?(racer, patch)
+		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming rocky patch
+		collisionGrace = 1
+		
+		sprite = patch[0]
+		if sprite.y.between?(racer[:RacerSprite].y - sprite.height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+
+		return false
+	end #def self.willCollideWithRockyPatch?(racer, patch)
+	
+	def self.rngRollThrottled(chance=nil)
 		return if @rngRollsTimer > 0 #if not able to roll rng yet
 		return if chance.nil? #if not rolling rng for anything at the moment
 		#otherwise, roll rng
 		chance = rand(100).between?(1, chance)
 		#Console.echo_warn "successful roll" if chance
 		return chance
-	end #self.rngRoll(chance)
+	end #self.rngRollThrottled(chance)
+	
+	def self.rngRoll(chance=nil) #meant to be run every frame without throttling
+		chance = rand(100*Graphics.frame_rate).between?(1, chance)
+		#Console.echo_warn "successful roll" if chance
+		return chance
+	end #self.rngRollThrottled(chance)
 	
 	def self.hasMoveEffect?(racer, effect)
 		if !racer[:Move1].nil? && self.getMoveEffect(racer, 1) == effect

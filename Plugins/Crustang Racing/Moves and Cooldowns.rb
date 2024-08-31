@@ -170,8 +170,8 @@ class CrustangRacing
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 		
 			#reset racer's spinout and overload ranges regardless of what move they just "released", as if they let go of the move button
-			racer[:SpinOutCharge] = 0#CrustangRacingSettings::SPINOUT_MIN_RANGE
-			racer[:OverloadCharge] = 0#CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			racer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 		
 		end #if moveNumber == 0
 		
@@ -443,8 +443,8 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 
-		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
-		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
@@ -459,8 +459,8 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 
-		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
-		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
@@ -475,8 +475,8 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 
-		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
-		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
@@ -505,8 +505,8 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 
-		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
-		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
 			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that overload is tied to
@@ -521,8 +521,8 @@ class CrustangRacing
 		###################################
 		racer = @racer2
 
-		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
-		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
 			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that overload is tied to
@@ -537,8 +537,8 @@ class CrustangRacing
 		###################################
 		racer = @racer3
 
-		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
-		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
 			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that overload is tied to
