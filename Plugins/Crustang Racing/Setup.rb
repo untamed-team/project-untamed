@@ -139,7 +139,42 @@ class CrustangRacing
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
 		
+		self.placeRockyPatches
+		
 	end #def setup
+	
+	def self.placeRockyPatches
+		#rocky patch placements
+		
+		#create sprite for width reference
+		@sprites["dummyRockyPatch"] = IconSprite.new(0, 0, @viewport)
+		@sprites["dummyRockyPatch"].setBitmap("Graphics/Pictures/Crustang Racing/rocky_patch")
+		@sprites["dummyRockyPatch"].visible = false
+		
+		@rockyPatchEligiblePlacements = []
+		maxDistanceBetweenRockyPatches = @sprites["track1"].width / CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK - @sprites["dummyRockyPatch"].width
+		
+		#place first rocky patch
+		#this will place the sprite somewhere between pixel 100 and pixel (1536-96) 1440
+		#@rockyPatchEligiblePlacements.push([startingPositionForRockyPatch, maxDistanceBetweenRockyPatches - @sprites["dummyRockyPatch"].width])
+
+		endOfLastRockyPatchEligibleX = 0
+		startingPositionForThisRockyPatch = 0
+		CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK.times do
+			#if this is the first iteration, the first element in the first array should be the setting SOONEST_ROCKY_PATCH_CAN_APPEAR
+			if endOfLastRockyPatchEligibleX == 0
+				@rockyPatchEligiblePlacements.push([CrustangRacingSettings::SOONEST_ROCKY_PATCH_CAN_APPEAR, maxDistanceBetweenRockyPatches + endOfLastRockyPatchEligibleX - CrustangRacingSettings::MIN_DISTANCE_BETWEEN_ROCKY_PATCHES])
+			else
+				@rockyPatchEligiblePlacements.push([startingPositionForThisRockyPatch, maxDistanceBetweenRockyPatches + endOfLastRockyPatchEligibleX - CrustangRacingSettings::MIN_DISTANCE_BETWEEN_ROCKY_PATCHES])
+			end
+			
+			startingPositionForThisRockyPatch += maxDistanceBetweenRockyPatches
+			endOfLastRockyPatchEligibleX += maxDistanceBetweenRockyPatches
+		end
+		
+		print @rockyPatchEligiblePlacements
+		
+	end #def self.placeRockyPatches
 	
 	def self.drawContestants
 		#in relay run, the player's pkmn is always at the same exact X on the screen, so the camera is always centered on them, about a third of the screen's width inward
