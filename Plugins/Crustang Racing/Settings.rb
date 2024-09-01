@@ -91,7 +91,7 @@ overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burde
 
 reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
 
-secondBoost:     {EffectName: "Stabilize", EffectCode: "secondBoost", Description: "Stabilize your speed for a short time. Faster than base speed, slower than boost. Using this makes Boost begin cooldown.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
+secondBoost:     {EffectName: "Stabilize", EffectCode: "secondBoost", Description: "Stabilize your speed for a short time. Faster than base speed, slower than boost. Using this makes Boost begin to cool down.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
 
 rockHazard:      {EffectName: "Rock Hazard", EffectCode: "rockHazard", Description: "Place a rock where you are, leaving it behind for another racer to hit.", AssignedMoves: [:ROCKTOMB, :ROCKSLIDE, :STONEEDGE, :STEALTHROCK],}, #put a hazard on the screen where you are, leaving it behind. It stays there until someone hits it. This is like a rock that causes someone to spin out if they hit it. This one you leave where you are when triggered
 
