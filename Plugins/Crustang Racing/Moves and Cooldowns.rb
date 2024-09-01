@@ -36,6 +36,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 1)
 				self.beginCooldown(@racerPlayer, 1)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove1 = false
 		end
@@ -51,6 +55,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 2)
 				self.beginCooldown(@racerPlayer, 2)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove2 = false
 		end
@@ -66,6 +74,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 3)
 				self.beginCooldown(@racerPlayer, 3)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove3 = false
 		end
@@ -81,6 +93,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 4)
 				self.beginCooldown(@racerPlayer, 4)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove4 = false
 		end
@@ -112,7 +128,14 @@ class CrustangRacing
 			#don't restrict up and DOWN
 		else
 			#if not colliding with something below you and not in front or behind, allow movement
-			racer[:RacerSprite].y -= racer[:StrafeSpeed] if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+				racer[:RacerSprite].y -= racer[:StrafeSpeed]
+				#if wandering, subtract from the remaining amount to wander if the racer does strafe successfully
+				racer[:WanderStrafeDistance] -= racer[:StrafeSpeed] if racer[:WanderStrafeDistance] > 0
+			elsif racer[:RacerSprite].y <= @trackBorderTopY
+				#if stuck trying to wander up but hitting the top wall, change wander distance to 0
+				racer[:WanderStrafeDistance] = 0
+			end
 		end
 	end #def self.strafeUp
 	
@@ -140,7 +163,14 @@ class CrustangRacing
 		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
 		else
 			#if not colliding with something below you and not in front or behind, allow movement
-			racer[:RacerSprite].y += racer[:StrafeSpeed] if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+				racer[:RacerSprite].y += racer[:StrafeSpeed]
+				#if wandering, subtract from the remaining amount to wander if the racer does strafe successfully
+				racer[:WanderStrafeDistance] -= racer[:StrafeSpeed] if racer[:WanderStrafeDistance] > 0
+			elsif racer[:RacerSprite].y >= @trackBorderBottomY
+				#if stuck trying to wander down but hitting the bottom wall, change wander distance to 0
+				racer[:WanderStrafeDistance] = 0
+			end
 		end
 	end #def self.strafeDown
 	

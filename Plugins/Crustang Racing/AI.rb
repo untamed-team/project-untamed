@@ -27,6 +27,140 @@ class CrustangRacing
 
 	end #def self.aiLookForOpportunityToUseBoost
 
+	def self.aiWanderStrafe
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+
+		if racer[:AvoidingSomething] != true && racer[:SpinOutTimer] <= 0 && racer[:TargetingRacer].nil? #if not avoiding something, not spinning out, and not targeting someone
+			if racer[:WanderStrafeDistance] > 0
+				if racer[:WanderingUp]
+					self.strafeUp(racer)
+				elsif racer[:WanderingDown]
+					self.strafeDown(racer)
+				end
+			else
+				#roll throttled RNG to see if we start wandering
+				if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+					#pick a direction to strafe in
+					direction = rand(1..2)
+				
+					case direction
+					when 1
+						racer[:WanderingUp] = true
+						racer[:WanderingDown] = false
+						#Console.echo_warn "racer1 starts wandering up"
+					when 2
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = true
+						#Console.echo_warn "racer1 starts wandering down"
+					end
+				
+					#pick a distance to strafe in that direction (random with maximum of amount possible to strafe on track until hitting a wall)
+					if CrustangRacingSettings::MAX_DISTANCE_TO_WANDER_STRAFE.nil?
+						maxAmountToWander = (@trackBorderBottomY - @trackBorderTopY).abs #max amount possible to wander before hitting the sides of the track
+					else
+						maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE
+					end
+					maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE if maxAmountToWander < CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE #in case somebody tries to set min higher than max
+				
+					amountOfWander = rand(CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE..maxAmountToWander)
+				
+					racer[:WanderStrafeDistance] = amountOfWander
+				end #if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+			end #if racer[:WanderStrafeDistance] > 0
+		end #if racer[:AvoidingSomething]
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+
+		if racer[:AvoidingSomething] != true && racer[:SpinOutTimer] <= 0 && racer[:TargetingRacer].nil? #if not avoiding something, not spinning out, and not targeting someone
+			if racer[:WanderStrafeDistance] > 0
+				if racer[:WanderingUp]
+					self.strafeUp(racer)
+				elsif racer[:WanderingDown]
+					self.strafeDown(racer)
+				end
+			else
+				#roll throttled RNG to see if we start wandering
+				if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+					#pick a direction to strafe in
+					direction = rand(1..2)
+				
+					case direction
+					when 1
+						racer[:WanderingUp] = true
+						racer[:WanderingDown] = false
+						#Console.echo_warn "racer2 starts wandering up"
+					when 2
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = true
+						#Console.echo_warn "racer2 starts wandering down"
+					end
+				
+					#pick a distance to strafe in that direction (random with maximum of amount possible to strafe on track until hitting a wall)
+					if CrustangRacingSettings::MAX_DISTANCE_TO_WANDER_STRAFE.nil?
+						maxAmountToWander = (@trackBorderBottomY - @trackBorderTopY).abs #max amount possible to wander before hitting the sides of the track
+					else
+						maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE
+					end
+					maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE if maxAmountToWander < CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE #in case somebody tries to set min higher than max
+				
+					amountOfWander = rand(CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE..maxAmountToWander)
+				
+					racer[:WanderStrafeDistance] = amountOfWander
+				end #if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+			end #if racer[:WanderStrafeDistance] > 0
+		end #if racer[:AvoidingSomething]
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+
+		if racer[:AvoidingSomething] != true && racer[:SpinOutTimer] <= 0 && racer[:TargetingRacer].nil? #if not avoiding something, not spinning out, and not targeting someone
+			if racer[:WanderStrafeDistance] > 0
+				if racer[:WanderingUp]
+					self.strafeUp(racer)
+				elsif racer[:WanderingDown]
+					self.strafeDown(racer)
+				end
+			else
+				#roll throttled RNG to see if we start wandering
+				if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+					#pick a direction to strafe in
+					direction = rand(1..2)
+				
+					case direction
+					when 1
+						racer[:WanderingUp] = true
+						racer[:WanderingDown] = false
+						#Console.echo_warn "racer3 starts wandering up"
+					when 2
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = true
+						#Console.echo_warn "racer3 starts wandering down"
+					end
+				
+					#pick a distance to strafe in that direction (random with maximum of amount possible to strafe on track until hitting a wall)
+					if CrustangRacingSettings::MAX_DISTANCE_TO_WANDER_STRAFE.nil?
+						maxAmountToWander = (@trackBorderBottomY - @trackBorderTopY).abs #max amount possible to wander before hitting the sides of the track
+					else
+						maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE
+					end
+					maxAmountToWander = CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE if maxAmountToWander < CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE #in case somebody tries to set min higher than max
+				
+					amountOfWander = rand(CrustangRacingSettings::MIN_DISTANCE_TO_WANDER_STRAFE..maxAmountToWander)
+				
+					racer[:WanderStrafeDistance] = amountOfWander
+				end #if self.rngRollThrottled(CrustangRacingSettings::CHANCE_TO_WANDER_STRAFE)
+			end #if racer[:WanderStrafeDistance] > 0
+		end #if racer[:AvoidingSomething]
+	end #def self.aiWanderStrafe
+
 	def self.aiAvoidObstacles
 		###################################
 		#============= Racer1 =============
@@ -86,6 +220,12 @@ class CrustangRacing
 			
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
+				racer[:AvoidingSomething] = true
+				Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
+			
 				centerYOfHazardSprite = hazardToAvoid[:PositionYOnTrack] + hazardToAvoid[:Sprite].height/2
 				centerYOfRacerSprite = racer[:RacerSprite].y + racer[:RacerSprite].height/2
 			
@@ -135,7 +275,7 @@ class CrustangRacing
 					self.strafeDown(racer)
 				end
 		
-			else #hazard to avoid is nil				
+			else #hazard to avoid is nil
 				if self.rngRoll(CrustangRacingSettings::CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME)
 					#check for rocky patches to avoid then since there is no upcoming hazard to avoid
 					rockyPatchToAvoid = nil
@@ -147,6 +287,12 @@ class CrustangRacing
 					
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
+						racer[:AvoidingSomething] = true
+						Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = false
+						racer[:WanderStrafeDistance] = 0
+						
 						sprite = rockyPatchToAvoid[0]
 				
 						centerYOfPatchSprite = sprite.y + sprite.height/2
@@ -199,6 +345,9 @@ class CrustangRacing
 						end
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
+						racer[:AvoidingSomething] = false
+						Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
 					end #if !rockyPatchToAvoid.nil?
@@ -262,6 +411,12 @@ class CrustangRacing
 			
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
+				racer[:AvoidingSomething] = true
+				Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
+			
 				centerYOfHazardSprite = hazardToAvoid[:PositionYOnTrack] + hazardToAvoid[:Sprite].height/2
 				centerYOfRacerSprite = racer[:RacerSprite].y + racer[:RacerSprite].height/2
 			
@@ -311,7 +466,7 @@ class CrustangRacing
 					self.strafeDown(racer)
 				end
 		
-			else #hazard to avoid is nil				
+			else #hazard to avoid is nil
 				if self.rngRoll(CrustangRacingSettings::CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME)
 					#check for rocky patches to avoid then since there is no upcoming hazard to avoid
 					rockyPatchToAvoid = nil
@@ -323,6 +478,12 @@ class CrustangRacing
 					
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
+						racer[:AvoidingSomething] = true
+						Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = false
+						racer[:WanderStrafeDistance] = 0
+						
 						sprite = rockyPatchToAvoid[0]
 				
 						centerYOfPatchSprite = sprite.y + sprite.height/2
@@ -375,6 +536,9 @@ class CrustangRacing
 						end
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
+						racer[:AvoidingSomething] = false
+						Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
 					end #if !rockyPatchToAvoid.nil?
@@ -438,6 +602,12 @@ class CrustangRacing
 			
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
+				racer[:AvoidingSomething] = true
+				Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
+			
 				centerYOfHazardSprite = hazardToAvoid[:PositionYOnTrack] + hazardToAvoid[:Sprite].height/2
 				centerYOfRacerSprite = racer[:RacerSprite].y + racer[:RacerSprite].height/2
 			
@@ -487,7 +657,7 @@ class CrustangRacing
 					self.strafeDown(racer)
 				end
 		
-			else #hazard to avoid is nil				
+			else #hazard to avoid is nil
 				if self.rngRoll(CrustangRacingSettings::CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME)
 					#check for rocky patches to avoid then since there is no upcoming hazard to avoid
 					rockyPatchToAvoid = nil
@@ -499,6 +669,12 @@ class CrustangRacing
 					
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
+						racer[:AvoidingSomething] = true
+						Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						racer[:WanderingUp] = false
+						racer[:WanderingDown] = false
+						racer[:WanderStrafeDistance] = 0
+						
 						sprite = rockyPatchToAvoid[0]
 				
 						centerYOfPatchSprite = sprite.y + sprite.height/2
@@ -551,6 +727,9 @@ class CrustangRacing
 						end
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
+						racer[:AvoidingSomething] = false
+						Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
 					end #if !rockyPatchToAvoid.nil?
@@ -653,6 +832,13 @@ class CrustangRacing
 				racer[:TargetingRacer] = nil
 				racer[:TargetingMoveEffect] = nil
 			end
+			
+			if !racer[:TargetingRacer].nil?
+				Console.echo_warn "racer1 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
+			end
 		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
 		
 		###################################
@@ -748,6 +934,13 @@ class CrustangRacing
 				racer[:TargetingRacer] = nil
 				racer[:TargetingMoveEffect] = nil
 			end
+			
+			if !racer[:TargetingRacer].nil?
+				Console.echo_warn "racer2 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
+			end
 		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
 		
 		###################################
@@ -842,6 +1035,13 @@ class CrustangRacing
 				#Console.echo_warn "target is no longer in range, so setting target to nil"
 				racer[:TargetingRacer] = nil
 				racer[:TargetingMoveEffect] = nil
+			end
+			
+			if !racer[:TargetingRacer].nil?
+				Console.echo_warn "racer3 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				racer[:WanderingUp] = false
+				racer[:WanderingDown] = false
+				racer[:WanderStrafeDistance] = 0
 			end
 		end #if self.hasMoveEffectThatRequiresTargetAndMoveIsReady?(racer) && racer[:SpinOutTimer] <= 0
 	end #def self.aiTargetAnotherRacer

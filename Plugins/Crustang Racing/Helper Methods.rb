@@ -446,8 +446,10 @@ class CrustangRacing
 						@currentlyPlayingSE = CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE 
 						@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
 					end
-					#set current speed of racer to ROCKY_PATCH_SPEED
-					racer[:CurrentSpeed] = CrustangRacingSettings::ROCKY_PATCH_SPEED
+					#set current speed of racer to ROCKY_PATCH_SPEED unless the current speed is less than what it would become
+					if racer[:CurrentSpeed] > CrustangRacingSettings::ROCKY_PATCH_SPEED
+						racer[:CurrentSpeed] = CrustangRacingSettings::ROCKY_PATCH_SPEED
+					end
 				end
 			end #for i in 0...@rockyPatches.length
 		end #if racer[:InvincibilityStatus] == false

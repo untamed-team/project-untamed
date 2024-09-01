@@ -20,10 +20,13 @@ PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################curr
 NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
 ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
 MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
-SOONEST_ROCKY_PATCH_CAN_APPEAR = 500
+SOONEST_ROCKY_PATCH_CAN_APPEAR = 600
 LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
 ROCKY_PATCH_COLLISION_SE = "CR_RockyPatch"
 CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME = 80
+CHANCE_TO_WANDER_STRAFE = 80
+MIN_DISTANCE_TO_WANDER_STRAFE = 20 #never set this to nil or a negative number
+MAX_DISTANCE_TO_WANDER_STRAFE = nil #never set this to a number lower than MIN_DISTANCE_TO_WANDER_STRAFE
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#

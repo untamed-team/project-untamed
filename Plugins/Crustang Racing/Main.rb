@@ -593,6 +593,7 @@ class CrustangRacing
 			#=============== AI ===============
 			###################################
 			self.aiAvoidObstacles
+			self.aiWanderStrafe
 			
 			#AI - the order in which these methods run determines what types of moves the AI will prioritize using when available
 			self.aiStrafeTowardTarget
@@ -604,8 +605,8 @@ class CrustangRacing
 			self.aiLookForOpportunityToUseSecondBoost #secondBoost / stabilize
 			self.aiLookForOpportunityToUseReduceCooldown #reduceCooldown
 			self.aiTargetAnotherRacer #spinOut and overload
-			#self.aiLookForOpportunityToUseRockHazard #rock hazard
-			#self.aiLookForOpportunityToUseMudHazard #mud hazard
+			#######################################################self.aiLookForOpportunityToUseRockHazard #rock hazard
+			#######################################################self.aiLookForOpportunityToUseMudHazard #mud hazard
 			self.aiLookForOpportunityToUseInvincibility #invincibility
 		end
 	end #def self.main

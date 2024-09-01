@@ -560,7 +560,9 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
-			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil}
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racer2 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
@@ -578,6 +580,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racer3 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
@@ -595,6 +599,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racerPlayer = {
 			EnteredCrustangContestant: nil,
@@ -612,6 +618,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		
 		#modify player's selected Crustang to match hashes of AI crustang contestants
