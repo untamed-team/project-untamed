@@ -223,13 +223,13 @@ Pokemon = WRENNER,9
     Nature = IMPISH
 #-------------------------------
 [TOURIST,William]
-LoseText = She will come back, she always does.
+LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 Pokemon = BUNNELBY,9
 Pokemon = WRENNER,9
 #-------------------------------
 [TOURIST,William,100]
-LoseText = She will come back, she always does.
+LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
     Ability = INTIMIDATE
@@ -250,6 +250,7 @@ LoseText = Wait, I lost?
 Pokemon = BUDEW,10
 	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
     Nature = CALM
+	Ability = POISONPOINT
 Pokemon = WORMOTE,10
 	Moves = STRUGGLEBUG,CONFUSION,SING
     Ability = TRACE
