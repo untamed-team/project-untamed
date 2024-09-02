@@ -1161,7 +1161,7 @@ class Battle::AI
 		if livecountuser>0
 			if !user.opposes?(target) # is ally
 				if (target.attack>target.spatk && target.hasActiveAbility?(:JUSTIFIED) && move.type == :DARK) || 
-				   (target.hasActiveAbility?(:STAMINA) || move.pbContactMove?(user))
+				   (target.hasActiveAbility?(:STAMINA) && move.pbContactMove?(user))
 					score = (100-thisinitial)
 					# checking if the recepient can outspeed
 					enemycounter = 0
