@@ -142,237 +142,57 @@ class Battle::AI
     return ret
   end
 
+  MEGA_EVO_STATS = {
+    GYARADOS: { item: :GYARADOSITE, atkmul: 1.24, defmul: 1.380, spemul: 1.000, spamul: 1.166, spdmul: 1.300 },
+    LEDIAN: { item: :LEDINITE, atkmul: 1.625, defmul: 1.000, spemul: 1.471, spamul: 0.778, spdmul: 1.200 },
+    XATU: { item: :XATUNITE, atkmul: 1.187, defmul: 1.015, spemul: 1.011, spamul: 1.295, spdmul: 1.800 },
+    AMPHAROS: { item: :AMPHAROSITE, atkmul: 1.000, defmul: 1.352, spemul: 0.909, spamul: 1.434, spdmul: 1.333 },
+    MAGCARGO: { item: :MAGCARGOITE, atkmul: 1.200, defmul: 1.333, spemul: 1.667, spamul: 1.111, spdmul: 1.250 },
+    SKARMORY: { item: :SKARMORITE, atkmul: 1.500, defmul: 1.143, spemul: 1.143, spamul: 1.500, spdmul: 1.143 },
+    SABLEYE: { item: :SABLEYEITE, atkmul: 1.000, defmul: 1.665, spemul: 0.400, spamul: 1.000, spdmul: 1.769 },
+    FLYGON: { item: :FLYGONITE, atkmul: 1.300, defmul: 1.000, spemul: 1.200, spamul: 1.625, spdmul: 1.000 },
+    CACTURNE: { item: :CACTURNITE, atkmul: 1.174, defmul: 1.167, spemul: 1.727, spamul: 1.261, spdmul: 1.000 },
+    MILOTIC: { item: :MILOTITE, atkmul: 1.417, defmul: 1.216, spemul: 1.013, spamul: 1.260, spdmul: 1.248 },
+    CHIMECHO: { item: :CHIMECHITE, atkmul: 1.000, defmul: 1.250, spemul: 1.000, spamul: 1.211, spdmul: 1.667 },
+    PORYGONZ: { item: :PORYGONZITE, atkmul: 1.600, defmul: 1.143, spemul: 1.133, spamul: 1.148, spdmul: 1.133 },
+    BEHEEYEM: { item: :BEHEEYEMITE, atkmul: 1.400, defmul: 1.000, spemul: 1.750, spamul: 1.080, spdmul: 1.316 },
+    GOLURK: { item: :GOLURKITE, atkmul: 1.161, defmul: 1.313, spemul: 1.818, spamul: 1.182, spdmul: 1.000 },
+    HAWLUCHA: { item: :HAWLUCHITE, atkmul: 1.435, defmul: 1.267, spemul: 1.000, spamul: 1.270, spdmul: 1.317 },
+    TREVENANT: { item: :TREVENANTITE, atkmul: 1.167, defmul: 1.305, spemul: 0.821, spamul: 1.385, spdmul: 1.488 },
+    FROSMOTH: { item: :FROSMOTHITE, atkmul: 1.000, defmul: 1.333, spemul: 1.308, spamul: 1.080, spdmul: 1.556 },
+
+    ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.248, spemul: 1.080, spamul: 1.380, spdmul: 1.120 },
+    BEAKRAFT: { item: :BEAKRAFTITE, 
+                male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 
+                female: { atkmul: 1.167, defmul: 1.105, spemul: 1.051, spamul: 2.000, spdmul: 1.267 } },
+    CHIXULOB: { item: :CHIXULITE, atkmul: 1.269, defmul: 1.883, spemul: 1.148, spamul: 0.928, spdmul: 1.393 },
+    FRIZZARD: { item: :FRIZZARDITE, atkmul: 1.231, defmul: 1.133, spemul: 1.056, spamul: 1.381, spdmul: 1.330 },
+    GOHILA: { item: :GOHILITE, atkmul: 1.304, defmul: 1.029, spemul: 1.021, spamul: 1.500, spdmul: 1.493 },
+    LAGUNA: { item: :LAGUNITE, atkmul: 1.200, defmul: 1.100, spemul: 1.288, spamul: 1.571, spdmul: 1.182 },
+    LUPACABRA: { item: :LUPACABRITE, atkmul: 1.286, defmul: 1.421, spemul: 1.182, spamul: 1.118, spdmul: 1.143 },
+    M_ROSERADE: { item: :M_ROSERADITE, atkmul: 1.462, defmul: 1.383, spemul: 1.022, spamul: 1.190, spdmul: 1.200 },
+    NOCTAVISPA: { item: :NOCTAVISPITE, atkmul: 1.538, defmul: 1.052, spemul: 1.184, spamul: 1.329, spdmul: 1.190 },
+    ROADRAPTOR: { item: :ROADRAPTORITE, atkmul: 1.372, defmul: 1.385, spemul: 1.000, spamul: 1.625, spdmul: 1.000 },
+    SPECTERZAL: { item: :SPECTERZITE, atkmul: 1.112, defmul: 2.000, spemul: 1.000, spamul: 1.118, spdmul: 1.154 },
+    SUCHOBILE: { item: :SUCHOBITE, atkmul: 1.184, defmul: 1.587, spemul: 0.746, spamul: 1.248, spdmul: 1.386 },
+    ZARCOIL: { item: :ZARCOILITE, atkmul: 1.227, defmul: 1.290, spemul: 1.282, spamul: 1.217, spdmul: 1.133 },
+    ZOLUPINE: { item: :ZOLUPINEITE, atkmul: 1.118, defmul: 1.167, spemul: 1.000, spamul: 1.421, spdmul: 1.381 }
+  }
+
+
   def pbRoughStat(battler, stat, skill)
-		# WillMega / Mid-turn mega stat calculation #by low
-		atkmul=defmul=spemul=spamul=spdmul=1
-		if battler.pokemon.willmega
-			# Gen 1
-			if battler.isSpecies?(:GYARADOS) && battler.form == 0 && # special stuff for only kanto trash
-				 (battler.item == :GYARADOSITE || battler.hasMegaEvoMutation?)
-				atkmul=1.24
-				defmul=1.38
-				spemul=1
-				spamul=1.166
-				spdmul=1.3
-			# Gen 2
-			elsif battler.isSpecies?(:AMPHAROS) && 
-				 (battler.item == :AMPHAROSITE || battler.hasMegaEvoMutation?)
-				atkmul=1
-				defmul=1.352
-				spemul=0.909
-				spamul=1.434
-				spdmul=1.333
-			elsif battler.isSpecies?(:XATU) && 
-				 (battler.item == :XATUNITE || battler.hasMegaEvoMutation?)
-				atkmul=1.187
-				defmul=1.015
-				spemul=1.011
-				spamul=1.295
-				spdmul=1.8
-			elsif battler.isSpecies?(:SKARMORY) && 
-				 (battler.item == :SKARMORITE || battler.hasMegaEvoMutation?)
-				atkmul=1.5
-				defmul=1.143
-				spemul=1.143
-				spamul=1.5
-				spdmul=1.143
-			# Gen 3
-			elsif battler.isSpecies?(:SABLEYE) && 
-				 (battler.item == :SABLEYEITE || battler.hasMegaEvoMutation?)
-				atkmul=1
-				defmul=1.665
-				spemul=0.4
-				spamul=1
-				spdmul=1.769
-			elsif battler.isSpecies?(:FLYGON) && 
-				 (battler.item == :FLYGONITE || battler.hasMegaEvoMutation?)
-				atkmul=1.3
-				defmul=1
-				spemul=1.2
-				spamul=1.625
-				spdmul=1
-			elsif battler.isSpecies?(:MILOTIC) && 
-				 (battler.item == :MILOTITE || battler.hasMegaEvoMutation?)
-				atkmul=1.417
-				defmul=1.216
-				spemul=1.013
-				spamul=1.26
-				spdmul=1.248
-			# Gen Mazah
-			elsif battler.isSpecies?(:NOCTAVISPA) && 
-				 (battler.item == :NOCTAVISPITE || battler.hasMegaEvoMutation?)
-				atkmul=1.538
-				defmul=1.052
-				spemul=1.184
-				spamul=1.329
-				spdmul=1.19
-			elsif battler.isSpecies?(:GOHILA) && 
-				 (battler.item == :GOHILITE || battler.hasMegaEvoMutation?)
-				atkmul=1.304
-				defmul=1.029
-				spemul=1.021
-				spamul=1.5
-				spdmul=1.493
-			elsif battler.isSpecies?(:ATELANGLER) && 
-				 (battler.item == :ATELANGLITE || battler.hasMegaEvoMutation?)
-				atkmul=1.538
-				defmul=1.248
-				spemul=1.08
-				spamul=1.38
-				spdmul=1.12
-			elsif battler.isSpecies?(:CHIXULOB) && 
-				 (battler.item == :CHIXULITE || battler.hasMegaEvoMutation?)
-				atkmul=1.269
-				defmul=1.883
-				spemul=1.148
-				spamul=0.928
-				spdmul=1.393
-			elsif battler.isSpecies?(:SUCHOBILE) && 
-				 (battler.item == :SUCHOBITE || battler.hasMegaEvoMutation?)
-				atkmul=1.184
-				defmul=1.587
-				spemul=0.746
-				spamul=1.248
-				spdmul=1.386
-			# 05/09/2023 Update
-			elsif battler.isSpecies?(:BEHEEYEM) && 
-				 (battler.item == :BEHEEYEMITE || battler.hasMegaEvoMutation?)
-				atkmul=1.400
-				defmul=1.000
-				spemul=1.750
-				spamul=1.080
-				spdmul=1.316
-			elsif battler.isSpecies?(:GOLURK) && 
-				 (battler.item == :GOLURKITE || battler.hasMegaEvoMutation?)
-				atkmul=1.161
-				defmul=1.313
-				spemul=1.818
-				spamul=1.182
-				spdmul=1.000
-			elsif battler.isSpecies?(:HAWLUCHA) && 
-				 (battler.item == :HAWLUCHITE || battler.hasMegaEvoMutation?)
-				atkmul=1.435
-				defmul=1.267
-				spemul=1.000
-				spamul=1.270
-				spdmul=1.317
-			elsif battler.isSpecies?(:CACTURNE) && 
-				 (battler.item == :CACTURNITE || battler.hasMegaEvoMutation?)
-				atkmul=1.174
-				defmul=1.167
-				spemul=1.727
-				spamul=1.261
-				spdmul=1.000
-			elsif battler.isSpecies?(:FROSMOTH) && 
-				 (battler.item == :FROSMOTHITE || battler.hasMegaEvoMutation?)
-				atkmul=1.000
-				defmul=1.333
-				spemul=1.308
-				spamul=1.080
-				spdmul=1.556
-			elsif battler.isSpecies?(:CHIMECHO) && 
-				 (battler.item == :CHIMECHITE || battler.hasMegaEvoMutation?)
-				atkmul=1.000
-				defmul=1.250
-				spemul=1.000
-				spamul=1.211
-				spdmul=1.667
-			elsif battler.isSpecies?(:PORYGONZ) && 
-				 (battler.item == :PORYGONZITE || battler.hasMegaEvoMutation?)
-				atkmul=1.600
-				defmul=1.143
-				spemul=1.133
-				spamul=1.148
-				spdmul=1.133
-			elsif battler.isSpecies?(:MAGCARGO) && 
-				 (battler.item == :MAGCARGOITE || battler.hasMegaEvoMutation?)
-				atkmul=1.200
-				defmul=1.333
-				spemul=1.667
-				spamul=1.111
-				spdmul=1.250
-			elsif battler.isSpecies?(:SPECTERZAL) && 
-				 (battler.item == :SPECTERZITE || battler.hasMegaEvoMutation?)
-				atkmul=1.112
-				defmul=2.000
-				spemul=1.000
-				spamul=1.118
-				spdmul=1.154
-			elsif battler.isSpecies?(:TREVENANT) && 
-				 (battler.item == :TREVENANTITE || battler.hasMegaEvoMutation?)
-				atkmul=1.167
-				defmul=1.305
-				spemul=0.821
-				spamul=1.385
-				spdmul=1.488
-			elsif battler.isSpecies?(:M_ROSERADE) && 
-				 (battler.item == :M_ROSERADITE || battler.hasMegaEvoMutation?)
-				atkmul=1.462
-				defmul=1.383
-				spemul=1.022
-				spamul=1.190
-				spdmul=1.200
-			elsif battler.isSpecies?(:LUPACABRA) && 
-				 (battler.item == :LUPACABRITE || battler.hasMegaEvoMutation?)
-				atkmul=1.286
-				defmul=1.421
-				spemul=1.182
-				spamul=1.118
-				spdmul=1.143
-			elsif battler.isSpecies?(:ROADRAPTOR) && 
-				 (battler.item == :ROADRAPTORITE || battler.hasMegaEvoMutation?)
-				atkmul=1.372
-				defmul=1.385
-				spemul=1.000
-				spamul=1.625
-				spdmul=1.000
-			elsif battler.isSpecies?(:FRIZZARD) && 
-				 (battler.item == :FRIZZARDITE || battler.hasMegaEvoMutation?)
-				atkmul=1.231
-				defmul=1.133
-				spemul=1.056
-				spamul=1.381
-				spdmul=1.330
-			elsif battler.isSpecies?(:ZARCOIL) && 
-				 (battler.item == :ZARCOILITE || battler.hasMegaEvoMutation?)
-				atkmul=1.227
-				defmul=1.290
-				spemul=1.282
-				spamul=1.217
-				spdmul=1.133
-			elsif battler.isSpecies?(:LAGUNA) && 
-				 (battler.item == :LAGUNITE || battler.hasMegaEvoMutation?)
-				atkmul=1.200
-				defmul=1.100
-				spemul=1.288
-				spamul=1.571
-				spdmul=1.182
-			elsif battler.isSpecies?(:LEDIAN) && 
-				 (battler.item == :LEDINITE || battler.hasMegaEvoMutation?)
-				atkmul=1.625
-				defmul=1.000
-				spemul=1.471
-				spamul=0.778
-				spdmul=1.200
-			# 14/10/2023 Update
-			elsif battler.isSpecies?(:BEAKRAFT) && 
-				 (battler.item == :BEAKRAFTITE || battler.hasMegaEvoMutation?)
-				if battler.gender == 0 #male
-					atkmul=1.211
-					defmul=1.250
-					spemul=1.051
-					spamul=1.520
-					spdmul=1.333
-				end
-				if battler.gender == 1 #female
-					atkmul=1.167
-					defmul=1.105
-					spemul=1.051
-					spamul=2.000
-					spdmul=1.267
-				end
-			end
-		end
+    atkmul=defmul=spemul=spamul=spdmul = 1
+    if battler.pokemon.willmega
+      mega_data = MEGA_EVO_STATS[battler.species]
+      if mega_data && (battler.item == mega_data[:item] || battler.hasMegaEvoMutation?)
+        if battler.species == :BEAKRAFT
+          gender_data = battler.gender == 0 ? mega_data[:male] : mega_data[:female]
+          atkmul, defmul, spemul, spamul, spdmul = gender_data.values_at(:atkmul, :defmul, :spemul, :spamul, :spdmul)
+        else
+          atkmul, defmul, spemul, spamul, spdmul = mega_data.values_at(:atkmul, :defmul, :spemul, :spamul, :spdmul)
+        end
+      end
+    end
     return battler.pbSpeed*spemul if skill >= PBTrainerAI.highSkill && stat == :SPEED
     stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
     stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
@@ -385,6 +205,8 @@ class Battle::AI
     when :SPECIAL_ATTACK  then value = battler.spatk*spamul
     when :SPECIAL_DEFENSE then value = battler.spdef*spdmul
     end
+    #Console.echo_h2("Multis = #{battler.attack}, #{battler.defense}, #{battler.speed}, #{battler.spatk}, #{battler.spdef}") if battler.pokemon.willmega
+    #Console.echo_h2("Multis = (#{atkmul}, #{(battler.attack*atkmul)}), (#{defmul}, #{(battler.defense*defmul)}), (#{spemul}, #{(battler.speed*spemul)}), (#{spamul}, #{(battler.spatk*spamul)}), (#{spdmul}, #{(battler.spdef*spdmul)})") if battler.pokemon.willmega
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
