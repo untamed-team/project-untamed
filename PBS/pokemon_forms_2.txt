@@ -79,6 +79,7 @@ Abilities = HYPERCUTTER
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
 MegaStone = BEHEEYEMITE
+Types = PSYCHIC,ELECTRIC
 BaseStats = 75,105,75,70,135,125
 Abilities = PSYCHICSURGE
 #------------------------------- 
