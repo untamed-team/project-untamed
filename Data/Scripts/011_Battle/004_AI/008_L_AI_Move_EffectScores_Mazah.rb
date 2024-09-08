@@ -1793,25 +1793,6 @@ class Battle::AI
 		return abilityscore
 	end
 	
-=begin
-	def pbGetMidTurnGlobalChanges
-		globalArray = []
-		@battle.allBattlers.each do |j|
-			globalArray.push("dark aura")        if (j.isSpecies?(:NOCTAVISPA) && (j.item == :NOCTAVISPITE || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("spooper aura")     if (j.isSpecies?(:SPECTERZAL) && (j.item == :SPECTERZITE  || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("electric terrain") if (j.isSpecies?(:BEAKRAFT)   && (j.item == :BEAKRAFTITE  || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("misty terrain")    if (j.isSpecies?(:MILOTIC)    && (j.item == :MILOTITE     || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("grassy terrain")   if (j.isSpecies?(:TREVENANT)  && (j.item == :TREVENANTITE || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("psychic terrain")  if (j.isSpecies?(:BEHEEYEM)   && (j.item == :BEHEEYEMITE  || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("sun weather")      if (j.isSpecies?(:ZARCOIL)    && (j.item == :ZARCOILITE   || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("rain weather")     if (j.isSpecies?(:ZOLUPINE)   && (j.item == :ZOLUPINEITE  || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("sand weather")     if (j.isSpecies?(:CACTURNE)   && (j.item == :CACTURNITE   || j.hasMegaEvoMutation?) && j.willmega)
-			globalArray.push("hail weather")     if (j.isSpecies?(:FRIZZARD)   && (j.item == :FRIZZARDITE  || j.hasMegaEvoMutation?) && j.willmega)
-		end
-		return globalArray
-	end
-=end
-
 	def pbGetMidTurnGlobalChanges
 		globalArray = []
 		globalEffects = {
