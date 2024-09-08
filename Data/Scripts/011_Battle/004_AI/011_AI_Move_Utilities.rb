@@ -167,6 +167,8 @@ class Battle::AI
     when :SPECIAL_ATTACK  then value = battler.spatk*spamul
     when :SPECIAL_DEFENSE then value = battler.spdef*spdmul
     end
+    #Console.echo_h2("Stats = #{battler.attack}, #{battler.defense}, #{battler.speed}, #{battler.spatk}, #{battler.spdef}") if battler.pokemon.willmega
+    #Console.echo_h2("Multis = (#{atkmul}, #{(battler.attack*atkmul)}), (#{defmul}, #{(battler.defense*defmul)}), (#{spemul}, #{(battler.speed*spemul)}), (#{spamul}, #{(battler.spatk*spamul)}), (#{spdmul}, #{(battler.spdef*spdmul)})") if battler.pokemon.willmega
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
