@@ -288,8 +288,7 @@ LoseText = Okay, the way out is easy, but don't tell my boss.
 Pokemon = EEVEE,11
 Pokemon = M_VANILLITE,12
 #-------------------------------
-#POKEMONTRAINER
-[WAREHOUSEWORKER,Reine]
+[TRAINER_Reine,Reine]
 LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
