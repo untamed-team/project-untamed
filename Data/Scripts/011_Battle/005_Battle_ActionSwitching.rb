@@ -453,9 +453,11 @@ class Battle
 
   def pbEntryHazards(battler)
     battler_side = battler.pbOwnSide
-		if !battler.hasActiveAbility?(:TILEWORKER) #by low
-			# Stealth Rock nerf #by low
-			if battler_side.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
+    # tileworker, overcoat buff and stealth rock nerf #by low
+		if !battler.hasActiveAbility?(:TILEWORKER)
+			# Stealth Rock
+			if battler_side.effects[PBEffects::StealthRock] && battler.takesIndirectDamage? && 
+        !(battler.hasActiveItem?(:HEAVYDUTYBOOTS) || battler.hasActiveAbility?(:OVERCOAT))
 				airdamage = (battler.airborne?) ? 4 : 8
 				battler.pbReduceHP((battler.totalhp / airdamage), false)
 				pbDisplay(_INTL("Pointed stones dug into {1}!", battler.pbThis))
@@ -463,7 +465,7 @@ class Battle
 			end
 			# Spikes
 			if battler_side.effects[PBEffects::Spikes] > 0 && battler.takesIndirectDamage? &&
-				 !battler.airborne? && !battler.hasActiveItem?(:HEAVYDUTYBOOTS)
+				 !battler.airborne? && !(battler.hasActiveItem?(:HEAVYDUTYBOOTS) || battler.hasActiveAbility?(:OVERCOAT))
 				spikesDiv = [8, 6, 4][battler_side.effects[PBEffects::Spikes] - 1]
 				battler.pbReduceHP(battler.totalhp / spikesDiv, false)
 				pbDisplay(_INTL("{1} is hurt by the spikes!", battler.pbThis))

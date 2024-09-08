@@ -2006,12 +2006,12 @@ Description = The user looses a blast of aura power from deep within its body. T
 Name = Body Press
 Type = FIGHTING
 Category = Physical
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = UseUserBaseDefenseInsteadOfUserBaseAttack
-Flags = Contact,CanProtect,CanMirrorMove,CannotMetronome
+Flags = Contact,CanProtect,CanMirrorMove
 Description = The user attacks by slamming its body into the target. Power increases the higher the user's Defense is.
 #-------------------------------
 [SUBMISSION]
@@ -2890,7 +2890,7 @@ Description = The user wraps its foe in a fierce wind that flies up into the sky
 [AEROBLAST]
 Name = Aeroblast
 Type = FLYING
-Category = Special
+Category = Physical
 Power = 100
 Accuracy = 100
 TotalPP = 5
@@ -3378,7 +3378,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = CurseTargetOrLowerUserSpd1RaiseUserAtkDef1
-Description = The user yells naughty words. Raises the user Atk and Defense by 1, lowers the user Speed by 1.
+Description = The user yells gamer words. Raises the user Atk and Defense by 1, lowers the user Speed by 1.
 #-------------------------------
 [DESTINYBOND]
 Name = Destiny Bond
@@ -8718,14 +8718,12 @@ Description = The user withdraws its body into its hard shell, raising its Defen
 Name = Psycrush
 Type = PSYCHIC
 Category = Special
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack
 Flags = Contact,CanProtect,CanMirrorMove
-EffectChance = 0
 Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
 #-------------------------------
 [KINETICREND]
@@ -8772,11 +8770,10 @@ Description = The user launches a kick with a high critical-hit ratio. It may al
 Name = Scouring Winds
 Type = FLYING
 Category = Special
-Power = 85
+Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = LowerTargetSpDef1
 Flags = CanProtect
 EffectChance = 10
@@ -8909,9 +8906,9 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 100
-Accuracy = 100
-TotalPP = 15
+Power = 90
+Accuracy = 90
+TotalPP = 10
 Target = NearOther
 FunctionCode = None
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate

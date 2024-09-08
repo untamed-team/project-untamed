@@ -265,6 +265,10 @@ class Battle::Move
   def pbModifyDamage(damageMult, user, target);         return damageMult; end
 
   def pbGetAttackStats(user, target)
+		if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
+			return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
+			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
+		end
     if specialMove?
       return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
     end
@@ -293,13 +297,6 @@ class Battle::Move
     # Calcuate base power of move
     baseDmg = pbBaseDamage(@baseDamage, user, target)
     # Calculate user's attack stat
-    amove = @battle.choices[user.index][2]
-		if user.hasActiveAbility?(:CRYSTALJAW) && amove.bitingMove? #by low
-			atk = user.spatk; atkStage = user.stages[:SPECIAL_ATTACK]+6
-			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
-		else
-			atk, atkStage = pbGetAttackStats(user,target)
-		end
     atk, atkStage = pbGetAttackStats(user, target)
     if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
       atkStage = 6 if target.damageState.critical && atkStage < 6

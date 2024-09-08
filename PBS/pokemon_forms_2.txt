@@ -15,7 +15,7 @@ FormName = Mega Gohila
 MegaStone = GOHILITE
 Types = POISON,ELECTRIC
 BaseStats = 97,73,71,101,135,103
-Abilities = CORROSION
+Abilities = VOLTABSORB
 Height = 0.3
 Weight = 3.5
 #-------------------------------
@@ -87,7 +87,7 @@ FormName = Mega Golurk
 MegaStone = GOLURKITE
 Types = GROUND,GHOST,FLYING
 BaseStats = 89,144,105,100,65,80
-Abilities = AERILATE
+Abilities = WEAKARMOR
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
@@ -105,7 +105,7 @@ Abilities = DUSTSENTINEL
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
-Types = ICE,FIRE
+Types = ICE,BUG,FIRE
 BaseStats = 70,65,80,85,135,140
 Abilities = MAGICGUARD
 #------------------------------- 
@@ -364,8 +364,8 @@ MegaStone = GYARADOSITE
 Types = WATER,FLYING,DARK
 BaseStats = 95,155,109,81,70,130
 BaseExp = 224
-Abilities = INTIMIDATE
-HiddenAbilities = MOLDBREAKER
+Abilities = MOLDBREAKER
+HiddenAbilities = INTIMIDATE
 Weight = 305.0
 Pokedex = It zooms out of the water at Mach speeds. Even large ships caught in its path are split cleanly in two!
 Generation = 6

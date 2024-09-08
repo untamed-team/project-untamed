@@ -308,6 +308,12 @@ Battle::AbilityEffects::SpeedCalc.add(:QUICKFEET,
   }
 )
 
+Battle::AbilityEffects::SpeedCalc.add(:TANGLEDFEET,
+  proc { |ability, battler, mult|
+    next mult * 2 if battler.effects[PBEffects::Confusion] > 0 || battler.dizzy?
+  }
+)
+
 Battle::AbilityEffects::SpeedCalc.add(:SANDRUSH,
   proc { |ability, battler, mult|
     next mult * 2 if [:Sandstorm].include?(battler.effectiveWeather)
@@ -730,8 +736,7 @@ Battle::AbilityEffects::StatLossImmunity.add(:CLEARBODY,
   }
 )
 
-Battle::AbilityEffects::StatLossImmunity.copy(:CLEARBODY, :WHITESMOKE)
-Battle::AbilityEffects::StatLossImmunity.copy(:CLEARBODY, :FULLMETALBODY)
+Battle::AbilityEffects::StatLossImmunity.copy(:CLEARBODY, :WHITESMOKE, :FULLMETALBODY)
 
 Battle::AbilityEffects::StatLossImmunity.add(:FLOWERVEIL,
   proc { |ability, battler, stat, battle, showMessages|
@@ -1113,15 +1118,6 @@ Battle::AbilityEffects::ModifyMoveBaseType.add(:NORMALIZE,
   }
 )
 
-# Enigmize #by low
-Battle::AbilityEffects::ModifyMoveBaseType.add(:ENIGMIZE,
-  proc { |ability, user, move, type|
-    next if !GameData::Type.exists?(:QMARKS)
-    move.powerBoost = true
-    next :QMARKS
-  }
-)
-
 Battle::AbilityEffects::ModifyMoveBaseType.add(:PIXILATE,
   proc { |ability, user, move, type|
     next if type != :NORMAL || !GameData::Type.exists?(:FAIRY)
@@ -1210,12 +1206,6 @@ Battle::AbilityEffects::AccuracyCalcFromTarget.add(:STORMDRAIN,
   }
 )
 
-Battle::AbilityEffects::AccuracyCalcFromTarget.add(:TANGLEDFEET,
-  proc { |ability, mods, user, target, move, type|
-    mods[:accuracy_multiplier] /= 2 if target.effects[PBEffects::Confusion] > 0
-  }
-)
-
 Battle::AbilityEffects::AccuracyCalcFromTarget.add(:UNAWARE,
   proc { |ability, mods, user, target, move, type|
     mods[:accuracy_stage] = 0 if move.damagingMove?
@@ -1240,8 +1230,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:AERILATE,
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromUser.copy(:AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE, :NORMALIZE, :ENIGMIZE) 
-#enigmize #by low
+Battle::AbilityEffects::DamageCalcFromUser.copy(:AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE, :NORMALIZE)
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:ANALYTIC,
   proc { |ability, user, target, move, mults, baseDmg, type|
@@ -1509,6 +1498,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:TRANSISTOR,
     mults[:attack_multiplier] *= 1.5 if type == :ELECTRIC
   }
 )
+Battle::AbilityEffects::DamageCalcFromUser.copy(:TRANSISTOR, :GALVANIZETWOELETRICBOOGALO)
 
 #by low
 Battle::AbilityEffects::DamageCalcFromUser.add(:MICROSTRIKE,
@@ -1551,12 +1541,6 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:COOLHEADED,
 Battle::AbilityEffects::DamageCalcFromUser.add(:CRYSTALJAW,
   proc { |ability, user, target, move, mults, baseDmg, type|
     mults[:base_damage_multiplier] *= 1.3 if move.bitingMove? && $game_variables[MECHANICSVAR] == 0
-  }
-)
-
-Battle::AbilityEffects::DamageCalcFromUser.add(:GALVANIZETWOELETRICBOOGALO,
-  proc { |ability, user, target, move, mults, baseDmg, type|
-    mults[:attack_multiplier] *= 1.5 if type == :ELECTRIC
   }
 )
 
@@ -2372,7 +2356,6 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
     hpGain = 0
     if move.statusMove?
       hpGain += (user.totalhp / 16.0).round
-      next if hpGain == 0 # not sure how that would happen but lets be safe
       battle.pbShowAbilitySplash(user)
       user.pbRecoverHP(hpGain)
       battle.pbHideAbilitySplash(user)
@@ -2707,59 +2690,22 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:BADDREAMS,
 Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
   proc { |ability, battler, battle|
     battle.pbShowAbilitySplash(battler)
-		moodmemory = battler.effects[PBEffects::MoodyMemory]
-		case moodmemory
-			when 0
-				battler.pbLowerStatStageByAbility(:ATTACK, 2, battler, false) if battler.pbCanLowerStatStage?(:ATTACK, battler)
-			when 1
-				battler.pbLowerStatStageByAbility(:DEFENSE, 2, battler, false) if battler.pbCanLowerStatStage?(:DEFENSE, battler)
-			when 2
-				battler.pbLowerStatStageByAbility(:SPECIAL_ATTACK, 2, battler, false) if battler.pbCanLowerStatStage?(:SPECIAL_ATTACK, battler)
-			when 3
-				battler.pbLowerStatStageByAbility(:SPECIAL_DEFENSE, 2, battler, false) if battler.pbCanLowerStatStage?(:SPECIAL_DEFENSE, battler)
-			when 4
-				battler.pbLowerStatStageByAbility(:SPEED, 2, battler, false) if battler.pbCanLowerStatStage?(:SPEED, battler)
-		end
-		reroll = 1 # to avoid buffing and nerfing the same stat in the same end of turn
-		while reroll > 0
-			mood = rand(4)
-			reroll = 0 if mood != moodmemory
-		end
-		case mood
-			when 0
-				battler.pbRaiseStatStageByAbility(:ATTACK, 2, battler, false) if battler.pbCanRaiseStatStage?(:ATTACK, battler)
-			when 1
-				battler.pbRaiseStatStageByAbility(:DEFENSE, 2, battler, false) if battler.pbCanRaiseStatStage?(:DEFENSE, battler)
-			when 2
-				battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 2, battler, false) if battler.pbCanRaiseStatStage?(:SPECIAL_ATTACK, battler)
-			when 3
-				battler.pbRaiseStatStageByAbility(:SPECIAL_DEFENSE, 2, battler, false) if battler.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, battler)
-			when 4
-				battler.pbRaiseStatStageByAbility(:SPEED, 2, battler, false) if battler.pbCanRaiseStatStage?(:SPEED, battler)
-		end
-		battler.effects[PBEffects::MoodyMemory] = moodmemory = mood
+    moodmemory = battler.effects[PBEffects::MoodyMemory]
+    stats = [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
+    if battler.pbCanLowerStatStage?(stats[moodmemory], battler) && moodmemory > 0
+      battler.pbLowerStatStageByAbility(stats[moodmemory], 2, battler, false)
+    end
+    mood = (0..4).to_a.reject { |i| i == moodmemory }
+    mood = battle.pbRandom(0..mood.length)
+    if battler.pbCanRaiseStatStage?(stats[mood], battler)
+      battler.pbRaiseStatStageByAbility(stats[mood], 2, battler, false)
+    end
+
+    battler.effects[PBEffects::MoodyMemory] = mood
     battle.pbHideAbilitySplash(battler)
-=begin
-    statpool = []
-		GameData::Stat.each_main_battle do |s|
-			statpool.push(s.id)# if s.id != :SPEED
-		end
-    battle.pbShowAbilitySplash(battler)
-		if moodmemory >= 0 && statpool.length > 0 && battler.pbCanLowerStatStage?(statpool[moodmemory], battler)
-			battler.pbLowerStatStageByAbility(statpool[moodmemory], 2, battler, false)
-			statpool.delete(statpool[moodmemory])
-			battler.effects[PBEffects::MoodyMemory] = moodmemory = -1
-		end
-		if statpool.length > 0
-			r = battle.pbRandom(statpool.length)
-			if battler.pbCanRaiseStatStage?(statpool[r], battler)
-				battler.pbRaiseStatStageByAbility(statpool[r], 2, battler, false)
-				battler.effects[PBEffects::MoodyMemory] = r
-			end
-		end
-=end
   }
 )
+
 
 Battle::AbilityEffects::EndOfRoundEffect.add(:SPEEDBOOST,
   proc { |ability, battler, battle|
@@ -3419,20 +3365,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:UNNERVE,
 #by low
 Battle::AbilityEffects::OnSwitchIn.add(:FREEZEOVER,
   proc { |ability, battler, battle, switch_in|
-    battle.pbShowAbilitySplash(battler)
-		if battler.hasActiveItem?(:ICYROCK)
-			battle.pbStartWeatherAbility(:Hail, battler)
-		end
-    battle.pbHideAbilitySplash(battler)
+    battle.pbStartWeatherAbility(:Hail, battler) if battler.hasActiveItem?(:ICYROCK)
   }
 )
 
 Battle::AbilityEffects::OnSwitchIn.add(:FORECAST,
   proc { |ability, battler, battle, switch_in|
-		didsomething=false
 		weather_hash = {
-			:ICYROCK		 => :Hail,
-			:DAMPROCK  	 => :Rain,
+			:ICYROCK     => :Hail,
+			:DAMPROCK    => :Rain,
 			:HEATROCK    => :Sun,
 			:SMOOTHROCK  => :Sandstorm
 		}
@@ -3640,17 +3581,6 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
   proc { |ability, battler, fainted, battle|
     battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
-  }
-)
-
-Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
-  proc { |ability,battler,fainted,battle|
-    next if fainted.ungainableAbility? || [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :WONDERGUARD].include?(fainted.ability_id)
-    battle.pbShowAbilitySplash(battler,true)
-    battler.ability = fainted.ability
-    battle.pbReplaceAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1}'s {2} was taken!",fainted.pbThis,fainted.abilityName))
-    battle.pbHideAbilitySplash(battler)
   }
 )
 

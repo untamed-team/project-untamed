@@ -112,7 +112,14 @@ class Battle::AI
   #=============================================================================
   # Wild Pokémon choose their moves randomly.
   def pbRegisterMoveWild(_user, idxMove, choices)
-    choices.push([idxMove, 100, -1])   # Move index, score, target
+		move = _user.moves[idxMove]
+    if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
+        "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
+      score = pbGetMoveScore(move, _user, _user, skill)
+      choices.push([idxMove, score, -1]) if score > 0
+    else
+      choices.push([idxMove, 100, -1])   # Move index, score, target
+    end
   end
 
 	# Trainer Pokémon calculate how much they want to use each of their moves.
@@ -171,18 +178,7 @@ class Battle::AI
           echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
         else
-          if b.effects[PBEffects::Illusion] && $AIGENERALLOG
-            # it seems the AI isnt fooled by illusion, thats pretty neat actually
-            Console.echo_h2 "---------------------------"
-            echoln "AI knowns target (#{b.name}) has illusion effect"
-            echoln "AI THINKS target (#{b.name}) has the following types:"
-            tTypes = b.pbTypes(true, true)
-            tTypes.each_with_index do |type, i|
-              echoln "#{type.name}"
-            end
-            echoln "AI THINKS target (#{b.name}) has the ability: #{b.ability.name}"
-            Console.echo_h2 "---------------------------"
-          end
+          # it seems the AI isnt fooled by illusion, thats pretty neat actually
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
           if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 

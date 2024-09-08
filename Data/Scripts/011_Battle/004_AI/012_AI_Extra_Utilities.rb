@@ -27,6 +27,9 @@ class Battle::AI
 	end
 	
 	
+  #=============================================================================
+  # Damage calculation (v2)
+  #=============================================================================
 	def pbRoughDamage(move, user, target, skill, baseDmg=0)
 		skill=100
 		baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
@@ -43,7 +46,7 @@ class Battle::AI
 			atk = pbRoughStat(user, :DEFENSE, skill)
 		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"   # Psycrush
 			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
-		elsif move.function == "TitanWrath"
+		elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
 			userStats = user.plainStats
 			highestStatValue = higheststat = 0
 			userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
@@ -60,12 +63,15 @@ class Battle::AI
 				atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
 			end
 		end
+		if user.hasActiveAbility?(:CRYSTALJAW) && move.bitingMove?
+			atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
+		end
 		##### Calculate target's defense stat #####
 		defense = pbRoughStat(target, :DEFENSE, skill)
 		if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
 			defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
 		end
-		if move.function == "TitanWrath"
+		if move.function == "TitanWrath" # Titan's Wrath (def calc)
 			case higheststat
 			when :ATTACK, :DEFENSE
 				defense = pbRoughStat(target, :DEFENSE, skill)
@@ -80,19 +86,19 @@ class Battle::AI
 			:defense_multiplier      => 1.0,
 			:final_damage_multiplier => 1.0
 		}
+		globalArray = pbGetMidTurnGlobalChanges
 		# Ability effects that alter damage
-		moldBreaker = false
-		if skill >= PBTrainerAI.highSkill && target.hasMoldBreaker?
-			moldBreaker = true
-		end
+		moldBreaker = moldbroken(user,target,move) # updated to take in the better mold breaker check
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
 			abilityBlacklist = [:ANALYTIC, :SNIPER]#, :TINTEDLENS, :AERILATE, :PIXILATE, :REFRIGERATE]
 			canCheck = true
 			abilityBlacklist.each do |m|
-				#next if move.id != m # Really? comparing a move id with an ability id? This blacklisting never worked.
-				if target.hasActiveAbility?(m)
+				# Really? comparing a move id with an ability id? This blacklisting never worked.
+				# it was also checking if the *target* had analytic/sniper, janky jank!
+				next if user.ability != m
+				if user.hasActiveAbility?(m)
 					canCheck = false
 					break
 				end
@@ -117,7 +123,8 @@ class Battle::AI
 			abilityBlacklist = [:FILTER,:SOLIDROCK]
 			canCheck = true
 			abilityBlacklist.each do |m|
-				#next if move.id != m # Really? comparing a move id with an ability id? This blacklisting never worked.
+				next if target.ability != m 
+				# Really? comparing a move id with an ability id? This blacklisting never worked.
 				if target.hasActiveAbility?(m)
 					canCheck = false
 					break
@@ -127,6 +134,10 @@ class Battle::AI
 				Battle::AbilityEffects.triggerDamageCalcFromTarget(
 					target.ability, user, target, move, multipliers, baseDmg, type
 				)
+				# if laguna already has fur coat in base, there is no need to take it in acc again
+				if target.isSpecies?(:LAGUNA) && target.willmega && target.ability != :FURCOAT
+					multipliers[:defense_multiplier] *= 2
+				end
 			end
 		end
 		if skill >= PBTrainerAI.bestSkill && !moldBreaker
@@ -159,9 +170,9 @@ class Battle::AI
 		end
 		# Global abilities
 		if skill >= PBTrainerAI.mediumSkill &&
-			((@battle.pbCheckGlobalAbility(:DARKAURA) 		&& type == :DARK)  ||
-			 (@battle.pbCheckGlobalAbility(:SPOOPERAURA) 	&& type == :GHOST) || # spooper aura #by low
-			 (@battle.pbCheckGlobalAbility(:FAIRYAURA) 		&& type == :FAIRY))
+			(((@battle.pbCheckGlobalAbility(:DARKAURA)    || globalArray.include?("dark aura"))    && type == :DARK)  ||
+			 ((@battle.pbCheckGlobalAbility(:SPOOPERAURA) || globalArray.include?("spooper aura")) && type == :GHOST) ||
+			 (@battle.pbCheckGlobalAbility(:FAIRYAURA)                                             && type == :FAIRY))
 			if @battle.pbCheckGlobalAbility(:AURABREAK)
 				multipliers[:base_damage_multiplier] *= 2 / 3.0
 			else
@@ -199,49 +210,6 @@ class Battle::AI
 				end
 			end
 		end
-		# Terrain moves
-		if skill >= PBTrainerAI.mediumSkill
-			# abilityTerrain #by low
-			if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
-				t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
-				t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
-			else
-				t_damage_multiplier = 1.3
-				t_damage_divider    = 2
-			end
-			thereselec=false
-			theresmisty=false
-			theresgrassy=false
-			therespsychic=false
-			@battle.allBattlers.each do |j|
-				thereselec=true if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && user.affectedByTerrain?)
-				theresmisty=true if (j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && target.affectedByTerrain?)
-				theresgrassy=true if (j.isSpecies?(:TREVENANT) && j.item == :TREVENANTITE && j.willmega && user.affectedByTerrain?)
-				therespsychic=true if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega && user.affectedByTerrain?)
-			end
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :ELECTRIC 	&& thereselec
-			multipliers[:base_damage_multiplier] /= 1.5  if type == :DRAGON 	&& theresmisty
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :GRASS 		&& theresgrassy
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :PSYCHIC 	&& therespsychic
-			if !thereselec && !theresmisty && !theresgrassy && !therespsychic
-				case @battle.field.terrain
-				when :Electric
-					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
-				when :Grassy
-					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
-				when :Psychic
-					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
-				when :Misty
-					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
-				end
-			end
-			# Specific Field Effect Boosts
-			if (@battle.field.terrain == :Grassy || theresgrassy) && [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
-				multipliers[:base_damage_multiplier] /= 2.0
-			end
-		end
-		#mastersex type zones #by low
-		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
 		# DemICE adding resist berries
 		if Effectiveness.super_effective?(typeMod)
 			if user.hasActiveItem?(:EXPERTBELT)
@@ -289,10 +257,44 @@ class Battle::AI
 				end
 			end
 		end
+		# Terrain moves
+		if skill >= PBTrainerAI.mediumSkill
+			# abilityTerrain #by low
+			if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+				t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
+				t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
+			else
+				t_damage_multiplier = 1.3
+				t_damage_divider    = 2
+			end
+			multipliers[:base_damage_multiplier] *= 1.25 if type == :ELECTRIC && globalArray.include?("electric terrain")
+			multipliers[:base_damage_multiplier] /= 1.5  if type == :DRAGON   && globalArray.include?("misty terrain")
+			multipliers[:base_damage_multiplier] *= 1.25 if type == :GRASS    && globalArray.include?("grassy terrain")
+			multipliers[:base_damage_multiplier] *= 1.25 if type == :PSYCHIC  && globalArray.include?("psychic terrain")
+			if globalArray.none? { |element| element.include?("terrain") }
+				case @battle.field.terrain
+				when :Electric
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
+				when :Grassy
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
+				when :Psychic
+					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
+				when :Misty
+					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
+				end
+			end
+			# Specific Field Effect Boosts
+			if (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")) && 
+			   [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
+				multipliers[:base_damage_multiplier] /= 2.0
+			end
+		end
+		#mastersex type zones #by low
+		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
 		# Multi-targeting attacks
 		# Splinter Shot #by low
 		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) &&
-			 move.function != "HitTwoTimesReload"
+		   move.function != "HitTwoTimesReload"
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Weather
@@ -306,48 +308,41 @@ class Battle::AI
 				w_damage_divider    = 2
 			end
 			# specific weather checks #by low
-			theressun=false
-			thereswet=false
-			theressad=false
-			thereshal=false
-			@battle.allBattlers.each do |j|
-				theressun=true if (j.isSpecies?(:ZARCOIL)  && j.item == :ZARCOILITE  && j.willmega)
-				thereswet=true if (j.isSpecies?(:ZOLUPINE) && j.item == :ZOLUPINEITE && j.willmega)
-				theressad=true if (j.isSpecies?(:CACTURNE) && j.item == :CACTURNITE  && j.willmega)
-				thereshal=true if (j.isSpecies?(:FRIZZARD) && j.item == :FRIZZARDITE && j.willmega)
-			end
-			if theressun # sunny day
-				case type
-				when :FIRE
-					multipliers[:final_damage_multiplier] *= 1.25
-				when :WATER
-					multipliers[:final_damage_multiplier] /= 1.5
+			# abilities *can* overwrite primal weather
+			if !user.hasActiveItem?(:UTILITYUMBRELLA)
+				if globalArray.include?("sun weather")
+					case type
+					when :FIRE
+						multipliers[:final_damage_multiplier] *= 1.25
+					when :WATER
+						multipliers[:final_damage_multiplier] /= 1.5
+					end
+					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
+						multipliers[:attack_multiplier] *= 1.5
+					end
 				end
-				if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
-					multipliers[:attack_multiplier] *= 1.5
-				end
-			end
-			if thereswet # rain dance
-				case type
-				when :FIRE
-					multipliers[:final_damage_multiplier] /= 1.5
-				when :WATER
-					multipliers[:final_damage_multiplier] *= 1.25
+				if globalArray.include?("rain weather")
+					case type
+					when :FIRE
+						multipliers[:final_damage_multiplier] /= 1.5
+					when :WATER
+						multipliers[:final_damage_multiplier] *= 1.25
+					end
 				end
 			end
-			if theressad # sandstorm
+			if globalArray.include?("sand weather")
 				if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
 					 move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
 					multipliers[:defense_multiplier] *= 1.5
 				end
 			end
-			if thereshal # hail
+			if globalArray.include?("hail weather")
 				if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
 					multipliers[:final_damage_multiplier] *= 0.75
 				end
 			end
 			
-			if !theressun && !thereswet && !theressad && !thereshal
+			if globalArray.none? { |element| element.include?("weather") }
 				case user.effectiveWeather
 				when :Sun, :HarshSun
 					case type
@@ -365,7 +360,7 @@ class Battle::AI
 					end
 				when :Sandstorm
 					if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
-						move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
+					   move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
 						multipliers[:defense_multiplier] *= 1.5
 					end
 				when :Hail # hail buff #by low
@@ -490,7 +485,7 @@ class Battle::AI
 				damage = 0.96*damage/atkmult if atkmult<1
 				damage = damage*defmult if defmult>1
 			end	
-			if c >= 0
+			if c >= 1
 				c = 4 if c > 4
 				if c>=3
 					damage*=1.5
@@ -503,19 +498,21 @@ class Battle::AI
 		return damage.floor
 	end
 	
-	def moldbroken(attacker,opponent,move=:SPLASH)
-		if (attacker.hasActiveAbility?(:MOLDBREAKER) || 
-				attacker.hasActiveAbility?(:TURBOBLAZE) || 
-				attacker.hasActiveAbility?(:TERAVOLT) ||
-				move.function=="IgnoreTargetAbility" ||
-				move.function=="CategoryDependsOnHigherDamageIgnoreTargetAbility") && 
-				!opponent.hasActiveAbility?(:SHADOWSHIELD) #!opponent.hasActiveAbility?(:FULLMETALBODY) && 
+	def moldbroken(user, target, move = :SPLASH)
+		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY])
+		return false if target.hasActiveAbility?(:SHADOWSHIELD)
+		if (user.hasMoldBreaker? || 
+			["IgnoreTargetAbility",
+			 "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
+			return true
+		end
+		if (user.isSpecies?(:GYARADOS)  && (user.item == :GYARADOSITE || user.hasMegaEvoMutation?) && user.willmega) ||
+		   (user.isSpecies?(:LUPACABRA) && (user.item == :LUPACABRITE || user.hasMegaEvoMutation?) && user.willmega)
 			return true
 		end
 		return false	
 	end
 	
-	alias stupidity_pbCheckMoveImmunity pbCheckMoveImmunity
 	def pbCheckMoveImmunity(score, move, user, target, skill)
 		# Changed by DemICE 08-Sep-2023 Yes i had to move Last Resort here to make its score return 0 otherwise it just never became 0.
 		if move.function == "FailsIfUserHasUnusedMove" 
@@ -530,21 +527,16 @@ class Battle::AI
 			if !hasThisMove || !hasOtherMoves || hasUnusedMoves
 				return true
 			end 
-		end  
-		# DemICE: Mold Breaker implementation
+		end
+		
 		type = pbRoughType(move,user,skill)
 		typeMod = pbCalcTypeMod(type,user,target)
+		# Type effectiveness
+		return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || 
+					   (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
+		# DemICE: Mold Breaker implementation
 		mold_broken=moldbroken(user,target,move)
-		therespsy=false
-		thereselec=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega && target.affectedByTerrain?)
-				therespsy=true
-			end
-			if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && target.affectedByTerrain?)
-				thereselec=true
-			end
-		end
+		globalArray = pbGetMidTurnGlobalChanges
 		case type
 		when :GROUND
 			if (target.airborneAI(mold_broken) && !move.hitsFlyingTargets?)
@@ -558,16 +550,24 @@ class Battle::AI
 			return true if target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
 		when :ELECTRIC
 			return true if target.hasActiveAbility?([:LIGHTNINGROD,:MOTORDRIVE,:VOLTABSORB],false,mold_broken)
+			return true if (target.isSpecies?(:GOHILA) || target.isSpecies?(:ROADRAPTOR)) && target.willmega && !mold_broken
+			# i mean, road is already immune cuz ground, but idk maybe you gave it ring target
+			# ¯\_(ツ)_/¯
 		end
 		return true if !Effectiveness.super_effective?(typeMod) && move.baseDamage>0 && 
-										target.hasActiveAbility?(:WONDERGUARD,false,mold_broken)
-		return true if move.canMagicCoat? && target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) &&
-										target.opposes?(user)
-		return true if move.soundMove? && (target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken) || 
-																			(target.isSpecies?(:CHIMECHO) && target.willmega && !mold_broken))
-		return true if move.bombMove? && target.hasActiveAbility?(:BULLETPROOF,false,mold_broken)
+						target.hasActiveAbility?(:WONDERGUARD,false,mold_broken)
+		return true if move.damagingMove? && user.index != target.index && !target.opposes?(user) &&
+					   target.hasActiveAbility?(:TELEPATHY,false,mold_broken)
+		return true if move.canMagicCoat? && 
+					   (target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) || 
+					   (target.isSpecies?(:SABLEYE) && target.willmega && !mold_broken)) && 
+					   target.opposes?(user)
+		return true if move.soundMove? && target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
+		return true if move.bombMove? && (target.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
+										 (target.isSpecies?(:MAGCARGO) && target.willmega && !mold_broken))
 		return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
-						:SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && thereselec
+						:SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && 
+						(@battle.field.terrain == :Electric || globalArray.include?("electric terrain"))
 		if move.powderMove?
 			return true if target.pbHasType?(:GRASS, true)
 			return true if target.hasActiveAbility?(:OVERCOAT,false,mold_broken)
@@ -575,12 +575,18 @@ class Battle::AI
 		end
 		if priorityAI(user,move) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
-				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken) 
+				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
+							 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.willmega) 
+							 # laguna can have dazz in pre-mega form
 			end
-			return true if (@battle.field.terrain == :Psychic || therespsy) && target.affectedByTerrain? && target.opposes?(user)
+			return true if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && target.affectedByTerrain? && target.opposes?(user)
 		end
-		return stupidity_pbCheckMoveImmunity(score, move, user, target, skill)
-		#return result   
+		return true if move.statusMove? && target.effects[PBEffects::Substitute] > 0 &&
+					   !move.ignoresSubstitute?(user) && user.index != target.index
+		return true if move.statusMove? && Settings::MECHANICS_GENERATION >= 7 &&
+					   user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK, true) &&
+					   target.opposes?(user)
+		return false
 	end	
 	
   	def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
@@ -589,13 +595,7 @@ class Battle::AI
 		damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
 		damage+=priodamage
 		damage*=mult
-		if move.name=="Meteor Beam"
-			Console.echo_h2("DOES HE LIVE") 
-			Console.echo_h2(move.name) 
-			Console.echo_h2(damage)
-			Console.echo_h2(opponent.hp)
-		end
-		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.turnCount==0	
+		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.form==0	
 			if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
 					"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
 					"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(move.function)
@@ -616,18 +616,19 @@ class Battle::AI
 		return false
 	end
 
-	def canSleepTarget(attacker,opponent,berry=false)
+	def canSleepTarget(attacker,opponent,globalArray,berry=false)
 		return false if opponent.effects[PBEffects::Substitute]>0
 		return false if berry && (opponent.status==:SLEEP)# && opponent.statusCount>1)
 		return false if (opponent.hasActiveItem?(:LUMBERRY) || opponent.hasActiveItem?(:CHESTOBERRY)) && berry
 		return false if opponent.pbCanSleep?(attacker,false)
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
+		return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
 				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)
 				return true	
 			end	
-		end	
+		end
 		return false
 	end
 	
@@ -658,6 +659,7 @@ class Battle::AI
 		return [maxdam,maxmove,maxprio,physorspec]
 	end	
 
+=begin # not used rn, but that could change in the future
 	def checkWeatherBenefit(user)
 		sum=0
 		ownparty = @battle.pbParty(user.index)
@@ -754,6 +756,7 @@ class Battle::AI
 		end
 		return sum
 	end
+=end
 
 	def priorityAI(user,move,switchin=false)
 		turncount = user.turnCount
@@ -893,7 +896,6 @@ class Battle
 		battler = Battler.new(self,@index)
 		battler.pbInitPokemon(pokemon,@index)
 		battler.pbInitEffects(batonpass)#,false,effectnegate)
-=begin
 		if batonpass
 			battler.stages[:ATTACK]          = currentmon.stages[:ATTACK]
 			battler.stages[:DEFENSE]         = currentmon.stages[:DEFENSE]
@@ -903,7 +905,6 @@ class Battle
 			battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
 			battler.stages[:EVASION]         = currentmon.stages[:EVASION]
 		end	
-=end
 		return battler
 	end	
 
@@ -928,72 +929,6 @@ class Battle
 		# end
 		return true
 	end	
-
-	def pbCommandPhaseLoop(isPlayer)
-		# NOTE: Doing some things (e.g. running, throwing a Poké Ball) takes up all
-		#       your actions in a round.
-		actioned = []
-		idxBattler = -1
-		loop do
-			break if @decision != 0   # Battle ended, stop choosing actions
-			idxBattler += 1
-			break if idxBattler >= @battlers.length
-			next if !@battlers[idxBattler] || pbOwnedByPlayer?(idxBattler) != isPlayer
-			next if @choices[idxBattler][0] != :None    # Action is forced, can't choose one
-			next if !pbCanShowCommands?(idxBattler)   # Action is forced, can't choose one
-			if !@controlPlayer && pbOwnedByPlayer?(idxBattler)
-				# Player chooses an action
-				actioned.push(idxBattler)
-				commandsEnd = false   # Whether to cancel choosing all other actions this round
-				loop do
-					cmd = pbCommandMenu(idxBattler, actioned.length == 1)
-					# If being Sky Dropped, can't do anything except use a move
-					if cmd > 0 && @battlers[idxBattler].effects[PBEffects::SkyDrop] >= 0
-						pbDisplay(_INTL("Sky Drop won't let {1} go!", @battlers[idxBattler].pbThis(true)))
-						next
-					end
-					case cmd
-					when 0    # Fight
-						break if pbFightMenu(idxBattler)
-					when 1    # Bag
-						if pbItemMenu(idxBattler, actioned.length == 1)
-							commandsEnd = true if pbItemUsesAllActions?(@choices[idxBattler][1])
-							break
-						end
-					when 2    # Pokémon
-						break if pbPartyMenu(idxBattler)
-					when 3    # Run
-						# NOTE: "Run" is only an available option for the first battler the
-						#       player chooses an action for in a round. Attempting to run
-						#       from battle prevents you from choosing any other actions in
-						#       that round.
-						if pbRunMenu(idxBattler)
-							commandsEnd = true
-							break
-						end
-					when 4    # Call
-						break if pbCallMenu(idxBattler)
-					when -2   # Debug
-						pbDebugMenu
-						next
-					when -1   # Go back to previous battler's action choice
-						next if actioned.length <= 1
-						actioned.pop   # Forget this battler was done
-						idxBattler = actioned.last - 1
-						pbCancelChoice(idxBattler + 1)   # Clear the previous battler's choice
-						actioned.pop   # Forget the previous battler was done
-						break
-					end
-					pbCancelChoice(idxBattler)
-				end
-			else 
-				# DemICE moved the AI decision after player decision.
-				# AI controls this battler
-				@battleAI.pbDefaultChooseEnemyCommand(idxBattler)
-			end 
-			break if commandsEnd
-		end
-	end
 end
 
 class Pokemon
@@ -1006,7 +941,7 @@ class Pokemon
 	end
 	
 	def eachMove
-			@moves.each { |m| yield m }
+		@moves.each { |m| yield m }
 	end
 	
 	def pbHasMoveFunction?(*arg)

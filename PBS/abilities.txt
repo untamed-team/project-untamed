@@ -308,7 +308,7 @@ Description = Eliminates the effects of weather.
 #-------------------------------
 [TANGLEDFEET]
 Name = Tangled Feet
-Description = Raises evasion if the Pokémon is confused.
+Description = Raises Speed if the Pokémon is confused.
 #-------------------------------
 [MOTORDRIVE]
 Name = Motor Drive
@@ -568,7 +568,7 @@ Description = Sharply raises one stat, resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
-Description = Protects the Pokémon from damage from weather.
+Description = Negates powder moves, weather and Spikes/Pebbles damage. 
 #-------------------------------
 [POISONTOUCH]
 Name = Poison Touch

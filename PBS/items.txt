@@ -3815,7 +3815,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_80
 Move = SCATTERDUST
-Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
+Description = The user attacks by scattering a cloud of coarse debris.
 #-------------------------------
 [TM10]
 Name = TM10
@@ -4605,7 +4605,7 @@ Price = 5500
 FieldUse = TM
 Flags = Fling_110
 Move = GEODEBURST
-Description = The user attacks its target with a hail of glittering crystals. This may also make the target flinch.
+Description = The user attacks its target with a hail of glittering crystals.
 #-------------------------------
 [TM89]
 Name = TM89
@@ -6629,15 +6629,6 @@ FieldUse = Direct
 Flags = KeyItem
 Description = Heals your party. Recharges at the PokéCenter. CTRL + Auto Heal to activate in party menu.
 #-------------------------------
-[EMPTYPOKEVIAL]
-Name = PokéVial
-NamePlural = PokéVials
-Pocket = 8
-Price = 0
-FieldUse = Direct
-Flags = KeyItem
-Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
-#-------------------------------
 [PORTABLEPC]
 Name = Portable PC
 NamePlural = Portable PCs
@@ -6663,7 +6654,7 @@ Pocket = 5
 Price = 200
 FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
-Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+Description = A berry filled with coloring with a disguising taste. It changes a Pokémon’s color when eaten.
 #-------------------------------
 [CAMPINGGEAR]
 Name = Camping Gear

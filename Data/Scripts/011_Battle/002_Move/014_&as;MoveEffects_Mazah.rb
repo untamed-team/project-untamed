@@ -79,7 +79,7 @@ class Battle::Move::TitanWrath < Battle::Move
       case userTypes[0]
       when :NORMAL    then id = :GIGAIMPACT     if GameData::Move.exists?(:GIGAIMPACT)     # gigas
       when :ROCK      then id = :STONEEDGE      if GameData::Move.exists?(:STONEEDGE)      # rock
-      when :ICE       then id = :ICICLECRASH    if GameData::Move.exists?(:POWERGEM)       # ce
+      when :ICE       then id = :ICICLECRASH    if GameData::Move.exists?(:ICICLECRASH)    # ce
       when :STEEL     then id = :STEELROLLER    if GameData::Move.exists?(:STEELROLLER)    # steel
       when :ELECTRIC  then id = :FUSIONBOLT     if GameData::Move.exists?(:FUSIONBOLT)     # eleki
       when :DRAGON    then id = :OUTRAGE        if GameData::Move.exists?(:OUTRAGE)        # drago

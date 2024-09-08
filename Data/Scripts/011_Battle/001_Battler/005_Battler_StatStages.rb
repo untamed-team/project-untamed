@@ -3,7 +3,6 @@ class Battle::Battler
   # Increase stat stages
   #=============================================================================
   def statStageAtMax?(stat)
-    return @stages[stat] >= 2 if stat == :SPEED #by low
     return @stages[stat] >= 6
   end
 
@@ -118,7 +117,6 @@ class Battle::Battler
   # Decrease stat stages
   #=============================================================================
   def statStageAtMin?(stat)
-    return @stages[stat] <= -2 if stat == :SPEED #by low
     return @stages[stat] <= -6
   end
 

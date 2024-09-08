@@ -364,65 +364,66 @@ class Battle::Move::PowerHigherWithConsecutiveUseOnUserSide < Battle::Move
 end
 
 #===============================================================================
-# Power is chosen at random. Power is doubled if the target is using Dig. Hits
-# some semi-invulnerable targets. (Magnitude) #edited #by low
+# Power is chosen at semi-random. Power is doubled if the target is using Dig.
+# Hits some semi-invulnerable targets. (Magnitude) #edited #by low
 #===============================================================================
 class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
   def hitsDiggingTargets?; return true; end
 
   def pbOnStartUse(user, targets)
     baseDmg = [10, 30, 50, 70, 90, 110, 130]
-		if user.level<=16
-			magnitudes=[
-				 4,
-				 5,5,
-				 5,5,5,5,
-				 5,5,5,6,6,6,
-				 6,6,6,6,
-				 6,6,
-				 6
-			]			
-		elsif user.level<=24
-			magnitudes=[
-				 5,
-				 5,5,
-				 6,6,6,6,
-				 6,6,6,6,6,6,
-				 6,6,6,6,
-				 7,7,
-				 7
-			]
-		elsif user.level<=33
-			magnitudes=[
-				 5,
-				 6,6,
-				 7,7,7,7,
-				 7,7,7,7,7,7,
-				 7,7,7,7,
-				 7,7,
-				 8
-			]
-		elsif user.level<=44											
-			magnitudes=[
-				 6,
-				 7,7,
-				 7,7,7,7,
-				 7,7,7,7,7,7,
-				 8,8,8,8,
-				 8,8,
-				 9
-			]
-		else	
-			magnitudes=[
-				 7,
-				 7,7,
-				 8,8,8,8,
-				 8,8,8,8,8,8,
-				 8,8,8,8,
-				 9,9,
-				 10
-			]	
-		end
+    magnitudes = case user.level
+      when 0..16
+        [
+          4,
+          5,5,
+          5,5,5,5,
+          5,5,5,6,6,6,
+          6,6,6,6,
+          6,6,
+          6
+        ]
+      when 17..24
+        [
+          5,
+          5,5,
+          6,6,6,6,
+          6,6,6,6,6,6,
+          6,6,6,6,
+          7,7,
+          7
+        ]
+      when 25..33
+        [
+          5,
+          6,6,
+          7,7,7,7,
+          7,7,7,7,7,7,
+          7,7,7,7,
+          7,7,
+          8
+        ]
+      when 34..44
+        [
+          6,
+          7,7,
+          7,7,7,7,
+          7,7,7,7,7,7,
+          8,8,8,8,
+          8,8,
+          9
+        ]
+      else
+        [
+          7,
+          7,7,
+          8,8,8,8,
+          8,8,8,8,8,8,
+          8,8,8,8,
+          9,9,
+          10
+        ]
+    end
     magni = magnitudes[@battle.pbRandom(magnitudes.length)]
     @magnitudeDmg = baseDmg[magni - 4]
     @battle.pbDisplay(_INTL("Magnitude {1}!", magni))

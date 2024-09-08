@@ -48,7 +48,8 @@ end
 
 MEGA_EVO_MOVESET = {
   :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
-  :CACTURNE => [:BULLETSEED, :SPLINTERSHOT]
+  :CACTURNE => [:BULLETSEED, :SPLINTERSHOT],
+  :GOLURK   => [:SHADOWBALL, :AEROBLAST]
 }
 
 class Battle
@@ -147,9 +148,10 @@ class Battle
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
 		if battler.hasMegaEvoMutation?
 			#nothing
-      battler.pokemon.ability = nil
+      #battler.pokemon.ability = nil
       battler.pokemon.ability_index = nil
       @scene.pbRefreshOne(idxBattler)
+      battler.pbUpdate(true)
 		else
 			side  = battler.idxOwnSide
 			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)

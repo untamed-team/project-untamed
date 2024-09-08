@@ -7,8 +7,8 @@ class Battle::AI
 		initialscore = score
 		attacker = user
 		opponent = target
-		mold_broken = moldbroken(attacker,opponent,move)
-		
+		mold_broken = moldbroken(user,target,move)
+		globalArray = pbGetMidTurnGlobalChanges
 		thisprio = priorityAI(user,move)
 		if thisprio>0 
 			aspeed = pbRoughStat(attacker,:SPEED,skill)
@@ -37,6 +37,7 @@ class Battle::AI
 				pridam = -1
 				for j in opponent.moves
 					tempdam = pbRoughDamage(j,opponent,attacker,skill,j.baseDamage)
+					tempdam = 0 if pbCheckMoveImmunity(1,j,opponent,attacker,100)
 					if priorityAI(opponent,j)>0
 						opppri=true
 						if tempdam>pridam
@@ -67,6 +68,7 @@ class Battle::AI
 								end
 							end		
 							tempdam = pbRoughDamage(j,opponent,attacker,skill,j.baseDamage)
+							tempdam = 0 if pbCheckMoveImmunity(1,j,opponent,attacker,100)
 							maxdam=tempdam if tempdam>maxdam
 							maxmove2=j
 						end
@@ -96,20 +98,14 @@ class Battle::AI
 					echo("Player Pokemon is invulnerable. Score-300. \n")
 					score-=300
 				end
-				therespsychic=false
-				@battle.allBattlers.each do |j|
-					if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega)
-						therespsychic=true
-					end
-				end
-				if (@battle.field.terrain == :Psychic || therespsychic) && opponent.affectedByTerrain?
+				if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && opponent.affectedByTerrain?
 					echo("Blocked by Psychic Terrain. Score-300. \n")
 					score-=300
 				end
 				@battle.allSameSideBattlers(opponent.index).each do |b|
 					priobroken=moldbroken(attacker,b,move)
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-						 !(b.isSpecies?(:LAGUNA) && b.item == :LAGUNITE && b.willmega) # laguna can have dazz in pre-mega form
+						 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.willmega) # laguna can have dazz in pre-mega form
 						score-=300 
 						echo("Blocked by enemy ability. Score-300. \n")
 					end
@@ -284,16 +280,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartSunWeather" # sunny day
-		theressun=false
-		thereswet=false
-		@battle.allBattlers.each do |j|
-			theressun=true if (j.isSpecies?(:ZARCOIL)  && j.item == :ZARCOILITE  && j.willmega)
-			thereswet=true if (j.isSpecies?(:ZOLUPINE) && j.item == :ZOLUPINEITE && j.willmega)
-		end
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
 		   @battle.field.weather == :Sun ||
-		   theressun
+		   globalArray.include?("sun weather")
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -357,8 +347,8 @@ class Battle::AI
 			if user.hasActiveAbility?(:HARVEST)
 				score*=1.5
 			end
-			if @battle.field.weather == :Rain || thereswet
-				miniscore = getFieldDisruptScore(user,target,skill)
+			if @battle.field.weather == :Rain || globalArray.include?("rain weather")
+				miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 				if user.pbHasType?(:NORMAL, true)
 					miniscore*=1.2
 				end
@@ -367,16 +357,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartRainWeather" # rain dance
-		theressun=false
-		thereswet=false
-		@battle.allBattlers.each do |j|
-			theressun=true if (j.isSpecies?(:ZARCOIL)  && j.item == :ZARCOILITE  && j.willmega)
-			thereswet=true if (j.isSpecies?(:ZOLUPINE) && j.item == :ZOLUPINEITE && j.willmega)
-		end
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
-			@battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-					@battle.field.weather == :Rain ||
-					thereswet
+		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
+		   @battle.field.weather == :Rain ||
+		   globalArray.include?("rain weather")
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -437,8 +421,8 @@ class Battle::AI
 			if user.hasActiveAbility?(:HYDRATION)
 				score*=1.5
 			end
-			if @battle.field.weather == :Sun || theressun
-				miniscore = getFieldDisruptScore(user,target,skill)
+			if @battle.field.weather == :Sun || globalArray.include?("sun weather")
+				miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 				if user.pbHasType?(:NORMAL, true)
 					miniscore*=1.2
 				end
@@ -447,14 +431,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartSandstormWeather" # sandstorm
-		theressad=false
-		@battle.allBattlers.each do |j|
-			theressad=true if (j.isSpecies?(:CACTURNE) && j.item == :CACTURNITE  && j.willmega)
-		end
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
-			@battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-					@battle.field.weather == :Sandstorm ||
-					theressad
+		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
+		   @battle.field.weather == :Sandstorm ||
+		   globalArray.include?("sand weather")
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -473,7 +453,8 @@ class Battle::AI
 			if user.pbHasMove?(:WEATHERBALL)
 				score*=2
 			end
-			if @battle.field.weather != :None && (@battle.field.weather != :Sandstorm || !theresad)
+			if @battle.field.weather != :None && 
+			  !(@battle.field.weather == :Sandstorm || globalArray.include?("sand weather"))
 				score*=1.5
 			end
 			if user.takesSandstormDamage?
@@ -514,14 +495,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartHailWeather" # hail
-		thereshal=false
-		@battle.allBattlers.each do |j|
-			thereshal=true if (j.isSpecies?(:FRIZZARD) && j.item == :FRIZZARDITE && j.willmega)
-		end
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
-			@battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-					@battle.field.weather == :Hail ||
-					thereshal
+		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
+		   @battle.field.weather == :Hail ||
+		   globalArray.include?("hail weather")
 			score = 0
 		else
 			score*=1.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
@@ -580,16 +557,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartElectricTerrain" # Electric Terrain
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:BEAKRAFT) && j.item == :BEAKRAFTITE && j.willmega && !target.affectedByTerrain?)
-				theresone=true
-			end
-		end
 		sleepvar=false
 		sleepvar=true if target.pbHasMoveFunction?("SleepTarget","SleepTargetIfUserDarkrai")
-		if @battle.field.terrain != :Electric && !theresone
-			miniscore = getFieldDisruptScore(user,target,skill)
+		if @battle.field.terrain != :Electric && !globalArray.include?("electric terrain")
+			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 			if user.hasActiveAbility?(:SURGESURFER)
 				miniscore*=1.5
 			end
@@ -620,12 +591,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartGrassyTerrain" # grassy terrain
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:TREVENANT) && j.item == :TREVENANTITE && j.willmega)
-				theresone=true
-			end
-		end
 		healvar=false
 		for j in target.moves
 			healvar=true if j.healingMove?
@@ -635,9 +600,9 @@ class Battle::AI
 			next if m.fainted?
 			grassvar=true if m.hasType?(:GRASS)
 		end
-		if @battle.field.terrain != :Grassy && !theresone
+		if @battle.field.terrain != :Grassy && !globalArray.include?("grassy terrain")
 			roles = pbGetPokemonRole(user, target)
-			miniscore = getFieldDisruptScore(user,target,skill)
+			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				miniscore*=1.5
 			end
@@ -662,12 +627,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartMistyTerrain" # misty terrain
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && !target.affectedByTerrain?)
-				theresone=true
-			end
-		end
 		healvar=false
 		for j in target.moves
 			healvar=true if j.healingMove?
@@ -679,9 +638,9 @@ class Battle::AI
 			fairyvar=true if m.hasType?(:FAIRY)
 			dragovar=true if m.hasType?(:DRAGON)
 		end
-		if @battle.field.terrain != :Misty && !theresone
+		if @battle.field.terrain != :Misty && !globalArray.include?("misty terrain")
 			roles = pbGetPokemonRole(user, target)
-			miniscore = getFieldDisruptScore(user,target,skill)
+			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 			if fairyvar
 				miniscore*=2
 			end
@@ -706,12 +665,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartPsychicTerrain" # psychic terrain
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega)
-				theresone=true
-			end
-		end
 		privar=false
 		for j in target.moves
 			privar=true if j.priority>0
@@ -725,9 +678,9 @@ class Battle::AI
 			next if m.fainted?
 			psyvar=true if m.hasType?(:PSYCHIC)
 		end
-		if @battle.field.terrain != :Psychic && !theresone
+		if @battle.field.terrain != :Psychic && !globalArray.include?("psychic terrain")
 			roles = pbGetPokemonRole(user, target)
-			miniscore = getFieldDisruptScore(user,target,skill)
+			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 			if user.hasActiveAbility?(:TELEPATHY)
 				miniscore*=1.5
 			end  
@@ -752,10 +705,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RemoveTerrain" # Steel Roller
-		miniscore = getFieldDisruptScore(user,target,skill)
+		miniscore = getFieldDisruptScore(user,target,globalArray,skill)
 		case @battle.field.terrain
 			when :None
-				score = 0
+				score = 0 if globalArray.none? { |element| element.include?("terrain") }
 			when :Electric
 				if target.hasActiveAbility?(:SURGESURFER)
 					miniscore*=1.5
@@ -873,8 +826,8 @@ class Battle::AI
 				if target.hasActiveItem?(:TERRAINEXTENDER)
 					miniscore*=1.2
 				end
-				score*=miniscore
 		end
+		score*=miniscore
     #---------------------------------------------------------------------------
     when "AddSpikesToFoeSide" # spikes
 		if user.pbOpposingSide.effects[PBEffects::Spikes] >= 3
@@ -903,11 +856,7 @@ class Battle::AI
 			if user.pbOpposingSide.effects[PBEffects::Spikes]>0
 				score*=0.9
 			end
-			jannyvar = false
-			if pbHasHazardCleaningMove?(target)
-				jannyvar = true
-			end
-			score*=0.3 if jannyvar
+			score*=0.3 if pbHasHazardCleaningMove?(target)
 		end
 	#---------------------------------------------------------------------------
     when "AddToxicSpikesToFoeSide" # toxic spikes
@@ -937,11 +886,7 @@ class Battle::AI
 			if user.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
 				score*=0.9
 			end
-			jannyvar = false
-			if pbHasHazardCleaningMove?(target)
-				jannyvar = true
-			end
-			score*=0.7 if jannyvar
+			score*=0.7 if pbHasHazardCleaningMove?(target)
 		end
     #---------------------------------------------------------------------------
     when "AddStealthRocksToFoeSide" # stealth rock
@@ -968,11 +913,7 @@ class Battle::AI
 			else
 				score*=0.1
 			end
-			jannyvar = false
-			if pbHasHazardCleaningMove?(target)
-				jannyvar = true
-			end
-			score*=0.7 if jannyvar
+			score*=0.7 if pbHasHazardCleaningMove?(target)
 		end
     #---------------------------------------------------------------------------
     when "AddStickyWebToFoeSide" # Sticky Web
@@ -1002,11 +943,7 @@ class Battle::AI
 			if user.pbOpposingSide.effects[PBEffects::StickyWeb]>0
 				score*=0.9
 			end
-			jannyvar = false
-			if pbHasHazardCleaningMove?(target)
-				jannyvar = true
-			end
-			score*=0.7 if jannyvar
+			score*=0.7 if pbHasHazardCleaningMove?(target)
 		end
     #---------------------------------------------------------------------------
     when "SwapSideEffects"
@@ -1028,18 +965,16 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "UserMakeSubstitute" # substitute
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
-		if user.hp*4 > user.totalhp
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
+		maxprio = bestmove[2]
+		if user.hp*4 > user.totalhp && maxprio < user.hp
 			if user.effects[PBEffects::Substitute] > 0	
 				if (user.pbSpeed > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					score = 0
 				else
 					if target.effects[PBEffects::LeechSeed]<0
-						score*=0
+						score=0
 					end
 				end
 			else
@@ -1118,9 +1053,7 @@ class Battle::AI
 		   user.pbOwnSide.effects[PBEffects::Spikes] > 0 || user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0 ||
 		   user.pbOwnSide.effects[PBEffects::StealthRock] || user.pbOwnSide.effects[PBEffects::StickyWeb] > 0)
 			miniscore = 100
-			if user.hasActiveAbility?(:SIMPLE)
-				miniscore*=2
-			end
+			miniscore*=2 if user.hasActiveAbility?(:SIMPLE)
 			if user.attack<user.spatk
 				if user.stages[:SPECIAL_ATTACK]<0            
 					ministat=user.stages[:SPECIAL_ATTACK]
@@ -1212,7 +1145,7 @@ class Battle::AI
 		if @battle.positions[target.index].effects[PBEffects::FutureSightCounter]>0
 			score*=0
 		else
-			score*=0.6
+			score*=0.7
 			hasAlly = !target.allAllies.empty?
 			if hasAlly
 				score*=0.7
@@ -1238,13 +1171,10 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserSwapsPositionsWithAlly" # ally switch
 		userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
-		if maxdam<user.hp && userlivecount!=0
+		hasAlly = !user.allAllies.empty?
+		bestmove = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
+		if maxdam<user.hp && userlivecount!=0 && hasAlly
 			score*=1.3
 			sweepvar = false
 			count=0
@@ -1256,15 +1186,8 @@ class Battle::AI
 					sweepvar = true
 				end
 			end
-			if sweepvar
-				score*=2
-			end
-			if userlivecount<3
-				score*=2
-			end
-			if user.pbOwnSide.effects[PBEffects::StealthRock] || user.pbOwnSide.effects[PBEffects::Spikes]>0
-				score*=0.5
-			end
+			score*=2 if sweepvar
+			score*=2 if userlivecount<3
 		else
 			score*=0
 		end
@@ -1279,7 +1202,7 @@ class Battle::AI
 			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
 			if tempdam > maxdam
 				maxdam = tempdam
-				if m.contactMove?
+				if m.pbContactMove?(user)
 					contactcheck=true
 				else
 					contactcheck=false
@@ -1289,7 +1212,7 @@ class Battle::AI
 			restcheck = true if m.id == :REST
 		end
 		if user.pbCanBurn?(target, false)
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 100, move, skill)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 100, move, globalArray, skill)
 			miniscore *= 1.2
 			ministat=0
 			ministat+=target.stages[:ATTACK]
@@ -1308,7 +1231,9 @@ class Battle::AI
 			end
 			miniscore-=100
 			miniscore*=(move.addlEffect.to_f/100)
-			if user.hasActiveAbility?(:SERENEGRACE) && (@battle.field.terrain == :Misty && !target.affectedByTerrain?)
+			if user.hasActiveAbility?(:SERENEGRACE) && 
+				((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
+					!target.affectedByTerrain?)
 				miniscore*=2
 			end
 			miniscore+=100
@@ -1334,7 +1259,7 @@ class Battle::AI
 			score*=0.7
 		end
     #---------------------------------------------------------------------------
-    when "RaiseUserAttack1", "RaiseUserAttack2", "RaiseUserAttack3" # Howl
+    when "RaiseUserAttack1", "RaiseUserAttack2", "RaiseUserAttack3", "RaiseTargetAttack1" # Howl
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
@@ -1358,11 +1283,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -1525,11 +1447,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -1671,11 +1590,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -1726,11 +1642,8 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -1813,11 +1726,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -1868,11 +1778,8 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -1955,12 +1862,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2118,12 +2021,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2254,11 +2153,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2309,11 +2205,8 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -2409,11 +2302,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2464,11 +2354,8 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -2527,7 +2414,7 @@ class Battle::AI
 		score*=miniscore
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
-    when "RaiseUserSpeed1" # Flame Charge
+    when "RaiseUserSpeed1", "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" # Flame Charge
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
@@ -2551,11 +2438,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2717,11 +2601,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -2922,11 +2803,8 @@ class Battle::AI
 			if target.effects[PBEffects::Yawn]>0
 				miniscore*=1.7
 			end
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam = tempdam if tempdam > maxdam
-			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0]
 			if maxdam<(user.hp/4.0)
 				miniscore*=1.2
 			else
@@ -3013,12 +2891,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -3239,12 +3113,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -3421,11 +3291,11 @@ class Battle::AI
 			minimini/=100.0
 			miniscore*=minimini
 		end
-		if target.hasActiveItem?(:BRIGHTPOWDER) || target.hasActiveItem?(:LAXINCENSE) || 
-			(target.hasActiveAbility?(:SANDVEIL) && target.effectiveWeather == :Sandstorm) ||
-			(target.hasActiveAbility?(:SNOWCLOAK) && target.effectiveWeather == :Hail)
-			miniscore*=1.1
-		end
+		#if target.hasActiveItem?(:BRIGHTPOWDER) || target.hasActiveItem?(:LAXINCENSE) || 
+		#	(target.hasActiveAbility?(:SANDVEIL) && target.effectiveWeather == :Sandstorm) ||
+		#	(target.hasActiveAbility?(:SNOWCLOAK) && target.effectiveWeather == :Hail)
+		#	miniscore*=1.1
+		#end
 		if !user.statStageAtMax?(:ACCURACY) 
 			miniscore/=100.0
 			score*=miniscore
@@ -3490,12 +3360,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -3644,12 +3510,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -3770,7 +3632,9 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE)
 			miniscore=1
 		end
-		if ([:Sun, :HarshSun].include?(user.effectiveWeather) || user.hasActiveAbility?(:PRESAGE))
+		if ([:Sun, :HarshSun].include?(user.effectiveWeather) || 
+			 globalArray.include?("sun weather") || 
+			 user.hasActiveAbility?(:PRESAGE))
 			miniscore*=2
 		end
 		score = miniscore
@@ -3800,11 +3664,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -3961,12 +3822,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -4144,12 +4001,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -4327,12 +4180,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -4466,11 +4315,11 @@ class Battle::AI
 			minimini/=100.0
 			miniscore*=minimini
 		end
-		if target.hasActiveItem?(:BRIGHTPOWDER) || target.hasActiveItem?(:LAXINCENSE) || 
-			(target.hasActiveAbility?(:SANDVEIL) && target.effectiveWeather == :Sandstorm) ||
-			(target.hasActiveAbility?(:SNOWCLOAK) && target.effectiveWeather == :Hail)
-			miniscore*=1.1
-		end
+		#if target.hasActiveItem?(:BRIGHTPOWDER) || target.hasActiveItem?(:LAXINCENSE) || 
+		#	(target.hasActiveAbility?(:SANDVEIL) && target.effectiveWeather == :Sandstorm) ||
+		#	(target.hasActiveAbility?(:SNOWCLOAK) && target.effectiveWeather == :Hail)
+		#	miniscore*=1.1
+		#end
 		if !user.statStageAtMax?(:ACCURACY) 
 			miniscore/=100.0
 			score*=miniscore
@@ -4520,11 +4369,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -4573,11 +4419,8 @@ class Battle::AI
 			minimini/=100.0          
 			miniscore*=minimini
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -4627,10 +4470,6 @@ class Battle::AI
 		if (target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
-			miniscore*=2
-		end
 		if (user.hp.to_f)/user.totalhp>0.75
 			miniscore*=1.2
 		end
@@ -4646,21 +4485,15 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
-			if move.baseDamage==0 
-				miniscore*=0.8
-				if maxdam>user.hp
-					miniscore*=0.1
-				end
-			end              
+			miniscore*=0.8
+			if maxdam>user.hp
+				miniscore*=0.1
+			end         
 		end
 		if user.turnCount<2
 			miniscore*=1.2
@@ -4767,45 +4600,41 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end 
-		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
-			miniscore/=100.0
-		end
 		movecheck=false
 		for m in target.moves
 			movecheck=true if m.id == :CLEARSMOG
 			movecheck=true if m.id == :HAZE
 		end
-		miniscore*=0 if movecheck
+		miniscore=0 if movecheck
 		if user.hasActiveAbility?(:CONTRARY)
-			miniscore*=0
+			miniscore=0
 		end            
 		if target.hasActiveAbility?(:UNAWARE)
 			miniscore=1
 		end
-		if move.baseDamage==0
-			specmove=false
-			for j in user.moves
-				if j.specialMove?(j.type)
-					specmove=true
-				end
-			end    
-			if (specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)) ||
-			   !user.statStageAtMax?(:SPECIAL_DEFENSE)
-				miniscore/=100.0
-				score+=miniscore
+		specmove=false
+		for j in user.moves
+			if j.specialMove?(j.type)
+				specmove=true
 			end
 		end
-		score+=miniscore
+		if (specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)) ||
+		   !user.statStageAtMax?(:SPECIAL_DEFENSE)
+			miniscore/=100.0
+			score*=miniscore
+		end
+
+		hasAlly = !target.allAllies.empty?
+		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			score*=2
+		end
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtkSpDefSpd1" # Quiver Dance
+		#spatk
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
-		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
-			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
 			miniscore*=1.2
@@ -4822,12 +4651,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		maxid = -1
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
@@ -4915,18 +4740,19 @@ class Battle::AI
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
-		if move.baseDamage==0
-			specmove=false
-			for j in user.moves
-				if j.specialMove?(j.type)
-					specmove=true
-				end
-			end    
-			if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
-				miniscore/=100.0
-				score+=miniscore
+		specmove=false
+		for j in user.moves
+			if j.specialMove?(j.type)
+				specmove=true
 			end
 		end
+		spatkscore = 1
+		if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
+			miniscore/=100.0
+			spatkscore=miniscore
+		end
+
+		#spdef
 		miniscore=100
 		roles = pbGetPokemonRole(user, target)
 		if pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)
@@ -4956,10 +4782,13 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end 
+		spdefscore = 1
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
-			score+=miniscore
+			spdefscore*=miniscore
 		end
+
+		#speed
 		miniscore=100
 		if user.stages[:SPECIAL_ATTACK]<0
 			ministat=user.stages[:SPECIAL_ATTACK]
@@ -4983,10 +4812,6 @@ class Battle::AI
 			end
 			miniscore*=0.1 if trickrooom
 		end
-		if !user.statStageAtMax?(:SPEED)
-			miniscore/=100.0
-			score+=miniscore
-		end
 		movecheck=false
 		for m in target.moves
 			movecheck=true if m.id == :CLEARSMOG
@@ -4999,8 +4824,16 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE)
 			miniscore=1
 		end
-		score+=miniscore
-		score=0 if user.statStageAtMax?(:SPEED) && user.statStageAtMax?(:SPECIAL_ATTACK) && user.statStageAtMax?(:SPECIAL_DEFENSE)
+		spedscore = 1
+		if !user.statStageAtMax?(:SPEED)
+			miniscore/=100.0
+			spedscore=miniscore
+		end
+		score*=(spatkscore+spdefscore+spedscore)/3
+		hasAlly = !target.allAllies.empty?
+		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			score*=2
+		end
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserMainStats1" # Ancient Power
@@ -5017,9 +4850,9 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserMainStats1LoseThirdOfTotalHP"
       if (user.hp <= user.totalhp / 2) || ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
-        score -= 100
+        score = 0
       elsif user.hasActiveAbility?(:CONTRARY)
-        score -= 100
+        score = 0
       else
         stats_maxed = true
         GameData::Stat.each_main_battle do |s|
@@ -5031,12 +4864,12 @@ class Battle::AI
           score = 0
         else
           if skill >= PBTrainerAI.highSkill && user.hp >= user.totalhp * 0.75
-            score += 30
+            score *= 1.3
           end
           GameData::Stat.each_main_battle { |s| score += 10 if user.stages[s.id] <= 0 }
           if skill >= PBTrainerAI.mediumSkill
             hasDamagingAttack = user.moves.any? { |m| next m&.damagingMove? }
-            score += 20 if hasDamagingAttack
+            score *= 1.2 if hasDamagingAttack
           end
         end
       end
@@ -5057,13 +4890,13 @@ class Battle::AI
           score = 0
         else
           if skill >= PBTrainerAI.highSkill
-            score -= 50 if user.hp <= user.totalhp / 2
-            score += 30 if user.trappedInBattle?
+            score *= 0.5 if user.hp <= user.totalhp / 2
+            score *= 1.3 if user.trappedInBattle?
           end
           GameData::Stat.each_main_battle { |s| score += 10 if user.stages[s.id] <= 0 }
           if skill >= PBTrainerAI.mediumSkill
             hasDamagingAttack = user.moves.any? { |m| next m&.damagingMove? }
-            score += 20 if hasDamagingAttack
+            score *= 1.20 if hasDamagingAttack
           end
         end
       end
@@ -5075,11 +4908,8 @@ class Battle::AI
 		if user.hp==user.totalhp
 			score*=1.3
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
 		if maxdam<(user.hp/4.0)
 			score*=1.3
 		end
@@ -5088,18 +4918,15 @@ class Battle::AI
       score += user.stages[:ATTACK] * 10
     #---------------------------------------------------------------------------
     when "LowerUserDefense1", "LowerUserDefense2" # Clanging Scales
-		maxdam = 0
-		maxphys = false
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
+		maxmove = bestmove[1]
+		maxphys = (bestmove[3]=="physical")
 		healvar = false
 		privar = false
 		for m in target.moves
 			healvar = true if m.healingMove?
 			privar = true if m.priority > 0
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			if tempdam > maxdam
-				maxdam = tempdam
-				maxphys = m.physicalMove?(m.type)
-			end
 		end
 		if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
 			score*=1.5
@@ -5195,14 +5022,10 @@ class Battle::AI
 			if thisinitial<100
 				score*=0.9
 			end
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			pivotvar = false
 			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
 				if pbHasPivotMove?(m)
 					pivotvar = true
 				end
@@ -5250,10 +5073,8 @@ class Battle::AI
 				end
 			end
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget>1
 				miniscore*=(livecounttarget-3)
 				miniscore/=100.0
@@ -5261,10 +5082,8 @@ class Battle::AI
 				miniscore=(1-miniscore)
 				score*=miniscore
 			end
-			livecountuser=-1
 			pivotvar = false
 			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
 				if pbHasPivotMove?(m)
 					pivotvar = true
 				end
@@ -5301,10 +5120,8 @@ class Battle::AI
 					score*=0.7 if healvar
 				end
 				miniscore=100
-				livecounttarget=0
-				@battle.pbParty(target.index).each do |m|
-					livecounttarget+=1 if !m.fainted?
-				end
+				livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+				livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 				if livecounttarget>1
 					miniscore*=(livecounttarget-3)
 					miniscore/=100.0
@@ -5312,10 +5129,8 @@ class Battle::AI
 					miniscore=(1-miniscore)
 					score*=miniscore
 				end
-				livecountuser=-1
 				pivotvar = false
 				@battle.pbParty(user.index).each do |m|
-					livecountuser+=1 if !m.fainted?
 					if pbHasPivotMove?(m)
 						pivotvar = true
 					end
@@ -5347,10 +5162,8 @@ class Battle::AI
 					score*=0.7 if privar
 				end
 				miniscore=100
-				livecounttarget=0
-				@battle.pbParty(target.index).each do |m|
-					livecounttarget+=1 if !m.fainted?
-				end
+				livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+				livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 				if livecounttarget>1
 					miniscore*=(livecounttarget-3)
 					miniscore/=100.0
@@ -5358,10 +5171,8 @@ class Battle::AI
 					miniscore=(1-miniscore)
 					score*=miniscore
 				end
-				livecountuser=-1
 				pivotvar = false
 				@battle.pbParty(user.index).each do |m|
-					livecountuser+=1 if !m.fainted?
 					if pbHasPivotMove?(m)
 						pivotvar = true
 					end
@@ -5376,18 +5187,11 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "RaiseTargetAttack1"
-		if target.opposes?(user) || target.statStageAtMax?(:ATTACK) || ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
-			score -= 90
-		else
-			score -= target.stages[:ATTACK] * 10
-		end
-    #---------------------------------------------------------------------------
     when "RaiseTargetAttack2ConfuseTarget" # swagger
 		if target.opposes?(user) # is enemy
 			if target.pbCanConfuse?(user, false)
 				if $game_variables[MECHANICSVAR] >= 3
-					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, skill)
+					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, globalArray, skill)
 				else
 					miniscore = 100
 					if target.paralyzed?
@@ -5473,7 +5277,7 @@ class Battle::AI
 		if target.opposes?(user) # is enemy
 			if target.pbCanConfuse?(user, false)
 				if $game_variables[MECHANICSVAR] >= 3
-					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, skill)
+					miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, globalArray, skill)
 				else
 					miniscore = 100
 				end
@@ -5567,8 +5371,8 @@ class Battle::AI
     when "RaiseTargetSpDef1" # Aromatic Mist
 		hasAlly = !user.allAllies.empty?
 		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
-			hasAlly = !target.allAllies.empty?
-			if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			t_hasAlly = !target.allAllies.empty?
+			if !t_hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
 				miniscore*=2
 			end
 			if target.hp*(1.0/target.totalhp)>0.75
@@ -5619,20 +5423,15 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
 		else
-			if move.baseDamage==0 
-				miniscore*=0.8
-				if maxdam>user.hp
-					miniscore*=0.1
-				end
-			end              
+			miniscore*=0.8
+			if maxdam>user.hp
+				miniscore*=0.1
+			end
 		end
 		if user.turnCount<2
 			miniscore*=1.2
@@ -5681,11 +5480,6 @@ class Battle::AI
 		end
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
-		end
-		if target.hasActiveItem?(:BRIGHTPOWDER) || target.hasActiveItem?(:LAXINCENSE) || 
-			(target.hasActiveAbility?(:SANDVEIL) && target.effectiveWeather == :Sandstorm) ||
-			(target.hasActiveAbility?(:SNOWCLOAK) && target.effectiveWeather == :Hail)
-			miniscore*=1.1
 		end
 		miniscore/=100.0
 		maxstat=0
@@ -5738,14 +5532,8 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -5855,14 +5643,8 @@ class Battle::AI
 				end
 			end
 			miniscore*=1.5 if healingmove
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -5923,14 +5705,8 @@ class Battle::AI
 				end
 			end
 			miniscore*=1.5 if healingmove
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -5967,14 +5743,8 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6068,14 +5838,8 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6137,14 +5901,8 @@ class Battle::AI
 				end
 			end
 			miniscore*=1.5 if healingmove
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6205,14 +5963,8 @@ class Battle::AI
 				end
 			end
 			miniscore*=1.3 if healingmove
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6263,14 +6015,8 @@ class Battle::AI
 			if (pbRoughStat(target,:SPEED,skill)*0.66)>user.pbSpeed      
 				miniscore*=1.1
 			end
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6321,14 +6067,8 @@ class Battle::AI
 			end
 			miniscore*=0.5 if gyroballin
 			
-			theresone=false
-			@battle.allBattlers.each do |j|
-				if (j.isSpecies?(:TREVENANT) && j.item == :TREVENANTITE && j.willmega)
-					theresone=true
-				end
-			end
 			miniscore*=0.7 if move.function == "LowerTargetSpeed1WeakerInGrassyTerrain" && 
-							 (@battle.field.terrain == :Grassy || theresone)
+							 (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain"))
 			
 			miniscore-=100
 			if move.addlEffect.to_f != 100
@@ -6356,14 +6096,8 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.3
 			end
@@ -6436,14 +6170,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion1RemoveSideEffects" # defog
 		miniscore=100
-		livecounttarget=0
-		@battle.pbParty(target.index).each do |m|
-			livecounttarget+=1 if !m.fainted?
-		end
-		livecountuser=0
-		@battle.pbParty(user.index).each do |m|
-			livecountuser+=1 if !m.fainted?
-		end
+		livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+		livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 		if livecounttarget>1
 			miniscore*=2 if user.pbOwnSide.effects[PBEffects::StealthRock]
 			miniscore*=(1.8**user.pbOwnSide.effects[PBEffects::StickyWeb])
@@ -6503,14 +6231,8 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6573,14 +6295,8 @@ class Battle::AI
 				end
 			end
 			miniscore*=1.3 if healingmove
-			livecounttarget=0
-			@battle.pbParty(target.index).each do |m|
-				livecounttarget+=1 if !m.fainted?
-			end
-			livecountuser=0
-			@battle.pbParty(user.index).each do |m|
-				livecountuser+=1 if !m.fainted?
-			end
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6643,8 +6359,8 @@ class Battle::AI
 			if sweepvar 
 				miniscore*=1.1
 			end
-			livecountuser		= @battle.pbAbleNonActiveCount(user.idxOwnSide)
-			livecounttarget = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
@@ -6697,8 +6413,8 @@ class Battle::AI
 				if sweepvar 
 					miniscore*=1.1
 				end
-				livecountuser		= @battle.pbAbleNonActiveCount(user.idxOwnSide)
-				livecounttarget = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
+				livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+				livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 				if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 					miniscore*=1.4
 				end
@@ -6752,10 +6468,10 @@ class Battle::AI
 					miniscore*=0.8
 				end
 				movecheckelectroball	= false
-				movecheckgyroball			= false
+				movecheckgyroball		= false
 				for j in target.moves
 					movecheckelectroball = true if j.id == :ELECTROBALL
-					movecheckgyroball		 = true if j.id == :GYROBALL
+					movecheckgyroball	 = true if j.id == :GYROBALL
 				end
 				miniscore*=1.3 if movecheckelectroball
 				miniscore*=0.5 if movecheckgyroball
@@ -6807,13 +6523,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaisePlusMinusUserAndAlliesDefSpDef1"
-		maxdam = 0
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
 		movecheck = false
 		movecheck = true if pbHasPhazingMove?(target)
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
 		plusminus = false
 		user.allAllies.each do |b|
 			plusminus = true if b.hasActiveAbility?([:PLUS, :MINUS])
@@ -6871,9 +6584,6 @@ class Battle::AI
 				if target.hasActiveAbility?(:UNAWARE)
 					miniscore*=0.5
 				end
-				if hasAlly
-					miniscore*=0.3
-				end
 				if maxdam<0.12*user.hp
 					miniscore*=0.2
 				end
@@ -6912,8 +6622,8 @@ class Battle::AI
 		movecheck = true if pbHasPhazingMove?(target)
 		count = 0
 		@battle.allBattlers.each do |b|
-			mold_broken=moldbroken(user,b,move)
-			if b.pbHasType?(:GRASS, true) && !b.airborneAI(mold_broken) &&
+			mold_bonkers=moldbroken(user,b,move)
+			if b.pbHasType?(:GRASS, true) && !b.airborneAI(mold_bonkers) &&
 			   (!b.statStageAtMax?(:ATTACK) || !b.statStageAtMax?(:SPECIAL_ATTACK)) && ($game_variables[MECHANICSVAR] >= 3 && !b.SetupMovesUsed.include?(move.id))
 				count += 1
 				if user.opposes?(b)
@@ -7215,18 +6925,13 @@ class Battle::AI
 		score*=0.8 if target.hasActiveAbility?([:SPEEDBOOST, :MOODY]) || movecheck
     #---------------------------------------------------------------------------
     when "StartUserSideImmunityToStatStageLowering" # mist
-		miniscore = 1
 		minimini = 1
 		if user.pbOwnSide.effects[PBEffects::Mist]==0 && !user.pbOwnSide.effects[PBEffects::StatDropImmunity]
 			minimini*=1.1
 			# check target for stat decreasing moves
 			minimini*=1.3 if pbHasDebuffMove?(target)
 		end
-		score*=miniscore
 		score*=minimini
-		if miniscore<=1 && minimini<=1
-			score = 0
-		end
     #---------------------------------------------------------------------------
     when "UserSwapBaseAtkDef" # power trick
 		if user.attack - user.defense >= 100
@@ -7261,8 +6966,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserTargetSwapBaseSpeed" # speed swap
 		if (user.pbSpeed<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
-			miniscore= (10)*target.stages[SPEED]
-			minimini= (-10)*user.stages[SPEED]
+			miniscore= (10)*target.stages[:SPEED]
+			minimini= (-10)*user.stages[:SPEED]
 			if miniscore==0 && minimini==0
 				score*=0
 			else
@@ -7346,11 +7051,8 @@ class Battle::AI
 			score = 0
 		else
 			ministat = target.hp + (user.hp/2)
-			maxdam = 0
-			for m in target.moves
-				tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-				maxdam = tempdam if tempdam > maxdam
-			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>ministat
 				score*=0
 			elsif maxdam>user.hp
@@ -7433,7 +7135,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints" # Fell Stinger
 		if !user.statStageAtMax?(:ATTACK)
-			score*=2 if !targetSurvivesMove(move,attacker,opponent)
+			score*=30 if !targetSurvivesMove(move,user,target)
 			if score>=100
 				score*=2
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)

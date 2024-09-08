@@ -696,7 +696,7 @@ class Battle::AI
 			if !pokmon.hasActiveItem?(:HEAVYDUTYBOOTS)
 				if pokmon.takesIndirectDamage?
 					if !pokmon.airborneAI(false)
-						if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0
+						if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0 && pokmon.ability != :OVERCOAT
 							spikesDiv = [8, 6, 4][pokmon.pbOwnSide.effects[PBEffects::Spikes] - 1]
 							hazarddamage += pokmon.totalhp/spikesDiv
 						end
@@ -710,7 +710,7 @@ class Battle::AI
 							end
 						end
 					end
-					if pokmon.pbOwnSide.effects[PBEffects::StealthRock]
+					if pokmon.pbOwnSide.effects[PBEffects::StealthRock] && pokmon.ability != :OVERCOAT
 						airdamage = (pokmon.airborneAI(false)) ? 4 : 8
 						hazarddamage += (pokmon.totalhp/airdamage)
 					end
