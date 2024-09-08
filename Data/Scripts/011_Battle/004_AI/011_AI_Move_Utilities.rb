@@ -143,7 +143,7 @@ class Battle::AI
   end
 
   def pbRoughStat(battler, stat, skill)
-    atkmul=defmul=spemul=spamul=spdmul = 1
+    atkmul=defmul=spemul=spamul=spdmul=1
     if battler.pokemon.willmega
       mega_data = MEGA_EVO_STATS[battler.species]
       if mega_data && (battler.item == mega_data[:item] || battler.hasMegaEvoMutation?)
@@ -167,8 +167,6 @@ class Battle::AI
     when :SPECIAL_ATTACK  then value = battler.spatk*spamul
     when :SPECIAL_DEFENSE then value = battler.spdef*spdmul
     end
-    #Console.echo_h2("Multis = #{battler.attack}, #{battler.defense}, #{battler.speed}, #{battler.spatk}, #{battler.spdef}") if battler.pokemon.willmega
-    #Console.echo_h2("Multis = (#{atkmul}, #{(battler.attack*atkmul)}), (#{defmul}, #{(battler.defense*defmul)}), (#{spemul}, #{(battler.speed*spemul)}), (#{spamul}, #{(battler.spatk*spamul)}), (#{spdmul}, #{(battler.spdef*spdmul)})") if battler.pokemon.willmega
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
@@ -292,7 +290,7 @@ class Battle::AI
     when "EffectivenessIncludesFlyingType"   # Flying Press
       if GameData::Type.exists?(:FLYING)
         if skill >= PBTrainerAI.highSkill
-          targetTypes = target.pbTypes(true)
+          targetTypes = target.pbTypes(true, true)
           mult = Effectiveness.calculate(
             :FLYING, targetTypes[0], targetTypes[1], targetTypes[2]
           )
@@ -318,7 +316,7 @@ class Battle::AI
 			end
 		when "HigherDamageInSunVSNonFireTypes"
 			scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-			baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
+			baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE, true)
     end
     baseDmg = 60 if baseDmg == 1
     return baseDmg

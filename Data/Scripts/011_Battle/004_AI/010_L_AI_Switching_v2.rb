@@ -39,12 +39,12 @@ class Battle::AI
 				if (j.function=="BadPoisonTarget" && b.pbCanPoison?(battler,false,j)) ||# Toxic
 					 (j.name=="Will-O-Wisp" && b.pbCanBurn?(battler,false,j)) ||# Willo
 					 (j.name=="Biting Cold" && b.pbCanFreeze?(battler,false,j)) ||# Biting Cold #untamed specifics
-					 (j.function=="StartLeechSeedTarget" && !b.pbHasType?(:GRASS) && b.effects[PBEffects::Substitute]<=0) # Leech Seed
+					 (j.function=="StartLeechSeedTarget" && !b.pbHasType?(:GRASS,true) && b.effects[PBEffects::Substitute]<=0) # Leech Seed
 					tickdamage=true
 				end	
 				if b.hp==1
-					tickdamage=true if j.function=="StartHailWeather" && !b.pbHasType?(:ICE) && !b.takesHailDamage?
-					tickdamage=true if j.function=="StartSandstormWeather" && !b.pbHasType?(:ROCK) && !b.pbHasType?(:GROUND) && !b.pbHasType?(:STEEL) && !b.takesSandstormDamage?
+					tickdamage=true if j.function=="StartHailWeather" && !b.pbHasType?(:ICE,true) && !b.takesHailDamage?
+					tickdamage=true if j.function=="StartSandstormWeather" && !b.pbHasType?(:ROCK,true) && !b.pbHasType?(:GROUND,true) && !b.pbHasType?(:STEEL,true) && !b.takesSandstormDamage?
 					tickdamage=true if j.function=="AddStealthRocksToFoeSide" && !battler.pbOpposingSide.effects[PBEffects::StealthRock]
 					tickdamage=true if j.function=="SwitchOutTargetStatusMove" && !b.effects[PBEffects::Ingrain]
 					tickdamage=true if j.function=="NegateTargetAbility"
@@ -419,7 +419,7 @@ class Battle::AI
 					if (m.function=="BadPoisonTarget" && b.pbCanPoison?(pokmon,false,m)) ||# Toxic
 						(m.name=="Will-O-Wisp" && b.pbCanBurn?(pokmon,false,m)) ||# Willo
 					  (m.name=="Biting Cold" && b.pbCanFreeze?(pokmon,false,m)) ||# Biting Cold #untamed specifics
-						(m.function=="StartLeechSeedTarget" && !b.pbHasType?(:GRASS) && b.effects[PBEffects::Substitute]<=0) # Leech Seed
+						(m.function=="StartLeechSeedTarget" && !b.pbHasType?(:GRASS,true) && b.effects[PBEffects::Substitute]<=0) # Leech Seed
 						tickdamage=true
 						sum+=150
 						if pokmon.pbHasMoveFunction?(
@@ -477,12 +477,12 @@ class Battle::AI
 						tempdam*=1.5 if pokmon.hasActiveAbility?(:SOLARPOWER) && m.specialMove?
 					end
 					if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
-						tempdam*=0.67 if b.pbHasType?(:ROCK) && m.specialMove?
+						tempdam*=0.67 if b.pbHasType?(:ROCK,true) && m.specialMove?
 						tempdam*=0.67 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
 						tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
 					end
 					if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
-						if b.pbHasType?(:ICE)
+						if b.pbHasType?(:ICE,true)
 							moveType = m.type
 							typeMod = pbCalcTypeMod(moveType, b, pokmon)
 							tempdam*=0.75 if Effectiveness.super_effective?(typeMod)

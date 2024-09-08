@@ -35,6 +35,27 @@ MEGA_EVO_STATS = {
   ZOLUPINE: { item: :ZOLUPINEITE, atkmul: 1.118, defmul: 1.167, spemul: 1.000, spamul: 1.421, spdmul: 1.381 }
 }
 
+MEGA_EVO_TYPES = {
+  GYARADOS: { item: :GYARADOSITE, typeadd: :DARK },
+  LEDIAN: { item: :LEDINITE, typeadd: :FIGHTING, typeremove: :FLYING },
+  XATU: { item: :XATUNITE, typeadd: :FIRE, typeremove: :FLYING },
+  AMPHAROS: { item: :AMPHAROSITE, typeadd: :DRAGON },
+  MAGCARGO: { item: :MAGCARGOITE, typeadd: :STEEL, typeremove: :ROCK },
+  FLYGON: { item: :FLYGONITE, typeadd: :BUG },
+  MILOTIC: { item: :MILOTITE, typeadd: :FAIRY },
+  CHIMECHO: { item: :CHIMECHITE, typeadd: :STEEL },
+  PORYGONZ: { item: :PORYGONZITE, typeadd: :QMARKS, typeremove: :NORMAL },
+  BEHEEYEM: { item: :BEHEEYEMITE, typeadd: :ELECTRIC },
+  GOLURK: { item: :GOLURKITE, typeadd: :FLYING },
+  FROSMOTH: { item: :FROSMOTHITE, typeadd: :FIRE },
+  BEAKRAFT: { item: :BEAKRAFTITE, typeadd: :ELECTRIC, typeremove: :FLYING },
+  GOHILA: { item: :GOHILITE, typeadd: :ELECTRIC },
+  LAGUNA: { item: :LAGUNITE, typeadd: :ICE, typeremove: :NORMAL },
+  LUPACABRA: { item: :LUPACABRITE, typeadd: :FIGHTING },
+  ROADRAPTOR: { item: :ROADRAPTORITE, typeadd: :GROUND, typeremove: :FLYING },
+  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK }
+}
+
 MEGA_EVO_MOVESET = {
   :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
   :CACTURNE => [:BULLETSEED, :SPLINTERSHOT],
