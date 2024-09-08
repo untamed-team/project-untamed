@@ -297,13 +297,13 @@ LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
 [NEOGRUNT_M,William]
-LoseText = She will come back. She always does.
+LoseText = A mere setback, in the name of progress!
 Pokemon = TECHUPPI,9
 Pokemon = BUNNELBY,9
 Pokemon = WRENNER,9
 #-------------------------------
 [NEOGRUNT_M,William,100]
-LoseText = She will come back. She always does.
+LoseText = A mere setback, in the name of progress!
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
     Ability = INTIMIDATE
@@ -314,13 +314,13 @@ Pokemon = GOHILA,10
     Ability = POISONTOUCH
 #-------------------------------
 [NEOGRUNT_F,William]
-LoseText = She will come back. She always does.
+LoseText = Retreat, in the name of progress!
 Pokemon = TECHUPPI,9
 Pokemon = BUNNELBY,9
 Pokemon = WRENNER,9
 #-------------------------------
 [NEOGRUNT_F,William,100]
-LoseText = She will come back. She always does.
+LoseText = Retreat, in the name of progress!
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
     Ability = INTIMIDATE
