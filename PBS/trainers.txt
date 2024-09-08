@@ -287,6 +287,48 @@ Pokemon = M_VANILLITE,12
 LoseText = Okay, the way out is easy, but don't tell my boss.
 Pokemon = EEVEE,11
 Pokemon = M_VANILLITE,12
+#-------------------------------
+[POKEMONTRAINER,Reine]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
+[POKEMONTRAINER,Reine,100]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
+[NEOGRUNT_M,William]
+LoseText = She will come back. She always does.
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[NEOGRUNT_M,William,100]
+LoseText = She will come back. She always does.
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
+#-------------------------------
+[NEOGRUNT_F,William]
+LoseText = She will come back. She always does.
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[NEOGRUNT_F,William,100]
+LoseText = She will come back. She always does.
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
 
 
 #-------------------------------
