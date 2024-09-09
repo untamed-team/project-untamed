@@ -222,7 +222,7 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
-		score = pbGetMoveScoreFunctionCode(50, move, user, target, skill)
+		score = pbGetMoveScoreFunctionCode(100, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
 		score += 1 if aigenlog
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
