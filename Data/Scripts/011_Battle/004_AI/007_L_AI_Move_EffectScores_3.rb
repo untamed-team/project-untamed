@@ -792,11 +792,11 @@ class Battle::AI
 				miniscore-=100
 				if move.addlEffect.to_f != 100
 					miniscore*=(move.addlEffect.to_f/100)
-					if user.hasActiveAbility?(:SERENEGRACE) && 
-						((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-						 !target.affectedByTerrain?)
-						miniscore*=2
-					end     
+					if (@battle.field.terrain == :Misty || 
+					   globalArray.include?("misty terrain")) && !target.affectedByTerrain?
+						miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+						miniscore*=2 # 2 hits = 2x the chance
+					end
 				end   
 				miniscore+=100
 				miniscore/=100.0
@@ -1700,10 +1700,8 @@ class Battle::AI
 		if target.effects[PBEffects::Yawn]>0
 			miniscore*=1.3
 		end
-		for j in target.moves
-			tempdam = pbRoughDamage(j,target,user,skill,j.baseDamage)
-			maxdam = tempdam if tempdam>maxdam
-		end  
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
 		if maxdam<(user.hp/3.0)
 			miniscore*=1.1
 		end  
@@ -1751,10 +1749,6 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		for j in target.moves
-			tempdam = pbRoughDamage(j,target,user,skill,j.baseDamage)
-			maxdam=tempdam if tempdam>maxdam
-		end  
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
@@ -3419,18 +3413,16 @@ class Battle::AI
 		target_num = move.pbTarget(user)
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
-			if user.hp<user.totalhp*0.5
-				if b.hasActiveAbility?(:SEANCE)
-					score*=miniscore
-					score*=1.1
-					if user.hasAbilityMutation? && b.hasAbilityMutation?
-						score*=2
-					end
+			if b.hasActiveAbility?(:SEANCE)
+				score*=miniscore
+				score*=1.1
+				if user.hasAbilityMutation? && b.hasAbilityMutation?
+					score*=2
 				end
-				if target_num.id == :AllNearOthers && 
-				   !Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, b))
-					score*=0.7
-				end
+			end
+			if target_num.id == :AllNearOthers && 
+			  !Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, b))
+				score*=0.7
 			end
 		end
 		reserves = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -3471,18 +3463,16 @@ class Battle::AI
 		target_num = move.pbTarget(user)
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
-			if user.hp<user.totalhp*0.5
-				if b.hasActiveAbility?(:SEANCE)
-					score*=miniscore
-					score*=1.1
-					if user.hasAbilityMutation? && b.hasAbilityMutation?
-						score*=2
-					end
+			if b.hasActiveAbility?(:SEANCE)
+				score*=miniscore
+				score*=1.1
+				if user.hasAbilityMutation? && b.hasAbilityMutation?
+					score*=2
 				end
-				if target_num.id == :AllNearOthers && 
-				   !Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, b))
-					score*=0.7
-				end
+			end
+			if target_num.id == :AllNearOthers && 
+			  !Effectiveness.ineffective?(pbCalcTypeMod(move.type, user, b))
+				score*=0.7
 			end
 		end
 		reserves = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -3511,13 +3501,11 @@ class Battle::AI
 		end
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
-			if user.hp<user.totalhp*0.5
-				if b.hasActiveAbility?(:SEANCE)
-					score*=miniscore
-					score*=1.1
-					if user.hasAbilityMutation? && b.hasAbilityMutation?
-						score*=2
-					end
+			if b.hasActiveAbility?(:SEANCE)
+				score*=miniscore
+				score*=1.1
+				if user.hasAbilityMutation? && b.hasAbilityMutation?
+					score*=2
 				end
 			end
 		end
@@ -3531,11 +3519,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserFaintsLowerTargetAtkSpAtk2" # memento
 		if user.hp==user.totalhp
-			seancecheck = false
-			user.allAllies.each do |b|
-				seancecheck = true if b.hasActiveAbility?(:SEANCE)
-			end
-			score*=0.2 if !seancecheck && !user.hasActiveAbility?(:PRANKSTER)
+			seancecheck = user.allAllies.any? { |b| b.hasActiveAbility?(:SEANCE) }
+			score*=0.2 if !seancecheck
 		else
 			miniscore = user.hp*(1.0/user.totalhp)
 			miniscore = 1-miniscore
@@ -3558,13 +3543,11 @@ class Battle::AI
 		end
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
-			if user.hp<user.totalhp*0.5
-				if b.hasActiveAbility?(:SEANCE)
-					score*=miniscore
-					score*=1.1
-					if user.hasAbilityMutation? && b.hasAbilityMutation?
-						score*=2
-					end
+			if b.hasActiveAbility?(:SEANCE)
+				score*=miniscore
+				score*=1.1
+				if user.hasAbilityMutation? && b.hasAbilityMutation?
+					score*=2
 				end
 			end
 		end
@@ -3614,13 +3597,11 @@ class Battle::AI
 		end
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
-			if user.hp<user.totalhp*0.5
-				if b.hasActiveAbility?(:SEANCE)
-					score*=miniscore
-					score*=1.1
-					if user.hasAbilityMutation? && b.hasAbilityMutation?
-						score*=2
-					end
+			if b.hasActiveAbility?(:SEANCE)
+				score*=miniscore
+				score*=1.1
+				if user.hasAbilityMutation? && b.hasAbilityMutation?
+					score*=2
 				end
 			end
 		end

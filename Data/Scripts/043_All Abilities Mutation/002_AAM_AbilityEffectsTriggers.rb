@@ -575,8 +575,8 @@ Battle::AbilityEffects::OnBeingHitSpirit.add(:WANDERINGSPIRIT,
 Battle::AbilityEffects::ChangeOnBattlerFainting.add(:POWEROFALCHEMY,
   proc { |ability, battler, fainted, battle|
     next if battler.opposes?(fainted)
-    next if fainted.ungainableAbility? ||
-       [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
+    next if (fainted.ungainableAbility? && fainted.ability_id != :NEUTRALIZINGGAS) || 
+            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
     battle.pbShowAbilitySplash(battler, true)
     index=0
     for i in 0..battler.abilityMutationList.length
@@ -590,13 +590,23 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.add(:POWEROFALCHEMY,
       end  
     end    
     if battler.hasAbilityMutation?
-      battler.abilityMutationList[index] = fainted.ability.id
+      if fainted.hasAbilityMutation?
+        battler.abilityMutationList.delete(ability)
+        fainted_abilist = fainted.abilityMutationList - battler.abilityMutationList
+        battler.abilityMutationList.concat(fainted_abilist).uniq!
+      else
+        battler.abilityMutationList[index] = fainted.ability.id
+      end
     else
       battler.ability = fainted.ability
     end    
     $aamName=fainted.abilityName
-    battle.pbReplaceAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1}'s {2} was taken over!", fainted.pbThis, fainted.abilityName))
+    if fainted.hasAbilityMutation? && battler.hasAbilityMutation?
+      battle.pbDisplay(_INTL("{1}'s abilities were taken over!",fainted.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} was taken over!",fainted.pbThis,fainted.abilityName))
+      battle.pbReplaceAbilitySplash(battler)
+    end
     battle.pbHideAbilitySplash(battler)
     #print battler.abilityMutationList
   }
@@ -606,7 +616,8 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 
 Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
   proc { |ability,battler,fainted,battle|
-    next if fainted.ungainableAbility? || [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
+    next if (fainted.ungainableAbility? && fainted.ability_id != :NEUTRALIZINGGAS) || 
+            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
     battle.pbShowAbilitySplash(battler, true)
     index=0
     for i in 0..battler.abilityMutationList.length
@@ -618,14 +629,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
     if battler.hasAbilityMutation?
       if fainted.hasAbilityMutation?
         battler.abilityMutationList.delete(:SEANCE) # get rid of seance
-        fainted_abilist = []
-        for i in fainted.abilityMutationList
-          fainted_abilist.push(i)
-        end
-        fainted_abilist |= [] # remove dupes
-        for i in fainted_abilist
-          battler.abilityMutationList.push(i)
-        end
+        fainted_abilist = fainted.abilityMutationList - battler.abilityMutationList
+        battler.abilityMutationList.concat(fainted_abilist).uniq!
       else
         battler.abilityMutationList[index] = fainted.ability.id
       end
@@ -633,7 +638,7 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
       battler.ability = fainted.ability
     end     
     $aamName=fainted.abilityName
-    if fainted.hasAbilityMutation?
+    if fainted.hasAbilityMutation? && battler.hasAbilityMutation?
       battle.pbDisplay(_INTL("{1}'s abilities were taken!",fainted.pbThis))
     else
       battle.pbDisplay(_INTL("{1}'s {2} was taken!",fainted.pbThis,fainted.abilityName))

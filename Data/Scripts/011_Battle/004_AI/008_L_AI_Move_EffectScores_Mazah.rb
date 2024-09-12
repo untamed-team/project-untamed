@@ -661,11 +661,15 @@ class Battle::AI
 		return 0 if globalArray.include?("misty terrain") || 
 		            @battle.field.terrain == :Misty || 
 		miniscore*=0.1 if target.hasActiveItem?(:LUMBERRY)
-		if target.hasActiveAbility?([:QUICKFEET, :GUTS, :MARVELSCALE])
+		if target.hasActiveAbility?([:QUICKFEET, :GUTS])
 			miniscore*=0.2
 		end
 		if target.hasActiveAbility?(:HYDRATION) && 
 		   ([:Rain, :HeavyRain].include?(target.effectiveWeather) || globalArray.include?("rain weather"))
+			miniscore*=0.2
+		end
+		if target.hasActiveAbility?(:LEAFGUARD) && 
+		   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
 			miniscore*=0.2
 		end
 		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE)
@@ -673,20 +677,15 @@ class Battle::AI
 		miniscore*=0.7 if target.hasActiveAbility?(:SHEDSKIN)
 		miniscore*=0.4 if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
 		if target.effects[PBEffects::Confusion]>0
-			miniscore *= (status != :SLEEP) ? 1.1 : 0.4
+			miniscore *= (status == :SLEEP) ?  0.4 : 1.1
 		end
 		#if target.effects[PBEffects::Attract]>=0;miniscore*=1.1; end # attract does nothing
 		facade = false
-		for m in target.moves
-			if m.function == "DoublePowerIfUserPoisonedBurnedParalyzed" ||
-			  (m.function == "HealUserFullyAndFallAsleep" && status != :SLEEP)
-				facade = true
-				break
-			end
-		end
-		if !(status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET))
-			miniscore*=0.3 if facade
-		end
+		facade = true if target.pbHasMoveFunction?("DoublePowerIfUserPoisonedBurnedParalyzed") && 
+						!(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
+		facade = true if target.pbHasMoveFunction?("HealUserFullyAndFallAsleep") && status != :SLEEP
+		facade = false if status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET)
+		miniscore*=0.3 if facade
 		if move.baseDamage>0 && status != :PARALYSIS
 			if target.hasActiveAbility?(:STURDY)
 				miniscore*=1.1
@@ -1665,7 +1664,7 @@ class Battle::AI
 			echo("\nDefeatist Disrupt") if $AIGENERALLOG
 			abilityscore*=0.5
 		end 
-		if target.hasActiveAbility?(:MULTISCALE) || target.hasActiveAbility?(:SHADOWSHIELD)
+		if target.hasActiveAbility?([:MULTISCALE, :SHADOWSHIELD])
 			echo("\nMultiscale Disrupt") if $AIGENERALLOG
 			abilityscore*=1.5 if target.hp==target.totalhp
 		end 
@@ -1718,7 +1717,7 @@ class Battle::AI
 			if echohealcheck
 				abilityscore*=1.15
 			end
-			if echopriocheck && user.speed>target.speed
+			if echopriocheck && user.pbSpeed>target.pbSpeed
 				abilityscore*=1.5
 			end
 		end

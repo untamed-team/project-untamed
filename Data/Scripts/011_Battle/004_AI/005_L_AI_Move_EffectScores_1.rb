@@ -7143,12 +7143,15 @@ class Battle::AI
 				if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 					score*=30
 				else
-					bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-					maxdam = bestmove[0]
-					if maxdam>user.hp
-						score*=0.1
+					bestTargetMove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+					maxdamTarget = bestTargetMove[0]
+					if maxdamTarget>user.hp
+						score*=0.5
 					else
 						score*=15
+						bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+						maxpriodam = bestmove[2]
+						score*=5 if maxpriodam > 0
 					end
 				end
 			end

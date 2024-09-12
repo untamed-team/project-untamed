@@ -57,7 +57,6 @@ class Battle::AI
 				maxdam=tempdam if tempdam>maxdam
 			end 
 			maxdampercent = maxdam *100.0 / b.hp
-			echoln("#{j.name} = #{maxdampercent}") if $AIGENERALLOG
 		end	
 		mindamage=20
 		if battler.effects[PBEffects::LeechSeed]>=0 && (battler.hp > battler.totalhp*0.66)
@@ -67,15 +66,17 @@ class Battle::AI
 				mindamage=100 if ((maxspeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 			end	
 		end	
+		echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
+		echoln("mindam = #{mindamage}") if $AIGENERALLOG
 		if maxdampercent<mindamage && !tickdamage
 			shouldSwitch=true 
 			echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
 		end	
 		# Pokémon can't do anything (must have been in battle for at least 5 rounds)
 		if !@battle.pbCanChooseAnyMove?(idxBattler) &&
-			 battler.turnCount && battler.turnCount >= 5
+			 battler.turnCount && battler.turnCount >= 3
 			shouldSwitch = true
-			echo("Switching because 5 turns of nothing.\n") if $AIGENERALLOG
+			echo("Switching because 3 turns of nothing.\n") if $AIGENERALLOG
 		end
 		# Pokémon is Perish Songed and has Baton Pass
 		if skill >= PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong] == 1

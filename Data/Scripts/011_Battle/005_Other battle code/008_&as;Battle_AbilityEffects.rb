@@ -662,27 +662,26 @@ Battle::AbilityEffects::StatusCure.add(:OBLIVIOUS,
 
 Battle::AbilityEffects::StatusCure.add(:OWNTEMPO,
   proc { |ability, battler|
-    next if battler.effects[PBEffects::Confusion] == 0
-    battler.battle.pbShowAbilitySplash(battler)
-    battler.pbCureConfusion
-    if Battle::Scene::USE_ABILITY_SPLASH
-      battler.battle.pbDisplay(_INTL("{1} snapped out of its confusion.", battler.pbThis))
+    if $game_variables[MECHANICSVAR] >= 3
+      next if battler.status != :DIZZY
+      battler.battle.pbShowAbilitySplash(battler)
+      battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
+      if !Battle::Scene::USE_ABILITY_SPLASH
+        battler.battle.pbDisplay(_INTL("{1}'s {2} healed its headache!", battler.pbThis, battler.abilityName))
+      end 
+      battler.battle.pbHideAbilitySplash(battler)
     else
-      battler.battle.pbDisplay(_INTL("{1}'s {2} snapped it out of its confusion!",
-         battler.pbThis, battler.abilityName))
+      next if battler.effects[PBEffects::Confusion] == 0
+      battler.battle.pbShowAbilitySplash(battler)
+      battler.pbCureConfusion
+      if Battle::Scene::USE_ABILITY_SPLASH
+        battler.battle.pbDisplay(_INTL("{1} snapped out of its confusion.", battler.pbThis))
+      else
+        battler.battle.pbDisplay(_INTL("{1}'s {2} snapped it out of its confusion!",
+          battler.pbThis, battler.abilityName))
+      end
+      battler.battle.pbHideAbilitySplash(battler)
     end
-    battler.battle.pbHideAbilitySplash(battler)
-  }
-)
-Battle::AbilityEffects::StatusCure.add(:OWNTEMPO,
-  proc { |ability, battler|
-    next if battler.status != :DIZZY
-    battler.battle.pbShowAbilitySplash(battler)
-    battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
-    if !Battle::Scene::USE_ABILITY_SPLASH
-      battler.battle.pbDisplay(_INTL("{1}'s {2} healed its headache!", battler.pbThis, battler.abilityName))
-    end 
-    battler.battle.pbHideAbilitySplash(battler)
   }
 )
 
@@ -2358,7 +2357,7 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
     next if !move.soundMove?
     hpGain = 0
     if move.statusMove?
-      hpGain += (user.totalhp / 16.0).round
+      hpGain = (user.totalhp / 16.0).round
       battle.pbShowAbilitySplash(user)
       user.pbRecoverHP(hpGain)
       battle.pbHideAbilitySplash(user)
@@ -2366,11 +2365,13 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
       targets.each { |b| hpGain += (b.damageState.hpLost / 3.0).round }
       next if hpGain == 0 # just to check if it did any worthwhile damage
       battle.pbShowAbilitySplash(user)
-      message=true
-      targets.each { |b| 
+      targets.each_with_index do |b, index|
+        ignoremsg = (index != targets.length - 1)
+        hpGain = (b.damageState.hpLost / 2.0).round
         user.pbRecoverHPFromDrain(hpGain, b, 
-                                  _INTL("{1} was healed due its {2}!", user.pbThis, user.abilityName))
-      }
+                                  _INTL("{1} was healed due to its {2}!", user.pbThis, user.abilityName), 
+                                  ignoremsg)
+      end
       user.effects[PBEffects::PrioEchoChamber] = 2 if user.effects[PBEffects::PrioEchoChamber] <= 0
       battle.pbHideAbilitySplash(user)
     end
@@ -2606,12 +2607,12 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:HEALER,
 			end
 		else
 			if battler.status != :NONE
-				battler.battle.pbShowAbilitySplash(battler)
+				battle.pbShowAbilitySplash(battler)
 				battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
 				if !Battle::Scene::USE_ABILITY_SPLASH
-					battler.battle.pbDisplay(_INTL("{1}'s {2} healed itself!", battler.pbThis, battler.abilityName))
+					battle.pbDisplay(_INTL("{1}'s {2} healed itself!", battler.pbThis, battler.abilityName))
 				end
-				battler.battle.pbHideAbilitySplash(battler)
+				battle.pbHideAbilitySplash(battler)
 			end
     end
   }

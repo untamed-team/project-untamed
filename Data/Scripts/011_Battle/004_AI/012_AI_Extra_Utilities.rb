@@ -115,8 +115,10 @@ class Battle::AI
 			end
 		end
 		# taking in account intimidate from mons with AAM
-		atk *= (atk.to_f * 2 / 3) if (target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && 
-									 target.willmega && target.hasAbilityMutation?
+		if (target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && 
+			 target.willmega && target.hasAbilityMutation? && move.physicalMove?(type)
+			atk *= (atk.to_f * 2 / 3) 
+		end
 		# if i didnt remove this mold breaker check, i would fake the AI out when she uses
 		# moves that have mold breaker built in
 		if skill >= PBTrainerAI.mediumSkill #&& !moldBreaker
@@ -220,7 +222,7 @@ class Battle::AI
 				end
 			end
 		end
-		# DemICE adding resist berries
+		# DemICE adding resist berries ### i made it a hash cuz i was bored
 		if Effectiveness.super_effective?(typeMod)
 			if user.hasActiveItem?(:EXPERTBELT)
 				multipliers[:final_damage_multiplier]*=1.2
@@ -228,44 +230,27 @@ class Battle::AI
 			if target.hasActiveAbility?([:SOLIDROCK, :FILTER]) && !moldBreaker
 				multipliers[:final_damage_multiplier]*=0.75
 			end
-			if target.itemActive?
-				case target.item_id
-				when :BABIRIBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:STEEL
-				when :SHUCABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:GROUND
-				when :CHARTIBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:ROCK
-				when :CHOPLEBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:FIGHTING
-				when :COBABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:FLYING
-				when :COLBURBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:DARK
-				when :HABANBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:DRAGON
-				when :KASIBBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:GHOST
-				when :KEBIABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:POISON
-				when :OCCABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:FIRE
-				when :PASSHOBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:WATER
-				when :PAYAPABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:PSYCHIC
-				when :RINDOBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:GRASS
-				when :ROSELIBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:FAIRY
-				when :TANGABERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:BUG
-				when :WACANBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:ELECTRIC
-				when :YACHEBERRY
-					multipliers[:final_damage_multiplier]*=0.5 if type==:ICE
-				end
-			end
+			berryTypesArray = {
+				:OCCABERRY   => :FIRE,
+				:PASSHOBERRY => :WATER,
+				:WACANBERRY  => :ELECTRIC,
+				:RINDOBERRY  => :GRASS,
+				:YACHEBERRY  => :ICE,
+				:CHOPLEBERRY => :FIGHTING,
+				:KEBIABERRY  => :POISON,
+				:SHUCABERRY  => :GROUND,
+				:COBABERRY   => :FLYING,
+				:PAYAPABERRY => :PSYCHIC,
+				:TANGABERRY  => :BUG,
+				:CHARTIBERRY => :ROCK,
+				:KASIBBERRY  => :GHOST,
+				:HABANBERRY  => :DRAGON,
+				:COLBURBERRY => :DARK,
+				:ROSELIBERRY => :FAIRY,
+				:BABIRIBERRY => :STEEL
+			}
+			berry_type = berryTypesArray[target.item_id]
+			multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
 		end
 		# Terrain moves
 		if skill >= PBTrainerAI.mediumSkill
@@ -294,8 +279,9 @@ class Battle::AI
 				end
 			end
 			# Specific Field Effect Boosts
-			if (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")) && 
-			   [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
+			if ((@battle.field.terrain == :Grassy && 
+				 globalArray.none? { |element| element.include?("terrain") }) || 
+			     globalArray.include?("grassy terrain")) && [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
 				multipliers[:base_damage_multiplier] /= 2.0
 			end
 		end
@@ -323,9 +309,9 @@ class Battle::AI
 				if globalArray.include?("sun weather")
 					case type
 					when :FIRE
-						multipliers[:final_damage_multiplier] *= 1.25
+						multipliers[:final_damage_multiplier] *= w_damage_multiplier
 					when :WATER
-						multipliers[:final_damage_multiplier] /= 1.5
+						multipliers[:final_damage_multiplier] /= w_damage_divider
 					end
 					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
 						multipliers[:attack_multiplier] *= 1.5
@@ -334,9 +320,9 @@ class Battle::AI
 				if globalArray.include?("rain weather")
 					case type
 					when :FIRE
-						multipliers[:final_damage_multiplier] /= 1.5
+						multipliers[:final_damage_multiplier] /= w_damage_divider
 					when :WATER
-						multipliers[:final_damage_multiplier] *= 1.25
+						multipliers[:final_damage_multiplier] *= w_damage_multiplier
 					end
 				end
 			end
@@ -414,14 +400,13 @@ class Battle::AI
 		damagenerf = (1 / 2.0)
 		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
 		# Burn
-		if skill >= PBTrainerAI.highSkill && move.physicalMove?(type) &&
-			user.status == :BURN && !user.hasActiveAbility?(:GUTS) &&
-			!(Settings::MECHANICS_GENERATION >= 6 &&
-				move.function == "DoublePowerIfUserPoisonedBurnedParalyzed")   # Facade
+		if move.physicalMove?(type) && user.status == :BURN && !user.hasActiveAbility?(:GUTS) &&
+		   move.function == "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
 			multipliers[:final_damage_multiplier] *= damagenerf
 		end
 		# Frostbite #by low
-		if user.status == :FREEZE && move.specialMove?(type) && skill >= PBTrainerAI.highSkill
+		if move.specialMove?(type) && user.status == :FREEZE && 
+		   move.function == "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
 			multipliers[:final_damage_multiplier] *= damagenerf
 		end
 		# Aurora Veil, Reflect, Light Screen
@@ -545,13 +530,11 @@ class Battle::AI
 		return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || 
 					   (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
 		# DemICE: Mold Breaker implementation
-		mold_broken=moldbroken(user,target,move)
+		mold_broken = moldbroken(user,target,move)
 		globalArray = pbGetMidTurnGlobalChanges
 		case type
 		when :GROUND
-			if (target.airborneAI(mold_broken) && !move.hitsFlyingTargets?)
-				return true 
-			end
+			return true if target.airborneAI(mold_broken) && !move.hitsFlyingTargets?
 		when :FIRE
 			return true if target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
 		when :WATER
@@ -586,8 +569,7 @@ class Battle::AI
 		if priorityAI(user,move) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
 				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
-							 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.willmega) 
-							 # laguna can have dazz in pre-mega form
+							 !(b.isSpecies?(:LAGUNA) && b.willmega) # laguna can have dazz in pre-mega form
 			end
 			return true if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && target.affectedByTerrain? && target.opposes?(user)
 		end
