@@ -658,7 +658,9 @@ class Battle::AI
 	
 	def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
 		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
-		miniscore=0 if globalArray.include?("misty terrain") || @battle.field.terrain == :Misty
+		return 0 if globalArray.include?("misty terrain") || 
+		            @battle.field.terrain == :Misty || 
+		miniscore*=0.1 if target.hasActiveItem?(:LUMBERRY)
 		if target.hasActiveAbility?([:QUICKFEET, :GUTS, :MARVELSCALE])
 			miniscore*=0.2
 		end
@@ -676,8 +678,8 @@ class Battle::AI
 		#if target.effects[PBEffects::Attract]>=0;miniscore*=1.1; end # attract does nothing
 		facade = false
 		for m in target.moves
-			if (m.function == "DoublePowerIfUserPoisonedBurnedParalyzed" && [:POISON, :BURN, :PARALYSIS].include?(status)) ||
-			   (m.function == "HealUserFullyAndFallAsleep" && status != :SLEEP)
+			if m.function == "DoublePowerIfUserPoisonedBurnedParalyzed" ||
+			  (m.function == "HealUserFullyAndFallAsleep" && status != :SLEEP)
 				facade = true
 				break
 			end
@@ -701,6 +703,7 @@ class Battle::AI
 					 @battle.field.effects[PBEffects::TrickRoom] <= 0
 					miniscore*=1.5
 				end
+				miniscore*=0.5 if target.hasActiveItem?(:CHERIBERRY)
 			when :BURN
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanBurnSynchronize?(user)
 					miniscore*=0.5
@@ -714,6 +717,7 @@ class Battle::AI
 				if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
 					miniscore*=1.7
 				end
+				miniscore*=0.3 if target.hasActiveItem?(:RAWSTBERRY)
 			when :POISON
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
 					miniscore*=0.5
@@ -735,6 +739,7 @@ class Battle::AI
 				if move.id == :TOXIC
 					miniscore*=1.1 if user.pbHasType?(:POISON, true)
 				end
+				miniscore*=0.5 if target.hasActiveItem?(:PECHABERRY)
 			when :FREEZE
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
 					miniscore*=0.5
@@ -745,6 +750,7 @@ class Battle::AI
 				if pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)
 					miniscore*=1.7
 				end
+				miniscore*=0.3 if target.hasActiveItem?(:ASPEARBERRY)
 			when :SLEEP
 				if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
 					miniscore*=1.5
@@ -778,6 +784,7 @@ class Battle::AI
 				if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
 					miniscore=0
 				end
+				miniscore*=0.5 if target.hasActiveItem?(:CHESTOBERRY)
 				miniscore=0 if globalArray.include?("electric terrain") || @battle.field.terrain == :Electric
 			when :DIZZY
 				minimi = getAbilityDisruptScore(move,user,target,skill)
@@ -790,6 +797,7 @@ class Battle::AI
 					minimi = 0 if target.hasActiveAbility?(:TANGLEDFEET)
 				end
 				miniscore*=minimi
+				miniscore*=0.3 if target.hasActiveItem?(:PERSIMBERRY)
 		end
 		return miniscore
 	end

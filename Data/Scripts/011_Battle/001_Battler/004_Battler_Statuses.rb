@@ -350,7 +350,6 @@ class Battle::Battler
 		end
 		#############################################
     duration = (duration / 2).floor if hasActiveAbility?(:EARLYBIRD)
-    duration = (duration / 2).floor if hasAbilityMutation?
     return duration
   end
 
@@ -649,7 +648,14 @@ class Battle::Battler
   #=============================================================================
   def pbFlinch(_user = nil)
     return if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
-		return false if @effects[PBEffects::NoFlinch] > 0
+    # no flinch and inner focus buff #by low
+    return false if @effects[PBEffects::NoFlinch] > 0
+    allAllies.each do |b|
+      break if $game_variables[MECHANICSVAR] <= 1
+      next if !b.abilityActive?
+      next unless hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+      return false
+    end
     @effects[PBEffects::Flinch] = true
     @effects[PBEffects::NoFlinch] = 2
   end

@@ -425,6 +425,7 @@ class Battle::Battler
       if @stages[s.id] > 0
         @statsLoweredThisRound = true
         @statsDropped = true
+        @SetupMovesUsed = [] #by low
       elsif @stages[s.id] < 0
         @statsRaisedThisRound = true
       end

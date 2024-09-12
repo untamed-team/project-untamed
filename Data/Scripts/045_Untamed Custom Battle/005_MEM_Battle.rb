@@ -27,7 +27,7 @@ MEGA_EVO_STATS = {
   LAGUNA: { item: :LAGUNITE, atkmul: 1.200, defmul: 1.100, spemul: 1.288, spamul: 1.571, spdmul: 1.182 },
   LUPACABRA: { item: :LUPACABRITE, atkmul: 1.286, defmul: 1.588, spemul: 1.182, spamul: 1.000, spdmul: 1.143 },
   M_ROSERADE: { item: :M_ROSERADITE, atkmul: 1.462, defmul: 1.383, spemul: 1.022, spamul: 1.190, spdmul: 1.200 },
-  NOCTAVISPA: { item: :NOCTAVISPITE, atkmul: 1.538, defmul: 1.052, spemul: 1.184, spamul: 1.329, spdmul: 1.190 },
+  NOCTAVISPA: { item: :NOCTAVISPITE, atkmul: 1.538, defmul: 1.052, spemul: 1.149, spamul: 1.329, spdmul: 1.190 },
   ROADRAPTOR: { item: :ROADRAPTORITE, atkmul: 1.372, defmul: 1.385, spemul: 1.000, spamul: 1.625, spdmul: 1.000 },
   SPECTERZAL: { item: :SPECTERZITE, atkmul: 1.112, defmul: 2.000, spemul: 1.000, spamul: 1.118, spdmul: 1.154 },
   SUCHOBILE: { item: :SUCHOBITE, atkmul: 1.365, defmul: 1.653, spemul: 0.774, spamul: 1.165, spdmul: 1.386 },

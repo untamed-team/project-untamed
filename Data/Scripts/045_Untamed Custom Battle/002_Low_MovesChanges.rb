@@ -447,15 +447,16 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
     failed = true
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self)
+      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
       failed = false
-			if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
-				@battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-				failed = false
-			end
       break
     end
     if failed
-      @battle.pbDisplay(_INTL("But it failed!"))
+      if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+				@battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
+      else
+        @battle.pbDisplay(_INTL("But it failed!"))
+      end
       return true
     end
     return false
@@ -479,15 +480,17 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
 end
 
 #===============================================================================
-# Increases target's Special Defense by 1 stage. (Aromatic Mist)
+# Increases target's Special Defense/Atk by 1 stage. (Aromatic Mist)
+# the atk boost was a typo at first but sure why not
 #===============================================================================
 class Battle::Move::RaiseTargetSpDef1 < Battle::Move
   def ignoresSubstitute?(user); return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message)
+    return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
+                   !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
 		if target.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
+      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
     return false
@@ -515,7 +518,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
       return true
     end
 		if target.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
+      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
     return false
@@ -549,12 +552,8 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-    if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      target.pbRaiseStatStage(:ATTACK, 2, user)
-    end
-    if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user)
-    end
+    target.pbRaiseStatStage(:ATTACK, 2, user) if target.pbCanRaiseStatStage?(:ATTACK, user, self)
+    target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user) if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
 		target.SetupMovesUsed.push(@id)
   end
 end
@@ -745,7 +744,9 @@ class Battle::Move::UserAddStockpileRaiseDefSpDef1 < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    user.effects[PBEffects::Stockpile] += 1
+    stockpileRaise = (user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3) ? 2 : 1
+    user.effects[PBEffects::Stockpile] += stockpileRaise
+    user.effects[PBEffects::Stockpile] = 3 if user.effects[PBEffects::Stockpile] > 3
     @battle.pbDisplay(_INTL("{1} stockpiled {2}!",
                             user.pbThis, user.effects[PBEffects::Stockpile]))
     showAnim = true
@@ -913,34 +914,5 @@ class Battle::Move::RaiseUserSpAtkSpDefSpd1 < Battle::Move::MultiStatUpMove
 				end
 			end
 		end
-  end
-end
-
-#===============================================================================
-# For 3-5 rounds, lowers power of attacks against the user's side. Fails if
-# weather is not hail. (Aurora Veil)
-#===============================================================================
-class Battle::Move::StartWeakenDamageAgainstUserSideIfHail < Battle::Move
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    if user.effectiveWeather != :Hail
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbEffectGeneral(user)
-		turns 				 = ($game_variables[MECHANICSVAR] >= 3) ? 3 : 5
-		lightclayturns = ($game_variables[MECHANICSVAR] >= 3) ? 5 : 8
-    user.pbOwnSide.effects[PBEffects::AuroraVeil] = turns
-    user.pbOwnSide.effects[PBEffects::AuroraVeil] = lightclayturns if user.hasActiveItem?(:LIGHTCLAY)
-    @battle.pbDisplay(_INTL("{1} made {2} stronger against physical and special moves!",
-                            @name, user.pbTeam(true)))
   end
 end

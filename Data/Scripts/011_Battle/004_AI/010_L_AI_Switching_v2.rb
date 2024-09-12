@@ -233,6 +233,8 @@ class Battle::AI
 			#end
 			maxdam=0
 			aspeed = pbRoughStat(pokmon,:SPEED,100)
+			aspeed = (aspeed.to_f * 2 / 3).floor if pokmon.pbOwnSide.effects[PBEffects::StickyWeb]>0 && 
+													!(pokmon.hasActiveItem?(:HEAVYDUTYBOOTS) || pokmon.hasActiveAbility?(:TILEWORKER))
 			maxspeed = 0
 			hasprio=0
 			priodamage=0
@@ -277,9 +279,6 @@ class Battle::AI
 				if pokmon.hasActiveAbility?(:ELECTRICSURGE) && 
 					 @battle.field.terrain != :Electric
 					ospeed *= 2 if newenemy.hasActiveAbility?(:SURGESURFER)
-				end
-				if pokmon.pbOwnSide.effects[PBEffects::StickyWeb]>0 && !newenemy.hasActiveItem?(:HEAVYDUTYBOOTS)
-					ospeed = (ospeed.to_f * 2 / 3).floor # speed drop
 				end
 				###############
 				for j in newenemy.moves
@@ -442,6 +441,17 @@ class Battle::AI
 							sum+=80 if damagetakenPercent<33
 						end	
 					end
+					if pokmon.effects[PBEffects::Wish]>0
+						wishhealPercent = (pokmon.effects[PBEffects::WishAmount] * 100.0 / pokmon.hp)
+						if wishhealPercent >= 50 && damagetakenPercent<50
+							sum+=80
+						elsif wishhealPercent >= 33 && damagetakenPercent<33
+							sum+=80
+						elsif wishhealPercent >= 60 && damagetakenPercent<20 && 
+							 ((pokmon.hp/pokmon.totalhp) < 0.6 && (pokmon.hp / pokmon.totalhp) > 0.3)
+							sum+=80
+						end
+					end
 					#  Sleep
 					# if m.function=="003" && b.pbCanSleep?(pokmon,false,m) && !(m.powderMove? && b.pbHasType?(:GRASS)) && i!=party.length-1
 					# 	willwakeup=false
@@ -463,7 +473,6 @@ class Battle::AI
 					#next if m.baseDamage == 0
 					tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
 					thispriority=priorityAI(pokmon,m,true)
-					thispriority +=1 if m.function=="HigherPriorityInGrassyTerrain" && pokmon.affectedByTerrain?
 					tempdam = 0 if thispriority>0 && pokmon.hasActiveAbility?(:PSYCHICSURGE) && b.affectedByTerrain?
 					maxprio=thispriority if tempdam>=b.hp && thispriority>0
 					tempdam = 0 if pbCheckMoveImmunity(1,m,pokmon,b,100)
@@ -520,8 +529,8 @@ class Battle::AI
 							tempdam*=2.2
 						end
 					end	
-					if m.function=="FlinchTargetFailsIfNotUserFirstTurn" && tempdam>1 && 
-						 !b.hasActiveAbility?(:INNERFOCUS) && (b.effects[PBEffects::Substitute] == 0)
+					if m.function=="FlinchTargetFailsIfNotUserFirstTurn" && 
+					   tempdam>1 && canFlinchTarget(pokmon,b)
 						fakedmg = tempdam *100.0 / b.hp
 						fakedmg = 100 if fakedmg>100
 					end

@@ -154,7 +154,7 @@ Description = Contact with the Pokémon may poison the attacker.
 #-------------------------------
 [INNERFOCUS]
 Name = Inner Focus
-Description = The Pokémon is protected from flinching.
+Description = Prevents itself and allies from flinching.
 #-------------------------------
 [MAGMAARMOR]
 Name = Magma Armor

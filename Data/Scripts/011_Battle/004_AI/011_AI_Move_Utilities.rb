@@ -142,7 +142,7 @@ class Battle::AI
     return ret
   end
 
-  def pbRoughStat(battler, stat, skill)
+  def pbRoughStat(battler, stat, skill=100)
     atkmul=defmul=spemul=spamul=spdmul=1
     if battler.pokemon.willmega
       mega_data = MEGA_EVO_STATS[battler.species]
@@ -234,15 +234,15 @@ class Battle::AI
       # Average damage dealt for each stage
       case user.level
         when 0..16
-          baseDmg = 39
+          baseDmg = 48
         when 17..24
-          baseDmg = 50
+          baseDmg = 65
         when 25..33
-          baseDmg = 67
+          baseDmg = 82
         when 34..44
-          baseDmg = 77
+          baseDmg = 94
         else
-          baseDmg = 91
+          baseDmg = 108
       end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
     when "TypeAndPowerDependOnUserBerry"   # Natural Gift
@@ -319,6 +319,8 @@ class Battle::AI
 		when "HigherDamageInSunVSNonFireTypes"
 			scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
 			baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE, true)
+    when "PursueSwitchingFoe"
+      baseDmg *= 2 if target.battle.choices[target.index][0] == :SwitchOut
     end
     baseDmg = 60 if baseDmg == 1
     return baseDmg
@@ -345,7 +347,7 @@ class Battle::AI
     modifiers = {}
     modifiers[:base_accuracy]  = baseAcc
     # acc and evasion murder / sleep moves acc buff #by low
-    modifiers[:base_accuracy]  = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(move.id)
+    modifiers[:base_accuracy]  = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(move.id)
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
     if user.stages[:ACCURACY] < 0

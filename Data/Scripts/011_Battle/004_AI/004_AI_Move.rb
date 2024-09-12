@@ -304,40 +304,6 @@ class Battle::AI
   # of the target's current HP)
   #=============================================================================
   def pbGetMoveScoreDamage(score, move, user, target, skill)
-    return 0 if score <= 0
-    # Calculate how much damage the move will do (roughly)
-    baseDmg = pbMoveBaseDamage(move, user, target, skill)
-    realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
-    # Account for accuracy of move
-    accuracy = pbRoughAccuracy(move, user, target, skill)
-    realDamage *= accuracy / 100.0
-    # Two-turn attacks waste 2 turns to deal one lot of damage
-    if move.chargingTurnMove? || move.function == "AttackAndSkipNextTurn"   # Hyper Beam
-      realDamage *= 2 / 3   # Not halved because semi-invulnerable during use or hits first turn
-    end
-    # Prefer flinching external effects (note that move effects which cause
-    # flinching are dealt with in the function code part of score calculation)
-    if skill >= PBTrainerAI.mediumSkill && !move.flinchingMove? &&
-       !target.hasActiveAbility?(:INNERFOCUS) &&
-       !target.hasActiveAbility?(:SHIELDDUST) &&
-       target.effects[PBEffects::Substitute] == 0
-      canFlinch = false
-      if user.hasActiveItem?([:KINGSROCK, :RAZORFANG]) ||
-         user.hasActiveAbility?(:STENCH)
-        canFlinch = true
-      end
-      realDamage *= 1.3 if canFlinch
-    end
-    # Convert damage to percentage of target's remaining HP
-    damagePercentage = realDamage * 100.0 / target.hp
-    # Don't prefer weak attacks
-#    damagePercentage /= 2 if damagePercentage<20
-    # Prefer damaging attack if level difference is significantly high
-    damagePercentage *= 1.2 if user.level - 10 > target.level
-    # Adjust score
-    damagePercentage = 120 if damagePercentage > 120   # Treat all lethal moves the same
-    damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal
-    score += damagePercentage.to_i
-    return score
+    # not used, check Consistent_AI
   end
 end

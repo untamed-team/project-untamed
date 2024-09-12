@@ -5,13 +5,13 @@ class Battle::AI
 	# game dies when instruct is used
 	# gastro acid can sometimes make the ai skip turns?
 	# crit moves are off, they dont check if the foe is an ally
-	$movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
+	$movesToTargetAllies = [#"HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
 							"RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
 							"RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
-							"TargetUsesItsLastUsedMoveAgain",
+							#"TargetUsesItsLastUsedMoveAgain",
 							"SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
 							"SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
-							"UserTargetSwapAbilities", "NegateTargetAbility", 
+							"UserTargetSwapAbilities", #"NegateTargetAbility", 
 							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
 							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
 							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 
@@ -222,7 +222,7 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
-		score = pbGetMoveScoreFunctionCode(100, move, user, target, skill)
+		score = pbGetMoveScoreFunctionCode(70, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
 		score += 1 if aigenlog
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
@@ -348,14 +348,13 @@ class Battle::AI
 				end
 			end
 			# Try make AI not trolled by disguise
-			if !mold_broken && target.hasActiveAbility?(:DISGUISE) && target.turnCount==0	
+			if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.turnCount==0	
 				if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes" ,"HitTwoTimesFlinchTarget", 
 						"HitThreeTimesPowersUpWithEachHit"].include?(move.function)
 					realDamage*=2.2
 				end
 			end	
-			if ((!target.hasActiveAbility?(:INNERFOCUS) && !target.hasActiveAbility?(:SHIELDDUST)) || 
-				 mold_broken) && target.effects[PBEffects::Substitute]==0
+			if canFlinchTarget(user,target,mold_broken) && !target.hasActiveAbility?(:SHIELDDUST,false,mold_broken)
 				canFlinch = false
 				if user.hasActiveItem?([:KINGSROCK,:RAZORFANG])
 					canFlinch = true
@@ -363,7 +362,6 @@ class Battle::AI
 				if user.hasActiveAbility?(:STENCH) || move.flinchingMove?
 					canFlinch = true
 				end
-				canFlinch = false if target.effects[PBEffects::NoFlinch] > 0
 				bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam=bestmove[0] #* 0.9
 				maxmove=bestmove[1]

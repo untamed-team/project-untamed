@@ -344,6 +344,7 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
+Gimmick = stealthrock
 Pokemon = CHIMECHO,50
     Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
     AbilityIndex = 2

@@ -37,7 +37,7 @@ class Battle::Move
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Foresight / normalize #by low
-      if (user.hasActiveAbility?(:SCRAPPY) || target.effects[PBEffects::Foresight] || user.hasActiveAbility?(:NORMALIZE)) &&
+      if (user.hasActiveAbility?([:SCRAPPY, :NORMALIZE]) || target.effects[PBEffects::Foresight]) &&
          defType == :GHOST
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
@@ -135,7 +135,7 @@ class Battle::Move
       end
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
-    modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
+    modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
     modifiers[:accuracy_multiplier] = 1.0
     modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
@@ -342,16 +342,18 @@ class Battle::Move
         user.ability, user, target, self, multipliers, baseDmg, type
       )
     end
+    #i edited this, because its stupid
+    user.allAllies.each do |b|
+      next if !b.abilityActive?
+      Battle::AbilityEffects.triggerDamageCalcFromAlly(
+        b.ability, user, target, self, multipliers, baseDmg, type
+      )
+    end
     if !@battle.moldBreaker
       # NOTE: It's odd that the user's Mold Breaker prevents its partner's
       #       beneficial abilities (i.e. Flower Gift boosting Atk), but that's
       #       how it works.
-      user.allAllies.each do |b|
-        next if !b.abilityActive?
-        Battle::AbilityEffects.triggerDamageCalcFromAlly(
-          b.ability, user, target, self, multipliers, baseDmg, type
-        )
-      end
+      #look up you fuckhead
       if target.abilityActive?
         Battle::AbilityEffects.triggerDamageCalcFromTarget(
           target.ability, user, target, self, multipliers, baseDmg, type

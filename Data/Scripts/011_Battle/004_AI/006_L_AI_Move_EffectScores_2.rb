@@ -250,7 +250,7 @@ class Battle::AI
 			score*=1.2 if movecheck
 		end
 		if move.function == "ParalyzeFlinchTarget"
-			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
+			if canFlinchTarget(user,target,mold_broken)
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=1.1
 				end
@@ -291,7 +291,7 @@ class Battle::AI
 			score = 0 if move.statusMove?
      	end
 		if move.function == "BurnFlinchTarget"
-			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
+			if canFlinchTarget(user,target,mold_broken)
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=1.1
 				end
@@ -333,7 +333,7 @@ class Battle::AI
 			score = 0 if move.statusMove?
       	end
 		if move.function == "FreezeFlinchTarget"
-			if target.effects[PBEffects::Substitute]<=0 && !target.hasActiveAbility?(:INNERFOCUS)
+			if canFlinchTarget(user,target,mold_broken)
 				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=1.1
 				end
@@ -505,7 +505,7 @@ class Battle::AI
 		roles = pbGetPokemonRole(user, target)
 		if user.pbOwnSide.effects[PBEffects::Safeguard]<=0 && 
 		 ((user.pbSpeed > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
-		   user.status == :NONE && !roles.include?("Status Absorber") 
+		  (user.status == :NONE && !roles.include?("Status Absorber")) 
 			ebinstatuscheck=false
 			statuscheck=false
 			sleepcheck=false
@@ -525,7 +525,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "FlinchTarget" # flinching moves
-		if target.effects[PBEffects::Substitute]==0 && !target.hasActiveAbility?(:INNERFOCUS)
+		if canFlinchTarget(user,target,mold_broken)
 			if (pbRoughStat(target,:SPEED,skill)<user.pbSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 				miniscore=100
 				miniscore*=1.3
@@ -555,7 +555,7 @@ class Battle::AI
     when "FlinchTargetFailsIfUserNotAsleep" # snore
 		if user.asleep?
 			score *= 2
-			if target.effects[PBEffects::Substitute]==0 && !target.hasActiveAbility?(:INNERFOCUS)
+			if canFlinchTarget(user,target,mold_broken)
 				if (pbRoughStat(target,:SPEED,skill)<user.pbSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					miniscore=100
 					miniscore*=1.3
@@ -587,7 +587,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FlinchTargetFailsIfNotUserFirstTurn" # fake out
 		if user.turnCount==0
-			if target.effects[PBEffects::Substitute]==0 && !target.hasActiveAbility?(:INNERFOCUS)
+			if canFlinchTarget(user,target,mold_broken)
 				if score>1
 					if ((user.pbSpeed<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						score*=1.2
@@ -601,16 +601,16 @@ class Battle::AI
 				end          
 				if target.hasActiveAbility?(:STEADFAST)
 					score*=0.3
-				end          
+				end
+				score*=0.3 if user.hasActiveAbility?(:SHEERFORCE)
+				score*=30 # fake out good 
 			end
-			score*=0.3 if user.hasActiveAbility?(:SHEERFORCE)
-			score*=30 if !target.hasActiveAbility?(:INNERFOCUS)
 		else
 			score=0
 		end
     #---------------------------------------------------------------------------
     when "FlinchTargetDoublePowerIfTargetInSky" # twister
-		if target.effects[PBEffects::Substitute]==0 && !target.hasActiveAbility?(:INNERFOCUS)
+		if canFlinchTarget(user,target,mold_broken)
 			if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 				miniscore=100
 				miniscore*=1.3
@@ -987,7 +987,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToSimple" # simple beam
 		if target.ability == :SIMPLE ||
-				(target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		   target.hasActiveAbility?(:DISGUISE) || target.effects[PBEffects::Substitute]>0
 			score = 0
 		else
 			miniscore=100
@@ -1018,7 +1018,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToInsomnia" # worry seed
 		if target.ability == :INSOMNIA ||
-				(target.hasActiveAbility?(:DISGUISE) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		   target.hasActiveAbility?(:DISGUISE) || target.effects[PBEffects::Substitute]>0
 			score = 0
 		else
 			miniscore = 100

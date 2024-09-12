@@ -40,11 +40,14 @@ class Battle::AI
 		typeMod = pbCalcTypeMod(type,user,target)
 		##### Calculate user's attack stat #####
 		atk = pbRoughStat(user, :ATTACK, skill)
-		if move.function == "UseTargetAttackInsteadOfUserAttack"   # Foul Play
+		if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
 			atk = pbRoughStat(target, :ATTACK, skill)
-		elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack"   # Body Press
+		elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
 			atk = pbRoughStat(user, :DEFENSE, skill)
-		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"   # Psycrush
+		elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
+			   "CategoryDependsOnHigherDamagePoisonTarget"].include?(move.function) # Photon Geyser, Shell Side Arm
+			atk = [pbRoughStat(user, :ATTACK, skill), pbRoughStat(user, :SPECIAL_ATTACK, skill)].max
+		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
 			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
 			userStats = user.plainStats
@@ -57,7 +60,7 @@ class Battle::AI
 			end
 			atk = pbRoughStat(user, higheststat, skill)
 		elsif move.specialMove?(type)
-			if move.function == "UseTargetAttackInsteadOfUserAttack"   # Foul Play
+			if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
 				atk = pbRoughStat(target, :SPECIAL_ATTACK, skill)
 			else
 				atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
@@ -68,7 +71,7 @@ class Battle::AI
 		end
 		##### Calculate target's defense stat #####
 		defense = pbRoughStat(target, :DEFENSE, skill)
-		if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
+		if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef" # Psyshock
 			defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
 		end
 		if move.function == "TitanWrath" # Titan's Wrath (def calc)
@@ -78,6 +81,8 @@ class Battle::AI
 			when :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED
 				defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
 			end
+		elsif move.function == "CategoryDependsOnHigherDamagePoisonTarget" # Shell Side Arm (def calc)
+			defense = [pbRoughStat(target, :DEFENSE, skill), pbRoughStat(target, :SPECIAL_DEFENSE, skill)].min
 		end
 		##### Calculate all multiplier effects #####
 		multipliers = {
@@ -109,7 +114,12 @@ class Battle::AI
 				)
 			end
 		end
-		if skill >= PBTrainerAI.mediumSkill && !moldBreaker
+		# taking in account intimidate from mons with AAM
+		atk *= (atk.to_f * 2 / 3) if (target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && 
+									 target.willmega && target.hasAbilityMutation?
+		# if i didnt remove this mold breaker check, i would fake the AI out when she uses
+		# moves that have mold breaker built in
+		if skill >= PBTrainerAI.mediumSkill #&& !moldBreaker
 			user.allAllies.each do |b|
 				next if !b.abilityActive?
 				Battle::AbilityEffects.triggerDamageCalcFromAlly(
@@ -480,7 +490,7 @@ class Battle::AI
 			atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
 			defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
 			if c==3 && 
-				 !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR]) && 
+				 target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker) && 
 				 target.pbOwnSide.effects[PBEffects::LuckyChant]==0
 				damage = 0.96*damage/atkmult if atkmult<1
 				damage = damage*defmult if defmult>1
@@ -617,12 +627,12 @@ class Battle::AI
 	end
 
 	def canSleepTarget(attacker,opponent,globalArray,berry=false)
-		return false if opponent.effects[PBEffects::Substitute]>0
+		return false if opponent.effects[PBEffects::Substitute]>0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		return false if berry && (opponent.status==:SLEEP)# && opponent.statusCount>1)
 		return false if (opponent.hasActiveItem?(:LUMBERRY) || opponent.hasActiveItem?(:CHESTOBERRY)) && berry
-		return false if opponent.pbCanSleep?(attacker,false)
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
+		return false if opponent.pbCanSleep?(attacker,false)
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
 				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)
@@ -630,6 +640,17 @@ class Battle::AI
 			end	
 		end
 		return false
+	end
+
+	def canFlinchTarget(user,target,mold_bonkers=false)
+		return false if target.effects[PBEffects::Substitute] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
+		return false if target.effects[PBEffects::NoFlinch] > 0
+		return false if target.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
+		target.allAllies.each do |bb|
+			break if $game_variables[MECHANICSVAR] <= 1
+			return false if bb.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
+		end
+		return true
 	end
 	
 	def bestMoveVsTarget(user,target,skill)

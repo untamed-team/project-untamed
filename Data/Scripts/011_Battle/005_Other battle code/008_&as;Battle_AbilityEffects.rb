@@ -2208,7 +2208,10 @@ Battle::AbilityEffects::OnBeingHit.add(:ANGELICBEAUTY,
 Battle::AbilityEffects::OnBeingHit.add(:ECHOCHAMBER,
   proc { |ability, user, target, move, battle|
     next if !move.soundMove?
+    battle.pbShowAbilitySplash(target)
+    battle.pbDisplay(_INTL("{1} reverberates due to {2}'s move!", target.pbThis, user.pbThis))
     target.effects[PBEffects::PrioEchoChamber] = 2 if target.effects[PBEffects::PrioEchoChamber] <= 0
+    battle.pbHideAbilitySplash(target)
     battle.pbCalculatePriority(false, [target.index])
   }
 )
@@ -2360,12 +2363,13 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
       user.pbRecoverHP(hpGain)
       battle.pbHideAbilitySplash(user)
     else
-      targets.each { |b| hpGain += (b.damageState.hpLost / 2.0).round }
+      targets.each { |b| hpGain += (b.damageState.hpLost / 3.0).round }
       next if hpGain == 0 # just to check if it did any worthwhile damage
       battle.pbShowAbilitySplash(user)
-      targets.each { |b|
-        hpGain = (b.damageState.hpLost / 2.0).round
-        user.pbRecoverHPFromDrain(hpGain, b)
+      message=true
+      targets.each { |b| 
+        user.pbRecoverHPFromDrain(hpGain, b, 
+                                  _INTL("{1} was healed due its {2}!", user.pbThis, user.abilityName))
       }
       user.effects[PBEffects::PrioEchoChamber] = 2 if user.effects[PBEffects::PrioEchoChamber] <= 0
       battle.pbHideAbilitySplash(user)

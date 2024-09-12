@@ -59,35 +59,25 @@ class Battle::Move::TitanWrath < Battle::Move
   
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
     userTypes = user.pbTypes(true)
-    # some of these are not actually possible given the regi's stats spreads
-    # but they were added anyway for consistency 
-    if @calcCategory == 1 # special
-      id = :TERRAINPULSE  # type specific anim
-      case userTypes[0]
-      when :NORMAL    then id = :HYPERBEAM      if GameData::Move.exists?(:HYPERBEAM)      # gigas
-      when :ROCK      then id = :POWERGEM       if GameData::Move.exists?(:POWERGEM)       # rock
-      when :ICE       then id = :SHEERCOLD      if GameData::Move.exists?(:SHEERCOLD)      # ce
-      when :STEEL     then id = :STEELBEAM      if GameData::Move.exists?(:STEELBEAM)      # steel
-      when :ELECTRIC  then id = :THUNDER        if GameData::Move.exists?(:THUNDER)        # eleki
-      when :DRAGON    then id = :ETERNABEAM     if GameData::Move.exists?(:ETERNABEAM)     # drago
-      when :GRASS     then id = :SOLARBEAM      if GameData::Move.exists?(:SOLARBEAM)      # wood
-      when :FIGHTING  then id = :FOCUSBLAST     if GameData::Move.exists?(:FOCUSBLAST)     # brute
-      when :FAIRY     then id = :LIGHTOFRUIN    if GameData::Move.exists?(:LIGHTOFRUIN)    # ternal
-      end
-    else                  # physical
-      id = :SECRETPOWER   # type specific anim
-      case userTypes[0]
-      when :NORMAL    then id = :GIGAIMPACT     if GameData::Move.exists?(:GIGAIMPACT)     # gigas
-      when :ROCK      then id = :STONEEDGE      if GameData::Move.exists?(:STONEEDGE)      # rock
-      when :ICE       then id = :ICICLECRASH    if GameData::Move.exists?(:ICICLECRASH)    # ce
-      when :STEEL     then id = :STEELROLLER    if GameData::Move.exists?(:STEELROLLER)    # steel
-      when :ELECTRIC  then id = :FUSIONBOLT     if GameData::Move.exists?(:FUSIONBOLT)     # eleki
-      when :DRAGON    then id = :OUTRAGE        if GameData::Move.exists?(:OUTRAGE)        # drago
-      when :GRASS     then id = :POWERWHIP      if GameData::Move.exists?(:POWERWHIP)      # wood
-      when :FIGHTING  then id = :CLOSECOMBAT    if GameData::Move.exists?(:CLOSECOMBAT)    # brute
-      when :FAIRY     then id = :NATURESMADNESS if GameData::Move.exists?(:NATURESMADNESS) # ternal
-      end
-    end
+    type_moves = {
+      special: {
+        :NORMAL => :HYPERBEAM, 
+        :ROCK => :POWERGEM, :ICE => :SHEERCOLD, :STEEL => :STEELBEAM,
+        :ELECTRIC => :THUNDER, :DRAGON => :ETERNABEAM, 
+        :GRASS => :SOLARBEAM, :FIGHTING => :FOCUSBLAST, :FAIRY => :LIGHTOFRUIN
+      },
+      physical: {
+        :NORMAL => :GIGAIMPACT, 
+        :ROCK => :STONEEDGE, :ICE => :ICICLECRASH, :STEEL => :STEELROLLER,
+        :ELECTRIC => :FUSIONBOLT, :DRAGON => :OUTRAGE, 
+        :GRASS => :POWERWHIP, :FIGHTING => :CLOSECOMBAT, :FAIRY => :NATURESMADNESS
+      }
+    }
+  
+    category = @calcCategory == 1 ? :special : :physical
+    type = userTypes[0]
+    id = type_moves[category][type] if type_moves[category][type] && 
+                                       GameData::Move.exists?(type_moves[category][type])
     super
   end
 end

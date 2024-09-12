@@ -1686,7 +1686,7 @@ Accuracy = 0
 TotalPP = 20
 Target = NearAlly
 FunctionCode = RaiseTargetSpDef1
-Description = The user raises the Sp. Def stat of an ally Pokémon by using a mysterious aroma.
+Description = The user raises the Atk and Sp. Def stat of an ally Pokémon by using a mysterious aroma.
 #-------------------------------
 [BABYDOLLEYES]
 Name = Baby-Doll Eyes
@@ -3176,11 +3176,10 @@ Description = The user disappears, then strikes the foe on the second turn. It h
 Name = Poltergeist
 Type = GHOST
 Category = Physical
-Power = 90
+Power = 80
 Accuracy = 0
 TotalPP = 10
 Target = NearOther
-FunctionCode = None
 Flags = CanProtect,CanMirrorMove
 Description = The user controls the target's own soul to hit itself. It hits without fail.
 #-------------------------------
@@ -3239,7 +3238,7 @@ Type = GHOST
 Category = Special
 Power = 80
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
 Flags = CanProtect,CanMirrorMove,Bomb
@@ -5010,11 +5009,11 @@ Type = NORMAL
 Category = Physical
 Power = 70
 Accuracy = 100
-TotalPP = 20
+TotalPP = 15
 Target = NearOther
 FunctionCode = DoublePowerIfUserPoisonedBurnedParalyzed
 Flags = Contact,CanProtect,CanMirrorMove
-Description = An attack move that doubles its power if the user is poisoned, burned, or has paralysis.
+Description = An attack move that increases in power if the user has a status problem.
 #-------------------------------
 [HEADBUTT]
 Name = Headbutt
@@ -6483,10 +6482,11 @@ Name = Stockpile
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 20
+TotalPP = 10
 Target = User
 FunctionCode = UserAddStockpileRaiseDefSpDef1
-Description = The user charges up power and raises both its Defense and Sp. Def. The move can be used three times.
+Flags = DoublePPUse
+Description = Raises the user's Def and Sp. Def. Raises Stockpile by 1, or 2 if already used, up to 3.
 #-------------------------------
 [SUBSTITUTE]
 Name = Substitute
@@ -8792,20 +8792,6 @@ FunctionCode = UserConsumeBerryRaiseDefense2
 EffectChance = 0
 Description = The user eats its held Berry, then sharply raises its Defense stat.
 #-------------------------------
-[HAUNT]
-Name = Haunt
-Type = GHOST
-Category = Physical
-Power = 75
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-Priority = 0
-FunctionCode = HealUserByHalfOfDamageDone
-Flags = Contact,CanProtect
-EffectChance = 0
-Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
-#-------------------------------
 [BITINGCOLD]
 Name = Biting Cold
 Type = ICE
@@ -8828,7 +8814,6 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = FreezeTarget
 Flags = CanProtect,Sound
 EffectChance = 10
@@ -9183,6 +9168,18 @@ Target = NearOther
 FunctionCode = None
 Flags = CanProtect
 Description = ...
+#-------------------------------
+[HAUNT]
+Name = Failsafe Haunt
+Type = GHOST
+Category = Physical
+Power = 2
+Accuracy = 0
+TotalPP = 1
+Target = NearOther
+FunctionCode = HealUserByHalfOfDamageDone
+Flags = Contact,CanProtect
+Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
 #-------------------------------
 [SUPERNOVA]
 Name = Supernova
