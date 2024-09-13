@@ -36,7 +36,7 @@ def switchestesting
 		$game_variables[MASTERMODEVARS] = []
 	end
 end
-
+=begin
 class Battle::Move
   alias old_pbCalcDamageMultipliers pbCalcDamageMultipliers
   def pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
@@ -80,7 +80,7 @@ class Battle::Battler
 	end # of pbCanConfuse
 	
   alias old_pbFlinch pbFlinch
-	def pbFlinch(_user = nil)
+	def pbFlinch(_user = nil, fakuout = false)
 		return false if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][6]==true
 		old_pbFlinch(_user)
 	end # of pbFlinch
@@ -211,3 +211,4 @@ class Battle::Move::BindTarget < Battle::Move
     @battle.pbDisplay(msg)
   end
 end
+=end

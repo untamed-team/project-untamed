@@ -3490,6 +3490,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   }
 )
 
+Battle::AbilityEffects::OnSwitchIn.add(:INNERFOCUS,
+  proc { |ability, battler, battle, switch_in|
+    next if $game_variables[MECHANICSVAR] <= 1
+    battle.pbShowAbilitySplash(battler)
+    battle.pbDisplay(_INTL("{1}'s mental fortitude prevents {2} from flinching!", battler.pbThis, battler.pbTeam))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 #===============================================================================
 # OnSwitchOut handlers
 #===============================================================================
@@ -3595,7 +3604,6 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
 
 Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
   proc { |ability, battler, battle, ability_changed|
-		# warning: if type zones are made summonable manually, then this will needed to be redone
     if battle.field.terrain == :None && battle.field.typezone == :None
       # Revert to original typing
       battle.pbShowAbilitySplash(battler)

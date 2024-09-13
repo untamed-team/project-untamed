@@ -588,9 +588,13 @@ class Battle::AI
 		damage+=priodamage
 		damage*=mult
 		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.form==0	
-			if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
-					"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-					"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(move.function)
+			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
+				 "HitTwoTimesTargetThenTargetAlly",
+				 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
+				 "HitThreeTimesPowersUpWithEachHit",
+				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+			 	 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				damage*=0.6
 			else
 				damage=1
@@ -599,10 +603,13 @@ class Battle::AI
 		return true if damage < opponent.hp
 		return false if priodamage>0
 		if (opponent.hasActiveItem?(:FOCUSSASH) || (!mold_broken && opponent.hasActiveAbility?(:STURDY))) && opponent.hp==opponent.totalhp
-			return false if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
-							 "HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-							 "HitTenTimesPopulationBomb", "HitThreeToFiveTimes", 
-							 "HitTwoTimesReload"].include?(move.function)
+			return false if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
+							 "HitTwoTimesTargetThenTargetAlly",
+							 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
+							 "HitThreeTimesPowersUpWithEachHit",
+							 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+							 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+							 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 			return true
 		end	
 		return false
@@ -613,7 +620,10 @@ class Battle::AI
 		return false if berry && (opponent.status==:SLEEP)# && opponent.statusCount>1)
 		return false if (opponent.hasActiveItem?(:LUMBERRY) || opponent.hasActiveItem?(:CHESTOBERRY)) && berry
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
-		return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
+		if opponent.affectedByTerrain?
+			return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
+			return false if (@battle.field.terrain == :Electric || @battle.field.terrain == :Misty)
+		end
 		return false if opponent.pbCanSleep?(attacker,false)
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
@@ -627,12 +637,21 @@ class Battle::AI
 	def canFlinchTarget(user,target,mold_bonkers=false)
 		return false if target.effects[PBEffects::Substitute] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
 		return false if target.effects[PBEffects::NoFlinch] > 0
-		return false if target.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
+		return false if target.hasActiveAbility?([:INNERFOCUS,:SHIELDDUST],false,mold_bonkers)
 		target.allAllies.each do |bb|
 			break if $game_variables[MECHANICSVAR] <= 1
 			return false if bb.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
 		end
-		return true
+		for move in user.moves
+			return true if move.function == "FlinchTargetFailsIfNotUserFirstTurn" && 
+						   user.turnCount == 0
+			if move.flinchingMove?
+				return false if @battle.turnCount == 0
+				return true
+			end
+		end
+		return true if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+		return false
 	end
 	
 	def bestMoveVsTarget(user,target,skill)

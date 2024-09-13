@@ -38,8 +38,7 @@ class Battle::Battler
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
       elsif boss.remaningHPBars == 2
-        @battle.pbDisplayBrief(_INTL("{1}'s malice summoned a Dark Zone!",self.pbThis))
-        @battle.field.typezone = :DARK
+        pbChangeTypeZone(boss, :DARK, "Noctavispa's  malice summoned a Dark Zone!")
         pbChangeUserItemMidTurn(boss, :STARFBERRY)
         pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
         boss.eachOpposing do |b|
@@ -128,6 +127,19 @@ class Battle::Battler
         didanimonce = true
       end
     end
+  end
+
+  def pbChangeTypeZone(user, newZone, msg = nil)
+    return if @battle.field.terrain == newZone
+    @battle.field.terrain = newZone
+    if msg.nil?
+      typeofzone = GameData::Type.get(@battle.field.typezone).name
+      @battle.pbDisplayBrief(_INTL("A {1} Zone was summoned, it will power up {1}-type attacks!",typeofzone))
+    else
+      @battle.pbDisplayBrief(_INTL(msg))
+    end
+    @battle.allBattlers.each { |b| b.pbAbilityOnTerrainChange }
+    @battle.allBattlers.each { |b| b.pbItemTerrainStatBoostCheck }
   end
 
   ################################################################################

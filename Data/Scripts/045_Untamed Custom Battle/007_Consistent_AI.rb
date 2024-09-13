@@ -349,23 +349,21 @@ class Battle::AI
 			end
 			# Try make AI not trolled by disguise
 			if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.turnCount==0	
-				if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes" ,"HitTwoTimesFlinchTarget", 
-						"HitThreeTimesPowersUpWithEachHit"].include?(move.function)
+				if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
+					 "HitTwoTimesTargetThenTargetAlly",
+					 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
+					 "HitThreeTimesPowersUpWithEachHit",
+					 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+					 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+					 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 					realDamage*=2.2
 				end
 			end	
-			if canFlinchTarget(user,target,mold_broken) && !target.hasActiveAbility?(:SHIELDDUST,false,mold_broken)
-				canFlinch = false
-				if user.hasActiveItem?([:KINGSROCK,:RAZORFANG])
-					canFlinch = true
-				end
-				if user.hasActiveAbility?(:STENCH) || move.flinchingMove?
-					canFlinch = true
-				end
+			if canFlinchTarget(user,target,mold_broken)
 				bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam=bestmove[0] #* 0.9
 				maxmove=bestmove[1]
-				if targetSurvivesMove(maxmove,user,target) && canFlinch
+				if targetSurvivesMove(maxmove,user,target)
 					realDamage *= 1.2 if (realDamage *100.0 / maxdam) > 75
 					realDamage *= 1.2 if move.function=="HitTwoTimesFlinchTarget"
 					realDamage*=2 if user.hasActiveAbility?(:SERENEGRACE)

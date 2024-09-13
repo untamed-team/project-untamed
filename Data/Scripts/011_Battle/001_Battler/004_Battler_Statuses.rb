@@ -644,18 +644,18 @@ class Battle::Battler
   end
 
   #=============================================================================
-  # Flinching edits #by low
+  # Flinching
   #=============================================================================
-  def pbFlinch(_user = nil)
+  def pbFlinch(_user = nil, fakuout = false)
     return if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
-    # no flinch and inner focus buff #by low
-    return false if @effects[PBEffects::NoFlinch] > 0
+    # first turn immunity, no flinch, inner focus buff #by low
+    return if @effects[PBEffects::NoFlinch] > 0
     allAllies.each do |b|
       break if $game_variables[MECHANICSVAR] <= 1
-      next if !b.abilityActive?
-      next unless hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
-      return false
+      next unless b.hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+      return
     end
+    return if @battle.turnCount == 0 && !fakuout
     @effects[PBEffects::Flinch] = true
     @effects[PBEffects::NoFlinch] = 2
   end
