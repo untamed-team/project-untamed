@@ -221,7 +221,7 @@ class Battle
     end
     battler.pbOnLosingAbility(old_ability)
     battler.pbTriggerAbilityOnGainingIt
-    pbCalculatePriority(false, [idxBattler]) if Settings::RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION && !$game_switches[OLDSCHOOLBATTLE]
+    pbCalculatePriority(false, [idxBattler]) if !$game_switches[OLDSCHOOLBATTLE]
     
     #increment achievement
     if battler.mega? && pbOwnedByPlayer?(battler)
