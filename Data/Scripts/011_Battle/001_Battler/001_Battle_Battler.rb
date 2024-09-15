@@ -239,7 +239,7 @@ class Battle::Battler
   #=============================================================================
   # Calculated properties
   #=============================================================================
-  def pbSpeed
+  def pbSpeed(megaSpeed = false)
     return 1 if fainted?
     stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
     stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
@@ -247,8 +247,12 @@ class Battle::Battler
     speed = @speed * stageMul[stage] / stageDiv[stage]
     speedMult = 1.0
     # Ability effects that alter calculated Speed
+    # these are ignored when AI is doing calcs (and taking in consideration willmega global changes)
     if abilityActive?
-      speedMult = Battle::AbilityEffects.triggerSpeedCalc(self.ability, self, speedMult)
+      if hasActiveAbility?([:CHLOROPHYLL, :SWIFTSWIM, :SLUSHRUSH, :SANDRUSH, :SURGESURFER]) && megaSpeed
+      else
+        speedMult = Battle::AbilityEffects.triggerSpeedCalc(self.ability, self, speedMult)
+      end
     end
     # Item effects that alter calculated Speed
     if itemActive?
@@ -260,11 +264,6 @@ class Battle::Battler
     # Paralysis
     if status == :PARALYSIS && !hasActiveAbility?(:QUICKFEET)
       speedMult /= (Settings::MECHANICS_GENERATION >= 7) ? 2 : 4
-    end
-    # Badge multiplier
-    if @battle.internalBattle && pbOwnedByPlayer? &&
-       @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPEED
-      speedMult *= 1.1
     end
     # Calculation
     return [(speed * speedMult).round, 1].max

@@ -345,9 +345,7 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 #Gimmick = stealthrock
-Pokemon = TREVENANT,50
-    Moves = GRASSYGLIDE,MAGNITUDE
-	Item = TREVENANTITE
+Pokemon = ZOLUPINE,50
     Nature = QUIRKY
 	AAM = True
 	MEM = True

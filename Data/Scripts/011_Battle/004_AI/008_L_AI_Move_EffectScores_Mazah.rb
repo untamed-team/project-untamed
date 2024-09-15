@@ -19,7 +19,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+		   pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
@@ -77,7 +77,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+		   pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || 
@@ -155,7 +155,7 @@ class Battle::AI
 			score*=0.6
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-				user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+				pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
@@ -185,7 +185,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if move.function == "ProtectUserFromDamagingMovesKingsShield"
-			if (user.pbSpeed < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0) && 
+			if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0) && 
 			   user.isSpecies?(:AEGISLASH) && user.form == 1
 				score*=4
 			else
@@ -238,11 +238,11 @@ class Battle::AI
 			hasAlly = !user.allAllies.empty?
 			if hasAlly
 				score*=1.3
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=1.2
 				else
 					score*=0.7
-					if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
 						score*=0
 					end
 				end
@@ -525,8 +525,8 @@ class Battle::AI
 						targetAlly.push(b.index)
 					end
 					if targetAlly.length > 0
-						if target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed && 
-						   target.pbSpeed > @battle.battlers[targetAlly[1]].pbSpeed
+						if pbRoughStat(target,:SPEED,skill) > pbRoughStat(@battle.battlers[targetAlly[0]],:SPEED,skill) && 
+						   pbRoughStat(target,:SPEED,skill) > pbRoughStat(@battle.battlers[targetAlly[1]],:SPEED,skill)
 							miniscore*=1.3
 						else
 							miniscore*=0.7
@@ -558,7 +558,7 @@ class Battle::AI
 		when "OverrideTargetStatusWithPoison"
 			if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
 				score *= 0.3
-			elsif target.asleep? && (target.statusCount <= 2 && target.pbSpeed < user.pbSpeed)
+			elsif target.asleep? && (target.statusCount <= 2 && pbRoughStat(target,:SPEED,skill) < pbRoughStat(user,:SPEED,skill))
 				score = 0
 			elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
 				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, skill)
@@ -576,7 +576,7 @@ class Battle::AI
 			if !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
 				if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
 					score *= 1.3
-					score *= 1.4 if user.pbSpeed <= target.pbSpeed && target.hasActiveItem?(:CHOICESCARF)
+					score *= 1.4 if pbRoughStat(user,:SPEED,skill) <= pbRoughStat(target,:SPEED,skill) && target.hasActiveItem?(:CHOICESCARF)
 				end
 			end
     #---------------------------------------------------------------------------
@@ -697,8 +697,8 @@ class Battle::AI
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanParalyzeSynchronize?(user)
 					miniscore*=0.5
 				end
-				if pbRoughStat(target, :SPEED, skill) > user.pbSpeed && 
-					 (pbRoughStat(target, :SPEED, skill)/2) < user.pbSpeed && 
+				if pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill) && 
+					 (pbRoughStat(target, :SPEED, skill)/2) < pbRoughStat(user,:SPEED,skill) && 
 					 @battle.field.effects[PBEffects::TrickRoom] <= 0
 					miniscore*=1.5
 				end
@@ -760,7 +760,7 @@ class Battle::AI
 				if target.hp==target.totalhp
 					miniscore*=1.2
 				end
-				if (pbRoughStat(target, :SPEED, skill) > user.pbSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					miniscore*=1.3
 				end
 				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveAbility?(:POISONHEAL) && user.poisoned?)
@@ -1702,7 +1702,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:PRANKSTER)
 			echo("\nPrankster Disrupt") if $AIGENERALLOG
-			abilityscore*=1.5 if user.pbSpeed>target.pbSpeed
+			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
 		end
 		if target.hasActiveAbility?(:ECHOCHAMBER)
 			echo("\nEcho Chamber Disrupt") if $AIGENERALLOG
@@ -1717,7 +1717,7 @@ class Battle::AI
 			if echohealcheck
 				abilityscore*=1.15
 			end
-			if echopriocheck && user.pbSpeed>target.pbSpeed
+			if echopriocheck && pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
 				abilityscore*=1.5
 			end
 		end

@@ -163,7 +163,25 @@ class Battle::AI
         end
       end
     end
-    return battler.pbSpeed*spemul if skill >= PBTrainerAI.highSkill && stat == :SPEED
+    if stat == :SPEED
+      megaSpeed = false
+      globalArray = pbGetMidTurnGlobalChanges
+      if globalArray.any? { |element| element.match?(/terrain|weather/) }
+        megaSpeed = true
+        weatherSpeed_hash = {
+          "rain weather" => :SWIFTSWIM,
+          "sun weather"  => :CHLOROPHYLL,
+          "hail weather" => :SLUSHRUSH,
+          "sand weather" => :SANDRUSH,
+          "electric terrain" => :SURGESURFER
+        }
+        weatherSpeed_hash.each do |weather, abil|
+          next unless globalArray.include?(weather)
+          spemul*=2 if battler.ability == abil && battler.abilityActive?
+        end
+      end
+      return (battler.pbSpeed(megaSpeed)*spemul).floor
+    end
     stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
     stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
     stage = battler.stages[stat] + 6
