@@ -344,7 +344,13 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
-Gimmick = stealthrock
+#Gimmick = stealthrock
+Pokemon = TREVENANT,50
+    Moves = GRASSYGLIDE,MAGNITUDE
+	Item = TREVENANTITE
+    Nature = QUIRKY
+	AAM = True
+	MEM = True
 Pokemon = CHIMECHO,50
     Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
     AbilityIndex = 2
@@ -361,38 +367,3 @@ Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory,100]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Name = Nocta3
-    Moves = DEFENDORDER
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory1]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory1,100]
-LoseText = kaboom
-Pokemon = BLAZEA,50
-    Moves = EMBER
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true
-Pokemon = M_ROSERADE,50
-    Moves = SPLASH
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true
-Pokemon = SABLEYE,50
-    Moves = SPLASH
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true

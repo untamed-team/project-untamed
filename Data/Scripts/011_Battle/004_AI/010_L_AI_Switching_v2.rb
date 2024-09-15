@@ -663,7 +663,7 @@ class Battle::AI
 						next if m.base_damage==0 || m.type != :GRASS
 						sum += 5
 					end   
-					score-=5 if pkmn.pbHasMoveFunction?("DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground",
+					sum-=5 if pkmn.pbHasMoveFunction?("DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground",
 																							"LowerTargetSpeed1WeakerInGrassyTerrain")
 					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HealTargetDependingOnGrassyTerrain")
 					sum+=5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain") 
@@ -674,7 +674,7 @@ class Battle::AI
 						next if m.base_damage==0 || m.type != :DRAGON
 						sum -= 5
 					end   
-					score-=5 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm", 
+					sum-=5 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm", 
 																							"ParalyzeTargetIfNotTypeImmune", "BadPoisonTarget")
 					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
 				end

@@ -233,6 +233,8 @@ class Battle
     return pbAutoChooseMove(idxBattler) if !pbCanShowFightMenu?(idxBattler)
     return true if pbAutoFightMenu(idxBattler)
     ret = false
+    @battlers[idxBattler].pokemon.willmega = false
+    @battlers[idxBattler].display_base_moves
     mechanics = []
     mechanics.push(pbCanMegaEvolve?(idxBattler))
     mechanics.push((PluginManager.installed?("ZUD Mechanics"))       ? pbCanUltraBurst?(idxBattler)   : false)
@@ -248,7 +250,6 @@ class Battle
     @scene.pbFightMenu(idxBattler, *mechanics) { |cmd|
       case cmd
       when DXTriggers::MENU_TRIGGER_CANCEL           # Cancel
-        @battlers[idxBattler].pokemon.willmega = false #by low
       when DXTriggers::MENU_TRIGGER_MEGA_EVOLUTION   # Mega Evolution
         pbToggleRegisteredMegaEvolution(idxBattler)
         next false
@@ -435,7 +436,7 @@ class Battle::Scene
     oldmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][0]
     newmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][1]
     return if !oldmove || !newmove
-    if megaBattler.willmega || megaBattler.mega?
+    if megaBattler.pokemon.willmega || megaBattler.mega?
       megaBattler.moves.each_with_index do |m, i|
         megaBattler.base_moves.push(megaBattler.moves[i])
         next if m.id != oldmove
@@ -493,6 +494,7 @@ class Battle::Scene
     ret = cw.index
     cancel = DXTriggers::MENU_TRIGGER_CANCEL
     case mechanic
+    when :mega
     when :zmove
       if cw.mode == 2
         if !battler.hasCompatibleZMove?(battler.moves[cw.index])

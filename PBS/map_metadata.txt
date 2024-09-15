@@ -1,55 +1,7 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-[020]   # Test World
-Name = Test World
-Outdoor = true
-DiveMap = 38
-#-------------------------------
 [001]   # Intro
 Name = Intro
-#-------------------------------
-[022]   # Veravalles Town
-Name = Veravalles Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-MapPosition = 0,19,5
-BattleBack = city
-MapSize = 1,1
-#-------------------------------
-[004]   # San Cerigold Town
-Name = San Cerigold Town
-Outdoor = true
-ShowArea = true
-Bicycle = true
-Weather = Marigolds,100
-MapPosition = 0,20,3
-BattleBack = city
-MapSize = 1,1
-#-------------------------------
-[019]   # San Cerigold PC
-Name = San Cerigold PC
-Outdoor = false
-HealingSpot = 4,22,22
-MapPosition = 0,20,3
-MapSize = 1,1
-#-------------------------------
-[005]   # San Cerigold Cemetery
-Name = San Cerigold Cemetery
-Outdoor = true
-ShowArea = true
-Bicycle = false
-Weather = Marigolds,100
-MapPosition = 0,20,3
-SnapEdges = true
-BattleBack = graveyard
-MapSize = 1,1
-#-------------------------------
-[018]   # San Cerigold Gym
-Name = GymInterior
-Outdoor = false
-MapPosition = 0,20,3
-MapSize = 1,1
 #-------------------------------
 [002]   # Mausoleum
 Name = MausoleumLeft
@@ -65,13 +17,34 @@ Outdoor = false
 MapPosition = 0,19,5
 MapSize = 1,1
 #-------------------------------
-[006]   # NW house-Blue
+[004]   # San Cerigold Town
+Name = San Cerigold Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+Weather = Marigolds,100
+MapPosition = 0,20,3
+BattleBack = city
+MapSize = 1,1
+#-------------------------------
+[005]   # San Cerigold Cemetery
+Name = San Cerigold Cemetery
+Outdoor = true
+ShowArea = true
+Bicycle = false
+Weather = Marigolds,100
+MapPosition = 0,20,3
+SnapEdges = true
+BattleBack = graveyard
+MapSize = 1,1
+#-------------------------------
+[006]   # NW house-Tan
 Name = NW house-blue
 Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
-[007]   # Library (Yellow)
+[007]   # Library (Tan)
 Name = Library (Yellow)
 Outdoor = false
 MapPosition = 0,20,3
@@ -83,13 +56,13 @@ Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
-[009]   # SE house-Purple
+[009]   # SE house-Tan
 Name = SE house-Purple
 Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
-[010]   # SE house-Green
+[010]   # SE house-Cyan
 Name = SE house-Green
 Outdoor = false
 MapPosition = 0,20,3
@@ -101,28 +74,28 @@ Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
+[013]   # Hacienda Interior
+Name = Hacienda Interior
+Outdoor = false
+MapPosition = 0,18,4
+MapSize = 1,1
+#-------------------------------
 [014]   # NE house-Cyan
 Name = NE house-Cyan
 Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
-[015]   # SE house-Orange
+[015]   # NE house-Yellow
 Name = SE house-Orange
 Outdoor = false
 MapPosition = 0,20,3
 MapSize = 1,1
 #-------------------------------
-[016]   # Hacienda Fields
+[016]   # Shed
 Name = Storage Shed
 Outdoor = false
 MapPosition = 0,18,3
-MapSize = 1,1
-#-------------------------------
-[013]   # Hacienda Interior
-Name = Hacienda Interior
-Outdoor = false
-MapPosition = 0,18,4
 MapSize = 1,1
 #-------------------------------
 [017]   # Hacienda Garden
@@ -131,10 +104,38 @@ Outdoor = true
 MapPosition = 0,18,4
 MapSize = 1,1
 #-------------------------------
-[021]   # Hacienda Castaneda
+[018]   # San Cerigold Gym
+Name = GymInterior
+Outdoor = false
+MapPosition = 0,20,3
+MapSize = 1,1
+#-------------------------------
+[019]   # San Cerigold PC
+Name = San Cerigold PC
+Outdoor = false
+HealingSpot = 4,22,22
+MapPosition = 0,20,3
+MapSize = 1,1
+#-------------------------------
+[020]   # Test World
+Name = Test World
+Outdoor = true
+DiveMap = 38
+BattleBack = Ezovillage
+#-------------------------------
+[021]   # Hacienda houses
 Name = Teo's House
 Outdoor = false
 MapPosition = 0,18,4
+MapSize = 1,1
+#-------------------------------
+[022]   # Veravalles Town
+Name = Veravalles Town
+Outdoor = true
+ShowArea = true
+Bicycle = true
+MapPosition = 0,19,5
+BattleBack = city
 MapSize = 1,1
 #-------------------------------
 [023]   # Route 5

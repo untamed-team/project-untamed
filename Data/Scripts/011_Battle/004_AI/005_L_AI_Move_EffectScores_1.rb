@@ -105,7 +105,7 @@ class Battle::AI
 				@battle.allSameSideBattlers(opponent.index).each do |b|
 					priobroken=moldbroken(attacker,b,move)
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-						 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.willmega) # laguna can have dazz in pre-mega form
+						 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.pokemon.willmega) # laguna can have dazz in pre-mega form
 						score-=300 
 						echo("Blocked by enemy ability. Score-300. \n")
 					end

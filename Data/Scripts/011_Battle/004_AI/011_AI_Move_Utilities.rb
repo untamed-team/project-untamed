@@ -127,7 +127,7 @@ class Battle::AI
   def pbRoughType(move, user, skill)
     ret = move.pbCalcType(user)
     # WillMega / Mid-turn mega move type calcuation
-    if user.willmega
+    if user.pokemon.willmega
       if move.type == :NORMAL # -ate / -ize abilities
         if user.isSpecies?(:HAWLUCHA) && $game_variables[MECHANICSVAR] >= 3 && !user.pokemon.hasHiddenAbility?
           ret = :ELECTRIC
@@ -407,7 +407,7 @@ class Battle::AI
         Battle::AbilityEffects.triggerAccuracyCalcFromUser(
           user.ability, modifiers, user, target, move, type
         )
-        modifiers[:accuracy_multiplier] *= 1.3 if user.isSpecies?(:FLYGON) && user.willmega
+        modifiers[:accuracy_multiplier] *= 1.3 if user.isSpecies?(:FLYGON) && user.pokemon.willmega
       end
       user.allAllies.each do |b|
         next if !b.abilityActive?

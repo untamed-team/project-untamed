@@ -167,7 +167,7 @@ class Battle
       when 1
         pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
       else
-        pbDisplay(_INTL("{1}'s {2}radiates with Mega energy!", battler.pbThis, battler.itemName))
+        pbDisplay(_INTL("{1}'s {2} radiates with Mega energy!", battler.pbThis, battler.itemName))
       end
     else
       trainerName = pbGetOwnerName(idxBattler)
@@ -199,6 +199,7 @@ class Battle
         @scene.pbRevertBattlerEnd
       end
     end
+    battler.pokemon.willmega = false
     battler.pbUpdate(true)
     @scene.pbRefreshOne(idxBattler)
     megaName = battler.pokemon.megaName

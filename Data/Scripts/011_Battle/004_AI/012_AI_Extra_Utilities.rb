@@ -116,7 +116,7 @@ class Battle::AI
 		end
 		# taking in account intimidate from mons with AAM
 		if (target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && 
-			 target.willmega && target.hasAbilityMutation? && move.physicalMove?(type)
+			 target.pokemon.willmega && target.hasAbilityMutation? && move.physicalMove?(type)
 			atk *= (atk.to_f * 2 / 3) 
 		end
 		# if i didnt remove this mold breaker check, i would fake the AI out when she uses
@@ -147,7 +147,7 @@ class Battle::AI
 					target.ability, user, target, move, multipliers, baseDmg, type
 				)
 				# if laguna already has fur coat in base, there is no need to take it in acc again
-				if target.isSpecies?(:LAGUNA) && target.willmega && target.ability != :FURCOAT
+				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT
 					multipliers[:defense_multiplier] *= 2
 				end
 			end
@@ -501,8 +501,8 @@ class Battle::AI
 			 "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
 			return true
 		end
-		if (user.isSpecies?(:GYARADOS)  && (user.item == :GYARADOSITE || user.hasMegaEvoMutation?) && user.willmega) ||
-		   (user.isSpecies?(:LUPACABRA) && (user.item == :LUPACABRITE || user.hasMegaEvoMutation?) && user.willmega)
+		if (user.isSpecies?(:GYARADOS)  && (user.item == :GYARADOSITE || user.hasMegaEvoMutation?) && user.pokemon.willmega) ||
+		   (user.isSpecies?(:LUPACABRA) && (user.item == :LUPACABRITE || user.hasMegaEvoMutation?) && user.pokemon.willmega)
 			return true
 		end
 		return false	
@@ -543,7 +543,7 @@ class Battle::AI
 			return true if target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
 		when :ELECTRIC
 			return true if target.hasActiveAbility?([:LIGHTNINGROD,:MOTORDRIVE,:VOLTABSORB],false,mold_broken)
-			return true if (target.isSpecies?(:GOHILA) || target.isSpecies?(:ROADRAPTOR)) && target.willmega && !mold_broken
+			return true if (target.isSpecies?(:GOHILA) || target.isSpecies?(:ROADRAPTOR)) && target.pokemon.willmega && !mold_broken
 			# i mean, road is already immune cuz ground, but idk maybe you gave it ring target
 			# ¯\_(ツ)_/¯
 		end
@@ -553,11 +553,11 @@ class Battle::AI
 					   target.hasActiveAbility?(:TELEPATHY,false,mold_broken)
 		return true if move.canMagicCoat? && 
 					   (target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) || 
-					   (target.isSpecies?(:SABLEYE) && target.willmega && !mold_broken)) && 
+					   (target.isSpecies?(:SABLEYE) && target.pokemon.willmega && !mold_broken)) && 
 					   target.opposes?(user)
 		return true if move.soundMove? && target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
 		return true if move.bombMove? && (target.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
-										 (target.isSpecies?(:MAGCARGO) && target.willmega && !mold_broken))
+										 (target.isSpecies?(:MAGCARGO) && target.pokemon.willmega && !mold_broken))
 		return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
 						:SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && 
 						(@battle.field.terrain == :Electric || globalArray.include?("electric terrain"))
@@ -569,7 +569,7 @@ class Battle::AI
 		if priorityAI(user,move) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
 				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
-							 !(b.isSpecies?(:LAGUNA) && b.willmega) # laguna can have dazz in pre-mega form
+							 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega) # laguna can have dazz in pre-mega form
 			end
 			return true if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && target.affectedByTerrain? && target.opposes?(user)
 		end

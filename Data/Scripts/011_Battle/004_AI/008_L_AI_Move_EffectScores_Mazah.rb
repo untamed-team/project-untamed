@@ -1624,8 +1624,8 @@ class Battle::AI
 			end	
 		end 			
 		if target.hasActiveAbility?(:MOLDBREAKER) || 
-			 (target.isSpecies?(:GYARADOS)  && (target.item == :GYARADOSITE || target.hasMegaEvoMutation?) && target.willmega) ||
-			 (target.isSpecies?(:LUPACABRA) && (target.item == :LUPACABRITE || target.hasMegaEvoMutation?) && target.willmega)
+			 (target.isSpecies?(:GYARADOS)  && (target.item == :GYARADOSITE || target.hasMegaEvoMutation?) && target.pokemon.willmega) ||
+			 (target.isSpecies?(:LUPACABRA) && (target.item == :LUPACABRITE || target.hasMegaEvoMutation?) && target.pokemon.willmega)
 			echo("\nMold Breaker Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
@@ -1829,11 +1829,12 @@ class Battle::AI
 	
 		@battle.allBattlers.each do |j|
 			megaSpecies = j.pokemon.species
-			if globalEffects.key?(megaSpecies) && j.willmega &&
-			  (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
+			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 
+				 (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
 				globalArray.push(globalEffects[megaSpecies])
 			end
 		end
+		#echoln globalArray
 		return globalArray
 	end
 end
