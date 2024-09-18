@@ -1952,7 +1952,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves
@@ -1999,7 +1999,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves
@@ -2046,7 +2046,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves
@@ -2126,7 +2126,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves
@@ -2179,7 +2179,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves
@@ -2229,7 +2229,7 @@ class Battle::AI
 		else
 			score*=0.8
 			for m in target.moves
-				miniscore*=0.5 if m.healingMove?
+				score*=0.5 if m.healingMove?
 			end
 			nevermiss=false
 			for m in user.moves

@@ -1,9 +1,10 @@
 class Battle::AI
+	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = false
-	$AIGENERALLOG = true
+	$AIMASTERLOG = true
+	$AIGENERALLOG = false
 	# game dies when instruct is used
-	# gastro acid can sometimes make the ai skip turns?
+	# gastro acid can sometimes make kiriya skip turns?
 	# crit moves are off, they dont check if the foe is an ally
 	$movesToTargetAllies = [#"HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
 							"RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
@@ -101,7 +102,6 @@ class Battle::AI
 				next if moveCateg.nil?
 				
 				fakeScore = pbGetMoveScore(mirrmove, user, fakeTarget, 100, true)
-				fakeScore -= 1
 				fakeScore *= -1 if $AIMASTERLOG_TARGET == 1
 				File.open("AI_master_log.txt", "a") do |line|
 					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + " has final score " + fakeScore.to_s
@@ -222,9 +222,9 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
-		score = pbGetMoveScoreFunctionCode(70, move, user, target, skill)
+		score = pbGetMoveScoreFunctionCode(60, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
-		score += 1 if aigenlog
+		score += 1 if aigenlog && score <= 0 
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# Adjust score based on how much damage it can deal
 		#DemICE moved damage calculation to the beginning
@@ -233,9 +233,10 @@ class Battle::AI
 		accuracy = 100 if accuracy>100
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
-			score -= 100-accuracy*1.33 if accuracy < 100
+			score -= (100-accuracy)*1.33 if accuracy < 100
 		else # Status moves
 			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
+			score += 1 if aigenlog && score <= 0
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			score *= accuracy / 100.0
 		end
@@ -286,7 +287,8 @@ class Battle::AI
 				end
 			end
 			# truant can, in fact, do something when loafing around
-			if user.hasActiveAbility?(:TRUANT) && user.effects[PBEffects::Truant]
+			if user.hasActiveAbility?(:TRUANT) && !user.effects[PBEffects::Truant] 
+				# the user WILL truant (!), instead of IS truanting
 				user.eachMove do |m|
 					next unless m.healingMove?
 					score *= 2
@@ -381,11 +383,6 @@ class Battle::AI
 	    damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
 		damagePercentage *= 0.5 if user.level - 3 > target.level
-		if $AIGENERALLOG
-			echo("\n-----------------------------")
-			echo("\n#{move.name} real dmg = #{realDamage}")
-			echo("\n#{move.name} dmg percent = #{damagePercentage}")
-		end
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -405,7 +402,12 @@ class Battle::AI
 		damagePercentage -= 1 if accuracy < 100  # DemICE
 		damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal  # DemICE
 		score += damagePercentage.to_i
-		echo("\n#{move.name} score = #{score}") if $AIGENERALLOG
+		if $AIGENERALLOG
+			echo("\n-----------------------------")
+			echo("\n#{move.name} real dmg = #{realDamage}")
+			echo("\n#{move.name} dmg percent = #{damagePercentage}")
+			echo("\n#{move.name} score = #{score}")
+		end
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s
