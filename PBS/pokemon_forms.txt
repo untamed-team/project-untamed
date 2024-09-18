@@ -47,8 +47,8 @@ Type1 = PSYCHIC
 Type2 = FIRE
 BaseStats = 75,87,71,98,123,126
 Abilities = PREMONITION
-Height = 1.5
-Weight = 16.7
+Height = 1.9
+Weight = 19.7
 #-------------------------------
 [FLYGON,1]
 FormName = Mega Flygon
@@ -57,8 +57,8 @@ Type1 = DRAGON
 Type2 = BUG
 BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
-Height = 2.0
-Weight = 81.6
+Height = 2.6
+Weight = 117.9
 Shape = MultiWinged
 #-------------------------------
 [MILOTIC,1]
@@ -95,6 +95,8 @@ Type1 = PSYCHIC
 Type2 = ELECTRIC
 BaseStats = 75,85,95,60,145,125
 Abilities = MAGNETPULL
+Height = 2.5
+Weight = 44.8
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
@@ -103,18 +105,26 @@ Type1 = GROUND
 Type2 = FLYING
 BaseStats = 89,134,105,105,70,80
 Abilities = AERILATE
+Height = 1.7
+Weight = 300.0
+Shape = HeadArms
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
 MegaStone = HAWLUCHITE
 BaseStats = 78,120,85,140,94,83
 Abilities = VOLTAICSPIRIT
+Height = 0.9
+Weight = 38.3
+Color = Red
 #------------------------------- 
 [CACTURNE,1]
 FormName = Mega Cacturne
 MegaStone = CACTURNITE
 BaseStats = 70,135,80,75,135,80
 Abilities = SANDRUSH
+Height = 1.6
+Weight = 92.1
 #------------------------------- 
 [FROSMOTH,1]
 FormName = Mega Frosmoth
@@ -123,6 +133,8 @@ Type1 = ICE
 Type2 = FIRE
 BaseStats = 70,65,100,95,145,100
 Abilities = ICESCALES
+Height = 1.4
+Weight = 51.0
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
@@ -131,12 +143,16 @@ Type1 = PSYCHIC
 Type2 = STEEL
 BaseStats = 75,50,100,80,120,130
 Abilities = LEVITATE
+Height = 0.9
+Weight = 3.4
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
 BaseStats = 85,118,85,102,150,95
 Abilities = OVERWRITE
+Height = 1.1
+Weight = 38.7
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
@@ -145,12 +161,16 @@ Type1 = FIRE
 Type2 = STEEL
 BaseStats = 60,50,160,30,130,100
 Abilities = REGENERATOR
+Height = 1.1
+Weight = 120.5
 #------------------------------- 
 [SPECTERZAL,1]
 FormName = Mega Specterzal
 MegaStone = SPECTERZITE
 BaseStats = 120,145,86,96,105,95
 Abilities = TOUGHCLAWS
+Height = 5.6
+Weight = 237.2
 #------------------------------- 
 [TREVENANT,1]
 FormName = Mega Trevenant
@@ -163,6 +183,9 @@ FormName = Mega Roserade
 MegaStone = M_ROSERADITE
 BaseStats = 70,70,95,110,130,145
 Abilities = SEANCE
+Height = 1.0
+Weight = 14.8
+Color = Black
 #------------------------------- 
 [LUPACABRA,1]
 FormName = Mega Lupacabra
@@ -171,6 +194,8 @@ Type1 = DARK
 Type2 = FIGHTING
 BaseStats = 80,135,135,80,55,105
 Abilities = MOXIE
+Height = 2.1
+Weight = 140.0
 #------------------------------- 
 [ZOLUPINE,1]
 FormName = Mega Zolupine
@@ -179,6 +204,8 @@ Type1 = GHOST
 Type2 = WATER
 BaseStats = 60,95,70,125,135,125
 Abilities = NOGUARD
+Height = 1.6
+Weight = 115.6
 #------------------------------- 
 [ROADRAPTOR,1]
 FormName = Mega Roadraptor
@@ -187,18 +214,24 @@ Type1 = ELECTRIC
 Type2 = FLYING
 BaseStats = 70,134,62,150,85,89
 Abilities = GALEWINGS
+Height = 1.0
+Weight = 27.0
 #------------------------------- 
 [FRIZZARD,1]
 FormName = Mega Frizzard
 MegaStone = FRIZZARDITE
 BaseStats = 80,75,99,85,145,121
 Abilities = THERMOCOOL
+Height = 1.7
+Weight = 87.9
 #------------------------------- 
 [ZARCOIL,1]
 FormName = Mega Zarcoil
 MegaStone = ZARCOILITE
 BaseStats = 80,145,99,121,85,75
 Abilities = THERMOHEAT
+Height = 1.3
+Weight = 78.2
 #------------------------------- #
 [LAGUNA,1]
 FormName = Mega Laguna
@@ -207,6 +240,8 @@ Type1 = ICE
 Type2 = FAIRY
 BaseStats = 50,60,80,95,110,130
 Abilities = FURCOAT
+Height = 0.8
+Weight = 14.0
 #-------------------------------
 [LEDIAN,1]
 FormName = Mega Ledian
@@ -215,6 +250,8 @@ Type1 = BUG
 Type2 = FIGHTING
 BaseStats = 55,130,90,105,15,120
 Abilities = IRONFIST
+Height = 1.4
+Weight = 42.5
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
@@ -329,6 +366,8 @@ Type1 = STEEL
 Type2 = ELECTRIC
 BaseStats = 75,125,150,88,70,70
 Abilities = MOTORDRIVE
+Height = 0.6
+Weight = 25.8
 #-------------------------------
 [BEAKRAFT,3]
 FormName = Mega Beakraft ♀
@@ -338,6 +377,8 @@ Type1 = STEEL
 Type2 = ELECTRIC
 BaseStats = 75,150,88,125,70,70
 Abilities = MOTORDRIVE
+Height = 0.6
+Weight = 25.8
 #-------------------------------
 #-------------------------------
 [CROACROZEN,1]
