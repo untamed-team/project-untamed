@@ -8,6 +8,10 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
 	mold_broken = moldbroken(user,target,move)
 	globalArray = pbGetMidTurnGlobalChanges
+	aspeed = pbRoughStat(user,:SPEED,skill)
+	ospeed = pbRoughStat(target,:SPEED,skill)
+	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+	pbAIPrioSpeedCheck(user,target,move,score,globalArray,aspeed,ospeed)
     case move.function
     #---------------------------------------------------------------------------
     when "FixedDamage20"
@@ -66,12 +70,12 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "PowerHigherWithUserHP"
-		if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (!userFasterThanTarget)
 			score*=0.5
 		end
     #---------------------------------------------------------------------------
     when "PowerLowerWithUserHP"
-		if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (!userFasterThanTarget)
 			score*=1.1
 			if user.hp<user.totalhp
 				score*1.3
@@ -199,7 +203,7 @@ class Battle::AI
     when "DoublePowerIfAllyFaintedLastTurn"
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserLostHPThisTurn" # Avalanche / Revenge
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			score*=0.5
 		end
 		if user.hp==user.totalhp
@@ -224,19 +228,19 @@ class Battle::AI
 		score*=miniscore
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetLostHPThisTurn" # Assurance
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			score*=1.5
 		end
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserStatsLoweredThisTurn"
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetActed" # Payback
-		if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if !userFasterThanTarget
 			score*=2
 		end
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetNotActed"
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			score*=2
 		end
 		if target.battle.choices[target.index][0] == :SwitchOut
@@ -257,7 +261,7 @@ class Battle::AI
 							enemy1.allAllies do |b|
 								enemy2 = b
 							end
-							if pbRoughStat(target,:SPEED,skill) > pbRoughStat(enemy1,:SPEED,skill) && pbRoughStat(target,:SPEED,skill) > pbRoughStat(enemy2,:SPEED,skill)
+							if ospeed > pbRoughStat(enemy1,:SPEED,skill) && ospeed > pbRoughStat(enemy2,:SPEED,skill)
 								score*=1.3
 							else
 								score*=0.7
@@ -357,7 +361,7 @@ class Battle::AI
 			if maxdam>user.hp
 				score*=2
 			end
-			if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+			if userFasterThanTarget
 				score*=1.3
 			else
 				score*0.5
@@ -379,7 +383,7 @@ class Battle::AI
 				score*=1.5
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.5
 				end
 			end
@@ -395,8 +399,6 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "StartWeakenPhysicalDamageAgainstUserSide"
 		#target=user.pbDirectOpposing(true)
-		aspeed = pbRoughStat(user,:SPEED,skill)
-		ospeed = pbRoughStat(target,:SPEED,skill)
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0] 
 		maxmove=bestmove[1]
@@ -425,8 +427,6 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "StartWeakenSpecialDamageAgainstUserSide"
 		#target=user.pbDirectOpposing(true)
-		aspeed = pbRoughStat(user,:SPEED,skill)
-		ospeed = pbRoughStat(target,:SPEED,skill)
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0] 
 		maxmove=bestmove[1]
@@ -459,8 +459,6 @@ class Battle::AI
 			score = 0
 		else
 			if user.effectiveWeather == :Hail || globalArray.include?("hail weather")
-				aspeed = pbRoughStat(user,:SPEED,skill)
-				ospeed = pbRoughStat(target,:SPEED,skill)
 				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam=bestmove[0] 
 				maxmove=bestmove[1]
@@ -703,7 +701,7 @@ class Battle::AI
 		for j in user.moves
 			pricheck=true if j.priority>0
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			if user.hasActiveAbility?(:VOLTABSORB)
 				if user.hp<user.totalhp*0.8
 					score*=1.5
@@ -742,7 +740,7 @@ class Battle::AI
 		maxdam=bestmove[0]
 		maxmove=bestmove[1]
 		maxtype=maxmove.type
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			score*=0.9
 		elsif user.hasActiveAbility?(:MOTORDRIVE)
 			if maxtype == :NORMAL
@@ -805,7 +803,7 @@ class Battle::AI
 		end
 		if move.function == "HitTwoTimesFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (pbRoughStat(target,:SPEED,skill)<pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					miniscore=100
 					miniscore*=1.3
 					if target.poisoned? || target.burned? || user.takesHailDamage? || user.takesSandstormDamage? || 
@@ -875,7 +873,7 @@ class Battle::AI
 							# checking if the recepient can outspeed
 							enemycounter = 0
 							user.eachOpposing do |m|
-								next unless pbRoughStat(target,:SPEED,skill) < pbRoughStat(m,:SPEED,skill)
+								next unless ospeed < pbRoughStat(m,:SPEED,skill)
 								enemycounter += 1
 							end
 							if enemycounter == 0
@@ -1095,7 +1093,7 @@ class Battle::AI
 			else
 				if miniscore<100
 					miniscore*=0.8
-					if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+					if (!userFasterThanTarget)
 						miniscore*=1.3
 					else
 						if privar
@@ -1142,7 +1140,7 @@ class Battle::AI
 						# checking if the recepient can outspeed
 						enemycounter = 0
 						user.eachOpposing do |m|
-							next unless pbRoughStat(target,:SPEED,skill) < pbRoughStat(m,:SPEED,skill)
+							next unless ospeed < pbRoughStat(m,:SPEED,skill)
 							enemycounter += 1
 						end
 						if enemycounter == 0
@@ -1231,7 +1229,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1266,7 +1264,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1301,7 +1299,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1365,7 +1363,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1427,7 +1425,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1447,7 +1445,7 @@ class Battle::AI
 			end
 		end
 		if canFlinchTarget(user,target,mold_broken)
-			if (pbRoughStat(target,:SPEED,skill)<pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+			if userFasterThanTarget
 				miniscore=100
 				miniscore*=1.3
 				if target.poisoned? || target.burned? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
@@ -1580,7 +1578,7 @@ class Battle::AI
 			healvar=true if m.healingMove?
 			priovar=true if m.priority>0
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (userFasterThanTarget)
 			miniscore*=1.5
 		end
 		roles = pbGetPokemonRole(user, target)
@@ -1630,7 +1628,7 @@ class Battle::AI
 			minimini/=100.0
 			miniscore*=minimini
 		end        
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			miniscore*=0.8          
 		end
 		if @battle.field.effects[PBEffects::TrickRoom]!=0
@@ -1668,7 +1666,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1797,7 +1795,7 @@ class Battle::AI
 				end
 			end
 			if target.effects[PBEffects::TwoTurnAttack]!=0
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=2
 				else
 					score*=0.5
@@ -1884,7 +1882,7 @@ class Battle::AI
 				movecheck=true if m.healingMove?
 			end
 			miniscore*=1.3 if movecheck
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if (userFasterThanTarget)
 				miniscore*=1.5
 			end
 			roles = pbGetPokemonRole(user, target)
@@ -1947,7 +1945,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -1994,7 +1992,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -2041,7 +2039,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -2121,7 +2119,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -2174,7 +2172,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -2224,7 +2222,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 			score*=0.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.8
@@ -2365,7 +2363,7 @@ class Battle::AI
 		if movecheck
 			score*=0.8
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.3
 		end
     #---------------------------------------------------------------------------
@@ -2397,7 +2395,7 @@ class Battle::AI
 		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 			score*=1.1
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.3
 		end
 		if movecheck
@@ -2412,11 +2410,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HealUserFullyAndFallAsleep" # rest
-		#target=user.pbDirectOpposing(true)
-		aspeed = pbRoughStat(user,:SPEED,skill)
-		ospeed = pbRoughStat(target,:SPEED,skill)
-		fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-		fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE)    
+		fasterhealing=userFasterThanTarget || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE)    
 		if user.hasActiveItem?(:CHESTOBERRY) || user.hasActiveItem?(:LUMBERRY)
 			halfhealth=(user.totalhp*2/3)
 		else    
@@ -2445,7 +2439,7 @@ class Battle::AI
 			if maxdam*1.5>user.hp
 				score*=2
 			end
-			if !fastermon
+			if !userFasterThanTarget
 				if maxdam*2>user.hp
 					score*=2
 				end
@@ -2459,7 +2453,7 @@ class Battle::AI
 		thisdam=maxdam#*1.1
 		hplost=(user.totalhp-user.hp)
 		hplost+=maxdam if !fasterhealing
-		if user.effects[PBEffects::LeechSeed]>=0 && !fastermon && canSleepTarget(target,user,globalArray)
+		if user.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,user,globalArray)
 			score *= 0.3 
 		end	
 		if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
@@ -2480,7 +2474,7 @@ class Battle::AI
 			if thisdam<=(halfhealth)
 				score*=2
 			else
-				if fastermon
+				if userFasterThanTarget
 					if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
 						score*=0.3
 					end
@@ -2592,11 +2586,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserHalfOfTotalHP", "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", 
 		 "HealUserDependingOnWeather", "HealUserDependingOnSandstorm" # Recover, Roost, Synthesis, Shore Up
-		#target=user.pbDirectOpposing(true)
-		aspeed = pbRoughStat(user,:SPEED,skill)
-		ospeed = pbRoughStat(target,:SPEED,skill)
-		fastermon=((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-		fasterhealing=fastermon || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE) 
+		fasterhealing=userFasterThanTarget || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE) 
 		if move.function == "HealUserDependingOnWeather" 
 			case user.effectiveWeather
 			when :Sun, :HarshSun
@@ -2629,7 +2619,7 @@ class Battle::AI
 				score=0
 			else
 				if maxdam>=halfhealth
-					if fastermon
+					if userFasterThanTarget
 						score*=0.5
 					else
 						score*=0.1
@@ -2642,7 +2632,7 @@ class Battle::AI
 			if maxdam*1.5>user.hp
 				score*=2
 			end
-			if !fastermon
+			if !userFasterThanTarget
 				if maxdam*2>user.hp
 					score*=2
 				end
@@ -2656,7 +2646,7 @@ class Battle::AI
 		thisdam=maxdam#*1.1
 		hplost=(user.totalhp-user.hp)
 		hplost+=maxdam if !fasterhealing
-		if user.effects[PBEffects::LeechSeed]>=0 && !fastermon && canSleepTarget(target,user,globalArray)
+		if user.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,user,globalArray)
 			score *= 0.3 
 		end	
 		if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
@@ -2677,7 +2667,7 @@ class Battle::AI
 			if thisdam<=(halfhealth)
 				score*=2
 			else
-				if fastermon
+				if userFasterThanTarget
 					if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
 						score*=0.3
 					end
@@ -2788,7 +2778,7 @@ class Battle::AI
 					if maxdam*1.5 > user.hp
 						score*=1.5
 					end
-					if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					if !userFasterThanTarget
 						if maxdam*2 > user.hp
 							score*=2
 						else
@@ -2901,7 +2891,7 @@ class Battle::AI
 			miniscore = (2-miniscore)
 		end
 		if (user.hp!=user.totalhp || 
-				((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) && target.effects[PBEffects::Substitute]==0
+				(userFasterThanTarget)) && target.effects[PBEffects::Substitute]==0
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
@@ -2923,7 +2913,7 @@ class Battle::AI
 				miniscore = (2-miniscore)
 			end
 			if (user.hp!=user.totalhp || 
-					((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) && target.effects[PBEffects::Substitute]==0
+					(userFasterThanTarget)) && target.effects[PBEffects::Substitute]==0
 				score*=miniscore
 			end
 		else
@@ -2948,7 +2938,7 @@ class Battle::AI
 			miniscore = (2-miniscore)
 		end
 		if (user.hp!=user.totalhp || 
-				((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) && target.effects[PBEffects::Substitute]==0
+				((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) && target.effects[PBEffects::Substitute]==0
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
@@ -2990,7 +2980,7 @@ class Battle::AI
 				end
 			end
 			if target.hp*(1.0/target.totalhp)>0.8
-				if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (!userFasterThanTarget)
 					score*=0.5
 				else
 					score*=0
@@ -3016,7 +3006,7 @@ class Battle::AI
 				end
 			end
 			if target.hp*(1.0/target.totalhp)>0.8
-				if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (!userFasterThanTarget)
 					score*=0.5
 				else
 					score*=0
@@ -3041,7 +3031,7 @@ class Battle::AI
 			if maxdam*1.5>user.hp
 				score*=2
 			end
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+			if userFasterThanTarget
 				if maxdam*2>user.hp
 					score*=5
 				end                
@@ -3303,7 +3293,7 @@ class Battle::AI
 		initialscores = score
 		if (!user.hasActiveAbility?(:MAGICGUARD) && user.hp<user.totalhp*0.5) || 
 				(user.hp<user.totalhp*0.75 && 
-				((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) ||
+				((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) ||
 				(!@battle.pbCheckGlobalAbility(:DAMP) && move.function == "UserLosesHalfOfTotalHPExplosive")
 			if !user.hasActiveAbility?(:MAGICGUARD)
 				if user.hasActiveAbility?(:PARTYPOPPER)
@@ -3313,7 +3303,7 @@ class Battle::AI
 				if initialscores < 100
 					score*=0.7
 				end
-				if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if !userFasterThanTarget
 					score*=0.5
 				end
 				if maxdam < user.totalhp*0.2
@@ -3491,7 +3481,7 @@ class Battle::AI
 		else
 			score*=0.5
 		end
-		if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*=0.5
@@ -3590,7 +3580,7 @@ class Battle::AI
 				end
 			end
 		end
-		if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.1
 		else
 			score*0.5
@@ -3711,7 +3701,7 @@ class Battle::AI
 				end            
 			end          
 		end        
-		if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.3
 		else
 			score*0.5
@@ -3745,7 +3735,7 @@ class Battle::AI
 				end            
 			end          
 		end        
-		if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=1.3
 		else
 			score*0.5
@@ -3763,7 +3753,7 @@ class Battle::AI
 				when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 					miniscore*=1.2
 				when :CHOICESCARF
-					if pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+					if aspeed<ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
 						miniscore*=1.1
 					end
 				when :CHOICEBAND
@@ -3795,7 +3785,7 @@ class Battle::AI
 		   target.effects[PBEffects::Substitute]<=0
 			case user.item_id
 			when :CHOICESCARF
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.2
 				end
 			when :CHOICEBAND
@@ -3838,7 +3828,7 @@ class Battle::AI
 					when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 						miniscore*=1.2
 					when :CHOICESCARF
-						if pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+						if aspeed<ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
 							miniscore*=1.1
 						end
 					when :CHOICEBAND
@@ -3868,7 +3858,7 @@ class Battle::AI
 					when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
 						minimini*=0.8
 					when :CHOICESCARF
-						if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+						if !userFasterThanTarget
 							minimini*=1.5
 						else
 							minimini*=0.9
@@ -4114,7 +4104,7 @@ class Battle::AI
 					score*=1.5 if user.spatk>user.attack
 				when :CUSTAPBERRY, :SALACBERRY
 					score*=1.1
-					score*=1.4 if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0))
+					score*=1.4 if (!userFasterThanTarget)
 				when :NYLOBERRY
 					score*=0.8
 			end 
@@ -4158,7 +4148,7 @@ class Battle::AI
 						score*=1.3
 					end
 				when :KINGSROCK, :RAZORCLAW
-					if canFlinchTarget(user,target,mold_broken) && (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					if canFlinchTarget(user,target,mold_broken) && (userFasterThanTarget)
 						score*=1.3
 					end
 				when :POWERHERB
@@ -4206,7 +4196,7 @@ class Battle::AI
 			end
 			speedcheck=0
 			target.allAllies.each do |m|
-				speedcheck+= 1 if pbRoughStat(user,:SPEED,skill) < pbRoughStat(m, :SPEED, skill)
+				speedcheck+= 1 if aspeed < pbRoughStat(m, :SPEED, skill)
 			end
 			score*=1.2 if target.allAllies.length == speedcheck
 		end
@@ -4257,10 +4247,10 @@ class Battle::AI
 					score*=2
 				end
 				target.allAllies.each do |barget|
-					if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
+					if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						score*=1.5
 					end
-					if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
+					if ((aspeed<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						score*=1.5
 					end
 				end
@@ -4304,8 +4294,8 @@ class Battle::AI
 			end
 			target.allAllies.each do |barget|
 				if target.hp*(1.0/target.totalhp)>0.8
-					if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
-							((pbRoughStat(user,:SPEED,skill)<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
+					if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
+							((aspeed<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						miniscore*=0.5
 					else
 						miniscore*=0
@@ -4326,7 +4316,7 @@ class Battle::AI
 				score = 0
 			else
 				score*=0.7
-				if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (!userFasterThanTarget)
 					score*=0.5
 				end
 				if maxdam*5 < user.hp
@@ -4439,7 +4429,7 @@ class Battle::AI
 			for m in target.moves
 				miniscore*=1.3 if m.healingMove?
 			end
-			if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]==0)
+			if (aspeed > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]==0)
 				miniscore*=0.5
 			else
 				miniscore*=1.1
@@ -4469,9 +4459,9 @@ class Battle::AI
 			roles = pbGetPokemonRole(user, target)
 			if pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)
 				if !(roles.include?("Physical Wall") || roles.include?("Special Wall"))
-					if ((pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && (user.hp.to_f)/user.totalhp>0.75
+					if (userFasterThanTarget) && (user.hp.to_f)/user.totalhp>0.75
 						miniscore*=1.3
-					elsif (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+					elsif (!userFasterThanTarget)
 						miniscore*=0.7
 					end
 				end
@@ -4506,7 +4496,7 @@ class Battle::AI
 			if user.hasActiveAbility?(:CONTRARY)
 				score=0
 			end  
-			if (pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)        
+			if userFasterThanTarget        
 				score*=0.7
 			end
 			score *= (atkscore+defscore)/2
@@ -4532,7 +4522,7 @@ class Battle::AI
 			firecheck = true if m.type == :FIRE
 		end
 		if !(target.pbHasType?(:GRASS, true) || target.hasActiveAbility?(:OVERCOAT) || target.hasActiveItem?(:SAFETYGOGGLES))
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if !userFasterThanTarget
 				score*=1.2
 			end
 			if maxtype == :FIRE
@@ -4585,13 +4575,13 @@ class Battle::AI
 			minimini = 0
 			user.allAllies.each do |bally|
 				target.allAllies.each do |barget|
-					if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
-							((pbRoughStat(user,:SPEED,skill)<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
+					if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
+							((aspeed<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						score*=1.2
 						if user.hp*(1.0/user.totalhp) < 0.33
 							score*=1.5
 						end
-						if pbRoughStat(bally,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && 
+						if pbRoughStat(bally,:SPEED,skill)<ospeed && 
 						   pbRoughStat(bally,:SPEED,skill)<pbRoughStat(barget,:SPEED,skill)
 							score*=1.5
 						end
@@ -4622,7 +4612,7 @@ class Battle::AI
 				end
 			end
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=0.5
 		end
 		if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
@@ -4670,7 +4660,7 @@ class Battle::AI
 				end
 			end
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=0.5
 		end
 		if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
@@ -4710,7 +4700,7 @@ class Battle::AI
 			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
 			maxdam = tempdam if tempdam > maxdam
 		end
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			score*=0.5
 		end
 		if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
@@ -4876,7 +4866,7 @@ class Battle::AI
 			else
 				score*=1.3
 			end
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if !userFasterThanTarget
 				score*=1.1
 			else
 				score*=0.8
@@ -4916,7 +4906,7 @@ class Battle::AI
 			if count>1
 				score*=0.5
 			end          
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if !userFasterThanTarget
 				score*=1.1
 			else
 				score*=0.8
@@ -4927,7 +4917,7 @@ class Battle::AI
 				if maxdam*1.5 > user.hp
 					score*=1.5
 				end
-				if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if !userFasterThanTarget
 					if maxdam*2 > user.hp
 						score*=2
 					else
@@ -4972,7 +4962,7 @@ class Battle::AI
 				rough = pbRoughDamage(copymove, user, target, skill, copymove.baseDamage)
 				copyscore = pbGetMoveScore(rough, copymove, user, target, skill)
 				score = copyscore
-				if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					score*=0.5
 				end
 			end
@@ -4991,7 +4981,7 @@ class Battle::AI
 				rough = pbRoughDamage(mirrmove, user, target, skill, mirrmove.baseDamage)
 				mirrorscore = pbGetMoveScore(rough, mirrmove, user, target, skill)
 				score = mirrorscore
-				if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
 					score *= 0.5
 				end
 			end
@@ -5000,7 +4990,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UseMoveTargetIsAboutToUse" # Me First
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if userFasterThanTarget
 			privar = false
 			setupvar = false
 			maxdam = 0
@@ -5211,8 +5201,6 @@ class Battle::AI
 		#target=user.pbDirectOpposing(true)
 		userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
 		if userlivecount>1
-			aspeed = pbRoughStat(user,:SPEED,skill)
-			ospeed = pbRoughStat(target,:SPEED,skill)
 			score *= 0.8 if aspeed>ospeed && !(target.status == :SLEEP && target.statusCount>1)
 			score *= 0.7 if user.pbOwnSide.effects[PBEffects::StealthRock]
 			score *= (0.9**user.pbOwnSide.effects[PBEffects::ToxicSpikes])
@@ -5249,8 +5237,6 @@ class Battle::AI
 		# that was so retarded holy shit
 		userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
     	 if userlivecount>1
-			aspeed = pbRoughStat(user,:SPEED,skill)
-			ospeed = pbRoughStat(target,:SPEED,skill)
 			if aspeed>ospeed && !(target.status == :SLEEP && target.statusCount>1)
 				score *= 0.8
 				# DemICE: Switching AI is dumb so if you're faster, don't sack a healthy mon. Better use another move.
@@ -5278,7 +5264,7 @@ class Battle::AI
 					sweepvar = true
 				end
 			end  
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if (userFasterThanTarget)
 				score*=1.2
 			else
 				if sweepvar
@@ -5328,7 +5314,7 @@ class Battle::AI
 			bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
 			maxdam = bestmove[0]
 			if maxdam <= ((target.hp * 100/target.totalhp) / 4)
-				if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+				if userFasterThanTarget
 					score*=2
 				else
 					besttargetmove=bestMoveVsTarget(target,user,skill)
@@ -5367,7 +5353,7 @@ class Battle::AI
 						score*=1.2
 					end
 				end
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.1
 				end
 				sweepvar = false
@@ -5432,7 +5418,7 @@ class Battle::AI
 				bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam = bestmove[0]
 				if maxdam <= ((target.hp * 100/target.totalhp) / 4)
-					if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+					if userFasterThanTarget
 						miniscore*=2
 					else
 						besttargetmove=bestMoveVsTarget(target,user,skill)
@@ -5573,7 +5559,7 @@ class Battle::AI
 		if target.hasActiveAbility?([:REGENERATOR, :NATURALCURE])
 			score*=0.5
 		end
-		if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if !userFasterThanTarget
 			score*=0.8
 		end
 		if user.effects[PBEffects::Substitute]>0
@@ -5629,7 +5615,7 @@ class Battle::AI
 			if target.hasActiveAbility?([:REGENERATOR, :NATURALCURE])
 				miniscore*=0.5
 			end
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if !userFasterThanTarget
 				miniscore*=0.8
 			end
 			if user.effects[PBEffects::Substitute]>0
@@ -5824,7 +5810,7 @@ class Battle::AI
 				end
 			end
 		end
-		if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+		if !userFasterThanTarget
 			score*=0.5
 		end
 		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
@@ -5925,7 +5911,7 @@ class Battle::AI
 		if user.hasActiveItem?(:FOCUSSASH)
 			score*=1.5
 		end
-		if pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill) || user.hasActiveItem?(:IRONBALL)
+		if aspeed < pbRoughStat(target, :SPEED, skill) || user.hasActiveItem?(:IRONBALL)
 			if @battle.field.effects[PBEffects::TrickRoom] > 0         
 				score=0
 			else
@@ -5958,7 +5944,7 @@ class Battle::AI
 				score+=10
 			end
 		end
-		if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (!userFasterThanTarget)
 			score*=0.5
 		end
 		if target.lastRegularMoveUsed
@@ -5998,7 +5984,7 @@ class Battle::AI
 		if (target.effects[PBEffects::Disable]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
+			if (userFasterThanTarget) || 
 					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.2
 			else
@@ -6041,7 +6027,7 @@ class Battle::AI
 		if (target.effects[PBEffects::Torment] || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
+			if (userFasterThanTarget) || 
 					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.2
 			else
@@ -6085,7 +6071,7 @@ class Battle::AI
 			if target.lastRegularMoveUsed
 				score*=0.2
 			else
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					score*=1.5
 				else
 					if (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
@@ -6122,7 +6108,7 @@ class Battle::AI
 		if (target.effects[PBEffects::Taunt]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
+			if (userFasterThanTarget) || 
 					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
 				score*=3.0 if target.battle.choices[target.index][2].statusMove? 
@@ -6156,7 +6142,7 @@ class Battle::AI
 		if (target.effects[PBEffects::HealBlock]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if ((pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) || 
+			if (userFasterThanTarget) || 
 					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
 			end

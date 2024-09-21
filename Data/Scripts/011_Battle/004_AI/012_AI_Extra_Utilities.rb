@@ -147,7 +147,7 @@ class Battle::AI
 					target.ability, user, target, move, multipliers, baseDmg, type
 				)
 				# if laguna already has fur coat in base, there is no need to take it in acc again
-				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT
+				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT && move.physicalMove?(type)
 					multipliers[:defense_multiplier] *= 2
 				end
 			end
