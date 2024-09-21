@@ -11,7 +11,6 @@ class Battle::AI
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-	pbAIPrioSpeedCheck(user,target,move,score,globalArray,aspeed,ospeed)
     case move.function
     #---------------------------------------------------------------------------
     when "ProtectUser"
