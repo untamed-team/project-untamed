@@ -292,6 +292,10 @@ Pokemon = M_VANILLITE,12
 LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
+[TRAINER_Reine,Reine,100]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
 [WAREHOUSEWORKER,Reine,100]
 LoseText = ...
 Pokemon = EEVEE,11
@@ -329,6 +333,14 @@ Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+#-------------------------------
+[TRAINER_Reine,Reine,1] #battle in sanctuary after Neo grunts
+LoseText = Well done.
+Pokemon = EEVEE,12
+#-------------------------------
+[TRAINER_Reine,Reine,101]
+LoseText = Well done.
+Pokemon = EEVEE,12
 
 
 #-------------------------------
