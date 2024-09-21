@@ -7,6 +7,10 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
 	mold_broken = moldbroken(user,target,move)
 	globalArray = pbGetMidTurnGlobalChanges
+	aspeed = pbRoughStat(user,:SPEED,skill)
+	ospeed = pbRoughStat(target,:SPEED,skill)
+	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+	pbAIPrioSpeedCheck(user,target,move,score,globalArray,aspeed,ospeed)
     case move.function
     #---------------------------------------------------------------------------
     when "SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm" # hypnosis
@@ -173,7 +177,7 @@ class Battle::AI
 			end
 			miniscore*=1.3 if movecheckelectroball
 			miniscore*=0.5 if movecheckgyroball
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if !userFasterThanTarget
 				score*=0.5
 			end              
 			miniscore/=100.0    
@@ -237,7 +241,7 @@ class Battle::AI
 			score = 0
 		end
 		if move.function == "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0) && 
+			if (userFasterThanTarget) && 
 				target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
 										"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
 										"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
@@ -251,7 +255,7 @@ class Battle::AI
 		end
 		if move.function == "ParalyzeFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -292,7 +296,7 @@ class Battle::AI
      	end
 		if move.function == "BurnFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -334,7 +338,7 @@ class Battle::AI
       	end
 		if move.function == "FreezeFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -393,7 +397,7 @@ class Battle::AI
 					if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
 						score*=1.1
 					end
-					if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					if !userFasterThanTarget
 						score*=1.2
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 120, move, globalArray, skill)
@@ -503,8 +507,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "StartUserSideImmunityToInflictedStatus" # Safeguard
 		roles = pbGetPokemonRole(user, target)
-		if user.pbOwnSide.effects[PBEffects::Safeguard]<=0 && 
-		 ((pbRoughStat(user,:SPEED,skill) > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)) && 
+		if user.pbOwnSide.effects[PBEffects::Safeguard]<=0 && userFasterThanTarget && 
 		  (user.status == :NONE && !roles.include?("Status Absorber")) 
 			ebinstatuscheck=false
 			statuscheck=false
@@ -526,7 +529,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FlinchTarget" # flinching moves
 		if canFlinchTarget(user,target,mold_broken)
-			if (pbRoughStat(target,:SPEED,skill)<pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+			if userFasterThanTarget
 				miniscore=100
 				miniscore*=1.3
 				if target.poisoned? || target.burned? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
@@ -556,7 +559,7 @@ class Battle::AI
 		if user.asleep?
 			score *= 2
 			if canFlinchTarget(user,target,mold_broken)
-				if (pbRoughStat(target,:SPEED,skill)<pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				if userFasterThanTarget
 					miniscore=100
 					miniscore*=1.3
 					if target.poisoned? || target.burned? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
@@ -589,7 +592,7 @@ class Battle::AI
 		if user.turnCount==0
 			if canFlinchTarget(user,target,mold_broken)
 				if score>1
-					if ((pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
+					if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
 						score*=1.2
 					end
 				end
@@ -611,7 +614,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FlinchTargetDoublePowerIfTargetInSky" # twister
 		if canFlinchTarget(user,target,mold_broken)
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if (userFasterThanTarget)
 				miniscore=100
 				miniscore*=1.3
 				if target.hasActiveAbility?(:STEADFAST)
@@ -978,7 +981,7 @@ class Battle::AI
 				end
 			end
 			userTypes = user.pbTypes(false)
-			if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+			if (userFasterThanTarget)
 				if user.hasActiveAbility?(:WONDERGUARD) && (userTypes[0] == :FIRE || userTypes[1] == :FIRE || userTypes[2] == :FIRE)
 					score*=8
 				end
@@ -1152,7 +1155,7 @@ class Battle::AI
 		end
 		if !target.unstoppableAbility?
 			miniscore = getAbilityDisruptScore(move,user,target,skill)
-			if (pbRoughStat(user,:SPEED,skill)<pbRoughStat(target,:SPEED,skill) && (@battle.field.effects[PBEffects::TrickRoom]!=0))
+			if (aspeed<ospeed && (@battle.field.effects[PBEffects::TrickRoom]!=0))
 				miniscore*=1.3
 			else
 				miniscore*=0.5
@@ -1256,7 +1259,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HitsTargetInSky" # sky uppercut
-		if (pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0) && 
+		if (userFasterThanTarget) && 
 			target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
 									"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
 									"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
@@ -1270,7 +1273,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HitsTargetInSkyGroundsTarget" # smack down
 		miniscore=100
-		if (pbRoughStat(user,:SPEED,skill) < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+		if (!userFasterThanTarget)
 			if target.pbHasMove?(:BOUNCE) || target.pbHasMove?(:FLY) || target.pbHasMove?(:SKYDROP)
 				miniscore*=1.3
 			else
