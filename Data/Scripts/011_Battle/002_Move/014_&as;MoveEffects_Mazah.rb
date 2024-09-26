@@ -303,12 +303,18 @@ class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
 end
 
 #===============================================================================
-# changes type to fire during sun or harsh sun (Pepper Spray)
+# typo on function code is intentional (Pepper Spray)
 #===============================================================================
-class Battle::Move::ChangeTypeToFireDuringSun < Battle::Move
-  def pbBaseType(user)
-    return :FIRE if [:Sun, :HarshSun].include?(user.effectiveWeather)
-    return @type
+class Battle::Move::PeperSpray < Battle::Move
+  def pbTarget(user)
+    return GameData::Target.get(:AllNearFoes) if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return super
+  end
+
+  def pbBaseDamage(baseDmg, user, target)
+    peper_dmg_mult = (@battle.field.abilityWeather) ? 5 / 4 : 4 / 3
+    baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return baseDmg
   end
 end
 

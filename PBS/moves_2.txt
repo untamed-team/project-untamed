@@ -8919,25 +8919,22 @@ Type = GRASS
 Category = Special
 Power = 75
 Accuracy = 100
-TotalPP = 10
-Target = AllNearFoes
-Priority = 0
-FunctionCode = ChangeTypeToFireDuringSun
+TotalPP = 5
+Target = NearOther
+FunctionCode = PeperSpray
 Flags = CanProtect,ThawsUser
-Description = Unleashes a spray of spicy vapors at the opposing foes to attack, this move is Fire-type during Sun.
+Description = Unleashes a spray of spicy vapors to attack. Powers up and hits all foes during Sun or Harsh Sun.
 #-------------------------------
 [TITANSWRATH]
 Name = Titan's Wrath
 Type = QMARKS
 Category = Special
-Power = 120
+Power = 110
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = TitanWrath
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 0
 Description = The damage is based on the user's highest plain, non-HP stat. The move's type is set by the user's type.
 #-------------------------------
 [SIRENSONG]
@@ -8948,7 +8945,6 @@ Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = SleepTargetChangeUserMeloettaForm
 Flags = CanProtect,Sound,CannotMetronome
 EffectChance = 10
@@ -8962,10 +8958,8 @@ Power = 0
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = Rebalancing
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 0
 Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
 [FRIGIDMAW]

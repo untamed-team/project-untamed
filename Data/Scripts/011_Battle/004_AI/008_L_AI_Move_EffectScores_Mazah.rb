@@ -582,6 +582,10 @@ class Battle::AI
 					score *= 1.4 if aspeed <= ospeed && target.hasActiveItem?(:CHOICESCARF)
 				end
 			end
+	#---------------------------------------------------------------------------
+		when "PeperSpray"
+			score *= 1.4 if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
+							(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
     #---------------------------------------------------------------------------
     else
       return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
@@ -661,12 +665,8 @@ class Battle::AI
 	
 	def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
 		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
-		return 0 if globalArray.include?("misty terrain") || 
-		            @battle.field.terrain == :Misty || 
-		miniscore*=0.1 if target.hasActiveItem?(:LUMBERRY)
-		if target.hasActiveAbility?([:QUICKFEET, :GUTS])
-			miniscore*=0.2
-		end
+		return 0 if globalArray.include?("misty terrain") || @battle.field.terrain == :Misty
+		return 0 if (globalArray.include?("electric terrain") || @battle.field.terrain == :Electric) && status == :SLEEP
 		if target.hasActiveAbility?(:HYDRATION) && 
 		   ([:Rain, :HeavyRain].include?(target.effectiveWeather) || globalArray.include?("rain weather"))
 			miniscore*=0.2
@@ -675,7 +675,9 @@ class Battle::AI
 		   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
 			miniscore*=0.2
 		end
+		miniscore*=0.2 if target.hasActiveAbility?(:GUTS) && !(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
 		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE)
+		miniscore*=0.3 if target.hasActiveAbility?(:QUICKFEET) && status == :PARALYSIS
 		miniscore*=0.5 if target.hasActiveAbility?(:MARVELSCALE)
 		miniscore*=0.7 if target.hasActiveAbility?(:SHEDSKIN)
 		miniscore*=0.4 if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
@@ -705,12 +707,12 @@ class Battle::AI
 					 @battle.field.effects[PBEffects::TrickRoom] <= 0
 					miniscore*=1.5
 				end
-				miniscore*=0.5 if target.hasActiveItem?(:CHERIBERRY)
+				miniscore*=0.5 if target.hasActiveItem?([:CHERIBERRY, :LUMBERRY])
 			when :BURN
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanBurnSynchronize?(user)
 					miniscore*=0.5
 				end
-				if target.hasActiveAbility?([:GUTS, :FLAREBOOST, :MAGICGUARD])
+				if target.hasActiveAbility?([:GUTS, :FLAREBOOST])
 					miniscore*=0.1
 				end
 				if target.effects[PBEffects::AquaRing]
@@ -718,8 +720,12 @@ class Battle::AI
 				end
 				if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
 					miniscore*=1.7
+				else
+					if target.hasActiveAbility?(:MAGICGUARD)
+						miniscore*=0.2
+					end
 				end
-				miniscore*=0.3 if target.hasActiveItem?(:RAWSTBERRY)
+				miniscore*=0.3 if target.hasActiveItem?([:RAWSTBERRY,:LUMBERRY])
 			when :POISON
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
 					miniscore*=0.5
@@ -727,7 +733,8 @@ class Battle::AI
 				if target.hasActiveAbility?([:TOXICBOOST, :POISONHEAL, :MAGICGUARD])
 					miniscore*=0.1
 				end
-				if user.hasActiveAbility?(:MERCILESS) || user.pbHasMove?(:VENOSHOCK) || user.pbHasMove?(:VENOMDRENCH)
+				if user.hasActiveAbility?(:MERCILESS) || 
+				   user.pbHasMoveFunction?("DoublePowerIfTargetPoisoned", "LowerPoisonedTargetAtkSpAtkSpd1")
 					miniscore*=1.6
 				end
 				healingmove = false
@@ -741,18 +748,19 @@ class Battle::AI
 				if move.id == :TOXIC
 					miniscore*=1.1 if user.pbHasType?(:POISON, true)
 				end
-				miniscore*=0.5 if target.hasActiveItem?(:PECHABERRY)
+				miniscore*=0.5 if target.hasActiveItem?([:PECHABERRY, :LUMBERRY])
 			when :FREEZE
 				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
 					miniscore*=0.5
 				end
-				if target.hasActiveAbility?(:MAGICGUARD)
-					miniscore*=0.2
-				end
 				if pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)
 					miniscore*=1.7
+				else
+					if target.hasActiveAbility?(:MAGICGUARD)
+						miniscore*=0.2
+					end
 				end
-				miniscore*=0.3 if target.hasActiveItem?(:ASPEARBERRY)
+				miniscore*=0.3 if target.hasActiveItem?([:ASPEARBERRY, :LUMBERRY])
 			when :SLEEP
 				if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
 					miniscore*=1.5
@@ -786,8 +794,7 @@ class Battle::AI
 				if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
 					miniscore=0
 				end
-				miniscore*=0.5 if target.hasActiveItem?(:CHESTOBERRY)
-				miniscore=0 if globalArray.include?("electric terrain") || @battle.field.terrain == :Electric
+				miniscore*=0.7 if target.hasActiveItem?([:CHESTOBERRY, :LUMBERRY])
 			when :DIZZY
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				if !user.opposes?(target) # is ally
@@ -796,10 +803,10 @@ class Battle::AI
 					# no need to do serene grace check here, 
 					# simply because the AI wont try to hit allies with damaging confusing moves
 				else
+					minimi*=0.3 if target.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
 					minimi = 0 if target.hasActiveAbility?(:TANGLEDFEET)
 				end
 				miniscore*=minimi
-				miniscore*=0.3 if target.hasActiveItem?(:PERSIMBERRY)
 		end
 		return miniscore
 	end
@@ -1830,13 +1837,43 @@ class Battle::AI
 			:FRIZZARD   => :FRIZZARDITE
 		}
 	
+		# if multiple weathers/terrains are pushed only the slowest one should be acounted
+		# very very VERY niche situation, but hey, i am bored.
+		slowestWeather = nil
+		slowestTerrain = nil
+		slowestWeatherSpeed = 9999
+		slowestTerrainSpeed = 9999
 		@battle.allBattlers.each do |j|
 			megaSpecies = j.pokemon.species
 			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 
-				 (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
-				globalArray.push(globalEffects[megaSpecies])
+			  (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
+			  	effectne = globalEffects[megaSpecies]
+			  	jspeed = j.pbSpeed # cant use pbRoughStat here for some reason?
+ 				if effectne.include?("weather")
+					if jspeed < slowestWeatherSpeed
+						slowestWeather = effectne
+						slowestWeatherSpeed = jspeed
+					end
+				elsif effectne.include?("terrain")
+					if jspeed < slowestTerrainSpeed
+						slowestTerrain = effectne
+						slowestTerrainSpeed = jspeed
+					end
+				else
+					globalArray.push(effectne) # auras can stack
+				end
 			end
 		end
+		globalArray.push(slowestWeather) if slowestWeather
+  		globalArray.push(slowestTerrain) if slowestTerrain
+
+		# airlock/cloud9 interaction
+		weatherNeg=false
+		@battle.allBattlers.each do |n|
+			weatherNeg = true if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
+								 n.battle.choices[n.index][0] != :SwitchOut
+		end
+		globalArray.reject! { |w| w.include?("weather") } if weatherNeg
 		#echoln globalArray
 		return globalArray
 	end

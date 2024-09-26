@@ -321,6 +321,7 @@ class Battle::AI
 							newenemy.item != :UTILITYUMBRELLA
 							tempdam*=w_damage_multiplier if j.type == :FIRE
 							tempdam/=w_damage_divider if j.type == :WATER
+							tempdam*=1.3 if j.function=="PeperSpray" && !newenemy.hasActiveItem?(:UTILITYUMBRELLA)
 							tempdam*=1.5 if newenemy.hasActiveAbility?(:SOLARPOWER) && j.specialMove?
 						end
 						if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
@@ -484,6 +485,7 @@ class Battle::AI
 					if pokmon.hasActiveAbility?(:DROUGHT) && @battle.pbWeather != :Sun && pokmon.item != :UTILITYUMBRELLA
 						tempdam*=w_damage_multiplier if m.type == :FIRE
 						tempdam/=w_damage_divider if m.type == :WATER
+						tempdam*=1.3 if m.function=="PeperSpray" && !pokmon.hasActiveItem?(:UTILITYUMBRELLA)
 						tempdam*=1.5 if pokmon.hasActiveAbility?(:SOLARPOWER) && m.specialMove?
 					end
 					if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 

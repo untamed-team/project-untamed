@@ -69,6 +69,13 @@ class Battle::AI
 		if user.hasActiveAbility?(:CRYSTALJAW) && move.bitingMove?
 			atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
 		end
+		# taking in account intimidate from mons with AAM
+		user.allOpposing.each do |b|
+			if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
+			   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
+				atk *= (atk.to_f * 2 / 3) 
+			end
+		end
 		##### Calculate target's defense stat #####
 		defense = pbRoughStat(target, :DEFENSE, skill)
 		if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef" # Psyshock
@@ -113,11 +120,21 @@ class Battle::AI
 					user.ability, user, target, move, multipliers, baseDmg, type
 				)
 			end
-		end
-		# taking in account intimidate from mons with AAM
-		if (target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && 
-			 target.pokemon.willmega && target.hasAbilityMutation? && move.physicalMove?(type)
-			atk *= (atk.to_f * 2 / 3) 
+			# this doesnt take in foes' negative priority themselves, but lets be real very few would
+			# use that anyway
+			# also yes, this is taking in account allies, because for some reason thats a real check
+			if user.hasActiveAbility?(:ANALYTIC)
+				willOutslow = true
+				aspeed = pbRoughStat(user,:SPEED,skill)
+				@battle.allBattlers.each do |j|
+					next if j.index == user.index
+					break if !willOutslow
+					willOutslow = false if ((aspeed > pbRoughStat(j,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+				end
+				if priorityAI(user,move) < 0 || willOutslow
+					multipliers[:base_damage_multiplier] *= 1.3
+				end
+			end
 		end
 		# if i didnt remove this mold breaker check, i would fake the AI out when she uses
 		# moves that have mold breaker built in
@@ -227,7 +244,7 @@ class Battle::AI
 			if user.hasActiveItem?(:EXPERTBELT)
 				multipliers[:final_damage_multiplier]*=1.2
 			end
-			if target.hasActiveAbility?([:SOLIDROCK, :FILTER]) && !moldBreaker
+			if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
 				multipliers[:final_damage_multiplier]*=0.75
 			end
 			berryTypesArray = {
@@ -446,6 +463,8 @@ class Battle::AI
 		# Increased critical hit rates
 		if skill >= PBTrainerAI.mediumSkill
 			c = 0
+			# Other efffects
+			c = -1 if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
 			# Ability effects that alter critical hit rate
 			if c >= 0 && user.abilityActive?
 				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
@@ -460,34 +479,33 @@ class Battle::AI
 			if skill >= PBTrainerAI.bestSkill && c >= 0 && target.itemActive?
 				c = Battle::ItemEffects.triggerCriticalCalcFromTarget(target.item, user, target, c)
 			end
-			# Other efffects
-			c = -1 if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
 			if c >= 0
 				c += 1 if move.highCriticalRate?
 				c += user.effects[PBEffects::FocusEnergy]
 				c += 1 if user.inHyperMode? && move.type == :SHADOW
-			end
-			# DemICE: taking into account 100% crit rate.
-			stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-			stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-			vatk, atkStage = move.pbGetAttackStats(user,target)
-			vdef, defStage = move.pbGetDefenseStats(user,target)
-			atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
-			defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
-			if c==3 && 
-				 target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker) && 
-				 target.pbOwnSide.effects[PBEffects::LuckyChant]==0
-				damage = 0.96*damage/atkmult if atkmult<1
-				damage = damage*defmult if defmult>1
-			end	
-			if c >= 1
-				c = 4 if c > 4
-				if c>=3
-					damage*=1.5
-					damage*=1.5 if user.hasActiveAbility?(:SNIPER)
-				else
-					damage += damage*0.1*c
-				end	
+				# DemICE: taking into account 100% crit rate.
+				# check might be redundant since c is set to -1 if the target has this abilities but w/e
+				if !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker)
+					stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+					stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+					vatk, atkStage = move.pbGetAttackStats(user,target)
+					vdef, defStage = move.pbGetDefenseStats(user,target)
+					atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
+					defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
+					if c >= 3
+						damage = 0.96*damage/atkmult if atkmult<1
+						damage = damage*defmult if defmult>1
+					end	
+					if c >= 1
+						c = 4 if c > 4
+						if c >= 3
+							damage*=1.5
+							damage*=1.5 if user.hasActiveAbility?(:SNIPER)
+						else
+							damage += damage*0.1*c
+						end	
+					end
+				end
 			end
 		end
 		return damage.floor
@@ -784,11 +802,12 @@ class Battle::AI
 		turncount = user.turnCount
 		turncount = 0 if switchin
 		pri = move.priority
-		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2)&& move.type==:FLYING
+		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2) && move.type==:FLYING
 		pri +=1 if move.baseDamage==0 && user.hasActiveAbility?(:PRANKSTER) 
 		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
 		pri +=1 if move.soundMove? && move.baseDamage==0 && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)
+		pri = -1 if user.hasActiveItem?([:LAGGINGTAIL, :FULLINCENSE])
 		return pri
 	end
 	

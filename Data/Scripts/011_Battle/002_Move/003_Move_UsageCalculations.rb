@@ -566,6 +566,7 @@ class Battle::Move
     return 0 if flinchingMove?
     return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
     return 0 if target.effects[PBEffects::NoFlinch] > 0
+    return 0 if @battle.turnCount == 0
     ret = 0
     if user.hasActiveAbility?(:STENCH, true) ||
        user.hasActiveItem?([:KINGSROCK, :RAZORFANG], true)

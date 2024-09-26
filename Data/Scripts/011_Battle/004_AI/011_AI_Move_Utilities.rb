@@ -163,7 +163,7 @@ class Battle::AI
         end
       end
     end
-    if stat == :SPEED
+    if stat == :SPEED && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
       megaSpeed = false
       globalArray = pbGetMidTurnGlobalChanges
       if globalArray.any? { |element| element.match?(/terrain|weather/) }
@@ -358,6 +358,10 @@ class Battle::AI
     when "DoublePowerInElectricTerrain"
       baseDmg *= 2 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
                        target.affectedByTerrain?
+    when "PeperSpray"
+      peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4) : (4 / 3)
+      baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
+                                    globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA)
     end
     baseDmg = 60 if baseDmg == 1
     return baseDmg

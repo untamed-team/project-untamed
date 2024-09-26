@@ -921,10 +921,12 @@ class Battle::AI
 			score *= 1.3 if user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0
 			score *= 1.3 if user.pbOwnSide.effects[PBEffects::StealthRock]
 		end
-		if !user.SetupMovesUsed.include?(move.id) && 
-		   (user.effects[PBEffects::Trapping] > 0 || user.effects[PBEffects::LeechSeed] >= 0 ||
-		   user.pbOwnSide.effects[PBEffects::Spikes] > 0 || user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0 ||
-		   user.pbOwnSide.effects[PBEffects::StealthRock] || user.pbOwnSide.effects[PBEffects::StickyWeb] > 0)
+		if (user.effects[PBEffects::Trapping] > 0 || 
+		   user.effects[PBEffects::LeechSeed] >= 0 ||
+		   user.pbOwnSide.effects[PBEffects::Spikes] > 0 || 
+		   user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0 ||
+		   user.pbOwnSide.effects[PBEffects::StealthRock] || 
+		   user.pbOwnSide.effects[PBEffects::StickyWeb] > 0) && !user.SetupMovesUsed.include?(move.id)
 			miniscore = 100
 			miniscore*=2 if user.hasActiveAbility?(:SIMPLE)
 			if user.attack<user.spatk
@@ -948,12 +950,12 @@ class Battle::AI
 			ministat+=target.stages[:DEFENSE]
 			ministat+=target.stages[:SPECIAL_DEFENSE]
 			if ministat>0
-			minimini=(-5)*ministat
-			minimini+=100
-			minimini/=100.0
-			miniscore*=minimini
+				minimini=(-5)*ministat
+				minimini+=100
+				minimini/=100.0
+				miniscore*=minimini
 			end
-			if (userFasterThanTarget)
+			if userFasterThanTarget
 				miniscore*=0.3
 				targetlivecount=@battle.pbAbleNonActiveCount(user.idxOpposingSide)
 				if targetlivecount==1
@@ -965,6 +967,7 @@ class Battle::AI
 			if roles.include?("Sweeper")
 				sweepvar = true
 			end
+			score*=1.5 if sweepvar
 			if @battle.field.effects[PBEffects::TrickRoom]!=0
 				miniscore*=0.2
 			else
@@ -988,29 +991,21 @@ class Battle::AI
 			for i in target.moves
 				if i.priority>0
 					privar=true
+					break
 				end
 			end
+			miniscore*=0.6 if privar
 			if target.hasActiveAbility?(:SPEEDBOOST)
 				miniscore*=0.6
 			end
 			if user.hasActiveAbility?(:MOXIE)
 				miniscore*=1.3
 			end
+			miniscore*=0.3 if target.pbHasMoveFunction?("ResetAllBattlersStatStages","ResetTargetStatStages")
 			miniscore/=100.0
-			if user.statStageAtMax?(:SPEED)
-				miniscore*=0
-			end
-			movecheck = false
-			for i in target.moves
-				movecheck=true if ["ResetAllBattlersStatStages","ResetTargetStatStages"].include?(i.function)
-			end
-			miniscore*=0.3 if movecheck
-			if user.hasActiveAbility?(:CONTRARY)
-				miniscore*=0
-			end            
-			if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
-				miniscore*=1
-			end  
+			miniscore=0 if user.statStageAtMax?(:SPEED)
+			miniscore=0 if user.hasActiveAbility?(:CONTRARY)
+			miniscore=1 if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			score*=miniscore 
 		end
     #---------------------------------------------------------------------------
@@ -4884,7 +4879,7 @@ class Battle::AI
 						pivotvar = true
 					end
 				end
-				doubleTarget = !user.allOpposing.empty?
+				doubleTarget = !user.allAllies.empty?
 				if pivotvar && doubleTarget
 					score*=1.2
 				end
@@ -4932,7 +4927,7 @@ class Battle::AI
 				miniscore=(1-miniscore)
 				score*=miniscore
 			end
-			doubleTarget = !user.allOpposing.empty?
+			doubleTarget = !user.allAllies.empty?
 			if pivotvar && doubleTarget
 				score*=1.2
 			end
@@ -4974,7 +4969,7 @@ class Battle::AI
 					pivotvar = true
 				end
 			end
-			doubleTarget = !user.allOpposing.empty?
+			doubleTarget = !user.allAllies.empty?
 			if pivotvar && doubleTarget
 				score*=1.2
 			end
@@ -5021,7 +5016,7 @@ class Battle::AI
 						pivotvar = true
 					end
 				end
-				doubleTarget = !user.allOpposing.empty?
+				doubleTarget = !user.allAllies.empty?
 				if pivotvar && doubleTarget
 					score*=1.2
 				end
@@ -5063,7 +5058,7 @@ class Battle::AI
 						pivotvar = true
 					end
 				end
-				doubleTarget = !user.allOpposing.empty?
+				doubleTarget = !user.allAllies.empty?
 				if pivotvar && doubleTarget
 					score*=1.2
 				end
@@ -6597,7 +6592,7 @@ class Battle::AI
 			miniscore+=100
 			miniscore/=100.0
 			score*=miniscore
-			doubleTarget = !user.allOpposing.empty?
+			doubleTarget = !user.allAllies.empty?
 			if doubleTarget
 				score*=0.8
 			end
@@ -6637,7 +6632,7 @@ class Battle::AI
 			miniscore+=100
 			miniscore/=100.0
 			score*=miniscore
-			doubleTarget = !user.allOpposing.empty?
+			doubleTarget = !user.allAllies.empty?
 			if doubleTarget
 				score*=0.8
 			end

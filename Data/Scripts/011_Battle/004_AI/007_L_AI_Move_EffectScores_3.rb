@@ -4428,7 +4428,7 @@ class Battle::AI
 			for m in target.moves
 				miniscore*=1.3 if m.healingMove?
 			end
-			if (aspeed > pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]==0)
+			if userFasterThanTarget
 				miniscore*=0.5
 			else
 				miniscore*=1.1
