@@ -163,8 +163,8 @@ class Battle::AI
         end
       end
     end
+    megaSpeed = false
     if (stat == :SPEED && dontignorespeb) && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
-      megaSpeed = false
       globalArray = pbGetMidTurnGlobalChanges
       if globalArray.any? { |element| element.match?(/terrain|weather/) }
         megaSpeed = true
