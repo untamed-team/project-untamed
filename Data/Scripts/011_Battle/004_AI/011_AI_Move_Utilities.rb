@@ -180,8 +180,8 @@ class Battle::AI
           spemul*=2 if battler.ability == abil && battler.abilityActive?
         end
       end
-      return (battler.pbSpeed(megaSpeed)*spemul).floor
     end
+    return (battler.pbSpeed(megaSpeed)*spemul).floor
     stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
     stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
     stage = battler.stages[stat] + 6
