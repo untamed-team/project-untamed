@@ -149,7 +149,7 @@ class Battle::AI
     return ret
   end
 
-  def pbRoughStat(battler, stat, skill=100)
+  def pbRoughStat(battler, stat, skill=100, dontignorespeb=true)
     # WillMega / Mid-turn stat calcuation
     atkmul=defmul=spemul=spamul=spdmul=1
     if battler.pokemon.willmega
@@ -163,7 +163,7 @@ class Battle::AI
         end
       end
     end
-    if stat == :SPEED && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
+    if (stat == :SPEED && dontignorespeb) && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
       megaSpeed = false
       globalArray = pbGetMidTurnGlobalChanges
       if globalArray.any? { |element| element.match?(/terrain|weather/) }
