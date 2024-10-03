@@ -271,19 +271,15 @@ class Battle::AI
 		end
 		# Terrain moves
 		if skill >= PBTrainerAI.mediumSkill
-			# abilityTerrain #by low
-			if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
-				t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
-				t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
-			else
-				t_damage_multiplier = 1.3
-				t_damage_divider    = 2
-			end
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :ELECTRIC && globalArray.include?("electric terrain")
-			multipliers[:base_damage_multiplier] /= 1.5  if type == :DRAGON   && globalArray.include?("misty terrain")
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :GRASS    && globalArray.include?("grassy terrain")
-			multipliers[:base_damage_multiplier] *= 1.25 if type == :PSYCHIC  && globalArray.include?("psychic terrain")
 			if globalArray.none? { |element| element.include?("terrain") }
+				# abilityTerrain #by low
+				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+					t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
+					t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
+				else
+					t_damage_multiplier = 1.3
+					t_damage_divider    = 2
+				end
 				case @battle.field.terrain
 				when :Electric
 					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
@@ -294,11 +290,23 @@ class Battle::AI
 				when :Misty
 					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
 				end
+			else	
+				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+					t_damage_multiplier = 1.15
+					t_damage_divider    = 1.5
+				else
+					t_damage_multiplier = 1.3
+					t_damage_divider    = 2
+				end
+				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && globalArray.include?("electric terrain") && user.affectedByTerrain?
+				multipliers[:base_damage_multiplier] /= t_damage_divider    if type == :DRAGON   && globalArray.include?("misty terrain") && target.affectedByTerrain?
+				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS    && globalArray.include?("grassy terrain") && user.affectedByTerrain?
+				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC  && globalArray.include?("psychic terrain") && user.affectedByTerrain?
 			end
 			# Specific Field Effect Boosts
-			if ((@battle.field.terrain == :Grassy && 
-				 globalArray.none? { |element| element.include?("terrain") }) || 
-			     globalArray.include?("grassy terrain")) && [:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
+			if ((@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
+			     globalArray.include?("grassy terrain")) && 
+				[:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
 				multipliers[:base_damage_multiplier] /= 2.0
 			end
 		end
@@ -312,50 +320,16 @@ class Battle::AI
 		end
 		# Weather
 		if skill >= PBTrainerAI.mediumSkill
-			# abilityWeather #by low
-			if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
-				w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
-				w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
-			else
-				w_damage_multiplier = 1.5
-				w_damage_divider    = 2
-			end
 			# specific weather checks #by low
-			# abilities *can* overwrite primal weather
-			if !user.hasActiveItem?(:UTILITYUMBRELLA)
-				if globalArray.include?("sun weather")
-					case type
-					when :FIRE
-						multipliers[:final_damage_multiplier] *= w_damage_multiplier
-					when :WATER
-						multipliers[:final_damage_multiplier] /= w_damage_divider
-					end
-					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
-						multipliers[:attack_multiplier] *= 1.5
-					end
-				end
-				if globalArray.include?("rain weather")
-					case type
-					when :FIRE
-						multipliers[:final_damage_multiplier] /= w_damage_divider
-					when :WATER
-						multipliers[:final_damage_multiplier] *= w_damage_multiplier
-					end
-				end
-			end
-			if globalArray.include?("sand weather")
-				if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
-					 move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
-					multipliers[:defense_multiplier] *= 1.5
-				end
-			end
-			if globalArray.include?("hail weather")
-				if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
-					multipliers[:final_damage_multiplier] *= 0.75
-				end
-			end
-			
 			if globalArray.none? { |element| element.include?("weather") }
+				# abilityWeather #by low
+				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+					w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
+					w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
+				else
+					w_damage_multiplier = 1.5
+					w_damage_divider    = 2
+				end
 				case user.effectiveWeather
 				when :Sun, :HarshSun
 					case type
@@ -377,6 +351,47 @@ class Battle::AI
 						multipliers[:defense_multiplier] *= 1.5
 					end
 				when :Hail # hail buff #by low
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+						multipliers[:final_damage_multiplier] *= 0.75
+					end
+				end
+			else
+				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+					w_damage_multiplier = 1.25
+					w_damage_divider    = 1.5
+				else
+					w_damage_multiplier = 1.5
+					w_damage_divider    = 2
+				end
+				# abilities *can* overwrite primal weather
+				if !user.hasActiveItem?(:UTILITYUMBRELLA)
+					if globalArray.include?("sun weather")
+						case type
+						when :FIRE
+							multipliers[:final_damage_multiplier] *= w_damage_multiplier
+						when :WATER
+							multipliers[:final_damage_multiplier] /= w_damage_divider
+						end
+						if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
+							multipliers[:attack_multiplier] *= 1.5
+						end
+					end
+					if globalArray.include?("rain weather")
+						case type
+						when :FIRE
+							multipliers[:final_damage_multiplier] /= w_damage_divider
+						when :WATER
+							multipliers[:final_damage_multiplier] *= w_damage_multiplier
+						end
+					end
+				end
+				if globalArray.include?("sand weather")
+					if target.pbHasType?(:ROCK, true) && move.specialMove?(type) &&
+						 move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
+						multipliers[:defense_multiplier] *= 1.5
+					end
+				end
+				if globalArray.include?("hail weather")
 					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
 						multipliers[:final_damage_multiplier] *= 0.75
 					end
@@ -417,13 +432,12 @@ class Battle::AI
 		damagenerf = (1 / 2.0)
 		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
 		# Burn
-		if move.physicalMove?(type) && user.status == :BURN && !user.hasActiveAbility?(:GUTS) &&
-		   move.function == "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
+		if move.physicalMove?(type) && move.damageReducedByBurn? && user.status == :BURN && 
+		  !user.hasActiveAbility?(:GUTS)
 			multipliers[:final_damage_multiplier] *= damagenerf
 		end
 		# Frostbite #by low
-		if move.specialMove?(type) && user.status == :FREEZE && 
-		   move.function == "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
+		if move.specialMove?(type) && move.damageReducedByBurn? && user.status == :FREEZE
 			multipliers[:final_damage_multiplier] *= damagenerf
 		end
 		# Aurora Veil, Reflect, Light Screen

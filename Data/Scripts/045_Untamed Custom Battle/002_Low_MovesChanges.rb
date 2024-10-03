@@ -744,26 +744,26 @@ class Battle::Move::UserAddStockpileRaiseDefSpDef1 < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    stockpileRaise = (user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3) ? 2 : 1
-    user.effects[PBEffects::Stockpile] += stockpileRaise
-    user.effects[PBEffects::Stockpile] = 3 if user.effects[PBEffects::Stockpile] > 3
+    user.effects[PBEffects::Stockpile] += 1
     @battle.pbDisplay(_INTL("{1} stockpiled {2}!",
                             user.pbThis, user.effects[PBEffects::Stockpile]))
     showAnim = true
+    didsomething = false
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
       if user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
-				user.SetupMovesUsed.push(@id)
         user.effects[PBEffects::StockpileDef] += 1
         showAnim = false
+        didsomething = true
       end
     end
     if user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
       if user.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
-				user.SetupMovesUsed.push(@id)
         user.effects[PBEffects::StockpileSpDef] += 1
+        didsomething = true
       end
     end
-		user.SetupMovesUsed |= []
+    user.SetupMovesUsed.push(@id) if didsomething
+    user.SetupMovesUsed |= []
   end
 end
 

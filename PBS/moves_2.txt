@@ -6485,8 +6485,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UserAddStockpileRaiseDefSpDef1
-Flags = DoublePPUse
-Description = Raises the user's Def and Sp. Def. Raises Stockpile by 1, or 2 if already used, up to 3.
+Description = The user charges up power and raises both its Defense and Sp. Def. The move can be used three times.
 #-------------------------------
 [SUBSTITUTE]
 Name = Substitute

@@ -1205,3 +1205,7 @@ Description = Creates Sandstorm, buffs itself during sand.
 Name = Echo Chamber
 Description = Heals w/ sound; next sound status moves: +1 prio.
 #-------------------------------
+[ACCUMULATOR]
+Name = Accumulator
+Description = Accumulates Stockpiles if the user has no held items.
+#-------------------------------

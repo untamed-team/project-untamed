@@ -584,6 +584,7 @@ end
 #===============================================================================
 # Heals user depending on the user's stockpile (X). Resets the stockpile to 0.
 # Decreases the user's Defense and Special Defense by X stages each. (Swallow)
+# edited a lil bit for accumulator #by low
 #===============================================================================
 class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
   def healingMove?; return true; end
@@ -594,9 +595,9 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
       @battle.pbDisplay(_INTL("But it failed to swallow a thing!"))
       return true
     end
-    if !user.canHeal? &&
-       user.effects[PBEffects::StockpileDef] == 0 &&
-       user.effects[PBEffects::StockpileSpDef] == 0
+    if !user.canHeal? #&&
+       #user.effects[PBEffects::StockpileDef] == 0 &&
+       #user.effects[PBEffects::StockpileSpDef] == 0
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -610,24 +611,30 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
     when 2 then hpGain = user.totalhp / 2
     when 3 then hpGain = user.totalhp
     end
+    noDefBoost = user.effects[PBEffects::StockpileDef] == 0 && 
+                 user.effects[PBEffects::StockpileSpDef] == 0
+    hpGain /= 2 if noDefBoost && hpGain > (user.totalhp / 4)
     if user.pbRecoverHP(hpGain) > 0
       @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
     end
-    @battle.pbDisplay(_INTL("{1}'s stockpiled effect wore off!", user.pbThis))
-    showAnim = true
-    if user.effects[PBEffects::StockpileDef] > 0 &&
-       user.pbCanLowerStatStage?(:DEFENSE, user, self)
-      if user.pbLowerStatStage(:DEFENSE, user.effects[PBEffects::StockpileDef], user, showAnim)
-        showAnim = false
+    
+    unless noDefBoost
+      @battle.pbDisplay(_INTL("{1}'s stockpiled effect wore off!", user.pbThis))
+      showAnim = true
+      if user.effects[PBEffects::StockpileDef] > 0 &&
+        user.pbCanLowerStatStage?(:DEFENSE, user, self)
+        if user.pbLowerStatStage(:DEFENSE, user.effects[PBEffects::StockpileDef], user, showAnim)
+          showAnim = false
+        end
       end
+      if user.effects[PBEffects::StockpileSpDef] > 0 &&
+        user.pbCanLowerStatStage?(:SPECIAL_DEFENSE, user, self)
+        user.pbLowerStatStage(:SPECIAL_DEFENSE, user.effects[PBEffects::StockpileSpDef], user, showAnim)
+      end
+      user.effects[PBEffects::StockpileDef]   = 0
+      user.effects[PBEffects::StockpileSpDef] = 0
     end
-    if user.effects[PBEffects::StockpileSpDef] > 0 &&
-       user.pbCanLowerStatStage?(:SPECIAL_DEFENSE, user, self)
-      user.pbLowerStatStage(:SPECIAL_DEFENSE, user.effects[PBEffects::StockpileSpDef], user, showAnim)
-    end
-    user.effects[PBEffects::Stockpile]      = 0
-    user.effects[PBEffects::StockpileDef]   = 0
-    user.effects[PBEffects::StockpileSpDef] = 0
+    user.effects[PBEffects::Stockpile]        = 0
   end
 end
 

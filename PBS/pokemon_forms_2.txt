@@ -136,6 +136,7 @@ FormName = Mega Specterzal
 MegaStone = SPECTERZITE
 BaseStats = 120,139,132,86,95,75
 Abilities = SPOOPERAURA
+# stab + spooper aura = adaptability boost
 #------------------------------- 
 [TREVENANT,1]
 FormName = Mega Trevenant

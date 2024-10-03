@@ -464,8 +464,7 @@ class Battle::Move::DoublePowerIfUserPoisonedBurnedParalyzed < Battle::Move
   def damageReducedByBurn?; return Settings::MECHANICS_GENERATION <= 5; end
 
   def pbBaseDamage(baseDmg, user, target)
-    baseDmg = [baseDmg * (user.pbHasAnyStatus? ? 2 : 1), 120].min
-    return baseDmg
+    return user.pbHasAnyStatus? ? baseDmg * 2 : baseDmg
   end
 end
 

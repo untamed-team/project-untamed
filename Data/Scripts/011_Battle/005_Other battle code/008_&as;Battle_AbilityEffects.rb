@@ -2209,7 +2209,7 @@ Battle::AbilityEffects::OnBeingHit.add(:ECHOCHAMBER,
     next if !move.soundMove?
     battle.pbShowAbilitySplash(target)
     battle.pbDisplay(_INTL("{1} reverberates due to {2}'s move!", target.pbThis, user.pbThis))
-    target.effects[PBEffects::PrioEchoChamber] = 2 if target.effects[PBEffects::PrioEchoChamber] <= 0
+    target.effects[PBEffects::PrioEchoChamber] = 2
     battle.pbHideAbilitySplash(target)
     battle.pbCalculatePriority(false, [target.index])
   }
@@ -2362,7 +2362,7 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
       user.pbRecoverHP(hpGain)
       battle.pbHideAbilitySplash(user)
     else
-      targets.each { |b| hpGain += (b.damageState.hpLost / 3.0).round }
+      targets.each { |b| hpGain += (b.damageState.hpLost / 2.0).round }
       next if hpGain == 0 # just to check if it did any worthwhile damage
       battle.pbShowAbilitySplash(user)
       targets.each_with_index do |b, index|
@@ -2734,6 +2734,21 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:SLOWSTART,
     end
   }
 )
+
+Battle::AbilityEffects::EndOfRoundEffect.add(:ACCUMULATOR,
+  proc { |ability, battler, battle|
+    next if battler.turnCount == 0
+    next if battle.choices[battler.index][0] == :Run
+    next if battler.effects[PBEffects::Stockpile] >= 3
+    next if battler.item
+    battle.pbShowAbilitySplash(battler)
+    battle.pbAnimation(:STOCKPILE, battler, battler)
+    battler.effects[PBEffects::Stockpile] += 1
+    @battle.pbDisplay(_INTL("{1} gathered {2} stockpiles!", battler.pbThis, battler.effects[PBEffects::Stockpile]))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 #===============================================================================
 # EndOfRoundGainItem handlers
 #===============================================================================
