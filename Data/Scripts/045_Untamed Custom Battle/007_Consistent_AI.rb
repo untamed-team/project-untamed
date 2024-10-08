@@ -222,7 +222,7 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
-		score = pbGetMoveScoreFunctionCode(60, move, user, target, skill)
+		score = pbGetMoveScoreFunctionCode(100, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
 		score += 1 if aigenlog && score <= 0 
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
@@ -234,8 +234,10 @@ class Battle::AI
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
 			score -= (100-accuracy)*1.33 if accuracy < 100
+			score *= 0.75 # test 
+			# lowering the scores of damaging moves as a whole to make status more appealing
 		else # Status moves
-			score = pbStatusDamage(move) # each status move now has a value tied to them #by low
+			score = pbStatusDamage(move) # each status move now has a value tied to them
 			score += 1 if aigenlog && score <= 0
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			score *= accuracy / 100.0
@@ -250,7 +252,7 @@ class Battle::AI
 				miss = true
 				miss = false if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
 				miss = false if ((aspeed<=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && priorityAI(user,move)<1 # DemICE
-				if miss && pbRoughStat(user, :SPEED, skill) > pbRoughStat(target, :SPEED, skill)
+				if miss && aspeed > ospeed
 					# Knows what can get past semi-invulnerability
 					if target.effects[PBEffects::SkyDrop] >= 0 ||
 						 target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
@@ -272,7 +274,7 @@ class Battle::AI
 					score *= 1.2
 				elsif move.damagingMove?
 					score *= 1.2
-				elsif move.function == "UserTargetSwapItems"
+				elsif move.function == "UserTargetSwapItems" && !user.hasActiveAbility?(:GORILLATACTICS)
 					score *= 1.2  # Trick
 				else
 					score *= 0.8
@@ -288,10 +290,10 @@ class Battle::AI
 			end
 			# truant can, in fact, do something when loafing around
 			if user.hasActiveAbility?(:TRUANT) && !user.effects[PBEffects::Truant] 
-				# the user WILL truant (!), instead of IS truanting
+				# the user WILL truant (false -> true), instead of IS truanting (true -> false)
 				user.eachMove do |m|
 					next unless m.healingMove?
-					score *= 2
+					score *= 3
 					break
 				end
 			end

@@ -1069,11 +1069,11 @@ class Battle::AI
 	end
 	
 	# Status Moves "Damage" ######################################################
-	
+=begin
 	def pbStatusDamage(move)
 		if (move.id == :AFTERYOU || move.id == :BESTOW ||
 				move.id == :CRAFTYSHIELD || move.id == :LUCKYCHANT ||
-				move.id == :MEMENTO || move.id == :QUASH ||
+				move.id == :QUASH ||
 				move.id == :SPITE ||
 				move.id == :SPLASH || move.id == :SWEETSCENT ||
 				move.id == :TELEKINESIS || 
@@ -1121,7 +1121,7 @@ class Battle::AI
 				move.id == :PSYCHUP || move.id == :SHARPEN ||
 				move.id == :SMOKESCREEN || move.id == :STRINGSHOT ||
 				move.id == :SUPERSONIC || move.id == :TAILWHIP ||
-				move.id == :TORMENT ||
+				move.id == :TORMENT || move.id == :MEMENTO ||
 				move.id == :DECORATE ||
 				move.id == :TEARFULLOOK ||
 				move.id == :WITHDRAW || move.id == :WORKUP)
@@ -1244,7 +1244,62 @@ class Battle::AI
 			return 10
 		end
 	end
-	
+=end
+
+	def pbStatusDamage(move)
+		moveScoores = {
+		  0 => [:AFTERYOU, :ATTRACT, :BESTOW, :CELEBRATE, :CRAFTYSHIELD, :HAPPYHOUR, :HOLDHANDS,
+				 :LUCKYCHANT, :QUASH, :SPITE, :SPLASH, :SWEETSCENT, :TELEKINESIS],
+		  5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :ENDURE, :ENTRAINMENT, :FAIRYLOCK,
+				 :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, :HELPINGHAND,
+				 :IMPRISON, :LIFEDEW, :LOCKON, :MAGICROOM, :MAGNETRISE, :MINDREADER, :MIRACLEEYE,
+				 :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, :POWERTRICK, :QUICKGUARD,
+				 :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, :SKILLSWAP, :SPEEDSWAP,
+				 :SPOTLIGHT, :TEATIME, :TEETERDANCE, :WATERSPORT],
+		  10 => [:ACUPRESSURE, :CAMOUFLAGE, :CHARM, :CONFIDE, :DEFENSECURL, :DECORATE, :EMBARGO,
+				 :EXCITE, :FLASH, :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :HOWL, :KINESIS, :LEER,
+				 :METALSOUND, :MEMENTO, :NOBLEROAR, :PLAYNICE, :POWDER, :PSYCHUP, :SHARPEN,
+				 :SMOKESCREEN, :STRINGSHOT, :SUPERSONIC, :TAILWHIP, :TORMENT, :TEARFULLOOK,
+				 :WITHDRAW, :WORKUP],
+		  20 => [:AGILITY, :ASSIST, :BABYDOLLEYES, :CAPTIVATE, :CHARGE, :CORROSIVEGAS, :COTTONSPORE,
+				 :COURTCHANGE, :DEFOG, :DOUBLETEAM, :EERIEIMPULSE, :FAKETEARS, :FEATHERDANCE,
+				 :FLORALHEALING, :GEARUP, :HEALINGWISH, :HEALPULSE, :INGRAIN, :INSTRUCT, :LUNARDANCE,
+				 :MEDITATE, :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE,
+				 :SCREECH, :SKETCH, :STUFFCHEEKS, :TARSHOT, :TICKLE, :TRICKORTREAT, :VENOMDRENCH,
+				 :MAGNETICFLUX],
+		  25 => [:AQUARING, :BLOCK, :CONVERSION2, :COPYCAT, :ELECTRIFY, :FLATTER, :FLOWERSHIELD,
+				 :GASTROACID, :GROWTH, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME,
+				 :MIRRORMOVE, :MIST, :PERISHSONG, :POISONGAS, :REST, :ROAR, :SIMPLEBEAM, :SNATCH,
+				 :SPIDERWEB, :SWAGGER, :SWEETKISS, :TRANSFORM, :WHIRLWIND, :WORRYSEED, :YAWN],
+		  30 => [:ACIDARMOR, :AMNESIA, :AUTOTOMIZE, :BARRIER, :BELLYDRUM, :COSMICPOWER, :COTTONGUARD,
+				 :DEFENDORDER, :DESTINYBOND, :DETECT, :DISABLE, :FOLLOWME, :GRAVITY, :IRONDEFENSE,
+				 :MINIMIZE, :OCTOLOCK, :POLLENPUFF, :PSYCHOSHIFT, :RAGEPOWDER, :REBALANCING,
+				 :ROCKPOLISH, :SANDSTORM, :STOCKPILE, :SUBSTITUTE, :SWALLOW, :SWITCHEROO, :TAUNT,
+				 :TRICK],
+		  35 => [:BATONPASS, :BULKUP, :CALMMIND, :CLANGOROUSSOUL, :COIL, :CURSE, :ELECTRICTERRAIN,
+				 :ENCORE, :GRASSYTERRAIN, :LEECHSEED, :MAGICPOWDER, :MISTYTERRAIN, :NATUREPOWER,
+				 :NORETREAT, :PAINSPLIT, :PSYCHICTERRAIN, :PURIFY, :SLEEPTALK, :SOAK, :SUNNYDAY,
+				 :TELEPORT, :TOPSYTURVY, :TRICKROOM, :WISH, :WONDERROOM, :RAINDANCE],
+		  40 => [:AROMATHERAPY, :AURORAVEIL, :BITINGCOLD, :CONFUSERAY, :GLARE, :HEALBELL, :LIGHTSCREEN,
+				 :MATBLOCK, :PARTINGSHOT, :REFLECT, :SPIKES, :STUNSPORE, :TAILWIND, :THUNDERWAVE,
+				 :TOXIC, :TOXICSPIKES, :TOXICTHREAD, :WIDEGUARD, :WILLOWISP],
+		  50 => [:HONECLAWS, :NASTYPLOT, :STEALTHROCK, :SWORDSDANCE],
+		  60 => [:DRAGONDANCE, :GEOMANCY, :QUIVERDANCE, :SHELLSMASH, :SHIFTGEAR, :STICKYWEB, :TAILGLOW],
+		  70 => [:HEALORDER, :JUNGLEHEALING, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
+				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
+		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD],
+		  100 => [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE]
+		}
+
+		moveid = move.id
+		moveScoores.each do |score, moves|
+		  return score if moves.include?(moveid)
+		end
+	  
+		print "why are you stupid; #{move.name}"
+		return 10
+	end			
+
 	# Disrupting Scores ##########################################################
 	
 	def getFieldDisruptScore(user, target, globalArray = [], skill = 100)
@@ -1269,7 +1324,8 @@ class Battle::AI
 				next if m.fainted?
 				partyelec=true if m.pbHasType?(:ELECTRIC, true)
 				for z in m.moves
-					sleepmove = true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(z.id)
+					sleepmove = true if [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, 
+										 :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE].include?(z.id)
 				end
 			end
 			if partyelec
@@ -1381,6 +1437,10 @@ class Battle::AI
 
 	def getAbilityDisruptScore(move,user,target,skill)
 		abilityscore=100.0
+		if target.unstoppableAbility?
+			echo("\nUnstoppable Ability Disrupt") if $AIGENERALLOG
+			return 0
+		end 
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			echo("\nSpeedboost Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
@@ -1401,7 +1461,7 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE])
-			echo("\nVolt Absorb Disrupt") if $AIGENERALLOG
+			echo("\nElectric Immunity Disrupt") if $AIGENERALLOG
 			elecvar = false
 			totalelec=true
 			elecmove=nil
@@ -1425,7 +1485,7 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?([:WATERABSORB, :STORMDRAIN, :DRYSKIN])
-			echo("\nWater Absorb Disrupt") if $AIGENERALLOG
+			echo("\nWater Immunity Disrupt") if $AIGENERALLOG
 			watervar = false
 			totalwater=true
 			watermove=nil
@@ -1540,7 +1600,7 @@ class Battle::AI
 			abilityscore*=1.3
 		end  
 		if target.hasActiveAbility?([:PUREPOWER, :HUGEPOWER])
-			echo("\nPure Power Disrupt") if $AIGENERALLOG
+			echo("\nPure/Huge Power Disrupt") if $AIGENERALLOG
 			abilityscore*=2
 		end
 		if target.hasActiveAbility?(:SOUNDPROOF)
@@ -1681,6 +1741,7 @@ class Battle::AI
 		if target.hasActiveAbility?(:HARVEST)
 			echo("\nHarvest Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
+			abilityscore*=1.2 if [:Sun, :HarshSun].include?(target.effectiveWeather)
 		end 
 		if target.hasActiveAbility?(:MOODY)
 			echo("\nMoody Disrupt") if $AIGENERALLOG
@@ -1730,10 +1791,6 @@ class Battle::AI
 			if echopriocheck && pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
 				abilityscore*=1.5
 			end
-		end
-		if target.hasActiveAbility?(:SNOWCLOAK)
-			echo("\nSnow Cloak Disrupt") if $AIGENERALLOG
-			abilityscore*=1.1 if target.effectiveWeather == :Hail
 		end
 		if target.hasActiveAbility?(:FURCOAT)
 			echo("\nFur Coat Disrupt") if $AIGENERALLOG
@@ -1789,10 +1846,6 @@ class Battle::AI
 				abilityscore*=1.3
 			end      
 		end
-		if target.unstoppableAbility?
-			echo("\nUnstoppable Ability Disrupt") if $AIGENERALLOG
-			abilityscore=0
-		end 
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :MICROSTRIKE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY])
 			echo("\nMinor Impact Untamed Ability Disrupt") if $AIGENERALLOG
