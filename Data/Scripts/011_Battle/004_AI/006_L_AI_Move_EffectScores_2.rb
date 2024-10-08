@@ -33,9 +33,9 @@ class Battle::AI
 				next if i.nil?
 				next if !i || i.egg?
 				next if i.status != :SLEEP
-				miniscore*=0.6
+				miniscore*=0.7
 			end
-			score = miniscore
+			score *= (miniscore / 100)
 		else
 			score = 0
 		end
@@ -57,7 +57,7 @@ class Battle::AI
 				minimini/=100.0
 				miniscore*=minimini
 			end
-			score = miniscore
+			score *= (miniscore / 100)
 		else
 			score = 0
 		end
@@ -187,8 +187,6 @@ class Battle::AI
          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ParalyzeFlinchTarget"
 		if target.pbCanParalyze?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 120, move, globalArray, skill)
-			aspeed = pbRoughStat(user, :SPEED, skill)
-			ospeed = pbRoughStat(target, :SPEED, skill)
 			if aspeed < ospeed
 				miniscore *= 1.2
 			elsif aspeed > ospeed
@@ -378,31 +376,28 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "GiveUserStatusToTarget" # Psycho Shift
-		if user.pbHasAnyStatus? && target.status==:NONE && target.effects[PBEffects::Yawn]==0
+		if user.pbHasAnyStatus? && !target.pbHasAnyStatus? && target.effects[PBEffects::Yawn]==0
 			score*=1.3
-			if target.status==0 && target.effects[PBEffects::Yawn]==0
+			if !target.pbHasAnyStatus? && target.effects[PBEffects::Yawn]==0
 				score*=1.3
-				if user.status==:BURN && target.pbCanBurn?(user, false)
+				if user.burned? && target.pbCanBurn?(user, false)
 					if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 						score*=1.2
 					end
-					if target.hasActiveAbility?(:FLAREBOOST)
+					if target.hasActiveAbility?([:FLAREBOOST, :GUTS])
 						score*=0.7
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, globalArray, skill)
 					score*=(miniscore/100)
 				end
-				if user.status==:PARALYSIS && target.pbCanParalyze?(user, false)
-					if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
-						score*=1.1
-					end
+				if user.paralyzed? && target.pbCanParalyze?(user, false)
 					if !userFasterThanTarget
 						score*=1.2
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 120, move, globalArray, skill)
 					score*=(miniscore/100)
 				end
-				if user.status==:POISON && target.pbCanPoison?(user, false)
+				if user.poisoned? && target.pbCanPoison?(user, false)
 					healmove=false
 					for j in user.moves
 						healmove=true if j.healingMove?
@@ -413,7 +408,14 @@ class Battle::AI
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 100, move, globalArray, skill)
 					score*=(miniscore/100)
-				end          
+				end
+				if user.frozen? && target.pbCanFreeze?(user, false)
+					if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
+						score*=1.2
+					end
+					miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 110, move, globalArray, skill)
+					score*=(miniscore/100)
+				end      
 			end
 			if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 				score*=1.3
@@ -423,28 +425,28 @@ class Battle::AI
 		end
 #---------------------------------------------------------------------------
     when "CureUserBurnPoisonParalysis" # refresh
-		if user.burned? || user.poisoned? || user.paralyzed?
+		if user.burned? || user.poisoned? || user.paralyzed? || user.frozen?
 			score*=3
+			if (user.hp.to_f)/user.totalhp>0.5
+				score*=1.5
+			else
+				score*=0.3
+			end
+			if target.effects[PBEffects::Yawn]>0
+				score*=0.1
+			end      
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
+			if maxdam>user.hp
+				score*=0.1
+			end
+			if target.effects[PBEffects::Toxic]>2
+				score*=1.3
+			end   
+			score*=1.3 if target.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 		else
 			score=0
 		end
-		if (user.hp.to_f)/user.totalhp>0.5
-			score*=1.5
-		else
-			score*=0.3
-		end
-		if target.effects[PBEffects::Yawn]>0
-			score*=0.1
-		end      
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		if maxdam>user.hp
-			score*=0.1
-		end
-		if target.effects[PBEffects::Toxic]>2
-			score*=1.3
-		end   
-		score*=1.3 if target.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
     #---------------------------------------------------------------------------
     when "CureUserPartyStatus" # aromatherapy
 		statuses = 0
@@ -461,9 +463,7 @@ class Battle::AI
 				if i.status==:POISON && i.ability == :POISONHEAL
 					score*=0.5
 				end
-				if i.ability == :GUTS || 
-						i.ability == :QUICKFEET || 
-						i.hasMove?(:FACADE)
+				if i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE)
 					score*=0.8
 				end
 				if i.status==:SLEEP
@@ -1292,12 +1292,12 @@ class Battle::AI
 		score*=miniscore
 	#---------------------------------------------------------------------------
     when "StartGravity" # gravity
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxmove=bestmove[1]
-		maxid=maxmove.id
 		if @battle.field.effects[PBEffects::Gravity]>0
-			score*=0
+			score=0
 		else
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxmove=bestmove[1]
+			maxid=maxmove.id
 			for i in user.moves 
 				if i.accuracy<=70
 					score*=2

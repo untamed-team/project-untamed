@@ -5,7 +5,7 @@ MEGA_EVO_STATS = {
   AMPHAROS: { item: :AMPHAROSITE, atkmul: 1.000, defmul: 1.352, spemul: 0.909, spamul: 1.434, spdmul: 1.333 },
   MAGCARGO: { item: :MAGCARGOITE, atkmul: 1.200, defmul: 1.333, spemul: 1.667, spamul: 1.111, spdmul: 1.250 },
   SKARMORY: { item: :SKARMORITE, atkmul: 1.500, defmul: 1.143, spemul: 1.143, spamul: 1.500, spdmul: 1.143 },
-  SABLEYE: { item: :SABLEYEITE, atkmul: 1.000, defmul: 1.667, spemul: 0.400, spamul: 1.000, spdmul: 1.769 },
+  SABLEYE: { item: :SABLEYEITE, atkmul: 1.000, defmul: 1.800, spemul: 0.400, spamul: 1.154, spdmul: 1.923 },
   FLYGON: { item: :FLYGONITE, atkmul: 1.300, defmul: 1.000, spemul: 1.200, spamul: 1.625, spdmul: 1.000 },
   CACTURNE: { item: :CACTURNITE, atkmul: 1.174, defmul: 1.667, spemul: 1.000, spamul: 1.261, spdmul: 1.167 },
   MILOTIC: { item: :MILOTITE, atkmul: 1.417, defmul: 1.215, spemul: 1.012, spamul: 1.260, spdmul: 1.248 },
@@ -22,7 +22,7 @@ MEGA_EVO_STATS = {
               male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 
               female: { atkmul: 1.167, defmul: 1.105, spemul: 1.051, spamul: 2.000, spdmul: 1.267 } },
   CHIXULOB: { item: :CHIXULITE, atkmul: 1.268, defmul: 1.882, spemul: 1.147, spamul: 0.927, spdmul: 1.392 },
-  FRIZZARD: { item: :FRIZZARDITE, atkmul: 1.231, defmul: 1.133, spemul: 1.056, spamul: 1.381, spdmul: 1.330 },
+  FRIZZARD: { item: :FRIZZARDITE, atkmul: 1.231, defmul: 1.143, spemul: 1.056, spamul: 1.381, spdmul: 1.330 },
   GOHILA: { item: :GOHILITE, atkmul: 1.304, defmul: 1.029, spemul: 1.020, spamul: 1.500, spdmul: 1.493 },
   LAGUNA: { item: :LAGUNITE, atkmul: 1.200, defmul: 1.100, spemul: 1.288, spamul: 1.571, spdmul: 1.182 },
   LUPACABRA: { item: :LUPACABRITE, atkmul: 1.286, defmul: 1.588, spemul: 1.182, spamul: 1.000, spdmul: 1.143 },
@@ -30,7 +30,7 @@ MEGA_EVO_STATS = {
   NOCTAVISPA: { item: :NOCTAVISPITE, atkmul: 1.538, defmul: 1.052, spemul: 1.149, spamul: 1.329, spdmul: 1.190 },
   ROADRAPTOR: { item: :ROADRAPTORITE, atkmul: 1.372, defmul: 1.385, spemul: 1.000, spamul: 1.625, spdmul: 1.000 },
   SPECTERZAL: { item: :SPECTERZITE, atkmul: 1.112, defmul: 2.000, spemul: 1.000, spamul: 1.118, spdmul: 1.154 },
-  SUCHOBILE: { item: :SUCHOBITE, atkmul: 1.365, defmul: 1.653, spemul: 0.774, spamul: 1.165, spdmul: 1.386 },
+  SUCHOBILE: { item: :SUCHOBITE, atkmul: 1.317, defmul: 1.583, spemul: 0.774, spamul: 1.165, spdmul: 1.314 },
   ZARCOIL: { item: :ZARCOILITE, atkmul: 1.227, defmul: 1.290, spemul: 1.282, spamul: 1.217, spdmul: 1.133 },
   ZOLUPINE: { item: :ZOLUPINEITE, atkmul: 1.118, defmul: 1.167, spemul: 1.000, spamul: 1.421, spdmul: 1.381 }
 }

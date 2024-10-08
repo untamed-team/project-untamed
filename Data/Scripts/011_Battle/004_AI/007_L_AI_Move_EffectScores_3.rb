@@ -3069,7 +3069,6 @@ class Battle::AI
 		elsif ((user.hp.to_f)/user.totalhp)<0.25
 			score*=2
 		end  
-		score = 0 if user.effects[PBEffects::Wish]>0
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Cleric")
 			wishpass=false
@@ -3082,6 +3081,10 @@ class Battle::AI
 			end
 			score*=1.3 if wishpass
 		end
+		if pbHasPivotMove?(user)
+			score*=1.3
+		end
+		score = 0 if user.effects[PBEffects::Wish]>0
     #---------------------------------------------------------------------------
     when "StartHealUserEachTurn" # aqua ring
 		movecheck = false
@@ -3585,7 +3588,7 @@ class Battle::AI
 		if userFasterThanTarget
 			score*=1.1
 		else
-			score*0.5
+			score*=0.5
 		end
 		miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 		user.allAllies.each do |b|
@@ -3990,7 +3993,7 @@ class Battle::AI
 		if target.effects[PBEffects::Embargo]>0  && target.effects[PBEffects::Substitute]>0 && move.baseDamage <=0  # added by JZ for Mind Meld fix
 			score=0
 		else
-			if !target.item
+			if target.item
 				score*=1.1
 				case target.item_id
 				when :LAXINCENSE, :ELECTRICSEED, :GRASSYSEED, :MISTYSEED, :PSYCHICSEED, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST, :MELEEVEST
@@ -4011,7 +4014,7 @@ class Battle::AI
 		if @battle.field.effects[PBEffects::MagicRoom] > 0
 			score=0
 		else
-			if !target.item
+			if target.item
 				score*=1.1
 				case target.item_id
 				when :LAXINCENSE, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, 
@@ -4024,7 +4027,7 @@ class Battle::AI
 					score*=1.4
 				end
 			end
-			if !user.item
+			if user.item
 				score*=0.8
 				case user.item_id
 				when :LAXINCENSE, :EXPERTBELT, :MUSCLEBAND, :WISEGLASSES, 
@@ -5029,11 +5032,15 @@ class Battle::AI
 			end
 			# testing is needed
 			if assistMoves.length >= 0
-				newmove = assistMoves[@battle.pbRandom(@assistMoves.length)]
-				newdata = Pokemon::Move.new(newmove)
-				naturemove = Battle::Move.from_pokemon_move(@battle, newdata)
-				echo("\nAssist Move will be #{newdata.name.to_s}") if $AIGENERALLOG
-				score = pbGetMoveScore(naturemove, user, target, skill)
+			#	newmove = assistMoves[@battle.pbRandom(assistMoves.length)]
+			#	if newmove
+			#		newdata = Pokemon::Move.new(newmove)
+			#		naturemove = Battle::Move.from_pokemon_move(@battle, newdata)
+			#		echo("\n~~~~Assist Move will be #{newdata.name.to_s}") if $AIGENERALLOG
+			#		score = pbGetMoveScore(naturemove, user, target, skill)
+			#	end
+			else
+				score=0
 			end
 		else
 			score=0
