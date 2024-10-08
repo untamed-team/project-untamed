@@ -1,13 +1,25 @@
 class Battle::AI
 	$AIMASTERLOG = false
 	$AIGENERALLOG = true
+	# need testing:
+	# topsy turby, instruct, gastro acid, floral healing, frost breath
+	$movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
+							"RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
+							"RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
+							"TargetUsesItsLastUsedMoveAgain",
+							"SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
+							"SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
+							"UserTargetSwapAbilities", "NegateTargetAbility", 
+							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
+							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
+							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
 	#=============================================================================
 	def pbChooseMoves(idxBattler)
 		user        = @battle.battlers[idxBattler]
-		wildBattler = user.wild?
+		wildBattler = user.wild? && !user.isBossPokemon?
 		skill       = 100
 		# if !wildBattler
 		# 	skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
@@ -33,15 +45,17 @@ class Battle::AI
 				pbRegisterMoveTrainer(user, i, choices, skill)
 			end
 		end
-		echo("\nChoices and scores:\n") #for: "+user.name+"\n")
-		Console.echo_h2(choices)
-		echo("------------------------\n")#----------------\n")
+		if $AIGENERALLOG
+			echo("\nChoices and scores:\n") #for: "+user.name+"\n")
+			Console.echo_h2(choices)
+			echo("------------------------\n")#----------------\n")
+		end
 		# Figure out useful information about the choices
 		totalScore = 0
 		maxScore   = 0
 		choices.each do |c|
 			totalScore += c[1]
-			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler
+			echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler && $AIGENERALLOG
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
@@ -191,7 +205,7 @@ class Battle::AI
 		skill = 100
 		score = pbGetMoveScoreFunctionCode(50, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
-		return 0 if score <= 0
+		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# Adjust score based on how much damage it can deal
 		#DemICE moved damage calculation to the beginning
 		# Account for accuracy of move
@@ -220,8 +234,8 @@ class Battle::AI
 					# Knows what can get past semi-invulnerability
 					if target.effects[PBEffects::SkyDrop] >= 0 ||
 						 target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-																		 "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-																		 "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+												 "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+												 "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 						miss = false if move.hitsFlyingTargets?
 					elsif target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")
 						miss = false if move.hitsDiggingTargets?
@@ -233,7 +247,7 @@ class Battle::AI
 			end
 			# Pick a good move for the Choice items
 			if user.hasActiveItem?([:CHOICEBAND, :CHOICESPECS, :CHOICESCARF]) ||
-				 user.hasActiveAbility?(:GORILLATACTICS)
+			   user.hasActiveAbility?(:GORILLATACTICS)
 				if move.baseDamage >= 60
 					score *= 1.2
 				elsif move.damagingMove?
@@ -264,7 +278,7 @@ class Battle::AI
 		# Don't prefer moves that are ineffective because of abilities or effects
 		return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
 		score = score.to_i
-		score = 0 if score < 0
+		score = 0 if score < 0 && !$movesToTargetAllies.include?(move.function)
 		return score
 	end
 
@@ -273,7 +287,7 @@ class Battle::AI
 	# of the target's current HP)
 	#=============================================================================
 	def pbGetMoveScoreDamage(score, move, user, target, skill)
-		return 0 if score <= 0
+		return 0 if (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
 		# Calculate how much damage the move will do (roughly)
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
@@ -294,17 +308,20 @@ class Battle::AI
 		# flinching are dealt with in the function code part of score calculation)
 		mold_broken=moldbroken(user,target,move)
 		if skill >= PBTrainerAI.mediumSkill 
-			if move.function == "FailsIfTargetActed" # Sucker Punch
-				if @battle.choices[0][0]!=:UseMove
+			# not a fan of randomness one bit, but i cant do much about this move
+			if user.lastMoveUsed == :SUCKERPUNCH && move.function == "FailsIfTargetActed" # Sucker Punch
+				if @battle.choices[target.index][0]!=:UseMove
 					chance=80
-					if pbAIRandom(100) < chance	# Try play "mind games" instead of just getting baited every time.
+					if pbAIRandom(100) < chance	
+						# Try play "mind games" instead of just getting baited every time.
 						echo("\n'Predicting' that opponent will not attack and sucker will fail")
 						score=1
 						realDamage=0
 					end
 				else
-					if @battle.choices[0][1]
-						if !@battle.choices[0][2].damagingMove? && pbAIRandom(100) < 50	# Try play "mind games" instead of just getting baited every time.
+					if @battle.choices[target.index][1]
+						if !@battle.choices[target.index][2].damagingMove? && pbAIRandom(100) < 50	
+							# Try play "mind games" instead of just getting baited every time.
 							echo("\n'Predicting' that opponent will not attack and sucker will fail")
 							score=1
 							realDamage=0 

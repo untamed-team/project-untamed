@@ -57,7 +57,7 @@ class Battle::AI
 				maxdam=tempdam if tempdam>maxdam
 			end 
 			maxdampercent = maxdam *100.0 / b.hp
-			echoln("#{j.name} = #{maxdampercent}")
+			echoln("#{j.name} = #{maxdampercent}") if $AIGENERALLOG
 		end	
 		mindamage=20
 		if battler.effects[PBEffects::LeechSeed]>=0 && (battler.hp > battler.totalhp*0.66)
@@ -69,13 +69,13 @@ class Battle::AI
 		end	
 		if maxdampercent<mindamage && !tickdamage
 			shouldSwitch=true 
-			echo("Switching because of dealing little to no direct or indirect damage.\n")
+			echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
 		end	
 		# Pokémon can't do anything (must have been in battle for at least 5 rounds)
 		if !@battle.pbCanChooseAnyMove?(idxBattler) &&
 			 battler.turnCount && battler.turnCount >= 5
 			shouldSwitch = true
-			echo("Switching because 5 turns of nothing.\n")
+			echo("Switching because 5 turns of nothing.\n") if $AIGENERALLOG
 		end
 		# Pokémon is Perish Songed and has Baton Pass
 		if skill >= PBTrainerAI.highSkill && battler.effects[PBEffects::PerishSong] == 1
@@ -84,7 +84,7 @@ class Battle::AI
 				next if !@battle.pbCanChooseMove?(idxBattler, i, false)
 				batonPass = i
 				shouldSwitch = true
-				echo("Switching because of perish song.\n")
+				echo("Switching because of perish song.\n") if $AIGENERALLOG
 				break
 			end
 		end
@@ -110,7 +110,7 @@ class Battle::AI
 				end
 				if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
 					shouldSwitch = true if battler.hp>battler.totalhp/2
-					echo("Switching because of being encored into a bad move.\n")
+					echo("Switching because of being encored into a bad move.\n") if $AIGENERALLOG
 				end
 			end
 		end
@@ -130,7 +130,7 @@ class Battle::AI
 				end
 				if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
 					shouldSwitch = true if battler.hp>battler.totalhp/3
-					echo("Switching because of being choice locked into a bad move.\n")
+					echo("Switching because of being choice locked into a bad move.\n") if $AIGENERALLOG
 				end
 			end
 		end
@@ -157,7 +157,7 @@ class Battle::AI
 		# Pokémon is about to faint because of Perish Song
 		if battler.effects[PBEffects::PerishSong] == 1
 			shouldSwitch = true
-			echo("Switching because of perish song.\n")
+			echo("Switching because of perish song.\n") if $AIGENERALLOG
 		end
 		#shouldSwitch = true # REMOVE THIS YOU PIECE OF SHIT BRAIDEAD MORRON - #by low
 		incoming = nil
@@ -175,7 +175,7 @@ class Battle::AI
 				swapper=newindex
 			end
 			if swapper==battler.pokemonIndex && shouldSwitch	
-				echo("\nRegretting the switch because there is no good pokemon to hard switch in.\n")
+				echo("\nRegretting the switch because there is no good pokemon to hard switch in.\n") if $AIGENERALLOG
 				shouldSwitch=false 
 			end
 		else
@@ -220,10 +220,10 @@ class Battle::AI
 		enemies.each do |i|
 			#pokmon = party[i]
 			pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
-			#if $consoleenabled
+			if $AIGENERALLOG
 				echo("\nSwitch score for: "+pokmon.name)
 				echo("\n----------------------------------------\n")
-			#end	
+			end	
 			sum  = 0
 			if PluginManager.installed?("Mid Battle Dialogue")
 				if BattleScripting.hasAceData?
@@ -530,7 +530,7 @@ class Battle::AI
 			end
 			sum+=maxscore+(scoresum*0.01) #if damagesum>0 || tickdamage
 			if $consoleenabled
-				echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)")
+				echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AIGENERALLOG
 			end	
 			if ownmaxmove
 				sum-=100 if (ownmaxmove.physicalMove? && pokmon.stages[:SPECIAL_ATTACK]>0) || (ownmaxmove.specialMove? && pokmon.stages[:ATTACK]>0)
@@ -568,7 +568,7 @@ class Battle::AI
 				end	
 			end	
 			#if $consoleenabled
-				echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)")
+				echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)") if $AIGENERALLOG
 			#end	
 			ownparty = @battle.pbParty(1)
 			ownparty.each_with_index do |pkmn, idxParty|
@@ -707,7 +707,7 @@ class Battle::AI
 				end
 			end
 			#if $consoleenabled
-				echo("\nScore after various other factors: "+sum.to_s+"\n")
+				echo("\nScore after various other factors: "+sum.to_s+"\n") if $AIGENERALLOG
 			#end	
 			if best == -1 || sum > bestSum
 				best = i

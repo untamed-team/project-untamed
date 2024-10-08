@@ -520,12 +520,9 @@ class Battle::Move
     if !ignoresReflect? && !target.damageState.critical &&
        !user.hasActiveAbility?(:INFILTRATOR)
       if target.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-        if @battle.pbSideBattlerCount(target) > 1
-          multipliers[:final_damage_multiplier] *= 1.5 / 3.0
-        else
-          multipliers[:final_damage_multiplier] /= 1.5
-        end
-      elsif target.pbOwnSide.effects[PBEffects::Reflect] > 0 && physicalMove?
+				multipliers[:final_damage_multiplier] *= 4 / 5.0
+      end
+      if target.pbOwnSide.effects[PBEffects::Reflect] > 0 && physicalMove?
         if @battle.pbSideBattlerCount(target) > 1
           multipliers[:final_damage_multiplier] *= 2 / 3.0
         else

@@ -123,13 +123,8 @@ class Battle::AI
     type = pbRoughType(move, user, skill)
     typeMod = pbCalcTypeMod(type, user, target)
     # Type effectiveness
-    return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || score <= 0
-		#~ theresone=false
-		#~ @battle.allBattlers.each do |j|
-			#~ if (j.isSpecies?(:BEHEEYEM) && j.item == :BEHEEYEMITE && j.willmega && target.affectedByTerrain?)
-				#~ theresone=true
-			#~ end
-		#~ end
+    return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || 
+                   (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
     # Immunity due to ability/item/other effects
     if skill >= PBTrainerAI.mediumSkill
       case type
@@ -521,11 +516,17 @@ class Battle::AI
         baseDmg = (baseDmg * 3.45).floor   # Average damage dealt
       end
     when "HitOncePerUserTeamMember"   # Beat Up
-      mult = 0
-      @battle.eachInTeamFromBattlerIndex(user.index) do |pkmn, _i|
-        mult += 1 if pkmn&.able? && pkmn.status == :NONE
-      end
-      baseDmg *= mult
+      # DemICE beat-up was being calculated very wrong.
+			beatUpList = []
+			@battle.eachInTeamFromBattlerIndex(user.index) do |pkmn,i|
+				next if !pkmn.able? || pkmn.status != :NONE
+				beatUpList.push(i)
+			end
+			baseDmg=0
+			for i in beatUpList
+				atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
+				baseDmg+= 5+(atk/10)
+			end
     when "TwoTurnAttackOneTurnInSun"   # Solar Beam
       baseDmg = move.pbBaseDamageMultiplier(baseDmg, user, target)
     when "MultiTurnAttackPowersUpEachTurn"   # Rollout
@@ -878,12 +879,9 @@ class Battle::AI
     # Aurora Veil, Reflect, Light Screen
     if skill >= PBTrainerAI.highSkill && !move.ignoresReflect? && !user.hasActiveAbility?(:INFILTRATOR)
       if target.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-        if @battle.pbSideBattlerCount(target) > 1
-          multipliers[:final_damage_multiplier] *= 1.5 / 3.0
-        else
-          multipliers[:final_damage_multiplier] /= 1.5
-        end
-      elsif target.pbOwnSide.effects[PBEffects::Reflect] > 0 && move.physicalMove?(type)
+        multipliers[:final_damage_multiplier] *= 4 / 5
+      end
+      if target.pbOwnSide.effects[PBEffects::Reflect] > 0 && move.physicalMove?(type)
         if @battle.pbSideBattlerCount(target) > 1
           multipliers[:final_damage_multiplier] *= 2 / 3.0
         else

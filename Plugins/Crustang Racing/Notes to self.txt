@@ -2,33 +2,13 @@ Notes to self:
 Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
 
-For RNG rolls, either each racer needs its own individual rng timers so checks can only be made every half a second or so, or there needs to be a global timer that runs out and resets every half second, and when that timer resets, a check CAN be made with individual odds
-def self.rngRoll(chance) #chance being maybe 50 (out of 100 is assumed)
-this can only be called when the global timer resets, making all checks that require rng will do nothing unless it's been half a second
-return rand(100).between?(1..chance) <- this would return true if you hit a number between 1 and 50 if using the example above
-
-
 Alright, organizing my thoughts for AI:
 
 When to use invincible:
 Use if available and there's a hazard coming up or if someone is within range of them and charging their spin out move
 
-When to use overload:
-Use when in max range of another racer if it's ready, rng very likely to use if ready
-
-When to use reduceCooldown:
-Use whenever, unlikely to use
-
 When to use secondBoost:
-Use if boost cooldown greater than 0 but speed is less than what stabilize would give?
-
-When to use rockHazard:
-Use whenever, rolling RNG to use if they have it readied
-Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
-
-When to use mudHazard:
-Use whenever, rolling RNG to use if they have it readied
-Prefer using this and rock hazard if in front of another racer, regardless of how far away on the X axis the other racer is
+AI uses secondBoost when possible
 
 When to strafe:
 Do not bother avoiding obstacles if invincible
@@ -36,6 +16,15 @@ Do not bother avoiding obstacles if invincible
 
 
 
-Add part of the track that slow you down, and make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
 
-separate boost length in seconds and stabilize boost length in seconds so stabilize lasts longer
+
+To do:
+throttle use of all AI moves with RNG
+add AI for racer2 and racer3
+Change boost button to spacebar
+
+
+After events (polish):
+Add part of the track that slow you down, and make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
+Add animation to overloading a racer
+Make shiny crustang opponents/rentables possible and make the overworld reflect shininess

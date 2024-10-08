@@ -372,13 +372,13 @@ MenuHandlers.add(:battle_pokemon_debug_menu, :hidden_values, {
           end
           msg = _INTL("Change which IV?\nHidden Power: {1}, power {2}\nTotal: {3}/{4} ({5}%)",
                       GameData::Type.get(hiddenpower[0]).name, hiddenpower[1], totaliv,
-                      iv_id.length * Pokemon::IV_STAT_LIMIT, 100 * totaliv / (iv_id.length * Pokemon::IV_STAT_LIMIT))
+                      iv_id.length * 0, 100 * totaliv / (iv_id.length * 0))
           ivcommands.push(_INTL("Randomise all"))
           cmd2 = pbMessage("\\ts[]\\l[3]" + msg, ivcommands, -1, nil, cmd2)
           break if cmd2 < 0
           if cmd2 < iv_id.length
             params = ChooseNumberParams.new
-            params.setRange(0, Pokemon::IV_STAT_LIMIT)
+            params.setRange(0, 0)
             params.setDefaultValue(pkmn.iv[iv_id[cmd2]])
             params.setCancelValue(pkmn.iv[iv_id[cmd2]])
             f = pbMessageChooseNumber("\\ts[]" + _INTL("Set the IV for {1} (max. 31).",
@@ -389,7 +389,7 @@ MenuHandlers.add(:battle_pokemon_debug_menu, :hidden_values, {
               battler&.pbUpdate
             end
           else   # Randomise all
-            GameData::Stat.each_main { |s| pkmn.iv[s.id] = rand(Pokemon::IV_STAT_LIMIT + 1) }
+            GameData::Stat.each_main { |s| pkmn.iv[s.id] = rand(0 + 1) }
             pkmn.calc_stats
             battler&.pbUpdate
           end

@@ -176,25 +176,6 @@ class CrustangRacing
 		end #if moveNumber == 0
 		
 	end #def self.beginCooldown(move)
-		
-	def self.updateCooldownMultipliers
-		if @startingCooldownMultiplier == true
-			@initialCooldownMultiplierTimer = CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED * Graphics.frame_rate if !@initialCooldownMultiplierTimer
-			@initialCooldownMultiplierTimer -= 1
-			if @initialCooldownMultiplierTimer <= 0
-				@startingCooldownMultiplier = false
-				#set all cooldownmultipliers to 1
-				@racer1[:BoostCooldownMultiplier] = 1
-				@racer1[:MoveCoolDownMultiplier] = 1
-				@racer2[:BoostCooldownMultiplier] = 1
-				@racer2[:MoveCoolDownMultiplier] = 1
-				@racer3[:BoostCooldownMultiplier] = 1
-				@racer3[:MoveCoolDownMultiplier] = 1
-				@racerPlayer[:BoostCooldownMultiplier] = 1
-				@racerPlayer[:MoveCoolDownMultiplier] = 1
-			end
-		end
-	end #def self.updateCooldownMultipliers
 	
 	def self.getMoveEffect(racer, moveNumber)
 		case moveNumber
@@ -303,7 +284,10 @@ class CrustangRacing
 				racer[:BoostingStatus] = true
 				racer[:PreviousDesiredSpeed] = racer[:DesiredSpeed]
 				racer[:DesiredSpeed] = CrustangRacingSettings::SECONDARY_BOOST_SPEED
-				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
+				racer[:SecondaryBoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDARY_BOOST_LENGTH_SECONDS) * Graphics.frame_rate
+				#make Boost cooldown as well
+				racer[:BoostTimer] = (CrustangRacingSettings::BOOST_LENGTH_SECONDS + CrustangRacingSettings::SECONDS_TO_REACH_BOOST_SPEED) * Graphics.frame_rate
+				self.beginCooldown(racer, 0)
 			when "rockHazard" #Place a hazard where you are, leaving it behind for another racer to hit.
 				self.placeHazard(racer, "rock")
 			when "mudHazard" #Place a mud pit where you are, leaving it behind for another racer to hit.
@@ -452,23 +436,24 @@ class CrustangRacing
 		end
 	end #self.spinOut
 	
-	def self.aiExecuteSpinOutMove
+	def self.aiChargeSpinOutMove
 		#used to hold down (charge) spinOut since I can't use loops
 		###################################
 		#============= Racer1 =============
 		###################################
 		racer = @racer1
-		#if AI decided to use spinOut
-		if racer[:SpinOutCharge] > 0
+
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
-			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE #get to the max range
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
 				moveNumber = self.hasMoveEffect?(racer, "spinOut")
 				self.moveEffect(racer, moveNumber)
 				self.beginCooldown(racer, moveNumber)
 			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
-		end #if racer[:SpinOutCharge] > 0
-	end #def self.executeSpinOutMove
+		end #if self.spinOutMoveIsReady?(racer)
+	end #def self.aiChargeSpinOutMove
 	
 	def self.overload(attacker, recipient)
 		#OVERLOAD_DURATION_IN_SECONDS
@@ -480,6 +465,25 @@ class CrustangRacing
 			CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
 		end
 	end #self.spinOut
+	
+	def self.aiChargeOverloadMove
+		#used to hold down (charge) overload since I can't use loops
+		###################################
+		#============= Racer1 =============
+		###################################
+		racer = @racer1
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+	end #def self.aiChargeOverloadMove
 	
 	def self.assignMoveEffects
 		#assign move effects based on the moves the racer has
@@ -592,7 +596,7 @@ class CrustangRacing
 			#recipient = "RacerPlayer"
 		end
 		announcement = "#{attacker[:EnteredCrustangContestant][:TrainerName]} -> #{action} -> #{recipient[:EnteredCrustangContestant][:TrainerName]}"
-		Console.echo_warn announcement
+		#Console.echo_warn announcement
 		#keep the feed at 3 elements at most
 		if @announcementsFeed.length >= 3
 			@announcementsFeed.delete_at(0)

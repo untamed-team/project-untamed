@@ -630,33 +630,29 @@ Battle::ItemEffects::StatusCure.add(:PECHABERRY,
 Battle::ItemEffects::StatusCure.add(:PERSIMBERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumeBerry?
-    next false if battler.effects[PBEffects::Confusion] == 0
-    itemName = GameData::Item.get(item).name
-    PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
-    battle.pbCommonAnimation("EatBerry", battler) if !forced
-		pbRaiseTropiusEvolutionStep(battler) #by low
-    battler.pbCureConfusion
-    if forced
-      battle.pbDisplay(_INTL("{1} snapped out of its confusion.", battler.pbThis))
+    if $game_variables[MECHANICSVAR] >= 3
+      next false if battler.status != :DIZZY #by low
+      itemName = GameData::Item.get(item).name
+      PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
+      battle.pbCommonAnimation("EatBerry", battler) if !forced
+      pbRaiseTropiusEvolutionStep(battler) #by low
+      battler.pbCureStatus(forced)
+      battle.pbDisplay(_INTL("{1}'s {2} healed its dizziness!", battler.pbThis, itemName)) if !forced
+      next true
     else
-      battle.pbDisplay(_INTL("{1}'s {2} snapped it out of its confusion!", battler.pbThis,
-         itemName))
+      next false if battler.effects[PBEffects::Confusion] == 0
+      itemName = GameData::Item.get(item).name
+      PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
+      battle.pbCommonAnimation("EatBerry", battler) if !forced
+      pbRaiseTropiusEvolutionStep(battler) #by low
+      battler.pbCureConfusion
+      if forced
+        battle.pbDisplay(_INTL("{1} snapped out of its confusion.", battler.pbThis))
+      else
+        battle.pbDisplay(_INTL("{1}'s {2} snapped it out of its confusion!", battler.pbThis,itemName))
+      end
+      next true
     end
-    next true
-  }
-)
-
-Battle::ItemEffects::StatusCure.add(:PERSIMBERRY,
-  proc { |item, battler, battle, forced|
-    next false if !forced && !battler.canConsumeBerry?
-    next false if battler.status != :DIZZY #by low
-    itemName = GameData::Item.get(item).name
-    PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
-    battle.pbCommonAnimation("EatBerry", battler) if !forced
-		pbRaiseTropiusEvolutionStep(battler) #by low
-    battler.pbCureStatus(forced)
-    battle.pbDisplay(_INTL("{1}'s {2} healed its dizziness!", battler.pbThis, itemName)) if !forced
-    next true
   }
 )
 

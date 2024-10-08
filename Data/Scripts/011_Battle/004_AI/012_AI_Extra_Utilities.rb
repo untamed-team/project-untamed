@@ -43,6 +43,16 @@ class Battle::AI
 			atk = pbRoughStat(user, :DEFENSE, skill)
 		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"   # Psycrush
 			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
+		elsif move.function == "TitanWrath"
+			userStats = user.plainStats
+			highestStatValue = higheststat = 0
+			userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
+			GameData::Stat.each_main_battle do |s|
+				next if userStats[s.id] < highestStatValue
+				higheststat = s.id
+				break
+			end
+			atk = pbRoughStat(user, higheststat, skill)
 		elsif move.specialMove?(type)
 			if move.function == "UseTargetAttackInsteadOfUserAttack"   # Foul Play
 				atk = pbRoughStat(target, :SPECIAL_ATTACK, skill)
@@ -54,6 +64,14 @@ class Battle::AI
 		defense = pbRoughStat(target, :DEFENSE, skill)
 		if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef"   # Psyshock
 			defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
+		end
+		if move.function == "TitanWrath"
+			case higheststat
+			when :ATTACK, :DEFENSE
+				defense = pbRoughStat(target, :DEFENSE, skill)
+			when :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED
+				defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
+			end
 		end
 		##### Calculate all multiplier effects #####
 		multipliers = {
@@ -399,17 +417,14 @@ class Battle::AI
 		end
 		# Frostbite #by low
 		if user.status == :FREEZE && move.specialMove?(type) && skill >= PBTrainerAI.highSkill
-		multipliers[:final_damage_multiplier] *= damagenerf
+			multipliers[:final_damage_multiplier] *= damagenerf
 		end
 		# Aurora Veil, Reflect, Light Screen
 		if skill >= PBTrainerAI.highSkill && !move.ignoresReflect? && !user.hasActiveAbility?(:INFILTRATOR)
 			if target.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				if @battle.pbSideBattlerCount(target) > 1
-					multipliers[:final_damage_multiplier] *= 1.5 / 3.0
-				else
-					multipliers[:final_damage_multiplier] /= 1.5
-				end
-			elsif target.pbOwnSide.effects[PBEffects::Reflect] > 0 && move.physicalMove?(type)
+				multipliers[:final_damage_multiplier] *= 4 / 5.0
+			end
+			if target.pbOwnSide.effects[PBEffects::Reflect] > 0 && move.physicalMove?(type)
 				if @battle.pbSideBattlerCount(target) > 1
 					multipliers[:final_damage_multiplier] *= 2 / 3.0
 				else
@@ -470,7 +485,7 @@ class Battle::AI
 			atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
 			defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
 			if c==3 && 
-				 !target.hasActiveAbility?(:SHELLARMOR) && !target.hasActiveAbility?(:BATTLEARMOR) && 
+				 !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR]) && 
 				 target.pbOwnSide.effects[PBEffects::LuckyChant]==0
 				damage = 0.96*damage/atkmult if atkmult<1
 				damage = damage*defmult if defmult>1
@@ -492,7 +507,8 @@ class Battle::AI
 		if (attacker.hasActiveAbility?(:MOLDBREAKER) || 
 				attacker.hasActiveAbility?(:TURBOBLAZE) || 
 				attacker.hasActiveAbility?(:TERAVOLT) ||
-				move.function=="IgnoreTargetAbility") && 
+				move.function=="IgnoreTargetAbility" ||
+				move.function=="CategoryDependsOnHigherDamageIgnoreTargetAbility") && 
 				!opponent.hasActiveAbility?(:SHADOWSHIELD) #!opponent.hasActiveAbility?(:FULLMETALBODY) && 
 			return true
 		end
@@ -566,30 +582,6 @@ class Battle::AI
 		return stupidity_pbCheckMoveImmunity(score, move, user, target, skill)
 		#return result   
 	end	
-	
-	#=============================================================================
-	# Get a better move's base damage value
-	#=============================================================================
-	alias stupidity_pbMoveBaseDamage pbMoveBaseDamage
-	def pbMoveBaseDamage(move,user,target,skill)
-		baseDmg = move.baseDamage
-		case move.function
-		when "HitOncePerUserTeamMember"   # DemICE beat up was being calculated very wrong.
-			beatUpList = []
-			@battle.eachInTeamFromBattlerIndex(user.index) do |pkmn,i|
-				next if !pkmn.able? || pkmn.status != :NONE
-				beatUpList.push(i)
-			end
-			baseDmg=0
-			for i in beatUpList
-				atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
-				baseDmg+= 5+(atk/10)
-			end
-		else
-			baseDmg = stupidity_pbMoveBaseDamage(move,user,target,skill)
-		end
-		return baseDmg
-	end
 	
   	def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
 		return true if !move

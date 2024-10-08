@@ -797,7 +797,8 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
 end
 
 #===============================================================================
-# Increases the target's Special Attack by 1 stage. Confuses the target. (Flatter)
+# Increases the target's Special Attack by 1 or 2 stage(s). 
+# Confuses the target. (Flatter)
 #===============================================================================
 class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   def canMagicCoat?; return true; end
@@ -818,8 +819,9 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
+		raise_num = ($game_variables[MECHANICSVAR] >= 3) ? 2 : 1 #by low
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
+      target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user)
     end
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
