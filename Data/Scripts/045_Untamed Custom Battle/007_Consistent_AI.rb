@@ -222,7 +222,7 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		skill = 100
-		score = pbGetMoveScoreFunctionCode(100, move, user, target, skill)
+		score = pbGetMoveScoreFunctionCode(80, move, user, target, skill)
 		# A score of 0 here means it absolutely should not be used
 		score += 1 if aigenlog && score <= 0 
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
@@ -234,8 +234,6 @@ class Battle::AI
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
 			score -= (100-accuracy)*1.33 if accuracy < 100
-			score *= 0.75 # test 
-			# lowering the scores of damaging moves as a whole to make status more appealing
 		else # Status moves
 			score = pbStatusDamage(move) # each status move now has a value tied to them
 			score += 1 if aigenlog && score <= 0

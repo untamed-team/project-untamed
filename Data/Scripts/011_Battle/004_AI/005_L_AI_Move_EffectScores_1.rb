@@ -3497,16 +3497,13 @@ class Battle::AI
 				specmove=true
 			end
 		end    
-		if (physmove && user.statStageAtMax?(:ATTACK)) ||
-				(specmove && user.statStageAtMax?(:SPECIAL_ATTACK))
-			miniscore/=100.0
-		end
+		miniscore/=100.0
 		movecheck=false
 		for m in target.moves
 			movecheck=true if m.id == :CLEARSMOG
 			movecheck=true if m.id == :HAZE
 		end
-		miniscore*=0 if movecheck
+		miniscore*=0.7 if movecheck
 		if user.hasActiveAbility?(:CONTRARY)
 			miniscore*=0
 		end            
@@ -3518,7 +3515,7 @@ class Battle::AI
 			 user.hasActiveAbility?(:PRESAGE))
 			miniscore*=2
 		end
-		score = miniscore
+		score *= miniscore
 		score = 0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash

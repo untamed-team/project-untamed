@@ -2744,7 +2744,7 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:ACCUMULATOR,
     battle.pbShowAbilitySplash(battler)
     battle.pbAnimation(:STOCKPILE, battler, battler)
     battler.effects[PBEffects::Stockpile] += 1
-    @battle.pbDisplay(_INTL("{1} gathered {2} stockpiles!", battler.pbThis, battler.effects[PBEffects::Stockpile]))
+    battle.pbDisplay(_INTL("{1} gathered {2} stockpiles!", battler.pbThis, battler.effects[PBEffects::Stockpile]))
     battle.pbHideAbilitySplash(battler)
   }
 )
