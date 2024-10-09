@@ -53,8 +53,8 @@ Weight = 19.7
 [FLYGON,1]
 FormName = Mega Flygon
 MegaStone = FLYGONITE
-Type1 = DRAGON
-Type2 = BUG
+Type1 = BUG
+Type2 = DRAGON
 BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
 Height = 2.6
