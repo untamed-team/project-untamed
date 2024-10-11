@@ -242,8 +242,9 @@ class Battle::Battler
         end
       when PBEffects::Gravity
         # float stone changes #by low
-        if @battle.field.effects[PBEffects::Gravity] > 0 && !b.hasActiveItem?(:FLOATSTONE) 
+        if @battle.field.effects[PBEffects::Gravity] > 0
           @battle.allBattlers.each do |b|
+            next if b.hasActiveItem?(:FLOATSTONE)
             showMessage = false
             if b.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
                                   "TwoTurnAttackInvulnerableInSkyParalyzeTarget",

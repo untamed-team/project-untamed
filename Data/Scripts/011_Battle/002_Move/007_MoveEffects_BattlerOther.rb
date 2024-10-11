@@ -201,7 +201,7 @@ class Battle::Move::ParalyzeFlinchTarget < Battle::Move
     if target.pbCanParalyze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbParalyze(user)
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -251,7 +251,7 @@ class Battle::Move::BurnFlinchTarget < Battle::Move
     if target.pbCanBurn?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbBurn(user)
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -311,7 +311,7 @@ class Battle::Move::FreezeFlinchTarget < Battle::Move
     if target.pbCanFreeze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbFreeze
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -535,12 +535,12 @@ class Battle::Move::FlinchTarget < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     return if damagingMove?
-    target.pbFlinch(user) if @battle.turnCount >= 1 #by low
+    target.pbFlinch(user)
   end
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbFlinch(user) if @battle.turnCount >= 1 #by low
+    target.pbFlinch(user)
   end
 end
 
@@ -568,7 +568,7 @@ class Battle::Move::FlinchTargetFailsIfNotUserFirstTurn < Battle::Move
 	
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbFlinch(user)
+    target.pbFlinch(user, true) #by low
   end
 	
   def pbMoveFailed?(user, targets)

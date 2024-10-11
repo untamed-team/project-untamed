@@ -6,21 +6,15 @@ class Battle::AI
   alias aiEffectScorePart3_pbGetMoveScoreFunctionCode pbGetMoveScoreFunctionCode
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
+	mold_broken = moldbroken(user,target,move)
+	globalArray = pbGetMidTurnGlobalChanges
+	aspeed = pbRoughStat(user,:SPEED,skill)
+	ospeed = pbRoughStat(target,:SPEED,skill)
+	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
     case move.function
     #---------------------------------------------------------------------------
     when "ProtectUser"
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if j.opposes?(user)
-				if (j.isSpecies?(:CACTURNE) && j.item == :CACTURNITE && j.willmega)   || # sand
-					(j.isSpecies?(:ZOLUPINE) && j.item == :ZOLUPINEITE && j.willmega) || # rain
-					(j.isSpecies?(:ZARCOIL) && j.item == :ZARCOILITE && j.willmega)   || # sun
-					(j.isSpecies?(:FRIZZARD) && j.item == :FRIZZARDITE && j.willmega) 	 # hail
-					theresone=true
-				end
-			end
-		end
-		score*=1.3 if theresone
+		score*=1.3 if globalArray.any? { |element| element.include?("weather") }
 		if target.turnCount==0
 			score*=1.5
 		end
@@ -28,10 +22,10 @@ class Battle::AI
 			score*=0.3
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 		   @battle.field.terrain == :Grassy
 			score*=1.2
@@ -56,24 +50,14 @@ class Battle::AI
 			movecheck=true if ["RemoveProtections", "RemoveProtectionsBypassSubstitute", "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1"].includes?(m.id)
 		end
 		score*=0.1 if movecheck
-		maxdam = 0
-		contactcheck=false
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			if tempdam > maxdam
-				maxdam = tempdam
-				contactcheck=true if m.contactMove?
-			end
-		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if user.effects[PBEffects::Wish]>0
 			if maxdam>user.hp
 				score*=3
 			else
 				score*=1.4
 			end
-		end  
-		if contactcheck
-			score*=1.3
 		end
 		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			score*=1.5
@@ -81,13 +65,14 @@ class Battle::AI
 		if !user.pbHasAnyStatus?
 			movecheck=false
 			for m in target.moves
-				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD].include?(m.id)
+				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(m.id)
 			end
 			score*=0.7 if movecheck
 		end
 		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserBanefulBunker" # baneful bunker
+		score*=1.3 if globalArray.any? { |element| element.include?("weather") }
 		if target.turnCount==0
 			score*=1.5
 		end        
@@ -95,11 +80,11 @@ class Battle::AI
 			score*=0.3
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
 		if user.hasActiveItem?(:LEFTOVERS) || 
-		   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 		   @battle.field.terrain == :Grassy
 			score*=1.2
@@ -108,7 +93,7 @@ class Battle::AI
 			score*=0.8
 		else
 			if target.pbCanPoison?(user, false)
-				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 130, move, 100)
+				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 130, move, globalArray, 100)
 				miniscore/=100.0
 				score*=miniscore
 			end
@@ -134,6 +119,12 @@ class Battle::AI
 			movecheck=true if ["RemoveProtections", "RemoveProtectionsBypassSubstitute", "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1"].includes?(m.id)
 		end
 		score*=0.1 if movecheck
+		contactcheck=false
+		for m in target.moves
+			contactcheck=true if m.pbContactMove?(user)
+		end
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam=bestmove[0]
 		if user.effects[PBEffects::Wish]>0
 			if maxdam>user.hp
 				score*=3
@@ -141,15 +132,6 @@ class Battle::AI
 				score*=1.4
 			end
 		end  
-		maxdam = 0
-		contactcheck=false
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			if tempdam > maxdam
-				maxdam = tempdam
-				contactcheck=true if m.contactMove?
-			end
-		end
 		if contactcheck
 			score*=1.3
 		end
@@ -159,7 +141,7 @@ class Battle::AI
 		if !user.pbHasAnyStatus?
 			movecheck=false
 			for m in target.moves
-				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD].include?(m.id)
+				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(m.id)
 			end
 			score*=0.7 if movecheck
 		end
@@ -176,10 +158,10 @@ class Battle::AI
 			score*=0.6
 		end
 		if user.hasActiveAbility?(:SPEEDBOOST) && 
-				user.pbSpeed > pbRoughStat(target, :SPEED, skill) && @battle.field.effects[PBEffects::TrickRoom]==0
+		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
 			score*=4
 		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 				user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 				@battle.field.terrain == :Grassy
 			score*=1.2
@@ -206,7 +188,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if move.function == "ProtectUserFromDamagingMovesKingsShield"
-			if (user.pbSpeed < pbRoughStat(target, :SPEED, skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0) && 
+			if (!userFasterThanTarget) && 
 			   user.isSpecies?(:AEGISLASH) && user.form == 1
 				score*=4
 			else
@@ -218,25 +200,13 @@ class Battle::AI
 			movecheck=true if m.ignoresSubstitute?(target)
 		end
 		score*=0.1 if movecheck
-		maxdam = 0
+		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		maxdam = bestmove[0]
 		contactcheck=false
 		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			if tempdam > maxdam
-				maxdam = tempdam
-				contactcheck=true if m.contactMove?
-			end
+			contactcheck=true if m.pbContactMove?(user)
 		end
-		if user.effects[PBEffects::Wish]>0
-			if maxdam>user.hp
-				score*=3
-			else
-				score*=1.4
-			end
-		end  
-		if contactcheck
-			score*=1.3
-		end
+		score*=1.3 if contactcheck
 		if user.effects[PBEffects::Wish]>0
 			if maxdam>user.hp
 				score*=3
@@ -250,17 +220,15 @@ class Battle::AI
 		if !user.pbHasAnyStatus?
 			movecheck=false
 			for m in target.moves
-				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD].include?(m.id)
+				movecheck=true if [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(m.id)
 			end
 			score*=0.7 if movecheck
 		end
 		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
-		soundcheck= false
 		healcheck = false
 		for m in target.moves
-			soundcheck = true if ["RemoveProtections", "RemoveProtectionsBypassSubstitute", "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1"].includes?(m.id)
 			healcheck = true if m.healingMove?
 		end
 		setupcheck = false
@@ -269,18 +237,18 @@ class Battle::AI
 			hasAlly = !user.allAllies.empty?
 			if hasAlly
 				score*=1.3
-				if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+				if (userFasterThanTarget)
 					score*=1.2
 				else
 					score*=0.7
-					if (user.pbSpeed>pbRoughStat(target,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom]!=0)
+					if (userFasterThanTarget)
 						score*=0
 					end
 				end
 				if setupcheck && healcheck
 					score*=0.3
 				end
-				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON)) || 
+				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 						user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 						@battle.field.terrain == :Grassy
 					score*=1.2
@@ -316,11 +284,6 @@ class Battle::AI
 		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromStatusMoves" # crafty shield
-		maxdam = 0
-		for m in target.moves
-			tempdam = pbRoughDamage(m, user, target, skill, m.baseDamage)
-			maxdam = tempdam if tempdam > maxdam
-		end
 		movecheck = false
 		movecheck = true if pbHasPhazingMove?(target)
 		if user.effects[PBEffects::ProtectRate] > 1
@@ -341,6 +304,9 @@ class Battle::AI
 			if user.hp==user.totalhp
 				score *= 1.5
 			end  
+			if target.battle.choices[target.index][2].statusMove?
+				score *= 2
+			end
 		end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromPriorityMoves"
@@ -348,11 +314,7 @@ class Battle::AI
 			score = 0
 		else
 			noprio = true
-			ally = false
-			user.allAllies.each do |b|
-				next if b.nil?
-				ally = true
-			end
+			ally = !user.allAllies.empty?
 			for m in target.moves
 				if m.priority > 0
 					noprio = false
@@ -362,7 +324,7 @@ class Battle::AI
 					noprio = false
 					break
 				end
-				if target.hasActiveAbility?(:PRANKSTER) && !user.pbHasType?(:DARK) && m.statusMove?
+				if target.hasActiveAbility?(:PRANKSTER) && !user.pbHasType?(:DARK, true) && m.statusMove?
 					noprio = false
 					break
 				end
@@ -387,6 +349,9 @@ class Battle::AI
 			if user.hp==user.totalhp
 				score *= 1.5
 			end          
+			if priorityAI(target,target.battle.choices[target.index][2]) > 0
+				score *= 3
+			end
 		end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromMultiTargetDamagingMoves"
@@ -408,229 +373,244 @@ class Battle::AI
 			if user.hp==user.totalhp
 				score *= 1.5
 			end
+			if pbTargetsMultiple?(target.battle.choices[target.index][2],user)
+				score *= 3
+			end
 		end
     #------------------------------------------------------------------------------------------------------------------------------------------------------
 	# Actual Untamed exclusive moves
     #------------------------------------------------------------------------------------------------------------------------------------------------------
-		when "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"
+	when "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"
     #---------------------------------------------------------------------------
-		when "Supernova"
+	when "Supernova"
     #---------------------------------------------------------------------------
-		when "TitanWrath"
+	when "TitanWrath"
     #---------------------------------------------------------------------------
-		when "Rebalancing"
-			targetStats = target.plainStats
-			highestStatValue = highestStatID = 0
-			targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
-			GameData::Stat.each_main_battle do |s|
-				next if targetStats[s.id] < highestStatValue
-				highestStatID = s.id
-				break
-			end
-			if user.opposes?(target) # is enemy
-				miniscore=100
-				livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
-				livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
-				case highestStatID # defense nerfs is just kind of whatever so i will skip them for now
-					when :ATTACK
-						if livecounttarget==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
-							miniscore*=1.4
-						end
-						if target.poisoned?
-							miniscore*=1.2
-						end
-						if target.stages[:ATTACK]<0
-							minimini = 5*target.stages[:ATTACK]
-							minimini+=100
-							minimini/=100.0
-							miniscore*=minimini
-						end
-						if user.pbHasMove?(:FOULPLAY)
-							miniscore*=0.5
-						end  
-						if target.burned? && !target.hasActiveAbility?(:GUTS)
-							miniscore*=0.5
-						end       
-						if livecounttarget==1
-							miniscore*=0.5
-						end
-					when :SPECIAL_ATTACK
-						roles = pbGetPokemonRole(user, target)
-						if roles.include?("Physical Wall") || roles.include?("Special Wall")
-							miniscore*=1.3
-						end
-						sweepvar = false
-						count=0
-						@battle.pbParty(user.index).each do |i|
-							next if i.nil?
-							count+=1
-							temproles = pbGetPokemonRole(i, target, count, @battle.pbParty(user.index))
-							if temproles.include?("Sweeper")
-								sweepvar = true
-							end
-						end
-						if sweepvar
-							miniscore*=1.1
-						end
-						if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-							miniscore*=1.4
-						end
-						if target.poisoned? || target.burned? || target.frozen?
-							miniscore*=1.2
-						end
-						if target.stages[:SPECIAL_ATTACK]<0
-							minimini = 5*target.stages[:SPECIAL_ATTACK]
-							minimini+=100
-							minimini/=100.0
-							miniscore*=minimini
-						end       
-						if livecountuser==1
-							miniscore*=0.5
-						end
-					when :SPEED
-						if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-							miniscore*=1.3
-						end
-						if target.stages[:SPEED]<0
-							minimini = 5*target.stages[:SPEED]
-							minimini+=100
-							minimini/=100.0
-							miniscore*=minimini
-						end
-						if target.hasActiveAbility?(:SPEEDBOOST)
-							miniscore*=0.5
-						end
-						if user.pbHasMove?(:ELECTROBALL)
-							miniscore*=1.5
-						end  
-						if user.pbHasMove?(:GYROBALL)
-							miniscore*=0.5
-						end
-						if @battle.field.effects[PBEffects::TrickRoom]!=0
-							miniscore*=0.1
-						else
-							trickrooom = false
-							for j in target.moves
-								if j.id == :TRICKROOM
-									trickrooom = true
-									break
-								end
-							end
-							miniscore*=0.1 if trickrooom
-						end
-						if target.hasActiveItem?([:LAGGINGTAIL, :IRONBALL])
-							miniscore*=0.1
-						end
-						electroballin = false
-						for j in target.moves
-							if j.id == :ELECTROBALL
-								electroballin = true
-								break
-							end
-						end
-						miniscore*=1.3 if electroballin
-						gyroballin = false
-						for j in target.moves
-							if j.id == :GYROBALL
-								gyroballin = true
-								break
-							end
-						end
-						miniscore*=0.5 if gyroballin
+	when "Rebalancing"
+		targetStats = target.plainStats
+		highestStatValue = highestStatID = 0
+		targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
+		GameData::Stat.each_main_battle do |s|
+			next if targetStats[s.id] < highestStatValue
+			highestStatID = s.id
+			break
+		end
+		if user.opposes?(target) # is enemy
+			miniscore=100
+			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
+			case highestStatID # defense nerfs is just kind of whatever so i will skip them for now
+			when :ATTACK
+				roles = pbGetPokemonRole(user, target)
+				if roles.include?("Physical Wall") || roles.include?("Special Wall")
+					miniscore*=1.3
 				end
-				if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+				sweepvar = false
+				count=0
+				@battle.pbParty(user.index).each do |i|
+					next if i.nil?
+					count+=1
+					temproles = pbGetPokemonRole(i, target, count, @battle.pbParty(user.index))
+					if temproles.include?("Sweeper")
+						sweepvar = true
+					end
+				end
+				if sweepvar
+					miniscore*=1.1
+				end
+				if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+					miniscore*=1.4
+				end
+				if target.poisoned? || target.frozen?
+					miniscore*=1.2
+				end
+				if target.stages[:ATTACK]<0
+					minimini = 5*target.stages[:ATTACK]
+					minimini+=100
+					minimini/=100.0
+					miniscore*=minimini
+				end
+				if user.pbHasMove?(:FOULPLAY)
+					miniscore*=0.5
+				end  
+				if target.burned? && !target.hasActiveAbility?(:GUTS)
+					miniscore*=0.5
+				end       
+				if livecountuser==1
+					miniscore*=0.5
+				end
+			when :SPECIAL_ATTACK
+				roles = pbGetPokemonRole(user, target)
+				if roles.include?("Physical Wall") || roles.include?("Special Wall")
+					miniscore*=1.3
+				end
+				sweepvar = false
+				count=0
+				@battle.pbParty(user.index).each do |i|
+					next if i.nil?
+					count+=1
+					temproles = pbGetPokemonRole(i, target, count, @battle.pbParty(user.index))
+					if temproles.include?("Sweeper")
+						sweepvar = true
+					end
+				end
+				if sweepvar
+					miniscore*=1.1
+				end
+				if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+					miniscore*=1.4
+				end
+				if target.poisoned? || target.burned?
+					miniscore*=1.2
+				end
+				if target.frozen?
+					miniscore*=0.5
+				end
+				if target.stages[:SPECIAL_ATTACK]<0
+					minimini = 5*target.stages[:SPECIAL_ATTACK]
+					minimini+=100
+					minimini/=100.0
+					miniscore*=minimini
+				end       
+				if livecountuser==1
+					miniscore*=0.5
+				end
+			when :SPEED
+				if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+					miniscore*=1.3
+				end
+				if target.stages[:SPEED]<0
+					minimini = 5*target.stages[:SPEED]
+					minimini+=100
+					minimini/=100.0
+					miniscore*=minimini
+				end
+				if target.hasActiveAbility?(:SPEEDBOOST)
+					miniscore*=0.5
+				end
+				if user.pbHasMove?(:ELECTROBALL)
+					miniscore*=1.5
+				end  
+				if user.pbHasMove?(:GYROBALL)
+					miniscore*=0.5
+				end
+				if @battle.field.effects[PBEffects::TrickRoom]!=0
 					miniscore*=0.1
-				end
-				if target.hasActiveAbility?(:UNAWARE) && highestStatID != :SPEED
-					miniscore*=0.1
-				end
-				miniscore/=100.0
-				score*=miniscore
-			else                     # is ally
-				miniscore = -100 # neg due to being ally
-				if !target.SetupMovesUsed.include?(move.id)
-					if (1.0/target.totalhp)*target.hp < 0.6
-						miniscore*=0.3
-					end
-					if target.effects[PBEffects::Attract]>=0 || target.paralyzed? || 
-					   target.effects[PBEffects::Yawn]>0 || target.asleep?
-						miniscore*=0.3
-					end
-					if target.effects[PBEffects::Substitute]>0
-						miniscore = 0
-					end
-					targetAlly = []
-					user.allOpposing.each do |b|
-						next if !b.near?(user.index)
-						targetAlly.push(b.index)
-					end
-					if targetAlly.length > 0
-						if target.pbSpeed > @battle.battlers[targetAlly[0]].pbSpeed && 
-						   target.pbSpeed > @battle.battlers[targetAlly[1]].pbSpeed
-							miniscore*=1.3
-						else
-							miniscore*=0.7
-						end
-						if (@battle.battlers[targetAlly[0]].pbHasMove?(:FOULPLAY) || 
-						   @battle.battlers[targetAlly[1]].pbHasMove?(:FOULPLAY)) &&
-						   highestStatID == :ATTACK
-							miniscore*=0.3
-						end
-					end
 				else
+					trickrooom = false
+					for j in target.moves
+						if j.id == :TRICKROOM
+							trickrooom = true
+							break
+						end
+					end
+					miniscore*=0.1 if trickrooom
+				end
+				if target.hasActiveItem?([:LAGGINGTAIL, :IRONBALL])
+					miniscore*=0.1
+				end
+				electroballin = false
+				for j in target.moves
+					if j.id == :ELECTROBALL
+						electroballin = true
+						break
+					end
+				end
+				miniscore*=1.3 if electroballin
+				gyroballin = false
+				for j in target.moves
+					if j.id == :GYROBALL
+						gyroballin = true
+						break
+					end
+				end
+				miniscore*=0.5 if gyroballin
+			end
+			if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+				miniscore*=0.1
+			end
+			if target.hasActiveAbility?(:UNAWARE) && highestStatID != :SPEED
+				miniscore*=0.1
+			end
+			miniscore/=100.0
+			score*=miniscore
+		else                     # is ally
+			miniscore = -100 # neg due to being ally
+			if !target.SetupMovesUsed.include?(move.id)
+				if (1.0/target.totalhp)*target.hp < 0.6
+					miniscore*=0.3
+				end
+				if target.effects[PBEffects::Attract]>=0 || target.paralyzed? || 
+					target.effects[PBEffects::Yawn]>0 || target.asleep?
+					miniscore*=0.3
+				end
+				if target.effects[PBEffects::Substitute]>0
 					miniscore = 0
 				end
-				miniscore/=100
-				score *= miniscore
-			end
-    #---------------------------------------------------------------------------
-		when "HigherDamageInRain"
-			if @battle.pbCheckGlobalAbility(:AIRLOCK) || @battle.pbCheckGlobalAbility(:CLOUDNINE)
-				score -= 30
-			elsif user.hasActiveAbility?(:PRESAGE)
-				score += 30
-			elsif @battle.field.weather != :Rain
-				score -= 30
+				targetAlly = []
+				user.allOpposing.each do |b|
+					next if !b.near?(user.index)
+					targetAlly.push(b.index)
+				end
+				if targetAlly.length > 0
+					if ospeed > pbRoughStat(@battle.battlers[targetAlly[0]],:SPEED,skill) && 
+						ospeed > pbRoughStat(@battle.battlers[targetAlly[1]],:SPEED,skill)
+						miniscore*=1.3
+					else
+						miniscore*=0.7
+					end
+					if (@battle.battlers[targetAlly[0]].pbHasMove?(:FOULPLAY) || 
+						@battle.battlers[targetAlly[1]].pbHasMove?(:FOULPLAY)) &&
+						highestStatID == :ATTACK
+						miniscore*=0.3
+					end
+				end
 			else
-				score += 30
+				miniscore = 0
 			end
+			miniscore/=100
+			score *= miniscore
+		end
     #---------------------------------------------------------------------------
-		when "HitThreeToFiveTimes"
-			if (target.hasActiveItem?(:ROCKYHELMET) || target.hasActiveAbility?([:IRONBARBS, :ROUGHSKIN])) && user.affectedByContactEffect? && move.pbContactMove?(user)
-				score*=0.9
-			end
-			if target.hp==target.totalhp && (target.hasActiveItem?(:FOCUSSASH) || target.hasActiveAbility?(:STURDY))
-				score*=1.3
-			end
-			if target.effects[PBEffects::Substitute]>0
-				score*=1.3
-			end
-			if user.hasActiveItem?(:RAZORFANG) || user.hasActiveItem?(:KINGSROCK)
-				score*=1.1
-			end
+	when "HigherDamageInRain"
+		if @battle.pbCheckGlobalAbility(:AIRLOCK) || @battle.pbCheckGlobalAbility(:CLOUDNINE)
+			score *= 0.7
+		elsif user.hasActiveAbility?(:PRESAGE)
+			score *= 1.3
+		elsif @battle.field.weather != :Rain
+			score *= 0.7
+		else
+			score *= 1.3
+		end
     #---------------------------------------------------------------------------
-		when "OverrideTargetStatusWithPoison"
-			if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
-				score *= 0.3
-			elsif target.asleep? && (target.statusCount <= 2 && target.pbSpeed < user.pbSpeed)
-				score = 0
-			elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
-				miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 110, move, skill)
-				score *= (miniscore / 100)
-				score *= 1.2
-				score *= 1.2 if user.hasActiveAbility?(:MERCILESS)
-				score *= 1.2 if (target.hasActiveAbility?(:GUTS) && target.burned?) || target.hasActiveAbility?(:FLAREBOOST)
-				score *= 0.6 if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
-				score = 0 if (target.hasActiveAbility?(:POISONHEAL) || target.hasActiveAbility?(:TOXICBOOST)) && !target.poisoned?
-			else
-				score *= 0.8
-			end
+	when "OverrideTargetStatusWithPoison"
+		if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
+			score *= 0.3
+		elsif target.asleep? && target.statusCount <= 2
+			score = 0
+		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, skill)
+			score *= (miniscore / 100)
+			score *= 1.2
+			score *= 1.2 if user.hasActiveAbility?(:MERCILESS)
+			score *= 1.2 if (target.hasActiveAbility?(:GUTS) && target.burned?) || target.hasActiveAbility?(:FLAREBOOST)
+			score *= 0.6 if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
+			score = 0 if (target.hasActiveAbility?(:POISONHEAL) || target.hasActiveAbility?(:TOXICBOOST)) && !target.poisoned?
+		else
+			score *= 0.8
+		end
     #---------------------------------------------------------------------------
-		when "DoubleDamageIfTargetHasChoiceItem"
-			if !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
-				score += 30 if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
-				score += 40 if user.pbSpeed <= target.pbSpeed
+	when "DoubleDamageIfTargetHasChoiceItem"
+		if !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
+			if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
+				score *= 1.3
+				score *= 1.4 if aspeed <= ospeed && target.hasActiveItem?(:CHOICESCARF)
 			end
+		end
+	#---------------------------------------------------------------------------
+	when "PeperSpray"
+		score *= 1.4 if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
+						(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
     #---------------------------------------------------------------------------
     else
       return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
@@ -708,73 +688,34 @@ class Battle::AI
 		return true if pokemon.ability == :TILEWORKER && countother
 	end
 	
-	def pbCheckOtherMovesScore(pokemon, opposing, thismove, array = false, score = 1) # dont use this
-		if array
-			startscore = [score]
-		else
-			startscore = 0
-		end
-		for i in pokemon.moves
-			next if i == thismove
-			phantomdata = Pokemon::Move.new(i.id)
-			phantommove = Battle::Move.from_pokemon_move(@battle, phantomdata)
-			next if phantomdata.nil? || phantommove.nil?
-			if phantommove.baseDamage<=0
-				phantomdam = pbStatusDamage(phantommove)
-			else
-				tempdam = pbRoughDamage(phantommove, pokemon, opposing, 100, phantommove.baseDamage)
-				phantomdam = (tempdam*100)/(opposing.hp.to_f)
-			end
-			phantomdam = 110 if phantomdam>110
-			miniscore = pbGetMoveScore(phantommove, pokemon, opposing, 100, phantomdam)
-			if array
-				startscore.push(miniscore)
-			else
-				startscore = miniscore if miniscore > startscore
-			end
-		end
-		return startscore
-	end
-
-	def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, skill = 100)
-		theresone=false
-		@battle.allBattlers.each do |j|
-			if (j.isSpecies?(:MILOTIC) && j.item == :MILOTITE && j.willmega && target.affectedByTerrain?)
-				theresone=true
-			end
-		end
-		miniscore*=0.2 if theresone || @battle.field.terrain == :Misty
-		if target.hasActiveAbility?([:QUICKFEET, :GUTS])
+	def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
+		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+		return 0 if globalArray.include?("misty terrain") || @battle.field.terrain == :Misty
+		return 0 if (globalArray.include?("electric terrain") || @battle.field.terrain == :Electric) && status == :SLEEP
+		if target.hasActiveAbility?(:HYDRATION) && 
+		   ([:Rain, :HeavyRain].include?(target.effectiveWeather) || globalArray.include?("rain weather"))
 			miniscore*=0.2
 		end
-		if target.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(target.effectiveWeather)
+		if target.hasActiveAbility?(:LEAFGUARD) && 
+		   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
 			miniscore*=0.2
 		end
-		if target.hasActiveAbility?(:NATURALCURE);		miniscore*=0.3; end
-		if target.hasActiveAbility?(:MARVELSCALE);		miniscore*=0.5; end
-		if target.hasActiveAbility?(:SHEDSKIN);			miniscore*=0.7; end
-		if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
-			miniscore*=0.4
-		end
+		miniscore*=0.2 if target.hasActiveAbility?(:GUTS) && !(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
+		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE)
+		miniscore*=0.3 if target.hasActiveAbility?(:QUICKFEET) && status == :PARALYSIS
+		miniscore*=0.5 if target.hasActiveAbility?(:MARVELSCALE)
+		miniscore*=0.7 if target.hasActiveAbility?(:SHEDSKIN)
+		miniscore*=0.4 if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
 		if target.effects[PBEffects::Confusion]>0
-			if status != :SLEEP
-				miniscore*=1.1
-			else
-				miniscore*=0.4
-			end
+			miniscore *= (status == :SLEEP) ?  0.4 : 1.1
 		end
-		#~ if target.effects[PBEffects::Attract]>=0;miniscore*=1.1; end # attract does nothing
+		#if target.effects[PBEffects::Attract]>=0;miniscore*=1.1; end # attract does nothing
 		facade = false
-		for m in target.moves
-			if (m.function == "DoublePowerIfUserPoisonedBurnedParalyzed" && [:POISON, :BURN, :PARALYSIS].include?(status)) ||
-				 (m.function == "HealUserFullyAndFallAsleep" && status != :SLEEP)
-				facade = true
-				break
-			end
-		end
-		if !(status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET))
-			miniscore*=0.3 if facade
-		end
+		facade = true if target.pbHasMoveFunction?("DoublePowerIfUserPoisonedBurnedParalyzed") && 
+						!(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
+		facade = true if target.pbHasMoveFunction?("HealUserFullyAndFallAsleep") && status != :SLEEP
+		facade = false if status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET)
+		miniscore*=0.3 if facade
 		if move.baseDamage>0 && status != :PARALYSIS
 			if target.hasActiveAbility?(:STURDY)
 				miniscore*=1.1
@@ -782,105 +723,114 @@ class Battle::AI
 		end
 		miniscore*=1.3 if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 		case status
-			when :PARALYSIS
-				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanParalyzeSynchronize?(user)
-					miniscore*=0.5
-				end
-				if pbRoughStat(target, :SPEED, skill) > user.pbSpeed && 
-					 (pbRoughStat(target, :SPEED, skill)/2) < user.pbSpeed && 
-					 @battle.field.effects[PBEffects::TrickRoom] <= 0
-					miniscore*=1.5
-				end
-			when :BURN
-				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanBurnSynchronize?(user)
-					miniscore*=0.5
-				end
-				if target.hasActiveAbility?(:FLAREBOOST) || target.hasActiveAbility?(:MAGICGUARD)
-					miniscore*=0.2
-				end
-				if target.hasActiveAbility?(:GUTS)
-					miniscore*=0.1
-				end
-				if target.effects[PBEffects::AquaRing]
-					miniscore*=0.1
-				end
-				if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
-					miniscore*=1.7
-				end
-			when :POISON
-				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
-					miniscore*=0.5
-				end
-				if target.hasActiveAbility?(:TOXICBOOST) || target.hasActiveAbility?(:POISONHEAL) || target.hasActiveAbility?(:MAGICGUARD)
-					miniscore*=0.1
-				end
-				if user.hasActiveAbility?(:MERCILESS) || user.pbHasMove?(:VENOSHOCK) || user.pbHasMove?(:VENOMDRENCH)
-					miniscore*=1.6
-				end
-				healingmove = false
-				for m in target.moves
-					if m.healingMove?
-						healingmove = true
-						break
-					end
-				end
-				miniscore*=2 if healingmove
-				if move.id == :TOXIC
-					miniscore*=1.1 if user.pbHasType?(:POISON)
-				end
-			when :FREEZE
-				if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
-					miniscore*=0.5
-				end
+		when :PARALYSIS
+			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanParalyzeSynchronize?(user)
+				miniscore*=0.5
+			end
+			if pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill) && 
+			  (pbRoughStat(target, :SPEED, skill)/2) < pbRoughStat(user,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom] <= 0
+				miniscore*=1.5
+			end
+			miniscore*=0.5 if target.hasActiveItem?([:CHERIBERRY, :LUMBERRY])
+		when :BURN
+			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanBurnSynchronize?(user)
+				miniscore*=0.5
+			end
+			if target.hasActiveAbility?([:GUTS, :FLAREBOOST])
+				miniscore*=0.1
+			end
+			if target.effects[PBEffects::AquaRing]
+				miniscore*=0.1
+			end
+			if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
+				miniscore*=1.7
+			else
 				if target.hasActiveAbility?(:MAGICGUARD)
 					miniscore*=0.2
 				end
-				if pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)
-					miniscore*=1.7
+			end
+			miniscore*=0.3 if target.hasActiveItem?([:RAWSTBERRY,:LUMBERRY])
+		when :POISON
+			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
+				miniscore*=0.5
+			end
+			if target.hasActiveAbility?([:TOXICBOOST, :POISONHEAL, :MAGICGUARD])
+				miniscore*=0.1
+			end
+			if user.hasActiveAbility?(:MERCILESS) || 
+				user.pbHasMoveFunction?("DoublePowerIfTargetPoisoned", "LowerPoisonedTargetAtkSpAtkSpd1")
+				miniscore*=1.6
+			end
+			healingmove = false
+			for m in target.moves
+				if m.healingMove?
+					healingmove = true
+					break
 				end
-			when :DIZZY
-				minimi = (100 * getAbilityDisruptScore(move,user,target,skill))
-				if !user.opposes?(target) # is ally
-					minimi = 1 / minimi 
-					# no need to do serene grace check here, 
-					# simply because the AI wont try to hit allies with damaging confusing moves
-					#minimi*= 0.95 if move.damagingMove?
+			end
+			miniscore*=2 if healingmove
+			if move.id == :TOXIC
+				miniscore*=1.1 if user.pbHasType?(:POISON, true)
+			end
+			miniscore*=0.5 if target.hasActiveItem?([:PECHABERRY, :LUMBERRY])
+		when :FREEZE
+			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
+				miniscore*=0.5
+			end
+			if pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)
+				miniscore*=1.7
+			else
+				if target.hasActiveAbility?(:MAGICGUARD)
+					miniscore*=0.2
 				end
-				minimi/=100.0
-				miniscore*=minimi
-			when :SLEEP
-				if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
-					miniscore*=1.5
+			end
+			miniscore*=0.3 if target.hasActiveItem?([:ASPEARBERRY, :LUMBERRY])
+		when :SLEEP
+			if user.pbHasMove?(:DREAMEATER) || user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
+				miniscore*=1.5
+			end
+			if user.pbHasMove?(:LEECHSEED) || user.pbHasMove?(:SUBSTITUTE)
+				miniscore*=1.3
+			end
+			if target.hp==target.totalhp
+				miniscore*=1.2
+			end
+			if (pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+				miniscore*=1.3
+			end
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveAbility?(:POISONHEAL) && user.poisoned?)
+				miniscore*=1.2
+			end
+			if pbHasSetupMove?(user, false)
+				miniscore*=1.2
+			end
+			sleeptalk = false
+			for m in target.moves
+				if m.id == :SLEEPTALK || m.id == :SNORE
+					sleeptalk = true
+					break
 				end
-				if user.pbHasMove?(:LEECHSEED) || user.pbHasMove?(:SUBSTITUTE)
-					miniscore*=1.3
-				end
-				if target.hp==target.totalhp
-					miniscore*=1.2
-				end
-				if (pbRoughStat(target, :SPEED, skill) > user.pbSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
-					miniscore*=1.3
-				end
-				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveAbility?(:POISONHEAL) && user.poisoned?)
-					miniscore*=1.2
-				end
-				if pbHasSetupMove?(user, false)
-					miniscore*=1.2
-				end
-				sleeptalk = false
-				for m in target.moves
-					if m.id == :SLEEPTALK || m.id == :SNORE
-						sleeptalk = true
-						break
-					end
-				end
-				miniscore*=0.1 if sleeptalk
-				if (move.id == :SPORE || move.id == :SLEEPPOWDER) && !target.affectedByPowder?
-					miniscore=0
-				end
-				if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
-					miniscore=0
-				end
+			end
+			miniscore*=0.1 if sleeptalk
+			if (move.id == :SPORE || move.id == :SLEEPPOWDER) && !target.affectedByPowder?
+				miniscore=0
+			end
+			if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
+				miniscore=0
+			end
+			miniscore*=0.7 if target.hasActiveItem?([:CHESTOBERRY, :LUMBERRY])
+		when :DIZZY
+			minimi = getAbilityDisruptScore(move,user,target,skill)
+			if !user.opposes?(target) # is ally
+				minimi = 1 / minimi 
+				minimi *= 2 if target.hasActiveAbility?(:TANGLEDFEET)
+				# no need to do serene grace check here, 
+				# simply because the AI wont try to hit allies with damaging confusing moves
+			else
+				minimi*=0.3 if target.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
+				minimi = 0 if target.hasActiveAbility?(:TANGLEDFEET)
+			end
+			miniscore*=minimi
 		end
 		return miniscore
 	end
@@ -961,21 +911,21 @@ class Battle::AI
 			end
 			if pokemon.pbHasMoveFunction?("StartSunWeather", "StartRainWeather", "StartSandstormWeather", "StartHailWeather") || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+				  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+				  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
-				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
-				 (pokemon.species == :CACTURNE && pokemon.item_id == :CACTURNITE) ||
-				 (pokemon.species == :FRIZZARD && pokemon.item_id == :FRIZZARDITE)
+				 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
 				roles.push("Weather Setter")
 			end
 			if pokemon.pbHasMoveFunction?("StartElectricTerrain", "StartGrassyTerrain", "StartMistyTerrain", "StartPsychicTerrain") || 
 				 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-				 (pokemon.species == :BEHEEYEM && pokemon.item_id == :BEHEEYEMITE) ||
-				 (pokemon.species == :MILOTIC && pokemon.item_id == :MILOTITE) ||
-				 (pokemon.species == :TREVENANT && pokemon.item_id == :TREVENANTITE) ||
-				 (pokemon.species == :BEAKRAFT && pokemon.item_id == :BEAKRAFTITE)
+				 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
 				roles.push("Field Setter")
 			end
 			pokemonPartyEnd = @battle.pbTeamIndexRangeFromBattlerIndex(pokemon.index).length
@@ -1108,13 +1058,13 @@ class Battle::AI
 			end
 			if weathermove || 
 				 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-					:PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-					:FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+				  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+				  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
 				 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-				 (pokemon.species == :ZARCOIL && pokemon.item_id == :ZARCOILITE) ||
-				 (pokemon.species == :ZOLUPINE && pokemon.item_id == :ZOLUPINEITE) ||
-				 (pokemon.species == :CACTURNE && pokemon.item_id == :CACTURNITE) ||
-				 (pokemon.species == :FRIZZARD && pokemon.item_id == :FRIZZARDITE)
+				 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
 				roles.push("Weather Setter")
 			end
 			terrainmove=false
@@ -1125,10 +1075,10 @@ class Battle::AI
 			end
 			if terrainmove || 
 				 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-				 (pokemon.species == :BEHEEYEM && pokemon.item_id == :BEHEEYEMITE) ||
-				 (pokemon.species == :MILOTIC && pokemon.item_id == :MILOTITE) ||
-				 (pokemon.species == :TREVENANT && pokemon.item_id == :TREVENANTITE) ||
-				 (pokemon.species == :BEAKRAFT && pokemon.item_id == :BEAKRAFTITE)
+				 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+				 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
 				roles.push("Field Setter")
 			end
 			if position == (party.length - 1)
@@ -1143,204 +1093,88 @@ class Battle::AI
 	end
 	
 	# Status Moves "Damage" ######################################################
-	
+
 	def pbStatusDamage(move)
-		if (move.id == :AFTERYOU || move.id == :BESTOW ||
-				move.id == :CRAFTYSHIELD || move.id == :LUCKYCHANT ||
-				move.id == :MEMENTO || move.id == :QUASH ||
-				move.id == :SPITE ||
-				move.id == :SPLASH || move.id == :SWEETSCENT ||
-				move.id == :TELEKINESIS || 
-				move.id == :HAPPYHOUR || 
-				move.id == :HOLDHANDS || 
-				move.id == :CELEBRATE)
-			return 0
-		elsif (move.id == :ALLYSWITCH || move.id == :AROMATICMIST ||
-				move.id == :CONVERSION || move.id == :ENDURE ||
-				move.id == :ENTRAINMENT || move.id == :FORESIGHT || 
-				move.id == :FORESTSCURSE || move.id == :DEFOG || 
-				move.id == :GUARDSWAP || move.id == :HEALBLOCK ||
-				move.id == :IMPRISON || 
-				move.id == :HELPINGHAND || move.id == :MAGICROOM ||
-				move.id == :MAGNETRISE || 
-				move.id == :LOCKON || move.id == :MINDREADER || 
-				move.id == :MIRACLEEYE || move.id == :MUDSPORT ||
-				move.id == :NIGHTMARE || move.id == :ODORSLEUTH ||
-				move.id == :POWERSPLIT || move.id == :POWERSWAP ||
-				move.id == :GRUDGE || move.id == :GUARDSPLIT ||
-				move.id == :POWERTRICK || move.id == :QUICKGUARD ||
-				move.id == :RECYCLE || move.id == :REFLECTTYPE ||
-				move.id == :ROTOTILLER || move.id == :SANDATTACK ||
-				move.id == :SKILLSWAP || 
-				move.id == :FAIRYLOCK || 
-				move.id == :COACHING || 
-				move.id == :SPOTLIGHT || 
-				move.id == :TEATIME || 
-				move.id == :SPEEDSWAP || 
-				move.id == :LIFEDEW || 
-				move.id == :SAFEGUARD || 
-				move.id == :COURTCHANGE || move.id == :LASERFOCUS ||
-				move.id == :TEETERDANCE || move.id == :WATERSPORT)
-			return 5
-		elsif (move.id == :ACUPRESSURE || move.id == :CAMOUFLAGE ||      
-				move.id == :CHARM || move.id == :CONFIDE ||
-				move.id == :DEFENSECURL ||
-				move.id == :EMBARGO || move.id == :FLASH ||
-				move.id == :FOCUSENERGY || move.id == :GROWL ||
-				move.id == :HARDEN || move.id == :HAZE ||
-				move.id == :HOWL || move.id == :EXCITE ||
-				move.id == :KINESIS || move.id == :LEER ||
-				move.id == :METALSOUND || move.id == :NOBLEROAR ||
-				move.id == :PLAYNICE || move.id == :POWDER ||
-				move.id == :PSYCHUP || move.id == :SHARPEN ||
-				move.id == :SMOKESCREEN || move.id == :STRINGSHOT ||
-				move.id == :SUPERSONIC || move.id == :TAILWHIP ||
-				move.id == :TORMENT ||
-				move.id == :DECORATE ||
-				move.id == :TEARFULLOOK ||
-				move.id == :WITHDRAW || move.id == :WORKUP)
-			return 10
-		elsif (move.id == :ASSIST || move.id == :BABYDOLLEYES || 
-				move.id == :CAPTIVATE || move.id == :COTTONSPORE ||
-				move.id == :AGILITY ||
-				move.id == :DOUBLETEAM || move.id == :EERIEIMPULSE ||
-				move.id == :FAKETEARS || move.id == :FEATHERDANCE ||
-				move.id == :HEALPULSE || move.id == :HEALINGWISH ||
-				move.id == :INGRAIN ||
-				move.id == :LUNARDANCE || move.id == :MEFIRST ||
-				move.id == :MEDITATE || move.id == :MIMIC ||
-				move.id == :POISONPOWDER ||
-				move.id == :REFRESH || move.id == :ROLEPLAY ||
-				move.id == :SCARYFACE || move.id == :SCREECH ||
-				move.id == :SKETCH ||
-				move.id == :INSTRUCT ||
-				move.id == :FLORALHEALING ||
-				move.id == :TARSHOT ||
-				move.id == :GEARUP ||
-				move.id == :STUFFCHEEKS ||
-				move.id == :CORROSIVEGAS ||
-				move.id == :TICKLE || move.id == :CHARGE ||
-				move.id == :TRICKORTREAT || move.id == :VENOMDRENCH ||
-				move.id == :MAGNETICFLUX || move.id == :FALLOUT ||
-				move.id == :SANDSTORM || move.id == :HAIL ||
-				move.id == :SUNNYDAY || move.id == :RAINDANCE)
-			return 15
-		elsif (move.id == :AQUARING || move.id == :BLOCK ||
-				move.id == :CONVERSION2 || move.id == :ELECTRIFY ||
-				move.id == :FLATTER || move.id == :GASTROACID ||
-				move.id == :HEARTSWAP || move.id == :IONDELUGE ||
-				move.id == :MEANLOOK || move.id == :GROWTH ||
-				move.id == :METRONOME || move.id == :COPYCAT ||
-				move.id == :MIRRORMOVE || move.id == :MIST ||
-				move.id == :PERISHSONG || move.id == :REST ||
-				move.id == :ROAR || move.id == :SIMPLEBEAM || 
-				move.id == :SPIDERWEB || move.id == :FLOWERSHIELD ||
-				move.id == :SWAGGER || move.id == :SWEETKISS ||
-				move.id == :POISONGAS || 
-				move.id == :TOXICTHREAD || 
-				move.id == :MAGICCOAT || move.id == :SNATCH ||
-				move.id == :TRANSFORM || move.id == :WHIRLWIND ||
-				move.id == :WORRYSEED || move.id == :YAWN)
-			return 20
-		elsif (move.id == :AMNESIA || move.id == :ATTRACT ||
-				move.id == :BARRIER || move.id == :BELLYDRUM ||
-				move.id == :DESTINYBOND ||
-				move.id == :DETECT || move.id == :DISABLE ||
-				move.id == :ACIDARMOR || move.id == :COSMICPOWER ||
-				move.id == :COTTONGUARD || move.id == :DEFENDORDER ||
-				move.id == :FOLLOWME || move.id == :AUTOTOMIZE ||
-				move.id == :IRONDEFENSE || move.id == :MINIMIZE || 
-				move.id == :PSYCHOSHIFT || move.id == :GRAVITY ||
-				move.id == :RAGEPOWDER || move.id == :ROCKPOLISH ||
-				move.id == :STOCKPILE || move.id == :SUBSTITUTE ||
-				move.id == :SWITCHEROO ||  move.id == :SWALLOW ||
-				move.id == :TAUNT || 
-				move.id == :OCTOLOCK || 
-				move.id == :REBALANCING || 
-				move.id == :TOPSYTURVY ||
-				move.id == :TRICK)
-			return 25
-		elsif (move.id == :BATONPASS || move.id == :BULKUP ||
-				move.id == :CALMMIND || move.id == :COIL || 
-				move.id == :CURSE || 
-				move.id == :NORETREAT ||
-				move.id == :CLANGOROUSSOUL || 
-				move.id == :GRASSYTERRAIN || move.id == :MISTYTERRAIN ||
-				move.id == :PSYCHICTERRAIN || move.id == :ELECTRICTERRAIN ||
-				move.id == :ENCORE || 
-				move.id == :SOAK || move.id == :MAGICPOWDER || 
-				move.id == :LEECHSEED || 
-				move.id == :PAINSPLIT ||
-				move.id == :WISH ||
-				move.id == :NATUREPOWER || 
-				move.id == :SLEEPTALK ||
-				move.id == :TELEPORT ||
-				move.id == :PURIFY ||
-				move.id == :TRICKROOM || move.id == :WONDERROOM)
-			return 30
-		elsif (move.id == :AROMATHERAPY || #move.id == :NUCLEARWASTE ||
-				move.id == :HEALBELL || move.id == :PARTINGSHOT || 
-				move.id == :LIGHTSCREEN || move.id == :MATBLOCK ||
-				move.id == :NASTYPLOT || move.id == :REFLECT ||
-				move.id == :TAILWIND || move.id == :SPIKES ||
-				move.id == :STEALTHROCK || move.id == :THUNDERWAVE ||
-				move.id == :WILLOWISP ||  move.id == :TOXICSPIKES ||
-				move.id == :TOXIC || 
-				move.id == :GLARE ||
-				move.id == :BITINGCOLD || move.id == :AURORAVEIL || 
-				move.id == :WIDEGUARD || move.id == :HONECLAWS ||
-				move.id == :STUNSPORE || move.id == :CONFUSERAY || 
-				move.id == :SWORDSDANCE || move.id == :TAILGLOW)
-			return 35
-		elsif (move.id == :DRAGONDANCE || move.id == :GEOMANCY ||
-				move.id == :QUIVERDANCE || move.id == :SHELLSMASH ||
-				move.id == :SHIFTGEAR)
-			return 40
-		elsif (move.id == :STICKYWEB || move.id == :ROOST ||
-				move.id == :SLACKOFF || move.id == :MILKDRINK ||
-				move.id == :HEALORDER || move.id == :MOONLIGHT || 
-				move.id == :SOFTBOILED || move.id == :MORNINGSUN ||
-				move.id == :JUNGLEHEALING || 
-				move.id == :STRENGTHSAP || 
-				move.id == :SHOREUP || 
-				move.id == :SYNTHESIS || 
-				move.id == :RECOVER)
-			return 60
-		elsif (move.id == :PROTECT || move.id == :SPIKYSHIELD || move.id == :KINGSSHIELD || 
-				move.id == :OBSTRUCT || move.id == :BANEFULBUNKER)
-			return 80
-		elsif (move.id == :SPORE ||  move.id == :HYPNOSIS || move.id == :SLEEPPOWDER || move.id == :SING ||
-				move.id == :DARKVOID || move.id == :GRASSWHISTLE || move.id == :LOVELYKISS) 
-			return 100
-		else
-			print move.name
-			return 10
+		moveScoores = {
+		  0 => [:AFTERYOU, :ATTRACT, :BESTOW, :CELEBRATE, :HAPPYHOUR, :HOLDHANDS,
+				 :QUASH, :SPLASH, :SWEETSCENT, :TELEKINESIS],
+		  5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :CRAFTYSHIELD, :ENDURE, :ENTRAINMENT, 
+				 :FAIRYLOCK, :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, 
+				 :HELPINGHAND, :IMPRISON, :LIFEDEW, :LOCKON, :LUCKYCHANT, :MAGICROOM, :MAGNETRISE, 
+				 :MINDREADER, :MIRACLEEYE, :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, 
+				 :POWERTRICK, :QUICKGUARD, :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, 
+				 :SKILLSWAP, :SPEEDSWAP, :SPOTLIGHT, :SPITE, :TEATIME, :TEETERDANCE, :WATERSPORT, 
+				 :EXCITE, :HOWL, :LASERFOCUS],
+		  10 => [:ACUPRESSURE, :CAMOUFLAGE, :CHARM, :CONFIDE, :DEFENSECURL, :DECORATE, :EMBARGO,
+				 :FLASH, :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :KINESIS, :LEER,
+				 :METALSOUND, :MEMENTO, :NOBLEROAR, :PLAYNICE, :POWDER, :PSYCHUP, :SHARPEN,
+				 :SMOKESCREEN, :STRINGSHOT, :SUPERSONIC, :TAILWHIP, :TORMENT, :TEARFULLOOK,
+				 :WITHDRAW, :MEDITATE, :GROWTH, :WORKUP],
+		  20 => [:AGILITY, :ASSIST, :BABYDOLLEYES, :CAPTIVATE, :CHARGE, :CORROSIVEGAS, :COTTONSPORE,
+				 :COURTCHANGE, :DEFOG, :DOUBLETEAM, :EERIEIMPULSE, :FAKETEARS, :FEATHERDANCE,
+				 :FLORALHEALING, :GEARUP, :HEALINGWISH, :HEALPULSE, :INGRAIN, :INSTRUCT, :LUNARDANCE,
+				 :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE,
+				 :SCREECH, :SKETCH, :STUFFCHEEKS, :TARSHOT, :TICKLE, :TRICKORTREAT, :VENOMDRENCH,
+				 :MAGNETICFLUX],
+		  25 => [:AQUARING, :BLOCK, :CONVERSION2, :COPYCAT, :ELECTRIFY, :FLATTER, :FLOWERSHIELD,
+				 :GASTROACID, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME,
+				 :MIRRORMOVE, :MIST, :PERISHSONG, :POISONGAS, :REST, :ROAR, :SIMPLEBEAM, :SNATCH,
+				 :SPIDERWEB, :SWAGGER, :SWEETKISS, :TRANSFORM, :WHIRLWIND, :WORRYSEED, :YAWN],
+		  30 => [:ACIDARMOR, :AMNESIA, :AUTOTOMIZE, :BARRIER, :BELLYDRUM, :COSMICPOWER, :COTTONGUARD,
+				 :DEFENDORDER, :DESTINYBOND, :DETECT, :DISABLE, :FOLLOWME, :GRAVITY, :IRONDEFENSE,
+				 :MINIMIZE, :OCTOLOCK, :POLLENPUFF, :PSYCHOSHIFT, :RAGEPOWDER, :REBALANCING,
+				 :ROCKPOLISH, :SANDSTORM, :STOCKPILE, :SUBSTITUTE, :SWALLOW, :SWITCHEROO, :TAUNT,
+				 :TRICK, :HAIL],
+		  35 => [:BATONPASS, :BULKUP, :CALMMIND, :CLANGOROUSSOUL, :COIL, :CURSE, :ELECTRICTERRAIN,
+				 :ENCORE, :GRASSYTERRAIN, :LEECHSEED, :MAGICPOWDER, :MISTYTERRAIN, :NATUREPOWER,
+				 :NORETREAT, :PAINSPLIT, :PSYCHICTERRAIN, :PURIFY, :SLEEPTALK, :SOAK, :SUNNYDAY,
+				 :TELEPORT, :TRICKROOM, :WISH, :WONDERROOM, :RAINDANCE],
+		  40 => [:AROMATHERAPY, :AURORAVEIL, :BITINGCOLD, :CONFUSERAY, :GLARE, :HEALBELL, :HONECLAWS, 
+				 :LIGHTSCREEN, :MATBLOCK, :PARTINGSHOT, :REFLECT, :SPIKES, :STUNSPORE, :TAILWIND, 
+				 :THUNDERWAVE, :TOXIC, :TOXICSPIKES, :TOXICTHREAD, :WIDEGUARD, :WILLOWISP],
+		  50 => [:NASTYPLOT, :STEALTHROCK, :SWORDSDANCE, :STICKYWEB, :TOPSYTURVY],
+		  60 => [:DRAGONDANCE, :GEOMANCY, :QUIVERDANCE, :SHELLSMASH, :SHIFTGEAR, :TAILGLOW],
+		  70 => [:HEALORDER, :JUNGLEHEALING, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
+				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
+		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD],
+		  100 => [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE]
+		}
+
+		moveid = move.id
+		moveScoores.each do |score, moves|
+		  return score if moves.include?(moveid)
 		end
-	end
-	
+	  
+		print "why are you stupid; #{move.name}"
+		return 10
+	end			
+
 	# Disrupting Scores ##########################################################
 	
-	def getFieldDisruptScore(user, target, skill = 100)
+	def getFieldDisruptScore(user, target, globalArray = [], skill = 100)
+		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
 		# modified by JZ
     	fieldscore = 100.0
 		aroles = pbGetPokemonRole(user, target)
 		oroles = pbGetPokemonRole(target, user)
-		if @battle.field.terrain == :Electric # Electric Terrain
-			PBDebug.log(sprintf("Electric Terrain Disrupt")) if $INTERNAL
+		if @battle.field.terrain == :Electric || 
+		   globalArray.include?("electric terrain") # Electric Terrain
+			echo("\nElectric Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
-				if target.pbHasType?(:ELECTRIC)
+				if b.pbHasType?(:ELECTRIC, true)
 					fieldscore*=1.5
 				end
 			end
-			if user.pbHasType?(:ELECTRIC)
+			if user.pbHasType?(:ELECTRIC, true)
 				fieldscore*=0.5
 			end
 			partyelec=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyelec=true if m.pbHasType?(:ELECTRIC)
+				partyelec=true if m.pbHasType?(:ELECTRIC, true)
 				for z in m.moves
-					sleepmove = true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(z.id)
+					sleepmove = true if [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, 
+										 :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE].include?(z.id)
 				end
 			end
 			if partyelec
@@ -1356,20 +1190,21 @@ class Battle::AI
 				fieldscore*=0.7
 			end
 		end
-		if @battle.field.terrain == :Grassy # Grassy Terrain
-			PBDebug.log(sprintf("Grassy Terrain Disrupt")) if $INTERNAL
+		if @battle.field.terrain == :Grassy || 
+		   globalArray.include?("grassy terrain") # Grassy Terrain
+			echo("\nGrassy Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
-				if target.pbHasType?(:GRASS)
+				if b.pbHasType?(:GRASS, true)
 					fieldscore*=1.5
 				end
 			end
-			if user.pbHasType?(:GRASS)
+			if user.pbHasType?(:GRASS, true)
 				fieldscore*=0.5
 			end
 			partygrass=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partygrass=true if m.pbHasType?(:GRASS)
+				partygrass=true if m.pbHasType?(:GRASS, true)
 			end
 			if partygrass
 				fieldscore*=0.5
@@ -1381,30 +1216,31 @@ class Battle::AI
 				fieldscore*=1.2
 			end
 		end
-		if @battle.field.terrain == :Misty # Misty Terrain
-			PBDebug.log(sprintf("Misty Terrain Disrupt")) if $INTERNAL
+		if @battle.field.terrain == :Misty || 
+		   globalArray.include?("misty terrain") # Misty Terrain
+			echo("\nMisty Terrain Disrupt") if $AIGENERALLOG
 			if user.spatk>user.attack
 				target.eachAlly do |b|
-					if target.pbHasType?(:FAIRY)
+					if b.pbHasType?(:FAIRY, true)
 						fieldscore*=1.3
 					end
 				end
 			end
 			if target.spatk>target.attack
-				if user.pbHasType?(:FAIRY)
+				if user.pbHasType?(:FAIRY, true)
 				fieldscore*=0.7
 				end
 			end
-			if target.pbHasType?(:DRAGON) || target.pbPartner.pbHasType?(:DRAGON)
+			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
 				fieldscore*=0.5
 			end
-			if user.pbHasType?(:DRAGON)
+			if user.pbHasType?(:DRAGON, true)
 				fieldscore*=1.5
 			end
 			partyfairy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyfairy=true if m.pbHasType?(:FAIRY)
+				partyfairy=true if m.pbHasType?(:FAIRY, true)
 			end
 			if partyfairy
 				fieldscore*=0.7
@@ -1412,26 +1248,27 @@ class Battle::AI
 			partydragon=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partydragon=true if m.pbHasType?(:DRAGON)
+				partydragon=true if m.pbHasType?(:DRAGON, true)
 			end
 			if partydragon
 				fieldscore*=1.5
 			end
 		end
-		if @battle.field.terrain == :Psychic # Psychic Terrain
-			PBDebug.log(sprintf("Psychic Terrain Disrupt")) if $INTERNAL
+		if @battle.field.terrain == :Psychic || 
+		   globalArray.include?("psychic terrain") # Psychic Terrain
+			echo("\nPsychic Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
-				if target.pbHasType?(:PSYCHIC)
+				if b.pbHasType?(:PSYCHIC, true)
 					fieldscore*=1.7
 				end
 			end
-			if user.pbHasType?(:PSYCHIC)
+			if user.pbHasType?(:PSYCHIC, true)
 				fieldscore*=0.3
 			end
 			partypsy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partypsy=true if m.pbHasType?(:PSYCHIC)
+				partypsy=true if m.pbHasType?(:PSYCHIC, true)
 			end
 			if partypsy
 				fieldscore*=0.3
@@ -1449,21 +1286,31 @@ class Battle::AI
 
 	def getAbilityDisruptScore(move,user,target,skill)
 		abilityscore=100.0
+		if target.unstoppableAbility?
+			echo("\nUnstoppable Ability Disrupt") if $AIGENERALLOG
+			return 0
+		end 
 		if target.hasActiveAbility?(:SPEEDBOOST)
-			PBDebug.log(sprintf("Speedboost Disrupt")) if $INTERNAL
+			echo("\nSpeedboost Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 			if target.stages[:SPEED]<2
 				abilityscore*=1.3
 			end
 		end
 		if target.hasActiveAbility?(:SANDVEIL)
-			PBDebug.log(sprintf("Sand veil Disrupt")) if $INTERNAL
+			echo("\nSand veil Disrupt") if $AIGENERALLOG
 			if target.effectiveWeather == :Sandstorm
 				abilityscore*=1.3
 			end
 		end
+		if target.hasActiveAbility?(:SNOWCLOAK)
+			echo("\nSnow Cloak Disrupt") if $AIGENERALLOG
+			if target.effectiveWeather == :Hail
+				abilityscore*=1.3
+			end
+		end
 		if target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE])
-			PBDebug.log(sprintf("Volt Absorb Disrupt")) if $INTERNAL
+			echo("\nElectric Immunity Disrupt") if $AIGENERALLOG
 			elecvar = false
 			totalelec=true
 			elecmove=nil
@@ -1487,7 +1334,7 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?([:WATERABSORB, :STORMDRAIN, :DRYSKIN])
-			PBDebug.log(sprintf("Water Absorb Disrupt")) if $INTERNAL
+			echo("\nWater Immunity Disrupt") if $AIGENERALLOG
 			watervar = false
 			totalwater=true
 			watermove=nil
@@ -1520,11 +1367,11 @@ class Battle::AI
 			end              
 		end
 		if target.hasActiveAbility?([:FLASHFIRE, :HEATPROOF])
-			if $INTERNAL
+			if $AIGENERALLOG
 				if target.hasActiveAbility?(:FLASHFIRE)
-					PBDebug.log(sprintf("Flash Fire Disrupt"))
+					echo("\nFlash Fire Disrupt")
 				else 
-					PBDebug.log(sprintf("Heatproof Disrupt"))
+					echo("\nHeatproof Disrupt")
 				end
 			end		
 			firevar = false
@@ -1550,7 +1397,7 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?(:LEVITATE)
-			PBDebug.log(sprintf("Levitate Disrupt")) if $INTERNAL
+			echo("\nLevitate Disrupt") if $AIGENERALLOG
 			groundvar = false
 			totalground=true
 			groundmove=nil
@@ -1574,19 +1421,20 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?(:SHADOWTAG)
-			PBDebug.log(sprintf("Shadow Tag Disrupt")) if $INTERNAL
+			echo("\nShadow Tag Disrupt") if $AIGENERALLOG
 			if !user.hasActiveAbility?(:SHADOWTAG)
 				abilityscore*=1.5
 			end
 		end    
 		if target.hasActiveAbility?(:ARENATRAP)
-			PBDebug.log(sprintf("Arena Trap Disrupt")) if $INTERNAL
-			if !user.airborne?
+			echo("\nArena Trap Disrupt") if $AIGENERALLOG
+			mold_bonkers=moldbroken(user,target,move)
+			if !user.airborneAI(mold_bonkers)
 				abilityscore*=1.5
 			end
 		end  
 		if target.hasActiveAbility?(:WONDERGUARD)
-			PBDebug.log(sprintf("Wonder Guard Disrupt")) if $INTERNAL
+			echo("\nWonder Guard Disrupt") if $AIGENERALLOG
 			wondervar=false
 			for i in user.moves
 				typeMod = pbCalcTypeMod(i.type, user, target)
@@ -1597,15 +1445,15 @@ class Battle::AI
 			end      
 		end
 		if target.hasActiveAbility?(:SERENEGRACE)
-			PBDebug.log(sprintf("Serene Grace Disrupt")) if $INTERNAL
+			echo("\nSerene Grace Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end  
 		if target.hasActiveAbility?([:PUREPOWER, :HUGEPOWER])
-			PBDebug.log(sprintf("Pure Power Disrupt")) if $INTERNAL
+			echo("\nPure/Huge Power Disrupt") if $AIGENERALLOG
 			abilityscore*=2
 		end
 		if target.hasActiveAbility?(:SOUNDPROOF)
-			PBDebug.log(sprintf("Soundproof Disrupt")) if $INTERNAL
+			echo("\nSoundproof Disrupt") if $AIGENERALLOG
 			soundvar=false
 			for i in user.moves
 				if i.soundMove?
@@ -1617,10 +1465,10 @@ class Battle::AI
 			end      
 		end
 		if target.hasActiveAbility?(:THICKFAT)
-			PBDebug.log(sprintf("Thick Fat Disrupt")) if $INTERNAL
+			echo("\nThick Fat Disrupt") if $AIGENERALLOG
 			totalguard=true
 			for i in user.moves
-				if i.type == :FIRE && i.type == :ICE
+				if i.type == :FIRE || i.type == :ICE
 					totalguard=false
 				end
 			end      
@@ -1629,126 +1477,127 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?(:TRUANT)
-			PBDebug.log(sprintf("Truant Disrupt")) if $INTERNAL
+			echo("\nTruant Disrupt") if $AIGENERALLOG
 			abilityscore*=0.1
 		end 
 		if target.hasActiveAbility?([:GUTS, :QUICKFEET, :MARVELSCALE])
-			PBDebug.log(sprintf("Guts Disrupt")) if $INTERNAL
+			echo("\nGuts/Quick Feet/Marvel Scale Disrupt") if $AIGENERALLOG
 			if target.pbHasAnyStatus?
 				abilityscore*=1.5
 			end      
 		end 
 		if target.hasActiveAbility?(:LIQUIDOOZE)
-			PBDebug.log(sprintf("Liquid Ooze Disrupt")) if $INTERNAL
+			echo("\nLiquid Ooze Disrupt") if $AIGENERALLOG
 			if target.effects[PBEffects::LeechSeed]>=0 || user.pbHasMove?(:LEECHSEED)
 				abilityscore*=2
 			end              
 		end 
 		if target.hasActiveAbility?([:AIRLOCK, :CLOUDNINE])
-			PBDebug.log(sprintf("Airlock Disrupt")) if $INTERNAL
+			echo("\nAirlock Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
 		if target.hasActiveAbility?(:HYDRATION)
-			PBDebug.log(sprintf("Hydration Disrupt")) if $INTERNAL
+			echo("\nHydration Disrupt") if $AIGENERALLOG
 			if [:Rain, :HeavyRain].include?(target.effectiveWeather)
 				abilityscore*=1.3
 			end
 		end
 		if target.hasActiveAbility?(:ADAPTABILITY)
-			PBDebug.log(sprintf("Adaptability Disrupt")) if $INTERNAL
+			echo("\nAdaptability Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end 
 		if target.hasActiveAbility?(:SKILLLINK)
-			PBDebug.log(sprintf("Skill Link Disrupt")) if $INTERNAL
+			echo("\nSkill Link Disrupt") if $AIGENERALLOG
 			abilityscore*=1.5
 		end 
 		if target.hasActiveAbility?(:POISONHEAL)
-			PBDebug.log(sprintf("Poison Heal Disrupt")) if $INTERNAL
+			echo("\nPoison Heal Disrupt") if $AIGENERALLOG
 			if target.poisoned?
 				abilityscore*=2
 			end      
 		end 
 		if target.hasActiveAbility?(:NORMALIZE)
-			PBDebug.log(sprintf("Normalize Disrupt")) if $INTERNAL
-			abilityscore*=0.6
+			echo("\nNormalize Disrupt") if $AIGENERALLOG
+			abilityscore*=0.5
 		end 
 		if target.hasActiveAbility?(:MAGICGUARD)
-			PBDebug.log(sprintf("Magic Guard Disrupt")) if $INTERNAL
+			echo("\nMagic Guard Disrupt") if $AIGENERALLOG
 			abilityscore*=1.4
 		end 
 		if target.hasActiveAbility?(:STALL)
-			PBDebug.log(sprintf("Stall Disrupt")) if $INTERNAL
+			echo("\nStall Disrupt") if $AIGENERALLOG
 			abilityscore*=1.5
 		end 
 		if target.hasActiveAbility?(:TECHNICIAN)
-			PBDebug.log(sprintf("Technician Disrupt")) if $INTERNAL
+			echo("\nTechnician Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end 
 		if target.hasActiveAbility?(:GALEWINGS)
-			PBDebug.log(sprintf("Gale Wings Disrupt")) if $INTERNAL
+			echo("\nGale Wings Disrupt") if $AIGENERALLOG
 			abilityscore*=2
 		end 	
 		if target.hasActiveAbility?(:UNBURDEN)
-			if target.effects[PBEffects::Unburden] && target.hasActiveAbility?(:UNBURDEN)
-				PBDebug.log(sprintf("Unburden Disrupt")) if $INTERNAL
+			if target.effects[PBEffects::Unburden]
+				echo("\nUnburden Disrupt") if $AIGENERALLOG
 				abilityscore*=2
 			end	
 		end 			
 		if target.hasActiveAbility?(:MOLDBREAKER) || 
-			 (target.isSpecies?(:GYARADOS) && (target.item == :GYARADOSITE || target.hasMegaEvoMutation?)) ||
-			 (target.isSpecies?(:LUPACABRA) && (target.item == :LUPACABRITE || target.hasMegaEvoMutation?))
-			PBDebug.log(sprintf("Mold Breaker Disrupt")) if $INTERNAL
+			 (target.isSpecies?(:GYARADOS)  && (target.item == :GYARADOSITE || target.hasMegaEvoMutation?) && target.pokemon.willmega) ||
+			 (target.isSpecies?(:LUPACABRA) && (target.item == :LUPACABRITE || target.hasMegaEvoMutation?) && target.pokemon.willmega)
+			echo("\nMold Breaker Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
 		if target.hasActiveAbility?(:UNAWARE)
-			PBDebug.log(sprintf("Unaware Disrupt")) if $INTERNAL
+			echo("\nUnaware Disrupt") if $AIGENERALLOG
 			abilityscore*=1.7
 		end 
 		if target.hasActiveAbility?(:SLOWSTART)
-			PBDebug.log(sprintf("Slow Start Disrupt")) if $INTERNAL
+			echo("\nSlow Start Disrupt") if $AIGENERALLOG
 			abilityscore*=0.3
 		end 
 		if target.hasActiveAbility?(:SHEERFORCE)
-			PBDebug.log(sprintf("Sheer Force Disrupt")) if $INTERNAL
+			echo("\nSheer Force Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
 		end 
 		if target.hasActiveAbility?(:PUNKROCK)
-			PBDebug.log(sprintf("Soundboost Disrupt")) if $INTERNAL
+			echo("\nSoundboost Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
 		end 
 		if target.hasActiveAbility?(:CONTRARY)
-			PBDebug.log(sprintf("Contrary Disrupt")) if $INTERNAL
+			echo("\nContrary Disrupt") if $AIGENERALLOG
 			abilityscore*=1.4
-			if target.stages[:ATTACK]>0 || target.stages[:SPECIAL_ATTACK]>0 || target.stages[:DEFENSE]>0 || 
-				 target.stages[:SPECIAL_DEFENSE]>0 || target.stages[:SPEED]>0
-				if target.pbHasMove?(:CLOSECOMBAT) || target.pbHasMove?(:OVERHEAT) || target.pbHasMove?(:LEAFSTORM) ||
-					 target.pbHasMove?(:DRACOMETEOR) || target.pbHasMove?(:SUPERPOWER) ||
-					 target.pbHasMove?(:PSYCHOBOOST) || target.pbHasMove?(:VCREATE) ||
-					 target.pbHasMove?(:HAMMERARM) || target.pbHasMove?(:DRAGONASCENT)
+			if target.stages[:ATTACK]>0  || target.stages[:SPECIAL_ATTACK]>0  || 
+			   target.stages[:DEFENSE]>0 || target.stages[:SPECIAL_DEFENSE]>0 || 
+			   target.stages[:SPEED]>0
+				if target.pbHasMove?(:CLOSECOMBAT) || target.pbHasMove?(:DRAGONASCENT) || 
+				   target.pbHasMove?(:LEAFSTORM) || target.pbHasMove?(:DRACOMETEOR) || 
+				   target.pbHasMove?(:OVERHEAT) || target.pbHasMove?(:PSYCHOBOOST) || 
+				   target.pbHasMove?(:HAMMERARM) || target.pbHasMove?(:SUPERPOWER) || 
+				   target.pbHasMove?(:VCREATE)
 					abilityscore*=3
 				end		
 			end              
 		end 
 		if target.hasActiveAbility?(:DEFEATIST)
-			PBDebug.log(sprintf("Defeatist Disrupt")) if $INTERNAL
+			echo("\nDefeatist Disrupt") if $AIGENERALLOG
 			abilityscore*=0.5
 		end 
-		if target.hasActiveAbility?(:MULTISCALE) || target.hasActiveAbility?(:SHADOWSHIELD)
-			PBDebug.log(sprintf("Multiscale Disrupt")) if $INTERNAL
-			if target.hp==target.totalhp
-				abilityscore*=1.5
-			end      
+		if target.hasActiveAbility?([:MULTISCALE, :SHADOWSHIELD])
+			echo("\nMultiscale Disrupt") if $AIGENERALLOG
+			abilityscore*=1.5 if target.hp==target.totalhp
 		end 
 		if target.hasActiveAbility?(:HARVEST)
-			PBDebug.log(sprintf("Harvest Disrupt")) if $INTERNAL
+			echo("\nHarvest Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
+			abilityscore*=1.2 if [:Sun, :HarshSun].include?(target.effectiveWeather)
 		end 
 		if target.hasActiveAbility?(:MOODY)
-			PBDebug.log(sprintf("Moody Disrupt")) if $INTERNAL
+			echo("\nMoody Disrupt") if $AIGENERALLOG
 			abilityscore*=1.8
 		end 
 		if target.hasActiveAbility?(:SAPSIPPER)
-			PBDebug.log(sprintf("Sap Sipper Disrupt")) if $INTERNAL
+			echo("\nSap Sipper Disrupt") if $AIGENERALLOG
 			grassvar = false
 			totalgrass=true
 			grassmove=nil
@@ -1772,13 +1621,11 @@ class Battle::AI
 			end
 		end
 		if target.hasActiveAbility?(:PRANKSTER)
-			PBDebug.log(sprintf("Prankster Disrupt")) if $INTERNAL
-			if user.speed>target.speed
-				abilityscore*=1.5
-			end      
+			echo("\nPrankster Disrupt") if $AIGENERALLOG
+			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
 		end
 		if target.hasActiveAbility?(:ECHOCHAMBER)
-			PBDebug.log(sprintf("Echo Chamber Disrupt")) if $INTERNAL
+			echo("\nEcho Chamber Disrupt") if $AIGENERALLOG
 			echohealcheck=false
 			echopriocheck=false
 			for i in target.moves
@@ -1790,44 +1637,36 @@ class Battle::AI
 			if echohealcheck
 				abilityscore*=1.15
 			end
-			if echopriocheck && user.speed>target.speed
+			if echopriocheck && pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
 				abilityscore*=1.5
-			end
-		end
-		if target.hasActiveAbility?(:SNOWCLOAK)
-			PBDebug.log(sprintf("Snow Cloak Disrupt")) if $INTERNAL
-			if target.effectiveWeather == :Hail
-				abilityscore*=1.1
 			end
 		end
 		if target.hasActiveAbility?(:FURCOAT)
-			PBDebug.log(sprintf("Fur Coat Disrupt")) if $INTERNAL
-			if user.attack>user.spatk
-				abilityscore*=1.5
-			end      
+			echo("\nFur Coat Disrupt") if $AIGENERALLOG
+			abilityscore*=1.5 if user.attack>user.spatk
 		end
 		if target.hasActiveAbility?(:PARENTALBOND)
-			PBDebug.log(sprintf("Parental Bond Disrupt")) if $INTERNAL
+			echo("\nParental Bond Disrupt") if $AIGENERALLOG
 			abilityscore*=3
 		end 
 		if target.hasActiveAbility?(:PROTEAN)
-			PBDebug.log(sprintf("Protean Disrupt")) if $INTERNAL
+			echo("\nProtean Disrupt") if $AIGENERALLOG
 			abilityscore*=3
 		end 
 		if target.hasActiveAbility?(:TOUGHCLAWS)
-			PBDebug.log(sprintf("Tough Claws Disrupt")) if $INTERNAL
+			echo("\nTough Claws Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
 		end 
 		if target.hasActiveAbility?(:BEASTBOOST)
-			PBDebug.log(sprintf("Beast Boost Disrupt")) if $INTERNAL
+			echo("\nBeast Boost Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
 		if target.hasActiveAbility?(:COMATOSE)
-			PBDebug.log(sprintf("Comatose Disrupt")) if $INTERNAL
+			echo("\nComatose Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end 
 		if target.hasActiveAbility?(:FLUFFY)
-			PBDebug.log(sprintf("Fluffy Disrupt")) if $INTERNAL
+			echo("\nFluffy Disrupt") if $AIGENERALLOG
 			abilityscore*=1.5
 			firevar = false
 			for i in user.moves
@@ -1840,11 +1679,11 @@ class Battle::AI
 			end      
 		end
 		if target.hasActiveAbility?(:MERCILESS)
-			PBDebug.log(sprintf("Merciless Disrupt")) if $INTERNAL
+			echo("\nMerciless Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end 
 		if target.hasActiveAbility?(:WATERBUBBLE)
-			PBDebug.log(sprintf("Water Bubble Disrupt")) if $INTERNAL
+			echo("\nWater Bubble Disrupt") if $AIGENERALLOG
 			abilityscore*=1.5
 			firevar = false
 			for i in user.moves
@@ -1856,38 +1695,222 @@ class Battle::AI
 				abilityscore*=1.3
 			end      
 		end
-		if target.unstoppableAbility?
-			PBDebug.log(sprintf("Unstoppable Ability Disrupt")) if $INTERNAL
-			abilityscore*=0
-		end 
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :MICROSTRIKE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY])
+			echo("\nMinor Impact Untamed Ability Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
 		end
 		if target.hasActiveAbility?([:BAITEDLINE, :FERVOR, :CRYSTALJAW, :JUNGLEFURY])
+			echo("\nMedium Impact Untamed Ability Disrupt") if $AIGENERALLOG
 			abilityscore*=1.3
 		end
 		if target.hasActiveAbility?([:PARTYPOPPER, :WARRIORSPIRIT, :SLIPPERYPEEL, :TRICKSTER, :MASSEXTINCTION, :PREMONITION])
+			echo("\nHigh Impact Untamed Ability Disrupt") if $AIGENERALLOG
 			abilityscore*=1.6
 		end
 		abilityscore*=0.01
 		return abilityscore
 	end
 	
-	def pbAICritRate(attacker,opponent,move)
-		return 0 if opponent.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR])
-		return 0 if opponent.pbOwnSide.effects[PBEffects::LuckyChant]>0
-		return 3 if move.function=="AlwaysCriticalHit" # Frost Breath
-		c=0
-		c+=attacker.effects[PBEffects::FocusEnergy]
-		c+=1 if move.highCriticalRate?
-		c+=1 if attacker.hasActiveAbility?(:SUPERLUCK)
-		c+=1 if attacker.hasActiveItem?(:RAZORCLAW)
-		c+=1 if attacker.hasActiveItem?(:SCOPELENS)
-		c+=1 if attacker.hasActiveAbility?(:BLADEMASTER) && move.bladeMove?
-		c+=2 if attacker.hasActiveAbility?(:JUNGLEFURY) && attacker.battle.field.terrain == :Grassy
-		c=50 if attacker.hasActiveAbility?(:MERCILESS) && opponent.poisoned?
-		c=3 if c>3
-		return c
+	def pbGetMidTurnGlobalChanges
+		globalArray = []
+		globalEffects = {
+			:NOCTAVISPA => "dark aura",
+			:SPECTERZAL => "spooper aura",
+			:BEAKRAFT   => "electric terrain",
+			:MILOTIC    => "misty terrain",
+			:TREVENANT  => "grassy terrain",
+			:BEHEEYEM   => "psychic terrain",
+			:ZARCOIL    => "sun weather",
+			:ZOLUPINE   => "rain weather",
+			:CACTURNE   => "sand weather",
+			:FRIZZARD   => "hail weather"
+		}
+		megaStones = {
+			:NOCTAVISPA => :NOCTAVISPITE,
+			:SPECTERZAL => :SPECTERZITE,
+			:BEAKRAFT   => :BEAKRAFTITE,
+			:MILOTIC    => :MILOTITE,
+			:TREVENANT  => :TREVENANTITE,
+			:BEHEEYEM   => :BEHEEYEMITE,
+			:ZARCOIL    => :ZARCOILITE,
+			:ZOLUPINE   => :ZOLUPINEITE,
+			:CACTURNE   => :CACTURNITE,
+			:FRIZZARD   => :FRIZZARDITE
+		}
+	
+		# if multiple weathers/terrains are pushed only the slowest one should be acounted
+		# very very VERY niche situation, but hey, i am bored.
+		slowestWeather = nil
+		slowestTerrain = nil
+		slowestWeatherSpeed = 9999
+		slowestTerrainSpeed = 9999
+		@battle.allBattlers.each do |j|
+			megaSpecies = j.pokemon.species
+			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 
+			  (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
+			  	effectne = globalEffects[megaSpecies]
+			  	jspeed = pbRoughStat(j,:SPEED,100,false)
+ 				if effectne.include?("weather")
+					if jspeed < slowestWeatherSpeed
+						slowestWeather = effectne
+						slowestWeatherSpeed = jspeed
+					end
+				elsif effectne.include?("terrain")
+					if jspeed < slowestTerrainSpeed
+						slowestTerrain = effectne
+						slowestTerrainSpeed = jspeed
+					end
+				else
+					globalArray.push(effectne) # auras can stack
+				end
+			end
+		end
+		globalArray.push(slowestWeather) if slowestWeather
+  		globalArray.push(slowestTerrain) if slowestTerrain
+
+		# airlock/cloud9 interaction
+		weatherNeg=false
+		@battle.allBattlers.each do |n|
+			weatherNeg = true if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
+								 n.battle.choices[n.index][0] != :SwitchOut
+		end
+		globalArray.reject! { |w| w.include?("weather") } if weatherNeg
+		#echoln globalArray
+		return globalArray
+	end
+	
+	def pbAIPrioSpeedCheck(attacker, opponent, move, score, globalArray, aspeed = 0, ospeed = 0)
+		user = attacker
+		target = opponent
+		skill = 100
+		thisprio = priorityAI(user,move)
+		if thisprio>0 
+			aspeed = pbRoughStat(attacker,:SPEED,skill) if aspeed == 0
+			ospeed = pbRoughStat(opponent,:SPEED,skill) if ospeed == 0
+			if move.baseDamage>0  
+				fastermon = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+				if fastermon
+					echo("\n"+user.name+" is faster than "+opponent.name+".\n")
+				else
+					echo("\n"+opponent.name+" is faster than "+user.name+".\n")
+				end
+				if !targetSurvivesMove(move,attacker,opponent)
+					echo("\n"+opponent.name+" will not survive.")
+					if fastermon
+						echo("Score x1.3\n")
+						score*=1.3
+					else
+						echo("Score x2\n")
+						score*=2
+					end
+				end   
+				movedamage = -1
+				maxpriomove=nil
+				maxmove = nil
+				opppri = false     
+				pridam = -1
+				for j in opponent.moves
+					tempdam = pbRoughDamage(j,opponent,attacker,skill,j.baseDamage)
+					tempdam = 0 if pbCheckMoveImmunity(1,j,opponent,attacker,100)
+					if priorityAI(opponent,j)>0
+						opppri=true
+						if tempdam>pridam
+							pridam = tempdam
+							maxpriomove=j
+						end              
+					end    
+					if tempdam>movedamage
+						movedamage = tempdam
+						maxmove=j
+					end 
+				end 
+				if opppri
+					echo("Expected priority damage taken by "+opponent.name+": "+pridam.to_s+"\n") 
+				end
+				if !fastermon
+					echo("Expected damage taken by "+opponent.name+": "+movedamage.to_s+"\n") 
+					maxdam=0
+					maxmove2=nil
+					if !targetSurvivesMove(maxmove,opponent,attacker)
+						echo(user.name+" does not survive. Score +150. \n")
+						score+=150
+						for j in opponent.moves
+							if opponent.effects[PBEffects::ChoiceBand] &&
+								opponent.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+								if opponent.lastMoveUsed && opponent.pbHasMove?(opponent.lastMoveUsed)
+									next if j.id!=opponent.lastMoveUsed
+								end
+							end		
+							tempdam = pbRoughDamage(j,opponent,attacker,skill,j.baseDamage)
+							tempdam = 0 if pbCheckMoveImmunity(1,j,opponent,attacker,100)
+							maxdam=tempdam if tempdam>maxdam
+							maxmove2=j
+						end
+						if !targetSurvivesMove(maxmove2,opponent,attacker)
+							score+=30
+						end
+					end
+				end     
+				if opppri
+					score*=1.1
+					if !targetSurvivesMove(maxpriomove,opponent,attacker)
+						if fastermon
+							echo(user.name+" does not survive piority move. Score x3. \n")
+							score*=3
+						else
+							echo(user.name+" does not survive priority move but is faster. Score -100 \n")
+							score-=100
+						end
+					end
+				end
+				if !fastermon && 
+						opponent.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+													"TwoTurnAttackInvulnerableUnderground",
+													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+													"TwoTurnAttackInvulnerableUnderwater",
+													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+					echo("Player Pokemon is invulnerable. Score-300. \n")
+					score-=300
+				end
+				if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && opponent.affectedByTerrain?
+					echo("Blocked by Psychic Terrain. Score-300. \n")
+					score-=300
+				end
+				@battle.allSameSideBattlers(opponent.index).each do |b|
+					priobroken=moldbroken(attacker,b,move)
+					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
+						 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.pokemon.willmega) # laguna can have dazz in pre-mega form
+						score-=300 
+						echo("Blocked by enemy ability. Score-300. \n")
+					end
+				end 
+				if pbTargetsMultiple?(move,user)    
+					quickcheck = false 
+					for j in opponent.moves
+						quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves"
+					end          
+					if quickcheck
+						echo("Expecting quick guard. Score-200. \n")
+						score-=200
+					end  
+				end    
+			end      
+		elsif thisprio<0
+			if fastermon
+				score*=0.9
+				if move.baseDamage>0
+					if opponent.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+													"TwoTurnAttackInvulnerableUnderground",
+													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+													"TwoTurnAttackInvulnerableUnderwater",
+													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+						echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
+						score*=2
+					end
+				end
+			end      
+		end
+		return
 	end
 end

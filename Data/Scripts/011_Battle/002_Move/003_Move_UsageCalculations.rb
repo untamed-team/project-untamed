@@ -37,7 +37,7 @@ class Battle::Move
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Foresight / normalize #by low
-      if (user.hasActiveAbility?(:SCRAPPY) || target.effects[PBEffects::Foresight] || user.hasActiveAbility?(:NORMALIZE)) &&
+      if (user.hasActiveAbility?([:SCRAPPY, :NORMALIZE]) || target.effects[PBEffects::Foresight]) &&
          defType == :GHOST
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
@@ -135,7 +135,7 @@ class Battle::Move
       end
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
-    modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
+    modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
     modifiers[:accuracy_multiplier] = 1.0
     modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
@@ -265,6 +265,10 @@ class Battle::Move
   def pbModifyDamage(damageMult, user, target);         return damageMult; end
 
   def pbGetAttackStats(user, target)
+		if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
+			return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
+			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
+		end
     if specialMove?
       return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
     end
@@ -293,13 +297,6 @@ class Battle::Move
     # Calcuate base power of move
     baseDmg = pbBaseDamage(@baseDamage, user, target)
     # Calculate user's attack stat
-    amove = @battle.choices[user.index][2]
-		if user.hasActiveAbility?(:CRYSTALJAW) && amove.bitingMove? #by low
-			atk = user.spatk; atkStage = user.stages[:SPECIAL_ATTACK]+6
-			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
-		else
-			atk, atkStage = pbGetAttackStats(user,target)
-		end
     atk, atkStage = pbGetAttackStats(user, target)
     if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
       atkStage = 6 if target.damageState.critical && atkStage < 6
@@ -345,16 +342,18 @@ class Battle::Move
         user.ability, user, target, self, multipliers, baseDmg, type
       )
     end
+    #i edited this, because its stupid
+    user.allAllies.each do |b|
+      next if !b.abilityActive?
+      Battle::AbilityEffects.triggerDamageCalcFromAlly(
+        b.ability, user, target, self, multipliers, baseDmg, type
+      )
+    end
     if !@battle.moldBreaker
       # NOTE: It's odd that the user's Mold Breaker prevents its partner's
       #       beneficial abilities (i.e. Flower Gift boosting Atk), but that's
       #       how it works.
-      user.allAllies.each do |b|
-        next if !b.abilityActive?
-        Battle::AbilityEffects.triggerDamageCalcFromAlly(
-          b.ability, user, target, self, multipliers, baseDmg, type
-        )
-      end
+      #look up you fuckhead
       if target.abilityActive?
         Battle::AbilityEffects.triggerDamageCalcFromTarget(
           target.ability, user, target, self, multipliers, baseDmg, type
@@ -567,6 +566,7 @@ class Battle::Move
     return 0 if flinchingMove?
     return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
     return 0 if target.effects[PBEffects::NoFlinch] > 0
+    return 0 if @battle.turnCount == 0
     ret = 0
     if user.hasActiveAbility?(:STENCH, true) ||
        user.hasActiveItem?([:KINGSROCK, :RAZORFANG], true)

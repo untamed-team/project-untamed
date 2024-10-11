@@ -1,26 +1,30 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
-# San Cerigold Town (4) - Route 1 (48)
-4,South,0,48,North,2
-# Veravalles Town (22) - Route 1 (48)
-22,East,0,48,West,19
-# Ice Cream Factory (28) - Calojarro Plaza (36)
+# Route 5 (23) - Ferrera (66)
+23,East,65,66,West,0
+# Racing Track (72) - Route 5 (23)
+72,West,0,23,East,5
+# Daycare CenterInterior (28) - Calojarro Plaza (36)
 28,South,0,36,North,0
-# Route 3 (29) - Calojarro Elevation (51)
+# Route 3 (29) - Calojarro (51)
 29,North,28,51,South,0
 # Route 3 (29) - Route 4 - Top East (47)
 29,West,49,47,East,0
 # Monarca (31) - Melolado (39)
 31,South,35,39,North,0
-# Caliendoro Ranch (45) - Route 4 - Top East (47)
+# Asterado Ranch (45) - Route 4 - Top East (47)
 45,South,33,47,North,0
+# Racing Track (72) - Ferrera (66)
+72,South,0,66,North,0
+# San Cerigold Town (4) - Route 1 (48)
+4,South,0,48,North,2
+# Veravalles Town (22) - Route 1 (48)
+22,East,0,48,West,19
 # Connection to Hacienda (61) - Route 1 (48)
 61,East,0,48,West,5
-# Connection to Hacienda (61) - Hacienda Castaneda (79)
-61,West,0,79,East,27
-# Route 5 (23) - Ferrera (66)
-23,East,65,66,West,0
-# Route 5 East Border (72) - Ferrera (66)
-72,South,0,66,North,0
-# Route 5 East Border (72) - Route 5 (23)
-72,West,0,23,East,5
+# Route 2 (26) - Route 1 (48)
+26,West,52,48,East,0
+# Route 2 (26) - San Cerigold Town (4)
+26,West,12,4,East,0
+# Hacienda Castaneda (79) - Connection to Hacienda (61)
+79,East,27,61,West,0

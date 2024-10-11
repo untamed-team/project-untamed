@@ -4,27 +4,18 @@ Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
 Alright, organizing my thoughts for AI:
 
-When to use invincible:
-Use if available and there's a hazard coming up or if someone is within range of them and charging their spin out move
-
-When to use secondBoost:
-AI uses secondBoost when possible
-
-When to strafe:
-Do not bother avoiding obstacles if invincible
-
-
-
-
-
 
 To do:
-throttle use of all AI moves with RNG
-add AI for racer2 and racer3
-Change boost button to spacebar
+
+
+
+
+Bugs:
 
 
 After events (polish):
-Add part of the track that slow you down, and make AI bad at avoiding it or maybe not try to avoid (maybe with RNG rolls?)
 Add animation to overloading a racer
 Make shiny crustang opponents/rentables possible and make the overworld reflect shininess
+Make the game end after a certain number of laps or minutes
+Make summary in the crustang selection screen possible
+Make animation for overload

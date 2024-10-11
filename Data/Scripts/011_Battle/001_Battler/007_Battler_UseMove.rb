@@ -225,7 +225,8 @@ class Battle::Battler
 				"ConfuseTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # hurricane
 				"ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # thunder
 				"HigherDamageInRain"														=> :Rain, # stream burst
-				"HigherDamageInSunVSNonFireTypes"	              => :Rain  # scald
+				"HigherDamageInSunVSNonFireTypes"	              => :Sun,  # scald
+				"PeperSpray"	                                  => :Sun   # pepper spray
 			}
 			if move.function != "TypeAndPowerDependOnWeather"
 				new_weather = weather_hash[move.function]

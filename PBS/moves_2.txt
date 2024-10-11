@@ -1686,7 +1686,7 @@ Accuracy = 0
 TotalPP = 20
 Target = NearAlly
 FunctionCode = RaiseTargetSpDef1
-Description = The user raises the Sp. Def stat of an ally Pokémon by using a mysterious aroma.
+Description = The user raises the Atk and Sp. Def stat of an ally Pokémon by using a mysterious aroma.
 #-------------------------------
 [BABYDOLLEYES]
 Name = Baby-Doll Eyes
@@ -2006,12 +2006,12 @@ Description = The user looses a blast of aura power from deep within its body. T
 Name = Body Press
 Type = FIGHTING
 Category = Physical
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = UseUserBaseDefenseInsteadOfUserBaseAttack
-Flags = Contact,CanProtect,CanMirrorMove,CannotMetronome
+Flags = Contact,CanProtect,CanMirrorMove
 Description = The user attacks by slamming its body into the target. Power increases the higher the user's Defense is.
 #-------------------------------
 [SUBMISSION]
@@ -2890,7 +2890,7 @@ Description = The user wraps its foe in a fierce wind that flies up into the sky
 [AEROBLAST]
 Name = Aeroblast
 Type = FLYING
-Category = Special
+Category = Physical
 Power = 100
 Accuracy = 100
 TotalPP = 5
@@ -3176,11 +3176,10 @@ Description = The user disappears, then strikes the foe on the second turn. It h
 Name = Poltergeist
 Type = GHOST
 Category = Physical
-Power = 90
+Power = 80
 Accuracy = 0
 TotalPP = 10
 Target = NearOther
-FunctionCode = None
 Flags = CanProtect,CanMirrorMove
 Description = The user controls the target's own soul to hit itself. It hits without fail.
 #-------------------------------
@@ -3239,7 +3238,7 @@ Type = GHOST
 Category = Special
 Power = 80
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
 Flags = CanProtect,CanMirrorMove,Bomb
@@ -3363,7 +3362,7 @@ Description = The user makes the foe see a frightening mirage. It inflicts damag
 Name = Confuse Ray
 Type = GHOST
 Category = Status
-Accuracy = 85
+Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = ConfuseTarget
@@ -3378,7 +3377,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = CurseTargetOrLowerUserSpd1RaiseUserAtkDef1
-Description = The user yells naughty words. Raises the user Atk and Defense by 1, lowers the user Speed by 1.
+Description = The user yells gamer words. Raises the user Atk and Defense by 1, lowers the user Speed by 1.
 #-------------------------------
 [DESTINYBOND]
 Name = Destiny Bond
@@ -5010,11 +5009,11 @@ Type = NORMAL
 Category = Physical
 Power = 70
 Accuracy = 100
-TotalPP = 20
+TotalPP = 15
 Target = NearOther
 FunctionCode = DoublePowerIfUserPoisonedBurnedParalyzed
 Flags = Contact,CanProtect,CanMirrorMove
-Description = An attack move that doubles its power if the user is poisoned, burned, or has paralysis.
+Description = An attack move that increases in power if the user has a status problem.
 #-------------------------------
 [HEADBUTT]
 Name = Headbutt
@@ -6483,7 +6482,7 @@ Name = Stockpile
 Type = NORMAL
 Category = Status
 Accuracy = 0
-TotalPP = 20
+TotalPP = 10
 Target = User
 FunctionCode = UserAddStockpileRaiseDefSpDef1
 Description = The user charges up power and raises both its Defense and Sp. Def. The move can be used three times.
@@ -8718,14 +8717,12 @@ Description = The user withdraws its body into its hard shell, raising its Defen
 Name = Psycrush
 Type = PSYCHIC
 Category = Special
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack
 Flags = Contact,CanProtect,CanMirrorMove
-EffectChance = 0
 Description = The user crushes their foe with a telekinetic force. Damage increases with the user's Special Defense stat.
 #-------------------------------
 [KINETICREND]
@@ -8772,11 +8769,10 @@ Description = The user launches a kick with a high critical-hit ratio. It may al
 Name = Scouring Winds
 Type = FLYING
 Category = Special
-Power = 85
+Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = LowerTargetSpDef1
 Flags = CanProtect
 EffectChance = 10
@@ -8795,26 +8791,12 @@ FunctionCode = UserConsumeBerryRaiseDefense2
 EffectChance = 0
 Description = The user eats its held Berry, then sharply raises its Defense stat.
 #-------------------------------
-[HAUNT]
-Name = Haunt
-Type = GHOST
-Category = Physical
-Power = 75
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-Priority = 0
-FunctionCode = HealUserByHalfOfDamageDone
-Flags = Contact,CanProtect
-EffectChance = 0
-Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
-#-------------------------------
 [BITINGCOLD]
 Name = Biting Cold
 Type = ICE
 Category = Status
 Power = 0
-Accuracy = 75
+Accuracy = 100
 TotalPP = 15
 Target = NearOther
 Priority = 0
@@ -8831,7 +8813,6 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = FreezeTarget
 Flags = CanProtect,Sound
 EffectChance = 10
@@ -8909,9 +8890,9 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 100
-Accuracy = 100
-TotalPP = 15
+Power = 90
+Accuracy = 90
+TotalPP = 10
 Target = NearOther
 FunctionCode = None
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
@@ -8937,25 +8918,22 @@ Type = GRASS
 Category = Special
 Power = 75
 Accuracy = 100
-TotalPP = 10
-Target = AllNearFoes
-Priority = 0
-FunctionCode = ChangeTypeToFireDuringSun
+TotalPP = 5
+Target = NearOther
+FunctionCode = PeperSpray
 Flags = CanProtect,ThawsUser
-Description = Unleashes a spray of spicy vapors at the opposing foes to attack, this move is Fire-type during Sun.
+Description = Unleashes a spray of spicy vapors to attack. Powers up and hits all foes during Sun or Harsh Sun.
 #-------------------------------
 [TITANSWRATH]
 Name = Titan's Wrath
 Type = QMARKS
 Category = Special
-Power = 120
+Power = 110
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = TitanWrath
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 0
 Description = The damage is based on the user's highest plain, non-HP stat. The move's type is set by the user's type.
 #-------------------------------
 [SIRENSONG]
@@ -8966,7 +8944,6 @@ Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = SleepTargetChangeUserMeloettaForm
 Flags = CanProtect,Sound,CannotMetronome
 EffectChance = 10
@@ -8980,10 +8957,8 @@ Power = 0
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = Rebalancing
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 0
 Description = Buffs an ally or nerfs a foe by raising or sharply lowering their highest stat.
 #-------------------------------
 [FRIGIDMAW]
@@ -9186,6 +9161,18 @@ Target = NearOther
 FunctionCode = None
 Flags = CanProtect
 Description = ...
+#-------------------------------
+[HAUNT]
+Name = Failsafe Haunt
+Type = GHOST
+Category = Physical
+Power = 2
+Accuracy = 0
+TotalPP = 1
+Target = NearOther
+FunctionCode = HealUserByHalfOfDamageDone
+Flags = Contact,CanProtect
+Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
 #-------------------------------
 [SUPERNOVA]
 Name = Supernova

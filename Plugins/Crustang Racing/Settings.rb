@@ -17,16 +17,26 @@ UPCOMING_HAZARD_DETECTION_DISTANCE = 1000 #in pixels in front of the player (inc
 TRACK_BGM = "Bone-Dry Dunes"
 RNG_ROLLS_TIMER_IN_SECONDS = 1 #rng rolls happen every X seconds
 PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################currently not used
+NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
+ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
+MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
+SOONEST_ROCKY_PATCH_CAN_APPEAR = 600
+LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
+ROCKY_PATCH_COLLISION_SE = "CR_RockyPatch"
+CHANCE_TO_AVOID_ROCKY_PATCH_EVERY_FRAME = 80
+CHANCE_TO_WANDER_STRAFE = 80
+MIN_DISTANCE_TO_WANDER_STRAFE = 20 #never set this to nil or a negative number
+MAX_DISTANCE_TO_WANDER_STRAFE = nil #never set this to a number lower than MIN_DISTANCE_TO_WANDER_STRAFE
 
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
 BOOST_BUTTON_COOLDOWN_SECONDS = 3
-BOOST_BUTTON = Input::SPECIAL
+BOOST_BUTTON = 0x20#Input::SPECIAL
 BOOST_LENGTH_SECONDS = 0.5
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 100#5#30
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 70
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -60,6 +70,13 @@ OVERLOAD_DURATION_IN_SECONDS = 5
 OVERLOADED_STRAFE_SPEED = 2
 OVERLOADED_SE = "CR_Overloaded"
 
+PERCENT_CHANCE_TO_TARGET_RACER = 25
+PERCENT_CHANCE_TO_USE_INVINCIBLE = 25
+PERCENT_CHANCE_TO_USE_REDUCECOOLDOWN = 25
+PERCENT_CHANCE_TO_USE_SECONDBOOST = 25
+PERCENT_CHANCE_TO_USE_ROCKHAZARD = 25
+PERCENT_CHANCE_TO_USE_MUDHAZARD = 25
+
 #========================================================#
 #===================== MOVE EFFECTS =====================#
 #========================================================#
@@ -74,7 +91,7 @@ overload:   {EffectName: "Overload", EffectCode: "overload", Description: "Burde
 
 reduceCooldown:  {EffectName: "Reduce Cooldown", EffectCode: "reduceCooldown", Description: "Move cooldowns are reduced for 3 uses.", AssignedMoves: [:REST, :SLEEPTALK, :SWORDSDANCE, :FALSESWIPE],}, #a secondary boost that has a separate recharge than the primary boost action
 
-secondBoost:     {EffectName: "Stabilize", EffectCode: "secondBoost", Description: "Stabilize your speed for a short time. Faster than base speed, slower than boost. Using this makes Boost begin cooldown.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
+secondBoost:     {EffectName: "Stabilize", EffectCode: "secondBoost", Description: "Stabilize your speed for a short time. Faster than base speed, slower than boost. Using this makes Boost begin to cool down.", AssignedMoves: [:RAPIDSPIN, :FLAMEWHEEL, :HIGHHORSEPOWER, :SHIFTGEAR, :HONECLAWS, :WORKUP],},
 
 rockHazard:      {EffectName: "Rock Hazard", EffectCode: "rockHazard", Description: "Place a rock where you are, leaving it behind for another racer to hit.", AssignedMoves: [:ROCKTOMB, :ROCKSLIDE, :STONEEDGE, :STEALTHROCK],}, #put a hazard on the screen where you are, leaving it behind. It stays there until someone hits it. This is like a rock that causes someone to spin out if they hit it. This one you leave where you are when triggered
 
@@ -98,9 +115,8 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-#{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:ROCKTOMB, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
 {TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
 

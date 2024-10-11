@@ -13,10 +13,10 @@ class CrustangRacing
 		###################################
 		#============= Boost =============
 		###################################
-		if Input.press?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+		if Input.pressex?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			@racerPlayer[:BoostButtonSprite].frame = 1
 		end
-		if Input.release?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
+		if Input.releaseex?(CrustangRacingSettings::BOOST_BUTTON) && @racerPlayer[:BoostCooldownTimer] <= 0
 			self.moveEffect(@racerPlayer, 0)
 			@racerPlayer[:BoostButtonSprite].frame = 0
 		end
@@ -36,6 +36,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 1)
 				self.beginCooldown(@racerPlayer, 1)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove1 = false
 		end
@@ -51,6 +55,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 2)
 				self.beginCooldown(@racerPlayer, 2)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove2 = false
 		end
@@ -66,6 +74,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 3)
 				self.beginCooldown(@racerPlayer, 3)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove3 = false
 		end
@@ -81,6 +93,10 @@ class CrustangRacing
 			if !self.cancellingMove?
 				self.moveEffect(@racerPlayer, 4)
 				self.beginCooldown(@racerPlayer, 4)
+			elsif self.cancellingMove?
+				#cancelling move, so reset the charged moves' charges
+				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			end #if !self.cancellingMove?
 			@pressingMove4 = false
 		end
@@ -112,7 +128,14 @@ class CrustangRacing
 			#don't restrict up and DOWN
 		else
 			#if not colliding with something below you and not in front or behind, allow movement
-			racer[:RacerSprite].y -= racer[:StrafeSpeed] if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			if racer[:RacerSprite].y > @trackBorderTopY && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_above?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+				racer[:RacerSprite].y -= racer[:StrafeSpeed]
+				#if wandering, subtract from the remaining amount to wander if the racer does strafe successfully
+				racer[:WanderStrafeDistance] -= racer[:StrafeSpeed] if racer[:WanderStrafeDistance] > 0
+			elsif racer[:RacerSprite].y <= @trackBorderTopY
+				#if stuck trying to wander up but hitting the top wall, change wander distance to 0
+				racer[:WanderStrafeDistance] = 0
+			end
 		end
 	end #def self.strafeUp
 	
@@ -140,7 +163,14 @@ class CrustangRacing
 		if self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) || self.collides_with_object_behind?(racer[:RacerSprite],opposingRacerC[:RacerSprite]) || self.collides_with_object_in_front?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
 		else
 			#if not colliding with something below you and not in front or behind, allow movement
-			racer[:RacerSprite].y += racer[:StrafeSpeed] if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+			if racer[:RacerSprite].y < @trackBorderBottomY && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerA[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerB[:RacerSprite]) && !self.collides_with_object_below?(racer[:RacerSprite],opposingRacerC[:RacerSprite])
+				racer[:RacerSprite].y += racer[:StrafeSpeed]
+				#if wandering, subtract from the remaining amount to wander if the racer does strafe successfully
+				racer[:WanderStrafeDistance] -= racer[:StrafeSpeed] if racer[:WanderStrafeDistance] > 0
+			elsif racer[:RacerSprite].y >= @trackBorderBottomY
+				#if stuck trying to wander down but hitting the bottom wall, change wander distance to 0
+				racer[:WanderStrafeDistance] = 0
+			end
 		end
 	end #def self.strafeDown
 	
@@ -170,8 +200,8 @@ class CrustangRacing
 			racer[:Move4CooldownTimer] = CrustangRacingSettings::MOVE_BUTTON_COOLDOWN_SECONDS * Graphics.frame_rate
 		
 			#reset racer's spinout and overload ranges regardless of what move they just "released", as if they let go of the move button
-			racer[:SpinOutCharge] = 0#CrustangRacingSettings::SPINOUT_MIN_RANGE
-			racer[:OverloadCharge] = 0#CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			racer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
 		
 		end #if moveNumber == 0
 		
@@ -443,8 +473,40 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 
-		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
-		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= 0
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that spinout is tied to
+				moveNumber = self.hasMoveEffect?(racer, "spinOut")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end #if self.spinOutMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
+			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
+			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that spinout is tied to
+				moveNumber = self.hasMoveEffect?(racer, "spinOut")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE
+		end #if self.spinOutMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+
+		#Console.echo_warn "spinOut ready" if self.spinOutMoveIsReady?(racer)
+		if self.spinOutMoveIsReady?(racer) && racer[:OverloadCharge] <= CrustangRacingSettings::OVERLOAD_MIN_RANGE
 			racer[:SpinOutCharge] += 1 if racer[:SpinOutCharge] < CrustangRacingSettings::SPINOUT_MAX_RANGE
 			if racer[:SpinOutCharge] >= CrustangRacingSettings::SPINOUT_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that spinout is tied to
@@ -473,8 +535,40 @@ class CrustangRacing
 		###################################
 		racer = @racer1
 
-		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
-		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= 0
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		racer = @racer2
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
+			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
+			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
+				#get the move number that overload is tied to
+				moveNumber = self.hasMoveEffect?(racer, "overload")
+				self.moveEffect(racer, moveNumber)
+				self.beginCooldown(racer, moveNumber)
+			end #if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE
+		end #if self.overloadMoveIsReady?(racer)
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		racer = @racer3
+
+		#Console.echo_warn "overload ready" if self.overloadMoveIsReady?(racer)
+		if self.overloadMoveIsReady?(racer) && racer[:SpinOutCharge] <= CrustangRacingSettings::SPINOUT_MIN_RANGE
 			racer[:OverloadCharge] += 1 if racer[:OverloadCharge] < CrustangRacingSettings::OVERLOAD_MAX_RANGE
 			if racer[:OverloadCharge] >= CrustangRacingSettings::OVERLOAD_MAX_RANGE || racer[:SpinOutTimer] > 0 #release if charges to the max range or starts spinning out
 				#get the move number that overload is tied to

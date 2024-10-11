@@ -335,9 +335,6 @@ class CrustangRacing
 
 	def self.checkForCollisions(racer)
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
-		###################################
-		#============= Racer1 =============
-		###################################
 		#collide with racers
 		self.bumpedIntoSomeone(racer, @racer1) if racer != @racer1 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer1[:RacerSprite])
 		self.bumpedIntoSomeone(racer, @racer2) if racer != @racer2 && self.collides_with_object_in_front?(racer[:RacerSprite],@racer2[:RacerSprite])
@@ -437,7 +434,25 @@ class CrustangRacing
 			self.endInvincibility(racer) if CrustangRacingSettings::INVINCIBLE_UNTIL_HIT
 			self.announceAttack(@racerPlayer, racer, "mud")
 		end
-
+		
+		#collide with rocky patch
+		if racer[:InvincibilityStatus] == false
+			for i in 0...@rockyPatches.length
+				sprite = @rockyPatches[i][0]
+			
+				if self.collides_with?(racer[:RacerSprite], sprite)
+					if self.racerOnScreen?(racer) && @currentlyPlayingSE != CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE 
+						pbSEPlay(CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE)
+						@currentlyPlayingSE = CrustangRacingSettings::ROCKY_PATCH_COLLISION_SE 
+						@currentlyPlayingSETimer = CrustangRacingSettings::SE_SPAM_PREVENTION_WAIT_IN_SECONDS * Graphics.frame_rate
+					end
+					#set current speed of racer to ROCKY_PATCH_SPEED unless the current speed is less than what it would become
+					if racer[:CurrentSpeed] > CrustangRacingSettings::ROCKY_PATCH_SPEED
+						racer[:CurrentSpeed] = CrustangRacingSettings::ROCKY_PATCH_SPEED
+					end
+				end
+			end #for i in 0...@rockyPatches.length
+		end #if racer[:InvincibilityStatus] == false
 	end #def self.checkForCollisions
 
 	def self.endInvincibility(racer)
@@ -504,6 +519,72 @@ class CrustangRacing
 		return withinRangeX
 	end #def self.withinHazardDetectionRange?
 	
+	def self.withinHazardDetectionRangePlusGrace?(racer, hazard, grace)
+		#hazard will be the entire hazard hash passed in like so:
+		#self.withinHazardDetectionRange?(@racerPlayer, @racer1[:RockHazard])
+		
+		withinRangeX = false
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE + grace
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || hazard[:PositionXOnTrack].between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if hazard[:PositionXOnTrack].between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRangePlusGrace?
+
+	def self.withinRockyPatchDetectionRange?(racer, patch)
+		withinRangeX = false
+		
+		sprite = patch[0]
+		positionXOnTrack = patch[1]
+			
+		###### Checking in front of player
+		detectionRange = CrustangRacingSettings::UPCOMING_HAZARD_DETECTION_DISTANCE
+		
+		if racer[:PositionOnTrack] > @sprites["track1"].width - detectionRange
+			#there will be some overlap between the end of the track and the beginning of the track
+			positionOnTrackInFrontOfRacer = []
+			positionOnTrackInFrontOfRacer.push([racer[:PositionOnTrack], @sprites["track1"].width])
+			amountHittingBeginningOfTrack = detectionRange - (@sprites["track1"].width - (racer[:PositionOnTrack]))
+			positionOnTrackInFrontOfRacer.push([0, amountHittingBeginningOfTrack])
+			#the above array will look something like this:
+			#positionOnTrackInFrontOfRacer is an array with these elements: [[6100, 6144], [0, 106]]
+		else
+			positionOnTrackInFrontOfRacer = racer[:PositionOnTrack] + detectionRange
+		end
+		
+		#if positionOnTrackInFrontOfRacer is an array or not
+		if positionOnTrackInFrontOfRacer.kind_of?(Array)
+			withinRangeX = true if positionXOnTrack.between?(positionOnTrackInFrontOfRacer[0][0], positionOnTrackInFrontOfRacer[0][1]) || positionXOnTrack.between?(positionOnTrackInFrontOfRacer[1][0], positionOnTrackInFrontOfRacer[1][1])
+		else
+			withinRangeX = true if positionXOnTrack.between?(racer[:PositionOnTrack], positionOnTrackInFrontOfRacer)
+		end
+		
+		################# MIGHT NOT NEED THIS SINCE WE AREN'T NOTIFYING THE PLAYER FOR ROCKY PATCHES WITH AN ALARM
+		#crude way of saying it's no longer in range when on the screen
+		withinRangeX = false if sprite.x.between?(0, Graphics.width) && racer == @racerPlayer #we don't want a hazard alarm happening for the player if the hazard is on screen, but we do want AI to detect upcoming hazards that are on the screen and beyond
+
+		return withinRangeX
+	end #def self.withinHazardDetectionRange?
+	
 	def self.willCollideWithHazard?(racer, hazard)
 		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming hazard
 		collisionGrace = 1
@@ -561,15 +642,34 @@ class CrustangRacing
 		end
 
 		return false
-	end #def self.withinHazardDetectionRange?
+	end #def self.willCollideWithHazard?
 	
-	def self.rngRoll(chance=nil)
+	def self.willCollideWithRockyPatch?(racer, patch)
+		#used specifically for detecting whether the racer needs to strafe out of the way of an upcoming rocky patch
+		collisionGrace = 1
+		
+		sprite = patch[0]
+		if sprite.y.between?(racer[:RacerSprite].y - sprite.height + collisionGrace, racer[:RacerSprite].y + racer[:RacerSprite].height - collisionGrace)
+			return true
+		end
+
+		return false
+	end #def self.willCollideWithRockyPatch?(racer, patch)
+	
+	def self.rngRollThrottled(chance=nil)
 		return if @rngRollsTimer > 0 #if not able to roll rng yet
 		return if chance.nil? #if not rolling rng for anything at the moment
-		
 		#otherwise, roll rng
-		return rand(100).between?(1, chance)
-	end #self.rngRoll(chance)
+		chance = rand(100).between?(1, chance)
+		#Console.echo_warn "successful roll" if chance
+		return chance
+	end #self.rngRollThrottled(chance)
+	
+	def self.rngRoll(chance=nil) #meant to be run every frame without throttling
+		chance = rand(100*Graphics.frame_rate).between?(1, chance)
+		#Console.echo_warn "successful roll" if chance
+		return chance
+	end #self.rngRollThrottled(chance)
 	
 	def self.hasMoveEffect?(racer, effect)
 		if !racer[:Move1].nil? && self.getMoveEffect(racer, 1) == effect
@@ -668,7 +768,6 @@ class CrustangRacing
 		return false
 	end #def self.reduceCooldownMoveIsReady?(racer)
 	
-	
 	def self.secondBoostMoveIsReady?(racer)
 		if self.hasMoveEffect?(racer, "secondBoost") != false
 			moveNumber = self.hasMoveEffect?(racer, "secondBoost")
@@ -685,6 +784,23 @@ class CrustangRacing
 		end
 		return false
 	end #def self.reduceCooldownMoveIsReady?(racer)
+	
+	def self.invincibilityMoveIsReady?(racer)
+		if self.hasMoveEffect?(racer, "invincible") != false
+			moveNumber = self.hasMoveEffect?(racer, "invincible")
+			case moveNumber
+			when 1
+				return true if racer[:Move1CooldownTimer] <= 0
+			when 2
+				return true if racer[:Move2CooldownTimer] <= 0
+			when 3
+				return true if racer[:Move3CooldownTimer] <= 0
+			when 4
+				return true if racer[:Move4CooldownTimer] <= 0
+			end
+		end
+		return false
+	end #def self.invincibilityMoveIsReady?(racer)
 	
 end #class CrustangRacing
 

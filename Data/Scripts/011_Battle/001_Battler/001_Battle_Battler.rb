@@ -239,7 +239,7 @@ class Battle::Battler
   #=============================================================================
   # Calculated properties
   #=============================================================================
-  def pbSpeed
+  def pbSpeed(megaSpeed = false)
     return 1 if fainted?
     stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
     stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
@@ -247,8 +247,12 @@ class Battle::Battler
     speed = @speed * stageMul[stage] / stageDiv[stage]
     speedMult = 1.0
     # Ability effects that alter calculated Speed
+    # these are ignored when AI is doing calcs (and taking in consideration willmega global changes)
     if abilityActive?
-      speedMult = Battle::AbilityEffects.triggerSpeedCalc(self.ability, self, speedMult)
+      if hasActiveAbility?([:CHLOROPHYLL, :SWIFTSWIM, :SLUSHRUSH, :SANDRUSH, :SURGESURFER]) && megaSpeed
+      else
+        speedMult = Battle::AbilityEffects.triggerSpeedCalc(self.ability, self, speedMult)
+      end
     end
     # Item effects that alter calculated Speed
     if itemActive?
@@ -260,11 +264,6 @@ class Battle::Battler
     # Paralysis
     if status == :PARALYSIS && !hasActiveAbility?(:QUICKFEET)
       speedMult /= (Settings::MECHANICS_GENERATION >= 7) ? 2 : 4
-    end
-    # Badge multiplier
-    if @battle.internalBattle && pbOwnedByPlayer? &&
-       @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPEED
-      speedMult *= 1.1
     end
     # Calculation
     return [(speed * speedMult).round, 1].max
@@ -306,8 +305,7 @@ class Battle::Battler
     ret = @types.uniq
     # Burn Up erases the Fire-type.
     ret.delete(:FIRE) if @effects[PBEffects::BurnUp]
-    # Roost erases the Flying-type. If there are no types left, adds the Normal-
-    # type.
+    # Roost erases the Flying-type. If there are no types left, adds the Normal-type.
     if @effects[PBEffects::Roost]
       ret.delete(:FLYING)
       ret.push(:NORMAL) if ret.length == 0
@@ -317,66 +315,18 @@ class Battle::Battler
       ret.push(@effects[PBEffects::Type3])
     end
 		# WillMega type changes #by low
-		if megaEvo && self.pokemon.willmega
-			if self.species == :AMPHAROS 			&& (self.item == :AMPHAROSITE || self.hasMegaEvoMutation?)
-				# sheep is pure electric
-				ret.push(:DRAGON)
-			elsif self.species == :GYARADOS 	&& (self.item == :GYARADOSITE || self.hasMegaEvoMutation?)
-				#~ ret.delete(:FLYING)
-				ret.push(:DARK)
-			elsif self.species == :GOHILA		 	&& (self.item == :GOHILITE || self.hasMegaEvoMutation?)
-				# godzilla is pure poison
-				ret.push(:ELECTRIC)
-			elsif self.species == :XATU 			&& (self.item == :XATUNITE || self.hasMegaEvoMutation?)
-				ret.delete(:FLYING)
-				ret.push(:FIRE)
-			elsif self.species == :FLYGON 		&& (self.item == :FLYGONITE || self.hasMegaEvoMutation?)
-				ret.delete(:GROUND)
-				ret.push(:BUG)
-			elsif self.species == :MILOTIC 		&& (self.item == :MILOTITE || self.hasMegaEvoMutation?)
-				# snek is pure water
-				ret.push(:FAIRY)
-			elsif self.species == :GOLURK 		&& (self.item == :GOLURKITE || self.hasMegaEvoMutation?)
-				ret.delete(:GHOST)
-				ret.push(:FLYING)
-			elsif self.species == :FROSMOTH		&& (self.item == :FROSMOTHITE || self.hasMegaEvoMutation?)
-				ret.delete(:BUG)
-				ret.push(:FIRE)
-			elsif self.species == :CHIMECHO		&& (self.item == :CHIMECHITE || self.hasMegaEvoMutation?)
-				# chim is pure psy
-				ret.push(:STEEL)
-			elsif self.species == :PORYGONZ		&& (self.item == :PORYGONZITE || self.hasMegaEvoMutation?)
-				# pory is pure normal
-				ret.push(:QMARKS)
-				if !self.moves.empty?
-					overwriteType = self.moves[0].type # cant cheese the AI here by swapping moves as mega-evolving only happens once
-					ret.push(overwriteType)
-					ret.delete(:NORMAL) if overwriteType != :NORMAL
-				end
-				ret.uniq
-				#~ echo("Mega Pory-Z type will be "+ret[0].to_s+" and "+ret[1].to_s+"\n")
-			elsif self.species == :MAGCARGO		&& (self.item == :MAGCARGOITE || self.hasMegaEvoMutation?)
-				ret.delete(:ROCK)
-				ret.push(:STEEL)
-			elsif self.species == :LUPACABRA	&& (self.item == :LUPACABRITE || self.hasMegaEvoMutation?)
-				# furry1 is pure dark
-				ret.push(:FIGHTING)
-			elsif self.species == :ZOLUPINE		&& (self.item == :ZOLUPINEITE || self.hasMegaEvoMutation?)
-				ret.delete(:DARK)
-				ret.push(:GHOST)
-			elsif self.species == :ROADRAPTOR	&& (self.item == :ROADRAPTORITE || self.hasMegaEvoMutation?)
-				ret.delete(:FLYING)
-				ret.push(:GROUND)
-			elsif self.species == :LAGUNA	&& (self.item == :LAGUNITE || self.hasMegaEvoMutation?)
-				ret.delete(:NORMAL)
-				ret.push(:ICE)
-			elsif self.species == :LEDIAN	&& (self.item == :LEDINITE || self.hasMegaEvoMutation?)
-				ret.delete(:FLYING)
-				ret.push(:FIGHTING)
-			elsif self.species == :BEAKRAFT	&& (self.item == :BEAKRAFTITE || self.hasMegaEvoMutation?)
-				ret.delete(:FLYING)
-				ret.push(:ELECTRIC)
-			end
+    if megaEvo && self.pokemon.willmega
+      megatype_data = MEGA_EVO_TYPES[self.species]
+      if megatype_data && (self.item == megatype_data[:item] || self.hasMegaEvoMutation?)
+        typeadd, typeremove = megatype_data.values_at(:typeadd, :typeremove)
+        ret.push(typeadd)
+        ret.delete(typeremove)
+        if self.species == :PORYGONZ && !self.moves.empty?
+          # cant cheese the AI here by swapping moves as mega-evolving only happens once
+          ret.push(self.moves[0].type)
+        end
+        ret = ret.uniq
+      end
     end
     return ret
   end
@@ -563,8 +513,7 @@ class Battle::Battler
     return false if hasActiveItem?(:IRONBALL)
     return false if @effects[PBEffects::Ingrain]
     return false if @effects[PBEffects::SmackDown]
-    # float stone changes #by low
-    return false if @battle.field.effects[PBEffects::Gravity] > 0 && !hasActiveItem?(:FLOATSTONE)
+    return false if @battle.field.effects[PBEffects::Gravity] > 0
     return true if pbHasType?(:FLYING)
     return true if hasActiveAbility?(:LEVITATE) && !@battle.moldBreaker
     return true if hasActiveItem?(:AIRBALLOON)

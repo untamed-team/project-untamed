@@ -139,7 +139,53 @@ class CrustangRacing
 		@overlayBaseColor   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
 		@overlayShadowColor = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
 		
+		self.placeRockyPatches
+		
 	end #def setup
+	
+	def self.placeRockyPatches
+		#create sprite for width reference
+		@sprites["dummyRockyPatch"] = IconSprite.new(0, 0, @viewport)
+		@sprites["dummyRockyPatch"].setBitmap("Graphics/Pictures/Crustang Racing/rocky_patch")
+		@sprites["dummyRockyPatch"].visible = false
+		
+		#find eligible placements for the rocky patches
+		@rockyPatchEligiblePlacements = []
+		maxDistanceBetweenRockyPatches = @sprites["track1"].width / CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK - @sprites["dummyRockyPatch"].width
+
+		endOfLastRockyPatchEligibleX = 0
+		startingPositionForThisRockyPatch = 0
+		for i in 0...CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK
+			#if this is the first iteration, the first element in the first array should be the setting SOONEST_ROCKY_PATCH_CAN_APPEAR
+			if i == 0 #first iteration
+				@rockyPatchEligiblePlacements.push([CrustangRacingSettings::SOONEST_ROCKY_PATCH_CAN_APPEAR, maxDistanceBetweenRockyPatches + endOfLastRockyPatchEligibleX - CrustangRacingSettings::MIN_DISTANCE_BETWEEN_ROCKY_PATCHES])
+			elsif i == CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK - 1 #last iteration
+				@rockyPatchEligiblePlacements.push([startingPositionForThisRockyPatch, @sprites["track1"].width - CrustangRacingSettings::LATEST_ROCKY_PATCH_CAN_APPEAR])
+			else
+				@rockyPatchEligiblePlacements.push([startingPositionForThisRockyPatch, maxDistanceBetweenRockyPatches + endOfLastRockyPatchEligibleX - CrustangRacingSettings::MIN_DISTANCE_BETWEEN_ROCKY_PATCHES])
+			end
+			
+			startingPositionForThisRockyPatch += maxDistanceBetweenRockyPatches
+			endOfLastRockyPatchEligibleX += maxDistanceBetweenRockyPatches
+		end
+		
+		#make an array to keep track of all the patches' sprites
+		@rockyPatches = []
+		
+		#place the rocky patches
+		for i in 0...CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK
+			@sprites["rocky_patch#{i}"] = IconSprite.new(0, 0, @viewport)
+			@sprites["rocky_patch#{i}"].setBitmap("Graphics/Pictures/Crustang Racing/rocky_patch")
+			@sprites["rocky_patch#{i}"].x = rand(@rockyPatchEligiblePlacements[i][0]..@rockyPatchEligiblePlacements[i][1])
+			@sprites["rocky_patch#{i}"].y = rand(@trackBorderTopY+24..@trackBorderBottomY + 64 - @sprites["rocky_patch#{i}"].height)
+			@sprites["rocky_patch#{i}"].z = 99998
+			
+			#push the rocky patch into the rocky patches array
+			#each element in the @rockyPatches array contains another array, with the first element being the sprite and the second element being the position X on the track
+			@rockyPatches.push([@sprites["rocky_patch#{i}"], @sprites["rocky_patch#{i}"].x])
+		end #for i in 0...CrustangRacingSettings::NUMBER_OF_ROCKY_PATCHES_ON_TRACK
+		
+	end #def self.placeRockyPatches
 	
 	def self.drawContestants
 		#in relay run, the player's pkmn is always at the same exact X on the screen, so the camera is always centered on them, about a third of the screen's width inward
@@ -308,7 +354,7 @@ class CrustangRacing
 		@boostButtonTextOverlay = @sprites["boostButtonTextOverlay"].bitmap
 		pbSetSystemFont(@boostButtonTextOverlay)
 		@boostButtonTextOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
-		drawFormattedTextEx(@boostButtonTextOverlay, 0, 4, Graphics.width, "#{$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@boostButtonTextOverlay, 0, 4, Graphics.width, "Space", @overlayBaseColor, @overlayShadowColor)
 		
 		#draw moves depending on what racer knows
 		#for now, draw specific moves, 4 at a time for testing
@@ -506,7 +552,7 @@ class CrustangRacing
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: 0, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: CrustangRacingSettings::SPINOUT_MIN_RANGE, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0, PreviousDesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, Bumped: false, BumpedRecoveryTimer: 0, StrafeSpeed: CrustangRacingSettings::BASE_STRAFE_SPEED, Overloaded: false,
 			#track overview positioning
@@ -514,7 +560,9 @@ class CrustangRacing
 			#laps and Placement
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
-			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil}
+			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racer2 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
@@ -523,7 +571,7 @@ class CrustangRacing
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: 0, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: CrustangRacingSettings::SPINOUT_MIN_RANGE, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0, PreviousDesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, Bumped: false, BumpedRecoveryTimer: 0, StrafeSpeed: CrustangRacingSettings::BASE_STRAFE_SPEED, Overloaded: false,
 			#track overview positioning
@@ -532,6 +580,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racer3 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
@@ -540,7 +590,7 @@ class CrustangRacing
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: 0, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: CrustangRacingSettings::SPINOUT_MIN_RANGE, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0, PreviousDesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, Bumped: false, BumpedRecoveryTimer: 0, StrafeSpeed: CrustangRacingSettings::BASE_STRAFE_SPEED, Overloaded: false,
 			#track overview positioning
@@ -549,6 +599,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		@racerPlayer = {
 			EnteredCrustangContestant: nil,
@@ -557,7 +609,7 @@ class CrustangRacing
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
-			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move1ButtonCooldownMaskSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move2ButtonCooldownMaskSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move3ButtonCooldownMaskSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, Move4ButtonCooldownMaskSprite: nil,  MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: 0, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
+			Move1: nil, Move1CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move1ButtonSprite: nil, Move1ButtonCooldownMaskSprite: nil, Move2: nil, Move2CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move2ButtonSprite: nil, Move2ButtonCooldownMaskSprite: nil, Move3: nil, Move3CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move3ButtonSprite: nil, Move3ButtonCooldownMaskSprite: nil, Move4: nil, Move4CooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, Move4ButtonSprite: nil, Move4ButtonCooldownMaskSprite: nil,  MoveCoolDownMultiplier: 1, ReduceCooldownCount: 0, SecondaryBoostTimer: 0, SpinOutRangeSprite: nil, SpinOutTimer: 0, SpinOutDirectionTimer: 0, SpinOutCharge: CrustangRacingSettings::SPINOUT_MIN_RANGE, DesiredHue: nil, InvincibilityTimer: 0, InvincibilityStatus: false, OverloadRangeSprite: nil, OverloadTimer: 0, OverloadCharge: CrustangRacingSettings::OVERLOAD_MIN_RANGE, TargetingRacer: nil, TargetingMoveEffect: nil,
 			#track positioning & speed
 			PositionOnTrack: 0, PreviousPositionOnTrack: 0, CurrentSpeed: 0, DesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, BoostTimer: 0, PreviousDesiredSpeed: CrustangRacingSettings::TOP_BASE_SPEED.floor, Bumped: false, BumpedRecoveryTimer: 0, StrafeSpeed: CrustangRacingSettings::BASE_STRAFE_SPEED, Overloaded: false,
 			#track overview positioning
@@ -566,6 +618,8 @@ class CrustangRacing
 			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
+			#misc
+			AvoidingSomething: false, WanderingUp: false, WanderingDown: false, WanderStrafeDistance: 0,
 		}
 		
 		#modify player's selected Crustang to match hashes of AI crustang contestants

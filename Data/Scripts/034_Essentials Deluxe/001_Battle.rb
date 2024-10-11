@@ -366,37 +366,3 @@ class Battle::Scene
     return ret
   end
 end
-
-
-#-------------------------------------------------------------------------------
-# AI Battlers consider a variety of battle mechanics.
-#-------------------------------------------------------------------------------
-class Battle::AI
-  def pbDefaultChooseEnemyCommand(idxBattler)
-    return if pbEnemyShouldUseItem?(idxBattler)
-    return if pbEnemyShouldWithdraw?(idxBattler) # old switching method
-		#~ return if pbShouldSwitch?(idxBattler) #messy switching method
-    return if @battle.pbAutoFightMenu(idxBattler)
-    @battle.pbRegisterMegaEvolution(idxBattler) if pbEnemyShouldMegaEvolve?(idxBattler)
-    if PluginManager.installed?("ZUD Mechanics")
-      @battle.pbRegisterUltraBurst(idxBattler) if pbEnemyShouldUltraBurst?(idxBattler)
-      @battle.pbRegisterDynamax(idxBattler) if pbEnemyShouldDynamax?(idxBattler)
-    end
-    if PluginManager.installed?("Terastal Phenomenon")
-      @battle.pbRegisterTerastallize(idxBattler) if pbEnemyShouldTerastallize?(idxBattler)
-    end
-    if PluginManager.installed?("Pokémon Birthsigns")
-      @battle.pbRegisterZodiacPower(idxBattler) if pbEnemyShouldZodiacPower?(idxBattler)
-    end
-    if PluginManager.installed?("Focus Meter System")
-      @battle.pbRegisterFocus(idxBattler) if pbEnemyShouldFocus?(idxBattler)
-    end
-    if !@battle.pbScriptedMechanic?(idxBattler, :custom) && pbEnemyShouldCustom?(idxBattler)
-      @battle.pbRegisterCustom(idxBattler)
-    end
-    pbChooseMoves(idxBattler)
-    if PluginManager.installed?("PLA Battle Styles") # Purposefully set after move selection.
-      @battle.pbRegisterStyle(idxBattler) if pbEnemyShouldUseStyle?(idxBattler)
-    end
-  end
-end

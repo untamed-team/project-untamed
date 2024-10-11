@@ -269,8 +269,9 @@ class CrustangRacing
 		###################################
 		@currentlyPlayingSETimer -= 1
 		@currentlyPlayingSE = nil if @currentlyPlayingSETimer <= 0
+		
 		if @rngRollsTimer < 0
-			@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS
+			@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS * Graphics.frame_rate
 		else
 			@rngRollsTimer -= 1
 		end

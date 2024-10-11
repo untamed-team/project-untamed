@@ -552,12 +552,7 @@ end
 # Removes trapping moves, entry hazards and Leech Seed on user/user's side.
 # Raises user's Speed by 1 stage IF REMOVED SOMETHING #by low (Rapid Spin)
 #===============================================================================
-class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move#::StatUpMove
-  #~ def initialize(battle, move)
-    #~ super
-    #~ @statUp = [:SPEED, 1]
-  #~ end
-
+class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
   def pbEffectAfterAllHits(user, target)
     return if user.fainted? || target.damageState.unaffected
 		didsomething=false
@@ -595,14 +590,11 @@ class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move#::StatUpMove
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!", user.pbThis))
 			didsomething=true
     end
-		if didsomething
+		if user.pbCanRaiseStatStage?(:SPEED, user) && didsomething && !user.SetupMovesUsed.include?(@id)
 			user.pbRaiseStatStage(:SPEED, 1, user)
+      user.SetupMovesUsed.push(@id)
     end
   end
-
-  #~ def pbAdditionalEffect(user, target)
-    #~ super if Settings::MECHANICS_GENERATION >= 8
-  #~ end
 end
 
 #===============================================================================

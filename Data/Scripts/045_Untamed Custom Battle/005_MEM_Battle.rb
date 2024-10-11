@@ -1,3 +1,67 @@
+MEGA_EVO_STATS = {
+  GYARADOS: { item: :GYARADOSITE, atkmul: 1.240, defmul: 1.380, spemul: 1.000, spamul: 1.167, spdmul: 1.300 },
+  LEDIAN: { item: :LEDINITE, atkmul: 1.625, defmul: 1.000, spemul: 1.471, spamul: 0.778, spdmul: 1.200 },
+  XATU: { item: :XATUNITE, atkmul: 1.187, defmul: 1.014, spemul: 1.011, spamul: 1.295, spdmul: 1.800 },
+  AMPHAROS: { item: :AMPHAROSITE, atkmul: 1.000, defmul: 1.352, spemul: 0.909, spamul: 1.434, spdmul: 1.333 },
+  MAGCARGO: { item: :MAGCARGOITE, atkmul: 1.200, defmul: 1.333, spemul: 1.667, spamul: 1.111, spdmul: 1.250 },
+  SKARMORY: { item: :SKARMORITE, atkmul: 1.500, defmul: 1.143, spemul: 1.143, spamul: 1.500, spdmul: 1.143 },
+  SABLEYE: { item: :SABLEYEITE, atkmul: 1.000, defmul: 1.800, spemul: 0.400, spamul: 1.154, spdmul: 1.923 },
+  FLYGON: { item: :FLYGONITE, atkmul: 1.300, defmul: 1.000, spemul: 1.200, spamul: 1.625, spdmul: 1.000 },
+  CACTURNE: { item: :CACTURNITE, atkmul: 1.174, defmul: 1.667, spemul: 1.000, spamul: 1.261, spdmul: 1.167 },
+  MILOTIC: { item: :MILOTITE, atkmul: 1.417, defmul: 1.215, spemul: 1.012, spamul: 1.260, spdmul: 1.248 },
+  CHIMECHO: { item: :CHIMECHITE, atkmul: 1.000, defmul: 1.250, spemul: 1.000, spamul: 1.211, spdmul: 1.667 },
+  PORYGONZ: { item: :PORYGONZITE, atkmul: 1.600, defmul: 1.143, spemul: 1.133, spamul: 1.148, spdmul: 1.133 },
+  BEHEEYEM: { item: :BEHEEYEMITE, atkmul: 1.400, defmul: 1.000, spemul: 1.750, spamul: 1.080, spdmul: 1.316 },
+  GOLURK: { item: :GOLURKITE, atkmul: 1.161, defmul: 1.313, spemul: 1.818, spamul: 1.182, spdmul: 1.000 },
+  HAWLUCHA: { item: :HAWLUCHITE, atkmul: 1.435, defmul: 1.267, spemul: 1.000, spamul: 1.270, spdmul: 1.317 },
+  TREVENANT: { item: :TREVENANTITE, atkmul: 1.167, defmul: 1.305, spemul: 0.821, spamul: 1.385, spdmul: 1.488 },
+  FROSMOTH: { item: :FROSMOTHITE, atkmul: 1.000, defmul: 1.333, spemul: 1.308, spamul: 1.080, spdmul: 1.556 },
+
+  ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.062, spdmul: 1.120 },
+  BEAKRAFT: { item: :BEAKRAFTITE, 
+              male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 
+              female: { atkmul: 1.167, defmul: 1.105, spemul: 1.051, spamul: 2.000, spdmul: 1.267 } },
+  CHIXULOB: { item: :CHIXULITE, atkmul: 1.268, defmul: 1.882, spemul: 1.147, spamul: 0.927, spdmul: 1.392 },
+  FRIZZARD: { item: :FRIZZARDITE, atkmul: 1.231, defmul: 1.143, spemul: 1.056, spamul: 1.381, spdmul: 1.330 },
+  GOHILA: { item: :GOHILITE, atkmul: 1.304, defmul: 1.029, spemul: 1.020, spamul: 1.500, spdmul: 1.493 },
+  LAGUNA: { item: :LAGUNITE, atkmul: 1.200, defmul: 1.100, spemul: 1.288, spamul: 1.571, spdmul: 1.182 },
+  LUPACABRA: { item: :LUPACABRITE, atkmul: 1.286, defmul: 1.588, spemul: 1.182, spamul: 1.000, spdmul: 1.143 },
+  M_ROSERADE: { item: :M_ROSERADITE, atkmul: 1.462, defmul: 1.383, spemul: 1.022, spamul: 1.190, spdmul: 1.200 },
+  NOCTAVISPA: { item: :NOCTAVISPITE, atkmul: 1.538, defmul: 1.052, spemul: 1.149, spamul: 1.329, spdmul: 1.190 },
+  ROADRAPTOR: { item: :ROADRAPTORITE, atkmul: 1.372, defmul: 1.385, spemul: 1.000, spamul: 1.625, spdmul: 1.000 },
+  SPECTERZAL: { item: :SPECTERZITE, atkmul: 1.112, defmul: 2.000, spemul: 1.000, spamul: 1.118, spdmul: 1.154 },
+  SUCHOBILE: { item: :SUCHOBITE, atkmul: 1.317, defmul: 1.583, spemul: 0.774, spamul: 1.165, spdmul: 1.314 },
+  ZARCOIL: { item: :ZARCOILITE, atkmul: 1.227, defmul: 1.290, spemul: 1.282, spamul: 1.217, spdmul: 1.133 },
+  ZOLUPINE: { item: :ZOLUPINEITE, atkmul: 1.118, defmul: 1.167, spemul: 1.000, spamul: 1.421, spdmul: 1.381 }
+}
+
+MEGA_EVO_TYPES = {
+  GYARADOS: { item: :GYARADOSITE, typeadd: :DARK },
+  LEDIAN: { item: :LEDINITE, typeadd: :FIGHTING, typeremove: :FLYING },
+  XATU: { item: :XATUNITE, typeadd: :FIRE, typeremove: :FLYING },
+  AMPHAROS: { item: :AMPHAROSITE, typeadd: :DRAGON },
+  MAGCARGO: { item: :MAGCARGOITE, typeadd: :STEEL, typeremove: :ROCK },
+  FLYGON: { item: :FLYGONITE, typeadd: :BUG },
+  MILOTIC: { item: :MILOTITE, typeadd: :FAIRY },
+  CHIMECHO: { item: :CHIMECHITE, typeadd: :STEEL },
+  PORYGONZ: { item: :PORYGONZITE, typeadd: :QMARKS, typeremove: :NORMAL },
+  BEHEEYEM: { item: :BEHEEYEMITE, typeadd: :ELECTRIC },
+  GOLURK: { item: :GOLURKITE, typeadd: :FLYING },
+  FROSMOTH: { item: :FROSMOTHITE, typeadd: :FIRE },
+  BEAKRAFT: { item: :BEAKRAFTITE, typeadd: :ELECTRIC, typeremove: :FLYING },
+  GOHILA: { item: :GOHILITE, typeadd: :ELECTRIC },
+  LAGUNA: { item: :LAGUNITE, typeadd: :ICE, typeremove: :NORMAL },
+  LUPACABRA: { item: :LUPACABRITE, typeadd: :FIGHTING },
+  ROADRAPTOR: { item: :ROADRAPTORITE, typeadd: :GROUND, typeremove: :FLYING },
+  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK }
+}
+
+MEGA_EVO_MOVESET = {
+  :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
+  :CACTURNE => [:BULLETSEED, :SPLINTERSHOT],
+  :GOLURK   => [:SHADOWBALL, :AEROBLAST]
+}
+
 class Pokemon
   attr_accessor :megaevoMutation
 	################################################################################
@@ -45,11 +109,6 @@ class Battle::FakeBattler
     return @pokemon.willmega
   end
 end
-
-MEGA_EVO_MOVESET = {
-  :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
-  :CACTURNE => [:BULLETSEED, :SPLINTERSHOT]
-}
 
 class Battle
   def pbGetMegaEvolutionMove(battler)
@@ -108,7 +167,7 @@ class Battle
       when 1
         pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
       else
-        pbDisplay(_INTL("{1}'s {2}radiates with Mega energy!", battler.pbThis, battler.itemName))
+        pbDisplay(_INTL("{1}'s {2} radiates with Mega energy!", battler.pbThis, battler.itemName))
       end
     else
       trainerName = pbGetOwnerName(idxBattler)
@@ -140,6 +199,7 @@ class Battle
         @scene.pbRevertBattlerEnd
       end
     end
+    battler.pokemon.willmega = false
     battler.pbUpdate(true)
     @scene.pbRefreshOne(idxBattler)
     megaName = battler.pokemon.megaName
@@ -147,9 +207,10 @@ class Battle
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
 		if battler.hasMegaEvoMutation?
 			#nothing
-      battler.pokemon.ability = nil
+      #battler.pokemon.ability = nil
       battler.pokemon.ability_index = nil
       @scene.pbRefreshOne(idxBattler)
+      battler.pbUpdate(true)
 		else
 			side  = battler.idxOwnSide
 			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
@@ -160,7 +221,7 @@ class Battle
     end
     battler.pbOnLosingAbility(old_ability)
     battler.pbTriggerAbilityOnGainingIt
-    pbCalculatePriority(false, [idxBattler]) if Settings::RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION && !$game_switches[OLDSCHOOLBATTLE]
+    pbCalculatePriority(false, [idxBattler]) if !$game_switches[OLDSCHOOLBATTLE]
     
     #increment achievement
     if battler.mega? && pbOwnedByPlayer?(battler)

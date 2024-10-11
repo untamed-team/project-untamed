@@ -5,7 +5,7 @@
 [NOCTAVISPA,1]
 FormName = Mega Noctavispa
 MegaStone = NOCTAVISPITE
-BaseStats = 65,143,61,103,93,69
+BaseStats = 65,143,61,100,93,69
 Abilities = DARKAURA
 Height = 0.9
 Weight = 18.6
@@ -15,7 +15,7 @@ FormName = Mega Gohila
 MegaStone = GOHILITE
 Types = POISON,ELECTRIC
 BaseStats = 97,73,71,101,135,103
-Abilities = CORROSION
+Abilities = VOLTABSORB
 Height = 0.3
 Weight = 3.5
 #-------------------------------
@@ -33,8 +33,10 @@ MegaStone = CHIXULITE
 BaseStats = 75,156,96,148,89,71
 Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
-Height = 72.0
-Weight = 3580.0
+Height = 20.9
+Weight = 35799.0
+# given the 20.9m/35799kg stats, this meteor would have a similar density to iron or steel
+# not as grand as the original meteor it was based off of, but it isnt a replica in lore so it should be fine 
 #-------------------------------
 [XATU,1]
 FormName = Mega Xatu
@@ -65,7 +67,7 @@ Abilities = MISTYSURGE
 [SUCHOBILE,1]
 FormName = Mega Suchobile
 MegaStone = SUCHOBITE
-BaseStats = 110,142,119,41,106,97
+BaseStats = 110,137,114,41,106,92
 Abilities = CORROSION
 #------------------------------- 
 [SKARMORY,1]
@@ -77,6 +79,7 @@ Abilities = HYPERCUTTER
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
 MegaStone = BEHEEYEMITE
+Types = PSYCHIC,ELECTRIC
 BaseStats = 75,105,75,70,135,125
 Abilities = PSYCHICSURGE
 #------------------------------- 
@@ -85,7 +88,7 @@ FormName = Mega Golurk
 MegaStone = GOLURKITE
 Types = GROUND,GHOST,FLYING
 BaseStats = 89,144,105,100,65,80
-Abilities = AERILATE
+Abilities = WEAKARMOR
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
@@ -103,7 +106,7 @@ Abilities = DUSTSENTINEL
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
-Types = ICE,FIRE
+Types = ICE,BUG,FIRE
 BaseStats = 70,65,80,85,135,140
 Abilities = MAGICGUARD
 #------------------------------- 
@@ -133,6 +136,7 @@ FormName = Mega Specterzal
 MegaStone = SPECTERZITE
 BaseStats = 120,139,132,86,95,75
 Abilities = SPOOPERAURA
+# stab + spooper aura = adaptability boost
 #------------------------------- 
 [TREVENANT,1]
 FormName = Mega Trevenant
@@ -163,19 +167,19 @@ Abilities = DRIZZLE
 FormName = Mega Roadraptor
 MegaStone = ROADRAPTORITE
 Types = ELECTRIC,GROUND
-BaseStats = 70,129,72,133,117,69
+BaseStats = 70,129,72,130,117,69
 Abilities = LIGHTNINGROD
 #------------------------------- 
 [FRIZZARD,1]
 FormName = Mega Frizzard
 MegaStone = FRIZZARDITE
-BaseStats = 80,80,85,94,145,121
+BaseStats = 80,80,80,94,145,121
 Abilities = SNOWWARNING
 #------------------------------- 
 [ZARCOIL,1]
 FormName = Mega Zarcoil
 MegaStone = ZARCOILITE
-BaseStats = 65,135,89,91,140,85
+BaseStats = 65,135,89,91,140,80
 Abilities = DROUGHT
 #------------------------------- # ~112 def
 [LAGUNA,1]
@@ -195,7 +199,7 @@ Abilities = FURCOAT
 [SABLEYE,1]
 FormName = Mega Sableye
 MegaStone = SABLENITE
-BaseStats = 75,75,125,20,65,115
+BaseStats = 75,75,135,20,75,125
 Abilities = MAGICBOUNCE
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
@@ -244,49 +248,11 @@ Abilities = GUTS
 FormName = Pharaoh Trim
 Types = NORMAL,GHOST
 Abilities = MOLDBREAKER
-BaseStats = 75,60,85,92,105,75
-#-------------------------------
-[PUMPKABOO,1]
-FormName = Average Size
-BaseStats = 49,44,70,51,66,55
-Height = 0.4
-Weight = 5.0
-#-------------------------------
-[PUMPKABOO,2]
-FormName = Large Size
-BaseStats = 54,44,70,46,66,55
-Height = 0.5
-Weight = 7.5
-#-------------------------------
-[PUMPKABOO,3]
-FormName = Super Size
-BaseStats = 59,44,70,41,66,55
-Height = 0.8
-Weight = 15.0
-#-------------------------------
-[GOURGEIST,1]
-FormName = Average Size
-BaseStats = 65,58,122,84,90,75
-Height = 0.9
-Weight = 12.5
-#-------------------------------
-[GOURGEIST,2]
-FormName = Large Size
-BaseStats = 75,58,122,69,95,75
-Height = 1.1
-Weight = 14.0
-#-------------------------------
-[GOURGEIST,3]
-FormName = Super Size
-BaseStats = 85,58,122,54,100,75
-Height = 1.7
-Weight = 39.0
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female
 BaseStats = 75,120,95,78,50,60
-Abilities = TECHNICIAN,RECKLESS
-Moves = 1,PECK,1,HARDEN,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
+Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
 TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE
 #-------------------------------
 [BEAKRAFT,2]
@@ -310,7 +276,7 @@ TutorMoves = FLY,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTE
 [CROACROZEN,1]
 FormName = Frozen
 Types = POISON,ICE
-BaseStats = 95,45,145,25,65,130
+BaseStats = 94,43,140,29,62,130
 Weight = 10.4
 #------------------------------- # 490 bst
 [STRELAVISON,1]
@@ -362,8 +328,8 @@ MegaStone = GYARADOSITE
 Types = WATER,FLYING,DARK
 BaseStats = 95,155,109,81,70,130
 BaseExp = 224
-Abilities = INTIMIDATE
-HiddenAbilities = MOLDBREAKER
+Abilities = MOLDBREAKER
+HiddenAbilities = INTIMIDATE
 Weight = 305.0
 Pokedex = It zooms out of the water at Mach speeds. Even large ships caught in its path are split cleanly in two!
 Generation = 6

@@ -396,3 +396,10 @@ BaseMoney = 32
 Name = Warehouse Worker
 Gender = Unknown
 BaseMoney = 32
+#-------------------------------
+[TRAINER_Reine]
+Name = Trainer
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader

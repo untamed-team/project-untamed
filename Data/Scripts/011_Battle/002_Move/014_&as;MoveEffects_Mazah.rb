@@ -8,52 +8,9 @@ class Battle::Move::UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack < Ba
 end
 
 #===============================================================================
-# Future Sight but complicated (Supernova)
-# why did i agree to this
-#===============================================================================
-# doesnt impact crater imply that the attacker already landed? 
-# wouldnt something like meteor crash make more sense since its the action and not the aftermath?
-#===============================================================================
-class Battle::Move::Supernova < Battle::Move
-  def targetsPosition?; return true; end
-
-  def pbAccuracyCheck(user, target)
-    return true if !@battle.futureSight
-    return super
-  end
-
-  def pbDisplayUseMessage(user)
-    super if !@battle.futureSight
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    if !@battle.futureSight &&
-       @battle.positions[target.index].effects[PBEffects::FutureSightCounter] > 0
-      @battle.pbDisplay(_INTL("But it failed!")) if show_message
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    return if @battle.futureSight   # Attack is hitting
-    effects = @battle.positions[target.index].effects
-    effects[PBEffects::FutureSightCounter]        = 3
-    effects[PBEffects::FutureSightMove]           = :SUPERNOVA_ALT
-    effects[PBEffects::FutureSightUserIndex]      = user.index
-    effects[PBEffects::FutureSightUserPartyIndex] = user.pokemonIndex
-    @battle.pbDisplay(_INTL("{1} chose Doom Desire as its destiny!", user.pbThis))
-  end
-
-  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    hitNum = 1 if !@battle.futureSight   # Charging anim
-    super
-  end
-end
-
-#===============================================================================
-# The damage is based on the user's highest attacking stat. 
+# The damage is based on the user's highest plain, non-HP stat. 
 # The move's type is set by the user's type.
+# The move's animation is set by the user's type.
 # (Titan's Wrath)
 #===============================================================================
 class Battle::Move::TitanWrath < Battle::Move
@@ -98,6 +55,30 @@ class Battle::Move::TitanWrath < Battle::Move
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
+  end
+  
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    userTypes = user.pbTypes(true)
+    type_moves = {
+      special: {
+        :NORMAL => :HYPERBEAM, 
+        :ROCK => :POWERGEM, :ICE => :SHEERCOLD, :STEEL => :STEELBEAM,
+        :ELECTRIC => :THUNDER, :DRAGON => :ETERNABEAM, 
+        :GRASS => :SOLARBEAM, :FIGHTING => :FOCUSBLAST, :FAIRY => :LIGHTOFRUIN
+      },
+      physical: {
+        :NORMAL => :GIGAIMPACT, 
+        :ROCK => :STONEEDGE, :ICE => :ICICLECRASH, :STEEL => :STEELROLLER,
+        :ELECTRIC => :FUSIONBOLT, :DRAGON => :OUTRAGE, 
+        :GRASS => :POWERWHIP, :FIGHTING => :CLOSECOMBAT, :FAIRY => :NATURESMADNESS
+      }
+    }
+  
+    category = @calcCategory == 1 ? :special : :physical
+    type = userTypes[0]
+    id = type_moves[category][type] if type_moves[category][type] && 
+                                       GameData::Move.exists?(type_moves[category][type])
+    super
   end
 end
 
@@ -322,12 +303,18 @@ class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
 end
 
 #===============================================================================
-# changes type to fire during sun or harsh sun (Pepper Spray)
+# typo on function code is intentional (Pepper Spray)
 #===============================================================================
-class Battle::Move::ChangeTypeToFireDuringSun < Battle::Move
-  def pbBaseType(user)
-    return :FIRE if [:Sun, :HarshSun].include?(user.effectiveWeather)
-    return @type
+class Battle::Move::PeperSpray < Battle::Move
+  def pbTarget(user)
+    return GameData::Target.get(:AllNearFoes) if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return super
+  end
+
+  def pbBaseDamage(baseDmg, user, target)
+    peper_dmg_mult = (@battle.field.abilityWeather) ? 5 / 4 : 4 / 3
+    baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return baseDmg
   end
 end
 

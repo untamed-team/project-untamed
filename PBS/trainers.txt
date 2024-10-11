@@ -199,10 +199,10 @@ Pokemon = FLABEBE,9
 LoseText = Aren't my Pokémon so cute?
 Pokemon = SKIDDO,9
 	Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
-    AbilityIndex = 1
+    Ability = GRASSPELT
 Pokemon = M_EKANS,9
 	Moves = POISONFANG,COIL,BITE
-    AbilityIndex = 0
+    Ability = INTIMIDATE
     Nature = IMPISH
 #-------------------------------
 [YOUNGSTER_M,Gabriel]
@@ -214,29 +214,30 @@ Pokemon = BUNNELBY,9
 LoseText = That was not so cool!
 Pokemon = M_MEOWTH,9
 	Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
-    AbilityIndex = 2
+    Ability = UNNERVE
     Nature = ADAMANT
 Pokemon = WRENNER,9
 	Moves = AERIALACE,SANDTOMB,DETECT
+	Item = BINDINGBAND
+    Ability = RUNAWAY
     Nature = IMPISH
-    AbilityIndex = 0
 #-------------------------------
 [TOURIST,William]
-LoseText = She will come back, she always does.
+LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 Pokemon = BUNNELBY,9
 Pokemon = WRENNER,9
 #-------------------------------
 [TOURIST,William,100]
-LoseText = She will come back, she always does.
+LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    AbilityIndex = 1
+    Ability = INTIMIDATE
     Nature = TIMID
 Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
-    AbilityIndex = 0
+    Ability = POISONTOUCH
 #-------------------------------
 [LAD,Rainer]
 LoseText = Wait, I lost?
@@ -249,9 +250,10 @@ LoseText = Wait, I lost?
 Pokemon = BUDEW,10
 	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
     Nature = CALM
+	Ability = POISONPOINT
 Pokemon = WORMOTE,9
 	Moves = STRUGGLEBUG,CONFUSION,SING
-    AbilityIndex = 1
+    Ability = TRACE
 	Item = OCCABERRY
     Nature = TIMID
 #-------------------------------
@@ -268,13 +270,83 @@ Pokemon = FEEBAS,10
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = LOTAD,10
 	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
-    AbilityIndex = 1
+    Ability = RAINDISH
 	Item = ASPEARBERRY
     Nature = MODEST
 Pokemon = GULPI,10
 	Moves = ASTONISH,BITE,SPARK,CHARGE
-    AbilityIndex = 0
+    Ability = SWIFTSWIM
+    Nature = CALM
+#-------------------------------
+[WAREHOUSEWORKER,Donna]
+LoseText = Okay, the way out is easy, but don't tell my boss.
+Pokemon = EEVEE,11
+Pokemon = M_VANILLITE,12
+#-------------------------------
+[WAREHOUSEWORKER,Donna,100]
+LoseText = Okay, the way out is easy, but don't tell my boss.
+Pokemon = EEVEE,11
+Pokemon = M_VANILLITE,12
+#-------------------------------
+[TRAINER_Reine,Reine]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
+[TRAINER_Reine,Reine,100]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
+[WAREHOUSEWORKER,Reine,100]
+LoseText = ...
+Pokemon = EEVEE,11
+#-------------------------------
+[NEOGRUNT_M,William]
+LoseText = A mere setback, in the name of progress!
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[NEOGRUNT_M,William,100]
+LoseText = A mere setback, in the name of progress!
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
     Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
+#-------------------------------
+[NEOGRUNT_F,William]
+LoseText = Retreat, in the name of progress!
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[NEOGRUNT_F,William,100]
+LoseText = Retreat, in the name of progress!
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
+#-------------------------------
+[TRAINER_Reine,Reine,1] #battle in sanctuary after Neo grunts
+LoseText = Well done.
+Pokemon = EEVEE,12
+#-------------------------------
+[TRAINER_Reine,Reine,101]
+LoseText = Well done.
+Pokemon = EEVEE,12
+
+
+#-------------------------------
+#-------------------------------
+#-------- TEST BATTLES ---------
+#-------------------------------
 #-------------------------------
 [HEXMANIAC,zinnia,1]
 LoseText = sex
@@ -284,6 +356,11 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
+#Gimmick = stealthrock
+Pokemon = ZOLUPINE,50
+    Nature = QUIRKY
+	AAM = True
+	MEM = True
 Pokemon = CHIMECHO,50
     Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
     AbilityIndex = 2
@@ -300,48 +377,3 @@ Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory,100]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Name = Nocta3
-    Moves = DEFENDORDER
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory1]
-LoseText = kaboom
-Pokemon = NOCTAVISPA,50
-    Nature = QUIRKY
-#-------------------------------
-[HEXMANIAC,pory1,100]
-LoseText = kaboom
-Pokemon = BLAZEA,50
-    Moves = EMBER
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true
-Pokemon = M_ROSERADE,50
-    Moves = SPLASH
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true
-Pokemon = SABLEYE,50
-    Moves = SPLASH
-    AbilityIndex = 2
-    Nature = QUIRKY
-	AAM = true
-#-------------------------------
-[WAREHOUSEWORKER,Donna]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
-#-------------------------------
-[WAREHOUSEWORKER,Donna,100]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12

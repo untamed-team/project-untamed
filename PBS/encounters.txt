@@ -1,4 +1,4 @@
-# See the documentation on the wiki to learn how to edit this file.
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
@@ -14,7 +14,7 @@ Water,2
     60,LOTAD,8,11
     40,FEEBAS,8,11
 OldRod
-    60,LOTAD,6,6
+    60,LOTAD,6
     40,BARBOACH,5,6
 GoodRod
     60,BARBOACH,12,17
@@ -24,22 +24,34 @@ GoodRod
 [026] # Route 2
 Land,21
     20,SKIDDO,5
-    15,TECHUPPI,5
-    15,FLABEBE,5
     15,BUNNELBY,5
-    10,SUNKERN,5
+    15,FLABEBE,5
+    15,TECHUPPI,5
     10,HOOTHOOT,5
+    10,SUNKERN,5
     10,WRENNER,5
     5,M_EKANS,5
+#-------------------------------
+[031] # Monarca
+LandNight,21
+    30,MINIMELO,6,9
+    20,HOOTHOOT,6,9
+    20,PACUNA,6,9
+    20,PHANTUMP,6,9
+    10,M_EKANS,6,9
+Land,21
+    30,MINIMELO,6,9
+    20,PACUNA,6,9
+    10,M_EKANS,6,9
 #-------------------------------
 [048] # Route 1
 Land,21
     25,MINIMELO,2,4
     25,PACUNA,2,4
     20,WRENNER,2,4
+    10,BUDEW,2,3
     10,FLABEBE,2,3
     10,LEDYBA,2,3
-    10,BUDEW,2,3
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
@@ -56,8 +68,8 @@ OldRod
     40,FINNEON,5,9
 GoodRod
     60,FEEBAS,12,17
-    20,FINNEON,10,16
     20,BANAGNAW,10,15
+    20,FINNEON,10,16
 #-------------------------------
 [079] # Hacienda Castaneda
 Water,2
@@ -68,16 +80,16 @@ OldRod
     40,FINNEON,5,9
 GoodRod
     60,FEEBAS,12,17
-    20,FINNEON,10,16
     20,BANAGNAW,10,15
+    20,FINNEON,10,16
 Land,21
-    25,WRENNER,3,5
     25,TECHUPPI,3,6
+    25,WRENNER,3,5
     20,M_EKANS,3,6
-    10,SUNKERN,3,4
-    10,PACUNA,2,4
     10,MINIMELO,3,5
+    10,PACUNA,2,4
+    10,SUNKERN,3,4
 Corn,5
     75,ZEAZAYA,5
     20,WRENNER,3,5
-    5,PACUNA,2,4 
+    5,PACUNA,2,4

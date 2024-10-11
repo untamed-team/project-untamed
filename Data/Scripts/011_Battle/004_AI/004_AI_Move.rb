@@ -112,7 +112,14 @@ class Battle::AI
   #=============================================================================
   # Wild Pokémon choose their moves randomly.
   def pbRegisterMoveWild(_user, idxMove, choices)
-    choices.push([idxMove, 100, -1])   # Move index, score, target
+		move = _user.moves[idxMove]
+    if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
+        "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
+      score = pbGetMoveScore(move, _user, _user, skill)
+      choices.push([idxMove, score, -1]) if score > 0
+    else
+      choices.push([idxMove, 100, -1])   # Move index, score, target
+    end
   end
 
 	# Trainer Pokémon calculate how much they want to use each of their moves.
@@ -121,7 +128,7 @@ class Battle::AI
 		target_data = move.pbTarget(user)
        # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers].include?(target_data.id)
-			# If move affects just the user or multiple Pokémon the AI will calc
+			# If move does not have a defined target the AI will calculate
 			# a average of every enemy currently active
       oppcounter = 0
 			@battle.allBattlers.each do |b|
@@ -165,12 +172,13 @@ class Battle::AI
 				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
 				next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
 				if !user.opposes?(b) # is ally
-          # wip, allows for the AI to target allies if its good to do so (polen puff/swagger/etc)
+          # wip, allows for the AI to target allies if its good to do so (polen puff/swag/etc)
           score = pbGetMoveScore(move, user, b, 100)
           score *= -1
-          echoln "targeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
+          echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
         else
+          # it seems the AI isnt fooled by illusion, thats pretty neat actually
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
           if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
@@ -296,40 +304,6 @@ class Battle::AI
   # of the target's current HP)
   #=============================================================================
   def pbGetMoveScoreDamage(score, move, user, target, skill)
-    return 0 if score <= 0
-    # Calculate how much damage the move will do (roughly)
-    baseDmg = pbMoveBaseDamage(move, user, target, skill)
-    realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
-    # Account for accuracy of move
-    accuracy = pbRoughAccuracy(move, user, target, skill)
-    realDamage *= accuracy / 100.0
-    # Two-turn attacks waste 2 turns to deal one lot of damage
-    if move.chargingTurnMove? || move.function == "AttackAndSkipNextTurn"   # Hyper Beam
-      realDamage *= 2 / 3   # Not halved because semi-invulnerable during use or hits first turn
-    end
-    # Prefer flinching external effects (note that move effects which cause
-    # flinching are dealt with in the function code part of score calculation)
-    if skill >= PBTrainerAI.mediumSkill && !move.flinchingMove? &&
-       !target.hasActiveAbility?(:INNERFOCUS) &&
-       !target.hasActiveAbility?(:SHIELDDUST) &&
-       target.effects[PBEffects::Substitute] == 0
-      canFlinch = false
-      if user.hasActiveItem?([:KINGSROCK, :RAZORFANG]) ||
-         user.hasActiveAbility?(:STENCH)
-        canFlinch = true
-      end
-      realDamage *= 1.3 if canFlinch
-    end
-    # Convert damage to percentage of target's remaining HP
-    damagePercentage = realDamage * 100.0 / target.hp
-    # Don't prefer weak attacks
-#    damagePercentage /= 2 if damagePercentage<20
-    # Prefer damaging attack if level difference is significantly high
-    damagePercentage *= 1.2 if user.level - 10 > target.level
-    # Adjust score
-    damagePercentage = 120 if damagePercentage > 120   # Treat all lethal moves the same
-    damagePercentage += 40 if damagePercentage > 100   # Prefer moves likely to be lethal
-    score += damagePercentage.to_i
-    return score
+    # not used, check Consistent_AI
   end
 end

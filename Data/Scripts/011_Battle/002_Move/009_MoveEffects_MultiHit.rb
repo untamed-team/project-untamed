@@ -303,7 +303,7 @@ class Battle::Move::TwoTurnAttackFlinchTarget < Battle::Move::TwoTurnMove
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbFlinch(user) if @battle.turnCount >= 1 #by low
+    target.pbFlinch(user)
   end
 end
 
