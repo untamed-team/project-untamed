@@ -713,104 +713,138 @@ class Battle::AI
 		return [maxdam,maxmove,maxprio,physorspec]
 	end	
 
-=begin # not used rn, but that could change in the future
-	def checkWeatherBenefit(user)
-		sum=0
+	def checkWeatherBenefit(user, globalArray, weathery = false, requestedWeather = nil, terrainy = false, requestedTerrain = nil)
+		sum = 0
+		issunny = @battle.field.weather == :Sun || globalArray.include?("sun weather")
+		currentWeather = requestedWeather || @battle.pbWeather
+		currentTerrain = requestedTerrain || @battle.field.terrain
+		if requestedWeather.nil?
+			globalArray.each do |weather|
+				case weather
+				when "sun weather"
+					currentWeather = :Sun
+				when "rain weather"
+					currentWeather = :Rain
+				when "sand weather"
+					currentWeather = :Sandstorm
+				when "hail weather"
+					currentWeather = :Hail
+				end
+			end
+		end
+		if requestedTerrain.nil?
+			globalArray.each do |terrain|
+				case terrain
+				when "electric terrain"
+					currentTerrain = :Electric
+				when "grassy terrain"
+					currentTerrain = :Grassy
+				when "misty terrain"
+					currentTerrain = :Misty
+				when "psychic terrain"
+					currentTerrain = :Psychic
+				end
+			end
+		end
+		
 		ownparty = @battle.pbParty(user.index)
 		ownparty.each_with_index do |pkmn, idxParty|
 			next if !pkmn || !pkmn.able?
-			if @battle.pbWeather==:Sun
-				sum+=20 if pkmn.ability == :CHLOROPHYLL
-				sum+=10 if pkmn.ability == :FLOWERGIFT || pkmn.ability == :SOLARPOWER
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :FIRE
-					sum += 10
-				end   
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :WATER
-					sum -= 5
-				end   
-				sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun")
-				sum+=5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") 
-				sum-=5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky")
+			if weathery
+				if currentWeather == :Sun
+					sum += 20 if pkmn.ability == :CHLOROPHYLL
+					sum += 10 if pkmn.ability == :FLOWERGIFT || pkmn.ability == :SOLARPOWER
+					sum += 5 if pkmn.ability == :HEALINGSUN || pkmn.ability == :HARVEST
+					sum -= 5 if pkmn.ability == :DRYSKIN
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :FIRE
+						sum += 10
+					end
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :WATER
+						sum -= 5
+					end
+					sum += 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun")
+					sum += 5 if pkmn.pbHasMoveFunction?("TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes")
+					sum -= 5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky")
+				end
+				if currentWeather == :Rain
+					sum += 20 if pkmn.ability == :SWIFTSWIM
+					sum += 5 if pkmn.ability == :RAINDISH || pkmn.ability == :DRYSKIN || pkmn.ability == :HYDRATION
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :WATER
+						sum += 10
+					end
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :FIRE
+						sum -= 5
+					end
+					sum += 5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky")
+					sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && issunny
+				end
+				if currentWeather == :Sandstorm
+					sum += 20 if pkmn.ability == :SANDRUSH
+					sum += 10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
+					sum += 10 if pkmn.hasType?(:ROCK)
+					sum += 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm")
+					sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") && issunny
+				end
+				if currentWeather == :Hail
+					sum += 20 if pkmn.ability == :SLUSHRUSH
+					sum += 10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
+					sum += 15 if pkmn.hasType?(:ICE)
+					sum += 15 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail")
+					sum += 5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail")
+					sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") && issunny
+				end
 			end
-			if @battle.pbWeather==:Rain
-				sum+=20 if pkmn.ability == :SWIFTSWIM
-				sum+=5 if pkmn.ability == :RAINDISH || pkmn.ability == :DRYSKIN || pkmn.ability == :HYDRATION
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :WATER
-					sum += 10
-				end   
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :FIRE
-					sum -= 5
-				end   
-				sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
-				sum+=5 if pkmn.pbHasMoveFunction?("ParalyzeTargetAlwaysHitsInRainHitsTargetInSky") 
-			end
-			if @battle.pbWeather==:Sandstorm
-				sum+=20 if pkmn.ability == :SANDRUSH
-				sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE || pkmn.ability == :DUSTSENTINEL
-				sum+=10 if pkmn.hasType?(:ROCK)
-				sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
-				sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm") 
-			end
-			if @battle.pbWeather==:Hail
-				sum+=20 if pkmn.ability == :SLUSHRUSH
-				sum+=10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
-				sum+=10 if pkmn.hasType?(:ICE)
-				sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
-				sum+=5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail") 
-				sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail") 
-			end
-			if @battle.field.terrain==:Electric
-				sum+=5 if pkmn.item == :ELECTRICSEED
-				sum+=10 if pkmn.ability == :SURGESURFER
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :ELECTRIC
-					sum += 5
-				end   
-				sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "BPRaiseWhileElectricTerrain")
-				sum+=5 if pkmn.pbHasMoveFunction?("DoublePowerInElectricTerrain") 
-			end
-			if @battle.field.terrain==:Grassy
-				sum+=5 if pkmn.item == :GRASSYSEED
-				sum+=5 if pkmn.ability == :GRASSPELT
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :GRASS
-					sum += 5
-				end   
-				score-=5 if pkmn.pbHasMoveFunction?("DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground",
-					"LowerTargetSpeed1WeakerInGrassyTerrain")
-				sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HealTargetDependingOnGrassyTerrain")
-				sum+=5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain") 
-			end
-			if @battle.field.terrain==:Misty
-				sum+=5 if pkmn.item == :MISTYSEED
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :DRAGON
-					sum -= 5
-				end   
-				score-=5 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm", 
-					"ParalyzeTargetIfNotTypeImmune", "BadPoisonTarget")
-				sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
-			end
-			if @battle.field.terrain==:Psychic
-				sum+=5 if pkmn.item == :PSYCHICSEED
-				sum-=5 if pkmn.ability == :PRANKSTER
-				pkmn.eachMove do |m|
-					next if m.base_damage==0 || m.type != :PSYCHIC
-					sum += 5
-				end  
-				pkmn.eachMove do |m|
-					sum -= 1 if m.prio>0
-				end   
-				sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HitsAllFoesAndPowersUpInPsychicTerrain")
+			if terrainy
+				if currentTerrain == :Electric
+					sum += 20 if pkmn.ability == :SURGESURFER
+					sum += 5 if pkmn.item == :ELECTRICSEED
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :ELECTRIC
+						sum += 5
+					end
+					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "BPRaiseWhileElectricTerrain")
+					sum += 5 if pkmn.pbHasMoveFunction?("DoublePowerInElectricTerrain")
+				end
+				if currentTerrain == :Grassy
+					sum += 5 if pkmn.ability == :GRASSPELT
+					sum += 5 if pkmn.item == :GRASSYSEED
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :GRASS
+						sum += 5
+					end
+					sum -= 5 if pkmn.pbHasMoveFunction?("DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground", "LowerTargetSpeed1WeakerInGrassyTerrain")
+					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HealTargetDependingOnGrassyTerrain")
+					sum += 5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain")
+				end
+				if currentTerrain == :Misty
+					sum += 5 if pkmn.item == :MISTYSEED
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :DRAGON
+						sum -= 5
+					end
+					sum -= 5 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm", "ParalyzeTargetIfNotTypeImmune", "BadPoisonTarget")
+					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
+				end
+				if currentTerrain == :Psychic
+					sum -= 5 if pkmn.ability == :PRANKSTER
+					sum += 5 if pkmn.item == :PSYCHICSEED
+					pkmn.eachMove do |m|
+						next if m.base_damage == 0 || m.type != :PSYCHIC
+						sum += 5
+					end
+					pkmn.eachMove do |m|
+						sum -= 1 if m.priority > 0
+					end
+					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HitsAllFoesAndPowersUpInPsychicTerrain")
+				end
 			end
 		end
 		return sum
-	end
-=end
+	end	  
 
 	def priorityAI(user,move,switchin=false)
 		turncount = user.turnCount

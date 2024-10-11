@@ -14,7 +14,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm" # hypnosis
 		if canSleepTarget(user,target,globalArray,true)
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 130, move, globalArray, 100)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 115, move, globalArray, 100)
 			ministat=0
 			ministat+=target.stages[:ATTACK]
 			ministat+=target.stages[:DEFENSE]
@@ -42,7 +42,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SleepTargetNextTurn" # yawn
 		if target.effects[PBEffects::Yawn]<=0 && canSleepTarget(user,target,globalArray,true)
-			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 115, move, globalArray, 100)
+			miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, 110, move, globalArray, 100)
 			ministat=0
 			ministat+=target.stages[:ATTACK]
 			ministat+=target.stages[:DEFENSE]

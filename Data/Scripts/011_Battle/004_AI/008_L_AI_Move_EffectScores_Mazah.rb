@@ -1093,206 +1093,31 @@ class Battle::AI
 	end
 	
 	# Status Moves "Damage" ######################################################
-=begin
-	def pbStatusDamage(move)
-		if (move.id == :AFTERYOU || move.id == :BESTOW ||
-				move.id == :CRAFTYSHIELD || move.id == :LUCKYCHANT ||
-				move.id == :QUASH ||
-				move.id == :SPITE ||
-				move.id == :SPLASH || move.id == :SWEETSCENT ||
-				move.id == :TELEKINESIS || 
-				move.id == :HAPPYHOUR || 
-				move.id == :HOLDHANDS || 
-				move.id == :CELEBRATE)
-			return 0
-		elsif (move.id == :ALLYSWITCH || move.id == :AROMATICMIST ||
-				move.id == :CONVERSION || move.id == :ENDURE ||
-				move.id == :ENTRAINMENT || move.id == :FORESIGHT || 
-				move.id == :FORESTSCURSE || move.id == :DEFOG || 
-				move.id == :GUARDSWAP || move.id == :HEALBLOCK ||
-				move.id == :IMPRISON || 
-				move.id == :HELPINGHAND || move.id == :MAGICROOM ||
-				move.id == :MAGNETRISE || 
-				move.id == :LOCKON || move.id == :MINDREADER || 
-				move.id == :MIRACLEEYE || move.id == :MUDSPORT ||
-				move.id == :NIGHTMARE || move.id == :ODORSLEUTH ||
-				move.id == :POWERSPLIT || move.id == :POWERSWAP ||
-				move.id == :GRUDGE || move.id == :GUARDSPLIT ||
-				move.id == :POWERTRICK || move.id == :QUICKGUARD ||
-				move.id == :RECYCLE || move.id == :REFLECTTYPE ||
-				move.id == :ROTOTILLER || move.id == :SANDATTACK ||
-				move.id == :SKILLSWAP || 
-				move.id == :FAIRYLOCK || 
-				move.id == :COACHING || 
-				move.id == :SPOTLIGHT || 
-				move.id == :TEATIME || 
-				move.id == :SPEEDSWAP || 
-				move.id == :LIFEDEW || 
-				move.id == :SAFEGUARD || 
-				move.id == :COURTCHANGE || move.id == :LASERFOCUS ||
-				move.id == :TEETERDANCE || move.id == :WATERSPORT)
-			return 5
-		elsif (move.id == :ACUPRESSURE || move.id == :CAMOUFLAGE ||      
-				move.id == :CHARM || move.id == :CONFIDE ||
-				move.id == :DEFENSECURL ||
-				move.id == :EMBARGO || move.id == :FLASH ||
-				move.id == :FOCUSENERGY || move.id == :GROWL ||
-				move.id == :HARDEN || move.id == :HAZE ||
-				move.id == :HOWL || move.id == :EXCITE ||
-				move.id == :KINESIS || move.id == :LEER ||
-				move.id == :METALSOUND || move.id == :NOBLEROAR ||
-				move.id == :PLAYNICE || move.id == :POWDER ||
-				move.id == :PSYCHUP || move.id == :SHARPEN ||
-				move.id == :SMOKESCREEN || move.id == :STRINGSHOT ||
-				move.id == :SUPERSONIC || move.id == :TAILWHIP ||
-				move.id == :TORMENT || move.id == :MEMENTO ||
-				move.id == :DECORATE ||
-				move.id == :TEARFULLOOK ||
-				move.id == :WITHDRAW || move.id == :WORKUP)
-			return 10
-		elsif (move.id == :ASSIST || move.id == :BABYDOLLEYES || 
-				move.id == :CAPTIVATE || move.id == :COTTONSPORE ||
-				move.id == :AGILITY ||
-				move.id == :DOUBLETEAM || move.id == :EERIEIMPULSE ||
-				move.id == :FAKETEARS || move.id == :FEATHERDANCE ||
-				move.id == :HEALPULSE || move.id == :HEALINGWISH ||
-				move.id == :INGRAIN ||
-				move.id == :LUNARDANCE || move.id == :MEFIRST ||
-				move.id == :MEDITATE || move.id == :MIMIC ||
-				move.id == :POISONPOWDER ||
-				move.id == :REFRESH || move.id == :ROLEPLAY ||
-				move.id == :SCARYFACE || move.id == :SCREECH ||
-				move.id == :SKETCH ||
-				move.id == :INSTRUCT ||
-				move.id == :FLORALHEALING ||
-				move.id == :TARSHOT ||
-				move.id == :GEARUP ||
-				move.id == :STUFFCHEEKS ||
-				move.id == :CORROSIVEGAS ||
-				move.id == :TICKLE || move.id == :CHARGE ||
-				move.id == :TRICKORTREAT || move.id == :VENOMDRENCH ||
-				move.id == :MAGNETICFLUX || move.id == :FALLOUT ||
-				move.id == :SANDSTORM || move.id == :HAIL ||
-				move.id == :SUNNYDAY || move.id == :RAINDANCE)
-			return 15
-		elsif (move.id == :AQUARING || move.id == :BLOCK ||
-				move.id == :CONVERSION2 || move.id == :ELECTRIFY ||
-				move.id == :FLATTER || move.id == :GASTROACID ||
-				move.id == :HEARTSWAP || move.id == :IONDELUGE ||
-				move.id == :MEANLOOK || move.id == :GROWTH ||
-				move.id == :METRONOME || move.id == :COPYCAT ||
-				move.id == :MIRRORMOVE || move.id == :MIST ||
-				move.id == :PERISHSONG || move.id == :REST ||
-				move.id == :ROAR || move.id == :SIMPLEBEAM || 
-				move.id == :SPIDERWEB || move.id == :FLOWERSHIELD ||
-				move.id == :SWAGGER || move.id == :SWEETKISS ||
-				move.id == :POISONGAS || 
-				move.id == :TOXICTHREAD || 
-				move.id == :MAGICCOAT || move.id == :SNATCH ||
-				move.id == :TRANSFORM || move.id == :WHIRLWIND ||
-				move.id == :WORRYSEED || move.id == :YAWN)
-			return 20
-		elsif (move.id == :AMNESIA || move.id == :ATTRACT ||
-				move.id == :BARRIER || move.id == :BELLYDRUM ||
-				move.id == :DESTINYBOND ||
-				move.id == :DETECT || move.id == :DISABLE ||
-				move.id == :ACIDARMOR || move.id == :COSMICPOWER ||
-				move.id == :COTTONGUARD || move.id == :DEFENDORDER ||
-				move.id == :FOLLOWME || move.id == :AUTOTOMIZE ||
-				move.id == :IRONDEFENSE || move.id == :MINIMIZE || 
-				move.id == :PSYCHOSHIFT || move.id == :GRAVITY ||
-				move.id == :RAGEPOWDER || move.id == :ROCKPOLISH ||
-				move.id == :STOCKPILE || move.id == :SUBSTITUTE ||
-				move.id == :SWITCHEROO ||  move.id == :SWALLOW ||
-				move.id == :TAUNT || 
-				move.id == :POLLENPUFF || # not actually a status move but it does use this to fetch its heal score
-				move.id == :OCTOLOCK || 
-				move.id == :REBALANCING || 
-				move.id == :TOPSYTURVY ||
-				move.id == :TRICK)
-			return 25
-		elsif (move.id == :BATONPASS || move.id == :BULKUP ||
-				move.id == :CALMMIND || move.id == :COIL || 
-				move.id == :CURSE || 
-				move.id == :NORETREAT ||
-				move.id == :CLANGOROUSSOUL || 
-				move.id == :GRASSYTERRAIN || move.id == :MISTYTERRAIN ||
-				move.id == :PSYCHICTERRAIN || move.id == :ELECTRICTERRAIN ||
-				move.id == :ENCORE || 
-				move.id == :SOAK || move.id == :MAGICPOWDER || 
-				move.id == :LEECHSEED || 
-				move.id == :PAINSPLIT ||
-				move.id == :WISH ||
-				move.id == :NATUREPOWER || 
-				move.id == :SLEEPTALK ||
-				move.id == :TELEPORT ||
-				move.id == :PURIFY ||
-				move.id == :TRICKROOM || move.id == :WONDERROOM)
-			return 30
-		elsif (move.id == :AROMATHERAPY || #move.id == :NUCLEARWASTE ||
-				move.id == :HEALBELL || move.id == :PARTINGSHOT || 
-				move.id == :LIGHTSCREEN || move.id == :MATBLOCK ||
-				move.id == :NASTYPLOT || move.id == :REFLECT ||
-				move.id == :TAILWIND || move.id == :SPIKES ||
-				move.id == :STEALTHROCK || move.id == :THUNDERWAVE ||
-				move.id == :WILLOWISP ||  move.id == :TOXICSPIKES ||
-				move.id == :TOXIC || 
-				move.id == :GLARE ||
-				move.id == :BITINGCOLD || move.id == :AURORAVEIL || 
-				move.id == :WIDEGUARD || move.id == :HONECLAWS ||
-				move.id == :STUNSPORE || move.id == :CONFUSERAY || 
-				move.id == :SWORDSDANCE || move.id == :TAILGLOW)
-			return 35
-		elsif (move.id == :DRAGONDANCE || move.id == :GEOMANCY ||
-				move.id == :QUIVERDANCE || move.id == :SHELLSMASH ||
-				move.id == :SHIFTGEAR)
-			return 40
-		elsif (move.id == :STICKYWEB || move.id == :ROOST ||
-				move.id == :SLACKOFF || move.id == :MILKDRINK ||
-				move.id == :HEALORDER || move.id == :MOONLIGHT || 
-				move.id == :SOFTBOILED || move.id == :MORNINGSUN ||
-				move.id == :JUNGLEHEALING || 
-				move.id == :STRENGTHSAP || 
-				move.id == :SHOREUP || 
-				move.id == :SYNTHESIS || 
-				move.id == :RECOVER)
-			return 60
-		elsif (move.id == :PROTECT || move.id == :SPIKYSHIELD || move.id == :KINGSSHIELD || 
-				move.id == :OBSTRUCT || move.id == :BANEFULBUNKER)
-			return 80
-		elsif (move.id == :SPORE ||  move.id == :HYPNOSIS || move.id == :SLEEPPOWDER || move.id == :SING ||
-				move.id == :DARKVOID || move.id == :GRASSWHISTLE || move.id == :LOVELYKISS) 
-			return 100
-		else
-			print move.name
-			return 10
-		end
-	end
-=end
 
 	def pbStatusDamage(move)
 		moveScoores = {
-		  0 => [:AFTERYOU, :ATTRACT, :BESTOW, :CELEBRATE, :CRAFTYSHIELD, :HAPPYHOUR, :HOLDHANDS,
-				 :LUCKYCHANT, :QUASH, :SPITE, :SPLASH, :SWEETSCENT, :TELEKINESIS],
-		  5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :ENDURE, :ENTRAINMENT, :FAIRYLOCK,
-				 :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, :HELPINGHAND,
-				 :IMPRISON, :LIFEDEW, :LOCKON, :MAGICROOM, :MAGNETRISE, :MINDREADER, :MIRACLEEYE,
-				 :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, :POWERTRICK, :QUICKGUARD,
-				 :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, :SKILLSWAP, :SPEEDSWAP,
-				 :SPOTLIGHT, :TEATIME, :TEETERDANCE, :WATERSPORT, :LASERFOCUS],
+		  0 => [:AFTERYOU, :ATTRACT, :BESTOW, :CELEBRATE, :HAPPYHOUR, :HOLDHANDS,
+				 :QUASH, :SPLASH, :SWEETSCENT, :TELEKINESIS],
+		  5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :CRAFTYSHIELD, :ENDURE, :ENTRAINMENT, 
+				 :FAIRYLOCK, :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, 
+				 :HELPINGHAND, :IMPRISON, :LIFEDEW, :LOCKON, :LUCKYCHANT, :MAGICROOM, :MAGNETRISE, 
+				 :MINDREADER, :MIRACLEEYE, :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, 
+				 :POWERTRICK, :QUICKGUARD, :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, 
+				 :SKILLSWAP, :SPEEDSWAP, :SPOTLIGHT, :SPITE, :TEATIME, :TEETERDANCE, :WATERSPORT, 
+				 :EXCITE, :HOWL, :LASERFOCUS],
 		  10 => [:ACUPRESSURE, :CAMOUFLAGE, :CHARM, :CONFIDE, :DEFENSECURL, :DECORATE, :EMBARGO,
-				 :EXCITE, :FLASH, :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :HOWL, :KINESIS, :LEER,
+				 :FLASH, :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :KINESIS, :LEER,
 				 :METALSOUND, :MEMENTO, :NOBLEROAR, :PLAYNICE, :POWDER, :PSYCHUP, :SHARPEN,
 				 :SMOKESCREEN, :STRINGSHOT, :SUPERSONIC, :TAILWHIP, :TORMENT, :TEARFULLOOK,
-				 :WITHDRAW, :WORKUP],
+				 :WITHDRAW, :MEDITATE, :GROWTH, :WORKUP],
 		  20 => [:AGILITY, :ASSIST, :BABYDOLLEYES, :CAPTIVATE, :CHARGE, :CORROSIVEGAS, :COTTONSPORE,
 				 :COURTCHANGE, :DEFOG, :DOUBLETEAM, :EERIEIMPULSE, :FAKETEARS, :FEATHERDANCE,
 				 :FLORALHEALING, :GEARUP, :HEALINGWISH, :HEALPULSE, :INGRAIN, :INSTRUCT, :LUNARDANCE,
-				 :MEDITATE, :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE,
+				 :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE,
 				 :SCREECH, :SKETCH, :STUFFCHEEKS, :TARSHOT, :TICKLE, :TRICKORTREAT, :VENOMDRENCH,
 				 :MAGNETICFLUX],
 		  25 => [:AQUARING, :BLOCK, :CONVERSION2, :COPYCAT, :ELECTRIFY, :FLATTER, :FLOWERSHIELD,
-				 :GASTROACID, :GROWTH, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME,
+				 :GASTROACID, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME,
 				 :MIRRORMOVE, :MIST, :PERISHSONG, :POISONGAS, :REST, :ROAR, :SIMPLEBEAM, :SNATCH,
 				 :SPIDERWEB, :SWAGGER, :SWEETKISS, :TRANSFORM, :WHIRLWIND, :WORRYSEED, :YAWN],
 		  30 => [:ACIDARMOR, :AMNESIA, :AUTOTOMIZE, :BARRIER, :BELLYDRUM, :COSMICPOWER, :COTTONGUARD,
