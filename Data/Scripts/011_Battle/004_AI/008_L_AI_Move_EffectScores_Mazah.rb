@@ -188,7 +188,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if move.function == "ProtectUserFromDamagingMovesKingsShield"
-			if (!userFasterThanTarget) && 
+			if !userFasterThanTarget && 
 			   user.isSpecies?(:AEGISLASH) && user.form == 1
 				score*=4
 			else
@@ -237,11 +237,11 @@ class Battle::AI
 			hasAlly = !user.allAllies.empty?
 			if hasAlly
 				score*=1.3
-				if (userFasterThanTarget)
+				if userFasterThanTarget
 					score*=1.2
 				else
 					score*=0.7
-					if (userFasterThanTarget)
+					if userFasterThanTarget
 						score*=0
 					end
 				end
@@ -320,7 +320,7 @@ class Battle::AI
 					noprio = false
 					break
 				end
-				if target.hasActiveAbility?(:GALEWINGS) && (target.hp >= (target.totalhp/2)) && m.type == :FLYING
+				if target.hasActiveAbility?(:GALEWINGS) && (target.hp >= (target.totalhp/2.0)) && m.type == :FLYING
 					noprio = false
 					break
 				end
@@ -568,7 +568,7 @@ class Battle::AI
 			else
 				miniscore = 0
 			end
-			miniscore/=100
+			miniscore/=100.0
 			score *= miniscore
 		end
     #---------------------------------------------------------------------------
@@ -590,7 +590,7 @@ class Battle::AI
 			score = 0
 		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, skill)
-			score *= (miniscore / 100)
+			score *= (miniscore / 100.0)
 			score *= 1.2
 			score *= 1.2 if user.hasActiveAbility?(:MERCILESS)
 			score *= 1.2 if (target.hasActiveAbility?(:GUTS) && target.burned?) || target.hasActiveAbility?(:FLAREBOOST)
@@ -728,7 +728,7 @@ class Battle::AI
 				miniscore*=0.5
 			end
 			if pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill) && 
-			  (pbRoughStat(target, :SPEED, skill)/2) < pbRoughStat(user,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom] <= 0
+			  (pbRoughStat(target, :SPEED, skill)/2.0) < pbRoughStat(user,:SPEED,skill) && @battle.field.effects[PBEffects::TrickRoom] <= 0
 				miniscore*=1.5
 			end
 			miniscore*=0.5 if target.hasActiveItem?([:CHERIBERRY, :LUMBERRY])
@@ -822,7 +822,7 @@ class Battle::AI
 		when :DIZZY
 			minimi = getAbilityDisruptScore(move,user,target,skill)
 			if !user.opposes?(target) # is ally
-				minimi = 1 / minimi 
+				minimi = 1.0 / minimi 
 				minimi *= 2 if target.hasActiveAbility?(:TANGLEDFEET)
 				# no need to do serene grace check here, 
 				# simply because the AI wont try to hit allies with damaging confusing moves
@@ -1743,8 +1743,8 @@ class Battle::AI
 		# very very VERY niche situation, but hey, i am bored.
 		slowestWeather = nil
 		slowestTerrain = nil
-		slowestWeatherSpeed = 9999
-		slowestTerrainSpeed = 9999
+		slowestWeatherSpeed = 9 ** 9
+		slowestTerrainSpeed = 9 ** 9
 		@battle.allBattlers.each do |j|
 			megaSpecies = j.pokemon.species
 			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 

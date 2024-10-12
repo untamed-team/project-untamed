@@ -281,11 +281,16 @@ class Battle::AI
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
       baseDmg *= 2 if Settings::MECHANICS_GENERATION >= 7 && skill >= PBTrainerAI.mediumSkill &&
                       target.effects[PBEffects::Minimize]
-    when "AlwaysCriticalHit", "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload"   # Frost Breath, Double Kick, Twineedle
+    when "AlwaysCriticalHit", "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
+         "HitTwoTimesTargetThenTargetAlly"
+      # Frost Breath, Double Kick, Twineedle
       baseDmg *= 2
-    when "HitThreeTimesPowersUpWithEachHit"   # Triple Kick
+    when "HitTwoTimesFlinchTarget"   # Double Iron Bash
+      baseDmg *= 2
+      baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
+    when "HitThreeTimesPowersUpWithEachHit", "HitThreeTimesAlwaysCriticalHit" # Triple Kick
       baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
-    when "HitTwoToFiveTimes"   # Fury Attack
+    when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1"   # Fury Attack
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
@@ -330,9 +335,6 @@ class Battle::AI
       baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
     when "DoublePowerIfUserLastMoveFailed"   # Stomping Tantrum
       baseDmg *= 2 if user.lastRoundMoveFailed
-    when "HitTwoTimesFlinchTarget"   # Double Iron Bash
-      baseDmg *= 2
-      baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
 		when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie
 			baseDmg *= 2.25 if user.effectiveWeather == :Rain
     #by low
@@ -352,14 +354,14 @@ class Battle::AI
     when "PursueSwitchingFoe", "DoublePowerIfTargetNotActed"
       baseDmg *= 2 if target.battle.choices[target.index][0] == :SwitchOut
     when "HitsAllFoesAndPowersUpInPsychicTerrain"
-      baseDmg = (baseDmg * 3 / 2).floor if (@battle.field.terrain == :Psychic || 
+      baseDmg = (baseDmg * 3 / 2.0).floor if (@battle.field.terrain == :Psychic || 
                                             globalArray.include?("psychic terrain")) && 
                                             user.affectedByTerrain?
     when "DoublePowerInElectricTerrain"
       baseDmg *= 2 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
                        target.affectedByTerrain?
     when "PeperSpray"
-      peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4) : (4 / 3)
+      peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4.0) : (4 / 3.0)
       baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
                                     globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA)
     end

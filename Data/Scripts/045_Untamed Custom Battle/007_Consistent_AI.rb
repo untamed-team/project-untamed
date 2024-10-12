@@ -16,6 +16,12 @@ class Battle::AI
 							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
 							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
 							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 
+
+	#@battle.choices[index][0] = :UseMove   # Action
+	#@battle.choices[index][1] = idxMove    # Index of move to be used
+	#@battle.choices[index][2] = move       # Battle::Move object
+	#@battle.choices[index][3] = -1         # Index of the target
+
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
 	# chosen)
@@ -222,30 +228,45 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
 		# Set up initial values
+		# for 80 initScore, dmg move = OHKO if score = 230 
 		skill = 100
 		initScore = 80
 		# Main score calcuations
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreFunctionCode(initScore, move, user, target, skill)
+			initScore = score
 			# Adjust score based on how much damage it can deal # DemICE moved damage calc to the beginning
 			score = pbGetMoveScoreDamage(score, move, user, target, skill)
 		else # Status moves # each status move has a value tied to them
 			statusDamage = pbStatusDamage(move)
 			return 0 if statusDamage <= 0
-			# Mult varies between 1.125x at 5 status dmg and 1.541x at 100 status dmg
-			statusDamageMult = 1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 20))))
+			# Mult varies between 1.056x at 5 status dmg and 1.284x at 100 status dmg
+			statusDamageMult = 1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 30))))
 			score = initScore * statusDamageMult
+			initScore = score
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			# Prefer status moves if level difference is significantly high
-			score *= 1.2 if user.level - 3 > target.level
+			if user.level - 4 > target.level
+				score *= 1.2
+			else
+				# Don't prefer set up moves if it was already used and still have raised stats
+				if user.SetupMovesUsed.include?(move.id) && user.hasRaisedStatStages?
+					score *= 0.7
+				end
+			end
+		end
+		if $AIMASTERLOG
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "Move " + move.name.to_s + " has initial score " + initScore.to_s
+			end
 		end
 		# Account for the accuracy of the move
 		accuracy = pbRoughAccuracy(move, user, target, skill)
 		accuracy = 100 if accuracy > 100
-		score -= (100 - accuracy) * (4 / 3) if accuracy < 100
+		score -= (100 - accuracy) * (4 / 3.0) if accuracy < 100
 		# A score of 0 here means it should not be used 
 		# ...unless it is a good move to target allies, which are stored on the negatives
-		score += 1 if aigenlog && score == 0 
+		#score += 1 if aigenlog && score == 0 
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# DemICE Converted all score alterations to multiplicative
 		# Don't prefer attacking the target if they'd be semi-invulnerable
@@ -313,20 +334,30 @@ class Battle::AI
 	#=============================================================================
 	def pbGetMoveScoreDamage(score, move, user, target, skill)
 		return 0 if (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
+		initialscore = score
 		# Calculate how much damage the move will do (roughly)
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
 		# Account for accuracy of move # its done on pbmovescore
-		accuracy = pbRoughAccuracy(move, user, target, skill)
+		#accuracy = pbRoughAccuracy(move, user, target, skill)
 		#accuracy = 100 if accuracy > 100
 		#realDamage *= accuracy / 100.0
+
 		# Two-turn attacks waste 2 turns to deal one lot of damage
-		if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", 
-			  "TwoTurnAttackBurnTarget", "TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttack", 
-			  "AttackTwoTurnsLater", "TwoTurnAttackChargeRaiseUserSpAtk1"].include?(move.function) ||
-			  (move.function=="TwoTurnAttackOneTurnInSun" && user.effectiveWeather!=:Sun)) && !user.hasActiveItem?(:POWERHERB)) ||
-			move.function == "AttackAndSkipNextTurn"
-		  realDamage *= 2 / 3   # Not halved because semi-invulnerable during use or hits first turn
+		# Not halved because semi-invulnerable during use or hits first turn
+		if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", 
+			  "TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttackChargeRaiseUserSpAtk1", 
+			  "AttackTwoTurnsLater", "TwoTurnAttack"].include?(move.function) ||
+			  (move.function == "TwoTurnAttackOneTurnInSun" && ![:Sun, :HarshSun].include?(user.effectiveWeather))) && 
+			  !user.hasActiveItem?(:POWERHERB))
+		  realDamage *= (2 / 3.0)
+		end
+		# Special interaction for beeg guns hyper beam clones
+		if move.function == "AttackAndSkipNextTurn"
+			if [:PRISMATICLASER, :ETERNABEAM].include?(move.id) && !targetSurvivesMove(move,user,target)
+			else
+				realDamage *= (2 / 3.0)
+			end
 		end
 
 		# not a fan of randomness one bit, but i cant do much about this move
@@ -351,12 +382,11 @@ class Battle::AI
 		mold_broken=moldbroken(user,target,move)
 		# Try make AI not trolled by disguise
 		if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0	
-			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-				 "HitTwoTimesTargetThenTargetAlly",
-				 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-				 "HitThreeTimesPowersUpWithEachHit",
-				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget",
+				 "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesPoisonTarget",
+				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja",
 				 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+				 "HitThreeToFiveTimes", "HitThreeTimesPowersUpWithEachHit", 
 				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				realDamage*=2.2
 			end
@@ -373,6 +403,7 @@ class Battle::AI
 				realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE)
 			end
 		end
+		realDamage = realDamage.to_i
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
 				line.puts "Move " + move.name + " real damage on "+target.name+": "+realDamage.to_s
@@ -383,7 +414,7 @@ class Battle::AI
 		# Don't prefer weak attacks
 	    damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
-		damagePercentage *= 0.5 if user.level - 3 > target.level
+		damagePercentage *= 0.5 if user.level - 4 > target.level
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 
@@ -400,19 +431,20 @@ class Battle::AI
 				damagePercentage += missinghp*0.5
 			end
 		end  
-		damagePercentage -= 1 if accuracy < 100 # DemICE
+#		damagePercentage -= 1 if accuracy < 100 # DemICE
 		damagePercentage += 40 if damagePercentage > 100 # Prefer moves likely to be lethal # DemICE
-#		damagePercentage *= 0.8 # test
-		score += damagePercentage.to_i
+		damagePercentage = damagePercentage.to_i
+		score += damagePercentage
 		if $AIGENERALLOG
 			echo("\n-----------------------------")
+			echo("\n#{move.name} score before dmg = #{initialscore}")
 			echo("\n#{move.name} real dmg = #{realDamage}")
-			echo("\n#{move.name} dmg percent = #{damagePercentage}")
+			echo("\n#{move.name} dmg percent = #{damagePercentage}%%")
 			echo("\n#{move.name} score = #{score}")
 		end
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
-				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s
+				line.puts "Move " + move.name + " damage % on "+target.name+": "+damagePercentage.to_s+"%"
 			end
 		end
 		return score

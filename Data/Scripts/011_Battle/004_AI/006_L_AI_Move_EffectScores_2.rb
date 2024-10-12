@@ -35,7 +35,7 @@ class Battle::AI
 				next if i.status != :SLEEP
 				miniscore*=0.7
 			end
-			score *= (miniscore / 100)
+			score *= (miniscore / 100.0)
 		else
 			score = 0
 		end
@@ -57,7 +57,7 @@ class Battle::AI
 				minimini/=100.0
 				miniscore*=minimini
 			end
-			score *= (miniscore / 100)
+			score *= (miniscore / 100.0)
 		else
 			score = 0
 		end
@@ -83,7 +83,7 @@ class Battle::AI
 			miniscore*=1.2 if healmove
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
+				miniscore*=(move.addlEffect.to_f/100.0)
 				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
@@ -220,7 +220,7 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
+				miniscore*=(move.addlEffect.to_f/100.0)
 				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
@@ -238,7 +238,7 @@ class Battle::AI
 			score = 0
 		end
 		if move.function == "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"
-			if (userFasterThanTarget) && 
+			if userFasterThanTarget && 
 				target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
 										"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
 										"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
@@ -252,7 +252,7 @@ class Battle::AI
 		end
 		if move.function == "ParalyzeFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (userFasterThanTarget)
+				if userFasterThanTarget
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -277,7 +277,7 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
+				miniscore*=(move.addlEffect.to_f/100.0)
 				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
@@ -293,7 +293,7 @@ class Battle::AI
      	end
 		if move.function == "BurnFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (userFasterThanTarget)
+				if userFasterThanTarget
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -319,7 +319,7 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
+				miniscore*=(move.addlEffect.to_f/100.0)
 				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
@@ -335,7 +335,7 @@ class Battle::AI
       	end
 		if move.function == "FreezeFlinchTarget"
 			if canFlinchTarget(user,target,mold_broken)
-				if (userFasterThanTarget)
+				if userFasterThanTarget
 					score*=1.1
 				end
 				if target.hasActiveAbility?(:STEADFAST)
@@ -366,7 +366,7 @@ class Battle::AI
 				miniscore*=0.3
 			end  
 			miniscore-=100
-			miniscore*=(move.addlEffect.to_f/100)
+			miniscore*=(move.addlEffect.to_f/100.0)
 			if user.hasActiveAbility?(:SERENEGRACE)
 				miniscore*=2
 			end
@@ -388,14 +388,14 @@ class Battle::AI
 						score*=0.7
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, globalArray, skill)
-					score*=(miniscore/100)
+					score*=(miniscore/100.0)
 				end
 				if user.paralyzed? && target.pbCanParalyze?(user, false)
 					if !userFasterThanTarget
 						score*=1.2
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 120, move, globalArray, skill)
-					score*=(miniscore/100)
+					score*=(miniscore/100.0)
 				end
 				if user.poisoned? && target.pbCanPoison?(user, false)
 					healmove=false
@@ -407,14 +407,14 @@ class Battle::AI
 						score*=1.4
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 100, move, globalArray, skill)
-					score*=(miniscore/100)
+					score*=(miniscore/100.0)
 				end
 				if user.frozen? && target.pbCanFreeze?(user, false)
 					if pbRoughStat(target,:ATTACK,skill)<pbRoughStat(target,:SPECIAL_ATTACK,skill)
 						score*=1.2
 					end
 					miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 110, move, globalArray, skill)
-					score*=(miniscore/100)
+					score*=(miniscore/100.0)
 				end      
 			end
 			if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
@@ -543,7 +543,7 @@ class Battle::AI
 				end
 				miniscore-=100
 				if move.addlEffect.to_f != 100
-					miniscore*=(move.addlEffect.to_f/100)
+					miniscore*=(move.addlEffect.to_f/100.0)
 					if user.hasActiveAbility?(:SERENEGRACE)
 						miniscore*=2
 					end     
@@ -556,31 +556,35 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FlinchTargetFailsIfUserNotAsleep" # snore
 		if user.asleep?
-			score *= 2
-			if canFlinchTarget(user,target,mold_broken)
-				if userFasterThanTarget
-					miniscore=100
-					miniscore*=1.3
-					if target.poisoned? || target.burned? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
-							target.effects[PBEffects::LeechSeed]>-1 || target.effects[PBEffects::Curse]
-						miniscore*=1.1
-						if target.effects[PBEffects::Toxic]>0
-							miniscore*=1.2
+			if user.statusCount <= 1
+				score = 0
+			else
+				score *= 2
+				if canFlinchTarget(user,target,mold_broken)
+					if userFasterThanTarget
+						miniscore=100
+						miniscore*=1.3
+						if target.poisoned? || target.burned? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
+								target.effects[PBEffects::LeechSeed]>-1 || target.effects[PBEffects::Curse]
+							miniscore*=1.1
+							if target.effects[PBEffects::Toxic]>0
+								miniscore*=1.2
+							end
+						end            
+						if target.hasActiveAbility?(:STEADFAST)
+							miniscore*=0.3
 						end
-					end            
-					if target.hasActiveAbility?(:STEADFAST)
-						miniscore*=0.3
+						miniscore-=100
+						if move.addlEffect.to_f != 100
+							miniscore*=(move.addlEffect.to_f/100.0)
+							if user.hasActiveAbility?(:SERENEGRACE)
+								miniscore*=2
+							end     
+						end
+						miniscore+=100
+						miniscore/=100.0       
+						score*=miniscore             
 					end
-					miniscore-=100
-					if move.addlEffect.to_f != 100
-						miniscore*=(move.addlEffect.to_f/100)
-						if user.hasActiveAbility?(:SERENEGRACE)
-							miniscore*=2
-						end     
-					end
-					miniscore+=100
-					miniscore/=100.0       
-					score*=miniscore             
 				end
 			end
 		else
@@ -590,21 +594,27 @@ class Battle::AI
     when "FlinchTargetFailsIfNotUserFirstTurn" # fake out
 		if user.turnCount==0
 			if canFlinchTarget(user,target,mold_broken)
-				if score>1
-					if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
-						score*=1.2
-					end
+				if score>1 && !userFasterThanTarget
+					score*=1.2
 				end
 				if user.hasActiveItem?(:NORMALGEM)
 					score*=1.1
-					if user.hasActiveAbility?(:UNBURDEN)
-						score*=2
-					end
+					score*=2.0 if user.hasActiveAbility?(:UNBURDEN)
 				end          
-				if target.hasActiveAbility?(:STEADFAST)
-					score*=0.3
-				end
+				score*=0.3 if target.hasActiveAbility?(:STEADFAST)
 				score*=0.3 if user.hasActiveAbility?(:SHEERFORCE)
+				# try to negate a turn of powered up stab
+				if target.pokemon.willmega
+					protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
+									"ProtectUserFromTargetingMovesSpikyShield", 
+									"ProtectUserFromDamagingMovesKingsShield",
+									"ProtectUserFromDamagingMovesObstruct"]
+					if target.battle.choices[target.index][0] == :UseMove &&
+				  	  !protectarray.include?(target.battle.choices[target.index][2].function)
+						score*=2 if globalArray.any? { |element| element.include?("weather") }
+						score*=2 if globalArray.any? { |element| element.include?("terrain") }
+					end
+				end
 				score*=30 # fake out good 
 			end
 		else
@@ -613,7 +623,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FlinchTargetDoublePowerIfTargetInSky" # twister
 		if canFlinchTarget(user,target,mold_broken)
-			if (userFasterThanTarget)
+			if userFasterThanTarget
 				miniscore=100
 				miniscore*=1.3
 				if target.hasActiveAbility?(:STEADFAST)
@@ -621,7 +631,7 @@ class Battle::AI
 				end
 				miniscore-=100
 				if move.addlEffect.to_f != 100
-					miniscore*=(move.addlEffect.to_f/100)
+					miniscore*=(move.addlEffect.to_f/100.0)
 				end   
 				miniscore+=100
 				if move.addlEffect.to_f != 100
@@ -661,7 +671,7 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100)
+				miniscore*=(move.addlEffect.to_f/100.0)
 				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
@@ -980,7 +990,7 @@ class Battle::AI
 				end
 			end
 			userTypes = user.pbTypes(false)
-			if (userFasterThanTarget)
+			if userFasterThanTarget
 				if user.hasActiveAbility?(:WONDERGUARD) && (userTypes[0] == :FIRE || userTypes[1] == :FIRE || userTypes[2] == :FIRE)
 					score*=8
 				end
@@ -994,7 +1004,7 @@ class Battle::AI
 		else
 			miniscore=100
 			minimi = getAbilityDisruptScore(move,user,target,skill)
-			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			minimi = 1.0 / minimi if !user.opposes?(target) # is ally
 			miniscore*=minimi
 			if user.opposes?(target) # is enemy
 				if miniscore < 2
@@ -1025,7 +1035,7 @@ class Battle::AI
 		else
 			miniscore = 100
 			minimi = getAbilityDisruptScore(move,user,target,skill)
-			minimi = 1 / minimi if !user.opposes?(target) # is ally
+			minimi = 1.0 / minimi if !user.opposes?(target) # is ally
 			miniscore*=minimi
 			restcheck=false
 			snorecheck=false
@@ -1056,7 +1066,7 @@ class Battle::AI
 				:TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((minimini-miniscore)/10))
+			score *= (1 + ((minimini-miniscore)/10.0))
 		end
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToUserAbility" # EEEEEEEEE-ntertainment !!
@@ -1068,7 +1078,7 @@ class Battle::AI
 				:TRACE, :ZENMODE].include?(user.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((miniscore-minimini)/10))
+			score *= (1 + ((miniscore-minimini)/10.0))
 			if user.opposes?(target) # is enemy
 				if user.ability == :TRUANT
 					score*=3
@@ -1109,7 +1119,7 @@ class Battle::AI
 				end
 			end 
 =end
-			score *= (1 + ((miniscore-minimini)/10))
+			score *= (1 + ((miniscore-minimini)/10.0))
 			if user.opposes?(target) # is enemy
 				if user.ability == :TRUANT
 					score*=3
@@ -1139,7 +1149,7 @@ class Battle::AI
 		elsif !target.unstoppableAbility?
 			minimi = getAbilityDisruptScore(move,user,target,skill)
 			if !user.opposes?(target) # is ally
-				minimi = 1 / minimi
+				minimi = 1.0 / minimi
 				minimi *= -1 
 			end
 			score*=minimi
@@ -1258,7 +1268,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HitsTargetInSky" # sky uppercut
-		if (userFasterThanTarget) && 
+		if userFasterThanTarget && 
 			target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
 									"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
 									"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
@@ -1272,7 +1282,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HitsTargetInSkyGroundsTarget" # smack down
 		miniscore=100
-		if (!userFasterThanTarget)
+		if !userFasterThanTarget
 			if target.pbHasMove?(:BOUNCE) || target.pbHasMove?(:FLY) || target.pbHasMove?(:SKYDROP)
 				miniscore*=1.3
 			else

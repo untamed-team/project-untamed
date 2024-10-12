@@ -73,7 +73,7 @@ class Battle::AI
 		user.allOpposing.each do |b|
 			if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
 			   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
-				atk *= (atk.to_f * 2 / 3) 
+				atk *= 2 / 3.0
 			end
 		end
 		##### Calculate target's defense stat #####
@@ -497,6 +497,7 @@ class Battle::AI
 				c += 1 if move.highCriticalRate?
 				c += user.effects[PBEffects::FocusEnergy]
 				c += 1 if user.inHyperMode? && move.type == :SHADOW
+				c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				# DemICE: taking into account 100% crit rate.
 				# check might be redundant since c is set to -1 if the target has this abilities but w/e
 				if !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker)
@@ -554,6 +555,10 @@ class Battle::AI
 			if !hasThisMove || !hasOtherMoves || hasUnusedMoves
 				return true
 			end 
+		elsif move.function == "FailsIfTargetHasNoItem"
+			if !target.item || !target.itemActive?
+				return true
+			end
 		end
 		
 		type = pbRoughType(move,user,skill)
@@ -663,6 +668,7 @@ class Battle::AI
 				return true	
 			end	
 		end
+		return true if $AIMASTERLOG
 		return false
 	end
 
@@ -683,6 +689,7 @@ class Battle::AI
 			end
 		end
 		return true if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+		return true if $AIMASTERLOG
 		return false
 	end
 	
@@ -850,7 +857,7 @@ class Battle::AI
 		turncount = user.turnCount
 		turncount = 0 if switchin
 		pri = move.priority
-		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2) && move.type==:FLYING
+		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
 		pri +=1 if move.baseDamage==0 && user.hasActiveAbility?(:PRANKSTER) 
 		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
