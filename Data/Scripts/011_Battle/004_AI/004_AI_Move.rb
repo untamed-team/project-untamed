@@ -115,7 +115,7 @@ class Battle::AI
 		move = _user.moves[idxMove]
     if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
         "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
-      score = pbGetMoveScore(move, _user, _user, skill)
+      score = pbGetMoveScore(move, _user, _user, 100)
       choices.push([idxMove, score, -1]) if score > 0
     else
       choices.push([idxMove, 100, -1])   # Move index, score, target
