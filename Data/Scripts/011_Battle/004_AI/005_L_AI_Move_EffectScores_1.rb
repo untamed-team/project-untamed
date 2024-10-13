@@ -5416,7 +5416,7 @@ class Battle::AI
 			score *= -1
 		end
     #---------------------------------------------------------------------------
-    when "LowerTargetAttack1" # growl
+    when "LowerTargetAttack1", "LowerTargetAttack1BypassSubstitute" # growl
 		if (pbRoughStat(target,:SPECIAL_ATTACK,skill)>pbRoughStat(target,:ATTACK,skill)) || 
 				target.stages[:ATTACK]>0 || !target.pbCanLowerStatStage?(:ATTACK)
 			if move.baseDamage==0
@@ -5433,7 +5433,7 @@ class Battle::AI
 				miniscore*=1.2
 			end
 			if target.stages[:ATTACK]<0
-				minimini = 5*target.stages[:ATTACK]
+				minimini = 10*target.stages[:ATTACK]
 				minimini+=100
 				minimini/=100.0
 				miniscore*=minimini
@@ -5460,12 +5460,29 @@ class Battle::AI
 				if livecounttarget==1
 					miniscore*=0.5
 				end
+				if (user.hp.to_f)/user.totalhp>0.8
+					miniscore*=1.2
+				else
+					miniscore*=0.4
+				end
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam = bestmove[0]
+				if maxdam>user.hp
+					miniscore*=0.1
+				end
+				physmove=false
+				for j in target.moves
+					if j.physicalMove?(j.type)
+						physmove=true
+					end  
+				end
+				miniscore*=0.1 if !physmove
 			end
 			miniscore/=100.0    
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-    when "LowerTargetAttack1BypassSubstitute", "LowerTargetAttack2", "LowerTargetAttack3" # feather dance
+    when "LowerTargetAttack2", "LowerTargetAttack3" # feather dance
 		if (pbRoughStat(target,:SPECIAL_ATTACK,skill)>pbRoughStat(target,:ATTACK,skill)) || 
 				target.stages[:ATTACK]>1 || !target.pbCanLowerStatStage?(:ATTACK)
 			if move.baseDamage==0
@@ -5482,7 +5499,7 @@ class Battle::AI
 				miniscore*=1.2
 			end
 			if target.stages[:ATTACK]<0
-				minimini = 5*target.stages[:ATTACK]
+				minimini = 10*target.stages[:ATTACK]
 				minimini+=100
 				minimini/=100.0
 				miniscore*=minimini
@@ -5509,6 +5526,23 @@ class Battle::AI
 				if livecounttarget==1
 					miniscore*=0.5
 				end
+				if (user.hp.to_f)/user.totalhp>0.8
+					miniscore*=1.2
+				else
+					miniscore*=0.4
+				end
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam = bestmove[0]
+				if maxdam>user.hp
+					miniscore*=0.1
+				end
+				physmove=false
+				for j in target.moves
+					if j.physicalMove?(j.type)
+						physmove=true
+					end  
+				end
+				miniscore*=0.1 if !physmove
 			end
 			miniscore/=100.0    
 			score*=miniscore

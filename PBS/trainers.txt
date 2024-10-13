@@ -162,6 +162,7 @@ LoseText = Ugh, whatever…
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
     AbilityIndex = 1
+    Item = LIGHTCLAY
     Nature = JOLLY
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,BITINGCOLD,OMINOUSWIND,BUBBLE
