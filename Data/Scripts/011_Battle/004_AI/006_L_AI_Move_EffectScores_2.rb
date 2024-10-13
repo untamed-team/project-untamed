@@ -515,13 +515,18 @@ class Battle::AI
 				ebinstatuscheck = true if [:WILLOWISP, :BITINGCOLD, :TOXIC, :THUNDERWAVE, :GLARE, :NUZZLE, :STUNSPORE].include?(j.id)
 				statuscheck     = true if [:POISONPOWDER, :POISONGAS, :CONFUSERAY].include?(j.id)
 				sleepcheck      = true if [:SPORE, :SLEEPPOWDER, :LOVELYKISS, :HYPNOSIS, :GRASSWHISTLE, :DARKVOID].include?(j.id)
-			end  
+				statusrng 		= true if j.baseDamage>0 && ["BurnTarget","ParalyzeTarget","FreezeTarget",
+															 "SleepTarget","SleepTargetChangeUserMeloettaForm",
+															 "PoisonTarget","BadPoisonTarget"].include?(j.function)
+			end
 			score*=1.7 if sleepcheck
 			score*=1.2 if statuscheck
 			score*=1.5 if ebinstatuscheck
+			score*=1.2 if statusrng
 			score*=1.5 if (sleepcheck || statuscheck || ebinstatuscheck) && 
 			              @battle.choices[target.index][0] == :UseMove && 
 						  @battle.choices[target.index][2].statusMove?
+			score*=1.3 if user.hasActiveItem?(:LIGHTCLAY) || roles.include?("Screener")
 		else
 			score=0
 		end

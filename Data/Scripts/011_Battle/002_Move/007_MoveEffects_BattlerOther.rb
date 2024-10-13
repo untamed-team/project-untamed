@@ -523,6 +523,7 @@ class Battle::Move::StartUserSideImmunityToInflictedStatus < Battle::Move
 
   def pbEffectGeneral(user)
     user.pbOwnSide.effects[PBEffects::Safeguard] = 5
+    user.pbOwnSide.effects[PBEffects::Safeguard] = 7 if user.hasActiveItem?(:LIGHTCLAY)
     @battle.pbDisplay(_INTL("{1} became cloaked in a mystical veil!", user.pbTeam))
   end
 end
