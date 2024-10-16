@@ -2,7 +2,7 @@ class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
 	$AIMASTERLOG = false
-	$AIGENERALLOG = true
+	$AIGENERALLOG = false
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
 	# crit moves are off, they dont check if the foe is an ally

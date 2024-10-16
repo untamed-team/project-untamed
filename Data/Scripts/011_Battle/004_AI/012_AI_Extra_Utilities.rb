@@ -655,13 +655,14 @@ class Battle::AI
 	def canSleepTarget(attacker,opponent,globalArray,berry=false)
 		return false if opponent.effects[PBEffects::Substitute]>0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		return false if berry && (opponent.status==:SLEEP)# && opponent.statusCount>1)
-		return false if (opponent.hasActiveItem?(:LUMBERRY) || opponent.hasActiveItem?(:CHESTOBERRY)) && berry
+		return false if opponent.hasActiveItem?([:LUMBERRY, :CHESTOBERRY]) && berry
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		if opponent.affectedByTerrain?
 			return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
 			return false if (@battle.field.terrain == :Electric || @battle.field.terrain == :Misty)
 		end
-		return false if opponent.pbCanSleep?(attacker,false)
+		return false if !opponent.pbCanSleep?(attacker,false)
+		echoln "fag"
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
 				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)

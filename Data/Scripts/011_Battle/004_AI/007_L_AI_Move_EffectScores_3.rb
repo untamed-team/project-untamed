@@ -263,7 +263,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "AlwaysCriticalHit" # frost breath
-		if !target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) && !user.effects[PBEffects::LaserFocus]
+		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus]
+			score*=0.9
+		else
 			if user.opposes?(target) # is enemy
 				if (target.hasActiveAbility?(:ANGERPOINT) && !target.statStageAtMax?(:ATTACK)) && 
 				   targetSurvivesMove(move,user,target)
@@ -296,8 +298,6 @@ class Battle::AI
 					score=0
 				end
 			end
-		else
-			score*=0.9
 		end
     #---------------------------------------------------------------------------
     when "EnsureNextCriticalHit" # Laser Focus
@@ -333,7 +333,7 @@ class Battle::AI
 		score -= 90 if user.pbOwnSide.effects[PBEffects::LuckyChant] > 0
     #---------------------------------------------------------------------------
     when "CannotMakeTargetFaint" # false swipe
-		if score>=100
+		if !targetSurvivesMove(move,user,target)
 			score*=0.1
 		end
     #---------------------------------------------------------------------------
@@ -406,7 +406,7 @@ class Battle::AI
 			end     
 		end 
 		score *= 1.5 if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && 
-						target.battle.choices[target.index][2].physicalMove?(target.battle.choices[target.index][2].type)
+						target.battle.choices[target.index][2].physicalMove?
 		score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
 						(target.pbHasMoveFunction?("DisableTargetStatusMoves") && aspeed<ospeed)
 		score = 0 if user.pbOwnSide.effects[PBEffects::Reflect] > 0
@@ -435,7 +435,7 @@ class Battle::AI
 			end     
 		end 
 		score *= 1.5 if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && 
-						target.battle.choices[target.index][2].specialMove?(target.battle.choices[target.index][2].type)
+						target.battle.choices[target.index][2].specialMove?
 		score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
 						(target.pbHasMoveFunction?("DisableTargetStatusMoves") && aspeed<ospeed)
 		score = 0 if user.pbOwnSide.effects[PBEffects::LightScreen] > 0
@@ -833,7 +833,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HitThreeTimesAlwaysCriticalHit" # surging strikes
-		if !target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) && !user.effects[PBEffects::LaserFocus]
+		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus]
+			score*=0.9
+		else
 			if user.opposes?(target) # is enemy
 				if (target.hasActiveAbility?(:ANGERPOINT) && !target.statStageAtMax?(:ATTACK)) && 
 				   targetSurvivesMove(move,user,target)
@@ -878,8 +880,6 @@ class Battle::AI
 					score=0
 				end
 			end
-		else
-			score*=0.9
 		end
     #---------------------------------------------------------------------------
     when "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
@@ -1141,7 +1141,7 @@ class Battle::AI
     when "AttackAndSkipNextTurn" # Hyper Beam
 		doesitdie = !targetSurvivesMove(move,user,target)
 		if [:PRISMATICLASER, :ETERNABEAM].include?(move.id) && doesitdie
-			score*=1.1
+			score*=2
 		else
 			miniscore=100
 			targetlivecount = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
@@ -1163,7 +1163,7 @@ class Battle::AI
 				score*=0.7
 			end
 			# use it to finish off
-			if doesitdie
+			if doesitdie && targetlivecount==1
 				score*=2
 			else
 				for m in target.moves
@@ -4548,7 +4548,7 @@ class Battle::AI
 			score*=1.1
 		end
 		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].physicalMove?(target.battle.choices[target.index][2].type) &&
+		   target.battle.choices[target.index][2].physicalMove? &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -4571,7 +4571,7 @@ class Battle::AI
 			score*=0.7
 		end
 		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].specialMove?(target.battle.choices[target.index][2].type) &&
+		   target.battle.choices[target.index][2].specialMove? &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -5744,7 +5744,7 @@ class Battle::AI
 			score*=0.3
 		end
 		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].physicalMove?(target.battle.choices[target.index][2].type)
+		   target.battle.choices[target.index][2].physicalMove?
 			score *= 2
 		else
 			if specialvar
@@ -5850,27 +5850,33 @@ class Battle::AI
 				count+=1
 			end
 		end   
+		miniscore=100
 		lastmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
 		if target.lastRegularMoveUsed
 			if lastmove.baseDamage>0 && count==1
-				score*=1.15
+				miniscore*=1.2
 			end
 			if lastmove.total_pp > 0
 				if lastmove.total_pp==5
-					score*=1.5
+					miniscore*=1.5
 				else
 					if lastmove.total_pp==10
-						score*=1.2
+						miniscore*=1.2
 					else
-						score*=0.7
+						miniscore*=0.7
 					end          
 				end
 			end
+			if move.statusMove?
+				if !userFasterThanTarget
+					miniscore*=0.5
+				end
+			else
+				miniscore*=1.2
+			end
 		end
-		if !userFasterThanTarget
-			score*=0.5
-		end
-		score*=1.1 if !move.statusMove?
+		miniscore/=100.0
+		score*=miniscore
     #---------------------------------------------------------------------------
     when "DisableTargetLastMoveUsed" # Disable
 		if target.lastRegularMoveUsed

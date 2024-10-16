@@ -37,7 +37,7 @@ class Battle::AI
 			end
 			score *= (miniscore / 100.0)
 		else
-			score = 0
+			score = 0 if move.baseDamage == 0
 		end
     #---------------------------------------------------------------------------
     when "SleepTargetNextTurn" # yawn
