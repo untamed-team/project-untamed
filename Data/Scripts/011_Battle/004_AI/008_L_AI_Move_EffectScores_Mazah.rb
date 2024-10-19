@@ -1926,5 +1926,6 @@ class Battle::AI
 		else
 			return false
 		end
+		return false
 	end
 end
