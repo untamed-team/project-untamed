@@ -1916,4 +1916,15 @@ class Battle::AI
 		end
 		return
 	end
+
+	def willMove?(action = "AG")
+		if @battle.choices[self.index][0] == :UseMove
+			return true if @battle.choices[self.index][2].physicalMove? && action == "phys"
+			return true if @battle.choices[self.index][2].specialMove? && action == "spec"
+			return true if @battle.choices[self.index][2].statusMove? && action == "status"
+			return true if action == "AG"
+		else
+			return false
+		end
+	end
 end

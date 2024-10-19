@@ -524,9 +524,9 @@ class Battle::AI
 			score*=1.5 if ebinstatuscheck
 			score*=1.2 if statusrng
 			score*=1.5 if (sleepcheck || statuscheck || ebinstatuscheck) && 
-			              @battle.choices[target.index][0] == :UseMove && 
-						  @battle.choices[target.index][2].statusMove?
+			              target.willMove?("status")
 			score*=1.3 if user.hasActiveItem?(:LIGHTCLAY) || roles.include?("Screener")
+			score*=0.5 if !sleepcheck && !statuscheck && !ebinstatuscheck
 		else
 			score=0
 		end
@@ -614,10 +614,11 @@ class Battle::AI
 									"ProtectUserFromTargetingMovesSpikyShield", 
 									"ProtectUserFromDamagingMovesKingsShield",
 									"ProtectUserFromDamagingMovesObstruct"]
-					if target.battle.choices[target.index][0] == :UseMove &&
-				  	  !protectarray.include?(target.battle.choices[target.index][2].function)
-						score*=2 if globalArray.any? { |element| element.include?("weather") }
-						score*=2 if globalArray.any? { |element| element.include?("terrain") }
+					if target.willMove?
+				  		if !protectarray.include?(target.battle.choices[target.index][2].function)
+							score*=2 if globalArray.any? { |element| element.include?("weather") }
+							score*=2 if globalArray.any? { |element| element.include?("terrain") }
+						end
 					end
 				end
 				score*=30 # fake out good 

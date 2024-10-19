@@ -111,9 +111,8 @@ class Battle::AI
 			if setupcheck
 				score*=0.8
 			end
-			if @battle.choices[target.index][0] == :UseMove &&
-				!@battle.choices[target.index][2].statusMove?
-				score*=1.5
+			if target.willMove?
+				score*=1.5 if !@battle.choices[target.index][2].statusMove?
 			else
 				score=0
 			end

@@ -4547,8 +4547,7 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=1.1
 		end
-		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].physicalMove? &&
+		if target.willMove?("phys") &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -4570,8 +4569,7 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=0.7
 		end
-		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].specialMove? &&
+		if target.willMove?("spec") &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -4587,10 +4585,11 @@ class Battle::AI
 		score*=0.6 if pbHasSetupMove?(target)
 		miniscore = user.hp*(1.0/user.totalhp)
 		score*=miniscore
-		if target.battle.choices[target.index][0] == :UseMove &&
-		   !target.battle.choices[target.index][2].statusMove? &&
-		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
-			score *= 1.5
+		if target.willMove?
+			if !target.battle.choices[target.index][2].statusMove? &&
+		       targetSurvivesMove(target.battle.choices[target.index][2],target,user)
+				score *= 1.5
+			end
 		end
     #---------------------------------------------------------------------------
     when "UserAddStockpileRaiseDefSpDef1" # stockpile
@@ -5010,10 +5009,8 @@ class Battle::AI
 			score*=1.4
 		end
 		hasAlly = !target.allAllies.empty?
-		if target.battle.choices[target.index][0] == :UseMove   &&
-		   target.battle.choices[target.index][2].canMagicCoat? #&& target.battle.choices[target.index][3] == user.index
-		   # ^this bit i commented out isnt working properly, ignore for now
-			score *= 4.0
+		if target.willMove?
+			score *= 4.0 if target.battle.choices[target.index][2].canMagicCoat?
 		else
 			score = (hasAlly) ? score * 0.7 : 0.3
 			if user.lastMoveUsed == :MAGICCOAT
@@ -5042,9 +5039,8 @@ class Battle::AI
 			end
 		end
 		hasAlly = !target.allAllies.empty?
-		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].canSnatch?
-			score *= 4.0
+		if target.willMove?
+			score *= 4.0 if target.battle.choices[target.index][2].canSnatch?
 		else
 			score = (hasAlly) ? score * 0.7 : 0.3
 			if user.lastMoveUsed == :SNATCH
@@ -5743,8 +5739,7 @@ class Battle::AI
 		if target.spatk > target.attack
 			score*=0.3
 		end
-		if target.battle.choices[target.index][0] == :UseMove &&
-		   target.battle.choices[target.index][2].physicalMove?
+		if target.willMove?("phys")
 			score *= 2
 		else
 			if specialvar
