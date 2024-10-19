@@ -15,7 +15,7 @@ class Battle::AI
 							"UserTargetSwapAbilities", #"NegateTargetAbility", 
 							"RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
 							"HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
-							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe"] 
+							"HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing"] 
 
 	#@battle.choices[index][0] = :UseMove   # Action
 	#@battle.choices[index][1] = idxMove    # Index of move to be used

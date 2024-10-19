@@ -524,7 +524,7 @@ class Battle::AI
 			score*=1.5 if ebinstatuscheck
 			score*=1.2 if statusrng
 			score*=1.5 if (sleepcheck || statuscheck || ebinstatuscheck) && 
-			              target.willMove?("status")
+			              targetWillMove?(target,"status")
 			score*=1.3 if user.hasActiveItem?(:LIGHTCLAY) || roles.include?("Screener")
 			score*=0.5 if !sleepcheck && !statuscheck && !ebinstatuscheck
 		else
@@ -614,7 +614,7 @@ class Battle::AI
 									"ProtectUserFromTargetingMovesSpikyShield", 
 									"ProtectUserFromDamagingMovesKingsShield",
 									"ProtectUserFromDamagingMovesObstruct"]
-					if target.willMove?
+					if targetWillMove?(target)
 				  		if !protectarray.include?(target.battle.choices[target.index][2].function)
 							score*=2 if globalArray.any? { |element| element.include?("weather") }
 							score*=2 if globalArray.any? { |element| element.include?("terrain") }

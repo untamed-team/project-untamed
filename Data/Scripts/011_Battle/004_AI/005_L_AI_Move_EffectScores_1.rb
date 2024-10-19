@@ -111,7 +111,7 @@ class Battle::AI
 			if setupcheck
 				score*=0.8
 			end
-			if target.willMove?
+			if targetWillMove?(target)
 				score*=1.5 if !@battle.choices[target.index][2].statusMove?
 			else
 				score=0

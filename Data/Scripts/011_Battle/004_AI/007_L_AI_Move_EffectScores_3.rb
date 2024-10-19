@@ -405,8 +405,12 @@ class Battle::AI
 				score *= 1.4 if halfdam<user.hp
 			end     
 		end 
-		score *= 1.5 if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && 
-						target.battle.choices[target.index][2].physicalMove?
+		if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			score *= 1.2
+			if targetWillMove?(target,"phys")
+				score *= 1.2
+			end
+		end
 		score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
 						(target.pbHasMoveFunction?("DisableTargetStatusMoves") && aspeed<ospeed)
 		score = 0 if user.pbOwnSide.effects[PBEffects::Reflect] > 0
@@ -434,8 +438,12 @@ class Battle::AI
 				score *= 1.4 if halfdam<user.hp
 			end     
 		end 
-		score *= 1.5 if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && 
-						target.battle.choices[target.index][2].specialMove?
+		if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			score *= 1.2
+			if targetWillMove?(target,"spec")
+				score *= 1.2
+			end
+		end
 		score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
 						(target.pbHasMoveFunction?("DisableTargetStatusMoves") && aspeed<ospeed)
 		score = 0 if user.pbOwnSide.effects[PBEffects::LightScreen] > 0
@@ -4547,7 +4555,7 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=1.1
 		end
-		if target.willMove?("phys") &&
+		if targetWillMove?(target,"phys") &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -4569,7 +4577,7 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=0.7
 		end
-		if target.willMove?("spec") &&
+		if targetWillMove?(target,"spec") &&
 		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 			score *= 1.5
 		end
@@ -4585,7 +4593,7 @@ class Battle::AI
 		score*=0.6 if pbHasSetupMove?(target)
 		miniscore = user.hp*(1.0/user.totalhp)
 		score*=miniscore
-		if target.willMove?
+		if targetWillMove?(target)
 			if !target.battle.choices[target.index][2].statusMove? &&
 		       targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 				score *= 1.5
@@ -5009,7 +5017,7 @@ class Battle::AI
 			score*=1.4
 		end
 		hasAlly = !target.allAllies.empty?
-		if target.willMove?
+		if targetWillMove?(target)
 			score *= 4.0 if target.battle.choices[target.index][2].canMagicCoat?
 		else
 			score = (hasAlly) ? score * 0.7 : 0.3
@@ -5039,7 +5047,7 @@ class Battle::AI
 			end
 		end
 		hasAlly = !target.allAllies.empty?
-		if target.willMove?
+		if targetWillMove?(target)
 			score *= 4.0 if target.battle.choices[target.index][2].canSnatch?
 		else
 			score = (hasAlly) ? score * 0.7 : 0.3
@@ -5739,7 +5747,7 @@ class Battle::AI
 		if target.spatk > target.attack
 			score*=0.3
 		end
-		if target.willMove?("phys")
+		if targetWillMove?(target,"phys")
 			score *= 2
 		else
 			if specialvar
