@@ -2889,7 +2889,6 @@ class Battle::AI
 				miniscore*=0.5
 			end          
 			if !user.statStageAtMax?(:ATTACK)
-				miniscore/=100.0
 				score*=miniscore
 			end
 		else
@@ -2913,7 +2912,6 @@ class Battle::AI
 				end
 			end    
 			if physmove && !user.statStageAtMax?(:ATTACK)
-				miniscore/=100.0
 				score*=miniscore
 			end
 		end

@@ -662,7 +662,6 @@ class Battle::AI
 			return false if (@battle.field.terrain == :Electric || @battle.field.terrain == :Misty)
 		end
 		return false if !opponent.pbCanSleep?(attacker,false)
-		echoln "fag"
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
 				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)

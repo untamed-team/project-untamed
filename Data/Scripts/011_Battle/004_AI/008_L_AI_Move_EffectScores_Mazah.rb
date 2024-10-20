@@ -284,32 +284,36 @@ class Battle::AI
 		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromStatusMoves" # crafty shield
-		if user.effects[PBEffects::ProtectRate] > 1
-			score = 0
-		elsif user.lastMoveUsed == :CRAFTYSHIELD
-			score*=0.5
+		nodam = true
+		for m in target.moves
+			if m.baseDamage>0
+				nodam=false
+				break
+			end
+		end
+		if nodam
+			score *= 1.2
+		end
+		if user.hp==user.totalhp
+			score *= 1.5
+		end  
+		movecheck = false
+		movecheck = true if pbHasPhazingMove?(target)
+		if movecheck
+			score *= 1.3
+		end
+		hasAlly = !user.allAllies.empty?
+		if hasAlly
+			score *= 1.2
 		else
-			nodam = true
-			for m in target.moves
-				if m.baseDamage>0
-					nodam=false
-					break
-				end
-			end
-			if nodam
-				score *= 1.2
-			end
-			if user.hp==user.totalhp
-				score *= 1.5
-			end  
-			movecheck = false
-			movecheck = true if pbHasPhazingMove?(target)
-			if movecheck
-				score *= 1.3
-			end
-			if target.battle.choices[target.index][2].statusMove?
+			score *= 0.8
+		end
+		if targetWillMove?(target, "status")
+			if !target.battle.choices[target.index][2].pbTarget(user).targets_all
 				score *= 2
 			end
+		elsif user.lastMoveUsed == :CRAFTYSHIELD
+			score*=0.5
 		end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromPriorityMoves"
