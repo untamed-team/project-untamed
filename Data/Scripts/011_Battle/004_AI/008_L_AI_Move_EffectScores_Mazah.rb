@@ -356,8 +356,10 @@ class Battle::AI
 			if user.hp==user.totalhp
 				score *= 1.5
 			end          
-			if priorityAI(target,target.battle.choices[target.index][2]) > 0
-				score *= 3
+			if targetWillMove?(target)
+				if priorityAI(target,target.battle.choices[target.index][2]) > 0
+					score *= 3
+				end
 			end
 		end
     #---------------------------------------------------------------------------
@@ -380,8 +382,10 @@ class Battle::AI
 			if user.hp==user.totalhp
 				score *= 1.5
 			end
-			if pbTargetsMultiple?(target.battle.choices[target.index][2],user)
-				score *= 3
+			if targetWillMove?(target)
+				if pbTargetsMultiple?(target.battle.choices[target.index][2],user)
+					score *= 3
+				end
 			end
 		end
     #------------------------------------------------------------------------------------------------------------------------------------------------------

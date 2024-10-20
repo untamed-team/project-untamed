@@ -4555,9 +4555,8 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=1.1
 		end
-		if targetWillMove?(target,"phys") &&
-		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
-			score *= 1.5
+		if targetWillMove?(target,"phys")
+			score *= 1.5 if targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 		end
     #---------------------------------------------------------------------------
     when "CounterSpecialDamage" # mirror coat
@@ -4577,9 +4576,8 @@ class Battle::AI
 		if user.lastRegularMoveUsed == :MIRRORCOAT
 			score*=0.7
 		end
-		if targetWillMove?(target,"spec") &&
-		   targetSurvivesMove(target.battle.choices[target.index][2],target,user)
-			score *= 1.5
+		if targetWillMove?(target,"spec")
+			score *= 1.5 if targetSurvivesMove(target.battle.choices[target.index][2],target,user)
 		end
     #---------------------------------------------------------------------------
     when "CounterDamagePlusHalf" # Metal Burst
@@ -6030,10 +6028,10 @@ class Battle::AI
 			if userFasterThanTarget || 
 					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
-				score*=3.0 if target.battle.choices[target.index][2].statusMove? 
+				score*=3.0 if targetWillMove?(target, "status")
 			else
 				score*=0.7
-				score*=1.2 if target.battle.choices[target.index][2].statusMove?
+				score*=1.2 if targetWillMove?(target, "status")
 			end
 			if target.turnCount<=1
 				score*=1.1
