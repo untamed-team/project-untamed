@@ -263,7 +263,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "AlwaysCriticalHit" # frost breath
-		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus]
+		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) #|| user.effects[PBEffects::LaserFocus]
 			score*=0.9
 		else
 			if user.opposes?(target) # is enemy
@@ -273,7 +273,7 @@ class Battle::AI
 					score*=0.1 if target.attack>target.spatk
 				end
 			else # !user.opposes?(target) # is ally
-				if target.hasActiveAbility?(:ANGERPOINT) && target.attack>target.spatk
+				if target.hasActiveAbility?(:ANGERPOINT)
 					if !targetSurvivesMove(move,user,target) || target.statStageAtMax?(:ATTACK)
 						score=0
 					else
@@ -841,7 +841,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HitThreeTimesAlwaysCriticalHit" # surging strikes
-		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus]
+		if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) #|| user.effects[PBEffects::LaserFocus]
 			score*=0.9
 		else
 			if user.opposes?(target) # is enemy
@@ -863,7 +863,7 @@ class Battle::AI
 					score*=1.2
 				end
 			else #if !user.opposes?(target) # is ally
-				if target.hasActiveAbility?(:ANGERPOINT) && target.attack>target.spatk
+				if target.hasActiveAbility?(:ANGERPOINT)
 					if !targetSurvivesMove(move,user,target) || target.statStageAtMax?(:ATTACK)
 						score=0
 					else
@@ -1092,14 +1092,13 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HitOncePerUserTeamMember" # beat up
-		thisinitial = score
 		livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
 		if livecountuser>0
 			if !user.opposes?(target) # is ally
-				if (target.attack>target.spatk && target.hasActiveAbility?(:JUSTIFIED) && move.type == :DARK) || 
+				if (target.hasActiveAbility?(:JUSTIFIED) && move.type == :DARK) || 
 				   (target.hasActiveAbility?(:STAMINA) && move.pbContactMove?(user))
 					if targetSurvivesMove(move,user,target)
-						score = (100-thisinitial)
+						score = -100.0
 						# checking if the recepient can outspeed
 						enemycounter = 0
 						user.eachOpposing do |m|
@@ -1119,13 +1118,12 @@ class Battle::AI
 						if Effectiveness.resistant_type?(move.type, targetTypes[0], targetTypes[1], targetTypes[2])
 							score*=2
 						end
-						score*=3
 						if target.hp == target.totalhp
-							score*=2
+							score*=3
 						else
 							score*=0.8
 						end
-						score *= -1
+						score *= 0.2 if target.stages[:ATTACK]>0
 					else
 						score=0
 					end
@@ -4234,7 +4232,7 @@ class Battle::AI
     when "HealAllyOrDamageFoe" # pollen puff
 		if user.opposes?(target) # is enemy
 		else                     # is ally
-			miniscore = -100 # heal pulse's score
+			miniscore = -100.0 # heal pulse's score
 			if target.hp>target.totalhp*0.3 && target.hp<target.totalhp*0.7
 				miniscore*=3.0
 			elsif target.hp*(1.0/target.totalhp)<0.3
@@ -5098,7 +5096,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FleeFromBattle"
 		if @battle.trainerBattle?
-      		score = -100
+      		score = -100.0
 		else
 			score = 999
 		end
