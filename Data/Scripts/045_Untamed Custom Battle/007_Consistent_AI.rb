@@ -152,11 +152,11 @@ class Battle::AI
 		if !user.wild? #!wildBattler
 			badMoves = false
 			attemptedSwitching = false
-			if ((maxScore <= 20 && user.turnCount >= 1) ||
-				(maxScore <= 40 && user.turnCount > 3))
+			if ((maxScore <= 60 && user.turnCount >= 1) ||
+				(maxScore <= 70 && user.turnCount > 3))
 				badMoves = true
 			end
-			if !badMoves && totalScore < 100
+			if !badMoves && totalScore < 160
 				badMoves = true
 				choices.each do |c|
 					next if !user.moves[c[0]].damagingMove?
@@ -245,7 +245,7 @@ class Battle::AI
 			initScore = score
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			# Prefer status moves if level difference is significantly high
-			if user.level - 4 > target.level
+			if user.level - 5 > target.level
 				score *= 1.2
 			else
 				# Don't prefer set up moves if it was already used and still have raised stats
@@ -413,7 +413,7 @@ class Battle::AI
 		# Don't prefer weak attacks
 	    damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
-		damagePercentage *= 0.5 if user.level - 4 > target.level
+		damagePercentage *= 0.5 if user.level - 5 > target.level
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
 			damagePercentage = 110 

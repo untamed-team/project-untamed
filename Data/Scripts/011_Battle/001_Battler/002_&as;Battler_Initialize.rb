@@ -124,7 +124,9 @@ class Battle::Battler
       @effects[PBEffects::PowerTrick]        = false
       @effects[PBEffects::Substitute]        = 0
       @effects[PBEffects::Telekinesis]       = 0
-      @effects[PBEffects::HonorBound]        = false #by low
+      #by low
+      @effects[PBEffects::HonorBound]        = false
+      @effects[PBEffects::BoomInstalled]     = false
     end
 		GameData::Stat.each_battle { |stat| @stages[stat.id] = 0 }
     @fainted               = (@hp == 0)

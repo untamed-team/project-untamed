@@ -9221,3 +9221,13 @@ Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = Contact,CanProtect,CanMirrorMove
 Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.
+#-------------------------------
+[BOOMINSTALL]
+Name = Virus Inject
+Type = QMARKS
+Category = Status
+Accuracy = 85
+TotalPP = 10
+Target = NearOther
+FunctionCode = BOOMInstall
+Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.

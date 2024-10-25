@@ -966,7 +966,8 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("It's a Charizard Doll. Well, can't say it doesn't deserve to be there."))
   when "Code"
     pbMessage(_INTL("You found some ...\\c[1]Code\\c[0]?"))
-    pbMessage(_INTL("Your reality may be crumbling, but I am sure it is nothing to worry about."))
+    print "What do mean Quash is 'too complicated' for me to learn!? teachmeTeachMeTEACHME!!!"
+    pbMessage(_INTL("Seems like Kiriya is having a fit. I hope she calms down soon enough."))
   when "Walmart"
     pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
     pbMessage(_INTL("It seems that a unidentified pink bunny has been banned from a PokeMart\\n...in Minecraft."))

@@ -599,7 +599,7 @@ class Battle::AI
     when "FlinchTargetFailsIfNotUserFirstTurn" # fake out
 		if user.turnCount==0
 			if canFlinchTarget(user,target,mold_broken)
-				if score>1 && !userFasterThanTarget
+				if !userFasterThanTarget
 					score*=1.2
 				end
 				if user.hasActiveItem?(:NORMALGEM)
@@ -934,17 +934,17 @@ class Battle::AI
 		maxdam=bestmove[0]
 		maxmove=bestmove[1]
 		maxtype=maxmove.type
-		healvar = false
-		for m in target.moves
-			healvar = true if m.healingMove?
-		end
 		if !user.pbHasType?(:FIRE, true)
 			score = 0
 		else
 			userlivecount 	= @battle.pbAbleNonActiveCount(user.idxOwnSide)
 			targetlivecount = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
-			if score<100
+			if targetSurvivesMove(move,user,target)
 				score*=0.9
+				healvar = false
+				for m in target.moves
+					healvar = true if m.healingMove?
+				end
 				if healvar
 					score*=0.5
 				end

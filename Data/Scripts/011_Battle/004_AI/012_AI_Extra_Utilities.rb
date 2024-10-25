@@ -473,6 +473,7 @@ class Battle::AI
 		defense = [(defense * multipliers[:defense_multiplier]).round, 1].max
 		damage  = ((((2.0 * user.level / 5) + 2).floor * baseDmg * atk / defense).floor / 50).floor + 2
 		damage  = [(damage * multipliers[:final_damage_multiplier]).round, 1].max
+		damage  *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
 		# "AI-specific calculations below"
 		# Increased critical hit rates
 		if skill >= PBTrainerAI.mediumSkill
@@ -924,6 +925,7 @@ class Battle::AI
 			end
 		end
 		chip*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
+		chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]
 		return chip if chips
 		diff=(healing-chip)
 		return diff if both

@@ -623,6 +623,24 @@ class Battle::AI
 		score *= 1.4 if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
 						(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
     #---------------------------------------------------------------------------
+	when "BOOMInstall"
+		if move.baseDamage == 0 && target.effects[PBEffects::BoomInstalled]
+			score = 0
+		else
+			damagingstatus = (target.poisoned? || target.burned? || target.frozen?)
+			statmove = physmove = specmove = false
+			for j in user.moves
+				statmove = true if [:WILLOWISP, :BITINGCOLD, :TOXIC].include?(j.id)
+				physmove = true if j.physicalMove?(j.type)
+				specmove = true if j.specialMove?(j.type)
+			end
+			score *= 1.15 if target.stages[:DEFENSE] > 0 && physmove
+			score *= 1.15 if target.stages[:SPECIAL_DEFENSE] > 0 && specmove
+			score *= 1.3 if statmove
+			score *= 1.3 if damagingstatus
+			score *= 1.2 if target.hp == target.totalhp
+		end
+    #---------------------------------------------------------------------------
     else
       return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
     end
@@ -717,6 +735,7 @@ class Battle::AI
 		miniscore*=0.5 if target.hasActiveAbility?(:MARVELSCALE)
 		miniscore*=0.7 if target.hasActiveAbility?(:SHEDSKIN)
 		miniscore*=0.4 if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
+		miniscore*=1.4 if target.effects[PBEffects::BoomInstalled] && [:BURN, :FREEZE, :POISON].include?(status)
 		if target.effects[PBEffects::Confusion]>0
 			miniscore *= (status == :SLEEP) ?  0.4 : 1.1
 		end
@@ -1140,9 +1159,9 @@ class Battle::AI
 				 :ENCORE, :GRASSYTERRAIN, :LEECHSEED, :MAGICPOWDER, :MISTYTERRAIN, :NATUREPOWER,
 				 :NORETREAT, :PAINSPLIT, :PSYCHICTERRAIN, :PURIFY, :SLEEPTALK, :SOAK, :SUNNYDAY,
 				 :TELEPORT, :TRICKROOM, :WISH, :WONDERROOM, :RAINDANCE],
-		  40 => [:AROMATHERAPY, :AURORAVEIL, :BITINGCOLD, :CONFUSERAY, :GLARE, :HEALBELL, :HONECLAWS, 
-				 :LIGHTSCREEN, :MATBLOCK, :PARTINGSHOT, :REFLECT, :SPIKES, :STUNSPORE, :TAILWIND, 
-				 :THUNDERWAVE, :TOXIC, :TOXICSPIKES, :TOXICTHREAD, :WIDEGUARD, :WILLOWISP],
+		  40 => [:AROMATHERAPY, :AURORAVEIL, :BITINGCOLD, :BOOMINSTALL, :CONFUSERAY, :GLARE, :HEALBELL, 
+				 :HONECLAWS, :LIGHTSCREEN, :MATBLOCK, :PARTINGSHOT, :REFLECT, :SPIKES, :STUNSPORE, 
+				 :TAILWIND, :THUNDERWAVE, :TOXIC, :TOXICSPIKES, :TOXICTHREAD, :WIDEGUARD, :WILLOWISP],
 		  50 => [:NASTYPLOT, :STEALTHROCK, :SWORDSDANCE, :STICKYWEB, :TOPSYTURVY],
 		  60 => [:DRAGONDANCE, :GEOMANCY, :QUIVERDANCE, :SHELLSMASH, :SHIFTGEAR, :TAILGLOW],
 		  70 => [:HEALORDER, :JUNGLEHEALING, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,

@@ -330,7 +330,6 @@ class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
   end
 end
 
-
 #===============================================================================
 # Hits two times, ignores multi target debuff. (Splinter Shot)
 #===============================================================================
@@ -341,4 +340,32 @@ class Battle::Move::HitTwoTimesReload < Battle::Move
   end
   def multiHitMove?;            return true; end
   def pbNumHits(user, targets); return 2;    end
+end
+
+#===============================================================================
+# Increases the damage recived from all sources by 25%. (Virus Inject)
+#===============================================================================
+class Battle::Move::BOOMInstall < Battle::Move
+  def pbFailsAgainstTarget?(user,target,show_message)
+    return if damagingMove?
+    if target.effects[PBEffects::BoomInstalled]
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    return if damagingMove?
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
+
+  def pbAdditionalEffect(user, target)
+    return if !damagingMove?
+    return if target.effects[PBEffects::BoomInstalled]
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
 end

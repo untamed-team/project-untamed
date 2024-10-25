@@ -146,6 +146,7 @@ class Battle::Battler
 
   def pbReduceHP(amt, anim = true, registerDamage = true, anyAnim = true)
     amt = amt.round
+    amt *= (5.0 / 4.0) if self.effects[PBEffects::BoomInstalled]
     amt = @hp if amt > @hp
     amt = 1 if amt < 1 && !fainted?
     survDmg = false

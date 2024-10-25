@@ -243,9 +243,6 @@ class Battle::AI
 		score*=miniscore
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetLostHPThisTurn" # Assurance
-		if userFasterThanTarget
-			score*=1.5
-		end
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserStatsLoweredThisTurn"
     #---------------------------------------------------------------------------
@@ -1461,6 +1458,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
+			score*=0.7
 		else
 			score*=2
 			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3

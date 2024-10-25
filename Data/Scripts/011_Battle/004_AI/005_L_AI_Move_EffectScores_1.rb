@@ -60,7 +60,6 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "FailsIfUserDamagedThisTurn" # focus punch
-		startscore=score
 		soundcheck=false
 		multicheck=false
 		for m in target.moves
@@ -74,7 +73,13 @@ class Battle::AI
 				score*=1.3
 			end
 		else
-			score *= 0.8
+			if targetWillMove?(target, "status")
+				score *= 1.8
+			elsif target.battle.choices[target.index][0] == :SwitchOut
+				score *= 1.3
+			else
+				score *= 0.8
+			end
 		end
 		if target.asleep? && (target.statusCount>=1 || !target.hasActiveAbility?(:EARLYBIRD)) && !target.hasActiveAbility?(:SHEDSKIN)
 			score*=1.2
@@ -85,9 +90,6 @@ class Battle::AI
 		end
 		if target.effects[PBEffects::HyperBeam]>0
 			score*=1.5
-		end
-		if score<=startscore
-			score*=0.3
 		end
     #---------------------------------------------------------------------------
     when "FailsIfTargetActed" # sucker punch
@@ -133,8 +135,8 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "CrashDamageIfFailsUnusableInGravity" # high jump kick
-		if score < 100 
-			score * 0.8
+		if targetSurvivesMove(move,user,target)
+			score *= 0.8
 		end
 		protectmove = false
 		protectmove = true if pbHasSingleTargetProtectMove?(target)
@@ -1066,7 +1068,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "BurnAttackerBeforeUserActs" # beak blast
-		startscore = score
 		maxdam = 0
 		contactcheck = false
 		facadecheck = false
@@ -1111,7 +1112,7 @@ class Battle::AI
 			end
 			miniscore+=100
 			miniscore/=100.0
-			if startscore==110
+			if !targetSurvivesMove(move,user,target)
 				miniscore*=0.8
 			end
 			minimini = 100
@@ -4834,7 +4835,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
 			score*=1.5
 		else
-			if score<100
+			if targetSurvivesMove(move,user,target)
 				score*=0.8
 				if !userFasterThanTarget
 					score*=1.3

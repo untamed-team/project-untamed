@@ -9087,6 +9087,16 @@ FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
 Description = A folded blade that tears through a target using Protect or Detect.
 #-------------------------------
+[BOOMINSTALL]
+Name = Virus Inject
+Type = QMARKS
+Category = Status
+Accuracy = 85
+TotalPP = 10
+Target = NearOther
+FunctionCode = BOOMInstall
+Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
 [HARDDRIVECRASH]
 Name = Hard Drive Crash
 Type = QMARKS
