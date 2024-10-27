@@ -290,6 +290,10 @@ class Battle::AI
 						else
 							score*=0.8
 						end
+						damage = pbRoughDamage(move,user,target,skill)
+						damage = damage * 100.0 / target.hp
+						score += damage
+						# + since it is on the negatives
 					end
 				else
 					score=0
@@ -393,17 +397,15 @@ class Battle::AI
 		score*=1.3 if roles.include?("Lead")
 		score*=1.2 if (roles & ["Physical Wall", "Pivot"]).any?
 		if maxphys
+			score*=1.2
 			score*=1.4 if halfhealth>maxdam
-			score*=1.6
-			if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			if !userFasterThanTarget
 				score *= 0.5 if maxdam>thirdhealth
 			else
-				halfdam=maxdam/2.0
-				score *= 1.4 if halfdam<user.hp
+				score *= 1.4 if (maxdam/2.0)<user.hp
 			end     
 		end 
-		if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-			score *= 1.2
+		if userFasterThanTarget
 			if targetWillMove?(target,"phys")
 				score *= 1.2
 			end
@@ -426,19 +428,17 @@ class Battle::AI
 		score*=1.2 if (roles & ["Special Wall", "Pivot"]).any?
 
 		if maxspec
+			score*=1.2
 			score*=1.4 if halfhealth>maxdam
-			score*=1.6
-			if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+			if !userFasterThanTarget
 				score *= 0.5 if maxdam>thirdhealth
 			else
-				halfdam=maxdam/2.0
-				score *= 1.4 if halfdam<user.hp
+				score *= 1.4 if (maxdam/2.0)<user.hp
 			end     
 		end 
-		if ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-			score *= 1.2
+		if userFasterThanTarget
 			if targetWillMove?(target,"spec")
-				score *= 1.2
+				score *= 1.3
 			end
 		end
 		score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
@@ -520,6 +520,7 @@ class Battle::AI
 			if user.hp*(1.0/user.totalhp)>0.1 && user.hp*(1.0/user.totalhp)<0.4
 				score *= 0.8
 			end
+			score *= 0.8 if user.effects[PBEffects::BoomInstalled]
 		end
     #---------------------------------------------------------------------------
     when "RecoilThirdOfDamageDealt", "RecoilThirdOfDamageDealtParalyzeTarget", "RecoilThirdOfDamageDealtBurnTarget" 
@@ -532,6 +533,7 @@ class Battle::AI
 			if user.hp*(1.0/user.totalhp)>0.15 && user.hp*(1.0/user.totalhp)<0.4
 				score *= 0.8
 			end
+			score *= 0.8 if user.effects[PBEffects::BoomInstalled]
 		end
 		# volt tackle
 		if move.function == "RecoilThirdOfDamageDealtParalyzeTarget"
@@ -555,9 +557,7 @@ class Battle::AI
 				end
 				miniscore-=100
 				miniscore*=(move.addlEffect.to_f/100.0)
-				if user.hasActiveAbility?(:SERENEGRACE) && 
-					((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-						!target.affectedByTerrain?)
+				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
 				miniscore+=100
@@ -586,9 +586,7 @@ class Battle::AI
 				end
 				miniscore-=100
 				miniscore*=(move.addlEffect.to_f/100.0)
-				if user.hasActiveAbility?(:SERENEGRACE) && 
-					((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-					 !target.affectedByTerrain?)
+				if user.hasActiveAbility?(:SERENEGRACE)
 					miniscore*=2
 				end
 				miniscore+=100
@@ -606,6 +604,7 @@ class Battle::AI
 			if user.hp*(1.0/user.totalhp)>0.2 && user.hp*(1.0/user.totalhp)<0.4
 				score *= 0.8
 			end
+			score *= 0.75 if user.effects[PBEffects::BoomInstalled]
 		end
     #---------------------------------------------------------------------------
     when "EffectivenessIncludesFlyingType" # flying press
@@ -781,11 +780,8 @@ class Battle::AI
 				miniscore-=100
 				if move.addlEffect.to_f != 100
 					miniscore*=(move.addlEffect.to_f/100.0)
-					if (@battle.field.terrain == :Misty || 
-					   globalArray.include?("misty terrain")) && !target.affectedByTerrain?
-						miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
-						miniscore*=2 # 2 hits = 2x the chance
-					end
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+					miniscore*=2 # 2 hits = 2x the chance
 				end   
 				miniscore+=100
 				miniscore/=100.0
@@ -880,6 +876,10 @@ class Battle::AI
 						else
 							score*=0.8
 						end
+						damage = pbRoughDamage(move,user,target,skill)
+						damage = damage * 100.0 / target.hp
+						score += damage
+						# + since it is on the negatives
 					end
 				else
 					score=0
@@ -1299,9 +1299,7 @@ class Battle::AI
 			end
 			miniscore-=100
 			miniscore*=(move.addlEffect.to_f/100.0)
-			if user.hasActiveAbility?(:SERENEGRACE) && 
-				((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-				 !target.affectedByTerrain?)
+			if user.hasActiveAbility?(:SERENEGRACE)
 				miniscore*=2
 			end
 			miniscore+=100
@@ -1361,9 +1359,7 @@ class Battle::AI
 			end
 			miniscore-=100
 			miniscore*=(move.addlEffect.to_f/100.0)
-			if user.hasActiveAbility?(:SERENEGRACE) && 
-				((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-				 !target.affectedByTerrain?)
+			if user.hasActiveAbility?(:SERENEGRACE)
 				miniscore*=2
 			end
 			miniscore+=100
@@ -2035,9 +2031,7 @@ class Battle::AI
 			end
 			miniscore-=100
 			miniscore*=(move.addlEffect.to_f/100.0)
-			if user.hasActiveAbility?(:SERENEGRACE) && 
-				((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-				 !target.affectedByTerrain?)
+			if user.hasActiveAbility?(:SERENEGRACE)
 				miniscore*=2
 			end
 			miniscore+=100
@@ -2847,8 +2841,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDoneIfTargetAsleep" # dream eater
-      	if target.asleep? && target.battle.choices[target.index][0] != :SwitchOut
-			minimini = score*0.01
+      	if target.asleep? && (target.statusCount > 1 || userFasterThanTarget)
+			minimini = pbRoughDamage(move,user,target,skill)
+			minimini = minimini * 100.0 / target.hp
 			miniscore = (target.hp*minimini)/2.0
 			if miniscore > (user.totalhp-user.hp)
 				miniscore = (user.totalhp-user.hp)
@@ -2867,6 +2862,7 @@ class Battle::AI
 					userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
 				score*=miniscore
 			end
+			score = 0 if target.battle.choices[target.index][0] == :SwitchOut
 		else
 			score = 0
       	end
@@ -5242,7 +5238,7 @@ class Battle::AI
 		if !target.pbCanLowerStatStage?(:ATTACK) && !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
 			score=0
 		else
-			if @battle.pbAbleNonActiveCount(user.idxOwnSide)==0
+			if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
 				if user.pbOwnSide.effects[PBEffects::StealthRock]
 					score*=0.7
 				end

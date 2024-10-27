@@ -624,25 +624,37 @@ class Battle::AI
 						(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
     #---------------------------------------------------------------------------
 	when "BOOMInstall"
-		if move.baseDamage == 0 && target.effects[PBEffects::BoomInstalled]
-			score = 0
+		if target.effects[PBEffects::BoomInstalled]
+			score = 0 if move.baseDamage == 0
 		else
-			damagingstatus = (target.poisoned? || target.burned? || target.frozen?)
-			statmove = physmove = specmove = false
-			for j in user.moves
-				statmove = true if [:WILLOWISP, :BITINGCOLD, :TOXIC].include?(j.id)
-				physmove = true if j.physicalMove?(j.type)
-				specmove = true if j.specialMove?(j.type)
-			end
-			score *= 1.15 if target.stages[:DEFENSE] > 0 && physmove
-			score *= 1.15 if target.stages[:SPECIAL_DEFENSE] > 0 && specmove
-			score *= 1.3 if statmove
-			score *= 1.3 if damagingstatus
 			score *= 1.2 if target.hp == target.totalhp
+
+			physmove = user.moves.any? { |j| j&.physicalMove?(j&.type) }
+			specmove = user.moves.any? { |j| j&.specialMove?(j&.type) }
+			score *= 1.2 if target.stages[:DEFENSE] > 0 && physmove
+			score *= 1.2 if target.stages[:SPECIAL_DEFENSE] > 0 && specmove
+			if target.takesIndirectDamage?
+				statmove = user.moves.any? { |j| [:WILLOWISP, :BITINGCOLD, :TOXIC].include?(j&.id) }
+				score *= 1.3 if statmove || (target.burned? || target.frozen? || target.poisoned?)
+				score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater") ||
+								target.effects[PBEffects::Trapping] > 0
+				score *= 1.3 if target.hasActiveItem?(:LIFEORB)
+				if user.hasActiveAbility?([:ROUGHSKIN, :IRONBARBS])
+					score *= 1.2 if target.moves.any? { |m| m&.pbContactMove?(user) }
+				end
+				if target.hasActiveAbility?(:SOLARPOWER) && 
+				   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
+					score *= 1.3
+				end
+				if ((target.effectiveWeather == :Hail || globalArray.include?("hail weather")) && target.takesHailDamage?) || 
+				   ((target.effectiveWeather == :Sandstorm || globalArray.include?("sand weather")) && target.takesSandstormDamage?)
+					score *= 1.3
+				end
+			end
 		end
     #---------------------------------------------------------------------------
     else
-      return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
+    	return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
     end
     return score
   end
@@ -1946,12 +1958,13 @@ class Battle::AI
 
 	def targetWillMove?(target, action = "AG")
 		if @battle.choices[target.index][0] == :UseMove
-			return true if @battle.choices[target.index][2].physicalMove? && action == "phys"
-			return true if @battle.choices[target.index][2].specialMove? && action == "spec"
-			return true if @battle.choices[target.index][2].statusMove? && action == "status"
-			return true if action == "AG"
-		else
-			return false
+			if @battle.choices[target.index][1] # checking if there is a move index
+				return true if @battle.choices[target.index][2].physicalMove? && action == "phys"
+				return true if @battle.choices[target.index][2].specialMove? && action == "spec"
+				return true if @battle.choices[target.index][2].statusMove? && action == "status"
+				return true if action == "AG"
+				return false
+			end
 		end
 		return false
 	end

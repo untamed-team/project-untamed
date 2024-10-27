@@ -104,6 +104,11 @@ class Battle::AI
 		setupcheck = false
 		setupcheck = true if pbHasSetupMove?(target, false)
 		alldam = false if setupcheck
+		if targetWillMove?(target)
+			score*=1.5 if !@battle.choices[target.index][2].statusMove?
+		else
+			score=0
+		end
 		if alldam && !pricheck
 			score*=1.3
 		else
@@ -112,11 +117,6 @@ class Battle::AI
 			end
 			if setupcheck
 				score*=0.8
-			end
-			if targetWillMove?(target)
-				score*=1.5 if !@battle.choices[target.index][2].statusMove?
-			else
-				score=0
 			end
 			if user.lastMoveUsed == :SUCKERPUNCH # Sucker Punch last turn
 				if setupvar
@@ -1105,9 +1105,7 @@ class Battle::AI
 			end
 			miniscore-=100
 			miniscore*=(move.addlEffect.to_f/100.0)
-			if user.hasActiveAbility?(:SERENEGRACE) && 
-				((@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && 
-					!target.affectedByTerrain?)
+			if user.hasActiveAbility?(:SERENEGRACE)
 				miniscore*=2
 			end
 			miniscore+=100
@@ -3808,8 +3806,8 @@ class Battle::AI
 			end
 		end
 		miniscore=100
-		if user.stages[:ATTACK]<0
-			ministat=user.stages[:ATTACK]
+		if user.stages[:SPEED]<0
+			ministat=user.stages[:SPEED]
 			minimini=5*ministat
 			minimini+=100
 			minimini/=100.0
@@ -3865,10 +3863,6 @@ class Battle::AI
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
-			miniscore*=2
-		end
 		if (user.hp.to_f)/user.totalhp>0.75
 			miniscore*=1.2
 		end
@@ -3887,7 +3881,7 @@ class Battle::AI
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
-			miniscore*=1.2
+			miniscore*=1.3
 		else
 			if move.baseDamage==0 
 				miniscore*=0.8
@@ -3995,9 +3989,9 @@ class Battle::AI
 				score*=miniscore
 			end
 		end
-		miniscore=100
-		if user.stages[:ATTACK]<0
-			ministat=user.stages[:ATTACK]
+		miniscore=125
+		if user.stages[:SPEED]<0
+			ministat=user.stages[:SPEED]
 			minimini=5*ministat
 			minimini+=100
 			minimini/=100.0
@@ -4040,6 +4034,10 @@ class Battle::AI
 		if !user.statStageAtMax?(:SPEED)
 			miniscore/=100.0
 			score*=miniscore
+		end
+		hasAlly = !target.allAllies.empty?
+		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			score*=2
 		end
 		score=0 if user.statStageAtMax?(:SPEED) && user.statStageAtMax?(:ATTACK)
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
@@ -5833,7 +5831,7 @@ class Battle::AI
 					break
 				end
 			end
-			miniscore*=1.5 if healingmove
+			miniscore*=1.2 if healingmove
 			livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
 			livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
 			if livecounttarget==1 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0

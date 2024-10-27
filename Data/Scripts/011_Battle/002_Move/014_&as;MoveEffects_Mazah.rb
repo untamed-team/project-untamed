@@ -346,6 +346,8 @@ end
 # Increases the damage recived from all sources by 25%. (Virus Inject)
 #===============================================================================
 class Battle::Move::BOOMInstall < Battle::Move
+  def canMagicCoat?; return true; end
+  
   def pbFailsAgainstTarget?(user,target,show_message)
     return if damagingMove?
     if target.effects[PBEffects::BoomInstalled]

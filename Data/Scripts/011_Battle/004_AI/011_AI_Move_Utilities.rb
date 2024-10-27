@@ -281,14 +281,14 @@ class Battle::AI
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
       baseDmg *= 2 if Settings::MECHANICS_GENERATION >= 7 && skill >= PBTrainerAI.mediumSkill &&
                       target.effects[PBEffects::Minimize]
-    when "AlwaysCriticalHit", "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
+    when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
          "HitTwoTimesTargetThenTargetAlly"
       # Frost Breath, Double Kick, Twineedle
       baseDmg *= 2
     when "HitTwoTimesFlinchTarget"   # Double Iron Bash
       baseDmg *= 2
       baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
-    when "HitThreeTimesPowersUpWithEachHit", "HitThreeTimesAlwaysCriticalHit" # Triple Kick
+    when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
       baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
     when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1"   # Fury Attack
       if user.hasActiveAbility?(:SKILLLINK)
@@ -367,6 +367,7 @@ class Battle::AI
     end
     baseDmg = 60 if baseDmg == 1
     return baseDmg
+    # always crit moves are dealt with on pbRoughDamage
   end
 
 	#=============================================================================

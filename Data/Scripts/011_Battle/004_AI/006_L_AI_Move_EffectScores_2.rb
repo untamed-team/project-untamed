@@ -220,9 +220,11 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				if user.hasActiveAbility?(:SERENEGRACE)
-					miniscore*=2
+				if move.addlEffect.to_f == 100
+					miniscore*=2 # nuzzle
+				else
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 				end
 				miniscore+=100
 				miniscore/=100.0

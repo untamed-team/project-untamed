@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (false && $DEBUG)
+	$AIMASTERLOG = (true && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
@@ -361,7 +361,7 @@ class Battle::AI
 
 		# not a fan of randomness one bit, but i cant do much about this move
 		# Try play "mind games" instead of just getting baited every time.
-		if user.lastMoveUsed == :SUCKERPUNCH && move.function == "FailsIfTargetActed"
+		if move.function == "FailsIfTargetActed"
 			if @battle.choices[target.index][0]!=:UseMove
 				if pbAIRandom(100) < 80	
 					echo("\n'Predicting' that opponent will not attack and sucker will fail")
@@ -370,7 +370,7 @@ class Battle::AI
 				end
 			else
 				if @battle.choices[target.index][1]
-					if !@battle.choices[target.index][2].damagingMove? && pbAIRandom(100) < 50	
+					if !@battle.choices[target.index][2].damagingMove? && pbAIRandom(100) < 66	
 						echo("\n'Predicting' that opponent will not attack and sucker will fail")
 						score=1
 						realDamage=0 
