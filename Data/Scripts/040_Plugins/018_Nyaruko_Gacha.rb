@@ -12,6 +12,7 @@ POSSIBLE_TICKETS = %w[TicketA TicketB TicketC GoldMilageTicket]
 TICKETS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
 # (pokeman, ability_index, item, form)
 GACHA_USED = 97
+GACHA_TIME = 96
 
 # LootBox.new.pbStartMainScene on a npc
 
@@ -23,6 +24,7 @@ class LootBox
     viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     viewport.z = 99999
 
+    $game_variables[GACHA_TIME] = Time.now.to_i
     gachaamt = $game_variables[GACHA_USED]
     random0 = semiRandomRNG(85..100, gachaamt)
     
@@ -79,6 +81,10 @@ class LootBox
         for i in 1..3
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
+          if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
+            random_val = random_val * 0.8
+            random_val = random_val.to_i
+          end
           $game_variables[GACHA_USED] += 1
           random_val = 0 if i == 3 && $game_variables[GACHA_USED] == 3
 
@@ -90,7 +96,6 @@ class LootBox
               sprites["icon#{i}"].item = GameData::Item.get(:GOLDTICKET).id
               pbMessage(_INTL("\\me[{1}]You obtained a \\c[1]{2}\\c[0]!\\wtnp[30]", "Item get", p_rare[pokeman].to_s))
               $PokemonGlobal.ticketStorage.push(p_rare[pokeman])
-              echoln $PokemonGlobal.ticketStorage
             when 4..10 # 6
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
               pbWait(20)
@@ -115,7 +120,7 @@ class LootBox
               item = semiRandomRNG(uncommon.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(uncommon[item]).id
               pbReceiveItem(uncommon[item])
-            else # 35
+            else        # 35
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
               pbWait(20)
               item = semiRandomRNG(common.length, gachaamt)
