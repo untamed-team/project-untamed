@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
@@ -96,7 +96,7 @@ Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,5
+Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
