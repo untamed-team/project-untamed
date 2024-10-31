@@ -6784,3 +6784,12 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A convenient notebook that contains all the advice a Trainer receives out on an adventure.
+#-------------------------------
+[GOLDCAMERA]
+Name = Golden Camera
+NamePlural = Golden Camera
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Tracks any movement without blur. Selling the footage to TETRA is automatic and non-negotiable.

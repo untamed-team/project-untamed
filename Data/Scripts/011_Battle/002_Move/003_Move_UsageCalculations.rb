@@ -316,6 +316,11 @@ class Battle::Move
       :final_damage_multiplier => 1.0
     }
     pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
+    # Golden Camera calculation
+    if $PokemonGlobal.goldencamera
+      atk *= 0.8 if user.pbOwnedByPlayer?
+      defense *= 0.8 if target.pbOwnedByPlayer?
+    end
     # Main damage calculation
     baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
     atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max

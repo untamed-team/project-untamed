@@ -364,6 +364,20 @@ class Battle
         $stats.battle_money_gained += moneyGained
         pbDisplayPaused(_INTL("You got ${1} for winning!", moneyGained.to_s_formatted))
       end
+      
+      # gold camera #by low
+      if $bag.has?(:COINCASE) && $PokemonGlobal.goldencamera
+        tCoins = 0
+        @opponent.each_with_index do |t, i|
+          tCoins += (t.base_money * 0.8)
+        end
+        tCoins = tCoins.to_i
+        oldCoins = pbPlayer.coins
+        pbPlayer.coins += tCoins
+        pbPlayer.coins = Settings::MAX_COINS if pbPlayer.coins > Settings::MAX_COINS
+        coinsGained = pbPlayer.coins - oldCoins
+        pbDisplayPaused(_INTL("The footage was sold for {1} coins!", coinsGained.to_s_formatted)) if coinsGained
+      end
     end
     # Pick up money scattered by Pay Day
     if @field.effects[PBEffects::PayDay] > 0
