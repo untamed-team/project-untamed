@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (true && $DEBUG)
+	$AIMASTERLOG = (false && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
@@ -67,7 +67,7 @@ class Battle::AI
 			maxScore = c[1] if maxScore < c[1]
 		end
 		# Log the available choices
-		if $INTERNAL || $AIGENERALLOG
+		if $INTERNAL
 			logMsg = "[AI] Move choices for #{user.pbThis(true)} (#{user.index}): "
 			choices.each_with_index do |c, i|
 				logMsg += "#{user.moves[c[0]].name}=#{c[1]}"
@@ -137,7 +137,7 @@ class Battle::AI
 				#preferredMoves.push(c)
 				# DemICE prefer ONLY the best move
 				preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
-				echoln(preferredMoves)
+				echoln(preferredMoves) if $AIGENERALLOG
 			end
 			if preferredMoves.length > 0
 				m = preferredMoves[pbAIRandom(preferredMoves.length)]
@@ -148,6 +148,7 @@ class Battle::AI
 			end
 			#end
 		end
+		choices.shuffle! if wildBattler
 		# Decide whether all choices are bad, and if so, try switching instead
 		if !user.wild? #!wildBattler
 			badMoves = false
@@ -172,6 +173,7 @@ class Battle::AI
 				return
 			end
 		end
+		bestScore = ["Splash",0]
 		# If there are no calculated choices, pick one at random
 		if choices.length == 0
 			PBDebug.log("[AI] #{user.pbThis} (#{user.index}) doesn't want to use any moves; picking one at random")
@@ -182,15 +184,15 @@ class Battle::AI
 			if choices.length == 0   # No moves are physically possible to use; use Struggle
 				@battle.pbAutoChooseMove(user.index)
 			end
-		end
-		bestScore = ["Splash",0]
-		choices.each do |c|
-			if bestScore[1] < c[1]
-				bestScore[1] = c[1]
-				bestScore[0] = c[0]
+		else
+			choices.each do |c|
+				if bestScore[1] < c[1]
+					bestScore[1] = c[1]
+					bestScore[0] = c[0]
+				end
 			end
 		end
-		if bestScore[1] <= 40
+		if bestScore[1] <= 60
 			# in case everything sucks, try switching (again)
 			if !user.wild? && !attemptedSwitching && pbEnemyShouldWithdrawEx?(idxBattler, true)
 				if $INTERNAL
@@ -239,14 +241,14 @@ class Battle::AI
 		else # Status moves # each status move has a value tied to them
 			statusDamage = pbStatusDamage(move)
 			return 0 if statusDamage <= 0
-			# Mult varies between 1.056x at 5 status dmg and 1.284x at 100 status dmg
+			# Mult varies between 1.037x at 5 status dmg and 1.499x at 100 status dmg
 			statusDamageMult = 1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 30))))
 			score = initScore * statusDamageMult
 			initScore = score
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			# Prefer status moves if level difference is significantly high
 			if user.level - 5 > target.level
-				score *= 1.2
+				score *= 1.1
 			else
 				# Don't prefer set up moves if it was already used and still have raised stats
 				if user.SetupMovesUsed.include?(move.id) && user.hasRaisedStatStages?
@@ -338,10 +340,6 @@ class Battle::AI
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
 		# Account for accuracy of move # its done on pbmovescore
-		#accuracy = pbRoughAccuracy(move, user, target, skill)
-		#accuracy = 100 if accuracy > 100
-		#realDamage *= accuracy / 100.0
-
 		# Two-turn attacks waste 2 turns to deal one lot of damage
 		# Not halved because semi-invulnerable during use or hits first turn
 		if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", 
@@ -349,7 +347,7 @@ class Battle::AI
 			  "AttackTwoTurnsLater", "TwoTurnAttack"].include?(move.function) ||
 			  (move.function == "TwoTurnAttackOneTurnInSun" && ![:Sun, :HarshSun].include?(user.effectiveWeather))) && 
 			  !user.hasActiveItem?(:POWERHERB))
-		  realDamage *= (2 / 3.0)
+			realDamage *= (2 / 3.0)
 		end
 		# Special interaction for beeg guns hyper beam clones
 		if move.function == "AttackAndSkipNextTurn"
@@ -388,6 +386,8 @@ class Battle::AI
 				 "HitThreeToFiveTimes", "HitThreeTimesPowersUpWithEachHit", 
 				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				realDamage*=2.2
+			else
+				realDamage=(target.totalhp / 8.0)
 			end
 		end	
 		# Prefer flinching external effects (note that move effects which cause
@@ -415,8 +415,9 @@ class Battle::AI
 		# Prefer status moves if level difference is significantly high
 		damagePercentage *= 0.5 if user.level - 5 > target.level
 		# Adjust score
-		if damagePercentage > 100   # Treat all lethal moves the same   # DemICE
+		if damagePercentage > 100   # Treat all lethal moves the same # DemICE
 			damagePercentage = 110 
+			damagePercentage += 40 # Prefer moves likely to be lethal # DemICE
 			if ["RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints"].include?(move.function) # DemICE: Fell Stinger should be preferred among other moves that KO
 				if user.hasActiveAbility?(:CONTRARY)
 					damagePercentage-=90    
@@ -431,7 +432,6 @@ class Battle::AI
 			end
 		end  
 #		damagePercentage -= 1 if accuracy < 100 # DemICE
-		damagePercentage += 40 if damagePercentage > 100 # Prefer moves likely to be lethal # DemICE
 		damagePercentage = damagePercentage.to_i
 		score += damagePercentage
 		if $AIGENERALLOG

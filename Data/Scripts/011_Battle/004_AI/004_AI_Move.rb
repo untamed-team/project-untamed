@@ -126,15 +126,11 @@ class Battle::AI
 	def pbRegisterMoveTrainer(user, idxMove, choices, skill)
 		move = user.moves[idxMove]
 		target_data = move.pbTarget(user)
-       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song
-    if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers].include?(target_data.id)
+       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
+    if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
 			# If move does not have a defined target the AI will calculate
 			# a average of every enemy currently active
-      oppcounter = 0
-			@battle.allBattlers.each do |b|
-				next if !user.opposes?(b)
-        oppcounter += 1
-      end
+      oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
       if oppcounter == 1
         @battle.allBattlers.each do |b|
           next if !user.opposes?(b)
@@ -150,7 +146,6 @@ class Battle::AI
         end
         choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
       end
-      # maybe slows down the game? 
     elsif target_data.num_targets == 0
 			# If move affects multiple Pokémon and the AI calculates an overall
 			# score at once instead of per target

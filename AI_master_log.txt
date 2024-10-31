@@ -1,9 +1,3 @@
-Move Frost Breath real damage on Garbodor: 57
-Move Frost Breath damage % on Garbodor: 40%
-Move Frost Breath has initial score 80
-Move Beat Up real damage on Garbodor: 29
-Move Beat Up damage % on Garbodor: 10%
-Move Beat Up has initial score 80
 -----------------------------------------------------------------------
                       Score Board for Ludicolo
 -----------------------------------------------------------------------
@@ -73,8 +67,8 @@ Move Struggle Bug has initial score 80.0
 Move Struggle Bug ( Category: Special ) has final score 89
 Move Fury Cutter real damage on Garbodor: 12
 Move Fury Cutter damage % on Garbodor: 4%
-Move Fury Cutter has initial score 124.80000000000001
-Move Fury Cutter ( Category: Physical ) has final score 128
+Move Fury Cutter has initial score 156.0
+Move Fury Cutter ( Category: Physical ) has final score 160
 Move Pin Missile real damage on Garbodor: 54
 Move Pin Missile damage % on Garbodor: 38%
 Move Pin Missile has initial score 80
@@ -85,8 +79,8 @@ Move Twineedle has initial score 112.0
 Move Twineedle ( Category: Physical ) has final score 121
 Move Infestation real damage on Garbodor: 12
 Move Infestation damage % on Garbodor: 4%
-Move Infestation has initial score 126.72
-Move Infestation ( Category: Special ) has final score 130
+Move Infestation has initial score 115.19999999999999
+Move Infestation ( Category: Special ) has final score 119
 Move Defend Order has initial score 100.0
 Move Defend Order ( Category: Status ) has final score 172
 Move Heal Order has initial score 119.28055160151632
@@ -100,7 +94,7 @@ Move Rage Powder ( Category: Status ) has final score 0
 Move Spider Web has initial score 95.10162675192582
 Move Spider Web ( Category: Status ) has final score 95
 Move Sticky Web has initial score 115.23188311911528
-Move Sticky Web ( Category: Status ) has final score 110
+Move Sticky Web ( Category: Status ) has final score 121
 Move String Shot has initial score 84.76811688088469
 Move String Shot ( Category: Status ) has final score 0
 Move Tail Glow has initial score 118.10296507289733
@@ -157,7 +151,7 @@ Move Night Slash has initial score 80
 Move Night Slash ( Category: Physical ) has final score 114
 Move Sucker Punch real damage on Garbodor: 0
 Move Sucker Punch damage % on Garbodor: 0%
-Move Sucker Punch has initial score 30.720000000000006
+Move Sucker Punch has initial score 38.400000000000006
 Move Sucker Punch ( Category: Physical ) has final score 1
 Move Knock Off real damage on Garbodor: 22
 Move Knock Off damage % on Garbodor: 7%
@@ -224,40 +218,40 @@ Move Memento ( Category: Status ) has final score 16
 Move Nasty Plot has initial score 115.23188311911528
 Move Nasty Plot ( Category: Status ) has final score 388
 Move Obstruct has initial score 119.7322859630286
-Move Obstruct ( Category: Status ) has final score 107
+Move Obstruct ( Category: Status ) has final score 179
 Move Parting Shot has initial score 109.2423431452002
-Move Parting Shot ( Category: Status ) has final score 187
+Move Parting Shot ( Category: Status ) has final score 206
 Move Quash ( Category: Status ) has final score 0
 Move Snatch has initial score 95.10162675192582
-Move Snatch ( Category: Status ) has final score 136
+Move Snatch ( Category: Status ) has final score 114
 Move Switcheroo has initial score 100.0
 Move Switcheroo ( Category: Status ) has final score 0
 Move Taunt has initial score 100.0
-Move Taunt ( Category: Status ) has final score 1087
+Move Taunt ( Category: Status ) has final score 836
 Move Topsy-Turvy has initial score 115.23188311911528
 Move Topsy-Turvy ( Category: Status ) has final score 0
 Move Torment has initial score 84.76811688088469
 Move Torment ( Category: Status ) has final score 101
 Move Eternabeam real damage on Garbodor: 65
 Move Eternabeam damage % on Garbodor: 46%
-Move Eternabeam has initial score 24.0
-Move Eternabeam ( Category: Special ) has final score 70
+Move Eternabeam has initial score 48.0
+Move Eternabeam ( Category: Special ) has final score 94
 Move Dragon Energy real damage on Garbodor: 92
 Move Dragon Energy damage % on Garbodor: 65%
 Move Dragon Energy has initial score 80
 Move Dragon Energy ( Category: Special ) has final score 145
 Move Roar of Time real damage on Garbodor: 61
 Move Roar of Time damage % on Garbodor: 43%
-Move Roar of Time has initial score 24.0
-Move Roar of Time ( Category: Special ) has final score 67
+Move Roar of Time has initial score 48.0
+Move Roar of Time ( Category: Special ) has final score 91
 Move Draco Meteor real damage on Garbodor: 80
 Move Draco Meteor damage % on Garbodor: 57%
 Move Draco Meteor has initial score 64.8
 Move Draco Meteor ( Category: Special ) has final score 121
 Move Outrage real damage on Garbodor: 74
 Move Outrage damage % on Garbodor: 52%
-Move Outrage has initial score 55.44
-Move Outrage ( Category: Physical ) has final score 107
+Move Outrage has initial score 50.4
+Move Outrage ( Category: Physical ) has final score 102
 Move Clanging Scales real damage on Garbodor: 62
 Move Clanging Scales damage % on Garbodor: 44%
 Move Clanging Scales has initial score 15.679999999999998
@@ -296,8 +290,8 @@ Move Breaking Swipe has initial score 80.0
 Move Breaking Swipe ( Category: Physical ) has final score 91
 Move Dragon Breath real damage on Garbodor: 32
 Move Dragon Breath damage % on Garbodor: 11%
-Move Dragon Breath has initial score 86.4128
-Move Dragon Breath ( Category: Special ) has final score 97
+Move Dragon Breath has initial score 83.64800000000001
+Move Dragon Breath ( Category: Special ) has final score 94
 Move Dragon Tail real damage on Garbodor: 32
 Move Dragon Tail damage % on Garbodor: 11%
 Move Dragon Tail has initial score 80
@@ -316,8 +310,8 @@ Move Twister has initial score 84.80000000000001
 Move Twister ( Category: Special ) has final score 91
 Move Scale Shot real damage on Garbodor: 54
 Move Scale Shot damage % on Garbodor: 38%
-Move Scale Shot has initial score 56.44799999999999
-Move Scale Shot ( Category: Physical ) has final score 94
+Move Scale Shot has initial score 32.51404799999999
+Move Scale Shot ( Category: Physical ) has final score 70
 Move Dragon Rage real damage on Garbodor: 48
 Move Dragon Rage damage % on Garbodor: 34%
 Move Dragon Rage has initial score 80
@@ -328,36 +322,36 @@ Move Dragon Dance has initial score 118.10296507289733
 Move Dragon Dance ( Category: Status ) has final score 337
 Move Bolt Strike real damage on Garbodor: 80
 Move Bolt Strike damage % on Garbodor: 57%
-Move Bolt Strike has initial score 84.2752
-Move Bolt Strike ( Category: Physical ) has final score 137
+Move Bolt Strike has initial score 82.432
+Move Bolt Strike ( Category: Physical ) has final score 135
 Move Volt Tackle real damage on Garbodor: 74
 Move Volt Tackle damage % on Garbodor: 52%
-Move Volt Tackle has initial score 76.03200000000001
-Move Volt Tackle ( Category: Physical ) has final score 128
+Move Volt Tackle has initial score 73.44
+Move Volt Tackle ( Category: Physical ) has final score 125
 Move Zap Cannon real damage on Garbodor: 74
 Move Zap Cannon damage % on Garbodor: 52%
-Move Zap Cannon has initial score 112.064
-Move Zap Cannon ( Category: Special ) has final score 106
+Move Zap Cannon has initial score 116.47999999999998
+Move Zap Cannon ( Category: Special ) has final score 111
 Move Aura Wheel real damage on Garbodor: 68
 Move Aura Wheel damage % on Garbodor: 48%
 Move Aura Wheel has initial score 138.23999999999998
 Move Aura Wheel ( Category: Physical ) has final score 186
 Move Thunder real damage on Garbodor: 68
 Move Thunder damage % on Garbodor: 48%
-Move Thunder has initial score 86.4128
-Move Thunder ( Category: Special ) has final score 107
+Move Thunder has initial score 83.64800000000001
+Move Thunder ( Category: Special ) has final score 104
 Move Fusion Bolt real damage on Garbodor: 62
 Move Fusion Bolt damage % on Garbodor: 44%
 Move Fusion Bolt has initial score 80
 Move Fusion Bolt ( Category: Physical ) has final score 124
 Move Plasma Fists real damage on Garbodor: 62
 Move Plasma Fists damage % on Garbodor: 44%
-Move Plasma Fists has initial score 36.0
-Move Plasma Fists ( Category: Physical ) has final score 80
+Move Plasma Fists has initial score 80
+Move Plasma Fists ( Category: Physical ) has final score 124
 Move Thunderbolt real damage on Garbodor: 56
 Move Thunderbolt damage % on Garbodor: 40%
-Move Thunderbolt has initial score 82.1376
-Move Thunderbolt ( Category: Special ) has final score 122
+Move Thunderbolt has initial score 81.216
+Move Thunderbolt ( Category: Special ) has final score 121
 Move Wild Charge real damage on Garbodor: 56
 Move Wild Charge damage % on Garbodor: 40%
 Move Wild Charge has initial score 72.0
@@ -368,24 +362,24 @@ Move Bolt Beak has initial score 160
 Move Bolt Beak ( Category: Physical ) has final score 169
 Move Discharge real damage on Garbodor: 50
 Move Discharge damage % on Garbodor: 35%
-Move Discharge has initial score 86.4128
-Move Discharge ( Category: Special ) has final score 121
+Move Discharge has initial score 83.64800000000001
+Move Discharge ( Category: Special ) has final score 118
 Move Overdrive real damage on Garbodor: 50
 Move Overdrive damage % on Garbodor: 35%
 Move Overdrive has initial score 80
 Move Overdrive ( Category: Special ) has final score 115
 Move Thunder Cage real damage on Garbodor: 50
 Move Thunder Cage damage % on Garbodor: 35%
-Move Thunder Cage has initial score 126.72
-Move Thunder Cage ( Category: Special ) has final score 161
+Move Thunder Cage has initial score 115.19999999999999
+Move Thunder Cage ( Category: Special ) has final score 150
 Move Zing Zap real damage on Garbodor: 50
 Move Zing Zap damage % on Garbodor: 35%
 Move Zing Zap has initial score 87.2
 Move Zing Zap ( Category: Physical ) has final score 122
 Move Thunder Punch real damage on Garbodor: 46
 Move Thunder Punch damage % on Garbodor: 32%
-Move Thunder Punch has initial score 82.1376
-Move Thunder Punch ( Category: Physical ) has final score 114
+Move Thunder Punch has initial score 81.216
+Move Thunder Punch ( Category: Physical ) has final score 113
 Move Rising Voltage real damage on Garbodor: 27
 Move Rising Voltage damage % on Garbodor: 9%
 Move Rising Voltage has initial score 80
@@ -400,12 +394,12 @@ Move Parabolic Charge has initial score 80.0
 Move Parabolic Charge ( Category: Special ) has final score 92
 Move Spark real damage on Garbodor: 34
 Move Spark damage % on Garbodor: 12%
-Move Spark has initial score 86.4128
-Move Spark ( Category: Physical ) has final score 98
+Move Spark has initial score 83.64800000000001
+Move Spark ( Category: Physical ) has final score 95
 Move Thunder Fang real damage on Garbodor: 34
 Move Thunder Fang damage % on Garbodor: 12%
-Move Thunder Fang has initial score 123.27040000000001
-Move Thunder Fang ( Category: Physical ) has final score 135
+Move Thunder Fang has initial score 128.128
+Move Thunder Fang ( Category: Physical ) has final score 140
 Move Shock Wave real damage on Garbodor: 32
 Move Shock Wave damage % on Garbodor: 11%
 Move Shock Wave has initial score 80
@@ -414,18 +408,18 @@ Move Electroweb real damage on Garbodor: 29
 Move Electroweb damage % on Garbodor: 10%
 Move Electroweb has initial score 80
 Move Electroweb ( Category: Special ) has final score 90
-Move Charge Beam real damage on Garbodor: 27
-Move Charge Beam damage % on Garbodor: 9%
-Move Charge Beam has initial score 212.69759999999997
-Move Charge Beam ( Category: Special ) has final score 221
+Move Charge Beam real damage on Garbodor: 22
+Move Charge Beam damage % on Garbodor: 7%
+Move Charge Beam has initial score 269.568
+Move Charge Beam ( Category: Special ) has final score 276
 Move Thunder Shock real damage on Garbodor: 22
 Move Thunder Shock damage % on Garbodor: 7%
-Move Thunder Shock has initial score 82.1376
-Move Thunder Shock ( Category: Special ) has final score 89
+Move Thunder Shock has initial score 81.216
+Move Thunder Shock ( Category: Special ) has final score 88
 Move Nuzzle real damage on Garbodor: 12
 Move Nuzzle damage % on Garbodor: 4%
-Move Nuzzle has initial score 112.064
-Move Nuzzle ( Category: Physical ) has final score 116
+Move Nuzzle has initial score 116.47999999999998
+Move Nuzzle ( Category: Physical ) has final score 120
 Move Electro Ball real damage on Garbodor: 32
 Move Electro Ball damage % on Garbodor: 11%
 Move Electro Ball has initial score 80
@@ -435,17 +429,17 @@ Move Charge ( Category: Status ) has final score 156
 Move Eerie Impulse has initial score 90.7576568547998
 Move Eerie Impulse ( Category: Status ) has final score 90
 Move Electric Terrain has initial score 104.89837324807418
-Move Electric Terrain ( Category: Status ) has final score 104
+Move Electric Terrain ( Category: Status ) has final score 95
 Move Electrify has initial score 95.10162675192582
 Move Electrify ( Category: Status ) has final score 95
 Move Ion Deluge has initial score 95.10162675192582
-Move Ion Deluge ( Category: Status ) has final score 42
+Move Ion Deluge ( Category: Status ) has final score 47
 Move Magnet Rise has initial score 83.03432720084973
 Move Magnet Rise ( Category: Status ) has final score 83
 Move Magnetic Flux has initial score 90.7576568547998
 Move Magnetic Flux ( Category: Status ) has final score 0
 Move Thunder Wave has initial score 109.2423431452002
-Move Thunder Wave ( Category: Status ) has final score 138
+Move Thunder Wave ( Category: Status ) has final score 125
 Move Light of Ruin real damage on Garbodor: 92
 Move Light of Ruin damage % on Garbodor: 65%
 Move Light of Ruin has initial score 72.0
@@ -456,8 +450,8 @@ Move Fleur Cannon has initial score 64.8
 Move Fleur Cannon ( Category: Special ) has final score 116
 Move Misty Explosion real damage on Garbodor: 62
 Move Misty Explosion damage % on Garbodor: 44%
-Move Misty Explosion has initial score 4.032
-Move Misty Explosion ( Category: Special ) has final score 48
+Move Misty Explosion has initial score 13.440000000000001
+Move Misty Explosion ( Category: Special ) has final score 57
 Move Moonblast real damage on Garbodor: 56
 Move Moonblast damage % on Garbodor: 40%
 Move Moonblast has initial score 80.0
@@ -501,7 +495,7 @@ Move Baby-Doll Eyes ( Category: Status ) has final score 10
 Move Charm has initial score 84.76811688088469
 Move Charm ( Category: Status ) has final score 10
 Move Crafty Shield has initial score 83.03432720084973
-Move Crafty Shield ( Category: Status ) has final score 199
+Move Crafty Shield ( Category: Status ) has final score 249
 Move Decorate has initial score 84.76811688088469
 Move Decorate ( Category: Status ) has final score 0
 Move Fairy Lock has initial score 83.03432720084973
@@ -511,7 +505,7 @@ Move Floral Healing ( Category: Status ) has final score 0
 Move Flower Shield has initial score 95.10162675192582
 Move Flower Shield ( Category: Status ) has final score 0
 Move Geomancy has initial score 118.10296507289733
-Move Geomancy ( Category: Status ) has final score 428
+Move Geomancy ( Category: Status ) has final score 612
 Move Misty Terrain has initial score 104.89837324807418
 Move Misty Terrain ( Category: Status ) has final score 209
 Move Moonlight has initial score 119.28055160151632
@@ -520,16 +514,16 @@ Move Sweet Kiss has initial score 95.10162675192582
 Move Sweet Kiss ( Category: Status ) has final score 76
 Move Focus Punch real damage on Garbodor: 92
 Move Focus Punch damage % on Garbodor: 65%
-Move Focus Punch has initial score 144.0
-Move Focus Punch ( Category: Physical ) has final score 209
+Move Focus Punch has initial score 120.0
+Move Focus Punch ( Category: Physical ) has final score 185
 Move Meteor Assault real damage on Garbodor: 61
 Move Meteor Assault damage % on Garbodor: 43%
-Move Meteor Assault has initial score 24.0
-Move Meteor Assault ( Category: Physical ) has final score 67
+Move Meteor Assault has initial score 48.0
+Move Meteor Assault ( Category: Physical ) has final score 91
 Move High Jump Kick real damage on Garbodor: 80
 Move High Jump Kick damage % on Garbodor: 57%
-Move High Jump Kick has initial score 32.0
-Move High Jump Kick ( Category: Physical ) has final score 89
+Move High Jump Kick has initial score 64.0
+Move High Jump Kick ( Category: Physical ) has final score 121
 Move Close Combat real damage on Garbodor: 68
 Move Close Combat damage % on Garbodor: 48%
 Move Close Combat has initial score 45.36
@@ -560,8 +554,8 @@ Move Hammer Arm has initial score 51.84
 Move Hammer Arm ( Category: Physical ) has final score 95
 Move Jump Kick real damage on Garbodor: 62
 Move Jump Kick damage % on Garbodor: 44%
-Move Jump Kick has initial score 32.0
-Move Jump Kick ( Category: Physical ) has final score 76
+Move Jump Kick has initial score 64.0
+Move Jump Kick ( Category: Physical ) has final score 108
 Move Sacred Sword real damage on Garbodor: 56
 Move Sacred Sword damage % on Garbodor: 40%
 Move Sacred Sword has initial score 80.0
@@ -616,12 +610,12 @@ Move Circle Throw has initial score 80
 Move Circle Throw ( Category: Physical ) has final score 91
 Move Force Palm real damage on Garbodor: 32
 Move Force Palm damage % on Garbodor: 11%
-Move Force Palm has initial score 86.4128
-Move Force Palm ( Category: Physical ) has final score 97
+Move Force Palm has initial score 83.64800000000001
+Move Force Palm ( Category: Physical ) has final score 94
 Move Revenge real damage on Garbodor: 32
 Move Revenge damage % on Garbodor: 11%
-Move Revenge has initial score 48.0
-Move Revenge ( Category: Physical ) has final score 59
+Move Revenge has initial score 60.0
+Move Revenge ( Category: Physical ) has final score 71
 Move Rolling Kick real damage on Garbodor: 32
 Move Rolling Kick damage % on Garbodor: 11%
 Move Rolling Kick has initial score 84.80000000000001
@@ -664,8 +658,8 @@ Move Triple Kick has initial score 80
 Move Triple Kick ( Category: Physical ) has final score 91
 Move Counter real damage on Garbodor: 72
 Move Counter damage % on Garbodor: 51%
-Move Counter has initial score 24.0
-Move Counter ( Category: Physical ) has final score 75
+Move Counter has initial score 40.0
+Move Counter ( Category: Physical ) has final score 91
 Move Final Gambit real damage on Garbodor: 168
 Move Final Gambit damage % on Garbodor: 150%
 Move Final Gambit has initial score 30.800000000000004
@@ -687,11 +681,11 @@ Move Bulk Up ( Category: Status ) has final score 353
 Move Coaching has initial score 83.03432720084973
 Move Coaching ( Category: Status ) has final score 0
 Move Detect has initial score 100.0
-Move Detect ( Category: Status ) has final score 45
+Move Detect ( Category: Status ) has final score 150
 Move Mat Block has initial score 109.2423431452002
 Move Mat Block ( Category: Status ) has final score 109
 Move No Retreat has initial score 104.89837324807418
-Move No Retreat ( Category: Status ) has final score 185
+Move No Retreat ( Category: Status ) has final score 202
 Move Octolock has initial score 100.0
 Move Octolock ( Category: Status ) has final score 100
 Move Quick Guard has initial score 83.03432720084973
@@ -702,20 +696,20 @@ Move V-create has initial score 57.6
 Move V-create ( Category: Physical ) has final score 135
 Move Blast Burn real damage on Garbodor: 61
 Move Blast Burn damage % on Garbodor: 43%
-Move Blast Burn has initial score 24.0
-Move Blast Burn ( Category: Special ) has final score 67
+Move Blast Burn has initial score 48.0
+Move Blast Burn ( Category: Special ) has final score 91
 Move Eruption real damage on Garbodor: 92
 Move Eruption damage % on Garbodor: 65%
 Move Eruption has initial score 80
 Move Eruption ( Category: Special ) has final score 145
 Move Mind Blown real damage on Garbodor: 92
 Move Mind Blown damage % on Garbodor: 65%
-Move Mind Blown has initial score 25.479999999999997
-Move Mind Blown ( Category: Special ) has final score 90
+Move Mind Blown has initial score 50.959999999999994
+Move Mind Blown ( Category: Special ) has final score 115
 Move Shell Trap real damage on Garbodor: 92
 Move Shell Trap damage % on Garbodor: 65%
-Move Shell Trap has initial score 1.92
-Move Shell Trap ( Category: Special ) has final score 66
+Move Shell Trap has initial score 2.4000000000000004
+Move Shell Trap ( Category: Special ) has final score 67
 Move Blue Flare real damage on Garbodor: 80
 Move Blue Flare damage % on Garbodor: 57%
 Move Blue Flare has initial score 81.6
@@ -748,8 +742,8 @@ Move Inferno has initial score 88.0
 Move Inferno ( Category: Special ) has final score 74
 Move Magma Storm real damage on Garbodor: 62
 Move Magma Storm damage % on Garbodor: 44%
-Move Magma Storm has initial score 126.72
-Move Magma Storm ( Category: Special ) has final score 152
+Move Magma Storm has initial score 115.19999999999999
+Move Magma Storm ( Category: Special ) has final score 140
 Move Sacred Fire real damage on Garbodor: 62
 Move Sacred Fire damage % on Garbodor: 44%
 Move Sacred Fire has initial score 84.0
@@ -824,20 +818,20 @@ Move Ember has initial score 80.8
 Move Ember ( Category: Special ) has final score 87
 Move Fire Spin real damage on Garbodor: 19
 Move Fire Spin damage % on Garbodor: 6%
-Move Fire Spin has initial score 126.72
-Move Fire Spin ( Category: Special ) has final score 132
+Move Fire Spin has initial score 115.19999999999999
+Move Fire Spin ( Category: Special ) has final score 121
 Move Heat Crash real damage on Garbodor: 22
 Move Heat Crash damage % on Garbodor: 7%
 Move Heat Crash has initial score 80
 Move Heat Crash ( Category: Physical ) has final score 87
 Move Sunny Day has initial score 104.89837324807418
-Move Sunny Day ( Category: Status ) has final score 52
+Move Sunny Day ( Category: Status ) has final score 78
 Move Will-O-Wisp has initial score 109.2423431452002
 Move Will-O-Wisp ( Category: Status ) has final score 120
 Move Sky Attack real damage on Garbodor: 58
 Move Sky Attack damage % on Garbodor: 41%
-Move Sky Attack has initial score 16.48
-Move Sky Attack ( Category: Physical ) has final score 57
+Move Sky Attack has initial score 164.8
+Move Sky Attack ( Category: Physical ) has final score 205
 Move Brave Bird real damage on Garbodor: 74
 Move Brave Bird damage % on Garbodor: 52%
 Move Brave Bird has initial score 72.0
@@ -848,24 +842,24 @@ Move Dragon Ascent has initial score 45.36
 Move Dragon Ascent ( Category: Physical ) has final score 93
 Move Hurricane real damage on Garbodor: 68
 Move Hurricane damage % on Garbodor: 48%
-Move Hurricane has initial score 80
-Move Hurricane ( Category: Special ) has final score 101
+Move Hurricane has initial score 80.8
+Move Hurricane ( Category: Special ) has final score 102
 Move Aeroblast real damage on Garbodor: 68
 Move Aeroblast damage % on Garbodor: 48%
 Move Aeroblast has initial score 80
 Move Aeroblast ( Category: Physical ) has final score 128
 Move Beak Blast real damage on Garbodor: 62
 Move Beak Blast damage % on Garbodor: 44%
-Move Beak Blast has initial score 72.8
-Move Beak Blast ( Category: Physical ) has final score 116
+Move Beak Blast has initial score 80.63999999999999
+Move Beak Blast ( Category: Physical ) has final score 124
 Move Fly real damage on Garbodor: 56
 Move Fly damage % on Garbodor: 40%
 Move Fly has initial score 70.4
 Move Fly ( Category: Physical ) has final score 110
 Move Bounce real damage on Garbodor: 52
 Move Bounce damage % on Garbodor: 37%
-Move Bounce has initial score 85.52192000000002
-Move Bounce ( Category: Physical ) has final score 122
+Move Bounce has initial score 77.1584
+Move Bounce ( Category: Physical ) has final score 114
 Move Drill Peck real damage on Garbodor: 50
 Move Drill Peck damage % on Garbodor: 35%
 Move Drill Peck has initial score 80
@@ -927,7 +921,7 @@ Move Mirror Move ( Category: Status ) has final score 0
 Move Roost has initial score 119.28055160151632
 Move Roost ( Category: Status ) has final score 0
 Move Tailwind has initial score 109.2423431452002
-Move Tailwind ( Category: Status ) has final score 147
+Move Tailwind ( Category: Status ) has final score 229
 Move Astral Barrage real damage on Garbodor: 74
 Move Astral Barrage damage % on Garbodor: 52%
 Move Astral Barrage has initial score 80
@@ -990,8 +984,8 @@ Move Astonish has initial score 87.2
 Move Astonish ( Category: Physical ) has final score 93
 Move Lick real damage on Garbodor: 17
 Move Lick damage % on Garbodor: 6%
-Move Lick has initial score 86.4128
-Move Lick ( Category: Physical ) has final score 92
+Move Lick has initial score 83.64800000000001
+Move Lick ( Category: Physical ) has final score 89
 Move Night Shade real damage on Garbodor: 60
 Move Night Shade damage % on Garbodor: 42%
 Move Night Shade has initial score 80
@@ -1012,20 +1006,20 @@ Move Trick-or-Treat has initial score 90.7576568547998
 Move Trick-or-Treat ( Category: Status ) has final score 0
 Move Frenzy Plant real damage on Garbodor: 61
 Move Frenzy Plant damage % on Garbodor: 43%
-Move Frenzy Plant has initial score 24.0
-Move Frenzy Plant ( Category: Special ) has final score 67
+Move Frenzy Plant has initial score 48.0
+Move Frenzy Plant ( Category: Special ) has final score 91
 Move Leaf Storm real damage on Garbodor: 74
 Move Leaf Storm damage % on Garbodor: 52%
 Move Leaf Storm has initial score 64.8
 Move Leaf Storm ( Category: Special ) has final score 116
 Move Solar Blade real damage on Garbodor: 49
 Move Solar Blade damage % on Garbodor: 35%
-Move Solar Blade has initial score 16.0
-Move Solar Blade ( Category: Physical ) has final score 51
+Move Solar Blade has initial score 160
+Move Solar Blade ( Category: Physical ) has final score 195
 Move Petal Dance real damage on Garbodor: 74
 Move Petal Dance damage % on Garbodor: 52%
-Move Petal Dance has initial score 55.44
-Move Petal Dance ( Category: Special ) has final score 107
+Move Petal Dance has initial score 50.4
+Move Petal Dance ( Category: Special ) has final score 102
 Move Power Whip real damage on Garbodor: 74
 Move Power Whip damage % on Garbodor: 52%
 Move Power Whip has initial score 80
@@ -1036,8 +1030,8 @@ Move Seed Flare has initial score 89.60000000000001
 Move Seed Flare ( Category: Special ) has final score 137
 Move Solar Beam real damage on Garbodor: 49
 Move Solar Beam damage % on Garbodor: 35%
-Move Solar Beam has initial score 16.0
-Move Solar Beam ( Category: Special ) has final score 51
+Move Solar Beam has initial score 160
+Move Solar Beam ( Category: Special ) has final score 195
 Move Wood Hammer real damage on Garbodor: 74
 Move Wood Hammer damage % on Garbodor: 52%
 Move Wood Hammer has initial score 72.0
@@ -1124,8 +1118,8 @@ Move Mega Drain has initial score 80.0
 Move Mega Drain ( Category: Special ) has final score 89
 Move Snap Trap real damage on Garbodor: 19
 Move Snap Trap damage % on Garbodor: 6%
-Move Snap Trap has initial score 126.72
-Move Snap Trap ( Category: Physical ) has final score 132
+Move Snap Trap has initial score 115.19999999999999
+Move Snap Trap ( Category: Physical ) has final score 121
 Move Bullet Seed real damage on Garbodor: 54
 Move Bullet Seed damage % on Garbodor: 38%
 Move Bullet Seed has initial score 80
@@ -1147,25 +1141,25 @@ Move Cotton Spore ( Category: Status ) has final score 0
 Move Forest's Curse has initial score 83.03432720084973
 Move Forest's Curse ( Category: Status ) has final score 0
 Move Grass Whistle has initial score 119.96355795222398
-Move Grass Whistle ( Category: Status ) has final score 194
+Move Grass Whistle ( Category: Status ) has final score 310
 Move Grassy Terrain has initial score 104.89837324807418
-Move Grassy Terrain ( Category: Status ) has final score 104
+Move Grassy Terrain ( Category: Status ) has final score 95
 Move Ingrain has initial score 90.7576568547998
-Move Ingrain ( Category: Status ) has final score 156
+Move Ingrain ( Category: Status ) has final score 130
 Move Jungle Healing has initial score 119.28055160151632
 Move Jungle Healing ( Category: Status ) has final score 39
 Move Leech Seed has initial score 104.89837324807418
-Move Leech Seed ( Category: Status ) has final score 138
+Move Leech Seed ( Category: Status ) has final score 115
 Move Sleep Powder has initial score 119.96355795222398
-Move Sleep Powder ( Category: Status ) has final score 194
+Move Sleep Powder ( Category: Status ) has final score 310
 Move Spiky Shield has initial score 119.7322859630286
-Move Spiky Shield ( Category: Status ) has final score 107
+Move Spiky Shield ( Category: Status ) has final score 179
 Move Spore has initial score 119.96355795222398
-Move Spore ( Category: Status ) has final score 198
+Move Spore ( Category: Status ) has final score 314
 Move Strength Sap has initial score 119.28055160151632
 Move Strength Sap ( Category: Status ) has final score 66
 Move Stun Spore has initial score 109.2423431452002
-Move Stun Spore ( Category: Status ) has final score 138
+Move Stun Spore ( Category: Status ) has final score 125
 Move Synthesis has initial score 119.28055160151632
 Move Synthesis ( Category: Status ) has final score 0
 Move Worry Seed has initial score 95.10162675192582
@@ -1192,8 +1186,8 @@ Move Land's Wrath has initial score 80
 Move Land's Wrath ( Category: Physical ) has final score 120
 Move Thousand Arrows real damage on Garbodor: 56
 Move Thousand Arrows damage % on Garbodor: 40%
-Move Thousand Arrows has initial score 80.0
-Move Thousand Arrows ( Category: Physical ) has final score 120
+Move Thousand Arrows has initial score 104.0
+Move Thousand Arrows ( Category: Physical ) has final score 144
 Move Thousand Waves real damage on Garbodor: 56
 Move Thousand Waves damage % on Garbodor: 40%
 Move Thousand Waves has initial score 80.0
@@ -1236,8 +1230,8 @@ Move Bonemerang has initial score 80
 Move Bonemerang ( Category: Physical ) has final score 124
 Move Sand Tomb real damage on Garbodor: 19
 Move Sand Tomb damage % on Garbodor: 6%
-Move Sand Tomb has initial score 126.72
-Move Sand Tomb ( Category: Physical ) has final score 132
+Move Sand Tomb has initial score 115.19999999999999
+Move Sand Tomb ( Category: Physical ) has final score 121
 Move Bone Rush real damage on Garbodor: 54
 Move Bone Rush damage % on Garbodor: 38%
 Move Bone Rush has initial score 80
@@ -1261,15 +1255,15 @@ Move Sand Attack ( Category: Status ) has final score 0
 Move Shore Up has initial score 119.28055160151632
 Move Shore Up ( Category: Status ) has final score 0
 Move Spikes has initial score 109.2423431452002
-Move Spikes ( Category: Status ) has final score 104
+Move Spikes ( Category: Status ) has final score 136
 Move Freeze Shock real damage on Garbodor: 57
 Move Freeze Shock damage % on Garbodor: 40%
-Move Freeze Shock has initial score 18.688
-Move Freeze Shock ( Category: Physical ) has final score 58
+Move Freeze Shock has initial score 169.60000000000002
+Move Freeze Shock ( Category: Physical ) has final score 209
 Move Ice Burn real damage on Garbodor: 57
 Move Ice Burn damage % on Garbodor: 40%
-Move Ice Burn has initial score 16.0
-Move Ice Burn ( Category: Special ) has final score 56
+Move Ice Burn has initial score 160.0
+Move Ice Burn ( Category: Special ) has final score 200
 Move Glacial Lance real damage on Garbodor: 62
 Move Glacial Lance damage % on Garbodor: 44%
 Move Glacial Lance has initial score 80
@@ -1312,8 +1306,8 @@ Move Ice Fang has initial score 96.80000000000001
 Move Ice Fang ( Category: Physical ) has final score 108
 Move Avalanche real damage on Garbodor: 32
 Move Avalanche damage % on Garbodor: 11%
-Move Avalanche has initial score 48.0
-Move Avalanche ( Category: Physical ) has final score 59
+Move Avalanche has initial score 60.0
+Move Avalanche ( Category: Physical ) has final score 71
 Move Frost Breath real damage on Garbodor: 57
 Move Frost Breath damage % on Garbodor: 40%
 Move Frost Breath has initial score 80
@@ -1332,8 +1326,8 @@ Move Powder Snow has initial score 80.8
 Move Powder Snow ( Category: Special ) has final score 87
 Move Ice Ball real damage on Garbodor: 17
 Move Ice Ball damage % on Garbodor: 6%
-Move Ice Ball has initial score 102.96000000000001
-Move Ice Ball ( Category: Physical ) has final score 108
+Move Ice Ball has initial score 128.70000000000002
+Move Ice Ball ( Category: Physical ) has final score 134
 Move Icicle Spear real damage on Garbodor: 54
 Move Icicle Spear damage % on Garbodor: 38%
 Move Icicle Spear has initial score 80
@@ -1347,27 +1341,27 @@ Move Sheer Cold ( Category: Special ) has final score 0
 Move Aurora Veil has initial score 109.2423431452002
 Move Aurora Veil ( Category: Status ) has final score 0
 Move Hail has initial score 100.0
-Move Hail ( Category: Status ) has final score 70
+Move Hail ( Category: Status ) has final score 84
 Move Haze has initial score 84.76811688088469
 Move Haze ( Category: Status ) has final score 0
 Move Mist has initial score 95.10162675192582
 Move Mist ( Category: Status ) has final score 135
 Move Explosion real damage on Garbodor: 152
 Move Explosion damage % on Garbodor: 150%
-Move Explosion has initial score 4.032
-Move Explosion ( Category: Physical ) has final score 154
+Move Explosion has initial score 13.440000000000001
+Move Explosion ( Category: Physical ) has final score 163
 Move Self-Destruct real damage on Garbodor: 122
 Move Self-Destruct damage % on Garbodor: 87%
-Move Self-Destruct has initial score 4.032
-Move Self-Destruct ( Category: Physical ) has final score 91
+Move Self-Destruct has initial score 13.440000000000001
+Move Self-Destruct ( Category: Physical ) has final score 100
 Move Giga Impact real damage on Garbodor: 61
 Move Giga Impact damage % on Garbodor: 43%
-Move Giga Impact has initial score 24.0
-Move Giga Impact ( Category: Physical ) has final score 67
+Move Giga Impact has initial score 48.0
+Move Giga Impact ( Category: Physical ) has final score 91
 Move Hyper Beam real damage on Garbodor: 61
 Move Hyper Beam damage % on Garbodor: 43%
-Move Hyper Beam has initial score 24.0
-Move Hyper Beam ( Category: Special ) has final score 67
+Move Hyper Beam has initial score 48.0
+Move Hyper Beam ( Category: Special ) has final score 91
 Move Boomburst real damage on Garbodor: 86
 Move Boomburst damage % on Garbodor: 61%
 Move Boomburst has initial score 80
@@ -1376,8 +1370,8 @@ Move Last Resort has initial score 0
 Move Last Resort ( Category: Physical ) has final score 0
 Move Skull Bash real damage on Garbodor: 53
 Move Skull Bash damage % on Garbodor: 37%
-Move Skull Bash has initial score 21.296000000000006
-Move Skull Bash ( Category: Physical ) has final score 58
+Move Skull Bash has initial score 212.96000000000006
+Move Skull Bash ( Category: Physical ) has final score 249
 Move Double-Edge real damage on Garbodor: 74
 Move Double-Edge damage % on Garbodor: 52%
 Move Double-Edge has initial score 72.0
@@ -1400,8 +1394,8 @@ Move Techno Blast has initial score 80
 Move Techno Blast ( Category: Special ) has final score 132
 Move Thrash real damage on Garbodor: 74
 Move Thrash damage % on Garbodor: 52%
-Move Thrash has initial score 55.44
-Move Thrash ( Category: Physical ) has final score 107
+Move Thrash has initial score 50.4
+Move Thrash ( Category: Physical ) has final score 102
 Move Egg Bomb real damage on Garbodor: 62
 Move Egg Bomb damage % on Garbodor: 44%
 Move Egg Bomb has initial score 80
@@ -1432,8 +1426,8 @@ Move Uproar has initial score 66.0
 Move Uproar ( Category: Special ) has final score 106
 Move Body Slam real damage on Garbodor: 52
 Move Body Slam damage % on Garbodor: 37%
-Move Body Slam has initial score 86.4128
-Move Body Slam ( Category: Physical ) has final score 123
+Move Body Slam has initial score 83.64800000000001
+Move Body Slam ( Category: Physical ) has final score 120
 Move Extreme Speed real damage on Garbodor: 50
 Move Extreme Speed damage % on Garbodor: 35%
 Move Extreme Speed has initial score 80
@@ -1448,8 +1442,8 @@ Move Mega Punch has initial score 80
 Move Mega Punch ( Category: Physical ) has final score 115
 Move Razor Wind real damage on Garbodor: 30
 Move Razor Wind damage % on Garbodor: 10%
-Move Razor Wind has initial score 16.0
-Move Razor Wind ( Category: Special ) has final score 26
+Move Razor Wind has initial score 160
+Move Razor Wind ( Category: Special ) has final score 170
 Move Slam real damage on Garbodor: 50
 Move Slam damage % on Garbodor: 35%
 Move Slam has initial score 80
@@ -1468,8 +1462,8 @@ Move Crush Claw has initial score 100.0
 Move Crush Claw ( Category: Physical ) has final score 132
 Move Relic Song real damage on Garbodor: 46
 Move Relic Song damage % on Garbodor: 32%
-Move Relic Song has initial score 132.48
-Move Relic Song ( Category: Special ) has final score 164
+Move Relic Song has initial score 92.9664
+Move Relic Song ( Category: Special ) has final score 124
 Move Chip Away real damage on Garbodor: 44
 Move Chip Away damage % on Garbodor: 31%
 Move Chip Away has initial score 80.0
@@ -1568,8 +1562,10 @@ Move Hold Back real damage on Garbodor: 22
 Move Hold Back damage % on Garbodor: 7%
 Move Hold Back has initial score 80
 Move Hold Back ( Category: Physical ) has final score 87
-Move Pay Day has initial score 0
-Move Pay Day ( Category: Physical ) has final score 0
+Move Pay Day real damage on Garbodor: 22
+Move Pay Day damage % on Garbodor: 7%
+Move Pay Day has initial score 80
+Move Pay Day ( Category: Physical ) has final score 87
 Move Pound real damage on Garbodor: 22
 Move Pound damage % on Garbodor: 7%
 Move Pound has initial score 80
@@ -1620,8 +1616,8 @@ Move Barrage has initial score 80
 Move Barrage ( Category: Physical ) has final score 90
 Move Bind real damage on Garbodor: 9
 Move Bind damage % on Garbodor: 3%
-Move Bind has initial score 126.72
-Move Bind ( Category: Physical ) has final score 129
+Move Bind has initial score 115.19999999999999
+Move Bind ( Category: Physical ) has final score 118
 Move Double Slap real damage on Garbodor: 28
 Move Double Slap damage % on Garbodor: 10%
 Move Double Slap has initial score 80
@@ -1632,16 +1628,16 @@ Move Fury Attack has initial score 80
 Move Fury Attack ( Category: Physical ) has final score 90
 Move Wrap real damage on Garbodor: 9
 Move Wrap damage % on Garbodor: 3%
-Move Wrap has initial score 126.72
-Move Wrap ( Category: Physical ) has final score 129
+Move Wrap has initial score 115.19999999999999
+Move Wrap ( Category: Physical ) has final score 118
 Move Constrict real damage on Garbodor: 7
 Move Constrict damage % on Garbodor: 2%
 Move Constrict has initial score 80
 Move Constrict ( Category: Physical ) has final score 82
 Move Bide real damage on Garbodor: 48
 Move Bide damage % on Garbodor: 34%
-Move Bide has initial score 41.6
-Move Bide ( Category: Physical ) has final score 75
+Move Bide has initial score 83.2
+Move Bide ( Category: Physical ) has final score 117
 Move Crush Grip real damage on Garbodor: 74
 Move Crush Grip damage % on Garbodor: 52%
 Move Crush Grip has initial score 80
@@ -1725,7 +1721,7 @@ Move Disable ( Category: Status ) has final score 120
 Move Double Team has initial score 90.7576568547998
 Move Double Team ( Category: Status ) has final score 0
 Move Encore has initial score 104.89837324807418
-Move Encore ( Category: Status ) has final score 157
+Move Encore ( Category: Status ) has final score 0
 Move Endure has initial score 83.03432720084973
 Move Endure ( Category: Status ) has final score 161
 Move Entrainment has initial score 83.03432720084973
@@ -1739,7 +1735,7 @@ Move Follow Me ( Category: Status ) has final score 0
 Move Foresight has initial score 83.03432720084973
 Move Foresight ( Category: Status ) has final score 49
 Move Glare has initial score 109.2423431452002
-Move Glare ( Category: Status ) has final score 138
+Move Glare ( Category: Status ) has final score 125
 Move Growl has initial score 84.76811688088469
 Move Growl ( Category: Status ) has final score 10
 Move Growth has initial score 84.76811688088469
@@ -1761,11 +1757,11 @@ Move Leer ( Category: Status ) has final score 127
 Move Lock-On has initial score 83.03432720084973
 Move Lock-On ( Category: Status ) has final score 83
 Move Lovely Kiss has initial score 119.96355795222398
-Move Lovely Kiss ( Category: Status ) has final score 194
+Move Lovely Kiss ( Category: Status ) has final score 310
 Move Lucky Chant has initial score 83.03432720084973
 Move Lucky Chant ( Category: Status ) has final score 83
 Move Me First has initial score 90.7576568547998
-Move Me First ( Category: Status ) has final score 54
+Move Me First ( Category: Status ) has final score 204
 Move Mean Look has initial score 95.10162675192582
 Move Mean Look ( Category: Status ) has final score 95
 Move Metronome has initial score 95.10162675192582
@@ -1792,11 +1788,11 @@ Move Odor Sleuth ( Category: Status ) has final score 49
 Move Pain Split has initial score 104.89837324807418
 Move Pain Split ( Category: Status ) has final score 104
 Move Perish Song has initial score 95.10162675192582
-Move Perish Song ( Category: Status ) has final score 114
+Move Perish Song ( Category: Status ) has final score 95
 Move Play Nice has initial score 84.76811688088469
 Move Play Nice ( Category: Status ) has final score 10
 Move Protect has initial score 119.7322859630286
-Move Protect ( Category: Status ) has final score 53
+Move Protect ( Category: Status ) has final score 179
 Move Psych Up has initial score 84.76811688088469
 Move Psych Up ( Category: Status ) has final score 0
 Move Recover has initial score 119.28055160151632
@@ -1808,9 +1804,9 @@ Move Reflect Type ( Category: Status ) has final score 0
 Move Refresh has initial score 90.7576568547998
 Move Refresh ( Category: Status ) has final score 0
 Move Roar has initial score 95.10162675192582
-Move Roar ( Category: Status ) has final score 0
+Move Roar ( Category: Status ) has final score 60
 Move Safeguard has initial score 83.03432720084973
-Move Safeguard ( Category: Status ) has final score 41
+Move Safeguard ( Category: Status ) has final score 24
 Move Scary Face has initial score 90.7576568547998
 Move Scary Face ( Category: Status ) has final score 0
 Move Screech has initial score 90.7576568547998
@@ -1822,7 +1818,7 @@ Move Shell Smash ( Category: Status ) has final score 31
 Move Simple Beam has initial score 95.10162675192582
 Move Simple Beam ( Category: Status ) has final score 0
 Move Sing has initial score 119.96355795222398
-Move Sing ( Category: Status ) has final score 194
+Move Sing ( Category: Status ) has final score 310
 Move Sketch has initial score 90.7576568547998
 Move Sketch ( Category: Status ) has final score 0
 Move Slack Off has initial score 119.28055160151632
@@ -1862,13 +1858,13 @@ Move Tickle ( Category: Status ) has final score 117
 Move Transform has initial score 95.10162675192582
 Move Transform ( Category: Status ) has final score 85
 Move Whirlwind has initial score 95.10162675192582
-Move Whirlwind ( Category: Status ) has final score 0
+Move Whirlwind ( Category: Status ) has final score 60
 Move Wish has initial score 104.89837324807418
 Move Wish ( Category: Status ) has final score 0
 Move Work Up has initial score 84.76811688088469
 Move Work Up ( Category: Status ) has final score 142
 Move Yawn has initial score 95.10162675192582
-Move Yawn ( Category: Status ) has final score 150
+Move Yawn ( Category: Status ) has final score 213
 Move Belch has initial score 0
 Move Belch ( Category: Special ) has final score 0
 Move Gunk Shot real damage on Garbodor: 74
@@ -1934,9 +1930,9 @@ Move Poison Sting ( Category: Physical ) has final score 107
 Move Acid Armor has initial score 100.0
 Move Acid Armor ( Category: Status ) has final score 158
 Move Baneful Bunker has initial score 119.7322859630286
-Move Baneful Bunker ( Category: Status ) has final score 140
+Move Baneful Bunker ( Category: Status ) has final score 431
 Move Coil has initial score 104.89837324807418
-Move Coil ( Category: Status ) has final score 388
+Move Coil ( Category: Status ) has final score 513
 Move Corrosive Gas real damage on Garbodor: 22
 Move Corrosive Gas damage % on Garbodor: 7%
 Move Corrosive Gas has initial score 80
@@ -1952,23 +1948,23 @@ Move Purify ( Category: Status ) has final score 0
 Move Toxic has initial score 109.2423431452002
 Move Toxic ( Category: Status ) has final score 218
 Move Toxic Spikes has initial score 109.2423431452002
-Move Toxic Spikes ( Category: Status ) has final score 104
+Move Toxic Spikes ( Category: Status ) has final score 136
 Move Toxic Thread has initial score 109.2423431452002
-Move Toxic Thread ( Category: Status ) has final score 327
+Move Toxic Thread ( Category: Status ) has final score 144
 Move Venom Drench has initial score 90.7576568547998
 Move Venom Drench ( Category: Status ) has final score 0
 Move Prismatic Laser real damage on Garbodor: 65
 Move Prismatic Laser damage % on Garbodor: 46%
-Move Prismatic Laser has initial score 24.0
-Move Prismatic Laser ( Category: Special ) has final score 70
+Move Prismatic Laser has initial score 48.0
+Move Prismatic Laser ( Category: Special ) has final score 94
 Move Psycho Boost real damage on Garbodor: 74
 Move Psycho Boost damage % on Garbodor: 52%
 Move Psycho Boost has initial score 64.8
 Move Psycho Boost ( Category: Special ) has final score 116
 Move Future Sight real damage on Garbodor: 49
 Move Future Sight damage % on Garbodor: 35%
-Move Future Sight has initial score 67.2
-Move Future Sight ( Category: Special ) has final score 102
+Move Future Sight has initial score 56.0
+Move Future Sight ( Category: Special ) has final score 91
 Move Synchronoise has initial score 0
 Move Synchronoise ( Category: Special ) has final score 0
 Move Dream Eater has initial score 0
@@ -2047,8 +2043,8 @@ Move Stored Power has initial score 80
 Move Stored Power ( Category: Special ) has final score 84
 Move Mirror Coat real damage on Garbodor: 72
 Move Mirror Coat damage % on Garbodor: 51%
-Move Mirror Coat has initial score 7.199999999999999
-Move Mirror Coat ( Category: Special ) has final score 58
+Move Mirror Coat has initial score 12.0
+Move Mirror Coat ( Category: Special ) has final score 63
 Move Psywave real damage on Garbodor: 60
 Move Psywave damage % on Garbodor: 42%
 Move Psywave has initial score 80
@@ -2066,7 +2062,7 @@ Move Calm Mind ( Category: Status ) has final score 353
 Move Cosmic Power has initial score 100.0
 Move Cosmic Power ( Category: Status ) has final score 172
 Move Gravity has initial score 100.0
-Move Gravity ( Category: Status ) has final score 100
+Move Gravity ( Category: Status ) has final score 200
 Move Guard Split has initial score 83.03432720084973
 Move Guard Split ( Category: Status ) has final score 0
 Move Guard Swap has initial score 83.03432720084973
@@ -2080,7 +2076,7 @@ Move Healing Wish ( Category: Status ) has final score 0
 Move Heart Swap has initial score 95.10162675192582
 Move Heart Swap ( Category: Status ) has final score 0
 Move Hypnosis has initial score 119.96355795222398
-Move Hypnosis ( Category: Status ) has final score 194
+Move Hypnosis ( Category: Status ) has final score 310
 Move Imprison has initial score 83.03432720084973
 Move Imprison ( Category: Status ) has final score 0
 Move Instruct has initial score 90.7576568547998
@@ -2088,11 +2084,11 @@ Move Instruct ( Category: Status ) has final score 90
 Move Kinesis has initial score 84.76811688088469
 Move Kinesis ( Category: Status ) has final score 0
 Move Light Screen has initial score 109.2423431452002
-Move Light Screen ( Category: Status ) has final score 256
+Move Light Screen ( Category: Status ) has final score 334
 Move Lunar Dance has initial score 90.7576568547998
 Move Lunar Dance ( Category: Status ) has final score 0
 Move Magic Coat has initial score 95.10162675192582
-Move Magic Coat ( Category: Status ) has final score 570
+Move Magic Coat ( Category: Status ) has final score 855
 Move Magic Powder has initial score 104.89837324807418
 Move Magic Powder ( Category: Status ) has final score 173
 Move Magic Room has initial score 83.03432720084973
@@ -2108,11 +2104,11 @@ Move Power Swap ( Category: Status ) has final score 0
 Move Power Trick has initial score 83.03432720084973
 Move Power Trick ( Category: Status ) has final score 8
 Move Psychic Terrain has initial score 104.89837324807418
-Move Psychic Terrain ( Category: Status ) has final score 99
+Move Psychic Terrain ( Category: Status ) has final score 88
 Move Psycho Shift has initial score 100.0
 Move Psycho Shift ( Category: Status ) has final score 0
 Move Reflect has initial score 109.2423431452002
-Move Reflect ( Category: Status ) has final score 109
+Move Reflect ( Category: Status ) has final score 142
 Move Rest has initial score 95.10162675192582
 Move Rest ( Category: Status ) has final score 0
 Move Role Play has initial score 90.7576568547998
@@ -2136,12 +2132,12 @@ Move Head Smash has initial score 72.0
 Move Head Smash ( Category: Physical ) has final score 126
 Move Rock Wrecker real damage on Garbodor: 61
 Move Rock Wrecker damage % on Garbodor: 43%
-Move Rock Wrecker has initial score 24.0
-Move Rock Wrecker ( Category: Physical ) has final score 67
+Move Rock Wrecker has initial score 48.0
+Move Rock Wrecker ( Category: Physical ) has final score 91
 Move Meteor Beam real damage on Garbodor: 49
 Move Meteor Beam damage % on Garbodor: 35%
-Move Meteor Beam has initial score 49.4208
-Move Meteor Beam ( Category: Special ) has final score 84
+Move Meteor Beam has initial score 494.20799999999997
+Move Meteor Beam ( Category: Special ) has final score 529
 Move Diamond Storm real damage on Garbodor: 62
 Move Diamond Storm damage % on Garbodor: 44%
 Move Diamond Storm has initial score 103.35999999999999
@@ -2172,16 +2168,16 @@ Move Rock Throw has initial score 80
 Move Rock Throw ( Category: Physical ) has final score 89
 Move Smack Down real damage on Garbodor: 27
 Move Smack Down damage % on Garbodor: 9%
-Move Smack Down has initial score 80.0
-Move Smack Down ( Category: Physical ) has final score 89
+Move Smack Down has initial score 104.0
+Move Smack Down ( Category: Physical ) has final score 113
 Move Accelerock real damage on Garbodor: 22
 Move Accelerock damage % on Garbodor: 7%
 Move Accelerock has initial score 80
 Move Accelerock ( Category: Physical ) has final score 87
 Move Rollout real damage on Garbodor: 17
 Move Rollout damage % on Garbodor: 6%
-Move Rollout has initial score 102.96000000000001
-Move Rollout ( Category: Physical ) has final score 108
+Move Rollout has initial score 128.70000000000002
+Move Rollout ( Category: Physical ) has final score 134
 Move Rock Blast real damage on Garbodor: 54
 Move Rock Blast damage % on Garbodor: 38%
 Move Rock Blast has initial score 80
@@ -2189,17 +2185,17 @@ Move Rock Blast ( Category: Physical ) has final score 118
 Move Rock Polish has initial score 100.0
 Move Rock Polish ( Category: Status ) has final score 51
 Move Sandstorm has initial score 100.0
-Move Sandstorm ( Category: Status ) has final score 70
+Move Sandstorm ( Category: Status ) has final score 84
 Move Stealth Rock has initial score 115.23188311911528
-Move Stealth Rock ( Category: Status ) has final score 110
+Move Stealth Rock ( Category: Status ) has final score 143
 Move Tar Shot has initial score 90.7576568547998
 Move Tar Shot ( Category: Status ) has final score 0
 Move Wide Guard has initial score 109.2423431452002
-Move Wide Guard ( Category: Status ) has final score 196
+Move Wide Guard ( Category: Status ) has final score 81
 Move Doom Desire real damage on Garbodor: 57
 Move Doom Desire damage % on Garbodor: 40%
-Move Doom Desire has initial score 67.2
-Move Doom Desire ( Category: Special ) has final score 107
+Move Doom Desire has initial score 56.0
+Move Doom Desire ( Category: Special ) has final score 96
 Move Steel Beam real damage on Garbodor: 86
 Move Steel Beam damage % on Garbodor: 61%
 Move Steel Beam has initial score 80
@@ -2280,8 +2276,8 @@ Move Heavy Slam has initial score 80
 Move Heavy Slam ( Category: Physical ) has final score 87
 Move Metal Burst real damage on Garbodor: 72
 Move Metal Burst damage % on Garbodor: 51%
-Move Metal Burst has initial score 24.0
-Move Metal Burst ( Category: Physical ) has final score 75
+Move Metal Burst has initial score 40.0
+Move Metal Burst ( Category: Physical ) has final score 91
 Move Autotomize has initial score 100.0
 Move Autotomize ( Category: Status ) has final score 51
 Move Gear Up has initial score 90.7576568547998
@@ -2289,15 +2285,15 @@ Move Gear Up ( Category: Status ) has final score 0
 Move Iron Defense has initial score 100.0
 Move Iron Defense ( Category: Status ) has final score 158
 Move King's Shield has initial score 119.7322859630286
-Move King's Shield ( Category: Status ) has final score 86
+Move King's Shield ( Category: Status ) has final score 143
 Move Metal Sound has initial score 84.76811688088469
 Move Metal Sound ( Category: Status ) has final score 110
 Move Shift Gear has initial score 118.10296507289733
 Move Shift Gear ( Category: Status ) has final score 359
 Move Hydro Cannon real damage on Garbodor: 61
 Move Hydro Cannon damage % on Garbodor: 43%
-Move Hydro Cannon has initial score 24.0
-Move Hydro Cannon ( Category: Special ) has final score 67
+Move Hydro Cannon has initial score 48.0
+Move Hydro Cannon ( Category: Special ) has final score 91
 Move Water Spout real damage on Garbodor: 92
 Move Water Spout damage % on Garbodor: 65%
 Move Water Spout has initial score 80
@@ -2400,26 +2396,26 @@ Move Water Gun has initial score 80
 Move Water Gun ( Category: Special ) has final score 87
 Move Clamp real damage on Garbodor: 19
 Move Clamp damage % on Garbodor: 6%
-Move Clamp has initial score 126.72
-Move Clamp ( Category: Physical ) has final score 132
+Move Clamp has initial score 115.19999999999999
+Move Clamp ( Category: Physical ) has final score 121
 Move Whirlpool real damage on Garbodor: 19
 Move Whirlpool damage % on Garbodor: 6%
-Move Whirlpool has initial score 126.72
-Move Whirlpool ( Category: Special ) has final score 132
-Move Surging Strikes real damage on Garbodor: 21
-Move Surging Strikes damage % on Garbodor: 7%
+Move Whirlpool has initial score 115.19999999999999
+Move Whirlpool ( Category: Special ) has final score 121
+Move Surging Strikes real damage on Garbodor: 69
+Move Surging Strikes damage % on Garbodor: 49%
 Move Surging Strikes has initial score 80
-Move Surging Strikes ( Category: Physical ) has final score 87
+Move Surging Strikes ( Category: Physical ) has final score 129
 Move Water Shuriken real damage on Garbodor: 28
 Move Water Shuriken damage % on Garbodor: 10%
 Move Water Shuriken has initial score 80
 Move Water Shuriken ( Category: Special ) has final score 90
 Move Aqua Ring has initial score 95.10162675192582
-Move Aqua Ring ( Category: Status ) has final score 164
+Move Aqua Ring ( Category: Status ) has final score 136
 Move Life Dew has initial score 83.03432720084973
 Move Life Dew ( Category: Status ) has final score 68
 Move Rain Dance has initial score 104.89837324807418
-Move Rain Dance ( Category: Status ) has final score 104
+Move Rain Dance ( Category: Status ) has final score 83
 Move Soak has initial score 104.89837324807418
 Move Soak ( Category: Status ) has final score 80
 Move Water Sport has initial score 83.03432720084973
@@ -2436,8 +2432,8 @@ Move Kinetic Rend has initial score 80
 Move Kinetic Rend ( Category: Special ) has final score 91
 Move Jolt Kick real damage on Garbodor: 57
 Move Jolt Kick damage % on Garbodor: 40%
-Move Jolt Kick has initial score 82.1376
-Move Jolt Kick ( Category: Physical ) has final score 122
+Move Jolt Kick has initial score 81.216
+Move Jolt Kick ( Category: Physical ) has final score 121
 Move Frost Kick real damage on Garbodor: 57
 Move Frost Kick damage % on Garbodor: 40%
 Move Frost Kick has initial score 80.8
@@ -2490,8 +2486,8 @@ Move Titan's Wrath has initial score 80
 Move Titan's Wrath ( Category: Special ) has final score 128
 Move Siren Song real damage on Garbodor: 46
 Move Siren Song damage % on Garbodor: 32%
-Move Siren Song has initial score 132.48
-Move Siren Song ( Category: Special ) has final score 164
+Move Siren Song has initial score 92.9664
+Move Siren Song ( Category: Special ) has final score 124
 Move Rebalancing has initial score 100.0
 Move Rebalancing ( Category: Status ) has final score 100
 Move Frigid Maw real damage on Garbodor: 50
@@ -2535,7 +2531,7 @@ Move Thousand Folds damage % on Garbodor: 40%
 Move Thousand Folds has initial score 80
 Move Thousand Folds ( Category: Physical ) has final score 120
 Move Virus Inject has initial score 109.2423431452002
-Move Virus Inject ( Category: Status ) has final score 127
+Move Virus Inject ( Category: Status ) has final score 138
 Move Hard Drive Crash real damage on Garbodor: 32
 Move Hard Drive Crash damage % on Garbodor: 11%
 Move Hard Drive Crash has initial score 80.0
@@ -2544,31 +2540,17 @@ Move Splinter Shot real damage on Garbodor: 44
 Move Splinter Shot damage % on Garbodor: 31%
 Move Splinter Shot has initial score 80
 Move Splinter Shot ( Category: Physical ) has final score 111
-Move Failsafe Slime Shot real damage on Garbodor: 3
-Move Failsafe Slime Shot damage % on Garbodor: 1%
-Move Failsafe Slime Shot has initial score 80
-Move Failsafe Slime Shot ( Category: Special ) has final score 81
-Move Failsafe Zealous Dance real damage on Garbodor: 3
-Move Failsafe Zealous Dance damage % on Garbodor: 1%
-Move Failsafe Zealous Dance has initial score 80
-Move Failsafe Zealous Dance ( Category: Special ) has final score 81
-Move Failsafe Psysonic real damage on Garbodor: 3
-Move Failsafe Psysonic damage % on Garbodor: 1%
-Move Failsafe Psysonic has initial score 80
-Move Failsafe Psysonic ( Category: Special ) has final score 81
-Move Failsafe Steam Burst real damage on Garbodor: 3
-Move Failsafe Steam Burst damage % on Garbodor: 1%
-Move Failsafe Steam Burst has initial score 80
-Move Failsafe Steam Burst ( Category: Special ) has final score 81
-Move Failsafe Haunt real damage on Garbodor: 3
-Move Failsafe Haunt damage % on Garbodor: 1%
-Move Failsafe Haunt has initial score 80.0
-Move Failsafe Haunt ( Category: Physical ) has final score 81
-Move Supernova real damage on Garbodor: 3
-Move Supernova damage % on Garbodor: 1%
-Move Supernova has initial score 80
-Move Supernova ( Category: Physical ) has final score 81
-Move Supernova real damage on Garbodor: 3
-Move Supernova damage % on Garbodor: 1%
-Move Supernova has initial score 80
-Move Supernova ( Category: Physical ) has final score 81
+Move Failsafe Slime Shot has initial score 0
+Move Failsafe Slime Shot ( Category: Special ) has final score 0
+Move Failsafe Zealous Dance has initial score 0
+Move Failsafe Zealous Dance ( Category: Special ) has final score 0
+Move Failsafe Psysonic has initial score 0
+Move Failsafe Psysonic ( Category: Special ) has final score 0
+Move Failsafe Steam Burst has initial score 0
+Move Failsafe Steam Burst ( Category: Special ) has final score 0
+Move Failsafe Haunt has initial score 0
+Move Failsafe Haunt ( Category: Physical ) has final score 0
+Move Supernova1 has initial score 0
+Move Supernova1 ( Category: Physical ) has final score 0
+Move Supernova2 has initial score 0
+Move Supernova2 ( Category: Physical ) has final score 0

@@ -1399,14 +1399,14 @@ Description = The user captures and attacks foes by using an electric net, which
 Name = Charge Beam
 Type = ELECTRIC
 Category = Special
-Power = 50
+Power = 40
 Accuracy = 100
-TotalPP = 10
+TotalPP = 20
 Target = NearOther
 FunctionCode = RaiseUserSpAtk1
 Flags = CanProtect,CanMirrorMove
-EffectChance = 70
-Description = The user fires a concentrated bundle of electricity. It may also raise the user's Sp. Atk stat.
+EffectChance = 100
+Description = The user fires a concentrated bundle of electricity. It also raises the user's Sp. Atk stat.
 #-------------------------------
 [THUNDERSHOCK]
 Name = Thunder Shock
@@ -2885,7 +2885,7 @@ Target = Other
 FunctionCode = ConfuseTargetAlwaysHitsInRainHitsTargetInSky
 Flags = CanProtect,CanMirrorMove
 EffectChance = 1 # too lazy to recreate a hurricane without confusion
-Description = The user wraps its foe in a fierce wind that flies up into the sky. It may also confuse the foe.
+Description = The user wraps its foe in a fierce wind that flies up into the sky. Always hits in Rain.
 #-------------------------------
 [AEROBLAST]
 Name = Aeroblast
@@ -9131,7 +9131,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9143,7 +9143,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9155,7 +9155,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = AllNearFoes
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 EffectChance = 0
 Description = ...
@@ -9168,7 +9168,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9180,30 +9180,30 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = HealUserByHalfOfDamageDone
+FunctionCode = DoesNothingUnusableInGravity
 Flags = Contact,CanProtect
 Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
 #-------------------------------
 [SUPERNOVA]
-Name = Supernova
+Name = Supernova1
 Type = FIRE
 Category = Physical
 Power = 2
 Accuracy = 100
 TotalPP = 1
 Target = AllNearFoes
-FunctionCode = Supernova
+FunctionCode = DoesNothingUnusableInGravity
 Flags = GravityBoosted
 Description = big kaboom first turn
 #-----------------
 [SUPERNOVA_ALT]
-Name = Supernova
+Name = Supernova2
 Type = ROCK
 Category = Physical
 Power = 2
 Accuracy = 0
 TotalPP = 0
 Target = AllNearFoes
-FunctionCode = Supernova
+FunctionCode = DoesNothingUnusableInGravity
 Flags = GravityBoosted
 Description = sharp rocks 2 turns next

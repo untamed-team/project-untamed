@@ -36,7 +36,7 @@ class Battle::AI
 		# Fixed damage moves
 		return baseDmg if move.is_a?(Battle::Move::FixedDamageMove)
 		# Get the move's type
-    	type = pbRoughType(move, user, skill)
+		type = pbRoughType(move, user, skill)
 		typeMod = pbCalcTypeMod(type,user,target)
 		##### Calculate user's attack stat #####
 		atk = pbRoughStat(user, :ATTACK, skill)
@@ -104,7 +104,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
-			abilityBlacklist = [:ANALYTIC, :SNIPER]#, :TINTEDLENS, :AERILATE, :PIXILATE, :REFRIGERATE]
+			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
 			canCheck = true
 			abilityBlacklist.each do |m|
 				# Really? comparing a move id with an ability id? This blacklisting never worked.
@@ -191,7 +191,7 @@ class Battle::AI
 				user.effects[PBEffects::GemConsumed] = nil   # Untrigger consuming of Gems
 			end
 		end
-		if skill >= PBTrainerAI.bestSkill &&							# DemICE: I now have high suspicions that the chilan berry thing doesn't work.
+		if skill >= PBTrainerAI.bestSkill &&                           # DemICE: I now have high suspicions that the chilan berry thing doesn't work.
 			target.itemActive? && target.item && !target.item.is_berry?# && target.item_id!=:CHILANBERRY)
 			Battle::ItemEffects.triggerDamageCalcFromTarget(
 				target.item, user, target, move, multipliers, baseDmg, type
@@ -220,6 +220,11 @@ class Battle::AI
 			 user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
 			multipliers[:base_damage_multiplier] *= 2
 		end
+		# Zealous Dance
+		if skill >= PBTrainerAI.mediumSkill &&
+			 user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
+			multipliers[:base_damage_multiplier] *= 1.5
+		end
 		# Mud Sport and Water Sport
 		if skill >= PBTrainerAI.mediumSkill
 			if type == :ELECTRIC
@@ -241,11 +246,11 @@ class Battle::AI
 		end
 		# DemICE adding resist berries ### i made it a hash cuz i was bored
 		if Effectiveness.super_effective?(typeMod)
-			if user.hasActiveItem?(:EXPERTBELT)
-				multipliers[:final_damage_multiplier]*=1.2
-			end
+			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
+			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
+			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
 			if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
-				multipliers[:final_damage_multiplier]*=0.75
+				multipliers[:final_damage_multiplier] *= 0.75
 			end
 			berryTypesArray = {
 				:OCCABERRY   => :FIRE,
@@ -268,6 +273,8 @@ class Battle::AI
 			}
 			berry_type = berryTypesArray[target.item_id]
 			multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
+		elsif Effectiveness.resistant?(typeMod)
+			multipliers[:final_damage_multiplier] *= 2.0 if user.hasActiveAbility?(:TINTEDLENS)
 		end
 		# Terrain moves
 		if skill >= PBTrainerAI.mediumSkill
@@ -288,7 +295,7 @@ class Battle::AI
 				when :Psychic
 					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
 				when :Misty
-					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
+					multipliers[:base_damage_multiplier] /= t_damage_divider    if type == :DRAGON && target.affectedByTerrain?
 				end
 			else	
 				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
@@ -314,8 +321,7 @@ class Battle::AI
 		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
 		# Multi-targeting attacks
 		# Splinter Shot #by low
-		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) &&
-		   move.function != "HitTwoTimesReload"
+		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) && move.function != "HitTwoTimesReload"
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Weather
@@ -409,13 +415,13 @@ class Battle::AI
 		end
 		# Critical hits - n/a
 		# Random variance - n/a
-		#~ if $Trainer.difficulty_mode==2
-			#~ if user.pbOwnedByPlayer? # Changed by DemICE 27-Sep-2023 Unfair difficulty
-				#~ multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
-			#~ else
-				#~ multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
-			#~ end
-		#~ end
+		#if $Trainer.difficulty_mode==2
+			#if user.pbOwnedByPlayer? # Changed by DemICE 27-Sep-2023 Unfair difficulty
+				#multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
+			#else
+				#multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
+			#end
+		#end
 		# STAB
 		if skill >= PBTrainerAI.mediumSkill && type && user.pbHasType?(type, true)
 			if user.hasActiveAbility?(:ADAPTABILITY)
@@ -473,7 +479,6 @@ class Battle::AI
 		defense = [(defense * multipliers[:defense_multiplier]).round, 1].max
 		damage  = ((((2.0 * user.level / 5) + 2).floor * baseDmg * atk / defense).floor / 50).floor + 2
 		damage  = [(damage * multipliers[:final_damage_multiplier]).round, 1].max
-		damage  *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
 		# "AI-specific calculations below"
 		# Increased critical hit rates
 		if skill >= PBTrainerAI.mediumSkill
@@ -484,14 +489,14 @@ class Battle::AI
 			if c >= 0 && user.abilityActive?
 				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
 			end
-			if skill >= PBTrainerAI.bestSkill && c >= 0 && !moldBreaker && target.abilityActive?
+			if c >= 0 && target.abilityActive? && !moldBreaker
 				c = Battle::AbilityEffects.triggerCriticalCalcFromTarget(target.ability, user, target, c)
 			end
 			# Item effects that alter critical hit rate
 			if c >= 0 && user.itemActive?
 				c = Battle::ItemEffects.triggerCriticalCalcFromUser(user.item, user, target, c)
 			end
-			if skill >= PBTrainerAI.bestSkill && c >= 0 && target.itemActive?
+			if c >= 0 && target.itemActive?
 				c = Battle::ItemEffects.triggerCriticalCalcFromTarget(target.item, user, target, c)
 			end
 			if c >= 0
@@ -500,34 +505,32 @@ class Battle::AI
 				c += 1 if user.inHyperMode? && move.type == :SHADOW
 				c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				# DemICE: taking into account 100% crit rate.
-				# check might be redundant since c is set to -1 if the target has this abilities but w/e
-				if !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker)
-					stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-					stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-					vatk, atkStage = move.pbGetAttackStats(user,target)
-					vdef, defStage = move.pbGetDefenseStats(user,target)
-					atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
-					defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
+				stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+				stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+				vatk, atkStage = move.pbGetAttackStats(user,target)
+				vdef, defStage = move.pbGetDefenseStats(user,target)
+				atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
+				defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
+				if c >= 3
+					damage = 0.96*damage/atkmult if atkmult<1
+					damage = damage*defmult if defmult>1
+				end
+				if c >= 1
+					c = 4 if c > 4
 					if c >= 3
-						damage = 0.96*damage/atkmult if atkmult<1
-						damage = damage*defmult if defmult>1
-					end	
-					if c >= 1
-						c = 4 if c > 4
-						if c >= 3
-							damage*=1.5
-							damage*=1.5 if user.hasActiveAbility?(:SNIPER)
-						else
-							damage += damage*0.1*c
-						end	
+						damage*=1.5
+						damage*=1.5 if user.hasActiveAbility?(:SNIPER)
+					else
+						damage += damage*0.1*c
 					end
 				end
 			end
 		end
+		damage  *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
 		return damage.floor
 	end
 	
-	def moldbroken(user, target, move = :SPLASH)
+	def moldbroken(user, target, move)
 		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY])
 		return false if target.hasActiveAbility?(:SHADOWSHIELD)
 		if (user.hasMoldBreaker? || 
@@ -539,7 +542,7 @@ class Battle::AI
 		   (user.isSpecies?(:LUPACABRA) && (user.item == :LUPACABRITE || user.hasMegaEvoMutation?) && user.pokemon.willmega)
 			return true
 		end
-		return false	
+		return false
 	end
 	
 	def pbCheckMoveImmunity(score, move, user, target, skill)
