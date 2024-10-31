@@ -6793,3 +6793,11 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = Tracks any movement without blur. Selling the footage to TETRA is automatic and non-negotiable.
+[GOLDTICKET]
+Name = Dummy Ticket
+NamePlural = Dummy Ticket
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Dummy Ticket.
