@@ -698,7 +698,7 @@ class Battle::AI
 	end
 	
 	def pbHasSingleTargetProtectMove?(pokemon, countother = true)
-		return false if countother && pokemon.effects[PBEffects::ProtectRate] > 0
+		return false if countother && pokemon.effects[PBEffects::ProtectRate] > 1
 		protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
 						"ProtectUserFromTargetingMovesSpikyShield", 
 						"ProtectUserFromDamagingMovesKingsShield",
