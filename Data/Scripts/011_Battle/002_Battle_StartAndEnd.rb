@@ -376,7 +376,7 @@ class Battle
         pbPlayer.coins += tCoins
         pbPlayer.coins = Settings::MAX_COINS if pbPlayer.coins > Settings::MAX_COINS
         coinsGained = pbPlayer.coins - oldCoins
-        pbDisplayPaused(_INTL("The footage was sold for {1} coins!", coinsGained.to_s_formatted)) if coinsGained
+        pbDisplayPaused(_INTL("The footage was sold for {1} coins!", coinsGained.to_s_formatted)) if coinsGained > 0
       end
     end
     # Pick up money scattered by Pay Day

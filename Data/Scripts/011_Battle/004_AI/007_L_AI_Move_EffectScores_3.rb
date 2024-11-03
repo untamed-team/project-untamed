@@ -13,17 +13,17 @@ class Battle::AI
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
     case move.function
     #---------------------------------------------------------------------------
-    when "FixedDamage20"
+    when "FixedDamage20" # Sonic Boom
 		if target.hp <= 20
 			score *= 3.0
 		elsif target.level >= 25
 			score *= 0.5   # Not useful against high-level Pokemon
 		end
     #---------------------------------------------------------------------------
-    when "FixedDamage40"
+    when "FixedDamage40" # dragon rage
 		score *= 3 if target.hp <= 40
     #---------------------------------------------------------------------------
-    when "FixedDamageHalfTargetHP"
+    when "FixedDamageHalfTargetHP" # Super Fang
 		if target.hp == target.totalhp
 			score *= 1.5
 		else
@@ -33,7 +33,7 @@ class Battle::AI
 			score *= (target.hp * 100.0 / target.totalhp) / 100
 		end
     #---------------------------------------------------------------------------
-    when "FixedDamageUserLevel", "FixedDamageUserLevelRandom"
+    when "FixedDamageUserLevel", "FixedDamageUserLevelRandom" # Seismic Toss
       	score *= 2.5 if target.hp <= user.level
     #---------------------------------------------------------------------------
     when "LowerTargetHPToUserHP" # Endeavor
@@ -64,7 +64,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
+    when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget" # lol
 		score -= 90 if target.hasActiveAbility?(:STURDY,false,mold_broken)
 		score -= 90 if target.level >= user.level
 		score = 0 if $game_variables[MECHANICSVAR] >= 2
@@ -76,12 +76,12 @@ class Battle::AI
 			score *= 1.2
 		end
     #---------------------------------------------------------------------------
-    when "PowerHigherWithUserHP"
+    when "PowerHigherWithUserHP" # Eruption / water spout / Dragon Energy
 		if !userFasterThanTarget
 			score*=0.5
 		end
     #---------------------------------------------------------------------------
-    when "PowerLowerWithUserHP"
+    when "PowerLowerWithUserHP" # Flail / Reversal
 		if !userFasterThanTarget
 			score*=1.1
 			if user.hp<user.totalhp
@@ -89,21 +89,21 @@ class Battle::AI
 			end          
 		end
     #---------------------------------------------------------------------------
-    when "PowerHigherWithTargetHP"
+    when "PowerHigherWithTargetHP" # Crush Grip
     #---------------------------------------------------------------------------
-    when "PowerHigherWithUserHappiness"
+    when "PowerHigherWithUserHappiness" # return
     #---------------------------------------------------------------------------
-    when "PowerLowerWithUserHappiness"
+    when "PowerLowerWithUserHappiness" # Frustration
     #---------------------------------------------------------------------------
-    when "PowerHigherWithUserPositiveStatStages"
+    when "PowerHigherWithUserPositiveStatStages" # Stored Power / Power Trip
     #---------------------------------------------------------------------------
-    when "PowerHigherWithTargetPositiveStatStages"
+    when "PowerHigherWithTargetPositiveStatStages" # Punishment
     #---------------------------------------------------------------------------
-    when "PowerHigherWithUserFasterThanTarget"
+    when "PowerHigherWithUserFasterThanTarget" # Electro Ball
     #---------------------------------------------------------------------------
-    when "PowerHigherWithTargetFasterThanUser"
+    when "PowerHigherWithTargetFasterThanUser" # Gyro Ball
     #---------------------------------------------------------------------------
-    when "PowerHigherWithLessPP"
+    when "PowerHigherWithLessPP" # Trump Card
 		if user.hp==user.totalhp
 			score*=1.3
 		end
@@ -113,11 +113,11 @@ class Battle::AI
 			score*=1.3
 		end
     #---------------------------------------------------------------------------
-    when "PowerHigherWithTargetWeight"
+    when "PowerHigherWithTargetWeight" # Low Kick / grass knot
     #---------------------------------------------------------------------------
-    when "PowerHigherWithUserHeavierThanTarget"
+    when "PowerHigherWithUserHeavierThanTarget" # Heavy Slam
     #---------------------------------------------------------------------------
-    when "PowerHigherWithConsecutiveUse"
+    when "PowerHigherWithConsecutiveUse", "PowerHigherWithConsecutiveUseOnUserSide"
 		if user.paralyzed? 
 			score*=0.7
 		end
@@ -127,37 +127,29 @@ class Battle::AI
 		if user.effects[PBEffects::Attract]>=0
 			score*=0.7
 		end
-		if user.hp==user.totalhp
-			score*=1.3
-		end
-		if pbHasSingleTargetProtectMove?(target)
+		if pbHasSingleTargetProtectMove?(target, false)
 			score*=0.8
 		end
-		if user.lastMoveUsed == :FURYCUTTER
-			score *= (1.2 + (user.effects[PBEffects::FuryCutter]/10))
-		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		if maxdam<(user.hp/3.0)
-			score*=1.5
-		end
-		score*=1.2 if user.hasActiveAbility?(:MOMENTUM) || user.hasActiveItem?(:METRONOME)
-    #---------------------------------------------------------------------------
-    when "PowerHigherWithConsecutiveUseOnUserSide"
-		if user.paralyzed? 
-			score*=0.7
-		end
-		if user.effects[PBEffects::Confusion]>0
-			score*=0.7
-		end
-		if user.effects[PBEffects::Attract]>=0
-			score*=0.7
-		end
 		if user.hp==user.totalhp
 			score*=1.3
 		end
-		if user.lastMoveUsed == :ECHOEDVOICE
-			score *= (1.1 + (user.effects[PBEffects::EchoedVoiceCounter]/10))
+		if move.function == "PowerHigherWithConsecutiveUseOnUserSide"
+			if user.lastMoveUsed == :ECHOEDVOICE
+				score *= (1.1 + (user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]/10))
+			end
+			if !user.allAllies.empty?
+				userAlly = user.allAllies.first
+				if userAlly.moves.any? { |j| j&.id == :ECHOEDVOICE }
+					score *= 1.5
+					if userAlly.lastMoveUsed == :ECHOEDVOICE
+						score *= (1.2 + (user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]/10))
+					end
+				end
+			end
+		elsif move.function == "PowerHigherWithConsecutiveUse"
+			if user.lastMoveUsed == :FURYCUTTER
+				score *= (1.15 + (user.effects[PBEffects::FuryCutter]/10))
+			end
 		end
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
@@ -166,11 +158,11 @@ class Battle::AI
 		end
 		score*=1.2 if user.hasActiveAbility?(:MOMENTUM) || user.hasActiveItem?(:METRONOME)
     #---------------------------------------------------------------------------
-    when "RandomPowerDoublePowerIfTargetUnderground"
+    when "RandomPowerDoublePowerIfTargetUnderground" # Magnitude
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetHPLessThanHalf"
+    when "DoublePowerIfTargetHPLessThanHalf" # Brine
     #---------------------------------------------------------------------------
-    when "DoublePowerIfUserPoisonedBurnedParalyzed"
+    when "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetAsleepCureTarget" # Wake-Up Slap
 		if target.asleep? && target.effects[PBEffects::Substitute]<=0
@@ -184,7 +176,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetPoisoned"
+    when "DoublePowerIfTargetPoisoned" # Venoshock
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetParalyzedCureTarget" # Smelling Salts
 		if target.paralyzed?
@@ -194,13 +186,13 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetStatusProblem"
+    when "DoublePowerIfTargetStatusProblem" # Hex (not the sexy hexy)
     #---------------------------------------------------------------------------
-    when "DoublePowerIfUserHasNoItem"
+    when "DoublePowerIfUserHasNoItem" # Acrobatics
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetUnderwater"
+    when "DoublePowerIfTargetUnderwater" # Surf
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetUnderground"
+    when "DoublePowerIfTargetUnderground" # Earthquake
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetInSky"
 		if userFasterThanTarget && 
@@ -211,12 +203,12 @@ class Battle::AI
 		end
 		score*=1.2 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
     #---------------------------------------------------------------------------
-    when "DoublePowerInElectricTerrain"
+    when "DoublePowerInElectricTerrain" # Rising Voltage
       	score *= 1.4 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserLastMoveFailed" # Stomping Tantrum
     #---------------------------------------------------------------------------
-    when "DoublePowerIfAllyFaintedLastTurn"
+    when "DoublePowerIfAllyFaintedLastTurn" # Retaliate
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserLostHPThisTurn" # Avalanche / Revenge
 		if userFasterThanTarget
@@ -245,7 +237,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetLostHPThisTurn" # Assurance
     #---------------------------------------------------------------------------
-    when "DoublePowerIfUserStatsLoweredThisTurn"
+    when "DoublePowerIfUserStatsLoweredThisTurn" # Lash Out
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetActed" # Payback
 		if !userFasterThanTarget
@@ -253,11 +245,12 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetNotActed"
-		if userFasterThanTarget
-			score*=2
-		end
 		if target.battle.choices[target.index][0] == :SwitchOut
-			score*=2
+			score*=1.5
+		else
+			if userFasterThanTarget
+				score*=1.5
+			end
 		end
     #---------------------------------------------------------------------------
     when "AlwaysCriticalHit" # frost breath
@@ -340,12 +333,12 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UserEnduresFaintingThisTurn" # endure
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
 		if user.hp>1
 			if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
 				score=0
 			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>user.hp
 				score*=2
 			end
@@ -364,13 +357,15 @@ class Battle::AI
 			if user.pbHasMove?(:PAINSPLIT) || user.pbHasMove?(:FLAIL) || user.pbHasMove?(:REVERSAL)
 				score*=2
 			end
+			score*=3 if user.hasActiveItem?(:SALACBERRY)
+			score*=2 if user.hasActiveItem?(:LIECHIBERRY) || user.hasActiveItem?(:PETAYABERRY)
 			if user.pbHasMove?(:ENDEAVOR)
 				score*=3
 			end
 			if target.poisoned? || target.burned? || target.frozen? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
 				score*=1.5
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] && !target.inTwoTurnAttack?("TwoTurnAttackRaiseUserSpAtkSpDefSpd2")
 				if userFasterThanTarget
 					score*=1.5
 				end
@@ -379,13 +374,13 @@ class Battle::AI
 			score*=0
 		end
     #---------------------------------------------------------------------------
-    when "StartWeakenElectricMoves"
+    when "StartWeakenElectricMoves" # Mud Sport
 		score -= 90 if user.effects[PBEffects::MudSport]
     #---------------------------------------------------------------------------
-    when "StartWeakenFireMoves"
+    when "StartWeakenFireMoves" # Water Sport
 		score -= 90 if user.effects[PBEffects::WaterSport]
     #---------------------------------------------------------------------------
-    when "StartWeakenPhysicalDamageAgainstUserSide"
+    when "StartWeakenPhysicalDamageAgainstUserSide" # Reflect
 		#target=user.pbDirectOpposing(true)
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0] 
@@ -415,7 +410,7 @@ class Battle::AI
 						(target.pbHasMoveFunction?("DisableTargetStatusMoves") && aspeed<ospeed)
 		score = 0 if user.pbOwnSide.effects[PBEffects::Reflect] > 0
     #---------------------------------------------------------------------------
-    when "StartWeakenSpecialDamageAgainstUserSide"
+    when "StartWeakenSpecialDamageAgainstUserSide" # Light Screen
 		#target=user.pbDirectOpposing(true)
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0] 
@@ -482,6 +477,7 @@ class Battle::AI
 		score*=2.0 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
     #---------------------------------------------------------------------------
     when "RemoveProtections", "RemoveProtectionsBypassSubstitute", "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1"
+		# Feint / Thousand Folds, Hyperspace Hole, Hyperspace Fury
 		protected = false
 		protectarray = ["ProtectUser", "ProtectUserBanefulBunker", "ProtectUserFromDamagingMovesKingsShield", 
 						"ProtectUserFromDamagingMovesObstruct", "ProtectUserFromTargetingMovesSpikyShield", 
@@ -538,7 +534,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RecoilThirdOfDamageDealt", "RecoilThirdOfDamageDealtParalyzeTarget", "RecoilThirdOfDamageDealtBurnTarget" 
-		# brave bird / wood hammer / general check
+		# brave bird / wood hammer / general recoil check
 		if !user.hasActiveAbility?(:ROCKHEAD) || !user.takesIndirectDamage?
 			score *= 0.9
 			if user.hp==user.totalhp && (user.hasActiveAbility?(:STURDY) || user.hasActiveItem?(:FOCUSSASH))
@@ -627,17 +623,21 @@ class Battle::AI
 			score*=0
 		end
     #---------------------------------------------------------------------------
-    when "UseUserBaseDefenseInsteadOfUserBaseAttack"
+    when "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
     #---------------------------------------------------------------------------
-    when "UseTargetAttackInsteadOfUserAttack"
+    when "UseTargetAttackInsteadOfUserAttack" # Foul Play
     #---------------------------------------------------------------------------
-    when "UseTargetDefenseInsteadOfTargetSpDef"
+    when "UseTargetDefenseInsteadOfTargetSpDef" # Psystrike
     #---------------------------------------------------------------------------
-    when "EnsureNextMoveAlwaysHits"
+    when "EnsureNextMoveAlwaysHits" # Lock On
 		score *= 0.1 if target.effects[PBEffects::Substitute] > 0
-		score *= 0.1 if user.effects[PBEffects::LockOn] > 0
+		if user.effects[PBEffects::LockOn] > 0
+			score = 0
+		else
+			score *= 1.3 if user.pbHasMove?(:INFERNO) || user.pbHasMove?(:ZAPCANNON)
+		end
     #---------------------------------------------------------------------------
-    when "StartNegateTargetEvasionStatStageAndGhostImmunity"
+    when "StartNegateTargetEvasionStatStageAndGhostImmunity" # Foresight
 		if target.effects[PBEffects::Foresight]
 			score *= 0.1
 		elsif target.pbHasType?(:GHOST, true)
@@ -646,7 +646,7 @@ class Battle::AI
 			score *= 0.6
 		end
     #---------------------------------------------------------------------------
-    when "StartNegateTargetEvasionStatStageAndDarkImmunity"
+    when "StartNegateTargetEvasionStatStageAndDarkImmunity" # Miracle Eye
 		if target.effects[PBEffects::MiracleEye]
 			score *= 0.1
 		elsif target.pbHasType?(:DARK, true)
@@ -665,14 +665,15 @@ class Battle::AI
 		ministat/=100.0
 		score*=ministat
     #---------------------------------------------------------------------------
-    when "TypeIsUserFirstType"
+    when "TypeIsUserFirstType" # revelaton dance
     #---------------------------------------------------------------------------
-    when "TypeDependsOnUserIVs"
+    when "TypeDependsOnUserIVs" # hidden power
     #---------------------------------------------------------------------------
-    when "TypeAndPowerDependOnUserBerry"
+    when "TypeAndPowerDependOnUserBerry" # Natural Gift
 		score = 0 if !user.item || !user.item.is_berry? || !user.itemActive?
     #---------------------------------------------------------------------------
     when "TypeDependsOnUserPlate", "TypeDependsOnUserMemory", "TypeDependsOnUserDrive"
+		# judgment, Multi-Attack, techno blast 
     #---------------------------------------------------------------------------
     when "TypeAndPowerDependOnWeather" # weather ball
 		if ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather")) && 
@@ -683,7 +684,7 @@ class Battle::AI
 			score*=0.1
 		end
     #---------------------------------------------------------------------------
-    when "TypeAndPowerDependOnTerrain"
+    when "TypeAndPowerDependOnTerrain" # Terrain Pulse
 		if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && user.affectedByTerrain? && 
 		   (target.hasActiveAbility?([:MOTORDRIVE, :LIGHTNINGROD, :VOLTABSORB],false,mold_broken) ||
 		    target.pbHasType?(:GROUND, true))
@@ -1164,11 +1165,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "TwoTurnAttack" # razor wind
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
-		if !user.hasActiveItem?(:POWERHERB)          
+		if !user.hasActiveItem?(:POWERHERB)     
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]     
 			if maxdam>user.hp
 				score*=0.4
 			else
@@ -1176,7 +1175,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1187,7 +1186,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1198,12 +1197,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
 	when "TwoTurnAttackOneTurnInSun" # solar beam
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB) && !user.hasActiveAbility?(:PRESAGE) && 
 			!([:Sun, :HarshSun].include?(user.effectiveWeather) && globalArray.include?("sun weather"))
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>user.hp
 				score*=0.4
 			else
@@ -1211,7 +1208,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1222,7 +1219,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1234,11 +1231,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "TwoTurnAttackParalyzeTarget" # freeze shock
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB)
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>user.hp
 				score*=0.4
 			else
@@ -1246,7 +1241,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1257,7 +1252,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1295,11 +1290,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "TwoTurnAttackBurnTarget" # ice burn
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB)
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>user.hp
 				score*=0.4
 			else
@@ -1307,7 +1300,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1318,7 +1311,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1327,6 +1320,7 @@ class Battle::AI
 				score*=1.5
 			end
 		end
+
 		if user.pbCanBurn?(target, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 100, move, globalArray, skill)
 			ministat=0
@@ -1354,11 +1348,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "TwoTurnAttackFlinchTarget" # Sky Attack
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB)
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if maxdam>user.hp
 				score*=0.4
 			else
@@ -1366,7 +1358,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1377,7 +1369,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1386,6 +1378,7 @@ class Battle::AI
 				score*=1.5
 			end
 		end
+		
 		if canFlinchTarget(user,target,mold_broken)
 			if userFasterThanTarget
 				miniscore=100
@@ -1415,8 +1408,6 @@ class Battle::AI
     when "TwoTurnAttackRaiseUserSpAtkSpDefSpd2" # Geomancy
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
-		movecheck=false
-		movecheck=true if pbHasPhazingMove?(target, false)
 		if !user.hasActiveItem?(:POWERHERB)
 			if maxdam>user.hp
 				score*=0.4
@@ -1430,7 +1421,7 @@ class Battle::AI
 			else
 				score*=0.7
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0 || target.effects[PBEffects::HyperBeam]>0
+			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				score*=2
 			else
 				score*=0.5
@@ -1486,9 +1477,6 @@ class Battle::AI
 		if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
 			miniscore*=0.3
 		end
-		if movecheck
-			miniscore*=0.5
-		end          
 		if user.hasActiveAbility?(:SIMPLE)
 			miniscore*=2
 		end
@@ -1585,11 +1573,9 @@ class Battle::AI
 		score *= 0.4 if user.SetupMovesUsed.include?(move.id)
 		score = 0 if $game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id)
     #---------------------------------------------------------------------------
-    when "TwoTurnAttackChargeRaiseUserDefense1"
+    when "TwoTurnAttackChargeRaiseUserDefense1" # Skull Bash
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB)
 			if maxdam>user.hp
 				score*=0.4
@@ -1598,7 +1584,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack]
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1609,7 +1595,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -1699,11 +1685,10 @@ class Battle::AI
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-    when "TwoTurnAttackChargeRaiseUserSpAtk1"
+    when "TwoTurnAttackChargeRaiseUserSpAtk1" # Meteor Beam
 		# charge up
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
-		movecheck = pbHasSingleTargetProtectMove?(target)
 		if !user.hasActiveItem?(:POWERHERB)
 			if maxdam>user.hp
 				score*=0.4
@@ -1712,7 +1697,7 @@ class Battle::AI
 					score*=0.6
 				end
 			end
-			if target.effects[PBEffects::TwoTurnAttack]!=0
+			if target.effects[PBEffects::TwoTurnAttack]
 				if userFasterThanTarget
 					score*=2
 				else
@@ -1723,7 +1708,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if movecheck
+			if pbHasSingleTargetProtectMove?(target, false)
 				score*=0.1
 			end          
 		else
@@ -2129,11 +2114,20 @@ class Battle::AI
 			if user.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
 				score*=1.3
 			end
-			if user.stages[:ATTACK]>0
-				miniscore = (-5)*user.stages[:ATTACK]
-				miniscore+=100
-				miniscore/=100.0
-				score*=miniscore
+			if move.specialMove?(move.type)
+				if user.stages[:SPECIAL_ATTACK]>0
+					miniscore = (-5)*user.stages[:SPECIAL_ATTACK]
+					miniscore+=100
+					miniscore/=100.0
+					score*=miniscore
+				end
+			else
+				if user.stages[:ATTACK]>0
+					miniscore = (-5)*user.stages[:ATTACK]
+					miniscore+=100
+					miniscore/=100.0
+					score*=miniscore
+				end
 			end
 			if targetlivecount>2
 				miniscore=100
@@ -2164,13 +2158,18 @@ class Battle::AI
 				ghostvar=true if m.hasType?(:GHOST)
 			end
 			score*=0.8 if ghostvar
+		elsif move.id == :PETALDANCE
+			sappyvar = false
+			@battle.pbParty(target.index).each do |m|
+				next if m.nil?
+				sappyvar=true if m.hasAbility?(:SAPSIPPER)
+			end
+			score*=0.8 if sappyvar && !mold_broken
 		end
     #---------------------------------------------------------------------------
     when "MultiTurnAttackPowersUpEachTurn" # Rollout
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
 		targetlivecount=@battle.pbAbleNonActiveCount(user.idxOpposingSide)
 		if targetlivecount>=1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
 			score*=1.1
@@ -2208,7 +2207,7 @@ class Battle::AI
 		if maxdam*3<user.hp
 			score*=1.5
 		end
-		if movecheck
+		if pbHasSingleTargetProtectMove?(target, false)
 			score*=0.8
 		end
 		if userFasterThanTarget
@@ -2773,7 +2772,7 @@ class Battle::AI
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-    when "HealUserAndAlliesQuarterOfTotalHP"
+    when "HealUserAndAlliesQuarterOfTotalHP" # Life Dew
 		ally_amt = 30
 		@battle.allSameSideBattlers(user.index).each do |b|
 			if b.hp == b.totalhp || (skill >= PBTrainerAI.mediumSkill && !b.canHeal?)
@@ -2783,7 +2782,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "HealUserAndAlliesQuarterOfTotalHPCureStatus"
+    when "HealUserAndAlliesQuarterOfTotalHPCureStatus" # Jungle Healing
 		ally_amt = 80 / @battle.pbSideSize(user.index)
 		@battle.allSameSideBattlers(user.index).each do |b|
 			if b.hp == b.totalhp || (skill >= PBTrainerAI.mediumSkill && !b.canHeal?)
@@ -2848,8 +2847,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HealUserPositionNextTurn" # wish
-		protectmove=false
-		protectmove = true if pbHasSingleTargetProtectMove?(target)
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
 		if maxdam>user.hp
@@ -2866,6 +2863,9 @@ class Battle::AI
 				if maxdam*2>user.hp
 					score*=5
 				end                
+			end
+			if pbHasSingleTargetProtectMove?(user, false)
+				score*=1.5
 			end
 		end
 		if pbHasSetupMove?(target) 
@@ -2917,13 +2917,9 @@ class Battle::AI
 		score = 0 if user.effects[PBEffects::Wish]>0
     #---------------------------------------------------------------------------
     when "StartHealUserEachTurn" # aqua ring
-		movecheck = false
-		protectmove = false
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = true if pbHasPhazingMove?(target)
-		protectmove = true if pbHasSingleTargetProtectMove?(user)
       	if !user.effects[PBEffects::AquaRing]
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if user.hp*(1.0/user.totalhp)>0.75
 				score*=1.2
 			end
@@ -2942,7 +2938,7 @@ class Battle::AI
 			  ((@battle.field.terrain == :Grass || globalArray.include?("grassy terrain")) && user.affectedByTerrain?)
 				score*=1.2
 			end
-			if protectmove
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.2
 			end
 			if maxdam*5 < user.totalhp
@@ -2954,7 +2950,7 @@ class Battle::AI
 			if pbHasPivotMove?(user)
 				score*=0.8
 			end
-			if movecheck
+			if pbHasPhazingMove?(target)
 				score*=0.3
 			end
 			hasAlly = !target.allAllies.empty?
@@ -2970,13 +2966,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartHealUserEachTurnTrapUserInBattle" # ingrain
-		movecheck = false
-		protectmove = false
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		movecheck = true if pbHasPhazingMove?(target)
-		protectmove = true if pbHasSingleTargetProtectMove?(user)
       	if !user.effects[PBEffects::Ingrain]
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam = bestmove[0]
 			if user.hp*(1.0/user.totalhp)>0.75
 				score*=1.2
 			end
@@ -2995,7 +2987,7 @@ class Battle::AI
 			  ((@battle.field.terrain == :Grass || globalArray.include?("grassy terrain")) && user.affectedByTerrain?)
 				score*=1.2
 			end
-			if protectmove
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.2
 			end
 			if maxdam*5 < user.totalhp
@@ -3007,7 +2999,7 @@ class Battle::AI
 			if pbHasPivotMove?(user)
 				score*=0.8
 			end
-			if movecheck
+			if pbHasPhazingMove?(target)
 				if pbHasSetupMove?(user)
 					score*=1.2
 				else
@@ -3053,10 +3045,9 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartLeechSeedTarget" # leech seed
-		movecheck = false
-		movecheck = true if pbHasPivotMove?(target)
-		movecheck = true if target.moves.any? { |j| j&.id == :RAPIDSPIN }
 		if target.effects[PBEffects::LeechSeed]<0 && !target.pbHasType?(:GRASS, true) && target.effects[PBEffects::Substitute]<=0
+			movecheck = pbHasPivotMove?(target)
+			movecheck = true if target.moves.any? { |j| j&.id == :RAPIDSPIN }
 			if movecheck
 				score*=0.2
 			end
@@ -3090,9 +3081,7 @@ class Battle::AI
 					score*=0.2
 				end
 			end
-			protectmove = false
-			protectmove = true if pbHasSingleTargetProtectMove?(user)
-			if protectmove
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.2
 			end
 			ministat=0
@@ -3114,12 +3103,11 @@ class Battle::AI
 			score*=0
 		end
     #---------------------------------------------------------------------------
-    when "UserLosesHalfOfTotalHP", "UserLosesHalfOfTotalHPExplosive"
+    when "UserLosesHalfOfTotalHP", "UserLosesHalfOfTotalHPExplosive" # Steel Beam, Mind Blown
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
 		healvar = target.moves.any? { |m| m&.healingMove? }
-		movecheck = false
-		movecheck = true if pbHasSingleTargetProtectMove?(target)
+		movecheck = pbHasSingleTargetProtectMove?(target)
 		if (!user.hasActiveAbility?(:MAGICGUARD) && user.hp<user.totalhp*0.5) || 
 				(user.hp<user.totalhp*0.75 && 
 				((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) ||
@@ -3196,8 +3184,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UserFaintsExplosive" # explosion
-		protectmove = false
-		protectmove = true if pbHasSingleTargetProtectMove?(target)
 		score*=0.7
 		if user.hp==user.totalhp
 			score*=0.2
@@ -3221,7 +3207,7 @@ class Battle::AI
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			score*=0.3
 		end
-		score*=0.3 if protectmove
+		score*=0.3 if pbHasSingleTargetProtectMove?(target)
 		if @battle.pbCheckGlobalAbility(:DAMP)
 			score=0
 		end
@@ -3249,8 +3235,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UserFaintsPowersUpInMistyTerrainExplosive" # misty explosion
-		protectmove = false
-		protectmove = true if pbHasSingleTargetProtectMove?(target)
 		score*=0.7
 		if user.hp==user.totalhp
 			score*=0.2
@@ -3271,7 +3255,7 @@ class Battle::AI
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			score*=0.3
 		end
-		score*=0.3 if protectmove
+		score*=0.3 if pbHasSingleTargetProtectMove?(target)
 		if @battle.pbCheckGlobalAbility(:DAMP)
 			score=0
 		end
@@ -3433,7 +3417,7 @@ class Battle::AI
 			   (user.hasActiveAbility?(:MAGNETPULL) && target.pbHasType?(:STEEL, true))
 				score*=3
 			end
-			if pbHasSingleTargetProtectMove?(user)
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.2
 			end
 			score*=1.2 if user.moves.any? { |m| m&.healingMove? }
@@ -3493,7 +3477,7 @@ class Battle::AI
 		end                
 		score=0 if target.effects[PBEffects::PerishSong]>0
     #---------------------------------------------------------------------------
-    when "AttackerFaintsIfUserFaints"
+    when "AttackerFaintsIfUserFaints" # Destiny Bond
 		movenum = 0
 		damcount = 0
 		for j in target.moves
@@ -3852,7 +3836,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "UserConsumeBerryRaiseDefense2"
+    when "UserConsumeBerryRaiseDefense2" # Stuff Cheeks
 		if !user.item || !user.item.is_berry? || !user.itemActive?
 			score = 0
 		else
@@ -3871,7 +3855,7 @@ class Battle::AI
 			score -= user.stages[:DEFENSE] * 20
 		end
     #---------------------------------------------------------------------------
-    when "AllBattlersConsumeBerry"
+    when "AllBattlersConsumeBerry" # Teatime
 		useful_berries = [
 			:ORANBERRY, :SITRUSBERRY, :AGUAVBERRY, :APICOTBERRY, :CHERIBERRY,
 			:CHESTOBERRY, :FIGYBERRY, :GANLONBERRY, :IAPAPABERRY, :KEEBERRY,
@@ -4068,7 +4052,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "CannotBeRedirected"
+    when "CannotBeRedirected" # Snipe Shot
 		redirection = false
 		user.allOpposing.each do |b|
 			next if b.index == target.index
@@ -4084,7 +4068,8 @@ class Battle::AI
 		end
 		score *= 1.5 if redirection && skill >= PBTrainerAI.mediumSkill
     #---------------------------------------------------------------------------
-    when "RandomlyDamageOrHealTarget"
+    when "RandomlyDamageOrHealTarget" # Present
+		score = 0
     #---------------------------------------------------------------------------
     when "HealAllyOrDamageFoe" # pollen puff
 		if user.opposes?(target) # is enemy
@@ -4291,9 +4276,9 @@ class Battle::AI
 			score = 0 if $game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id)
 		end
     #---------------------------------------------------------------------------
-    when "EffectDependsOnEnvironment"
+    when "EffectDependsOnEnvironment" # Secret Power
     #---------------------------------------------------------------------------
-    when "HitsAllFoesAndPowersUpInPsychicTerrain"
+    when "HitsAllFoesAndPowersUpInPsychicTerrain" # Expanding Force
       	score *= 1.4 if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "TargetNextFireMoveDamagesTarget" # powder
@@ -4334,11 +4319,11 @@ class Battle::AI
 			score*=0
 		end
     #---------------------------------------------------------------------------
-    when "DoublePowerAfterFusionFlare"
+    when "DoublePowerAfterFusionFlare" # Fusion Bolt
     #---------------------------------------------------------------------------
-    when "DoublePowerAfterFusionBolt"
+    when "DoublePowerAfterFusionBolt" # Fusion Flare
     #---------------------------------------------------------------------------
-    when "PowerUpAllyMove"
+    when "PowerUpAllyMove" # helping hand
       	hasAlly = !user.allAllies.empty?
 		if hasAlly
 			effvar = user.moves.any? { |move| pbCalcTypeMod(move.type, user, target) >= 8 }
@@ -4679,20 +4664,27 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UseMoveTargetIsAboutToUse" # Me First
-		if userFasterThanTarget
-			privar = target.moves.any? { |m| m&.priority>0 }
-			healvar = target.moves.any? { |m| m&.healingMove? }
+		if userFasterThanTarget || priorityAI(user, move) > 0
+			privar = target.moves.any? { |m| priorityAI(target,m) > 0 }
 			if pbHasSetupMove?(target)
 				score*=0.8
 			else
 				score*=1.5
 			end
-			if privar || target.hasActiveAbility?(:PRANKSTER) || 
-				(target.hasActiveAbility?(:GALEWINGS) && (target.hp >= (target.totalhp/2.0))) || 
-				(target.hasActiveAbility?(:TRIAGE) && m.healingMove?)
+			if privar
 				score*=0.6
 			else
 				score*=1.5
+			end
+			if targetWillMove?(target)
+				if @battle.choices[target.index][2].statusMove? ||
+				   priorityAI(@battle.choices[target.index][2],m) > 0
+					score*=0.2
+				else
+					score*=2.5
+				end
+			else
+				score*=0.2
 			end
 		else
 			score*=0
@@ -4834,7 +4826,7 @@ class Battle::AI
 			score *= 0.2
 		end
     #---------------------------------------------------------------------------
-    when "ReplaceMoveThisBattleWithTargetLastMoveUsed"
+    when "ReplaceMoveThisBattleWithTargetLastMoveUsed" # Mimic
 		moveBlacklist = [
 			"Struggle",   # Struggle
 			"ReplaceMoveThisBattleWithTargetLastMoveUsed",   # Mimic
@@ -4856,7 +4848,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "ReplaceMoveWithTargetLastMoveUsed"
+    when "ReplaceMoveWithTargetLastMoveUsed" # Sketch
 		moveBlacklist = [
 			"Struggle",   # Struggle
 			"ReplaceMoveWithTargetLastMoveUsed"   # Sketch
@@ -4876,14 +4868,14 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "FleeFromBattle"
+    when "FleeFromBattle" # teleport
 		if @battle.trainerBattle?
-      		score = -100.0
+      		score = 0
 		else
 			score = 999
 		end
     #---------------------------------------------------------------------------
-    when "SwitchOutUserStatusMove"
+    when "SwitchOutUserStatusMove" # teleport
 		#target=user.pbDirectOpposing(true)
 		userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
 		if userlivecount>1
@@ -5353,7 +5345,7 @@ class Battle::AI
 			if target.effects[PBEffects::Confusion]>0
 				score*=1.3
 			end
-			if pbHasSingleTargetProtectMove?(user)
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.1
 			end
 			if user.hasActiveItem?(:BINDINGBAND)
@@ -5369,9 +5361,8 @@ class Battle::AI
 			end  
 		end
     #---------------------------------------------------------------------------
-    when "TrapTargetInBattle", "TrapTargetInBattleLowerTargetDefSpDef1EachTurn" # mean look / octolock
-		movecheck = false
-		movecheck = true if pbHasPivotMove?(target)
+    when "TrapTargetInBattle", "TrapTargetInBattleLowerTargetDefSpDef1EachTurn" # mean look, octolock
+		movecheck = pbHasPivotMove?(target)
 		if !target.trappedInBattle? && target.effects[PBEffects::Substitute]<=0
 			if movecheck
 				score*=0.1
@@ -5415,7 +5406,7 @@ class Battle::AI
 			score=0
 		end
     #---------------------------------------------------------------------------
-    when "TrapUserAndTargetInBattle"
+    when "TrapUserAndTargetInBattle" # jaw lock
 		if target.effects[PBEffects::JawLock] < 0
 			score *= 1.4 if !user.trappedInBattle? && !target.trappedInBattle?
 		end
@@ -5524,9 +5515,9 @@ class Battle::AI
 			score *= 2
 		end
     #---------------------------------------------------------------------------
-    when "TargetActsNext"
+    when "TargetActsNext" # after you
     #---------------------------------------------------------------------------
-    when "TargetActsLast"
+    when "TargetActsLast" # squash
     #---------------------------------------------------------------------------
     when "TargetUsesItsLastUsedMoveAgain" # instruct
 		hasAlly = !user.allAllies.empty?
@@ -5582,7 +5573,7 @@ class Battle::AI
 		if roles.include?("Lead")
 			score*=1.5
 		end
-		hasAlly = !target.allAllies.empty?
+		hasAlly = !user.allAllies.empty?
 		if hasAlly
 			score*=1.3
 		end
@@ -5606,19 +5597,14 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "HigherPriorityInGrassyTerrain"
+    when "HigherPriorityInGrassyTerrain" # grassy glide
 		score *= 1.4 if (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")) && user.affectedByTerrain? && !userFasterThanTarget
     #---------------------------------------------------------------------------
     when "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3" # Spite, eerie spell
-		count=0
-		for i in target.moves
-			if i.baseDamage>0
-				count+=1
-			end
-		end   
 		miniscore=100
 		lastmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
 		if target.lastRegularMoveUsed
+			count=target.moves.count { |i| i.baseDamage > 0 }
 			if lastmove.baseDamage>0 && count==1
 				miniscore*=1.2
 			end
@@ -5640,34 +5626,29 @@ class Battle::AI
 			else
 				miniscore*=1.2
 			end
+		else
+			miniscore = 0 if move.baseDamage == 0
 		end
 		miniscore/=100.0
 		score*=miniscore
     #---------------------------------------------------------------------------
     when "DisableTargetLastMoveUsed" # Disable
-		if target.lastRegularMoveUsed
-			olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-			oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
-		end
 		auroma = false
 		target.allAllies.each do |b|
 			next if !b.hasActiveAbility?(:AROMAVEIL)
 			auroma = true
 		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		maxmove=bestmove[1]
-		moveid=maxmove.id
 		if (target.effects[PBEffects::Disable]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if userFasterThanTarget || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
-				score*=1.2
-			else
-				score*=0.3
-			end
 			if target.lastRegularMoveUsed
+				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
+				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam=bestmove[0]
+				maxmove=bestmove[1]
+				moveid=maxmove.id
+
 				if oldmove.baseDamage>0
 					score*=1.5
 					if moveid == oldmove.id
@@ -5679,33 +5660,38 @@ class Battle::AI
 				else
 					score*=0.5
 				end
+				if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+					score*=1.2
+					if targetWillMove?(target)
+						if @battle.choices[target.index][2].id == oldmove.id
+							score*=1.5
+						end
+					end
+				else
+					score*=0.3
+				end
+			else
+				score = 0 if move.baseDamage == 0
 			end
 		end
     #---------------------------------------------------------------------------
     when "DisableTargetUsingSameMoveConsecutively" # torment
-		if target.lastRegularMoveUsed
-			olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-			oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
-		end
 		auroma = false
 		target.allAllies.each do |b|
 			next if !b.hasActiveAbility?(:AROMAVEIL)
 			auroma = true
 		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		maxmove=bestmove[1]
-		moveid=maxmove.id
 		if (target.effects[PBEffects::Torment] || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if userFasterThanTarget || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
-				score*=1.2
-			else
-				score*=0.7
-			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0]
+			maxmove=bestmove[1]
+			moveid=maxmove.id
+
 			if target.lastRegularMoveUsed
+				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
+				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
 				if oldmove.baseDamage>0
 					score*=1.5
 					if moveid == oldmove.id
@@ -5714,24 +5700,31 @@ class Battle::AI
 							score*=1.5
 						end
 					end
-					if user.pbHasMove?(:PROTECT)
+					if pbHasSingleTargetProtectMove?(user, false)
 						score*=1.5
 					end
-					if user.hasActiveItem?(:LEFTOVERS)
+					if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 						score*=1.3
 					end
 				else
 					score*=0.5
 				end
+				if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+					score*=1.2
+					if targetWillMove?(target)
+						if @battle.choices[target.index][2].id == oldmove.id
+							score*=1.5
+						end
+					end
+				else
+					score*=0.3
+				end
+			else
+				score = 0 if move.baseDamage == 0
 			end
 		end
     #---------------------------------------------------------------------------
     when "DisableTargetUsingDifferentMove" # encore
-		#~ oldmove = GameData::Move.get(target.lastRegularMoveUsed)
-		if target.lastRegularMoveUsed
-			olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-			oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
-		end
 		auroma = false
 		target.allAllies.each do |b|
 			next if !b.hasActiveAbility?(:AROMAVEIL)
@@ -5743,15 +5736,8 @@ class Battle::AI
 			if !target.lastRegularMoveUsed
 				score=0 if move.baseDamage == 0
 			else
-				if userFasterThanTarget
-					score*=1.5
-				else
-					if (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
-						score*=2
-					else              
-						score*=0.2
-					end            
-				end
+				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
+				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
 				if !oldmove.nil?
 					if oldmove.baseDamage>0 && pbRoughDamage(oldmove, user, target, skill, oldmove.baseDamage)*5>user.hp
 						score*=0.3
@@ -5768,6 +5754,15 @@ class Battle::AI
 						end            
 					end
 				end
+				if userFasterThanTarget
+					score*=1.5
+				else
+					if (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+						score*=2
+					else              
+						score*=0.2
+					end            
+				end
 			end 
 		end
     #---------------------------------------------------------------------------
@@ -5780,8 +5775,7 @@ class Battle::AI
 		if (target.effects[PBEffects::Taunt]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if userFasterThanTarget || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+			if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
 				score*=1.5
 				score*=3.0 if targetWillMove?(target, "status")
 			else
@@ -5793,7 +5787,7 @@ class Battle::AI
 			else
 				score*=0.9
 			end  
-			score*=1.3 if pbHasSingleTargetProtectMove?(target)
+			score*=1.3 if pbHasSingleTargetProtectMove?(target, false)
 			score*=1.3 if target.moves.any? { |m| m&.healingMove? }
 			hasNonDamagingAttack = target.moves.any? { |m| next m&.statusMove? }
 			if hasNonDamagingAttack
@@ -5812,26 +5806,34 @@ class Battle::AI
 		if (target.effects[PBEffects::HealBlock]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if userFasterThanTarget || 
-					(user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+			if target.moves.any? { |m| m&.healingMove? }
 				score*=1.5
+				if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+					score*=1.5
+					if targetWillMove?(target)
+						if @battle.choices[target.index][2].healingMove?
+							score*=2.5
+						end
+					end
+				end
 			end
-			score*=2.5 if target.moves.any? { |m| m&.healingMove? }
-			if target.hasActiveItem?(:LEFTOVERS)
-				score*=1.3
-			end
+			score*=1.3 if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
 		end
     #---------------------------------------------------------------------------
-    when "DisableTargetSoundMoves" # Throat Chop
+    when "DisableTargetSoundMoves" # Throat Chop # did gf forget auroma exists while making this move?
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxmove=bestmove[1]
 		maxsound=maxmove.soundMove?
-		soundcheck = target.moves.any? { |m| m&.soundMove? }
-		if maxsound 
-			score*=1.5
-		else
-			if soundcheck
+		if target.moves.any? { |m| m&.soundMove? }
+			if maxsound 
+				score*=1.5
+			else
 				score*=1.3
+			end
+			if targetWillMove?(target) && userFasterThanTarget
+				if @battle.choices[target.index][2].soundMove?
+					score*=2.0
+				end
 			end
 		end
     #---------------------------------------------------------------------------
@@ -5839,20 +5841,32 @@ class Battle::AI
 		if user.effects[PBEffects::Imprison]
 			score = 0
 		else
-			miniscore=1
 			ourmoves = []
-			for m in user.moves
-				ourmoves.push(m.id) unless m.nil?
+			user.moves.each do |m|
+				next if m.nil?
+				ourmoves.push(m.id)
 			end
-			for m in target.moves
+			miniscore = 1
+			sharedmoves = []
+			target.moves.each do |m|
+				next if m.nil?
 				if ourmoves.include?(m.id)
 					miniscore+=1
+					sharedmoves.push(m.id)
 					score*=1.5 if m.healingMove?
 					score*=1.6 if m.id == :TRICKROOM
 				end
 			end
 			score*=miniscore
-			score = 0 if miniscore == 1
+			if miniscore == 1
+				score = 0
+			else
+				if targetWillMove?(target) && userFasterThanTarget
+					if sharedmoves.include?(@battle.choices[target.index][2].id)
+						score*=3.0
+					end
+				end
+			end
 		end
     #---------------------------------------------------------------------------
     when "AllBattlersLoseHalfHPUserSkipsNextTurn"

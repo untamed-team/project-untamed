@@ -123,14 +123,16 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "CrashDamageIfFailsUnusableInGravity" # high jump kick
-		score*=0.8 if targetSurvivesMove(move,user,target)
 		score*=0.5 if pbHasSingleTargetProtectMove?(target)
-		ministat=user.stages[:ACCURACY]
-		ministat=0 if user.stages[:ACCURACY]<0
-		ministat*=(10)
-		ministat+=100
-		ministat/=100.0
-		score*=ministat
+		if move.accuracy < 87
+			score*=0.8 if targetSurvivesMove(move,user,target)
+			ministat=user.stages[:ACCURACY]
+			ministat=0 if user.stages[:ACCURACY]<0
+			ministat*=(10)
+			ministat+=100
+			ministat/=100.0
+			score*=ministat
+		end
 		score = 0 if @battle.field.effects[PBEffects::Gravity] > 0 && !user.hasActiveItem?(:FLOATSTONE)
     #---------------------------------------------------------------------------
     when "StartSunWeather" # sunny day
@@ -445,7 +447,7 @@ class Battle::AI
 			score*=miniscore
 			score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
 			score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Electric) / 100.0))
-			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, nil, true, :Electric) / 100.0)))
+			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Electric) / 100.0)))
 		end
     #---------------------------------------------------------------------------
     when "StartGrassyTerrain" # grassy terrain
@@ -481,7 +483,7 @@ class Battle::AI
 			score*=miniscore
 			score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
 			score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Grassy) / 100.0))
-			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, nil, true, :Grassy) / 100.0)))
+			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Grassy) / 100.0)))
 		end
     #---------------------------------------------------------------------------
     when "StartMistyTerrain" # misty terrain
@@ -519,7 +521,7 @@ class Battle::AI
 			score*=miniscore
 			score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
 			score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Misty) / 100.0))
-			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, nil, true, :Misty) / 100.0)))
+			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Misty) / 100.0)))
 		end
     #---------------------------------------------------------------------------
     when "StartPsychicTerrain" # psychic terrain
@@ -556,7 +558,7 @@ class Battle::AI
 			score*=miniscore
 			score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
 			score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Psychic) / 100.0))
-			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, nil, true, :Psychic) / 100.0)))
+			score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Psychic) / 100.0)))
 		end
     #---------------------------------------------------------------------------
     when "RemoveTerrain" # Steel Roller
@@ -845,7 +847,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "SwapSideEffects"
+    when "SwapSideEffects" # Court Change
       if skill >= PBTrainerAI.mediumSkill
         good_effects = [:Reflect, :LightScreen, :AuroraVeil, :SeaOfFire,
                         :Swamp, :Rainbow, :Mist, :Safeguard,
@@ -1024,17 +1026,19 @@ class Battle::AI
 			if user.effects[PBEffects::Substitute]>0
 				score*=1.2
 			end
-			if pbHasSingleTargetProtectMove?(user)
+			if pbHasSingleTargetProtectMove?(user, false)
 				score*=1.2
 			end
 			roles = pbGetPokemonRole(user, target)
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				score*=1.1
 			end
-			if user.hasActiveAbility?(:MOODY) || user.pbHasMove?(:QUIVERDANCE) || 
-			   user.pbHasMove?(:NASTYPLOT) || user.pbHasMove?(:TAILGLOW)
+			if user.pbHasMove?(:CALMMIND) || user.pbHasMove?(:QUIVERDANCE) || 
+			   user.pbHasMove?(:NASTYPLOT) || user.pbHasMove?(:TAILGLOW) || 
+			   user.hasActiveAbility?(:MOODY)
 				score*=1.2
 			end
+			score *= 1.7 if user.hasActiveAbility?(:PREMONITION)
 		end
     #---------------------------------------------------------------------------
     when "UserSwapsPositionsWithAlly" # ally switch
@@ -1504,7 +1508,7 @@ class Battle::AI
 			score = 0 if mechanicver
 		end
     #---------------------------------------------------------------------------
-    when "RaiseUserDefense2", "RaiseUserDefense3" # Iron Defense
+    when "RaiseUserDefense2", "RaiseUserDefense3" # Iron Defense, Cotton Guard
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
@@ -2146,7 +2150,7 @@ class Battle::AI
 		score*=miniscore
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
-    when "RaiseUserSpeed1", "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" # Flame Charge
+    when "RaiseUserSpeed1", "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" # Flame Charge, Aura Wheel
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
@@ -2462,6 +2466,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseUserEvasion1", "RaiseUserEvasion2", "RaiseUserEvasion2MinimizeUser", "RaiseUserEvasion3"
+		# Double Team, Minimize
 		score = 0
     #---------------------------------------------------------------------------
     when "RaiseUserCriticalHitRate2" # Focus Energy
@@ -4118,7 +4123,7 @@ class Battle::AI
 		miniscore=0.1 if user.hasActiveAbility?(:CONTRARY)
 		score*=miniscore
     #---------------------------------------------------------------------------
-    when "RaiseUserMainStats1LoseThirdOfTotalHP"
+    when "RaiseUserMainStats1LoseThirdOfTotalHP" # Clangorous Soul
       if (user.hp <= user.totalhp / 2) || ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
         score = 0
       elsif user.hasActiveAbility?(:CONTRARY)
@@ -4144,7 +4149,7 @@ class Battle::AI
         end
       end
     #---------------------------------------------------------------------------
-    when "RaiseUserMainStats1TrapUserInBattle"
+    when "RaiseUserMainStats1TrapUserInBattle" # No Retreat
       if user.effects[PBEffects::NoRetreat]
         score = 0
       elsif user.hasActiveAbility?(:CONTRARY)
@@ -4727,7 +4732,7 @@ class Battle::AI
 		score*=miniscore
 		score=0 if ($game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
-    when "RaiseTargetAtkSpAtk2"
+    when "RaiseTargetAtkSpAtk2" # Decorate
 		if target.hasActiveAbility?(:CONTRARY)
 			if target.opposes?(user) && target.battle.choices[target.index][0] != :SwitchOut
 				score -= target.stages[:ATTACK] * 20
@@ -5045,7 +5050,7 @@ class Battle::AI
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-    when "LowerTargetSpAtk2IfCanAttract"
+    when "LowerTargetSpAtk2IfCanAttract" # Captivate
 		if (pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)) || 
 		   target.stages[:SPECIAL_ATTACK]>1 || !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
 			if move.baseDamage==0
@@ -5192,7 +5197,8 @@ class Battle::AI
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-	when "LowerTargetSpeed1", "LowerTargetSpeed1WeakerInGrassyTerrain", "LowerTargetSpeed1MakeTargetWeakerToFire" # Rock Tomb
+	when "LowerTargetSpeed1", "LowerTargetSpeed1WeakerInGrassyTerrain", "LowerTargetSpeed1MakeTargetWeakerToFire" 
+		# Rock Tomb, bulldoze, tar shot
 		hasAllyDos = !user.allAllies.empty?
 		if (userFasterThanTarget && !hasAllyDos) || !target.pbCanLowerStatStage?(:SPEED)
 			score=0 if move.baseDamage==0
@@ -5299,7 +5305,7 @@ class Battle::AI
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
-    when "LowerTargetAccuracy1", "LowerTargetAccuracy2", "LowerTargetAccuracy3"
+    when "LowerTargetAccuracy1", "LowerTargetAccuracy2", "LowerTargetAccuracy3" # Mud-Slap, Sand Attack
     	score = 0 if move.statusMove? # they do jackshit
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion1"
@@ -5357,7 +5363,7 @@ class Battle::AI
 			score*=1.3
 		end
     #---------------------------------------------------------------------------
-    when "LowerTargetEvasion2", "LowerTargetEvasion3"
+    when "LowerTargetEvasion2", "LowerTargetEvasion3" # Sweet Scent
 		if move.statusMove?
 			if target.pbCanLowerStatStage?(:EVASION, user)
 				score += target.stages[:EVASION] * 10
@@ -5608,7 +5614,7 @@ class Battle::AI
 			score*=0
 		end
     #---------------------------------------------------------------------------
-    when "RaiseUserAndAlliesAtkDef1"
+    when "RaiseUserAndAlliesAtkDef1" # Coaching
       has_ally = false
       user.allAllies.each do |b|
         next if !b.pbCanLowerStatStage?(:ATTACK, user) &&
@@ -5625,7 +5631,7 @@ class Battle::AI
       end
       score = 0 if !has_ally
     #---------------------------------------------------------------------------
-    when "RaisePlusMinusUserAndAlliesAtkSpAtk1"
+    when "RaisePlusMinusUserAndAlliesAtkSpAtk1" # Gear Up
 		hasEffect = user.statStageAtMax?(:ATTACK) &&
 					user.statStageAtMax?(:SPECIAL_ATTACK)
 		user.allAllies.each do |b|
@@ -5642,7 +5648,7 @@ class Battle::AI
 			score -= 90
 		end
     #---------------------------------------------------------------------------
-    when "RaisePlusMinusUserAndAlliesDefSpDef1"
+    when "RaisePlusMinusUserAndAlliesDefSpDef1" # Magnetic Flux
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
 		movecheck = false

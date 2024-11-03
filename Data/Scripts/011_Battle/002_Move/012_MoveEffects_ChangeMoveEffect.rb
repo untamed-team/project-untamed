@@ -611,9 +611,6 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
     when 2 then hpGain = user.totalhp / 2
     when 3 then hpGain = user.totalhp
     end
-    noDefBoost = user.effects[PBEffects::StockpileDef] == 0 && 
-                 user.effects[PBEffects::StockpileSpDef] == 0
-    hpGain /= 2 if noDefBoost && hpGain > (user.totalhp / 4)
     if user.pbRecoverHP(hpGain) > 0
       @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
     end

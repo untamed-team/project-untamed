@@ -8829,7 +8829,6 @@ Target = NearOther
 Priority = 0
 FunctionCode = None
 Flags = Contact,CanProtect,HighCriticalHitRate,Blade
-EffectChance = 10
 Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
@@ -8839,12 +8838,12 @@ Category = Special
 Power = 90
 Accuracy = 100
 TotalPP = 10
-Target = AllNearFoes
+Target = NearOther
 Priority = 0
 FunctionCode = None
-Flags = CanProtect
+Flags = CanProtect,Sound
 EffectChance = 0
-Description = The user strikes the air to send a damaging shockwave towards opposing Pokémon.
+Description = The user strikes the air to send a damaging shockwave towards an opposing foe.
 #-------------------------------
 [GEODEBURST]
 Name = Geode Burst

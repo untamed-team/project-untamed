@@ -255,6 +255,23 @@ class Battle::AI
 					score *= 0.7
 				end
 			end
+			# Prefer usable Protect-like moves
+			# IF future sight is about to hit and if best move does not KO
+			if pbHasSingleTargetProtectMove?(user)
+				roughFSDamage = futureSightRoughDamage(user, target, skill)
+				if roughFSDamage > 0
+					miniscore = 1 + (roughFSDamage / target.hp)
+					bestmove = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+					maxmove = bestmove[1]
+					if targetSurvivesMove(maxmove,user,target)
+						miniscore *= 1.2
+					else
+						miniscore *= 0.8
+					end
+					echoln "score for protect+FS #{miniscore}" if $AIGENERALLOG
+					score *= miniscore
+				end
+			end
 		end
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
@@ -402,6 +419,11 @@ class Battle::AI
 				realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE)
 			end
 		end
+		roughFSDamage = futureSightRoughDamage(user, target, skill)
+		if roughFSDamage > 0
+			echoln "rough dmg for FS #{roughFSDamage}" if $AIGENERALLOG
+			realDamage += roughFSDamage
+		end 
 		realDamage = realDamage.to_i
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|

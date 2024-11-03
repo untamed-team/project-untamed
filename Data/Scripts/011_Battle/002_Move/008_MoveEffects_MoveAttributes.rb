@@ -355,7 +355,7 @@ class Battle::Move::PowerHigherWithConsecutiveUseOnUserSide < Battle::Move
     if !user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed]
       user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] = (oldVal >= 5) ? 5 : oldVal + 1
     end
-    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true
+    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true if user.pbOwnedByPlayer?
   end
 
   def pbBaseDamage(baseDmg, user, target)

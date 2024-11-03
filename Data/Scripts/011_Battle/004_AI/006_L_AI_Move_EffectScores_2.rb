@@ -186,6 +186,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "ParalyzeTarget", "ParalyzeTargetIfNotTypeImmune",
          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", "ParalyzeFlinchTarget"
+		# paralysis moves, Thunder Wave, Thunder
 		if target.pbCanParalyze?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, 120, move, globalArray, skill)
 			if aspeed < ospeed
@@ -259,8 +260,8 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "BurnTarget", "BurnTargetIfTargetStatsRaisedThisTurn","BurnFlinchTarget"
-		# Burning Jealousy shouldn't be here but who will use that trash move anyway kekeros
+    when "BurnTarget", "BurnTargetIfTargetStatsRaisedThisTurn", "BurnFlinchTarget"
+		# burning moves, Burning Jealousy (shouldn't be here but who will use that trash move anyway kekeros)
 		if target.pbCanBurn?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, globalArray, 100)
 			ministat=0
@@ -618,6 +619,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "ConfuseTarget", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
+		# confusion moves / hurricane
 		if target.pbCanConfuse?(user, false)
 			if $game_variables[MECHANICSVAR] >= 3
 				miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, globalArray, skill)
@@ -669,10 +671,10 @@ class Battle::AI
 			score*=1.2 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
 		end
     #---------------------------------------------------------------------------
-    when "AttractTarget"
+    when "AttractTarget" # Attract
     	score = 0
     #---------------------------------------------------------------------------
-    when "SetUserTypesBasedOnEnvironment"
+    when "SetUserTypesBasedOnEnvironment" # Camouflage
 		if !user.canChangeType?
 			score -= 90
 		elsif skill >= PBTrainerAI.mediumSkill
@@ -716,7 +718,7 @@ class Battle::AI
 			score -= 90 if !user.pbHasOtherType?(new_type)
 		end
     #---------------------------------------------------------------------------
-    when "SetUserTypesToResistLastAttack"
+    when "SetUserTypesToResistLastAttack" # Conversion 2
 		if !user.canChangeType?
 			score -= 90
 		elsif !target.lastMoveUsed || !target.lastMoveUsedType ||
@@ -743,7 +745,7 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "SetUserTypesToTargetTypes"
+    when "SetUserTypesToTargetTypes" # Reflect Type
 		if !user.canChangeType? || target.pbTypes(true).length == 0
 			score -= 90
 		elsif user.pbTypes == target.pbTypes &&
@@ -751,7 +753,7 @@ class Battle::AI
 			score -= 90
 		end
     #---------------------------------------------------------------------------
-    when "SetUserTypesToUserMoveType"
+    when "SetUserTypesToUserMoveType" # Conversion (you cant say that, d*scord will think its le bad!)
 		if user.canChangeType?
 			has_possible_type = false
 			user.eachMoveWithIndex do |m, i|
@@ -1197,7 +1199,6 @@ class Battle::AI
 			if target.pbHasMove?(:BOUNCE) || target.pbHasMove?(:FLY) || target.pbHasMove?(:SKYDROP)
 				miniscore*=1.3
 			else
-				target.effects[PBEffects::TwoTurnAttack]!=0
 				miniscore*=2
 			end
 		end

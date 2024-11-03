@@ -326,7 +326,6 @@ class Battle::AI
 		end
 		# Weather
 		if skill >= PBTrainerAI.mediumSkill
-			# specific weather checks #by low
 			if globalArray.none? { |element| element.include?("weather") }
 				# abilityWeather #by low
 				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
@@ -357,7 +356,7 @@ class Battle::AI
 						multipliers[:defense_multiplier] *= 1.5
 					end
 				when :Hail # hail buff #by low
-					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(typeMod)
 						multipliers[:final_damage_multiplier] *= 0.75
 					end
 				end
@@ -398,14 +397,14 @@ class Battle::AI
 					end
 				end
 				if globalArray.include?("hail weather")
-					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(typeMod)
 						multipliers[:final_damage_multiplier] *= 0.75
 					end
 				end
 			end
 		end
 		# Master Mode stuff #by low
-		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(typeMod)
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Gravity Boost #by low 
@@ -432,8 +431,8 @@ class Battle::AI
 		end
 		# Type effectiveness
 		if skill >= PBTrainerAI.mediumSkill
-			typemod = pbCalcTypeMod(type, user, target)
-			multipliers[:final_damage_multiplier] *= typemod.to_f / Effectiveness::NORMAL_EFFECTIVE
+			#typemod = pbCalcTypeMod(type, user, target) # why are you calculating it again?
+			multipliers[:final_damage_multiplier] *= typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
 		end
 		damagenerf = (1 / 2.0)
 		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
@@ -531,7 +530,8 @@ class Battle::AI
 				end
 			end
 		end
-		damage  *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
+		damage *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
+		damage /= 2 if @battle.futureSight && ![:FUTURESIGHT,:DOOMDESIRE].include?(move.id)
 		return damage.floor
 	end
 	

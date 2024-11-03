@@ -53,6 +53,21 @@ class Battle::Battler
     @pokemon      = pkmn
     @pokemonIndex = idxParty
     @participants = []
+    # bug fixes for AAM #by low
+    abilist = [pkmn.ability_id]
+    if pkmn.hasAbilityMutation?
+      if pkmn&.mega?
+        pkmn.makeUnmega
+        for i in pkmn.getAbilityList
+          abilist.push(i[0])
+        end 
+        pkmn.makeMega
+      end  
+      for i in pkmn.getAbilityList
+        abilist.push(i[0])
+      end
+    end
+    @abilityMutationList= abilist|[]
     # moves intentionally not copied across here
     @dummy        = true
   end

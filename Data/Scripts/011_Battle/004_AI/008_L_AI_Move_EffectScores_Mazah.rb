@@ -13,231 +13,274 @@ class Battle::AI
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
     case move.function
     #---------------------------------------------------------------------------
-    when "ProtectUser"
-		score*=1.3 if globalArray.any? { |element| element.include?("weather") }
-		if target.turnCount==0
-			score*=1.5
-		end
-		if pbHasSetupMove?(target, false)
-			score*=0.3
-		end
-		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
-			score*=4
-		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-		   @battle.field.terrain == :Grassy
-			score*=1.2
-		end
-		if user.poisoned? || user.burned? || user.frozen?
-			score*=0.8
-			if user.effects[PBEffects::Toxic]>0
+    when "ProtectUser" # Protect, Detect
+		if user.effects[PBEffects::ProtectRate] > 1
+			score = 0
+		else
+			score*=1.3 if globalArray.any? { |element| element.include?("weather") }
+			if target.turnCount==0
+				score*=1.5
+			end
+			if pbHasSetupMove?(target, false)
 				score*=0.3
 			end
-		end   
-		if target.effects[PBEffects::LeechSeed]>=0
-			score*=1.3
-		end
-		if target.effects[PBEffects::PerishSong]!=0
-			score*=2
-		end
-		if target.asleep?
-			score*=0.3
-		end
-		score*=0.1 if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
-												"RemoveProtectionsBypassSubstitute", 
-												"RemoveProtections"].includes?(m&.id) }
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		if user.effects[PBEffects::Wish]>0
-			if maxdam>user.hp
-				score*=3
-			else
-				score*=1.4
+			if user.hasActiveAbility?(:SPEEDBOOST) && 
+			   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
+				score*=4
 			end
-		end
-		if !user.pbHasAnyStatus?
-			score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
-		end
-		if targetWillMove?(target)
-			score *= 2.0 if !@battle.choices[target.index][2].statusMove?
-		end
-		score = 0 if user.effects[PBEffects::ProtectRate] > 1
-    #---------------------------------------------------------------------------
-    when "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield" 
-		# Baneful Bunker, Spiky Shield
-		score*=1.3 if globalArray.any? { |element| element.include?("weather") }
-		if target.turnCount==0
-			score*=1.5
-		end        
-		if pbHasSetupMove?(target, false)
-			score*=0.3
-		end
-		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
-			score*=4
-		end
-		if user.hasActiveItem?(:LEFTOVERS) || 
-		   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-		   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-		   @battle.field.terrain == :Grassy
-			score*=1.2
-		end  
-		if move.function == "ProtectUserBanefulBunker"
-			if target.pbHasAnyStatus?
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
+			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
+			   @battle.field.terrain == :Grassy
+				score*=1.2
+			end
+			if user.poisoned? || user.burned? || user.frozen?
 				score*=0.8
-			else
-				if target.pbCanPoison?(user, false)
-					miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 120, move, globalArray, 100)
-					miniscore/=100.0
-					score*=miniscore
+				if user.effects[PBEffects::Toxic]>0
+					score*=0.3
+				end
+			end   
+			if target.effects[PBEffects::LeechSeed]>=0
+				score*=1.3
+			end
+			if target.effects[PBEffects::PerishSong]!=0
+				score*=2
+			end
+			if target.asleep?
+				score*=0.3
+			end
+			score*=0.1 if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
+													"RemoveProtectionsBypassSubstitute", 
+													"RemoveProtections"].includes?(m&.id) }
+			if user.effects[PBEffects::Wish]>0
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam=bestmove[0]
+				if maxdam>user.hp
+					score*=3
+				else
+					score*=1.4
+				end
+			end
+			if !user.pbHasAnyStatus?
+				score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
+			end
+			if targetWillMove?(target)
+				targetMove = @battle.choices[target.index][2]
+				if targetMove.statusMove?
+					score *= 1.1
+				else
+					if !targetSurvivesMove(targetMove,target,user)
+						score *= 5.0
+					else
+						expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+						expectedPrcnt = expectedDmg * 100.0 / user.hp
+						score *= (expectedPrcnt * 0.05)
+					end
 				end
 			end
 		end
-		if user.poisoned? || user.burned? || user.frozen?
-			score*=0.8
-			if user.effects[PBEffects::Toxic]>0
+    #---------------------------------------------------------------------------
+    when "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield" 
+		# Baneful Bunker, Spiky Shield
+		if user.effects[PBEffects::ProtectRate] > 1
+			score = 0
+		else
+			contactcheck = target.moves.any? { |m| m&.pbContactMove?(target) }
+			score*=1.3 if globalArray.any? { |element| element.include?("weather") }
+			if target.turnCount==0
+				score*=1.5
+			end        
+			if pbHasSetupMove?(target, false)
 				score*=0.3
 			end
-		end   
-		if target.effects[PBEffects::LeechSeed]>=0
-			score*=1.3
-		end
-		if target.effects[PBEffects::PerishSong]!=0
-			score*=2
-		end
-		if target.asleep?
-			score*=0.3
-		end
-		movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
-		movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
-													"RemoveProtectionsBypassSubstitute", 
-													"RemoveProtections"].includes?(m&.id) }
-		score*=0.1 if movecheck
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		if user.effects[PBEffects::Wish]>0
-			if maxdam>user.hp
-				score*=3
-			else
-				score*=1.4
+			if user.hasActiveAbility?(:SPEEDBOOST) && 
+			   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
+				score*=4
 			end
-		end  
-		if target.moves.any? { |m| m&.pbContactMove?(target) }
-			score*=1.3
-		end
-		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
-			score*=1.5
-		end
-		if !user.pbHasAnyStatus?
-			score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
-		end
-		if targetWillMove?(target)
-			if !@battle.choices[target.index][2].statusMove?
-				score *= 2.0
-				score *= 1.5 if @battle.choices[target.index][2].pbContactMove?(user)
+			if user.hasActiveItem?(:LEFTOVERS) || 
+			   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
+			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
+			   @battle.field.terrain == :Grassy
+				score*=1.2
+			end  
+			if move.function == "ProtectUserBanefulBunker"
+				if target.pbHasAnyStatus?
+					score*=0.8
+				else
+					if target.pbCanPoison?(user, false) && contactcheck
+						miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, 100)
+						miniscore/=100.0
+						score*=miniscore
+					end
+				end
+			end
+			if user.poisoned? || user.burned? || user.frozen?
+				score*=0.8
+				if user.effects[PBEffects::Toxic]>0
+					score*=0.3
+				end
+			end   
+			if target.effects[PBEffects::LeechSeed]>=0
+				score*=1.3
+			end
+			if target.effects[PBEffects::PerishSong]!=0
+				score*=2
+			end
+			if target.asleep?
+				score*=0.3
+			end
+			movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
+			movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
+														"RemoveProtectionsBypassSubstitute", 
+														"RemoveProtections"].includes?(m&.id) }
+			score*=0.1 if movecheck
+			if user.effects[PBEffects::Wish]>0
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam=bestmove[0]
+				if maxdam>user.hp
+					score*=3
+				else
+					score*=1.4
+				end
+			end  
+			if contactcheck
+				score*=1.3
+			end
+			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
+				score*=1.5
+			end
+			if !user.pbHasAnyStatus?
+				score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
+			end
+			if targetWillMove?(target)
+				targetMove = @battle.choices[target.index][2]
+				if targetMove.statusMove?
+					score *= 1.1
+				else
+					if !targetSurvivesMove(targetMove,target,user)
+						score *= 5.0
+					else
+						expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+						expectedPrcnt = expectedDmg * 100.0 / user.hp
+						score *= (expectedPrcnt * 0.05)
+					end
+					score *= 1.5 if targetMove.pbContactMove?(user)
+				end
 			end
 		end
-		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserFromDamagingMovesKingsShield",
 		 "ProtectUserFromDamagingMovesObstruct"
 		# King's Shield, Obstruct
-		if target.turnCount==0
-			score*=1.5
-		end        
-		if pbHasSetupMove?(target, false)
-			score*=0.6
-		end
-		if user.hasActiveAbility?(:SPEEDBOOST) && 
-		   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
-			score*=4
-		end
-		if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-				user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-				@battle.field.terrain == :Grassy
-			score*=1.2
-		end  
-		if target.poisoned? || target.burned? || target.frozen?
-			score*=1.2
-			if target.effects[PBEffects::Toxic]>0
+		if user.effects[PBEffects::ProtectRate] > 1
+			score = 0
+		else
+			if target.turnCount==0
+				score*=1.5
+			end        
+			if pbHasSetupMove?(target, false)
+				score*=0.6
+			end
+			if user.hasActiveAbility?(:SPEEDBOOST) && 
+			   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
+				score*=4
+			end
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
+			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
+			   @battle.field.terrain == :Grassy
+				score*=1.2
+			end  
+			if target.poisoned? || target.burned? || target.frozen?
+				score*=1.2
+				if target.effects[PBEffects::Toxic]>0
+					score*=1.3
+				end
+			end
+			if user.poisoned? || user.burned? || user.frozen?
+				score*=0.8
+				if user.effects[PBEffects::Toxic]>0
+					score*=0.3
+				end
+			end   
+			if target.effects[PBEffects::LeechSeed]>=0
 				score*=1.3
 			end
-		end
-		if user.poisoned? || user.burned? || user.frozen?
-			score*=0.8
-			if user.effects[PBEffects::Toxic]>0
+			if target.effects[PBEffects::PerishSong]!=0
+				score*=2
+			end
+			if target.asleep?
 				score*=0.3
 			end
-		end   
-		if target.effects[PBEffects::LeechSeed]>=0
-			score*=1.3
-		end
-		if target.effects[PBEffects::PerishSong]!=0
-			score*=2
-		end
-		if target.asleep?
-			score*=0.3
-		end
-		if move.function == "ProtectUserFromDamagingMovesKingsShield"
-			if !userFasterThanTarget && 
-			   user.isSpecies?(:AEGISLASH) && user.form == 1
-				score*=4
-			else
-				score*=0.8
+			if move.function == "ProtectUserFromDamagingMovesKingsShield"
+				if user.isSpecies?(:AEGISLASH) && user.form == 1
+					if userFasterThanTarget
+						bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+						maxmove = bestmove[1]
+						if targetSurvivesMove(maxmove,user,target)
+							score*=1.2
+						else
+							score*=0.8
+						end
+					else
+						score*=4
+					end
+				end
+			end
+			movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
+			movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
+														"RemoveProtectionsBypassSubstitute", 
+														"RemoveProtections"].includes?(m&.id) }
+			score*=0.1 if movecheck
+			score*=1.3 if target.moves.any? { |m| m&.pbContactMove?(target) }
+			if user.effects[PBEffects::Wish]>0
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam = bestmove[0]
+				if maxdam>user.hp
+					score*=3
+				else
+					score*=1.4
+				end
+			end
+			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
+				score*=1.5
+			end
+			if !user.pbHasAnyStatus?
+				score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
+			end
+			if targetWillMove?(target)
+				targetMove = @battle.choices[target.index][2]
+				if targetMove.statusMove?
+					score *= 0.3
+				else
+					if !targetSurvivesMove(targetMove,target,user)
+						score *= 5.0
+					else
+						expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+						expectedPrcnt = expectedDmg * 100.0 / user.hp
+						score *= (expectedPrcnt * 0.05)
+					end
+					score *= 1.5 if targetMove.pbContactMove?(user)
+				end
 			end
 		end
-		movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
-		movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
-													"RemoveProtectionsBypassSubstitute", 
-													"RemoveProtections"].includes?(m&.id) }
-		score*=0.1 if movecheck
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam = bestmove[0]
-		score*=1.3 if target.moves.any? { |m| m&.pbContactMove?(target) }
-		if user.effects[PBEffects::Wish]>0
-			if maxdam>user.hp
-				score*=3
-			else
-				score*=1.4
-			end
-		end
-		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
-			score*=1.5
-		end
-		if !user.pbHasAnyStatus?
-			score*=0.7 if target.moves.any? { |j| [:WILLOWISP, :THUNDERWAVE, :TOXIC, :BITINGCOLD, :CONFUSERAY].include?(j&.id) }
-		end
-		if targetWillMove?(target)
-			if !@battle.choices[target.index][2].statusMove?
-				score *= 2.0
-				score *= 1.5 if @battle.choices[target.index][2].pbContactMove?(user)
-			end
-		end
-		score = 0 if user.effects[PBEffects::ProtectRate] > 1
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
      	if user.turnCount == 0
-			healcheck = target.moves.any? { |m| m&.healingMove? }
-			setupcheck = pbHasSetupMove?(target, false)
 			hasAlly = !user.allAllies.empty?
 			if hasAlly
+				healcheck = target.moves.any? { |m| m&.healingMove? }
+				setupcheck = pbHasSetupMove?(target, false)
 				score*=1.3
 				if userFasterThanTarget
 					score*=1.2
 				else
 					score*=0.7
-					if userFasterThanTarget
-						score*=0
-					end
 				end
 				if setupcheck && healcheck
 					score*=0.3
 				end
 				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-						user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-						@battle.field.terrain == :Grassy
+				   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
+				   @battle.field.terrain == :Grassy
 					score*=1.2
 				end  
 				if target.poisoned? || target.burned? || target.frozen?
@@ -295,33 +338,11 @@ class Battle::AI
 			score*=0.5 if user.lastMoveUsed == :CRAFTYSHIELD
 		end
     #---------------------------------------------------------------------------
-    when "ProtectUserSideFromPriorityMoves"
+    when "ProtectUserSideFromPriorityMoves" # Quick Guard
 		if user.effects[PBEffects::ProtectRate] > 1
 			score = 0
 		else
-			noprio = !target.moves.any? { |m| m&.priority>0 }
-			if noprio
-				for m in target.moves
-					if target.hasActiveAbility?(:GALEWINGS) && (target.hp >= (target.totalhp/2.0)) && m.type == :FLYING
-						noprio = false
-						break
-					end
-					if target.hasActiveAbility?(:PRANKSTER) && !user.pbHasType?(:DARK, true) && m.statusMove?
-						noprio = false
-						break
-					end
-					if target.hasActiveAbility?(:ECHOCHAMBER) && target.effects[PBEffects::PrioEchoChamber] > 0 && 
-					   m.statusMove? && m.soundMove?
-						noprio = false
-						break
-					end
-					if target.hasActiveAbility?(:TRIAGE) && m.healingMove?
-						noprio = false
-						break
-					end
-				end
-			end
-			if noprio
+			if target.moves.none? { |m| priorityAI(target,m) > 0 }
 				score *= 0.5
 			else
 				score *= 1.2
@@ -331,15 +352,29 @@ class Battle::AI
 			end
 			if user.hp==user.totalhp
 				score *= 1.5
-			end          
+			end
 			if targetWillMove?(target)
-				if priorityAI(target,target.battle.choices[target.index][2]) > 0
-					score *= 3
+				targetMove = @battle.choices[target.index][2]
+				if priorityAI(target,targetMove) > 0
+					score *= 2.0 
+					if targetMove.statusMove?
+						score *= 1.1
+					else
+						if !targetSurvivesMove(targetMove,target,user)
+							score *= 5.0
+						else
+							expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+							expectedPrcnt = expectedDmg * 100.0 / user.hp
+							score *= (expectedPrcnt * 0.05)
+						end
+					end
+				else
+					score *= 0.6
 				end
 			end
 		end
     #---------------------------------------------------------------------------
-    when "ProtectUserSideFromMultiTargetDamagingMoves"
+    when "ProtectUserSideFromMultiTargetDamagingMoves" # Wide Guard
 		if user.effects[PBEffects::ProtectRate] > 1
 			score = 0
 		else
@@ -352,19 +387,33 @@ class Battle::AI
 				score *= 1.5
 			end
 			if targetWillMove?(target)
-				if pbTargetsMultiple?(target.battle.choices[target.index][2], user)
-					score *= 3
+				targetMove = @battle.choices[target.index][2]
+				if pbTargetsMultiple?(targetMove, target)
+					score *= 2.0 
+					if targetMove.statusMove?
+						score *= 0.5
+					else
+						if !targetSurvivesMove(targetMove,target,user)
+							score *= 5.0
+						else
+							expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+							expectedPrcnt = expectedDmg * 100.0 / user.hp
+							score *= (expectedPrcnt * 0.05)
+						end
+					end
+				else
+					score *= 0.6
 				end
 			end
 		end
     #------------------------------------------------------------------------------------------------------------------------------------------------------
 	# Actual Untamed exclusive moves
     #------------------------------------------------------------------------------------------------------------------------------------------------------
-	when "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack"
+	when "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
     #---------------------------------------------------------------------------
-	when "TitanWrath"
+	when "TitanWrath" # Titan's Wrath
     #---------------------------------------------------------------------------
-	when "Rebalancing"
+	when "Rebalancing" # Rebalancing
 		targetStats = target.plainStats
 		highestStatValue = highestStatID = 0
 		targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
@@ -528,7 +577,7 @@ class Battle::AI
 			score *= miniscore
 		end
     #---------------------------------------------------------------------------
-	when "HigherDamageInRain"
+	when "HigherDamageInRain" # Steam Burst (not properly implemented)
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) || @battle.pbCheckGlobalAbility(:CLOUDNINE)
 			score *= 0.7
 		elsif user.hasActiveAbility?(:PRESAGE)
@@ -539,7 +588,7 @@ class Battle::AI
 			score *= 1.3
 		end
     #---------------------------------------------------------------------------
-	when "OverrideTargetStatusWithPoison"
+	when "OverrideTargetStatusWithPoison" # Crimson Surge
 		if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
 			score *= 0.3
 		elsif target.asleep? && target.statusCount <= 2
@@ -547,7 +596,6 @@ class Battle::AI
 		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, skill)
 			score *= (miniscore / 100.0)
-			score *= 1.2
 			score *= 1.2 if user.hasActiveAbility?(:MERCILESS)
 			score *= 1.2 if (target.hasActiveAbility?(:GUTS) && target.burned?) || target.hasActiveAbility?(:FLAREBOOST)
 			score *= 0.6 if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanPoisonSynchronize?(user)
@@ -556,7 +604,7 @@ class Battle::AI
 			score *= 0.8
 		end
     #---------------------------------------------------------------------------
-	when "DoubleDamageIfTargetHasChoiceItem"
+	when "DoubleDamageIfTargetHasChoiceItem" # Unused
 		if !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
 			if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
 				score *= 1.3
@@ -564,11 +612,11 @@ class Battle::AI
 			end
 		end
 	#---------------------------------------------------------------------------
-	when "PeperSpray"
+	when "PeperSpray" # Pepper Spray
 		score *= 1.4 if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
 						(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
     #---------------------------------------------------------------------------
-	when "BOOMInstall"
+	when "BOOMInstall" # BOOM! BOOM!!! BOOM!!!!!
 		if target.effects[PBEffects::BoomInstalled]
 			score = 0 if move.baseDamage == 0
 		else
@@ -579,11 +627,19 @@ class Battle::AI
 				score *= targetpercent / 100
 			end
 
-			physmove = user.moves.any? { |j| j&.physicalMove?(j&.type) }
-			specmove = user.moves.any? { |j| j&.specialMove?(j&.type) }
-			score *= 1.2 if target.stages[:DEFENSE] > 0 && physmove
-			score *= 1.2 if target.stages[:SPECIAL_DEFENSE] > 0 && specmove
+			score *= 1.1 if target.stages[:DEFENSE] > 0 && user.moves.any? { |j| j&.physicalMove?(j&.type) }
+			score *= 1.1 if target.stages[:SPECIAL_DEFENSE] > 0 && user.moves.any? { |j| j&.specialMove?(j&.type) }
+			score *= 1.2 if target.moves.any? { |m| m&.healingMove? } 
+			score *= 1.2 if target.trappedInBattle?
+			if !user.allAllies.empty?
+				roles = pbGetPokemonRole(user, target)
+				score *= 1.2 if roles.include?("Lead")
+				userAlly = user.allAllies.first
+				roles = pbGetPokemonRole(userAlly, target)
+				score *= 1.3 if roles.include?("Sweeper") || roles.include?("Stallbreaker")
+			end
 			if target.takesIndirectDamage?
+				score *= 2.0 if @battle.pbCheckGlobalAbility(:STALL)
 				score *= 1.3 if target.burned? || target.frozen? || target.poisoned?
 				score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater") ||
 								target.effects[PBEffects::Trapping] > 0
@@ -642,6 +698,7 @@ class Battle::AI
 	end
 	
 	def pbHasSingleTargetProtectMove?(pokemon, countother = true)
+		return false if countother && pokemon.effects[PBEffects::ProtectRate] == 0
 		protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
 						"ProtectUserFromTargetingMovesSpikyShield", 
 						"ProtectUserFromDamagingMovesKingsShield",
@@ -1887,6 +1944,21 @@ class Battle::AI
 			end      
 		end
 		return
+	end
+
+	def futureSightRoughDamage(user, target, skill)
+		futureDmg = 0
+		targetPosi = @battle.positions[target.index]
+		if targetPosi.effects[PBEffects::FutureSightCounter] == 1
+			futureMove = targetPosi.effects[PBEffects::FutureSightMove]
+			return 0 if futureMove.nil?
+			futureBattleMove = Pokemon::Move.new(futureMove)
+			futureUsableMove = Battle::Move.from_pokemon_move(@battle, futureBattleMove)
+			futureBaseDmg = pbMoveBaseDamage(futureUsableMove, user, target, skill)
+			futureRealDamage = (pbRoughDamage(futureUsableMove, user, target, skill, futureBaseDmg) / 2)
+			futureDmg = futureRealDamage if futureRealDamage > 0
+		end
+		return futureDmg
 	end
 
 	def targetWillMove?(target, action = "AG")
