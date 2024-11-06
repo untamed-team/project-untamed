@@ -207,6 +207,7 @@ class Battle::AI
 
   #=============================================================================
   # Get a better move's base damage value
+  # so much shit was missing from here what the fuck
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
     globalArray = pbGetMidTurnGlobalChanges
@@ -223,7 +224,7 @@ class Battle::AI
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
       baseDmg = 60
-    when "DoublePowerIfTargetUnderwater", "DoublePowerIfTargetUnderground",
+    when "DoublePowerIfTargetUnderwater",
          "BindTargetDoublePowerIfTargetUnderwater"
       baseDmg = move.pbModifyDamage(baseDmg, user, target)
     # Gust, Twister, Venoshock, Smelling Salts, Wake-Up Slap, Facade, Hex, Brine,
@@ -267,53 +268,59 @@ class Battle::AI
     when "TypeAndPowerDependOnWeather"
       baseDmg *= 2 if user.effectiveWeather != :None || 
                       globalArray.any? { |element| element.include?("weather") }
-    when "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
-      # Average damage dealt for each stage
-      case user.level
-        when 0..16
-          baseDmg = 48
-        when 17..24
-          baseDmg = 65
-        when 25..33
-          baseDmg = 82
-        when 34..44
-          baseDmg = 94
-        else
-          baseDmg = 108
+    when "TypeAndPowerDependOnTerrain"
+      baseDmg *= 2 if user.affectedByTerrain? && (@battle.field.terrain != :None || 
+                      globalArray.any? { |element| element.include?("terrain") })
+    when "HitsAllFoesAndPowersUpInPsychicTerrain"
+      baseDmg = (baseDmg * 3 / 2.0).floor if (@battle.field.terrain == :Psychic || 
+                                            globalArray.include?("psychic terrain")) && 
+                                            user.affectedByTerrain?
+    when "DoublePowerInElectricTerrain"
+      baseDmg *= 2 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
+                       target.affectedByTerrain?
+    when "DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
+      if move.function == "RandomPowerDoublePowerIfTargetUnderground"
+        # Average damage dealt for each stage
+        case user.level
+          when 0..16
+            baseDmg = 48
+          when 17..24
+            baseDmg = 65
+          when 25..33
+            baseDmg = 82
+          when 34..44
+            baseDmg = 94
+          else
+            baseDmg = 108
+        end
       end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
-      baseDmg /= 2 if @battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")
+      baseDmg /= 2 if (@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
+                      globalArray.include?("grassy terrain")
+    when "LowerTargetSpeed1WeakerInGrassyTerrain"
+      baseDmg /= 2 if (@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
+                      globalArray.include?("grassy terrain")
     when "TypeAndPowerDependOnUserBerry"   # Natural Gift
       baseDmg = move.pbNaturalGiftBaseDamage(user.item_id)
     when "PowerHigherWithUserHeavierThanTarget"   # Heavy Slam
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
-      baseDmg *= 2 if Settings::MECHANICS_GENERATION >= 7 && skill >= PBTrainerAI.mediumSkill &&
-                      target.effects[PBEffects::Minimize]
     when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
-         "HitTwoTimesTargetThenTargetAlly"
-      # Frost Breath, Double Kick, Twineedle
+         "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesFlinchTarget"
+      # Double Kick, Twineedle, Splinter Shot, Dragon Darts, Double Iron Bash
       baseDmg *= 2
-    when "HitTwoTimesFlinchTarget"   # Double Iron Bash
-      baseDmg *= 2
-      baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
     when "HitThreeTimesAlwaysCriticalHit" # always crit moves (crit part) are dealt with on pbRoughDamage
       baseDmg *= 3
     when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
       baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
-    when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1"   # Fury Attack
+    when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1", "HitTwoToFiveTimesOrThreeForAshGreninja"
+      # Fury Attack, Scale Shot, Water Shuriken
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
       else
         baseDmg = (baseDmg * 3.47).floor   # Average damage dealt
       end
-    when "HitTwoToFiveTimesOrThreeForAshGreninja"
-      if user.isSpecies?(:GRENINJA) && user.form == 2
-        baseDmg *= 4   # 3 hits at 20 power = 4 hits at 15 power
-      elsif user.hasActiveAbility?(:SKILLLINK)
-        baseDmg *= 5
-      else
-        baseDmg = (baseDmg * 3.47).floor   # Average damage dealt
-      end
+      # 3 hits at 20 power = 4 hits at 15 power
+      baseDmg *= 4 if user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
     when "HitOncePerUserTeamMember"   # Beat Up
       # DemICE beat-up was being calculated very wrong.
       beatUpList = []
@@ -342,9 +349,10 @@ class Battle::AI
         )
         baseDmg = (baseDmg.to_f * mult / Effectiveness::NORMAL_EFFECTIVE).round
       end
-      baseDmg *= 2 if skill >= PBTrainerAI.mediumSkill && target.effects[PBEffects::Minimize]
     when "DoublePowerIfUserLastMoveFailed"   # Stomping Tantrum
       baseDmg *= 2 if user.lastRoundMoveFailed
+    when "PursueSwitchingFoe", "DoublePowerIfTargetNotActed"
+      baseDmg *= 2 if target.battle.choices[target.index][0] == :SwitchOut
     when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie
       baseDmg *= 2.25 if user.effectiveWeather == :Rain
     #by low
@@ -354,22 +362,13 @@ class Battle::AI
       else
         baseDmg = (baseDmg * 4.33).floor   # Average damage dealt
       end
-    when "DoubleDamageIfTargetHasChoiceItem"
+    when "DoubleDamageIfTargetHasChoiceItem" # unused
       if !target.unlosableItem?(target.item) && [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.item)
         baseDmg *= 2
       end
     when "HigherDamageInSunVSNonFireTypes"
       scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
       baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE, true)
-    when "PursueSwitchingFoe", "DoublePowerIfTargetNotActed"
-      baseDmg *= 2 if target.battle.choices[target.index][0] == :SwitchOut
-    when "HitsAllFoesAndPowersUpInPsychicTerrain"
-      baseDmg = (baseDmg * 3 / 2.0).floor if (@battle.field.terrain == :Psychic || 
-                                            globalArray.include?("psychic terrain")) && 
-                                            user.affectedByTerrain?
-    when "DoublePowerInElectricTerrain"
-      baseDmg *= 2 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
-                       target.affectedByTerrain?
     when "PeperSpray"
       peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4.0) : (4 / 3.0)
       baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
@@ -403,7 +402,7 @@ class Battle::AI
     modifiers[:base_accuracy]  = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(move.id)
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
-    if user.stages[:ACCURACY] < 0
+    if modifiers[:accuracy_stage] < 0
       case $game_variables[MECHANICSVAR]
       when 2, 3
         modifiers[:accuracy_stage] = 0
@@ -416,6 +415,8 @@ class Battle::AI
     modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers, move, type, skill)
+    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], 1.0].max if !user.hasActiveAbility?(:HUSTLE)
+    modifiers[:evasion_multiplier]  = [modifiers[:evasion_multiplier], 1.0].min
     # Check if move can't miss
     return 125 if modifiers[:base_accuracy] == 0
     # Calculation

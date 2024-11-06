@@ -9094,6 +9094,7 @@ Accuracy = 85
 TotalPP = 10
 Target = NearOther
 FunctionCode = BOOMInstall
+Flags = CanProtect,CanMirrorMove
 Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
 #-------------------------------
 [HARDDRIVECRASH]
@@ -9112,13 +9113,13 @@ Description = The user does an all-out attack, crashing its own hard drives. Low
 Name = Splinter Shot
 Type = GRASS
 Category = Physical
-Power = 35
+Power = 40
 Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.
+Description = The user unleashes a blast of thorns in a wide spread. Power does not lower even if there are multiple foes.
 #-------------------------------
 #-------------------------------
 #-------------------------------
@@ -9181,7 +9182,7 @@ TotalPP = 1
 Target = NearOther
 FunctionCode = DoesNothingUnusableInGravity
 Flags = Contact,CanProtect
-Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
+Description = ...
 #-------------------------------
 [SUPERNOVA]
 Name = Supernova1
@@ -9192,8 +9193,7 @@ Accuracy = 100
 TotalPP = 1
 Target = AllNearFoes
 FunctionCode = DoesNothingUnusableInGravity
-Flags = GravityBoosted
-Description = big kaboom first turn
+Description = ...
 #-----------------
 [SUPERNOVA_ALT]
 Name = Supernova2
@@ -9204,5 +9204,4 @@ Accuracy = 0
 TotalPP = 0
 Target = AllNearFoes
 FunctionCode = DoesNothingUnusableInGravity
-Flags = GravityBoosted
-Description = sharp rocks 2 turns next
+Description = ...

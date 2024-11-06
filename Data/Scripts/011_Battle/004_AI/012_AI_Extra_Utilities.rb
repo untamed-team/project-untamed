@@ -39,16 +39,17 @@ class Battle::AI
 		type = pbRoughType(move, user, skill)
 		typeMod = pbCalcTypeMod(type,user,target)
 		##### Calculate user's attack stat #####
+		# shellysidearm isnt being calc'd correctly, but i dont really care desu
 		atk = pbRoughStat(user, :ATTACK, skill)
 		if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
 			atk = pbRoughStat(target, :ATTACK, skill)
 		elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
 			atk = pbRoughStat(user, :DEFENSE, skill)
+		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
+			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
 			   "CategoryDependsOnHigherDamagePoisonTarget"].include?(move.function) # Photon Geyser, Shell Side Arm
 			atk = [pbRoughStat(user, :ATTACK, skill), pbRoughStat(user, :SPECIAL_ATTACK, skill)].max
-		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
-			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
 			userStats = user.plainStats
 			highestStatValue = higheststat = 0
@@ -70,10 +71,12 @@ class Battle::AI
 			atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
 		end
 		# taking in account intimidate from mons with AAM
-		user.allOpposing.each do |b|
-			if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
-			   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
-				atk *= 2 / 3.0
+		if !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
+			user.allOpposing.each do |b|
+				if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
+				   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
+					atk *= 2 / 3.0
+				end
 			end
 		end
 		##### Calculate target's defense stat #####
@@ -310,12 +313,6 @@ class Battle::AI
 				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS    && globalArray.include?("grassy terrain") && user.affectedByTerrain?
 				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC  && globalArray.include?("psychic terrain") && user.affectedByTerrain?
 			end
-			# Specific Field Effect Boosts
-			if ((@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
-			     globalArray.include?("grassy terrain")) && 
-				[:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
-				multipliers[:base_damage_multiplier] /= 2.0
-			end
 		end
 		#mastersex type zones #by low
 		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
@@ -531,7 +528,6 @@ class Battle::AI
 			end
 		end
 		damage *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
-		damage /= 2 if @battle.futureSight && ![:FUTURESIGHT,:DOOMDESIRE].include?(move.id)
 		return damage.floor
 	end
 	
@@ -633,14 +629,15 @@ class Battle::AI
 		damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
 		damage+=priodamage
 		damage*=mult
-		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.form==0	
-			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-				 "HitTwoTimesTargetThenTargetAlly",
-				 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-				 "HitThreeTimesPowersUpWithEachHit",
-				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
-			 	 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+		multiarray = ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
+					  "HitTwoTimesTargetThenTargetAlly",
+					  "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
+					  "HitThreeTimesPowersUpWithEachHit",
+					  "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+					  "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+					  "HitThreeTimesAlwaysCriticalHit"]
+		if opponent.hasActiveAbility?(:DISGUISE,false,mold_broken) && opponent.form==0	
+			if multiarray.include?(move.function)
 				damage*=0.6
 			else
 				damage=1
@@ -648,14 +645,8 @@ class Battle::AI
 		end			
 		return true if damage < opponent.hp
 		return false if priodamage>0
-		if (opponent.hasActiveItem?(:FOCUSSASH) || (!mold_broken && opponent.hasActiveAbility?(:STURDY))) && opponent.hp==opponent.totalhp
-			return false if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-							 "HitTwoTimesTargetThenTargetAlly",
-							 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-							 "HitThreeTimesPowersUpWithEachHit",
-							 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
-							 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-							 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+		if (opponent.hasActiveItem?(:FOCUSSASH) || opponent.hasActiveAbility?(:STURDY,false,mold_broken)) && opponent.hp==opponent.totalhp
+			return false if multiarray.include?(move.function)
 			return true
 		end	
 		return false
@@ -876,64 +867,78 @@ class Battle::AI
 	end
 	
 	def EndofTurnHPChanges(user,target,heal,chips,both,switching=false,rest=false)
-		#### Azery: function below sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
-		### the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
-		### thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
+		# sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
+		# the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
+		# thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
 		healing = 1  
 		chip = 0
-		oppitemworks = target.itemActive?
-		attitemworks = user.itemActive?
-		skill=100
-		if (user.effects[PBEffects::AquaRing])==true
-			subscore = 0
-			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
-			healing += subscore
-		end
-		if user.effects[PBEffects::Ingrain]
-			subscore = 0
-			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
-			healing += subscore
-		end
-		healing += 0.0625 if user.hasWorkingAbility(:DRYSKIN) &&  @battle.pbWeather==:Rain
-		healing += 0.0625 if attitemworks && (user.item == :LEFTOVERS || (user.item == :BLACKSLUDGE && user.pbHasType?(:POISON, true)))
-		healing += 0.0625 if user.hasWorkingAbility(:RAINDISH) && @battle.pbWeather==:Rain
-		healing += 0.0625 if user.hasWorkingAbility(:ICEBODY) && @battle.pbWeather==:Hail
-		healing += 0.125 if user.status == :POISON && user.hasWorkingAbility(:POISONHEAL)
-		healing += 0.125 if (target.effects[PBEffects::LeechSeed]>-1 && !target.hasWorkingAbility(:LIQUIDOOZE))
-		healing*=0 if user.effects[PBEffects::HealBlock]>0
-		healing*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
-		return healing if heal
-		if !(user.hasWorkingAbility(:MAGICGUARD)) 
-			if !(attitemworks && user.item == :SAFETYGOGGLES) || !(user.hasWorkingAbility(:OVERCOAT)) 
-				weatherchip = 0
-				weatherchip += 0.0625 if @battle.pbWeather==:Sun && (user.hasWorkingAbility(:DRYSKIN))
-				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK, true) || user.pbHasType?(:STEEL, true) || user.pbHasType?(:GROUND, true)) && 
-					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility([:SANDFORCE, :DUSTSENTINEL]) || user.hasWorkingAbility(:SANDRUSH))
-					weatherchip += 0.0625
-				end	
-				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE, true)) && 
-					!(user.hasWorkingAbility(:ICEBODY) || user.hasWorkingAbility(:SNOWCLOAK) || user.hasWorkingAbility(:SLUSHRUSH))
-					weatherchip += 0.0625
-				end	 
-				chip += weatherchip
+		if user.effects[PBEffects::HealBlock] > 0
+			healing = 0
+		else
+			if user.effects[PBEffects::AquaRing]
+				subscore = 0.0625
+				subscore *= 1.3 if user.itemActive? && [:BIGROOT, :COLOGNECASE].include?(user.item)
+				healing += subscore
 			end
+			if user.effects[PBEffects::Ingrain]
+				subscore = 0.0625
+				subscore *= 1.3 if user.itemActive? && [:BIGROOT, :COLOGNECASE].include?(user.item)
+				healing += subscore
+			end
+			healing += 0.0625 if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
+			healing += 0.0625 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
+			healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)
+			healing += 0.125 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
+			healing *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+		end
+		return healing if heal
+		if user.takesIndirectDamage?
+			weatherchip = 0
+			weatherchip += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather) && user.hasActiveAbility?(:DRYSKIN)
+			weatherchip += 0.0625 if user.effectiveWeather == :Sandstorm && user.takesSandstormDamage?
+			weatherchip += 0.0625 if user.effectiveWeather == :Hail && user.takesHailDamage?
+			chip += weatherchip
 			if user.effects[PBEffects::Trapping]>0
 				multiturnchip = 0.125 
-				multiturnchip *= 1.3333 if (target.item == :BINDINGBAND)
+				multiturnchip *= (4.0 / 3.0) if @battlers[battler.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
 				chip+=multiturnchip
 			end
-			chip += 0.125 if (user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasWorkingAbility(:LIQUIDOOZE))) 
-			chip += 0.25  if (user.effects[PBEffects::Curse]) 
-			if user.status!=:NONE && !rest
+			chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
+			chip += 0.25  if user.effects[PBEffects::Curse]
+			if user.pbHasAnyStatus? && !rest
 				statuschip = 0
-				statuschip += 0.0625 if user.status==:BURN 
-				statuschip += 0.125 if ((user.status==:POISON &&  (user.hasWorkingAbility(:POISONHEAL) || !(user.hasWorkingAbility(:POISONHEAL))) && (user.effects[PBEffects::Toxic]==0))) || (user.status == :SLEEP && target.hasWorkingAbility(:BADDREAMS)) 
-				statuschip += (0.0625*user.effects[PBEffects::Toxic]) if user.effects[PBEffects::Toxic]!=0 && !(user.hasWorkingAbility(:POISONHEAL)) 
+				if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)
+					subscore = 0.0625
+					subscore /= 2 if user.hasWorkingAbility?(:HEATPROOF)
+					statuschip += subscore
+				end
+				if user.frozen?
+					subscore = 0.0625
+					subscore /= 2 if user.hasWorkingAbility?(:THICKFAT)
+					statuschip += subscore
+				end
+				if user.asleep?
+					user.allOpposing.each do |b|
+						statuschip += 0.125 if b.hasActiveAbility?(:BADDREAMS)
+						break
+					end
+				end
+				if user.poisoned? && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST])
+					if $game_variables[MECHANICSVAR] >= 2 || user.effects[PBEffects::Toxic]==0 
+						statuschip += 0.125
+						statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $game_variables[MECHANICSVAR] >= 2
+					else
+						statuschip += (0.0625*user.effects[PBEffects::Toxic])
+					end
+				end
 				chip+=statuschip
 			end
+			chip*=2 if @battle.pbCheckGlobalAbility(:STALL)
+			chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]
 		end
-		chip*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
-		chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]
 		return chip if chips
 		diff=(healing-chip)
 		return diff if both
@@ -995,7 +1000,7 @@ end
 
 class Battle
 	def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,effectnegate=true)
-		if @index.nil? || !currentmon.nil?
+		if @index.nil? && !currentmon.nil?
 			@index=currentmon.index
 		end
 		wonderroom= @field.effects[PBEffects::WonderRoom]!=0

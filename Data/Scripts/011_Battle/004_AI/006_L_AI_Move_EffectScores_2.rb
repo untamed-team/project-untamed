@@ -31,13 +31,15 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				if move.addlEffect.to_f != 100
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore+=100
 			else
 				@battle.pbParty(target.index).each do |i|
-					next if i.nil? || i.egg? || i.status != :SLEEP
+					next if i.nil? || i.egg? || i.status != :SLEEP || i.hasMove?(:SLEEPTALK)
 					miniscore*=0.4 if (i.hp/i.totalhp.to_f)>0.3
 				end
 			end
@@ -96,8 +98,10 @@ class Battle::AI
 			miniscore*=1.2 if user.moves.any? { |m| m&.healingMove? }
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				if move.addlEffect.to_f != 100
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore+=100
 				miniscore/=100.0
@@ -145,11 +149,12 @@ class Battle::AI
 			end
 			userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
 			targetlivecount = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
-			if targetlivecount==1 || user.hasActiveAbility?(:SHADOWTAG) || target.effects[PBEffects::MeanLook]>0
+			if targetlivecount==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
 				miniscore*=1.4
 			end
-			if target.stages[:SPEED]<0
+			if target.stages[:SPEED]!=0
 				minimini = 5*target.stages[:SPEED]
+				minimini *= 1.1 if move.baseDamage==0
 				minimini+=100
 				minimini/=100.0
 				miniscore*=minimini
@@ -276,8 +281,10 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				if move.addlEffect.to_f != 100
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore+=100
 			end
@@ -314,8 +321,10 @@ class Battle::AI
 			end
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				if move.addlEffect.to_f != 100
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore+=100
 			end
@@ -356,8 +365,10 @@ class Battle::AI
 				miniscore*=0.3
 			end  
 			miniscore-=100
-			miniscore*=(move.addlEffect.to_f/100.0)
-			miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+			if move.addlEffect.to_f != 100
+				miniscore*=(move.addlEffect.to_f/100.0)
+				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+			end
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0       
@@ -647,8 +658,10 @@ class Battle::AI
 			# confusion/dizzy with hurricane is unlikely for chaos mode, so skip applying the calc
 			if move.baseDamage>0
 				miniscore-=100
-				miniscore*=(move.addlEffect.to_f/100.0)
-				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				if move.addlEffect.to_f != 100
+					miniscore*=(move.addlEffect.to_f/100.0)
+					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore = 1 if move.function == "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $game_variables[MECHANICSVAR] >= 3
 				miniscore+=100
@@ -837,7 +850,7 @@ class Battle::AI
 		else
 			score*=1.1
 		end
-		if target.pbHasType?(:GHOST, true) || target.canChangeType? || 
+		if target.pbHasType?(:GHOST, true) || !target.canChangeType? || 
 				target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
 			score*=0
 		end
@@ -860,7 +873,7 @@ class Battle::AI
 		else
 			score*=1.1
 		end
-		if target.pbHasType?(:GRASS, true) || target.canChangeType? || 
+		if target.pbHasType?(:GRASS, true) || !target.canChangeType? || 
 				target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
 			score*=0
 		end
@@ -934,7 +947,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToSimple" # simple beam
-		if target.ability == :SIMPLE ||
+		if target.ability == :SIMPLE || target.unstoppableAbility? ||
 		   target.hasActiveAbility?(:DISGUISE) || target.effects[PBEffects::Substitute]>0
 			score = 0
 		else
@@ -943,29 +956,23 @@ class Battle::AI
 			minimi = 1.0 / minimi if !user.opposes?(target) # is ally
 			miniscore*=minimi
 			if user.opposes?(target) # is enemy
-				if miniscore < 2
-					miniscore = 2 - miniscore
-				else
-					miniscore = 0
-				end
+				miniscore = 0 if minimi < 1.4
 			else
 				miniscore *= -1
 			end
-			movecheck=false
-			movecheck=true if pbHasSetupMove?(target, false)
-			if movecheck
+			if pbHasSetupMove?(target, false)
 				if !user.opposes?(target)  # is ally
-					miniscore*=1.3
+					miniscore*=1.5
 				else                      # is enemy
-					miniscore*=0.5
+					miniscore*=0.2
 				end
 			end
-			miniscore = 0 if target.ungainableAbility? || target.unstoppableAbility?
+			miniscore/=100
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToInsomnia" # worry seed
-		if target.ability == :INSOMNIA ||
+		if target.ability == :INSOMNIA || target.unstoppableAbility? ||
 		   target.hasActiveAbility?(:DISGUISE) || target.effects[PBEffects::Substitute]>0
 			score = 0
 		else
@@ -973,6 +980,7 @@ class Battle::AI
 			minimi = getAbilityDisruptScore(move,user,target,skill)
 			minimi = 1.0 / minimi if !user.opposes?(target) # is ally
 			miniscore*=minimi
+			miniscore/=100
 			score*=1.3 if target.moves.any? { |j| [:SNORE, :SLEEPTALK].include?(j&.id) }
 			score*=2.0 if target.moves.any? { |j| j&.id == :REST }
 			if user.pbHasMove?(:SPORE) || user.pbHasMove?(:SLEEPPOWDER) ||
@@ -984,7 +992,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetUserAbilityToTargetAbility" # role play
-		if target.effects[PBEffects::Substitute] > 0
+		if target.effects[PBEffects::Substitute] > 0 || target.ungainableAbility?
 			score = 0
 		elsif !target.ability || user.ability == target.ability ||
 			![:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) ||
@@ -992,11 +1000,17 @@ class Battle::AI
 				:TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((minimini-miniscore)/10.0))
+			if minimini > miniscore
+				score *= minimini / miniscore
+			else
+				score = 0
+			end
+		else
+			score = 0 if move.statusMove?
 		end
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToUserAbility" # EEEEEEEEE-ntertainment !!
-		if target.effects[PBEffects::Substitute] > 0
+		if target.effects[PBEffects::Substitute] > 0 || target.unstoppableAbility?
 			score = 0
 		elsif !user.ability || user.ability == target.ability ||
 				![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
@@ -1004,8 +1018,10 @@ class Battle::AI
 				:TRACE, :ZENMODE].include?(user.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-			score *= (1 + ((miniscore-minimini)/10.0))
 			if user.opposes?(target) # is enemy
+				if minimini > miniscore
+					score*=(minimini/miniscore)
+				end
 				if user.ability == :TRUANT
 					score*=3
 				elsif user.ability == :SLOWSTART
@@ -1018,6 +1034,9 @@ class Battle::AI
 					score=0
 				end
 			else                    # is ally
+				if minimini < miniscore
+					score *= (miniscore/minimini)
+				end
 				if user.ability == :WONDERGUARD
 					score *= 5
 				elsif user.ability == :SPEEDBOOST
@@ -1025,10 +1044,12 @@ class Battle::AI
 				end
 				score *= -1
 			end
+		else
+			score = 0 if move.statusMove?
 		end
     #---------------------------------------------------------------------------
     when "UserTargetSwapAbilities" # Skill Swap
-		if target.effects[PBEffects::Substitute] > 0
+		if target.effects[PBEffects::Substitute] > 0 || target.unstoppableAbility? || user.ungainableAbility?
 			score = 0
 		elsif !user.ability || user.ability == target.ability ||
 				![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
@@ -1036,17 +1057,8 @@ class Battle::AI
 				:TRACE, :ZENMODE].include?(user.ability_id)
 			miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
-=begin
- 			if !user.opposes?(target) # is ally
-				if minimini < 2
-					minimini = 2 - minimini
-				else
-					minimini = 0
-				end
-			end 
-=end
-			score *= (1 + ((miniscore-minimini)/10.0))
 			if user.opposes?(target) # is enemy
+				score *= 1.0 / miniscore
 				if user.ability == :TRUANT
 					score*=3
 				elsif user.ability == :SLOWSTART
@@ -1059,6 +1071,11 @@ class Battle::AI
 					score=0
 				end
 			else                    # is ally
+				if miniscore > minimini
+					score *= (miniscore / minimini)
+				else
+					score = 0
+				end
 				if user.ability == :WONDERGUARD
 					score *= 5
 				elsif user.ability == :SPEEDBOOST
@@ -1066,11 +1083,12 @@ class Battle::AI
 				end
 				score *= -1
 			end
+		else
+			score = 0 if move.statusMove?
 		end
     #---------------------------------------------------------------------------
     when "NegateTargetAbility" # Gastro Acid
-		if target.effects[PBEffects::Substitute] > 0 ||
-		   target.effects[PBEffects::GastroAcid]
+		if target.effects[PBEffects::Substitute] > 0 || target.effects[PBEffects::GastroAcid]
 			score = 0
 		elsif !target.unstoppableAbility?
 			minimi = getAbilityDisruptScore(move,user,target,skill)
@@ -1084,16 +1102,19 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "NegateTargetAbilityIfTargetActed" # Core Enforcer
-		if !target.unstoppableAbility?
-			miniscore = getAbilityDisruptScore(move,user,target,skill)
+		if target.effects[PBEffects::Substitute] > 0 || target.effects[PBEffects::GastroAcid]
+			score = 0 if move.baseDamage == 0
+		elsif !target.unstoppableAbility?
+			miniscore = (getAbilityDisruptScore(move,user,target,skill)*100)
 			if (aspeed<ospeed && (@battle.field.effects[PBEffects::TrickRoom]!=0))
 				miniscore*=1.3
 			else
 				miniscore*=0.5
 			end
-			if target.moves.any? { |m| m&.priority>0 }
+			if target.moves.any? { |m| priorityAI(target,m)>0 }
 				miniscore*=1.3
 			end
+			miniscore/=100
 			score*=miniscore
 		end
     #---------------------------------------------------------------------------

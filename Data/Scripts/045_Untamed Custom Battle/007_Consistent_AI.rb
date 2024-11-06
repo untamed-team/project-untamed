@@ -76,7 +76,8 @@ class Battle::AI
 			end
 			PBDebug.log(logMsg)
 		end
-		if $AIMASTERLOG # master debug by JZ, ported (and edited) #by low
+		# if you gradually swap out all parts of a boat, is it still the same boat?
+		if $AIMASTERLOG # master debug idea by JZ #by low
 			fakeTarget = nil
 			if $AIMASTERLOG_TARGET == 1 # ally
 				user.allAllies.each do |b|
@@ -99,6 +100,7 @@ class Battle::AI
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
 				next if mirrored==nil
 				next if !$movesToTargetAllies.include?(mirrmove.function) && $AIMASTERLOG_TARGET == 1
+				next if ["AttackOneTurnLater", "DoesNothingUnusableInGravity"].include?(mirrmove.function)
 				case mirrmove.category
 				when 0 then moveCateg = "Physical"
 				when 1 then moveCateg = "Special"
@@ -106,7 +108,7 @@ class Battle::AI
 				end
 				next if moveCateg.nil?
 				
-				fakeScore = pbGetMoveScore(mirrmove, user, fakeTarget, 100, true)
+				fakeScore = pbGetMoveScore(mirrmove, user, fakeTarget, 100)
 				fakeScore *= -1 if $AIMASTERLOG_TARGET == 1
 				File.open("AI_master_log.txt", "a") do |line|
 					line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + "has final score " + fakeScore.to_s
@@ -227,7 +229,7 @@ class Battle::AI
 	#=============================================================================
 	# Get a score for the given move being used against the given target
 	#=============================================================================
-	def pbGetMoveScore(move, user, target, skill = 100, aigenlog = false)
+	def pbGetMoveScore(move, user, target, skill = 100)
 		# Set up initial values
 		# for 80 initScore, dmg move = OHKO if score = 230 
 		skill = 100
@@ -237,7 +239,7 @@ class Battle::AI
 			score = pbGetMoveScoreFunctionCode(initScore, move, user, target, skill)
 			initScore = score
 			# Adjust score based on how much damage it can deal # DemICE moved damage calc to the beginning
-			score = pbGetMoveScoreDamage(score, move, user, target, skill)
+			score = pbGetMoveScoreDamage(score, move, user, target, skill, initScore)
 		else # Status moves # each status move has a value tied to them
 			statusDamage = pbStatusDamage(move)
 			return 0 if statusDamage <= 0
@@ -255,9 +257,11 @@ class Battle::AI
 					score *= 0.7
 				end
 			end
-			# Prefer usable Protect-like moves
+			# Prefer Protect-like moves
 			# IF future sight is about to hit and if best move does not KO
-			if pbHasSingleTargetProtectMove?(user)
+			# "ProtectRate" check is done above
+			if ["ProtectUser", "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield", 
+				"ProtectUserFromDamagingMovesKingsShield", "ProtectUserFromDamagingMovesObstruct"].include?(move.function)
 				roughFSDamage = futureSightRoughDamage(user, target, skill)
 				if roughFSDamage > 0
 					miniscore = 1 + (roughFSDamage / target.hp)
@@ -284,30 +288,32 @@ class Battle::AI
 		score -= (100 - accuracy) * (4 / 3.0) if accuracy < 100
 		# A score of 0 here means it should not be used 
 		# ...unless it is a good move to target allies, which are stored on the negatives
-		#score += 1 if aigenlog && score == 0 
 		return 0 if score <= 0 && !$movesToTargetAllies.include?(move.function)
 		# DemICE Converted all score alterations to multiplicative
-		# Don't prefer attacking the target if they'd be semi-invulnerable
-		if target.semiInvulnerable? || target.effects[PBEffects::SkyDrop] >= 0
-			aspeed = pbRoughStat(user,:SPEED,skill)
-			ospeed = pbRoughStat(target,:SPEED,skill)
-			miss = true
-			miss = false if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
-			miss = false if ((aspeed<=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && priorityAI(user,move)<1 # DemICE
-			if miss && aspeed > ospeed
-				# Knows what can get past semi-invulnerability
-				if target.effects[PBEffects::SkyDrop] >= 0 ||
-				   target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-										   "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-										   "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-					miss = false if move.hitsFlyingTargets?
-				elsif target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")
-					miss = false if move.hitsDiggingTargets?
-				elsif target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderwater")
-					miss = false if move.hitsDivingTargets?
+		# Don't prefer moves that directly affect the target if they'd be semi-invulnerable
+		target_data = move.pbTarget(user)
+		if ![:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
+			if target.semiInvulnerable? || target.effects[PBEffects::SkyDrop] >= 0
+				aspeed = pbRoughStat(user,:SPEED,skill)
+				ospeed = pbRoughStat(target,:SPEED,skill)
+				miss = true
+				miss = false if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
+				miss = false if ((aspeed<=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && priorityAI(user,move)<1 # DemICE
+				if miss && aspeed > ospeed
+					# Knows what can get past semi-invulnerability
+					if target.effects[PBEffects::SkyDrop] >= 0 ||
+					   target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+												"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+												"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+						miss = false if move.hitsFlyingTargets?
+					elsif target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")
+						miss = false if move.hitsDiggingTargets?
+					elsif target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderwater")
+						miss = false if move.hitsDivingTargets?
+					end
 				end
+				score *= 0.2 if miss
 			end
-			score *= 0.2 if miss
 		end
 		# Pick a good move for the Choice items
 		if user.hasActiveItem?([:CHOICEBAND, :CHOICESPECS, :CHOICESCARF]) ||
@@ -350,13 +356,28 @@ class Battle::AI
 	# Add to a move's score based on how much damage it will deal (as a percentage
 	# of the target's current HP)
 	#=============================================================================
-	def pbGetMoveScoreDamage(score, move, user, target, skill)
+	def pbGetMoveScoreDamage(score, move, user, target, skill, initialscore = 0)
 		return 0 if (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
-		initialscore = score
 		# Calculate how much damage the move will do (roughly)
 		baseDmg = pbMoveBaseDamage(move, user, target, skill)
 		realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
-		# Account for accuracy of move # its done on pbmovescore
+		mold_broken=moldbroken(user,target,move)
+
+		# Try make AI not trolled by disguise
+		# priority over other calcs due to hyper beam
+		if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0	
+			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget",
+				 "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesPoisonTarget",
+				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja",
+				 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+				 "HitThreeToFiveTimes", "HitThreeTimesPowersUpWithEachHit", 
+				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+				realDamage*=2.2
+			else
+				realDamage=(target.totalhp / 8.0)
+			end
+		end	
+
 		# Two-turn attacks waste 2 turns to deal one lot of damage
 		# Not halved because semi-invulnerable during use or hits first turn
 		if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", 
@@ -393,20 +414,7 @@ class Battle::AI
 				end
 			end
 		end
-		mold_broken=moldbroken(user,target,move)
-		# Try make AI not trolled by disguise
-		if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0	
-			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget",
-				 "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesPoisonTarget",
-				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja",
-				 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-				 "HitThreeToFiveTimes", "HitThreeTimesPowersUpWithEachHit", 
-				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
-				realDamage*=2.2
-			else
-				realDamage=(target.totalhp / 8.0)
-			end
-		end	
+
 		# Prefer flinching external effects (note that move effects which cause
 		# flinching are dealt with in the function code part of score calculation)
 		if canFlinchTarget(user,target,mold_broken)
@@ -416,9 +424,12 @@ class Battle::AI
 			if targetSurvivesMove(maxmove,user,target)
 				realDamage *= 1.2 if (realDamage * 100.0 / maxdam) > 75
 				realDamage *= 1.2 if move.function == "HitTwoTimesFlinchTarget"
-				realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE)
+				realDamage *= 1.1 if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+				realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow] > 0
 			end
 		end
+
+		# taking in account the damage of future sight/doom desire/premoniton
 		roughFSDamage = futureSightRoughDamage(user, target, skill)
 		if roughFSDamage > 0
 			echoln "rough dmg for FS #{roughFSDamage}" if $AIGENERALLOG
@@ -430,6 +441,7 @@ class Battle::AI
 				line.puts "Move " + move.name + " real damage on "+target.name+": "+realDamage.to_s
 			end
 		end
+
 		# Convert damage to percentage of target's remaining HP
 		damagePercentage = realDamage * 100.0 / target.hp
 		# Don't prefer weak attacks
@@ -452,8 +464,7 @@ class Battle::AI
 				missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
 				damagePercentage += missinghp*0.5
 			end
-		end  
-#		damagePercentage -= 1 if accuracy < 100 # DemICE
+		end
 		damagePercentage = damagePercentage.to_i
 		score += damagePercentage
 		if $AIGENERALLOG
