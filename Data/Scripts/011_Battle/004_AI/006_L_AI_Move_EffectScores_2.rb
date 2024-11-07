@@ -139,8 +139,19 @@ class Battle::AI
 			miniscore/=100.0
 			score*=miniscore
      	end
-		hasAllyDos = !user.allAllies.empty?
-		if (userFasterThanTarget && !hasAllyDos) || !target.pbCanLowerStatStage?(:SPEED)
+		allOutspeed = userFasterThanTarget
+		if user.allAllies.any?
+			user.allAllies.each do |b|
+				user.allOpposing.each do |z|
+					if (pbRoughStat(b,:SPEED,skill)<pbRoughStat(z,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
+						allOutspeed = false
+						break
+					end
+				end
+				break if !allOutspeed
+			end
+		end
+		if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
 			score*=0.5
 		else          
 			miniscore=100
@@ -226,15 +237,15 @@ class Battle::AI
 				end
 			end
 			if move.baseDamage>0
-				miniscore-=100
-				if move.addlEffect.to_f == 100
-					miniscore*=3 # nuzzle
+				if move.addlEffect.to_f == 100 && move.function != "ParalyzeFlinchTarget"
+					score*=1.37 if !user.hasActiveAbility?(:SHEERFORCE) # twave's usual score boost
 				else
+					miniscore-=100
 					miniscore*=(move.addlEffect.to_f/100.0)
 					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+					miniscore+=100
 				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
-				miniscore+=100
 			end
 			miniscore/=100.0
 			score*=miniscore
@@ -886,13 +897,15 @@ class Battle::AI
 		if !user.pbHasType?(:FIRE, true)
 			score = 0
 		else
+			miniscore=100
 			userlivecount 	= @battle.pbAbleNonActiveCount(user.idxOwnSide)
-			targetlivecount = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
+			targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
 			if targetSurvivesMove(move,user,target)
 				score*=0.9
 				score*=0.5 if target.moves.any? { |m| m&.healingMove? }
+			else
+				targetlivecount -= 1
 			end
-			miniscore=100
 			if targetlivecount!=0
 				miniscore*=targetlivecount
 				miniscore/=100.0
@@ -938,9 +951,9 @@ class Battle::AI
 					end
 				end
 			end
-			userTypes = user.pbTypes(false)
+			userTypes = user.pbTypes(true)
 			if userFasterThanTarget
-				if user.hasActiveAbility?(:WONDERGUARD) && (userTypes[0] == :FIRE || userTypes[1] == :FIRE || userTypes[2] == :FIRE)
+				if user.hasActiveAbility?(:WONDERGUARD) && userTypes.all? { |typo| typo == :FIRE }
 					score*=8
 				end
 			end

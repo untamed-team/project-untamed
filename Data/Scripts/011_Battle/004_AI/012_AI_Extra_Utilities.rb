@@ -1000,7 +1000,7 @@ end
 
 class Battle
 	def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,effectnegate=true)
-		if @index.nil? && !currentmon.nil?
+		if @index.nil? || !currentmon.nil?
 			@index=currentmon.index
 		end
 		wonderroom= @field.effects[PBEffects::WonderRoom]!=0

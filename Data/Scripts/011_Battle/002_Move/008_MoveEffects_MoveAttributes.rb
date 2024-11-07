@@ -206,6 +206,7 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [(user.happiness * 2 / 5).floor, 1].max
   end
 end
@@ -215,6 +216,7 @@ end
 #===============================================================================
 class Battle::Move::PowerLowerWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [((255 - user.happiness) * 2 / 5).floor, 1].max
   end
 end

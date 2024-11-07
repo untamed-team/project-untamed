@@ -394,6 +394,20 @@ class Battle::AI
 				realDamage *= (2 / 3.0)
 			end
 		end
+		# Self-KO moves should avoided (under normal circumstances) if possible
+		if ["UserFaintsExplosive", "UserFaintsPowersUpInMistyTerrainExplosive", 
+			"UserFaintsFixedDamageUserHP"].include?(move.function)
+			if user.hasActiveAbility?(:PARTYPOPPER)
+				innatemove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:HEALINGWISH))
+				innatescore = (pbGetMoveScore(innatemove, user, target, skill) / 2)
+				innatescore > 0 ? (score += innatescore) : (realDamage *= (2 / 3.0))
+				echoln "#{move.name}'s score (#{score}) was boosted due to party popper. #{innatescore}" if $AIGENERALLOG
+			else
+				if user.allAllies.none? { |b| b.hasActiveAbility?(:SEANCE) }
+					realDamage *= (2 / 3.0)
+				end
+			end
+		end
 
 		# not a fan of randomness one bit, but i cant do much about this move
 		# Try play "mind games" instead of just getting baited every time.

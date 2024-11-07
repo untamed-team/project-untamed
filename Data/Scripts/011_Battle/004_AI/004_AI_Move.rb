@@ -12,7 +12,7 @@ class Battle::AI
   #=============================================================================
   # Wild Pokémon choose their moves randomly.
   def pbRegisterMoveWild(_user, idxMove, choices)
-		move = _user.moves[idxMove]
+    move = _user.moves[idxMove]
     if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
         "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
       score = pbGetMoveScore(move, _user, _user, 100)
@@ -22,14 +22,15 @@ class Battle::AI
     end
   end
 
-	# Trainer Pokémon calculate how much they want to use each of their moves.
-	def pbRegisterMoveTrainer(user, idxMove, choices, skill)
-		move = user.moves[idxMove]
-		target_data = move.pbTarget(user)
+  # it seems the AI isnt fooled by illusion, thats pretty neat actually
+  # Trainer Pokémon calculate how much they want to use each of their moves.
+  def pbRegisterMoveTrainer(user, idxMove, choices, skill)
+    move = user.moves[idxMove]
+    target_data = move.pbTarget(user)
        # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
-			# If move does not have a defined target the AI will calculate
-			# a average of every enemy currently active
+      # If move does not have a defined target the AI will calculate
+      # a average of every enemy currently active
       oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
       if oppcounter == 1
         @battle.allBattlers.each do |b|
@@ -47,33 +48,32 @@ class Battle::AI
         choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
       end
     elsif target_data.num_targets == 0
-			# If move affects multiple Pokémon and the AI calculates an overall
-			# score at once instead of per target
-			score = pbGetMoveScore(move, user, user, skill)
-			choices.push([idxMove, score, -1, move.name]) if score > 0
-		elsif target_data.num_targets > 1
-			# If move affects multiple battlers and you don't choose a particular one
-			totalScore = 0
-			@battle.allBattlers.each do |b|
-				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-				score = pbGetMoveScore(move, user, b, skill)
-				totalScore += ((user.opposes?(b)) ? score : -score)
-			end
-			choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
-		else
-			# If move affects one battler and you have to choose which one
-			scoresAndTargets = []
-			@battle.allBattlers.each do |b|
-				next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-				next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
-				if !user.opposes?(b) # is ally
+      # If move affects multiple Pokémon and the AI calculates an overall
+      # score at once instead of per target
+      score = pbGetMoveScore(move, user, user, skill)
+      choices.push([idxMove, score, -1, move.name]) if score > 0
+    elsif target_data.num_targets > 1
+      # If move affects multiple battlers and you don't choose a particular one
+      totalScore = 0
+      @battle.allBattlers.each do |b|
+        next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
+        score = pbGetMoveScore(move, user, b, skill)
+        totalScore += ((user.opposes?(b)) ? score : -score)
+      end
+      choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
+    else
+      # If move affects one battler and you have to choose which one
+      scoresAndTargets = []
+      @battle.allBattlers.each do |b|
+        next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
+        next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
+        if !user.opposes?(b) # is ally
           # wip, allows for the AI to target allies if its good to do so (polen puff/swag/etc)
           score = pbGetMoveScore(move, user, b, 100)
           score *= -1
           echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
         else
-          # it seems the AI isnt fooled by illusion, thats pretty neat actually
           # switch abuse prevention #by low
           #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
           if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
@@ -86,14 +86,14 @@ class Battle::AI
           score = pbGetMoveScore(move, user, realTarget, 100)
           scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
-			end
-			if scoresAndTargets.length > 0
-				# Get the one best target for the move
-				scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }
-				choices.push([idxMove, scoresAndTargets[0][0], scoresAndTargets[0][1], move.name])
-			end
-		end
-	end
+      end
+      if scoresAndTargets.length > 0
+        # Get the one best target for the move
+        scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }
+        choices.push([idxMove, scoresAndTargets[0][0], scoresAndTargets[0][1], move.name])
+      end
+    end
+  end
 
   #=============================================================================
   # Get a score for the given move being used against the given target

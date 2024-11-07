@@ -557,7 +557,7 @@ class Battle::AI
 						minimini+=100
 						minimini/=100.0
 						miniscore*=minimini
-					end       
+					end
 					if livecountuser==1
 						miniscore*=0.5
 					end
@@ -794,7 +794,7 @@ class Battle::AI
 	
 	# movecateg array needs to be functions
 	def movesetCheck(pokemon, movecateg, countother, addeffect = false)
-		if pokemon.is_a?(Battle::Battler)
+		if pokemon.is_a?(Battle::Battler) # an active battler
 			if addeffect
 				pokemon.moves.each do |m|
 					next unless movecateg.include?(m.function)
@@ -803,7 +803,7 @@ class Battle::AI
 			else
 				return true if pokemon.moves.any? { |m| movecateg.include?(m&.function) }
 			end
-		elsif pokemon.is_a?(Pokemon)
+		elsif pokemon.is_a?(Pokemon) # an inactive party member
 			movelist = []
 			pokemon.moves.each do |i|
 				next if i.nil?
@@ -974,7 +974,7 @@ class Battle::AI
 				miniscore*=1.2
 			end
 			miniscore*=0.1 if target.moves.any? { |j| [:SLEEPTALK, :SNORE].include?(j&.id) }
-			if (move.id == :SPORE || move.id == :SLEEPPOWDER) && !target.affectedByPowder?
+			if move.powderMove? && !target.affectedByPowder?
 				miniscore=0
 			end
 			if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
@@ -1095,8 +1095,7 @@ class Battle::AI
 			movelist = []
 			for i in pokemon.moves
 				next if i.nil?
-				movedummy = Pokemon::Move.new(i.id)
-				movedummy = Battle::Move.from_pokemon_move(@battle, movedummy)
+				movedummy = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(i.id))
 				movelist.push(movedummy)
 			end
 			if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
@@ -1139,7 +1138,8 @@ class Battle::AI
 			if pokemon.item_id == :LIGHTCLAY
 				roles.push("Screener")
 			end
-			fakemon = @battle.pbMakeFakeBattler(pokemon,false)
+			# the index here is wrong but lets see what will happen
+			fakemon = @battle.pbMakeFakeBattler(pokemon,false,target)
 			priorityko=false
 			for zzz in fakemon.moves
 				next if zzz.nil? || priorityAI(target,zzz)<1
@@ -1149,14 +1149,6 @@ class Battle::AI
 					priorityko=true if percentage>100
 				end
 			end
-=begin
-			# pbRoughDamage does not take Pokemon objects, this will cause issues
-			for zzz in movelist
-				next if zzz.priority<1
-				next if zzz.baseDamage<10
-				priorityko=true
-			end
-=end
 			if priorityko || (pokemon.speed>target.pbSpeed)
 				roles.push("Revenge Killer")
 			end
@@ -1695,7 +1687,7 @@ class Battle::AI
 		end 
 		if target.hasActiveAbility?(:GALEWINGS)
 			echo("\nGale Wings Disrupt") if $AIGENERALLOG
-			abilityscore*=2
+			abilityscore*=2 if target.moves.any? { |m| [:FLYING].include?(m&.type) } && target.hp >= (target.totalhp/2)
 		end 	
 		if target.hasActiveAbility?(:UNBURDEN)
 			if target.effects[PBEffects::Unburden]
@@ -1783,24 +1775,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:PRANKSTER)
 			echo("\nPrankster Disrupt") if $AIGENERALLOG
-			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
-		end
-		if target.hasActiveAbility?(:ECHOCHAMBER)
-			echo("\nEcho Chamber Disrupt") if $AIGENERALLOG
-			echohealcheck=false
-			echopriocheck=false
-			for i in target.moves
-				if i.soundMove?
-					echohealcheck=true
-					echopriocheck=true if i.statusMove?
-				end
-			end
-			if echohealcheck
-				abilityscore*=1.15
-			end
-			if echopriocheck && pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
-				abilityscore*=1.5
-			end
+			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && !user.pbHasType?(:DARK, false)
 		end
 		if target.hasActiveAbility?(:FURCOAT)
 			echo("\nFur Coat Disrupt") if $AIGENERALLOG
@@ -1849,7 +1824,7 @@ class Battle::AI
 			firevar = false
 			for i in user.moves
 				if i.type == :FIRE
-				firevar=true
+					firevar=true
 				end
 			end
 			if firevar
@@ -1857,7 +1832,36 @@ class Battle::AI
 			end      
 		end
 		# Disrupt scores for Untamed abilities
-		if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :MICROSTRIKE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY, :ACCUMULATOR])
+		if target.hasActiveAbility?(:MICROSTRIKE)
+			echo("\nMicro Strike Disrupt") if $AIGENERALLOG
+			if user.pbWeight > target.pbWeight
+				abilityscore*=1.2
+			end
+		end
+		if target.hasActiveAbility?(:ECHOCHAMBER)
+			echo("\nEcho Chamber Disrupt") if $AIGENERALLOG
+			echohealcheck=false
+			echopriocheck=false
+			for i in target.moves
+				if i.soundMove?
+					echohealcheck=true
+					echopriocheck=true if i.statusMove?
+				end
+			end
+			if echohealcheck
+				abilityscore*=1.15
+			end
+			if echopriocheck && pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill)
+				abilityscore*=1.5
+			end
+		end
+		if target.hasActiveAbility?(:ACCUMULATOR)
+			echo("\nAccumulator Disrupt") if $AIGENERALLOG
+			if !target.item && target.moves.any? { |j| [:SPITUP, :SWALLOW, :STOCKPILE].include?(j&.id) }
+				abilityscore*=1.2
+			end
+		end
+		if target.hasActiveAbility?([:AMPLIFIER, :SEANCE, :BLADEMASTER, :MOMENTUM, :ANGELICBEAUTY])
 			echo("\nMinor Impact Untamed Ability Disrupt") if $AIGENERALLOG
 			abilityscore*=1.2
 		end
