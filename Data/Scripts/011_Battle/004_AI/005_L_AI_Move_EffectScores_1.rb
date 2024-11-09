@@ -70,7 +70,7 @@ class Battle::AI
 		else
 			if targetWillMove?(target, "status")
 				score *= 1.5
-			elsif target.battle.choices[target.index][0] == :SwitchOut
+			elsif @battle.choices[target.index][0] == :SwitchOut
 				score *= 1.3
 			else
 				score *= 0.8
@@ -99,18 +99,19 @@ class Battle::AI
 				score*=1.5
 			end
 		else
-			score*=0.2
+			score*=0.1
 		end
 		if alldam && !pricheck
 			score*=1.3
 		else
-			if healcheck
-				score*=0.6
-			end
-			if setupcheck
-				score*=0.8
-			end
-			if user.lastMoveUsed == :SUCKERPUNCH # Sucker Punch last turn
+			suckr = (user.lastMoveUsed == :SUCKERPUNCH) # Sucker Punch last turn
+			if suckr
+				if healcheck
+					score*=0.6
+				end
+				if setupcheck
+					score*=0.8
+				end
 				if setupvar
 					score*=0.5
 				end
@@ -118,10 +119,12 @@ class Battle::AI
 			if userFasterThanTarget
 				score*=0.8
 			else
-				if pricheck
-					score*=0.5
-				else
-					score*=1.3
+				if suckr
+					if pricheck
+						score*=0.5
+					else
+						score*=1.3
+					end
 				end
 			end
 		end
@@ -138,8 +141,8 @@ class Battle::AI
 			ministat/=100.0
 			score*=ministat
 		end
-		if target.battle.choices[target.index][0] == :SwitchOut
-			realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.battle.choices[target.index][1]],false,target)
+		if @battle.choices[target.index][0] == :SwitchOut
+			realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
 			score = 0 if pbCheckMoveImmunity(1, move, user, realTarget, skill)
 		end
 		score = 0 if @battle.field.effects[PBEffects::Gravity] > 0 && !user.hasActiveItem?(:FLOATSTONE)
@@ -722,8 +725,8 @@ class Battle::AI
 			if targetWillMove?(target, "status")
 				score=0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
 			end
-			if target.battle.choices[target.index][0] == :SwitchOut
-				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.battle.choices[target.index][1]],false,target)
+			if @battle.choices[target.index][0] == :SwitchOut
+				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
 				if realTarget.hasActiveAbility?(:MAGICBOUNCE)
 					score=0
 				else
@@ -763,8 +766,8 @@ class Battle::AI
 			if targetWillMove?(target, "status")
 				score=0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
 			end
-			if target.battle.choices[target.index][0] == :SwitchOut
-				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.battle.choices[target.index][1]],false,target)
+			if @battle.choices[target.index][0] == :SwitchOut
+				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
 				if realTarget.hasActiveAbility?(:MAGICBOUNCE)
 					score=0
 				else
@@ -801,8 +804,8 @@ class Battle::AI
 			if targetWillMove?(target, "status")
 				score=0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
 			end
-			if target.battle.choices[target.index][0] == :SwitchOut
-				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.battle.choices[target.index][1]],false,target)
+			if @battle.choices[target.index][0] == :SwitchOut
+				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
 				if realTarget.hasActiveAbility?(:MAGICBOUNCE)
 					score=0
 				else
@@ -842,8 +845,8 @@ class Battle::AI
 			if targetWillMove?(target, "status")
 				score=0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
 			end
-			if target.battle.choices[target.index][0] == :SwitchOut
-				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.battle.choices[target.index][1]],false,target)
+			if @battle.choices[target.index][0] == :SwitchOut
+				realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
 				if realTarget.hasActiveAbility?(:MAGICBOUNCE)
 					score=0
 				else
@@ -931,6 +934,9 @@ class Battle::AI
 				if hasAlly
 					score*=0.7
 				end
+				if target.hasActiveAbility?(:SLIPPERYPEEL,false,mold_broken) && !target.effects[PBEffects::SlipperyPeel]
+					score *= 1.4
+				end
 			end
 		else
 			score = 0
@@ -1006,7 +1012,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:SPEEDBOOST)
 				miniscore*=0.7
 			end
-			if user.hasActiveAbility?(:MOXIE)
+			if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 				miniscore*=1.3
 			end
 			miniscore*=0.6 if target.pbHasMoveFunction?("ResetAllBattlersStatStages","ResetTargetStatStages")
@@ -1114,7 +1120,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1256,7 +1262,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1379,7 +1385,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1468,6 +1474,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
+			miniscore*=1.5
+		end
 		if move.baseDamage>0
 			miniscore-=100
 			if move.addlEffect.to_f != 100
@@ -1520,7 +1529,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1609,6 +1618,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
+			miniscore*=1.5
+		end
 		if move.baseDamage>0
 			miniscore-=100
 			if move.addlEffect.to_f != 100
@@ -1647,7 +1659,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1784,7 +1796,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1903,7 +1915,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -1992,6 +2004,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
+			miniscore*=1.5
+		end
 		if move.function == "RaiseUserSpDef1PowerUpElectricMove"
 			elecmove=user.moves.any? { |j| j.type == :ELECTRIC && j.baseDamage > 0 }
 			if elecmove && user.effects[PBEffects::Charge]==0
@@ -2037,7 +2052,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -2126,6 +2141,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
+			miniscore*=1.5
+		end
 		if move.baseDamage>0
 			miniscore-=100
 			if move.addlEffect.to_f != 100
@@ -2163,7 +2181,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -2266,7 +2284,7 @@ class Battle::AI
 			miniscore*=1.4
 		end
 		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }    
-		if user.hasActiveAbility?(:MOXIE)
+		if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 			miniscore*=1.3
 		end        
 		if move.baseDamage>0
@@ -2311,7 +2329,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -2421,7 +2439,7 @@ class Battle::AI
 			miniscore*=1.4
 		end
 		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }    
-		if user.hasActiveAbility?(:MOXIE)
+		if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 			miniscore*=1.3
 		end        
 		if move.baseDamage>0
@@ -2484,7 +2502,7 @@ class Battle::AI
 				miniscore*=1.3
 			end
 			hasAlly = !target.allAllies.empty?
-			if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 				miniscore*=2
 			end
 			if (user.hp.to_f)/user.totalhp>0.75
@@ -2570,7 +2588,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -2724,6 +2742,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
+			miniscore*=1.5
+		end
 		if move.baseDamage>0
 			miniscore-=100
 			if move.addlEffect.to_f != 100
@@ -2761,7 +2782,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -2908,6 +2929,9 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
+			miniscore*=1.5
+		end
 		miniscore/=100.0
 		if !user.statStageAtMax?(:DEFENSE)
 			score*=miniscore
@@ -2962,7 +2986,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3098,7 +3122,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3189,7 +3213,7 @@ class Battle::AI
 		score*=miniscore
 		miniscore=100
 		if user.hasActiveItem?(:WHITEHERB)
-			miniscore *= 1.5
+			miniscore *= 2.25
 		else
 			if userFasterThanTarget
 				miniscore*=0.1
@@ -3200,11 +3224,8 @@ class Battle::AI
 		else
 			miniscore*=0.1 if target.moves.any? { |j| j&.id == :TRICKROOM }
 		end
-		if user.hasActiveAbility?(:MOXIE)
+		if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 			miniscore*=1.3
-		end
-		if user.hasActiveItem?(:WHITEHERB)
-			miniscore*=1.5
 		end  
 		if !user.statStageAtMax?(:SPEED)          
 			miniscore/=100.0
@@ -3374,7 +3395,7 @@ class Battle::AI
 			score*=miniscore
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			score*=2
 		end
 		if move.statusMove? && score == initialscore
@@ -3533,7 +3554,7 @@ class Battle::AI
 			score*=miniscore
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			score*=2
 		end
 		if move.statusMove? && score == initialscore
@@ -3549,7 +3570,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3703,7 +3724,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3776,6 +3797,9 @@ class Battle::AI
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
+			miniscore*=1.5
+		end
 		if !user.statStageAtMax?(:DEFENSE)
 			miniscore/=100.0
 			score*=miniscore
@@ -3802,6 +3826,9 @@ class Battle::AI
 		miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
 		if user.hasActiveAbility?(:CONTRARY)
 			miniscore*=0
+		end
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
+			miniscore*=1.5
 		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
@@ -3951,12 +3978,15 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
+			miniscore*=1.5
+		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
 			score*=miniscore
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			score*=2
 		end
 		if move.statusMove? && score == initialscore
@@ -4104,6 +4134,9 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
+		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
+			miniscore*=1.5
+		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
 			score*=miniscore
@@ -4140,7 +4173,7 @@ class Battle::AI
 			score*=miniscore
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			score*=3
 		end
 		if move.statusMove? && score == initialscore
@@ -4235,7 +4268,7 @@ class Battle::AI
 							score = 0
 						end
 					end
-				elsif target.battle.choices[target.index][0] == :SwitchOut && target.allAllies.empty?
+				elsif @battle.choices[target.index][0] == :SwitchOut && target.allAllies.empty?
 					score *= 1.5
 				end
 				if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
@@ -4295,7 +4328,7 @@ class Battle::AI
 				score *= 2 if user.hasActiveAbility?(:SIMPLE)
 				if user.hasActiveAbility?(:RUNAWAY) || user.hasActiveItem?(:SHEDSHELL)
 					score *= 2
-					score *= 1.5 if target.battle.choices[target.index][0] == :SwitchOut && target.allAllies.empty?
+					score *= 1.5 if @battle.choices[target.index][0] == :SwitchOut && target.allAllies.empty?
 				else
 					bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 					maxdam = bestmove[0]
@@ -4489,9 +4522,6 @@ class Battle::AI
 				if livecounttarget>1 && livecountuser==1
 					score*=0.8
 				end
-				if user.hasActiveAbility?(:MOXIE)
-					score*=1.5
-				end
 			else
 				livecounttarget -= 1
 			end
@@ -4501,6 +4531,9 @@ class Battle::AI
 				miniscore*=0.05
 				miniscore=(1-miniscore)
 				score*=miniscore
+			end
+			if user.hasActiveAbility?(:MOXIE)
+				score*=1.5
 			end
 		end
     #---------------------------------------------------------------------------
@@ -4760,7 +4793,7 @@ class Battle::AI
 		hasAlly = !user.allAllies.empty?
 		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
 			t_hasAlly = !target.allAllies.empty?
-			if !t_hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+			if !t_hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 				miniscore*=2
 			end
 			if target.hp*(1.0/target.totalhp)>0.75
@@ -4793,7 +4826,7 @@ class Battle::AI
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -4889,7 +4922,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseTargetAtkSpAtk2" # Decorate
 		if target.hasActiveAbility?(:CONTRARY)
-			if target.opposes?(user) && target.battle.choices[target.index][0] != :SwitchOut
+			if target.opposes?(user) && @battle.choices[target.index][0] != :SwitchOut
 				score -= target.stages[:ATTACK] * 20
 				score -= target.stages[:SPECIAL_ATTACK] * 20
 			else
@@ -4934,6 +4967,9 @@ class Battle::AI
 			end       
 			if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
 				miniscore*=0.1
+			end
+			if (move.statusMove? || move.addlEffect.to_f == 100) && userFasterThanTarget && targetWillMove?(target, "phys")
+				miniscore*=1.2
 			end
 			if move.baseDamage>0
 				miniscore-=100
@@ -4995,6 +5031,9 @@ class Battle::AI
 			end       
 			if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
 				miniscore*=0.1
+			end
+			if (move.statusMove? || move.addlEffect.to_f == 100) && userFasterThanTarget && targetWillMove?(target, "phys")
+				miniscore*=1.2
 			end
 			if move.baseDamage>0
 				miniscore-=100
@@ -5144,6 +5183,9 @@ class Battle::AI
 			if target.hasActiveAbility?([:UNAWARE,:COMPETITIVE, :DEFIANT, :CONTRARY])
 				miniscore*=0.1
 			end
+			if (move.statusMove? || move.addlEffect.to_f == 100) && userFasterThanTarget && targetWillMove?(target, "spec")
+				miniscore*=1.2
+			end
 			if user.frozen?
 				miniscore*=0.7
 			end
@@ -5210,6 +5252,9 @@ class Battle::AI
 			if target.hasActiveAbility?([:UNAWARE,:COMPETITIVE, :DEFIANT, :CONTRARY])
 				miniscore*=0.1
 			end         
+			if (move.statusMove? || move.addlEffect.to_f == 100) && userFasterThanTarget && targetWillMove?(target, "spec")
+				miniscore*=1.2
+			end
 			miniscore/=100.0    
 			score*=miniscore
 		end
@@ -5239,6 +5284,9 @@ class Battle::AI
 			end     
 			if target.hasActiveAbility?([:UNAWARE,:COMPETITIVE, :DEFIANT, :CONTRARY])
 				miniscore*=0.1
+			end
+			if (move.statusMove? || move.addlEffect.to_f == 100) && userFasterThanTarget && targetWillMove?(target, "spec")
+				miniscore*=1.2
 			end
 			if user.frozen?
 				miniscore*=0.7
@@ -5876,7 +5924,7 @@ class Battle::AI
 				if user.effects[PBEffects::Substitute]>0
 					miniscore*=1.3
 				end
-				if !hasAlly && move.statusMove? && target.battle.choices[target.index][0] == :SwitchOut
+				if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
 					miniscore*=2
 				end
 				if (user.hp.to_f)/user.totalhp>0.75
@@ -6160,6 +6208,7 @@ class Battle::AI
 			ministat*=(15)
 			ministat*=(-1) if user.hasActiveAbility?(:CONTRARY)
 			ministat*=2 if user.hasActiveAbility?(:SIMPLE)
+			ministat*=1.3 if $game_variables[MECHANICSVAR] >= 3
 			ministat+=100
 			ministat/=100.0
 			score*=ministat
@@ -6184,6 +6233,7 @@ class Battle::AI
 				ministat-= 100 if !user.opposes?(target) # ally
 				ministat = 0   if user.opposes?(target) # enemy
 			end
+			ministat*=1.2 if $game_variables[MECHANICSVAR] >= 3
 			ministat/=100.0
 			score*=ministat
 		else
@@ -6448,7 +6498,7 @@ class Battle::AI
     when "RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints" # Fell Stinger
 		if !user.statStageAtMax?(:ATTACK)
 			if !targetSurvivesMove(move,user,target) && 
-			   target.battle.choices[target.index][0] != :SwitchOut
+			   @battle.choices[target.index][0] != :SwitchOut
 				if userFasterThanTarget
 					score*=30
 				else

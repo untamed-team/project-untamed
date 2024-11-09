@@ -300,7 +300,13 @@ class Battle::AI
 				miniscore+=100
 			end
 			miniscore/=100.0
-			score*=miniscore
+			if move.function == "BurnTargetIfTargetStatsRaisedThisTurn"
+				if !userFasterThanTarget && pbHasSetupMove?(target) && targetWillMove?(target)
+					score*=(miniscore*0.75)
+				end
+			else
+				score*=miniscore
+			end
 		else
 			score = 0 if move.statusMove?
      	end
@@ -315,8 +321,8 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "FreezeTarget", "FreezeFlinchTarget", 
-		 "FreezeTargetSuperEffectiveAgainstWater", "FreezeTargetAlwaysHitsInHail" 
+    when "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetAlwaysHitsInHail",
+		 "FreezeTargetSuperEffectiveAgainstWater"
 		 # biting cold, ice fang, freeze dry, blizzard
 		if target.pbCanFreeze?(user, false)
 			miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, 110, move, globalArray, 100)
@@ -356,7 +362,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "ParalyzeBurnOrFreezeTarget" # tri attack
-		if target.status == :NONE
+		if !target.pbHasAnyStatus?
 			miniscore=140
 			ministat=0
 			ministat+=target.stages[:ATTACK]
@@ -520,7 +526,7 @@ class Battle::AI
     when "StartUserSideImmunityToInflictedStatus" # Safeguard
 		roles = pbGetPokemonRole(user, target)
 		if user.pbOwnSide.effects[PBEffects::Safeguard]<=0 && userFasterThanTarget && 
-		  (user.status == :NONE && !roles.include?("Status Absorber")) 
+		  (!user.pbHasAnyStatus? && !roles.include?("Status Absorber")) 
 			ebinstatuscheck = target.moves.any? { |j| [:WILLOWISP, :BITINGCOLD, :TOXIC, :THUNDERWAVE, :GLARE, :NUZZLE, :STUNSPORE].include?(j&.id) }
 			statuscheck     = target.moves.any? { |j| [:POISONPOWDER, :POISONGAS, :CONFUSERAY].include?(j&.id) }
 			sleepcheck      = target.moves.any? { |j| [:SPORE, :SLEEPPOWDER, :LOVELYKISS, :HYPNOSIS, :GRASSWHISTLE, :DARKVOID].include?(j&.id) }
@@ -612,23 +618,23 @@ class Battle::AI
     when "FlinchTargetFailsIfNotUserFirstTurn" # fake out
 		if user.turnCount==0
 			if canFlinchTarget(user,target,mold_broken)
-				if !userFasterThanTarget
+				if !userFasterThanTarget && !target.hasActiveAbility?(:STEADFAST)
 					score*=1.2
 				end
 				if user.hasActiveItem?(:NORMALGEM)
 					score*=1.1
 					score*=2.0 if user.hasActiveAbility?(:UNBURDEN)
 				end          
-				score*=0.3 if target.hasActiveAbility?(:STEADFAST)
+				score*=0.03 if target.hasActiveAbility?(:STEADFAST)
 				score*=0.3 if user.hasActiveAbility?(:SHEERFORCE)
 				# try to negate a turn of powered up stab
 				if target.pokemon.willmega
-					protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
-									"ProtectUserFromTargetingMovesSpikyShield", 
-									"ProtectUserFromDamagingMovesKingsShield",
-									"ProtectUserFromDamagingMovesObstruct"]
 					if targetWillMove?(target)
-				  		if !protectarray.include?(target.battle.choices[target.index][2].function)
+						protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
+										"ProtectUserFromTargetingMovesSpikyShield", 
+										"ProtectUserFromDamagingMovesKingsShield",
+										"ProtectUserFromDamagingMovesObstruct"]
+				  		if !protectarray.include?(@battle.choices[target.index][2].function)
 							score*=2 if globalArray.any? { |element| element.include?("weather") }
 							score*=2 if globalArray.any? { |element| element.include?("terrain") }
 						end
@@ -674,9 +680,9 @@ class Battle::AI
 					miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 				end
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
-				miniscore = 1 if move.function == "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $game_variables[MECHANICSVAR] >= 3
 				miniscore+=100
 				miniscore/=100.0
+				miniscore = 1 if move.function == "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $game_variables[MECHANICSVAR] >= 3
 				score*=miniscore
 			else
 				miniscore/=100.0
@@ -743,6 +749,10 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetUserTypesToResistLastAttack" # Conversion 2
+		# the scoring for this move was using the user to calculate the target's last move type
+		# this means that if the user had galvanize and the target's last move was normal
+		# this very well tested code would have said "hey he just used a electric attack"
+		# ffs essentials
 		if !user.canChangeType?
 			score -= 90
 		elsif !target.lastMoveUsed || !target.lastMoveUsedType ||
@@ -752,7 +762,7 @@ class Battle::AI
 			aType = nil
 			target.eachMove do |m|
 				next if m.id != target.lastMoveUsed
-				aType = m.pbCalcType(user)
+				aType = m.pbCalcType(target)
 				break
 			end
 			if aType
@@ -993,7 +1003,7 @@ class Battle::AI
 			minimi = getAbilityDisruptScore(move,user,target,skill)
 			minimi = 1.0 / minimi if !user.opposes?(target) # is ally
 			miniscore*=minimi
-			miniscore/=100
+			score*=(miniscore/100.0)
 			score*=1.3 if target.moves.any? { |j| [:SNORE, :SLEEPTALK].include?(j&.id) }
 			score*=2.0 if target.moves.any? { |j| j&.id == :REST }
 			if user.pbHasMove?(:SPORE) || user.pbHasMove?(:SLEEPPOWDER) ||
@@ -1072,6 +1082,7 @@ class Battle::AI
 			minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
 			if user.opposes?(target) # is enemy
 				score *= 1.0 / miniscore
+				score *= minimini if minimini > 1.0
 				if user.ability == :TRUANT
 					score*=3
 				elsif user.ability == :SLOWSTART
@@ -1119,10 +1130,10 @@ class Battle::AI
 			score = 0 if move.baseDamage == 0
 		elsif !target.unstoppableAbility?
 			miniscore = (getAbilityDisruptScore(move,user,target,skill)*100)
-			if (aspeed<ospeed && (@battle.field.effects[PBEffects::TrickRoom]!=0))
+			if !userFasterThanTarget
 				miniscore*=1.3
 			else
-				miniscore*=0.5
+				miniscore*=0.7
 			end
 			if target.moves.any? { |m| priorityAI(target,m)>0 }
 				miniscore*=1.3
@@ -1203,6 +1214,11 @@ class Battle::AI
 			end
 			if target.pbHasType?(:GROUND, true)
 				score*=3
+			end
+			if (userFasterThanTarget || priorityAI(user, move) > 0) && targetWillMove?(target)
+				if @battle.choices[target.index][2].type == :GROUND
+					score*=3
+				end
 			end
 		end
     #---------------------------------------------------------------------------

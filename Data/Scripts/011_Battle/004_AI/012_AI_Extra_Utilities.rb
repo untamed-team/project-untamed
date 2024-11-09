@@ -152,7 +152,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.bestSkill && !moldBreaker && target.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
-			abilityBlacklist = [:FILTER,:SOLIDROCK]
+			abilityBlacklist = [:FILTER,:SOLIDROCK,:PRISMARMOR]
 			canCheck = true
 			abilityBlacklist.each do |m|
 				next if target.ability != m 
@@ -216,7 +216,9 @@ class Battle::AI
 			multipliers[:base_damage_multiplier] *= 1.25
 		end
 		# Me First
-		# TODO
+		if user.effects[PBEffects::MeFirst]
+			multipliers[:base_damage_multiplier] *= 1.5
+		end
 		# Helping Hand - n/a
 		# Charge
 		if skill >= PBTrainerAI.mediumSkill &&
@@ -252,6 +254,7 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
 			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
 			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
+			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
 			if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
 				multipliers[:final_damage_multiplier] *= 0.75
 			end
@@ -532,8 +535,8 @@ class Battle::AI
 	end
 	
 	def moldbroken(user, target, move)
-		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY])
-		return false if target.hasActiveAbility?(:SHADOWSHIELD)
+		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY, :PRISMARMOR])
+		return false if target.hasActiveAbility?([:SHADOWSHIELD, :PRISMARMOR])
 		if (user.hasMoldBreaker? || 
 			["IgnoreTargetAbility",
 			 "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
@@ -912,12 +915,12 @@ class Battle::AI
 				statuschip = 0
 				if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)
 					subscore = 0.0625
-					subscore /= 2 if user.hasWorkingAbility?(:HEATPROOF)
+					subscore /= 2 if user.hasActiveAbility?(:HEATPROOF)
 					statuschip += subscore
 				end
 				if user.frozen?
 					subscore = 0.0625
-					subscore /= 2 if user.hasWorkingAbility?(:THICKFAT)
+					subscore /= 2 if user.hasActiveAbility?(:THICKFAT)
 					statuschip += subscore
 				end
 				if user.asleep?

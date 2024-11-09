@@ -100,7 +100,7 @@ class Battle::AI
 				mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
 				next if mirrored==nil
 				next if !$movesToTargetAllies.include?(mirrmove.function) && $AIMASTERLOG_TARGET == 1
-				next if ["AttackOneTurnLater", "DoesNothingUnusableInGravity"].include?(mirrmove.function)
+				next if ["AttackOneTurnLater", "DoesNothingUnusableInGravity", "DoesNothingCongratulations", "DoesNothingFailsIfNoAlly", "DoubleMoneyGainedFromBattle"].include?(mirrmove.function)
 				case mirrmove.category
 				when 0 then moveCateg = "Physical"
 				when 1 then moveCateg = "Special"
@@ -396,7 +396,8 @@ class Battle::AI
 		end
 		# Self-KO moves should avoided (under normal circumstances) if possible
 		if ["UserFaintsExplosive", "UserFaintsPowersUpInMistyTerrainExplosive", 
-			"UserFaintsFixedDamageUserHP"].include?(move.function)
+			"UserFaintsFixedDamageUserHP"].include?(move.function) ||
+		   (["UserLosesHalfOfTotalHPExplosive", "UserLosesHalfOfTotalHP"].include?(move.function) && user.takesIndirectDamage?)
 			if user.hasActiveAbility?(:PARTYPOPPER)
 				innatemove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:HEALINGWISH))
 				innatescore = (pbGetMoveScore(innatemove, user, target, skill) / 2)
