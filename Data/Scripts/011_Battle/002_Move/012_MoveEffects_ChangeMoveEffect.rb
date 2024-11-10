@@ -993,6 +993,7 @@ end
 
 #===============================================================================
 # Uses a random move known by any non-user Pokémon in the user's party. (Assist)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
   def callsAnotherMove?; return true; end
@@ -1101,12 +1102,15 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
 
   def pbEffectGeneral(user)
     move = @assistMoves[@battle.pbRandom(@assistMoves.length)]
+    move = user.prepickedMove if !user.prepickedMove.nil?
     user.pbUseMoveSimple(move)
+    user.prepickedMove = nil
   end
 end
 
 #===============================================================================
 # Uses a random move the user knows. Fails if user is not asleep. (Sleep Talk)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomUserMoveIfAsleep < Battle::Move
   def usableWhenAsleep?; return true; end
@@ -1168,8 +1172,13 @@ class Battle::Move::UseRandomUserMoveIfAsleep < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    choice = @sleepTalkMoves[@battle.pbRandom(@sleepTalkMoves.length)]
-    user.pbUseMoveSimple(user.moves[choice].id, user.pbDirectOpposing.index)
+    if !user.prepickedMove.nil?
+      user.pbUseMoveSimple(user.prepickedMove, user.pbDirectOpposing.index)
+      user.prepickedMove = nil
+    else
+      choice = @sleepTalkMoves[@battle.pbRandom(@sleepTalkMoves.length)]
+      user.pbUseMoveSimple(user.moves[choice].id, user.pbDirectOpposing.index)
+    end
   end
 end
 

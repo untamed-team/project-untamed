@@ -305,6 +305,7 @@ class Battle::Battler
     @effects[PBEffects::MoodyMemory]     		 = -1
     @effects[PBEffects::PrioEchoChamber]     = -1
     @SetupMovesUsed             						 = []
+    @prepickedMove             						   = nil
   end
 
   #=============================================================================
