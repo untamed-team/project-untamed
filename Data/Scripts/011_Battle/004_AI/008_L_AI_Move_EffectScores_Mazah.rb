@@ -1126,8 +1126,8 @@ class Battle::AI
 			if pokemon.item_id == :LIGHTCLAY
 				roles.push("Screener")
 			end
-			# the index here is wrong but lets see what will happen
-			fakemon = @battle.pbMakeFakeBattler(pokemon,false,target)
+			# the index here is (probably) wrong but lets see what will happen
+			fakemon = @battle.pbMakeFakeBattler(pokemon,false,target.pbDirectOpposing)
 			priorityko=false
 			for zzz in fakemon.moves
 				next if zzz.nil? || priorityAI(target,zzz)<1

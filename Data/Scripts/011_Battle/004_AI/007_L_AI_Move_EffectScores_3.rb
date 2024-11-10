@@ -4730,7 +4730,7 @@ class Battle::AI
 			end
 		else
 			if targetWillMove?(target) && target.effects[PBEffects::Substitute]<=0
-				copymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(@battle.choices[target.index][2]))
+				copymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(@battle.choices[target.index][2].id))
 				score = pbGetMoveScore(copymove, user, target, skill)
 			else
 				score=0
@@ -4752,10 +4752,10 @@ class Battle::AI
 		else
 			if targetWillMove?(target)
 				targetMove = @battle.choices[target.index][2]
-				if GameData::Move.get(targetMove).flags.none? { |f| f[/^CanMirrorMove$/i] }
+				if GameData::Move.get(targetMove.id).flags.none? { |f| f[/^CanMirrorMove$/i] }
 					score = 0
 				else
-					mirrmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(targetMove))
+					mirrmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(targetMove.id))
 					score = pbGetMoveScore(mirrmove, user, target, skill)
 				end
 			else

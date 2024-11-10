@@ -184,18 +184,11 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
   def multiHitMove?; return true; end
 
   def pbNumHits(user, targets)
-    if user.pbOwnedByPlayer?
-      hitChances = [
-        3, 3, 3, 3, 3, 3, 3, 3,
-        4, 4, 4, 4, 
-        5
-      ]
-    else
-      hitChances = [
-        4, 4, 4, 4, 4, 4, 4, 4,
-        5, 5, 5, 5
-      ]
-    end
+    hitChances = [
+      3, 3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 4, 5
+    ]
+    hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
     r = hitChances.length - 1 if user.hasActiveAbility?(:SKILLLINK)
     return hitChances[r]
