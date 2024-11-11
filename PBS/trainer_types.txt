@@ -403,3 +403,17 @@ Gender = Female
 BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[LEADER_Matteo]
+Name = Gym Leader
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[LEADER_Mercedes]
+Name = Gym Leader
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader

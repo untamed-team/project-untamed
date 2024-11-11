@@ -342,7 +342,36 @@ Pokemon = EEVEE,12
 [TRAINER_Reine,Reine,101]
 LoseText = Well done.
 Pokemon = EEVEE,12
-
+#-------------------------------
+[LEADER_Matteo, Matteo]
+LoseText = Lose text
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
+    AbilityIndex = 2
+    Ace = yes
+#-------------------------------
+[LEADER_Matteo, Matteo,100]
+LoseText = Lose text
+Pokemon = PACUNA,8
+    Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
+    AbilityIndex = 1
+    Item = LIGHTCLAY
+    Nature = JOLLY
+#-------------------------------
+[LEADER_Mercedes, Mercedes]
+LoseText = Lose text
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
+    AbilityIndex = 2
+    Ace = yes
+#-------------------------------
+[LEADER_Mercedes, Mercedes,100]
+LoseText = Lose text
+Pokemon = PACUNA,8
+    Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
+    AbilityIndex = 1
+    Item = LIGHTCLAY
+    Nature = JOLLY
 
 #-------------------------------
 #-------------------------------

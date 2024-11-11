@@ -476,6 +476,10 @@ http404error
 Automatic Level Scaling:
 Benitex
 
+Autoscroll:
+Gardenette
+Wachunga
+
 Bag Screen with Interactable Party:
 DiegoWT
 Rose
