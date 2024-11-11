@@ -1543,6 +1543,13 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:CRYSTALJAW,
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:MOMENTUM,
+proc { |ability, user, target, move, mults, baseDmg, type|
+    met = 1 + (0.2 * [user.effects[PBEffects::Momentum], 5].min)
+    mults[:final_damage_multiplier] *= met
+  }
+)
+
 #by chespin
 Battle::AbilityEffects::DamageCalcFromUser.add(:ARTILLERIST,
   proc { |ability, user, target, move, mults, baseDmg, type|
@@ -2445,6 +2452,7 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel] || !move.pbContactMove?(user)
 		next if battle.wasUserAbilityActivated?(target)
+    next if user.effects[PBEffects::Substitute] > 0
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
 		target.effects[PBEffects::SlipperyPeel] = true

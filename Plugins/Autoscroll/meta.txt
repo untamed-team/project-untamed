@@ -1,0 +1,4 @@
+﻿Name         = Autoscroll
+Version      = 1.1
+Credits      = Gardenette, Wachunga
+Essentials   = 20.1

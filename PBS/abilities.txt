@@ -568,7 +568,7 @@ Description = Sharply raises one stat, resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
-Description = Negates powder moves, weather and Spikes/Pebbles damage. 
+Description = Negates powder moves, weather, and hazard damage. 
 #-------------------------------
 [POISONTOUCH]
 Name = Poison Touch

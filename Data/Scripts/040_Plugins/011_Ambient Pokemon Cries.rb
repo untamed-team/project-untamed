@@ -33,6 +33,7 @@ class PokemonEncounters
     @data = GameData::Encounter.get(mapID, $PokemonGlobal.encounter_version)
     data = GameData::Encounter.get(mapID, $PokemonGlobal.encounter_version)
     enclist= Marshal.load(Marshal.dump(data.types))
+    print data
     ret=[]
     enclist.each{|enclist| 
       ret.push(enclist)

@@ -3,20 +3,6 @@ class Battle::Battler
   # Change HP
   #=============================================================================
   def pbReduceHP(amt, anim = true, registerDamage = true, anyAnim = true)
-    amt = amt.round
-    amt = @hp if amt > @hp
-    amt = 1 if amt < 1 && !fainted?
-    oldHP = @hp
-    self.hp -= amt
-    PBDebug.log("[HP change] #{pbThis} lost #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
-    raise _INTL("HP less than 0") if @hp < 0
-    raise _INTL("HP greater than total HP") if @hp > @totalhp
-    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
-    if amt > 0 && registerDamage
-      @droppedBelowHalfHP = true if @hp < @totalhp / 2 && @hp + amt >= @totalhp / 2
-      @tookDamageThisRound = true
-    end
-    return amt
   end
 
   def pbRecoverHP(amt, anim = true, anyAnim = true)

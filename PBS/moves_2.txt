@@ -329,7 +329,7 @@ Type = BUG
 Category = Status
 Accuracy = 100
 TotalPP = 40
-Target = AllNearFoes
+Target = NearOther
 FunctionCode = LowerTargetSpeed2
 Flags = CanProtect,CanMirrorMove
 Description = The foe is bound with silk blown from the user's mouth. This silk reduces the target's Speed.
@@ -1399,14 +1399,14 @@ Description = The user captures and attacks foes by using an electric net, which
 Name = Charge Beam
 Type = ELECTRIC
 Category = Special
-Power = 50
+Power = 40
 Accuracy = 100
-TotalPP = 10
+TotalPP = 20
 Target = NearOther
 FunctionCode = RaiseUserSpAtk1
 Flags = CanProtect,CanMirrorMove
-EffectChance = 70
-Description = The user fires a concentrated bundle of electricity. It may also raise the user's Sp. Atk stat.
+EffectChance = 100
+Description = The user fires a concentrated bundle of electricity. It also raises the user's Sp. Atk stat.
 #-------------------------------
 [THUNDERSHOCK]
 Name = Thunder Shock
@@ -2885,7 +2885,7 @@ Target = Other
 FunctionCode = ConfuseTargetAlwaysHitsInRainHitsTargetInSky
 Flags = CanProtect,CanMirrorMove
 EffectChance = 1 # too lazy to recreate a hurricane without confusion
-Description = The user wraps its foe in a fierce wind that flies up into the sky. It may also confuse the foe.
+Description = The user wraps its foe in a fierce wind that flies up into the sky. Always hits in Rain.
 #-------------------------------
 [AEROBLAST]
 Name = Aeroblast
@@ -8829,7 +8829,6 @@ Target = NearOther
 Priority = 0
 FunctionCode = None
 Flags = Contact,CanProtect,HighCriticalHitRate,Blade
-EffectChance = 10
 Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
@@ -8839,12 +8838,12 @@ Category = Special
 Power = 90
 Accuracy = 100
 TotalPP = 10
-Target = AllNearFoes
+Target = NearOther
 Priority = 0
 FunctionCode = None
-Flags = CanProtect
+Flags = CanProtect,Sound
 EffectChance = 0
-Description = The user strikes the air to send a damaging shockwave towards opposing Pokémon.
+Description = The user strikes the air to send a damaging shockwave towards an opposing foe.
 #-------------------------------
 [GEODEBURST]
 Name = Geode Burst
@@ -9087,6 +9086,17 @@ FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
 Description = A folded blade that tears through a target using Protect or Detect.
 #-------------------------------
+[BOOMINSTALL]
+Name = Virus Inject
+Type = QMARKS
+Category = Status
+Accuracy = 85
+TotalPP = 10
+Target = NearOther
+FunctionCode = BOOMInstall
+Flags = CanProtect,CanMirrorMove
+Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
 [HARDDRIVECRASH]
 Name = Hard Drive Crash
 Type = QMARKS
@@ -9103,13 +9113,13 @@ Description = The user does an all-out attack, crashing its own hard drives. Low
 Name = Splinter Shot
 Type = GRASS
 Category = Physical
-Power = 35
+Power = 40
 Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.
+Description = The user unleashes a blast of thorns in a wide spread. Power does not lower even if there are multiple foes.
 #-------------------------------
 #-------------------------------
 #-------------------------------
@@ -9121,7 +9131,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9133,7 +9143,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9145,7 +9155,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = AllNearFoes
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 EffectChance = 0
 Description = ...
@@ -9158,7 +9168,7 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = None
+FunctionCode = DoesNothingUnusableInGravity
 Flags = CanProtect
 Description = ...
 #-------------------------------
@@ -9170,30 +9180,28 @@ Power = 2
 Accuracy = 0
 TotalPP = 1
 Target = NearOther
-FunctionCode = HealUserByHalfOfDamageDone
+FunctionCode = DoesNothingUnusableInGravity
 Flags = Contact,CanProtect
-Description = The user drains the target’s life force. The user's HP is restored by half the damage taken by the target.
+Description = ...
 #-------------------------------
 [SUPERNOVA]
-Name = Supernova
+Name = Supernova1
 Type = FIRE
 Category = Physical
 Power = 2
 Accuracy = 100
 TotalPP = 1
 Target = AllNearFoes
-FunctionCode = Supernova
-Flags = GravityBoosted
-Description = big kaboom first turn
+FunctionCode = DoesNothingUnusableInGravity
+Description = ...
 #-----------------
 [SUPERNOVA_ALT]
-Name = Supernova
+Name = Supernova2
 Type = ROCK
 Category = Physical
 Power = 2
 Accuracy = 0
 TotalPP = 0
 Target = AllNearFoes
-FunctionCode = Supernova
-Flags = GravityBoosted
-Description = sharp rocks 2 turns next
+FunctionCode = DoesNothingUnusableInGravity
+Description = ...

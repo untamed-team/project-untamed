@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
@@ -96,7 +96,7 @@ Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,5
+Pokemon = ZEAZAYA,6
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
@@ -162,6 +162,7 @@ LoseText = Ugh, whatever…
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
     AbilityIndex = 1
+    Item = LIGHTCLAY
     Nature = JOLLY
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,BITINGCOLD,OMINOUSWIND,BUBBLE
@@ -357,22 +358,21 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,100]
 LoseText = sex
 #Gimmick = stealthrock
-Pokemon = ZOLUPINE,50
-    Nature = QUIRKY
+Pokemon = M_ROSERADE,50
+    Moves = SHADOWSNEAK,SHADOWBALL,WILLOWISP,BITINGCOLD
+    Ability = SEANCE
 	AAM = True
-	MEM = True
-Pokemon = CHIMECHO,50
-    Moves = PARTINGSHOT,DISARMINGVOICE,HEALBELL
-    AbilityIndex = 2
     Nature = QUIRKY
-	AAM = True
-	MEM = True
 Pokemon = SABLEYE,50
-    Moves = SPLASH
+    Moves = SPLASH,MEMENTO,NIGHTSHADE
     Ability = PRANKSTER
     Nature = QUIRKY
 	AAM = True
 	MEM = True
+Pokemon = DUPEDILLO,50
+    Moves = POUND,BEATUP
+    Ability = ANGERPOINT
+    Nature = ADAMANT
 Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE

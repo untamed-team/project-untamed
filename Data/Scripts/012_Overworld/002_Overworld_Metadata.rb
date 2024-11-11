@@ -53,6 +53,8 @@ class PokemonGlobalMetadata
   attr_accessor :safesave
 	# DDT Spray #by low
   attr_accessor :ddtspray
+  attr_accessor :goldencamera
+  attr_accessor :ticketStorage
 
   def initialize
     # Movement
@@ -107,7 +109,10 @@ class PokemonGlobalMetadata
     @pokerusTime          = nil
     # Save file
     @safesave             = false
-    @ddtspray             = false #by low
+    #by low
+    @ddtspray             = false
+    @goldencamera         = false
+    @ticketStorage        = []
   end
 
   def encounter_version=(value)

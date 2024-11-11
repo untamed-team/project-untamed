@@ -8841,7 +8841,7 @@ Description = The user eats its held Berry, then sharply raises its Defense stat
 Name = Haunt
 Type = GHOST
 Category = Physical
-Power = 85
+Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -8875,7 +8875,7 @@ TotalPP = 10
 Target = NearOther
 Priority = 0
 FunctionCode = FreezeTarget
-Flags = CanProtect
+Flags = CanProtect,Sound
 EffectChance = 20
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------
@@ -9221,3 +9221,13 @@ Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = Contact,CanProtect,CanMirrorMove
 Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.
+#-------------------------------
+[BOOMINSTALL]
+Name = Virus Inject
+Type = QMARKS
+Category = Status
+Accuracy = 85
+TotalPP = 10
+Target = NearOther
+FunctionCode = BOOMInstall
+Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.

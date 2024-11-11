@@ -184,18 +184,11 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
   def multiHitMove?; return true; end
 
   def pbNumHits(user, targets)
-    if user.pbOwnedByPlayer?
-      hitChances = [
-        3, 3, 3, 3, 3, 3, 3, 3,
-        4, 4, 4, 4, 
-        5
-      ]
-    else
-      hitChances = [
-        4, 4, 4, 4, 4, 4, 4, 4,
-        5, 5, 5, 5
-      ]
-    end
+    hitChances = [
+      3, 3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 4, 5
+    ]
+    hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
     r = hitChances.length - 1 if user.hasActiveAbility?(:SKILLLINK)
     return hitChances[r]
@@ -330,7 +323,6 @@ class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
   end
 end
 
-
 #===============================================================================
 # Hits two times, ignores multi target debuff. (Splinter Shot)
 #===============================================================================
@@ -341,4 +333,34 @@ class Battle::Move::HitTwoTimesReload < Battle::Move
   end
   def multiHitMove?;            return true; end
   def pbNumHits(user, targets); return 2;    end
+end
+
+#===============================================================================
+# Increases the damage recived from all sources by 25%. (Virus Inject)
+#===============================================================================
+class Battle::Move::BOOMInstall < Battle::Move
+  def canMagicCoat?; return !damagingMove?; end
+  
+  def pbFailsAgainstTarget?(user,target,show_message)
+    return if damagingMove?
+    if target.effects[PBEffects::BoomInstalled]
+      @battle.pbDisplay(_INTL("But it failed!"))
+      return true
+    end
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    return if damagingMove?
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
+
+  def pbAdditionalEffect(user, target)
+    return if !damagingMove?
+    return if target.effects[PBEffects::BoomInstalled]
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
 end

@@ -53,6 +53,21 @@ class Battle::Battler
     @pokemon      = pkmn
     @pokemonIndex = idxParty
     @participants = []
+    # bug fixes for AAM #by low
+    abilist = [pkmn.ability_id]
+    if pkmn.hasAbilityMutation?
+      if pkmn&.mega?
+        pkmn.makeUnmega
+        for i in pkmn.getAbilityList
+          abilist.push(i[0])
+        end 
+        pkmn.makeMega
+      end  
+      for i in pkmn.getAbilityList
+        abilist.push(i[0])
+      end
+    end
+    @abilityMutationList= abilist|[]
     # moves intentionally not copied across here
     @dummy        = true
   end
@@ -124,7 +139,9 @@ class Battle::Battler
       @effects[PBEffects::PowerTrick]        = false
       @effects[PBEffects::Substitute]        = 0
       @effects[PBEffects::Telekinesis]       = 0
-      @effects[PBEffects::HonorBound]        = false #by low
+      #by low
+      @effects[PBEffects::HonorBound]        = false
+      @effects[PBEffects::BoomInstalled]     = false
     end
 		GameData::Stat.each_battle { |stat| @stages[stat.id] = 0 }
     @fainted               = (@hp == 0)
@@ -288,6 +305,7 @@ class Battle::Battler
     @effects[PBEffects::MoodyMemory]     		 = -1
     @effects[PBEffects::PrioEchoChamber]     = -1
     @SetupMovesUsed             						 = []
+    @prepickedMove             						   = nil
   end
 
   #=============================================================================

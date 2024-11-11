@@ -1,3 +1,6 @@
+#Autoscroll
+#by Gardenette
+#modified version of Map Autoscroll Version 1.02 by Wachunga
 #===============================================================================
 # ** Map Autoscroll
 #-------------------------------------------------------------------------------
@@ -78,56 +81,63 @@ class Interpreter
   #     speed : (optional) scroll speed (from 1-6, default being 4)
   #-----------------------------------------------------------------------------
   def autoscroll(x, y, speed = SCROLL_SPEED_DEFAULT)
-    if $game_map.scrolling?
-      return false
-    elsif !$game_map.valid?(x, y)
-      print "Map Autoscroll: given x,y is invalid"
-      return command_skip
-    elsif !(1..6).include?(speed)
-      print "Map Autoscroll: invalid speed (1-6 only)"
-      return command_skip
-    end
-    center_x = ((Graphics.width / 2) - (Game_Map::TILE_WIDTH / 2)) * 4   # X coordinate in the center of the screen
-    center_y = ((Graphics.height / 2) - (Game_Map::TILE_HEIGHT / 2)) * 4   # Y coordinate in the center of the screen
-    max_x = ($game_map.width - (Graphics.width.to_f / Game_Map::TILE_WIDTH)) * 4 * Game_Map::TILE_WIDTH
-    max_y = ($game_map.height - (Graphics.height.to_f / Game_Map::TILE_HEIGHT)) * 4 * Game_Map::TILE_HEIGHT
-    count_x = ($game_map.display_x - [0, [(x * Game_Map::REAL_RES_X) - center_x, max_x].min].max) / Game_Map::REAL_RES_X
-    count_y = ($game_map.display_y - [0, [(y * Game_Map::REAL_RES_Y) - center_y, max_y].min].max) / Game_Map::REAL_RES_Y
-    if @diag
-      @diag = false
-      dir = nil
-      if count_x != 0 && count_y != 0
-        return false
-      elsif count_x > 0
-        dir = 4
-      elsif count_x < 0
-        dir = 6
-      elsif count_y > 0
-        dir = 8
-      elsif count_y < 0
-        dir = 2
-      end
-      count = count_x == 0 ? count_y.abs : count_x.abs
-    else
-      print "else statement is firing"
-      @diag = true
-      dir = nil
-      if count_x > 0
-        if count_y > 0
-          dir = 7
-        elsif count_y < 0
-          dir = 1
-        end
-      elsif count_x < 0
-        if count_y > 0
-          dir = 9
-        elsif count_y < 0
-          dir = 3
-        end
-      end
-      count = [count_x.abs, count_y.abs].min
-    end
-    $game_map.start_scroll(dir, count, speed) if dir
+	2.times do
+		if $game_map.scrolling?
+			return false
+		elsif !$game_map.valid?(x, y)
+		print "Map Autoscroll: given x,y is invalid"
+		return command_skip
+		elsif !(1..6).include?(speed)
+		print "Map Autoscroll: invalid speed (1-6 only)"
+		return command_skip
+		end
+		center_x = ((Graphics.width / 2) - (Game_Map::TILE_WIDTH / 2)) * 4   # X coordinate in the center of the screen
+		center_y = ((Graphics.height / 2) - (Game_Map::TILE_HEIGHT / 2)) * 4   # Y coordinate in the center of the screen
+		max_x = ($game_map.width - (Graphics.width.to_f / Game_Map::TILE_WIDTH)) * 4 * Game_Map::TILE_WIDTH
+		max_y = ($game_map.height - (Graphics.height.to_f / Game_Map::TILE_HEIGHT)) * 4 * Game_Map::TILE_HEIGHT
+		count_x = ($game_map.display_x - [0, [(x * Game_Map::REAL_RES_X) - center_x, max_x].min].max) / Game_Map::REAL_RES_X
+		count_y = ($game_map.display_y - [0, [(y * Game_Map::REAL_RES_Y) - center_y, max_y].min].max) / Game_Map::REAL_RES_Y
+		if @diag
+		@diag = false
+		dir = nil
+		if count_x != 0 && count_y != 0
+			return false
+		elsif count_x > 0
+			dir = 4
+		elsif count_x < 0
+			dir = 6
+		elsif count_y > 0
+			dir = 8
+		elsif count_y < 0
+			dir = 2
+		end
+		count = count_x == 0 ? count_y.abs : count_x.abs
+		else
+		@diag = true
+		dir = nil
+		if count_x > 0
+			if count_y > 0
+			dir = 7
+			elsif count_y < 0
+			dir = 1
+			end
+		elsif count_x < 0
+			if count_y > 0
+			dir = 9
+			elsif count_y < 0
+			dir = 3
+			end
+		end
+		count = [count_x.abs, count_y.abs].min
+		end
+		$game_map.start_scroll(dir, count, speed) if dir
+		#player will wait while scrolling
+		while $game_map.scrolling?
+			Graphics.update
+			$game_map.update
+			pbUpdateSceneMap
+		end
+	end #2.times do
     return !@diag
   end
 
@@ -188,4 +198,58 @@ class Game_Map
       @scroll_rest -= distance
     end
   end
+  
+  #added and edited by Gardenette
+  def update
+		# refresh maps if necessary
+		if $map_factory
+			$map_factory.maps.each do |i|
+				i.refresh if i.need_refresh
+			end
+			$map_factory.setCurrentMap
+		end
+		# If scrolling
+		if @scroll_rest > 0
+			distance = (1 << @scroll_speed) * 40.0 / Graphics.frame_rate
+			distance = @scroll_rest if distance > @scroll_rest
+			case @scroll_direction
+			#modified by Gardenette
+			when 1 then scroll_downleft(distance)
+			when 2 then scroll_down(distance)
+			when 3 then scroll_downright(distance)
+			when 4 then scroll_left(distance)
+			when 6 then scroll_right(distance)
+			when 7 then scroll_upleft(distance)
+			when 8 then scroll_up(distance)
+			when 9 then scroll_upright(distance)
+			end
+			@scroll_rest -= distance
+		end
+		# Only update events that are on-screen
+		@events.each_value do |event|
+			event.update
+		end
+		# Update common events
+		@common_events.each_value do |common_event|
+			common_event.update
+		end
+		# Update fog
+		@fog_ox -= @fog_sx / 8.0
+		@fog_oy -= @fog_sy / 8.0
+		if @fog_tone_duration >= 1
+			d = @fog_tone_duration
+			target = @fog_tone_target
+			@fog_tone.red   = ((@fog_tone.red * (d - 1)) + target.red) / d
+			@fog_tone.green = ((@fog_tone.green * (d - 1)) + target.green) / d
+			@fog_tone.blue  = ((@fog_tone.blue * (d - 1)) + target.blue) / d
+			@fog_tone.gray  = ((@fog_tone.gray * (d - 1)) + target.gray) / d
+			@fog_tone_duration -= 1
+		end
+		if @fog_opacity_duration >= 1
+			d = @fog_opacity_duration
+			@fog_opacity = ((@fog_opacity * (d - 1)) + @fog_opacity_target) / d
+			@fog_opacity_duration -= 1
+		end
+	end
+  
 end

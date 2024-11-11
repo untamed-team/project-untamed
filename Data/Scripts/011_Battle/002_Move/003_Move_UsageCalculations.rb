@@ -54,11 +54,11 @@ class Battle::Move
       if target.effectiveWeather == :StrongWinds && defType == :FLYING
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
-		elsif !Effectiveness.super_effective_type?(moveType, defType)
-			# Mass Extinction #by low
-			if user.hasActiveAbility?(:MASSEXTINCTION) && defType == :DRAGON
-				ret = Effectiveness::SUPER_EFFECTIVE_ONE
-			end
+    elsif !Effectiveness.super_effective_type?(moveType, defType)
+      # Mass Extinction #by low
+      if user.hasActiveAbility?(:MASSEXTINCTION) && defType == :DRAGON
+        ret = Effectiveness::SUPER_EFFECTIVE_ONE
+      end
     end
     # Grounded Flying-type Pokémon become susceptible to Ground moves
     if !target.airborne? && defType == :FLYING && moveType == :GROUND
@@ -91,20 +91,20 @@ class Battle::Move
     ret = 1
     typeMods.each { |m| ret *= m }
     ret *= 2 if target.effects[PBEffects::TarShot] && moveType == :FIRE
-		# Inverse Battle Switch #by low
-		# 8x = ret 64
-		# 4x = ret 32
-		if $game_switches[INVERSEBATTLESWITCH]
-			if ret == 0
-				ret = 16
-			elsif ret >= 64
-				ret = 0
-			else
-				ret = (64 / ret)
-			end
-		end
-		#~ print ret
-		ret = 14 if ret > 14 && !target.pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][28]==true
+    # Inverse Battle Switch #by low
+    # 8x = ret 64
+    # 4x = ret 32
+    if $game_switches[INVERSEBATTLESWITCH]
+      if ret == 0
+        ret = 16
+      elsif ret >= 64
+        ret = 0
+      else
+        ret = (64 / ret)
+      end
+    end
+    #~ print ret
+    ret = 14 if ret > 14 && !target.pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][28]==true
     return ret
   end
 
@@ -125,8 +125,8 @@ class Battle::Move
     modifiers[:base_accuracy]  = baseAcc
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
-		# acc and evasion murder / sleep moves acc buff #by low
-    if user.stages[:ACCURACY] < 0
+    # acc and evasion murder / sleep moves acc buff #by low
+    if modifiers[:accuracy_stage] < 0
       case $game_variables[MECHANICSVAR]
       when 2, 3
         modifiers[:accuracy_stage] = 0
@@ -140,6 +140,8 @@ class Battle::Move
     modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers)
+    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], 1.0].max if !user.hasActiveAbility?(:HUSTLE)
+    modifiers[:evasion_multiplier]  = [modifiers[:evasion_multiplier], 1.0].min
     # Check if move can't miss
     return true if modifiers[:base_accuracy] == 0
     # Calculation
@@ -214,47 +216,7 @@ class Battle::Move
 
   # Returns whether the move will be a critical hit.
   def pbIsCritical?(user, target)
-    return false if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
-    # Set up the critical hit ratios
-    ratios = (Settings::NEW_CRITICAL_HIT_RATE_MECHANICS) ? [24, 8, 2, 1] : [16, 8, 4, 3, 2]
-    c = 0
-    # Ability effects that alter critical hit rate
-    if c >= 0 && user.abilityActive?
-      c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
-    end
-    if c >= 0 && target.abilityActive? && !@battle.moldBreaker
-      c = Battle::AbilityEffects.triggerCriticalCalcFromTarget(target.ability, user, target, c)
-    end
-    # Item effects that alter critical hit rate
-    if c >= 0 && user.itemActive?
-      c = Battle::ItemEffects.triggerCriticalCalcFromUser(user.item, user, target, c)
-    end
-    if c >= 0 && target.itemActive?
-      c = Battle::ItemEffects.triggerCriticalCalcFromTarget(target.item, user, target, c)
-    end
-    return false if c < 0
-    # Move-specific "always/never a critical hit" effects
-    case pbCritialOverride(user, target)
-    when 1  then return true
-    when -1 then return false
-    end
-    # Other effects
-    return true if c > 50   # Merciless
-    return true if user.effects[PBEffects::LaserFocus] > 0
-    c += 1 if highCriticalRate?
-    c += user.effects[PBEffects::FocusEnergy]
-    c += 1 if user.inHyperMode? && @type == :SHADOW
-    c = ratios.length - 1 if c >= ratios.length
-    # Calculation
-    return true if ratios[c] == 1
-    r = @battle.pbRandom(ratios[c])
-    return true if r == 0
-    if r == 1 && Settings::AFFECTION_EFFECTS && @battle.internalBattle &&
-       user.pbOwnedByPlayer? && user.affection_level == 5 && !target.mega?
-      target.damageState.affection_critical = true
-      return true
-    end
-    return false
+    # low_utilities.rb
   end
 
   #=============================================================================
@@ -265,10 +227,9 @@ class Battle::Move
   def pbModifyDamage(damageMult, user, target);         return damageMult; end
 
   def pbGetAttackStats(user, target)
-		if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
-			return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
-			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
-		end
+    if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
+      return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
+    end
     if specialMove?
       return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
     end
@@ -316,6 +277,11 @@ class Battle::Move
       :final_damage_multiplier => 1.0
     }
     pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
+    # Golden Camera calculation
+    if $PokemonGlobal.goldencamera
+      atk *= 0.8 if user.pbOwnedByPlayer?
+      defense *= 0.8 if target.pbOwnedByPlayer?
+    end
     # Main damage calculation
     baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
     atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max
@@ -394,10 +360,10 @@ class Battle::Move
     if user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
       multipliers[:base_damage_multiplier] *= 2
     end
-		#by low
+    #by low
     if user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
       multipliers[:base_damage_multiplier] *= 1.5
-			#~ @battle.pbDisplay(_INTL(":TakoMan:"))
+      #~ @battle.pbDisplay(_INTL(":TakoMan:"))
     end
     # Mud Sport
     if type == :ELECTRIC
@@ -418,14 +384,14 @@ class Battle::Move
       end
     end
     # Terrain moves
-		# abilityTerrain #by low
-		if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
-			t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
-			t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
-		else
-			t_damage_multiplier = 1.3
-			t_damage_divider    = 2
-		end
+    # abilityTerrain #by low
+    if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+      t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
+      t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
+    else
+      t_damage_multiplier = 1.3
+      t_damage_divider    = 2
+    end
     case @battle.field.terrain
     when :Electric
       multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
@@ -436,21 +402,21 @@ class Battle::Move
     when :Misty
       multipliers[:base_damage_multiplier] /= t_damage_divider if type == :DRAGON && target.affectedByTerrain?
     end
-		#mastersex type zones #by low
-		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
+    #mastersex type zones #by low
+    multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
     # Multi-targeting attacks
     # Splinter Shot #by low
     if numTargets > 1 && @function != "HitTwoTimesReload"
       multipliers[:final_damage_multiplier] *= 0.75
     end
-		# abilityWeather #by low
-		if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
-			w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
-			w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
-		else
-			w_damage_multiplier = 1.5
-			w_damage_divider    = 2
-		end
+    # abilityWeather #by low
+    if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+      w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
+      w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
+    else
+      w_damage_multiplier = 1.5
+      w_damage_divider    = 2
+    end
     # Weather
     case user.effectiveWeather
     when :Sun, :HarshSun
@@ -471,20 +437,20 @@ class Battle::Move
       if target.pbHasType?(:ROCK) && specialMove? && @function != "UseTargetDefenseInsteadOfTargetSpDef"
         multipliers[:defense_multiplier] *= 1.5
       end
-		when :Hail # hail buff #by low
-			if target.pbHasType?(:ICE) && Effectiveness.super_effective?(target.damageState.typeMod)
-				multipliers[:final_damage_multiplier] *= 0.75
-			end
+    when :Hail # hail buff #by low
+      if target.pbHasType?(:ICE) && Effectiveness.super_effective?(target.damageState.typeMod)
+        multipliers[:final_damage_multiplier] *= 0.75
+      end
     end
-		# Master Mode stuff #by low
-		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
-			multipliers[:final_damage_multiplier] *= 0.75
-		end
-		# Gravity Boost #by low 
+    # Master Mode stuff #by low
+    if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+      multipliers[:final_damage_multiplier] *= 0.75
+    end
+    # Gravity Boost #by low 
     # float stone changes
-		if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
-			multipliers[:base_damage_multiplier] *= 4 / 3.0
-		end
+    if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
+      multipliers[:base_damage_multiplier] *= 4 / 3.0
+    end
     # Critical hits
     if target.damageState.critical
       if Settings::NEW_CRITICAL_HIT_RATE_MECHANICS && !$game_switches[OLDSCHOOLBATTLE]
@@ -502,16 +468,16 @@ class Battle::Move
       end
     end
     # Type effectiveness
-		#~ print "#{multipliers[:final_damage_multiplier]} *= #{target.damageState.typeMod.to_f} / #{Effectiveness::NORMAL_EFFECTIVE}"
+    #~ print "#{multipliers[:final_damage_multiplier]} *= #{target.damageState.typeMod.to_f} / #{Effectiveness::NORMAL_EFFECTIVE}"
     multipliers[:final_damage_multiplier] *= target.damageState.typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
-		damagenerf = 0.5
-		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
+    damagenerf = 0.5
+    damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
     # Burn
     if user.status == :BURN && physicalMove? && damageReducedByBurn? &&
        !user.hasActiveAbility?(:GUTS)
       multipliers[:final_damage_multiplier] *= damagenerf
     end
-		# Frostbite #by low
+    # Frostbite #by low
     if user.status == :FROZEN && specialMove? && damageReducedByBurn?
       multipliers[:final_damage_multiplier] *= damagenerf
     end
@@ -519,7 +485,7 @@ class Battle::Move
     if !ignoresReflect? && !target.damageState.critical &&
        !user.hasActiveAbility?(:INFILTRATOR)
       if target.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
-				multipliers[:final_damage_multiplier] *= 4 / 5.0
+        multipliers[:final_damage_multiplier] *= 4 / 5.0
       end
       if target.pbOwnSide.effects[PBEffects::Reflect] > 0 && physicalMove?
         if @battle.pbSideBattlerCount(target) > 1
@@ -550,7 +516,7 @@ class Battle::Move
   #=============================================================================
   def pbAdditionalEffectChance(user, target, effectChance = 0)
     return 0 if target.hasActiveAbility?(:SHIELDDUST) && !@battle.moldBreaker
-		return 0 if @battle.futureSight #by low
+    return 0 if @battle.futureSight #by low
     ret = (effectChance > 0) ? effectChance : @addlEffect
     if (Settings::MECHANICS_GENERATION >= 6 || @function != "EffectDependsOnEnvironment") &&
        (user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow] > 0)

@@ -237,7 +237,11 @@ class Battle::Scene
 	  "UserFaintsPowersUpInMistyTerrainExplosive", # Misty Explosion
 	  "ThrowUserItemAtTarget",                     # Fling
 	  "HitsAllFoesAndPowersUpInPsychicTerrain",    # Expanding Force
-	  "PowerDependsOnUserStockpile"                # Spit Up
+	  "PowerDependsOnUserStockpile",                # Spit Up
+    "PeperSpray",
+    "HigherDamageInSunVSNonFireTypes",
+    "DoubleDamageIfTargetHasChoiceItem",
+    "HigherDamageInRain"
 	]
   end
   
@@ -985,6 +989,7 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
+    effects.push(["Virus Inject", "---"]) if battler.effects[PBEffects::BoomInstalled]
     # Draws panels and text for all relevant battle effects affecting the battler.
     effects.each_with_index do |effect, i|
       break if i == 8

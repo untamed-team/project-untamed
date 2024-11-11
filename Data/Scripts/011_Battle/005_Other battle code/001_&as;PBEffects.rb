@@ -128,6 +128,7 @@ module PBEffects
   RemaningHPBars     	= 122
   HonorBound          = 123
   PrioEchoChamber     = 124
+  BoomInstalled       = 125
 
   #=============================================================================
   # These effects apply to a battler position

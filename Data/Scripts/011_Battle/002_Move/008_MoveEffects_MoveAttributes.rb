@@ -206,6 +206,7 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [(user.happiness * 2 / 5).floor, 1].max
   end
 end
@@ -215,6 +216,7 @@ end
 #===============================================================================
 class Battle::Move::PowerLowerWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [((255 - user.happiness) * 2 / 5).floor, 1].max
   end
 end
@@ -355,7 +357,7 @@ class Battle::Move::PowerHigherWithConsecutiveUseOnUserSide < Battle::Move
     if !user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed]
       user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] = (oldVal >= 5) ? 5 : oldVal + 1
     end
-    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true
+    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true if user.pbOwnedByPlayer?
   end
 
   def pbBaseDamage(baseDmg, user, target)

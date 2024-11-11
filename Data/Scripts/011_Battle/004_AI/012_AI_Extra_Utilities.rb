@@ -36,19 +36,20 @@ class Battle::AI
 		# Fixed damage moves
 		return baseDmg if move.is_a?(Battle::Move::FixedDamageMove)
 		# Get the move's type
-    	type = pbRoughType(move, user, skill)
+		type = pbRoughType(move, user, skill)
 		typeMod = pbCalcTypeMod(type,user,target)
 		##### Calculate user's attack stat #####
+		# shellysidearm isnt being calc'd correctly, but i dont really care desu
 		atk = pbRoughStat(user, :ATTACK, skill)
 		if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
 			atk = pbRoughStat(target, :ATTACK, skill)
 		elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
 			atk = pbRoughStat(user, :DEFENSE, skill)
+		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
+			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
 			   "CategoryDependsOnHigherDamagePoisonTarget"].include?(move.function) # Photon Geyser, Shell Side Arm
 			atk = [pbRoughStat(user, :ATTACK, skill), pbRoughStat(user, :SPECIAL_ATTACK, skill)].max
-		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
-			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
 			userStats = user.plainStats
 			highestStatValue = higheststat = 0
@@ -70,10 +71,12 @@ class Battle::AI
 			atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
 		end
 		# taking in account intimidate from mons with AAM
-		user.allOpposing.each do |b|
-			if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
-			   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
-				atk *= (atk.to_f * 2 / 3) 
+		if !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
+			user.allOpposing.each do |b|
+				if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
+				   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
+					atk *= 2 / 3.0
+				end
 			end
 		end
 		##### Calculate target's defense stat #####
@@ -104,7 +107,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
-			abilityBlacklist = [:ANALYTIC, :SNIPER]#, :TINTEDLENS, :AERILATE, :PIXILATE, :REFRIGERATE]
+			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
 			canCheck = true
 			abilityBlacklist.each do |m|
 				# Really? comparing a move id with an ability id? This blacklisting never worked.
@@ -149,7 +152,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.bestSkill && !moldBreaker && target.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
-			abilityBlacklist = [:FILTER,:SOLIDROCK]
+			abilityBlacklist = [:FILTER,:SOLIDROCK,:PRISMARMOR]
 			canCheck = true
 			abilityBlacklist.each do |m|
 				next if target.ability != m 
@@ -191,7 +194,7 @@ class Battle::AI
 				user.effects[PBEffects::GemConsumed] = nil   # Untrigger consuming of Gems
 			end
 		end
-		if skill >= PBTrainerAI.bestSkill &&							# DemICE: I now have high suspicions that the chilan berry thing doesn't work.
+		if skill >= PBTrainerAI.bestSkill &&                           # DemICE: I now have high suspicions that the chilan berry thing doesn't work.
 			target.itemActive? && target.item && !target.item.is_berry?# && target.item_id!=:CHILANBERRY)
 			Battle::ItemEffects.triggerDamageCalcFromTarget(
 				target.item, user, target, move, multipliers, baseDmg, type
@@ -213,12 +216,19 @@ class Battle::AI
 			multipliers[:base_damage_multiplier] *= 1.25
 		end
 		# Me First
-		# TODO
+		if user.effects[PBEffects::MeFirst]
+			multipliers[:base_damage_multiplier] *= 1.5
+		end
 		# Helping Hand - n/a
 		# Charge
 		if skill >= PBTrainerAI.mediumSkill &&
 			 user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
 			multipliers[:base_damage_multiplier] *= 2
+		end
+		# Zealous Dance
+		if skill >= PBTrainerAI.mediumSkill &&
+			 user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
+			multipliers[:base_damage_multiplier] *= 1.5
 		end
 		# Mud Sport and Water Sport
 		if skill >= PBTrainerAI.mediumSkill
@@ -241,11 +251,12 @@ class Battle::AI
 		end
 		# DemICE adding resist berries ### i made it a hash cuz i was bored
 		if Effectiveness.super_effective?(typeMod)
-			if user.hasActiveItem?(:EXPERTBELT)
-				multipliers[:final_damage_multiplier]*=1.2
-			end
+			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
+			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
+			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
+			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
 			if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
-				multipliers[:final_damage_multiplier]*=0.75
+				multipliers[:final_damage_multiplier] *= 0.75
 			end
 			berryTypesArray = {
 				:OCCABERRY   => :FIRE,
@@ -268,6 +279,8 @@ class Battle::AI
 			}
 			berry_type = berryTypesArray[target.item_id]
 			multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
+		elsif Effectiveness.resistant?(typeMod)
+			multipliers[:final_damage_multiplier] *= 2.0 if user.hasActiveAbility?(:TINTEDLENS)
 		end
 		# Terrain moves
 		if skill >= PBTrainerAI.mediumSkill
@@ -288,7 +301,7 @@ class Battle::AI
 				when :Psychic
 					multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
 				when :Misty
-					multipliers[:base_damage_multiplier] /= t_damage_divider 	if type == :DRAGON && target.affectedByTerrain?
+					multipliers[:base_damage_multiplier] /= t_damage_divider    if type == :DRAGON && target.affectedByTerrain?
 				end
 			else	
 				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
@@ -303,24 +316,16 @@ class Battle::AI
 				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS    && globalArray.include?("grassy terrain") && user.affectedByTerrain?
 				multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC  && globalArray.include?("psychic terrain") && user.affectedByTerrain?
 			end
-			# Specific Field Effect Boosts
-			if ((@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
-			     globalArray.include?("grassy terrain")) && 
-				[:EARTHQUAKE, :MAGNITUDE, :BULLDOZE].include?(move.id)
-				multipliers[:base_damage_multiplier] /= 2.0
-			end
 		end
 		#mastersex type zones #by low
 		multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
 		# Multi-targeting attacks
 		# Splinter Shot #by low
-		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) &&
-		   move.function != "HitTwoTimesReload"
+		if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) && move.function != "HitTwoTimesReload"
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Weather
 		if skill >= PBTrainerAI.mediumSkill
-			# specific weather checks #by low
 			if globalArray.none? { |element| element.include?("weather") }
 				# abilityWeather #by low
 				if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
@@ -351,7 +356,7 @@ class Battle::AI
 						multipliers[:defense_multiplier] *= 1.5
 					end
 				when :Hail # hail buff #by low
-					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(typeMod)
 						multipliers[:final_damage_multiplier] *= 0.75
 					end
 				end
@@ -392,14 +397,14 @@ class Battle::AI
 					end
 				end
 				if globalArray.include?("hail weather")
-					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(target.damageState.typeMod)
+					if target.pbHasType?(:ICE, true) && Effectiveness.super_effective?(typeMod)
 						multipliers[:final_damage_multiplier] *= 0.75
 					end
 				end
 			end
 		end
 		# Master Mode stuff #by low
-		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(typeMod)
 			multipliers[:final_damage_multiplier] *= 0.75
 		end
 		# Gravity Boost #by low 
@@ -409,13 +414,13 @@ class Battle::AI
 		end
 		# Critical hits - n/a
 		# Random variance - n/a
-		#~ if $Trainer.difficulty_mode==2
-			#~ if user.pbOwnedByPlayer? # Changed by DemICE 27-Sep-2023 Unfair difficulty
-				#~ multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
-			#~ else
-				#~ multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
-			#~ end
-		#~ end
+		#if $Trainer.difficulty_mode==2
+			#if user.pbOwnedByPlayer? # Changed by DemICE 27-Sep-2023 Unfair difficulty
+				#multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
+			#else
+				#multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
+			#end
+		#end
 		# STAB
 		if skill >= PBTrainerAI.mediumSkill && type && user.pbHasType?(type, true)
 			if user.hasActiveAbility?(:ADAPTABILITY)
@@ -426,8 +431,8 @@ class Battle::AI
 		end
 		# Type effectiveness
 		if skill >= PBTrainerAI.mediumSkill
-			typemod = pbCalcTypeMod(type, user, target)
-			multipliers[:final_damage_multiplier] *= typemod.to_f / Effectiveness::NORMAL_EFFECTIVE
+			#typemod = pbCalcTypeMod(type, user, target) # why are you calculating it again?
+			multipliers[:final_damage_multiplier] *= typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
 		end
 		damagenerf = (1 / 2.0)
 		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
@@ -467,6 +472,11 @@ class Battle::AI
 		# TODO
 		# Move-specific final damage modifiers
 		# TODO
+		# Golden Camera calculation
+		if $PokemonGlobal.goldencamera
+			atk *= 0.8 if user.pbOwnedByPlayer?
+			defense *= 0.8 if target.pbOwnedByPlayer?
+		end
 		##### Main damage calculation #####
 		baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
 		atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max
@@ -483,51 +493,50 @@ class Battle::AI
 			if c >= 0 && user.abilityActive?
 				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
 			end
-			if skill >= PBTrainerAI.bestSkill && c >= 0 && !moldBreaker && target.abilityActive?
+			if c >= 0 && target.abilityActive? && !moldBreaker
 				c = Battle::AbilityEffects.triggerCriticalCalcFromTarget(target.ability, user, target, c)
 			end
 			# Item effects that alter critical hit rate
 			if c >= 0 && user.itemActive?
 				c = Battle::ItemEffects.triggerCriticalCalcFromUser(user.item, user, target, c)
 			end
-			if skill >= PBTrainerAI.bestSkill && c >= 0 && target.itemActive?
+			if c >= 0 && target.itemActive?
 				c = Battle::ItemEffects.triggerCriticalCalcFromTarget(target.item, user, target, c)
 			end
 			if c >= 0
 				c += 1 if move.highCriticalRate?
 				c += user.effects[PBEffects::FocusEnergy]
 				c += 1 if user.inHyperMode? && move.type == :SHADOW
+				c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				# DemICE: taking into account 100% crit rate.
-				# check might be redundant since c is set to -1 if the target has this abilities but w/e
-				if !target.hasActiveAbility?([:SHELLARMOR, :BATTLEARMOR],false,moldBreaker)
-					stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-					stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
-					vatk, atkStage = move.pbGetAttackStats(user,target)
-					vdef, defStage = move.pbGetDefenseStats(user,target)
-					atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
-					defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
+				stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
+				stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+				vatk, atkStage = move.pbGetAttackStats(user,target)
+				vdef, defStage = move.pbGetDefenseStats(user,target)
+				atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
+				defmult = 1.0*stageMul[defStage]/stageDiv[defStage]
+				if c >= 3
+					damage = 0.96*damage/atkmult if atkmult<1
+					damage = damage*defmult if defmult>1
+				end
+				if c >= 1
+					c = 4 if c > 4
 					if c >= 3
-						damage = 0.96*damage/atkmult if atkmult<1
-						damage = damage*defmult if defmult>1
-					end	
-					if c >= 1
-						c = 4 if c > 4
-						if c >= 3
-							damage*=1.5
-							damage*=1.5 if user.hasActiveAbility?(:SNIPER)
-						else
-							damage += damage*0.1*c
-						end	
+						damage*=1.5
+						damage*=1.5 if user.hasActiveAbility?(:SNIPER)
+					else
+						damage += damage*0.1*c
 					end
 				end
 			end
 		end
+		damage *= (5.0 / 4.0) if target.effects[PBEffects::BoomInstalled]
 		return damage.floor
 	end
 	
-	def moldbroken(user, target, move = :SPLASH)
-		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY])
-		return false if target.hasActiveAbility?(:SHADOWSHIELD)
+	def moldbroken(user, target, move)
+		#return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY, :PRISMARMOR])
+		return false if target.hasActiveAbility?([:SHADOWSHIELD, :PRISMARMOR])
 		if (user.hasMoldBreaker? || 
 			["IgnoreTargetAbility",
 			 "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
@@ -537,7 +546,7 @@ class Battle::AI
 		   (user.isSpecies?(:LUPACABRA) && (user.item == :LUPACABRITE || user.hasMegaEvoMutation?) && user.pokemon.willmega)
 			return true
 		end
-		return false	
+		return false
 	end
 	
 	def pbCheckMoveImmunity(score, move, user, target, skill)
@@ -554,6 +563,10 @@ class Battle::AI
 			if !hasThisMove || !hasOtherMoves || hasUnusedMoves
 				return true
 			end 
+		elsif move.function == "FailsIfTargetHasNoItem"
+			if !target.item || !target.itemActive?
+				return true
+			end
 		end
 		
 		type = pbRoughType(move,user,skill)
@@ -619,14 +632,15 @@ class Battle::AI
 		damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
 		damage+=priodamage
 		damage*=mult
-		if !mold_broken && opponent.hasActiveAbility?(:DISGUISE) && opponent.form==0	
-			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-				 "HitTwoTimesTargetThenTargetAlly",
-				 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-				 "HitThreeTimesPowersUpWithEachHit",
-				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
-			 	 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+		multiarray = ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
+					  "HitTwoTimesTargetThenTargetAlly",
+					  "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
+					  "HitThreeTimesPowersUpWithEachHit",
+					  "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+					  "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
+					  "HitThreeTimesAlwaysCriticalHit"]
+		if opponent.hasActiveAbility?(:DISGUISE,false,mold_broken) && opponent.form==0	
+			if multiarray.include?(move.function)
 				damage*=0.6
 			else
 				damage=1
@@ -634,14 +648,8 @@ class Battle::AI
 		end			
 		return true if damage < opponent.hp
 		return false if priodamage>0
-		if (opponent.hasActiveItem?(:FOCUSSASH) || (!mold_broken && opponent.hasActiveAbility?(:STURDY))) && opponent.hp==opponent.totalhp
-			return false if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-							 "HitTwoTimesTargetThenTargetAlly",
-							 "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-							 "HitThreeTimesPowersUpWithEachHit",
-							 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
-							 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-							 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+		if (opponent.hasActiveItem?(:FOCUSSASH) || opponent.hasActiveAbility?(:STURDY,false,mold_broken)) && opponent.hp==opponent.totalhp
+			return false if multiarray.include?(move.function)
 			return true
 		end	
 		return false
@@ -650,19 +658,20 @@ class Battle::AI
 	def canSleepTarget(attacker,opponent,globalArray,berry=false)
 		return false if opponent.effects[PBEffects::Substitute]>0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		return false if berry && (opponent.status==:SLEEP)# && opponent.statusCount>1)
-		return false if (opponent.hasActiveItem?(:LUMBERRY) || opponent.hasActiveItem?(:CHESTOBERRY)) && berry
+		return false if opponent.hasActiveItem?([:LUMBERRY, :CHESTOBERRY]) && berry
 		return false if opponent.pbOwnSide.effects[PBEffects::Safeguard] > 0 && !attacker.hasActiveAbility?(:INFILTRATOR)
 		if opponent.affectedByTerrain?
 			return false if globalArray.any? { |j| ["electric terrain", "misty terrain"].include?(j) }
 			return false if (@battle.field.terrain == :Electric || @battle.field.terrain == :Misty)
 		end
-		return false if opponent.pbCanSleep?(attacker,false)
+		return false if !opponent.pbCanSleep?(attacker,false)
 		for move in attacker.moves
 			if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function)
 				return false if move.powderMove? && opponent.pbHasType?(:GRASS, true)
 				return true	
 			end	
 		end
+		return true if $AIMASTERLOG
 		return false
 	end
 
@@ -683,6 +692,7 @@ class Battle::AI
 			end
 		end
 		return true if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+		return true if $AIMASTERLOG
 		return false
 	end
 	
@@ -850,7 +860,7 @@ class Battle::AI
 		turncount = user.turnCount
 		turncount = 0 if switchin
 		pri = move.priority
-		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2) && move.type==:FLYING
+		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
 		pri +=1 if move.baseDamage==0 && user.hasActiveAbility?(:PRANKSTER) 
 		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
@@ -860,63 +870,78 @@ class Battle::AI
 	end
 	
 	def EndofTurnHPChanges(user,target,heal,chips,both,switching=false,rest=false)
-		#### Azery: function below sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
-		### the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
-		### thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
+		# sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
+		# the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
+		# thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
 		healing = 1  
 		chip = 0
-		oppitemworks = target.itemActive?
-		attitemworks = user.itemActive?
-		skill=100
-		if (user.effects[PBEffects::AquaRing])==true
-			subscore = 0
-			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
-			healing += subscore
-		end
-		if user.effects[PBEffects::Ingrain]
-			subscore = 0
-			subscore *= 1.3 if attitemworks && user.item == :BIGROOT
-			healing += subscore
-		end
-		healing += 0.0625 if user.hasWorkingAbility(:DRYSKIN) &&  @battle.pbWeather==:Rain
-		healing += 0.0625 if attitemworks && (user.item == :LEFTOVERS || (user.item == :BLACKSLUDGE && user.pbHasType?(:POISON, true)))
-		healing += 0.0625 if user.hasWorkingAbility(:RAINDISH) && @battle.pbWeather==:Rain
-		healing += 0.0625 if user.hasWorkingAbility(:ICEBODY) && @battle.pbWeather==:Hail
-		healing += 0.125 if user.status == :POISON && user.hasWorkingAbility(:POISONHEAL)
-		healing += 0.125 if (target.effects[PBEffects::LeechSeed]>-1 && !target.hasWorkingAbility(:LIQUIDOOZE))
-		healing*=0 if user.effects[PBEffects::HealBlock]>0
-		healing*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
-		return healing if heal
-		if !(user.hasWorkingAbility(:MAGICGUARD)) 
-			if !(attitemworks && user.item == :SAFETYGOGGLES) || !(user.hasWorkingAbility(:OVERCOAT)) 
-				weatherchip = 0
-				weatherchip += 0.0625 if @battle.pbWeather==:Sun && (user.hasWorkingAbility(:DRYSKIN))
-				if @battle.pbWeather==:Sandstorm && !(user.pbHasType?(:ROCK, true) || user.pbHasType?(:STEEL, true) || user.pbHasType?(:GROUND, true)) && 
-					!(user.hasWorkingAbility(:SANDVEIL) || user.hasWorkingAbility([:SANDFORCE, :DUSTSENTINEL]) || user.hasWorkingAbility(:SANDRUSH))
-					weatherchip += 0.0625
-				end	
-				if @battle.pbWeather==:Hail && !(user.pbHasType?(:ICE, true)) && 
-					!(user.hasWorkingAbility(:ICEBODY) || user.hasWorkingAbility(:SNOWCLOAK) || user.hasWorkingAbility(:SLUSHRUSH))
-					weatherchip += 0.0625
-				end	 
-				chip += weatherchip
+		if user.effects[PBEffects::HealBlock] > 0
+			healing = 0
+		else
+			if user.effects[PBEffects::AquaRing]
+				subscore = 0.0625
+				subscore *= 1.3 if user.itemActive? && [:BIGROOT, :COLOGNECASE].include?(user.item)
+				healing += subscore
 			end
+			if user.effects[PBEffects::Ingrain]
+				subscore = 0.0625
+				subscore *= 1.3 if user.itemActive? && [:BIGROOT, :COLOGNECASE].include?(user.item)
+				healing += subscore
+			end
+			healing += 0.0625 if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
+			healing += 0.0625 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(user.effectiveWeather)
+			healing += 0.0625 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
+			healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)
+			healing += 0.125 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
+			healing *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+		end
+		return healing if heal
+		if user.takesIndirectDamage?
+			weatherchip = 0
+			weatherchip += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather) && user.hasActiveAbility?(:DRYSKIN)
+			weatherchip += 0.0625 if user.effectiveWeather == :Sandstorm && user.takesSandstormDamage?
+			weatherchip += 0.0625 if user.effectiveWeather == :Hail && user.takesHailDamage?
+			chip += weatherchip
 			if user.effects[PBEffects::Trapping]>0
 				multiturnchip = 0.125 
-				multiturnchip *= 1.3333 if (target.item == :BINDINGBAND)
+				multiturnchip *= (4.0 / 3.0) if @battlers[battler.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
 				chip+=multiturnchip
 			end
-			chip += 0.125 if (user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasWorkingAbility(:LIQUIDOOZE))) 
-			chip += 0.25  if (user.effects[PBEffects::Curse]) 
-			if user.status!=:NONE && !rest
+			chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
+			chip += 0.25  if user.effects[PBEffects::Curse]
+			if user.pbHasAnyStatus? && !rest
 				statuschip = 0
-				statuschip += 0.0625 if user.status==:BURN 
-				statuschip += 0.125 if ((user.status==:POISON &&  (user.hasWorkingAbility(:POISONHEAL) || !(user.hasWorkingAbility(:POISONHEAL))) && (user.effects[PBEffects::Toxic]==0))) || (user.status == :SLEEP && target.hasWorkingAbility(:BADDREAMS)) 
-				statuschip += (0.0625*user.effects[PBEffects::Toxic]) if user.effects[PBEffects::Toxic]!=0 && !(user.hasWorkingAbility(:POISONHEAL)) 
+				if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)
+					subscore = 0.0625
+					subscore /= 2 if user.hasActiveAbility?(:HEATPROOF)
+					statuschip += subscore
+				end
+				if user.frozen?
+					subscore = 0.0625
+					subscore /= 2 if user.hasActiveAbility?(:THICKFAT)
+					statuschip += subscore
+				end
+				if user.asleep?
+					user.allOpposing.each do |b|
+						statuschip += 0.125 if b.hasActiveAbility?(:BADDREAMS)
+						break
+					end
+				end
+				if user.poisoned? && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST])
+					if $game_variables[MECHANICSVAR] >= 2 || user.effects[PBEffects::Toxic]==0 
+						statuschip += 0.125
+						statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $game_variables[MECHANICSVAR] >= 2
+					else
+						statuschip += (0.0625*user.effects[PBEffects::Toxic])
+					end
+				end
 				chip+=statuschip
 			end
+			chip*=2 if @battle.pbCheckGlobalAbility(:STALL)
+			chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]
 		end
-		chip*=2 if user.hasWorkingAbility(:STALL) || target.hasWorkingAbility(:STALL)
 		return chip if chips
 		diff=(healing-chip)
 		return diff if both
