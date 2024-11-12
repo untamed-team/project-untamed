@@ -93,3 +93,11 @@ Corn,5
     75,ZEAZAYA,5
     20,WRENNER,3,5
     5,PACUNA,2,4
+#-------------------------------
+[106] # Butterfly Sanctuary Entrance
+Land,15
+    35,M_BURMY,8,10
+    10,BURBRAWL,6,8
+    40,SCATTERBUG,6,9
+    20,MOLLUCOTTA,5
+    15,SPEWPA,7,9
