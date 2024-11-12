@@ -359,14 +359,14 @@ Pokemon = PACUNA,8
     Nature = JOLLY
 #-------------------------------
 [LEADER_Mercedes, Mercedes]
-LoseText = Lose text
+LoseText = ...
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
     Ace = yes
 #-------------------------------
 [LEADER_Mercedes, Mercedes,100]
-LoseText = Lose text
+LoseText = Hot dang, you really are a menace, hahahaha!
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
     AbilityIndex = 1
