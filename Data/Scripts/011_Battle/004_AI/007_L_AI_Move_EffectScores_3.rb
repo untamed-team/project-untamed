@@ -4854,7 +4854,7 @@ class Battle::AI
 				"TwoTurnAttackOneTurnInSun", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackRaiseUserSpAtkSpDefSpd2",
 				"UseLastMoveUsed", "UseLastMoveUsedByTarget", "UseMoveDependingOnEnvironment", "UseMoveTargetIsAboutToUse",
 				"UseRandomMove", "UseRandomMoveFromUserParty", "UseRandomUserMoveIfAsleep", "UserEnduresFaintingThisTurn",
-				"UserTakesTargetItem", "UserTargetSwapItems"
+				"UserTakesTargetItem", "UserTargetSwapItems", "ProtectUserFromDamagingMovesObstruct"
 			]
 			assistMoves = []
 			@battle.pbParty(user.index).each_with_index do |pkmn, i|
@@ -4863,18 +4863,22 @@ class Battle::AI
 			  pkmn.moves.each do |move|
 				next if moveBlacklist.include?(move.function_code)
 				next if move.type == :SHADOW
+				next if user.SetupMovesUsed.include?(move.id)
+				assMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move.id))
+				assiBD = pbMoveBaseDamage(assMov, user, target, skill)
+				assiRD = pbRoughDamage(assMov, user, target, skill, assiBD)
+				next if assiRD <= 1 && assMov.damagingMove?
 				assistMoves.push(move.id)
 			  end
 			end
-			# testing is needed ( it was a failure (T-T)7 )
 			if assistMoves.length >= 0
-			#	newmove = assistMoves[@battle.pbRandom(assistMoves.length)]
-			#	if newmove
-			#		newdata = Pokemon::Move.new(newmove)
-			#		naturemove = Battle::Move.from_pokemon_move(@battle, newdata)
-			#		echo("\n~~~~Assist Move will be #{newdata.name.to_s}") if $AIGENERALLOG
-			#		score = pbGetMoveScore(naturemove, user, target, skill)
-			#	end
+				newmove = assistMoves[@battle.pbRandom(assistMoves.length)]
+				if newmove
+					assmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
+					user.prepickedMove = newmove
+					echo("\n~~~~Assist Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+					score = pbGetMoveScore(assmove, user, target, skill)
+				end
 			else
 				score=0
 			end
@@ -4887,7 +4891,42 @@ class Battle::AI
 			if user.statusCount <= 1
 				score = 0
 			else
-				score *= 2
+				moveBlacklist = [
+					"MultiTurnAttackPreventSleeping", "MultiTurnAttackBideThenReturnDoubleDamage", "Struggle", 
+					"FailsIfUserNotConsumedBerry", "ReplaceMoveThisBattleWithTargetLastMoveUsed", 
+					"ReplaceMoveWithTargetLastMoveUsed", "UseLastMoveUsedByTarget", "UseLastMoveUsed", 
+					"UseMoveTargetIsAboutToUse", "UseMoveDependingOnEnvironment", "UseRandomUserMoveIfAsleep", 
+					"UseRandomMoveFromUserParty", "UseRandomMove", "TwoTurnAttack", "TwoTurnAttackOneTurnInSun", 
+					"TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", "TwoTurnAttackFlinchTarget", 
+					"TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttackInvulnerableInSky", 
+					"TwoTurnAttackInvulnerableUnderground", "TwoTurnAttackInvulnerableUnderwater", 
+					"TwoTurnAttackInvulnerableInSkyParalyzeTarget", "TwoTurnAttackInvulnerableRemoveProtections", 
+					"TwoTurnAttackInvulnerableInSkyTargetCannotAct", "AllBattlersLoseHalfHPUserSkipsNextTurn", 
+					"TwoTurnAttackRaiseUserSpAtkSpDefSpd2", "FailsIfUserDamagedThisTurn", 
+					"UsedAfterUserTakesPhysicalDamage", "BurnAttackerBeforeUserActs"
+				]
+				sleepTalkMoves = []
+				user.eachMoveWithIndex do |m, i|
+					next if moveBlacklist.include?(m.function)
+					next if !@battle.pbCanChooseMove?(user.index, i, false, true)
+					next if user.SetupMovesUsed.include?(m.id)
+					slepBD = pbMoveBaseDamage(m, user, target, skill)
+					slepRD = pbRoughDamage(m, user, target, skill, slepBD)
+					next if slepRD <= 1 && m.damagingMove?
+					sleepTalkMoves.push(m.id)
+				end
+				if sleepTalkMoves.length >= 0
+					newmove = sleepTalkMoves[@battle.pbRandom(sleepTalkMoves.length)]
+					if newmove
+						slepmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
+						user.prepickedMove = newmove
+						echo("\n~~~~Sleep Talk Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+						score = pbGetMoveScore(slepmove, user, target, skill)
+						score /= 0.5 # reverting the score lowering inside getmovescore
+					end
+				else
+					score=0
+				end
 			end
 		else
 			score = 0
