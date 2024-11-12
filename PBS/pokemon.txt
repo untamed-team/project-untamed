@@ -3133,7 +3133,7 @@ Shape = Quadruped
 Category = Water Pup
 Pokedex = Despite their reclusive nature, trainers who find these Pokémon find them to be friendly and energetic. They use their elongated tongue to attack foes.
 WildItemUncommon = MYSTICWATER
-Evolutions = AMPHIBARK,Level,25
+Evolutions = AMPHIBARK,Level,30
 #-------------------------------
 [AMPHIBARK]
 Name = Amphibark
@@ -3158,7 +3158,7 @@ Shape = Quadruped
 Category = Water Dog
 Pokedex = Amphibark's limbs are designed for both aquatic and land, but it seems to prefer living on land. Their delicate gills must stay wet in order for them to breath.
 WildItemUncommon = MYSTICWATER
-Evolutions = PEROXOTAL,LevelRain,50
+Evolutions = PEROXOTAL,LevelRain,55
 #-------------------------------
 [PEROXOTAL]
 Name = Peroxotal
