@@ -186,7 +186,7 @@ Evolutions = CETTOEKKO,Level,16
 [CETTOEKKO]
 Name = Cettoekko
 Types = WATER,PSYCHIC
-BaseStats = 80,60,65,55,70,80
+BaseStats = 80,70,60,60,70,70
 GenderRatio = FemaleOneEighth
 GrowthRate = Parabolic
 BaseExp = 147
