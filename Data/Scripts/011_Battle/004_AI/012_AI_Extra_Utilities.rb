@@ -816,7 +816,7 @@ class Battle::AI
 						next if m.base_damage == 0 || m.type != :ELECTRIC
 						sum += 5
 					end
-					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "BPRaiseWhileElectricTerrain")
+					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain")
 					sum += 5 if pkmn.pbHasMoveFunction?("DoublePowerInElectricTerrain")
 				end
 				if currentTerrain == :Grassy
@@ -836,7 +836,8 @@ class Battle::AI
 						next if m.base_damage == 0 || m.type != :DRAGON
 						sum -= 5
 					end
-					sum -= 5 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm", "ParalyzeTargetIfNotTypeImmune", "BadPoisonTarget")
+					sum -= 10 if pkmn.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetChangeUserMeloettaForm")
+					sum -= 5 if pkmn.pbHasMoveFunction?("BurnTarget", "FreezeTarget", "ParalyzeTargetIfNotTypeImmune", "BadPoisonTarget")
 					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
 				end
 				if currentTerrain == :Psychic
@@ -906,7 +907,7 @@ class Battle::AI
 			chip += weatherchip
 			if user.effects[PBEffects::Trapping]>0
 				multiturnchip = 0.125 
-				multiturnchip *= (4.0 / 3.0) if @battlers[battler.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
+				multiturnchip *= (4.0 / 3.0) if @battle.battlers[user.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
 				chip+=multiturnchip
 			end
 			chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))

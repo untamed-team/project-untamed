@@ -899,6 +899,7 @@ end
 
 #===============================================================================
 # Uses a random move that exists. (Metronome)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomMove < Battle::Move
   def callsAnotherMove?; return true; end
@@ -987,7 +988,10 @@ class Battle::Move::UseRandomMove < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    user.pbUseMoveSimple(@metronomeMove)
+    move = @metronomeMove
+    move = user.prepickedMove if !user.prepickedMove.nil?
+    user.pbUseMoveSimple(move)
+    user.prepickedMove = nil
   end
 end
 

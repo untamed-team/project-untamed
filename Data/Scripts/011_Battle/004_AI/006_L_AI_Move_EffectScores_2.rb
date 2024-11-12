@@ -154,7 +154,7 @@ class Battle::AI
 		if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
 			score*=0.5
 		else          
-			miniscore=100
+			miniscore=110
 			if roles.include?("Physical Wall") || roles.include?("Special Wall")
 				miniscore*=1.1
 			end
@@ -237,8 +237,11 @@ class Battle::AI
 				end
 			end
 			if move.baseDamage>0
-				if move.addlEffect.to_f == 100 && move.function != "ParalyzeFlinchTarget"
-					score*=1.37 if !user.hasActiveAbility?(:SHEERFORCE) # twave's usual score boost
+				if move.addlEffect.to_f == 100
+					if !user.hasActiveAbility?(:SHEERFORCE) && move.id == :NUZZLE
+						score*=1.37 # twave's usual score boost
+						score*=1.1 if target.moves.any? { |j| j&.id == :TAUNT }
+					end
 				else
 					miniscore-=100
 					miniscore*=(move.addlEffect.to_f/100.0)

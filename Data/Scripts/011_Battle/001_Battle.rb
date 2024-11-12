@@ -90,12 +90,12 @@ class Battle
 
   def pbRandom(x)
     if trainerBattle?
-      #singles
+      # singles
       convert1 = nameToNumberConvert(@opponent[0].trainer_type.to_s)
       convert2 = nameToNumberConvert(@opponent[0].name.to_s)
       haxxvalue = ((convert2 + convert1 + (@opponent[0].rngversion + 1)**2) * (@turnCount + 1))
       haxxvalue = haxxvalue.to_s[-8..-1].to_i if haxxvalue.to_s.length > 8
-      #doubles
+      # doubles
       if !@opponent[1].nil?
         convrt1 = nameToNumberConvert(@opponent[1].trainer_type.to_s)
         convrt2 = nameToNumberConvert(@opponent[1].name.to_s)
@@ -103,6 +103,15 @@ class Battle
         hexvalue = hexvalue.to_s[-8..-1].to_i if hexvalue.to_s.length > 8
         haxxvalue += hexvalue
         haxxvalue /= 2
+      end
+      # who the fuck cares about triple battles?
+      
+      # extra stuff 
+      #makes it so it wont be common to see the same move have the same side effect 
+      #if 2 or more mons choose it on the same turn
+      @battlers.each do |b|
+        next if b.movedThisRound?
+        haxxvalue += b.index
       end
     else
       #wild so who cares

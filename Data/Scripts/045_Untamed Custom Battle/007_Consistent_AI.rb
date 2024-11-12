@@ -474,9 +474,13 @@ class Battle::AI
 					damagePercentage+=50    
 				end
 			end
-			if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
-				(move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?)
-				missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
+		end
+		if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
+			(move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?)
+			missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
+			if target.hasActiveAbility?(:LIQUIDOOZE)
+				damagePercentage -= missinghp*0.5
+			else
 				damagePercentage += missinghp*0.5
 			end
 		end
