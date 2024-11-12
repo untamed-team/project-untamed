@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
@@ -97,7 +97,6 @@ Corn,5
 [106] # Butterfly Sanctuary Entrance
 Land,15
     35,M_BURMY,8,10
-    10,BURBRAWL,6,8
-    40,SCATTERBUG,6,9
-    20,MOLLUCOTTA,5
-    15,SPEWPA,7,9
+    35,SPEWPA,6,8
+    25,BURBRAWL,7,9
+    5,VIVILLON,12
