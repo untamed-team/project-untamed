@@ -343,15 +343,15 @@ Pokemon = EEVEE,12
 LoseText = Well done.
 Pokemon = EEVEE,12
 #-------------------------------
-[LEADER_Matteo, Matteo]
-LoseText = Lose text
+[LEADER_Mateo, Mateo]
+LoseText = ...
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2
     Ace = yes
 #-------------------------------
-[LEADER_Matteo, Matteo,100]
-LoseText = Lose text
+[LEADER_Mateo, Mateo,100]
+LoseText = ...
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
     AbilityIndex = 1
@@ -359,7 +359,7 @@ Pokemon = PACUNA,8
     Nature = JOLLY
 #-------------------------------
 [LEADER_Mercedes, Mercedes]
-LoseText = ...
+LoseText = Hot dang, you really are a menace, hahahaha!
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
     AbilityIndex = 2

@@ -404,7 +404,7 @@ BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
-[LEADER_Matteo]
+[LEADER_Mateo]
 Name = Gym Leader
 Gender = Male
 BaseMoney = 100
