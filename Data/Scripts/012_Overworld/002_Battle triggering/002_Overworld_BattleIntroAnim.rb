@@ -228,9 +228,7 @@ SpecialBattleIntroAnimations.register("vs_trainer_animation", 60,   # Priority 6
   proc { |viewport, battle_type, foe, location|   # Animation
     #if Mateo & Mercedes
     if $game_switches[116]
-      print foe[0].trainer_type
-      print foe[0].name
-      $game_temp.transition_animation_data = [foe[0].trainer_type, "Mateo_Mercedes"]
+      $game_temp.transition_animation_data = [foe[0].trainer_type, "Mateo & Mercedes"]
       pbBattleAnimationCore("VSTrainer", viewport, location, 1)
       $game_temp.transition_animation_data = nil
     else
