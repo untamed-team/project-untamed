@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (true && $DEBUG)
+	$AIMASTERLOG = (false && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
