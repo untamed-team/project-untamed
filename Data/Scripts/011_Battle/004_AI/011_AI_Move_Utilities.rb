@@ -212,6 +212,9 @@ class Battle::AI
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
     globalArray = pbGetMidTurnGlobalChanges
+    procGlobalArray = processGlobalArray(globalArray)
+    expectedWeather = procGlobalArray[0]
+    expectedTerrain = procGlobalArray[1]
     baseDmg = move.baseDamage
     # Covers all function codes which have their own def pbBaseDamage
     case move.function
@@ -273,12 +276,9 @@ class Battle::AI
       baseDmg *= 2 if user.affectedByTerrain? && (@battle.field.terrain != :None || 
                       globalArray.any? { |element| element.include?("terrain") })
     when "HitsAllFoesAndPowersUpInPsychicTerrain"
-      baseDmg = (baseDmg * 3 / 2.0).floor if (@battle.field.terrain == :Psychic || 
-                                            globalArray.include?("psychic terrain")) && 
-                                            user.affectedByTerrain?
+      baseDmg *= 1.5 if expectedTerrain == :Psychic && user.affectedByTerrain?
     when "DoublePowerInElectricTerrain"
-      baseDmg *= 2 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
-                       target.affectedByTerrain?
+      baseDmg *= 2.0 if expectedTerrain == :Electric && target.affectedByTerrain?
     when "DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
       if move.function == "RandomPowerDoublePowerIfTargetUnderground"
         # Average damage dealt for each stage
@@ -296,11 +296,9 @@ class Battle::AI
         end
       end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
-      baseDmg /= 2 if (@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
-                      globalArray.include?("grassy terrain")
+      baseDmg /= 2 if expectedTerrain == :Grassy
     when "LowerTargetSpeed1WeakerInGrassyTerrain"
-      baseDmg /= 2 if (@battle.field.terrain == :Grassy && globalArray.none? { |element| element.include?("terrain") }) || 
-                      globalArray.include?("grassy terrain")
+      baseDmg /= 2 if expectedTerrain == :Grassy
     when "TypeAndPowerDependOnUserBerry"   # Natural Gift
       baseDmg = move.pbNaturalGiftBaseDamage(user.item_id)
     when "PowerHigherWithUserHeavierThanTarget"   # Heavy Slam
@@ -317,11 +315,12 @@ class Battle::AI
       # Fury Attack, Scale Shot, Water Shuriken
       if user.hasActiveAbility?(:SKILLLINK)
         baseDmg *= 5
+      elsif user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
+        # 3 hits at 20 power = 4 hits at 15 power
+        baseDmg *= 4
       else
         baseDmg = (baseDmg * 3.47).floor   # Average damage dealt
       end
-      # 3 hits at 20 power = 4 hits at 15 power
-      baseDmg *= 4 if user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
     when "HitOncePerUserTeamMember"   # Beat Up
       # DemICE beat-up was being calculated very wrong.
       beatUpList = []
@@ -353,7 +352,7 @@ class Battle::AI
     when "DoublePowerIfUserLastMoveFailed"   # Stomping Tantrum
       baseDmg *= 2 if user.lastRoundMoveFailed
     when "PursueSwitchingFoe", "DoublePowerIfTargetNotActed"
-      baseDmg *= 2 if target.battle.choices[target.index][0] == :SwitchOut
+      baseDmg *= 2 if @battle.choices[target.index][0] == :SwitchOut
     when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie
       baseDmg *= 2.25 if user.effectiveWeather == :Rain
     #by low
@@ -368,12 +367,13 @@ class Battle::AI
         baseDmg *= 2
       end
     when "HigherDamageInSunVSNonFireTypes"
-      scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-      baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE, true)
+      if !target.pbHasType?(:FIRE, true)
+        scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
+        baseDmg *= scald_damage_multiplier if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
+      end
     when "PeperSpray"
       peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4.0) : (4 / 3.0)
-      baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
-                                    globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA)
+      baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
     end
     baseDmg = 60 if baseDmg == 1
     return baseDmg

@@ -7,6 +7,9 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
 	mold_broken = moldbroken(user,target,move)
 	globalArray = pbGetMidTurnGlobalChanges
+	procGlobalArray = processGlobalArray(globalArray)
+	expectedWeather = procGlobalArray[0]
+	expectedTerrain = procGlobalArray[1]
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
@@ -25,7 +28,7 @@ class Battle::AI
 			end
 			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-			   @battle.field.terrain == :Grassy
+			   expectedTerrain == :Grassy
 				score*=1.2
 			end
 			if user.poisoned? || user.burned? || user.frozen?
@@ -91,7 +94,7 @@ class Battle::AI
 			if user.hasActiveItem?(:LEFTOVERS) || 
 			   (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-			   @battle.field.terrain == :Grassy
+			   expectedTerrain == :Grassy
 				score*=1.2
 			end  
 			if move.function == "ProtectUserBanefulBunker"
@@ -176,7 +179,7 @@ class Battle::AI
 			end
 			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-			   @battle.field.terrain == :Grassy
+			   expectedTerrain == :Grassy
 				score*=1.2
 			end  
 			if target.poisoned? || target.burned? || target.frozen?
@@ -271,7 +274,7 @@ class Battle::AI
 				end
 				if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
 				   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
-				   @battle.field.terrain == :Grassy
+				   expectedTerrain == :Grassy
 					score*=1.2
 				end  
 				if target.poisoned? || target.burned? || target.frozen?
@@ -665,8 +668,7 @@ class Battle::AI
 		end
 	#---------------------------------------------------------------------------
 	when "PeperSpray" # Pepper Spray
-		score *= 1.4 if [:Sun, :HarshSun].include?(user.effectiveWeather) || 
-						(globalArray.include?("sun weather") && !user.hasActiveItem?(:UTILITYUMBRELLA))
+		score *= 1.4 if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
     #---------------------------------------------------------------------------
 	when "BOOMInstall" # BOOM! BOOM!!! BOOM!!!!!
 		if target.effects[PBEffects::BoomInstalled]
@@ -700,12 +702,11 @@ class Battle::AI
 				if user.hasActiveAbility?([:ROUGHSKIN, :IRONBARBS])
 					score *= 1.2 if target.moves.any? { |m| m&.pbContactMove?(user) }
 				end
-				if target.hasActiveAbility?(:SOLARPOWER) && 
-				   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
+				if target.hasActiveAbility?(:SOLARPOWER) && [:Sun, :HarshSun].include?(expectedWeather)
 					score *= 1.3
 				end
-				if ((target.effectiveWeather == :Hail || globalArray.include?("hail weather")) && target.takesHailDamage?) || 
-				   ((target.effectiveWeather == :Sandstorm || globalArray.include?("sand weather")) && target.takesSandstormDamage?)
+				if (expectedWeather == :Hail && target.takesHailDamage?) || 
+				   (expectedWeather == :Sandstorm && target.takesSandstormDamage?)
 					score *= 1.3
 				end
 			end
@@ -820,9 +821,23 @@ class Battle::AI
 		if targetPosi.effects[PBEffects::FutureSightCounter] == 1
 			futureMove = targetPosi.effects[PBEffects::FutureSightMove]
 			return 0 if futureMove.nil?
+			moveUser = sacrifice = nil
+			@battle.allBattlers.each do |battler|
+				next if battler.opposes?(targetPosi.effects[PBEffects::FutureSightUserIndex])
+				sacrifice = battler
+				next if battler.pokemonIndex != targetPosi.effects[PBEffects::FutureSightUserPartyIndex]
+				moveUser = battler
+				break
+			end
+			if moveUser.nil? # User isn't in battle, get it from the party
+				party = @battle.pbParty(targetPosi.effects[PBEffects::FutureSightUserIndex])
+				pkmn = party[targetPosi.effects[PBEffects::FutureSightUserPartyIndex]]
+				moveUser = @battle.pbMakeFakeBattler(pkmn,false,sacrifice) if pkmn&.able?
+			end
+			return 0 if !moveUser
 			futureUsableMove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(futureMove))
-			futureBaseDmg = pbMoveBaseDamage(futureUsableMove, user, target, skill)
-			futureRealDamage = pbRoughDamage(futureUsableMove, user, target, skill, futureBaseDmg)
+			futureBaseDmg = pbMoveBaseDamage(futureUsableMove, user, moveUser, skill)
+			futureRealDamage = pbRoughDamage(futureUsableMove, user, moveUser, skill, futureBaseDmg)
 			futureRealDamage /= 2 if ![:DOOMDESIRE, :FUTURESIGHT].include?(futureMove)
 			futureDmg = futureRealDamage if futureRealDamage > 0
 		end
@@ -844,15 +859,20 @@ class Battle::AI
 
 	def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
 		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
-		return 0 if globalArray.include?("misty terrain") || @battle.field.terrain == :Misty
-		return 0 if (globalArray.include?("electric terrain") || @battle.field.terrain == :Electric) && status == :SLEEP
-		if target.hasActiveAbility?(:HYDRATION) && 
-		   ([:Rain, :HeavyRain].include?(target.effectiveWeather) || globalArray.include?("rain weather"))
-			miniscore*=0.2
+		procGlobalArray = processGlobalArray(globalArray)
+		expectedWeather = procGlobalArray[0]
+		expectedTerrain = procGlobalArray[1]
+		if target.affectedByTerrain?
+			return 0 if expectedTerrain == :Misty
+			return 0 if expectedTerrain == :Electric && status == :SLEEP
 		end
-		if target.hasActiveAbility?(:LEAFGUARD) && 
-		   ([:Sun, :HarshSun].include?(target.effectiveWeather) || globalArray.include?("sun weather"))
-			miniscore*=0.2
+		if !target.hasActiveItem?(:UTILITYUMBRELLA)
+			if target.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(expectedWeather)
+				miniscore*=0.2
+			end
+			if target.hasActiveAbility?(:LEAFGUARD) && [:Sun, :HarshSun].include?(expectedWeather)
+				miniscore*=0.2
+			end
 		end
 		miniscore*=0.2 if target.hasActiveAbility?(:GUTS) && !(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
 		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE)
@@ -1295,14 +1315,16 @@ class Battle::AI
 	def getFieldDisruptScore(user, target, globalArray = [], skill = 100) 
 		# probably redundant with the check WeatherBenefit script but eh
 		globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+		procGlobalArray = processGlobalArray(globalArray)
+		expectedTerrain = procGlobalArray[1]
 		# modified by JZ
     	fieldscore = 100.0
 		aroles = pbGetPokemonRole(user, target)
 		oroles = pbGetPokemonRole(target, user)
-		if @battle.field.terrain == :Electric || 
-		   globalArray.include?("electric terrain") # Electric Terrain
+		if expectedTerrain == :Electric # Electric Terrain
 			echo("\nElectric Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
+				next if !b.affectedByTerrain?
 				if b.pbHasType?(:ELECTRIC, true)
 					fieldscore*=1.5
 				end
@@ -1332,10 +1354,10 @@ class Battle::AI
 				fieldscore*=0.7
 			end
 		end
-		if @battle.field.terrain == :Grassy || 
-		   globalArray.include?("grassy terrain") # Grassy Terrain
+		if expectedTerrain == :Grassy # Grassy Terrain
 			echo("\nGrassy Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
+				next if !b.affectedByTerrain?
 				if b.pbHasType?(:GRASS, true)
 					fieldscore*=1.5
 				end
@@ -1358,11 +1380,11 @@ class Battle::AI
 				fieldscore*=1.2
 			end
 		end
-		if @battle.field.terrain == :Misty || 
-		   globalArray.include?("misty terrain") # Misty Terrain
+		if expectedTerrain == :Misty # Misty Terrain
 			echo("\nMisty Terrain Disrupt") if $AIGENERALLOG
 			if user.spatk>user.attack
 				target.eachAlly do |b|
+					next if !b.affectedByTerrain?
 					if b.pbHasType?(:FAIRY, true)
 						fieldscore*=1.3
 					end
@@ -1370,7 +1392,7 @@ class Battle::AI
 			end
 			if target.spatk>target.attack
 				if user.pbHasType?(:FAIRY, true)
-				fieldscore*=0.7
+					fieldscore*=0.7
 				end
 			end
 			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
@@ -1396,10 +1418,10 @@ class Battle::AI
 				fieldscore*=1.5
 			end
 		end
-		if @battle.field.terrain == :Psychic || 
-		   globalArray.include?("psychic terrain") # Psychic Terrain
+		if expectedTerrain == :Psychic # Psychic Terrain
 			echo("\nPsychic Terrain Disrupt") if $AIGENERALLOG
 			target.eachAlly do |b|
+				next if !b.affectedByTerrain?
 				if b.pbHasType?(:PSYCHIC, true)
 					fieldscore*=1.7
 				end
@@ -1697,10 +1719,8 @@ class Battle::AI
 				abilityscore*=2
 			end	
 		end 			
-		if target.hasActiveAbility?(:MOLDBREAKER) || 
-			 (target.isSpecies?(:GYARADOS)  && (target.item == :GYARADOSITE || target.hasMegaEvoMutation?) && target.pokemon.willmega) ||
-			 (target.isSpecies?(:LUPACABRA) && (target.item == :LUPACABRITE || target.hasMegaEvoMutation?) && target.pokemon.willmega)
-			echo("\nMold Breaker Disrupt") if $AIGENERALLOG
+		if target.hasMoldBreaker? || ((target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && target.pokemon.willmega)
+			echo("\nMold Breaker (and clones) Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
 		if target.hasActiveAbility?(:UNAWARE)
@@ -2022,6 +2042,24 @@ class Battle::AI
 		return globalArray
 	end
 
+	def processGlobalArray(globalArray)
+		expectedWeather = @battle.pbWeather
+		expectedTerrain = @battle.field.terrain
+		globalArray.each do |wtz|
+			case wtz
+			when "sun weather"  then expectedWeather = :Sun
+			when "rain weather" then expectedWeather = :Rain
+			when "sand weather" then expectedWeather = :Sandstorm
+			when "hail weather" then expectedWeather = :Hail
+			when "electric terrain" then expectedTerrain = :Electric
+			when "grassy terrain"   then expectedTerrain = :Grassy
+			when "misty terrain"    then expectedTerrain = :Misty
+			when "psychic terrain"  then expectedTerrain = :Psychic
+			end
+		end
+		return [expectedWeather, expectedTerrain]
+	end
+
 	# Priority Moves Scoring #####################################################
 	
 	def pbAIPrioSpeedCheck(user, target, move, score, globalArray, aspeed = 0, ospeed = 0)
@@ -2115,14 +2153,16 @@ class Battle::AI
 					echo("Player Pokemon is invulnerable. Score-300. \n")
 					score-=300
 				end
-				if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && target.affectedByTerrain?
+				procGlobalArray = processGlobalArray(globalArray)
+				expectedTerrain = procGlobalArray[1]
+				if expectedTerrain == :Psychic && target.affectedByTerrain?
 					echo("Blocked by Psychic Terrain. Score-300. \n")
 					score-=300
 				end
 				@battle.allSameSideBattlers(target.index).each do |b|
 					priobroken=moldbroken(user,b,move)
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-						 !(b.isSpecies?(:LAGUNA) && (b.item == :LAGUNITE || b.hasMegaEvoMutation?) && b.pokemon.willmega) # laguna can have dazz in pre-mega form
+						 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
 						score-=300 
 						echo("Blocked by enemy ability. Score-300. \n")
 					end

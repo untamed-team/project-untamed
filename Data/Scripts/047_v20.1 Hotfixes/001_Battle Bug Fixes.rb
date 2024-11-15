@@ -494,7 +494,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
     elsif user.canHeal?
       healAmt = (healAmt * 1.3).floor if user.hasActiveItem?(:BIGROOT)
 			# Cologne Case #by low
-			healAmt = (healAmt * 1.5).floor if hasActiveItem?(:COLOGNECASE)
+			healAmt = (healAmt * 1.5).floor if user.hasActiveItem?(:COLOGNECASE)
       user.pbRecoverHP(healAmt)
       @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
     end

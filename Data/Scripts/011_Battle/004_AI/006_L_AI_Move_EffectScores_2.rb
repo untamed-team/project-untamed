@@ -1188,9 +1188,9 @@ class Battle::AI
 			score*=3.0 if move.soundMove?
 		elsif target.hasActiveAbility?(:MULTISCALE)
 			score*=1.5 if user.hp==user.totalhp
-		elsif target.hasActiveAbility?(:SNOWCLOAK) && (target.effectiveWeather == :Hail || globalArray.include?("hail weather"))
+		elsif target.hasActiveAbility?(:SNOWCLOAK) && expectedWeather == :Hail
 			score*=1.2 if move.specialMove?(move.type)
-		elsif target.hasActiveAbility?(:SANDVEIL)  && (target.effectiveWeather == :Sandstorm || globalArray.include?("sand weather"))
+		elsif target.hasActiveAbility?(:SANDVEIL)  && expectedWeather == :Sandstorm
 			score*=1.2 if move.physicalMove?(move.type)
 		elsif target.hasActiveAbility?(:FURCOAT)
 			score*=1.5 if move.physicalMove?(move.type)
@@ -1251,8 +1251,6 @@ class Battle::AI
 		if !userFasterThanTarget
 			if target.pbHasMove?(:BOUNCE) || target.pbHasMove?(:FLY) || target.pbHasMove?(:SKYDROP)
 				miniscore*=1.3
-			else
-				miniscore*=2
 			end
 		end
 		miniscore*=1.3 if user.moves.any? { |m| m&.type == :GROUND }

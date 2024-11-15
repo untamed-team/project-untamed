@@ -1759,7 +1759,7 @@ Battle::AbilityEffects::CriticalCalcFromUser.add(:SUPERLUCK,
 #by low
 Battle::AbilityEffects::CriticalCalcFromUser.add(:BLADEMASTER,
   proc { |ability, user, target, c|
-    next c + 1 if move.bladeMove?
+    next c + 1 if bladeMove?
   }
 )
 

@@ -315,6 +315,12 @@ class Battle::Move
         b.ability, user, target, self, multipliers, baseDmg, type
       )
     end
+    #wasnt actually non ignorable. Nice
+    if target.abilityActive?
+      Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
+        target.ability, user, target, self, multipliers, baseDmg, type
+      )
+    end
     if !@battle.moldBreaker
       # NOTE: It's odd that the user's Mold Breaker prevents its partner's
       #       beneficial abilities (i.e. Flower Gift boosting Atk), but that's
@@ -322,9 +328,6 @@ class Battle::Move
       #look up you fuckhead
       if target.abilityActive?
         Battle::AbilityEffects.triggerDamageCalcFromTarget(
-          target.ability, user, target, self, multipliers, baseDmg, type
-        )
-        Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
           target.ability, user, target, self, multipliers, baseDmg, type
         )
       end
@@ -363,7 +366,6 @@ class Battle::Move
     #by low
     if user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
       multipliers[:base_damage_multiplier] *= 1.5
-      #~ @battle.pbDisplay(_INTL(":TakoMan:"))
     end
     # Mud Sport
     if type == :ELECTRIC

@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (false && $DEBUG)
+	$AIMASTERLOG = (true && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
@@ -481,7 +481,7 @@ class Battle::AI
 			if target.hasActiveAbility?(:LIQUIDOOZE)
 				damagePercentage -= missinghp*0.5
 			else
-				damagePercentage += missinghp*0.5
+				damagePercentage += missinghp*0.4
 			end
 		end
 		damagePercentage = damagePercentage.to_i

@@ -5,6 +5,9 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
 	mold_broken = moldbroken(user,target,move)
 	globalArray = pbGetMidTurnGlobalChanges
+	procGlobalArray = processGlobalArray(globalArray)
+	expectedWeather = procGlobalArray[0]
+	expectedTerrain = procGlobalArray[1]
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
@@ -150,8 +153,7 @@ class Battle::AI
     when "StartSunWeather" # sunny day
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   @battle.field.weather == :Sun ||
-		   globalArray.include?("sun weather")
+		   (expectedWeather == :Sun && !user.hasActiveItem?(:UTILITYUMBRELLA))
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -226,8 +228,7 @@ class Battle::AI
     when "StartRainWeather" # rain dance
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   @battle.field.weather == :Rain ||
-		   globalArray.include?("rain weather")
+		   (expectedWeather == :Rain && !user.hasActiveItem?(:UTILITYUMBRELLA))
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -296,8 +297,7 @@ class Battle::AI
     when "StartSandstormWeather" # sandstorm
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   @battle.field.weather == :Sandstorm ||
-		   globalArray.include?("sand weather")
+		   expectedWeather == :Sandstorm
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -316,8 +316,7 @@ class Battle::AI
 			if user.pbHasMove?(:WEATHERBALL)
 				score*=2
 			end
-			if @battle.field.weather != :None && 
-			  !(@battle.field.weather == :Sandstorm || globalArray.include?("sand weather"))
+			if @battle.field.weather != :None && expectedWeather != :Sandstorm
 				score*=1.5
 			end
 			if user.takesSandstormDamage?
@@ -363,8 +362,7 @@ class Battle::AI
     when "StartHailWeather" # hail
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   @battle.field.weather == :Hail ||
-		   globalArray.include?("hail weather")
+		   expectedWeather == :Hail
 			score = 0
 		else
 			score*=1.6 if user.pbOwnSide.effects[PBEffects::AuroraVeil] > 0
@@ -426,7 +424,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartElectricTerrain" # Electric Terrain
-		if @battle.field.terrain == :Electric || globalArray.include?("electric terrain")
+		if expectedTerrain == :Electric
 			score=0
 		else
 			sleepvar=false
@@ -463,7 +461,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartGrassyTerrain" # grassy terrain
-		if @battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")
+		if expectedTerrain == :Grassy
 			score=0
 		else
 			healvar=target.moves.any? { |m| m&.healingMove? }
@@ -499,7 +497,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartMistyTerrain" # misty terrain
-		if @battle.field.terrain == :Misty || globalArray.include?("misty terrain")
+		if expectedTerrain == :Misty
 			score=0
 		else
 			healvar=target.moves.any? { |m| m&.healingMove? }
@@ -535,7 +533,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "StartPsychicTerrain" # psychic terrain
-		if @battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")
+		if expectedTerrain == :Psychic
 			score=0
 		else
 			privar=target.moves.any? { |m| priorityAI(target,m)>0 }
@@ -587,7 +585,7 @@ class Battle::AI
 		end
 		currentTerrain = @battle.field.terrain if currentTerrain.nil?
 
-		miniscore = getFieldDisruptScore(user,target,globalArray,skill) * 100
+		miniscore = getFieldDisruptScore(user,target,globalArray,skill) * 100.0
 		if currentTerrain == :Electric
 			if target.hasActiveAbility?(:SURGESURFER)
 				miniscore*=1.5
@@ -2201,7 +2199,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpeed1", "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" # Flame Charge, Aura Wheel
 		miniscore=100        
-		if ospeed<(aspeed*(3.0/2.0))
+		if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
@@ -2352,7 +2350,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpeed2", "RaiseUserSpeed2LowerUserWeight", "RaiseUserSpeed3" # Agility
 		miniscore=110        
-		if ospeed<(aspeed*2.0)
+		if ospeed<(aspeed*2.0) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
@@ -3118,8 +3116,8 @@ class Battle::AI
 		end
 		miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
 		if move.function == "RaiseUserAtkSpAtk1Or2InSun"
-			if ([:Sun, :HarshSun].include?(user.effectiveWeather) || 
-				 globalArray.include?("sun weather") || user.hasActiveAbility?(:PRESAGE))
+			if ([:Sun, :HarshSun].include?(expectedWeather) && user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+			   user.hasActiveAbility?(:PRESAGE)
 				miniscore*=2.2
 			else
 				miniscore*=0.5 if user.level >= 26
@@ -3215,7 +3213,7 @@ class Battle::AI
 		miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }    
 		if !userFasterThanTarget
 			miniscore*=1.3
-			if ospeed<(aspeed*(3.0/2.0))
+			if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 				miniscore*=1.2
 			end
 		end    
@@ -3361,7 +3359,7 @@ class Battle::AI
 		miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
 		if !userFasterThanTarget
 			miniscore*=1.5
-			if ospeed<(aspeed*(3.0/2.0))
+			if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 				miniscore*=1.2
 			end
 		end
@@ -3397,7 +3395,7 @@ class Battle::AI
 			end
 		end
 		miniscore=100
-		if ospeed<(aspeed*(3.0/2.0))
+		if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
 		if user.stages[:SPEED]<0
@@ -3526,7 +3524,7 @@ class Battle::AI
 		miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
 		if !userFasterThanTarget
 			miniscore*=1.5
-			if ospeed<(aspeed*2.0)
+			if ospeed<(aspeed*2.0) && @battle.field.effects[PBEffects::TrickRoom] == 0
 				miniscore*=1.2
 			end
 		end
@@ -4197,7 +4195,7 @@ class Battle::AI
 			miniscore*=0.8
 		else
 			miniscore*=1.2
-			if ospeed<(aspeed*(3.0/2.0))
+			if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 				miniscore*=1.2
 			end
 		end
@@ -4390,12 +4388,11 @@ class Battle::AI
 							end
 						end
 					end
-					if user.hasActiveItem?(:LEFTOVERS) || 
-					  (user.hasActiveAbility?(:HEALINGSUN) && ([:Sun, :HarshSun].include?(user.effectiveWeather) || globalArray.include?("sun weather"))) || 
-					  (user.hasActiveAbility?(:RAINDISH) && ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather"))) || 
-					  (user.hasActiveAbility?(:ICEBODY) && ([:Hail].include?(user.effectiveWeather) || globalArray.include?("hail weather"))) || 
-					  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-					  ((@battle.field.terrain == :Grass || globalArray.include?("grassy terrain")) && user.affectedByTerrain?)
+					if user.hasActiveItem?(:LEFTOVERS) || (expectedTerrain == :Grass && user.affectedByTerrain?)
+					  (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+					  (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+					  (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+					  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 						score*=1.2
 					end
 					if user.turnCount<2
@@ -5541,8 +5538,7 @@ class Battle::AI
 			miniscore*=1.3 if target.moves.any? { |j| j&.id == :ELECTROBALL }
 			miniscore*=0.5 if target.moves.any? { |j| j&.id == :GYROBALL }
 			
-			miniscore*=0.7 if move.function == "LowerTargetSpeed1WeakerInGrassyTerrain" && 
-							 (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain"))
+			miniscore*=0.7 if move.function == "LowerTargetSpeed1WeakerInGrassyTerrain" && expectedTerrain == :Grassy
 			if move.baseDamage==0
 				if move.function == "LowerTargetSpeed1MakeTargetWeakerToFire"
 					if target.effects[PBEffects::TarShot]

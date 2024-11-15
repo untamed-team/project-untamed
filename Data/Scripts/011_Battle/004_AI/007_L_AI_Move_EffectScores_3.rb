@@ -7,6 +7,9 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
 	mold_broken = moldbroken(user,target,move)
 	globalArray = pbGetMidTurnGlobalChanges
+	procGlobalArray = processGlobalArray(globalArray)
+	expectedWeather = procGlobalArray[0]
+	expectedTerrain = procGlobalArray[1]
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
 	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
@@ -51,8 +54,8 @@ class Battle::AI
 					score*=3
 				end
 			end
-			if (user.takesHailDamage? && (user.effectiveWeather == :Hail || globalArray.include?("hail weather"))) || 
-			   (user.takesSandstormDamage? && (user.effectiveWeather == :Sandstorm || globalArray.include?("sand weather")))
+			if (user.takesHailDamage? && expectedWeather == :Hail) || 
+			   (user.takesSandstormDamage? && expectedWeather == :Sandstorm)
 				score*=1.5
 			end
 			if target.level - user.level > 9
@@ -235,7 +238,7 @@ class Battle::AI
 		score*=1.2 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
     #---------------------------------------------------------------------------
     when "DoublePowerInElectricTerrain" # Rising Voltage
-      	score *= 1.4 if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && user.affectedByTerrain?
+      	score *= 1.4 if expectedTerrain == :Electric && target.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserLastMoveFailed" # Stomping Tantrum
     #---------------------------------------------------------------------------
@@ -379,8 +382,8 @@ class Battle::AI
 			else
 				score*0.5
 			end
-			if (user.takesHailDamage? && (user.effectiveWeather == :Hail || globalArray.include?("hail weather"))) || 
-			   (user.takesSandstormDamage? && (user.effectiveWeather == :Sandstorm || globalArray.include?("sand weather")))
+			if (user.takesHailDamage? && expectedWeather == :Hail) || 
+			   (user.takesSandstormDamage? && expectedWeather == :Sandstorm)
 				score=0
 			end
 			if user.poisoned? || user.burned? || user.frozen? || user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Curse]
@@ -482,7 +485,7 @@ class Battle::AI
 		if user.pbOwnSide.effects[PBEffects::AuroraVeil]>0
 			score = 0
 		else
-			if user.effectiveWeather == :Hail || globalArray.include?("hail weather")
+			if expectedWeather == :Hail
 				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam=bestmove[0] 
 				maxmove=bestmove[1]
@@ -717,33 +720,30 @@ class Battle::AI
 		# judgment, Multi-Attack, techno blast 
     #---------------------------------------------------------------------------
     when "TypeAndPowerDependOnWeather" # weather ball
-		if ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather")) && 
+		if [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA) &&
 		   target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB],false,mold_broken)
 			score*=0.1
-		elsif ([:Sun, :HarshSun].include?(user.effectiveWeather) || globalArray.include?("sun weather")) && 
+		elsif [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA) &&
 		   target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
 			score*=0.1
 		end
     #---------------------------------------------------------------------------
     when "TypeAndPowerDependOnTerrain" # Terrain Pulse
 		if user.affectedByTerrain?
-			if (@battle.field.terrain == :Electric || globalArray.include?("electric terrain")) && 
+			if expectedTerrain == :Electric && 
 			   (target.hasActiveAbility?([:MOTORDRIVE, :LIGHTNINGROD, :VOLTABSORB],false,mold_broken) ||
 				target.pbHasType?(:GROUND, true))
 				score*=0.1
 			end
-			if (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")) && 
-			   target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
+			if expectedTerrain == :Grassy && target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
 				score*=0.1
 			end
-			if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && 
-			   target.pbHasType?(:DARK, true)
+			if expectedTerrain == :Psychic && target.pbHasType?(:DARK, true)
 				score*=0.1
 			end
 		end
     #---------------------------------------------------------------------------
     when "TargetMovesBecomeElectric" # Electrify
-		pricheck = user.moves.any? { |m| priorityAI(target,m)>0 }
 		if userFasterThanTarget
 			if user.hasActiveAbility?(:VOLTABSORB)
 				if user.hp<user.totalhp*0.8
@@ -769,7 +769,7 @@ class Battle::AI
 			if user.pbHasType?(:GROUND, true)
 				score*=1.3
 			end
-			if pricheck
+			if target.moves.any? { |m| priorityAI(target,m)>0 }
 				score*=0.5
 			end
 		else
@@ -1002,7 +1002,7 @@ class Battle::AI
 			# speed raise
 			if $game_variables[MECHANICSVAR] >= 3 && !user.SetupMovesUsed.include?(move.id)
 				miniscore=125
-				if ospeed<(aspeed*(3.0/2.0))
+				if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 					miniscore*=1.2
 				end
 				if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
@@ -1252,14 +1252,24 @@ class Battle::AI
 			if hasAlly
 				score*=0.7
 			end
-			if targetlivecount>1 && userlivecount==1
+			if targetlivecount>1 && userlivecount==0
 				score*=0.7
 			end
 			# use it to finish off
-			if doesitdie && targetlivecount==1
-				score*=2
+			if doesitdie && targetlivecount==0
+				healmove = priohealmove = false
+				target.eachMove do |m|
+					next if !m.healingMove?
+					healmove = true
+					priohealmove = true if priorityAI(target,m)>0
+				end
+				if userFasterThanTarget && !priohealmove
+					score*=2
+				else
+					score*=0.5 if healmove
+				end
 			else
-				score*=0.5 if user.moves.any? { |m| m&.healingMove? }
+				score*=0.5 if target.moves.any? { |m| m&.healingMove? }
 			end
 		end
     #---------------------------------------------------------------------------
@@ -1297,7 +1307,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 	when "TwoTurnAttackOneTurnInSun" # solar beam
 		if !user.hasActiveItem?(:POWERHERB) && !user.hasActiveAbility?(:PRESAGE) && 
-			!([:Sun, :HarshSun].include?(user.effectiveWeather) && globalArray.include?("sun weather"))
+		 !([:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA))
 			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 			maxdam = bestmove[0]
 			if maxdam>user.hp
@@ -1323,8 +1333,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if (user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3) && 
-			  !([:Sun, :HarshSun].include?(user.effectiveWeather) || globalArray.include?("sun weather"))
+			if (user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3) && !([:Sun, :HarshSun].include?(expectedWeather) && user.hasActiveItem?(:UTILITYUMBRELLA))
 				score*=1.5
 			end
 		end
@@ -1611,7 +1620,7 @@ class Battle::AI
 		if userFasterThanTarget
 			miniscore*=1.5
 		end
-		if ospeed<(aspeed*2.0)
+		if ospeed<(aspeed*2.0) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
 		roles = pbGetPokemonRole(user, target)
@@ -2488,7 +2497,7 @@ class Battle::AI
 		score=0 if user.effects[PBEffects::Wish]>0	
 		if !user.hasActiveItem?([:CHESTOBERRY, :LUMBERRY]) && 
 		   !(user.hasActiveAbility?(:HYDRATION) && 
-		    ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather")))
+		    [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA))
 			score*=0.8
 			if maxdam*2 > user.totalhp
 				score*=0.4
@@ -2538,23 +2547,23 @@ class Battle::AI
 		 "HealUserDependingOnWeather", "HealUserDependingOnSandstorm" # Recover, Roost, Synthesis, Shore Up
 		fasterhealing=userFasterThanTarget || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE) 
 		if move.function == "HealUserDependingOnWeather" 
-			case user.effectiveWeather
+			case expectedWeather
 			when :Sun, :HarshSun
 				halfhealth=(user.totalhp*2 / 3.0)
+				halfhealth=(user.totalhp/2.0) if user.hasActiveItem?(:UTILITYUMBRELLA)
 			when :None
 				halfhealth=(user.totalhp/2.0)
 			else
 				halfhealth=(user.totalhp/4.0)
 			end
-			halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE) || globalArray.include?("sun weather")
+			halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE)
 		elsif move.function == "HealUserDependingOnSandstorm" 
-			case user.effectiveWeather
+			case expectedWeather
 			when :Sandstorm
 				halfhealth=(user.totalhp*2 / 3.0)
 			else
 				halfhealth=(user.totalhp/2.0)
 			end   
-			halfhealth=(user.totalhp*2 / 3.0) if globalArray.include?("sand weather")
 		else     
 			halfhealth=(user.totalhp/2)
 		end       
@@ -2818,10 +2827,11 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDone" # drain punch
 		minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
-		minimini = minimini * 100.0 / target.hp
-		miniscore = (target.hp*minimini)/2.0
-		if miniscore > (user.totalhp-user.hp)
-			miniscore = (user.totalhp-user.hp)
+		minimini = minimini * 100 / target.hp
+		miniscore = minimini / 2.0
+		missinghp = (user.totalhp-user.hp) * 100.0
+		if miniscore > missinghp
+			miniscore = missinghp
 		end
 		if user.totalhp>0
 			miniscore/=(user.totalhp).to_f
@@ -2829,23 +2839,25 @@ class Battle::AI
 		if user.hasActiveItem?([:BIGROOT, :COLOGNECASE])
 			miniscore*=1.3
 		end
-		miniscore *= 0.5 #arbitrary multiplier to make it value the HP less
+		miniscore *= 0.75 #arbitrary multiplier to make it value the HP less
 		miniscore+=1
 		if target.hasActiveAbility?(:LIQUIDOOZE)
 			miniscore = (2-miniscore)
-		end
-		if (user.hp!=user.totalhp || 
-				userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
 			score*=miniscore
+		else
+			if !(user.hp==user.totalhp && userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
+				score*=miniscore
+			end
 		end
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDoneIfTargetAsleep" # dream eater
       	if target.asleep? && (target.statusCount > 1 || userFasterThanTarget)
 			minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
-			minimini = minimini * 100.0 / target.hp
-			miniscore = (target.hp*minimini)/2.0
-			if miniscore > (user.totalhp-user.hp)
-				miniscore = (user.totalhp-user.hp)
+			minimini = minimini / target.hp
+			miniscore = minimini / 2.0
+			missinghp = (user.totalhp-user.hp) * 100.0
+			if miniscore > missinghp
+				miniscore = missinghp
 			end
 			if user.totalhp>0
 				miniscore/=(user.totalhp).to_f
@@ -2856,10 +2868,11 @@ class Battle::AI
 			miniscore+=1
 			if target.hasActiveAbility?(:LIQUIDOOZE)
 				miniscore = (2-miniscore)
-			end
-			if (user.hp!=user.totalhp || 
-					userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
 				score*=miniscore
+			else
+				if !(user.hp==user.totalhp && userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
+					score*=miniscore
+				end
 			end
 			score = 0 if @battle.choices[target.index][0] == :SwitchOut
 		else
@@ -2868,10 +2881,11 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserByThreeQuartersOfDamageDone" # oblivion wing
 		minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
-		minimini = minimini * 100.0 / target.hp
-		miniscore = (target.hp*minimini)*(3.0/4.0)
-		if miniscore > (user.totalhp-user.hp)
-			miniscore = (user.totalhp-user.hp)
+		minimini = minimini / target.hp
+		miniscore = minimini * (3.0/4.0)
+		missinghp = (user.totalhp-user.hp) * 100.0
+		if miniscore > missinghp
+			miniscore = missinghp
 		end
 		if user.totalhp>0
 			miniscore/=(user.totalhp).to_f
@@ -2879,14 +2893,15 @@ class Battle::AI
 		if user.hasActiveItem?([:BIGROOT, :COLOGNECASE])
 			miniscore*=1.3
 		end
-		miniscore *= 0.5 #arbitrary multiplier to make it value the HP less
+		miniscore *= 0.9 #arbitrary multiplier to make it value the HP less
 		miniscore+=1
 		if target.hasActiveAbility?(:LIQUIDOOZE)
 			miniscore = (2-miniscore)
-		end
-		if (user.hp!=user.totalhp || 
-				((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))) && target.effects[PBEffects::Substitute]==0
 			score*=miniscore
+		else
+			if !(user.hp==user.totalhp && userFasterThanTarget) && target.effects[PBEffects::Substitute]==0
+				score*=miniscore
+			end
 		end
     #---------------------------------------------------------------------------
     when "HealUserAndAlliesQuarterOfTotalHP" # Life Dew
@@ -2959,7 +2974,7 @@ class Battle::AI
 					score*=0
 				end
 			end
-			score*=1.3 if @battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")
+			score*=1.3 if expectedTerrain == :Grassy && target.affectedByTerrain?
 			score *= -1
 		end
     #---------------------------------------------------------------------------
@@ -3046,13 +3061,11 @@ class Battle::AI
 					score*=0.5
 				end            
 			end
-			if user.hasActiveItem?(:LEFTOVERS) || 
-			  (user.hasActiveAbility?(:HEALINGSUN) && ([:Sun, :HarshSun].include?(user.effectiveWeather) || globalArray.include?("sun weather"))) || 
-			  (user.hasActiveAbility?(:RAINDISH) && ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather"))) || 
-			  (user.hasActiveAbility?(:ICEBODY) && ([:Hail].include?(user.effectiveWeather) || globalArray.include?("hail weather"))) || 
-			   user.effects[PBEffects::Ingrain] || 
-			  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-			  ((@battle.field.terrain == :Grass || globalArray.include?("grassy terrain")) && user.affectedByTerrain?)
+			if user.hasActiveItem?(:LEFTOVERS) || user.effects[PBEffects::Ingrain] || (expectedTerrain == :Grass && user.affectedByTerrain?)
+			  (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+			  (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+			  (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+			  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 				score*=1.2
 			end
 			if pbHasSingleTargetProtectMove?(user, false)
@@ -3095,12 +3108,11 @@ class Battle::AI
 					score*=0.5
 				end            
 			end
-			if user.hasActiveItem?(:LEFTOVERS) || 
-			  (user.hasActiveAbility?(:HEALINGSUN) && ([:Sun, :HarshSun].include?(user.effectiveWeather) || globalArray.include?("sun weather"))) || 
-			  (user.hasActiveAbility?(:RAINDISH) && ([:Rain, :HeavyRain].include?(user.effectiveWeather) || globalArray.include?("rain weather"))) || 
-			  (user.hasActiveAbility?(:ICEBODY) && ([:Hail].include?(user.effectiveWeather) || globalArray.include?("hail weather"))) || 
-			  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
-			  ((@battle.field.terrain == :Grass || globalArray.include?("grassy terrain")) && user.affectedByTerrain?)
+			if user.hasActiveItem?(:LEFTOVERS) || user.effects[PBEffects::AquaRing] || (expectedTerrain == :Grass && user.affectedByTerrain?)
+			  (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+			  (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
+			  (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+			  (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
 				score*=1.2
 			end
 			if pbHasSingleTargetProtectMove?(user, false)
@@ -3396,7 +3408,7 @@ class Battle::AI
 			score = 0      # don't want to lose
 		elsif skill >= PBTrainerAI.highSkill && reserves == 0 && foes == 0
 			score *= 1.8   # want to draw
-			score *= 1.2 if (@battle.field.terrain == :Misty || globalArray.include?("misty terrain")) && user.affectedByTerrain?
+			score *= 1.2 if expectedTerrain == :Misty
 		end
     #---------------------------------------------------------------------------
     when "UserFaintsFixedDamageUserHP" # final gambit
@@ -4408,7 +4420,7 @@ class Battle::AI
     when "EffectDependsOnEnvironment" # Secret Power
     #---------------------------------------------------------------------------
     when "HitsAllFoesAndPowersUpInPsychicTerrain" # Expanding Force
-      	score *= 1.4 if (@battle.field.terrain == :Psychic || globalArray.include?("psychic terrain")) && user.affectedByTerrain?
+      	score *= 1.4 if expectedTerrain == :Psychic && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "TargetNextFireMoveDamagesTarget" # powder
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -4840,7 +4852,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UseMoveDependingOnEnvironment" # nature power
 		newmove = :TRIATTACK
-		case @battle.field.terrain
+		case expectedTerrain
 		when :Electric
 			newmove = :THUNDERBOLT if GameData::Move.exists?(:THUNDERBOLT)
 		when :Grassy
@@ -4879,10 +4891,6 @@ class Battle::AI
 				newmove = :PSYSHOCK
 			end
 		end
-		newmove = :THUNDERBOLT if globalArray.include?("electric terrain") && GameData::Move.exists?(:THUNDERBOLT)
-		newmove = :PSYCHIC     if globalArray.include?("psychic terrain")  && GameData::Move.exists?(:PSYCHIC)
-		newmove = :ENERGYBALL  if globalArray.include?("grassy terrain")   && GameData::Move.exists?(:ENERGYBALL)
-		newmove = :MOONBLAST   if globalArray.include?("misty terrain")    && GameData::Move.exists?(:MOONBLAST)
 		newdata = Pokemon::Move.new(newmove)
 		naturemove = Battle::Move.from_pokemon_move(@battle, newdata)
 		score = pbGetMoveScore(naturemove, user, target, skill)
@@ -5896,7 +5904,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "HigherPriorityInGrassyTerrain" # grassy glide
-		score *= 1.4 if (@battle.field.terrain == :Grassy || globalArray.include?("grassy terrain")) && user.affectedByTerrain? && !userFasterThanTarget
+		score *= 1.4 if expectedTerrain == :Grassy && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3" # Spite, eerie spell
 		miniscore=100
