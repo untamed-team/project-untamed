@@ -372,6 +372,42 @@ Pokemon = PACUNA,8
     AbilityIndex = 1
     Item = LIGHTCLAY
     Nature = JOLLY
+#-------------------------------
+[RIVAL2,Val]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = QUEXCELL,25
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL2,Val,1]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = CETTOEKKO,25
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL2,Val,2]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = EXPURSUM,25
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL2,Val,100]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = QUEXCELL,25
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL2,Val,101]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = CETTOEKKO,25
+    Gender = male
+    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL2,Val,102]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = EXPURSUM,25
+    Gender = male
+    IV = 0,0,0,0,0,0
 
 #-------------------------------
 #-------------------------------

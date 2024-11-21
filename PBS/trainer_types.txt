@@ -30,8 +30,11 @@ VictoryBGM = Victory - Emilio
 #-------------------------------
 [RIVAL2]
 Name = Rival
-Gender = Male
-BaseMoney = 36
+Gender = Female
+BaseMoney = 16
+IntroBGM = Encounter - Emilio
+BattleBGM = Battle - Emilio
+VictoryBGM = Victory - Emilio
 #-------------------------------
 [AROMALADY]
 Name = Aroma Lady
