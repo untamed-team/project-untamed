@@ -868,13 +868,13 @@ Description = Converts life-force into power to attack. The lower the user's HP,
 Name = Roar of Time
 Type = DRAGON
 Category = Special
-Power = 150
-Accuracy = 90
+Power = 160
+Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove
-Description = The user blasts the target with power that distorts even time. The user must rest on the next turn.
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Sound
+Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [DRACOMETEOR]
 Name = Draco Meteor
@@ -1576,7 +1576,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpAtk1
 Flags = CanProtect,CanMirrorMove
-EffectChance = 20
+EffectChance = 10
 Description = The user attacks by borrowing the power of the moon. This may also lower the target's Sp. Atk stat.
 #-------------------------------
 [PLAYROUGH]
@@ -1829,7 +1829,7 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
 Flags = CanProtect,CanMirrorMove,CannotMetronome,GravityBoosted
-Description = The user attacks wildly with its thick leek. The user can't move on the next turn.
+Description = The user attacks wildly with the force of a crashing meteor. The user can't move on the next turn.
 #-------------------------------
 [HIGHJUMPKICK]
 Name = High Jump Kick
@@ -1847,7 +1847,7 @@ Description = The target is attacked with a knee kick from a jump. If it misses,
 Name = Close Combat
 Type = FIGHTING
 Category = Physical
-Power = 110
+Power = 100
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
@@ -7002,7 +7002,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,CannotMetronome,Bomb
 Description = The user can't move on the next turn, unless the target was knocked out by this move.
 #-------------------------------
 [PSYCHOBOOST]

@@ -614,7 +614,7 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
     if user.pbRecoverHP(hpGain) > 0
       @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
     end
-    
+    noDefBoost = user.effects[PBEffects::StockpileDef] == 0 && user.effects[PBEffects::StockpileSpDef] == 0
     unless noDefBoost
       @battle.pbDisplay(_INTL("{1}'s stockpiled effect wore off!", user.pbThis))
       showAnim = true

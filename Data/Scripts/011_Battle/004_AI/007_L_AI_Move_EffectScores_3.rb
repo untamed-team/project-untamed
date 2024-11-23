@@ -1232,7 +1232,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "AttackAndSkipNextTurn" # Hyper Beam
 		doesitdie = !targetSurvivesMove(move,user,target)
-		if [:PRISMATICLASER, :ETERNABEAM].include?(move.id) && doesitdie && 
+		if [:PRISMATICLASER, :ETERNABEAM, :ROAROFTIME].include?(move.id) && doesitdie && 
 		   @battle.choices[target.index][0] != :SwitchOut
 			score*=2
 		else
@@ -1655,8 +1655,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec") && user.hasActiveItem?(:POWERHERB)
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1 && user.hasActiveItem?(:POWERHERB)
+				miniscore*=1.5
+			end
 		end
 		miniscore/=100.0
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
@@ -1796,8 +1799,11 @@ class Battle::AI
 			if user.hasActiveAbility?(:CONTRARY)
 				miniscore*=0.5
 			end
-			if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-				miniscore*=1.5
+			if targetWillMove?(target, "phys")
+				if move.statusMove? && userFasterThanTarget && 
+				   priorityAI(target,@battle.choices[target.index][2])<1
+					miniscore*=1.5
+				end
 			end
 			miniscore/=100.0
 			if user.statStageAtMax?(:DEFENSE) 
@@ -4400,8 +4406,11 @@ class Battle::AI
 			if user.pbHasMove?(:PAINSPLIT)
 				miniscore*=1.2
 			end 
-			if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-				miniscore*=1.5
+			if targetWillMove?(target, "phys")
+				if move.statusMove? && userFasterThanTarget && 
+				   priorityAI(target,@battle.choices[target.index][2])<1
+					miniscore*=1.5
+				end
 			end
 			if !user.statStageAtMax?(:DEFENSE) 
 				miniscore/=100.0
@@ -4657,9 +4666,11 @@ class Battle::AI
 			if user.pbHasMove?(:PAINSPLIT)
 				miniscore*=1.2
 			end
-			if move.statusMove? && userFasterThanTarget && 
-			  (targetWillMove?(target, "phys") || targetWillMove?(target, "spec"))
-				miniscore*=2
+			if targetWillMove?(target, "phys") || targetWillMove?(target, "spec")
+				if move.statusMove? && userFasterThanTarget && 
+				   priorityAI(target,@battle.choices[target.index][2])<1
+					miniscore*=2
+				end
 			end
 			miniscore/=100.0
 			score*=miniscore
@@ -4669,14 +4680,11 @@ class Battle::AI
 		if user.effects[PBEffects::Stockpile]<3
 			if user.pbHasMoveFunction?("PowerDependsOnUserStockpile","HealUserDependingOnUserStockpile") 
 				score*=1.6
-				if user.SetupMovesUsed.include?(move.id)
-					score*=1.1
-					bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-					maxdam = bestmove[0]
-					score*=1.2 if maxdam*1.2 < user.hp
-					if target.allAllies.empty? && @battle.choices[target.index][0] == :SwitchOut
-						score*=1.5
-					end
+				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+				maxdam = bestmove[0]
+				score*=1.2 if maxdam*1.2 < user.hp
+				if target.allAllies.empty? && @battle.choices[target.index][0] == :SwitchOut
+					score*=1.5
 				end
 			end
 		else
@@ -4914,33 +4922,30 @@ class Battle::AI
 			"UsedAfterUserTakesPhysicalDamage","BurnAttackerBeforeUserActs","DoesNothingFailsIfNoAlly",
 			"DoesNothingCongratulations"
 		]
-		metronomeMove = nil
+		metronomeMove = [nil, 0]
 		move_keys = GameData::Move.keys
 		1000.times do
-			break if !metronomeMove.nil?
-			move_id = move_keys[@battle.pbRandom(move_keys.length)]
+			break if !metronomeMove[0].nil?
+			move_id = move_keys[rand(move_keys.length)] # rand instead of pbRandom intentionally
 			move_data = GameData::Move.get(move_id)
 			next if moveBlacklist.include?(move_data.function_code)
 			next if move_data.has_flag?("CannotMetronome")
 			next if move_data.type == :SHADOW
 			next if user.SetupMovesUsed.include?(move_data.id)
 			metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
-			metroiBD = pbMoveBaseDamage(metroMov, user, target, skill)
-			metroiRD = pbRoughDamage(metroMov, user, target, skill, metroiBD)
-			next if metroiRD <= 1 && metroMov.damagingMove?
-			metronomeMove = move_data.id
+			metroScore = pbGetMoveScore(metroMov, user, target, skill)
+			next if metroScore <= 1
+			metronomeMove = [move_data.id, metroScore]
 		end
-		if metronomeMove.nil?
+		if metronomeMove[0].nil?
 			score=0
 		else
-			metromove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(metronomeMove))
-			user.prepickedMove = metronomeMove
+			user.prepickedMove = metronomeMove[0]
 			echo("\n~~~~Metro Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
-			score = pbGetMoveScore(metromove, user, target, skill)
+			score = metronomeMove[1]
 		end
     #---------------------------------------------------------------------------
     when "UseRandomMoveFromUserParty" # assist
-		# TODO: make so assist picks only specific moves as a gimmicky boss?
 		if @battle.pbAbleNonActiveCount(user.idxOwnSide) > 0
 			moveBlacklist = [
 				"AllBattlersLoseHalfHPUserSkipsNextTurn", "AttackerFaintsIfUserFaints", "BounceBackProblemCausingStatusMoves",
@@ -4969,21 +4974,25 @@ class Battle::AI
 				pkmn.moves.each do |move|
 					next if moveBlacklist.include?(move.function_code)
 					next if move.type == :SHADOW
-					next if user.SetupMovesUsed.include?(move.id)
 					assMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move.id))
-					assiBD = pbMoveBaseDamage(assMov, user, target, skill)
-					assiRD = pbRoughDamage(assMov, user, target, skill, assiBD)
-					next if assiRD <= 1 && assMov.damagingMove?
-					assistMoves.push(move.id)
+					assSco = pbGetMoveScore(assMov, user, target, skill)
+					next if assSco <= 1
+					assistMoves.push([move.id, assSco])
 				end
 			end
-			if assistMoves.length >= 0
-				newmove = assistMoves[@battle.pbRandom(assistMoves.length)]
-				if newmove
-					assmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
-					user.prepickedMove = newmove
-					echo("\n~~~~Assist Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
-					score = pbGetMoveScore(assmove, user, target, skill)
+			if assistMoves.length > 0
+				if true
+					assistMoves.sort! { |a, b| b[1] <=> a[1] }
+					user.prepickedMove = assistMoves[0][0]
+					echo("\n~~~~*Assist Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+					score = assistMoves[0][1]
+				else
+					newmove = assistMoves[@battle.pbRandom(assistMoves.length)]
+					if newmove
+						user.prepickedMove = newmove[0]
+						echo("\n~~~~Assist Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+						score = newmove[1]
+					end
 				end
 			else
 				score=0
@@ -5015,20 +5024,23 @@ class Battle::AI
 				user.eachMoveWithIndex do |m, i|
 					next if moveBlacklist.include?(m.function)
 					next if !@battle.pbCanChooseMove?(user.index, i, false, true)
-					next if user.SetupMovesUsed.include?(m.id)
-					slepBD = pbMoveBaseDamage(m, user, target, skill)
-					slepRD = pbRoughDamage(m, user, target, skill, slepBD)
-					next if slepRD <= 1 && m.damagingMove?
-					sleepTalkMoves.push(m.id)
+					slepSco = pbGetMoveScore(m, user, target, skill)
+					next if slepSco <= 1
+					sleepTalkMoves.push([m.id, slepSco])
 				end
-				if sleepTalkMoves.length >= 0
-					newmove = sleepTalkMoves[@battle.pbRandom(sleepTalkMoves.length)]
-					if newmove
-						slepmove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
-						user.prepickedMove = newmove
-						echo("\n~~~~Sleep Talk Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
-						score = pbGetMoveScore(slepmove, user, target, skill)
-						score /= 0.5 # reverting the score lowering inside getmovescore
+				if sleepTalkMoves.length > 0
+					if true
+						sleepTalkMoves.sort! { |a, b| b[1] <=> a[1] }
+						user.prepickedMove = sleepTalkMoves[0][0]
+						echo("\n~~~~*Sleep Talk Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+						score = sleepTalkMoves[0][1]
+					else
+						newmove = sleepTalkMoves[@battle.pbRandom(sleepTalkMoves.length)]
+						if newmove
+							user.prepickedMove = newmove[0]
+							echo("\n~~~~Sleep Talk Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+							score = newmove[1]
+						end
 					end
 				else
 					score=0

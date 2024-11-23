@@ -1486,8 +1486,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-			miniscore*=1.5
+		if targetWillMove?(target, "phys")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if move.baseDamage>0
 			miniscore-=100
@@ -1630,8 +1633,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-			miniscore*=1.5
+		if targetWillMove?(target, "phys")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if move.baseDamage>0
 			miniscore-=100
@@ -2026,8 +2032,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if move.function == "RaiseUserSpDef1PowerUpElectricMove"
 			elecmove=user.moves.any? { |j| j.type == :ELECTRIC && j.baseDamage > 0 }
@@ -2163,8 +2172,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if move.baseDamage>0
 			miniscore-=100
@@ -2770,8 +2782,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end        
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-			miniscore*=1.5
+		if targetWillMove?(target, "phys")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if move.baseDamage>0
 			miniscore-=100
@@ -2957,8 +2972,11 @@ class Battle::AI
 		if user.pbHasMove?(:PAINSPLIT)
 			miniscore*=1.2
 		end
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-			miniscore*=1.5
+		if targetWillMove?(target, "phys")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		miniscore/=100.0
 		if !user.statStageAtMax?(:DEFENSE)
@@ -3837,8 +3855,11 @@ class Battle::AI
 		if (maxdam.to_f/user.hp)<0.12
 			miniscore*=0.3
 		end
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "phys")
-			miniscore*=1.5
+		if targetWillMove?(target, "phys")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if !user.statStageAtMax?(:DEFENSE)
 			miniscore/=100.0
@@ -3867,8 +3888,11 @@ class Battle::AI
 		if user.hasActiveAbility?(:CONTRARY)
 			miniscore*=0
 		end
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
@@ -4018,8 +4042,11 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0
@@ -4174,8 +4201,11 @@ class Battle::AI
 		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
-		if move.statusMove? && userFasterThanTarget && targetWillMove?(target, "spec")
-			miniscore*=1.5
+		if targetWillMove?(target, "spec")
+			if move.statusMove? && userFasterThanTarget && 
+			   priorityAI(target,@battle.choices[target.index][2])<1
+				miniscore*=1.5
+			end
 		end
 		if !user.statStageAtMax?(:SPECIAL_DEFENSE)
 			miniscore/=100.0

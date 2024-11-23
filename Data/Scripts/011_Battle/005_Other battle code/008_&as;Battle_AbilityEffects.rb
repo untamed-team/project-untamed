@@ -2450,9 +2450,8 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:PICKPOCKET,
 #by low
 Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
-    next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel] || !move.pbContactMove?(user)
-		next if battle.wasUserAbilityActivated?(target)
-    next if user.effects[PBEffects::Substitute] > 0
+    next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
+    next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
 		target.effects[PBEffects::SlipperyPeel] = true
@@ -3519,6 +3518,14 @@ Battle::AbilityEffects::OnSwitchIn.add(:INNERFOCUS,
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("{1}'s mental fortitude prevents {2} from flinching!", battler.pbThis, battler.pbTeam))
     battle.pbHideAbilitySplash(battler)
+  }
+)
+
+# I could have just used wasUserAbilityAct checks, but this effect is needed regardless and its easier for Kiriya
+Battle::AbilityEffects::OnSwitchIn.add(:SLIPPERYPEEL,
+  proc { |ability, battler, battle, switch_in|
+    next if !battle.wasUserAbilityActivated?(battler)
+    battler.effects[PBEffects::SlipperyPeel] = true
   }
 )
 

@@ -130,28 +130,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-    # Calculate target's effective attack value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
-    atk      = (target.attack/2)
-    atkStage = target.stages[:ATTACK] + 6
-    healAmt = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
-    # Reduce target's Attack stat
-    if target.pbCanLowerStatStage?(:ATTACK, user, self)
-      target.pbLowerStatStage(:ATTACK, 1, user)
-    end
-    # Heal user
-    if target.hasActiveAbility?(:LIQUIDOOZE)
-      @battle.pbShowAbilitySplash(target)
-      user.pbReduceHP(healAmt)
-      @battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!", user.pbThis))
-      @battle.pbHideAbilitySplash(target)
-      user.pbItemHPHealCheck
-    elsif user.canHeal?
-      healAmt = (healAmt * 1.3).floor if user.hasActiveItem?(:BIGROOT)
-      user.pbRecoverHP(healAmt)
-      @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
-    end
+    # 001_battle bug fixes.rb
   end
 end
 

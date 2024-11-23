@@ -303,10 +303,8 @@ class Battle::AI
 						tempdam = 0 
 					else
 						thispriority = priorityAI(newenemy,j)
-						if !mold_broken && pokmon.hasActiveAbility?(:DISGUISE) && pokmon.turnCount==0	
-							if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
-									"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-									"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(j.function) #untamed specifics
+						if !mold_broken && pokmon.hasActiveAbility?(:DISGUISE) && pokmon.form==0	
+							if j.multiHitMove?
 								tempdam*=0.6
 							else
 								tempdam=1
@@ -525,10 +523,8 @@ class Battle::AI
 						tempdam*=1.5 if m.function=="UserFaintsPowersUpInMistyTerrainExplosive" && pokmon.affectedByTerrain?
 						tempdam*=0.67 if b.hasActiveItem?(:MISTYSEED) && m.specialMove?
 					end
-					if !mold_broken && b.hasActiveAbility?(:DISGUISE) && b.turnCount==0	
-						if ["HitTwoToFiveTimes", "HitTwoTimes", "HitThreeTimes",
-							"HitTwoTimesFlinchTarget", "HitThreeTimesPowersUpWithEachHit", 
-							"HitThreeToFiveTimes", "HitTwoTimesReload"].include?(m.function) #untamed specifics
+					if !mold_broken && b.hasActiveAbility?(:DISGUISE) && b.form==0	
+						if m.multiHitMove?
 							tempdam*=2.2
 						end
 					end	

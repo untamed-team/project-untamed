@@ -1830,7 +1830,7 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
 Flags = CanProtect,CanMirrorMove,CannotMetronome,GravityBoosted
-Description = The user attacks wildly with its thick leek. The user can't move on the next turn.
+Description = The user attacks wildly with the force of a crashing meteor. The user can't move on the next turn.
 #-------------------------------
 [HIGHJUMPKICK]
 Name = High Jump Kick

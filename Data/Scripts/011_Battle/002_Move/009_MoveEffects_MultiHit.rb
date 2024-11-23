@@ -191,11 +191,12 @@ end
 
 #===============================================================================
 # Attacks first turn, skips second turn (if successful).
-# IF opponent is knocked out AND the moves are prismatic laser or eternabeam, no recharge needed #by low
+# IF opponent is knocked out AND the moves are prismatic laser, eternabeam or roar of time
+# = no recharge needed #by low
 #===============================================================================
 class Battle::Move::AttackAndSkipNextTurn < Battle::Move
   def pbEffectAfterAllHits(user, target)
-		if !([:PRISMATICLASER, :ETERNABEAM].include?(@id) && target.damageState.fainted) #by low
+		if !([:PRISMATICLASER, :ETERNABEAM, :ROAROFTIME].include?(@id) && target.damageState.fainted) #by low
 			user.effects[PBEffects::HyperBeam] = 2
 			user.currentMove = @id
 		end

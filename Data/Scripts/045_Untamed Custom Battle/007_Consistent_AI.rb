@@ -262,7 +262,7 @@ class Battle::AI
 			# "ProtectRate" check is done above
 			if ["ProtectUser", "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield", 
 				"ProtectUserFromDamagingMovesKingsShield", "ProtectUserFromDamagingMovesObstruct"].include?(move.function)
-				roughFSDamage = futureSightRoughDamage(user, target, skill)
+				roughFSDamage = futureSightRoughDamage(target, skill)
 				if roughFSDamage > 0
 					miniscore = 1 + (roughFSDamage / target.hp)
 					bestmove = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -366,12 +366,7 @@ class Battle::AI
 		# Try make AI not trolled by disguise
 		# priority over other calcs due to hyper beam
 		if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0	
-			if ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget",
-				 "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesPoisonTarget",
-				 "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja",
-				 "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-				 "HitThreeToFiveTimes", "HitThreeTimesPowersUpWithEachHit", 
-				 "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+			if move.multiHitMove?
 				realDamage*=2.2
 			else
 				realDamage=(target.totalhp / 8.0)
@@ -389,7 +384,7 @@ class Battle::AI
 		end
 		# Special interaction for beeg guns hyper beam clones
 		if move.function == "AttackAndSkipNextTurn"
-			if [:PRISMATICLASER, :ETERNABEAM].include?(move.id) && !targetSurvivesMove(move,user,target)
+			if [:PRISMATICLASER, :ETERNABEAM, :ROAROFTIME].include?(move.id) && !targetSurvivesMove(move,user,target)
 			else
 				realDamage *= (2 / 3.0)
 			end
@@ -401,13 +396,19 @@ class Battle::AI
 			if user.hasActiveAbility?(:PARTYPOPPER)
 				innatemove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:HEALINGWISH))
 				innatescore = (pbGetMoveScore(innatemove, user, target, skill) / 2)
-				innatescore > 0 ? (score += innatescore) : (realDamage *= (2 / 3.0))
+				innatescore >= 35 ? (score += innatescore) : (realDamage *= (2 / 3.0))
 				echoln "#{move.name}'s score (#{score}) was boosted due to party popper. #{innatescore}" if $AIGENERALLOG
 			else
 				if user.allAllies.none? { |b| b.hasActiveAbility?(:SEANCE) }
 					realDamage *= (2 / 3.0)
 				end
 			end
+		end
+		# try to avoid triggering slippery peel
+		if target.hasActiveAbility?(:SLIPPERYPEEL) && !target.effects[PBEffects::SlipperyPeel] && 
+		   move.pbContactMove?(user) && user.affectedByContactEffect? && user.effects[PBEffects::Substitute] == 0 && 
+		   !user.hasActiveAbility?(:SUCTIONCUPS) && !user.effects[PBEffects::Ingrain]
+			realDamage *= (2 / 3.0)
 		end
 
 		# not a fan of randomness one bit, but i cant do much about this move
@@ -432,24 +433,24 @@ class Battle::AI
 
 		# Prefer flinching external effects (note that move effects which cause
 		# flinching are dealt with in the function code part of score calculation)
-		if canFlinchTarget(user,target,mold_broken)
+		if canFlinchTarget(user,target,mold_broken) && (user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH) || move.function == "HitTwoTimesFlinchTarget")
 			bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
 			maxdam=bestmove[0] #* 0.9
 			maxmove=bestmove[1]
 			if targetSurvivesMove(maxmove,user,target)
 				realDamage *= 1.2 if (realDamage * 100.0 / maxdam) > 75
-				realDamage *= 1.2 if move.function == "HitTwoTimesFlinchTarget"
-				realDamage *= 1.1 if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+				realDamage *= 1.2 if move.multiHitMove?
 				realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow] > 0
 			end
 		end
 
 		# taking in account the damage of future sight/doom desire/premoniton
-		roughFSDamage = futureSightRoughDamage(user, target, skill)
+		roughFSDamage = futureSightRoughDamage(target, skill)
 		if roughFSDamage > 0
 			echoln "rough dmg for FS #{roughFSDamage}" if $AIGENERALLOG
 			realDamage += roughFSDamage
-		end 
+		end
+
 		realDamage = realDamage.to_i
 		if $AIMASTERLOG
 			File.open("AI_master_log.txt", "a") do |line|
@@ -460,9 +461,15 @@ class Battle::AI
 		# Convert damage to percentage of target's remaining HP
 		damagePercentage = realDamage * 100.0 / target.hp
 		# Don't prefer weak attacks
-	    damagePercentage *= 0.5 if damagePercentage < 30
+		if damagePercentage < 30
+			damagePercentage *= 0.5
+			score *= 0.85
+		end
 		# Prefer status moves if level difference is significantly high
-		damagePercentage *= 0.5 if user.level - 5 > target.level
+		if user.level - 5 > target.level
+			damagePercentage *= 0.5
+			score *= 0.70
+		end
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same # DemICE
 			damagePercentage = 110 
@@ -472,6 +479,19 @@ class Battle::AI
 					damagePercentage-=90    
 				else
 					damagePercentage+=50    
+				end
+			end
+			if targetWillMove?(target, "status")
+				if @battle.choices[target.index][2].function == "AttackerFaintsIfUserFaints" && 
+				  !target.effects[PBEffects::DestinyBondPrevious] && target.hp == target.totalhp
+					aspeed = pbRoughStat(user,:SPEED,skill)
+					ospeed = pbRoughStat(target,:SPEED,skill)
+					fasterDBond = ((aspeed<=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && priorityAI(target, @battle.choices[target.index][2])<1
+					if fasterDBond && move.pbContactMove?(user) && user.affectedByContactEffect? &&
+						!(target.hasActiveItem?(:FOCUSSASH) || target.hasActiveAbility?(:STURDY,false,mold_broken))
+						echoln "aborting calculations due to destiny bond, #{move.name} score = 5" if $AIGENERALLOG
+						return 5
+					end
 				end
 			end
 		end

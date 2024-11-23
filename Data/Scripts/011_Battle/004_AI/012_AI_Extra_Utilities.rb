@@ -110,6 +110,8 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
+
+			# highly suspicious that this blacklist system does not work well with AAM
 			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
 			canCheck = true
 			abilityBlacklist.each do |m|
@@ -126,6 +128,7 @@ class Battle::AI
 					user.ability, user, target, move, multipliers, baseDmg, type
 				)
 			end
+
 			# this doesnt take in foes' negative priority themselves, but lets be real very few would
 			# use that anyway
 			# also yes, this is taking in account allies, because for some reason thats a real check
@@ -323,7 +326,8 @@ class Battle::AI
 					when :WATER
 						multipliers[:final_damage_multiplier] /= w_damage_divider
 					end
-					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER)
+					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER) && 
+					    ![:Sun, :HarshSun].include?(user.effectiveWeather)
 						multipliers[:attack_multiplier] *= 1.5
 					end
 				end
@@ -578,15 +582,9 @@ class Battle::AI
 		damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
 		damage+=priodamage
 		damage*=mult
-		multiarray = ["HitTwoTimes", "HitTwoTimesReload", "HitTwoTimesFlinchTarget", 
-					  "HitTwoTimesTargetThenTargetAlly",
-					  "HitTwoTimesPoisonTarget", "HitThreeToFiveTimes", 
-					  "HitThreeTimesPowersUpWithEachHit",
-					  "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
-					  "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1",
-					  "HitThreeTimesAlwaysCriticalHit"]
+		multiarray = move.multiHitMove?
 		if opponent.hasActiveAbility?(:DISGUISE,false,mold_broken) && opponent.form==0	
-			if multiarray.include?(move.function)
+			if multiarray
 				damage*=0.6
 			else
 				damage=1
@@ -595,7 +593,7 @@ class Battle::AI
 		return true if damage < opponent.hp
 		return false if priodamage>0
 		if (opponent.hasActiveItem?(:FOCUSSASH) || opponent.hasActiveAbility?(:STURDY,false,mold_broken)) && opponent.hp==opponent.totalhp
-			return false if multiarray.include?(move.function)
+			return false if multiarray
 			return true
 		end	
 		return false
@@ -817,6 +815,7 @@ class Battle::AI
 	end
 	
 	def EndofTurnHPChanges(user,target,heal,chips,both,switching=false,rest=false)
+		# this shit was horribly messy and flat out did not work in some aspects
 		# sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
 		# the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
 		# thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
@@ -872,7 +871,8 @@ class Battle::AI
 				end
 				if user.asleep?
 					user.allOpposing.each do |b|
-						statuschip += 0.125 if b.hasActiveAbility?(:BADDREAMS)
+						next if !b.hasActiveAbility?(:BADDREAMS)
+						statuschip += 0.125 
 						break
 					end
 				end
@@ -885,6 +885,13 @@ class Battle::AI
 					end
 				end
 				chip+=statuschip
+			end
+			if rest
+				user.allOpposing.each do |b|
+					next if !b.hasActiveAbility?(:BADDREAMS)
+					chip += 0.125
+					break
+				end
 			end
 			chip*=2 if @battle.pbCheckGlobalAbility(:STALL)
 			chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]

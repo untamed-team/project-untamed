@@ -64,8 +64,9 @@ class Battle::AI
 			if targetWillMove?(target)
 				targetMove = @battle.choices[target.index][2]
 				if targetMove.statusMove?
-					score *= 1.1
+					score *= 0.7
 					score *= 0.3 if pbHasSetupMove?(target, false)
+					score *= 0.2 if !targetMove.canMagicCoat?
 				else
 					if !targetSurvivesMove(targetMove,target,user)
 						score *= 5.0
@@ -149,8 +150,9 @@ class Battle::AI
 			if targetWillMove?(target)
 				targetMove = @battle.choices[target.index][2]
 				if targetMove.statusMove?
-					score *= 1.1
+					score *= 0.7
 					score *= 0.3 if pbHasSetupMove?(target, false)
+					score *= 0.2 if !targetMove.canMagicCoat?
 				else
 					if !targetSurvivesMove(targetMove,target,user)
 						score *= 5.0
@@ -242,8 +244,7 @@ class Battle::AI
 			if targetWillMove?(target)
 				targetMove = @battle.choices[target.index][2]
 				if targetMove.statusMove?
-					score *= 0.3
-					score *= 0.3 if pbHasSetupMove?(target, false)
+					score *= 0.2
 				else
 					if !targetSurvivesMove(targetMove,target,user)
 						score *= 5.0
@@ -355,7 +356,9 @@ class Battle::AI
 				if priorityAI(target,targetMove) > 0
 					score *= 2.0 
 					if targetMove.statusMove?
-						score *= 1.1
+						score *= 0.9
+						score *= 0.3 if pbHasSetupMove?(target, false)
+						score *= 0.3 if !targetMove.canMagicCoat?
 					else
 						if !targetSurvivesMove(targetMove,target,user)
 							score *= 5.0
@@ -389,6 +392,8 @@ class Battle::AI
 					score *= 2.0 
 					if targetMove.statusMove?
 						score *= 0.5
+						score *= 0.3 if pbHasSetupMove?(target, false)
+						score *= 0.3 if !targetMove.canMagicCoat?
 					else
 						if !targetSurvivesMove(targetMove,target,user)
 							score *= 5.0
@@ -815,7 +820,7 @@ class Battle::AI
 
 	##############################################################################
 
-	def futureSightRoughDamage(user, target, skill)
+	def futureSightRoughDamage(target, skill)
 		futureDmg = 0
 		targetPosi = @battle.positions[target.index]
 		if targetPosi.effects[PBEffects::FutureSightCounter] == 1
@@ -836,8 +841,8 @@ class Battle::AI
 			end
 			return 0 if !moveUser
 			futureUsableMove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(futureMove))
-			futureBaseDmg = pbMoveBaseDamage(futureUsableMove, user, moveUser, skill)
-			futureRealDamage = pbRoughDamage(futureUsableMove, user, moveUser, skill, futureBaseDmg)
+			futureBaseDmg = pbMoveBaseDamage(futureUsableMove, moveUser, target, skill)
+			futureRealDamage = pbRoughDamage(futureUsableMove, moveUser, target, skill, futureBaseDmg)
 			futureRealDamage /= 2 if ![:DOOMDESIRE, :FUTURESIGHT].include?(futureMove)
 			futureDmg = futureRealDamage if futureRealDamage > 0
 		end
@@ -2065,11 +2070,11 @@ class Battle::AI
 	def pbAIPrioSpeedCheck(user, target, move, score, globalArray, aspeed = 0, ospeed = 0)
 		skill = 100
 		thisprio = priorityAI(user,move)
+		aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
+		ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
+		fastermon = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 		if thisprio>0 
-			aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
-			ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
 			if move.baseDamage>0  
-				fastermon = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 				if fastermon
 					echo("\n"+user.name+" is faster than "+target.name+".\n")
 				else
@@ -2181,7 +2186,7 @@ class Battle::AI
 		elsif thisprio<0
 			if fastermon
 				score*=0.9
-				if move.baseDamage>0
+				if move.damagingMove?
 					if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
 													"TwoTurnAttackInvulnerableUnderground",
 													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
@@ -2189,6 +2194,18 @@ class Battle::AI
 													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 						echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
 						score*=2
+					end
+				else
+					if move.id == :TELEPORT
+						if targetWillMove?(target)
+							targetMove = @battle.choices[target.index][2]
+							willSwitch = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 
+										  "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(targetMove.function)
+						end
+						if willSwitch || @battle.choices[target.index][0] == :SwitchOut
+							echo("Negative priority move, AI pokemon is faster and target will switch out. Score x1.3\n")
+							score*=1.3
+						end
 					end
 				end
 			end      

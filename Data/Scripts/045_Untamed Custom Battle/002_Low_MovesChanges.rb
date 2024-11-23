@@ -559,18 +559,20 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
 end
 
 #===============================================================================
-# Decreases the user's Defense and Special Defense by 2 stages each.
-# Increases the user's Attack and Special Attack by 2 stages each.
-# Increases the user's Speed by 1 stage.
-# (Shell Smash) edits #by low
+# (Shell Smash) edits #by low [dumb move tbdesu]
 #===============================================================================
 class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
   def canSnatch?; return true; end
 
   def initialize(battle, move)
     super
-    @statUp   = [:ATTACK, 2, :SPECIAL_ATTACK, 2, :SPEED, 1]
-    @statDown = [:DEFENSE, 2, :SPECIAL_DEFENSE, 2]
+    @statUp   = [:ATTACK, 2, :SPECIAL_ATTACK, 2]
+    if $game_variables[MECHANICSVAR] >= 3
+      @statUp.push(:SPEED, 1)
+    else
+      @statUp.push(:SPEED, 2)
+    end
+    @statDown = [:DEFENSE, 1, :SPECIAL_DEFENSE, 1]
   end
 
   def pbMoveFailed?(user, targets)
