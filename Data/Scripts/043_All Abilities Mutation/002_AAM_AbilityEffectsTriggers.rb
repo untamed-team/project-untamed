@@ -279,46 +279,49 @@ module Battle::AbilityEffects
 
   #=============================================================================
 
-  def self.triggerDamageCalcFromUser(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromUser(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
-      DamageCalcFromUser.trigger(i, user, target, move, mults, base_damage, type)
+      DamageCalcFromUser.trigger(i, user, target, move, mults, base_damage, type, aiweather)
     end	
   end
 
-  def self.triggerDamageCalcFromAlly(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromAlly(ability, user, target, move, mults, base_damage, type, aiweather = nil)
     user.allAllies.each do |b|
       if b.hasActiveAbility?(ability.id) && !$aam_DamageCalcFromAlly.include?(b)
         $aam_DamageCalcFromAlly.push(b)
         for i in b.abilityMutationList
           $aamName=GameData::Ability.get(i).name
-          DamageCalcFromAlly.trigger(i, user, target, move, mults, base_damage, type)
+          DamageCalcFromAlly.trigger(i, user, target, move, mults, base_damage, type, aiweather)
         end	
       end  
     end 
   end
 
-  def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
-      DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type)
+      DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
     end	
   end
 
-  def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
     end	
   end
 
-  def self.triggerDamageCalcFromTargetAlly(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTargetAlly(ability, user, target, move, mults, base_damage, type, aiweather = nil)
     target.allAllies.each do |b|
       if b.hasActiveAbility?(ability.id) && !$aam_DamageCalcFromTargetAlly.include?(b)
         $aam_DamageCalcFromTargetAlly.push(b)
         for i in b.abilityMutationList
           $aamName=GameData::Ability.get(i).name
-          DamageCalcFromTargetAlly.trigger(i, user, target, move, mults, base_damage, type)
+          DamageCalcFromTargetAlly.trigger(i, user, target, move, mults, base_damage, type, aiweather)
         end	
       end  
     end 

@@ -12,7 +12,7 @@ class Battle::AI
 	expectedTerrain = procGlobalArray[1]
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
-	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+	userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
     case move.function
     #---------------------------------------------------------------------------
     when "FixedDamage20" # Sonic Boom
@@ -279,12 +279,14 @@ class Battle::AI
 			score*=2
 		end
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetNotActed"
+    when "DoublePowerIfTargetNotActed" # Fishious Rend / Bolt Beak
 		if @battle.choices[target.index][0] == :SwitchOut
-			score*=1.5
+			score*=1.2
+			score*=1.25 if move.baseDamage > 80
 		else
 			if userFasterThanTarget
-				score*=1.5
+				score*=1.2
+				score*=1.25 if move.baseDamage > 80
 			end
 		end
     #---------------------------------------------------------------------------
@@ -380,7 +382,7 @@ class Battle::AI
 			if userFasterThanTarget
 				score*=1.3
 			else
-				score*0.5
+				score*=0.5
 			end
 			if (user.takesHailDamage? && expectedWeather == :Hail) || 
 			   (user.takesSandstormDamage? && expectedWeather == :Sandstorm)
@@ -539,7 +541,7 @@ class Battle::AI
 				score *= 1.2
 				if !user.allAllies.empty?
 					ayylly = user.allAllies.first
-					if asleep > pbRoughStat(ayylly,:SPEED,skill)
+					if aspeed > pbRoughStat(ayylly,:SPEED,skill)
 						score *= 1.3
 					end
 				end
@@ -1057,6 +1059,9 @@ class Battle::AI
 				end
 				if user.hasActiveAbility?(:SIMPLE)
 					miniscore*=2
+				end
+				if user.pbHasMoveFunction?("UseMoveTargetIsAboutToUse")
+					miniscore*=1.3
 				end
 				hasAlly = !target.allAllies.empty?
 				if hasAlly
@@ -3654,12 +3659,12 @@ class Battle::AI
 			score=0
 		end
     #---------------------------------------------------------------------------
-    when "SetuserMovePPTo0IfUserFaints" # grudge
+    when "SetAttackerMovePPTo0IfUserFaints" # grudge
 		movenum = 0
 		damcount = 0
 		for m in target.moves
 			movenum+=1
-			if j.baseDamage>0
+			if m.baseDamage>0
 				damcount+=1
 			end
 		end
@@ -5823,8 +5828,6 @@ class Battle::AI
 		if targetWillMove?(target,"phys")
 			score *= 1.5
 		else
-			score *= 0.3 if target.spatk > target.attack
-			score *= 0.05 if specialvar
 			score = 0
 		end
     #---------------------------------------------------------------------------
@@ -5978,7 +5981,7 @@ class Battle::AI
 				else
 					score*=0.5
 				end
-				if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+				if userFasterThanTarget || priorityAI(user, move) > 0
 					score*=1.2
 					if targetWillMove?(target)
 						if @battle.choices[target.index][2].id == oldmove.id
@@ -6027,7 +6030,7 @@ class Battle::AI
 				else
 					score*=0.5
 				end
-				if userFasterThanTarget || (user.hasActiveAbility?(:PRANKSTER) && !target.pbHasType?(:DARK, true))
+				if userFasterThanTarget || priorityAI(user, move) > 0
 					score*=1.2
 					if targetWillMove?(target)
 						if @battle.choices[target.index][2].id == oldmove.id

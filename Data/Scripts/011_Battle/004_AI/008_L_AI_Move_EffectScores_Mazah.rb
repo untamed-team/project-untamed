@@ -12,7 +12,7 @@ class Battle::AI
 	expectedTerrain = procGlobalArray[1]
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
-	userFasterThanTarget = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+	userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
     case move.function
     #---------------------------------------------------------------------------
     when "ProtectUser" # Protect, Detect
@@ -751,9 +751,14 @@ class Battle::AI
 		return false
 	end
 	
-	def pbHasSingleTargetProtectMove?(pokemon, countother = true) # should add unseen fist here somewhere but w/e
+	def pbHasSingleTargetProtectMove?(pokemon, countother = true)
 		if pokemon.is_a?(Battle::Battler) && countother
 			return false if pokemon.effects[PBEffects::ProtectRate] > 1
+			#@battle.allBattlers.each do |b|
+			#	next unless pokemon.opposes?(b)
+			#	next unless pokemon.hasActiveAbility?(:UNSEENFIST)
+			#	return false if b.moves.any? { |m| m&.pbContactMove?(b) }
+			#end
 		end
 		protectarray = ["ProtectUser", "ProtectUserBanefulBunker", 
 						"ProtectUserFromTargetingMovesSpikyShield", 
@@ -854,6 +859,7 @@ class Battle::AI
 			if @battle.choices[target.index][1] # checking if there is a move index
 				return true if @battle.choices[target.index][2].physicalMove? && action == "phys"
 				return true if @battle.choices[target.index][2].specialMove? && action == "spec"
+				return true if @battle.choices[target.index][2].damagingMove? && action == "dmg"
 				return true if @battle.choices[target.index][2].statusMove? && action == "status"
 				return true if action == "AG"
 				return false
@@ -868,24 +874,25 @@ class Battle::AI
 		expectedWeather = procGlobalArray[0]
 		expectedTerrain = procGlobalArray[1]
 		if target.affectedByTerrain?
-			return 0 if expectedTerrain == :Misty
-			return 0 if expectedTerrain == :Electric && status == :SLEEP
+			return 1 if expectedTerrain == :Misty
+			return 1 if expectedTerrain == :Electric && status == :SLEEP
 		end
 		if !target.hasActiveItem?(:UTILITYUMBRELLA)
-			if target.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(expectedWeather)
-				miniscore*=0.2
-			end
-			if target.hasActiveAbility?(:LEAFGUARD) && [:Sun, :HarshSun].include?(expectedWeather)
-				miniscore*=0.2
-			end
+			return 1 if target.hasActiveAbility?(:HYDRATION) && [:Rain, :HeavyRain].include?(expectedWeather)
+			return 1 if target.hasActiveAbility?(:LEAFGUARD) && [:Sun, :HarshSun].include?(expectedWeather)
 		end
+		return 1 if target.effects[PBEffects::AquaRing] && status == :BURN
+		return 1 if move.powderMove? && !target.affectedByPowder?
+		return 1 if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
+		
 		miniscore*=0.2 if target.hasActiveAbility?(:GUTS) && !(status == :SLEEP && target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
-		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE)
-		miniscore*=0.3 if target.hasActiveAbility?(:QUICKFEET) && status == :PARALYSIS
+		miniscore*=0.3 if target.hasActiveAbility?(:NATURALCURE) && !target.trappedInBattle?
+		miniscore*=0.1 if target.hasActiveAbility?(:QUICKFEET) && status == :PARALYSIS
 		miniscore*=0.5 if target.hasActiveAbility?(:MARVELSCALE)
 		miniscore*=0.7 if target.hasActiveAbility?(:SHEDSKIN)
 		miniscore*=0.4 if target.effects[PBEffects::Yawn]>0 && status != :SLEEP
 		miniscore*=1.5 if target.effects[PBEffects::BoomInstalled] && [:BURN, :FREEZE, :POISON].include?(status)
+		miniscore*=1.4 if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 		if target.effects[PBEffects::Confusion]>0
 			miniscore *= (status == :SLEEP) ?  0.4 : 1.1
 		end
@@ -897,11 +904,11 @@ class Battle::AI
 		facade = false if status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET)
 		miniscore*=0.3 if facade
 		if move.baseDamage>0 && status != :PARALYSIS
-			if target.hasActiveAbility?(:STURDY)
+			if (target.hasActiveAbility?(:STURDY) || target.hasActiveItem?(:FOCUSASH)) &&
+				 target.hp == target.totalhp
 				miniscore*=1.1
 			end
 		end
-		miniscore*=1.4 if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
 		case status
 		when :PARALYSIS
 			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanParalyzeSynchronize?(user)
@@ -917,9 +924,6 @@ class Battle::AI
 				miniscore*=0.5
 			end
 			if target.hasActiveAbility?([:GUTS, :FLAREBOOST])
-				miniscore*=0.1
-			end
-			if target.effects[PBEffects::AquaRing]
 				miniscore*=0.1
 			end
 			if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
@@ -943,9 +947,7 @@ class Battle::AI
 				miniscore*=1.6
 			end
 			miniscore*=2 if target.moves.any? { |m| m&.healingMove? }
-			if move.id == :TOXIC
-				miniscore*=1.1 if user.pbHasType?(:POISON, true)
-			end
+			miniscore*=1.1 if user.pbHasType?(:POISON, true) && move.id == :TOXIC
 			miniscore*=0.5 if target.hasActiveItem?([:PECHABERRY, :LUMBERRY])
 		when :FREEZE
 			if target.hasActiveAbility?(:SYNCHRONIZE) && target.pbCanFreezeSynchronize?(user)
@@ -971,7 +973,7 @@ class Battle::AI
 			if target.hp==target.totalhp
 				miniscore*=1.2
 			end
-			if target.turnCount == 0 && !target.pbHasMoveFunction?("FlinchTargetFailsIfNotUserFirstTurn")
+			if target.turnCount == 0
 				miniscore*=1.2
 			end
 			if (pbRoughStat(target, :SPEED, skill) > pbRoughStat(user,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0)
@@ -987,12 +989,6 @@ class Battle::AI
 				miniscore*=1.2
 			end
 			miniscore*=0.1 if target.moves.any? { |j| [:SLEEPTALK, :SNORE].include?(j&.id) }
-			if move.powderMove? && !target.affectedByPowder?
-				miniscore=0
-			end
-			if move.id == :DARKVOID && !user.isSpecies?(:DARKRAI)
-				miniscore=0
-			end
 			miniscore*=0.7 if target.hasActiveItem?([:CHESTOBERRY, :LUMBERRY])
 		when :DIZZY
 			minimi = getAbilityDisruptScore(move,user,target,skill)
@@ -1977,7 +1973,8 @@ class Battle::AI
 	end
 
 	# Megas' Mid Turn A.T.W. changes #############################################
-	
+	# its a mess
+
 	def pbGetMidTurnGlobalChanges
 		globalArray = []
 		globalEffects = {
@@ -2047,6 +2044,7 @@ class Battle::AI
 		return globalArray
 	end
 
+	# does not factor in utility umbrela. i am starting to really hate that item
 	def processGlobalArray(globalArray)
 		expectedWeather = @battle.pbWeather
 		expectedTerrain = @battle.field.terrain
@@ -2197,6 +2195,7 @@ class Battle::AI
 					end
 				else
 					if move.id == :TELEPORT
+						willSwitch = false
 						if targetWillMove?(target)
 							targetMove = @battle.choices[target.index][2]
 							willSwitch = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 

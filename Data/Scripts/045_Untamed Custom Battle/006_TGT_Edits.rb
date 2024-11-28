@@ -348,7 +348,7 @@ or dont
       next if @sides[1].effects[effect] == 0
       pbDisplay(_INTL(msg))
     end
-		pbDisplay(_INTL("The opponent chants an incantation towards the sky!")) if @sides[1].effects[PBEffects::LuckyChant] > 0
+		pbDisplay(_INTL("The opponent is immune to all stat drops!")) if @sides[1].effects[PBEffects::StatDropImmunity]
 		if @sides[0].effects[PBEffects::Spikes] > 0    || @sides[0].effects[PBEffects::ToxicSpikes] > 0 ||
 			 @sides[0].effects[PBEffects::StickyWeb] > 0 || @sides[0].effects[PBEffects::StealthRock]
 			pbDisplay(_INTL("Hazards are scattered all around your side of the field!"))

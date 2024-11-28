@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (false && $DEBUG)
+	$AIMASTERLOG = (true && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
@@ -431,6 +431,12 @@ class Battle::AI
 			end
 		end
 
+		# try hitting mons that dont have available protect moves if it is a double battle
+		if target.allAllies.any? && pbHasSingleTargetProtectMove(target) && 
+		 !(user.hasActiveAbility?(:UNSEENFIST) && move.pbContactMove?(user))
+			realDamage *= (2 / 3.0)
+		end
+
 		# Prefer flinching external effects (note that move effects which cause
 		# flinching are dealt with in the function code part of score calculation)
 		if canFlinchTarget(user,target,mold_broken) && (user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH) || move.function == "HitTwoTimesFlinchTarget")
@@ -461,15 +467,9 @@ class Battle::AI
 		# Convert damage to percentage of target's remaining HP
 		damagePercentage = realDamage * 100.0 / target.hp
 		# Don't prefer weak attacks
-		if damagePercentage < 30
-			damagePercentage *= 0.5
-			score *= 0.85
-		end
+		damagePercentage *= 0.5 if damagePercentage < 30
 		# Prefer status moves if level difference is significantly high
-		if user.level - 5 > target.level
-			damagePercentage *= 0.5
-			score *= 0.70
-		end
+		damagePercentage *= 0.5 if user.level - 5 > target.level
 		# Adjust score
 		if damagePercentage > 100   # Treat all lethal moves the same # DemICE
 			damagePercentage = 110 
@@ -481,14 +481,13 @@ class Battle::AI
 					damagePercentage+=50    
 				end
 			end
-			if targetWillMove?(target, "status")
-				if @battle.choices[target.index][2].function == "AttackerFaintsIfUserFaints" && 
-				  !target.effects[PBEffects::DestinyBondPrevious] && target.hp == target.totalhp
+			if targetWillMove?(target)
+				if !target.effects[PBEffects::DestinyBondPrevious] && target.hp == target.totalhp && 
+				   move.pbContactMove?(user) && user.affectedByContactEffect?
 					aspeed = pbRoughStat(user,:SPEED,skill)
 					ospeed = pbRoughStat(target,:SPEED,skill)
-					fasterDBond = ((aspeed<=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) && priorityAI(target, @battle.choices[target.index][2])<1
-					if fasterDBond && move.pbContactMove?(user) && user.affectedByContactEffect? &&
-						!(target.hasActiveItem?(:FOCUSSASH) || target.hasActiveAbility?(:STURDY,false,mold_broken))
+					fasterDBond = ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) || priorityAI(target, @battle.choices[target.index][2])>0
+					if (@battle.choices[target.index][2].function == "AttackerFaintsIfUserFaints" && fasterDBond) || target.effects[PBEffects::DestinyBond]
 						echoln "aborting calculations due to destiny bond, #{move.name} score = 5" if $AIGENERALLOG
 						return 5
 					end

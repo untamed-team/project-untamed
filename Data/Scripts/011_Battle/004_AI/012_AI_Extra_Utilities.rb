@@ -94,6 +94,11 @@ class Battle::AI
 		elsif move.function == "CategoryDependsOnHigherDamagePoisonTarget" # Shell Side Arm (def calc)
 			defense = [pbRoughStat(target, :DEFENSE, skill), pbRoughStat(target, :SPECIAL_DEFENSE, skill)].min
 		end
+		# Golden Camera calculation
+		if $PokemonGlobal.goldencamera
+			atk *= 0.8 if user.pbOwnedByPlayer?
+			defense *= 0.8 if target.pbOwnedByPlayer?
+		end
 		##### Calculate all multiplier effects #####
 		multipliers = {
 			:base_damage_multiplier  => 1.0,
@@ -111,23 +116,26 @@ class Battle::AI
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
 
-			# highly suspicious that this blacklist system does not work well with AAM
 			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
-			canCheck = true
-			abilityBlacklist.each do |m|
-				# Really? comparing a move id with an ability id? This blacklisting never worked.
-				# it was also checking if the *target* had analytic/sniper, janky jank!
-				next if user.ability != m
-				if user.hasActiveAbility?(m)
-					canCheck = false
-					break
-				end
+			# highly suspicious that this blacklist system does not work well with AAM
+			#canCheck = true
+			#abilityBlacklist.each do |m|
+			#	# Really? comparing a move id with an ability id? This blacklisting never worked.
+			#	# it was also checking if the *target* had analytic/sniper, janky jank!
+			#	next if user.ability != m
+			#	if user.hasActiveAbility?(m)
+			#		canCheck = false
+			#		break
+			#	end
+			#end
+			expectedUserWeather = expectedWeather
+			if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedUserWeather) && 
+				 user.hasActiveItem?(:UTILITYUMBRELLA)
+				expectedUserWeather = :None
 			end
-			if canCheck
-				Battle::AbilityEffects.triggerDamageCalcFromUser(
-					user.ability, user, target, move, multipliers, baseDmg, type
-				)
-			end
+			Battle::AbilityEffects.triggerDamageCalcFromUser(
+				user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
+			)
 
 			# this doesnt take in foes' negative priority themselves, but lets be real very few would
 			# use that anyway
@@ -155,34 +163,49 @@ class Battle::AI
 				)
 			end
 		end
-		if skill >= PBTrainerAI.bestSkill && !moldBreaker && target.abilityActive?
+		if skill >= PBTrainerAI.bestSkill && target.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
-			abilityBlacklist = [:FILTER,:SOLIDROCK,:PRISMARMOR]
-			canCheck = true
-			abilityBlacklist.each do |m|
-				next if target.ability != m 
-				# Really? comparing a move id with an ability id? This blacklisting never worked.
-				if target.hasActiveAbility?(m)
-					canCheck = false
-					break
+			abilityBlacklist = [:FILTER, :SOLIDROCK, :PRISMARMOR, :GRASSPELT]
+			#canCheck = true
+			#abilityBlacklist.each do |m|
+			#	next if target.ability != m 
+			#	# Really? comparing a move id with an ability id? This blacklisting never worked.
+			#	if target.hasActiveAbility?(m)
+			#		canCheck = false
+			#		break
+			#	end
+			#end
+			if !moldBreaker
+				expectedTargetWeather = expectedWeather
+				if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedTargetWeather) && 
+					 target.hasActiveItem?(:UTILITYUMBRELLA)
+					expectedTargetWeather = :None
 				end
-			end
-			if canCheck
 				Battle::AbilityEffects.triggerDamageCalcFromTarget(
-					target.ability, user, target, move, multipliers, baseDmg, type
+					target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
 				)
 				# if laguna already has fur coat in base, there is no need to take it in acc again
 				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT && move.physicalMove?(type)
 					multipliers[:defense_multiplier] *= 2
 				end
+				multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
 			end
+			# when moronuno said 'NonIgnorable', he meant "Ignorable(Forgot)"
+			Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
+				target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist
+			)
 		end
 		if skill >= PBTrainerAI.bestSkill && !moldBreaker
 			target.allAllies.each do |b|
 				next if !b.abilityActive?
+				expectedBWeather = expectedWeather
+				if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedBWeather) && 
+					 b.hasActiveItem?(:UTILITYUMBRELLA)
+					expectedBWeather = :None
+				end
 				Battle::AbilityEffects.triggerDamageCalcFromTargetAlly(
-					b.ability, user, target, move, multipliers, baseDmg, type
+					b.ability, user, target, move, multipliers, baseDmg, type, expectedBWeather
 				)
 			end
 		end
@@ -261,9 +284,8 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
 			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
 			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
-			if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
-				multipliers[:final_damage_multiplier] *= 0.75
-			end
+			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
+			
 			berryTypesArray = {
 				:OCCABERRY   => :FIRE,
 				:PASSHOBERRY => :WATER,
@@ -311,24 +333,20 @@ class Battle::AI
 		end
 		# Weather
 		if skill >= PBTrainerAI.mediumSkill
+			if $game_variables[MECHANICSVAR] >= 3
+				w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
+				w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
+			else
+				w_damage_multiplier = 1.5
+				w_damage_divider    = 2
+			end
 			if !user.hasActiveItem?(:UTILITYUMBRELLA)
-				if $game_variables[MECHANICSVAR] >= 3
-					w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
-					w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
-				else
-					w_damage_multiplier = 1.5
-					w_damage_divider    = 2
-				end
 				if [:Sun, :HarshSun].include?(expectedWeather)
 					case type
 					when :FIRE
 						multipliers[:final_damage_multiplier] *= w_damage_multiplier
 					when :WATER
 						multipliers[:final_damage_multiplier] /= w_damage_divider
-					end
-					if move.specialMove?(type) && user.hasActiveAbility?(:SOLARPOWER) && 
-					    ![:Sun, :HarshSun].include?(user.effectiveWeather)
-						multipliers[:attack_multiplier] *= 1.5
 					end
 				end
 				if [:Rain, :HeavyRain].include?(expectedWeather)
@@ -421,11 +439,6 @@ class Battle::AI
 		# TODO
 		# Move-specific final damage modifiers
 		# TODO
-		# Golden Camera calculation
-		if $PokemonGlobal.goldencamera
-			atk *= 0.8 if user.pbOwnedByPlayer?
-			defense *= 0.8 if target.pbOwnedByPlayer?
-		end
 		##### Main damage calculation #####
 		baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
 		atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max
@@ -441,6 +454,7 @@ class Battle::AI
 			# Ability effects that alter critical hit rate
 			if c >= 0 && user.abilityActive?
 				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
+				c += 2 if user.hasActiveAbility?(:JUNGLEFURY) && @battle.field.terrain == :None && expectedTerrain == :Grassy
 			end
 			if c >= 0 && target.abilityActive? && !moldBreaker
 				c = Battle::AbilityEffects.triggerCriticalCalcFromTarget(target.ability, user, target, c)
