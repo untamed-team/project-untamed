@@ -38,7 +38,7 @@ class Swdfm_Exp_Screen
 	# e   = PANEL_EDGE_SIZE
 	# bmp = Swdfm_Bitmap.colour(bmp, @f_col, e, e, @s_width - 2 * e, @s_height - 2 * e)
 	@sprites["bg"] = IconSprite.new(@s_x, @s_y, @viewport)
-	@sprites["bg"].setBitmap("Graphics/Pictures/EXP Panel.png")
+	#@sprites["bg"].setBitmap("Graphics/Pictures/Battle/exp_panel_bg.png")
 	@sprites["bg"].x = @s_x
 	@sprites["bg"].y = @s_y
   end
@@ -74,6 +74,7 @@ class Swdfm_Exp_Screen
   
   def draw_party
 	b_w = (@s_width / 3).floor - EXP_WIDTH_GAP * 2
+	b_w_2 = (@s_width / 1.5).floor - EXP_WIDTH_GAP * 2
 	b_h = EXP_BAR_HEIGHT
 	c_o = CO_ORDINATES[$player.party.size - 1]
 	e   = EXP_BAR_EDGE_SIZE
@@ -87,8 +88,14 @@ class Swdfm_Exp_Screen
 	  x       += @s_x
 	  y       += @s_y
 	  y       += MOVE_DOWN_PIXELS
-	  bmp = Swdfm_Bitmap.colour([b_w, b_h], EXP_EDGE_COLOUR, 0, 0, b_w, b_h)
-	  bmp = Swdfm_Bitmap.colour(bmp, EXP_FILL_COLOUR, e, e, b_w - 2 * e, b_h - 2 * e)
+	  bmp = Swdfm_Bitmap.colour([b_w_2, b_h], EXP_EDGE_COLOUR, 0, 0, b_w_2, b_h)
+	  bmp = Swdfm_Bitmap.colour(bmp, EXP_FILL_COLOUR, e, e, b_w_2 - 2 * e, b_h - 2 * e)
+	  # EXP panel piece thingy
+	  @sprites["panel_#{i}"] = IconSprite.new(0, 0, @viewport)
+	  @sprites["panel_#{i}"].setBitmap("Graphics/Pictures/Battle/exp_panel_piece.png")
+	  @sprites["panel_#{i}"].x = x - BAR_PIECE_X
+	  @sprites["panel_#{i}"].y = y - BAR_PIECE_Y
+	  set_comparative_z("panel_#{i}", "bg", 1)
 	  # Pokemon
 	  s = PokemonIconSprite.new($player.party[i], @viewport)
 	  @sprites["poke_#{i}"] = s
@@ -110,6 +117,12 @@ class Swdfm_Exp_Screen
 	  @sprites["poke_#{i}"].x = x + POKE_X
 	  @sprites["poke_#{i}"].y = y - @sprites["poke_#{i}"].height + POKE_Y
 	  # Levels
+	  @sprites["level_icon_#{i}"] = IconSprite.new(0, 0, @viewport)
+	  @sprites["level_icon_#{i}"].setBitmap("Graphics/Pictures/Party/overlay_lv.png")
+	  @sprites["level_icon_#{i}"].x = x + b_w + 10 - e - LEVEL_X
+	  @sprites["level_icon_#{i}"].y = y + 30 - LEVEL_Y
+	  set_comparative_z("level_icon_#{i}", "bg", 20)
+
 	  @sprites["level_#{i}"] = BitmapSprite.new(96, 64, @viewport)
 	  @sprites["level_#{i}"].x = x + b_w - e - LEVEL_X
 	  @sprites["level_#{i}"].y = y - LEVEL_Y
@@ -122,15 +135,14 @@ class Swdfm_Exp_Screen
 	  bmp = Swdfm_Bitmap.text($player.party[i].level.to_s, hash, @sprites["level_#{i}"].bitmap)
 	  next if @values[i] == 0
 	  # Exp
-	  @sprites["exp_#{i}"] = BitmapSprite.new(b_w, 64, @viewport)
-	  @sprites["exp_#{i}"].x = x + EXP_X
+	  @sprites["exp_#{i}"] = BitmapSprite.new(96, 64, @viewport)
+	  @sprites["exp_#{i}"].x = x + b_w - e + EXP_X
 	  @sprites["exp_#{i}"].y = y + EXP_Y
 	  set_comparative_z("exp_#{i}", "bg", 25)
-	  exp_msg_x = x + EXP_BAR_X
-	  exp_msg_y = y + EXP_BAR_y
 	  hash = {
-	    :X       => (exp_msg_x)*1.1,
-		:Y		 => (exp_msg_y)*1.1
+	    :X       => 48,
+	    :Align   => 2,
+	    :Outline => true
 	  }
 	  bmp = Swdfm_Bitmap.text("+" + @values[i].to_s_formatted, hash, @sprites["exp_#{i}"].bitmap)
 	end

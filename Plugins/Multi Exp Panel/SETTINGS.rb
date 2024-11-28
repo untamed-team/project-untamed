@@ -12,10 +12,12 @@ class Swdfm_Exp_Screen
   BORDER_WIDTH      = 140
   # The height in pixels in between the top/lower side of the screen and the top/lower side of the panel
   BORDER_HEIGHT     = 46
+  # these arent used
   # What colour is the edge of the panel?
   PANEL_EDGE_COLOUR = Color.new(24, 20, 67)
   # What is the main colour of the panel?
   PANEL_FILL_COLOUR = Color.new(0, 96, 142)
+  ##################
   # What colour is the edge of the Exp bars?
   EXP_EDGE_COLOUR   = PANEL_EDGE_COLOUR
   # What colour is the fill of the exp bar (without exp)
@@ -25,21 +27,21 @@ class Swdfm_Exp_Screen
   # The size in pixels of the edge of the panel
   PANEL_EDGE_SIZE   = 4
   # The height in pixels of the exp bar
-  EXP_BAR_HEIGHT    = 16
+  EXP_BAR_HEIGHT    = 6
   # (Quite complicated!)
   # Half of the difference, in pixels, between 1/3 of the width of the panel and the width of an exp bar
   # Basically, make smaller for a wider exp bar
-  EXP_WIDTH_GAP     = 6
+  EXP_WIDTH_GAP     = 1
   # The size, in pixels, of the edge of each exp bar
   EXP_BAR_EDGE_SIZE = 2
-  EXP_BAR_X         = 128
-  EXP_BAR_y         = -28
+  EXP_BAR_X         = 60
+  EXP_BAR_y         = -18
   # What is the shortest amount of time (In seconds, assuming 40fps) that it takes for the exp bars to animate?
   FASTEST_TIME      = 0.5
   # What is the longest amount of time (In seconds, assuming 40fps) that it takes for the exp bars to animate?
   SLOWEST_TIME      = 2.5
   # For how long (In seconds, assuming 40fps) does the amount of gained exp stay there for?
-  ANNOUCE_TIME      = 1
+  ANNOUCE_TIME      = 10
   # In exp per frame, assuming 40fps, how fast is the bar?
   # Any value lower than 0 is treated as 0
   # Any value higher than 199 is treated as 199
@@ -47,16 +49,18 @@ class Swdfm_Exp_Screen
   # How many pixels LEFT OF the right side of bar is midpoint of the Level of the Pokemon?
   LEVEL_X           = 16
   # How many pixels ABOVE the bar is the Level of the Pokemon?
-  LEVEL_Y           = 50
+  LEVEL_Y           = 69
+  BAR_PIECE_X       = 16
+  BAR_PIECE_Y       = 54
   # How many pixels to the RIGHT of the left side of the bar is the left side of the Pokemon?
   POKE_X            = 0
   # How many pixels BELOW where the Pokemon would be it it sat on top of the top of the bar is the Pokemon?
   # Not sure why you'd change this, but it's here!
   POKE_Y            = 0
   # How many pixels to the right of the midpoint of the bar is the announced experience?
-  EXP_X             = 0
+  EXP_X             = 52
   # How many pixels BELOW the underside of the bar is the announced experience?
-  EXP_Y             = 4
+  EXP_Y             = -69
   # Decides positions of where bars go
   # Best leave these alone!
   #...
