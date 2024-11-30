@@ -122,6 +122,7 @@ class Battle
 									 $game_variables[MECHANICSVAR] == 0 && 
 									!$game_switches[LOWEREXPGAINSWITCH]
 	exp = (exp / 2).floor if pkmn.level>40
+	exp = 10000 if exp > 10000 && $game_variables[MECHANICSVAR] == 0
 	#exp = (exp * 0.2).floor if $game_switches[319] 				# custom wild
 	#exp = 0 if $game_switches[305] && pkmn.level>=level 		# leader rematch
 	# exp leech #by low
