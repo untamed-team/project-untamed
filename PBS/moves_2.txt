@@ -8809,7 +8809,7 @@ Description = The user chills their target to the bone to inflict frostbite.
 Name = Chilling Wail
 Type = GHOST
 Category = Special
-Power = 80
+Power = 75
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -8843,7 +8843,7 @@ Priority = 0
 FunctionCode = None
 Flags = CanProtect,Sound
 EffectChance = 0
-Description = The user strikes the air to send a damaging shockwave towards an opposing foe.
+Description = The user strikes the air to send a terrible sound-based shockwave towards an opposing foe.
 #-------------------------------
 [GEODEBURST]
 Name = Geode Burst

@@ -2065,14 +2065,16 @@ class Battle::AI
 
 	# Priority Moves Scoring #####################################################
 	
-	def pbAIPrioSpeedCheck(user, target, move, score, globalArray, aspeed = 0, ospeed = 0)
+	def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
 		skill = 100
 		thisprio = priorityAI(user,move)
+		return score if thisprio == 0
+		globalArray = pbGetMidTurnGlobalChanges if globalArray.nil?
 		aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
 		ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
 		fastermon = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 		if thisprio>0 
-			if move.baseDamage>0  
+			if move.damagingMove? # redudant check since this is only called w/ dmg moves but shhh
 				if fastermon
 					echo("\n"+user.name+" is faster than "+target.name+".\n")
 				else
@@ -2081,10 +2083,10 @@ class Battle::AI
 				if !targetSurvivesMove(move,user,target)
 					echo("\n"+target.name+" will not survive.")
 					if fastermon
-						echo("Score x1.3\n")
+						echo("Score (for" + move.name + ") x1.3\n")
 						score*=1.3
 					else
-						echo("Score x2\n")
+						echo("Score (for" + move.name + ") x2\n")
 						score*=2
 					end
 				end   
@@ -2116,7 +2118,7 @@ class Battle::AI
 					maxdam=0
 					maxmove2=nil
 					if !targetSurvivesMove(maxmove,target,user)
-						echo(user.name+" does not survive. Score +150. \n")
+						echo(user.name+" does not survive foe's maxmove. Score +150. \n")
 						score+=150
 						for j in target.moves
 							if target.effects[PBEffects::ChoiceBand] &&
@@ -2139,10 +2141,10 @@ class Battle::AI
 					score*=1.1
 					if !targetSurvivesMove(maxpriomove,target,user)
 						if fastermon
-							echo(user.name+" does not survive piority move. Score x3. \n")
+							echo(user.name+" does not survive piority move. Score (for" + move.name + ") x3. \n")
 							score*=3
 						else
-							echo(user.name+" does not survive priority move but is faster. Score -100 \n")
+							echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") -100 \n")
 							score-=100
 						end
 					end
@@ -2153,13 +2155,13 @@ class Battle::AI
 													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
 													"TwoTurnAttackInvulnerableUnderwater",
 													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-					echo("Player Pokemon is invulnerable. Score-300. \n")
+					echo("Player Pokemon is invulnerable. Score (for" + move.name + ") -300. \n")
 					score-=300
 				end
 				procGlobalArray = processGlobalArray(globalArray)
 				expectedTerrain = procGlobalArray[1]
 				if expectedTerrain == :Psychic && target.affectedByTerrain?
-					echo("Blocked by Psychic Terrain. Score-300. \n")
+					echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") -300. \n")
 					score-=300
 				end
 				@battle.allSameSideBattlers(target.index).each do |b|
@@ -2167,16 +2169,16 @@ class Battle::AI
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
 						 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
 						score-=300 
-						echo("Blocked by enemy ability. Score-300. \n")
+						echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
 					end
 				end 
 				if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target)
 					quickcheck = false 
 					for j in target.moves
-						quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves"
+						quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0
 					end          
 					if quickcheck
-						echo("Expecting quick guard. Score-200. \n")
+						echo("Expecting quick guard. Score  (for" + move.name + ") -200. \n")
 						score-=200
 					end  
 				end    
@@ -2209,6 +2211,6 @@ class Battle::AI
 				end
 			end      
 		end
-		return
+		return score
 	end
 end

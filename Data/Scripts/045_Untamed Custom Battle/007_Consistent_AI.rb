@@ -129,41 +129,41 @@ class Battle::AI
 			end
 		end
 		# Find any preferred moves and just choose from them
-		if !wildBattler && maxScore > 100
-			#stDev = pbStdDev(choices)
-			#if stDev >= 40 && pbAIRandom(100) < 90
-			# DemICE removing randomness of AI
-			preferredMoves = []
-			choices.each do |c|
-				next if c[1] < 200 && c[1] < maxScore * 0.8
-				#preferredMoves.push(c)
-				# DemICE prefer ONLY the best move
-				preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
-				echoln(preferredMoves) if $AIGENERALLOG
-			end
-			if preferredMoves.length > 0
-				m = preferredMoves[pbAIRandom(preferredMoves.length)]
-				PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
-				@battle.pbRegisterMove(idxBattler, m[0], false)
-				@battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
-				return
-			end
-			#end
-		end
-		choices.shuffle! if wildBattler
-		# Decide whether all choices are bad, and if so, try switching instead
+		#if !wildBattler && maxScore > 100
+		#	#stDev = pbStdDev(choices)
+		#	#if stDev >= 40 && pbAIRandom(100) < 90
+		#	# DemICE removing randomness of AI
+		#	preferredMoves = []
+		#	choices.each do |c|
+		#		next if c[1] < 200 && c[1] < maxScore * 0.8
+		#		#preferredMoves.push(c)
+		#		# DemICE prefer ONLY the best move
+		#		preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
+		#		echoln(preferredMoves) if $AIGENERALLOG
+		#	end
+		#	if preferredMoves.length > 0
+		#		m = preferredMoves[pbAIRandom(preferredMoves.length)]
+		#		PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
+		#		@battle.pbRegisterMove(idxBattler, m[0], false)
+		#		@battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
+		#		return
+		#	end
+		#	#end
+		#end
+		choices.shuffle! if user.wild?
+		# Checking if switching is preferred
 		if !user.wild? #!wildBattler
-			badMoves = false
-			attemptedSwitching = false
-			if ((maxScore <= 60 && user.turnCount >= 1) ||
-				(maxScore <= 70 && user.turnCount > 3))
+			# Decide whether all choices are bad, and if so, try switching instead
+			badMoves = attemptedSwitching = false
+			if (maxScore <= 90 && user.turnCount > 2) || 
+			   (maxScore <= 80 && user.turnCount > 3)
 				badMoves = true
 			end
-			if !badMoves && totalScore < 160
+			if !badMoves && totalScore <= 300
 				badMoves = true
 				choices.each do |c|
-					next if !user.moves[c[0]].damagingMove?
-					badMoves = false
+					next if !user.moves[c[0]].statusMove?
+					badMoves = false if c[1] > 110
 					break
 				end
 			end
@@ -173,6 +173,48 @@ class Battle::AI
 					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves 1")
 				end
 				return
+			end
+			# Check the foe's damage potential, and if it is a lot, try switching
+			if !attemptedSwitching
+				shouldSwitch = false
+				aspeed = pbRoughStat(user,:SPEED,100)
+				user.eachOpposing do |b|
+					ospeed = pbRoughStat(b,:SPEED,100)
+					userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+
+					bestmove = bestMoveVsTarget(b,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+					maxdam = bestmove[0]
+					maxpri = bestmove[2]
+					maxdampercent = maxdam * 100.0 / user.hp
+					maxpripercent = maxpri * 100.0 / user.hp
+
+					if userFasterThanTarget
+						userBestmove = bestMoveVsTarget(user,b,skill) # [userMaxdam,0,userMaxpri,0]
+						userMaxdam = userBestmove[0]
+						userMaxpri = userBestmove[2]
+						userMaxdampercent = userMaxdam * 100.0 / b.hp
+						userMaxpripercent = userMaxpri * 100.0 / b.hp
+
+						if (maxpripercent >= 40 && userMaxpripercent < maxpripercent) ||
+						   (maxdampercent >= 50 && userMaxdampercent < maxdampercent)
+							shouldSwitch = true
+							break
+						end
+					else
+						if maxpripercent >= 50 || maxdampercent >= 40
+							shouldSwitch = true
+							break
+						end
+					end
+				end
+
+				if shouldSwitch && pbEnemyShouldWithdrawEx?(idxBattler, true)
+					attemptedSwitching = true
+					if $INTERNAL
+						PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to foe's threatening a lot of damage")
+					end
+					return
+				end
 			end
 		end
 		bestScore = ["Splash",0]
@@ -194,13 +236,12 @@ class Battle::AI
 				end
 			end
 		end
-		if bestScore[1] <= 60
-			# in case everything sucks, try switching (again)
-			if !user.wild? && !attemptedSwitching && pbEnemyShouldWithdrawEx?(idxBattler, true)
-				if $INTERNAL
-					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves 2")
+		if bestScore[0] == "Splash"
+			if !user.wild?
+				if !attemptedSwitching && pbEnemyShouldWithdrawEx?(idxBattler, true)
+					PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will switch due to terrible moves 2") if $INTERNAL
+					return
 				end
-				return
 			end
 			
 			# if switching isnt a option, randomly choose a move from the choices and register it 
@@ -212,13 +253,12 @@ class Battle::AI
 				@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
 				break
 			end
-		else
-			# Choose the best move possible always (if one thing does not suck)
-			choices.each do |c|
-				next if bestScore[0] != c[0]
-				@battle.pbRegisterMove(idxBattler, c[0], false)
-				@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
-			end
+		end
+		# Choose the best move possible always (if one thing does not suck)
+		choices.each do |c|
+			next if bestScore[0] != c[0]
+			@battle.pbRegisterMove(idxBattler, c[0], false)
+			@battle.pbRegisterTarget(idxBattler, c[2]) if c[2] >= 0
 		end
 		# Log the result
 		if @battle.choices[idxBattler][2]
@@ -238,6 +278,8 @@ class Battle::AI
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreFunctionCode(initScore, move, user, target, skill)
 			initScore = score
+			# Adjust score if this move has priority, whether that is negative or positive
+			score = pbAIPrioSpeedCheck(score, move, user, target)
 			# Adjust score based on how much damage it can deal # DemICE moved damage calc to the beginning
 			score = pbGetMoveScoreDamage(score, move, user, target, skill, initScore)
 		else # Status moves # each status move has a value tied to them

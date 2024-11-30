@@ -351,8 +351,15 @@ class Battle::AI
       end
     when "DoublePowerIfUserLastMoveFailed"   # Stomping Tantrum
       baseDmg *= 2 if user.lastRoundMoveFailed
-    when "PursueSwitchingFoe", "DoublePowerIfTargetNotActed"
+    when "PursueSwitchingFoe" # Pursuit
       baseDmg *= 2 if @battle.choices[target.index][0] == :SwitchOut
+    when "DoublePowerIfTargetNotActed" # Fishious Rend / Bolt Beak
+      aspeed = pbRoughStat(user,:SPEED,skill)
+      ospeed = pbRoughStat(target,:SPEED,skill)
+      if @battle.choices[target.index][0] == :SwitchOut ||
+        ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+        baseDmg *= 2
+      end
     when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie
       baseDmg *= 2.25 if user.effectiveWeather == :Rain
     #by low

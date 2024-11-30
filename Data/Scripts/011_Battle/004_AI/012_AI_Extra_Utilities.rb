@@ -820,7 +820,7 @@ class Battle::AI
 		turncount = 0 if switchin
 		pri = move.priority
 		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
-		pri +=1 if move.baseDamage==0 && user.hasActiveAbility?(:PRANKSTER) 
+		pri +=1 if move.statusMove? && user.hasActiveAbility?(:PRANKSTER) 
 		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
 		pri +=1 if move.soundMove? && move.baseDamage==0 && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)

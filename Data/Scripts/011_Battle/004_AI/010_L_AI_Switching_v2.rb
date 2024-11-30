@@ -69,7 +69,7 @@ class Battle::AI
 		echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
 		echoln("mindam = #{mindamage}") if $AIGENERALLOG
 		if maxdampercent<mindamage && !tickdamage
-			shouldSwitch=true 
+			shouldSwitch = true 
 			echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
 		end	
 		# Pokémon can't do anything (must have been in battle for at least 5 rounds)
@@ -167,7 +167,8 @@ class Battle::AI
 		party.each_with_index do |_pkmn, i|
 			canheswitch=true if @battle.pbCanHardSwitchLax?(idxBattler, i)
 		end
-		shouldSwitch=false if !canheswitch
+		shouldSwitch = false if !canheswitch
+		return false if !shouldSwitch
 		newindex=pbHardSwitchChooseNewEnemy(idxBattler,party,true) if shouldSwitch
 		if newindex
 			if newindex.is_a?(Array)

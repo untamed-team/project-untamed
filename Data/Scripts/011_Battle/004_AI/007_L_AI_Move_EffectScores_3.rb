@@ -81,7 +81,7 @@ class Battle::AI
     when "PowerHigherWithUserHP" # Eruption / water spout / Dragon Energy
 		if targetWillMove?(target)
 			targetMove = @battle.choices[target.index][2]
-			if userFasterThanTarget
+			if userFasterThanTarget || priorityAI(target,targetMove) < 1
 				if !targetSurvivesMove(move,user,target)
 					score*=1.3
 				end
@@ -102,7 +102,7 @@ class Battle::AI
     when "PowerLowerWithUserHP" # Flail / Reversal
 		if targetWillMove?(target)
 			targetMove = @battle.choices[target.index][2]
-			if userFasterThanTarget
+			if userFasterThanTarget || priorityAI(target,targetMove) < 1
 				if !targetSurvivesMove(move,user,target)
 					score*=1.3
 				else
@@ -1541,7 +1541,7 @@ class Battle::AI
 			if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
 				score*=2
 			else
-				score*=0.5
+				score*=0.7
 			end      
 			hasAlly = !target.allAllies.empty?
 			if hasAlly
@@ -3098,7 +3098,7 @@ class Battle::AI
 			if hasAlly
 				score*=0.5
 			end
-			burny = target.moves.any? { |j| j&.id == :WILLOWISP }
+			burny = target.moves.any? { |m| ["BurnTarget","BurnFlinchTarget","RecoilThirdOfDamageDealtBurnTarget"].include?(m&.function) }
 			if user.status == :BURN || burny
 				score*=1.3
 			end
@@ -4795,11 +4795,18 @@ class Battle::AI
 			end
 		end
     #---------------------------------------------------------------------------
-    when "GrassPledge" # Grass Pledge
-    #---------------------------------------------------------------------------
-    when "FirePledge" # Fire Pledge
-    #---------------------------------------------------------------------------
-    when "WaterPledge" # Water Pledge
+    when "GrassPledge", "FirePledge", "WaterPledge" # Grass Pledge, Fire Pledge, Water Pledge
+		# janky, and probably not very effective. Better than nothing i guess?
+		if !user.allAllies.empty?
+			if user.pbOpposingSide.effects[PBEffects::SeaOfFire] == 0 &&
+			   user.pbOpposingSide.effects[PBEffects::Swamp] == 0 &&
+			   user.pbOwnSide.effects[PBEffects::Rainbow] == 0
+				userAlly = user.allAllies.first
+				if userAlly.moves.any? { |m| ["GrassPledge", "FirePledge", "WaterPledge"].include?(m&.function) }
+					score *= 1.5
+				end
+			end
+		end
     #---------------------------------------------------------------------------
     when "UseLastMoveUsed" # copycat
 		if userFasterThanTarget || priorityAI(user, move) > 0

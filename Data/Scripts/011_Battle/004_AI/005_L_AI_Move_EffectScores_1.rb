@@ -11,7 +11,6 @@ class Battle::AI
 	aspeed = pbRoughStat(user,:SPEED,skill)
 	ospeed = pbRoughStat(target,:SPEED,skill)
 	userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-	pbAIPrioSpeedCheck(user,target,move,score,globalArray,aspeed,ospeed)
     case move.function
     #---------------------------------------------------------------------------
     when "Struggle"
@@ -71,12 +70,10 @@ class Battle::AI
 				score*=1.3
 			end
 		else
-			if targetWillMove?(target, "status")
-				score *= 1.5
-			elsif @battle.choices[target.index][0] == :SwitchOut
+			if targetWillMove?(target, "status") || @battle.choices[target.index][0] == :SwitchOut
 				score *= 1.3
 			else
-				score *= 0.8
+				score *= 0.5
 			end
 		end
 		if target.asleep? && (target.statusCount>=1 || !target.hasActiveAbility?(:EARLYBIRD)) && !target.hasActiveAbility?(:SHEDSKIN)
@@ -133,7 +130,8 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "CrashDamageIfFailsUnusableInGravity" # high jump kick
-		score*=0.5 if pbHasSingleTargetProtectMove?(target)
+		score*=0.5 if pbHasSingleTargetProtectMove?(target) && 
+					 !(user.hasActiveAbility?(:UNSEENFIST) && move.pbContactMove?(user))
 		currentAcc = pbRoughAccuracy(move,user,target,100)
 		if currentAcc < 100
 			score*=0.8 if targetSurvivesMove(move,user,target)
@@ -820,9 +818,6 @@ class Battle::AI
 				score*=miniscore
 			else
 				score*=0.1
-			end
-			if user.pbOpposingSide.effects[PBEffects::StickyWeb]>0
-				score*=0.9
 			end
 			score*=0.7 if pbHasHazardCleaningMove?(target)
 			if targetWillMove?(target, "status")
@@ -1573,21 +1568,8 @@ class Battle::AI
 				miniscore*=1.5
 			end          
 		end
-		if user.effects[PBEffects::Confusion]>0
-			miniscore*=0.5
-		end
-		if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
-			miniscore*=0.3
-		end
-		if pbHasPhazingMove?(target)
-			miniscore*=0.2
-		end
 		if user.hasActiveAbility?(:SIMPLE)
 			miniscore*=2
-		end
-		hasAlly = !target.allAllies.empty?
-		if hasAlly
-			miniscore*=0.5
 		end
 		if user.stages[:DEFENSE]>0
 			ministat=user.stages[:DEFENSE]
@@ -1599,10 +1581,25 @@ class Battle::AI
 		if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 			miniscore*=1.3
 		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		if (maxdam.to_f/user.hp)<0.12
-			miniscore*=0.3
+		if move.statusMove?
+			if user.effects[PBEffects::Confusion]>0
+				miniscore*=0.5
+			end
+			if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
+				miniscore*=0.3
+			end
+			if pbHasPhazingMove?(target)
+				miniscore*=0.2
+			end
+			hasAlly = !target.allAllies.empty?
+			if hasAlly
+				miniscore*=0.5
+			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0]
+			if (maxdam.to_f/user.hp)<0.12
+				miniscore*=0.3
+			end
 		end
 		roles = pbGetPokemonRole(user, target)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
