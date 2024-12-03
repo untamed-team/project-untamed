@@ -11,7 +11,7 @@
 #Comments should look like this:
 #quest_marker Quest1 true 1
 #"quest_marker" tells the game this is a quest
-#"questID" tells the game which quest the comment is about. This should not be a symbol iwth ':' in front
+#"questID" tells the game which quest the comment is about. This should not be a symbol with ':' in front
 #the true/false statement tells the game whether this NPC is the
 #quest giver and therefore should have an ! when the quest is ready to be given
 #the number at the end of the statement tells the game whether this NPC is where

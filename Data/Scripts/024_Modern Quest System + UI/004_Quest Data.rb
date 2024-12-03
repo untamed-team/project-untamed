@@ -183,6 +183,20 @@ module QuestModule
     :QuestDescription => "Alex has loaned you her camping gear so you can experience camping with your Pokémon.",
     :ReadyAtStart => true,
   }
+  Quest9 = {
+    :ID => "9",
+    :Name => "Ol' Rusty",
+    :QuestGiver => "Leo",
+    :QuestGiverSprite => "NPC_Old_Man",
+    :QuestGiverDescSprite => "GOLDPANNER",
+    :Stage1 => "Beat the three gold panners.",
+    :Task1 => ["Defeat Gold Panner Leo.",1,false],
+    :Task2 => ["Defeat Gold Panner Martina",1,false],
+    :Task3 => ["Defeat Gold Panner Agustín",1,false],
+    :Location1 => "Route 3",
+    :QuestDescription => "Beat the gold panners to earn the greatest things they've found!",
+    :ReadyAtStart => true,
+  }
   
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
