@@ -408,6 +408,23 @@ LoseText = Pant, pant-. Wait, I lost?
 Pokemon = EXPURSUM,25
     Gender = male
     IV = 0,0,0,0,0,0
+#-------------------------------
+[GOLDPANNER,Leo]
+LoseText = Woowee!
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[GOLDPANNER,Leo,100]
+LoseText = Woowee!
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
 
 #-------------------------------
 #-------------------------------

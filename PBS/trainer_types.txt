@@ -400,6 +400,11 @@ Name = Warehouse Worker
 Gender = Unknown
 BaseMoney = 32
 #-------------------------------
+[GOLDPANNER]
+Name = Goldpanner
+Gender = Unknown
+BaseMoney = 32
+#-------------------------------
 [TRAINER_Reine]
 Name = Trainer
 Gender = Female

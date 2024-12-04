@@ -194,6 +194,8 @@ module QuestModule
     :Task2 => ["Defeat Gold Panner Martina",1,false],
     :Task3 => ["Defeat Gold Panner Agustín",1,false],
     :Location1 => "Route 3",
+    :Stage2 => "Take the bike pieces to a man at the Shady Shuckle.",
+    :Location1 => "Route 5",
     :QuestDescription => "Beat the gold panners to earn the greatest things they've found!",
     :ReadyAtStart => true,
   }
