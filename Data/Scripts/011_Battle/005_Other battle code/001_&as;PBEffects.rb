@@ -129,6 +129,7 @@ module PBEffects
   HonorBound          = 123
   PrioEchoChamber     = 124
   BoomInstalled       = 125
+  LeechSeedCount      = 126
 
   #=============================================================================
   # These effects apply to a battler position

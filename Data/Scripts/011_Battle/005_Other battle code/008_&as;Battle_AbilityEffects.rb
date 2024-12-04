@@ -662,7 +662,7 @@ Battle::AbilityEffects::StatusCure.add(:OBLIVIOUS,
 
 Battle::AbilityEffects::StatusCure.add(:OWNTEMPO,
   proc { |ability, battler|
-    if $game_variables[MECHANICSVAR] >= 3
+    if $player.difficulty_mode?("chaos")
       next if battler.status != :DIZZY
       battler.battle.pbShowAbilitySplash(battler)
       battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
@@ -1379,7 +1379,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:RIVALRY,
       if user.gender == target.gender
         mults[:base_damage_multiplier] *= 1.25
       else
-        mults[:base_damage_multiplier] *= 0.75
+        mults[:base_damage_multiplier] *= 0.75 && !$player.difficulty_mode?("chaos")
       end
     end
   }
@@ -1388,7 +1388,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:RIVALRY,
 Battle::AbilityEffects::DamageCalcFromUser.add(:SANDFORCE,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = user.effectiveWeather if aiweather.nil?
-    if [:ROCK, :GROUND, :STEEL].include?(type) && effweather == :Sandstorm
+    if [:ROCK, :GROUND, :STEEL].include?(type) && aiweather == :Sandstorm
       mults[:base_damage_multiplier] *= 1.3
     end
   }
@@ -1527,7 +1527,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:WARRIORSPIRIT,
 Battle::AbilityEffects::DamageCalcFromUser.add(:HOTHEADED,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = user.effectiveWeather if aiweather.nil?
-    if type == :FIRE && effweather == :Hail
+    if type == :FIRE && aiweather == :Hail
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1543,7 +1543,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:COOLHEADED,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:CRYSTALJAW,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:base_damage_multiplier] *= 1.3 if move.bitingMove? && $game_variables[MECHANICSVAR] == 0
+    mults[:base_damage_multiplier] *= 1.3 if move.bitingMove? && $player.difficulty_mode?("easy")
   }
 )
 
@@ -1699,14 +1699,14 @@ Battle::AbilityEffects::DamageCalcFromTarget.add(:WATERBUBBLE,
 Battle::AbilityEffects::DamageCalcFromTarget.add(:SANDVEIL,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = target.effectiveWeather if aiweather.nil?
-    mults[:defense_multiplier] *= 1.5 if effweather == :Sandstorm && move.physicalMove?
+    mults[:defense_multiplier] *= 1.5 if aiweather == :Sandstorm && move.physicalMove?
   }
 )
 
 Battle::AbilityEffects::DamageCalcFromTarget.add(:SNOWCLOAK,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = target.effectiveWeather if aiweather.nil?
-    mults[:defense_multiplier] *= 1.5 if effweather == :Hail && move.specialMove?
+    mults[:defense_multiplier] *= 1.5 if aiweather == :Hail && move.specialMove?
   }
 )
 
@@ -2461,10 +2461,11 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
+    next if battle.wasUserAbilityActivated?(user)
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
 		target.effects[PBEffects::SlipperyPeel] = true
-		battle.ActivateUserAbility(user) if $game_variables[MECHANICSVAR] >= 2 # Hard / "Low" mode
+		battle.ActivateUserAbility(user) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     if user.hasActiveAbility?(:SUCTIONCUPS) && !battle.moldBreaker
       battle.pbShowAbilitySplash(user)
       if Battle::Scene::USE_ABILITY_SPLASH
@@ -2576,7 +2577,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:HEALINGSUN,
     next unless [:Sun, :HarshSun].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-		hpRecovered = (weather == :HarshSun) ? (battler.totalhp / 10).round : (battler.totalhp / 16).round
+		hpRecovered = (weather == :HarshSun) ? (battler.totalhp / 8).round : (battler.totalhp / 16).round
     battler.pbRecoverHP(hpRecovered)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
@@ -2788,7 +2789,7 @@ Battle::AbilityEffects::EndOfRoundGainItem.add(:HARVEST,
     next if battler.item
     next if !battler.recycleItem || !GameData::Item.get(battler.recycleItem).is_berry?
     if ![:Sun, :HarshSun].include?(battler.effectiveWeather)
-      next unless battle.pbRandom(100) < 50
+      next unless battle.pbRandom(100) < 25
     end
     battle.pbShowAbilitySplash(battler)
     battler.item = battler.recycleItem
@@ -2802,7 +2803,7 @@ Battle::AbilityEffects::EndOfRoundGainItem.add(:HARVEST,
 
 Battle::AbilityEffects::EndOfRoundGainItem.add(:PICKUP,
   proc { |ability, battler, battle|
-    next if $game_variables[MECHANICSVAR] >= 3 #by low
+    next if $player.difficulty_mode?("chaos") #by low
     next if battler.item
     foundItem = nil
     fromBattler = nil
@@ -3523,7 +3524,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
 
 Battle::AbilityEffects::OnSwitchIn.add(:INNERFOCUS,
   proc { |ability, battler, battle, switch_in|
-    next if $game_variables[MECHANICSVAR] <= 1
+    next if !$player.difficulty_mode?("chaos")
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("{1}'s mental fortitude prevents {2} from flinching!", battler.pbThis, battler.pbTeam))
     battle.pbHideAbilitySplash(battler)

@@ -129,9 +129,9 @@ class Battle::AI
     # WillMega / Mid-turn mega move type calcuation
     if user.pokemon.willmega
       if move.type == :NORMAL # -ate / -ize abilities
-        if user.isSpecies?(:HAWLUCHA) && $game_variables[MECHANICSVAR] >= 3 && !user.pokemon.hasHiddenAbility?
+        if user.isSpecies?(:HAWLUCHA) && $player.difficulty_mode?("chaos") && !user.pokemon.hasHiddenAbility?
           ret = :ELECTRIC
-        elsif user.isSpecies?(:GOLURK) && $game_variables[MECHANICSVAR] <= 3
+        elsif user.isSpecies?(:GOLURK) && !$player.difficulty_mode?("chaos")
           ret = :FLYING
         end
       end
@@ -227,7 +227,24 @@ class Battle::AI
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
-      baseDmg = 60
+      baseDmg = 20
+      targetMove = @battle.choices[target.index][2]
+      if !["CounterPhysicalDamage","CounterSpecialDamage","CounterDamagePlusHalf"].include?(targetMove.function)
+        if (move.function == "CounterPhysicalDamage" && targetWillMove?(target, "phys")) ||
+           (move.function == "CounterSpecialDamage"  && targetWillMove?(target, "spec")) ||
+           (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
+          if targetSurvivesMove(targetMove,target,user)
+            baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+            baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
+            baseDmg *= 1.5 if move.function == "CounterDamagePlusHalf"
+          end
+        end
+        if move.function == "CounterDamagePlusHalf"
+          aspeed = pbRoughStat(user,:SPEED,skill)
+          ospeed = pbRoughStat(target,:SPEED,skill)
+          baseDmg = 1 if (ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)
+        end
+      end
     when "DoublePowerIfTargetUnderwater",
          "BindTargetDoublePowerIfTargetUnderwater"
       baseDmg = move.pbModifyDamage(baseDmg, user, target)
@@ -411,11 +428,10 @@ class Battle::AI
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
     modifiers[:evasion_stage]  = target.stages[:EVASION]
     if modifiers[:accuracy_stage] < 0
-      case $game_variables[MECHANICSVAR]
-      when 2, 3
+      if $player.difficulty_mode?("hard")
         modifiers[:accuracy_stage] = 0
-      else
-        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer? 
+      else 
+        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer?
       end
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0

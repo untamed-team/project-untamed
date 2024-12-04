@@ -513,7 +513,7 @@ end
 class Pokemon
   def calcHP(base, level, iv, ev)
     return 1 if base == 1   # For Shedinja
-		ev = 0 if $game_variables[MECHANICSVAR] >= 3
+		ev = 0 if $player.difficulty_mode?("chaos")
 		# made ivs be a brute stat boost #by low
     return (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
   end
@@ -524,7 +524,7 @@ class Pokemon
 			return 10 if realStat == :SPEED
 			return 7 if realStat == :SPECIAL_ATTACK
 		end
-		ev = 0 if $game_variables[MECHANICSVAR] >= 3
+		ev = 0 if $player.difficulty_mode?("chaos")
 		# made ivs be a brute stat boost #by low
     return ((((((base * 2) + (ev / 4)) * level / 100).floor + 5) * nat / 100) * (1+iv/100.0)).floor
   end
@@ -739,7 +739,7 @@ class Battle::Move
     c += 1 if user.inHyperMode? && @type == :SHADOW
     c = ratios.length - 1 if c >= ratios.length
     # Calculation
-		return false if c == 0 && $game_variables[MECHANICSVAR] >= 3 #by low
+		return false if c == 0 && $player.difficulty_mode?("chaos") #by low
 		return false if !target.pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][19]==true
     return true if ratios[c] == 1
     r = @battle.pbRandom(ratios[c])
@@ -874,13 +874,14 @@ class Player < Trainer
     @bin_array = ["FakeStone", "Elena", "Kanto", "Pop Culture", "Flygon", 
                   "Book", "AI Art", "Love Advice", "man.", "Hiccups", 
                   "RGB", "Jynx", "Kanto 2", "Code", "Walmart", 
-                  "Kettle"]
+                  "Kettle", "NYC", "AsaCoco", "Kanto 3", "Flavor",
+                  "saghex", "HexySexy", "Devstruggle"]
   end
 end
 
 def pbTrashBin(eventID, specialBin = false)
   if !specialBin
-    bin_rng  = rand(5)
+    bin_rng = rand(5)
     case bin_rng
     when 0 then msg = "A common trash bin."
     when 1 then msg = "A interesting trash bin."
@@ -894,14 +895,14 @@ def pbTrashBin(eventID, specialBin = false)
   end
   if $player.bin_array.empty?
     pbMessage(_INTL("A common trash bin."))
-    echoln "no bin 4 u"
+    #echoln "no bin 4 u"
     return
   end
   bin_rng2 = semiRandomRNG($player.bin_array.length)
-  echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
+  #echoln "#{bin_rng2} || #{$player.bin_array[bin_rng2]}"
   pbMEPlay("Item get")
   pbSetSelfSwitch(eventID, "B", true)
-
+  ayaya = ($Trainer.they == "he" && $player.gender == 0) # jesus christ this "they" shit is so fucking cringe
   case $player.bin_array[bin_rng2]
   when "FakeStone"
     fake_stonen = rand(4)
@@ -909,21 +910,25 @@ def pbTrashBin(eventID, specialBin = false)
     when 0 then fake_stone = "Gastronautite"
     when 1 then fake_stone = "Quetzillianite"
     when 2 then fake_stone = "Bathygigite"
-    when 3 then fake_stone = "Crustangite"
+    when 3 then fake_stone = "Crustanite"
     when 4 then fake_stone = "Peroxotalite"
     end
     pbMessage(_INTL("You found a \\c[1]{1}\\c[0]!",fake_stone))
     pbMessage(_INTL("...\\n..."))
     pbMessage(_INTL("You awkwardly put the trash back at the bin."))
   when "Elena"
-    pbMessage(_INTL("You found a \\c[1]Rusty Note\\c[0]!"))
-    pbMessage(_INTL("It says: &quot;\\c[1]Zaza\\c[0] was here! :D \\n\\c[1]Lucius\\c[0] is a fat meanie :(&quot;"))
+    pbMessage(_INTL("You found a \\c[1]Old Drawing\\c[0]!"))
+    pbMessage(_INTL("It has Gijinkas of the legendary birds. Cute."))
+    if ayaya
+      pbMessage(_INTL("...'Arti' is pretty hot.")) 
+      pbMessage(_INTL("...and this 'Zaza' is so (ToT).")) if rand(3) == 0
+    end
+    pbMessage(_INTL("You put the \\c[1]Drawing\\c[0] in\\nyour Bag's \\c[1]Spare\\c[0] pocket."))
   when "Kanto"
     pbMessage(_INTL("You found a \\c[1]Crumpled Photo\\c[0]!"))
-    pbMessage(_INTL("It's a photo of a little kid from KANTO0O0O0O0O, he is hugging a Eevee."))
+    pbMessage(_INTL("It's a photo of a little kid from KANTO, he is hugging a Eevee."))
     pbMessage(_INTL("...\\n..."))
     pbMessage(_INTL("Truly repugnant."))
-    pbMessage(_INTL("With utter disgust of the horrid taste of KANTO0Onians, you put the trash back at the bin."))
   when "Pop Culture"
     pbMessage(_INTL("You found a \\c[1]Discarted Screenplay\\c[0]!"))
     pbMessage(_INTL("It says something about dramatic entrances and eating garbage."))
@@ -932,10 +937,10 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("It shows many weird looking Flygons. It seems the artist had a art block."))
   when "Book"
     pbMessage(_INTL("You found a \\c[1]Joke Book\\c[0]!"))
-    pbMessage(_INTL("'I had a good one but it was rubbish.' by Genedartee."))
+    pbMessage(_INTL("'I had a good one but it was rubbish.'"))
   when "AI Art"
     pbMessage(_INTL("You found a \\c[1]Picture\\c[0]!"))
-    if $Trainer.they == "he" && $player.gender == 0 # jesus christ this "they" shit is so fucking cringe
+    if ayaya
       pbMessage(_INTL("It's your favorite PokeGirl trying to hug you."))
       pbMessage(_INTL("It has a 'AI Generated' watermark."))
       pbMessage(_INTL("You put the \\c[1]Picture\\c[0] in\\nyour Bag's \\c[1]Spare\\c[0] pocket for later."))
@@ -956,24 +961,58 @@ def pbTrashBin(eventID, specialBin = false)
   when "RGB"
     pbSetSelfSwitch(eventID, "B", false)
     pbSetSelfSwitch(eventID, "D", true)
-    pbMessage(_INTL("You found a \\c[2]R\\c[3]G\\c[1]B Bin\\c[0]!"))
-    pbMessage(_INTL("She is not like other bins."))
+    pbMessage(_INTL("You found a \\c[2]R\\c[3]G\\c[1]Bin\\c[0]!"))
   when "Jynx"
     pbMessage(_INTL("You found some \\c[1]Drafts Art\\c[0]!"))
-    pbMessage(_INTL("It shows Jynx evolving into a new cool looking Pokemon. Twitter might not like this."))
+    pbMessage(_INTL("It shows Jynx evolving into a new cool looking Pokemon. Social recluses might not like this."))
   when "Kanto 2"
     pbMessage(_INTL("You found some \\c[1]Doll\\c[0]!"))
-    pbMessage(_INTL("It's a Charizard Doll. Well, can't say it doesn't deserve to be there."))
+    pbMessage(_INTL("It's a Charizard Doll.\\nWell, can't say it doesn't deserve to be there."))
   when "Code"
-    pbMessage(_INTL("You found some ...\\c[1]Code\\c[0]?"))
-    print "What do mean Quash is 'too complicated' for me to learn!? teachmeTeachMeTEACHME!!!"
+    pbMessage(_INTL("You found some ...\\c[1]Crash logs\\c[0]?"))
+    print "What do mean Quash is 'too complicated' for me to learn!? Just TEACH ME you dumb granny!!!"
     pbMessage(_INTL("Seems like Kiriya is having a fit. I hope she calms down soon enough."))
   when "Walmart"
     pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
-    pbMessage(_INTL("It seems that a unidentified pink bunny has been banned from a PokeMart\\n...in Minecraft."))
+    pbMessage(_INTL("It seems that a unidentified pink bunny has been banned from PokeMarts\\n...in Minecraft?"))
   when "Kettle"
     pbMessage(_INTL("You found a \\c[1]Cropped Ad\\c[0]!"))
     pbMessage(_INTL("It's a yellow kettle. It seems to have a &quot;<i>Dynamically Adjustable Yield Operator</i>&quot; system, or DAYO for short."))
+  when "NYC"
+    pbMessage(_INTL("You found ...\\c[1]'drawings'\\c[0]..."))
+    pbMessage(_INTL("Disregarding how awful it looks, it seems to be a trainer with a black and blue color scheme and a Snake Pokemon?"))
+    pbMessage(_INTL("There is a blob of blond-yellow in the snake's mouth...\\nFeeling violated, you put the trash back at the bin."))
+  when "AsaCoco"
+    pbMessage(_INTL("You found a \\c[1]Indie Newspaper\\c[0]!"))
+    pbMessage(_INTL("A discontinued newsletter. The final issue had a interview between a self-proclaimed Phoenix and a Yakuza member."))
+    pbMessage(_INTL("Good memories."))
+  when "Kanto 3"
+    pbMessage(_INTL("You found a \\c[1]Tour Guide\\c[0]!"))
+    pbMessage(_INTL("The pictures are pretty.\\n...Though, why is that trainer forcing a Karp climb a waterfall? Isn't that a bit unpractical?"))
+  when "Flavor"
+    pbMessage(_INTL("You found a \\c[1]Court Transcript\\c[0]!"))
+    pbMessage(_INTL("This is long, ridiculously so.\\nSkimming through this snoozefest, it seems that many people were debating about... flavor...?"))
+    pbMessage(_INTL("That was a waste of time."))
+  when "saghex"
+    pbMessage(_INTL("You found a \\c[1]Research Paper\\c[0]!"))
+    if ayaya
+      pbMessage(_INTL("It shows a steep increase in romantic relationships between 30+ y/o women and 20 y/o men."))
+      pbMessage(_INTL("god I wish that was me"))
+    else
+      pbMessage(_INTL("It shows a increase in general loneliness. I didn't need data to prove that."))
+    end
+  when "HexySexy"
+    pbMessage(_INTL("You found a \\c[1]Crumpled Map\\c[0]!"))
+    pbMessage(_INTL("Many cafés are marked. All of them have attached gimmicks."))
+    if ayaya
+      pbMessage(_INTL("In Kalos, a Hex Maniac Maid Café opened. It specializes in milk beverages."))
+      pbMessage(_INTL("You put the \\c[1]Crumpled Map\\c[0] in\\nyour Bag's \\c[1]Spare\\c[0] pocket as a reminder."))
+    else
+      pbMessage(_INTL("You wonder what the point of these are. StaryuChucks has everything you need anyway."))
+    end
+  when "Devstruggle"
+    pbMessage(_INTL("You found a \\c[1]Scam\\c[0]!"))
+    pbMessage(_INTL("The author claims to have found a new region.\\nThe starters change every week, and this has been going for years."))
   else
     pbMessage(_INTL("A Trash bin."))
   end
@@ -1008,7 +1047,7 @@ def nameToNumberConvert(name)
     ' ' => 37, '!' => 38, '"' => 39, '#' => 40, '$' => 41, '%' => 42, '&' => 43, '\'' => 44, '(' => 45, 
     ')' => 46, '*' => 47, '+' => 48, ',' => 49, '-' => 50, '.' => 51, '/' => 52, ':' => 53, ';' => 54, 
     '<' => 55, '=' => 56, '>' => 57, '?' => 58, '@' => 59, '[' => 60, '\\' => 61, ']' => 62, '^' => 63, 
-    '_' => 64, '`' => 65, '{' => 66, '|' => 67, '}' => 68, '~' => 69 #heh nice
+    '_' => 64, '`' => 65, '{' => 66, '|' => 67, '}' => 68, '~' => 69 #nice
   }
   name = name.upcase
   total = 0
@@ -1020,17 +1059,6 @@ def nameToNumberConvert(name)
     total += letter_values[letter]
   end
   return total
-end
-
-def build_char_map
-  char_map = {}
-  (' '..'~').each_with_index do |char, index|
-    char_map[char] = format('%03d', index)
-  end
-  ('À'..'ÿ').each_with_index do |char, index|
-    char_map[char] = format('%04d', index + 1000)
-  end
-  char_map.invert
 end
 
 # look brah i got lazy

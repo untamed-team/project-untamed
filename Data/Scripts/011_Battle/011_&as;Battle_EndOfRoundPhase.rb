@@ -198,17 +198,26 @@ class Battle
       next if !recipient || recipient.fainted?
       pbCommonAnimation("LeechSeed", recipient, battler)
 			# leech seed nerf #by low
-			math = ($game_variables[MECHANICSVAR] >= 3) ? 10 : 8
-			dmg = battler.totalhp / math
+			dmg = battler.totalhp / 8
 			dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
       battler.pbTakeEffectDamage(dmg) { |hp_lost|
 				true_hp_lost = hp_lost
-				true_hp_lost /= 2 if $game_variables[MECHANICSVAR] >= 3 && battler.pbOwnedByPlayer?
+				true_hp_lost *= 0.75 if recipient.pbOwnedByPlayer?
         recipient.pbRecoverHPFromDrain(true_hp_lost, battler,
                                        _INTL("{1}'s health is sapped by Leech Seed!", battler.pbThis))
         recipient.pbAbilitiesOnDamageTaken
       }
       recipient.pbFaint if recipient.fainted?
+      if !battler.fainted?
+        if $player.difficulty_mode?("chaos")
+          battler.effects[PBEffects::LeechSeedCount] -= 1
+          if battler.effects[PBEffects::LeechSeedCount] <= 0
+            battler.effects[PBEffects::LeechSeed]      = -1
+            battler.effects[PBEffects::LeechSeedCount] = 0
+            pbDisplay(_INTL("{1} was freed from the leech!", battler.pbThis))
+          end
+        end
+      end
     end
   end
 
@@ -216,91 +225,6 @@ class Battle
   # End Of Round deal damage from status problems
   #=============================================================================
   def pbEORStatusProblemDamage(priority)
-    # Damage from poisoning
-    priority.each do |battler|
-      next if battler.fainted?
-      next if battler.status != :POISON
-      next if battler.hasActiveAbility?(:TOXICBOOST) #by low
-      if battler.statusCount > 0
-        battler.effects[PBEffects::Toxic] += 1
-        battler.effects[PBEffects::Toxic] = 16 if battler.effects[PBEffects::Toxic] > 16
-      end
-      if battler.hasActiveAbility?(:POISONHEAL)
-        if battler.canHeal?
-          anim_name = GameData::Status.get(:POISON).animation
-          pbCommonAnimation(anim_name, battler) if anim_name
-          pbShowAbilitySplash(battler)
-          battler.pbRecoverHP(battler.totalhp / 8)
-          if Scene::USE_ABILITY_SPLASH
-            pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
-          else
-            pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
-          end
-          pbHideAbilitySplash(battler)
-        end
-      elsif battler.takesIndirectDamage?
-        battler.droppedBelowHalfHP = false
-        dmg = battler.totalhp / 8
-				if battler.statusCount > 0
-					if $game_variables[DIFFICULTYVAR] > 0 #by low
-						if battler.effects[PBEffects::Toxic] > 2
-							dmg = battler.totalhp / 4
-							battler.effects[PBEffects::Toxic] = 0
-							battler.statusCount = 2 #for "pbContinueStatus" to say a different message
-							#~ print "super damage"
-						end
-					else
-						dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
-					end
-				end
-        battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-        battler.pbItemHPHealCheck
-        battler.pbAbilitiesOnDamageTaken
-        battler.pbFaint if battler.fainted?
-        battler.droppedBelowHalfHP = false
-      end
-    end
-    # Damage from burn
-    priority.each do |battler|
-      next if battler.status != :BURN || !battler.takesIndirectDamage? || battler.hasActiveAbility?(:FLAREBOOST) #by low
-      battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
-      dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:HEATPROOF)
-      battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-      battler.pbItemHPHealCheck
-      battler.pbAbilitiesOnDamageTaken
-      battler.pbFaint if battler.fainted?
-      battler.droppedBelowHalfHP = false
-    end
-    # Damage from frostbite #by low
-    priority.each do |battler|
-      next if battler.status != :FROZEN || !battler.takesIndirectDamage?
-      battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
-      dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:THICKFAT)
-      battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-      battler.pbItemHPHealCheck
-      battler.pbAbilitiesOnDamageTaken
-      battler.pbFaint if battler.fainted?
-      battler.droppedBelowHalfHP = false
-    end
-		# dizzy #by low
-    priority.each do |battler|
-      next if battler.status != :DIZZY
-      battler.statusCount -= 1
-      if battler.statusCount <= 0
-        battler.pbCureStatus
-      else
-				battler.pbContinueStatus
-			end
-    end
-		# paralyzis rework #by low
-    priority.each do |battler|
-      next if battler.status != :PARALYSIS
-      next if $game_variables[DIFFICULTYVAR] == 0
-      battler.statusCount -= 1
-      battler.pbCureStatus if battler.statusCount <= 0
-    end
   end
 
   #=============================================================================
@@ -769,16 +693,11 @@ class Battle
 				end
 				
 				battler.pokemon.evolution_steps += 1 if battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky") && battler.isSpecies?(:DUNSPARCE)
-				#~ print battler.pokemon.evolution_steps
 				for i in $Trainer.party
 					if [:BANAGNAW, :NANAHI, :POTASSOPOD].include?(i.species) && i.fainted?
 						$game_temp.party_dead_bananas[battler.pokemonIndex] += 1
 					end
 				end
-				#print "#{$game_temp.party_speed_boost_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_berries_eaten_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_fly_turns_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_dead_bananas[battler.pokemonIndex]}"
 			end
 		end
     # Reset/count down battler-specific effects (no messages)

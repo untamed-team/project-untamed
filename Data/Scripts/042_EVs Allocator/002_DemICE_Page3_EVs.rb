@@ -76,7 +76,7 @@ class EVAllocationSprite2 < Sprite
 	attr_reader :index
 	
 	def initialize(viewport=nil,fifthmove=false)
-		$donteditEVs = true if $game_variables[MECHANICSVAR] >= 3 #by low
+		$donteditEVs = true if $player.difficulty_mode?("chaos") #by low
 		super(viewport)
 		if PluginManager.installed?("BW Summary Screen") 	
 			@EVsel2=AnimatedBitmap.new("Graphics/Pictures/Level Based Mixed EV System and Allocator/EVsel2BW")

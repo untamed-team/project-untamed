@@ -245,7 +245,7 @@ class Battle::AI
 			death=false	
 			roomturn=0
 			roomturn=1 if sack
-			if $game_variables[MECHANICSVAR] >= 3
+			if $player.difficulty_mode?("chaos")
 				# no need to do abilityWeather or abilityTerrain checks here
 				w_damage_multiplier = 1.25
 				t_damage_multiplier = 1.15
@@ -652,8 +652,7 @@ class Battle::AI
 						next if m.base_damage==0 || m.type != :ELECTRIC
 						sum += 5
 					end   
-					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "BPRaiseWhileElectricTerrain")
-					sum+=5 if pkmn.pbHasMoveFunction?("DoublePowerInElectricTerrain") 
+					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "DoublePowerInElectricTerrain")
 				end
 				if pokmon.ability==:GRASSYSURGE
 					sum+=5 if pkmn.item == :GRASSYSEED
@@ -664,8 +663,7 @@ class Battle::AI
 					end   
 					sum-=5 if pkmn.pbHasMoveFunction?("DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground",
 																							"LowerTargetSpeed1WeakerInGrassyTerrain")
-					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HealTargetDependingOnGrassyTerrain")
-					sum+=5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain") 
+					sum+=5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HealTargetDependingOnGrassyTerrain", "HigherPriorityInGrassyTerrain")
 				end
 				if pokmon.ability==:MISTYSURGE
 					sum+=5 if pkmn.item == :MISTYSEED

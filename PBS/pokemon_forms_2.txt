@@ -206,47 +206,47 @@ Abilities = MAGICBOUNCE
 #---------------------------------------------------------------------------------------------
 [FURFROU,1]
 FormName = Heart Trim
-Types = NORMAL,FAIRY
-Abilities = CUTECHARM
+Types = FAIRY,NORMAL
+Abilities = HEALER
 #-------------------------------
 [FURFROU,2]
 FormName = Star Trim
-Types = NORMAL,ICE
-Abilities = REFRIGERATE
+Types = ICE,NORMAL
+Abilities = CLEARBODY
 #-------------------------------
 [FURFROU,3]
 FormName = Diamond Trim
-Types = NORMAL,ROCK
-Abilities = ROCKHEAD
+Types = ROCK,NORMAL
+Abilities = STEADFAST
 #-------------------------------
 [FURFROU,4]
 FormName = Debutante Trim
-Types = NORMAL,ELECTRIC
+Types = ELECTRIC,NORMAL
 Abilities = STATIC
 #-------------------------------
 [FURFROU,5]
 FormName = Matron Trim
-Types = NORMAL,PSYCHIC
+Types = PSYCHIC,NORMAL
 Abilities = PRESSURE
 #-------------------------------
 [FURFROU,6]
 FormName = Dandy Trim
-Types = NORMAL,GRASS
+Types = GRASS,NORMAL
 Abilities = NATURALCURE
 #-------------------------------
 [FURFROU,7]
 FormName = La Reine Trim
-Types = NORMAL,WATER
+Types = WATER,NORMAL
 Abilities = WATERVEIL
 #-------------------------------
 [FURFROU,8]
 FormName = Kabuki Trim
-Types = NORMAL,FIGHTING
-Abilities = GUTS
+Types = FIGHTING,NORMAL
+Abilities = SHEERFORCE
 #-------------------------------
 [FURFROU,9]
 FormName = Pharaoh Trim
-Types = NORMAL,GHOST
+Types = GHOST,NORMAL
 Abilities = MOLDBREAKER
 #-------------------------------
 [BEAKRAFT,1]

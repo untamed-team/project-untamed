@@ -9231,3 +9231,15 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = BOOMInstall
 Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
+[TRIMTACKLE]
+Name = Trim Tackle
+Type = NORMAL
+Category = Physical
+Power = 90
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = TypeIsUserFirstType
+Flags = CanProtect,CanMirrorMove
+Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.

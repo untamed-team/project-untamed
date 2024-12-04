@@ -263,7 +263,7 @@ class Battle::Scene::PokemonDataBox < Sprite
 
   def draw_status
     return if @battler.status == :NONE
-    if @battler.status == :POISON && @battler.statusCount > 0 && $game_variables[MECHANICSVAR] < 3 #by low  # Badly poisoned
+    if @battler.status == :POISON && @battler.statusCount > 0 && !$player.difficulty_mode?("chaos") #by low  # Badly poisoned
       s = GameData::Status.count - 1
     else
       s = GameData::Status.get(@battler.status).icon_position

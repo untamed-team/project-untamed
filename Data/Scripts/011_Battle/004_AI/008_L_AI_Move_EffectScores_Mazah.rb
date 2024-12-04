@@ -649,7 +649,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
 	when "OverrideTargetStatusWithPoison" # Crimson Surge
-		if $game_variables[MECHANICSVAR] >= 2 && target.status == :NONE
+		if $player.difficulty_mode?("chaos") && target.status == :NONE
 			score *= 0.3
 		elsif target.asleep? && target.statusCount <= 2
 			score = 0

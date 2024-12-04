@@ -25,7 +25,7 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
 
   def pbAccuracyCheck(user, target)
     acc = @accuracy + user.level - target.level
-		acc = 0 if $game_variables[MECHANICSVAR] >= 2 #by low
+		acc = 0 if $player.difficulty_mode?("hard") #by low
     return @battle.pbRandom(100) < acc
   end
 
@@ -47,7 +47,7 @@ end
 #===============================================================================
 class Battle::Move::RemoveTargetItem < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-		if $game_variables[MECHANICSVAR] < 3
+		if !$player.difficulty_mode?("chaos")
 			if Settings::MECHANICS_GENERATION >= 6 &&
 				 target.item && !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
 				 # NOTE: Damage is still boosted even if target has a substitute.
@@ -81,7 +81,7 @@ class Battle::Move::StatUpMove < Battle::Move
 
   def pbMoveFailed?(user, targets)
     return false if damagingMove?
-		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -96,7 +96,7 @@ class Battle::Move::StatUpMove < Battle::Move
 
   def pbAdditionalEffect(user, target)
     if user.pbCanRaiseStatStage?(@statUp[0], user, self) && 
-			 !user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+			 !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
     end
 		if damagingMove? && @addlEffect == 100
@@ -119,7 +119,7 @@ class Battle::Move::MultiStatUpMove < Battle::Move
       failed = false
       break
     end
-		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -148,7 +148,7 @@ class Battle::Move::MultiStatUpMove < Battle::Move
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
       if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim) && 
-				 !user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+				 !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
         showAnim = false
 				if damagingMove? && @addlEffect == 100
 					user.SetupMovesUsed.push(@id)
@@ -179,6 +179,7 @@ class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
     end
     if user.effects[PBEffects::LeechSeed] >= 0
       user.effects[PBEffects::LeechSeed] = -1
+      user.effects[PBEffects::LeechSeedCount] = 0
       @battle.pbDisplay(_INTL("{1} shed Leech Seed!", user.pbThis))
 			didsomething=true
     end
@@ -223,7 +224,7 @@ class Battle::Move::RaiseUserAndAlliesAtkDef1 < Battle::Move
       next if b.index == user.index
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
 			@validTargets.push(b)
     end
     if @validTargets.length == 0
@@ -272,7 +273,7 @@ class Battle::Move::RaisePlusMinusUserAndAlliesAtkSpAtk1 < Battle::Move
       next if !b.hasActiveAbility?([:MINUS, :PLUS])
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @validTargets.push(b)
     end
     if @validTargets.length == 0
@@ -328,7 +329,7 @@ class Battle::Move::RaisePlusMinusUserAndAlliesDefSpDef1 < Battle::Move
       next if !b.hasActiveAbility?([:MINUS, :PLUS])
       next if !b.pbCanRaiseStatStage?(:DEFENSE, user, self) &&
               !b.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @validTargets.push(b)
     end
     if @validTargets.length == 0
@@ -374,7 +375,7 @@ class Battle::Move::RaiseGroundedGrassBattlersAtkSpAtk1 < Battle::Move
       next if b.airborne? || b.semiInvulnerable?
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @validTargets.push(b.index)
     end
     if @validTargets.length == 0
@@ -415,7 +416,7 @@ class Battle::Move::RaiseGrassBattlersDef1 < Battle::Move
       next if !b.pbHasType?(:GRASS)
       next if b.semiInvulnerable?
       next if !b.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @validTargets.push(b.index)
     end
     if @validTargets.length == 0
@@ -447,12 +448,12 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
     failed = true
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
     if failed
-      if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+      if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
 				@battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       else
         @battle.pbDisplay(_INTL("But it failed!"))
@@ -489,7 +490,7 @@ class Battle::Move::RaiseTargetSpDef1 < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
                    !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
-		if target.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -517,7 +518,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
       @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", target.pbThis)) if show_message
       return true
     end
-		if target.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -540,7 +541,7 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-			next if b.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+			next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -567,7 +568,7 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
   def initialize(battle, move)
     super
     @statUp   = [:ATTACK, 2, :SPECIAL_ATTACK, 2]
-    if $game_variables[MECHANICSVAR] >= 3
+    if $player.difficulty_mode?("chaos")
       @statUp.push(:SPEED, 1)
     else
       @statUp.push(:SPEED, 2)
@@ -593,7 +594,7 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
       @battle.pbDisplay(_INTL("{1}'s stats can't be changed further!", user.pbThis))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -644,7 +645,7 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
     if user.pbCanLowerStatStage?(:DEFENSE, user, self)
       user.pbLowerStatStage(:DEFENSE, 1, user)
     end
-    if user.pbCanRaiseStatStage?(:SPEED, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
+    if user.pbCanRaiseStatStage?(:SPEED, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:SPEED, 1, user)
     end
 		user.SetupMovesUsed.push(@id)
@@ -664,7 +665,7 @@ class Battle::Move::TwoTurnAttackRaiseUserSpAtkSpDefSpd2 < Battle::Move::TwoTurn
       @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", user.pbThis))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -698,7 +699,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserDefense1 < Battle::Move::TwoTurn
   end
 
   def pbChargingTurnEffect(user, target)
-    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
+    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:DEFENSE, 1, user)
 			user.SetupMovesUsed.push(@id)
     end
@@ -715,7 +716,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserSpAtk1 < Battle::Move::TwoTurnMo
   end
 
   def pbChargingTurnEffect(user, target)
-    if user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
+    if user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
 			user.SetupMovesUsed.push(@id)
     end
@@ -743,14 +744,14 @@ class Battle::Move::UserAddStockpileRaiseDefSpDef1 < Battle::Move
                             user.pbThis, user.effects[PBEffects::Stockpile]))
     showAnim = true
     didsomething = false
-    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
+    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       if user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
         user.effects[PBEffects::StockpileDef] += 1
         showAnim = false
         didsomething = true
       end
     end
-    if user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3)
+    if user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       if user.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
         user.effects[PBEffects::StockpileSpDef] += 1
         didsomething = true
@@ -771,7 +772,7 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
   def ignoresSubstitute?(user); return true; end
 
   def pbTarget(user)
-    if user.pbHasType?(:GHOST) && $game_variables[MECHANICSVAR] < 3
+    if user.pbHasType?(:GHOST) && !$player.difficulty_mode?("chaos")
       ghost_target = (Settings::MECHANICS_GENERATION >= 8) ? :RandomNearFoe : :NearFoe
       return GameData::Target.get(ghost_target)
     end
@@ -779,14 +780,14 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
   end
 
   def pbMoveFailed?(user, targets)
-    return false if user.pbHasType?(:GHOST) && $game_variables[MECHANICSVAR] < 3
+    return false if user.pbHasType?(:GHOST) && !$player.difficulty_mode?("chaos")
     if !user.pbCanLowerStatStage?(:SPEED, user, self) &&
        !user.pbCanRaiseStatStage?(:ATTACK, user, self) &&
        !user.pbCanRaiseStatStage?(:DEFENSE, user, self)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $game_variables[MECHANICSVAR] >= 3
+		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
 		end
@@ -794,7 +795,7 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if user.pbHasType?(:GHOST) && target.effects[PBEffects::Curse] && $game_variables[MECHANICSVAR] < 3
+    if user.pbHasType?(:GHOST) && target.effects[PBEffects::Curse] && !$player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -802,7 +803,7 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    return if user.pbHasType?(:GHOST) && $game_variables[MECHANICSVAR] < 3
+    return if user.pbHasType?(:GHOST) && !$player.difficulty_mode?("chaos")
     # Non-Ghost effect
     if user.pbCanLowerStatStage?(:SPEED, user, self)
       user.pbLowerStatStage(:SPEED, 1, user)
@@ -819,7 +820,7 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     return if !user.pbHasType?(:GHOST)
-		return if $game_variables[MECHANICSVAR] >= 3
+		return if $player.difficulty_mode?("chaos")
     # Ghost effect
     @battle.pbDisplay(_INTL("{1} cut its own HP and laid a curse on {2}!", user.pbThis, target.pbThis(true)))
     target.effects[PBEffects::Curse] = true
@@ -846,7 +847,7 @@ class Battle::Move::RaiseUserSpAtk1 < Battle::Move::StatUpMove
     return if user.fainted?
 		return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
     if @id == :FIERYDANCE && user.pbOwnedByPlayer?
-			if $game_variables[MECHANICSVAR] >= 3
+			if $player.difficulty_mode?("chaos")
 				rng = rand(1..2)
 				case rng
 					when 1
@@ -863,7 +864,7 @@ class Battle::Move::RaiseUserSpAtk1 < Battle::Move::StatUpMove
 				if rng == 1
 					@battle.pbDisplay(_INTL("{1} is extremely anxious!", user.pbThis))
 					@battle.pbDisplay(_INTL("{1} did a wrong step!", user.pbThis))
-					user.pbReduceHP((user.hp/32), false)
+					user.pbReduceHP((user.hp/16), false)
 					user.pbItemHPHealCheck
 					@battle.pbDisplay(_INTL("{1} is trying to play it off cool.", user.pbThis))
 				end
@@ -885,7 +886,7 @@ class Battle::Move::RaiseUserSpAtkSpDefSpd1 < Battle::Move::MultiStatUpMove
     return if user.fainted?
 		return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
     if @id == :QUIVERDANCE && user.pbOwnedByPlayer?
-			if $game_variables[MECHANICSVAR] >= 2
+			if $player.difficulty_mode?("hard")
 				rng = rand(1..2)
 				case rng
 					when 1

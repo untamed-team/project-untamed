@@ -228,7 +228,7 @@ MenuHandlers.add(:battle_guide, :moves_page_misc, {
   "name"        => _INTL("Specific Moves"),
   "parent"      => :moves_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> does damage equal to 1/10th HP, has a maximum damage of 100 HP and heals only 50% of the damage dealt."))
+		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> has a maximum damage of 100 HP and heals only 75% of the damage dealt."))
 	}
 })
 

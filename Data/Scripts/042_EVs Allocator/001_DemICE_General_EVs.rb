@@ -270,7 +270,7 @@ class Battle
         end	       
       end
     else
-      if $game_variables[MECHANICSVAR] < 3
+      if !$player.difficulty_mode?("chaos")
         evYield = defeatedBattler.pokemon.evYield
         evYield.each_key { |stat| evYield[stat] *= 4 if evYield[stat] > 0 }
         if pkmn.pokerusStage >= 1   # Infected or cured

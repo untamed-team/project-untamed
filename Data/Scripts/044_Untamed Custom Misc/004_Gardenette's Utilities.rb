@@ -1052,7 +1052,7 @@ module Battle::CatchAndStoreMixin
       end
     end
 		# setting initial values #by low
-		if $game_variables[MECHANICSVAR] > 2
+		if $player.difficulty_mode?("hard")
 			if !$game_switches[NOINITIALVALUES]
 				if pbDisplayConfirm(_INTL("Would you like to set initial values for {1}?", pkmn.name))
 					# choosing an ability

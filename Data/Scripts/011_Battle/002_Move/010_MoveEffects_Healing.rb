@@ -394,6 +394,7 @@ end
 #===============================================================================
 # Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
 # and the Pokémon in the user's position gains the same amount. (Leech Seed)
+# (now has a turn ticking timer) #by low
 #===============================================================================
 class Battle::Move::StartLeechSeedTarget < Battle::Move
   def canMagicCoat?; return true; end
@@ -417,6 +418,7 @@ class Battle::Move::StartLeechSeedTarget < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     target.effects[PBEffects::LeechSeed] = user.index
+    target.effects[PBEffects::LeechSeedCount] = 3 #by low
     @battle.pbDisplay(_INTL("{1} was seeded!", target.pbThis))
   end
 end

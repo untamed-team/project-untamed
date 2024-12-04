@@ -45,7 +45,7 @@ class Battle::AI
     # Pokémon will faint because of bad poisoning at the end of this round, but
     # would survive at least one more round if it were regular poisoning instead
     if battler.status == :POISON && battler.statusCount > 0 #&& skill >= PBTrainerAI.highSkill
-			if $game_variables[MECHANICSVAR] >= 3 #by low
+			if $player.difficulty_mode?("chaos")
 				if battler.effects[PBEffects::Toxic] > 2
 					toxicHP = battler.totalhp / 8
 					nextToxicHP = battler.totalhp / 4

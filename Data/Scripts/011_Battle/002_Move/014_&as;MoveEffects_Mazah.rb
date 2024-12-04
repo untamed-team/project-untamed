@@ -261,10 +261,9 @@ class Battle::Move::OverrideTargetStatusWithPoison < Battle::Move
     return if target.damageState.substitute
 		return if target.poisoned?
 		if target.pbCanInflictStatus?(:POISON, user, false, self, true)
-			if $game_variables[MECHANICSVAR] >= 3 && target.status != :NONE
-				target.pbPoison(user, nil, false) 
-			end
-			if $game_variables[MECHANICSVAR] < 3
+			if $player.difficulty_mode?("chaos")
+				target.pbPoison(user, nil, false) if target.status != :NONE
+      else
 				target.pbPoison(user, nil, false)
 			end
 		end
@@ -339,12 +338,12 @@ end
 # Increases the damage recived from all sources by 25%. (Virus Inject)
 #===============================================================================
 class Battle::Move::BOOMInstall < Battle::Move
-  def canMagicCoat?; return !damagingMove?; end
+  def canMagicCoat?; return statusMove?; end
   
-  def pbFailsAgainstTarget?(user,target,show_message)
+  def pbFailsAgainstTarget?(user, target, show_message)
     return if damagingMove?
     if target.effects[PBEffects::BoomInstalled]
-      @battle.pbDisplay(_INTL("But it failed!"))
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
   end
@@ -357,7 +356,7 @@ class Battle::Move::BOOMInstall < Battle::Move
   end
 
   def pbAdditionalEffect(user, target)
-    return if !damagingMove?
+    return if statusMove?
     return if target.effects[PBEffects::BoomInstalled]
     pbSEPlay("BOOM") if rand(2) == 0
     target.effects[PBEffects::BoomInstalled] = true

@@ -127,11 +127,10 @@ class Battle::Move
     modifiers[:evasion_stage]  = target.stages[:EVASION]
     # acc and evasion murder / sleep moves acc buff #by low
     if modifiers[:accuracy_stage] < 0
-      case $game_variables[MECHANICSVAR]
-      when 2, 3
+      if $player.difficulty_mode?("hard")
         modifiers[:accuracy_stage] = 0
-      else
-        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer? 
+      else 
+        modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer?
       end
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
@@ -385,15 +384,15 @@ class Battle::Move
         multipliers[:base_damage_multiplier] /= 3
       end
     end
-    # Terrain moves
     # abilityTerrain #by low
-    if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+    if $player.difficulty_mode?("chaos") # on "low mode"
       t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
       t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
     else
       t_damage_multiplier = 1.3
       t_damage_divider    = 2
     end
+    # Terrain
     case @battle.field.terrain
     when :Electric
       multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
@@ -412,7 +411,7 @@ class Battle::Move
       multipliers[:final_damage_multiplier] *= 0.75
     end
     # abilityWeather #by low
-    if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+    if $player.difficulty_mode?("chaos") # on "low mode"
       w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
       w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
     else
@@ -473,7 +472,7 @@ class Battle::Move
     #~ print "#{multipliers[:final_damage_multiplier]} *= #{target.damageState.typeMod.to_f} / #{Effectiveness::NORMAL_EFFECTIVE}"
     multipliers[:final_damage_multiplier] *= target.damageState.typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
     damagenerf = 0.5
-    damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
+    damagenerf = (2 / 3.0) if $player.difficulty_mode?("chaos") #by low
     # Burn
     if user.status == :BURN && physicalMove? && damageReducedByBurn? &&
        !user.hasActiveAbility?(:GUTS)

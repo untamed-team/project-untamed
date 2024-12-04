@@ -630,7 +630,7 @@ Battle::ItemEffects::StatusCure.add(:PECHABERRY,
 Battle::ItemEffects::StatusCure.add(:PERSIMBERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumeBerry?
-    if $game_variables[MECHANICSVAR] >= 3
+    if $player.difficulty_mode?("chaos")
       next false if battler.status != :DIZZY #by low
       itemName = GameData::Item.get(item).name
       PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced

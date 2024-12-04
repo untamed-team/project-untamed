@@ -131,6 +131,7 @@ class Battle::Battler
       @effects[PBEffects::Ingrain]           = false
       @effects[PBEffects::LaserFocus]        = 0
       @effects[PBEffects::LeechSeed]         = -1
+      @effects[PBEffects::LeechSeedCount]    = 0
       @effects[PBEffects::LockOn]            = 0
       @effects[PBEffects::LockOnPos]         = -1
       @effects[PBEffects::MagnetRise]        = 0

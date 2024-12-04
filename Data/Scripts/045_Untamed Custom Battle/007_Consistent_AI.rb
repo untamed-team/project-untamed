@@ -20,6 +20,7 @@ class Battle::AI
 	#@battle.choices[index][1] = idxMove    # Index of move to be used
 	#@battle.choices[index][2] = move       # Battle::Move object
 	#@battle.choices[index][3] = -1         # Index of the target
+	#@battle.choices[index][4] = 0          # pbCalculatePriority of the move
 
 	#=============================================================================
 	# Main move-choosing method (moves with higher scores are more likely to be
@@ -38,7 +39,7 @@ class Battle::AI
 		choices     = []
 		user.eachMoveWithIndex do |_m, i|
 			next if !@battle.pbCanChooseMove?(idxBattler, i, false)
-			if MEGA_EVO_MOVESET.key?(user.species) && $game_variables[MECHANICSVAR] >= 2
+			if MEGA_EVO_MOVESET.key?(user.species) && $player.difficulty_mode?("chaos")
 				oldmove = MEGA_EVO_MOVESET[user.species][0]
 				newmove = MEGA_EVO_MOVESET[user.species][1]
 				if _m.id == oldmove
@@ -163,7 +164,7 @@ class Battle::AI
 				badMoves = true
 				choices.each do |c|
 					next if !user.moves[c[0]].statusMove?
-					badMoves = false if c[1] > 110
+					badMoves = false if c[1] > 115
 					break
 				end
 			end
@@ -179,6 +180,7 @@ class Battle::AI
 				shouldSwitch = false
 				aspeed = pbRoughStat(user,:SPEED,100)
 				user.eachOpposing do |b|
+					next if @battle.choices[b.index][0] == :SwitchOut
 					ospeed = pbRoughStat(b,:SPEED,100)
 					userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 
@@ -277,17 +279,16 @@ class Battle::AI
 		# Main score calcuations
 		if move.damagingMove? && !(move.function == "HealAllyOrDamageFoe" && !user.opposes?(target))
 			score = pbGetMoveScoreFunctionCode(initScore, move, user, target, skill)
-			initScore = score
 			# Adjust score if this move has priority, whether that is negative or positive
 			score = pbAIPrioSpeedCheck(score, move, user, target)
+			initScore = score
 			# Adjust score based on how much damage it can deal # DemICE moved damage calc to the beginning
 			score = pbGetMoveScoreDamage(score, move, user, target, skill, initScore)
 		else # Status moves # each status move has a value tied to them
 			statusDamage = pbStatusDamage(move)
 			return 0 if statusDamage <= 0
 			# Mult varies between 1.037x at 5 status dmg and 1.499x at 100 status dmg
-			statusDamageMult = 1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 30))))
-			score = initScore * statusDamageMult
+			score = initScore * (1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 30)))))
 			initScore = score
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
 			# Prefer status moves if level difference is significantly high

@@ -15,7 +15,7 @@ class Battle
 		next unless b.fainted? || b.captured
 		# Count the number of participants
 		numPartic = 0
-		if $game_variables[MECHANICSVAR] >= 2
+		if $player.difficulty_mode?("chaos")
 			eachInTeam(0, 0) do |pkmn, i|
 				b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
 			end
@@ -109,22 +109,22 @@ class Battle
 	expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
 	truelevel = defeatedBattler.level
 	truelevel = (defeatedBattler.level - 5) if (pkmn.level - defeatedBattler.level) >= 3 && 
-									 	 	 	$game_variables[MECHANICSVAR] == 0
+									 	 	 	$player.difficulty_mode?("easy")
 	truelevel -= 10 if $game_variables[MASTERMODEVARS][7]==true
 	truelevel -= 20 if $game_variables[MASTERMODEVARS][22]==true
 	truelevel -= 30 if $game_variables[MASTERMODEVARS][24]==true
 	truelevel -= 60 if $game_variables[MASTERMODEVARS][27]==true
 	exp = (exp / 3).floor
-	originExp = exp if $game_variables[MECHANICSVAR] == 0
+	originExp = exp if $player.difficulty_mode?("easy")
 	exp = (exp * (100 + expvariable * (truelevel - pkmn.level)) / 100).floor
-	exp = 0 if pkmn.level - truelevel >= 3 && $game_variables[MECHANICSVAR] > 0
+	exp = 0 if pkmn.level - truelevel >= 3 && $player.difficulty_mode?("normal")
 	exp = (originExp * 0.1).floor if exp <= 0 && 
-									 $game_variables[MECHANICSVAR] == 0 && 
+									 $player.difficulty_mode?("easy") && 
 									!$game_switches[LOWEREXPGAINSWITCH]
 	exp = (exp / 2).floor if pkmn.level>40
-	exp = 10000 if exp > 10000 && $game_variables[MECHANICSVAR] == 0
-	#exp = (exp * 0.2).floor if $game_switches[319] 				# custom wild
-	#exp = 0 if $game_switches[305] && pkmn.level>=level 		# leader rematch
+	exp = 10000 if exp > 10000 && $player.difficulty_mode?("normal")
+	#exp = (exp * 0.2).floor if $game_switches[319]         # custom wild
+	#exp = 0 if $game_switches[305] && pkmn.level>=level    # leader rematch
 	# exp leech #by low
 	if !expAll
 		# exp is multiplied by (number of allies in party) / (number of allies with exp leech)

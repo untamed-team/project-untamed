@@ -140,68 +140,6 @@ class Battle
   # General switching method that checks if any Pokémon need to be sent out and,
   # if so, does. Called at the end of each round.
   def pbEORSwitch(favorDraws = false)
-    return if @decision > 0 && !favorDraws
-    return if @decision == 5 && favorDraws
-    pbJudge
-    return if @decision > 0
-    # Check through each fainted battler to see if that spot can be filled.
-    switched = []
-    loop do
-      switched.clear
-      @battlers.each do |b|
-        next if !b || !b.fainted?
-        idxBattler = b.index
-        next if !pbCanChooseNonActive?(idxBattler)
-        if !pbOwnedByPlayer?(idxBattler)   # Opponent/ally is switching in
-          next if b.wild?   # Wild Pokémon can't switch
-          idxPartyNew = pbSwitchInBetween(idxBattler)
-          opponent = pbGetOwnerFromBattlerIndex(idxBattler)
-          # NOTE: The player is only offered the chance to switch their own
-          #       Pokémon when an opponent replaces a fainted Pokémon in single
-          #       battles. In double battles, etc. there is no such offer.
-          if @internalBattle && (@switchStyle && $game_variables[DIFFICULTYVAR] == 0) && #edits #by low
-						 trainerBattle? && pbSideSize(0) == 1 && opposes?(idxBattler) && 
-						 !@battlers[0].fainted? && !switched.include?(0) &&
-             pbCanChooseNonActive?(0) && @battlers[0].effects[PBEffects::Outrage] == 0 &&
-            idxPartyForName = idxPartyNew
-            enemyParty = pbParty(idxBattler)
-            if enemyParty[idxPartyNew].ability == :ILLUSION && !pbCheckGlobalAbility(:NEUTRALIZINGGAS)
-              new_index = pbLastInTeam(idxBattler)
-              idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
-            end
-            if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                      opponent.full_name, enemyParty[idxPartyForName].name))
-              idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-              if idxPlayerPartyNew >= 0
-                pbMessageOnRecall(@battlers[0])
-                pbRecallAndReplace(0, idxPlayerPartyNew)
-                switched.push(0)
-              end
-            end
-          end
-          pbRecallAndReplace(idxBattler, idxPartyNew)
-          switched.push(idxBattler)
-        elsif trainerBattle?   # Player switches in in a trainer battle
-          idxPlayerPartyNew = pbGetReplacementPokemonIndex(idxBattler)   # Owner chooses
-          pbRecallAndReplace(idxBattler, idxPlayerPartyNew)
-          switched.push(idxBattler)
-        else   # Player's Pokémon has fainted in a wild battle
-          switch = false
-          if pbDisplayConfirm(_INTL("Use next Pokémon?"))
-            switch = true
-          else
-            switch = (pbRun(idxBattler, true) <= 0)
-          end
-          if switch
-            idxPlayerPartyNew = pbGetReplacementPokemonIndex(idxBattler)   # Owner chooses
-            pbRecallAndReplace(idxBattler, idxPlayerPartyNew)
-            switched.push(idxBattler)
-          end
-        end
-      end
-      break if switched.length == 0
-      pbOnBattlerEnteringBattle(switched)
-    end
   end
 
   def pbGetReplacementPokemonIndex(idxBattler, random = false)

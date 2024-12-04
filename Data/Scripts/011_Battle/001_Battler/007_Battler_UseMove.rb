@@ -850,7 +850,7 @@ class Battle::Battler
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
 		# damage message #by low
-		if $game_variables[MECHANICSVAR] >= 2
+		if $player.difficulty_mode?("hard")
 			targets.each do |b|
 				if b.damageState.calcDamage > 0
 					damagetotal = b.damageState.calcDamage

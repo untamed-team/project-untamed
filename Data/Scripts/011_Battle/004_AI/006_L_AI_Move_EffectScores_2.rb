@@ -652,7 +652,7 @@ class Battle::AI
     when "ConfuseTarget", "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
 		# confusion moves / hurricane
 		if target.pbCanConfuse?(user, false)
-			if $game_variables[MECHANICSVAR] >= 3
+			if $player.difficulty_mode?("chaos")
 				miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 100, move, globalArray, skill)
 			else
 				miniscore = 100
@@ -685,7 +685,7 @@ class Battle::AI
 				miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 				miniscore+=100
 				miniscore/=100.0
-				miniscore = 1 if move.function == "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $game_variables[MECHANICSVAR] >= 3
+				miniscore = 1 if move.function == "ConfuseTargetAlwaysHitsInRainHitsTargetInSky" && $player.difficulty_mode?("chaos")
 				score*=miniscore
 			else
 				miniscore/=100.0
@@ -1262,21 +1262,23 @@ class Battle::AI
 		if @battle.field.effects[PBEffects::Gravity]>0
 			score=0
 		else
-			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-			maxmove=bestmove[1]
-			maxid=maxmove.id
 			score*=2.0 if user.moves.any? { |m| m&.accuracy <= 70 }
-			score*=1.2 if user.moves.any? { |m| m&.boostedByGravity? }
+			@battle.pbParty(user.index).each_with_index do |pkmn, i|
+				next if !pkmn || pkmn.fainted?
+				pkmn.moves.each do |move|
+					gravMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move.id))
+					score*=0.5 if gravMov.unusableInGravity?
+					score*=1.2 if gravMov.boostedByGravity?
+					score*=1.3 if gravMov.accuracy <= 70
+				end
+			end
 			if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
 				score*=3
 			end
-			if [:SKYDROP, :BOUNCE, :FLY, :JUMPKICK, :FLYINGPRESS, :HIJUMPKICK, :SPLASH].include?(maxid) &&
-			   !target.hasActiveItem?(:FLOATSTONE)
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxmove=bestmove[1]
+			if maxmove.unusableInGravity? && !target.hasActiveItem?(:FLOATSTONE)
 				score*=2
-			end
-			if !user.hasActiveItem?(:FLOATSTONE)
-				score = 0 if user.moves.any? { |j| [:SKYDROP, :BOUNCE, :FLY, :JUMPKICK, 
-													:FLYINGPRESS, :HIJUMPKICK, :SPLASH].include?(j&.id) }
 			end
 			if user.pbHasType?(:GROUND, true) && target.airborneAI(mold_broken)
 				score*=2

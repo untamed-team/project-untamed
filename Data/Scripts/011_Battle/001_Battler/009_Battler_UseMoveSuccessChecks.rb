@@ -259,7 +259,7 @@ class Battle::Battler
     end
     # Paralysis
     if @status == :PARALYSIS 
-			if $game_variables[MECHANICSVAR] >= 3 #by low
+			if $player.difficulty_mode?("chaos") #by low
 				#nothing
 			else
 				if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 #by low

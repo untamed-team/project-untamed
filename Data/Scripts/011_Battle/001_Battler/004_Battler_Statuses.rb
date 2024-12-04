@@ -369,7 +369,7 @@ class Battle::Battler
   end
 
   def pbPoison(user = nil, msg = nil, toxic = false)
-		if $game_variables[MECHANICSVAR] >= 3 # on "low mode" #by low
+		if $player.difficulty_mode?("chaos") # on "low mode" #by low
 			pbInflictStatus(:POISON, 1, msg, user)
 		else
 			pbInflictStatus(:POISON, (toxic) ? 1 : 0, msg, user)
@@ -412,7 +412,7 @@ class Battle::Battler
 
   def pbParalyze(user = nil, msg = nil)
 		# paralyzis rework #by low
-    pbInflictStatus(:PARALYSIS, ($game_variables[MECHANICSVAR] >= 3) ? pbSleepDuration(7) : 0, msg, user)
+    pbInflictStatus(:PARALYSIS, ($player.difficulty_mode?("chaos")) ? pbSleepDuration(7) : 0, msg, user)
   end
 
   #=============================================================================
@@ -504,7 +504,7 @@ class Battle::Battler
   #=============================================================================
   def pbCanConfuse?(user = nil, showMessages = true, move = nil, selfInflicted = false)
     return false if fainted?
-		if $game_variables[MECHANICSVAR] >= 3
+		if $player.difficulty_mode?("chaos")
 			return pbCanDizzy?(user, showMessages, move)
 		end
 		if pbHasType?(:PSYCHIC) #by low
@@ -550,7 +550,7 @@ class Battle::Battler
   end
 
   def pbConfuse(msg = nil)
-		if $game_variables[MECHANICSVAR] >= 3
+		if $player.difficulty_mode?("chaos")
 			pbInflictStatus(:DIZZY, pbSleepDuration, msg) # this technically buffs early bird but i think its cool so i will leave it
 		else
 			@effects[PBEffects::Confusion] = pbConfusionDuration
@@ -651,7 +651,7 @@ class Battle::Battler
     # first turn immunity, no flinch, inner focus buff #by low
     return if @effects[PBEffects::NoFlinch] > 0
     allAllies.each do |b|
-      break if $game_variables[MECHANICSVAR] <= 1
+      break if !$player.difficulty_mode?("chaos")
       next unless b.hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
       return
     end

@@ -2884,7 +2884,7 @@ TotalPP = 10
 Target = Other
 FunctionCode = ConfuseTargetAlwaysHitsInRainHitsTargetInSky
 Flags = CanProtect,CanMirrorMove
-EffectChance = 1 # too lazy to recreate a hurricane without confusion
+EffectChance = 0 # too lazy to recreate a hurricane without confusion
 Description = The user wraps its foe in a fierce wind that flies up into the sky. Always hits in Rain.
 #-------------------------------
 [AEROBLAST]
@@ -3916,8 +3916,8 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = StartLeechSeedTarget
-Flags = CanProtect,CanMirrorMove
-Description = A seed is planted on the target. It steals some HP from the target every turn.
+Flags = CanProtect,CanMirrorMove,Bomb
+Description = A seed is planted on the target. It steals some HP from the target every turn, for 3 turns.
 #-------------------------------
 [SLEEPPOWDER]
 Name = Sleep Powder
@@ -9096,6 +9096,18 @@ Target = NearOther
 FunctionCode = BOOMInstall
 Flags = CanProtect,CanMirrorMove
 Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
+[TRIMTACKLE]
+Name = Trim Tackle
+Type = NORMAL
+Category = Physical
+Power = 90
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = TypeIsUserFirstType
+Flags = CanProtect,CanMirrorMove
+Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
 #-------------------------------
 [HARDDRIVECRASH]
 Name = Hard Drive Crash

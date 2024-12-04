@@ -567,6 +567,7 @@ class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
     end
     if user.effects[PBEffects::LeechSeed] >= 0
       user.effects[PBEffects::LeechSeed] = -1
+      user.effects[PBEffects::LeechSeedCount] = 0
       @battle.pbDisplay(_INTL("{1} shed Leech Seed!", user.pbThis))
 			didsomething=true
     end

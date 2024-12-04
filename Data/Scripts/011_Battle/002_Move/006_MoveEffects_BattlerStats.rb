@@ -819,7 +819,7 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-		raise_num = ($game_variables[MECHANICSVAR] >= 3) ? 2 : 1 #by low
+		raise_num = ($player.difficulty_mode?("chaos")) ? 2 : 1 #by low
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
       target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user)
     end

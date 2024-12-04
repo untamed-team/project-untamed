@@ -69,7 +69,7 @@ class Battle::AI
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget" # lol
 		score -= 90 if target.hasActiveAbility?(:STURDY,false,mold_broken)
 		score -= 90 if target.level >= user.level
-		score = 0 if $game_variables[MECHANICSVAR] >= 2
+		score = 0 if $player.difficulty_mode?("hard")
     #---------------------------------------------------------------------------
     when "DamageTargetAlly" # flame burst
 		target.allAllies.each do |b|
@@ -1002,7 +1002,7 @@ class Battle::AI
 		end
 		if move.function == "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1" # scale shot
 			# speed raise
-			if $game_variables[MECHANICSVAR] >= 3 && !user.SetupMovesUsed.include?(move.id)
+			if $player.difficulty_mode?("chaos") && !user.SetupMovesUsed.include?(move.id)
 				miniscore=125
 				if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 					miniscore*=1.2
@@ -1305,7 +1305,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
@@ -1338,7 +1338,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if (user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3) && !([:Sun, :HarshSun].include?(expectedWeather) && user.hasActiveItem?(:UTILITYUMBRELLA))
+			if (user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")) && !([:Sun, :HarshSun].include?(expectedWeather) && user.hasActiveItem?(:UTILITYUMBRELLA))
 				score*=1.5
 			end
 		end
@@ -1370,7 +1370,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
@@ -1431,7 +1431,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
@@ -1491,7 +1491,7 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
@@ -1549,7 +1549,7 @@ class Battle::AI
 			end
 		else
 			score*=2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
@@ -1663,7 +1663,7 @@ class Battle::AI
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
 			   priorityAI(target,@battle.choices[target.index][2])<1 && user.hasActiveItem?(:POWERHERB)
-				miniscore*=1.5
+				miniscore*=1.3
 			end
 		end
 		miniscore/=100.0
@@ -1697,7 +1697,7 @@ class Battle::AI
 			score*=0
 		end
 		score *= 0.4 if user.SetupMovesUsed.include?(move.id)
-		score = 0 if $game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id)
+		score = 0 if $player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id)
     #---------------------------------------------------------------------------
     when "TwoTurnAttackChargeRaiseUserDefense1" # Skull Bash
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -1726,11 +1726,11 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
-		if $game_variables[MECHANICSVAR] >= 3 && !user.SetupMovesUsed.include?(move.id)
+		if $player.difficulty_mode?("chaos") && !user.SetupMovesUsed.include?(move.id)
 			miniscore=100
 			if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
 				miniscore*=1.3
@@ -1807,7 +1807,7 @@ class Battle::AI
 			if targetWillMove?(target, "phys")
 				if move.statusMove? && userFasterThanTarget && 
 				   priorityAI(target,@battle.choices[target.index][2])<1
-					miniscore*=1.5
+					miniscore*=1.2
 				end
 			end
 			miniscore/=100.0
@@ -1845,13 +1845,13 @@ class Battle::AI
 			end          
 		else
 			score*=1.2
-			if user.hasActiveAbility?(:UNBURDEN) && $game_variables[MECHANICSVAR] != 3
+			if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
 				score*=1.5
 			end
 		end
 
 		# spatk boost
-		if $game_variables[MECHANICSVAR] >= 3 && !user.SetupMovesUsed.include?(move.id)
+		if $player.difficulty_mode?("chaos") && !user.SetupMovesUsed.include?(move.id)
 			miniscore=100        
 			if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
 				miniscore*=1.3
@@ -2710,7 +2710,7 @@ class Battle::AI
 						score*=2
 					end            
 				end
-				toxicturns = ($game_variables[MECHANICSVAR] >= 3) ? 1 : 3
+				toxicturns = ($player.difficulty_mode?("chaos")) ? 1 : 3
 				if target.effects[PBEffects::Toxic]>toxicturns
 					score*=1.3
 				end
@@ -4252,7 +4252,7 @@ class Battle::AI
     when "CurseTargetOrLowerUserSpd1RaiseUserAtkDef1" # curse
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
-		if user.pbHasType?(:GHOST, true) && $game_variables[MECHANICSVAR] < 3
+		if user.pbHasType?(:GHOST, true) && !$player.difficulty_mode?("chaos")
 			if target.effects[PBEffects::Curse] || user.hp*2<user.totalhp
 				score = 0
 			else
@@ -4414,7 +4414,7 @@ class Battle::AI
 			if targetWillMove?(target, "phys")
 				if move.statusMove? && userFasterThanTarget && 
 				   priorityAI(target,@battle.choices[target.index][2])<1
-					miniscore*=1.5
+					miniscore*=1.2
 				end
 			end
 			if !user.statStageAtMax?(:DEFENSE) 
@@ -4428,7 +4428,7 @@ class Battle::AI
 				score*=0.7
 			end
 			score = 0 if user.statStageAtMax?(:DEFENSE) && user.statStageAtMax?(:ATTACK)
-			score = 0 if $game_variables[MECHANICSVAR] >= 3 && user.SetupMovesUsed.include?(move.id)
+			score = 0 if $player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id)
 		end
     #---------------------------------------------------------------------------
     when "EffectDependsOnEnvironment" # Secret Power
@@ -4513,7 +4513,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "CounterPhysicalDamage" # Counter
-		score*=0.3 if userFasterThanTarget
 		if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
 			score*=1.1
 		end
@@ -4540,7 +4539,6 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "CounterSpecialDamage" # mirror coat
-		score*=0.3 if userFasterThanTarget
 		if user.hp==user.totalhp && (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY))
 			score*=1.1
 		end
@@ -4577,9 +4575,8 @@ class Battle::AI
 		score*=0.6 if pbHasSetupMove?(target)
 		miniscore = user.hp*(1.0/user.totalhp)
 		score*=miniscore
-		if targetWillMove?(target)
-			if !@battle.choices[target.index][2].statusMove? &&
-		       targetSurvivesMove(@battle.choices[target.index][2],target,user)
+		if targetWillMove?(target, "dmg")
+			if targetSurvivesMove(@battle.choices[target.index][2],target,user)
 				score *= 1.5
 			else
 				score *= 0.2
@@ -4671,10 +4668,10 @@ class Battle::AI
 			if user.pbHasMove?(:PAINSPLIT)
 				miniscore*=1.2
 			end
-			if targetWillMove?(target, "phys") || targetWillMove?(target, "spec")
+			if targetWillMove?(target, "dmg")
 				if move.statusMove? && userFasterThanTarget && 
 				   priorityAI(target,@battle.choices[target.index][2])<1
-					miniscore*=2
+					miniscore*=1.2
 				end
 			end
 			miniscore/=100.0

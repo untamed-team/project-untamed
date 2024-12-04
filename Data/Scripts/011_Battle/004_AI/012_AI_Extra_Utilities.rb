@@ -35,6 +35,7 @@ class Battle::AI
 		baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
 		# Fixed damage moves
 		return baseDmg if move.is_a?(Battle::Move::FixedDamageMove)
+		return baseDmg if ["CounterPhysicalDamage","CounterSpecialDamage","CounterDamagePlusHalf"].include?(move.function)
 		# Get the move's type
 		type = pbRoughType(move, user, skill)
 		typeMod = pbCalcTypeMod(type,user,target)
@@ -312,7 +313,7 @@ class Battle::AI
 		end
 		# Terrain moves
 		if skill >= PBTrainerAI.mediumSkill
-			if $game_variables[MECHANICSVAR] >= 3 # on "low mode"
+			if $player.difficulty_mode?("chaos") # on "low mode"
 				t_damage_multiplier = (@battle.field.abilityTerrain) ? 1.15 : 1.3
 				t_damage_divider    = (@battle.field.abilityTerrain) ? 1.5 : 2
 			else
@@ -333,7 +334,7 @@ class Battle::AI
 		end
 		# Weather
 		if skill >= PBTrainerAI.mediumSkill
-			if $game_variables[MECHANICSVAR] >= 3
+			if $player.difficulty_mode?("chaos")
 				w_damage_multiplier = (@battle.field.abilityWeather) ? 1.25 : 1.5
 				w_damage_divider    = (@battle.field.abilityWeather) ? 1.5 : 2
 			else
@@ -402,7 +403,7 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
 		end
 		damagenerf = (1 / 2.0)
-		damagenerf = (2 / 3.0) if $game_variables[MECHANICSVAR] >= 3 #by low
+		damagenerf = (2 / 3.0) if $player.difficulty_mode?("chaos") #by low
 		# Burn
 		if move.physicalMove?(type) && move.damageReducedByBurn? && user.status == :BURN && 
 		  !user.hasActiveAbility?(:GUTS)
@@ -638,7 +639,7 @@ class Battle::AI
 		return false if target.effects[PBEffects::NoFlinch] > 0
 		return false if target.hasActiveAbility?([:INNERFOCUS,:SHIELDDUST],false,mold_bonkers)
 		target.allAllies.each do |bb|
-			break if $game_variables[MECHANICSVAR] <= 1
+			break if !$player.difficulty_mode?("chaos")
 			return false if bb.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
 		end
 		for move in user.moves
@@ -891,9 +892,9 @@ class Battle::AI
 					end
 				end
 				if user.poisoned? && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST])
-					if $game_variables[MECHANICSVAR] >= 2 || user.effects[PBEffects::Toxic]==0 
+					if $player.difficulty_mode?("chaos") || user.effects[PBEffects::Toxic]==0 
 						statuschip += 0.125
-						statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $game_variables[MECHANICSVAR] >= 2
+						statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
 					else
 						statuschip += (0.0625*user.effects[PBEffects::Toxic])
 					end

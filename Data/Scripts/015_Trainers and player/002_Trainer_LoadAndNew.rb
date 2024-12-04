@@ -3,7 +3,7 @@
 #===============================================================================
 def pbLoadTrainer(tr_type, tr_name, tr_version = 0)
 	# math for trainers #by low
-	diffic=(100*$game_variables[DIFFICULTYVAR])
+	diffic=(100*$player.difficulty)
 	diffic=0 if diffic==1 # so 100*0 doesnt produce 1 and mess up things
 	tr_version+=diffic
 	

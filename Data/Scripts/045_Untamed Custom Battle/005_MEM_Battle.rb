@@ -113,7 +113,7 @@ end
 class Battle
   def pbGetMegaEvolutionMove(battler)
     return if !MEGA_EVO_MOVESET.key?(battler.species)
-    return if $game_variables[MECHANICSVAR] <= 1
+    return if !$player.difficulty_mode?("chaos")
     oldmove = MEGA_EVO_MOVESET[battler.species][0]
     newmove = MEGA_EVO_MOVESET[battler.species][1]
     return if !oldmove || !newmove
@@ -163,12 +163,7 @@ class Battle
 		# MEM stuff #by low
     if battler.wild? || battler.hasMegaEvoMutation?
 		###################
-      case battler.pokemon.megaMessage
-      when 1
-        pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
-      else
-        pbDisplay(_INTL("{1}'s {2} radiates with Mega energy!", battler.pbThis, battler.itemName))
-      end
+      pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
     else
       trainerName = pbGetOwnerName(idxBattler)
       case battler.pokemon.megaMessage
@@ -239,16 +234,7 @@ class Pokemon
 			# MEM stuff #by low
       if data.mega_stone && (hasItem?(data.mega_stone) || hasMegaEvoMutation?)
         ret = data.form
-				if self.species == :BEAKRAFT
-					case self.gender
-						when 0 #male
-							ret = 2
-						when 1 #female
-							ret = 3
-						when 2 #genderless
-							ret = 0 #what the fuck
-					end
-				end
+				ret = (self.form + 2) if self.species == :BEAKRAFT
         break
       elsif data.mega_move && (hasMove?(data.mega_move) || hasMegaEvoMutation?)
         ret = data.form
