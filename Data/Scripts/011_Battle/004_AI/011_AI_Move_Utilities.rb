@@ -229,21 +229,19 @@ class Battle::AI
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
       baseDmg = 20
       targetMove = @battle.choices[target.index][2]
-      if !["CounterPhysicalDamage","CounterSpecialDamage","CounterDamagePlusHalf"].include?(targetMove.function)
-        if (move.function == "CounterPhysicalDamage" && targetWillMove?(target, "phys")) ||
-           (move.function == "CounterSpecialDamage"  && targetWillMove?(target, "spec")) ||
-           (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
-          if targetSurvivesMove(targetMove,target,user)
-            baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
-            baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
-            baseDmg *= 1.5 if move.function == "CounterDamagePlusHalf"
-          end
+      if (move.function == "CounterPhysicalDamage" && targetWillMove?(target, "phys")) ||
+         (move.function == "CounterSpecialDamage"  && targetWillMove?(target, "spec")) ||
+         (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
+        if targetSurvivesMove(targetMove,target,user)
+          baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+          baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
+          baseDmg *= 1.5 if move.function == "CounterDamagePlusHalf"
         end
-        if move.function == "CounterDamagePlusHalf"
-          aspeed = pbRoughStat(user,:SPEED,skill)
-          ospeed = pbRoughStat(target,:SPEED,skill)
-          baseDmg = 1 if (ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)
-        end
+      end
+      if move.function == "CounterDamagePlusHalf"
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
+        baseDmg = 1 if (ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)
       end
     when "DoublePowerIfTargetUnderwater",
          "BindTargetDoublePowerIfTargetUnderwater"
