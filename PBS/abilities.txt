@@ -159,7 +159,7 @@ Description = Prevents the Pokémon from flinching.
 [MAGMAARMOR]
 Name = Magma Armor
 Flags = FasterEggHatching
-Description = Prevents the Pokémon from becoming frozen.
+Description = Prevents the Pokémon from getting frostbite.
 #-------------------------------
 [WATERVEIL]
 Name = Water Veil

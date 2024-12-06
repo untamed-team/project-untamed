@@ -397,7 +397,7 @@ Description = The user swings both arms and hits the target. Ignores the target'
 Name = Night Daze
 Type = DARK
 Category = Special
-Power = 85
+Power = 80
 Accuracy = 95
 TotalPP = 10
 Target = NearOther
@@ -5604,7 +5604,7 @@ Description = The user draws power to attack by using its held Berry. The Berry 
 #-------------------------------
 [PRESENT]
 Name = Present
-Type = NORMAL
+Type = ICE
 Category = Physical
 Power = 1
 Accuracy = 100
@@ -8745,7 +8745,6 @@ Power = 85
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = ParalyzeTarget
 Flags = Contact,CanProtect,HighCriticalHitRate
 EffectChance = 10
@@ -8759,7 +8758,6 @@ Power = 85
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = FreezeTarget
 Flags = Contact,CanProtect,HighCriticalHitRate
 EffectChance = 10
@@ -8786,9 +8784,7 @@ Power = 0
 Accuracy = 0
 TotalPP = 10
 Target = User
-Priority = 0
 FunctionCode = UserConsumeBerryRaiseDefense2
-EffectChance = 0
 Description = The user eats its held Berry, then sharply raises its Defense stat.
 #-------------------------------
 [BITINGCOLD]
@@ -8799,10 +8795,8 @@ Power = 0
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
-Priority = 0
 FunctionCode = FreezeTarget
 Flags = CanProtect,CanMirrorMove
-EffectChance = 0
 Description = The user chills their target to the bone to inflict frostbite.
 #-------------------------------
 [CHILLINGWAIL]
@@ -8826,7 +8820,6 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = None
 Flags = Contact,CanProtect,HighCriticalHitRate,Blade
 Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
@@ -8839,10 +8832,8 @@ Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-Priority = 0
 FunctionCode = None
 Flags = CanProtect,Sound
-EffectChance = 0
 Description = The user strikes the air to send a terrible sound-based shockwave towards an opposing foe.
 #-------------------------------
 [GEODEBURST]
@@ -8853,10 +8844,9 @@ Power = 100
 Accuracy = 80
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-Description = The user attacks its target with a hail of glittering crystals. It has a high critical-hit ratio.
+Flags = CanProtect,CanMirrorMove
+Description = The user attacks its target with a hail of glittering crystals.
 #-------------------------------
 [FORGEBREATH]
 Name = Forge Breath
@@ -8866,7 +8856,6 @@ Power = 85
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
-Priority = 0
 FunctionCode = BurnTarget
 Flags = CanProtect
 EffectChance = 10
@@ -8880,9 +8869,7 @@ Power = 0
 Accuracy = 0
 TotalPP = 20
 Target = UserAndAllies
-Priority = 0
 FunctionCode = RaiseUserSpAtk1
-EffectChance = 0
 Description = The user pumps themselves up, raising its Sp. Atk stat.
 #-------------------------------
 [SCATTERDUST]
@@ -8905,7 +8892,6 @@ Power = 50
 Accuracy = 100
 TotalPP = 25
 Target = NearOther
-Priority = 0
 FunctionCode = FlinchTarget
 Flags = Contact,CanProtect,Biting
 EffectChance = 30
@@ -8968,7 +8954,6 @@ Power = 80
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = LowerTargetSpeed1
 Flags = Contact,CanProtect,Biting,CannotMetronome
 EffectChance = 100
@@ -8982,10 +8967,8 @@ Power = 100
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
-Priority = 0
 FunctionCode = HealUserByHalfOfDamageDone
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 0
 Description = The user drains the life force from the target. This move heals the user by 50% of the damage dealt.
 #-------------------------------
 [QUESOBLAST]
@@ -9130,8 +9113,8 @@ Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
-Flags = Contact,CanProtect,CanMirrorMove
-Description = The user unleashes a blast of thorns in a wide spread. Power does not lower even if there are multiple foes.
+Flags = CanProtect,CanMirrorMove
+Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
 #-------------------------------
 #-------------------------------
 #-------------------------------

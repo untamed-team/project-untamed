@@ -49,7 +49,8 @@ class Battle::AI
 		elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
 			atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
 		elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
-			   "CategoryDependsOnHigherDamagePoisonTarget"].include?(move.function) # Photon Geyser, Shell Side Arm
+			   "CategoryDependsOnHigherDamagePoisonTarget", 
+			   "HitTwoTimesReload"].include?(move.function) # Photon Geyser, Shell Side Arm, Splinter Shot
 			atk = [pbRoughStat(user, :ATTACK, skill), pbRoughStat(user, :SPECIAL_ATTACK, skill)].max
 		elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
 			userStats = user.plainStats
@@ -116,19 +117,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
-
 			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
-			# highly suspicious that this blacklist system does not work well with AAM
-			#canCheck = true
-			#abilityBlacklist.each do |m|
-			#	# Really? comparing a move id with an ability id? This blacklisting never worked.
-			#	# it was also checking if the *target* had analytic/sniper, janky jank!
-			#	next if user.ability != m
-			#	if user.hasActiveAbility?(m)
-			#		canCheck = false
-			#		break
-			#	end
-			#end
 			expectedUserWeather = expectedWeather
 			if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedUserWeather) && 
 				 user.hasActiveItem?(:UTILITYUMBRELLA)
@@ -138,8 +127,7 @@ class Battle::AI
 				user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
 			)
 
-			# this doesnt take in foes' negative priority themselves, but lets be real very few would
-			# use that anyway
+			# this doesnt take in foes' negative priority, but lets be real very few would use that anyway
 			# also yes, this is taking in account allies, because for some reason thats a real check
 			if user.hasActiveAbility?(:ANALYTIC)
 				willOutslow = true
@@ -149,7 +137,7 @@ class Battle::AI
 					break if !willOutslow
 					willOutslow = false if ((aspeed > pbRoughStat(j,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 				end
-				if priorityAI(user,move) < 0 || willOutslow
+				if priorityAI(user,move,globalArray) < 0 || willOutslow
 					multipliers[:base_damage_multiplier] *= 1.3
 				end
 			end
@@ -168,15 +156,6 @@ class Battle::AI
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
 			abilityBlacklist = [:FILTER, :SOLIDROCK, :PRISMARMOR, :GRASSPELT]
-			#canCheck = true
-			#abilityBlacklist.each do |m|
-			#	next if target.ability != m 
-			#	# Really? comparing a move id with an ability id? This blacklisting never worked.
-			#	if target.hasActiveAbility?(m)
-			#		canCheck = false
-			#		break
-			#	end
-			#end
 			if !moldBreaker
 				expectedTargetWeather = expectedWeather
 				if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedTargetWeather) && 
@@ -224,8 +203,8 @@ class Battle::AI
 				user.effects[PBEffects::GemConsumed] = nil   # Untrigger consuming of Gems
 			end
 		end
-		if skill >= PBTrainerAI.bestSkill &&                           # DemICE: I now have high suspicions that the chilan berry thing doesn't work.
-			target.itemActive? && target.item && !target.item.is_berry?# && target.item_id!=:CHILANBERRY)
+		if skill >= PBTrainerAI.bestSkill &&
+		   target.itemActive? && target.item && !target.item.is_berry?
 			Battle::ItemEffects.triggerDamageCalcFromTarget(
 				target.item, user, target, move, multipliers, baseDmg, type
 			)
@@ -308,6 +287,10 @@ class Battle::AI
 			}
 			berry_type = berryTypesArray[target.item_id]
 			multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
+			# Master Mode stuff #by low
+			if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer?
+				multipliers[:final_damage_multiplier] *= 0.75
+			end
 		elsif Effectiveness.resistant?(typeMod)
 			multipliers[:final_damage_multiplier] *= 2.0 if user.hasActiveAbility?(:TINTEDLENS)
 		end
@@ -371,10 +354,6 @@ class Battle::AI
 				end
 			end
 		end
-		# Master Mode stuff #by low
-		if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(typeMod)
-			multipliers[:final_damage_multiplier] *= 0.75
-		end
 		# Gravity Boost #by low 
 		# float stone changes
 		if move.boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
@@ -382,12 +361,13 @@ class Battle::AI
 		end
 		# Critical hits - n/a
 		# Random variance - n/a
+		# Unfair difficulty - Changed by DemICE 27-Sep-2023
 		#if $Trainer.difficulty_mode==2
-			#if user.pbOwnedByPlayer? # Changed by DemICE 27-Sep-2023 Unfair difficulty
-				#multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
-			#else
-				#multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
-			#end
+		#	if user.pbOwnedByPlayer?
+		#		multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
+		#	else
+		#		multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
+		#	end
 		#end
 		# STAB
 		if skill >= PBTrainerAI.mediumSkill && type && user.pbHasType?(type, true)
@@ -576,7 +556,7 @@ class Battle::AI
 			return true if target.hasActiveAbility?(:OVERCOAT,false,mold_broken)
 			return true if target.hasActiveItem?(:SAFETYGOGGLES)
 		end
-		if priorityAI(user,move) > 0
+		if priorityAI(user,move,globalArray) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
 				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
 							 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
@@ -816,15 +796,20 @@ class Battle::AI
 		return sum
 	end	  
 
-	def priorityAI(user,move,switchin=false)
-		turncount = user.turnCount
-		turncount = 0 if switchin
+	def priorityAI(user,move,globalArray = [],skip=false)
+		if skip
+			expectedTerrain = @battle.field.terrain
+		else
+			globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+			procGlobalArray = processGlobalArray(globalArray)
+			expectedTerrain = procGlobalArray[1]
+		end
 		pri = move.priority
 		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
 		pri +=1 if move.statusMove? && user.hasActiveAbility?(:PRANKSTER) 
-		pri +=1 if move.function=="HigherPriorityInGrassyTerrain" && @battle.field.terrain==:Grassy && user.affectedByTerrain?
+		pri +=1 if move.function == "HigherPriorityInGrassyTerrain" && expectedTerrain == :Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
-		pri +=1 if move.soundMove? && move.baseDamage==0 && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)
+		pri +=1 if move.soundMove? && move.statusMove? && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)
 		pri = -1 if user.hasActiveItem?([:LAGGINGTAIL, :FULLINCENSE])
 		return pri
 	end

@@ -88,7 +88,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "FailsIfTargetActed" # sucker punch
-		pricheck = target.moves.any? { |m| priorityAI(target,m)>0 }
+		pricheck = target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		healcheck = target.moves.any? { |m| m&.healingMove? }
 		alldam = target.moves.all? { |m| m.baseDamage > 0 }
 		setupcheck = pbHasSetupMove?(target, false)
@@ -534,8 +534,8 @@ class Battle::AI
 		if expectedTerrain == :Psychic
 			score=0
 		else
-			privar=target.moves.any? { |m| priorityAI(target,m)>0 }
-			pricheck=user.moves.any? { |m| priorityAI(target,m)>0 }
+			privar=target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
+			pricheck=user.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 			psyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
@@ -644,8 +644,8 @@ class Battle::AI
 				miniscore*=1.2
 			end
 		elsif expectedTerrain == :Psychic
-			privar=user.moves.any? { |m| priorityAI(target,m)>0 }
-			pricheck=target.moves.any? { |m| priorityAI(target,m)>0 }
+			privar=user.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
+			pricheck=target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 			psyvar=false
 			@battle.pbParty(target.index).each_with_index do |m, i|
 				next if m.fainted?
@@ -986,7 +986,7 @@ class Battle::AI
 			if user.paralyzed?
 				miniscore*=0.8
 			end
-			miniscore*=0.7 if target.moves.any? { |m| priorityAI(target,m)>0 }
+			miniscore*=0.7 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 			if target.hasActiveAbility?(:SPEEDBOOST)
 				miniscore*=0.7
 			end
@@ -1197,7 +1197,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -1347,7 +1347,7 @@ class Battle::AI
 		   !user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.1 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.1 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -1468,7 +1468,7 @@ class Battle::AI
 		end        
 		if targetWillMove?(target, "phys")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -1617,7 +1617,7 @@ class Battle::AI
 		end        
 		if targetWillMove?(target, "phys")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.5
 			end
 		end
@@ -1754,7 +1754,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST,false,mold_broken)
 			miniscore*=0.6
 		end
@@ -1901,7 +1901,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -2016,7 +2016,7 @@ class Battle::AI
 		end        
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -2156,7 +2156,7 @@ class Battle::AI
 		end        
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.5
 			end
 		end
@@ -2302,7 +2302,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)  
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }    
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }    
 		if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 			miniscore*=1.3
 		end        
@@ -2463,7 +2463,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)  
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }    
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }    
 		if user.hasActiveAbility?([:MOXIE, :SOULHEART])
 			miniscore*=1.3
 		end        
@@ -2711,7 +2711,7 @@ class Battle::AI
 		   !user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -2771,7 +2771,7 @@ class Battle::AI
 		end        
 		if targetWillMove?(target, "phys")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -2904,7 +2904,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -2957,7 +2957,7 @@ class Battle::AI
 		end
 		if targetWillMove?(target, "phys")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -3107,7 +3107,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3229,7 +3229,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.5
 		end
-		miniscore*=0.2 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.2 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3367,7 +3367,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3528,7 +3528,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3687,7 +3687,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3816,7 +3816,7 @@ class Battle::AI
 		end
 		if targetWillMove?(target, "phys")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -3849,7 +3849,7 @@ class Battle::AI
 		end
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -3955,7 +3955,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -3999,7 +3999,7 @@ class Battle::AI
 		end
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -4109,7 +4109,7 @@ class Battle::AI
 				!user.takesHailDamage? && !user.takesSandstormDamage?)
 			miniscore*=1.4
 		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m)>0 }
+		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 		if target.hasActiveAbility?(:SPEEDBOOST)
 			miniscore*=0.6
 		end
@@ -4154,7 +4154,7 @@ class Battle::AI
 		end
 		if targetWillMove?(target, "spec")
 			if move.statusMove? && userFasterThanTarget && 
-			   priorityAI(target,@battle.choices[target.index][2])<1
+			   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
 				miniscore*=1.2
 			end
 		end
@@ -4263,7 +4263,7 @@ class Battle::AI
 					end
 				end
 				score *= 1.2 if target.moves.any? { |m| m&.healingMove? }
-				GameData::Stat.each_main_battle { |s| score *= 1.1 if user.stages[s.id] <= 0 }
+				GameData::Stat.each_main_battle { |s| score *= 1.05 if user.stages[s.id] <= 0 }
 				score *= 2 if user.hasActiveAbility?(:SIMPLE)
 				if user.effects[PBEffects::HealBlock]==0
 					healvar = healdam = false
@@ -4345,7 +4345,7 @@ class Battle::AI
 				end
 				score *= 1.2 if target.moves.any? { |m| m&.healingMove? }
 				score *= 1.3 if user.trappedInBattle?
-				GameData::Stat.each_main_battle { |s| score *= 1.1 if user.stages[s.id] <= 0 }
+				GameData::Stat.each_main_battle { |s| score *= 1.05 if user.stages[s.id] <= 0 }
 				score *= 2 if user.hasActiveAbility?(:SIMPLE)
 				if user.hasActiveAbility?(:RUNAWAY) || user.hasActiveItem?(:SHEDSHELL)
 					score *= 2
@@ -4366,7 +4366,7 @@ class Battle::AI
 							end
 						end
 					end
-					if user.hasActiveItem?(:LEFTOVERS) || (expectedTerrain == :Grass && user.affectedByTerrain?)
+					if user.hasActiveItem?(:LEFTOVERS) || (expectedTerrain == :Grass && user.affectedByTerrain?) ||
 					  (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
 					  (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
 					  (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
@@ -4422,7 +4422,7 @@ class Battle::AI
 				if !userFasterThanTarget
 					score*=1.3
 				else
-					if target.moves.none? { |m| priorityAI(target,m)>0 }
+					if target.moves.none? { |m| priorityAI(target,m,globalArray)>0 }
 						score*=1.2
 					end
 				end  
@@ -4547,7 +4547,7 @@ class Battle::AI
 				if !userFasterThanTarget
 					score*=1.2
 				else
-					score*=0.8 if target.moves.any? { |m| priorityAI(target,m)>0 }
+					score*=0.8 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 					score*=0.5 if target.moves.any? { |m| m&.healingMove? }
 				end
 				doubleTarget = !target.allAllies.empty?
@@ -4589,7 +4589,7 @@ class Battle::AI
 				if !userFasterThanTarget
 					score*=1.2
 				else
-					score*=0.7 if target.moves.any? { |m| priorityAI(target,m)>0 }
+					score*=0.7 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 					score*=0.7 if target.moves.any? { |m| m&.healingMove? }
 				end
 				doubleTarget = !target.allAllies.empty?
@@ -4620,7 +4620,7 @@ class Battle::AI
 				if !userFasterThanTarget
 					score*=1.3
 				else
-					score*=0.7 if target.moves.any? { |m| priorityAI(target,m)>0 }
+					score*=0.7 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 				end
 				miniscore=100
 				livecountuser 	 = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -6364,7 +6364,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserSwapBaseAtkDef" # power trick
 		if user.attack - user.defense >= 100
-			if aspeed>ospeed || !userFasterThanTarget
+			if userFasterThanTarget
 				score*=1.5
 			end
 			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
@@ -6372,7 +6372,7 @@ class Battle::AI
 			end
 			score*=2 if user.moves.any? { |m| m&.healingMove? }
 		elsif user.defense - user.attack >= 100
-			if aspeed>ospeed || !userFasterThanTarget
+			if userFasterThanTarget
 				score*=1.5
 				if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && !user.takesHailDamage? && !user.takesSandstormDamage?)
 					score*=2
@@ -6562,7 +6562,7 @@ class Battle::AI
 						score*=0.5
 					else
 						score*=2.5
-						score*=5 if user.moves.any? { |m| priorityAI(target,m)>0 }
+						score*=5 if user.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 					end
 				end
 			end

@@ -1138,7 +1138,7 @@ class Battle::AI
 			else
 				miniscore*=0.7
 			end
-			if target.moves.any? { |m| priorityAI(target,m)>0 }
+			if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
 				miniscore*=1.3
 			end
 			miniscore/=100
@@ -1218,7 +1218,7 @@ class Battle::AI
 			if target.pbHasType?(:GROUND, true)
 				score*=3
 			end
-			if (userFasterThanTarget || priorityAI(user, move) > 0) && targetWillMove?(target)
+			if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target)
 				if @battle.choices[target.index][2].type == :GROUND
 					score*=3
 				end

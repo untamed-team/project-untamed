@@ -175,8 +175,7 @@ class Battle::AI
 			if target.turnCount==0
 				score*=1.5
 			end        
-			if user.hasActiveAbility?(:SPEEDBOOST) && 
-			   aspeed > ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
+			if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
 				score*=4
 			end
 			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
@@ -340,7 +339,7 @@ class Battle::AI
 		if user.effects[PBEffects::ProtectRate] > 1
 			score = 0
 		else
-			if target.moves.none? { |m| priorityAI(target,m) > 0 }
+			if target.moves.none? { |m| priorityAI(target,m,globalArray) > 0 }
 				score *= 0.5
 			else
 				score *= 1.2
@@ -353,7 +352,7 @@ class Battle::AI
 			end
 			if targetWillMove?(target)
 				targetMove = @battle.choices[target.index][2]
-				if priorityAI(target,targetMove) > 0
+				if priorityAI(target,targetMove,globalArray) > 0
 					score *= 2.0 
 					if targetMove.statusMove?
 						score *= 0.9
@@ -1041,7 +1040,7 @@ class Battle::AI
 			end
 			priorityko=false
 			for zzz in pokemon.moves
-				next if zzz.nil? || priorityAI(target,zzz)<1
+				next if zzz.nil? || priorityAI(target,zzz,[],true)<1
 				dam=pbRoughDamage(zzz, pokemon, target, 100, zzz.baseDamage)
 				if target.hp>0
 					percentage=(dam*100.0)/target.hp
@@ -1151,7 +1150,7 @@ class Battle::AI
 			fakemon = @battle.pbMakeFakeBattler(pokemon,false,target.pbDirectOpposing)
 			priorityko=false
 			for zzz in fakemon.moves
-				next if zzz.nil? || priorityAI(target,zzz)<1
+				next if zzz.nil? || priorityAI(target,zzz,[],true)<1
 				dam=pbRoughDamage(zzz, fakemon, target, 100, zzz.baseDamage)
 				if target.hp>0
 					percentage=(dam*100.0)/target.hp
@@ -1262,40 +1261,39 @@ class Battle::AI
 				 :QUASH, :SPLASH, :SWEETSCENT, :TELEKINESIS],
 		  5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :CRAFTYSHIELD, :ENDURE, :ENTRAINMENT, 
 				 :FAIRYLOCK, :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, 
-				 :HELPINGHAND, :IMPRISON, :LOCKON, :LUCKYCHANT, :MAGICROOM, :MAGNETRISE, 
-				 :MINDREADER, :MIRACLEEYE, :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, 
-				 :POWERTRICK, :QUICKGUARD, :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, 
-				 :SKILLSWAP, :SPEEDSWAP, :SPOTLIGHT, :SPITE, :SHARPEN, :TEATIME, :TEETERDANCE, :WATERSPORT, 
-				 :LASERFOCUS],
-		  10 => [:ACUPRESSURE, :CAMOUFLAGE, :CHARM, :CONFIDE, :DEFENSECURL, :DECORATE, :EMBARGO,
-				 :FLASH, :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :KINESIS, :LEER, :LIFEDEW,
-				 :METALSOUND, :MEMENTO, :NOBLEROAR, :PLAYNICE, :POWDER, :PSYCHUP, 
-				 :SMOKESCREEN, :STRINGSHOT, :SUPERSONIC, :TAILWHIP, :TORMENT, :TEARFULLOOK,
-				 :WITHDRAW, :EXCITE, :HOWL, :MEDITATE, :GROWTH, :WORKUP],
+				 :HELPINGHAND, :IMPRISON, :LOCKON, :LUCKYCHANT, :MAGICROOM, :MAGNETRISE, :MINDREADER, 
+				 :MIRACLEEYE, :MUDSPORT, :NIGHTMARE, :ODORSLEUTH, :POWERSPLIT, :POWERSWAP, :POWERTRICK, 
+				 :QUICKGUARD, :RECYCLE, :REFLECTTYPE, :ROTOTILLER, :SAFEGUARD, :SANDATTACK, :SKILLSWAP, 
+				 :SPEEDSWAP, :SPOTLIGHT, :SPITE, :SHARPEN, :TEATIME, :TEETERDANCE, :WATERSPORT, :LASERFOCUS],
+		  10 => [:ACUPRESSURE, :CAMOUFLAGE, :CHARM, :CONFIDE, :DEFENSECURL, :DECORATE, :EMBARGO, :FLASH, 
+				 :FOCUSENERGY, :GROWL, :HARDEN, :HAZE, :KINESIS, :LEER, :LIFEDEW, :METALSOUND, :MEMENTO, 
+				 :NOBLEROAR, :PLAYNICE, :POWDER, :PSYCHUP, :SMOKESCREEN, :STRINGSHOT, :SUPERSONIC, 
+				 :TAILWHIP, :TORMENT, :TEARFULLOOK, :WITHDRAW, :EXCITE, :HOWL, :MEDITATE, :GROWTH, 
+				 :WORKUP],
 		  20 => [:AGILITY, :ASSIST, :BABYDOLLEYES, :CAPTIVATE, :CHARGE, :CORROSIVEGAS, :COTTONSPORE,
 				 :COURTCHANGE, :DEFOG, :DOUBLETEAM, :EERIEIMPULSE, :FAKETEARS, :FEATHERDANCE,
 				 :FLORALHEALING, :GEARUP, :HEALINGWISH, :HEALPULSE, :INGRAIN, :INSTRUCT, :LUNARDANCE,
-				 :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE,
-				 :SCREECH, :SKETCH, :STUFFCHEEKS, :TARSHOT, :TICKLE, :TRICKORTREAT, :VENOMDRENCH,
-				 :MAGNETICFLUX, :JUNGLEHEALING],
+				 :MEFIRST, :MIMIC, :POISONPOWDER, :REFRESH, :ROLEPLAY, :SCARYFACE, :SCREECH, :SKETCH, 
+				 :STUFFCHEEKS, :TARSHOT, :TICKLE, :TRICKORTREAT, :VENOMDRENCH, :MAGNETICFLUX, 
+				 :JUNGLEHEALING],
 		  25 => [:AQUARING, :BLOCK, :CONVERSION2, :COPYCAT, :ELECTRIFY, :FLATTER, :FLOWERSHIELD,
-				 :GASTROACID, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME,
-				 :MIRRORMOVE, :MIST, :PERISHSONG, :POISONGAS, :REST, :ROAR, :SIMPLEBEAM, :SNATCH,
-				 :SPIDERWEB, :SWAGGER, :SWEETKISS, :TRANSFORM, :WHIRLWIND, :WORRYSEED, :YAWN],
-		  30 => [:ACIDARMOR, :AMNESIA, :AUTOTOMIZE, :BARRIER, :BELLYDRUM, :COSMICPOWER, :COTTONGUARD,
-				 :DEFENDORDER, :DESTINYBOND, :DISABLE, :FOLLOWME, :GRAVITY, :IRONDEFENSE,
-				 :MINIMIZE, :OCTOLOCK, :POLLENPUFF, :PSYCHOSHIFT, :RAGEPOWDER, :REBALANCING,
-				 :ROCKPOLISH, :SANDSTORM, :STOCKPILE, :SUBSTITUTE, :SWALLOW, :SWITCHEROO, :TAUNT,
-				 :TRICK, :HAIL],
-		  35 => [:BATONPASS, :BULKUP, :CALMMIND, :CLANGOROUSSOUL, :COIL, :CURSE, :ELECTRICTERRAIN,
+				 :GASTROACID, :HEARTSWAP, :IONDELUGE, :MAGICCOAT, :MEANLOOK, :METRONOME, :MIRRORMOVE, 
+				 :MIST, :PERISHSONG, :POISONGAS, :REST, :ROAR, :SIMPLEBEAM, :SNATCH, :SPIDERWEB, 
+				 :SWAGGER, :SWEETKISS, :TRANSFORM, :WHIRLWIND, :WORRYSEED, :YAWN],
+		  30 => [:ACIDARMOR, :AMNESIA, :AUTOTOMIZE, :BARRIER, :BELLYDRUM, :COSMICPOWER, :DEFENDORDER, 
+				 :DESTINYBOND, :DISABLE, :FOLLOWME, :GRAVITY, :IRONDEFENSE, :MINIMIZE, :OCTOLOCK, 
+				 :POLLENPUFF, :PSYCHOSHIFT, :RAGEPOWDER, :REBALANCING, :ROCKPOLISH, :SANDSTORM, 
+				 :STOCKPILE, :SUBSTITUTE, :SWALLOW, :SWITCHEROO, :TAUNT, :TRICK, :HAIL],
+		  35 => [:BATONPASS, :BULKUP, :CALMMIND, :COTTONGUARD, :COIL, :CURSE, :ELECTRICTERRAIN, 
 				 :ENCORE, :GRASSYTERRAIN, :LEECHSEED, :MAGICPOWDER, :MISTYTERRAIN, :NATUREPOWER,
-				 :NORETREAT, :PAINSPLIT, :PSYCHICTERRAIN, :PURIFY, :SLEEPTALK, :SOAK, :SUNNYDAY,
-				 :TELEPORT, :TRICKROOM, :WISH, :WONDERROOM, :RAINDANCE],
+				 :PAINSPLIT, :PSYCHICTERRAIN, :PURIFY, :SLEEPTALK, :SOAK, :SUNNYDAY, :TELEPORT, 
+				 :TRICKROOM, :WISH, :WONDERROOM, :RAINDANCE],
 		  40 => [:AROMATHERAPY, :AURORAVEIL, :BITINGCOLD, :BOOMINSTALL, :CONFUSERAY, :GLARE, :HEALBELL, 
 				 :HONECLAWS, :LIGHTSCREEN, :MATBLOCK, :PARTINGSHOT, :REFLECT, :SPIKES, :STUNSPORE, 
 				 :TAILWIND, :THUNDERWAVE, :TOXIC, :TOXICSPIKES, :TOXICTHREAD, :WIDEGUARD, :WILLOWISP],
 		  50 => [:NASTYPLOT, :STEALTHROCK, :SWORDSDANCE, :STICKYWEB, :TOPSYTURVY],
-		  60 => [:DRAGONDANCE, :GEOMANCY, :QUIVERDANCE, :SHELLSMASH, :SHIFTGEAR, :TAILGLOW],
+		  60 => [:DRAGONDANCE, :SHELLSMASH, :NORETREAT, :CLANGOROUSSOUL],
+		  65 => [:GEOMANCY, :QUIVERDANCE, :SHIFTGEAR, :TAILGLOW],
 		  70 => [:HEALORDER, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
 				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
 		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD, :DETECT],
@@ -1890,9 +1888,7 @@ class Battle::AI
 				typeMod = pbCalcTypeMod(i.type, target, user)
 				supervar=true if Effectiveness.super_effective?(typeMod)
 			end
-			if supervar
-				abilityscore*=2.0
-			end      
+			abilityscore*=2.0 if supervar
 		end
 		if target.hasActiveAbility?(:SLIPPERYPEEL)
 			echo("\nSlippery Peel Disrupt") if $AIGENERALLOG
@@ -2067,14 +2063,14 @@ class Battle::AI
 	
 	def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
 		skill = 100
-		thisprio = priorityAI(user,move)
-		return score if thisprio == 0
 		globalArray = pbGetMidTurnGlobalChanges if globalArray.nil?
+		thisprio = priorityAI(user,move,globalArray)
+		return score if thisprio == 0
 		aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
 		ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
-		fastermon = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+		fastermon = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
 		if thisprio>0 
-			if move.damagingMove? # redudant check since this is only called w/ dmg moves but shhh
+			if move.damagingMove?
 				if fastermon
 					echo("\n"+user.name+" is faster than "+target.name+".\n")
 				else
@@ -2098,7 +2094,7 @@ class Battle::AI
 				for j in target.moves
 					tempdam = pbRoughDamage(j,target,user,skill,j.baseDamage)
 					tempdam = 0 if pbCheckMoveImmunity(1,j,target,user,100)
-					if priorityAI(target,j)>0
+					if priorityAI(target,j,globalArray)>0
 						opppri=true
 						if tempdam>pridam
 							pridam = tempdam
@@ -2172,7 +2168,7 @@ class Battle::AI
 						echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
 					end
 				end 
-				if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target)
+				if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target) && targetWillMove?(target, "status")
 					quickcheck = false 
 					for j in target.moves
 						quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0
@@ -2181,17 +2177,28 @@ class Battle::AI
 						echo("Expecting quick guard. Score  (for" + move.name + ") -200. \n")
 						score-=200
 					end  
-				end    
+				end
+			else
+				if move.id == :BABYDOLLEYES
+					if targetWillMove?(target, "phys")
+						score*=1.4 if priorityAI(target,@battle.choices[target.index][2],globalArray) <= 0
+					end
+					if @battle.choices[target.index][0] != :SwitchOut
+						if pbRoughStat(target, :ATTACK, skill) > pbRoughStat(target, :SPECIAL_ATTACK, skill)
+							score*=1.2
+						end
+					end
+				end  
 			end      
 		elsif thisprio<0
 			if fastermon
-				score*=0.9
 				if move.damagingMove?
+					score*=0.9
 					if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-													"TwoTurnAttackInvulnerableUnderground",
-													"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-													"TwoTurnAttackInvulnerableUnderwater",
-													"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+												"TwoTurnAttackInvulnerableUnderground",
+												"TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+												"TwoTurnAttackInvulnerableUnderwater",
+												"TwoTurnAttackInvulnerableInSkyTargetCannotAct")
 						echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
 						score*=2
 					end

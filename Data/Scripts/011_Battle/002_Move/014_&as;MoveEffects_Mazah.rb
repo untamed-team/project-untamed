@@ -323,9 +323,29 @@ class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
 end
 
 #===============================================================================
-# Hits two times, ignores multi target debuff. (Splinter Shot)
+# Hits two times, ignores multi target debuff, phys or spec. (Splinter Shot)
 #===============================================================================
 class Battle::Move::HitTwoTimesReload < Battle::Move
+  def initialize(battle, move)
+    super
+    @calcCategory = 1
+  end
+  def physicalMove?(thisType = nil); return (@calcCategory == 0); end
+  def specialMove?(thisType = nil);  return (@calcCategory == 1); end
+  def pbOnStartUse(user, targets)
+    # Calculate user's effective attacking value
+    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    atk        = user.attack
+    atkStage   = user.stages[:ATTACK] + 6
+    realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
+    spAtk      = user.spatk
+    spAtkStage = user.stages[:SPECIAL_ATTACK] + 6
+    realSpAtk  = (spAtk.to_f * stageMul[spAtkStage] / stageDiv[spAtkStage]).floor
+    # Determine move's category
+    @calcCategory = (realAtk > realSpAtk) ? 0 : 1
+  end
+
   def pbDisplayChargeMessage(user)
     @battle.pbCommonAnimation("FocusPunch", user)
     @battle.pbDisplay(_INTL("{1} is reloading!", user.pbThis))

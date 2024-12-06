@@ -1,7 +1,7 @@
 class Battle::AI
 	# kiriya ai log settings
 	$AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-	$AIMASTERLOG = (false && $DEBUG)
+	$AIMASTERLOG = (true && $DEBUG)
 	$AIGENERALLOG = (false && $DEBUG)
 	# game dies when instruct is used
 	# gastro acid can sometimes make kiriya skip turns?
@@ -291,6 +291,7 @@ class Battle::AI
 			score = initScore * (1 + (0.5 / (1 + Math.exp(-0.1 * (statusDamage - 30)))))
 			initScore = score
 			score = pbGetMoveScoreFunctionCode(score, move, user, target, skill)
+			score = pbAIPrioSpeedCheck(score, move, user, target)
 			# Prefer status moves if level difference is significantly high
 			if user.level - 5 > target.level
 				score *= 1.1

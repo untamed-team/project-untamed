@@ -227,21 +227,22 @@ class Battle::AI
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
-      baseDmg = 20
-      targetMove = @battle.choices[target.index][2]
+      baseDmg = 5
       if (move.function == "CounterPhysicalDamage" && targetWillMove?(target, "phys")) ||
          (move.function == "CounterSpecialDamage"  && targetWillMove?(target, "spec")) ||
          (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
+        targetMove = @battle.choices[target.index][2]
         if targetSurvivesMove(targetMove,target,user)
           baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
           baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
-          baseDmg *= 1.5 if move.function == "CounterDamagePlusHalf"
+          if move.function == "CounterDamagePlusHalf"
+            baseDmg *= 1.5
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(target,:SPEED,skill)
+            fasterFoe = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)) || priorityAI(target, targetMove, globalArray) > 0
+            baseDmg = 1 if !fasterFoe
+          end
         end
-      end
-      if move.function == "CounterDamagePlusHalf"
-        aspeed = pbRoughStat(user,:SPEED,skill)
-        ospeed = pbRoughStat(target,:SPEED,skill)
-        baseDmg = 1 if (ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0)
       end
     when "DoublePowerIfTargetUnderwater",
          "BindTargetDoublePowerIfTargetUnderwater"
@@ -283,7 +284,7 @@ class Battle::AI
       userSpeed = pbRoughStat(user, :SPEED, skill)
       baseDmg = [[(25 * targetSpeed / userSpeed).floor, 150].min, 1].max
     when "RandomlyDamageOrHealTarget"   # Present
-      baseDmg = 50
+      baseDmg = 120
     when "TypeAndPowerDependOnWeather"
       baseDmg *= 2 if user.effectiveWeather != :None || 
                       globalArray.any? { |element| element.include?("weather") }
@@ -346,7 +347,7 @@ class Battle::AI
       baseDmg=0
       for i in beatUpList
         atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
-        baseDmg+= 5+(atk/10)
+        baseDmg += 5+(atk/10)
       end
     when "TwoTurnAttackOneTurnInSun"   # Solar Beam
       baseDmg = move.pbBaseDamageMultiplier(baseDmg, user, target)

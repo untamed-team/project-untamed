@@ -63,6 +63,7 @@ class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
     elsif r < 80
       @presentDmg = 120
     end
+    @presentDmg = 120 if !user.pbOwnedByPlayer?
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)

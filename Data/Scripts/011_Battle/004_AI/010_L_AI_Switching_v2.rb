@@ -303,7 +303,7 @@ class Battle::AI
 						(newenemy.status==:SLEEP && newenemy.statusCount>1 && !newenemy.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
 						tempdam = 0 
 					else
-						thispriority = priorityAI(newenemy,j)
+						thispriority = priorityAI(newenemy,j,[],true)
 						if !mold_broken && pokmon.hasActiveAbility?(:DISGUISE) && pokmon.form==0	
 							if j.multiHitMove?
 								tempdam*=0.6
@@ -473,7 +473,7 @@ class Battle::AI
 					# end
 					#next if m.baseDamage == 0
 					tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
-					thispriority=priorityAI(pokmon,m,true)
+					thispriority=priorityAI(pokmon,m,[],true)
 					tempdam = 0 if thispriority>0 && pokmon.hasActiveAbility?(:PSYCHICSURGE) && b.affectedByTerrain?
 					maxprio=thispriority if tempdam>=b.hp && thispriority>0
 					tempdam = 0 if pbCheckMoveImmunity(1,m,pokmon,b,100)
