@@ -9,18 +9,24 @@
 #To specify the quests an NPC will have, use comments on the event's first page
 #One quest per comment
 #Comments should look like this:
-#quest_marker Quest1 true 1
+#quest_marker QUESTID true/false TurninLocationForStage
+
 #"quest_marker" tells the game this is a quest
-#"questID" tells the game which quest the comment is about. This should not be a symbol with ':' in front
-#the true/false statement tells the game whether this NPC is the
-#quest giver and therefore should have an ! when the quest is ready to be given
-#the number at the end of the statement tells the game whether this NPC is where
-#the player will turn in the quest once the requirements are met
+#"QUESTID" tells the game which quest the comment is about. This should not be a symbol with ':' in front. Example: Quest1
+#the true/false statement tells the game whether this NPC is the quest giver and therefore should have an ! when the quest is ready to be given (readied).
+#the TurninLocationForStage at the end of the statement tells the game what at what stage of the quest should this NPC have a ? over them.
 #when you flag the quest for "turnin", the NPC should have a yellow ? above their head
-#The number itself signifies 'stage 1', and this is used when you have the plugin automatically detect
-#when the quest can be turned in at its stage
-#alternatively if you are going to have the same NPC be the turnin location for all stages of the quest, you can leave this number out
-#Example: quest_marker Quest1 true
+#if you are going to have the same NPC give the quest and be the turnin location for all stages of the quest, you can leave this number out
+
+#Examples:
+#If an NPC is going to give the quest and be the only NPC at which the player will turn in the quest, use this:
+#quest_marker Quest1 true
+
+#If NPC1 is going to give the quest, and NPC2 will be the turnin location for stage 1, use this:
+#NPC1 comment: 
+#quest_marker Quest1 true
+#NPC2 comment: quest_marker Quest1 false 1
+
 
 #When you want to put an ! above an NPC's head, you need to ready the quest to
 #signal the game that quest is ready to be given out
