@@ -133,6 +133,8 @@ class Battle::AI
           ret = :ELECTRIC
         elsif user.isSpecies?(:GOLURK) && !$player.difficulty_mode?("chaos")
           ret = :FLYING
+        elsif user.isSpecies?(:GLALIE)
+          ret = :ICE
         end
       end
     end

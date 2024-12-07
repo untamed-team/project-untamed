@@ -127,6 +127,11 @@ class Battle::AI
 				user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
 			)
 
+			if target.pokemon.willmega && move.physicalMove?(type)
+				multipliers[:attack_multiplier] *= 2.0 if target.isSpecies?(:MAWILE)
+				multipliers[:attack_multiplier] *= 1.3 if target.isSpecies?(:BANETTE) && move.pbContactMove?(user) && $player.difficulty_mode?("chaos")
+			end
+
 			# this doesnt take in foes' negative priority, but lets be real very few would use that anyway
 			# also yes, this is taking in account allies, because for some reason thats a real check
 			if user.hasActiveAbility?(:ANALYTIC)
@@ -486,7 +491,8 @@ class Battle::AI
 			 "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
 			return true
 		end
-		if (user.isSpecies?(:GYARADOS) || user.isSpecies?(:LUPACABRA)) && user.pokemon.willmega
+		if (user.isSpecies?(:GYARADOS) || user.isSpecies?(:LUPACABRA) || user.isSpecies?(:AMPHAROS)) && 
+		   user.pokemon.willmega
 			return true
 		end
 		return false
@@ -566,8 +572,9 @@ class Battle::AI
 		return true if move.statusMove? && target.effects[PBEffects::Substitute] > 0 &&
 					   !move.ignoresSubstitute?(user) && user.index != target.index
 		return true if move.statusMove? && Settings::MECHANICS_GENERATION >= 7 &&
-					   user.hasActiveAbility?(:PRANKSTER) && target.pbHasType?(:DARK, true) &&
-					   target.opposes?(user)
+					   (user.hasActiveAbility?(:PRANKSTER) ||
+					   (user.isSpecies?(:BANETTE) && user.pokemon.willmega && !$player.difficulty_mode?("chaos"))) && 
+					   target.pbHasType?(:DARK, true) && target.opposes?(user)
 		return false
 	end	
 	
@@ -806,7 +813,7 @@ class Battle::AI
 		end
 		pri = move.priority
 		pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
-		pri +=1 if move.statusMove? && user.hasActiveAbility?(:PRANKSTER) 
+		pri +=1 if move.statusMove? && user.hasActiveAbility?(:PRANKSTER)
 		pri +=1 if move.function == "HigherPriorityInGrassyTerrain" && expectedTerrain == :Grassy && user.affectedByTerrain?
 		pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
 		pri +=1 if move.soundMove? && move.statusMove? && user.effects[PBEffects::PrioEchoChamber] > 0 && user.hasActiveAbility?(:ECHOCHAMBER)
