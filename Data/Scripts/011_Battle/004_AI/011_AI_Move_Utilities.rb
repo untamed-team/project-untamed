@@ -71,6 +71,16 @@ class Battle::AI
                                               target.hasActiveItem?(:IRONBALL)
     # Determine types
     tTypes = target.pbTypes(true, true)
+    # Account for Protean #by low
+    if target.hasActiveAbility?([:PROTEAN,:LIBERO]) && targetWillMove?(target)
+      aspeed = pbRoughStat(user,:SPEED,100)
+      ospeed = pbRoughStat(target,:SPEED,100)
+      userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+      targetMove = @battle.choices[target.index][2]
+      if !userFasterThanTarget || priorityAI(target,targetMove)>0
+        tTypes = [targetMove.type]
+      end
+    end
     # Get effectivenesses
     typeMods = [Effectiveness::NORMAL_EFFECTIVE_ONE] * 3   # 3 types max
     if moveType == :SHADOW

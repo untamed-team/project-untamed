@@ -1209,3 +1209,7 @@ Description = Heals w/ sound; next sound status moves: +1 prio.
 Name = Accumulator
 Description = Accumulates Stockpiles if the user has no held items.
 #-------------------------------
+[ENTOINSTINCTS]
+Name = Ento Instincts
+Description = Powers up ally Pokémon's Bug-type moves.
+#-------------------------------
