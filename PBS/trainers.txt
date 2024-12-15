@@ -425,6 +425,40 @@ Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+#-------------------------------
+[GOLDPANNER,Martina]
+LoseText = Woowee!
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[GOLDPANNER,Martina,100]
+LoseText = Woowee!
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
+#-------------------------------
+[GOLDPANNER,Amalia]
+LoseText = Woowee!
+Pokemon = TECHUPPI,9
+Pokemon = BUNNELBY,9
+Pokemon = WRENNER,9
+#-------------------------------
+[GOLDPANNER,Amalia,100]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,9
+	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Ability = INTIMIDATE
+    Nature = TIMID
+Pokemon = GOHILA,10
+	Moves = POISONGAS,SNARL,ACID
+    Nature = BOLD
+    Ability = POISONTOUCH
 
 #-------------------------------
 #-------------------------------

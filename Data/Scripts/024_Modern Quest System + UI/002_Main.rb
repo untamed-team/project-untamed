@@ -677,8 +677,14 @@ def taskCompleteJingle
   pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Task completed!</c2>\nYour objective list has been updated!</ac>",QUEST_JINGLE))
 end
 
+def isQuestActive(quest)
+  arr = getActiveQuests
+  return true if arr.include?(quest) && !isQuestComplete(quest) #then it's active but not completed, so ret true
+  return false if !arr.include?(quest) #then it's not active, so ret false
+end
+
 def isQuestComplete(quest)
-  arr = getCompletedQuests(quest)
+  arr = getCompletedQuests
   return true if arr.include?(quest) #then it's completed, so ret true
   return false if !arr.include?(quest) #then it's not completed, so ret false
 end

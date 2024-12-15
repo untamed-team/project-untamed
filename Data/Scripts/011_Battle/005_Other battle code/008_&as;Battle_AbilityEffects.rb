@@ -1554,6 +1554,12 @@ proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOINSTINCTS,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    mults[:base_damage_multiplier] *= 1.3 if type == :BUG
+  }
+)
+
 #by chespin
 Battle::AbilityEffects::DamageCalcFromUser.add(:ARTILLERIST,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
@@ -1598,6 +1604,12 @@ Battle::AbilityEffects::DamageCalcFromAlly.add(:CARPENTER,
     if user.pbHasType?(:GRASS) || user.pbHasType?(:ROCK) || user.pbHasType?(:STEEL)
       mults[:attack_multiplier] *= 1.3
     end
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromAlly.add(:ENTOINSTINCTS,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    mults[:base_damage_multiplier] *= 1.3 if type == :BUG
   }
 )
 

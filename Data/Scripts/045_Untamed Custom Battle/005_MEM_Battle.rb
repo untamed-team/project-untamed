@@ -5,7 +5,10 @@ MEGA_EVO_STATS = {
   AMPHAROS: { item: :AMPHAROSITE, atkmul: 1.000, defmul: 1.352, spemul: 0.909, spamul: 1.434, spdmul: 1.333 },
   MAGCARGO: { item: :MAGCARGOITE, atkmul: 1.200, defmul: 1.333, spemul: 1.667, spamul: 1.111, spdmul: 1.250 },
   SKARMORY: { item: :SKARMORITE, atkmul: 1.500, defmul: 1.143, spemul: 1.143, spamul: 1.500, spdmul: 1.143 },
+  MAWILE: { item: :MAWILITE, atkmul: 1.235, defmul: 1.471, spemul: 1.000, spamul: 1.000, spdmul: 1.727 },
   SABLEYE: { item: :SABLEYEITE, atkmul: 1.000, defmul: 1.800, spemul: 0.400, spamul: 1.154, spdmul: 1.923 },
+  BANETTE: { item: :BANETTITE, atkmul: 1.261, defmul: 1.267, spemul: 1.000, spamul: 1.241, spdmul: 1.411 },
+  GLALIE: { item: :GLALITITE, atkmul: 1.500, defmul: 1.000, spemul: 1.250, spamul: 1.500, spdmul: 1.000 },
   FLYGON: { item: :FLYGONITE, atkmul: 1.300, defmul: 1.000, spemul: 1.200, spamul: 1.625, spdmul: 1.000 },
   CACTURNE: { item: :CACTURNITE, atkmul: 1.174, defmul: 1.667, spemul: 1.000, spamul: 1.261, spdmul: 1.167 },
   MILOTIC: { item: :MILOTITE, atkmul: 1.417, defmul: 1.215, spemul: 1.012, spamul: 1.260, spdmul: 1.248 },
@@ -16,6 +19,9 @@ MEGA_EVO_STATS = {
   HAWLUCHA: { item: :HAWLUCHITE, atkmul: 1.435, defmul: 1.267, spemul: 1.000, spamul: 1.270, spdmul: 1.317 },
   TREVENANT: { item: :TREVENANTITE, atkmul: 1.167, defmul: 1.305, spemul: 0.821, spamul: 1.385, spdmul: 1.488 },
   FROSMOTH: { item: :FROSMOTHITE, atkmul: 1.000, defmul: 1.333, spemul: 1.308, spamul: 1.080, spdmul: 1.556 },
+
+  CAMERUPT: { item: :CAMERUPTITE, atkmul: 1.200, defmul: 1.429, spemul: 0.500, spamul: 1.381, spdmul: 1.400 },
+  ABOMASNOW: { item: :ABOMASITE, atkmul: 1.435, defmul: 1.400, spemul: 0.500, spamul: 1.435, spdmul: 1.235 },
 
   ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.062, spdmul: 1.120 },
   BEAKRAFT: { item: :BEAKRAFTITE, 

@@ -17,7 +17,7 @@ class Pokemon
 end
 
 MenuHandlers.add(:party_menu, :relearner, {
-  "name"      => _INTL("Relearn Moves"),
+  "name"      => _INTL("Relearn"),
   "order"     => 65,
 	"condition" => proc { |screen, party, party_idx| # added #by low
 		next $game_switches[RELEARNERSWITCH]
