@@ -192,13 +192,13 @@ module QuestModule
     :QuestGiverSprite => "NPC_Gold_Panner_M",
     :QuestGiverDescSprite => "GOLDPANNER",
     :Stage1 => "Beat the three gold panners.",
-    :Task1 => ["Defeat Gold Panner Leo.",1,false],
+    :Task1 => ["Defeat Gold Panner Leo",1,false],
     :Task2 => ["Defeat Gold Panner Martina",1,false],
     :Task3 => ["Defeat Gold Panner Amalia",1,false],
     :Location1 => "Route 3",
     :Stage2 => "Talk to Gold Panner Leo.",
     :Location2 => "Route 3",
-    :Stage3 => "Take the bike pieces to a man at the Shady Shuckle.",
+    :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
     :Location3 => "Route 5",
   }
   
