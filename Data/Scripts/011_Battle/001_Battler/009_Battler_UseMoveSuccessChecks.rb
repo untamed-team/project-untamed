@@ -225,7 +225,7 @@ class Battle::Battler
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!", pbThis))
         @battle.pbHideAbilitySplash(self)
-				if !move.healingMove? # Truant buff #by low
+				unless move.usableWhenTruanting? # Truant buff #by low
 					@lastMoveFailed = true
 					return false
 				end

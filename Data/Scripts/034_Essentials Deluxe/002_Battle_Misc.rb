@@ -304,7 +304,7 @@ class Battle::Move
     @short_name = (Settings::SHORTEN_MOVES && @name.length > 16) ? @name[0..12] + "..." : @name
   end
   
-  def pbIsCritical?(user, target)
+  def pbIsCritical?(user, target, move)
     return false if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
     ratios = (Settings::NEW_CRITICAL_HIT_RATE_MECHANICS) ? [24, 8, 2, 1] : [16, 8, 4, 3, 2]
     c = 0

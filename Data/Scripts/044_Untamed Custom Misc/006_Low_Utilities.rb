@@ -255,20 +255,7 @@ GameData::Evolution.register({
   }	
 })
 
-#by low	
-GameData::Evolution.register({ # the big funny	
-  :id            => :Noseponch,	
-  :after_battle_proc => proc { |pkmn, party_index, parameter|	
-		if pkmn.moves.any? { |m| m && m.id == :HEADBUTT } && 	
-			 [:BRAVE, :RELAXED, :QUIET, :SASSY].include?(pkmn.nature_id) &&	
-			 pkmn == $player.first_pokemon	
-			next $game_temp.party_speed_boost_number &&	
-					 $game_temp.party_speed_boost_number[party_index] &&	
-					 $game_temp.party_speed_boost_number[party_index] <= -2	
-		end	
-  }	
-})	
-
+#by low
 def pbRaiseTropiusEvolutionStep(pkmn)
   if pkmn.isSpecies?(:TROPIUS)
     pkmn.evolution_steps += 1
@@ -276,7 +263,7 @@ def pbRaiseTropiusEvolutionStep(pkmn)
   end
 end
 
-GameData::Evolution.register({ # the big funny 2: revengeance	
+GameData::Evolution.register({ # the big funny 
   :id            => :Titanotrop,	
   :parameter     => Integer,	
   :after_battle_proc => proc { |pkmn, party_index, parameter|	
@@ -285,7 +272,7 @@ GameData::Evolution.register({ # the big funny 2: revengeance
 		end	
   }	
 })	
-GameData::Evolution.register({ # the big funny 3: the prequel	
+GameData::Evolution.register({ # the big funny 2: revengeance
   :id            => :Dunsended,	
   :parameter     => Integer,	
   :after_battle_proc => proc { |pkmn, party_index, parameter|	
@@ -293,7 +280,16 @@ GameData::Evolution.register({ # the big funny 3: the prequel
 			next pkmn.evolution_steps >= 5	
 		end	
   }	
-})	
+})
+GameData::Evolution.register({ # the big funny 3: the prequel
+  :id            => :Venorayge,	
+  :parameter     => Integer,	
+  :after_battle_proc => proc { |pkmn, party_index, parameter|	
+		if pkmn.level >= parameter	
+			next pkmn.evolution_steps >= 10
+		end	
+  }	
+})
 GameData::Evolution.register({ # rotten bananas	
   :id            => :Potassopod,	
   :parameter     => Integer,	
@@ -302,15 +298,6 @@ GameData::Evolution.register({ # rotten bananas
 			next $game_temp.party_dead_bananas &&	
 					 $game_temp.party_dead_bananas[party_index] &&	
 					 $game_temp.party_dead_bananas[party_index] > 0	
-		end	
-  }	
-})
-GameData::Evolution.register({ # defeat 25 smol rays to become big ray
-  :id            => :Venorayge,	
-  :parameter     => Integer,	
-  :after_battle_proc => proc { |pkmn, party_index, parameter|	
-		if pkmn.level >= parameter	
-			next pkmn.evolution_steps >= 25	
 		end	
   }	
 })
@@ -367,7 +354,7 @@ GameData::Evolution.register({
 })
 
 #===============================================================================
-# jack's powertrip
+# powertrip
 #===============================================================================
 def pbFieldEvolutionCheck(hm_used)
 	return if hm_used.nil?
@@ -384,7 +371,6 @@ def pbFieldEvolutionCheck(hm_used)
 				if hm_used == "087065084069082070065076076"
 					new_species = evo2.to_sym
 				end
-#			when 1 # mega basic bitch
 			when 2
 				if hm_used == "068073086069" && pkmn.happiness >= 200
 					new_species = evo2.to_sym
@@ -459,13 +445,12 @@ end
 #===============================================================================	
 class Pokemon
   def compatible_with_move?(move_id)	
-		return false if species_data.species == :M_DITTO # ditto is unable to learn anything, just like me
+		return false if species_data.species == :M_DITTO
     move_data = GameData::Move.try_get(move_id)	
 		# Universal TMs/Move Tutors #by low	
 		unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]	
-		unimovefullyevolvedlist = [:HYPERBEAM, :GIGAIMPACT]	
-		return true if move_data && unimovelist.include?(move_data.id)	
-		return true if move_data && unimovefullyevolvedlist.include?(move_data.id) && species_data.get_evolutions(true).length == 0	
+		unimovelist.push(:HYPERBEAM,:GIGAIMPACT) if species_data.get_evolutions(true).length == 0
+		return true if move_data && unimovelist.include?(move_data.id)
     return move_data && species_data.tutor_moves.include?(move_data.id)	
   end
 end
@@ -702,7 +687,7 @@ class PokemonPokedexInfo_Scene
 end
 
 class Battle::Move
-  def pbIsCritical?(user, target)
+  def pbIsCritical?(user, target, move)
     return false if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
     # Set up the critical hit ratios
 		if Settings::NEW_CRITICAL_HIT_RATE_MECHANICS && !$game_switches[OLDSCHOOLBATTLE]
@@ -713,7 +698,7 @@ class Battle::Move
     c = 0
     # Ability effects that alter critical hit rate
     if c >= 0 && user.abilityActive?
-      c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
+      c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, move, c)
     end
     if c >= 0 && target.abilityActive? && !@battle.moldBreaker
       c = Battle::AbilityEffects.triggerCriticalCalcFromTarget(target.ability, user, target, c)
