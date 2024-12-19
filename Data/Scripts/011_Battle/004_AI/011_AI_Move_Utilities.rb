@@ -67,20 +67,10 @@ class Battle::AI
   def pbCalcTypeMod(moveType, user, target)
     return Effectiveness::NORMAL_EFFECTIVE if !moveType
     return Effectiveness::NORMAL_EFFECTIVE if moveType == :GROUND &&
-                                              target.pbHasType?(:FLYING, true) &&
+                                              hasTypeAI?(:FLYING, target, user, 100) &&
                                               target.hasActiveItem?(:IRONBALL)
     # Determine types
-    tTypes = target.pbTypes(true, true)
-    # Account for Protean #by low
-    if target.hasActiveAbility?([:PROTEAN,:LIBERO]) && targetWillMove?(target)
-      aspeed = pbRoughStat(user,:SPEED,100)
-      ospeed = pbRoughStat(target,:SPEED,100)
-      userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-      targetMove = @battle.choices[target.index][2]
-      if !userFasterThanTarget || priorityAI(target,targetMove)>0
-        tTypes = [targetMove.type]
-      end
-    end
+    tTypes = typesAI(target, user, 100)
     # Get effectivenesses
     typeMods = [Effectiveness::NORMAL_EFFECTIVE_ONE] * 3   # 3 types max
     if moveType == :SHADOW
@@ -98,8 +88,7 @@ class Battle::AI
     ret = 1
     typeMods.each { |m| ret *= m }
     # Inverse Battle Switch #by low
-    # 8x = ret 64
-    # 4x = ret 32
+    # 8x = ret 64; 4x = ret 32
     if $game_switches[INVERSEBATTLESWITCH]
       if ret == 0
         ret = 16
@@ -109,7 +98,6 @@ class Battle::AI
         ret = (64 / ret)
       end
     end
-    #~ print ret
     ret = 14 if ret > 14 && !target.pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][28]==true
     return ret
   end
@@ -371,7 +359,7 @@ class Battle::AI
       baseDmg = user.hp
     when "EffectivenessIncludesFlyingType"   # Flying Press
       if GameData::Type.exists?(:FLYING)
-        targetTypes = target.pbTypes(true, true)
+        targetTypes = typesAI(target, user, skill)
         mult = Effectiveness.calculate(
           :FLYING, targetTypes[0], targetTypes[1], targetTypes[2]
         )
@@ -402,7 +390,7 @@ class Battle::AI
         baseDmg *= 2
       end
     when "HigherDamageInSunVSNonFireTypes"
-      if !target.pbHasType?(:FIRE, true)
+      if !hasTypeAI?(:FIRE, target, user, skill)
         scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
         baseDmg *= scald_damage_multiplier if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
       end
@@ -447,10 +435,10 @@ class Battle::AI
     end
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:accuracy_multiplier] = 1.0
-    modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers, move, type, skill)
-    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], 1.0].max if !user.hasActiveAbility?(:HUSTLE)
+    minAcc = (user.hasActiveAbility?(:HUSTLE)) ? 0.8 : 1.0
+    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], minAcc].max
     modifiers[:evasion_multiplier]  = [modifiers[:evasion_multiplier], 1.0].min
     # Check if move can't miss
     return 125 if modifiers[:base_accuracy] == 0
@@ -522,7 +510,7 @@ class Battle::AI
     end
     if skill >= PBTrainerAI.highSkill
       if move.function == "BadPoisonTarget" &&   # Toxic
-         (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]) && move.statusMove? && user.pbHasType?(:POISON, true)
+         (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]) && move.statusMove? && hasTypeAI?(:POISON, user, target, skill)
         modifiers[:base_accuracy] = 0
       end
       if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(move.function)
@@ -533,5 +521,6 @@ class Battle::AI
         end
       end
     end
+    modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
   end
 end

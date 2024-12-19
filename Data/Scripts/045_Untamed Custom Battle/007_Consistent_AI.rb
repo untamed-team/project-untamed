@@ -383,7 +383,7 @@ class Battle::AI
 		end
 		# If user has Truant, prefer moves that are usable while truanting
 		if user.hasActiveAbility?(:TRUANT) && user.effects[PBEffects::Truant]
-			if move.healingMove?
+			if move.usableWhenTruanting?
 				score *= 2
 			else
 				score *= 0.5

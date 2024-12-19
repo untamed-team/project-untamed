@@ -51,7 +51,7 @@ class Battle::AI
 		if !target.item || !target.itemActive?
 			score = 0
 		else
-			score *= 1.3
+			score *= 1.2
 		end
     #---------------------------------------------------------------------------
     when "FailsUnlessTargetSharesTypeWithUser" # synchronoise
@@ -1503,7 +1503,6 @@ class Battle::AI
 			end
 		end
 		score*=miniscore
-		mechanicver = ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
 		if move.function == "RaiseUserDefense1CurlUpUser"
 			if !user.effects[PBEffects::DefenseCurl]
 				movecheck = user.moves.any? { |m| [:ROLLOUT, :ICEBALL].include?(m.id) }
@@ -1511,12 +1510,9 @@ class Battle::AI
 					score *= 1.2
 					score *= 1.2 if userFasterThanTarget
 				end
-			else
-				score = 0 if mechanicver
 			end
-		else
-			score = 0 if mechanicver
 		end
+		score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserDefense2", "RaiseUserDefense3" # Iron Defense, Cotton Guard
 		miniscore=100        

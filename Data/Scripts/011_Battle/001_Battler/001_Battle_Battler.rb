@@ -377,8 +377,8 @@ class Battle::Battler
       # Form-changing abilities
       :BATTLEBOND,
       :DISGUISE,
-#      :FLOWERGIFT,                                        # This can be stopped
-#      :FORECAST,                                          # This can be stopped
+      #:FLOWERGIFT,                                        # This can be stopped
+      #:FORECAST,                                          # This can be stopped
       :GULPMISSILE,
       :ICEFACE,
       :MULTITYPE,
@@ -408,7 +408,6 @@ class Battle::Battler
       :DISGUISE,
       :FLOWERGIFT,
       :FORECAST,
-			:PRESAGE, #by low
       :GULPMISSILE,
       :ICEFACE,
       :MULTITYPE,
@@ -569,6 +568,9 @@ class Battle::Battler
   def takesShadowSkyDamage?
     return false if fainted?
     return false if shadowPokemon?
+    return false if !pbOwnedByPlayer?
+    return false if hasActiveAbility?(:OVERCOAT)
+    return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
 

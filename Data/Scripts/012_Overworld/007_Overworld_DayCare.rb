@@ -548,6 +548,7 @@ class DayCare
                 (egg_groups1 & egg_groups2).length == 0
     # Pokémon with incompatible genders cannot breed
     return 0 if !compatible_gender?(pkmn1, pkmn2)
+    return 0 if pbIsBadPokemon?(pkmn1) || pbIsBadPokemon?(pkmn2)
     # Pokémon can breed; calculate a compatibility factor
     ret = 1
     ret += 1 if pkmn1.species == pkmn2.species

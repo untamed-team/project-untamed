@@ -327,10 +327,10 @@ module Battle::AbilityEffects
     end 
   end
 
-  def self.triggerCriticalCalcFromUser(ability, user, target, crit_stage)
+  def self.triggerCriticalCalcFromUser(ability, user, target, move, crit_stage)
     for i in user.abilityMutationList
       $aamName=GameData::Ability.get(i).name
-      crit_stage =  trigger(CriticalCalcFromUser, i, user, target, crit_stage, ret: crit_stage)
+      crit_stage =  trigger(CriticalCalcFromUser, i, user, target, move, crit_stage, ret: crit_stage)
     end	
 	  return crit_stage
   end

@@ -140,6 +140,11 @@ class Battle::Move
 
   def nonLethal?(_user, _target); return false; end   # For False Swipe
 
+  def usableWhenTruanting? # Truant buff #by low
+    return true if healingMove?
+    return false
+  end
+
   def ignoresSubstitute?(user)   # user is the Pokémon using this move
     if Settings::MECHANICS_GENERATION >= 6
       return true if soundMove?
@@ -154,13 +159,13 @@ class Battle::Move
       if battler.isSpecies?(:MORPEKO) || battler.effects[PBEffects::TransformSpecies] == :MORPEKO
         return pbBaseType(battler)
       end
-=begin
+#=begin
     when "TypeDependsOnUserPlate", "TypeDependsOnUserMemory",
          "TypeDependsOnUserDrive", "TypeAndPowerDependOnUserBerry",
          "TypeIsUserFirstType", "TypeAndPowerDependOnWeather",
          "TypeAndPowerDependOnTerrain"
       return pbBaseType(battler)
-=end
+#=end
     end
     return @realMove.display_type(battler.pokemon)
   end

@@ -87,13 +87,15 @@ module QuestModule
   }
   Quest2 = {
     :ID => "2",
-    :Name => "To San Cerigold",
+    :Name => "Victory Road",
     :QuestGiver => "Professor Ceiba",
     :QuestGiverSprite => "trainer_PROFESSOR",
     :QuestGiverDescSprite => "CEIBA",
     :Stage1 => "Take on the Gym in San Cerigold Town.",
+    :Stage2 => "Take on the Gym in Calojarro.",
     :Location1 => "San Cerigold Town",
-    :QuestDescription => "Defeat the gym in San Cerigold Town as part of the gym challenge.",
+    :Location1 => "Calojarro",
+    :QuestDescription => "Defeat all gyms in the Mazah Region.",
     :RewardString => "Main Story",
     }
   Quest3 = {
@@ -173,6 +175,7 @@ module QuestModule
     :QuestGiver => "Alex",
     :QuestGiverSprite => "trchar019",
     :QuestGiverDescSprite => "PICNICKER",
+    :RewardString => "Camping Gear",
     :Stage1 => "Camp with your Pokémon.",
     :Task1 => ["Pet your Pokémon",1,false],
     :Task2 => ["Feed your Pokémon",1,false],
@@ -191,14 +194,15 @@ module QuestModule
     :QuestGiver => "Leo",
     :QuestGiverSprite => "NPC_Gold_Panner_M",
     :QuestGiverDescSprite => "GOLDPANNER",
+    :RewardString => "Something shiny!",
     :Stage1 => "Beat the three gold panners.",
-    :Task1 => ["Defeat Gold Panner Leo.",1,false],
+    :Task1 => ["Defeat Gold Panner Leo",1,false],
     :Task2 => ["Defeat Gold Panner Martina",1,false],
     :Task3 => ["Defeat Gold Panner Amalia",1,false],
     :Location1 => "Route 3",
     :Stage2 => "Talk to Gold Panner Leo.",
     :Location2 => "Route 3",
-    :Stage3 => "Take the bike pieces to a man at the Shady Shuckle.",
+    :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
     :Location3 => "Route 5",
   }
   
