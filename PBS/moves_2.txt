@@ -2842,13 +2842,13 @@ Name = Sky Attack
 Type = FLYING
 Category = Physical
 Power = 130
-Accuracy = 100
+Accuracy = 90
 TotalPP = 5
 Target = Other
 FunctionCode = TwoTurnAttackFlinchTarget
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-EffectChance = 10
-Description = A second-turn attack move where critical hits land more easily. It may also make the target flinch.
+EffectChance = 0
+Description = A second-turn attack move where critical hits land more easily.
 #-------------------------------
 [BRAVEBIRD]
 Name = Brave Bird
@@ -4907,13 +4907,13 @@ Description = The target is slugged by a punch thrown with muscle-packed power.
 Name = Razor Wind
 Type = NORMAL
 Category = Special
-Power = 80
+Power = 100
 Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = TwoTurnAttack
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
-Description = A two-turn attack. Blades of wind hit the foe on the second turn. Critical hits land more easily.
+Description = A two-turn attack. Blades of wind hit the foes on the second turn. Critical hits land more easily.
 #-------------------------------
 [SLAM]
 Name = Slam
@@ -4936,7 +4936,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Punching
 Description = The target is slugged with a punch thrown at maximum power to inflict serious damage.
 #-------------------------------
 [TRIATTACK]
@@ -5436,7 +5436,7 @@ Description = The target is raked with sharp claws or scythes for two to five ti
 Name = Barrage
 Type = NORMAL
 Category = Physical
-Power = 15
+Power = 18
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -5906,7 +5906,7 @@ FunctionCode = UserEnduresFaintingThisTurn
 Description = The user endures any attack with at least 1 HP. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [ENTRAINMENT]
-Name = Entrainment
+Name = Entertainment
 Type = NORMAL
 Category = Status
 Accuracy = 100
@@ -8146,9 +8146,9 @@ Description = The user launches steel bombs that stick to the target. This attac
 Name = Gear Grind
 Type = STEEL
 Category = Physical
-Power = 50
+Power = 45
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = HitTwoTimes
 Flags = Contact,CanProtect,CanMirrorMove
@@ -8629,7 +8629,7 @@ Name = Surging Strikes
 Type = WATER
 Category = Physical
 Power = 25
-Accuracy = 100
+Accuracy = 85
 TotalPP = 5
 Target = NearOther
 FunctionCode = HitThreeTimesAlwaysCriticalHit
@@ -8746,7 +8746,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = ParalyzeTarget
-Flags = Contact,CanProtect,HighCriticalHitRate
+Flags = Contact,CanProtect,HighCriticalHitRate,CanMirrorMove
 EffectChance = 10
 Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with paralysis.
 #-------------------------------
@@ -8759,7 +8759,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = FreezeTarget
-Flags = Contact,CanProtect,HighCriticalHitRate
+Flags = Contact,CanProtect,HighCriticalHitRate,CanMirrorMove
 EffectChance = 10
 Description = The user launches a kick with a high critical-hit ratio. It may also leave the target with frostbite.
 #-------------------------------
@@ -8772,7 +8772,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
-Flags = CanProtect
+Flags = CanProtect,CanMirrorMove
 EffectChance = 10
 Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
 #-------------------------------
@@ -8808,7 +8808,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = FreezeTarget
-Flags = CanProtect,Sound
+Flags = CanProtect,CanMirrorMove,Sound
 EffectChance = 10
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------
@@ -8821,7 +8821,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,HighCriticalHitRate,Blade
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
@@ -8833,7 +8833,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,Sound
+Flags = CanProtect,CanMirrorMove,Sound
 Description = The user strikes the air to send a terrible sound-based shockwave towards an opposing foe.
 #-------------------------------
 [GEODEBURST]
@@ -8852,14 +8852,14 @@ Description = The user attacks its target with a hail of glittering crystals.
 Name = Forge Breath
 Type = STEEL
 Category = Special
-Power = 85
+Power = 90
 Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = BurnTarget
-Flags = CanProtect
+Flags = CanProtect,CanMirrorMove
 EffectChance = 10
-Description = The user spews superheated metal at its target. This may also leave the target with a burn.
+Description = The user spews superheated metal at its target. It may also leave the target with a burn.
 #-------------------------------
 [EXCITE]
 Name = Excite
@@ -8890,12 +8890,11 @@ Type = FAIRY
 Category = Physical
 Power = 50
 Accuracy = 100
-TotalPP = 25
+TotalPP = 10
 Target = NearOther
-FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,Biting
-EffectChance = 30
-Description = The target is bitten with sweet and sharp fangs. It may make the target flinch.
+FunctionCode = UserConsumeTargetBerry
+Flags = Contact,CanProtect,CanMirrorMove,Biting
+Description = The target is bitten with sugary fangs. If the target is holding a Berry, the user eats it.
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
@@ -8906,7 +8905,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = PeperSpray
-Flags = CanProtect,ThawsUser
+Flags = CanProtect,CanMirrorMove,ThawsUser
 Description = Unleashes a spray of spicy vapors to attack. Powers up and hits all foes during Sun or Harsh Sun.
 #-------------------------------
 [TITANSWRATH]
@@ -8930,7 +8929,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = SleepTargetChangeUserMeloettaForm
-Flags = CanProtect,Sound,CannotMetronome
+Flags = CanProtect,CanMirrorMove,Sound,CannotMetronome
 EffectChance = 10
 Description = An ancient song appeals to the hearts of those listening. It may also induce sleep.
 #-------------------------------
@@ -8955,7 +8954,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = LowerTargetSpeed1
-Flags = Contact,CanProtect,Biting,CannotMetronome
+Flags = Contact,CanProtect,CanMirrorMove,Biting,CannotMetronome
 EffectChance = 100
 Description = The user hunts down its foe with a deadly precision chomp, which lowers their speed.
 #-------------------------------

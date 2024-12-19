@@ -783,7 +783,8 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetUserTypesToTargetTypes" # Reflect Type
-		if !user.canChangeType? || target.pbTypes(true).length == 0
+		tTypes = typesAI(target, user, skill)
+		if !user.canChangeType? || tTypes.length == 0
 			score -= 90
 		elsif user.pbTypes == target.pbTypes &&
 				user.effects[PBEffects::Type3] == target.effects[PBEffects::Type3]
@@ -929,7 +930,7 @@ class Battle::AI
 			if userlivecount==0 && targetlivecount!=0
 				score*=0.7
 			end
-			targetTypes = target.pbTypes(true)
+			targetTypes = typesAI(target, user, skill)
 			effcheck = Effectiveness.calculate(targetTypes[0], :FIRE, :FIRE, :FIRE)
 			if effcheck > 4
 				score*=1.5
@@ -964,7 +965,7 @@ class Battle::AI
 					end
 				end
 			end
-			userTypes = user.pbTypes(true)
+			userTypes = typesAI(user, target, skill)
 			if userFasterThanTarget
 				if user.hasActiveAbility?(:WONDERGUARD) && userTypes.all? { |typo| typo == :FIRE }
 					score*=8
@@ -1146,7 +1147,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "IgnoreTargetAbility", "CategoryDependsOnHigherDamageIgnoreTargetAbility" # Moongeist Beam / Photon Geyser
-		targetTypes = target.pbTypes(true)
+		targetTypes = typesAI(target, user, skill)
 		if target.hasActiveAbility?(:WONDERGUARD)
 			score*=5
 		elsif target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD])

@@ -75,7 +75,7 @@ class Battle::AI
 		# taking in account intimidate from mons with AAM
 		if !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
 			user.allOpposing.each do |b|
-				if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA)) && 
+				if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)) && 
 				   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
 					atk *= 2 / 3.0
 				end
@@ -117,7 +117,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
 			# NOTE: These abilities aren't suitable for checking at the start of the
 			#       round.    # DemICE: some of them.
-			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT]
+			abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT, :AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE, :NORMALIZE]
 			expectedUserWeather = expectedWeather
 			if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedUserWeather) && 
 				 user.hasActiveItem?(:UTILITYUMBRELLA)
@@ -127,9 +127,9 @@ class Battle::AI
 				user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
 			)
 
-			if target.pokemon.willmega && move.physicalMove?(type)
-				multipliers[:attack_multiplier] *= 2.0 if target.isSpecies?(:MAWILE)
-				multipliers[:attack_multiplier] *= 1.3 if target.isSpecies?(:BANETTE) && move.pbContactMove?(user) && $player.difficulty_mode?("chaos")
+			if user.pokemon.willmega && move.physicalMove?(type)
+				multipliers[:attack_multiplier] *= 2.0 if user.isSpecies?(:MAWILE)
+				multipliers[:attack_multiplier] *= 1.3 if user.isSpecies?(:BANETTE) && move.contactMove? && $player.difficulty_mode?("chaos")
 			end
 
 			# this doesnt take in foes' negative priority, but lets be real very few would use that anyway
@@ -144,6 +144,24 @@ class Battle::AI
 				end
 				if priorityAI(user,move,globalArray) < 0 || willOutslow
 					multipliers[:base_damage_multiplier] *= 1.3
+				end
+			end
+			
+			if !@battle.field.effects[PBEffects::IonDeluge] && !user.effects[PBEffects::Electrify]
+				if move.type == :NORMAL # not 'type' intentionally
+					megaboost = false
+					if user.pokemon.willmega
+						if (user.isSpecies?(:HAWLUCHA) && $player.difficulty_mode?("chaos") && !user.pokemon.hasHiddenAbility?) ||
+						   (user.isSpecies?(:GOLURK) && !$player.difficulty_mode?("chaos")) ||
+						   user.isSpecies?(:GLALIE)
+							megaboost = true
+						end
+					end
+					if user.hasActiveAbility?([:AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE]) || megaboost
+						multipliers[:base_damage_multiplier] *= 1.2
+					end
+				else
+					multipliers[:base_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NORMALIZE)
 				end
 			end
 		end
@@ -268,8 +286,7 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
 			multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
 			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
-			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
-			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
+			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER, :PRISMARMOR],false,moldBreaker)
 			
 			berryTypesArray = {
 				:OCCABERRY   => :FIRE,
@@ -376,14 +393,12 @@ class Battle::AI
 		#end
 		# STAB
 		if skill >= PBTrainerAI.mediumSkill && type
-			if user.pbHasType?(type, true)
+			if user.pbHasType?(type, true) || user.hasActiveAbility?([:PROTEAN,:LIBERO])
 				if user.hasActiveAbility?(:ADAPTABILITY)
 					multipliers[:final_damage_multiplier] *= 2
 				else
 					multipliers[:final_damage_multiplier] *= 1.5
 				end
-			else
-				multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?([:PROTEAN,:LIBERO])
 			end
 		end
 		# Type effectiveness
@@ -443,7 +458,7 @@ class Battle::AI
 			c = -1 if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
 			# Ability effects that alter critical hit rate
 			if c >= 0 && user.abilityActive?
-				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, c)
+				c = Battle::AbilityEffects.triggerCriticalCalcFromUser(user.ability, user, target, move, c)
 				c += 2 if user.hasActiveAbility?(:JUNGLEFURY) && @battle.field.terrain == :None && expectedTerrain == :Grassy
 			end
 			if c >= 0 && target.abilityActive? && !moldBreaker
@@ -462,8 +477,8 @@ class Battle::AI
 				c += 1 if user.inHyperMode? && move.type == :SHADOW
 				c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
 				# DemICE: taking into account 100% crit rate.
-				stageMul = [2,2,2,2,2,2, 2, 3,4,5,6,7,8]
-				stageDiv = [8,7,6,5,4,3, 2, 2,2,2,2,2,2]
+				stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+				stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
 				vatk, atkStage = move.pbGetAttackStats(user,target)
 				vdef, defStage = move.pbGetDefenseStats(user,target)
 				atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]
@@ -475,10 +490,10 @@ class Battle::AI
 				if c >= 1
 					c = 4 if c > 4
 					if c >= 3
-						damage*=1.5
-						damage*=1.5 if user.hasActiveAbility?(:SNIPER)
+						damage *= 1.5
+						damage *= 1.5 if user.hasActiveAbility?(:SNIPER)
 					else
-						damage += damage*0.1*c
+						damage *= (1 + 0.1 * c)
 					end
 				end
 			end
@@ -634,14 +649,16 @@ class Battle::AI
 			return false if bb.hasActiveAbility?(:INNERFOCUS,false,mold_bonkers)
 		end
 		for move in user.moves
-			return true if move.function == "FlinchTargetFailsIfNotUserFirstTurn" && 
-						   user.turnCount == 0
-			if move.flinchingMove?
-				return false if @battle.turnCount == 0
-				return true
+			if move.function == "FlinchTargetFailsIfNotUserFirstTurn"
+				return true if user.turnCount == 0
+			else
+				if move.flinchingMove?
+					return false if @battle.turnCount == 0
+					return true
+				end
 			end
 		end
-		return true if user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)
+		return true if (user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)) && @battle.turnCount > 0
 		return true if $AIMASTERLOG
 		return false
 	end
@@ -824,6 +841,31 @@ class Battle::AI
 		pri = -1 if user.hasActiveItem?([:LAGGINGTAIL, :FULLINCENSE])
 		return pri
 	end
+
+	def typesAI(target, user, skill)
+		tTypes = target.pbTypes(true, true)
+		# Account for Player's Protean #by low
+		if target.pbOwnedByPlayer?
+			if target.hasActiveAbility?([:PROTEAN,:LIBERO]) && targetWillMove?(target)
+				aspeed = pbRoughStat(user,:SPEED,skill)
+				ospeed = pbRoughStat(target,:SPEED,skill)
+				userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+				targetMove = @battle.choices[target.index][2]
+				if !userFasterThanTarget || priorityAI(target,targetMove) > 0
+					tTypes = [targetMove.type]
+				end
+			end
+		end
+		# If i were to implement AI protean, then i would need to add "if you click this you'll be this"
+		# logic, which honestly is too much trouble for a ability only kekcleon will use
+		return tTypes
+	end
+
+	def hasTypeAI?(type, target, user, skill)
+		return false if !type
+		activeTypes = typesAI(target, user, skill)
+		return activeTypes.include?(GameData::Type.get(type).id)
+	end
 	
 	def EndofTurnHPChanges(user,target,heal,chips,both,switching=false,rest=false)
 		# this shit was horribly messy and flat out did not work in some aspects
@@ -860,14 +902,15 @@ class Battle::AI
 			weatherchip += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather) && user.hasActiveAbility?(:DRYSKIN)
 			weatherchip += 0.0625 if user.effectiveWeather == :Sandstorm && user.takesSandstormDamage?
 			weatherchip += 0.0625 if user.effectiveWeather == :Hail && user.takesHailDamage?
+			weatherchip += 0.0625 if user.effectiveWeather == :ShadowSky && user.takesShadowSkyDamage?
 			chip += weatherchip
 			if user.effects[PBEffects::Trapping]>0
 				multiturnchip = 0.125 
 				multiturnchip *= (4.0 / 3.0) if @battle.battlers[user.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
 				chip+=multiturnchip
 			end
+			chip += 0.0625 if user.effects[PBEffects::Curse]
 			chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
-			chip += 0.25  if user.effects[PBEffects::Curse]
 			if user.pbHasAnyStatus? && !rest
 				statuschip = 0
 				if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)

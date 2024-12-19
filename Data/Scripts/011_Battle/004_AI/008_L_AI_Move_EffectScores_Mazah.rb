@@ -710,7 +710,8 @@ class Battle::AI
 					score *= 1.3
 				end
 				if (expectedWeather == :Hail && target.takesHailDamage?) || 
-				   (expectedWeather == :Sandstorm && target.takesSandstormDamage?)
+				   (expectedWeather == :Sandstorm && target.takesSandstormDamage?) || 
+				   (expectedWeather == :ShadowSky && target.takesShadowSkyDamage?)
 					score *= 1.3
 				end
 			end
@@ -902,10 +903,16 @@ class Battle::AI
 		facade = true if target.pbHasMoveFunction?("HealUserFullyAndFallAsleep") && status != :SLEEP
 		facade = false if status == :PARALYSIS && !target.hasActiveAbility?(:QUICKFEET)
 		miniscore*=0.3 if facade
-		if move.baseDamage>0 && status != :PARALYSIS
+		if move.damagingMove?
 			if (target.hasActiveAbility?(:STURDY) || target.hasActiveItem?(:FOCUSASH)) &&
-				 target.hp == target.totalhp
+			   target.hp == target.totalhp && status != :PARALYSIS
 				miniscore*=1.1
+			end
+		else
+			user.allOpposing.each do |m|
+				next unless m.hasActiveAbility?(:HEALER)
+				miniscore*=0.6
+				break
 			end
 		end
 		case status
@@ -1490,7 +1497,7 @@ class Battle::AI
 				if totalelec
 					abilityscore*=3
 				end
-				targetTypes = target.pbTypes(true)
+				targetTypes = typesAI(target, user, skill)
 				if Effectiveness.calculate(elecmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
 					abilityscore*=2
 				end
@@ -1518,7 +1525,7 @@ class Battle::AI
 				if totalwater
 					abilityscore*=3
 				end
-				targetTypes = target.pbTypes(true)
+				targetTypes = typesAI(target, user, skill)
 				if Effectiveness.calculate(watermove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
 					abilityscore*=2
 				end
@@ -1553,7 +1560,7 @@ class Battle::AI
 				if totalfire
 					abilityscore*=3
 				end
-				targetTypes = target.pbTypes(true)
+				targetTypes = typesAI(target, user, skill)
 				if Effectiveness.calculate(firemove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
 					abilityscore*=3
 				end
@@ -1577,7 +1584,7 @@ class Battle::AI
 				if totalground
 					abilityscore*=3
 				end
-				targetTypes = target.pbTypes(true)
+				targetTypes = typesAI(target, user, skill)
 				if Effectiveness.calculate(groundmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
 					abilityscore*=2
 				end
@@ -1788,15 +1795,15 @@ class Battle::AI
 				if totalgrass
 					abilityscore*=3
 				end
-				targetTypes = target.pbTypes(true)
-				if Effectiveness.calculate(groundmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
+				targetTypes = typesAI(target, user, skill)
+				if Effectiveness.calculate(grassmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
 					abilityscore*=2
 				end
 			end
 		end
 		if target.hasActiveAbility?(:PRANKSTER)
 			echo("\nPrankster Disrupt") if $AIGENERALLOG
-			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && !user.pbHasType?(:DARK, false)
+			abilityscore*=1.5 if pbRoughStat(user,:SPEED,skill)>pbRoughStat(target,:SPEED,skill) && !hasTypeAI?(:DARK, user, target, skill)
 		end
 		if target.hasActiveAbility?(:FURCOAT)
 			echo("\nFur Coat Disrupt") if $AIGENERALLOG

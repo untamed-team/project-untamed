@@ -136,10 +136,10 @@ class Battle::Move
     modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:base_accuracy] = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(self.id)
     modifiers[:accuracy_multiplier] = 1.0
-    modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers)
-    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], 1.0].max if !user.hasActiveAbility?(:HUSTLE)
+    minAcc = (user.hasActiveAbility?(:HUSTLE)) ? 0.8 : 1.0
+    modifiers[:accuracy_multiplier] = [modifiers[:accuracy_multiplier], minAcc].max
     modifiers[:evasion_multiplier]  = [modifiers[:evasion_multiplier], 1.0].min
     # Check if move can't miss
     return true if modifiers[:base_accuracy] == 0
@@ -202,6 +202,7 @@ class Battle::Move
     end
     modifiers[:evasion_stage] = 0 if target.effects[PBEffects::Foresight] && modifiers[:evasion_stage] > 0
     modifiers[:evasion_stage] = 0 if target.effects[PBEffects::MiracleEye] && modifiers[:evasion_stage] > 0
+    modifiers[:accuracy_multiplier] *= 1.15 if !user.pbOwnedByPlayer?
   end
 
   #=============================================================================
@@ -214,7 +215,7 @@ class Battle::Move
   def pbCritialOverride(user, target); return 0; end
 
   # Returns whether the move will be a critical hit.
-  def pbIsCritical?(user, target)
+  def pbIsCritical?(user, target, move)
     # low_utilities.rb
   end
 
@@ -253,7 +254,7 @@ class Battle::Move
     # Get the move's type
     type = @calcType   # nil is treated as physical
     # Calculate whether this hit deals critical damage
-    target.damageState.critical = pbIsCritical?(user, target)
+    target.damageState.critical = pbIsCritical?(user, target, @battle.choices[user.index][2])
     # Calcuate base power of move
     baseDmg = pbBaseDamage(@baseDamage, user, target)
     # Calculate user's attack stat

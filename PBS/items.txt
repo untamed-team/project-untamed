@@ -6803,29 +6803,29 @@ FieldUse = Direct
 Flags = KeyItem
 Description = Dummy Ticket.
 #-------------------------------
-[RUSTYHANDLEBAR]
-Name = Rusty Handlebar
+[RUSTYHANDLEBARS]
+Name = Rusty Handlebars
 NamePlural = Rusty Handlebars
 Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = An old, rusted handlebar that might have belonged to a bicycle.
+Description = An old, rusted set of handlebars that might have belonged to a bicycle.
 #-------------------------------
-[RUSTYSPOKE]
-Name = Rusty Spoke
-NamePlural = Rusty Spokes
+[RUSTYPEDAL]
+Name = Rusty Pedal
+NamePlural = Rusty Pedals
 Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = An old, rusted wheel spoke that might have belonged to a bicycle.
+Description = An old, rusted pedal spoke that might have belonged to a bicycle.
 #-------------------------------
-[RUSTYGEAR]
-Name = Rusty Gear
-NamePlural = Rusty Gear
+[RUSTYTOPTUBE]
+Name = Rusty Top Tube
+NamePlural = Rusty Top Tubes
 Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = An old, rusted gear that might have belonged to a bicycle.
+Description = An old, rusted top tube that might have belonged to a bicycle.
