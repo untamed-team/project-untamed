@@ -1,5 +1,6 @@
 # selects trainer teams  = $player.difficulty
 # selects game mechanics = $player.mechanics
+ItemCAP = 3
 
 class Player < Trainer
   attr_accessor :difficulty
@@ -146,8 +147,8 @@ class Battle
             break if pbFightMenu(idxBattler)
           when 1    # Bag
             # items ban #by low
-            if $player.difficulty_mode?("normal") && $game_variables[MAXITEMSVAR]>=3 && @opponent
-              pbDisplay(_INTL("But 3 items have already been used in this Trainer Battle!"))
+            if $player.difficulty_mode?("normal") && @numberOfUsedItems[idxBattler % 2] >= ItemCAP && @opponent
+              pbDisplay(_INTL("But #{1} items have already been used in this Trainer Battle!", ItemCAP))
             elsif $player.difficulty_mode?("hard") && @opponent
               pbDisplay(_INTL("Items are banned during Trainer Battles."))
             else

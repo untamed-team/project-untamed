@@ -1725,7 +1725,10 @@ class Battle::AI
 				abilityscore*=2
 			end	
 		end 			
-		if target.hasMoldBreaker? || ((target.isSpecies?(:GYARADOS) || target.isSpecies?(:LUPACABRA)) && target.pokemon.willmega)
+		if target.hasMoldBreaker? || 
+			((target.isSpecies?(:GYARADOS) || 
+			  target.isSpecies?(:LUPACABRA) || 
+			  target.isSpecies?(:AMPHAROS)) && target.pokemon.willmega)
 			echo("\nMold Breaker (and clones) Disrupt") if $AIGENERALLOG
 			abilityscore*=1.1
 		end 
@@ -1869,6 +1872,18 @@ class Battle::AI
 				abilityscore*=1.3
 			end      
 		end
+		if target.hasActiveAbility?(:KLUTZ)
+			if $player.difficulty_mode?("chaos")
+				itemsAffected = [:ASSAULTVEST, :MELEEVEST, :EVIOLITE, :BRIGHTPOWDER, :LAXINCENSE, 
+									:REDCARD, :EJECTBUTTON]
+				itemsAffected.push(:OCCABERRY, :PASSHOBERRY, :WACANBERRY, :RINDOBERRY, :YACHEBERRY, 
+									:CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, 
+									:TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, 
+									:ROSELIBERRY, :BABIRIBERRY)
+				abilityscore*=1.5 if itemsAffected.include?(user.item_id)
+			end
+			abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
+		end
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?(:BAITEDLINE)
 			echo("\nBaited Line Disrupt") if $AIGENERALLOG
@@ -1921,6 +1936,7 @@ class Battle::AI
 			if target.moves.any? { |i| i.bitingMove? }
 				abilityscore*=1.2
 				abilityscore*=1.1 if user.attack<user.spatk
+				abilityscore*=1.2 if $player.difficulty_mode?("easy")
 			end
 		end
 		if target.hasActiveAbility?(:TRICKSTER)

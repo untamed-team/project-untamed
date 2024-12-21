@@ -431,7 +431,7 @@ Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:HONORBOUND,
 
 Battle::AbilityEffects::StatusCheckNonIgnorable.add(:COMATOSE,
   proc { |ability, battler, status|
-    next false if !battler.isSpecies?(:KOMALA)
+    #next false if !battler.isSpecies?(:KOMALA)
     next true if status.nil? || status == :SLEEP
   }
 )
@@ -500,7 +500,7 @@ Battle::AbilityEffects::StatusImmunity.add(:OWNTEMPO,
 
 Battle::AbilityEffects::StatusImmunityNonIgnorable.add(:COMATOSE,
   proc { |ability, battler, status|
-    next true if battler.isSpecies?(:KOMALA)
+    next true #if battler.isSpecies?(:KOMALA)
   }
 )
 
@@ -2195,10 +2195,12 @@ Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
     next if !move.physicalMove?
     next if !target.pbCanLowerStatStage?(:DEFENSE, target) &&
             !target.pbCanRaiseStatStage?(:SPEED, target)
+    next if battle.wasUserAbilityActivated?(target)
     battle.pbShowAbilitySplash(target)
     target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false)
     target.pbRaiseStatStageByAbility(:SPEED,
        (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
     battle.pbHideAbilitySplash(target)
   }
 )
@@ -2210,7 +2212,7 @@ Battle::AbilityEffects::OnBeingHit.add(:PARTYPOPPER,
     next if battle.wasUserAbilityActivated?(target)
     battle.pbShowAbilitySplash(target)
     target.pbOwnSide.effects[PBEffects::PartyPopper] = true
-    battle.ActivateUserAbility(user)
+    battle.ActivateUserAbility(target)
     battle.pbHideAbilitySplash(target)
   }
 )
@@ -2473,11 +2475,11 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
-    next if battle.wasUserAbilityActivated?(user)
+    next if battle.wasUserAbilityActivated?(target)
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
     target.effects[PBEffects::SlipperyPeel] = true
-    battle.ActivateUserAbility(user) if $player.difficulty_mode?("hard") # Hard / "Low" mode
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     if user.hasActiveAbility?(:SUCTIONCUPS) && !battle.moldBreaker
       battle.pbShowAbilitySplash(user)
       if Battle::Scene::USE_ABILITY_SPLASH

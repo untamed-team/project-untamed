@@ -72,7 +72,7 @@ class Battle
       b.lastMoveFailed = false   # Counts as a successful move for Stomping Tantrum
       item = @choices[b.index][1]
       next if !item
-			$game_variables[MAXITEMSVAR]+=1 # items ban #by low
+      @numberOfUsedItems[b.index % 2] += 1 # items cap #by low
       case GameData::Item.get(item).battle_use
       when 1, 2   # Use on Pokémon/Pokémon's move
         pbUseItemOnPokemon(item, @choices[b.index][2], b) if @choices[b.index][2] >= 0

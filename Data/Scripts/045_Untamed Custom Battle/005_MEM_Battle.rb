@@ -23,7 +23,7 @@ MEGA_EVO_STATS = {
   CAMERUPT: { item: :CAMERUPTITE, atkmul: 1.200, defmul: 1.429, spemul: 0.500, spamul: 1.381, spdmul: 1.400 },
   ABOMASNOW: { item: :ABOMASITE, atkmul: 1.435, defmul: 1.400, spemul: 0.500, spamul: 1.435, spdmul: 1.235 },
 
-  ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.062, spdmul: 1.120 },
+  ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.185, spdmul: 1.147 },
   BEAKRAFT: { item: :BEAKRAFTITE, 
               male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 
               female: { atkmul: 1.167, defmul: 1.105, spemul: 1.051, spamul: 2.000, spdmul: 1.267 } },
@@ -169,7 +169,12 @@ class Battle
 		# MEM stuff #by low
     if battler.wild? || battler.hasMegaEvoMutation?
 		###################
-      pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
+      case battler.pokemon.megaMessage
+      when 1
+        pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
+      else
+        pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
+      end
     else
       trainerName = pbGetOwnerName(idxBattler)
       case battler.pokemon.megaMessage
@@ -206,13 +211,7 @@ class Battle
     megaName = battler.pokemon.megaName
     megaName = _INTL("Mega {1}", battler.pokemon.speciesName) if nil_or_empty?(megaName)
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
-		if battler.hasMegaEvoMutation?
-			#nothing
-      #battler.pokemon.ability = nil
-      battler.pokemon.ability_index = nil
-      @scene.pbRefreshOne(idxBattler)
-      battler.pbUpdate(true)
-		else
+		unless battler.hasMegaEvoMutation?
 			side  = battler.idxOwnSide
 			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
 			@megaEvolution[side][owner] = -2

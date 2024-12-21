@@ -459,14 +459,14 @@ class Battle::AI
 		# Try play "mind games" instead of just getting baited every time.
 		if move.function == "FailsIfTargetActed"
 			if @battle.choices[target.index][0]!=:UseMove
-				if pbAIRandom(100) < 80	
+				if rand(100) < 80	
 					echo("\n'Predicting' that opponent will not attack and sucker will fail")
 					score=1
 					realDamage=0
 				end
 			else
 				if @battle.choices[target.index][1]
-					if !@battle.choices[target.index][2].damagingMove? && pbAIRandom(100) < 66	
+					if !@battle.choices[target.index][2].damagingMove? && rand(100) < 66	
 						echo("\n'Predicting' that opponent will not attack and sucker will fail")
 						score=1
 						realDamage=0 
