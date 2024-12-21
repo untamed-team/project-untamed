@@ -1,7 +1,7 @@
 $aiberrycheck=false
 class Battle::AI
 	def pbDefaultChooseEnemyCommand(idxBattler)
-		#return if pbEnemyShouldUseItem?(idxBattler)
+		return if pbEnemyShouldUseItem?(idxBattler)
 		return if pbEnemyShouldWithdraw?(idxBattler)
 		return if @battle.pbAutoFightMenu(idxBattler)
 		@battle.pbRegisterMegaEvolution(idxBattler) if pbEnemyShouldMegaEvolve?(idxBattler)
@@ -127,9 +127,9 @@ class Battle::AI
 				user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
 			)
 
-			if user.pokemon.willmega && move.physicalMove?(type)
-				multipliers[:attack_multiplier] *= 2.0 if user.isSpecies?(:MAWILE)
-				multipliers[:attack_multiplier] *= 1.3 if user.isSpecies?(:BANETTE) && move.contactMove? && $player.difficulty_mode?("chaos")
+			if user.pokemon.willmega
+				multipliers[:attack_multiplier] *= 2.0 if user.isSpecies?(:MAWILE) && move.physicalMove?(type)
+				multipliers[:base_damage_multiplier] *= 4 / 3.0 if user.isSpecies?(:BANETTE) && move.contactMove? && $player.difficulty_mode?("chaos")
 			end
 
 			# this doesnt take in foes' negative priority, but lets be real very few would use that anyway
@@ -226,7 +226,8 @@ class Battle::AI
 				user.effects[PBEffects::GemConsumed] = nil   # Untrigger consuming of Gems
 			end
 		end
-		if skill >= PBTrainerAI.bestSkill &&
+		# klutz buff #by low
+		if skill >= PBTrainerAI.bestSkill && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos")) &&
 		   target.itemActive? && target.item && !target.item.is_berry?
 			Battle::ItemEffects.triggerDamageCalcFromTarget(
 				target.item, user, target, move, multipliers, baseDmg, type
@@ -288,27 +289,30 @@ class Battle::AI
 			multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
 			multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER, :PRISMARMOR],false,moldBreaker)
 			
-			berryTypesArray = {
-				:OCCABERRY   => :FIRE,
-				:PASSHOBERRY => :WATER,
-				:WACANBERRY  => :ELECTRIC,
-				:RINDOBERRY  => :GRASS,
-				:YACHEBERRY  => :ICE,
-				:CHOPLEBERRY => :FIGHTING,
-				:KEBIABERRY  => :POISON,
-				:SHUCABERRY  => :GROUND,
-				:COBABERRY   => :FLYING,
-				:PAYAPABERRY => :PSYCHIC,
-				:TANGABERRY  => :BUG,
-				:CHARTIBERRY => :ROCK,
-				:KASIBBERRY  => :GHOST,
-				:HABANBERRY  => :DRAGON,
-				:COLBURBERRY => :DARK,
-				:ROSELIBERRY => :FAIRY,
-				:BABIRIBERRY => :STEEL
-			}
-			berry_type = berryTypesArray[target.item_id]
-			multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
+			if (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos")) && 
+			   target.itemActive? && target.item
+				berryTypesArray = {
+					:OCCABERRY   => :FIRE,
+					:PASSHOBERRY => :WATER,
+					:WACANBERRY  => :ELECTRIC,
+					:RINDOBERRY  => :GRASS,
+					:YACHEBERRY  => :ICE,
+					:CHOPLEBERRY => :FIGHTING,
+					:KEBIABERRY  => :POISON,
+					:SHUCABERRY  => :GROUND,
+					:COBABERRY   => :FLYING,
+					:PAYAPABERRY => :PSYCHIC,
+					:TANGABERRY  => :BUG,
+					:CHARTIBERRY => :ROCK,
+					:KASIBBERRY  => :GHOST,
+					:HABANBERRY  => :DRAGON,
+					:COLBURBERRY => :DARK,
+					:ROSELIBERRY => :FAIRY,
+					:BABIRIBERRY => :STEEL
+				}
+				berry_type = berryTypesArray[target.item_id]
+				multipliers[:final_damage_multiplier] *= 0.5 if berry_type && type == berry_type
+			end
 			# Master Mode stuff #by low
 			if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer?
 				multipliers[:final_damage_multiplier] *= 0.75

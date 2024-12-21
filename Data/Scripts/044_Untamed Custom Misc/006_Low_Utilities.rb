@@ -745,6 +745,7 @@ class Battle
     @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
 		@slowstartCount  = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
 		@overwriteType   = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
+    @numberOfUsedItems = [0,0]
   end
   def wasUserAbilityActivated?(user) 
 		return @activedAbility[user.index & 1][user.pokemonIndex]

@@ -185,7 +185,8 @@ class Battle::Move
         user.item, modifiers, user, target, self, @calcType
       )
     end
-    if target.itemActive?
+    # klutz buff #by low
+    if target.itemActive? && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, self, @calcType
       )
@@ -344,7 +345,8 @@ class Battle::Move
         user.item, user, target, self, multipliers, baseDmg, type
       )
     end
-    if target.itemActive?
+    # klutz buff #by low
+    if target.itemActive? && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
       Battle::ItemEffects.triggerDamageCalcFromTarget(
         target.item, user, target, self, multipliers, baseDmg, type
       )

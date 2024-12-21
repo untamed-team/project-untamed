@@ -5093,45 +5093,61 @@ class Battle::AI
 			score *= 0.2
 		end
     #---------------------------------------------------------------------------
-    when "ReplaceMoveThisBattleWithTargetLastMoveUsed" # Mimic
-		moveBlacklist = [
-			"Struggle",   # Struggle
-			"ReplaceMoveThisBattleWithTargetLastMoveUsed",   # Mimic
-			"ReplaceMoveWithTargetLastMoveUsed",   # Sketch
-			"UseRandomMove"   # Metronome
-		]
-		if user.effects[PBEffects::Transform] || !target.lastRegularMoveUsed
-			score = 0
-		else
-			lastMoveData = GameData::Move.get(target.lastRegularMoveUsed)
-			if moveBlacklist.include?(lastMoveData.function_code) ||
-			   lastMoveData.type == :SHADOW
-				score = 0
-			end
-			user.eachMove do |m|
-				next if m != target.lastRegularMoveUsed
-				score = 0
-				break
-			end
-		end
-    #---------------------------------------------------------------------------
-    when "ReplaceMoveWithTargetLastMoveUsed" # Sketch
+    when "ReplaceMoveThisBattleWithTargetLastMoveUsed", "ReplaceMoveWithTargetLastMoveUsed" # Mimic, Sketch
 		moveBlacklist = [
 			"Struggle",   # Struggle
 			"ReplaceMoveWithTargetLastMoveUsed"   # Sketch
 		]
-		if user.effects[PBEffects::Transform] || !target.lastRegularMoveUsed
+		if move.function == "ReplaceMoveThisBattleWithTargetLastMoveUsed"
+			moveBlacklist.push(
+				"ReplaceMoveThisBattleWithTargetLastMoveUsed",   # Mimic
+				"UseRandomMove"   # Metronome
+			)
+		end
+		if user.effects[PBEffects::Transform]
 			score = 0
 		else
-			lastMoveData = GameData::Move.get(target.lastRegularMoveUsed)
-			if moveBlacklist.include?(lastMoveData.function_code) ||
-			   lastMoveData.type == :SHADOW
-				score = 0
-			end
-			user.eachMove do |m|
-				next if m != target.lastRegularMoveUsed
-				score = 0   # User already knows the move that will be Sketched
-				break
+			if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
+				if !target.lastRegularMoveUsed.nil? && target.effects[PBEffects::Substitute]<=0
+					user.eachMove do |m|
+						next unless m == target.lastRegularMoveUsed
+						score = 0
+						break
+					end
+					copymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(target.lastRegularMoveUsed))
+					score = 0 if moveBlacklist.include?(copymove.function)
+					if score > 0
+						score = pbGetMoveScore(copymove, user, target, skill)
+						if score > 90
+							score *= 1 + ((score - 90) / 100.0)
+						else
+							score *= score / 100.0
+						end
+					end
+				else
+					score=0
+				end
+			else
+				if targetWillMove?(target) && target.effects[PBEffects::Substitute]<=0
+					targetMove = @battle.choices[target.index][2]
+					user.eachMove do |m|
+						next unless m.id == targetMove.id
+						score = 0
+						break
+					end
+					score = 0 if moveBlacklist.include?(targetMove.function)
+					if score > 0
+						copymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(targetMove.id))
+						score = pbGetMoveScore(copymove, user, target, skill)
+						if score > 90
+							score *= 1 + ((score - 90) / 100.0)
+						else
+							score *= score / 100.0
+						end
+					end
+				else
+					score=0
+				end
 			end
 		end
     #---------------------------------------------------------------------------
@@ -5512,7 +5528,7 @@ class Battle::AI
 		score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
     when "SwitchOutTargetDamagingMove" # dragon tail
-      	if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+      	if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) && target.effects[PBEffects::Substitute]==0
 			miniscore = 100
 			if target.pbOwnSide.effects[PBEffects::StealthRock]
 				miniscore*=1.3
@@ -5790,21 +5806,12 @@ class Battle::AI
 		miniscore+=100
 		miniscore/=100.0
 		score*=miniscore
-		if target.effects[PBEffects::Confusion]>0
-			score*=1.2
-		end
-		if target.effects[PBEffects::LeechSeed]>=0
-			score*=1.5
-		end
-		if target.effects[PBEffects::Attract]>=0
-			score*=1.3
-		end
-		if target.effects[PBEffects::Substitute]>0
-			score*=0.7
-		end
-		if target.effects[PBEffects::Yawn]>0
-			score*=1.5
-		end
+		score*=1.1 if target.effects[PBEffects::Confusion]>0
+		#score*=1.15 if target.effects[PBEffects::Attract]>=0
+		score*=1.2 if target.effects[PBEffects::LeechSeed]>=0
+		score*=1.2 if target.effects[PBEffects::Yawn]>0
+		score*=0.8 if target.effects[PBEffects::Substitute]>0
+
 		# i wonder if will tripfags will complain about this
 		if @battle.choices[target.index][0] == :SwitchOut
 			score*=3
@@ -5816,12 +5823,8 @@ class Battle::AI
     when "UsedAfterUserTakesPhysicalDamage" # Shell Trap
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxmove = bestmove[1]
-		if !userFasterThanTarget
-			score*=0.5
-		end
-		if user.lastMoveUsed == :SHELLTRAP
-			score*=0.7
-		end
+		score*=0.5 if !userFasterThanTarget
+		score*=0.7 if user.lastMoveUsed == :SHELLTRAP
 		if targetSurvivesMove(maxmove,target,user) && (!user.takesHailDamage? && !user.takesSandstormDamage?)
 			score*=1.2
 		else
@@ -5947,12 +5950,10 @@ class Battle::AI
 			if lastmove.total_pp > 0
 				if lastmove.total_pp==5
 					miniscore*=1.5
+				elsif lastmove.total_pp==10
+					miniscore*=1.2
 				else
-					if lastmove.total_pp==10
-						miniscore*=1.2
-					else
-						miniscore*=0.7
-					end          
+					miniscore*=0.7
 				end
 			end
 			miniscore*=1.2 if move.damagingMove?

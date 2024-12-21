@@ -339,7 +339,7 @@ class Battle::Battler
     pbInflictStatus(:SLEEP, pbSleepDuration(duration), msg)
   end
 
-  def pbSleepDuration(duration = -1)
+  def pbSleepDuration(duration = -1, status = :None)
 		#############################################
 		# edits to be more consitent #by low
 		# 2 turns of sleep, no matter who moved first
@@ -350,6 +350,7 @@ class Battle::Battler
 		end
 		#############################################
     duration = (duration / 2).floor if hasActiveAbility?(:EARLYBIRD)
+    duration = (duration / 2).floor if hasAbilityMutation? && status == :DIZZY
     return duration
   end
 
@@ -446,7 +447,7 @@ class Battle::Battler
   end
 
   def pbDizzy(user = nil, msg = nil)
-    pbInflictStatus(:DIZZY, pbSleepDuration, msg, user)
+    pbInflictStatus(:DIZZY, pbSleepDuration(-1, :DIZZY), msg, user)
   end
 
   #=============================================================================

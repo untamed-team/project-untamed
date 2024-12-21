@@ -2340,6 +2340,7 @@ class Battle::AI
 		end
 		score*=miniscore
 		score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+		score=0 if move.function == "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" && !(user.isSpecies?(:MORPEKO) || user.effects[PBEffects::TransformSpecies] == :MORPEKO)
     #---------------------------------------------------------------------------
     when "RaiseUserSpeed2", "RaiseUserSpeed2LowerUserWeight", "RaiseUserSpeed3" # Agility
 		miniscore=110        
@@ -3262,7 +3263,7 @@ class Battle::AI
 		score/=2.0 if user.SetupMovesUsed.include?(move.id)
 		score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
-    when "RaiseUserAtkSpd1" # Dragon Dance
+    when "RaiseUserAtkSpd1", "RaiseUserAtk1Spd2" # Dragon Dance, Shift Gear
 		miniscore=100        
 		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
@@ -3380,167 +3381,15 @@ class Battle::AI
 			end
 		end
 		miniscore=100
-		if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
-			miniscore*=1.2
-		end
-		if user.stages[:SPEED]<0
-			ministat=user.stages[:SPEED]
-			minimini=5*ministat
-			minimini+=100
-			minimini/=100.0
-			miniscore*=minimini
-		end
-		roles = pbGetPokemonRole(user, target)
-		if roles.include?("Sweeper")
-			miniscore*=1.3
-		end
-		if @battle.field.effects[PBEffects::TrickRoom]!=0
-			miniscore*=0.1
+		if move.function == "RaiseUserAtk1Spd2"
+			miniscore*=1.25
+			spedraise = 2.0
 		else
-			miniscore*=0.1 if target.moves.any? { |j| j&.id == :TRICKROOM }
+			spedraise = (3.0/2.0)
 		end
-		if user.hasActiveAbility?(:MOXIE)
-			miniscore*=1.3
-		end        
-		if target.hasActiveAbility?(:SPEEDBOOST)
-			miniscore*=0.6
-		end
-		miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
-		if user.hasActiveAbility?(:CONTRARY)
-			miniscore*=0
-		end            
-		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
-			miniscore=1
-		end
-		if !user.statStageAtMax?(:SPEED)
-			miniscore/=100.0
-			score*=miniscore
-		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
-			score*=2
-		end
-		score=0 if user.statStageAtMax?(:SPEED) && user.statStageAtMax?(:ATTACK)
-		score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
-    #---------------------------------------------------------------------------
-    when "RaiseUserAtk1Spd2" # Shift Gear
-		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
-			miniscore*=1.3
-		end
-		if (user.hp.to_f)/user.totalhp>0.75
+		if ospeed<(aspeed*spedraise) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
-		if (user.hp.to_f)/user.totalhp<0.33
-			miniscore*=0.3
-		end
-		if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
-			miniscore*=0.3
-		end
-		if target.effects[PBEffects::HyperBeam]>0
-			miniscore*=1.3
-		end
-		if target.effects[PBEffects::Yawn]>0
-			miniscore*=1.7
-		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxdam=bestmove[0]
-		if maxdam<(user.hp/4.0)
-			miniscore*=1.3
-		else
-			if move.baseDamage==0 
-				miniscore*=0.8
-				if maxdam>user.hp
-					miniscore*=0.1
-				end
-			end              
-		end
-		if user.turnCount<2
-			miniscore*=1.2
-		end
-		if target.pbHasAnyStatus?
-			miniscore*=1.2
-		end
-		if target.asleep?
-			miniscore*=1.5
-		end
-		if target.effects[PBEffects::Encore]>0
-			if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-				miniscore*=1.5
-			end          
-		end
-		if user.effects[PBEffects::Confusion]>0
-			miniscore*=0.2
-		end
-		if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
-			miniscore*=0.6
-		end
-		if pbHasPhazingMove?(target)
-			miniscore*=0.5
-		end
-		if user.hasActiveAbility?(:SIMPLE)
-			miniscore*=2
-		end
-		hasAlly = !target.allAllies.empty?
-		if hasAlly
-			miniscore*=0.7
-		end
-		if user.stages[:SPEED]<0
-			ministat=user.stages[:SPEED]
-			minimini=5*ministat
-			minimini+=100          
-			minimini/=100.0          
-			miniscore*=minimini
-		end
-		ministat=0
-		ministat+=target.stages[:ATTACK]
-		ministat+=target.stages[:SPECIAL_ATTACK]
-		ministat+=target.stages[:SPEED]
-		if ministat>0
-			minimini=(-5)*ministat
-			minimini+=100
-			minimini/=100.0
-			miniscore*=minimini
-		end
-		miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
-		if !userFasterThanTarget
-			miniscore*=1.5
-			if ospeed<(aspeed*2.0) && @battle.field.effects[PBEffects::TrickRoom] == 0
-				miniscore*=1.2
-			end
-		end
-		roles = pbGetPokemonRole(user, target)
-		if roles.include?("Sweeper")
-			miniscore*=1.3
-		end
-		if user.burned?
-			miniscore*=0.5
-		end
-		if user.paralyzed?
-			miniscore*=0.5
-		end
-		miniscore*=0.3 if target.moves.any? { |j| j&.id == :FOULPLAY }
-		if user.hp==user.totalhp && ((user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && 
-				!user.takesHailDamage? && !user.takesSandstormDamage?)
-			miniscore*=1.4
-		end
-		miniscore*=0.6 if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
-		if target.hasActiveAbility?(:SPEEDBOOST)
-			miniscore*=0.6
-		end
-		if move.baseDamage==0
-			physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-			if physmove && !user.statStageAtMax?(:ATTACK)
-				miniscore/=100.0
-				score*=miniscore
-			end
-		else
-			if !user.statStageAtMax?(:ATTACK)
-				miniscore/=100.0
-				score*=miniscore
-			end
-		end
-		miniscore=125
 		if user.stages[:SPEED]<0
 			ministat=user.stages[:SPEED]
 			minimini=5*ministat

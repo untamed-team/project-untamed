@@ -412,7 +412,7 @@ Description = Prevents problems with status in sunny weather.
 #-------------------------------
 [KLUTZ]
 Name = Klutz
-Description = The Pokémon can't use any held items.
+Description = This Pokémon doesn't understand held items.
 #-------------------------------
 [MOLDBREAKER]
 Name = Mold Breaker
@@ -1199,11 +1199,11 @@ Description = Changes for the finale. Targeted during finale.
 #-------------------------------
 [DUSTSENTINEL]
 Name = Dust Sentinel
-Description = Creates Sandstorm, buffs itself during sand.
+Description = Creates Sandstorm, user has the effects of Sand Force.
 #-------------------------------
 [ECHOCHAMBER]
 Name = Echo Chamber
-Description = Heals w/ sound; next sound status moves: +1 prio.
+Description = Heals w/ sound; next sound status move: +1 prio.
 #-------------------------------
 [ACCUMULATOR]
 Name = Accumulator

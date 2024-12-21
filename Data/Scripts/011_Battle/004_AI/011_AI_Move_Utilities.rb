@@ -284,7 +284,7 @@ class Battle::AI
       userSpeed = pbRoughStat(user, :SPEED, skill)
       baseDmg = [[(25 * targetSpeed / userSpeed).floor, 150].min, 1].max
     when "RandomlyDamageOrHealTarget"   # Present
-      baseDmg = 120
+      baseDmg = (user.pbOwnedByPlayer?) ? 40 : 120
     when "TypeAndPowerDependOnWeather"
       baseDmg *= 2 if user.effectiveWeather != :None || 
                       globalArray.any? { |element| element.include?("weather") }
@@ -485,7 +485,9 @@ class Battle::AI
         user.item, modifiers, user, target, move, type
       )
     end
-    if skill >= PBTrainerAI.bestSkill && target.itemActive?
+		# klutz buff #by low
+    if skill >= PBTrainerAI.bestSkill && target.itemActive? && 
+      (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, move, type
       )
