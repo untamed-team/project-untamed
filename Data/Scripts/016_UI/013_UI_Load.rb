@@ -20,7 +20,7 @@ class PokemonLoadPanel < Sprite
     @totalsec = (stats) ? stats.play_time.to_i : ((framecount || 0) / Graphics.frame_rate)
     @mapid = mapid
     @selected = (index == 0)
-    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/loadPanels")
+    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/bg - Copia")
     @refreshBitmap = true
     @refreshing = false
     refresh
@@ -37,6 +37,10 @@ class PokemonLoadPanel < Sprite
     @selected = value
     @refreshBitmap = true
     refresh
+  end
+
+  def isContinue
+    return @isContinue
   end
 
   def pbRefresh
@@ -56,24 +60,24 @@ class PokemonLoadPanel < Sprite
       @refreshBitmap = false
       self.bitmap&.clear
       if @isContinue
-        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0, (@selected) ? 222 : 0, @bgbitmap.width, 222))
+        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0,  0, @bgbitmap.width, 222))
       else
         self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0, 444 + ((@selected) ? 46 : 0), @bgbitmap.width, 46))
       end
       textpos = []
       if @isContinue
         textpos.push([@title, 32, 16, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Badges:"), 32, 118, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([@trainer.badge_count.to_s, 206, 118, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Pokédex:"), 32, 150, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([@trainer.pokedex.seen_count.to_s, 206, 150, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Time:"), 32, 182, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+        #textpos.push([_INTL("Badges:"), 32, 118, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+        #textpos.push([@trainer.badge_count.to_s, 168, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+        textpos.push([_INTL("Pokédex:"), 32, 200, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+        textpos.push([@trainer.pokedex.seen_count.to_s, 170, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+        textpos.push([_INTL("Time:"), 182, 200, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
         hour = @totalsec / 60 / 60
         min  = @totalsec / 60 % 60
         if hour > 0
-          textpos.push([_INTL("{1}h {2}m", hour, min), 206, 182, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+          textpos.push([_INTL("{1}h {2}m", hour, min), 292, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
         else
-          textpos.push([_INTL("{1}m", min), 206, 182, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+          textpos.push([_INTL("{1}m", min), 292, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
         end
         if @trainer.male?
           textpos.push([@trainer.name, 112, 70, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
@@ -99,25 +103,6 @@ end
 #===============================================================================
 class PokemonLoad_Scene
   def pbStartScene(commands, show_continue, trainer, frame_count, stats, map_id)
-    @commands = commands
-    @sprites = {}
-    @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
-    @viewport.z = 99998
-    addBackgroundOrColoredPlane(@sprites, "background", "loadbg", Color.new(248, 248, 248), @viewport)
-    y = 32
-    commands.length.times do |i|
-      @sprites["panel#{i}"] = PokemonLoadPanel.new(
-        i, commands[i], (show_continue) ? (i == 0) : false, trainer,
-        frame_count, stats, map_id, @viewport
-      )
-      @sprites["panel#{i}"].x = 48
-      @sprites["panel#{i}"].y = y
-      @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 224 : 48
-    end
-    @sprites["cmdwindow"] = Window_CommandPokemon.new([])
-    @sprites["cmdwindow"].viewport = @viewport
-    @sprites["cmdwindow"].visible  = false
   end
 
   def pbStartScene2
@@ -142,23 +127,24 @@ class PokemonLoad_Scene
       @sprites["panel#{newi}"].pbRefresh
       while @sprites["panel#{newi}"].y > Graphics.height - 80
         @commands.length.times do |i|
+          next if @sprites["panel#{i}"].isContinue
           @sprites["panel#{i}"].y -= 48
         end
-        6.times do |i|
-          break if !@sprites["party#{i}"]
-          @sprites["party#{i}"].y -= 48
-        end
-        @sprites["player"].y -= 48 if @sprites["player"]
+        #6.times do |i|
+        #  break if !@sprites["party#{i}"]
+        #  @sprites["party#{i}"].y -= 48
+        #end
+        #@sprites["player"].y -= 48 if @sprites["player"]
       end
       while @sprites["panel#{newi}"].y < 32
         @commands.length.times do |i|
           @sprites["panel#{i}"].y += 48
         end
-        6.times do |i|
-          break if !@sprites["party#{i}"]
-          @sprites["party#{i}"].y += 48
-        end
-        @sprites["player"].y += 48 if @sprites["player"]
+        #6.times do |i|
+        #  break if !@sprites["party#{i}"]
+        #  @sprites["party#{i}"].y += 48
+        #end
+        #@sprites["player"].y += 48 if @sprites["player"]
       end
     end
   end

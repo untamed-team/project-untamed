@@ -216,7 +216,7 @@ class PokemonLoad_Scene
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
-    addBackgroundOrColoredPlane(@sprites, "background", "loadbg", Color.new(248, 248, 248), @viewport)
+    addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
     y = 32
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
