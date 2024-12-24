@@ -25,24 +25,25 @@ class PokemonLoadPanel < Sprite
     @buttonbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/button")
     @overlaysprite = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
     @overlaysprite.z = self.z + 1
-    textpos = []
-    textpos.push([_INTL("Pokédex:"), 32, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-    textpos.push([@trainer.pokedex.seen_count.to_s, 170, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-    textpos.push([_INTL("Time:"), 204, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-    hour = @totalsec / 60 / 60
-    min  = @totalsec / 60 % 60
-    if hour > 0
-      textpos.push([_INTL("{1}h {2}m", hour, min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-    else
-      textpos.push([_INTL("{1}m", min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-    end
-    if @trainer.male?
-      textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
-    else
-      textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
-    end
-    pbDrawTextPositions(@overlaysprite.bitmap, textpos)
     if @trainer
+      textpos = []
+      textpos.push([_INTL("Pokédex:"), 32, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([@trainer.pokedex.seen_count.to_s, 170, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([_INTL("Time:"), 204, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      hour = @totalsec / 60 / 60
+      min  = @totalsec / 60 % 60
+      if hour > 0
+        textpos.push([_INTL("{1}h {2}m", hour, min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      else
+        textpos.push([_INTL("{1}m", min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      end
+      if @trainer.male?
+        textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
+      else
+        textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
+      end
+      pbDrawTextPositions(@overlaysprite.bitmap, textpos)
+      
       imagePositions = []
       x = 38
       8.times do |i|
