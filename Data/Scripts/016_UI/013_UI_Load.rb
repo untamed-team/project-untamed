@@ -20,7 +20,40 @@ class PokemonLoadPanel < Sprite
     @totalsec = (stats) ? stats.play_time.to_i : ((framecount || 0) / Graphics.frame_rate)
     @mapid = mapid
     @selected = (index == 0)
-    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/bg - Copia")
+    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/blank")
+    
+    @buttonbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/button")
+    @overlaysprite = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
+    @overlaysprite.z = self.z + 1
+    textpos = []
+    textpos.push([_INTL("Pokédex:"), 32, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+    textpos.push([@trainer.pokedex.seen_count.to_s, 170, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+    textpos.push([_INTL("Time:"), 204, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+    hour = @totalsec / 60 / 60
+    min  = @totalsec / 60 % 60
+    if hour > 0
+      textpos.push([_INTL("{1}h {2}m", hour, min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+    else
+      textpos.push([_INTL("{1}m", min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+    end
+    if @trainer.male?
+      textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
+    else
+      textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
+    end
+    pbDrawTextPositions(@overlaysprite.bitmap, textpos)
+    if @trainer
+      imagePositions = []
+      x = 38
+      8.times do |i|
+        if trainer.badges[i]
+          imagePositions.push(["Graphics/Pictures/Trainer Card/icon_badges", x, 268, i * 32, 0, 32, 32])
+        end
+        x += 38
+      end
+      pbDrawImagePositions(@overlaysprite.bitmap, imagePositions)
+    end
+
     @refreshBitmap = true
     @refreshing = false
     refresh
@@ -60,38 +93,13 @@ class PokemonLoadPanel < Sprite
       @refreshBitmap = false
       self.bitmap&.clear
       if @isContinue
-        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0,  0, @bgbitmap.width, 222))
+        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0,  0, @bgbitmap.width, @bgbitmap.height))
       else
-        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0, 444 + ((@selected) ? 46 : 0), @bgbitmap.width, 46))
+        self.bitmap.blt(0, 0, @buttonbitmap.bitmap, Rect.new(0, (@selected) ? 44 : 0, @buttonbitmap.width, 44))
       end
       textpos = []
-      if @isContinue
-        textpos.push([@title, 32, 16, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        #textpos.push([_INTL("Badges:"), 32, 118, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        #textpos.push([@trainer.badge_count.to_s, 168, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Pokédex:"), 32, 200, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([@trainer.pokedex.seen_count.to_s, 170, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        textpos.push([_INTL("Time:"), 182, 200, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        hour = @totalsec / 60 / 60
-        min  = @totalsec / 60 % 60
-        if hour > 0
-          textpos.push([_INTL("{1}h {2}m", hour, min), 292, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        else
-          textpos.push([_INTL("{1}m", min), 292, 200, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-        end
-        if @trainer.male?
-          textpos.push([@trainer.name, 112, 70, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
-        elsif @trainer.female?
-          textpos.push([@trainer.name, 112, 70, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
-        else
-          textpos.push([@trainer.name, 112, 70, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-        end
-        mapname = pbGetMapNameFromId(@mapid)
-        mapname.gsub!(/\\PN/, @trainer.name)
-        #textpos.push([mapname, 386, 16, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-      else
-        textpos.push([@title, 32, 14, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-      end
+      textpos.push([@title, 32, 16, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if @isContinue
+      textpos.push([@title, 18, 14, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if !@isContinue
       pbDrawTextPositions(self.bitmap, textpos)
     end
     @refreshing = false
@@ -125,27 +133,6 @@ class PokemonLoad_Scene
       @sprites["panel#{oldi}"].pbRefresh
       @sprites["panel#{newi}"].selected = true
       @sprites["panel#{newi}"].pbRefresh
-      while @sprites["panel#{newi}"].y > Graphics.height - 80
-        @commands.length.times do |i|
-          next if @sprites["panel#{i}"].isContinue
-          @sprites["panel#{i}"].y -= 48
-        end
-        #6.times do |i|
-        #  break if !@sprites["party#{i}"]
-        #  @sprites["party#{i}"].y -= 48
-        #end
-        #@sprites["player"].y -= 48 if @sprites["player"]
-      end
-      while @sprites["panel#{newi}"].y < 32
-        @commands.length.times do |i|
-          @sprites["panel#{i}"].y += 48
-        end
-        #6.times do |i|
-        #  break if !@sprites["party#{i}"]
-        #  @sprites["party#{i}"].y += 48
-        #end
-        #@sprites["player"].y += 48 if @sprites["player"]
-      end
     end
   end
 
@@ -157,15 +144,15 @@ class PokemonLoad_Scene
       @sprites["player"] = TrainerWalkingCharSprite.new(filename, @viewport)
       charwidth  = @sprites["player"].bitmap.width
       charheight = @sprites["player"].bitmap.height
-      @sprites["player"].x        = 112 - (charwidth / 8)
-      @sprites["player"].y        = 112 - (charheight / 8)
+      @sprites["player"].x        = 58 - (charwidth / 8)
+      @sprites["player"].y        = 108 - (charheight / 8)
       @sprites["player"].src_rect = Rect.new(0, 0, charwidth / 4, charheight / 4)
     end
     trainer.party.each_with_index do |pkmn, i|
       @sprites["party#{i}"] = PokemonIconSprite.new(pkmn, @viewport)
       @sprites["party#{i}"].setOffset(PictureOrigin::CENTER)
-      @sprites["party#{i}"].x = 334 + (66 * (i % 2))
-      @sprites["party#{i}"].y = 112 + (50 * (i / 2))
+      @sprites["party#{i}"].x = 118 + (66 * (i % 3))
+      @sprites["party#{i}"].y = 174 + (50 * (i / 3))
       @sprites["party#{i}"].z = 99999
     end
   end

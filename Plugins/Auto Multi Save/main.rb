@@ -223,23 +223,26 @@ class PokemonLoad_Scene
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,
         frame_count, stats, map_id, @viewport
       )
-      @sprites["panel#{i}"].x = 48
+      x = (show_continue && i == 0) ? 126 : 352
+      @sprites["panel#{i}"].x = x
       @sprites["panel#{i}"].y = y
       @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 224 : 48
+      y += (show_continue && i == 0) ? 54 : 54
     end
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].viewport = @viewport
     @sprites["cmdwindow"].visible  = false
     
     #added by Gardenette
+    arrowsX = 40
+    arrowsY = 56
     @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
-    @sprites["leftarrow"].x = 40
-    @sprites["leftarrow"].y = Graphics.height/2 - 40 - @sprites["leftarrow"].bitmap.height/16
+    @sprites["leftarrow"].x = arrowsX
+    @sprites["leftarrow"].y = arrowsY - @sprites["leftarrow"].bitmap.height/16
     @sprites["leftarrow"].visible = false
     @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
-    @sprites["rightarrow"].x = Graphics.width - 40 - @sprites["rightarrow"].bitmap.width
-    @sprites["rightarrow"].y = Graphics.height/2 - 40 - @sprites["rightarrow"].bitmap.height/16 
+    @sprites["rightarrow"].x = arrowsX + 10 + @sprites["rightarrow"].bitmap.width*6
+    @sprites["rightarrow"].y = arrowsY - @sprites["rightarrow"].bitmap.height/16 
     @sprites["rightarrow"].visible = false
     getNumberSavesTaken
     if @savesTaken > 1
