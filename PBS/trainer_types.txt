@@ -56,9 +56,29 @@ Name = Bird Keeper
 Gender = Male
 BaseMoney = 32
 #-------------------------------
+[BIRDKEEPER_M]
+Name = Bird Keeper
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[BIRDKEEPER_F]
+Name = Bird Keeper
+Gender = Female
+BaseMoney = 32
+#-------------------------------
 [BUGCATCHER]
 Name = Bug Catcher
 Gender = Male
+BaseMoney = 16
+#-------------------------------
+[BUGCATCHER_M]
+Name = Bug Catcher
+Gender = Male
+BaseMoney = 16
+#-------------------------------
+[BUGCATCHER_F]
+Name = Bug Catcher
+Gender = Female
 BaseMoney = 16
 #-------------------------------
 [BURGLAR]
@@ -84,6 +104,16 @@ BaseMoney = 48
 [FISHERMAN]
 Name = Fisherman
 Gender = Male
+BaseMoney = 32
+#-------------------------------
+[FISHER_M]
+Name = Fisher
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[FISHER_F]
+Name = Fisher
+Gender = Female
 BaseMoney = 32
 #-------------------------------
 [GAMBLER]
@@ -174,6 +204,16 @@ BaseMoney = 24
 [CAMPER]
 Name = Camper
 Gender = Male
+BaseMoney = 16
+#-------------------------------
+[CAMPER_M]
+Name = Camper
+Gender = Male
+BaseMoney = 16
+#-------------------------------
+[CAMPER_F]
+Name = Camper
+Gender = Female
 BaseMoney = 16
 #-------------------------------
 [PICNICKER]
@@ -390,9 +430,14 @@ Name = Psychic
 Gender = Female
 BaseMoney = 32
 #-------------------------------
-[TOURIST]
+[TOURIST_M]
 Name = Tourist
-Gender = Unknown
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[TOURIST_F]
+Name = Tourist
+Gender = Female
 BaseMoney = 32
 #-------------------------------
 [WAREHOUSEWORKER]
