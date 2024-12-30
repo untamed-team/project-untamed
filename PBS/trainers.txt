@@ -54,12 +54,12 @@ Pokemon = WRENNER,4
 LoseText = B-but, how did I lose?
 Pokemon = WRENNER,4
 #-------------------------------
-[BUGCATCHER,Marco]
+[BUGCATCHER_M,Marco]
 LoseText = Man, your Pokémon are really strong too!
 Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
 #-------------------------------
-[BUGCATCHER,Marco,100]
+[BUGCATCHER_M,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
 Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
@@ -223,13 +223,13 @@ Pokemon = WRENNER,9
     Ability = RUNAWAY
     Nature = IMPISH
 #-------------------------------
-[TOURIST,William]
+[TOURIST_M,William]
 LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 Pokemon = BUNNELBY,9
 Pokemon = WRENNER,9
 #-------------------------------
-[TOURIST,William,100]
+[TOURIST_M,William,100]
 LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
 	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
@@ -258,7 +258,7 @@ Pokemon = WORMOTE,9
 	Item = OCCABERRY
     Nature = TIMID
 #-------------------------------
-[FISHERMAN,Ted]
+[FISHER_M,Ted]
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = MAGIKARP,1
 Pokemon = MAGIKARP,3
@@ -267,7 +267,7 @@ Pokemon = MAGIKARP,7
 Pokemon = MAGIKARP,9
 Pokemon = FEEBAS,10
 #-------------------------------
-[FISHERMAN,Ted,100]
+[FISHER_M,Ted,100]
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = LOTAD,10
 	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
@@ -459,6 +459,80 @@ Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+[TOURIST_F, Kaitlyn]
+LoseText = The sun was in my eyes!
+Pokemon = PACUNA,9
+Pokemon = M_VANILLITE,9
+#-------------------------------
+[TOURIST_M, Samuel]
+LoseText = Cowabummer!
+Pokemon = LITWICK,9
+Pokemon = ZEAZAYA,9
+Pokemon = M_EKANS,9
+#-------------------------------
+[CAMPER_F, Lola]
+LoseText = If only my battling skills were are sharp as my survival skills...
+Pokemon = HOOTHOOT,10
+Pokemon = SKIDDO,10
+Pokemon = WRENNER,10
+#-------------------------------
+[BUGCATCHER_F, Alisa]
+LoseText = Bug types are still the best!
+Pokemon = MINIMELO,9
+Pokemon = LEDYBA,10
+#-------------------------------
+[BUGCATCHER_M, Mannie]
+LoseText = Maybe I should have studied type matchups?
+Pokemon = SCATTERBUG,10
+Pokemon = CHICATTA,10
+#-------------------------------
+[YOUNGSTER_F, Milly]
+LoseText = No way, let me try again!
+Pokemon = PURRLOIN,10
+Pokemon = SUNKERN,10
+Pokemon = TECHUPPI,10
+#-------------------------------
+[BUGCATCHER_F, Dany]
+LoseText = My bug types and I still have to evolve and get stronger!
+Pokemon = SPEWPA,10
+Pokemon = CHICATTA,11
+#-------------------------------
+[BIRDKEEPER_M, Connor]
+LoseText = You really ruffle my feathers!
+Pokemon = HOOTHOOT,11
+Pokemon = WRENNER,11
+#-------------------------------
+[FISHER_M, Jimbly]
+LoseText = Looks like I'm the one who's sinking...
+Pokemon = BANAGNAW,11
+Pokemon = FINNEON,11
+#-------------------------------
+[FISHER_F, Violet]
+LoseText = I've been schooled!
+Pokemon = FEEBAS,10
+Pokemon = LOTAD,11
+#-------------------------------
+[POKEMONRANGER_F, Fabian]
+LoseText = What a great battle! I wish I could have won...
+Pokemon = PHANTUMP,11
+Pokemon = PACUNA,11
+Pokemon = M_EKANS,11
+#-------------------------------
+[AROMALADY, Gloria]
+LoseText = Not my beautiful flowers!
+Pokemon = FLABEBE,11
+Pokemon = BUDEW,12
+#-------------------------------
+[BUGCATCHER_M, Roberto]
+LoseText = No fair, did you use bug repellent? Harumph!
+Pokemon = MINIMELO,11
+Pokemon = LEDYBA,12
+#-------------------------------
+[BIRDKEEPER_M, Juan]
+LoseText = And down I go...
+Pokemon = HOOTHOOT,12
+Pokemon = CROMEN,12
+#-------------------------------
 
 #-------------------------------
 #-------------------------------
