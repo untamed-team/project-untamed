@@ -159,13 +159,26 @@ class Battle::Move
       if battler.isSpecies?(:MORPEKO) || battler.effects[PBEffects::TransformSpecies] == :MORPEKO
         return pbBaseType(battler)
       end
-#=begin
     when "TypeDependsOnUserPlate", "TypeDependsOnUserMemory",
          "TypeDependsOnUserDrive", "TypeAndPowerDependOnUserBerry",
          "TypeIsUserFirstType", "TypeAndPowerDependOnWeather",
          "TypeAndPowerDependOnTerrain"
       return pbBaseType(battler)
-#=end
+    end
+    # -ate/-ize abilities display #by low
+    if battler.abilityActive? && damagingMove?
+      ret = @type
+      typeabil_hash = {
+        :AERILATE     => :FLYING,
+        :GALVANIZE    => :ELECTRIC,
+        :PIXILATE     => :FAIRY,
+        :REFRIGERATE  => :ICE
+      }
+      typeabil_hash.each do |abil, type|
+        next unless battler.ability == abil
+        return type if ret == :NORMAL
+      end
+      return :NORMAL if battler.ability == :NORMALIZE
     end
     return @realMove.display_type(battler.pokemon)
   end
