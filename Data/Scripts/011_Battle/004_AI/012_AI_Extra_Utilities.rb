@@ -356,7 +356,9 @@ class Battle::AI
 					when :FIRE
 						multipliers[:final_damage_multiplier] *= w_damage_multiplier
 					when :WATER
-						multipliers[:final_damage_multiplier] /= w_damage_divider
+						if !(move.function == "HigherDamageInSunVSNonFireTypes" && !hasTypeAI?(:FIRE, target, user, skill))
+							multipliers[:final_damage_multiplier] /= w_damage_divider
+						end
 					end
 				end
 				if [:Rain, :HeavyRain].include?(expectedWeather)

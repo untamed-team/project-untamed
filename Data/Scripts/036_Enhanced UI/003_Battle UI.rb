@@ -239,7 +239,7 @@ class Battle::Scene
 	  "HitsAllFoesAndPowersUpInPsychicTerrain",    # Expanding Force
 	  "PowerDependsOnUserStockpile",                # Spit Up
     "PeperSpray",
-    "HigherDamageInSunVSNonFireTypes",
+    #"HigherDamageInSunVSNonFireTypes",
     "DoubleDamageIfTargetHasChoiceItem",
     "HigherDamageInRain"
 	]

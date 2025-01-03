@@ -389,11 +389,6 @@ class Battle::AI
       if !target.unlosableItem?(target.item) && [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.item)
         baseDmg *= 2
       end
-    when "HigherDamageInSunVSNonFireTypes"
-      if !hasTypeAI?(:FIRE, target, user, skill)
-        scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-        baseDmg *= scald_damage_multiplier if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
-      end
     when "PeperSpray"
       peper_dmg_mult = (@battle.field.abilityWeather) ? (5 / 4.0) : (4 / 3.0)
       baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)

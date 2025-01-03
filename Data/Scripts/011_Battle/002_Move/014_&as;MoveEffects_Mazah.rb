@@ -315,11 +315,7 @@ end
 # ignores desolate land vaporization vs non fire types (scald)
 #===============================================================================
 class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
-  def pbBaseDamage(baseDmg, user, target)
-		scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-    baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
-    return baseDmg
-  end
+  # in 003_MoveUsageCalculations
 end
 
 #===============================================================================

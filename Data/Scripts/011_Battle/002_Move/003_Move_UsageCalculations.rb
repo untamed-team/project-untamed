@@ -428,7 +428,9 @@ class Battle::Move
       when :FIRE
         multipliers[:final_damage_multiplier] *= w_damage_multiplier
       when :WATER
-        multipliers[:final_damage_multiplier] /= w_damage_divider
+        if !(@function == "HigherDamageInSunVSNonFireTypes" && !target.pbHasType?(:FIRE))
+          multipliers[:final_damage_multiplier] /= w_damage_divider
+        end
       end
     when :Rain, :HeavyRain
       case type
