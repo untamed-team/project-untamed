@@ -123,15 +123,15 @@ class Battle::Scene
     @dmg_shadow = @acc_shadow = @eff_shadow = SHADOW_LIGHT
     damage = base_dmg = calc_dmg = move.baseDamage
     stab = 1
-    if battler.tera? || (battler.power_trigger && @sprites["fightWindow"].teraType > 0)
-      if battler.tera_type == type && battler.pokemon.types.include?(type)
-        stab = 2
-      elsif battler.tera_type == type || battler.pokemon.types.include?(type)
-        stab = 1.5
-      end
-    else
+    #if battler.tera? || (battler.power_trigger && @sprites["fightWindow"].teraType > 0)
+    #  if battler.tera_type == type && battler.pokemon.types.include?(type)
+    #    stab = 2
+    #  elsif battler.tera_type == type || battler.pokemon.types.include?(type)
+    #    stab = 1.5
+    #  end
+    #else
       stab = 1.5 if battler.pbHasType?(type)
-    end
+    #end
     if move.damagingMove?
       if pbVariablePowerFunctions.include?(move.function) ||
          # Natural Gift called here specifically to check for a berry first.
