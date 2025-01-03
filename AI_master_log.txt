@@ -5123,26 +5123,3 @@ Move Splinter Shot real damage on Garbodor: 62
 Move Splinter Shot damage % on Garbodor: 46%
 Move Splinter Shot has initial score 80
 Move Splinter Shot ( Category: Physical ) has final score 126
-Move Shadow Sneak real damage on Garbodor: 32
-Move Shadow Sneak damage % on Garbodor: 12%
-Move Shadow Sneak has initial score 80
-Move Shadow Ball real damage on Garbodor: 93
-Move Shadow Ball damage % on Garbodor: 70%
-Move Shadow Ball has initial score 87.04
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Lunge real damage on Garbodor: 40
-Move Lunge damage % on Garbodor: 30%
-Move Lunge has initial score 48.0
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Garbodor: 50
-Move Night Shade damage % on Garbodor: 37%
-Move Night Shade has initial score 80
-Move Pound real damage on Garbodor: 26
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Beat Up real damage on Garbodor: 34
-Move Beat Up damage % on Garbodor: 12%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469

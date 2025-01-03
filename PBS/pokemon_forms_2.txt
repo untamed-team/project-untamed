@@ -241,6 +241,18 @@ Height = 1.2
 Weight = 13.0
 Pokedex = Extraordinary energy amplifies its cursing power to such an extent that it can't help but curse out its own Trainer.
 Generation = 6
+#-------------------------------
+[GLALIE,1]
+FormName = Mega Glalie
+MegaStone = GLALITITE
+BaseStats = 80,120,80,100,120,80
+BaseExp = 203
+Abilities = REFRIGERATE
+HiddenAbilities = REFRIGERATE
+Height = 2.1
+Weight = 350.2
+Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
+Generation = 6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
