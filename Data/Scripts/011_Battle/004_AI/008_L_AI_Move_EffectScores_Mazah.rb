@@ -1996,29 +1996,17 @@ class Battle::AI
 
 	def pbGetMidTurnGlobalChanges
 		globalArray = []
-		globalEffects = {
-			:NOCTAVISPA => "dark aura",
-			:SPECTERZAL => "spooper aura",
-			:BEAKRAFT   => "electric terrain",
-			:MILOTIC    => "misty terrain",
-			:TREVENANT  => "grassy terrain",
-			:BEHEEYEM   => "psychic terrain",
-			:ZARCOIL    => "sun weather",
-			:ZOLUPINE   => "rain weather",
-			:CACTURNE   => "sand weather",
-			:FRIZZARD   => "hail weather"
-		}
-		megaStones = {
-			:NOCTAVISPA => :NOCTAVISPITE,
-			:SPECTERZAL => :SPECTERZITE,
-			:BEAKRAFT   => :BEAKRAFTITE,
-			:MILOTIC    => :MILOTITE,
-			:TREVENANT  => :TREVENANTITE,
-			:BEHEEYEM   => :BEHEEYEMITE,
-			:ZARCOIL    => :ZARCOILITE,
-			:ZOLUPINE   => :ZOLUPINEITE,
-			:CACTURNE   => :CACTURNITE,
-			:FRIZZARD   => :FRIZZARDITE
+		megaChecks = {
+			:NOCTAVISPA => [:NOCTAVISPITE, "dark aura"],
+			:SPECTERZAL => [:SPECTERZITE,  "spooper aura"],
+			:BEAKRAFT   => [:BEAKRAFTITE,  "electric terrain"],
+			:MILOTIC    => [:MILOTITE,     "misty terrain"],
+			:TREVENANT  => [:TREVENANTITE, "grassy terrain"],
+			:BEHEEYEM   => [:BEHEEYEMITE,  "psychic terrain"],
+			:ZARCOIL    => [:ZARCOILITE,   "sun weather"],
+			:ZOLUPINE   => [:ZOLUPINEITE,  "rain weather"],
+			:CACTURNE   => [:CACTURNITE,   "sand weather"],
+			:FRIZZARD   => [:FRIZZARDITE,  "hail weather"]
 		}
 	
 		# if multiple weathers/terrains are pushed only the slowest one should be acounted
@@ -2029,9 +2017,9 @@ class Battle::AI
 		slowestTerrainSpeed = 9 ** 9
 		@battle.allBattlers.each do |j|
 			megaSpecies = j.pokemon.species
-			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 
-			  (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
-			  	effectne = globalEffects[megaSpecies]
+			if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
+			  (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
+			  	effectne = megaChecks[megaSpecies][1]
 			  	jspeed = pbRoughStat(j,:SPEED,100,false)
  				if effectne.include?("weather")
 					if jspeed < slowestWeatherSpeed
@@ -2052,10 +2040,13 @@ class Battle::AI
   		globalArray.push(slowestTerrain) if slowestTerrain
 
 		# airlock/cloud9 interaction
-		weatherNeg=false
+		weatherNeg = false
 		@battle.allBattlers.each do |n|
-			weatherNeg = true if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
-								 n.battle.choices[n.index][0] != :SwitchOut
+			if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
+			   n.battle.choices[n.index][0] != :SwitchOut
+				weatherNeg = true
+				break
+			end
 		end
 		globalArray.reject! { |w| w.include?("weather") } if weatherNeg
 		globalArray.uniq!
