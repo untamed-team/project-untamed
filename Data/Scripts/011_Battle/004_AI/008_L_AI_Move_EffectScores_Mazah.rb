@@ -84,7 +84,6 @@ class Battle::AI
 		if user.effects[PBEffects::ProtectRate] > 1
 			score = 0
 		else
-			contactcheck = target.moves.any? { |m| m&.pbContactMove?(target) }
 			score*=1.3 if globalArray.any? { |element| element.include?("weather") }
 			if target.turnCount==0
 				score*=1.5
@@ -97,17 +96,6 @@ class Battle::AI
 			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 			   expectedTerrain == :Grassy
 				score*=1.2
-			end  
-			if move.function == "ProtectUserBanefulBunker"
-				if target.pbHasAnyStatus?
-					score*=0.8
-				else
-					if target.pbCanPoison?(user, false) && contactcheck
-						miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, 100)
-						miniscore/=100.0
-						score*=miniscore
-					end
-				end
 			end
 			if user.poisoned? || user.burned? || user.frozen?
 				score*=0.8
@@ -138,9 +126,6 @@ class Battle::AI
 					score*=1.4
 				end
 			end  
-			if contactcheck
-				score*=1.3
-			end
 			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 				score*=1.5
 			end
@@ -161,7 +146,18 @@ class Battle::AI
 						expectedPrcnt = expectedDmg * 100.0 / user.hp
 						score *= (expectedPrcnt * 0.05)
 					end
-					score *= 1.5 if targetMove.pbContactMove?(user)
+					score*=1.3 if targetMove.pbContactMove?(user)
+					if move.function == "ProtectUserBanefulBunker" && targetMove.pbContactMove?(user)
+						if target.pbHasAnyStatus?
+							score*=0.8
+						else
+							if target.pbCanPoison?(user, false)
+								miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 80, move, globalArray, 100)
+								miniscore/=100.0
+								score*=miniscore
+							end
+						end
+					end
 				end
 			end
 		end
