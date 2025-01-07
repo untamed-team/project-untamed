@@ -218,7 +218,7 @@ MegaStone = SABLENITE
 BaseStats = 75,75,135,20,75,125
 Abilities = MAGICBOUNCE
 HiddenAbilities = MAGICBOUNCE
-#-------------------------------
+#------------------------------- # note: +nature 105 atk huge power = 212 <-> 213 atk
 [MAWILE,1]
 FormName = Mega Mawile
 MegaStone = MAWILITE

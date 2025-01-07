@@ -47,7 +47,7 @@ Target = NearOther
 Priority = 2
 FunctionCode = FailsIfNotUserFirstTurn
 Flags = Contact,CanProtect,CanMirrorMove
-Description = Although this move has great power, it only works the first turn the user is in battle.
+Description = Although this move has great power and priority, it only works the first turn the user is in battle.
 #-------------------------------
 [POLLENPUFF]
 Name = Pollen Puff

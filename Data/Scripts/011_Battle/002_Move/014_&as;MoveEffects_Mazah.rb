@@ -185,8 +185,9 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
 
   def pbNumHits(user, targets)
     hitChances = [
-      3, 3, 3, 3, 3, 3, 3, 3,
-      4, 4, 4, 4, 5
+      3, 3, 3, 3, 3, 3, 3,
+      3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 5, 5, 5
     ]
     hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
