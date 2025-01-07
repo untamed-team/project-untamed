@@ -5119,7 +5119,7 @@ class Battle::AI
 					if score > 0
 						score = pbGetMoveScore(copymove, user, target, skill)
 						if score > 105
-							score *= 1 + ((score - 105) / 100.0)
+							score *= 0.8 + ((score - 80) / 100.0)
 						else
 							score *= score / 100.0
 						end
