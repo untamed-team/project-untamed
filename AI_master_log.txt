@@ -1,13 +1,3 @@
-Move Shadow Sneak real damage on Garbodor: 21
-Move Shadow Sneak damage % on Garbodor: 7%
-Move Shadow Sneak has initial score 80
-Move Shadow Ball real damage on Garbodor: 62
-Move Shadow Ball damage % on Garbodor: 44%
-Move Shadow Ball has initial score 83.2
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Lunge real damage on Garbodor: 40
-Move Lunge damage % on Garbodor: 14%
-Move Lunge has initial score 80.0
 -----------------------------------------------------------------------
                       Score Board for Roserade
 -----------------------------------------------------------------------
@@ -2558,16 +2548,6 @@ Move Splinter Shot real damage on Garbodor: 62
 Move Splinter Shot damage % on Garbodor: 44%
 Move Splinter Shot has initial score 80
 Move Splinter Shot ( Category: Physical ) has final score 124
-Move Shadow Sneak real damage on Garbodor: 21
-Move Shadow Sneak damage % on Garbodor: 7%
-Move Shadow Sneak has initial score 80
-Move Shadow Ball real damage on Garbodor: 62
-Move Shadow Ball damage % on Garbodor: 46%
-Move Shadow Ball has initial score 87.04
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Lunge real damage on Garbodor: 40
-Move Lunge damage % on Garbodor: 30%
-Move Lunge has initial score 48.0
 -----------------------------------------------------------------------
                       Score Board for Roserade
 -----------------------------------------------------------------------

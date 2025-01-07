@@ -3204,6 +3204,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:NEUTRALIZINGGAS,
     battle.allBattlers.each do |b|
       # Slow Start - end all turn counts
       b.effects[PBEffects::SlowStart] = 0
+      b.slowstartCount[b.index & 1][b.pokemonIndex] = 0
       # Truant - let b move on its first turn after Neutralizing Gas disappears
       b.effects[PBEffects::Truant] = false
       # Gorilla Tactics - end choice lock

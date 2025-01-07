@@ -151,7 +151,7 @@ class Battle::AI
     when "StartSunWeather" # sunny day
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   (expectedWeather == :Sun && !user.hasActiveItem?(:UTILITYUMBRELLA))
+		   [:Sun, :HarshSun].include?(expectedWeather)
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -226,7 +226,7 @@ class Battle::AI
     when "StartRainWeather" # rain dance
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   (expectedWeather == :Rain && !user.hasActiveItem?(:UTILITYUMBRELLA))
+		   [:Rain, :HeavyRain].include?(expectedWeather)
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
