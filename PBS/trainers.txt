@@ -459,6 +459,7 @@ Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+#-------------------------------
 [TOURIST_F, Kaitlyn]
 LoseText = The sun was in my eyes!
 Pokemon = PACUNA,9
@@ -528,7 +529,7 @@ LoseText = No fair, did you use bug repellent? Harumph!
 Pokemon = MINIMELO,11
 Pokemon = LEDYBA,12
 #-------------------------------
-[BIRDKEEPER_M, Juan]
+[BIRDKEEPER_M, Francis]
 LoseText = And down I go...
 Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
