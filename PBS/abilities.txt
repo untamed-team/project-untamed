@@ -772,7 +772,7 @@ Description = Boosts Defense when hit by a direct attack.
 #-------------------------------
 [WIMPOUT]
 Name = Wimp Out
-Description = Cowardly switches out if its HP becomes half or less.
+Description = Switches out if its HP becomes half or less.
 #-------------------------------
 [EMERGENCYEXIT]
 Name = Emergency Exit
