@@ -169,10 +169,10 @@ class Battle::Move
     if battler.abilityActive? && damagingMove?
       ret = @type
       typeabil_hash = {
-        :AERILATE     => :FLYING,
-        :GALVANIZE    => :ELECTRIC,
-        :PIXILATE     => :FAIRY,
-        :REFRIGERATE  => :ICE
+        :GALVANIZE   => :ELECTRIC,
+        :AERILATE    => :FLYING,
+        :PIXILATE    => :FAIRY,
+        :REFRIGERATE => :ICE
       }
       typeabil_hash.each do |abil, type|
         next unless battler.ability == abil

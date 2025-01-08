@@ -4851,11 +4851,12 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "UseMoveTargetIsAboutToUse" # Me First
-		if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
+		userPrio = priorityAI(user, move, globalArray)
+		if userFasterThanTarget || userPrio > 0
 			if targetWillMove?(target, "dmg")
 				targetMove = @battle.choices[target.index][2]
-				if priorityAI(target,targetMove,globalArray) > 0
-					score*=0.2
+				if priorityAI(target,targetMove,globalArray) > userPrio
+					score = 0
 				else
 					memove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(targetMove.id))
 					user.effects[PBEffects::MeFirst] = true
@@ -4863,10 +4864,10 @@ class Battle::AI
 					user.effects[PBEffects::MeFirst] = false
 				end
 			else
-				score*=0.2
+				score = 0
 			end
 		else
-			score*=0
+			score = 0
 		end
     #---------------------------------------------------------------------------
     when "UseMoveDependingOnEnvironment" # nature power

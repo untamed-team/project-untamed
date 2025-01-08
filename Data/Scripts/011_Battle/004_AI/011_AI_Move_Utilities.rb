@@ -34,7 +34,7 @@ class Battle::AI
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Foresight
-      if (user.hasActiveAbility?(:SCRAPPY) || target.effects[PBEffects::Foresight]) &&
+      if (user.hasActiveAbility?([:SCRAPPY, :NORMALIZE]) || target.effects[PBEffects::Foresight]) &&
          defType == :GHOST
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
