@@ -380,3 +380,13 @@ class Battle::Move::BOOMInstall < Battle::Move
     @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
   end
 end
+
+#===============================================================================
+# Heals user by 1/2 of its max HP, or 2/3 of its max HP in a hailstorm
+#===============================================================================
+class Battle::Move::HealUserDependingOnHail < Battle::Move::HealingMove
+  def pbHealAmount(user)
+    return (user.totalhp * 2 / 3.0).round if user.effectiveWeather == :Hail
+    return (user.totalhp / 2.0).round
+  end
+end

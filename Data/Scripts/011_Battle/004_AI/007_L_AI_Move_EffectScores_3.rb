@@ -2565,7 +2565,8 @@ class Battle::AI
 		score=0 if !user.pbCanSleep?(user,false)
     #---------------------------------------------------------------------------
     when "HealUserHalfOfTotalHP", "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", 
-		 "HealUserDependingOnWeather", "HealUserDependingOnSandstorm" # Recover, Roost, Synthesis, Shore Up
+		 "HealUserDependingOnWeather", "HealUserDependingOnSandstorm", "HealUserDependingOnHail"
+		 # Recover, Roost, Synthesis, Shore Up, Glacial Gulf
 		fasterhealing=userFasterThanTarget || user.hasActiveAbility?(:PRANKSTER) || user.hasActiveAbility?(:TRIAGE) 
 		if move.function == "HealUserDependingOnWeather" 
 			case expectedWeather
@@ -2585,6 +2586,13 @@ class Battle::AI
 			else
 				halfhealth=(user.totalhp/2.0)
 			end   
+		elsif move.function == "HealUserDependingOnHail" 
+			case expectedWeather
+			when :Hail
+				halfhealth=(user.totalhp*2 / 3.0)
+			else
+				halfhealth=(user.totalhp/2.0)
+			end
 		else     
 			halfhealth=(user.totalhp/2)
 		end       

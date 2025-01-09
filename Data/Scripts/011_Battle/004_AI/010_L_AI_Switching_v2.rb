@@ -425,7 +425,7 @@ class Battle::AI
 						if pokmon.pbHasMoveFunction?(
 								"HealUserHalfOfTotalHP", "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn",  # Recovery, Roost
 								"HealUserDependingOnWeather", "HealUserDependingOnSandstorm", # Synthesis, Shore up 
-								"HealUserFullyAndFallAsleep", "HealUserByTargetAttackLowerTargetAttack1")  # Rest, Strength Sap
+								"HealUserFullyAndFallAsleep", "HealUserByTargetAttackLowerTargetAttack1", "HealUserDependingOnHail")  # Rest, Strength Sap
 							if ((aspeed>maxspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>roomturn))
 								sum+=40 if damagetakenPercent<50
 							else	
@@ -435,7 +435,7 @@ class Battle::AI
 					end		
 					#  Recovery
 					if ["HealUserHalfOfTotalHP", "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", 
-							"HealUserDependingOnWeather", "HealUserDependingOnSandstorm", "HealUserFullyAndFallAsleep"].include?(m.function)
+							"HealUserDependingOnWeather", "HealUserDependingOnSandstorm", "HealUserFullyAndFallAsleep", "HealUserDependingOnHail"].include?(m.function)
 						if ((aspeed>maxspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>roomturn))
 							sum+=80 if damagetakenPercent<50
 						else	
@@ -643,7 +643,7 @@ class Battle::AI
 					sum+=10 if pkmn.hasType?(:ICE)
 					sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
 					sum+=5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail") 
-					sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail") 
+					sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail", "HealUserDependingOnHail") 
 				end
 				if pokmon.ability==:ELECTRICSURGE
 					sum+=5 if pkmn.item == :ELECTRICSEED

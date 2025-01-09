@@ -259,6 +259,15 @@ HiddenAbilities = FURCOAT
 Height = 0.8
 Weight = 14.0
 #-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 75,75,135,20,75,125
+Abilities = MAGICBOUNCE
+HiddenAbilities = MAGICBOUNCE
+Weight = 161.0
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
+#-------------------------------
 [LEDIAN,1]
 FormName = Mega Ledian
 MegaStone = LEDINITE
@@ -505,7 +514,7 @@ Pokedex = This is the form Castform takes when covered in snow. Its body becomes
 FormName = Sandy Form
 Types = GROUND
 Color = Brown
-Pokedex = catsform so cute i want to pat it
+Pokedex = This is the form Castform takes when covered in sand. Its body becomes a rough dust-like material, which is excellent replacement for steel wool.
 #-------------------------------
 [MAGIKARP,2]
 FormName = Mazian Magikarp
@@ -651,9 +660,3 @@ FormName = Blue Flower
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
-#-------------------------------
-[SABLEYE,1]
-FormName = Mega Sableye
-MegaStone = SABLENITE
-BaseStats = 75,75,125,20,65,115
-Abilities = MAGICBOUNCE
