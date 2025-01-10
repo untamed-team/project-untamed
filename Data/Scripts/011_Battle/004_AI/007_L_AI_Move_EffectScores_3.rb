@@ -1007,7 +1007,7 @@ class Battle::AI
 				if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 					miniscore*=1.2
 				end
-				if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+				if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 					miniscore*=1.3
 				end
 				if (user.hp.to_f)/user.totalhp>0.75
@@ -1566,7 +1566,7 @@ class Battle::AI
 			end
 		end
 		miniscore=100
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -3358,7 +3358,7 @@ class Battle::AI
 		if user.hasActiveAbility?(:PARTYPOPPER)
 			score*=1.2
 		end
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			score*=0.3
 		end
 		score*=0.3 if pbHasSingleTargetProtectMove?(target)
@@ -3405,7 +3405,7 @@ class Battle::AI
 		if user.pokemonIndex == 0 # on the lead slot
 			score*=1.2
 		end
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			score*=0.3
 		end
 		score*=0.3 if pbHasSingleTargetProtectMove?(target)
@@ -4297,7 +4297,7 @@ class Battle::AI
 			end
 		else
 			miniscore=100
-			if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+			if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
 				miniscore*=1.3
 			end
 			if (user.hp.to_f)/user.totalhp>0.75
@@ -5537,7 +5537,9 @@ class Battle::AI
 		score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
     when "SwitchOutTargetDamagingMove" # dragon tail
-      	if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) && target.effects[PBEffects::Substitute]==0
+		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+			# just regular dmg
+		else
 			miniscore = 100
 			if target.pbOwnSide.effects[PBEffects::StealthRock]
 				miniscore*=1.3
