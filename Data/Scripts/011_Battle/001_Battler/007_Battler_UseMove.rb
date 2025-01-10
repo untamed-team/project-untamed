@@ -213,42 +213,43 @@ class Battle::Battler
         pbChangeForm(0, _INTL("{1} changed to Shield Forme!", pbThis))
       end
     end
-		# Presage #by low (placed here so it triggers before doing damage)
-		if self.hasActiveAbility?(:PRESAGE)
-			weather_hash = {
-				"RaiseUserAtkSpAtk1Or2InSun"	=> :Sun, # growth
-				"HealUserDependingOnWeather"	=> :Sun, # morning sun
-				"TwoTurnAttackOneTurnInSun"		=> :Sun, # solar beam / solar blade
-				"FreezeTargetAlwaysHitsInHail"	=> :Hail, # blizzard
-				"HealUserDependingOnSandstorm"	=> :Sandstorm, # shore up
-				"StartUserSideDoubleSpeed"			=> :StrongWinds,  # tailwind
-				"ConfuseTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # hurricane
-				"ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # thunder
-				"HigherDamageInRain"														=> :Rain, # stream burst
-				"HigherDamageInSunVSNonFireTypes"	              => :Sun,  # scald
-				"PeperSpray"	                                  => :Sun   # pepper spray
-			}
-			if move.function != "TypeAndPowerDependOnWeather"
-				new_weather = weather_hash[move.function]
-				if !new_weather && move.damagingMove?
-					case move.type
-						when :FIRE
-							new_weather = :Sun
-						when :WATER
-							new_weather = :Rain
-						when :ICE
-							new_weather = :Hail
-						when :GROUND, :ROCK
-							new_weather = :Sandstorm
-						when :NORMAL
-							new_weather = :None
-						when :QMARKS
-							new_weather = :ShadowSky
-					end
-				end
-			end
-			battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
-		end
+    # Presage #by low (placed here so it triggers before doing damage)
+    if self.hasActiveAbility?(:PRESAGE)
+      weather_hash = {
+        "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+        "HealUserDependingOnWeather" => :Sun, # morning sun
+        "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+        "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+        "HealUserDependingOnHail"      => :Hail, # glacial gulf
+        "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+        "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+        "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+        "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+        "HigherDamageInRain"                            => :Rain, # stream burst
+        "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+        "PeperSpray"                                    => :Sun   # pepper spray
+      }
+      if move.function != "TypeAndPowerDependOnWeather"
+        new_weather = weather_hash[move.function]
+        if !new_weather && move.damagingMove?
+          case move.type
+            when :FIRE
+              new_weather = :Sun
+            when :WATER
+              new_weather = :Rain
+            when :ICE
+              new_weather = :Hail
+            when :GROUND, :ROCK
+              new_weather = :Sandstorm
+            when :NORMAL
+              new_weather = :None
+            when :QMARKS
+              new_weather = :ShadowSky
+          end
+        end
+      end
+      battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
+    end
     # Calculate the move's type during this usage
     move.calcType = move.pbCalcType(self)
     # Start effect of Mold Breaker

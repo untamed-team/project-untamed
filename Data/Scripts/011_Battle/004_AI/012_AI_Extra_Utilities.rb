@@ -777,7 +777,7 @@ class Battle::AI
 					sum += 10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
 					sum += 15 if pkmn.hasType?(:ICE)
 					sum += 15 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail")
-					sum += 5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail")
+					sum += 5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail", "HealUserDependingOnHail")
 					sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") && issunny
 				end
 			end

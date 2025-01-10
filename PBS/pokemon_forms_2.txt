@@ -68,6 +68,8 @@ Types = WATER,FAIRY
 BaseStats = 95,85,96,82,126,156
 Abilities = MISTYSURGE
 HiddenAbilities = MISTYSURGE
+Height = 7.6
+Weight = 193.4
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
@@ -75,6 +77,8 @@ MegaStone = SUCHOBITE
 BaseStats = 110,137,114,41,106,92
 Abilities = CORROSION
 HiddenAbilities = CORROSION
+Height = 2.7
+Weight = 345.6
 #------------------------------- 
 [SKARMORY,1]
 FormName = Mega Skarmory
@@ -82,6 +86,9 @@ MegaStone = SKARMORITE
 BaseStats = 65,120,160,80,60,80
 Abilities = HYPERCUTTER
 HiddenAbilities = HYPERCUTTER
+Height = 1.9
+Weight = 60.3
+Shape = MultiWinged
 #------------------------------- 
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
@@ -90,6 +97,8 @@ Types = PSYCHIC,ELECTRIC
 BaseStats = 75,105,75,70,135,125
 Abilities = PSYCHICSURGE
 HiddenAbilities = PSYCHICSURGE
+Height = 2.5
+Weight = 44.8
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
@@ -98,6 +107,9 @@ Types = GROUND,GHOST,FLYING
 BaseStats = 89,144,105,100,65,80
 Abilities = WEAKARMOR
 HiddenAbilities = WEAKARMOR
+Height = 1.7
+Weight = 300.0
+Shape = HeadArms
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
@@ -105,6 +117,9 @@ MegaStone = HAWLUCHITE
 BaseStats = 78,132,95,118,94,83
 Abilities = GALVANIZE
 HiddenAbilities = WARRIORSPIRIT
+Height = 0.9
+Weight = 38.3
+Color = Red
 #------------------------------- 
 [CACTURNE,1]
 FormName = Mega Cacturne
@@ -112,6 +127,8 @@ MegaStone = CACTURNITE
 BaseStats = 70,135,100,55,145,70
 Abilities = DUSTSENTINEL
 HiddenAbilities = DUSTSENTINEL
+Height = 1.6
+Weight = 92.1
 #------------------------------- 
 [FROSMOTH,1]
 FormName = Mega Frosmoth
@@ -120,6 +137,8 @@ Types = ICE,BUG,FIRE
 BaseStats = 70,65,80,85,135,140
 Abilities = MAGICGUARD
 HiddenAbilities = MAGICGUARD
+Height = 1.4
+Weight = 51.0
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
@@ -128,6 +147,8 @@ Types = PSYCHIC,STEEL
 BaseStats = 75,50,100,65,115,150
 Abilities = ECHOCHAMBER
 HiddenAbilities = ECHOCHAMBER
+Height = 0.9
+Weight = 3.4
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
@@ -136,6 +157,8 @@ Types = NORMAL,QMARKS
 BaseStats = 85,128,80,102,155,85
 Abilities = OVERWRITE
 HiddenAbilities = OVERWRITE
+Height = 1.1
+Weight = 38.7
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
@@ -144,6 +167,8 @@ Types = FIRE,STEEL
 BaseStats = 60,60,160,50,100,100
 Abilities = BULLETPROOF
 HiddenAbilities = BULLETPROOF
+Height = 1.1
+Weight = 120.5
 #------------------------------- 
 [SPECTERZAL,1]
 FormName = Mega Specterzal
@@ -151,6 +176,8 @@ MegaStone = SPECTERZITE
 BaseStats = 120,139,132,86,95,75
 Abilities = SPOOPERAURA
 HiddenAbilities = SPOOPERAURA
+Height = 5.6
+Weight = 237.2
 # stab + spooper aura = adaptability boost
 #------------------------------- 
 [TREVENANT,1]
@@ -166,6 +193,9 @@ MegaStone = M_ROSERADITE
 BaseStats = 70,95,83,92,125,150
 Abilities = SOULHEART
 HiddenAbilities = SOULHEART
+Height = 1.0
+Weight = 14.8
+Color = Black
 #------------------------------- 
 [LUPACABRA,1]
 FormName = Mega Lupacabra
@@ -173,6 +203,8 @@ MegaStone = LUPACABRITE
 BaseStats = 80,135,135,65,95,80
 Abilities = MOLDBREAKER
 HiddenAbilities = MOLDBREAKER
+Height = 2.1
+Weight = 140.0
 #------------------------------- 
 [ZOLUPINE,1]
 FormName = Mega Zolupine
@@ -181,6 +213,8 @@ Types = GHOST,WATER
 BaseStats = 60,95,70,85,135,145
 Abilities = DRIZZLE
 HiddenAbilities = DRIZZLE
+Height = 1.6
+Weight = 115.6
 #------------------------------- 
 [ROADRAPTOR,1]
 FormName = Mega Roadraptor
@@ -189,6 +223,8 @@ Types = ELECTRIC,GROUND
 BaseStats = 70,129,72,130,117,69
 Abilities = LIGHTNINGROD
 HiddenAbilities = LIGHTNINGROD
+Height = 1.0
+Weight = 27.0
 #------------------------------- 
 [FRIZZARD,1]
 FormName = Mega Frizzard
@@ -196,6 +232,8 @@ MegaStone = FRIZZARDITE
 BaseStats = 80,80,80,94,145,121
 Abilities = SNOWWARNING
 HiddenAbilities = SNOWWARNING
+Height = 1.7
+Weight = 87.9
 #------------------------------- 
 [ZARCOIL,1]
 FormName = Mega Zarcoil
@@ -203,6 +241,8 @@ MegaStone = ZARCOILITE
 BaseStats = 65,135,89,91,140,80
 Abilities = DROUGHT
 HiddenAbilities = DROUGHT
+Height = 1.3
+Weight = 78.2
 #------------------------------- # ~112 def
 [LAGUNA,1]
 FormName = Mega Laguna
@@ -211,6 +251,8 @@ Types = ICE,FAIRY
 BaseStats = 50,72,55,103,110,130
 Abilities = FURCOAT
 HiddenAbilities = FURCOAT
+Height = 0.8
+Weight = 14.0
 #-------------------------------
 [SABLEYE,1]
 FormName = Mega Sableye
@@ -218,6 +260,8 @@ MegaStone = SABLENITE
 BaseStats = 75,75,135,20,75,125
 Abilities = MAGICBOUNCE
 HiddenAbilities = MAGICBOUNCE
+Weight = 161.0
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
 #------------------------------- # note: +nature 105 atk huge power = 212 <-> 213 atk
 [MAWILE,1]
 FormName = Mega Mawile
@@ -305,7 +349,7 @@ Abilities = MOLDBREAKER
 FormName = Female
 BaseStats = 75,120,95,78,50,60
 Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
-TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
+TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
 #-------------------------------
 [BEAKRAFT,2]
 FormName = Mega Beakraft ♂
@@ -325,7 +369,7 @@ BaseStats = 75,140,105,82,100,76
 Abilities = ELECTRICSURGE
 HiddenAbilities = ELECTRICSURGE
 Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
-TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,UTURN,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
+TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
 #-------------------------------
 [CROACROZEN,1]
 FormName = Frozen
@@ -364,7 +408,7 @@ Pokedex = This is the form Castform takes when covered in snow. Its body becomes
 FormName = Sandy Form
 Types = GROUND
 Color = Brown
-Pokedex = This is the form Castform takes when covered in sand.
+Pokedex = This is the form Castform takes when covered in sand. Its body becomes a rough dust-like material, which is excellent replacement for steel wool.
 #-------------------------------
 [MAGIKARP,2]
 FormName = Mazian Magikarp
