@@ -137,7 +137,7 @@ class Battle::Move::Rebalancing < Battle::Move
 end
 
 #===============================================================================
-# gets 3x on rain
+# gets 2.25x on rain
 # in theory it nullifies the nerfs/buffs of a fire type move on those weathers
 # (Steam Burst)
 #===============================================================================

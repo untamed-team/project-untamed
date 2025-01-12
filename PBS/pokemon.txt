@@ -6719,7 +6719,7 @@ Category = ...
 Pokedex = ...
 #-------------------------------
 [BERGMITE]
-Name = Bergmite
+Name = Failsafe_Bergmite
 Types = ICE
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent
@@ -6741,7 +6741,7 @@ Category = ...
 Pokedex = ...
 #-------------------------------
 [AVALUGG]
-Name = Avalugg
+Name = Failsafe_Avalugg
 Types = ICE
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent
