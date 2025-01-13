@@ -148,7 +148,7 @@ class Battle
           when 1    # Bag
             # items ban #by low
             if $player.difficulty_mode?("normal") && @numberOfUsedItems[idxBattler % 2] >= ItemCAP && @opponent
-              pbDisplay(_INTL("But #{1} items have already been used in this Trainer Battle!", ItemCAP))
+              pbDisplay(_INTL("But {1} items have already been used in this Trainer Battle!", ItemCAP))
             elsif $player.difficulty_mode?("hard") && @opponent
               pbDisplay(_INTL("Items are banned during Trainer Battles."))
             else

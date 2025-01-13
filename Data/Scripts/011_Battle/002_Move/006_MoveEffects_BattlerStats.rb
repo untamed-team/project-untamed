@@ -778,6 +778,7 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -791,6 +792,7 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
   def pbEffectAgainstTarget(user, target)
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
       target.pbRaiseStatStage(:ATTACK, 2, user)
+      target.SetupMovesUsed.push(@id)
     end
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
@@ -808,6 +810,7 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -819,9 +822,10 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-		raise_num = ($player.difficulty_mode?("chaos")) ? 2 : 1 #by low
+    raise_num = ($player.difficulty_mode?("chaos")) ? 2 : 1 #by low
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
       target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user)
+      target.SetupMovesUsed.push(@id)
     end
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
