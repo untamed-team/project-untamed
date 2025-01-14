@@ -392,9 +392,9 @@ class DifficultySelectMenu_Scene
     drawFormattedTextEx(bitmap=overlay, x=260, y=52, width=overlay.width-58, text=_INTL("Chaos"), baseColor=base, shadowColor=shadow, lineheight=16)
 
     # fs = font size
-    #difficultyDesc = "<fs=10>" + difficultyDesc + "</fs>"
+    difficultyDesc = "<fs=24>" + difficultyDesc + "</fs>"
     #difficulty description, changes per page
-    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=32)
+    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
   end
   
   def pbEndScene
