@@ -1210,7 +1210,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:ATTACK) 
+			if user.statStageAtMax?(:ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1481,7 +1481,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1626,7 +1626,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1763,7 +1763,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_ATTACK) 
+			if user.statStageAtMax?(:SPECIAL_ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2031,7 +2031,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2165,7 +2165,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2314,7 +2314,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2476,7 +2476,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2718,7 +2718,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2778,7 +2778,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2980,7 +2980,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -4056,7 +4056,7 @@ class Battle::AI
 			miniscore*=(move.addlEffect.to_f/100.0)
 			miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 		end
-		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 		miniscore+=100
 		miniscore/=100.0   
 		miniscore=0.1 if user.hasActiveAbility?(:CONTRARY)
@@ -4530,7 +4530,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4547,6 +4547,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0
@@ -4629,7 +4630,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4646,6 +4647,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0

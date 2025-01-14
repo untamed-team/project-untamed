@@ -237,7 +237,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill &&
 			(((@battle.pbCheckGlobalAbility(:DARKAURA)    || globalArray.include?("dark aura"))    && type == :DARK)  ||
 			 ((@battle.pbCheckGlobalAbility(:SPOOPERAURA) || globalArray.include?("spooper aura")) && type == :GHOST) ||
-			 (@battle.pbCheckGlobalAbility(:FAIRYAURA)                                             && type == :FAIRY))
+			 ((@battle.pbCheckGlobalAbility(:FAIRYAURA)   || globalArray.include?("fairy aura"))   && type == :FAIRY))
 			if @battle.pbCheckGlobalAbility(:AURABREAK)
 				multipliers[:base_damage_multiplier] *= 2 / 3.0
 			else
@@ -590,7 +590,8 @@ class Battle::AI
 		if priorityAI(user,move,globalArray) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
 				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
-							 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
+							 !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+				# laguna/diancie can have priority immunity in pre-mega form
 			end
 			return true if expectedTerrain == :Psychic && target.affectedByTerrain? && target.opposes?(user)
 		end

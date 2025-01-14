@@ -25,7 +25,7 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
 
   def pbAccuracyCheck(user, target)
     acc = @accuracy + user.level - target.level
-		acc = 0 if $player.difficulty_mode?("hard") #by low
+    acc = 0 if $player.difficulty_mode?("hard") #by low
     return @battle.pbRandom(100) < acc
   end
 
@@ -47,12 +47,12 @@ end
 #===============================================================================
 class Battle::Move::RemoveTargetItem < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-		if !$player.difficulty_mode?("chaos")
-			if Settings::MECHANICS_GENERATION >= 6 &&
-				 target.item && !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
-				 # NOTE: Damage is still boosted even if target has a substitute.
-				baseDmg = (baseDmg * 1.5).round
-			end
+    if !$player.difficulty_mode?("chaos")
+      if Settings::MECHANICS_GENERATION >= 6 &&
+         target.item && !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
+         # NOTE: Damage is still boosted even if target has a substitute.
+        baseDmg = (baseDmg * 1.5).round
+      end
     end
     return baseDmg
   end
@@ -81,26 +81,26 @@ class Battle::Move::StatUpMove < Battle::Move
 
   def pbMoveFailed?(user, targets)
     return false if damagingMove?
-		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return !user.pbCanRaiseStatStage?(@statUp[0], user, self, true)
   end
 
   def pbEffectGeneral(user)
     return if damagingMove?
     user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
-		user.SetupMovesUsed.push(@id)
+    user.SetupMovesUsed.push(@id)
   end
 
   def pbAdditionalEffect(user, target)
     if user.pbCanRaiseStatStage?(@statUp[0], user, self) && 
-			 !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+       !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
-    end
-		if damagingMove? && @addlEffect == 100
-			user.SetupMovesUsed.push(@id)
+      if damagingMove? #&& @addlEffect == 100
+        user.SetupMovesUsed.push(@id)
+      end
     end
   end
 end
@@ -119,10 +119,10 @@ class Battle::Move::MultiStatUpMove < Battle::Move
       failed = false
       break
     end
-		if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     if failed
       @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", user.pbThis))
       return true
@@ -137,8 +137,8 @@ class Battle::Move::MultiStatUpMove < Battle::Move
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
       if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
         showAnim = false
-				user.SetupMovesUsed.push(@id)
-				user.SetupMovesUsed |= []
+        user.SetupMovesUsed.push(@id)
+        user.SetupMovesUsed |= []
       end
     end
   end
@@ -148,12 +148,12 @@ class Battle::Move::MultiStatUpMove < Battle::Move
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
       if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim) && 
-				 !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+         !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
         showAnim = false
-				if damagingMove? && @addlEffect == 100
-					user.SetupMovesUsed.push(@id)
-					user.SetupMovesUsed |= []
-				end
+        if damagingMove? #&& @addlEffect == 100
+          user.SetupMovesUsed.push(@id)
+          user.SetupMovesUsed |= []
+        end
       end
     end
   end
@@ -167,7 +167,7 @@ end
 class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
   def pbEffectAfterAllHits(user, target)
     return if user.fainted? || target.damageState.unaffected
-		didsomething=false
+    didsomething=false
     if user.effects[PBEffects::Trapping] > 0
       trapMove = GameData::Move.get(user.effects[PBEffects::TrappingMove]).name
       trapUser = @battle.battlers[user.effects[PBEffects::TrappingUser]]
@@ -175,37 +175,37 @@ class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
       user.effects[PBEffects::Trapping]     = 0
       user.effects[PBEffects::TrappingMove] = nil
       user.effects[PBEffects::TrappingUser] = -1
-			didsomething=true
+      didsomething=true
     end
     if user.effects[PBEffects::LeechSeed] >= 0
       user.effects[PBEffects::LeechSeed] = -1
       user.effects[PBEffects::LeechSeedCount] = 0
       @battle.pbDisplay(_INTL("{1} shed Leech Seed!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::StealthRock]
       user.pbOwnSide.effects[PBEffects::StealthRock] = false
       @battle.pbDisplay(_INTL("{1} blew away stealth rocks!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::Spikes] > 0
       user.pbOwnSide.effects[PBEffects::Spikes] = 0
       @battle.pbDisplay(_INTL("{1} blew away spikes!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0
       user.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
       @battle.pbDisplay(_INTL("{1} blew away poison spikes!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::StickyWeb] > 0
       user.pbOwnSide.effects[PBEffects::StickyWeb] = 0
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
-		if didsomething && !user.SetupMovesUsed.include?(@id)
-			user.pbRaiseStatStage(:SPEED, 1, user)
-			user.SetupMovesUsed.push(@id)
+    if didsomething && !user.SetupMovesUsed.include?(@id)
+      user.pbRaiseStatStage(:SPEED, 1, user)
+      user.SetupMovesUsed.push(@id)
     end
   end
 end
@@ -225,7 +225,7 @@ class Battle::Move::RaiseUserAndAlliesAtkDef1 < Battle::Move
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:DEFENSE, user, self)
       next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-			@validTargets.push(b)
+      @validTargets.push(b)
     end
     if @validTargets.length == 0
       @battle.pbDisplay(_INTL("But it failed!"))
@@ -248,7 +248,7 @@ class Battle::Move::RaiseUserAndAlliesAtkDef1 < Battle::Move
     if target.pbCanRaiseStatStage?(:DEFENSE, user, self)
       target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
     end
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 
@@ -298,7 +298,7 @@ class Battle::Move::RaisePlusMinusUserAndAlliesAtkSpAtk1 < Battle::Move
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
       target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
     end
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 
   def pbEffectGeneral(user)
@@ -354,7 +354,7 @@ class Battle::Move::RaisePlusMinusUserAndAlliesDefSpDef1 < Battle::Move
     if target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
       target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
     end
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 
   def pbEffectGeneral(user)
@@ -401,7 +401,7 @@ class Battle::Move::RaiseGroundedGrassBattlersAtkSpAtk1 < Battle::Move
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
       target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
     end
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 
@@ -434,7 +434,7 @@ class Battle::Move::RaiseGrassBattlersDef1 < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     target.pbRaiseStatStage(:DEFENSE, 1, user)
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 #===============================================================================
@@ -454,7 +454,7 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
     end
     if failed
       if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-				@battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
+        @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       else
         @battle.pbDisplay(_INTL("But it failed!"))
       end
@@ -471,7 +471,7 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     return if damagingMove?
     target.pbRaiseStatStage(:ATTACK, 1, user)
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 
   def pbAdditionalEffect(user, target)
@@ -490,17 +490,17 @@ class Battle::Move::RaiseTargetSpDef1 < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
                    !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
-		if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return false
   end
 
   def pbEffectAgainstTarget(user, target)
     target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user)
     target.pbRaiseStatStage(:ATTACK, 1, user)
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 
@@ -518,17 +518,17 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
       @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", target.pbThis)) if show_message
       return true
     end
-		if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return false
   end
 
   def pbEffectAgainstTarget(user, target)
     stat = @statArray[@battle.pbRandom(@statArray.length)]
     target.pbRaiseStatStage(stat, 2, user)
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 
@@ -541,7 +541,7 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-			next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -555,7 +555,7 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     target.pbRaiseStatStage(:ATTACK, 2, user) if target.pbCanRaiseStatStage?(:ATTACK, user, self)
     target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user) if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-		target.SetupMovesUsed.push(@id)
+    target.SetupMovesUsed.push(@id)
   end
 end
 
@@ -594,10 +594,10 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
       @battle.pbDisplay(_INTL("{1}'s stats can't be changed further!", user.pbThis))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return false
   end
 
@@ -616,7 +616,7 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
         showAnim = false
       end
     end
-		user.SetupMovesUsed.push(@id)
+    user.SetupMovesUsed.push(@id)
   end
 end
 
@@ -648,7 +648,7 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
     if user.pbCanRaiseStatStage?(:SPEED, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:SPEED, 1, user)
     end
-		user.SetupMovesUsed.push(@id)
+    user.SetupMovesUsed.push(@id)
   end
 end
 
@@ -665,10 +665,10 @@ class Battle::Move::TwoTurnAttackRaiseUserSpAtkSpDefSpd2 < Battle::Move::TwoTurn
       @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", user.pbThis))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return false
   end
 
@@ -685,7 +685,7 @@ class Battle::Move::TwoTurnAttackRaiseUserSpAtkSpDefSpd2 < Battle::Move::TwoTurn
         showAnim = false
       end
     end
-		user.SetupMovesUsed.push(@id)
+    user.SetupMovesUsed.push(@id)
   end
 end
 
@@ -701,7 +701,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserDefense1 < Battle::Move::TwoTurn
   def pbChargingTurnEffect(user, target)
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:DEFENSE, 1, user)
-			user.SetupMovesUsed.push(@id)
+      user.SetupMovesUsed.push(@id)
     end
   end
 end
@@ -718,7 +718,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserSpAtk1 < Battle::Move::TwoTurnMo
   def pbChargingTurnEffect(user, target)
     if user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
-			user.SetupMovesUsed.push(@id)
+      user.SetupMovesUsed.push(@id)
     end
   end
 end
@@ -787,10 +787,10 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-		if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
       return true
-		end
+    end
     return false
   end
 
@@ -815,12 +815,12 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self)
       user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
     end
-		user.SetupMovesUsed.push(@id)
+    user.SetupMovesUsed.push(@id)
   end
 
   def pbEffectAgainstTarget(user, target)
     return if !user.pbHasType?(:GHOST)
-		return if $player.difficulty_mode?("chaos")
+    return if $player.difficulty_mode?("chaos")
     # Ghost effect
     @battle.pbDisplay(_INTL("{1} cut its own HP and laid a curse on {2}!", user.pbThis, target.pbThis(true)))
     target.effects[PBEffects::Curse] = true
@@ -842,34 +842,34 @@ class Battle::Move::RaiseUserSpAtk1 < Battle::Move::StatUpMove
     super
     @statUp = [:SPECIAL_ATTACK, 1]
   end
-	
+  
   def pbOnStartUse(user, targets)
     return if user.fainted?
-		return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
+    return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
     if @id == :FIERYDANCE && user.pbOwnedByPlayer?
-			if $player.difficulty_mode?("chaos")
-				rng = rand(1..2)
-				case rng
-					when 1
-						@battle.pbDisplay(_INTL("{1} forgot how to perform its dance!", user.pbThis))
-						@battle.pbDisplay(_INTL("{1} exponentially combusts out of embarrassment!", user.pbThis))
-					when 2
-						@battle.pbDisplay(_INTL("{1} looks at you with immense disapointment.", user.pbThis))
-						@battle.pbDisplay(_INTL("{1} exponentially combusts out of shame of its trainer.", user.pbThis))
-				end
-				user.pbReduceHP(user.hp, false)
-				user.pbItemHPHealCheck
-			else
-				rng = rand(1..4)
-				if rng == 1
-					@battle.pbDisplay(_INTL("{1} is extremely anxious!", user.pbThis))
-					@battle.pbDisplay(_INTL("{1} did a wrong step!", user.pbThis))
-					user.pbReduceHP((user.hp/16), false)
-					user.pbItemHPHealCheck
-					@battle.pbDisplay(_INTL("{1} is trying to play it off cool.", user.pbThis))
-				end
-			end
-		end
+      if $player.difficulty_mode?("chaos")
+        rng = rand(1..2)
+        case rng
+          when 1
+            @battle.pbDisplay(_INTL("{1} forgot how to perform its dance!", user.pbThis))
+            @battle.pbDisplay(_INTL("{1} exponentially combusts out of embarrassment!", user.pbThis))
+          when 2
+            @battle.pbDisplay(_INTL("{1} looks at you with immense disapointment.", user.pbThis))
+            @battle.pbDisplay(_INTL("{1} exponentially combusts out of shame of its trainer.", user.pbThis))
+        end
+        user.pbReduceHP(user.hp, false)
+        user.pbItemHPHealCheck
+      else
+        rng = rand(1..4)
+        if rng == 1
+          @battle.pbDisplay(_INTL("{1} is extremely anxious!", user.pbThis))
+          @battle.pbDisplay(_INTL("{1} did a wrong step!", user.pbThis))
+          user.pbReduceHP((user.hp/16), false)
+          user.pbItemHPHealCheck
+          @battle.pbDisplay(_INTL("{1} is trying to play it off cool.", user.pbThis))
+        end
+      end
+    end
   end
 end
 
@@ -881,33 +881,33 @@ class Battle::Move::RaiseUserSpAtkSpDefSpd1 < Battle::Move::MultiStatUpMove
     super
     @statUp = [:SPECIAL_ATTACK, 1, :SPECIAL_DEFENSE, 1, :SPEED, 1]
   end
-	
+  
   def pbOnStartUse(user, targets)
     return if user.fainted?
-		return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
+    return if ![:QUETZALIL, :QUEXCELL, :QUETZILLIAN].include?(user.species)
     if @id == :QUIVERDANCE && user.pbOwnedByPlayer?
-			if $player.difficulty_mode?("hard")
-				rng = rand(1..2)
-				case rng
-					when 1
-						@battle.pbDisplay(_INTL("{1} forgot how to perform its dance!", user.pbThis))
-						@battle.pbDisplay(_INTL("{1} exponentially combusts out of embarrassment!", user.pbThis))
-					when 2
-						@battle.pbDisplay(_INTL("{1} looks at you with immense disapointment.", user.pbThis))
-						@battle.pbDisplay(_INTL("{1} exponentially combusts out of shame of its trainer.", user.pbThis))
-				end
-				user.pbReduceHP(user.hp, false)
-				user.pbItemHPHealCheck
-			else
-				rng = rand(1..4)
-				if rng == 1
-					@battle.pbDisplay(_INTL("{1} is extremely anxious!", user.pbThis))
-					@battle.pbDisplay(_INTL("{1} did a wrong step!", user.pbThis))
-					user.pbReduceHP((user.hp/16), false)
-					user.pbItemHPHealCheck
-					@battle.pbDisplay(_INTL("{1} is trying to play it off cool.", user.pbThis))
-				end
-			end
-		end
+      if $player.difficulty_mode?("hard")
+        rng = rand(1..2)
+        case rng
+          when 1
+            @battle.pbDisplay(_INTL("{1} forgot how to perform its dance!", user.pbThis))
+            @battle.pbDisplay(_INTL("{1} exponentially combusts out of embarrassment!", user.pbThis))
+          when 2
+            @battle.pbDisplay(_INTL("{1} looks at you with immense disapointment.", user.pbThis))
+            @battle.pbDisplay(_INTL("{1} exponentially combusts out of shame of its trainer.", user.pbThis))
+        end
+        user.pbReduceHP(user.hp, false)
+        user.pbItemHPHealCheck
+      else
+        rng = rand(1..4)
+        if rng == 1
+          @battle.pbDisplay(_INTL("{1} is extremely anxious!", user.pbThis))
+          @battle.pbDisplay(_INTL("{1} did a wrong step!", user.pbThis))
+          user.pbReduceHP((user.hp/16), false)
+          user.pbItemHPHealCheck
+          @battle.pbDisplay(_INTL("{1} is trying to play it off cool.", user.pbThis))
+        end
+      end
+    end
   end
 end

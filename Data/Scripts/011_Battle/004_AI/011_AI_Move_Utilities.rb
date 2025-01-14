@@ -420,7 +420,7 @@ class Battle::AI
     # acc and evasion murder / sleep moves acc buff #by low
     modifiers[:base_accuracy]  = 85 if !user.pbOwnedByPlayer? && [:HYPNOSIS, :GRASSWHISTLE, :SLEEPPOWDER, :LOVELYKISS, :SING, :DARKVOID].include?(move.id)
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
-    modifiers[:evasion_stage]  = target.stages[:EVASION]
+    modifiers[:evasion_stage]  = [target.stages[:EVASION], 0].min
     if modifiers[:accuracy_stage] < 0
       if $player.difficulty_mode?("hard")
         modifiers[:accuracy_stage] = 0
@@ -428,7 +428,6 @@ class Battle::AI
         modifiers[:accuracy_stage] += 1 if !user.pbOwnedByPlayer?
       end
     end
-    modifiers[:evasion_stage]  = 0 if target.stages[:EVASION] > 0
     modifiers[:accuracy_multiplier] = 1.0
     modifiers[:evasion_multiplier]  = 1.0
     pbCalcAccuracyModifiers(user, target, modifiers, move, type, skill)
@@ -440,8 +439,6 @@ class Battle::AI
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    accStage = 6 if accStage < 6
-    evaStage = 6 if evaStage > 6
     stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
     stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]

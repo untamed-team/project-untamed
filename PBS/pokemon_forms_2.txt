@@ -261,7 +261,7 @@ BaseStats = 75,75,135,20,75,125
 Abilities = MAGICBOUNCE
 HiddenAbilities = MAGICBOUNCE
 Weight = 161.0
-Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly. Said jewel is as durable as hundreds of reinforced metal plates.
 #------------------------------- # note: +nature 105 atk huge power = 212 <-> 213 atk
 [MAWILE,1]
 FormName = Mega Mawile
@@ -283,7 +283,7 @@ Abilities = TOUGHCLAWS
 HiddenAbilities = TOUGHCLAWS
 Height = 1.2
 Weight = 13.0
-Pokedex = Extraordinary energy amplifies its cursing power to such an extent that it can't help but curse out its own Trainer.
+Pokedex = Extraordinary energy amplifies its power to such an extent that it can't help but curse out its own Trainer.
 Generation = 6
 #-------------------------------
 [GLALIE,1]
@@ -295,7 +295,19 @@ Abilities = REFRIGERATE
 HiddenAbilities = REFRIGERATE
 Height = 2.1
 Weight = 350.2
-Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
+Pokedex = It envelops prey in its mouth, freezing them instantly. It's jaws can shred through thick blocks of ice as if they are paper.
+Generation = 6
+#-------------------------------
+[DIANCIE,1]
+FormName = Mega Diancie
+MegaStone = DIANCITE
+BaseStats = 60,110,150,75,110,150
+BaseExp = 350
+Abilities = FAIRYAURA
+HiddenAbilities = FAIRYAURA
+Height = 1.1
+Weight = 27.8
+Pokedex = It can only undergo this transformation once it feeds from a thousand gems. In this form, Diancie's entire purpose is to fulfill the desires of her subjects.
 Generation = 6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
@@ -349,7 +361,7 @@ Abilities = MOLDBREAKER
 FormName = Female
 BaseStats = 75,120,95,78,50,60
 Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
-TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
+TutorMoves = DEFOG,WORKUP,HELPINGHAND,BULKUP,SWAGGER,TAUNT,SANDSTORM,DIG,AERIALACE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
 #-------------------------------
 [BEAKRAFT,2]
 FormName = Mega Beakraft ♂
@@ -369,7 +381,7 @@ BaseStats = 75,140,105,82,100,76
 Abilities = ELECTRICSURGE
 HiddenAbilities = ELECTRICSURGE
 Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,ELECTRIFY,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
-TutorMoves = BOUNCE,DEFOG,WORKUP,HELPINGHAND,BULKUP,HIDDENPOWER,SWAGGER,TAUNT,PROTECT,SANDSTORM,RETURN,DIG,AERIALACE,FACADE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,GIGAIMPACT,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
+TutorMoves = DEFOG,WORKUP,HELPINGHAND,BULKUP,SWAGGER,TAUNT,SANDSTORM,DIG,AERIALACE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE
 #-------------------------------
 [CROACROZEN,1]
 FormName = Frozen
@@ -417,8 +429,10 @@ BaseStats = 20,10,80,50,15,25
 BaseExp = 40
 Abilities = SOLIDROCK
 HiddenAbilities = POWEROFALCHEMY
+Weight = 151.0
 Moves = 1,SPLASH,15,SMACKDOWN,25,FLAIL
 TutorMoves = BODYSLAM,SURF
+Pokedex = Its swimming muscles are weak, but it is deceptively heavy. Deep underwater in rivers with gold deposits, you can see many Magikarp attempting to swim.
 #-------------------------------
 [GYARADOS,1]
 FormName = Mega Gyarados
@@ -439,8 +453,10 @@ BaseStats = 85,89,125,60,91,90
 BaseExp = 189
 Abilities = FULLMETALBODY
 HiddenAbilities = BERSERK
+Weight = 1000.0
 Moves = 0,MIRRORSHOT,1,BITE,1,FLAIL,1,SPLASH,1,SMACKDOWN,1,LEER,1,TWISTER,4,WHIRLPOOL,8,ICEFANG,12,BRINE,16,SCARYFACE,21,WATERPULSE,24,CRUNCH,28,IRONDEFENSE,32,POWERGEM,36,ROCKPOLISH,40,DRAGONPULSE,44,FORGEBREATH,48,GEODEBURST,52,STEELBEAM
 TutorMoves = WORKUP,ROAR,SWAGGER,ICEBEAM,BLIZZARD,RAINDANCE,EARTHQUAKE,ROCKTOMB,FACADE,FLASHCANNON,BODYSLAM,ROCKSLIDE,DRAGONPULSE,SCREECH,STONEEDGE,GEODEBURST,SNARL,LIQUIDATION,ZENHEADBUTT,AVALANCHE,GYROBALL,DEFOG,SURF,STRENGTH,WATERFALL,DIVE,AQUATAIL,IRONHEAD,IRONTAIL,ROCKBLAST,FORGEBREATH,SCALESHOT
+Pokedex = From the depths, it devoured piles of gold and transformed. Its outer armor is valued more than many large cruise ships.
 #---------------------------------------------------------------------------------------------
 # COSMETIC FORM CHANGES (AND ETERNAL FLOETTE)
 #---------------------------------------------------------------------------------------------

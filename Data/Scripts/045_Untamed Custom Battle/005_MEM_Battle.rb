@@ -18,6 +18,7 @@ MEGA_EVO_STATS = {
   GOLURK: { item: :GOLURKITE, atkmul: 1.161, defmul: 1.313, spemul: 1.818, spamul: 1.182, spdmul: 1.000 },
   HAWLUCHA: { item: :HAWLUCHITE, atkmul: 1.435, defmul: 1.267, spemul: 1.000, spamul: 1.270, spdmul: 1.317 },
   TREVENANT: { item: :TREVENANTITE, atkmul: 1.167, defmul: 1.305, spemul: 0.821, spamul: 1.385, spdmul: 1.488 },
+  DIANCIE: { item: :DIANCITE, atkmul: 1.222, defmul: 1.154, spemul: 1.364, spamul: 1.222, spdmul: 1.154 },
   FROSMOTH: { item: :FROSMOTHITE, atkmul: 1.000, defmul: 1.333, spemul: 1.308, spamul: 1.080, spdmul: 1.556 },
 
   CAMERUPT: { item: :CAMERUPTITE, atkmul: 1.200, defmul: 1.429, spemul: 0.500, spamul: 1.381, spdmul: 1.400 },
@@ -70,33 +71,33 @@ MEGA_EVO_MOVESET = {
 
 class Pokemon
   attr_accessor :megaevoMutation
-	################################################################################
-	# Mega Evolution Mutation
-	################################################################################ 
-	# Enables Mega Evolution Mutation.
-	@megaevoMutation = false
-	def enableMegaEvoMutation
-		@megaevoMutation = true
-	end  
-	# Disables Mega Evolution Mutation.
-	def disableMegaEvoMutation
-		@megaevoMutation = false
-	end    
+  ################################################################################
+  # Mega Evolution Mutation
+  ################################################################################ 
+  # Enables Mega Evolution Mutation.
+  @megaevoMutation = false
+  def enableMegaEvoMutation
+    @megaevoMutation = true
+  end  
+  # Disables Mega Evolution Mutation.
+  def disableMegaEvoMutation
+    @megaevoMutation = false
+  end    
 
-	# Toggles Mega Evolution Mutation.
-	def toggleMegaEvoMutation
-		if !@megaevoMutation
-			@megaevoMutation = true
-		else	
-			@megaevoMutation = false
-		end	
-	end 		
-	
-	def hasMegaEvoMutation?
-		if @megaevoMutation==true || Settings::GLOBAL_MUTATION==true
-			return true 
-		end	
-	end
+  # Toggles Mega Evolution Mutation.
+  def toggleMegaEvoMutation
+    if !@megaevoMutation
+      @megaevoMutation = true
+    else  
+      @megaevoMutation = false
+    end  
+  end     
+  
+  def hasMegaEvoMutation?
+    if @megaevoMutation==true || Settings::GLOBAL_MUTATION==true
+      return true 
+    end  
+  end
 end
 
 class Battle::Battler
@@ -141,20 +142,20 @@ class Battle
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop] >= 0
     #~ return false if !pbHasMegaRing?(idxBattler)
-		# MEM stuff #by low
-		if !@battlers[idxBattler].hasMegaEvoMutation?
-			return false if !@battlers[idxBattler].hasMega?
-			return false if @battlers[idxBattler].mega?
-			return false if @battlers[idxBattler].wild?
-			side  = @battlers[idxBattler].idxOwnSide
-			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-			return @megaEvolution[side][owner] == -1
-		end
-		######################
+    # MEM stuff #by low
+    if !@battlers[idxBattler].hasMegaEvoMutation?
+      return false if !@battlers[idxBattler].hasMega?
+      return false if @battlers[idxBattler].mega?
+      return false if @battlers[idxBattler].wild?
+      side  = @battlers[idxBattler].idxOwnSide
+      owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+      return @megaEvolution[side][owner] == -1
+    end
+    ######################
     return true
   end
 
-	def pbMegaEvolve(idxBattler)
+  def pbMegaEvolve(idxBattler)
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon
     return if !battler.hasMega? || battler.mega?
@@ -166,9 +167,9 @@ class Battle
     if battler.hasActiveAbility?(:ILLUSION)
       Battle::AbilityEffects.triggerOnBeingHit(battler.ability, nil, battler, nil, self)
     end
-		# MEM stuff #by low
+    # MEM stuff #by low
     if battler.wild? || battler.hasMegaEvoMutation?
-		###################
+    ###################
       case battler.pokemon.megaMessage
       when 1
         pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
@@ -211,11 +212,11 @@ class Battle
     megaName = battler.pokemon.megaName
     megaName = _INTL("Mega {1}", battler.pokemon.speciesName) if nil_or_empty?(megaName)
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
-		unless battler.hasMegaEvoMutation?
-			side  = battler.idxOwnSide
-			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-			@megaEvolution[side][owner] = -2
-		end
+    unless battler.hasMegaEvoMutation?
+      side  = battler.idxOwnSide
+      owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+      @megaEvolution[side][owner] = -2
+    end
     if battler.isSpecies?(:GENGAR) && battler.mega?
       battler.effects[PBEffects::Telekinesis] = 0
     end
@@ -236,16 +237,16 @@ class Pokemon
     ret = 0
     GameData::Species.each do |data|
       next if data.species != @species || data.unmega_form != form_simple
-			# MEM stuff #by low
+      # MEM stuff #by low
       if data.mega_stone && (hasItem?(data.mega_stone) || hasMegaEvoMutation?)
         ret = data.form
-				ret = (self.form + 2) if self.species == :BEAKRAFT
+        ret = (self.form + 2) if self.species == :BEAKRAFT
         break
       elsif data.mega_move && (hasMove?(data.mega_move) || hasMegaEvoMutation?)
         ret = data.form
         break
       end
-			###################
+      ###################
     end
     return ret   # form number, or 0 if no accessible Mega form
   end
