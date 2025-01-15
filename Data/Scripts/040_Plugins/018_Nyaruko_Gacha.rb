@@ -1,37 +1,56 @@
 #Script de lootboxes creado por Nyaruko
 #Si metes micropagos no me hago responsable
+#edited, heavily, maybe even a little bit too much #by low
+POSSIBLE_TICKETS = ["Ticket A", "Ticket B", "Ticket C", "Gold Milage Ticket"]
+GACHA_COST = 100 # in coins
+GACHA_PITY = 4   # in gold tickets
+TICKET_EXCHANGE_TXT = { # just meaningless text, though every tickets needs to be mentioned here
+  "Ticket A" => "Hex Sex",
+  "Ticket B" => "Zinnia Plush",
+  "Ticket C" => "Elegg Figurine"
+}
 
-#edited, heavily #by low
-COMMON     = [:POTION,:POKEBALL,:ANTIDOTE,:BURNHEAL,:PARALYZEHEAL,:ICEHEAL]
-UNCOMMON   = [:AWAKENING,:GREATBALL,:HPUP,:PROTEIN,:IRON,:CALCIUM,:ZINC,:CARBOS]
-RARE       = [:FULLHEAL,:ULTRABALL,:HYPERPOTION,:STARDUST]
-SUPER_RARE = [:REVIVE,:QUICKBALL,:SHINYBERRY,:STARPIECE]
-ULTRA_RARE = [:SACREDASH,:MASTERBALL,:COMETSHARD]
-PENIS_RARE = %w[TicketA TicketB TicketC]
-POSSIBLE_TICKETS = %w[TicketA TicketB TicketC GoldMilageTicket]
+COMMON     = [:POTION, :ANTIDOTE, :BURNHEAL, :PARALYZEHEAL, :ICEHEAL, :POKEBALL, :REPEL, :CHARIZARDITEY, :CHARIZARDITEX]
+UNCOMMON   = [:SUPERPOTION, :AWAKENING, :GREATBALL, :SUPERREPEL, :HPUP, :PROTEIN, :IRON, :CALCIUM, :ZINC, :CARBOS]
+RARE       = [:HYPERPOTION, :FULLHEAL, :REVIVALHERB, :ULTRABALL, :MAXREPEL, :PEARL, :OLDGATEAU]
+SUPER_RARE = [:MAXPOTION, :REVIVE, :QUICKBALL, :STARDUST, :RARECANDY, :SHINYBERRY]
+ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
+PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
 # (pokeman species, ability_index, item, form)
-# the rewards here are tied to their index in comparison to the possible tickets array indexes
-# does that make sense?
-TICKETS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
+TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
+# the rewards ^here are tied to their index in comparison to the possible tickets array indexes, does that make sense?
+
+# game variables, do not edit
 GACHA_USED = 97
 GACHA_TIME = 96
 
 # to call this scene, use gachaPullsNPC on a npc
 # the first time the player interacts with the npc; the NPC needs to force the player to pull only 3 times
 
-def gachaPullsNPC
-  # each pull is 100 coins for now
-  pullcost = 100
+class PokemonGlobalMetadata
+  attr_accessor :ticketStorage
+  attr_accessor :goldencamera
+  alias initialize_gamble initialize
+  def initialize
+    initialize_gamble
+    super
+    @ticketStorage = []
+    @goldencamera  = false
+  end
+  # golden camera is mentioned in the following defs:
+  # pbGainMoney, pbCalcDamage, pbRoughDamage
+end
 
+def gachaPullsNPC
   commands = []
   pulloptions = []
-  commands.push(_INTL("Cancel"))
   [1, 3, 5, 10].each do |i|
-    totalpullcost = i * pullcost
+    totalpullcost = i * GACHA_COST
     next if totalpullcost > pbPlayer.coins
     commands.push(_INTL("Pull #{i} times at the cost of #{totalpullcost}?"))
     pulloptions.push([i, totalpullcost])
   end
+  commands.push(_INTL("Cancel"))
 
   helpwindow = Window_UnformattedTextPokemon.new("")
   helpwindow.visible = false
@@ -82,24 +101,14 @@ class LootBox
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
 
-    item_pos = {
-      {x: 227, y: 135},
-      {x: 99, y: 135},
-      {x: 355, y: 135}
-    }
-    item_pos.each_with_index do |pos, index|
+    sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
+    sprite_cords[:item].each_with_index do |pos, index|
       break if index + 1 > pullamount || pos.nil?
       sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
       sprites["item#{index + 1}"].x = pos[:x]
       sprites["item#{index + 1}"].y = pos[:y]
     end
-
-    icon_pos = {
-      {x: 260, y: 195},
-      {x: 134, y: 195},
-      {x: 389, y: 195}
-    }
-    icon_pos.each_with_index do |pos, index|
+    sprite_cords[:icon].each_with_index do |pos, index|
       break if index + 1 > pullamount || pos.nil?
       sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
       sprites["icon#{index + 1}"].x = pos[:x]
@@ -180,19 +189,15 @@ def ticketExchangeNPC
   commands.push(_INTL("My Tickets"))
   counts = Hash.new(0)
   $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
-  resultsCommander = {
-    "TicketA" => "HexSex",
-    "TicketB" => "ZinniaPlush",
-    "TicketC" => "EleggFigurine"
-  }
+  ticketExchange = TICKET_EXCHANGE_TXT
   duped=false
   counts.each do |str, count|
-    unless str == "GoldMilageTicket"
-      commands.push(_INTL("A #{str} for 1 #{resultsCommander[str]}")) if count >= 1
+    unless str == "Gold Milage Ticket"
+      commands.push(_INTL("A #{str} for 1 #{ticketExchange[str]}")) if count >= 1
       duped=true if count > 1
     end
   end
-  commands.push(_INTL("2 Dupe Tickets for 1 Gold Milage")) if duped
+  commands.push(_INTL("2 Dupe Tickets for 1 Milage Ticket")) if duped
   commands.push(_INTL("Cancel"))
 
   helpwindow = Window_UnformattedTextPokemon.new("")
@@ -206,20 +211,20 @@ def ticketExchangeNPC
   when "My Tickets"
     ticketbag = POSSIBLE_TICKETS.map { |b| "#{b}: #{counts[b]}" }.join("\n")
     pbMessage(_INTL("You have the following tickets:\n#{ticketbag}"))
-  when "2 Dupe Tickets for 1 Gold Milage"
+  when "2 Dupe Tickets for 1 Milage Ticket"
     counts.each do |str, count|
-      if count > 1 && str != "GoldMilageTicket"
+      if count > 1 && str != "Gold Milage Ticket"
         $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
         $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
-        $PokemonGlobal.ticketStorage.push("GoldMilageTicket")
+        $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
         pbMessage(_INTL("You exchanged 2 #{str} for 1 Milage Tickets."))
         break
       end
     end
   else
     oldv = $game_switches[NOINITIALVALUES]
-    resultsCommander.each_with_index do |(str, count), index|
-      if selectedCommander == "A #{str} for 1 #{resultsCommander[str]}"
+    ticketExchange.each_with_index do |(str, count), index|
+      if selectedCommander == "A #{str} for 1 #{ticketExchange[str]}"
         $game_switches[NOINITIALVALUES] = true
         pbMessage(_INTL("You exchanged 1 #{str} for..."))
         pkmn = ticketReward(index)
@@ -232,7 +237,7 @@ def ticketExchangeNPC
 end
 
 def ticketReward(id)
-  t_array = TICKETS_ARRAY
+  t_array = TICKETMONS_ARRAY
   pkmn = Pokemon.new(t_array[id][0], (pbBalancedLevel($Trainer.party) - 10))
   pkmn.ability_index = t_array[id][1] if !t_array[id][1].nil?
   pkmn.item = t_array[id][2] if !t_array[id][2].nil?
@@ -241,13 +246,13 @@ def ticketReward(id)
 end
 
 def goldTicketExchangeNPC
+  pity = GACHA_PITY
   commands = []
   counts = Hash.new(0)
-  pity = 4
   $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
-  if counts["GoldMilageTicket"] >= pity
+  if counts["Gold Milage Ticket"] >= pity
     POSSIBLE_TICKETS.each { |tckt|
-      next if tckt == "GoldMilageTicket"
+      next if tckt == "Gold Milage Ticket"
       commands.push(_INTL("#{pity} Milage Tickets for 1 #{tckt}"))
     }
   end
@@ -262,10 +267,10 @@ def goldTicketExchangeNPC
     return false
   else
     POSSIBLE_TICKETS.each do |ticket|
-      next if ticket == "GoldMilageTicket"
+      next if ticket == "Gold Milage Ticket"
       if selectedCommander == "#{pity} Milage Tickets for 1 #{ticket}"
         pity.times do
-          $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index("GoldMilageTicket"))
+          $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index("Gold Milage Ticket"))
         end
         $PokemonGlobal.ticketStorage.push(ticket)
         pbMessage(_INTL("You exchanged #{pity} Milage Tickets for 1 #{ticket}."))
@@ -273,3 +278,60 @@ def goldTicketExchangeNPC
     end
   end
 end
+
+#===============================================================================
+# settings too big to be added at the top
+#===============================================================================
+
+ItemHandlers::UseInField.add(:GOLDCAMERA,proc { |item|
+  $PokemonGlobal.goldencamera = !$PokemonGlobal.goldencamera
+  if $PokemonGlobal.goldencamera
+    pbMessage(_INTL("The camera was turned on. It will make your Pokemon weaker but it will give you coins passively."))
+  else
+    pbMessage(_INTL("The camera was turned off."))
+  end
+  next true
+})
+
+GACHA_SPRITES_COORDINATES = {
+  1 => {
+    items: [{ x: 227, y: 135 }],
+    icons: [{ x: 260, y: 195 }]
+  },
+  3 => {
+    items: [
+      { x: 227, y: 135 },
+      { x: 99, y: 135 },
+      { x: 355, y: 135 }
+    ],
+    icons: [
+      { x: 260, y: 195 },
+      { x: 134, y: 195 },
+      { x: 389, y: 195 }
+    ]
+  },
+  5 => {
+    items: [
+      { x: 227, y: 135 },
+      { x: 99, y: 135 },
+      { x: 355, y: 135 }
+    ],
+    icons: [
+      { x: 260, y: 195 },
+      { x: 134, y: 195 },
+      { x: 389, y: 195 }
+    ]
+  },
+  10 => {
+    items: [
+      { x: 227, y: 135 },
+      { x: 99, y: 135 },
+      { x: 355, y: 135 }
+    ],
+    icons: [
+      { x: 260, y: 195 },
+      { x: 134, y: 195 },
+      { x: 389, y: 195 }
+    ]
+  }
+}
