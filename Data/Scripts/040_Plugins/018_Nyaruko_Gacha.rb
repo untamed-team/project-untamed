@@ -64,7 +64,11 @@ def gachaPullsNPC
       if selectedCommander == "Pull #{pullamount} time(s) at the cost of #{totalpullcost} coins?"
         pbPlayer.coins -= totalpullcost
         LootBox.new.pbStartMainScene(pullamount)
-        pbMessage(_INTL("Thank you! Come again!"))
+        if $game_variables[GACHA_USED] % 100 == 0
+          pbMessage(_INTL("Congratulations Highroller! You've earned a Gold Milage Ticket for your dedication!"))
+          $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
+        end
+        pbMessage(_INTL("Thank you, Highroller. Please come again!"))
         return true
       end
     end
