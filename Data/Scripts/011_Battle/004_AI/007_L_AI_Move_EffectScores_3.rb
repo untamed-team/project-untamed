@@ -152,18 +152,10 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "PowerHigherWithConsecutiveUse", "PowerHigherWithConsecutiveUseOnUserSide"
 		# Fury Cutter, Echoed Voice
-		if user.paralyzed? 
-			score*=0.7
-		end
-		if user.effects[PBEffects::Confusion]>0
-			score*=0.7
-		end
-		if user.effects[PBEffects::Attract]>=0
-			score*=0.7
-		end
-		if pbHasSingleTargetProtectMove?(target, false)
-			score*=0.8
-		end
+		score*=0.7 if user.paralyzed?
+		score*=0.7 if user.effects[PBEffects::Confusion]>0
+		score*=0.7 if user.effects[PBEffects::Attract]>=0
+		score*=0.8 if pbHasSingleTargetProtectMove?(target, false)
 		if move.function == "PowerHigherWithConsecutiveUseOnUserSide"
 			if user.lastMoveUsed == :ECHOEDVOICE
 				score *= (1.1 + (user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]/10))
@@ -171,7 +163,7 @@ class Battle::AI
 			if !user.allAllies.empty?
 				userAlly = user.allAllies.first
 				if userAlly.moves.any? { |j| j&.id == :ECHOEDVOICE }
-					score *= 1.5
+					score *= 1.1
 					if userAlly.lastMoveUsed == :ECHOEDVOICE
 						score *= (1.2 + (user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]/10))
 					end
@@ -179,15 +171,13 @@ class Battle::AI
 			end
 		elsif move.function == "PowerHigherWithConsecutiveUse"
 			if user.lastMoveUsed == :FURYCUTTER
-				score *= (1.15 + (user.effects[PBEffects::FuryCutter]/10))
+				score *= (1.0 + (user.effects[PBEffects::FuryCutter]/10))
 			end
 		end
-		if user.hp==user.totalhp
-			score*=1.1
-		end
+		score*=1.1 if user.hp==user.totalhp
 		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam = bestmove[0]
-		score*=1.2 if maxdam<(user.hp/3.0)
+		score*=1.1 if maxdam<(user.hp/3.0)
 		# these can stack
 		score*=1.2 if user.hasActiveAbility?(:MOMENTUM)
 		score*=1.2 if user.hasActiveItem?(:METRONOME)
@@ -762,7 +752,7 @@ class Battle::AI
 				end
 			end
 			if user.hasActiveAbility?(:MOTORDRIVE)
-				if user.statStageAtMax?[:SPEED]
+				if !user.statStageAtMax?[:SPEED]
 					score*=1.2
 				else
 					score*=0.1
