@@ -16,10 +16,40 @@ TICKETS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1,
 GACHA_USED = 97
 GACHA_TIME = 96
 
-# LootBox.new.pbStartMainScene on a npc
+# to call this scene, use gachaPullsNPC on a npc
+# the first time the player interacts with the npc; the NPC needs to force the player to pull only 3 times
 
-def gachaPullScreen(pulls)
-  LootBox.new.pbStartMainScene(pulls)
+def gachaPullsNPC
+  # each pull is 100 coins for now
+  pullcost = 100
+
+  commands = []
+  pulloptions = []
+  commands.push(_INTL("Cancel"))
+  [1, 3, 5, 10].each do |i|
+    totalpullcost = i * pullcost
+    next if totalpullcost > pbPlayer.coins
+    commands.push(_INTL("Pull #{i} times at the cost of #{totalpullcost}?"))
+    pulloptions.push([i, totalpullcost])
+  end
+
+  helpwindow = Window_UnformattedTextPokemon.new("")
+  helpwindow.visible = false
+  cmd = UIHelper.pbShowCommands(helpwindow,"How many times would you like to pull?",commands) {}
+  Input.update
+  selectedCommander = commands[cmd]
+  if selectedCommander == "Cancel"
+    return false
+  else
+    pulloptions.each do |pullamount, totalpullcost|
+      if selectedCommander == "Pull #{pullamount} times at the cost of #{totalpullcost}?"
+        pbPlayer.coins -= totalpullcost
+        LootBox.new.pbStartMainScene(pullamount)
+        pbMessage(_INTL("Thank you! Come again!"))
+        return true
+      end
+    end
+  end
 end
 
 
@@ -52,20 +82,28 @@ class LootBox
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
 
-    item_pos = [227, 99, 355]
-    item_pos.each_with_index do |x, index|
-      break if index + 1 > pullamount
+    item_pos = {
+      {x: 227, y: 135},
+      {x: 99, y: 135},
+      {x: 355, y: 135}
+    }
+    item_pos.each_with_index do |pos, index|
+      break if index + 1 > pullamount || pos.nil?
       sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
-      sprites["item#{index + 1}"].x = x
-      sprites["item#{index + 1}"].y = 135
+      sprites["item#{index + 1}"].x = pos[:x]
+      sprites["item#{index + 1}"].y = pos[:y]
     end
 
-    icon_pos = [260, 134, 389]
-    icon_pos.each_with_index do |x, index|
-      break if index + 1 > pullamount
+    icon_pos = {
+      {x: 260, y: 195},
+      {x: 134, y: 195},
+      {x: 389, y: 195}
+    }
+    icon_pos.each_with_index do |pos, index|
+      break if index + 1 > pullamount || pos.nil?
       sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
-      sprites["icon#{index + 1}"].x = x
-      sprites["icon#{index + 1}"].y = 195
+      sprites["icon#{index + 1}"].x = pos[:x]
+      sprites["icon#{index + 1}"].y = pos[:y]
     end
     
     sprites["overlay"]=BitmapSprite.new(Graphics.width, Graphics.height, viewport)
