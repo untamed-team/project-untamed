@@ -18,7 +18,7 @@ ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
 PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
 # (pokeman species, ability_index, item, form)
 TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
-# the rewards ^here are tied to their index in comparison to the possible tickets array indexes, does that make sense?
+# ^these rewards are tied to their index in comparison to the ticket exchange txt hash index, does that make sense?
 
 # game variables, do not edit
 GACHA_USED = 97
@@ -47,7 +47,7 @@ def gachaPullsNPC
   [1, 3, 5, 10].each do |i|
     totalpullcost = i * GACHA_COST
     next if totalpullcost > pbPlayer.coins
-    commands.push(_INTL("Pull #{i} times at the cost of #{totalpullcost}?"))
+    commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
     pulloptions.push([i, totalpullcost])
   end
   commands.push(_INTL("Cancel"))
@@ -61,7 +61,7 @@ def gachaPullsNPC
     return false
   else
     pulloptions.each do |pullamount, totalpullcost|
-      if selectedCommander == "Pull #{pullamount} times at the cost of #{totalpullcost}?"
+      if selectedCommander == "Pull #{pullamount} time(s) at the cost of #{totalpullcost} coins?"
         pbPlayer.coins -= totalpullcost
         LootBox.new.pbStartMainScene(pullamount)
         pbMessage(_INTL("Thank you! Come again!"))
@@ -101,15 +101,24 @@ class LootBox
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
 
+    possiblepullamount = 0
     sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
     sprite_cords[:item].each_with_index do |pos, index|
-      break if index + 1 > pullamount || pos.nil?
+      if index + 1 > pullamount || pos.nil?
+        break
+      else
+        possiblepullamount += 1
+      end
       sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
       sprites["item#{index + 1}"].x = pos[:x]
       sprites["item#{index + 1}"].y = pos[:y]
     end
     sprite_cords[:icon].each_with_index do |pos, index|
-      break if index + 1 > pullamount || pos.nil?
+      if index + 1 > pullamount || pos.nil?
+        break
+      else
+        possiblepullamount += 1
+      end
       sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
       sprites["icon#{index + 1}"].x = pos[:x]
       sprites["icon#{index + 1}"].y = pos[:y]
@@ -124,7 +133,7 @@ class LootBox
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
-        for i in 1..pullamount
+        for i in 1..possiblepullamount
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
@@ -238,7 +247,7 @@ end
 
 def ticketReward(id)
   t_array = TICKETMONS_ARRAY
-  pkmn = Pokemon.new(t_array[id][0], (pbBalancedLevel($Trainer.party) - 10))
+  pkmn = Pokemon.new(t_array[id][0], (pbBalancedLevel($player.party) - 10))
   pkmn.ability_index = t_array[id][1] if !t_array[id][1].nil?
   pkmn.item = t_array[id][2] if !t_array[id][2].nil?
   pkmn.form = t_array[id][3] if !t_array[id][3].nil?
