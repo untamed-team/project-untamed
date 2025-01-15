@@ -808,7 +808,7 @@ DEX_COMPLETION_REWARDS = [
   [999]
 ]
 
-NPC_MESSAGES = {
+DEX_COMPLETION_MESSAGES = {
   0 => "\\xn[Ceiba]\\mr[CEIBA]Oh! You're off to a good start!\\nKeep on catching all the new Pokémon you see!",
   1 => "\\xn[Ceiba]\\mr[CEIBA]You're making good progress.\\nHave you got a fishing rod?\\nMany different species live in lakes, rivers, and the sea.",
   2 => "\\xn[Ceiba]\\mr[CEIBA]Amazing! Over 30 species!\\nEnjoy these Lava Cookie and Casteliacone, which can heal your Pokémon.",
