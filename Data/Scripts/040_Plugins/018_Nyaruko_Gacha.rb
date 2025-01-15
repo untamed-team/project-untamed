@@ -10,6 +10,8 @@ ULTRA_RARE = [:SACREDASH,:MASTERBALL,:COMETSHARD]
 PENIS_RARE = %w[TicketA TicketB TicketC]
 POSSIBLE_TICKETS = %w[TicketA TicketB TicketC GoldMilageTicket]
 # (pokeman species, ability_index, item, form)
+# the rewards here are tied to their index in comparison to the possible tickets array indexes
+# does that make sense?
 TICKETS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
 GACHA_USED = 97
 GACHA_TIME = 96
