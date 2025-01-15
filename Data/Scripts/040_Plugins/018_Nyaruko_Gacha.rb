@@ -142,31 +142,31 @@ class LootBox
               sprites["icon#{i}"].item = GameData::Item.get(:GOLDTICKET).id
               pbMessage(_INTL("\\me[{1}]You obtained a \\c[1]{2}\\c[0]!\\wtnp[30]", "Item get", p_rare[pokeman].to_s))
               $PokemonGlobal.ticketStorage.push(p_rare[pokeman])
-            when 4..10 # 6
+            when 4..10 # 7
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
               pbWait(20)
               item = semiRandomRNG(u_rare.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(u_rare[item]).id
               pbReceiveItem(u_rare[item])
-            when 11..21 # 10
+            when 11..21 # 11
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
               pbWait(20)
               item = semiRandomRNG(s_rare.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(s_rare[item]).id
               pbReceiveItem(s_rare[item])
-            when 22..42 # 20
+            when 22..42 # 21
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
               pbWait(20)
               item = semiRandomRNG(rare.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(rare[item]).id
               pbReceiveItem(rare[item])
-            when 48..78 # 25
+            when 48..73 # 26
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
               pbWait(20)
               item = semiRandomRNG(uncommon.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(uncommon[item]).id
               pbReceiveItem(uncommon[item])
-            else        # 35
+            else        # 32
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
               pbWait(20)
               item = semiRandomRNG(common.length, gachaamt)
@@ -242,6 +242,9 @@ def ticketReward(id)
   pkmn.ability_index = t_array[id][1] if !t_array[id][1].nil?
   pkmn.item = t_array[id][2] if !t_array[id][2].nil?
   pkmn.form = t_array[id][3] if !t_array[id][3].nil?
+  pkmn.makeFemale if !pkmn.singleGendered?
+  pkmn.owner = Pokemon::Owner.new_foreign("Mustang", 0)
+  pkmn.obtain_method = 4
   return pkmn
 end
 
