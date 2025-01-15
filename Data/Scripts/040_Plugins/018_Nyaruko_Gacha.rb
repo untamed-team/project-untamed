@@ -18,8 +18,13 @@ GACHA_TIME = 96
 
 # LootBox.new.pbStartMainScene on a npc
 
+def gachaPullScreen(pulls)
+  LootBox.new.pbStartMainScene(pulls)
+end
+
+
 class LootBox
-  def pbStartMainScene
+  def pbStartMainScene(pullamount = 3)
     if $PokemonGlobal.ticketStorage.nil?
       $PokemonGlobal.ticketStorage = []
     end
@@ -46,30 +51,22 @@ class LootBox
     sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_closed")
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
-    
-    sprites["item1"]=IconSprite.new(0,0,viewport)    
-    sprites["item1"].x = 227
-    sprites["item1"].y = 135
-    
-    sprites["item2"]=IconSprite.new(0,0,viewport)    
-    sprites["item2"].x = 99
-    sprites["item2"].y = 135
-    
-    sprites["item3"]=IconSprite.new(0,0,viewport)   
-    sprites["item3"].x = 355
-    sprites["item3"].y = 135
 
-    sprites["icon1"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon1"].x = 260
-    sprites["icon1"].y = 195
-    
-    sprites["icon2"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon2"].x = 134
-    sprites["icon2"].y = 195
-    
-    sprites["icon3"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon3"].x = 389
-    sprites["icon3"].y = 195
+    item_pos = [227, 99, 355]
+    item_pos.each_with_index do |x, index|
+      break if index + 1 > pullamount
+      sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
+      sprites["item#{index + 1}"].x = x
+      sprites["item#{index + 1}"].y = 135
+    end
+
+    icon_pos = [260, 134, 389]
+    icon_pos.each_with_index do |x, index|
+      break if index + 1 > pullamount
+      sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
+      sprites["icon#{index + 1}"].x = x
+      sprites["icon#{index + 1}"].y = 195
+    end
     
     sprites["overlay"]=BitmapSprite.new(Graphics.width, Graphics.height, viewport)
     
@@ -80,7 +77,7 @@ class LootBox
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
-        for i in 1..3
+        for i in 1..pullamount
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
@@ -88,7 +85,7 @@ class LootBox
             random_val = random_val.to_i
           end
           $game_variables[GACHA_USED] += 1
-          random_val = 0 if i == 3 && $game_variables[GACHA_USED] == 3
+          random_val = 0 if i == pullamount && $game_variables[GACHA_USED] == pullamount
 
           case random_val
             when 0..3 # 4
