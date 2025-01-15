@@ -1379,7 +1379,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:RIVALRY,
       if user.gender == target.gender
         mults[:base_damage_multiplier] *= 1.25
       else
-        mults[:base_damage_multiplier] *= 0.75 && !$player.difficulty_mode?("chaos")
+        mults[:base_damage_multiplier] *= 0.75 if !$player.difficulty_mode?("chaos")
       end
     end
   }

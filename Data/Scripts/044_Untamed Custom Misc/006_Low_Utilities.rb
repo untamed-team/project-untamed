@@ -808,6 +808,20 @@ DEX_COMPLETION_REWARDS = [
   [999]
 ]
 
+DEX_COMPLETION_MESSAGES = {
+  0 => "\\xn[Ceiba]\\mr[CEIBA]Oh! You're off to a good start!\\nKeep on catching all the new Pokémon you see!",
+  1 => "\\xn[Ceiba]\\mr[CEIBA]You're making good progress.\\nHave you got a fishing rod?\\nMany different species live in lakes, rivers, and the sea.",
+  2 => "\\xn[Ceiba]\\mr[CEIBA]Amazing! Over 30 species!\\nEnjoy these Lava Cookie and Casteliacone, which can heal your Pokémon.",
+  3 => "\\xn[Ceiba]\\mr[CEIBA]Fantastic! You've caught over 50 species!\\nHere's an Amulet Coin, it will help you earn more money in battles.",
+  4 => "\\xn[Ceiba]\\mr[CEIBA]Incredible! Over 75 species!\\nI have a special reward for you, an Egg of a rare Pokémon.",
+  5 => "\\xn[Ceiba]\\mr[CEIBA]Outstanding! You've caught over 100 species!\\nHere's an Eviolite to boost the defenses of your unevolved Pokémon.",
+  6 => "\\xn[Ceiba]\\mr[CEIBA]Unbelievable! Over 125 species!\\nTake this Rocky Helmet, which damages opponents that make contact.",
+  7 => "\\xn[Ceiba]\\mr[CEIBA]Phenomenal! You've caught over 150 species!\\nHere's some Leftovers to keep your Pokémon healthy, it restores HP at the end of each turn.",
+  8 => "\\xn[Ceiba]\\mr[CEIBA]Astounding! Over 175 species!\\nTake this Assault Vest to boost your Pokémon's Special Defense.",
+  9 => "\\xn[Ceiba]\\mr[CEIBA]Legendary! You've caught over 200 species!\\nHere's a Choice Scarf to increase your Pokémon's Speed. Careful to not lock into a bad move, though!",
+  :default => "\\xn[Ceiba]\\mr[CEIBA]zinnia, courtney and hex maniac are the best pokegirls."
+}
+
 def pbGiveDexReward
   progress = $game_variables[DEXREWARDSVAR]
   if pbConfirmMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Ah, hello \\PN.\\nAre you here to evaluate your PokéDex?"))
@@ -816,20 +830,11 @@ def pbGiveDexReward
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]So, you've seen <b>{1}</b> Pokémon\\nand caught <b>{2}</b> of them...", dexseen, dexcount))
     if DEX_COMPLETION_REWARDS[progress][0] > dexcount
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Well, when you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]I'm just messing with you, good job kiddo.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
       return false
     end
     return false if DEX_COMPLETION_REWARDS[progress][1].nil?
-    case progress
-    when 0
-      msg = "\\xn[Ceiba]\\mr[CEIBA]Oh! You're off to a good start!\\nKeep on catching all the new Pokémon you see!"
-    when 1
-      msg = "\\xn[Ceiba]\\mr[CEIBA]You're making good progress.\\nHave you got a fishing rod?\\nMany different species live in lakes, rivers, and the sea."
-    when 2
-      msg = "\\xn[Ceiba]\\mr[CEIBA]Hey, you've caught over 50 species of Pokémon!\\nGreat! I have a special reward for you, an Egg of a rare Pokémon."
-    else
-      msg = "\\xn[Ceiba]\\mr[CEIBA]zinnia is my wife"
-    end
+    msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
     pbMessage(_INTL(msg))
     if [4].include?(progress)
       egg = Pokemon.new(DEX_COMPLETION_REWARDS[progress][1], 1)
@@ -848,11 +853,11 @@ def pbGiveDexReward
       end
     end
     pbMessage(_INTL("When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
-    pbMessage(_INTL("I'm just messing with you, good job kiddo.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
     $game_variables[DEXREWARDSVAR] += 1
   else
     pbMessage(_INTL("When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-    pbMessage(_INTL("I'm just messing with you, good job kiddo.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
     return false
   end
   return true
