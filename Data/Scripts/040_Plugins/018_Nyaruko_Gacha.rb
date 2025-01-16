@@ -18,7 +18,7 @@ ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
 PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
 # (pokeman species, ability_index, item, form)
 TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:NOCTAVISPA, 1, :STICKYBARB],[:BANAGNAW, 1, :SPLASHPLATE]] 
-# ^these rewards are tied to their index in comparison to the ticket exchange txt hash index, does that make sense?
+# index 0 = ticket A, index 1 = ticket B, etcetc
 
 # game variables, do not edit
 GACHA_USED = 97
@@ -92,38 +92,28 @@ class LootBox
     p_rare     = PENIS_RARE
     
     sprites={}
-    sprites["bg"]=Sprite.new
-    sprites["bg"].z=99998
+    sprites["bg"] = Sprite.new
+    sprites["bg"].z = 99998
     sprites["bg"].bitmap = RPG::Cache.load_bitmap("Graphics/Pictures/Lootboxes/","background")
     
-    sprites["bolsa"]=IconSprite.new(0,0,viewport)
+    sprites["bolsa"] = IconSprite.new(0,0,viewport)
     sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_closed")
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
 
-    possiblepullamount = 0
     sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
     sprite_cords[:items].each_with_index do |pos, index|
-      if index + 1 > pullamount || pos.nil?
-        break
-      else
-        possiblepullamount += 1
-      end
+      break if index + 1 > pullamount
       sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
       sprites["item#{index + 1}"].x = pos[:x]
       sprites["item#{index + 1}"].y = pos[:y]
     end
     sprite_cords[:icons].each_with_index do |pos, index|
-      if index + 1 > pullamount || pos.nil?
-        break
-      else
-        possiblepullamount += 1
-      end
+      break if index + 1 > pullamount
       sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
       sprites["icon#{index + 1}"].x = pos[:x]
       sprites["icon#{index + 1}"].y = pos[:y]
     end
-    possiblepullamount /= 2
     
     sprites["overlay"]=BitmapSprite.new(Graphics.width, Graphics.height, viewport)
     
@@ -134,7 +124,7 @@ class LootBox
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
-        for i in 1..possiblepullamount
+        for i in 1..pullamount
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
@@ -266,11 +256,11 @@ end
 def goldTicketExchangeNPC
   pity = GACHA_PITY
   commands = []
+  commands.push(_INTL("My Tickets"))
   counts = Hash.new(0)
   $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
   if counts["Gold Milage Ticket"] >= pity
-    POSSIBLE_TICKETS.each { |tckt|
-      next if tckt == "Gold Milage Ticket"
+    PENIS_RARE.each { |tckt|
       commands.push(_INTL("#{pity} Milage Tickets for 1 #{tckt}"))
     }
   end
@@ -281,11 +271,14 @@ def goldTicketExchangeNPC
   cmd = UIHelper.pbShowCommands(helpwindow,"You can exchange milage tickets for various things.",commands) {}
   Input.update
   selectedCommander = commands[cmd]
-  if selectedCommander == "Cancel"
+  case selectedCommander
+  when "Cancel"
     return false
+  when "My Tickets"
+    ticketbag = POSSIBLE_TICKETS.map { |b| "#{b}: #{counts[b]}" }.join("\n")
+    pbMessage(_INTL("You have the following tickets:\n#{ticketbag}"))
   else
-    POSSIBLE_TICKETS.each do |ticket|
-      next if ticket == "Gold Milage Ticket"
+    PENIS_RARE.each do |ticket|
       if selectedCommander == "#{pity} Milage Tickets for 1 #{ticket}"
         pity.times do
           $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index("Gold Milage Ticket"))
