@@ -1995,6 +1995,7 @@ class Battle::AI
 		megaChecks = {
 			:NOCTAVISPA => [:NOCTAVISPITE, "dark aura"],
 			:SPECTERZAL => [:SPECTERZITE,  "spooper aura"],
+			:DIANCIE    => [:DIANCITE,     "fairy aura"],
 			:BEAKRAFT   => [:BEAKRAFTITE,  "electric terrain"],
 			:MILOTIC    => [:MILOTITE,     "misty terrain"],
 			:TREVENANT  => [:TREVENANTITE, "grassy terrain"],
@@ -2038,8 +2039,11 @@ class Battle::AI
 		# airlock/cloud9 interaction
 		weatherNeg = false
 		@battle.allBattlers.each do |n|
-			if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
-			   n.battle.choices[n.index][0] != :SwitchOut
+			realn = n
+			if @battle.choices[n.index][0] == :SwitchOut
+				realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+			end
+			if realn.hasActiveAbility?([:AIRLOCK, :CLOUDNINE])
 				weatherNeg = true
 				break
 			end
@@ -2173,9 +2177,11 @@ class Battle::AI
 				@battle.allSameSideBattlers(target.index).each do |b|
 					priobroken=moldbroken(user,b,move)
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-						 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
+						 !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+						# laguna/diancie can have priority immunity in pre-mega form
 						score-=300 
 						echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
+						break
 					end
 				end 
 				if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target) && targetWillMove?(target, "status")

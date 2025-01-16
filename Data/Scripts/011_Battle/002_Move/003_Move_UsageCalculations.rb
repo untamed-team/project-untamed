@@ -124,7 +124,7 @@ class Battle::Move
     modifiers = {}
     modifiers[:base_accuracy]  = baseAcc
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
-    modifiers[:evasion_stage]  = target.stages[:EVASION]
+    modifiers[:evasion_stage]  = [target.stages[:EVASION], 0].min
     # acc and evasion murder / sleep moves acc buff #by low
     if modifiers[:accuracy_stage] < 0
       if $player.difficulty_mode?("hard")
@@ -146,8 +146,6 @@ class Battle::Move
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    accStage = 6 if accStage < 6
-    evaStage = 6 if evaStage > 6
     stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
     stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]

@@ -147,8 +147,8 @@ or dont
     return if @field.weather == newWeather
     @field.weather = newWeather
     duration = (fixedDuration) ? 5 : -1
-    if duration > 0 && user && user.itemActive? && !user.hasActiveAbility?(:FREEZEOVER) #by low
-      duration = Battle::ItemEffects.triggerWeatherExtender(user.item, @field.weather,duration, user, self)
+    if duration > 0 && user && user.itemActive?
+      duration = Battle::ItemEffects.triggerWeatherExtender(user.item, @field.weather,duration, user, self) if !user.hasActiveAbility?([:FREEZEOVER, :FORECAST]) #by low
     end
 		if duration > 0 && @field.defaultWeather != :None #by low
 			duration = (duration / 3).floor
