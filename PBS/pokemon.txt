@@ -6718,9 +6718,34 @@ Shape = Winged
 Category = ...
 Pokedex = ...
 #-------------------------------
-[BERGMITE]
-Name = Bergmite
-Types = ICE
+[DRUDDIGON]
+Name = Druddigon
+Types = DRAGON
+BaseStats = 77,120,90,48,60,90
+GenderRatio = Female50Percent
+GrowthRate = Medium
+BaseExp = 170
+EVs = ATTACK,2
+CatchRate = 45
+Happiness = 70
+Abilities = ROUGHSKIN,SHEERFORCE
+HiddenAbilities = MOLDBREAKER
+Moves = 1,THUNDERFANG,1,FIREFANG,1,SCRATCH,1,LEER,5,BITE,10,DRAGONTAIL,15,METALCLAW,20,SCARYFACE,25,SLASH,30,DRAGONCLAW,35,HONECLAWS,40,CRUNCH,45,IRONHEAD,50,OUTRAGE,55,SUPERPOWER
+TutorMoves = WORKUP,BULKUP,ROAR,SWAGGER,TAUNT,HYPERBEAM,PROTECT,SANDSTORM,EARTHQUAKE,RETURN,DIG,BRICKBREAK,FLAMETHROWER,FIREBLAST,ROCKTOMB,AERIALACE,FACADE,REST,SLEEPTALK,ATTRACT,THIEF,FRUSTRATION,FALSESWIPE,STEELWING,BODYPRESS,SCOURINGWINDS,TOXIC,FLAMECHARGE,GIGAIMPACT,BODYSLAM,ASSURANCE,BRUTALSWING,SWORDSDANCE,SUBSTITUTE,ROCKSLIDE,DRAGONPULSE,DRAGONCLAW,SCREECH,STONEEDGE,GEODEBURST,SNARL,SHADOWCLAW,ZENHEADBUTT,WILDCHARGE,CUT,ROCKSMASH,STRENGTH,ROCKCLIMB,SURF,METRONOME,FIREPUNCH,THUNDERPUNCH,AQUATAIL,IRONHEAD,IRONTAIL,ROCKBLAST,SUPERPOWER,DUALWINGBEAT,FORGEBREATH,KNOCKOFF,SCALESHOT,STEALTHROCK,SPIKES,DRACOMETEOR,GUNKSHOT,HEATWAVE
+EggMoves = GLARE,NIGHTSLASH,POISONTAIL,SUCKERPUNCH
+EggGroups = Monster,Dragon
+HatchSteps = 7905
+Height = 1.6
+Weight = 139.0
+Color = Red
+Shape = HeadBase
+Habitat = Cave
+Category = Cave
+Pokedex = It races through narrow caves, using its sharp claws to catch prey. Then skin on its face is harder than a rock.
+#-------------------------------
+[AMAURA]
+Name = Failsafe_Amaura
+Types = ROCK,ICE
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent
 GrowthRate = Erratic
@@ -6740,9 +6765,75 @@ Shape = Winged
 Category = ...
 Pokedex = ...
 #-------------------------------
-[AVALUGG]
-Name = Avalugg
-Types = ICE
+[AURORUS]
+Name = Failsafe_Aurorus
+Types = ROCK,ICE
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 137
+EVs = ATTACK,2,SPECIAL_DEFENSE,2
+CatchRate = 90
+Happiness = 70
+Abilities = STURDY
+Moves = 1,SPLASH
+TutorMoves = SPLASH
+EggGroups = Bug
+HatchSteps = 3840
+Height = 1.7
+Weight = 45.7
+Color = Red
+Shape = Winged
+Category = ...
+Pokedex = ...
+#-------------------------------
+[TYRUNT]
+Name = Failsafe_Tyrunt
+Types = ROCK,DRAGON
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 137
+EVs = ATTACK,2,SPECIAL_DEFENSE,2
+CatchRate = 90
+Happiness = 70
+Abilities = STURDY
+Moves = 1,SPLASH
+TutorMoves = SPLASH
+EggGroups = Bug
+HatchSteps = 3840
+Height = 1.7
+Weight = 45.7
+Color = Red
+Shape = Winged
+Category = ...
+Pokedex = ...
+#-------------------------------
+[TYRANTRUM]
+Name = Failsafe_Tyrantrum
+Types = ROCK,DRAGON
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 137
+EVs = ATTACK,2,SPECIAL_DEFENSE,2
+CatchRate = 90
+Happiness = 70
+Abilities = STURDY
+Moves = 1,SPLASH
+TutorMoves = SPLASH
+EggGroups = Bug
+HatchSteps = 3840
+Height = 1.7
+Weight = 45.7
+Color = Red
+Shape = Winged
+Category = ...
+Pokedex = ...
+#-------------------------------
+[DIANCIE]
+Name = Failsafe_Diancie
+Types = ROCK,FAIRY
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent
 GrowthRate = Erratic
