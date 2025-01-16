@@ -337,7 +337,7 @@ Generation = 6
 [GLALIE,1]
 FormName = Mega Glalie
 MegaStone = GLALITITE
-BaseStats = 80,120,80,100,120,80
+BaseStats = 85,125,85,105,125,85
 BaseExp = 203
 Abilities = REFRIGERATE
 HiddenAbilities = REFRIGERATE
