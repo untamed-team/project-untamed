@@ -4560,7 +4560,11 @@ class Battle::AI
 				miniscore = 0
 			end
 			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4660,7 +4664,11 @@ class Battle::AI
 				miniscore = 0
 			end
 			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4672,32 +4680,47 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetSpDef1" # Aromatic Mist
-		hasAlly = !user.allAllies.empty?
-		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
-			t_hasAlly = !target.allAllies.empty?
-			if !t_hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
-				miniscore*=2
+		if !user.allAllies.empty? 
+			ally = user.allAllies.first
+			#spdef
+			miniscore=100
+			miniscore*=1.1 if ally.hp*(1.0/ally.totalhp)>0.75
+			if ally.hasActiveItem?(:LEFTOVERS) || (ally.hasActiveItem?(:BLACKSLUDGE) && ally.pbHasType?(:POISON, true))
+				miniscore*=1.2
 			end
-			if target.hp*(1.0/target.totalhp)>0.75
-				score*=1.1
+			miniscore = 1 if ally.statStageAtMax?(:SPECIAL_DEFENSE)
+			miniscore/=100.0
+			score *= miniscore
+
+			#atk
+			miniscore=100
+			miniscore*=1.5 if ally.attack>ally.spatk
+			miniscore*=0.3 if (1.0/ally.totalhp)*ally.hp < 0.6
+			enemy1 = user.pbDirectOpposing
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
 			end
-			if target.effects[PBEffects::Yawn]>0 || target.effects[PBEffects::LeechSeed]>=0 || 
-					target..effects[PBEffects::Attract]>=0 || target.pbHasAnyStatus?
+			if pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy1,:SPEED,skill) && 
+			   pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy2,:SPEED,skill)
+				miniscore*=1.3
+			else
+				miniscore*=0.7
+			end
+			if enemy1.pbHasMove?(:FOULPLAY) || enemy2.pbHasMove?(:FOULPLAY)
+				miniscore*=0.3
+			end
+			miniscore = 1 if ally.statStageAtMax?(:ATTACK)
+			miniscore/=100.0
+			score *= miniscore
+
+			#for both
+			if ally.effects[PBEffects::Yawn]>0 || ally.effects[PBEffects::LeechSeed]>=0 || ally.effects[PBEffects::Attract]>=0 || ally.pbHasAnyStatus?
 				score*=0.3
 			end
-			if movecheck
-				score*=0.2
-			end
-			if target.hasActiveAbility?(:SIMPLE)
-				score*=2
-			end
-			if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
-				score*=1.2
-			end
-			if target.hasActiveAbility?(:CONTRARY)
-				score=0
-			end
-			score=0 if $player.difficulty_mode?("chaos") && target.SetupMovesUsed.include?(move.id)
+			score *= 2 if ally.hasActiveAbility?(:SIMPLE)
+			score = 0 if ally.hasActiveAbility?(:CONTRARY) || ($player.difficulty_mode?("chaos") && ally.SetupMovesUsed.include?(move.id))
 		else
 			score=0
 		end

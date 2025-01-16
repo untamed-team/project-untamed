@@ -647,8 +647,8 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
     end
     if user.pbCanRaiseStatStage?(:SPEED, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
       user.pbRaiseStatStage(:SPEED, 1, user)
+      user.SetupMovesUsed.push(@id)
     end
-    user.SetupMovesUsed.push(@id)
   end
 end
 

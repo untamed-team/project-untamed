@@ -17,8 +17,8 @@ SUPER_RARE = [:MAXPOTION, :REVIVE, :QUICKBALL, :STARDUST, :RARECANDY, :SHINYBERR
 ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
 PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
 # (pokeman species, ability_index, item, form)
-TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
-# ^these rewards are tied to their index in comparison to the ticket exchange txt hash index, does that make sense?
+TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:NOCTAVISPA, 1, :STICKYBARB],[:BANAGNAW, 1, :SPLASHPLATE]] 
+# index 0 = ticket A, index 1 = ticket B, etcetc
 
 # game variables, do not edit
 GACHA_USED = 97
@@ -46,7 +46,7 @@ def gachaPullsNPC
   pulloptions = []
   [1, 3, 5, 10].each do |i|
     totalpullcost = i * GACHA_COST
-    next if totalpullcost > pbPlayer.coins
+    next if totalpullcost > $player.coins
     commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
     pulloptions.push([i, totalpullcost])
   end
@@ -54,7 +54,7 @@ def gachaPullsNPC
 
   helpwindow = Window_UnformattedTextPokemon.new("")
   helpwindow.visible = false
-  cmd = UIHelper.pbShowCommands(helpwindow,"How many times would you like to pull?",commands) {}
+  cmd = UIHelper.pbShowCommands(helpwindow,"",commands) {}
   Input.update
   selectedCommander = commands[cmd]
   if selectedCommander == "Cancel"
@@ -62,9 +62,9 @@ def gachaPullsNPC
   else
     pulloptions.each do |pullamount, totalpullcost|
       if selectedCommander == "Pull #{pullamount} time(s) at the cost of #{totalpullcost} coins?"
-        pbPlayer.coins -= totalpullcost
+        $player.coins -= totalpullcost
         LootBox.new.pbStartMainScene(pullamount)
-        pbMessage(_INTL("Thank you! Come again!"))
+        pbMessage(_INTL("Thank you, Highroller. Please come again!"))
         return true
       end
     end
@@ -92,33 +92,24 @@ class LootBox
     p_rare     = PENIS_RARE
     
     sprites={}
-    sprites["bg"]=Sprite.new
-    sprites["bg"].z=99998
+    sprites["bg"] = Sprite.new
+    sprites["bg"].z = 99998
     sprites["bg"].bitmap = RPG::Cache.load_bitmap("Graphics/Pictures/Lootboxes/","background")
     
-    sprites["bolsa"]=IconSprite.new(0,0,viewport)
+    sprites["bolsa"] = IconSprite.new(0,0,viewport)
     sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_closed")
     sprites["bolsa"].x = 157
     sprites["bolsa"].y = 256
 
-    possiblepullamount = 0
     sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
-    sprite_cords[:item].each_with_index do |pos, index|
-      if index + 1 > pullamount || pos.nil?
-        break
-      else
-        possiblepullamount += 1
-      end
+    sprite_cords[:items].each_with_index do |pos, index|
+      break if index + 1 > pullamount
       sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
       sprites["item#{index + 1}"].x = pos[:x]
       sprites["item#{index + 1}"].y = pos[:y]
     end
-    sprite_cords[:icon].each_with_index do |pos, index|
-      if index + 1 > pullamount || pos.nil?
-        break
-      else
-        possiblepullamount += 1
-      end
+    sprite_cords[:icons].each_with_index do |pos, index|
+      break if index + 1 > pullamount
       sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
       sprites["icon#{index + 1}"].x = pos[:x]
       sprites["icon#{index + 1}"].y = pos[:y]
@@ -133,7 +124,7 @@ class LootBox
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
-        for i in 1..possiblepullamount
+        for i in 1..pullamount
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
@@ -181,6 +172,11 @@ class LootBox
               item = semiRandomRNG(common.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(common[item]).id
               pbReceiveItem(common[item])
+            end
+            
+            if $game_variables[GACHA_USED] % 100 == 0
+              pbMessage(_INTL("Congratulations Highroller! You've earned a Gold Milage Ticket for your dedication!"))
+              $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
             end
         end
         pbWait(10)
@@ -260,11 +256,11 @@ end
 def goldTicketExchangeNPC
   pity = GACHA_PITY
   commands = []
+  commands.push(_INTL("My Tickets"))
   counts = Hash.new(0)
   $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
   if counts["Gold Milage Ticket"] >= pity
-    POSSIBLE_TICKETS.each { |tckt|
-      next if tckt == "Gold Milage Ticket"
+    PENIS_RARE.each { |tckt|
       commands.push(_INTL("#{pity} Milage Tickets for 1 #{tckt}"))
     }
   end
@@ -275,11 +271,14 @@ def goldTicketExchangeNPC
   cmd = UIHelper.pbShowCommands(helpwindow,"You can exchange milage tickets for various things.",commands) {}
   Input.update
   selectedCommander = commands[cmd]
-  if selectedCommander == "Cancel"
+  case selectedCommander
+  when "Cancel"
     return false
+  when "My Tickets"
+    ticketbag = POSSIBLE_TICKETS.map { |b| "#{b}: #{counts[b]}" }.join("\n")
+    pbMessage(_INTL("You have the following tickets:\n#{ticketbag}"))
   else
-    POSSIBLE_TICKETS.each do |ticket|
-      next if ticket == "Gold Milage Ticket"
+    PENIS_RARE.each do |ticket|
       if selectedCommander == "#{pity} Milage Tickets for 1 #{ticket}"
         pity.times do
           $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index("Gold Milage Ticket"))
@@ -325,25 +324,43 @@ GACHA_SPRITES_COORDINATES = {
   5 => {
     items: [
       { x: 227, y: 135 },
-      { x: 99, y: 135 },
-      { x: 355, y: 135 }
+      { x: 139, y: 135 },
+      { x: 315, y: 135 },
+      { x: 51, y: 135 },
+      { x: 403, y: 135 }
     ],
     icons: [
       { x: 260, y: 195 },
-      { x: 134, y: 195 },
-      { x: 389, y: 195 }
+      { x: 174, y: 195 },
+      { x: 349, y: 195 },
+      { x: 85, y: 195 },
+      { x: 438, y: 195 }
     ]
   },
   10 => {
     items: [
-      { x: 227, y: 135 },
-      { x: 99, y: 135 },
-      { x: 355, y: 135 }
+      { x: 227, y: 55 },
+      { x: 139, y: 55 },
+      { x: 315, y: 55 },
+      { x: 51, y: 55 },
+      { x: 403, y: 55 },
+      { x: 227, y: 175 },
+      { x: 139, y: 175 },
+      { x: 315, y: 175 },
+      { x: 51, y: 175 },
+      { x: 403, y: 175 }
     ],
     icons: [
-      { x: 260, y: 195 },
-      { x: 134, y: 195 },
-      { x: 389, y: 195 }
+      { x: 260, y: 115 },
+      { x: 174, y: 115 },
+      { x: 349, y: 115 },
+      { x: 85, y: 115 },
+      { x: 438, y: 115 },
+      { x: 260, y: 235 },
+      { x: 174, y: 235 },
+      { x: 349, y: 235 },
+      { x: 85, y: 235 },
+      { x: 438, y: 235 }
     ]
   }
 }
