@@ -2347,6 +2347,7 @@ Shape = Winged
 Habitat = Urban
 Category = Builder
 Pokedex = Beakraft couples pair for life, working together to construct elaborate nests. Their steel-hard beaks differ in shape and function between males and females.
+FormName = Male
 #-------------------------------
 [GOHILA]
 Name = Gohila

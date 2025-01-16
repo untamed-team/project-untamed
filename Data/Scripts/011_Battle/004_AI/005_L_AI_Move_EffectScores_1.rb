@@ -4702,7 +4702,8 @@ class Battle::AI
 			else
 				enemy2 = enemy1.allAllies.first
 			end
-			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && ospeed > pbRoughStat(enemy2,:SPEED,skill)
+			if pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy1,:SPEED,skill) && 
+			   pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
 			else
 				miniscore*=0.7
