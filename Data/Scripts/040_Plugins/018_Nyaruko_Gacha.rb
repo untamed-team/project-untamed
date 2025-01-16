@@ -17,7 +17,7 @@ SUPER_RARE = [:MAXPOTION, :REVIVE, :QUICKBALL, :STARDUST, :RARECANDY, :SHINYBERR
 ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
 PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
 # (pokeman species, ability_index, item, form)
-TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB],[:PACUNA, 1, :STICKYBARB]] 
+TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:NOCTAVISPA, 1, :STICKYBARB],[:BANAGNAW, 1, :SPLASHPLATE]] 
 # ^these rewards are tied to their index in comparison to the ticket exchange txt hash index, does that make sense?
 
 # game variables, do not edit
@@ -46,7 +46,7 @@ def gachaPullsNPC
   pulloptions = []
   [1, 3, 5, 10].each do |i|
     totalpullcost = i * GACHA_COST
-    next if totalpullcost > pbPlayer.coins
+    next if totalpullcost > $player.coins
     commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
     pulloptions.push([i, totalpullcost])
   end
@@ -54,7 +54,7 @@ def gachaPullsNPC
 
   helpwindow = Window_UnformattedTextPokemon.new("")
   helpwindow.visible = false
-  cmd = UIHelper.pbShowCommands(helpwindow,"How many times would you like to pull?",commands) {}
+  cmd = UIHelper.pbShowCommands(helpwindow,"",commands) {}
   Input.update
   selectedCommander = commands[cmd]
   if selectedCommander == "Cancel"
@@ -62,7 +62,7 @@ def gachaPullsNPC
   else
     pulloptions.each do |pullamount, totalpullcost|
       if selectedCommander == "Pull #{pullamount} time(s) at the cost of #{totalpullcost} coins?"
-        pbPlayer.coins -= totalpullcost
+        $player.coins -= totalpullcost
         LootBox.new.pbStartMainScene(pullamount)
         pbMessage(_INTL("Thank you, Highroller. Please come again!"))
         return true
@@ -103,7 +103,7 @@ class LootBox
 
     possiblepullamount = 0
     sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
-    sprite_cords[:item].each_with_index do |pos, index|
+    sprite_cords[:items].each_with_index do |pos, index|
       if index + 1 > pullamount || pos.nil?
         break
       else
@@ -113,7 +113,7 @@ class LootBox
       sprites["item#{index + 1}"].x = pos[:x]
       sprites["item#{index + 1}"].y = pos[:y]
     end
-    sprite_cords[:icon].each_with_index do |pos, index|
+    sprite_cords[:icons].each_with_index do |pos, index|
       if index + 1 > pullamount || pos.nil?
         break
       else
@@ -123,6 +123,7 @@ class LootBox
       sprites["icon#{index + 1}"].x = pos[:x]
       sprites["icon#{index + 1}"].y = pos[:y]
     end
+    possiblepullamount /= 2
     
     sprites["overlay"]=BitmapSprite.new(Graphics.width, Graphics.height, viewport)
     
@@ -330,25 +331,43 @@ GACHA_SPRITES_COORDINATES = {
   5 => {
     items: [
       { x: 227, y: 135 },
-      { x: 99, y: 135 },
-      { x: 355, y: 135 }
+      { x: 139, y: 135 },
+      { x: 315, y: 135 },
+      { x: 51, y: 135 },
+      { x: 403, y: 135 }
     ],
     icons: [
       { x: 260, y: 195 },
-      { x: 134, y: 195 },
-      { x: 389, y: 195 }
+      { x: 174, y: 195 },
+      { x: 349, y: 195 },
+      { x: 85, y: 195 },
+      { x: 438, y: 195 }
     ]
   },
   10 => {
     items: [
-      { x: 227, y: 135 },
-      { x: 99, y: 135 },
-      { x: 355, y: 135 }
+      { x: 227, y: 55 },
+      { x: 139, y: 55 },
+      { x: 315, y: 55 },
+      { x: 51, y: 55 },
+      { x: 403, y: 55 },
+      { x: 227, y: 175 },
+      { x: 139, y: 175 },
+      { x: 315, y: 175 },
+      { x: 51, y: 175 },
+      { x: 403, y: 175 }
     ],
     icons: [
-      { x: 260, y: 195 },
-      { x: 134, y: 195 },
-      { x: 389, y: 195 }
+      { x: 260, y: 115 },
+      { x: 174, y: 115 },
+      { x: 349, y: 115 },
+      { x: 85, y: 115 },
+      { x: 438, y: 115 },
+      { x: 260, y: 235 },
+      { x: 174, y: 235 },
+      { x: 349, y: 235 },
+      { x: 85, y: 235 },
+      { x: 438, y: 235 }
     ]
   }
 }
