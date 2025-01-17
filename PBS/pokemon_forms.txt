@@ -191,6 +191,8 @@ MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
 Abilities = GRASSYSURGE
 HiddenAbilities = GRASSYSURGE
+Height = 3.0
+Weight = 89.5
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
