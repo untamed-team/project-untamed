@@ -4931,10 +4931,9 @@ class Battle::AI
 			"UsedAfterUserTakesPhysicalDamage","BurnAttackerBeforeUserActs","DoesNothingFailsIfNoAlly",
 			"DoesNothingCongratulations"
 		]
-		metronomeMove = [nil, 0]
+		metronomeMove = []
 		move_keys = GameData::Move.keys
-		1000.times do
-			break if !metronomeMove[0].nil?
+		while metronomeMove.length < 10
 			move_id = move_keys[rand(move_keys.length)] # rand instead of pbRandom intentionally
 			move_data = GameData::Move.get(move_id)
 			next if moveBlacklist.include?(move_data.function_code)
@@ -4944,14 +4943,15 @@ class Battle::AI
 			metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
 			metroScore = pbGetMoveScore(metroMov, user, target, skill)
 			next if metroScore <= 1
-			metronomeMove = [move_data.id, metroScore]
+			metronomeMove.push([move_data.id, metroScore])
 		end
-		if metronomeMove[0].nil?
-			score=0
-		else
+		if metronomeMove.length > 0
+			metronomeMove.sort! { |a, b| b[1] <=> a[1] }
 			user.prepickedMove = metronomeMove[0]
 			echo("\n~~~~Metro Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
 			score = metronomeMove[1]
+		else
+			score=0
 		end
     #---------------------------------------------------------------------------
     when "UseRandomMoveFromUserParty" # assist
