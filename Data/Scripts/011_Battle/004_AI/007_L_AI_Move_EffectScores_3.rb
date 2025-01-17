@@ -6063,43 +6063,44 @@ class Battle::AI
 		if (target.effects[PBEffects::Encore]>0 || auroma) && move.baseDamage == 0
 			score=0
 		else
-			if !target.lastRegularMoveUsed
-				if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
-					score = 0 if move.baseDamage == 0
-				else
-					if targetWillMove?(target, "status")
-						score*=2.0
-					end
+			oldmove = nil
+			if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
+				if !target.lastRegularMoveUsed.nil?
+					oldmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
 				end
 			else
-				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
-				if !oldmove.nil?
-					if oldmove.baseDamage>0 && pbRoughDamage(oldmove, user, target, skill, oldmove.baseDamage)*5>user.hp
-						score*=0.3
-					else
-						if target.stages[:SPEED]>0
-							if (target.pbHasType?(:DARK, true) || !user.hasActiveAbility?(:PRANKSTER)) || 
-									target.hasActiveAbility?(:SPEEDBOOST)
-								score*=0.5
-							else
-								score*=2
-							end
+				if targetWillMove?(target)
+					oldmove = @battle.choices[target.index][2]
+				end
+			end
+			if oldmove.nil?
+				score = 0
+			else
+				if oldmove.damagingMove? && pbRoughDamage(oldmove, user, target, skill, oldmove.baseDamage)*5>user.hp
+					score*=0.3
+				else
+					if target.stages[:SPEED]>0
+						if (target.pbHasType?(:DARK, true) || !user.hasActiveAbility?(:PRANKSTER)) || target.hasActiveAbility?(:SPEEDBOOST)
+							score*=0.5
 						else
 							score*=2
-						end            
-					end
-				end
-				if userFasterThanTarget
-					score*=1.5
-				else
-					if priorityAI(user, move, globalArray) > 0
+						end
+					else
 						score*=2
-					else              
-						score*=0.2
 					end            
 				end
-			end 
+				if !target.lastRegularMoveUsed.nil?
+					if oldmove.statusMove? && (userFasterThanTarget || priorityAI(user, move, globalArray) > 0)
+						oldscore = pbGetMoveScore(oldmove, target, user, 100)
+						if oldscore <= 90
+							score *= 1 + ((90 - oldscore) / 100.0)
+						else
+							score /= 1 + ((oldscore - 50) / 100.0)
+						end 
+						score*=1.4 if targetWillMove?(target, "dmg")
+					end
+				end
+			end
 		end
     #---------------------------------------------------------------------------
     when "DisableTargetStatusMoves" # taunt
