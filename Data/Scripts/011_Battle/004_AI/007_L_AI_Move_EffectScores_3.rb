@@ -5138,8 +5138,8 @@ class Battle::AI
 					if score > 0
 						copymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(targetMove.id))
 						score = pbGetMoveScore(copymove, user, target, skill)
-						if score > 90
-							score *= 1 + ((score - 90) / 100.0)
+						if score > 105
+							score *= 0.8 + ((score - 80) / 100.0)
 						else
 							score *= score / 100.0
 						end
