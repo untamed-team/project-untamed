@@ -785,6 +785,7 @@ class Battle::AI
 			if terrainy
 				if currentTerrain == :Electric
 					sum += 20 if pkmn.ability == :SURGESURFER
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :ELECTRICSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :ELECTRIC
@@ -795,6 +796,7 @@ class Battle::AI
 				end
 				if currentTerrain == :Grassy
 					sum += 5 if pkmn.ability == :GRASSPELT
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :GRASSYSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :GRASS
@@ -805,6 +807,7 @@ class Battle::AI
 					sum += 5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain")
 				end
 				if currentTerrain == :Misty
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :MISTYSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :DRAGON
@@ -815,6 +818,7 @@ class Battle::AI
 					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
 				end
 				if currentTerrain == :Psychic
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum -= 5 if pkmn.ability == :PRANKSTER
 					sum += 5 if pkmn.item == :PSYCHICSEED
 					pkmn.eachMove do |m|
