@@ -254,7 +254,7 @@ class Battle::AI
 		if pbHasSetupMove?(target, false)
 			score*=0.8
 		end
-		if targetWillMove?(target) && !targetWillMove?(target, "status")
+		if targetWillMove?(target, "dmg")
 			score*=1.3
 		end
 		miniscore=user.hp*(1.0/user.totalhp)
