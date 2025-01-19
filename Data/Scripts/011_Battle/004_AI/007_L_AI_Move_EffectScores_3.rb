@@ -4913,6 +4913,11 @@ class Battle::AI
 		score = pbGetMoveScore(naturemove, user, target, skill)
     #---------------------------------------------------------------------------
     when "UseRandomMove" # metronome
+		if $AIMASTERLOG
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "-------Metronome Start--------"
+			end
+		end
 		moveBlacklist = [
 			"FlinchTargetFailsIfUserNotAsleep","TargetActsNext","TargetActsLast",
 			"TargetUsesItsLastUsedMoveAgain","Struggle","FailsIfUserNotConsumedBerry",
@@ -4937,7 +4942,7 @@ class Battle::AI
 			move_id = move_keys[rand(move_keys.length)] # rand instead of pbRandom intentionally
 			move_data = GameData::Move.get(move_id)
 			next if moveBlacklist.include?(move_data.function_code)
-			next if move_data.has_flag?("CannotMetronome")
+			#next if move_data.has_flag?("CannotMetronome")
 			next if move_data.type == :SHADOW
 			next if user.SetupMovesUsed.include?(move_data.id)
 			metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
@@ -4947,11 +4952,16 @@ class Battle::AI
 		end
 		if metronomeMove.length > 0
 			metronomeMove.sort! { |a, b| b[1] <=> a[1] }
-			user.prepickedMove = metronomeMove[0]
+			user.prepickedMove = metronomeMove[0][0]
 			echo("\n~~~~Metro Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
-			score = metronomeMove[1]
+			score = metronomeMove[0][1]
 		else
 			score=0
+		end
+		if $AIMASTERLOG
+			File.open("AI_master_log.txt", "a") do |line|
+				line.puts "-------Metronome End----------"
+			end
 		end
     #---------------------------------------------------------------------------
     when "UseRandomMoveFromUserParty" # assist
