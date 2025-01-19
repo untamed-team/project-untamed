@@ -440,6 +440,16 @@ Name = Tourist
 Gender = Female
 BaseMoney = 32
 #-------------------------------
+[HIKER_M]
+Name = Hiker
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[HIKER_F]
+Name = Hiker
+Gender = Female
+BaseMoney = 32
+#-------------------------------
 [WAREHOUSEWORKER]
 Name = Warehouse Worker
 Gender = Unknown

@@ -82,10 +82,6 @@ class Battle::AI
             realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.battle.choices[b.index][1]],false,b)
           else
             realTarget = b
-            #if b.pokemon.willmega
-            #  realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.pokemonIndex],true,b)
-            #  realTarget.makeMega
-            #end
           end
           score = pbGetMoveScore(move, user, realTarget, 100)
           scoresAndTargets.push([score, realTarget.index]) if score > 0

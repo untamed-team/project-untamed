@@ -125,14 +125,14 @@ class LootBox
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
         for i in 1..pullamount
+          $game_variables[GACHA_USED] += 1
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
             random_val = random_val * 0.8
             random_val = random_val.to_i
           end
-          $game_variables[GACHA_USED] += 1
-          random_val = 0 if i == 3 && $game_variables[GACHA_USED] == 3
+          random_val = 0 if i == 3 && gachaamt == 3
 
           case random_val
             when 0..3 # 4

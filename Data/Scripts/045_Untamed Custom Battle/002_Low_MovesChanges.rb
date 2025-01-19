@@ -491,7 +491,7 @@ class Battle::Move::RaiseTargetSpDef1 < Battle::Move
     return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
                    !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
     if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
+      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name)) if show_message
       return true
     end
     return false
@@ -519,7 +519,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
       return true
     end
     if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
+      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name)) if show_message
       return true
     end
     return false

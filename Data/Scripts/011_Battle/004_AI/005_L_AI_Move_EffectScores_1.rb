@@ -437,7 +437,7 @@ class Battle::AI
 			elecvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				elecvar=true if m.hasType?(:ELECTRIC)
+				elecvar=true if m.hasType?(:ELECTRIC) || m.hasAbility?(:MIMICRY)
 			end
 			if elecvar
 				miniscore*=2
@@ -466,7 +466,7 @@ class Battle::AI
 			grassvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				grassvar=true if m.hasType?(:GRASS)
+				grassvar=true if m.hasType?(:GRASS) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -502,7 +502,7 @@ class Battle::AI
 			fairyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				fairyvar=true if m.hasType?(:FAIRY)
+				fairyvar=true if m.hasType?(:FAIRY) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -539,7 +539,7 @@ class Battle::AI
 			psyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				psyvar=true if m.hasType?(:PSYCHIC)
+				psyvar=true if m.hasType?(:PSYCHIC) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)

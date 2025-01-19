@@ -1298,7 +1298,7 @@ class Battle::AI
 		  60 => [:DRAGONDANCE, :SHELLSMASH, :NORETREAT, :CLANGOROUSSOUL],
 		  65 => [:GEOMANCY, :QUIVERDANCE, :SHIFTGEAR, :TAILGLOW],
 		  70 => [:HEALORDER, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
-				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
+				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS, :GLACIALGULF],
 		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD, :DETECT],
 		  100 => [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE]
 		}
@@ -1337,7 +1337,7 @@ class Battle::AI
 			partyelec=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyelec=true if m.pbHasType?(:ELECTRIC, true)
+				partyelec=true if m.hasType?(:ELECTRIC)
 				for z in m.moves
 					sleepmove = true if [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, 
 										 :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE].include?(z.id)
@@ -1370,7 +1370,7 @@ class Battle::AI
 			partygrass=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partygrass=true if m.pbHasType?(:GRASS, true)
+				partygrass=true if m.hasType?(:GRASS)
 			end
 			if partygrass
 				fieldscore*=0.5
@@ -1397,7 +1397,12 @@ class Battle::AI
 					fieldscore*=0.7
 				end
 			end
-			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
+			if target.allAllies.empty?
+				targetAlly = target
+			else
+				targetAlly = target.allAllies.first
+			end
+			if target.pbHasType?(:DRAGON, true) || targetAlly.pbHasType?(:DRAGON, true)
 				fieldscore*=0.5
 			end
 			if user.pbHasType?(:DRAGON, true)
@@ -1406,7 +1411,7 @@ class Battle::AI
 			partyfairy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyfairy=true if m.pbHasType?(:FAIRY, true)
+				partyfairy=true if m.hasType?(:FAIRY)
 			end
 			if partyfairy
 				fieldscore*=0.7
@@ -1414,7 +1419,7 @@ class Battle::AI
 			partydragon=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partydragon=true if m.pbHasType?(:DRAGON, true)
+				partydragon=true if m.hasType?(:DRAGON)
 			end
 			if partydragon
 				fieldscore*=1.5
@@ -1434,7 +1439,7 @@ class Battle::AI
 			partypsy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partypsy=true if m.pbHasType?(:PSYCHIC, true)
+				partypsy=true if m.hasType?(:PSYCHIC)
 			end
 			if partypsy
 				fieldscore*=0.3
