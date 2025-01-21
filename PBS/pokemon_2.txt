@@ -6647,3 +6647,25 @@ Shape = Serpentine
 Habitat = Grassland
 Category = Snake
 Pokedex = ...
+#-------------------------------
+[DRUDDIGON]
+Name = Failsafe_Druddigon
+Types = QMARKS
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 58
+EVs = ATTACK,1
+CatchRate = 255
+Happiness = 70
+Abilities = CUTECHARM
+Moves = 1,SPLASH
+EggGroups = Undiscovered
+HatchSteps = 5120
+Height = 2.0
+Weight = 6.9
+Color = Purple
+Shape = Serpentine
+Habitat = Grassland
+Category = Snake
+Pokedex = ...
