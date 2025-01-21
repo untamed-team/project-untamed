@@ -603,7 +603,11 @@ class Battle::AI
 						miniscore*=0.3
 					end
 					enemy1 = user.pbDirectOpposing
-					enemy2 = enemy1.allAllies.first
+					if enemy1.allAllies.empty?
+						enemy2 = enemy1
+					else
+						enemy2 = enemy1.allAllies.first
+					end
 					e1sped = pbRoughStat(enemy1,:SPEED,skill)
 					e2sped = pbRoughStat(enemy2,:SPEED,skill)
 					if ospeed > e1sped && ospeed > e2sped

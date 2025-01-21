@@ -4159,7 +4159,11 @@ class Battle::AI
 				score=0
 			else                     # is ally
 				target2 = user.pbDirectOpposing(true)
-				target3 = target2.allAllies.first
+				if target2.allAllies.empty?
+					target3 = target2
+				else
+					target3 = target2.allAllies.first
+				end
 
 				bestmove = bestMoveVsTarget(target2,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxmove = bestmove[1]
@@ -4239,8 +4243,7 @@ class Battle::AI
 				miniscore*=0.8
 				miniscore*=0.7 if target.effects[PBEffects::Toxic]>0
 			end
-			realTarget = user.pbDirectOpposing
-			realTarget.allAllies.each do |barget|
+			@battle.allOtherSideBattlers(user.index).each do |barget|
 				if target.hp*(1.0/target.totalhp)>0.8
 					if !userFasterThanTarget && 
 					  ((aspeed<pbRoughStat(barget,:SPEED,skill)) ^ (@battle.field.effects[PBEffects::TrickRoom]!=0))
