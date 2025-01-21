@@ -298,7 +298,11 @@ class Battle::AI
 						score = -100.0
 						score *= 1.2
 						enemy1 = user.pbDirectOpposing
-						enemy2 = enemy1.allAllies.first
+						if enemy1.allAllies.empty?
+							enemy2 = enemy1
+						else
+							enemy2 = enemy1.allAllies.first
+						end
 						if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 						   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 							score*=1.3
@@ -936,7 +940,11 @@ class Battle::AI
 						score = -100.0
 						score *= 1.2
 						enemy1 = user.pbDirectOpposing
-						enemy2 = enemy1.allAllies.first
+						if enemy1.allAllies.empty?
+							enemy2 = enemy1
+						else
+							enemy2 = enemy1.allAllies.first
+						end
 						if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 						   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 							score*=1.3
@@ -4948,6 +4956,7 @@ class Battle::AI
 			metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
 			metroScore = pbGetMoveScore(metroMov, user, target, skill)
 			next if metroScore <= 1
+			metroScore *= 0.75 if metroMov.chargingTurnMove? && !user.hasActiveItem?(:POWERHERB)
 			metronomeMove.push([move_data.id, metroScore])
 		end
 		if metronomeMove.length > 0

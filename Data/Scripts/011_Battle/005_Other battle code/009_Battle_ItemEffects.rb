@@ -441,7 +441,7 @@ Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
     itemName = GameData::Item.get(item).name
     if forced
       PBDebug.log("[Item triggered] Forced consuming of #{itemName}")
-      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
+      battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
     else
       battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
     end
@@ -569,6 +569,8 @@ Battle::ItemEffects::StatusCure.add(:LUMBERRY,
         battle.pbDisplay(_INTL("{1}'s {2} cured its paralysis!", battler.pbThis, itemName))
       when :FROZEN
         battle.pbDisplay(_INTL("{1}'s {2} defrosted it!", battler.pbThis, itemName))
+      when :DIZZY
+        battle.pbDisplay(_INTL("{1}'s {2} healed its headache!", battler.pbThis, itemName))
       end
       if oldConfusion
         battle.pbDisplay(_INTL("{1}'s {2} snapped it out of its confusion!", battler.pbThis, itemName))
