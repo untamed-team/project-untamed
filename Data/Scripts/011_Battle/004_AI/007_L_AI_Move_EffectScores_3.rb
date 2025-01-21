@@ -4963,6 +4963,11 @@ class Battle::AI
 			metronomeMove.sort! { |a, b| b[1] <=> a[1] }
 			user.prepickedMove = metronomeMove[0][0]
 			echo("\n~~~~Metro Move will be #{user.prepickedMove.name.to_s}") if $AIGENERALLOG
+			if $AIMASTERLOG
+				File.open("AI_master_log.txt", "a") do |line|
+					line.puts "~~~~Metronome Move will be " + user.prepickedMove.name.to_s
+				end
+			end
 			score = metronomeMove[0][1]
 		else
 			score=0
@@ -4975,6 +4980,11 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UseRandomMoveFromUserParty" # assist
 		if @battle.pbAbleNonActiveCount(user.idxOwnSide) > 0
+			if $AIMASTERLOG
+				File.open("AI_master_log.txt", "a") do |line|
+					line.puts "-------Assist Start--------"
+				end
+			end
 			moveBlacklist = [
 				"AllBattlersLoseHalfHPUserSkipsNextTurn", "AttackerFaintsIfUserFaints", "BounceBackProblemCausingStatusMoves",
 				"BurnAttackerBeforeUserActs", "CounterDamagePlusHalf", "CounterPhysicalDamage", "CounterSpecialDamage",
@@ -5022,8 +5032,18 @@ class Battle::AI
 						score = newmove[1]
 					end
 				end
+				if $AIMASTERLOG
+					File.open("AI_master_log.txt", "a") do |line|
+						line.puts "~~~~Assist Move will be " + user.prepickedMove.name.to_s
+					end
+				end
 			else
 				score=0
+			end
+			if $AIMASTERLOG
+				File.open("AI_master_log.txt", "a") do |line|
+					line.puts "-------Assist End----------"
+				end
 			end
 		else
 			score=0
@@ -5034,6 +5054,11 @@ class Battle::AI
 			if user.statusCount <= 1
 				score = 0
 			else
+				if $AIMASTERLOG
+					File.open("AI_master_log.txt", "a") do |line|
+						line.puts "-------Sleep Talk Start--------"
+					end
+				end
 				moveBlacklist = [
 					"MultiTurnAttackPreventSleeping", "MultiTurnAttackBideThenReturnDoubleDamage", "Struggle", 
 					"FailsIfUserNotConsumedBerry", "ReplaceMoveThisBattleWithTargetLastMoveUsed", 
@@ -5070,8 +5095,18 @@ class Battle::AI
 							score = newmove[1]
 						end
 					end
+					if $AIMASTERLOG
+						File.open("AI_master_log.txt", "a") do |line|
+							line.puts "~~~~Sleep Talk Move will be " + user.prepickedMove.name.to_s
+						end
+					end
 				else
 					score=0
+				end
+				if $AIMASTERLOG
+					File.open("AI_master_log.txt", "a") do |line|
+						line.puts "-------Sleep Talk End----------"
+					end
 				end
 			end
 		else
