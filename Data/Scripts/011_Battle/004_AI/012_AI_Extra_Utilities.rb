@@ -1014,7 +1014,7 @@ class Battle::Battler
 	def pbCanLowerAttackStatStageGrimTearsAI(user)
 		return false if fainted?
 		return false if @effects[PBEffects::Substitute] > 0
-		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:UNNERVE, :SOUNDPROOF, :INSOMNIA])
+		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:OBLIVIOUS, :UNNERVE, :SOUNDPROOF, :INSOMNIA])
 		return false if !hasActiveAbility?(:CONTRARY)
 		return false if !pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
 	end

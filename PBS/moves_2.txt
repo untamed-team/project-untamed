@@ -8821,7 +8821,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
 Description = The user conjures a shining blade and then attacks by piercing its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
