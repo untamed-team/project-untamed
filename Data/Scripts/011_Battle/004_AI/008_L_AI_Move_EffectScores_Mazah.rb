@@ -1930,7 +1930,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:MOMENTUM)
 			echo("\nMomentum Disrupt") if $AIGENERALLOG
-			abilityscore *= 1 + (0.25 * [user.effects[PBEffects::Momentum], 5].min)
+			abilityscore *= 1 + (0.25 * [target.effects[PBEffects::Momentum], 5].min)
 		end
 		if target.hasActiveAbility?(:CRYSTALJAW)
 			echo("\nCrystal Jaw Disrupt") if $AIGENERALLOG
