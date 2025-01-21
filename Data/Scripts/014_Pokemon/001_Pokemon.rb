@@ -710,10 +710,6 @@ class Pokemon
   # @param move_id [Symbol, String, GameData::Move] ID of the move to check
   # @return [Boolean] whether the Pokémon is compatible with the given move
   def compatible_with_move?(move_id)
-		# i dont know if this works still
-		# the edited version is in low_extrastuff
-    move_data = GameData::Move.try_get(move_id)
-    return move_data && species_data.tutor_moves.include?(move_data.id)
   end
 
   def can_relearn_move?

@@ -437,7 +437,7 @@ class Battle::AI
 			elecvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				elecvar=true if m.hasType?(:ELECTRIC)
+				elecvar=true if m.hasType?(:ELECTRIC) || m.hasAbility?(:MIMICRY)
 			end
 			if elecvar
 				miniscore*=2
@@ -466,7 +466,7 @@ class Battle::AI
 			grassvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				grassvar=true if m.hasType?(:GRASS)
+				grassvar=true if m.hasType?(:GRASS) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -502,7 +502,7 @@ class Battle::AI
 			fairyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				fairyvar=true if m.hasType?(:FAIRY)
+				fairyvar=true if m.hasType?(:FAIRY) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -539,7 +539,7 @@ class Battle::AI
 			psyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				psyvar=true if m.hasType?(:PSYCHIC)
+				psyvar=true if m.hasType?(:PSYCHIC) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -1210,7 +1210,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:ATTACK) 
+			if user.statStageAtMax?(:ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1481,7 +1481,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1626,7 +1626,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1763,7 +1763,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_ATTACK) 
+			if user.statStageAtMax?(:SPECIAL_ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2031,7 +2031,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2165,7 +2165,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2314,7 +2314,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2476,7 +2476,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2718,7 +2718,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2778,7 +2778,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2980,7 +2980,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -4056,7 +4056,7 @@ class Battle::AI
 			miniscore*=(move.addlEffect.to_f/100.0)
 			miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 		end
-		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 		miniscore+=100
 		miniscore/=100.0   
 		miniscore=0.1 if user.hasActiveAbility?(:CONTRARY)
@@ -4530,7 +4530,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4547,6 +4547,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0
@@ -4558,8 +4559,12 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4629,7 +4634,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4646,6 +4651,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0
@@ -4657,8 +4663,12 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4670,32 +4680,47 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetSpDef1" # Aromatic Mist
-		hasAlly = !user.allAllies.empty?
-		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
-			t_hasAlly = !target.allAllies.empty?
-			if !t_hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
-				miniscore*=2
+		if !user.allAllies.empty? 
+			ally = user.allAllies.first
+			#spdef
+			miniscore=100
+			miniscore*=1.1 if ally.hp*(1.0/ally.totalhp)>0.75
+			if ally.hasActiveItem?(:LEFTOVERS) || (ally.hasActiveItem?(:BLACKSLUDGE) && ally.pbHasType?(:POISON, true))
+				miniscore*=1.2
 			end
-			if target.hp*(1.0/target.totalhp)>0.75
-				score*=1.1
+			miniscore = 1 if ally.statStageAtMax?(:SPECIAL_DEFENSE)
+			miniscore/=100.0
+			score *= miniscore
+
+			#atk
+			miniscore=100
+			miniscore*=1.5 if ally.attack>ally.spatk
+			miniscore*=0.3 if (1.0/ally.totalhp)*ally.hp < 0.6
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
 			end
-			if target.effects[PBEffects::Yawn]>0 || target.effects[PBEffects::LeechSeed]>=0 || 
-					target..effects[PBEffects::Attract]>=0 || target.pbHasAnyStatus?
+			if pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy1,:SPEED,skill) && 
+			   pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy2,:SPEED,skill)
+				miniscore*=1.3
+			else
+				miniscore*=0.7
+			end
+			if enemy1.pbHasMove?(:FOULPLAY) || enemy2.pbHasMove?(:FOULPLAY)
+				miniscore*=0.3
+			end
+			miniscore = 1 if ally.statStageAtMax?(:ATTACK)
+			miniscore/=100.0
+			score *= miniscore
+
+			#for both
+			if ally.effects[PBEffects::Yawn]>0 || ally.effects[PBEffects::LeechSeed]>=0 || ally.effects[PBEffects::Attract]>=0 || ally.pbHasAnyStatus?
 				score*=0.3
 			end
-			if movecheck
-				score*=0.2
-			end
-			if target.hasActiveAbility?(:SIMPLE)
-				score*=2
-			end
-			if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
-				score*=1.2
-			end
-			if target.hasActiveAbility?(:CONTRARY)
-				score=0
-			end
-			score=0 if $player.difficulty_mode?("chaos") && target.SetupMovesUsed.include?(move.id)
+			score *= 2 if ally.hasActiveAbility?(:SIMPLE)
+			score = 0 if ally.hasActiveAbility?(:CONTRARY) || ($player.difficulty_mode?("chaos") && ally.SetupMovesUsed.include?(move.id))
 		else
 			score=0
 		end

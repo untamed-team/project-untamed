@@ -7757,15 +7757,15 @@ Description = Gathers space power and boosts its Sp. Atk stat on the first turn,
 [DIAMONDSTORM]
 Name = Diamond Storm
 Type = ROCK
-Category = Physical
-Power = 100
+Category = Special
+Power = 95
 Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
-FunctionCode = RaiseUserDefense2
+FunctionCode = RaiseUserDefense1
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 50
-Description = The user whips up a storm of diamonds to damage foes. This may also sharply raise the user's Defense stat.
+EffectChance = 100
+Description = The user whips up a storm of diamonds to damage foes. This also raises the user's Defense stat.
 #-------------------------------
 [STONEEDGE]
 Name = Stone Edge
@@ -8813,7 +8813,7 @@ EffectChance = 10
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------
 [MYSTICBLADE]
-Name = Mystic Blade
+Name = Mystic Lance
 Type = FAIRY
 Category = Physical
 Power = 80
@@ -8821,8 +8821,8 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
-Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Description = The user conjures a shining blade and then attacks by piercing its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
 Name = Force Wave
@@ -8868,7 +8868,7 @@ Category = Status
 Power = 0
 Accuracy = 0
 TotalPP = 20
-Target = UserAndAllies
+Target = User
 FunctionCode = RaiseUserSpAtk1
 Description = The user pumps themselves up, raising its Sp. Atk stat.
 #-------------------------------

@@ -237,7 +237,7 @@ class Battle::AI
 		if skill >= PBTrainerAI.mediumSkill &&
 			(((@battle.pbCheckGlobalAbility(:DARKAURA)    || globalArray.include?("dark aura"))    && type == :DARK)  ||
 			 ((@battle.pbCheckGlobalAbility(:SPOOPERAURA) || globalArray.include?("spooper aura")) && type == :GHOST) ||
-			 (@battle.pbCheckGlobalAbility(:FAIRYAURA)                                             && type == :FAIRY))
+			 ((@battle.pbCheckGlobalAbility(:FAIRYAURA)   || globalArray.include?("fairy aura"))   && type == :FAIRY))
 			if @battle.pbCheckGlobalAbility(:AURABREAK)
 				multipliers[:base_damage_multiplier] *= 2 / 3.0
 			else
@@ -590,7 +590,8 @@ class Battle::AI
 		if priorityAI(user,move,globalArray) > 0
 			@battle.allSameSideBattlers(target.index).each do |b|
 				return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
-							 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
+							 !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+				# laguna/diancie can have priority immunity in pre-mega form
 			end
 			return true if expectedTerrain == :Psychic && target.affectedByTerrain? && target.opposes?(user)
 		end
@@ -784,6 +785,7 @@ class Battle::AI
 			if terrainy
 				if currentTerrain == :Electric
 					sum += 20 if pkmn.ability == :SURGESURFER
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :ELECTRICSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :ELECTRIC
@@ -794,6 +796,7 @@ class Battle::AI
 				end
 				if currentTerrain == :Grassy
 					sum += 5 if pkmn.ability == :GRASSPELT
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :GRASSYSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :GRASS
@@ -804,6 +807,7 @@ class Battle::AI
 					sum += 5 if pkmn.pbHasMoveFunction?("HigherPriorityInGrassyTerrain")
 				end
 				if currentTerrain == :Misty
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum += 5 if pkmn.item == :MISTYSEED
 					pkmn.eachMove do |m|
 						next if m.base_damage == 0 || m.type != :DRAGON
@@ -814,6 +818,7 @@ class Battle::AI
 					sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "UserFaintsPowersUpInMistyTerrainExplosive")
 				end
 				if currentTerrain == :Psychic
+					sum += 5 if pkmn.ability == :MIMICRY
 					sum -= 5 if pkmn.ability == :PRANKSTER
 					sum += 5 if pkmn.item == :PSYCHICSEED
 					pkmn.eachMove do |m|
@@ -1009,7 +1014,7 @@ class Battle::Battler
 	def pbCanLowerAttackStatStageGrimTearsAI(user)
 		return false if fainted?
 		return false if @effects[PBEffects::Substitute] > 0
-		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:UNNERVE, :SOUNDPROOF, :INSOMNIA])
+		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:OBLIVIOUS, :UNNERVE, :SOUNDPROOF, :INSOMNIA])
 		return false if !hasActiveAbility?(:CONTRARY)
 		return false if !pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
 	end

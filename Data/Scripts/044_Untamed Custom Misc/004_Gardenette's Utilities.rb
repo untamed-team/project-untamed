@@ -1053,6 +1053,7 @@ module Battle::CatchAndStoreMixin
     end
 		# setting initial values #by low
 		if $player.difficulty_mode?("hard")
+			pkmn.obtain_method = 4 if pbIsBadPokemon?(pkmn)
 			if !$game_switches[NOINITIALVALUES]
 				if pbDisplayConfirm(_INTL("Would you like to set initial values for {1}?", pkmn.name))
 					# choosing an ability

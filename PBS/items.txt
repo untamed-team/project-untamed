@@ -6803,6 +6803,15 @@ FieldUse = Direct
 Flags = KeyItem
 Description = Dummy Ticket.
 #-------------------------------
+[ROSEDIAMOND]
+Name = Rose Diamond
+NamePlural = Rose Diamonds
+Pocket = 1
+Price = 38000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A vibrant pink diamond sculpted into a beautiful flower shape. It is loved by a certain Pokémon.
+#-------------------------------
 [RUSTYHANDLEBARS]
 Name = Rusty Handlebars
 NamePlural = Rusty Handlebars

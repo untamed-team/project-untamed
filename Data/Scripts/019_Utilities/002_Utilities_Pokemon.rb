@@ -21,7 +21,7 @@ def pbStorePokemon(pkmn)
     return
   end
   pkmn.record_first_moves
-	pbSetInitialValues(pkmn) #by low
+  pbSetInitialValues(pkmn) #by low
   if $player.party_full?
     stored_box = $PokemonStorage.pbStoreCaught(pkmn)
     box_name   = $PokemonStorage[stored_box].name
@@ -33,84 +33,85 @@ end
 
 # setting initial values #by low
 def pbSetInitialValues(pkmn)
-	pokemon = pkmn
-	if $player.difficulty_mode?("hard")
-		if !$game_switches[NOINITIALVALUES]
-			if pbConfirmMessage(_INTL("Would you like to set initial values for {1}?", pkmn.name))
-				# choosing an ability
-				abils = pkmn.getAbilityList
-				commands = []
-				cmd = 0
-				for i in abils
-					next if i[1] > 1 # only natural abilities
-					commands.push(GameData::Ability.get(i[0]).name)
-					cmd = commands.length - 1 if pkmn.ability_id == i[0]
-				end
-				Kernel.pbMessage(_INTL("What ability would you like {1} to have?",pokemon.name))
-				cmd = Kernel.pbShowCommands(nil, commands, cmd)
-				if cmd < 0
-					#nothing
-				else
-					pkmn.ability_index = abils[cmd][1]
-					pkmn.ability = nil
-				end
-				
-				# choosing natures
-				commands = []
-				ids = []
-				naturenum = 0
-				GameData::Nature.each do |nature|
-					if nature.stat_changes.length == 0
-						commands.push(_INTL("{1} (---)", nature.real_name))
-					else
-						plus_text = ""
-						minus_text = ""
-						nature.stat_changes.each do |change|
-							if change[1] > 0
-								plus_text += "/" if !plus_text.empty?
-								plus_text += GameData::Stat.get(change[0]).name_brief
-							elsif change[1] < 0
-								minus_text += "/" if !minus_text.empty?
-								minus_text += GameData::Stat.get(change[0]).name_brief
-							end
-						end
-						commands.push(_INTL("{1} (+{2}, -{3})", nature.real_name, plus_text, minus_text))
-					end
-					ids.push(nature.id)
-					naturenum+=1
-				end
-				commands.push(_INTL("Cancel"))
-				Kernel.pbMessage(_INTL("What nature would you like {1} to have?",pokemon.name))
-				cmd = Kernel.pbShowCommands(nil, commands, cmd)
-				if cmd < 0
-					#nothing
-				else
-					pkmn.nature = ids[cmd]
-					pkmn.calc_stats
-				end
-				
-				# choosing hidden power type
-				commands = []
-				types = []
-				GameData::Type.each do |t|
-					if !t.pseudo_type && ![:FAIRY, :SHADOW].include?(t.id)
-						commands.push(t.name)
-						types.push(t.id) 
-				 end
-				end
-				commands.push(_INTL("Cancel"))
-				Kernel.pbMessage(_INTL("What hidden power type would you like {1} to have?",pokemon.name))
-				cmd = types.index(pkmn.hptype) || 0
-				cmd = Kernel.pbShowCommands(nil, commands, cmd)
-				if cmd >=0 && cmd<types.length && pkmn.hptype != types[cmd]
-					pkmn.hptype = types[cmd]
-					Kernel.pbMessage(_INTL("{1}'s Hidden Power has been set to {2}.",pkmn.name, pkmn.hptype))
-				else
-					# canceled
-				end
-			end
-		end
-	end
+  pokemon = pkmn
+  if $player.difficulty_mode?("hard")
+    pkmn.obtain_method = 4 if pbIsBadPokemon?(pkmn)
+    if !$game_switches[NOINITIALVALUES]
+      if pbConfirmMessage(_INTL("Would you like to set initial values for {1}?", pkmn.name))
+        # choosing an ability
+        abils = pkmn.getAbilityList
+        commands = []
+        cmd = 0
+        for i in abils
+          next if i[1] > 1 # only natural abilities
+          commands.push(GameData::Ability.get(i[0]).name)
+          cmd = commands.length - 1 if pkmn.ability_id == i[0]
+        end
+        Kernel.pbMessage(_INTL("What ability would you like {1} to have?",pokemon.name))
+        cmd = Kernel.pbShowCommands(nil, commands, cmd)
+        if cmd < 0
+          #nothing
+        else
+          pkmn.ability_index = abils[cmd][1]
+          pkmn.ability = nil
+        end
+        
+        # choosing natures
+        commands = []
+        ids = []
+        naturenum = 0
+        GameData::Nature.each do |nature|
+          if nature.stat_changes.length == 0
+            commands.push(_INTL("{1} (---)", nature.real_name))
+          else
+            plus_text = ""
+            minus_text = ""
+            nature.stat_changes.each do |change|
+              if change[1] > 0
+                plus_text += "/" if !plus_text.empty?
+                plus_text += GameData::Stat.get(change[0]).name_brief
+              elsif change[1] < 0
+                minus_text += "/" if !minus_text.empty?
+                minus_text += GameData::Stat.get(change[0]).name_brief
+              end
+            end
+            commands.push(_INTL("{1} (+{2}, -{3})", nature.real_name, plus_text, minus_text))
+          end
+          ids.push(nature.id)
+          naturenum+=1
+        end
+        commands.push(_INTL("Cancel"))
+        Kernel.pbMessage(_INTL("What nature would you like {1} to have?",pokemon.name))
+        cmd = Kernel.pbShowCommands(nil, commands, cmd)
+        if cmd < 0
+          #nothing
+        else
+          pkmn.nature = ids[cmd]
+          pkmn.calc_stats
+        end
+        
+        # choosing hidden power type
+        commands = []
+        types = []
+        GameData::Type.each do |t|
+          if !t.pseudo_type && ![:FAIRY, :SHADOW].include?(t.id)
+            commands.push(t.name)
+            types.push(t.id) 
+         end
+        end
+        commands.push(_INTL("Cancel"))
+        Kernel.pbMessage(_INTL("What hidden power type would you like {1} to have?",pokemon.name))
+        cmd = types.index(pkmn.hptype) || 0
+        cmd = Kernel.pbShowCommands(nil, commands, cmd)
+        if cmd >=0 && cmd<types.length && pkmn.hptype != types[cmd]
+          pkmn.hptype = types[cmd]
+          Kernel.pbMessage(_INTL("{1}'s Hidden Power has been set to {2}.",pkmn.name, pkmn.hptype))
+        else
+          # canceled
+        end
+      end
+    end
+  end
 end
 
 def pbNicknameAndStore(pkmn)
