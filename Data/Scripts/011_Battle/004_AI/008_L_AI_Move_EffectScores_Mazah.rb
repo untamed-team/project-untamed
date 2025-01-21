@@ -602,7 +602,7 @@ class Battle::AI
 					   target.effects[PBEffects::Yawn]>0
 						miniscore*=0.3
 					end
-					enemy1 = user.pbDirectOpposing
+					enemy1 = user.pbDirectOpposing(true)
 					if enemy1.allAllies.empty?
 						enemy2 = enemy1
 					else

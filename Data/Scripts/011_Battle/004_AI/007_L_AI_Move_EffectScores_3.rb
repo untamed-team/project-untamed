@@ -297,7 +297,7 @@ class Battle::AI
 					else
 						score = -100.0
 						score *= 1.2
-						enemy1 = user.pbDirectOpposing
+						enemy1 = user.pbDirectOpposing(true)
 						if enemy1.allAllies.empty?
 							enemy2 = enemy1
 						else
@@ -939,7 +939,7 @@ class Battle::AI
 					else
 						score = -100.0
 						score *= 1.2
-						enemy1 = user.pbDirectOpposing
+						enemy1 = user.pbDirectOpposing(true)
 						if enemy1.allAllies.empty?
 							enemy2 = enemy1
 						else

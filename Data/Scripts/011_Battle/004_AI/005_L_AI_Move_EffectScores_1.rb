@@ -4559,7 +4559,7 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
@@ -4663,7 +4663,7 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
@@ -4696,7 +4696,7 @@ class Battle::AI
 			miniscore=100
 			miniscore*=1.5 if ally.attack>ally.spatk
 			miniscore*=0.3 if (1.0/ally.totalhp)*ally.hp < 0.6
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
