@@ -279,25 +279,11 @@ Pokemon = GULPI,10
     Ability = SWIFTSWIM
     Nature = CALM
 #-------------------------------
-[WAREHOUSEWORKER,Donna]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
-#-------------------------------
-[WAREHOUSEWORKER,Donna,100]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
-#-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
 [TRAINER_Reine,Reine,100]
-LoseText = ...
-Pokemon = EEVEE,11
-#-------------------------------
-[WAREHOUSEWORKER,Reine,100]
 LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
@@ -641,6 +627,82 @@ Pokemon = WOOBAT,12
 LoseText = You're ruining the view!
 Pokemon = BUNNELBY,11
 Pokemon = WOOBAT,12
+#-------------------------------
+[WAREHOUSEWORKER_M, Bernard]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+Pokemon = SNORUNT,12
+    Ability = MOODY
+Pokemon = MAGNEMITE,13
+#-------------------------------
+[WAREHOUSEWORKER_M, Bernard,100]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+Pokemon = SNORUNT,12
+    Ability = MOODY
+Pokemon = MAGNEMITE,13
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+Pokemon = EEVEE,14
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna,100]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+Pokemon = EEVEE,14
+#-------------------------------
+[WAREHOUSEWORKER_M, Santos]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+Pokemon = FINNEON,14
+#-------------------------------
+[WAREHOUSEWORKER_M, Santos,100]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+Pokemon = FINNEON,14
+#-------------------------------
+[TOURIST_M, Floyd]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+Pokemon = LOTAD,15
+#-------------------------------
+[TOURIST_M, Floyd,100]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+Pokemon = LOTAD,15
+#-------------------------------
+[TOURIST_F, Jennifer]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+#-------------------------------
+[TOURIST_F, Jennifer,100]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+#-------------------------------
+[SWIMMER_M, Edson]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+Pokemon = CLOBBOPUS,15
+#-------------------------------
+[SWIMMER_M, Edson,100]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+Pokemon = CLOBBOPUS,15
+#-------------------------------
+[SWIMMER_F, Claudia]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+Pokemon = BANAGNAW,14
+#-------------------------------
+[SWIMMER_F, Claudia,100]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+Pokemon = BANAGNAW,14
 #-------------------------------
 
 #-------------------------------
