@@ -582,7 +582,7 @@ def pbTrainerBattleEditor
             pbMessage(_INTL("There is no room to create a trainer of that type and name."))
             next
           end
-          t = pbNewTrainer(tr_type, tr_name, tr_version, false)
+          t = nil #pbNewTrainer(tr_type, tr_name, tr_version, false)
           if t
             trainer_hash = {
               :trainer_type => tr_type,
