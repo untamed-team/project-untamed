@@ -602,8 +602,12 @@ class Battle::AI
 					   target.effects[PBEffects::Yawn]>0
 						miniscore*=0.3
 					end
-					enemy1 = user.pbDirectOpposing
-					enemy2 = enemy1.allAllies.first
+					enemy1 = user.pbDirectOpposing(true)
+					if enemy1.allAllies.empty?
+						enemy2 = enemy1
+					else
+						enemy2 = enemy1.allAllies.first
+					end
 					e1sped = pbRoughStat(enemy1,:SPEED,skill)
 					e2sped = pbRoughStat(enemy2,:SPEED,skill)
 					if ospeed > e1sped && ospeed > e2sped
@@ -1930,7 +1934,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:MOMENTUM)
 			echo("\nMomentum Disrupt") if $AIGENERALLOG
-			abilityscore *= 1 + (0.25 * [user.effects[PBEffects::Momentum], 5].min)
+			abilityscore *= 1 + (0.25 * [target.effects[PBEffects::Momentum], 5].min)
 		end
 		if target.hasActiveAbility?(:CRYSTALJAW)
 			echo("\nCrystal Jaw Disrupt") if $AIGENERALLOG

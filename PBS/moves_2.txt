@@ -8868,7 +8868,7 @@ Category = Status
 Power = 0
 Accuracy = 0
 TotalPP = 20
-Target = UserAndAllies
+Target = User
 FunctionCode = RaiseUserSpAtk1
 Description = The user pumps themselves up, raising its Sp. Atk stat.
 #-------------------------------

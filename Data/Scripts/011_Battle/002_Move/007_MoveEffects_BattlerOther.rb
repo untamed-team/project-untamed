@@ -385,7 +385,7 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
   def canSnatch?; return true; end
 
   def pbMoveFailed?(user, targets)
-    if ![:BURN, :POISON, :PARALYSIS].include?(user.status)
+    if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -402,6 +402,8 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
       @battle.pbDisplay(_INTL("{1} cured its poisoning!", user.pbThis))
     when :PARALYSIS
       @battle.pbDisplay(_INTL("{1} cured its paralysis!", user.pbThis))
+    when :FREEZE
+      @battle.pbDisplay(_INTL("{1} healed its frostbite!", user.pbThis))
     end
   end
 end

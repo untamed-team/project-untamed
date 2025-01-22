@@ -48,6 +48,8 @@ end
 
 def pbIsBadPokemon?(pkmn)
   return true if [:EEVEE, :VAPOREON, :JOLTEON, :FLAREON, :ESPEON, :UMBREON, :LEAFEON, :GLACEON, :SLYVEON, :GUSTEON, :TERREON].include?(pkmn.species)
+  #poke = GameData::Species.get(pkmn).get_baby_species
+  #return true if poke.species == :EEVEE
   return false
 end
 
@@ -457,6 +459,7 @@ end
 class Pokemon
   def compatible_with_move?(move_id)  
     return false if species_data.species == :M_DITTO
+    #return false if self.obtain_method == 4
     move_data = GameData::Move.try_get(move_id)  
     # Universal TMs/Move Tutors #by low  
     unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]  
