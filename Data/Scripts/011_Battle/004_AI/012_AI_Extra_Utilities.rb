@@ -194,13 +194,15 @@ class Battle::AI
 					 target.hasActiveItem?(:UTILITYUMBRELLA)
 					expectedTargetWeather = :None
 				end
+				old_ability = nil
+				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega
+					old_ability = target.ability
+					target.ability = :FURCOAT
+				end
 				Battle::AbilityEffects.triggerDamageCalcFromTarget(
 					target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
 				)
-				# if laguna already has fur coat in base, there is no need to take it in acc again
-				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT && move.physicalMove?(type)
-					multipliers[:defense_multiplier] *= 2
-				end
+				target.ability = old_ability if !old_ability.nil?
 				multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
 			end
 			# when moronuno said 'NonIgnorable', he meant "Ignorable(Forgot)"
