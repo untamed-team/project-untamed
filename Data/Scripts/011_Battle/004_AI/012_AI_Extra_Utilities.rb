@@ -112,6 +112,15 @@ class Battle::AI
 		procGlobalArray = processGlobalArray(globalArray)
 		expectedWeather = procGlobalArray[0]
 		expectedTerrain = procGlobalArray[1]
+		# Powder (the move) logic
+		if type == :FIRE && targetWillMove?(target)
+			targetMove = @battle.choices[target.index][2]
+			if targetMove.function == "TargetNextFireMoveDamagesTarget"
+				thisprio = priorityAI(user, move, globalArray)
+				thatprio = priorityAI(target, targetMove, globalArray)
+				return 0 if thatprio > thisprio
+			end
+		end
 		# Ability effects that alter damage
 		moldBreaker = moldbroken(user,target,move) # updated to take in the better mold breaker check
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
