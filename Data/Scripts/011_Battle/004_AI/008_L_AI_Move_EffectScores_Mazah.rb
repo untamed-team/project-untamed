@@ -649,7 +649,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 	when "OverrideTargetStatusWithPoison" # Crimson Surge
 		if $player.difficulty_mode?("chaos") && target.status == :NONE
-			score *= 0.3
+#			score *= 0.3
 		elsif target.asleep? && target.statusCount <= 2
 			score = 0
 		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
