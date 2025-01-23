@@ -84,7 +84,6 @@ class Battle::AI
 		if user.effects[PBEffects::ProtectRate] > 1
 			score = 0
 		else
-			contactcheck = target.moves.any? { |m| m&.pbContactMove?(target) }
 			score*=1.3 if globalArray.any? { |element| element.include?("weather") }
 			if target.turnCount==0
 				score*=1.5
@@ -97,17 +96,6 @@ class Battle::AI
 			   user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
 			   expectedTerrain == :Grassy
 				score*=1.2
-			end  
-			if move.function == "ProtectUserBanefulBunker"
-				if target.pbHasAnyStatus?
-					score*=0.8
-				else
-					if target.pbCanPoison?(user, false) && contactcheck
-						miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 90, move, globalArray, 100)
-						miniscore/=100.0
-						score*=miniscore
-					end
-				end
 			end
 			if user.poisoned? || user.burned? || user.frozen?
 				score*=0.8
@@ -138,9 +126,6 @@ class Battle::AI
 					score*=1.4
 				end
 			end  
-			if contactcheck
-				score*=1.3
-			end
 			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
 				score*=1.5
 			end
@@ -161,7 +146,18 @@ class Battle::AI
 						expectedPrcnt = expectedDmg * 100.0 / user.hp
 						score *= (expectedPrcnt * 0.05)
 					end
-					score *= 1.5 if targetMove.pbContactMove?(user)
+					score*=1.3 if targetMove.pbContactMove?(user)
+					if move.function == "ProtectUserBanefulBunker" && targetMove.pbContactMove?(user)
+						if target.pbHasAnyStatus?
+							score*=0.8
+						else
+							if target.pbCanPoison?(user, false)
+								miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 80, move, globalArray, 100)
+								miniscore/=100.0
+								score*=miniscore
+							end
+						end
+					end
 				end
 			end
 		end
@@ -606,8 +602,12 @@ class Battle::AI
 					   target.effects[PBEffects::Yawn]>0
 						miniscore*=0.3
 					end
-					enemy1 = user.pbDirectOpposing
-					enemy2 = enemy1.allAllies.first
+					enemy1 = user.pbDirectOpposing(true)
+					if enemy1.allAllies.empty?
+						enemy2 = enemy1
+					else
+						enemy2 = enemy1.allAllies.first
+					end
 					e1sped = pbRoughStat(enemy1,:SPEED,skill)
 					e2sped = pbRoughStat(enemy2,:SPEED,skill)
 					if ospeed > e1sped && ospeed > e2sped
@@ -1302,7 +1302,7 @@ class Battle::AI
 		  60 => [:DRAGONDANCE, :SHELLSMASH, :NORETREAT, :CLANGOROUSSOUL],
 		  65 => [:GEOMANCY, :QUIVERDANCE, :SHIFTGEAR, :TAILGLOW],
 		  70 => [:HEALORDER, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
-				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
+				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS, :GLACIALGULF],
 		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD, :DETECT],
 		  100 => [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE]
 		}
@@ -1341,7 +1341,7 @@ class Battle::AI
 			partyelec=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyelec=true if m.pbHasType?(:ELECTRIC, true)
+				partyelec=true if m.hasType?(:ELECTRIC)
 				for z in m.moves
 					sleepmove = true if [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, 
 										 :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE].include?(z.id)
@@ -1374,7 +1374,7 @@ class Battle::AI
 			partygrass=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partygrass=true if m.pbHasType?(:GRASS, true)
+				partygrass=true if m.hasType?(:GRASS)
 			end
 			if partygrass
 				fieldscore*=0.5
@@ -1401,7 +1401,12 @@ class Battle::AI
 					fieldscore*=0.7
 				end
 			end
-			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
+			if target.allAllies.empty?
+				targetAlly = target
+			else
+				targetAlly = target.allAllies.first
+			end
+			if target.pbHasType?(:DRAGON, true) || targetAlly.pbHasType?(:DRAGON, true)
 				fieldscore*=0.5
 			end
 			if user.pbHasType?(:DRAGON, true)
@@ -1410,7 +1415,7 @@ class Battle::AI
 			partyfairy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyfairy=true if m.pbHasType?(:FAIRY, true)
+				partyfairy=true if m.hasType?(:FAIRY)
 			end
 			if partyfairy
 				fieldscore*=0.7
@@ -1418,7 +1423,7 @@ class Battle::AI
 			partydragon=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partydragon=true if m.pbHasType?(:DRAGON, true)
+				partydragon=true if m.hasType?(:DRAGON)
 			end
 			if partydragon
 				fieldscore*=1.5
@@ -1438,7 +1443,7 @@ class Battle::AI
 			partypsy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partypsy=true if m.pbHasType?(:PSYCHIC, true)
+				partypsy=true if m.hasType?(:PSYCHIC)
 			end
 			if partypsy
 				fieldscore*=0.3
@@ -1929,7 +1934,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:MOMENTUM)
 			echo("\nMomentum Disrupt") if $AIGENERALLOG
-			abilityscore *= 1 + (0.25 * [user.effects[PBEffects::Momentum], 5].min)
+			abilityscore *= 1 + (0.25 * [target.effects[PBEffects::Momentum], 5].min)
 		end
 		if target.hasActiveAbility?(:CRYSTALJAW)
 			echo("\nCrystal Jaw Disrupt") if $AIGENERALLOG
@@ -1996,29 +2001,18 @@ class Battle::AI
 
 	def pbGetMidTurnGlobalChanges
 		globalArray = []
-		globalEffects = {
-			:NOCTAVISPA => "dark aura",
-			:SPECTERZAL => "spooper aura",
-			:BEAKRAFT   => "electric terrain",
-			:MILOTIC    => "misty terrain",
-			:TREVENANT  => "grassy terrain",
-			:BEHEEYEM   => "psychic terrain",
-			:ZARCOIL    => "sun weather",
-			:ZOLUPINE   => "rain weather",
-			:CACTURNE   => "sand weather",
-			:FRIZZARD   => "hail weather"
-		}
-		megaStones = {
-			:NOCTAVISPA => :NOCTAVISPITE,
-			:SPECTERZAL => :SPECTERZITE,
-			:BEAKRAFT   => :BEAKRAFTITE,
-			:MILOTIC    => :MILOTITE,
-			:TREVENANT  => :TREVENANTITE,
-			:BEHEEYEM   => :BEHEEYEMITE,
-			:ZARCOIL    => :ZARCOILITE,
-			:ZOLUPINE   => :ZOLUPINEITE,
-			:CACTURNE   => :CACTURNITE,
-			:FRIZZARD   => :FRIZZARDITE
+		megaChecks = {
+			:NOCTAVISPA => [:NOCTAVISPITE, "dark aura"],
+			:SPECTERZAL => [:SPECTERZITE,  "spooper aura"],
+			:DIANCIE    => [:DIANCITE,     "fairy aura"],
+			:BEAKRAFT   => [:BEAKRAFTITE,  "electric terrain"],
+			:MILOTIC    => [:MILOTITE,     "misty terrain"],
+			:TREVENANT  => [:TREVENANTITE, "grassy terrain"],
+			:BEHEEYEM   => [:BEHEEYEMITE,  "psychic terrain"],
+			:ZARCOIL    => [:ZARCOILITE,   "sun weather"],
+			:ZOLUPINE   => [:ZOLUPINEITE,  "rain weather"],
+			:CACTURNE   => [:CACTURNITE,   "sand weather"],
+			:FRIZZARD   => [:FRIZZARDITE,  "hail weather"]
 		}
 	
 		# if multiple weathers/terrains are pushed only the slowest one should be acounted
@@ -2029,9 +2023,9 @@ class Battle::AI
 		slowestTerrainSpeed = 9 ** 9
 		@battle.allBattlers.each do |j|
 			megaSpecies = j.pokemon.species
-			if globalEffects.key?(megaSpecies) && j.pokemon.willmega && 
-			  (j.item == megaStones[megaSpecies] || j.hasMegaEvoMutation?)
-			  	effectne = globalEffects[megaSpecies]
+			if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
+			  (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
+			  	effectne = megaChecks[megaSpecies][1]
 			  	jspeed = pbRoughStat(j,:SPEED,100,false)
  				if effectne.include?("weather")
 					if jspeed < slowestWeatherSpeed
@@ -2052,10 +2046,16 @@ class Battle::AI
   		globalArray.push(slowestTerrain) if slowestTerrain
 
 		# airlock/cloud9 interaction
-		weatherNeg=false
+		weatherNeg = false
 		@battle.allBattlers.each do |n|
-			weatherNeg = true if n.hasActiveAbility?([:AIRLOCK, :CLOUDNINE]) && 
-								 n.battle.choices[n.index][0] != :SwitchOut
+			realn = n
+			if @battle.choices[n.index][0] == :SwitchOut
+				realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+			end
+			if realn.hasActiveAbility?([:AIRLOCK, :CLOUDNINE])
+				weatherNeg = true
+				break
+			end
 		end
 		globalArray.reject! { |w| w.include?("weather") } if weatherNeg
 		globalArray.uniq!
@@ -2186,9 +2186,11 @@ class Battle::AI
 				@battle.allSameSideBattlers(target.index).each do |b|
 					priobroken=moldbroken(user,b,move)
 					if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-						 !(b.isSpecies?(:LAGUNA) && b.pokemon.willmega && !b.hasAbilityMutation?) # laguna can have dazz in pre-mega form
+						 !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+						# laguna/diancie can have priority immunity in pre-mega form
 						score-=300 
 						echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
+						break
 					end
 				end 
 				if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target) && targetWillMove?(target, "status")

@@ -30,21 +30,21 @@ class Player < Trainer
 end
 
 def pbUpdatePBSFilesForDifficulty(thing = false)
-	if $player.difficulty_mode?("chaos") # Hard / "Low" mode
-		print _INTL("Updating files...") if thing
-		Compiler.compile_moves("PBS/moves_2.txt")
-		Compiler.compile_items # here for dependances
-		Compiler.compile_pokemon("PBS/pokemon_2.txt")
-		Compiler.compile_pokemon_forms("PBS/pokemon_forms_2.txt")
-		Compiler.compile_encounters("PBS/encounters_2.txt")
-	else
-		print _INTL("Updating files...") if thing
-		Compiler.compile_moves
-		Compiler.compile_items # here for dependances
-		Compiler.compile_pokemon
-		Compiler.compile_pokemon_forms
-		Compiler.compile_encounters
-	end
+  if $player.difficulty_mode?("chaos") # Hard / "Low" mode
+    print _INTL("Updating files...") if thing
+    Compiler.compile_moves("PBS/moves_2.txt")
+    Compiler.compile_items # here for dependances
+    Compiler.compile_pokemon("PBS/pokemon_2.txt")
+    Compiler.compile_pokemon_forms("PBS/pokemon_forms_2.txt")
+    Compiler.compile_encounters("PBS/encounters_2.txt")
+  else
+    print _INTL("Updating files...") if thing
+    Compiler.compile_moves
+    Compiler.compile_items # here for dependances
+    Compiler.compile_pokemon
+    Compiler.compile_pokemon_forms
+    Compiler.compile_encounters
+  end
 end
 
 class Battle
@@ -74,8 +74,8 @@ class Battle
           #       Pokémon when an opponent replaces a fainted Pokémon in single
           #       battles. In double battles, etc. there is no such offer.
           if @internalBattle && (@switchStyle && $player.difficulty_mode?("easy")) && #edits #by low
-						 trainerBattle? && pbSideSize(0) == 1 && opposes?(idxBattler) && 
-						 !@battlers[0].fainted? && !switched.include?(0) &&
+             trainerBattle? && pbSideSize(0) == 1 && opposes?(idxBattler) && 
+             !@battlers[0].fainted? && !switched.include?(0) &&
              pbCanChooseNonActive?(0) && @battlers[0].effects[PBEffects::Outrage] == 0 &&
             idxPartyForName = idxPartyNew
             enemyParty = pbParty(idxBattler)
@@ -118,8 +118,8 @@ class Battle
     end
   end
   
-	
-	def pbCommandPhaseLoop(isPlayer)
+  
+  def pbCommandPhaseLoop(isPlayer)
     # NOTE: Doing some things (e.g. running, throwing a Poké Ball) takes up all
     #       your actions in a round.
     actioned = []
@@ -127,11 +127,11 @@ class Battle
     loop do
       break if @decision != 0   # Battle ended, stop choosing actions
       idxBattler += 1
-			break if idxBattler >= @battlers.length
-			next if !@battlers[idxBattler] || pbOwnedByPlayer?(idxBattler) != isPlayer
-			next if @choices[idxBattler][0] != :None    # Action is forced, can't choose one
-			next if !pbCanShowCommands?(idxBattler)   # Action is forced, can't choose one
-			if !@controlPlayer && pbOwnedByPlayer?(idxBattler)
+      break if idxBattler >= @battlers.length
+      next if !@battlers[idxBattler] || pbOwnedByPlayer?(idxBattler) != isPlayer
+      next if @choices[idxBattler][0] != :None    # Action is forced, can't choose one
+      next if !pbCanShowCommands?(idxBattler)   # Action is forced, can't choose one
+      if !@controlPlayer && pbOwnedByPlayer?(idxBattler)
         # Player chooses an action
         actioned.push(idxBattler)
         commandsEnd = false   # Whether to cancel choosing all other actions this round
@@ -148,7 +148,7 @@ class Battle
           when 1    # Bag
             # items ban #by low
             if $player.difficulty_mode?("normal") && @numberOfUsedItems[idxBattler % 2] >= ItemCAP && @opponent
-              pbDisplay(_INTL("But #{1} items have already been used in this Trainer Battle!", ItemCAP))
+              pbDisplay(_INTL("But {1} items have already been used in this Trainer Battle!", ItemCAP))
             elsif $player.difficulty_mode?("hard") && @opponent
               pbDisplay(_INTL("Items are banned during Trainer Battles."))
             else
@@ -184,7 +184,7 @@ class Battle
           pbCancelChoice(idxBattler)
         end
       else
-				# DemICE moved the AI decision after player decision.
+        # DemICE moved the AI decision after player decision.
         # AI controls this battler
         @battleAI.pbDefaultChooseEnemyCommand(idxBattler)
         next
@@ -193,7 +193,7 @@ class Battle
     end
   end
   
-	#=============================================================================
+  #=============================================================================
   # End Of Round deal damage from status problems
   #=============================================================================
   def pbEORStatusProblemDamage(priority)
@@ -220,18 +220,18 @@ class Battle
       elsif battler.takesIndirectDamage?
         battler.droppedBelowHalfHP = false
         dmg = battler.totalhp / 8
-				if battler.statusCount > 0
-					if $player.difficulty_mode?("chaos") #by low
-						if battler.effects[PBEffects::Toxic] > 2
-							dmg = battler.totalhp / 4
-							battler.effects[PBEffects::Toxic] = 0
-							battler.statusCount = 2 #for "pbContinueStatus" to say a different message
-							#~ print "super damage"
-						end
-					else
-						dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
-					end
-				end
+        if battler.statusCount > 0
+          if $player.difficulty_mode?("chaos") #by low
+            if battler.effects[PBEffects::Toxic] > 2
+              dmg = battler.totalhp / 4
+              battler.effects[PBEffects::Toxic] = 0
+              battler.statusCount = 2 #for "pbContinueStatus" to say a different message
+              #~ print "super damage"
+            end
+          else
+            dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
+          end
+        end
         battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
         battler.pbItemHPHealCheck
         battler.pbAbilitiesOnDamageTaken
@@ -263,17 +263,17 @@ class Battle
       battler.pbFaint if battler.fainted?
       battler.droppedBelowHalfHP = false
     end
-		# dizzy #by low
+    # dizzy #by low
     priority.each do |battler|
       next if battler.status != :DIZZY
       battler.statusCount -= 1
       if battler.statusCount <= 0
         battler.pbCureStatus
       else
-				battler.pbContinueStatus
-			end
+        battler.pbContinueStatus
+      end
     end
-		# paralyzis rework #by low
+    # paralyzis rework #by low
     priority.each do |battler|
       next if battler.status != :PARALYSIS
       next if !$player.difficulty_mode?("chaos")
@@ -302,15 +302,15 @@ class DifficultySelectMenu_Scene
   def pbDisplay(msg, brief = false)
     UIHelper.pbDisplay(@sprites["msgwindow"], msg, brief) { pbUpdate }
   end
-	
+  
   def pbConfirm(msg)
     UIHelper.pbConfirm(@sprites["msgwindow"], msg) { pbUpdate }
   end
-	
+  
   def pbUpdate
     pbUpdateSpriteHash(@sprites)
   end
-	
+  
   def pbStartScene
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
@@ -340,7 +340,7 @@ class DifficultySelectMenu_Scene
     shadow = MessageConfig::DARK_TEXT_SHADOW_COLOR
     overlay.font.size = 22
 
-		# this could be more compact but whatever im gonna pull a yandev
+    # this could be more compact but whatever im gonna pull a yandev
     case page
     when 1
       #Freeze replaced with frostbite
@@ -359,30 +359,30 @@ class DifficultySelectMenu_Scene
       #Ability Changes
       #Evo Method changes
 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
+      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
       difficultyDesc = _INTL("Freeze replaced with Frostbite\nHail buff\nSleep no longer random\nEVs rework (post game)\nIVs reworked\nCheck the Project Untamed Wiki for more changes.")
     when 2
-			#All of the above BUT
-			#Soft level cap (exp has diminishing returns)
-			#Soft item cap (10 items allowed)
-			#Select limited pokemon before gym battle
+      #All of the above BUT
+      #Soft level cap (exp has diminishing returns)
+      #Soft item cap (10 items allowed)
+      #Select limited pokemon before gym battle
 
       @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
       difficultyDesc = _INTL("All changes in Casual mode, plus:\nSoft level cap (exp has diminishing returns)\nSoft item cap (10 items allowed per battle)\nSelect limited number of Pokémon before gym battles\nCheck the Project Untamed Wiki for more changes.")
     when 3
-			#All of the above BUT
-			#Hard level cap (no exp above certain level)
-			#Hard item cap (no items in battle)
-			#Set style enforced
-			#Sleep clause
-			#More difficult trainers
+      #All of the above BUT
+      #Hard level cap (no exp above certain level)
+      #Hard item cap (no items in battle)
+      #Set style enforced
+      #Sleep clause
+      #More difficult trainers
 
       @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
       difficultyDesc = _INTL("All changes in Normal mode, plus:\nHard level cap (no exp above certain level)\nCannot use items in battle\nSet style enforced\nSleep clause\nMore difficult trainers\nCheck the Project Untamed Wiki for more changes.")
     when 4
       #notes to come
 
-			@sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
+      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
       difficultyDesc = _INTL("NOTE: Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\nPokemon stats, abilities, learnset and distribution differences.\nCertain move and battle effects changed or removed.\n'Extremely' difficult trainers.\nStatus effects changed.\nCheck Chaos Codex ingame for more Info.")
     end
     #difficulty name, always present
@@ -391,10 +391,12 @@ class DifficultySelectMenu_Scene
     drawFormattedTextEx(bitmap=overlay, x=198, y=52, width=overlay.width-58, text=_INTL("Hard"), baseColor=base, shadowColor=shadow, lineheight=16)
     drawFormattedTextEx(bitmap=overlay, x=260, y=52, width=overlay.width-58, text=_INTL("Chaos"), baseColor=base, shadowColor=shadow, lineheight=16)
 
+    # fs = font size
+    difficultyDesc = "<fs=24>" + difficultyDesc + "</fs>"
     #difficulty description, changes per page
-    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=32)
+    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
   end
-	
+  
   def pbEndScene
     pbFadeOutAndHide(@sprites) { pbUpdate }
     pbDisposeSpriteHash(@sprites)
@@ -406,10 +408,10 @@ class DifficultySelectMenuScreen
   def initialize(scene)
     @scene = scene
   end
-	
+  
   def pbStartScreen
     @scene.pbStartScene
-		@page = 1
+    @page = 1
     loop do
       Graphics.update
       Input.update
@@ -419,36 +421,36 @@ class DifficultySelectMenuScreen
       if Input.trigger?(Input::USE)
         case @page
         when 1   # casual
-					if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
-						$player.mechanics=0
-						$player.difficulty=0
-						enditall=true
-					end
+          if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
+            $player.mechanics=0
+            $player.difficulty=0
+            enditall=true
+          end
         when 2   # normal
-					if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
-						$player.mechanics=1
-						$player.difficulty=0
-						enditall=true
-					end
+          if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
+            $player.mechanics=1
+            $player.difficulty=0
+            enditall=true
+          end
         when 3   # hard
-					if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
-						$player.mechanics=2
-						$player.difficulty=1
-						enditall=true
-					end
+          if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
+            $player.mechanics=2
+            $player.difficulty=1
+            enditall=true
+          end
         when 4   # meme
-					if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
-						$player.mechanics=3
-						$player.difficulty=1
-						enditall=true
-					end
+          if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
+            $player.mechanics=3
+            $player.difficulty=1
+            enditall=true
+          end
         end
-				if enditall
-					@scene.pbDisplay(_INTL("Updating files..."), true)
-					pbUpdatePBSFilesForDifficulty#(true)
-					@scene.pbEndScene
-					break
-				end
+        if enditall
+          @scene.pbDisplay(_INTL("Updating files..."), true)
+          pbUpdatePBSFilesForDifficulty#(true)
+          @scene.pbEndScene
+          break
+        end
       elsif Input.trigger?(Input::LEFT)
         oldpage = @page
         @page -= 1
@@ -473,5 +475,5 @@ class DifficultySelectMenuScreen
       end
     end
     return @index
-	end
+  end
 end

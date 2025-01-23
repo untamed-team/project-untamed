@@ -137,7 +137,7 @@ class Battle::Move::Rebalancing < Battle::Move
 end
 
 #===============================================================================
-# gets 3x on rain
+# gets 2.25x on rain
 # in theory it nullifies the nerfs/buffs of a fire type move on those weathers
 # (Steam Burst)
 #===============================================================================
@@ -185,8 +185,9 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
 
   def pbNumHits(user, targets)
     hitChances = [
-      3, 3, 3, 3, 3, 3, 3, 3,
-      4, 4, 4, 4, 5
+      3, 3, 3, 3, 3, 3, 3,
+      3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 5, 5, 5
     ]
     hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
@@ -315,11 +316,7 @@ end
 # ignores desolate land vaporization vs non fire types (scald)
 #===============================================================================
 class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
-  def pbBaseDamage(baseDmg, user, target)
-		scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-    baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
-    return baseDmg
-  end
+  # in 003_MoveUsageCalculations
 end
 
 #===============================================================================
@@ -381,5 +378,15 @@ class Battle::Move::BOOMInstall < Battle::Move
     pbSEPlay("BOOM") if rand(2) == 0
     target.effects[PBEffects::BoomInstalled] = true
     @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
+end
+
+#===============================================================================
+# Heals user by 1/2 of its max HP, or 2/3 of its max HP in a hailstorm
+#===============================================================================
+class Battle::Move::HealUserDependingOnHail < Battle::Move::HealingMove
+  def pbHealAmount(user)
+    return (user.totalhp * 2 / 3.0).round if user.effectiveWeather == :Hail
+    return (user.totalhp / 2.0).round
   end
 end

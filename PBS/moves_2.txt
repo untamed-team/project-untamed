@@ -47,7 +47,7 @@ Target = NearOther
 Priority = 2
 FunctionCode = FailsIfNotUserFirstTurn
 Flags = Contact,CanProtect,CanMirrorMove
-Description = Although this move has great power, it only works the first turn the user is in battle.
+Description = Although this move has great power and priority, it only works the first turn the user is in battle.
 #-------------------------------
 [POLLENPUFF]
 Name = Pollen Puff
@@ -1275,7 +1275,7 @@ Name = Thunder Cage
 Type = ELECTRIC
 Category = Special
 Power = 80
-Accuracy = 90
+Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = BindTarget
@@ -1290,10 +1290,10 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = FlinchTarget
+FunctionCode = ParalyzeTarget
 Flags = Contact,CanProtect,CanMirrorMove
-EffectChance = 30
-Description = A strong electric blast crashes down on the target. This may also make the target flinch.
+EffectChance = 10
+Description = A strong electric blast crashes down on the target. It may also leave the target with paralysis.
 #-------------------------------
 [THUNDERPUNCH]
 Name = Thunder Punch
@@ -2591,7 +2591,7 @@ Description = An inferno of scarlet flames torches everything around the user. I
 Name = Heat Wave
 Type = FIRE
 Category = Special
-Power = 95
+Power = 90
 Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
@@ -4735,7 +4735,7 @@ Description = The target is attacked by a kick launched with muscle-packed power
 Name = Multi-Attack
 Type = NORMAL
 Category = Physical
-Power = 120
+Power = 100
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
@@ -4747,12 +4747,12 @@ Description = Cloaking itself in high energy, the user slams into the target. Th
 Name = Techno Blast
 Type = NORMAL
 Category = Special
-Power = 120
+Power = 100
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
 FunctionCode = TypeDependsOnUserDrive
-Flags = CanProtect,CanMirrorMove,CannotMetronome
+Flags = CanProtect,CanMirrorMove
 Description = The user fires a beam of light at its target. The type changes depending on the Drive the user holds.
 #-------------------------------
 [THRASH]
@@ -7757,15 +7757,15 @@ Description = Gathers space power and boosts its Sp. Atk stat on the first turn,
 [DIAMONDSTORM]
 Name = Diamond Storm
 Type = ROCK
-Category = Physical
-Power = 100
+Category = Special
+Power = 95
 Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
-FunctionCode = RaiseUserDefense2
+FunctionCode = RaiseUserDefense1
 Flags = CanProtect,CanMirrorMove,CannotMetronome
-EffectChance = 50
-Description = The user whips up a storm of diamonds to damage foes. This may also sharply raise the user's Defense stat.
+EffectChance = 100
+Description = The user whips up a storm of diamonds to damage foes. This also raises the user's Defense stat.
 #-------------------------------
 [STONEEDGE]
 Name = Stone Edge
@@ -8813,7 +8813,7 @@ EffectChance = 10
 Description = The user wails eerily at its target, chilling them to the bone. This may also give the target frostbite.
 #-------------------------------
 [MYSTICBLADE]
-Name = Mystic Blade
+Name = Mystic Lance
 Type = FAIRY
 Category = Physical
 Power = 80
@@ -8821,8 +8821,8 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
-Description = The user conjures a shining blade and then attacks by cutting its target. Critical hits land more easily.
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Description = The user conjures a shining blade and then attacks by piercing its target. Critical hits land more easily.
 #-------------------------------
 [FORCEWAVE]
 Name = Force Wave
@@ -8868,7 +8868,7 @@ Category = Status
 Power = 0
 Accuracy = 0
 TotalPP = 20
-Target = UserAndAllies
+Target = User
 FunctionCode = RaiseUserSpAtk1
 Description = The user pumps themselves up, raising its Sp. Atk stat.
 #-------------------------------
@@ -9078,6 +9078,29 @@ Target = NearOther
 FunctionCode = BOOMInstall
 Flags = CanProtect,CanMirrorMove
 Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
+[STALAGBITE]
+Name = Stalagbite
+Type = ROCK
+Category = Physical
+Power = 75
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = LowerTargetDefense1
+Flags = Contact,CanProtect,CanMirrorMove,Biting
+EffectChance = 20
+Description = The user bites down with rock-hard fangs formed from stalagmites. May lower the target's Defense stat.
+#-------------------------------
+[GLACIALGULF]
+Name = Glacial Gulf
+Type = ICE
+Category = Status
+Accuracy = 0
+TotalPP = 5
+Target = User
+FunctionCode = HealUserDependingOnHail
+Description = The user regains up to half of its max HP. It restores more HP in a hailstorm.
 #-------------------------------
 [TRIMTACKLE]
 Name = Trim Tackle

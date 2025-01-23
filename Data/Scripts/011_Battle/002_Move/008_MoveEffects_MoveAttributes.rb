@@ -430,8 +430,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
     magni = magnitudes[@battle.pbRandom(magnitudes.length)]
     if !user.pbOwnedByPlayer?
       magni += 1
-      maxMagnitude = magnitudes.max
-      magni = maxMagnitude if magni > maxMagnitude
+      magni = [magni, magnitudes.max].min
     end
     @magnitudeDmg = baseDmg[magni - 4]
     @battle.pbDisplay(_INTL("Magnitude {1}!", magni))
@@ -1587,6 +1586,10 @@ class Battle::Move::TypeAndPowerDependOnWeather < Battle::Move
       ret = :ROCK if GameData::Type.exists?(:ROCK)
     when :Hail
       ret = :ICE if GameData::Type.exists?(:ICE)
+    when :StrongWinds
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
+    when :ShadowSky
+      ret = :QMARKS if GameData::Type.exists?(:QMARKS)
     end
     return ret
   end

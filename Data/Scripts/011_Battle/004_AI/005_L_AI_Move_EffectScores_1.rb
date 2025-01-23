@@ -63,7 +63,7 @@ class Battle::AI
     when "FailsIfUserDamagedThisTurn" # focus punch
 		soundcheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) } # includes infiltrator
 		multicheck=target.moves.any? { |m| m&.multiHitMove? }
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			if multicheck || soundcheck
 				score*=0.9
 			else
@@ -151,7 +151,7 @@ class Battle::AI
     when "StartSunWeather" # sunny day
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   (expectedWeather == :Sun && !user.hasActiveItem?(:UTILITYUMBRELLA))
+		   [:Sun, :HarshSun].include?(expectedWeather)
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -226,7 +226,7 @@ class Battle::AI
     when "StartRainWeather" # rain dance
 		if @battle.pbCheckGlobalAbility(:AIRLOCK) ||
 		   @battle.pbCheckGlobalAbility(:CLOUDNINE) ||
-		   (expectedWeather == :Rain && !user.hasActiveItem?(:UTILITYUMBRELLA))
+		   [:Rain, :HeavyRain].include?(expectedWeather)
 			score = 0
 		else
 			score*=1.6 if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
@@ -437,7 +437,7 @@ class Battle::AI
 			elecvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				elecvar=true if m.hasType?(:ELECTRIC)
+				elecvar=true if m.hasType?(:ELECTRIC) || m.hasAbility?(:MIMICRY)
 			end
 			if elecvar
 				miniscore*=2
@@ -466,7 +466,7 @@ class Battle::AI
 			grassvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				grassvar=true if m.hasType?(:GRASS)
+				grassvar=true if m.hasType?(:GRASS) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -502,7 +502,7 @@ class Battle::AI
 			fairyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				fairyvar=true if m.hasType?(:FAIRY)
+				fairyvar=true if m.hasType?(:FAIRY) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -539,7 +539,7 @@ class Battle::AI
 			psyvar=false
 			@battle.pbParty(user.index).each_with_index do |m, i|
 				next if m.fainted?
-				psyvar=true if m.hasType?(:PSYCHIC)
+				psyvar=true if m.hasType?(:PSYCHIC) || m.hasAbility?(:MIMICRY)
 			end
 			roles = pbGetPokemonRole(user, target)
 			miniscore = getFieldDisruptScore(user,target,globalArray,skill)
@@ -1098,7 +1098,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAttack1", "RaiseUserAttack2", "RaiseUserAttack3", "RaiseTargetAttack1" # Howl
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1210,7 +1210,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:ATTACK) 
+			if user.statStageAtMax?(:ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1250,7 +1250,7 @@ class Battle::AI
 	#---------------------------------------------------------------------------
     when "MaxUserAttackLoseHalfOfTotalHP" # Belly Drum
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1373,7 +1373,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserDefense1", "RaiseUserDefense1CurlUpUser" # Harden
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1481,7 +1481,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1516,7 +1516,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserDefense2", "RaiseUserDefense3" # Iron Defense, Cotton Guard
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1626,7 +1626,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:DEFENSE) 
+			if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1651,7 +1651,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtk1" # Charge Beam
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1763,7 +1763,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_ATTACK) 
+			if user.statStageAtMax?(:SPECIAL_ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -1798,7 +1798,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtk2", "RaiseUserSpAtk3" # Nasty Plot
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -1917,7 +1917,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpDef1", "RaiseUserSpDef1PowerUpElectricMove" # Charge
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2031,7 +2031,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2057,7 +2057,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 	when "RaiseUserSpDef2", "RaiseUserSpDef3" # Amnesia
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2165,7 +2165,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPECIAL_DEFENSE) 
+			if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2192,7 +2192,7 @@ class Battle::AI
 		if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2314,7 +2314,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2347,7 +2347,7 @@ class Battle::AI
 		if ospeed<(aspeed*2.0) && @battle.field.effects[PBEffects::TrickRoom] == 0
 			miniscore*=1.2
 		end
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2476,7 +2476,7 @@ class Battle::AI
 			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
 			miniscore+=100
 			miniscore/=100.0          
-			if user.statStageAtMax?(:SPEED) 
+			if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 				miniscore=1
 			end       
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2523,7 +2523,7 @@ class Battle::AI
     when "RaiseUserCriticalHitRate2" # Focus Energy
 		if user.effects[PBEffects::FocusEnergy] < 2
 			miniscore=100        
-			if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+			if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 				miniscore*=1.3
 			end
 			hasAlly = !target.allAllies.empty?
@@ -2608,7 +2608,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAtkDef1" # Bulk Up
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2718,7 +2718,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2778,7 +2778,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -2801,7 +2801,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAtkDefAcc1" # Coil
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -2980,7 +2980,7 @@ class Battle::AI
 				miniscore*=(move.addlEffect.to_f/100.0)
 				miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 			end
-			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+			miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 			miniscore+=100
 			miniscore/=100.0
 			if user.hasActiveAbility?(:CONTRARY)
@@ -3004,7 +3004,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAtkSpAtk1", "RaiseUserAtkSpAtk1Or2InSun" # Work Up, Growth
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -3136,7 +3136,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash
 		miniscore=100
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -3265,7 +3265,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAtkSpd1", "RaiseUserAtk1Spd2" # Dragon Dance, Shift Gear
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3432,7 +3432,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserAtkAcc1" # Hone Claws
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -3582,7 +3582,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserDefSpDef1" # Cosmic Power
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		hasAlly = !target.allAllies.empty?
@@ -3707,7 +3707,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtkSpDef1" # calm mind
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -3861,7 +3861,7 @@ class Battle::AI
     when "RaiseUserSpAtkSpDefSpd1" # Quiver Dance
 		#spatk
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.4
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -4056,7 +4056,7 @@ class Battle::AI
 			miniscore*=(move.addlEffect.to_f/100.0)
 			miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
 		end
-		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+		miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
 		miniscore+=100
 		miniscore/=100.0   
 		miniscore=0.1 if user.hasActiveAbility?(:CONTRARY)
@@ -4530,7 +4530,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4547,6 +4547,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0
@@ -4558,8 +4559,12 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4629,7 +4634,7 @@ class Battle::AI
 		else # is ally
 			miniscore = -100 # neg due to being ally
 			if target.pbCanConfuse?(user, false)
-				miniscore*=0.5
+				miniscore*=0.75
 			else
 				miniscore*=1.5
 			end          
@@ -4646,6 +4651,7 @@ class Battle::AI
 				minimi = getAbilityDisruptScore(move,user,target,skill)
 				minimi = 1.0 / minimi
 				miniscore*=minimi
+				miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
 			else
 				if target.hasActiveAbility?(:CONTRARY)
 					miniscore = 0
@@ -4657,8 +4663,12 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
-			enemy2 = enemy1.allAllies.first
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
+			end
 			if ospeed > pbRoughStat(enemy1,:SPEED,skill) && 
 			   ospeed > pbRoughStat(enemy2,:SPEED,skill)
 				miniscore*=1.3
@@ -4670,43 +4680,61 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetSpDef1" # Aromatic Mist
-		hasAlly = !user.allAllies.empty?
-		if hasAlly && !target.opposes?(user) && !target.statStageAtMax?(:SPECIAL_DEFENSE)
-			t_hasAlly = !target.allAllies.empty?
-			if !t_hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
-				miniscore*=2
+		if !user.allAllies.empty? 
+			ally = user.allAllies.first
+			#spdef
+			miniscore=100
+			miniscore*=1.1 if ally.hp*(1.0/ally.totalhp)>0.75
+			if ally.hasActiveItem?(:LEFTOVERS) || (ally.hasActiveItem?(:BLACKSLUDGE) && ally.pbHasType?(:POISON, true))
+				miniscore*=1.2
 			end
-			if target.hp*(1.0/target.totalhp)>0.75
-				score*=1.1
+			miniscore = 1 if ally.statStageAtMax?(:SPECIAL_DEFENSE)
+			miniscore/=100.0
+			score *= miniscore
+
+			#atk
+			miniscore=100
+			miniscore*=1.5 if ally.attack>ally.spatk
+			miniscore*=0.3 if (1.0/ally.totalhp)*ally.hp < 0.6
+			enemy1 = user.pbDirectOpposing(true)
+			if enemy1.allAllies.empty?
+				enemy2 = enemy1
+			else
+				enemy2 = enemy1.allAllies.first
 			end
-			if target.effects[PBEffects::Yawn]>0 || target.effects[PBEffects::LeechSeed]>=0 || 
-					target..effects[PBEffects::Attract]>=0 || target.pbHasAnyStatus?
+			if pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy1,:SPEED,skill) && 
+			   pbRoughStat(ally,:SPEED,skill) > pbRoughStat(enemy2,:SPEED,skill)
+				miniscore*=1.3
+			else
+				miniscore*=0.7
+			end
+			if enemy1.pbHasMove?(:FOULPLAY) || enemy2.pbHasMove?(:FOULPLAY)
+				miniscore*=0.3
+			end
+			miniscore = 1 if ally.statStageAtMax?(:ATTACK)
+			miniscore/=100.0
+			score *= miniscore
+
+			#for both
+			if ally.effects[PBEffects::Yawn]>0 || ally.effects[PBEffects::LeechSeed]>=0 || ally.effects[PBEffects::Attract]>=0 || ally.pbHasAnyStatus?
 				score*=0.3
 			end
-			if movecheck
-				score*=0.2
-			end
-			if target.hasActiveAbility?(:SIMPLE)
-				score*=2
-			end
-			if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
-				score*=1.2
-			end
-			if target.hasActiveAbility?(:CONTRARY)
-				score=0
-			end
-			score=0 if $player.difficulty_mode?("chaos") && target.SetupMovesUsed.include?(move.id)
+			score *= 2 if ally.hasActiveAbility?(:SIMPLE)
+			score = 0 if ally.hasActiveAbility?(:CONTRARY) || ($player.difficulty_mode?("chaos") && ally.SetupMovesUsed.include?(move.id))
 		else
 			score=0
 		end
     #---------------------------------------------------------------------------
     when "RaiseTargetRandomStat2" # Acupressure
 		miniscore=100        
-		if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
+		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
+		enemy1 = user.pbDirectOpposing(true)
+		hasAlly = !enemy1.allAllies.empty?
+		if hasAlly
+			miniscore*=0.7
+		elsif move.statusMove? && @battle.choices[enemy1.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -4718,13 +4746,13 @@ class Battle::AI
 		if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 			miniscore*=0.3
 		end
-		if target.effects[PBEffects::HyperBeam]>0
+		if enemy1.effects[PBEffects::HyperBeam]>0
 			miniscore*=1.3
 		end
-		if target.effects[PBEffects::Yawn]>0
+		if enemy1.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		bestmove=bestMoveVsTarget(enemy1,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
@@ -4737,14 +4765,14 @@ class Battle::AI
 		if user.turnCount<2
 			miniscore*=1.2
 		end
-		if target.pbHasAnyStatus?
+		if enemy1.pbHasAnyStatus?
 			miniscore*=1.2
 		end
-		if target.asleep?
+		if enemy1.asleep?
 			miniscore*=1.3
 		end
-		if target.effects[PBEffects::Encore]>0
-			if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
+		if enemy1.effects[PBEffects::Encore]>0
+			if GameData::Move.get(enemy1.effects[PBEffects::EncoreMove]).base_damage==0
 				miniscore*=1.5
 			end          
 		end
@@ -4754,17 +4782,13 @@ class Battle::AI
 		if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
 			miniscore*=0.6
 		end
-		if pbHasPhazingMove?(target)
+		if pbHasPhazingMove?(enemy1)
 			miniscore*=0.5
 		end
 		if user.hasActiveAbility?(:SIMPLE)
 			miniscore*=2
 		end
-		hasAlly = !target.allAllies.empty?
-		if hasAlly
-			miniscore*=0.7
-		end
-		roles = pbGetPokemonRole(user, target)
+		roles = pbGetPokemonRole(user, enemy1)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
@@ -4790,11 +4814,11 @@ class Battle::AI
 		if maxstat>1
 			miniscore=0
 		end
-		miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
+		miniscore*=0 if enemy1.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
 		if user.hasActiveAbility?(:CONTRARY)
 			miniscore*=0
 		end            
-		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
+		if enemy1.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
 		score*=miniscore

@@ -8941,7 +8941,7 @@ Category = Status
 Power = 0
 Accuracy = 0
 TotalPP = 20
-Target = UserAndAllies
+Target = User
 Priority = 0
 FunctionCode = RaiseUserSpAtk1
 EffectChance = 0
@@ -9243,3 +9243,26 @@ Target = NearOther
 FunctionCode = TypeIsUserFirstType
 Flags = CanProtect,CanMirrorMove
 Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
+#-------------------------------
+[STALAGBITE]
+Name = Stalagbite
+Type = ROCK
+Category = Physical
+Power = 75
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = LowerTargetDefense1
+Flags = Contact,CanProtect,CanMirrorMove,Biting
+EffectChance = 20
+Description = The user bites down with rock-hard fangs formed from stalagmites. May lower the target's Defense stat.
+#-------------------------------
+[GLACIALGULF]
+Name = Glacial Gulf
+Type = ICE
+Category = Status
+Accuracy = 0
+TotalPP = 5
+Target = User
+FunctionCode = HealUserDependingOnHail
+Description = The user regains up to half of its max HP. It restores more HP in a hailstorm.

@@ -450,7 +450,7 @@ class Battle::AI
 		end
 #---------------------------------------------------------------------------
     when "CureUserBurnPoisonParalysis" # refresh
-		if user.burned? || user.poisoned? || user.paralyzed? #|| user.frozen?
+		if user.burned? || user.poisoned? || user.paralyzed? || user.frozen?
 			score*=3
 			if (user.hp.to_f)/user.totalhp>0.5
 				score*=1.5
