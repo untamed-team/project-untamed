@@ -5535,6 +5535,9 @@ class Battle::AI
 		if target.pbOwnSide.effects[PBEffects::Safeguard]>0
 			score*=1.3
 		end
+		if target.pbOwnSide.effects[PBEffects::Tailwind]>0
+			score*=1.5
+		end
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion2", "LowerTargetEvasion3" # Sweet Scent
 		if move.statusMove?

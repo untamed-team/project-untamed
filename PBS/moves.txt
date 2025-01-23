@@ -276,6 +276,7 @@ Category = Status
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
+Priority = 2
 FunctionCode = TargetNextFireMoveDamagesTarget
 Flags = CanProtect,CanMirrorMove,Powder
 Description = The target is covered in a powder that explodes and damages it if it uses a Fire-type move.

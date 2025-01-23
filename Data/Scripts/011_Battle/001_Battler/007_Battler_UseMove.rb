@@ -357,7 +357,7 @@ class Battle::Battler
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
-      if ![:Rain, :HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
+      if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
           @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
         }

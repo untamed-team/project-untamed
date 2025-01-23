@@ -4448,20 +4448,17 @@ class Battle::AI
       	score *= 1.4 if expectedTerrain == :Psychic && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "TargetNextFireMoveDamagesTarget" # powder
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-		maxmove=bestmove[1]
-		maxtype=maxmove.type
-		if !(target.pbHasType?(:GRASS, true) || target.hasActiveAbility?(:OVERCOAT) || target.hasActiveItem?(:SAFETYGOGGLES))
-			if !userFasterThanTarget
-				score*=1.2
-			end
+		if target.affectedByPowder?
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxmove=bestmove[1]
+			maxtype=maxmove.type
 			if maxtype == :FIRE
 				score*=3
 			else
 				if target.pbHasType?(:FIRE, true)
 					score*=2
 				else
-					score*=0.2
+					score*=0.7
 				end
 			end
 			targetTypes = typesAI(target, user, skill)
@@ -4475,11 +4472,16 @@ class Battle::AI
 			if user.lastMoveUsed == :POWDER
 				score*=0.6
 			end        
-			if target.hasActiveAbility?(:MAGICGUARD)
-				score*=0.5
+			if !target.takesIndirectDamage?
+				score=0
 			end
 			if target.moves.none? { |m| m.type == :FIRE }
-				score*=0
+				score=0
+			else
+				if targetWillMove?(target)
+					realtype = pbRoughType(@battle.choices[target.index][2], target, 100)
+					score*=1.5 if realtype == :FIRE
+				end
 			end   
 		else
 			score*=0
