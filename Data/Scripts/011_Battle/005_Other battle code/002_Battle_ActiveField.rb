@@ -36,7 +36,7 @@ class Battle::ActiveField
     @terrain         = :None
     @terrainDuration = 0
     @typezone				 = :None #mastersex type zones #by low
-    @presageBackup	 = [:None, 0] # presage stuff  #by low
+    @presageBackup	 = [:None, 0, false] # presage stuff  #by low
 		@abilityWeather  = false
 		@abilityTerrain  = false
   end
