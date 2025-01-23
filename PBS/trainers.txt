@@ -631,78 +631,110 @@ Pokemon = WOOBAT,12
 [WAREHOUSEWORKER_M, Bernard]
 LoseText = Now that's cold!
 Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
 Pokemon = SNORUNT,12
+    Moves = BITE,LEER,ASTONISH,POWDERSNOW
     Ability = MOODY
 Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
 #-------------------------------
 [WAREHOUSEWORKER_M, Bernard,100]
 LoseText = Now that's cold!
 Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
 Pokemon = SNORUNT,12
+    Moves = BITE,LEER,ASTONISH,POWDERSNOW
     Ability = MOODY
 Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
 #-------------------------------
-[WAREHOUSEWORKER_F,Donna]
+[WAREHOUSEWORKER_F, Donna]
 LoseText = I wanted just dessert, not my just desserts!
 Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
 Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
 #-------------------------------
-[WAREHOUSEWORKER_F,Donna,100]
+[WAREHOUSEWORKER_F, Donna,100]
 LoseText = I wanted just dessert, not my just desserts!
 Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
 Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
 #-------------------------------
 [WAREHOUSEWORKER_M, Santos]
 LoseText = I guess I should get back to work...
 Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
 Pokemon = FINNEON,14
 #-------------------------------
 [WAREHOUSEWORKER_M, Santos,100]
 LoseText = I guess I should get back to work...
 Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
 Pokemon = FINNEON,14
 #-------------------------------
 [TOURIST_M, Floyd]
 LoseText = Woah dude, chill out!
 Pokemon = M_VANILLITE,14
-Pokemon = LOTAD,15
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
 #-------------------------------
 [TOURIST_M, Floyd,100]
 LoseText = Woah dude, chill out!
 Pokemon = M_VANILLITE,14
-Pokemon = LOTAD,15
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
 #-------------------------------
 [TOURIST_F, Jennifer]
 LoseText = Where'd you get a Pokémon like that?
 Pokemon = VIVILLON,15
     Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
 Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
 #-------------------------------
 [TOURIST_F, Jennifer,100]
 LoseText = Where'd you get a Pokémon like that?
 Pokemon = VIVILLON,15
     Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
 Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
 #-------------------------------
 [SWIMMER_M, Edson]
 LoseText = No way, our synergy was perfect!
 Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
 Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
 #-------------------------------
 [SWIMMER_M, Edson,100]
 LoseText = No way, our synergy was perfect!
 Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
 Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
 #-------------------------------
 [SWIMMER_F, Claudia]
 LoseText = Impossible, we've been training together since yesterday!
 Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
 Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
 #-------------------------------
 [SWIMMER_F, Claudia,100]
 LoseText = Impossible, we've been training together since yesterday!
 Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
 Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
 #-------------------------------
 
 #-------------------------------
