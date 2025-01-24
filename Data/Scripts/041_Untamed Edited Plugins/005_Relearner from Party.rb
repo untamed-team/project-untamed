@@ -66,30 +66,23 @@ class MoveRelearnerScreen
   def pbGetRelearnableMoves(pkmn,eggmoverelearn=false)
     return [] if !pkmn || pkmn.egg? || pkmn.shadowPokemon?
     moves = []
-		if eggmoverelearn
-			GameData::Species.get(pkmn.species).get_egg_moves.each do |m|
-				next if pkmn.hasMove?(m)
-				moves.push(m)
-			end
-		else
-			# necturna clause #by low
-			necclause = false
-			if !pkmn.sketchMove.nil?
-				necclause = true if pkmn.hasMove?(pkmn.sketchMove)
-				#~ print necclause
-			end
-			pkmn.getMoveList.each do |m|
-				next if m[0] > pkmn.level || pkmn.hasMove?(m[1])
-				next if m[1] == :SKETCH && necclause
-				moves.push(m[1]) if !moves.include?(m[1])
-			end
-			if $game_switches[Settings::EGGMOVESSWITCH] && pkmn.first_moves || EGGMOVES==true && pkmn.first_moves
-				tmoves = []
-				pkmn.first_moves.each do |i|
-					tmoves.push(i) if !moves.include?(i) && !pkmn.hasMove?(i)
-				end
-				moves = tmoves + moves   # List first moves before level-up moves
-			end
+    # necturna clause #by low
+    necclause = false
+    if !pkmn.sketchMove.nil?
+      necclause = true if pkmn.hasMove?(pkmn.sketchMove)
+      #~ print necclause
+    end
+    pkmn.getMoveList.each do |m|
+      next if m[0] > pkmn.level || pkmn.hasMove?(m[1])
+      next if m[1] == :SKETCH && necclause
+      moves.push(m[1]) if !moves.include?(m[1])
+    end
+    if $game_switches[Settings::EGGMOVESSWITCH] && pkmn.first_moves || EGGMOVES==true && pkmn.first_moves
+      tmoves = []
+      pkmn.first_moves.each do |i|
+        tmoves.push(i) if !moves.include?(i) && !pkmn.hasMove?(i)
+      end
+      moves = tmoves + moves   # List first moves before level-up moves
     end
     return moves | []   # remove duplicates
   end
