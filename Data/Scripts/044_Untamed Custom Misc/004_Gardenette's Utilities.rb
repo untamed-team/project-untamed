@@ -1926,8 +1926,13 @@ def talkToRanchPkmn(daycareSlot)
   return if pkmn.nil?
   species = pkmn.species.to_s
 	pbSEPlay("Cries/"+species,100)
-  levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
-  print levelsGained
+  
+  
+  #is the pokemon happy in the daycare? Based on compatibility with other pkmn in slot, then based on levels gained
+  compat = $PokemonGlobal.day_care.get_compatibility
+  print "compat is #{compat}"
+  #levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
+  #print levelsGained
   #pbMessage(_INTL("{1} seems happy at the moment.", pkmn.name))
 
 end
