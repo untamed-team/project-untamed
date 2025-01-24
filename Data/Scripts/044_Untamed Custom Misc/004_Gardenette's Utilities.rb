@@ -1926,8 +1926,51 @@ def talkToRanchPkmn(daycareSlot)
   return if pkmn.nil?
   species = pkmn.species.to_s
 	pbSEPlay("Cries/"+species,100)
+  
+  
+  #say things based on how much pkmn gets along with partner, how many levels it's gained, etc.
+  compat = $PokemonGlobal.day_care.get_compatibility
   levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
-  print levelsGained
+
+  #pbMessage(_INTL("{1} seems like it would rather be adventuring with you.", pkmn.name))
+
+chance = rand(5)
+case chance
+when 0
+  #comment based on levels gained
+  if levelsGained <= 0
+    pbMessage(_INTL("{1} is training to be the very best!", pkmn.name))
+  elsif levelsGained.between?(1,5)
+    pbMessage(_INTL("{1} wants to show you how strong it's gotten!", pkmn.name))
+  else
+    pbMessage(_INTL("{1} is ready for another adventure with you.", pkmn.name))
+  end
+when 1
+  #comment based on compatibility with other pkmn in daycare slot
+  case compat
+  when 0
+    #0 - rather play with other pkmn
+    pbMessage(_INTL("{1} seems very content.", pkmn.name))
+  when 1
+    #1 - don't like each other much
+    pbMessage(_INTL("{1} is daydreaming.", pkmn.name))
+  when 2
+    #2 - get along
+    pbMessage(_INTL("{1} seems to be having fun.", pkmn.name))
+  when 3
+    #3 - get along very well
+    pbMessage(_INTL("{1} looks like it could stay here forever.", pkmn.name))
+  end
+when 2
+  pbMessage(_INTL("{1} seems very content.", pkmn.name))
+when 3
+  pbMessage(_INTL("{1} is thinking about how kind Grandma is.", pkmn.name))
+when 4
+  pbMessage(_INTL("{1} is drooling and thinking about Grandpa's homemade Pokémon food.", pkmn.name))
+end
+  
+  #levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
+  #print levelsGained
   #pbMessage(_INTL("{1} seems happy at the moment.", pkmn.name))
 
 end
