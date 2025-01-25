@@ -45,19 +45,13 @@ Land,21
     10,M_EKANS,6,9
 #-------------------------------
 [048] # Route 1
-LandDay,21
+Land,21
     25,MINIMELO,2,4
+    25,PACUNA,2,4
     20,WRENNER,2,4
     10,BUDEW,2,3
     10,FLABEBE,2,3
     10,LEDYBA,2,3
-    25,PACUNA,2,4
-LandNight,21
-    25,MINIMELO,2,4
-    25,PACUNA,2,4
-    20,WRENNER,2,4
-    10,BUDEW,2,3
-    10,FLABEBE,2,3
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
@@ -76,8 +70,6 @@ GoodRod
     60,FEEBAS,12,17
     20,BANAGNAW,10,15
     20,FINNEON,10,16
-CornDay,100
-    20,MOLLUCOTTA,5
 #-------------------------------
 [079] # Hacienda Castaneda
 Land,21
