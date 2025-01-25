@@ -4001,12 +4001,117 @@ class Battle::AI
 				:MARANGABERRY, :PECHABERRY, :PERSIMBERRY, :PETAYABERRY, :RAWSTBERRY,
 				:SALACBERRY, :STARFBERRY, :WIKIBERRY
 			]
-			score *= 1.3 if useful_berries.include?(user.item_id)
+			ebinberry = [:LIECHIBERRY, :GANLONBERRY, :SALACBERRY, :PETAYABERRY, :APICOTBERRY, :STARFBERRY]
+			score *= 1.2 if useful_berries.include?(user.item_id)
+			if ebinberry.include?(user.item_id)
+				score *= 1.2
+				score *= 1.2 if user.turnCount<2
+			end
 			score *= 1.2 if user.canHeal? && user.hp < user.totalhp / 3.0 && user.hasActiveAbility?(:CHEEKPOUCH)
 			score *= 1.2 if user.hasActiveAbility?([:HARVEST, :RIPEN]) ||
 							user.pbHasMoveFunction?("RestoreUserConsumedItem")   # Recycle
 			score *= 1.2 if !user.canConsumeBerry?
-			score -= user.stages[:DEFENSE] * 20
+
+			# defense boost
+			miniscore=100
+			if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
+				miniscore*=1.3
+			end
+			hasAlly = !target.allAllies.empty?
+			if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
+				miniscore*=2
+			end
+			if (user.hp.to_f)/user.totalhp>0.75
+				miniscore*=1.2
+			end
+			if (user.hp.to_f)/user.totalhp<0.33
+				miniscore*=0.3
+			end
+			if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
+				miniscore*=0.3
+			end  
+			if target.effects[PBEffects::HyperBeam]>0
+				miniscore*=1.3
+			end
+			if target.effects[PBEffects::Yawn]>0
+				miniscore*=1.7
+			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0]
+			if maxdam<(user.hp/4.0)
+				miniscore*=1.2
+			else
+				if move.baseDamage==0 
+					miniscore*=0.8
+					if maxdam>user.hp
+						miniscore*=0.1
+					end
+				end              
+			end
+			miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
+			if userFasterThanTarget
+				miniscore*=1.5
+			else
+				miniscore*=1.5 if user.item_id == :SALACBERRY
+			end
+			if pbHasPhazingMove?(target)
+				miniscore*=0.2
+			end
+			if user.hasActiveAbility?(:SIMPLE)
+				miniscore*=2
+			end
+			hasAlly = !target.allAllies.empty?
+			if hasAlly
+				miniscore*=0.7
+			end
+			if user.stages[:DEFENSE]>0
+				ministat=user.stages[:DEFENSE]
+				minimini=-15*ministat
+				minimini+=100          
+				minimini/=100.0          
+				miniscore*=minimini
+			end
+			if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
+				miniscore*=1.3
+			end
+			bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+			maxdam=bestmove[0]
+			if (maxdam.to_f/user.hp)<0.12
+				miniscore*=0.3
+			end
+			roles = pbGetPokemonRole(user, target)
+			if roles.include?("Physical Wall") || roles.include?("Special Wall")
+				miniscore*=1.3
+			end
+			if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
+				miniscore*=1.2
+			end
+			miniscore*=1.3 if user.moves.any? { |m| m&.healingMove? }
+			if user.pbHasMove?(:LEECHSEED)
+				miniscore*=1.3
+			end
+			if user.pbHasMove?(:PAINSPLIT)
+				miniscore*=1.2
+			end        
+			if targetWillMove?(target, "phys")
+				if move.statusMove? && userFasterThanTarget && 
+				   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
+					miniscore*=1.2
+				end
+			end
+			if user.statStageAtMax?(:DEFENSE)
+				miniscore=0
+			end
+			movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
+			miniscore*=0 if movecheck
+			if user.hasActiveAbility?(:CONTRARY)
+				miniscore*=0
+			end            
+			if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
+				miniscore=1
+			end
+			score*=miniscore
+			score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
 		end
     #---------------------------------------------------------------------------
     when "AllBattlersConsumeBerry" # Teatime
