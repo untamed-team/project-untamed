@@ -5346,7 +5346,7 @@ Accuracy = 100
 TotalPP = 35
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,GravityBoosted
 Description = A physical attack in which the user charges and slams into the target with its whole body.
 #-------------------------------
 [DOUBLEHIT]
@@ -7827,7 +7827,7 @@ Accuracy = 95
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,GravityBoosted
 EffectChance = 100
 Description = Boulders are hurled at the target. It also lowers the target's Speed by preventing its movement.
 #-------------------------------
@@ -9242,7 +9242,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = TypeIsUserFirstType
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,GravityBoosted
 Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
 #-------------------------------
 [STALAGBITE]

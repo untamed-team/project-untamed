@@ -1889,6 +1889,9 @@ class Battle::AI
 			end
 			abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
 		end
+		if target.hasActiveAbility?(:SIMPLE)
+			abilityscore*=1.4 if pbHasSetupMove?(target)
+		end
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?(:BAITEDLINE)
 			echo("\nBaited Line Disrupt") if $AIGENERALLOG
