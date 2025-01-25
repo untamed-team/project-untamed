@@ -886,12 +886,12 @@ def pbTrashBin(eventID, specialBin = false)
   if !specialBin
     bin_rng = rand(5)
     case bin_rng
-    when 0 then msg = "A common trash bin."
-    when 1 then msg = "A interesting trash bin."
-    when 2 then msg = "A trash bin, it has paper in it."
-    when 3 then msg = "A trash bin. You wonder how they are made."
-    when 4 then msg = "One of the trash bins of all time."
-    when 5 then msg = "One of a variety of the mysterious Trash Bins."
+    when 0 then msg = (_INTL("A common trash bin."))
+    when 1 then msg = (_INTL("An interesting trash bin."))
+    when 2 then msg = (_INTL("A trash bin, it has paper in it."))
+    when 3 then msg = (_INTL("A trash bin. You wonder how they are made."))
+    when 4 then msg = (_INTL("One of the trash bins of all time."))
+    when 5 then msg = (_INTL("One of a variety of the mysterious Trash Bins."))
     end
     pbMessage(msg)
     return
