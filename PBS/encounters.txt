@@ -1,4 +1,4 @@
-# See the documentation on the wiki to learn how to edit this file.
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
@@ -72,16 +72,6 @@ GoodRod
     20,FINNEON,10,16
 #-------------------------------
 [079] # Hacienda Castaneda
-Water,2
-    60,BANAGNAW,7,9
-    40,FINNEON,6,8
-OldRod
-    60,BANAGNAW,6,8
-    40,FINNEON,5,9
-GoodRod
-    60,FEEBAS,12,17
-    20,BANAGNAW,10,15
-    20,FINNEON,10,16
 Land,21
     25,TECHUPPI,3,6
     25,WRENNER,3,5
