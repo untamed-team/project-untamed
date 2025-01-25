@@ -42,28 +42,28 @@ Land,21
 #-------------------------------
 [034] # Monarca Cave
 Cave,5
-    20,BUDEW,8-10
-    20,FLABEBE,9-11
-    20,WOOBAT,8-10
-    20,KNOGGIN,8-10
-    10,CHICATTA,10-11
-    10,M_ROSELIA,9-11
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    20,WOOBAT,8,10
+    20,KNOGGIN,8,10
+    10,CHICATTA,10,11
+    10,M_ROSELIA,9,11
 Land,21
-    20,BUDEW,8-10
-    20,FLABEBE,9-11
-    10,WOOBAT,8-10
-    10,KNOGGIN,8-10
-    20,CHICATTA,10-11
-    20,M_ROSELIA,9-11
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    10,WOOBAT,8,10
+    10,KNOGGIN,8,10
+    20,CHICATTA,10,11
+    20,M_ROSELIA,9,11
 #-------------------------------
 [035] # Monarca Cave 2
 Cave,5
-    20,BUDEW,8-10
-    20,FLABEBE,9-11
-    20,WOOBAT,8-10
-    20,KNOGGIN,8-10
-    10,CHICATTA,10-11
-    10,M_ROSELIA,9-11
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    20,WOOBAT,8,10
+    20,KNOGGIN,8,10
+    10,CHICATTA,10,11
+    10,M_ROSELIA,9,11
 #-------------------------------
 [048] # Route 1
 Land,21
