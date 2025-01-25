@@ -539,6 +539,8 @@ class Battle::AI
 					damagedealtPercent = ownmaxdmg *100.0 / b.hp
 					if m.function=="SwitchOutUserPassOnEffects"
 						score=120
+					elsif m.function=="UseRandomMove" #by low
+						score=95
 					else	
 						score=pbGetMoveScore(m, pokmon, b, 100)
 					end	

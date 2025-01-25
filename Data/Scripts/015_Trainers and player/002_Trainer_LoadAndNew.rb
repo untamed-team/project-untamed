@@ -93,10 +93,10 @@ def pbTrainerCheck(tr_type, tr_name, max_battles, tr_version = 0)
   # Check for existence of trainer with given ID number
   return true if GameData::Trainer.exists?(tr_type, tr_name, tr_version)
   # Add new trainer
-  if pbConfirmMessage(_INTL("Add new trainer variant {1} (of {2}) for {3} {4}?",
-                            tr_version, max_battles, tr_type.to_s, tr_name))
-    pbNewTrainer(tr_type, tr_name, tr_version)
-  end
+  #if pbConfirmMessage(_INTL("Add new trainer variant {1} (of {2}) for {3} {4}?",
+  #                          tr_version, max_battles, tr_type.to_s, tr_name))
+  #  pbNewTrainer(tr_type, tr_name, tr_version)
+  #end
   return true
 end
 
@@ -124,6 +124,6 @@ def pbMissingTrainer(tr_type, tr_name, tr_version)
     message = _INTL("Add new trainer ({1}, {2}, ID {3})?", tr_type.to_s, tr_name, tr_version)
   end
   cmd = pbMessage(message, [_INTL("Yes"), _INTL("No")], 2)
-  pbNewTrainer(tr_type, tr_name, tr_version) if cmd == 0
+  #pbNewTrainer(tr_type, tr_name, tr_version) if cmd == 0
   return cmd
 end
