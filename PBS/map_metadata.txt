@@ -135,7 +135,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,19,5
-BattleBack = city
+BattleBack = field
 MapSize = 1,1
 #-------------------------------
 [023]   # Route 5
@@ -143,6 +143,7 @@ Name = Route 5
 Outdoor = true
 ShowArea = true
 MapPosition = 0,18,4
+BattleBack = desert
 #-------------------------------
 [024]   # Camp - Grassy
 Name = Camp - Grassy
@@ -153,18 +154,21 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,18,3
+BattleBack = mountain
 #-------------------------------
 [026]   # Route 2
 Name = Route 2
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,3
+BattleBack = field
 MapSize = 4,01111100
 #-------------------------------
 [027]   # Route 4 - Bottom Vertical
 Name = Route 4
 Outdoor = true
 ShowArea = true
+BattleBack = mountain
 #-------------------------------
 [028]   # Daycare CenterInterior
 Name = Daycare CenterInterior
@@ -175,12 +179,14 @@ Name = Route 3
 Outdoor = true
 ShowArea = true
 MapPosition = 0,24,6
+BattleBack = mountain
 #-------------------------------
 [030]   # Butterfly Sanctuary
 Name = Butterfly Sanctuary
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,1
+BattleBack = forest
 MapSize = 1,1
 #-------------------------------
 [031]   # Monarca
@@ -188,6 +194,7 @@ Name = Monarca Woods
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,1
+BattleBack = forest
 MapSize = 1,1
 #-------------------------------
 [032]   # Ceiba's Lab
@@ -207,12 +214,14 @@ MapSize = 1,1
 Name = Monarca Cave
 ShowArea = true
 MapPosition = 0,22,1
+BattleBack = cave
 MapSize = 1,1
 #-------------------------------
 [035]   # Monarca Cave 2
 Name = Monarca Cave
 ShowArea = true
 MapPosition = 0,22,1
+BattleBack = cave
 MapSize = 1,1
 #-------------------------------
 [036]   # Calojarro Plaza
@@ -232,6 +241,7 @@ Name = Melolado
 Outdoor = true
 ShowArea = true
 MapPosition = 0,12,1
+BattleBack = snow
 MapSize = 1,1
 #-------------------------------
 [040]   # Butterfly View
@@ -239,12 +249,14 @@ Name = Monarca
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,1
+BattleBack = mountain
 MapSize = 1,1
 #-------------------------------
 [041]   # Calojarro Gym Exterior 1
 Name = Calojarro Gym Exterior 1
 Outdoor = true
 MapPosition = 0,25,2
+BattleBack = beach
 MapSize = 1,1
 #-------------------------------
 [042]   # Emilio's House
@@ -257,6 +269,7 @@ MapSize = 1,1
 Name = Calojarro Resort Section
 Outdoor = true
 MapPosition = 0,25,2
+BattleBack = beach
 MapSize = 1,1
 #-------------------------------
 [044]   # Calojarro Shopping District
@@ -269,15 +282,18 @@ MapSize = 1,1
 Name = Asterado Ranch
 Outdoor = true
 ShowArea = true
+BattleBack = farmland
 #-------------------------------
 [046]   # Route 3 Cave
 Name = Route 3 Cave
 MapPosition = 0,24,5
+BattleBack = cave
 #-------------------------------
 [047]   # Route 4 - Top East
 Name = Route 4
 Outdoor = true
 ShowArea = true
+BattleBack = mountain
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
@@ -288,10 +304,15 @@ MapPosition = 0,19,4
 BattleBack = field
 MapSize = 2,1101
 #-------------------------------
+[049]   # Asterado Dive
+Name = Asterado Dive
+BattleBack = water2
+#-------------------------------
 [050]   # Dorado Mine Floor 1
 Name = Dorado Mine F1
 ShowArea = true
 Dungeon = false
+BattleBack = cave1
 Environment = Cave
 #-------------------------------
 [051]   # Calojarro
@@ -299,32 +320,47 @@ Name = Calojarro
 Outdoor = true
 ShowArea = true
 MapPosition = 0,25,2
+BattleBack = beach
 MapSize = 1,1
 #-------------------------------
 [052]   # Dorado Mine Floor 2 Main
 Name = Dorado Mine F2
 ShowArea = true
+BattleBack = cave1
 #-------------------------------
-[053]   # Dorado Mine Floor 3
+[053]   # Dorado Mine Floor 3 Main
 Name = Dorado Mine F3
 ShowArea = true
+BattleBack = cave4
 #-------------------------------
 [054]   # Dorado Mine Floor 2 Right Side Strength Room
 Name = Dorado Mine F2
 ShowArea = true
+BattleBack = cave
 #-------------------------------
 [055]   # Dorado Mine Floor 2 South Section
 Name = Dorado Mine F2
 ShowArea = true
+BattleBack = cave
 #-------------------------------
 [056]   # Dorado Mine Floor 4
 Name = Dorado Mine F4
 ShowArea = true
+BattleBack = cave4
+#-------------------------------
+[057]   # Canyon Temple Main
+Name = Canyon Temple Main
+BattleBack = cave_deep
 #-------------------------------
 [058]   # Route 6
 Name = Route 6
 Outdoor = true
 ShowArea = true
+BattleBack = desert
+#-------------------------------
+[059]   # Canyon Temple Left
+Name = Canyon Temple Left
+BattleBack = cave_deep
 #-------------------------------
 [061]   # Connection to Hacienda
 Name = Connection to Hacienda
@@ -340,6 +376,7 @@ MapSize = 1,1
 Name = Ferrera Town
 Outdoor = true
 ShowArea = true
+BattleBack = desert
 #-------------------------------
 [069]   # Contest Reception
 Name = Contest Reception
@@ -420,3 +457,43 @@ Outdoor = false
 Name = Favela Housing Interiors
 Outdoor = false
 MapPosition = 0,25,2
+#-------------------------------
+[086]   # Canyon Temple Mural
+Name = Canyon Temple Mural
+BattleBack = cave_deep
+#-------------------------------
+[087]   # Soleca Desert North
+Name = Soleca Desert North
+BattleBack = desert
+#-------------------------------
+[096]   # Calojarro 2 Electric Boogaloo
+Name = Calojarro 2 Electric Boogaloo
+BattleBack = beach
+#-------------------------------
+[098]   # Dorado Mine Level 2 Right Side
+Name = Dorado Mine Level 2 Right Side
+BattleBack = cave
+#-------------------------------
+[106]   # Butterfly Sanctuary Entrance
+Name = Butterfly Sanctuary Entrance
+BattleBack = forest
+#-------------------------------
+[113]   # Route 4 Temple Entrance
+Name = Route 4 Temple Entrance
+BattleBack = mountain
+#-------------------------------
+[116]   # Dorado Mine Floor 3 Right Side
+Name = Dorado Mine Floor 3 Right Side
+BattleBack = cave4
+#-------------------------------
+[117]   # Route 3-4 Transfer Map
+Name = Route 3-4 Transfer Map
+BattleBack = mountain
+#-------------------------------
+[118]   # Dorado Mine Floor 3 Item Room left
+Name = Dorado Mine Floor 3 Item Room left
+BattleBack = cave4
+#-------------------------------
+[120]   # Canyon Temple Right
+Name = Canyon Temple Right
+BattleBack = cave_deep
