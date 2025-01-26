@@ -154,7 +154,7 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,18,3
-BattleBack = mountain
+BattleBack = canyon
 #-------------------------------
 [026]   # Route 2
 Name = Route 2
@@ -168,7 +168,7 @@ MapSize = 4,01111100
 Name = Route 4
 Outdoor = true
 ShowArea = true
-BattleBack = mountain
+BattleBack = canyon
 #-------------------------------
 [028]   # Daycare CenterInterior
 Name = Daycare CenterInterior
@@ -293,7 +293,7 @@ BattleBack = cave
 Name = Route 4
 Outdoor = true
 ShowArea = true
-BattleBack = mountain
+BattleBack = canyon
 #-------------------------------
 [048]   # Route 1
 Name = Route 1
@@ -480,7 +480,7 @@ BattleBack = forest
 #-------------------------------
 [113]   # Route 4 Temple Entrance
 Name = Route 4 Temple Entrance
-BattleBack = mountain
+BattleBack = canyon
 #-------------------------------
 [116]   # Dorado Mine Floor 3 Right Side
 Name = Dorado Mine Floor 3 Right Side
