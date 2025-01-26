@@ -279,16 +279,6 @@ Pokemon = GULPI,10
     Ability = SWIFTSWIM
     Nature = CALM
 #-------------------------------
-[WAREHOUSEWORKER,Donna]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
-#-------------------------------
-[WAREHOUSEWORKER,Donna,100]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
-#-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
 Pokemon = EEVEE,11
@@ -297,11 +287,7 @@ Pokemon = EEVEE,11
 LoseText = ...
 Pokemon = EEVEE,11
 #-------------------------------
-[WAREHOUSEWORKER,Reine,100]
-LoseText = ...
-Pokemon = EEVEE,11
-#-------------------------------
-[NEOGRUNT_F, Priscilla]
+[NEOGRUNT_F,Priscilla]
 LoseText = L-let's get out of here!
 Pokemon = PACUNA,13
     Moves = BITE,BABYDOLLEYES,DISARMINGVOICE,TACKLE
@@ -310,7 +296,7 @@ Pokemon = MAGNEMITE,14
 Pokemon = CHICATTA,13
     Moves = STRUGGLEBUG,FURYCUTTER,STRINGSHOT,RAZORLEAF
 #-------------------------------
-[NEOGRUNT_F, Priscilla,100]
+[NEOGRUNT_F,Priscilla,100]
 LoseText = L-let's get out of here!
 Pokemon = PACUNA,13
     Moves = BITE,BABYDOLLEYES,DISARMINGVOICE,TACKLE
@@ -319,7 +305,7 @@ Pokemon = MAGNEMITE,14
 Pokemon = CHICATTA,13
     Moves = STRUGGLEBUG,FURYCUTTER,STRINGSHOT,RAZORLEAF
 #-------------------------------
-[NEOGRUNT_M, Lucas]
+[NEOGRUNT_M,Lucas]
 LoseText = Nothing but a minor setback!
 Pokemon = WIMPOD,13
     Moves = MUDSHOT,AQUAJET,TAUNT,STRUGGLEBUG
@@ -328,7 +314,7 @@ Pokemon = SUNFLORA,12
     Ability = EARLYBIRD
     Nature = IMPISH
 #-------------------------------
-[NEOGRUNT_M, Lucas,100]
+[NEOGRUNT_M,Lucas,100]
 LoseText = Nothing but a minor setback!
 Pokemon = WIMPOD,13
     Moves = MUDSHOT,AQUAJET,TAUNT,STRUGGLEBUG
@@ -462,185 +448,293 @@ Pokemon = GOHILA,10
     Nature = BOLD
     Ability = POISONTOUCH
 #-------------------------------
-[TOURIST_F, Kaitlyn]
+[TOURIST_F,Kaitlyn]
 LoseText = The sun was in my eyes!
 Pokemon = PACUNA,9
 Pokemon = M_VANILLITE,9
 #-------------------------------
-[TOURIST_F, Kaitlyn,100]
+[TOURIST_F,Kaitlyn,100]
 LoseText = The sun was in my eyes!
 Pokemon = PACUNA,9
 Pokemon = M_VANILLITE,9
 #-------------------------------
-[TOURIST_M, Samuel]
+[TOURIST_M,Samuel]
 LoseText = Cowabummer!
 Pokemon = LITWICK,9
 Pokemon = ZEAZAYA,9
 Pokemon = M_EKANS,9
 #-------------------------------
-[TOURIST_M, Samuel,100]
+[TOURIST_M,Samuel,100]
 LoseText = Cowabummer!
 Pokemon = LITWICK,9
 Pokemon = ZEAZAYA,9
 Pokemon = M_EKANS,9
 #-------------------------------
-[CAMPER_F, Lola]
+[CAMPER_F,Lola]
 LoseText = If only my battling skills were are sharp as my survival skills...
 Pokemon = HOOTHOOT,10
 Pokemon = SKIDDO,10
 Pokemon = WRENNER,10
 #-------------------------------
-[CAMPER_F, Lola,100]
+[CAMPER_F,Lola,100]
 LoseText = If only my battling skills were are sharp as my survival skills...
 Pokemon = HOOTHOOT,10
 Pokemon = SKIDDO,10
 Pokemon = WRENNER,10
 #-------------------------------
-[BUGCATCHER_F, Alisa]
+[BUGCATCHER_F,Alisa]
 LoseText = Bug types are still the best!
 Pokemon = MINIMELO,9
 Pokemon = LEDYBA,10
 #-------------------------------
-[BUGCATCHER_F, Alisa,100]
+[BUGCATCHER_F,Alisa,100]
 LoseText = Bug types are still the best!
 Pokemon = MINIMELO,9
 Pokemon = LEDYBA,10
 #-------------------------------
-[BUGCATCHER_M, Mannie]
+[BUGCATCHER_M,Mannie]
 LoseText = Maybe I should have studied type matchups?
 Pokemon = SCATTERBUG,10
 Pokemon = CHICATTA,10
 #-------------------------------
-[BUGCATCHER_M, Mannie,100]
+[BUGCATCHER_M,Mannie,100]
 LoseText = Maybe I should have studied type matchups?
 Pokemon = SCATTERBUG,10
 Pokemon = CHICATTA,10
 #-------------------------------
-[YOUNGSTER_F, Milly]
+[YOUNGSTER_F,Milly]
 LoseText = No way, let me try again!
 Pokemon = PURRLOIN,10
 Pokemon = SUNKERN,10
 Pokemon = TECHUPPI,10
 #-------------------------------
-[YOUNGSTER_F, Milly,100]
+[YOUNGSTER_F,Milly,100]
 LoseText = No way, let me try again!
 Pokemon = PURRLOIN,10
 Pokemon = SUNKERN,10
 Pokemon = TECHUPPI,10
 #-------------------------------
-[BUGCATCHER_F, Dany]
+[BUGCATCHER_F,Dany]
 LoseText = My bug types and I still have to evolve and get stronger!
 Pokemon = SPEWPA,10
 Pokemon = CHICATTA,11
 #-------------------------------
-[BUGCATCHER_F, Dany,100]
+[BUGCATCHER_F,Dany,100]
 LoseText = My bug types and I still have to evolve and get stronger!
 Pokemon = SPEWPA,10
 Pokemon = CHICATTA,11
 #-------------------------------
-[BIRDKEEPER_M, Connor]
+[BIRDKEEPER_M,Connor]
 LoseText = You really ruffle my feathers!
 Pokemon = HOOTHOOT,11
 Pokemon = WRENNER,11
 #-------------------------------
-[BIRDKEEPER_M, Connor,100]
+[BIRDKEEPER_M,Connor,100]
 LoseText = You really ruffle my feathers!
 Pokemon = HOOTHOOT,11
 Pokemon = WRENNER,11
 #-------------------------------
-[FISHER_M, Jimbly]
+[FISHER_M,Jimbly]
 LoseText = Looks like I'm the one who's sinking...
 Pokemon = BANAGNAW,11
 Pokemon = FINNEON,11
 #-------------------------------
-[FISHER_M, Jimbly,100]
+[FISHER_M,Jimbly,100]
 LoseText = Looks like I'm the one who's sinking...
 Pokemon = BANAGNAW,11
 Pokemon = FINNEON,11
 #-------------------------------
-[FISHER_F, Violet]
+[FISHER_F,Violet]
 LoseText = I've been schooled!
 Pokemon = FEEBAS,10
 Pokemon = LOTAD,11
 #-------------------------------
-[FISHER_F, Violet,100]
+[FISHER_F,Violet,100]
 LoseText = I've been schooled!
 Pokemon = FEEBAS,10
 Pokemon = LOTAD,11
 #-------------------------------
-[POKEMONRANGER_F, Fabian]
+[POKEMONRANGER_F,Fabian]
 LoseText = What a great battle! I wish I could have won...
 Pokemon = PHANTUMP,11
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
 #-------------------------------
-[POKEMONRANGER_F, Fabian,100]
+[POKEMONRANGER_F,Fabian,100]
 LoseText = What a great battle! I wish I could have won...
 Pokemon = PHANTUMP,11
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
 #-------------------------------
-[AROMALADY, Gloria]
+[AROMALADY,Gloria]
 LoseText = Not my beautiful flowers!
 Pokemon = FLABEBE,11
 Pokemon = BUDEW,12
 #-------------------------------
-[AROMALADY, Gloria,100]
+[AROMALADY,Gloria,100]
 LoseText = Not my beautiful flowers!
 Pokemon = FLABEBE,11
 Pokemon = BUDEW,12
 #-------------------------------
-[BUGCATCHER_M, Roberto]
+[BUGCATCHER_M,Roberto]
 LoseText = No fair, did you use bug repellent? Harumph!
 Pokemon = MINIMELO,11
 Pokemon = LEDYBA,12
 #-------------------------------
-[BUGCATCHER_M, Roberto,100]
+[BUGCATCHER_M,Roberto,100]
 LoseText = No fair, did you use bug repellent? Harumph!
 Pokemon = MINIMELO,11
 Pokemon = LEDYBA,12
 #-------------------------------
-[BIRDKEEPER_M, Francis]
+[BIRDKEEPER_M,Francis]
 LoseText = And down I go...
 Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
 #-------------------------------
-[BIRDKEEPER_M, Francis,100]
+[BIRDKEEPER_M,Francis,100]
 LoseText = And down I go...
 Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
 #-------------------------------
-[HIKER_F, Xavia]
+[HIKER_F,Xavia]
 LoseText = I haven't found my victory yet...
 Pokemon = M_ROSELIA,10
 Pokemon = KNOGGIN,12
 #-------------------------------
-[HIKER_F, Xavia,100]
+[HIKER_F,Xavia,100]
 LoseText = I haven't found my victory yet...
 Pokemon = M_ROSELIA,10
 Pokemon = KNOGGIN,12
 #-------------------------------
-[POKEMONRANGER_M, Noah]
+[POKEMONRANGER_M,Noah]
 LoseText = Looks like I'm the one who needs to train harder!
 Pokemon = KNOGGIN,12
 Pokemon = WOOBAT,11
 Pokemon = BUDEW,13
 #-------------------------------
-[POKEMONRANGER_M, Noah,100]
+[POKEMONRANGER_M,Noah,100]
 LoseText = Looks like I'm the one who needs to train harder!
 Pokemon = KNOGGIN,12
 Pokemon = WOOBAT,11
 Pokemon = BUDEW,13
 #-------------------------------
-[TOURIST_F, Lucette]
+[TOURIST_F,Lucette]
 LoseText = You're ruining the view!
 Pokemon = BUNNELBY,11
 Pokemon = WOOBAT,12
 #-------------------------------
-[TOURIST_F, Lucette,100]
+[TOURIST_F,Lucette,100]
 LoseText = You're ruining the view!
 Pokemon = BUNNELBY,11
 Pokemon = WOOBAT,12
+#-------------------------------
+[WAREHOUSEWORKER_M,Bernard]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
+Pokemon = SNORUNT,12
+    Moves = BITE,LEER,ASTONISH,POWDERSNOW
+    Ability = MOODY
+Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
+#-------------------------------
+[WAREHOUSEWORKER_M,Bernard,100]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
+Pokemon = SNORUNT,12
+    Moves = BITE,LEER,ASTONISH,POWDERSNOW
+    Ability = MOODY
+Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
+Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna,100]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
+Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
+#-------------------------------
+[WAREHOUSEWORKER_M,Santos]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = FINNEON,14
+#-------------------------------
+[WAREHOUSEWORKER_M,Santos,100]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = FINNEON,14
+#-------------------------------
+[TOURIST_M,Floyd]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
+#-------------------------------
+[TOURIST_M,Floyd,100]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
+#-------------------------------
+[TOURIST_F,Jennifer]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
+#-------------------------------
+[TOURIST_F,Jennifer,100]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
+#-------------------------------
+[SWIMMER_M,Edson]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
+Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
+#-------------------------------
+[SWIMMER_M,Edson,100]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
+Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
+#-------------------------------
+[SWIMMER_F,Claudia]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
+Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
+#-------------------------------
+[SWIMMER_F,Claudia,100]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
+Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
 #-------------------------------
 
 #-------------------------------
