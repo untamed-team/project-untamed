@@ -212,6 +212,7 @@ MapSize = 1,1
 #-------------------------------
 [034]   # Monarca Cave
 Name = Monarca Cave
+Outdoor = false
 ShowArea = true
 MapPosition = 0,22,1
 BattleBack = cave
@@ -219,6 +220,7 @@ MapSize = 1,1
 #-------------------------------
 [035]   # Monarca Cave 2
 Name = Monarca Cave
+Outdoor = false
 ShowArea = true
 MapPosition = 0,22,1
 BattleBack = cave
@@ -286,6 +288,7 @@ BattleBack = farmland
 #-------------------------------
 [046]   # Route 3 Cave
 Name = Route 3 Cave
+Outdoor = false
 MapPosition = 0,24,5
 BattleBack = cave
 #-------------------------------
@@ -306,10 +309,12 @@ MapSize = 2,1101
 #-------------------------------
 [049]   # Asterado Dive
 Name = Asterado Dive
+Outdoor = false
 BattleBack = water2
 #-------------------------------
 [050]   # Dorado Mine Floor 1
 Name = Dorado Mine F1
+Outdoor = false
 ShowArea = true
 Dungeon = false
 BattleBack = cave1
@@ -325,31 +330,37 @@ MapSize = 1,1
 #-------------------------------
 [052]   # Dorado Mine Floor 2 Main
 Name = Dorado Mine F2
+Outdoor = false
 ShowArea = true
 BattleBack = cave1
 #-------------------------------
 [053]   # Dorado Mine Floor 3 Main
 Name = Dorado Mine F3
+Outdoor = false
 ShowArea = true
 BattleBack = cave4
 #-------------------------------
 [054]   # Dorado Mine Floor 2 Right Side Strength Room
 Name = Dorado Mine F2
+Outdoor = false
 ShowArea = true
 BattleBack = cave
 #-------------------------------
 [055]   # Dorado Mine Floor 2 South Section
 Name = Dorado Mine F2
+Outdoor = false
 ShowArea = true
 BattleBack = cave
 #-------------------------------
 [056]   # Dorado Mine Floor 4
 Name = Dorado Mine F4
+Outdoor = false
 ShowArea = true
 BattleBack = cave4
 #-------------------------------
 [057]   # Canyon Temple Main
 Name = Canyon Temple Main
+Outdoor = false
 BattleBack = cave_deep
 #-------------------------------
 [058]   # Route 6
@@ -360,6 +371,7 @@ BattleBack = desert
 #-------------------------------
 [059]   # Canyon Temple Left
 Name = Canyon Temple Left
+Outdoor = false
 BattleBack = cave_deep
 #-------------------------------
 [061]   # Connection to Hacienda
@@ -385,6 +397,7 @@ MapSize = 1,1
 #-------------------------------
 [070]   # A Monarca Experiment
 Name = A Monarca Experiment
+Outdoor = false
 MapPosition = 0,22,1
 MapSize = 1,1
 #-------------------------------
@@ -460,41 +473,94 @@ MapPosition = 0,25,2
 #-------------------------------
 [086]   # Canyon Temple Mural
 Name = Canyon Temple Mural
+Outdoor = false
 BattleBack = cave_deep
 #-------------------------------
 [087]   # Soleca Desert North
 Name = Soleca Desert North
+Outdoor = true
 BattleBack = desert
+#-------------------------------
+[088]   # Camp - Meadow
+Name = Camp - Meadow
+Outdoor = true
+#-------------------------------
+[089]   # Camp - Forest
+Name = Camp - Forest
+Outdoor = true
+#-------------------------------
+[090]   # Camp - Canyon
+Name = Camp - Canyon
+Outdoor = true
+#-------------------------------
+[091]   # Camp - Beach
+Name = Camp - Beach
+Outdoor = true
+#-------------------------------
+[092]   # Camp - Farmland
+Name = Camp - Farmland
+Outdoor = true
+#-------------------------------
+[093]   # Camp - Cave
+Name = Camp - Cave
+Outdoor = false
+#-------------------------------
+[094]   # Desert
+Name = Desert
+Outdoor = true
 #-------------------------------
 [096]   # Calojarro 2 Electric Boogaloo
 Name = Calojarro 2 Electric Boogaloo
+Outdoor = true
 BattleBack = beach
 #-------------------------------
 [098]   # Dorado Mine Level 2 Right Side
 Name = Dorado Mine Level 2 Right Side
+Outdoor = false
 BattleBack = cave
+#-------------------------------
+[105]   # Ferrera Gym
+Name = Ferrera Gym
+Outdoor = false
 #-------------------------------
 [106]   # Butterfly Sanctuary Entrance
 Name = Butterfly Sanctuary Entrance
 Outdoor = true
 BattleBack = forest
 #-------------------------------
+[112]   # Mateo and Mercedes House
+Name = Mateo and Mercedes House
+Outdoor = false
+#-------------------------------
 [113]   # Route 4 Temple Entrance
 Name = Route 4 Temple Entrance
+Outdoor = true
 BattleBack = canyon
+#-------------------------------
+[114]   # Cromen Collectibles 2
+Name = Cromen Collectibles 2
+Outdoor = false
+#-------------------------------
+[115]   # Comfey Cafe
+Name = Comfey Cafe
+Outdoor = false
 #-------------------------------
 [116]   # Dorado Mine Floor 3 Right Side
 Name = Dorado Mine Floor 3 Right Side
+Outdoor = false
 BattleBack = cave4
 #-------------------------------
 [117]   # Route 3-4 Transfer Map
 Name = Route 3-4 Transfer Map
+Outdoor = true
 BattleBack = mountain
 #-------------------------------
 [118]   # Dorado Mine Floor 3 Item Room left
 Name = Dorado Mine Floor 3 Item Room left
+Outdoor = false
 BattleBack = cave4
 #-------------------------------
 [120]   # Canyon Temple Right
 Name = Canyon Temple Right
+Outdoor = false
 BattleBack = cave_deep
