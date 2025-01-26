@@ -476,6 +476,7 @@ BattleBack = cave
 #-------------------------------
 [106]   # Butterfly Sanctuary Entrance
 Name = Butterfly Sanctuary Entrance
+Outdoor = true
 BattleBack = forest
 #-------------------------------
 [113]   # Route 4 Temple Entrance

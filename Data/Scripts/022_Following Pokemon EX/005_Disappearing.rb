@@ -21,6 +21,7 @@ EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   if metadata && metadata.outdoor_map != true
     # Don't follow if the Pokemon's height is greater than 3 meters and there are no encounters ie a building or something
     height =  GameData::Species.get_species_form(pkmn.species, pkmn.form).height
+    next false if $PokemonEncounters.nil? #added by Gardenette to prevent a crash
     next false if (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here?
   end
 })
