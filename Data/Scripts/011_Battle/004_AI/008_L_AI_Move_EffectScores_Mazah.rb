@@ -649,7 +649,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 	when "OverrideTargetStatusWithPoison" # Crimson Surge
 		if $player.difficulty_mode?("chaos") && target.status == :NONE
-			score *= 0.3
+#			score *= 0.3
 		elsif target.asleep? && target.statusCount <= 2
 			score = 0
 		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
@@ -1888,6 +1888,9 @@ class Battle::AI
 				abilityscore*=1.5 if itemsAffected.include?(user.item_id)
 			end
 			abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
+		end
+		if target.hasActiveAbility?(:SIMPLE)
+			abilityscore*=1.4 if pbHasSetupMove?(target)
 		end
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?(:BAITEDLINE)

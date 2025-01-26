@@ -47,9 +47,7 @@ def pbNatureChanger(pkmn)
 end
 
 def pbIsBadPokemon?(pkmn)
-  return true if [:EEVEE, :VAPOREON, :JOLTEON, :FLAREON, :ESPEON, :UMBREON, :LEAFEON, :GLACEON, :SLYVEON, :GUSTEON, :TERREON].include?(pkmn.species)
-  #poke = GameData::Species.get(pkmn).get_baby_species
-  #return true if poke.species == :EEVEE
+  return true if pkmn.species_data.get_baby_species == :EEVEE
   return false
 end
 
@@ -459,7 +457,7 @@ end
 class Pokemon
   def compatible_with_move?(move_id)  
     return false if species_data.species == :M_DITTO
-    #return false if self.obtain_method == 4
+    #return false if self.obtain_method == 4 # <- works but i am not sure if i should go through with it
     move_data = GameData::Move.try_get(move_id)  
     # Universal TMs/Move Tutors #by low  
     unimovelist = [:ATTRACT,:FACADE,:FRUSTRATION,:PROTECT,:REST,:RETURN,:SLEEPTALK,:SUBSTITUTE,:HIDDENPOWER]  
@@ -888,12 +886,12 @@ def pbTrashBin(eventID, specialBin = false)
   if !specialBin
     bin_rng = rand(5)
     case bin_rng
-    when 0 then msg = "A common trash bin."
-    when 1 then msg = "A interesting trash bin."
-    when 2 then msg = "A trash bin, it has paper in it."
-    when 3 then msg = "A trash bin. You wonder how they are made."
-    when 4 then msg = "One of the trash bins of all time."
-    when 5 then msg = "One of a variety of the mysterious Trash Bins."
+    when 0 then msg = (_INTL("A common trash bin."))
+    when 1 then msg = (_INTL("An interesting trash bin."))
+    when 2 then msg = (_INTL("A trash bin, it has paper in it."))
+    when 3 then msg = (_INTL("A trash bin. You wonder how they are made."))
+    when 4 then msg = (_INTL("One of the trash bins of all time."))
+    when 5 then msg = (_INTL("One of a variety of the mysterious Trash Bins."))
     end
     pbMessage(msg)
     return
@@ -1105,4 +1103,102 @@ class PersonalNumberGenerator
     end
     decoded_text
   end
+end
+
+def eggMoveTutor
+  @eggmovesarray = []
+  @mother = nil
+  @father = nil
+  doegg = false
+  dadmovelist = []
+  mommovelist = []
+  pbFadeOutIn {
+    scene = PokemonParty_Scene.new
+    screen = PokemonPartyScreen.new(scene, $player.party)
+    screen.pbStartScene(_INTL(""), false)
+    loop do
+      chosen1 = screen.pbChoosePokemon
+      break if chosen1 < 0
+      @father = $player.party[chosen1]
+      if @father.egg?
+        pbMessage(_INTL("I know it is called egg moves, but come on now.")) { screen.pbUpdate }
+      elsif @father.shadowPokemon?
+        pbMessage(_INTL("Shadow Pokémon can't give any moves.")) { screen.pbUpdate }
+      end
+      @father.moves.each do |i|
+        break if i.nil? || !@father.hasMove?(i.id)
+        dadmovelist.push(i.id)
+      end
+      break if dadmovelist.nil?
+      chosen2 = screen.pbChoosePokemon
+      break if chosen2 < 0
+      @mother = $player.party[chosen2]
+      if @mother.egg?
+        pbMessage(_INTL("I know it is called egg moves, but come on now.")) { screen.pbUpdate }
+      elsif @mother.shadowPokemon?
+        pbMessage(_INTL("Shadow Pokémon can't be taught any moves.")) { screen.pbUpdate }
+      elsif !@mother.has_any_egg_moves?
+        pbMessage(_INTL("The receiver has no egg moves to learn.")) { screen.pbUpdate }
+        break
+      end
+      @mother.species_data.get_egg_moves.each { |m| mommovelist.push(m) }
+      if @mother == @father
+        pbMessage(_INTL("These are the same pokemon you fucking idiot.")) { screen.pbUpdate }
+        break
+      #elsif @mother.gender == @father.gender
+      #  pbMessage(_INTL("These species are not of opposite sex.")) { screen.pbUpdate }
+      #  break
+      #elsif @mother.gender == 2 || @father.gender == 2
+      #  pbMessage(_INTL("One of them is genderless.")) { screen.pbUpdate }
+      #  break
+      elsif @mother.obtain_method == 4 || @father.obtain_method == 4
+        pbMessage(_INTL("One of them is too fabulous to do this process.")) { screen.pbUpdate }
+        break
+      end
+
+      @eggmovesarray = mommovelist & dadmovelist
+      egg_groups1 = @father.species_data.egg_groups
+      egg_groups2 = @mother.species_data.egg_groups
+      if egg_groups1.any? { |e| [:Undiscovered, :Ditto].include?(e) } || 
+         egg_groups2.any? { |e| [:Undiscovered, :Ditto].include?(e) } ||
+         (egg_groups1 & egg_groups2).length == 0
+        pbMessage(_INTL("These species are not compatible.")) { screen.pbUpdate }
+        break
+      elsif @eggmovesarray.empty?
+        pbMessage(_INTL("These species share no possible egg moves.")) { screen.pbUpdate }
+        break
+      end
+      doegg = true
+      break
+    end
+    screen.pbEndScene
+  }
+  if doegg
+    commands = []
+    @eggmovesarray.each do |move|
+      commands.push(_INTL("#{move.name}"))
+    end
+    commands.push(_INTL("Cancel"))
+    helpwindow = Window_UnformattedTextPokemon.new("")
+    helpwindow.visible = false
+    cmd = UIHelper.pbShowCommands(helpwindow,"What move should i teach?",commands) {}
+    Input.update
+    selectedCommander = commands[cmd]
+    case selectedCommander
+    when "Cancel"
+      return false
+    else
+      @eggmovesarray.each do |move|
+        if selectedCommander == "#{move.name}"
+          if pbLearnMove(@mother, move, false, false)
+            $stats.moves_taught_by_tutor += 1
+            return true
+          else
+            return false
+          end
+        end
+      end
+    end
+  end
+  return false
 end

@@ -23,26 +23,47 @@ GoodRod
 #-------------------------------
 [026] # Route 2
 Land,21
-    20,SKIDDO,5
-    15,BUNNELBY,5
-    15,FLABEBE,5
-    15,TECHUPPI,5
-    10,HOOTHOOT,5
-    10,SUNKERN,5
-    10,WRENNER,5
-    5,M_EKANS,5
+    20,SKIDDO,7,10
+    15,BUNNELBY,8,11
+    15,FLABEBE,8,10
+    15,TECHUPPI,7,9
+    10,HOOTHOOT,8,10
+    10,SUNKERN,7,10
+    10,WRENNER,7,9
+    5,M_EKANS,9,11
 #-------------------------------
 [031] # Monarca
-LandNight,21
-    30,MINIMELO,6,9
-    20,HOOTHOOT,6,9
-    20,PACUNA,6,9
-    20,PHANTUMP,6,9
-    10,M_EKANS,6,9
 Land,21
-    30,MINIMELO,6,9
-    20,PACUNA,6,9
-    10,M_EKANS,6,9
+    30,MINIMELO,7,9
+    20,HOOTHOOT,8,10
+    20,PACUNA,9,10
+    20,PHANTUMP,8,10
+    10,M_EKANS,7,9
+#-------------------------------
+[034] # Monarca Cave
+Cave,5
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    20,WOOBAT,8,10
+    20,KNOGGIN,8,10
+    10,CHICATTA,10,11
+    10,M_ROSELIA,9,11
+Land,21
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    10,WOOBAT,8,10
+    10,KNOGGIN,8,10
+    20,CHICATTA,10,11
+    20,M_ROSELIA,9,11
+#-------------------------------
+[035] # Monarca Cave 2
+Cave,5
+    20,BUDEW,8,10
+    20,FLABEBE,9,11
+    20,WOOBAT,8,10
+    20,KNOGGIN,8,10
+    10,CHICATTA,10,11
+    10,M_ROSELIA,9,11
 #-------------------------------
 [048] # Route 1
 Land,21
@@ -55,11 +76,11 @@ Land,21
 #-------------------------------
 [078] # Hacienda Fields
 Corn,5
-    50,ZEAZAYA,5,7
     20,MURKROW,4,6
     15,PUMPKABOO,4,7
     10,MINIMELO,3,4
     5,DRILBUR,2,6
+    5,ZEAZAYA,5,7
 Water,2
     60,BANAGNAW,7,9
     40,FINNEON,6,8
@@ -72,16 +93,6 @@ GoodRod
     20,FINNEON,10,16
 #-------------------------------
 [079] # Hacienda Castaneda
-Water,2
-    60,BANAGNAW,7,9
-    40,FINNEON,6,8
-OldRod
-    60,BANAGNAW,6,8
-    40,FINNEON,5,9
-GoodRod
-    60,FEEBAS,12,17
-    20,BANAGNAW,10,15
-    20,FINNEON,10,16
 Land,21
     25,TECHUPPI,3,6
     25,WRENNER,3,5
@@ -95,8 +106,8 @@ Corn,5
     5,PACUNA,2,4
 #-------------------------------
 [106] # Butterfly Sanctuary Entrance
-Land,15
-    35,M_BURMY,8,10
-    35,SPEWPA,6,8
-    25,BURBRAWL,7,9
-    5,VIVILLON,12
+Land,21
+    35,M_BURMY,9,12
+    30,SPEWPA,8,11
+    25,BURBRAWL,8,11
+    10,VIVILLON,12
