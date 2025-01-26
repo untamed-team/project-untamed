@@ -359,7 +359,8 @@ MenuHandlers.add(:pause_menu, :options1, {
       screen = PokemonOptionScreen.new(scene)
       screen.pbStartScreen
       pbUpdateSceneMap
+	  menu.pbRefresh
     }
-    return false
+    next false
   }
 })
