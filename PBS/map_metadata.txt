@@ -431,7 +431,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,18,3
-BattleBack = field
+BattleBack = farmland
 MapSize = 1,1
 #-------------------------------
 [079]   # Hacienda Castaneda
@@ -440,7 +440,7 @@ Outdoor = true
 ShowArea = true
 Bicycle = true
 MapPosition = 0,18,4
-BattleBack = field
+BattleBack = farmland
 MapSize = 1,1
 #-------------------------------
 [080]   # Calojarro Interiors
