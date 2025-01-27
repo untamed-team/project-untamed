@@ -3496,6 +3496,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
 Battle::AbilityEffects::OnSwitchIn.add(:INNERFOCUS,
   proc { |ability, battler, battle, switch_in|
     next if !$player.difficulty_mode?("chaos")
+    next if battler.allAllies.empty?
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("{1}'s mental fortitude prevents {2} from flinching!", battler.pbThis, battler.pbTeam))
     battle.pbHideAbilitySplash(battler)

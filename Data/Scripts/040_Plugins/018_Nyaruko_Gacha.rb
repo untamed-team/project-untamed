@@ -120,19 +120,19 @@ class LootBox
     loop do
       Graphics.update
       Input.update
-      #if Input.trigger?(Input::C)
+      if Input.trigger?(Input::USE)
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
         for i in 1..pullamount
+          $game_variables[GACHA_USED] += 1
           gachaamt = $game_variables[GACHA_USED]
           random_val = semiRandomRNG(random0, gachaamt)
           if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
             random_val = random_val * 0.8
             random_val = random_val.to_i
           end
-          $game_variables[GACHA_USED] += 1
-          random_val = 0 if i == pullamount && $game_variables[GACHA_USED] == pullamount
+          random_val = 0 if i == 3 && gachaamt == 3
 
           case random_val
             when 0..3 # 4
@@ -184,7 +184,7 @@ class LootBox
         pbDisposeSpriteHash(sprites)
         viewport.dispose if viewport
         break
-     # end  
+      end  
     end  
   end
 end
