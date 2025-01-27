@@ -64,7 +64,7 @@ MEGA_EVO_TYPES = {
 }
 
 MEGA_EVO_MOVESET = {
-  :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
+  :PORYGONZ => [:CONVERSION, :HARDDRIVECRASH],
   :CACTURNE => [:BULLETSEED, :SPLINTERSHOT],
   :GOLURK   => [:SHADOWBALL, :AEROBLAST]
 }
@@ -181,6 +181,10 @@ class Battle
       case battler.pokemon.megaMessage
       when 1
         pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
+      when 2 # pory-z
+        pbDisplay(_INTL("{1}'s corrupted code is modifying {2}!", trainerName, battler.pbThis))
+      when 3 # KISAMAAAAAAAAAAAAAAA
+        pbDisplay(_INTL("{1}'s bell has resonated with {2}!", trainerName, battler.pbThis))
       else
         pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
                         battler.pbThis, battler.itemName, trainerName, pbGetMegaRingName(idxBattler)))

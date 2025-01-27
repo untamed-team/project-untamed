@@ -440,9 +440,24 @@ Name = Tourist
 Gender = Female
 BaseMoney = 32
 #-------------------------------
-[WAREHOUSEWORKER]
+[HIKER_M]
+Name = Hiker
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[HIKER_F]
+Name = Hiker
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[WAREHOUSEWORKER_M]
 Name = Warehouse Worker
-Gender = Unknown
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[WAREHOUSEWORKER_F]
+Name = Warehouse Worker
+Gender = Female
 BaseMoney = 32
 #-------------------------------
 [GOLDPANNER]

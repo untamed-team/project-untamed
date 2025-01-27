@@ -112,6 +112,15 @@ class Battle::AI
 		procGlobalArray = processGlobalArray(globalArray)
 		expectedWeather = procGlobalArray[0]
 		expectedTerrain = procGlobalArray[1]
+		# Powder (the move) logic
+		if type == :FIRE && targetWillMove?(target)
+			targetMove = @battle.choices[target.index][2]
+			if targetMove.function == "TargetNextFireMoveDamagesTarget"
+				thisprio = priorityAI(user, move, globalArray)
+				thatprio = priorityAI(target, targetMove, globalArray)
+				return 0 if thatprio > thisprio
+			end
+		end
 		# Ability effects that alter damage
 		moldBreaker = moldbroken(user,target,move) # updated to take in the better mold breaker check
 		if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
@@ -185,13 +194,15 @@ class Battle::AI
 					 target.hasActiveItem?(:UTILITYUMBRELLA)
 					expectedTargetWeather = :None
 				end
+				old_ability = nil
+				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega
+					old_ability = target.ability
+					target.ability = :FURCOAT
+				end
 				Battle::AbilityEffects.triggerDamageCalcFromTarget(
 					target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
 				)
-				# if laguna already has fur coat in base, there is no need to take it in acc again
-				if target.isSpecies?(:LAGUNA) && target.pokemon.willmega && target.ability != :FURCOAT && move.physicalMove?(type)
-					multipliers[:defense_multiplier] *= 2
-				end
+				target.ability = old_ability if !old_ability.nil?
 				multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
 			end
 			# when moronuno said 'NonIgnorable', he meant "Ignorable(Forgot)"
@@ -1014,7 +1025,7 @@ class Battle::Battler
 	def pbCanLowerAttackStatStageGrimTearsAI(user)
 		return false if fainted?
 		return false if @effects[PBEffects::Substitute] > 0
-		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:UNNERVE, :SOUNDPROOF, :INSOMNIA])
+		return false if Settings::MECHANICS_GENERATION >= 8 && hasActiveAbility?([:OBLIVIOUS, :UNNERVE, :SOUNDPROOF, :INSOMNIA])
 		return false if !hasActiveAbility?(:CONTRARY)
 		return false if !pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
 	end

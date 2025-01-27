@@ -1221,6 +1221,8 @@ class Battle::Move::LowerTargetEvasion1RemoveSideEffects < Battle::Move::TargetS
                     targetOpposingSide.effects[PBEffects::ToxicSpikes] > 0 ||
                     targetOpposingSide.effects[PBEffects::StickyWeb] > 0)
     return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+    return false if targetSide.effects[PBEffects::Tailwind] > 0 || 
+                    targetOpposingSide.effects[PBEffects::Tailwind] > 0
     return super
   end
 
@@ -1288,6 +1290,11 @@ class Battle::Move::LowerTargetEvasion1RemoveSideEffects < Battle::Move::TargetS
         @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
       end
       @battle.field.terrain = :None
+    end
+    if target.pbOwnSide.effects[PBEffects::Tailwind] > 0 || target.pbOpposingSide.effects[PBEffects::Tailwind] > 0
+      target.pbOwnSide.effects[PBEffects::Tailwind] = 0
+      target.pbOpposingSide.effects[PBEffects::Tailwind] = 0
+      @battle.pbDisplay(_INTL("Tailwinds petered out."))
     end
   end
 end

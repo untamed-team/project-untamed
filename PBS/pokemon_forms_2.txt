@@ -143,6 +143,7 @@ Weight = 51.0
 [CHIMECHO,1]
 FormName = Mega Chimecho
 MegaStone = CHIMECHITE
+MegaMessage = 3
 Types = PSYCHIC,STEEL
 BaseStats = 75,50,100,65,115,150
 Abilities = ECHOCHAMBER
@@ -153,6 +154,7 @@ Weight = 3.4
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
+MegaMessage = 2
 Types = NORMAL,QMARKS
 BaseStats = 85,128,80,102,155,85
 Abilities = OVERWRITE

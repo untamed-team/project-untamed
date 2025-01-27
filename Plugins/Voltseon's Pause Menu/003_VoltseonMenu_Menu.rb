@@ -258,6 +258,7 @@ class VoltseonsPauseMenu < Component
     calc_display_index
     middle = @disp_indices.length / 2
     @disp_indices.each_with_index do |idx, val|
+	print @entries[idx]
       icon = MENU_FILE_PATH + @entries[idx][:icon]
       @sprites["icon_#{val}"].setBitmap(icon)
       @sprites["icon_#{val}"].zoom_x = 1
@@ -345,6 +346,22 @@ MenuHandlers.add(:pause_menu, :save, {
     end
     menu.pbRefresh
     menu.pbShowMenu
+    next false
+  }
+})
+
+MenuHandlers.add(:pause_menu, :options1, {
+  "name"      => _INTL("Options"),
+  "order"     => 70,
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonOption_Scene.new
+      screen = PokemonOptionScreen.new(scene)
+      screen.pbStartScreen
+      pbUpdateSceneMap
+      menu.pbRefresh
+    }
     next false
   }
 })

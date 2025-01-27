@@ -4559,7 +4559,7 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
@@ -4663,7 +4663,7 @@ class Battle::AI
 			if target.effects[PBEffects::Substitute]>0
 				miniscore = 0
 			end
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
@@ -4696,7 +4696,7 @@ class Battle::AI
 			miniscore=100
 			miniscore*=1.5 if ally.attack>ally.spatk
 			miniscore*=0.3 if (1.0/ally.totalhp)*ally.hp < 0.6
-			enemy1 = user.pbDirectOpposing
+			enemy1 = user.pbDirectOpposing(true)
 			if enemy1.allAllies.empty?
 				enemy2 = enemy1
 			else
@@ -4730,8 +4730,11 @@ class Battle::AI
 		if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
 			miniscore*=1.3
 		end
-		hasAlly = !target.allAllies.empty?
-		if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
+		enemy1 = user.pbDirectOpposing(true)
+		hasAlly = !enemy1.allAllies.empty?
+		if hasAlly
+			miniscore*=0.7
+		elsif move.statusMove? && @battle.choices[enemy1.index][0] == :SwitchOut
 			miniscore*=2
 		end
 		if (user.hp.to_f)/user.totalhp>0.75
@@ -4743,13 +4746,13 @@ class Battle::AI
 		if (user.hp.to_f)/user.totalhp<0.75 && (user.hasActiveAbility?(:EMERGENCYEXIT) || user.hasActiveAbility?(:WIMPOUT) || user.hasActiveItem?(:EJECTBUTTON))
 			miniscore*=0.3
 		end
-		if target.effects[PBEffects::HyperBeam]>0
+		if enemy1.effects[PBEffects::HyperBeam]>0
 			miniscore*=1.3
 		end
-		if target.effects[PBEffects::Yawn]>0
+		if enemy1.effects[PBEffects::Yawn]>0
 			miniscore*=1.7
 		end
-		bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+		bestmove=bestMoveVsTarget(enemy1,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 		maxdam=bestmove[0]
 		if maxdam<(user.hp/4.0)
 			miniscore*=1.2
@@ -4762,14 +4765,14 @@ class Battle::AI
 		if user.turnCount<2
 			miniscore*=1.2
 		end
-		if target.pbHasAnyStatus?
+		if enemy1.pbHasAnyStatus?
 			miniscore*=1.2
 		end
-		if target.asleep?
+		if enemy1.asleep?
 			miniscore*=1.3
 		end
-		if target.effects[PBEffects::Encore]>0
-			if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
+		if enemy1.effects[PBEffects::Encore]>0
+			if GameData::Move.get(enemy1.effects[PBEffects::EncoreMove]).base_damage==0
 				miniscore*=1.5
 			end          
 		end
@@ -4779,17 +4782,13 @@ class Battle::AI
 		if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
 			miniscore*=0.6
 		end
-		if pbHasPhazingMove?(target)
+		if pbHasPhazingMove?(enemy1)
 			miniscore*=0.5
 		end
 		if user.hasActiveAbility?(:SIMPLE)
 			miniscore*=2
 		end
-		hasAlly = !target.allAllies.empty?
-		if hasAlly
-			miniscore*=0.7
-		end
-		roles = pbGetPokemonRole(user, target)
+		roles = pbGetPokemonRole(user, enemy1)
 		if roles.include?("Physical Wall") || roles.include?("Special Wall")
 			miniscore*=1.3
 		end
@@ -4815,11 +4814,11 @@ class Battle::AI
 		if maxstat>1
 			miniscore=0
 		end
-		miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
+		miniscore*=0 if enemy1.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
 		if user.hasActiveAbility?(:CONTRARY)
 			miniscore*=0
 		end            
-		if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
+		if enemy1.hasActiveAbility?(:UNAWARE,false,mold_broken)
 			miniscore=1
 		end
 		score*=miniscore
@@ -5535,6 +5534,9 @@ class Battle::AI
 		end
 		if target.pbOwnSide.effects[PBEffects::Safeguard]>0
 			score*=1.3
+		end
+		if target.pbOwnSide.effects[PBEffects::Tailwind]>0
+			score*=1.5
 		end
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion2", "LowerTargetEvasion3" # Sweet Scent

@@ -20,13 +20,14 @@ class Battle
       # Check for form changes caused by the weather changing
       allBattlers.each { |battler| battler.pbCheckFormOnWeatherChange }
       # Start up the default weather
-			if @field.defaultWeather != :None
-				pbStartWeather(nil, @field.defaultWeather)
-			elsif @field.presageBackup[0] != :None # presage stuff  #by low
-				pbStartWeather(nil, @field.presageBackup[0], false, true, false, @field.presageBackup[1])
-				@field.abilityWeather = @field.presageBackup[2]
-				#~ echo ("\nWas the previous "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
-			end
+      if @field.defaultWeather != :None
+        @field.abilityWeather = false
+        pbStartWeather(nil, @field.defaultWeather)
+      elsif @field.presageBackup[0] != :None # presage stuff  #by low
+        pbStartWeather(nil, @field.presageBackup[0], false, true, false, @field.presageBackup[1])
+        @field.abilityWeather = @field.presageBackup[2]
+        #~ echo ("\nWas the previous "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
+      end
       return if @field.weather == :None
     end
     # Weather continues
@@ -112,7 +113,7 @@ class Battle
     moveUser.pbUseMoveSimple(move, position_index)
     @futureSight = false
     moveUser.lastMoveFailed = userLastMoveFailed
-		moveUser.premonitionMove = 0  # Premonition #by low
+    moveUser.premonitionMove = 0  # Premonition #by low
     @battlers[position_index].pbFaint if @battlers[position_index].fainted?
     position.effects[PBEffects::FutureSightCounter]        = 0
     position.effects[PBEffects::FutureSightMove]           = nil
@@ -171,7 +172,7 @@ class Battle
   # End Of Round various healing effects
   #=============================================================================
   def pbEORHealingEffects(priority)
-		# Cologne Case #by low
+    # Cologne Case #by low
     # Aqua Ring
     priority.each do |battler|
       next if !battler.effects[PBEffects::AquaRing]
@@ -197,12 +198,12 @@ class Battle
       recipient = @battlers[battler.effects[PBEffects::LeechSeed]]
       next if !recipient || recipient.fainted?
       pbCommonAnimation("LeechSeed", recipient, battler)
-			# leech seed nerf #by low
-			dmg = battler.totalhp / 8
-			dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
+      # leech seed nerf #by low
+      dmg = battler.totalhp / 8
+      dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
       battler.pbTakeEffectDamage(dmg) { |hp_lost|
-				true_hp_lost = hp_lost
-				true_hp_lost *= 0.75 if recipient.pbOwnedByPlayer?
+        true_hp_lost = hp_lost
+        true_hp_lost *= 0.75 if recipient.pbOwnedByPlayer?
         recipient.pbRecoverHPFromDrain(true_hp_lost, battler,
                                        _INTL("{1}'s health is sapped by Leech Seed!", battler.pbThis))
         recipient.pbAbilitiesOnDamageTaken
@@ -503,7 +504,7 @@ class Battle
         pbDisplay(_INTL("{1} is making an uproar!", battler.pbThis))
       end
     end
-		# moved slow start counter to *Battle_AbilityEffects #by low
+    # moved slow start counter to *Battle_AbilityEffects #by low
   end
 
   #=============================================================================
@@ -592,7 +593,7 @@ class Battle
       end
     end
     # Self-curing of status due to affection
-		# this is disgusting, fuck off
+    # this is disgusting, fuck off
     if Settings::AFFECTION_EFFECTS && @internalBattle
       priority.each do |battler|
         next if battler.fainted? || battler.status == :NONE
@@ -648,12 +649,12 @@ class Battle
     end
     # Effects that apply to a side that wear off after a number of rounds
     2.times { |side| 
-			pbEOREndSideEffects(side, priority)
-			if @field.weather != :Hail && @sides[side].effects[PBEffects::AuroraVeil] > 0 #by low
-				@sides[side].effects[PBEffects::AuroraVeil] = 0
-				pbDisplay(_INTL("Due to the lack of Hail, {1}'s Aurora Veil wore off!", @battlers[side].pbTeam))
-			end
-		}
+      pbEOREndSideEffects(side, priority)
+      if @field.weather != :Hail && @sides[side].effects[PBEffects::AuroraVeil] > 0 #by low
+        @sides[side].effects[PBEffects::AuroraVeil] = 0
+        pbDisplay(_INTL("Due to the lack of Hail, {1}'s Aurora Veil wore off!", @battlers[side].pbTeam))
+      end
+    }
     # Effects that apply to the whole field that wear off after a number of rounds
     pbEOREndFieldEffects(priority)
     # End of terrains
@@ -686,20 +687,20 @@ class Battle
     pbEORShiftDistantBattlers
     # Try to make Trace work, check for end of primordial weather
     priority.each { |battler| battler.pbContinualAbilityChecks }
-		allBattlers.each do |battler| # the big funny #by low
-			if battler.pbOwnedByPlayer?
-				if $game_temp.party_speed_boost_number && $game_temp.party_speed_boost_number[battler.pokemonIndex]
-					$game_temp.party_speed_boost_number[battler.pokemonIndex] = battler.stages[:SPEED]
-				end
-				
-				battler.pokemon.evolution_steps += 1 if battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky") && battler.isSpecies?(:DUNSPARCE)
-				for i in $Trainer.party
-					if [:BANAGNAW, :NANAHI, :POTASSOPOD].include?(i.species) && i.fainted?
-						$game_temp.party_dead_bananas[battler.pokemonIndex] += 1
-					end
-				end
-			end
-		end
+    allBattlers.each do |battler| # the big funny #by low
+      if battler.pbOwnedByPlayer?
+        if $game_temp.party_speed_boost_number && $game_temp.party_speed_boost_number[battler.pokemonIndex]
+          $game_temp.party_speed_boost_number[battler.pokemonIndex] = battler.stages[:SPEED]
+        end
+        
+        battler.pokemon.evolution_steps += 1 if battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky") && battler.isSpecies?(:DUNSPARCE)
+        for i in $Trainer.party
+          if [:BANAGNAW, :NANAHI, :POTASSOPOD].include?(i.species) && i.fainted?
+            $game_temp.party_dead_bananas[battler.pokemonIndex] += 1
+          end
+        end
+      end
+    end
     # Reset/count down battler-specific effects (no messages)
     allBattlers.each do |battler|
       battler.effects[PBEffects::BanefulBunker]    = false
@@ -736,11 +737,11 @@ class Battle
       battler.effects[PBEffects::SpikyShield]      = false
       battler.effects[PBEffects::Spotlight]        = 0
       battler.effects[PBEffects::ThroatChop]       -= 1 if battler.effects[PBEffects::ThroatChop] > 0
-			# new effects #by low
+      # new effects #by low
       battler.effects[PBEffects::NoFlinch]         -= 1 if battler.effects[PBEffects::NoFlinch] > 0
       battler.effects[PBEffects::ZealousDance]     -= 1 if battler.effects[PBEffects::ZealousDance] > 0
       battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
-			battler.pokemon.willmega 										 = false
+      battler.pokemon.willmega                     = false
       battler.lastHPLost                           = 0
       battler.lastHPLostFromFoe                    = 0
       battler.droppedBelowHalfHP                   = false

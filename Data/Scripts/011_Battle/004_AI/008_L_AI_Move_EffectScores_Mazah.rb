@@ -602,8 +602,12 @@ class Battle::AI
 					   target.effects[PBEffects::Yawn]>0
 						miniscore*=0.3
 					end
-					enemy1 = user.pbDirectOpposing
-					enemy2 = enemy1.allAllies.first
+					enemy1 = user.pbDirectOpposing(true)
+					if enemy1.allAllies.empty?
+						enemy2 = enemy1
+					else
+						enemy2 = enemy1.allAllies.first
+					end
 					e1sped = pbRoughStat(enemy1,:SPEED,skill)
 					e2sped = pbRoughStat(enemy2,:SPEED,skill)
 					if ospeed > e1sped && ospeed > e2sped
@@ -645,7 +649,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
 	when "OverrideTargetStatusWithPoison" # Crimson Surge
 		if $player.difficulty_mode?("chaos") && target.status == :NONE
-			score *= 0.3
+#			score *= 0.3
 		elsif target.asleep? && target.statusCount <= 2
 			score = 0
 		elsif target.pbCanInflictStatus?(:POISON, user, false, self, true)
@@ -1298,7 +1302,7 @@ class Battle::AI
 		  60 => [:DRAGONDANCE, :SHELLSMASH, :NORETREAT, :CLANGOROUSSOUL],
 		  65 => [:GEOMANCY, :QUIVERDANCE, :SHIFTGEAR, :TAILGLOW],
 		  70 => [:HEALORDER, :MILKDRINK, :MOONLIGHT, :MORNINGSUN, :RECOVER, :ROOST,
-				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS],
+				 :SHOREUP, :SLACKOFF, :SOFTBOILED, :STRENGTHSAP, :SYNTHESIS, :GLACIALGULF],
 		  80 => [:BANEFULBUNKER, :KINGSSHIELD, :OBSTRUCT, :PROTECT, :SPIKYSHIELD, :DETECT],
 		  100 => [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE]
 		}
@@ -1337,7 +1341,7 @@ class Battle::AI
 			partyelec=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyelec=true if m.pbHasType?(:ELECTRIC, true)
+				partyelec=true if m.hasType?(:ELECTRIC)
 				for z in m.moves
 					sleepmove = true if [:DARKVOID, :GRASSWHISTLE, :HYPNOSIS, 
 										 :LOVELYKISS, :SING, :SLEEPPOWDER, :SPORE].include?(z.id)
@@ -1370,7 +1374,7 @@ class Battle::AI
 			partygrass=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partygrass=true if m.pbHasType?(:GRASS, true)
+				partygrass=true if m.hasType?(:GRASS)
 			end
 			if partygrass
 				fieldscore*=0.5
@@ -1397,7 +1401,12 @@ class Battle::AI
 					fieldscore*=0.7
 				end
 			end
-			if target.pbHasType?(:DRAGON, true) || target.pbPartner.pbHasType?(:DRAGON, true)
+			if target.allAllies.empty?
+				targetAlly = target
+			else
+				targetAlly = target.allAllies.first
+			end
+			if target.pbHasType?(:DRAGON, true) || targetAlly.pbHasType?(:DRAGON, true)
 				fieldscore*=0.5
 			end
 			if user.pbHasType?(:DRAGON, true)
@@ -1406,7 +1415,7 @@ class Battle::AI
 			partyfairy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partyfairy=true if m.pbHasType?(:FAIRY, true)
+				partyfairy=true if m.hasType?(:FAIRY)
 			end
 			if partyfairy
 				fieldscore*=0.7
@@ -1414,7 +1423,7 @@ class Battle::AI
 			partydragon=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partydragon=true if m.pbHasType?(:DRAGON, true)
+				partydragon=true if m.hasType?(:DRAGON)
 			end
 			if partydragon
 				fieldscore*=1.5
@@ -1434,7 +1443,7 @@ class Battle::AI
 			partypsy=false
 			@battle.pbParty(user.index).each do |m|
 				next if m.fainted?
-				partypsy=true if m.pbHasType?(:PSYCHIC, true)
+				partypsy=true if m.hasType?(:PSYCHIC)
 			end
 			if partypsy
 				fieldscore*=0.3
@@ -1880,6 +1889,9 @@ class Battle::AI
 			end
 			abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
 		end
+		if target.hasActiveAbility?(:SIMPLE)
+			abilityscore*=1.4 if pbHasSetupMove?(target)
+		end
 		# Disrupt scores for Untamed abilities
 		if target.hasActiveAbility?(:BAITEDLINE)
 			echo("\nBaited Line Disrupt") if $AIGENERALLOG
@@ -1925,7 +1937,7 @@ class Battle::AI
 		end
 		if target.hasActiveAbility?(:MOMENTUM)
 			echo("\nMomentum Disrupt") if $AIGENERALLOG
-			abilityscore *= 1 + (0.25 * [user.effects[PBEffects::Momentum], 5].min)
+			abilityscore *= 1 + (0.25 * [target.effects[PBEffects::Momentum], 5].min)
 		end
 		if target.hasActiveAbility?(:CRYSTALJAW)
 			echo("\nCrystal Jaw Disrupt") if $AIGENERALLOG

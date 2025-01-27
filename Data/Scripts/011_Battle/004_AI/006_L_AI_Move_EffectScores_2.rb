@@ -448,9 +448,9 @@ class Battle::AI
 		else
 			score=0
 		end
-#---------------------------------------------------------------------------
+	#---------------------------------------------------------------------------
     when "CureUserBurnPoisonParalysis" # refresh
-		if user.burned? || user.poisoned? || user.paralyzed? #|| user.frozen?
+		if user.burned? || user.poisoned? || user.paralyzed? || user.frozen?
 			score*=3
 			if (user.hp.to_f)/user.totalhp>0.5
 				score*=1.5
@@ -807,7 +807,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetTargetTypesToPsychic" # Magic Powder
-		if user.moves.any? { |m| [:DARK, :GHOST].include?(m&.type) }
+		if user.moves.any? { |m| [:DARK, :GHOST].include?(m&.type) && m&.damagingMove? }
 			score*=1.5
 		else
 			score*=0.7
@@ -833,7 +833,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "SetTargetTypesToWater" # soak
-		if user.moves.any? { |m| [:ELECTRIC, :GRASS].include?(m&.type) }
+		if user.moves.any? { |m| [:ELECTRIC, :GRASS].include?(m&.type) && m&.damagingMove? }
 			score*=1.5
 		else
 			score*=0.7
@@ -859,7 +859,7 @@ class Battle::AI
 		end
     #---------------------------------------------------------------------------
     when "AddGhostTypeToTarget" # Trick or Treat
-		if user.moves.any? { |m| [:DARK, :GHOST].include?(m&.type) }
+		if user.moves.any? { |m| [:DARK, :GHOST].include?(m&.type) && m&.damagingMove? }
 			score*=1.5
 		else
 			score*=0.7
@@ -882,7 +882,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "AddGrassTypeToTarget" # Forest's Curse
 		# compare this to soak, damn
-		if user.moves.any? { |m| [:FIRE, :ICE, :BUG, :FLYING, :POISON].include?(m&.type) }
+		if user.moves.any? { |m| [:FIRE, :ICE, :BUG, :FLYING, :POISON].include?(m&.type) && m&.damagingMove? }
 			score*=1.5
 		else
 			score*=0.7

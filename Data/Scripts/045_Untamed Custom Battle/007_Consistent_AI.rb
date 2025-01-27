@@ -476,7 +476,7 @@ class Battle::AI
 		end
 
 		# try hitting mons that dont have available protect moves if it is a double battle
-		if target.allAllies.any? && pbHasSingleTargetProtectMove(target) && 
+		if target.allAllies.any? && pbHasSingleTargetProtectMove?(target) && 
 		 !(user.hasActiveAbility?(:UNSEENFIST) && move.pbContactMove?(user))
 			realDamage *= (2 / 3.0)
 		end
