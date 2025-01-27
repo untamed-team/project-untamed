@@ -448,7 +448,7 @@ class Battle::AI
 		else
 			score=0
 		end
-#---------------------------------------------------------------------------
+	#---------------------------------------------------------------------------
     when "CureUserBurnPoisonParalysis" # refresh
 		if user.burned? || user.poisoned? || user.paralyzed? || user.frozen?
 			score*=3
