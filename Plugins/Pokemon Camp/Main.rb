@@ -53,6 +53,38 @@ class Camping
 	$PokemonGlobal.beforeCampPlayerMapY = $game_player.y
 	$PokemonGlobal.beforeCampPlayerDirection = $game_player.direction
 	
+	#choose which camping map to teleported to, and set the name value to variable 50
+	#1 = Beach - campMapBeach
+	#2 = Cave - campMapCave
+	#3 = Grassy - campMapGrassy
+	#4 = Desert - campMapDesert
+	#5 = Meadow - campMapMeadow
+	#6 = Farmland - campMapFarmland
+	#7 = Forest - campMapForest
+	#8 = Canyon - campMapCanyon
+	#9 = Snowy - campMapSnowy
+	if GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapBeach")
+		$game_variables[50] = 1
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapCave")
+		$game_variables[50] = 2
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapGrassy")
+		$game_variables[50] = 3
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapDesert")
+		$game_variables[50] = 4
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapMeadow")
+		$game_variables[50] = 5
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapFarmland")
+		$game_variables[50] = 6
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapForest")
+		$game_variables[50] = 7
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapCanyon")
+		$game_variables[50] = 8
+	elsif GameData::MapMetadata.get($game_map.map_id)&.has_flag?("campMapSnowy")
+		$game_variables[50] = 9
+	else #default is Grassy
+		$game_variables[50] = 3
+	end
+	
 	pbCommonEvent(9) #start camping
 	
 	#get the player's current X and Y position when they enter camp
@@ -353,9 +385,9 @@ MenuHandlers.add(:pause_menu, :camp, {
 	"condition" => proc { next $bag.has?(:CAMPINGGEAR) && (!$PokemonGlobal.camping || $PokemonGlobal.camping.nil?) },
 	"effect"    => proc { |menu|
 		#in what cases can you not use the camping gear?
-		if GameData::MapMetadata.get($game_map.map_id).outdoor_map == false || $PokemonGlobal.diving || GameData::MapMetadata.get($game_map.map_id)&.has_flag?("CannotCamp")
+		if $PokemonGlobal.diving || GameData::MapMetadata.get($game_map.map_id)&.has_flag?("CannotCamp") || (GameData::MapMetadata.get($game_map.map_id).outdoor_map == false && !GameData::MapMetadata.get($game_map.map_id)&.has_flag?("CanCamp"))
 			#if not outdoors or if underwater, you can't use the camping gear
-			pbMessage(_INTL("You can't use that here."))
+			pbMessage(_INTL("You can't set up camp here."))
 			next false #do not exit the pause menu
 		else
 			menu.pbHideMenu
