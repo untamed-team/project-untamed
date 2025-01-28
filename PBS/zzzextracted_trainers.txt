@@ -1,0 +1,3 @@
+RIVAL1,Emilio,0,Route1,M, Pokemon; MOLLUCOTTA; 5, MOLLUCOTTA; 5, MOLLUCOTTA; 5, MOLLUCOTTA; 5
+RIVAL1,Emilio,1,Route1,M, Pokemon; QUETZALIL; 5
+RIVAL1,Emilio,2,Route1,M, Pokemon; PORSITE; 5
