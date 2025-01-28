@@ -565,6 +565,11 @@ class CrustangRacing
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
+			
+			#3 2 1 GO
+			
+			
+			
 			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
 			self.moveMiscSprites
 			self.updateRacerPositionOnTrack
