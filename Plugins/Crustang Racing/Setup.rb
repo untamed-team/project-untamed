@@ -147,9 +147,9 @@ class CrustangRacing
 		@sprites["321GO"].y = Graphics.height - @sprites["321GO"].height
 		@sprites["321GO"].z = 999999
 		@sprites["321GO"].opacity = 255
-		@321GOOverlay = @sprites["321GO"].bitmap
-		pbSetSystemFont(@321GOOverlay)
-		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE + 3
+		@countdownGOOverlay = @sprites["321GO"].bitmap
+		pbSetSystemFont(@countdownGOOverlay)
+		@countdownGOOverlay.font.size = MessageConfig::SMALL_FONT_SIZE + 3
 		#@sprites["321GO"].visible = false
 		
 	end #def setup
