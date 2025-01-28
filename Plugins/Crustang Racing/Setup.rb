@@ -141,6 +141,17 @@ class CrustangRacing
 		
 		self.placeRockyPatches
 		
+		#create a bitmap on which to write "3 2 1 GO"
+		@sprites["321GO"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["321GO"].x = Graphics.width - @sprites["321GO"].width
+		@sprites["321GO"].y = Graphics.height - @sprites["321GO"].height
+		@sprites["321GO"].z = 999999
+		@sprites["321GO"].opacity = 255
+		@321GOOverlay = @sprites["321GO"].bitmap
+		pbSetSystemFont(@321GOOverlay)
+		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE + 3
+		#@sprites["321GO"].visible = false
+		
 	end #def setup
 	
 	def self.placeRockyPatches
