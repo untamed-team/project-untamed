@@ -6042,7 +6042,7 @@ Category = Status
 Accuracy = 0
 TotalPP = 40
 Target = NearAlly
-FunctionCode = DoesNothingFailsIfNoAlly
+FunctionCode = HoldingHandsShamefully
 Description = The user and an ally hold hands. This makes them very happy.
 #-------------------------------
 [HOWL]

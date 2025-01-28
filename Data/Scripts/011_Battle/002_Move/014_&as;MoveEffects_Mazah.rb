@@ -272,6 +272,31 @@ class Battle::Move::OverrideTargetStatusWithPoison < Battle::Move
 end
 
 #===============================================================================
+# Lower's the base power of incoming attacks for the ally's by 2/3. (Holding Hand)
+#===============================================================================
+class Battle::Move::HoldingHandsShamefully < Battle::Move
+  def ignoresSubstitute?(user); return true; end
+
+  def pbFailsAgainstTarget?(user, target, show_message)
+    if target.fainted? || target.effects[PBEffects::HoldingHand]
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+    return false
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    target.effects[PBEffects::HoldingHand] = true
+    if user.gender != target.gender && user.gender != 2 && target.gender != 2
+      @battle.pbDisplay(_INTL("{1} is holding hands with {2}!", user.pbThis, target.pbThis(true)))
+      @battle.pbDisplay(_INTL("How romantic! How lewd!")) if rand(2) == 0
+    else
+      @battle.pbDisplay(_INTL("{1} is ready to protect {2}!", user.pbThis, target.pbThis(true)))
+    end
+  end
+end
+
+#===============================================================================
 # Deals double damage if the opponent initial item belongs to the "choice" brand
 # "Knocks Off" the opponent item if its a choice item
 #===============================================================================
