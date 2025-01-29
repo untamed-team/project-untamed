@@ -450,11 +450,9 @@ def input_trainerdata(trainers_data)
 end
 
 def main
-  pokemon_data = POKEMON_GROWTH_DATA
-  trainers_data = TRAINERS_ROUTE_DATA
-  pokemon_team, expvar = input_pkmndata(pokemon_data)
-  location, obligatoryonly = input_trainerdata(trainers_data)
-  simRoute(pokemon_team, location, obligatoryonly, expvar, trainers_data, pokemon_data)
+  pokemon_team, expvar = input_pkmndata(POKEMON_GROWTH_DATA)
+  location, obligatoryonly = input_trainerdata(TRAINERS_ROUTE_DATA)
+  simRoute(pokemon_team, location, obligatoryonly, expvar, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
 end
 
 main
