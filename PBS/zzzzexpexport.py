@@ -16,13 +16,16 @@ def extract_data_from_file(input_file, output_file):
             base_exp = line.split('=')[1].strip()
         elif line.startswith("#-------------------------------"):
             if name and growth_rate and base_exp:
-                extracted_data.append(f"{name},{growth_rate},{base_exp}")
+                extracted_data.append(f'"{name}" => {{ base_exp: {base_exp}, growth_rate: "{growth_rate}" }}')
             name = ""
             growth_rate = ""
             base_exp = ""
     with open(output_file, 'w') as f:
+        f.write("pokemon_data = {\n")
         for data in extracted_data:
-            f.write(data + '\n')
+            f.write(f"  {data},\n")
+        f.write("}\n")
+
 extract_data_from_file('pokemon.txt', 'zzzextracted_exp.txt')
 
 def extract_trainer_data(input_file, output_file):
@@ -34,7 +37,8 @@ def extract_trainer_data(input_file, output_file):
     area_main = ""
     area_mandatory = ""
     pokemon_list = []
-    extracted_data = []
+    extracted_data = {}
+
     for line in lines:
         if line.startswith("[") and "," in line:
             parts = line.strip("[]\n").split(",")
@@ -51,18 +55,26 @@ def extract_trainer_data(input_file, output_file):
             pokemon_parts = pokemon_info.split(',')
             pokemon_name = pokemon_parts[0]
             pokemon_level = pokemon_parts[1]
-            pokemon_list.append(f"{pokemon_name}; {pokemon_level}")
+            pokemon_list.append(f'{{ name: "{pokemon_name}", level: {pokemon_level} }}')
         elif line.startswith("#-------------------------------"):
             if internal_name and external_name and area_main:
-                extracted_data.append(f"{internal_name},{external_name},{trainer_id},{area_main},{area_mandatory}, Pokemon; {', '.join(pokemon_list)}")
+                if area_main not in extracted_data:
+                    extracted_data[area_main] = []
+                extracted_data[area_main].append(f'{{ name: "{external_name}", obligatory: {str(area_mandatory).lower() == "m"}, pokemon: [{", ".join(pokemon_list)}] }}')
             internal_name = ""
             external_name = ""
             trainer_id = "0"
             area_main = ""
             area_mandatory = ""
             pokemon_list = []
+
     with open(output_file, 'w') as f:
-        for data in extracted_data:
-            f.write(data + '\n')
+        f.write("trainers_data = {\n")
+        for area, trainers in extracted_data.items():
+            f.write(f'  "{area}" => [\n')
+            for trainer in trainers:
+                f.write(f'    {trainer},\n')
+            f.write("  ],\n")
+        f.write("}\n")
 
 extract_trainer_data('trainers.txt', 'zzzextracted_trainers.txt')
