@@ -1,2 +1,45 @@
 trainers_data = {
+  "Route2" => [
+    { name: "Juju", obligatory: true, pokemon: [{ name: "SKIDDO", level: 9 }, { name: "FLABEBE", level: 9 }] },
+    { name: "Gabriel", obligatory: true, pokemon: [{ name: "M_EKANS", level: 9 }, { name: "BUNNELBY", level: 9 }] },
+    { name: "William", obligatory: true, pokemon: [{ name: "TECHUPPI", level: 9 }, { name: "BUNNELBY", level: 9 }, { name: "WRENNER", level: 9 }] },
+    { name: "Rainer", obligatory: true, pokemon: [{ name: "LEDYBA", level: 10 }, { name: "BUDEW", level: 10 }] },
+    { name: "Ted", obligatory: true, pokemon: [{ name: "MAGIKARP", level: 1 }, { name: "MAGIKARP", level: 3 }, { name: "MAGIKARP", level: 5 }, { name: "MAGIKARP", level: 7 }, { name: "MAGIKARP", level: 9 }, { name: "FEEBAS", level: 10 }] },
+    { name: "Kaitlyn", obligatory: true, pokemon: [{ name: "PACUNA", level: 9 }, { name: "M_VANILLITE", level: 9 }] },
+    { name: "Samuel", obligatory: true, pokemon: [{ name: "LITWICK", level: 9 }, { name: "ZEAZAYA", level: 9 }, { name: "M_EKANS", level: 9 }] },
+    { name: "Lola", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 10 }, { name: "SKIDDO", level: 10 }, { name: "WRENNER", level: 10 }] },
+    { name: "Alisa", obligatory: true, pokemon: [{ name: "MINIMELO", level: 9 }, { name: "LEDYBA", level: 10 }] },
+    { name: "Mannie", obligatory: true, pokemon: [{ name: "SCATTERBUG", level: 10 }, { name: "CHICATTA", level: 10 }] },
+    { name: "Milly", obligatory: true, pokemon: [{ name: "PURRLOIN", level: 10 }, { name: "SUNKERN", level: 10 }, { name: "TECHUPPI", level: 10 }] },
+  ],
+  "MonarcaWoods" => [
+    { name: "Dany", obligatory: true, pokemon: [{ name: "SPEWPA", level: 10 }, { name: "CHICATTA", level: 11 }] },
+    { name: "Connor", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 11 }, { name: "WRENNER", level: 11 }] },
+    { name: "Jimbly", obligatory: true, pokemon: [{ name: "BANAGNAW", level: 11 }, { name: "FINNEON", level: 11 }] },
+    { name: "Violet", obligatory: true, pokemon: [{ name: "FEEBAS", level: 10 }, { name: "LOTAD", level: 11 }] },
+    { name: "Fabian", obligatory: true, pokemon: [{ name: "PHANTUMP", level: 11 }, { name: "PACUNA", level: 11 }, { name: "M_EKANS", level: 11 }] },
+    { name: "Gloria", obligatory: true, pokemon: [{ name: "FLABEBE", level: 11 }, { name: "BUDEW", level: 12 }] },
+    { name: "Roberto", obligatory: true, pokemon: [{ name: "MINIMELO", level: 11 }, { name: "LEDYBA", level: 12 }] },
+    { name: "Francis", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 12 }, { name: "CROMEN", level: 12 }] },
+  ],
+  "MonarcaCave" => [
+    { name: "Xavia", obligatory: true, pokemon: [{ name: "M_ROSELIA", level: 10 }, { name: "KNOGGIN", level: 12 }] },
+    { name: "Noah", obligatory: true, pokemon: [{ name: "KNOGGIN", level: 12 }, { name: "WOOBAT", level: 11 }, { name: "BUDEW", level: 13 }] },
+    { name: "Lucette", obligatory: true, pokemon: [{ name: "BUNNELBY", level: 11 }, { name: "WOOBAT", level: 12 }] },
+  ],
+  "MonarcaSanctuary1" => [
+    { name: "Priscilla", obligatory: true, pokemon: [{ name: "PACUNA", level: 13 }, { name: "MAGNEMITE", level: 14 }, { name: "CHICATTA", level: 13 }] },
+    { name: "Lucas", obligatory: true, pokemon: [{ name: "WIMPOD", level: 13 }, { name: "SUNFLORA", level: 12 }] },
+  ],
+  "MeloladoExterior" => [
+    { name: "Bernard", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 12 }, { name: "SNORUNT", level: 12 }, { name: "MAGNEMITE", level: 13 }] },
+    { name: "Donna", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "EEVEE", level: 14 }] },
+    { name: "Santos", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "FINNEON", level: 14 }] },
+  ],
+  "CalojarroBeach" => [
+    { name: "Floyd", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 14 }, { name: "LOMBRE", level: 15 }] },
+    { name: "Jennifer", obligatory: true, pokemon: [{ name: "VIVILLON", level: 15 }, { name: "SKITTY", level: 16 }] },
+    { name: "Edson", obligatory: true, pokemon: [{ name: "FINNEON", level: 14 }, { name: "CLOBBOPUS", level: 15 }] },
+    { name: "Claudia", obligatory: true, pokemon: [{ name: "PINCURCHIN", level: 13 }, { name: "BANAGNAW", level: 14 }] },
+  ],
 }
