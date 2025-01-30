@@ -40,33 +40,40 @@ Pokemon = PORSITE,5
 LoseText = I guess it's also double the chance to lose...
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_F,Emma,100]
 LoseText = I guess it's also double the chance to lose...
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_M,Julián]
 LoseText = B-but, how did I lose?
 Pokemon = WRENNER,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_M,Julián,100]
 LoseText = B-but, how did I lose?
 Pokemon = WRENNER,4
+#Area=Route1_M
 #-------------------------------
 [BUGCATCHER_M,Marco]
 LoseText = Man, your Pokémon are really strong too!
 Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
+#Area=Route1_M
 #-------------------------------
 [BUGCATCHER_M,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
 Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
+#Area=Route1_M
 #-------------------------------
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?
 Pokemon = MURKROW,5
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
 LoseText = Yikes, what's up with kids these days?
@@ -76,10 +83,12 @@ Pokemon = M_EKANS,4
 Pokemon = MURKROW,5
     Moves = THIEF,GUST,HYPNOSIS
     AbilityIndex = 1
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
 Pokemon = TECHUPPI,5
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_F,Jess,100]
 LoseText = Right? This used to be so much easier.
@@ -89,37 +98,45 @@ Pokemon = CACNEA,4
 Pokemon = TECHUPPI,5
     Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
     AbilityIndex = 1
+#Area=Hacienda1_M
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
 Pokemon = ZEAZAYA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
 Pokemon = ZEAZAYA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
 Pokemon = CAFECARACHA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Feliciano,100]
 LoseText = Corn is surprisingly shady!
 Pokemon = CAFECARACHA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Rafa]
 LoseText = I need some water...
 Pokemon = SUNKERN,6
 Pokemon = DRILBUR,7
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Rafa,100]
 LoseText = I need some water...
 Pokemon = ZEAZAYA,6
 Pokemon = DRILBUR,6
+#Area=Hacienda2_M
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!
 Pokemon = PUMPKABOO,6
 Pokemon = PHANTUMP,7
+#Area=Cemetery_M
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
 LoseText = Wow, you’re pretty good!
@@ -128,12 +145,14 @@ Pokemon = LILORINA,6
     AbilityIndex = 0
 Pokemon = PHANTUMP,7
     Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
+#Area=Cemetery_M
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?
 Pokemon = DUSKULL,6
 Pokemon = LITWICK,6
     AbilityIndex = 0
+#Area=Cemetery_M
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = ..Is that a no?
@@ -143,6 +162,7 @@ Pokemon = FLABEBE,6
 Pokemon = LITWICK,7
     Moves = WILLOWISP,EMBER,NIGHTSHADE
     AbilityIndex = 1
+#Area=Cemetery_M
 #-------------------------------
 [LEADER_Valentina,Valentina]
 LoseText = Ugh, whatever…
@@ -156,6 +176,7 @@ Pokemon = LITWICK,8
 Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
+#Area=Gym1_M
 #-------------------------------
 [LEADER_Valentina,Valentina,100]
 LoseText = Ugh, whatever…
@@ -190,6 +211,7 @@ Pokemon = M_ROSELIA,9
     AbilityIndex = 2
     Item = ORANBERRY
     Nature = MODEST
+#Area=Gym1_M
 #-------------------------------
 [LASS,Juju]
 LoseText = Aren't my Pokémon so cute?
