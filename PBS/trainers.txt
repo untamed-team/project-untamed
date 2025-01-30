@@ -446,6 +446,43 @@ LoseText = And down I go...
 Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
 #-------------------------------
+[BUGCATCHER_M,Curtis]
+LoseText = You're really starting to bug me!
+Pokemon = CHICATTA,12
+    Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
+Pokemon = VIVILLON,13
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+#Area=MonarcaWoods_O
+#-------------------------------
+[BUGCATCHER_M,Curtis,100]
+LoseText = You're really starting to bug me!
+Pokemon = CHICATTA,12
+    Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
+Pokemon = VIVILLON,13
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+#-------------------------------
+[POKEMONRANGER_M,Benjamin]
+LoseText = We did our best!
+Pokemon = BURBRAWL,14
+    Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_M,Benjamin,100]
+LoseText = We did our best!
+Pokemon = BURBRAWL,14
+    Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+#-------------------------------
+[POKEMONRANGER_F,Penelope]
+LoseText = I went easy on you!
+Pokemon = PHANTUMP,14
+    Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_F,Penelope,100]
+LoseText = I went easy on you!
+Pokemon = PHANTUMP,14
+    Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+#-------------------------------
 [HIKER_F,Xavia]
 LoseText = I haven't found my victory yet...
 Pokemon = M_ROSELIA,10
@@ -634,6 +671,88 @@ Pokemon = BANAGNAW,14
     Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
     Ability = SWIFTSWIM
 #-------------------------------
+[GOLDPANNER_F,Martina]
+LoseText = Love shall not always prevail...
+Pokemon = MAGIKARP,17 # should be Mazian Magikarp
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,18
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Martina,100]
+LoseText = Love shall not always prevail...
+Pokemon = MAGIKARP,17 # should be Mazian Magikarp
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,18
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#-------------------------------
+[GOLDPANNER_M,Leo]
+LoseText = I just didn't have enough grit!
+Pokemon = BARBOACH,18
+    Moves = WATERPULSE,MUDBOMB,WATERSPORT,AMNESIA
+Pokemon = MINGOT,19
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_M,Leo,100]
+LoseText = I just didn't have enough grit!
+Pokemon = BARBOACH,18
+    Moves = WATERPULSE,MUDBOMB,WATERSPORT,AMNESIA
+Pokemon = MINGOT,19
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#-------------------------------
+[GOLDPANNER_F,Amalia]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,19
+    Moves = RAGE,BITE,LICK,HOWL
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Amalia,100]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,19
+    Moves = RAGE,BITE,LICK,HOWL
+#-------------------------------
+[HIKER_M,Brian]
+LoseText = Man, I really walked into that one!
+Pokemon = KNOGGIN,18
+    Moves = BRUTALSWING,HARDEN,ROCKTHROW,ROAR
+Pokemon = PHANTUMP,19
+    Moves = FEINTATTACK,ASTONISH,INGRAIN,GRASSYGLIDE
+#Area=Route3_M
+#-------------------------------
+[HIKER_M,Brian,100]
+LoseText = Man, I really walked into that one!
+Pokemon = KNOGGIN,18
+    Moves = BRUTALSWING,HARDEN,ROCKTHROW,ROAR
+Pokemon = PHANTUMP,19
+    Moves = FEINTATTACK,ASTONISH,INGRAIN,GRASSYGLIDE
+#-------------------------------
+[PSYCHIC_M,Simon]
+LoseText = How could I have not foreseen this outcome?
+Pokemon = SPOINK,18
+    Moves = CONFUSERAY,PSYBEAM,GROWL,PSYCHUP
+Pokemon = CROMEN,18
+    Moves = CONFUSION,GUST,EXCITE,COVET
+#Area=Route3_M
+#-------------------------------
+[PSYCHIC_M,Simon,100]
+LoseText = How could I have not foreseen this outcome?
+Pokemon = SPOINK,18
+    Moves = CONFUSERAY,PSYBEAM,GROWL,PSYCHUP
+Pokemon = CROMEN,18
+    Moves = CONFUSION,GUST,EXCITE,COVET
+#-------------------------------
+[HIKER_F,Cassie]
+LoseText = Looks like you're the one who's on a roll...
+Pokemon = BOWLLO,19
+    Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+#Area=Route3Cave_M
+#-------------------------------
+[HIKER_F,Cassie,100]
+LoseText = Looks like you're the one who's on a roll...
+Pokemon = BOWLLO,19
+    Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+#-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
 Pokemon = EEVEE,11
@@ -715,57 +834,6 @@ LoseText = Pant, pant-. Wait, I lost?
 Pokemon = EXPURSUM,25
     Gender = male
     IV = 0,0,0,0,0,0
-#-------------------------------
-[GOLDPANNER,Leo]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
-#-------------------------------
-[GOLDPANNER,Leo,100]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
-#-------------------------------
-[GOLDPANNER,Martina]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
-#-------------------------------
-[GOLDPANNER,Martina,100]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
-#-------------------------------
-[GOLDPANNER,Amalia]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
-#-------------------------------
-[GOLDPANNER,Amalia,100]
-LoseText = I was supposed to strike gold, not strike out!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
 #-------------------------------
 
 #-------------------------------

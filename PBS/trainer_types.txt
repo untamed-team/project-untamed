@@ -460,9 +460,14 @@ Name = Warehouse Worker
 Gender = Female
 BaseMoney = 32
 #-------------------------------
-[GOLDPANNER]
+[GOLDPANNER_F]
 Name = Goldpanner
-Gender = Unknown
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[GOLDPANNER_M]
+Name = Goldpanner
+Gender = Male
 BaseMoney = 32
 #-------------------------------
 [TRAINER_Reine]
