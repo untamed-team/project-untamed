@@ -60,7 +60,7 @@ def extract_trainer_data(input_file, output_file):
             if internal_name and external_name and area_main:
                 if area_main not in extracted_data:
                     extracted_data[area_main] = []
-                extracted_data[area_main].append(f'{{ name: "{external_name}", obligatory: {"true" if area_mandatory else "false"}, pokemon: [{", ".join(pokemon_list)}] }}')
+                extracted_data[area_main].append(f'{{ name: "{external_name}", id: {trainer_id}, obligatory: {"true" if area_mandatory else "false"}, pokemon: [{", ".join(pokemon_list)}] }}')
             internal_name = ""
             external_name = ""
             trainer_id = "0"
@@ -69,14 +69,12 @@ def extract_trainer_data(input_file, output_file):
             pokemon_list = []
 
     with open(output_file, 'w') as f:
-        f.write("trainers_data = {\n")
+        f.write("TRAINERS_ROUTE_DATA = {\n")
         for area, trainers in extracted_data.items():
             f.write(f'  "{area}" => [\n')
             for trainer in trainers:
                 f.write(f'    {trainer},\n')
             f.write("  ],\n")
         f.write("}\n")
-
-extract_trainer_data('trainers.txt', 'zzzextracted_trainers.txt')
 
 extract_trainer_data('trainers.txt', 'zzzextracted_trainers.txt')

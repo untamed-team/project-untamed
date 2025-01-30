@@ -342,6 +342,7 @@ Pokemon = CHICATTA,10
 LoseText = Maybe I should have studied type matchups?
 Pokemon = SCATTERBUG,10
 Pokemon = CHICATTA,10
+#Area=Route2_M
 #-------------------------------
 [YOUNGSTER_F,Milly]
 LoseText = No way, let me try again!
