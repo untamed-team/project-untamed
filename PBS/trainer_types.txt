@@ -477,6 +477,13 @@ BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
+[LEADER_Thalia]
+Name = Gym Leader
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
 [LEADER_Mateo]
 Name = Gym Leader
 Gender = Male

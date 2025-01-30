@@ -206,6 +206,7 @@ Pokemon = M_EKANS,9
 	Moves = POISONFANG,COIL,BITE
     Ability = INTIMIDATE
     Nature = IMPISH
+#Area=Route2_M
 #-------------------------------
 [YOUNGSTER_M,Gabriel]
 LoseText = That was not so cool!
@@ -224,6 +225,7 @@ Pokemon = WRENNER,9
 	Item = BINDINGBAND
     Ability = RUNAWAY
     Nature = IMPISH
+#Area=Route2_M
 #-------------------------------
 [TOURIST_M,William]
 LoseText = She will come back. She always does.
@@ -242,6 +244,7 @@ Pokemon = GOHILA,10
 	Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+#Area=Route2_M
 #-------------------------------
 [LAD,Rainer]
 LoseText = Wait, I lost?
@@ -261,6 +264,7 @@ Pokemon = WORMOTE,9
     Ability = TRACE
 	Item = OCCABERRY
     Nature = TIMID
+#Area=Route2_M
 #-------------------------------
 [FISHER_M,Ted]
 LoseText = Hold on, I don't think that was the catchphrase.
@@ -283,6 +287,7 @@ Pokemon = GULPI,10
 	Moves = ASTONISH,BITE,SPARK,CHARGE
     Ability = SWIFTSWIM
     Nature = CALM
+#Area=Route2_M
 #-------------------------------
 [TOURIST_F,Kaitlyn]
 LoseText = The sun was in my eyes!
@@ -294,6 +299,7 @@ Pokemon = M_VANILLITE,9
 LoseText = The sun was in my eyes!
 Pokemon = PACUNA,9
 Pokemon = M_VANILLITE,9
+#Area=Route2_M
 #-------------------------------
 [TOURIST_M,Samuel]
 LoseText = Cowabummer!
@@ -307,6 +313,7 @@ LoseText = Cowabummer!
 Pokemon = LITWICK,9
 Pokemon = ZEAZAYA,9
 Pokemon = M_EKANS,9
+#Area=Route2_M
 #-------------------------------
 [CAMPER_F,Lola]
 LoseText = If only my battling skills were are sharp as my survival skills...
@@ -320,6 +327,7 @@ LoseText = If only my battling skills were are sharp as my survival skills...
 Pokemon = HOOTHOOT,10
 Pokemon = SKIDDO,10
 Pokemon = WRENNER,10
+#Area=Route2_M
 #-------------------------------
 [BUGCATCHER_F,Alisa]
 LoseText = Bug types are still the best!
@@ -331,6 +339,7 @@ Pokemon = LEDYBA,10
 LoseText = Bug types are still the best!
 Pokemon = MINIMELO,9
 Pokemon = LEDYBA,10
+#Area=Route2_M
 #-------------------------------
 [BUGCATCHER_M,Mannie]
 LoseText = Maybe I should have studied type matchups?
@@ -342,6 +351,7 @@ Pokemon = CHICATTA,10
 LoseText = Maybe I should have studied type matchups?
 Pokemon = SCATTERBUG,10
 Pokemon = CHICATTA,10
+#Area=Route2_M
 #-------------------------------
 [YOUNGSTER_F,Milly]
 LoseText = No way, let me try again!
@@ -355,6 +365,7 @@ LoseText = No way, let me try again!
 Pokemon = PURRLOIN,10
 Pokemon = SUNKERN,10
 Pokemon = TECHUPPI,10
+#Area=Route2_M
 #-------------------------------
 [BUGCATCHER_F,Dany]
 LoseText = My bug types and I still have to evolve and get stronger!
@@ -366,6 +377,7 @@ Pokemon = CHICATTA,11
 LoseText = My bug types and I still have to evolve and get stronger!
 Pokemon = SPEWPA,10
 Pokemon = CHICATTA,11
+#Area=MonarcaWoods_M
 #-------------------------------
 [BIRDKEEPER_M,Connor]
 LoseText = You really ruffle my feathers!
@@ -377,6 +389,7 @@ Pokemon = WRENNER,11
 LoseText = You really ruffle my feathers!
 Pokemon = HOOTHOOT,11
 Pokemon = WRENNER,11
+#Area=MonarcaWoods_M
 #-------------------------------
 [FISHER_M,Jimbly]
 LoseText = Looks like I'm the one who's sinking...
@@ -388,6 +401,7 @@ Pokemon = FINNEON,11
 LoseText = Looks like I'm the one who's sinking...
 Pokemon = BANAGNAW,11
 Pokemon = FINNEON,11
+#Area=MonarcaWoods_M
 #-------------------------------
 [FISHER_F,Violet]
 LoseText = I've been schooled!
@@ -399,6 +413,7 @@ Pokemon = LOTAD,11
 LoseText = I've been schooled!
 Pokemon = FEEBAS,10
 Pokemon = LOTAD,11
+#Area=MonarcaWoods_M
 #-------------------------------
 [POKEMONRANGER_F,Fabian]
 LoseText = What a great battle! I wish I could have won...
@@ -412,6 +427,7 @@ LoseText = What a great battle! I wish I could have won...
 Pokemon = PHANTUMP,11
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
+#Area=MonarcaWoods_M
 #-------------------------------
 [AROMALADY,Gloria]
 LoseText = Not my beautiful flowers!
@@ -423,6 +439,7 @@ Pokemon = BUDEW,12
 LoseText = Not my beautiful flowers!
 Pokemon = FLABEBE,11
 Pokemon = BUDEW,12
+#Area=MonarcaWoods_M
 #-------------------------------
 [BUGCATCHER_M,Roberto]
 LoseText = No fair, did you use bug repellent? Harumph!
@@ -434,6 +451,7 @@ Pokemon = LEDYBA,12
 LoseText = No fair, did you use bug repellent? Harumph!
 Pokemon = MINIMELO,11
 Pokemon = LEDYBA,12
+#Area=MonarcaWoods_M
 #-------------------------------
 [BIRDKEEPER_M,Francis]
 LoseText = And down I go...
@@ -445,6 +463,7 @@ Pokemon = CROMEN,12
 LoseText = And down I go...
 Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
+#Area=MonarcaWoods_M
 #-------------------------------
 [BUGCATCHER_M,Curtis]
 LoseText = You're really starting to bug me!
@@ -460,6 +479,7 @@ Pokemon = CHICATTA,12
     Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
 Pokemon = VIVILLON,13
     Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+#Area=MonarcaWoods_O
 #-------------------------------
 [POKEMONRANGER_M,Benjamin]
 LoseText = We did our best!
@@ -471,6 +491,7 @@ Pokemon = BURBRAWL,14
 LoseText = We did our best!
 Pokemon = BURBRAWL,14
     Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+#Area=MonarcaWoods_O
 #-------------------------------
 [POKEMONRANGER_F,Penelope]
 LoseText = I went easy on you!
@@ -482,6 +503,7 @@ Pokemon = PHANTUMP,14
 LoseText = I went easy on you!
 Pokemon = PHANTUMP,14
     Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+#Area=MonarcaWoods_O
 #-------------------------------
 [HIKER_F,Xavia]
 LoseText = I haven't found my victory yet...
@@ -493,6 +515,7 @@ Pokemon = KNOGGIN,12
 LoseText = I haven't found my victory yet...
 Pokemon = M_ROSELIA,10
 Pokemon = KNOGGIN,12
+#Area=MonarcaCave_M
 #-------------------------------
 [POKEMONRANGER_M,Noah]
 LoseText = Looks like I'm the one who needs to train harder!
@@ -506,6 +529,7 @@ LoseText = Looks like I'm the one who needs to train harder!
 Pokemon = KNOGGIN,12
 Pokemon = WOOBAT,11
 Pokemon = BUDEW,13
+#Area=MonarcaCave_M
 #-------------------------------
 [TOURIST_F,Lucette]
 LoseText = You're ruining the view!
@@ -517,6 +541,7 @@ Pokemon = WOOBAT,12
 LoseText = You're ruining the view!
 Pokemon = BUNNELBY,11
 Pokemon = WOOBAT,12
+#Area=MonarcaCave_M
 #-------------------------------
 [NEOGRUNT_F,Priscilla]
 LoseText = L-let's get out of here!
@@ -536,6 +561,7 @@ Pokemon = MAGNEMITE,14
     Moves = THUNDERWAVE,THUNDERSHOCK,TACKLE,ELECTROBALL
 Pokemon = CHICATTA,13
     Moves = STRUGGLEBUG,FURYCUTTER,STRINGSHOT,RAZORLEAF
+#Area=MonarcaSanctuary1_M
 #-------------------------------
 [NEOGRUNT_M,Lucas]
 LoseText = Nothing but a minor setback!
@@ -555,6 +581,7 @@ Pokemon = SUNFLORA,12
     Moves = GRASSYTERRAIN,MEGADRAIN,GROWTH,FIREPUNCH
     Ability = EARLYBIRD
     Nature = IMPISH
+#Area=MonarcaSanctuary1_M
 #-------------------------------
 [WAREHOUSEWORKER_M,Bernard]
 LoseText = Now that's cold!
@@ -576,6 +603,7 @@ Pokemon = SNORUNT,12
     Ability = MOODY
 Pokemon = MAGNEMITE,13
     Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
+#Area=MeloladoExterior_M
 #-------------------------------
 [WAREHOUSEWORKER_F,Donna]
 LoseText = I wanted just dessert, not my just desserts!
@@ -593,6 +621,7 @@ Pokemon = M_VANILLITE,13
     Item = SITRUSBERRY
 Pokemon = EEVEE,14
     Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
+#Area=MeloladoExterior_M
 #-------------------------------
 [WAREHOUSEWORKER_M,Santos]
 LoseText = I guess I should get back to work...
@@ -606,6 +635,7 @@ LoseText = I guess I should get back to work...
 Pokemon = M_VANILLITE,13
     Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
 Pokemon = FINNEON,14
+#Area=MeloladoExterior_M
 #-------------------------------
 [TOURIST_M,Floyd]
 LoseText = Woah dude, chill out!
@@ -621,6 +651,7 @@ Pokemon = M_VANILLITE,14
     Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
 Pokemon = LOMBRE,15
     Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
+#Area=CalojarroBeach_M
 #-------------------------------
 [TOURIST_F,Jennifer]
 LoseText = Where'd you get a Pokémon like that?
@@ -636,6 +667,7 @@ Pokemon = VIVILLON,15
     Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
 Pokemon = SKITTY,16
     Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
+#Area=CalojarroBeach_M
 #-------------------------------
 [SWIMMER_M,Edson]
 LoseText = No way, our synergy was perfect!
@@ -653,6 +685,7 @@ Pokemon = FINNEON,14
     Ability = SWIFTSWIM
 Pokemon = CLOBBOPUS,15
     Moves = BULKUP,ROCKSMASH,BIND,LEER
+#Area=CalojarroBeach_M
 #-------------------------------
 [SWIMMER_F,Claudia]
 LoseText = Impossible, we've been training together since yesterday!
@@ -670,10 +703,44 @@ Pokemon = PINCURCHIN,13
 Pokemon = BANAGNAW,14
     Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
     Ability = SWIFTSWIM
+#Area=CalojarroBeach_M
+#-------------------------------
+[LEADER_Thalia,Thalia]
+LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Pokemon = FURFROU,16
+    Form = 5
+    Moves = HEADBUTT,ROUND,TAILWHIP,ZENHEADBUTT
+Pokemon = EEVEE,17
+    Moves = EXCITE,SNARL,GROWL,ROUND
+    Ability = RUNAWAY
+Pokemon = DELCATTY,17
+    Moves = FAKEOUT,ROUND,TAUNT,FURYSWIPES
+    Ability = NORMALIZE
+Pokemon = LAGUNA,18
+    Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
+    Ability = DAZZLING
+#Area=Gym2_M
+#-------------------------------
+[LEADER_Thalia,Thalia,100]
+LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Pokemon = FURFROU,16
+    Form = 5
+    Moves = HEADBUTT,ROUND,TAILWHIP,ZENHEADBUTT
+Pokemon = EEVEE,17
+    Moves = EXCITE,SNARL,GROWL,ROUND
+    Ability = RUNAWAY
+Pokemon = DELCATTY,17
+    Moves = FAKEOUT,ROUND,TAUNT,FURYSWIPES
+    Ability = NORMALIZE
+Pokemon = LAGUNA,18
+    Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
+    Ability = DAZZLING
+#Area=Gym2_M
 #-------------------------------
 [GOLDPANNER_F,Martina]
 LoseText = Love shall not always prevail...
-Pokemon = MAGIKARP,17 # should be Mazian Magikarp
+Pokemon = MAGIKARP,17
+    Form = 2
     Moves = SPLASH,SMACKDOWN,BODYSLAM
 Pokemon = MINGOT,18
     Moves = METALCLAW,QUICKATTACK,DIG,LICK
@@ -681,10 +748,12 @@ Pokemon = MINGOT,18
 #-------------------------------
 [GOLDPANNER_F,Martina,100]
 LoseText = Love shall not always prevail...
-Pokemon = MAGIKARP,17 # should be Mazian Magikarp
+Pokemon = MAGIKARP,17
+    Form = 2
     Moves = SPLASH,SMACKDOWN,BODYSLAM
 Pokemon = MINGOT,18
     Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
 #-------------------------------
 [GOLDPANNER_M,Leo]
 LoseText = I just didn't have enough grit!
@@ -700,6 +769,7 @@ Pokemon = BARBOACH,18
     Moves = WATERPULSE,MUDBOMB,WATERSPORT,AMNESIA
 Pokemon = MINGOT,19
     Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
 #-------------------------------
 [GOLDPANNER_F,Amalia]
 LoseText = I was supposed to strike gold, not strike out!
@@ -711,6 +781,7 @@ Pokemon = TECHUPPI,19
 LoseText = I was supposed to strike gold, not strike out!
 Pokemon = TECHUPPI,19
     Moves = RAGE,BITE,LICK,HOWL
+#Area=Route3_M
 #-------------------------------
 [HIKER_M,Brian]
 LoseText = Man, I really walked into that one!
@@ -726,6 +797,7 @@ Pokemon = KNOGGIN,18
     Moves = BRUTALSWING,HARDEN,ROCKTHROW,ROAR
 Pokemon = PHANTUMP,19
     Moves = FEINTATTACK,ASTONISH,INGRAIN,GRASSYGLIDE
+#Area=Route3_M
 #-------------------------------
 [PSYCHIC_M,Simon]
 LoseText = How could I have not foreseen this outcome?
@@ -741,6 +813,7 @@ Pokemon = SPOINK,18
     Moves = CONFUSERAY,PSYBEAM,GROWL,PSYCHUP
 Pokemon = CROMEN,18
     Moves = CONFUSION,GUST,EXCITE,COVET
+#Area=Route3_M
 #-------------------------------
 [HIKER_F,Cassie]
 LoseText = Looks like you're the one who's on a roll...
@@ -752,6 +825,7 @@ Pokemon = BOWLLO,19
 LoseText = Looks like you're the one who's on a roll...
 Pokemon = BOWLLO,19
     Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+#Area=Route3Cave_M
 #-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
