@@ -305,6 +305,7 @@ class Battle::Battler
     @effects[PBEffects::SlipperyPeel]        = false
     @effects[PBEffects::MoodyMemory]     		 = -1
     @effects[PBEffects::PrioEchoChamber]     = -1
+    @effects[PBEffects::HoldingHand]         = false
     @SetupMovesUsed             						 = []
     @prepickedMove             						   = nil
   end

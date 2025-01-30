@@ -6136,8 +6136,7 @@ class Battle::AI
 			score=0
 		else
 			if !target.lastRegularMoveUsed.nil?
-				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
+				oldmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
 				bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
 				maxdam=bestmove[0]
 				maxmove=bestmove[1]
@@ -6184,8 +6183,7 @@ class Battle::AI
 			moveid=maxmove.id
 
 			if !target.lastRegularMoveUsed.nil?
-				olddata = Pokemon::Move.new(target.lastRegularMoveUsed)
-				oldmove = Battle::Move.from_pokemon_move(@battle, olddata)
+				oldmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
 				if oldmove.baseDamage>0
 					score*=1.5
 					if moveid == oldmove.id

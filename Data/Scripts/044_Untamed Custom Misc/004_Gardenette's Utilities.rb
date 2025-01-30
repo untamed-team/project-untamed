@@ -1974,3 +1974,21 @@ end
   #pbMessage(_INTL("{1} seems happy at the moment.", pkmn.name))
 
 end
+
+#-----------------------------------------------------------------------------
+# * Set Move Route - edited to take into account multiple followers
+#-----------------------------------------------------------------------------
+#use like so:
+#follower_move_route("Reine")
+def command_209(name=nil)
+  character = get_character(@parameters[0])
+  if @follower_move_route
+    #character = Followers.get(@follower_move_route_id)
+    character = $game_temp.followers.get_follower_by_name(name)
+    @follower_move_route = false
+    @follower_move_route_id = nil
+  end
+  return true if character.nil?
+  character.force_move_route(@parameters[1])
+  return true
+end

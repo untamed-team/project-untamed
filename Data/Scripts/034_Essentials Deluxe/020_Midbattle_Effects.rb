@@ -34,7 +34,8 @@ $DELUXE_BATTLE_EFFECTS = {
     PBEffects::SmackDown,
     PBEffects::TarShot,
     PBEffects::Torment,
-    PBEffects::WaterSport
+    PBEffects::WaterSport,
+    PBEffects::HoldingHand
   ],
   :battler_default_zero => [
     PBEffects::Charge,

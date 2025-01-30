@@ -276,7 +276,7 @@ Category = Status
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
-Priority = 2
+Priority = 1
 FunctionCode = TargetNextFireMoveDamagesTarget
 Flags = CanProtect,CanMirrorMove,Powder
 Description = The target is covered in a powder that explodes and damages it if it uses a Fire-type move.
@@ -2312,7 +2312,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = FixedDamageUserLevel
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,GravityBoosted
 Description = The target is thrown using the power of gravity. It inflicts damage equal to the user's level.
 #-------------------------------
 [BULKUP]
@@ -6042,7 +6042,7 @@ Category = Status
 Accuracy = 0
 TotalPP = 40
 Target = NearAlly
-FunctionCode = DoesNothingFailsIfNoAlly
+FunctionCode = HoldingHandsShamefully
 Description = The user and an ally hold hands. This makes them very happy.
 #-------------------------------
 [HOWL]
