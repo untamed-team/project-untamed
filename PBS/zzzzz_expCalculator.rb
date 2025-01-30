@@ -334,8 +334,10 @@ end
 
 def simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data)
   trainers.each do |trainer|
-    selectedTrainer = trainers.find { |t| t[:name] == trainer[:name] && t[:id] == (difficulty_mode * 100) } ||
-                       trainers.find { |t| t[:name] == trainer[:name] && t[:id] == 0 }
+    diff = (100 * difficulty_mode)
+    diff = 0 if diff == 1
+    trainerID = trainer[:id] + diff
+    selectedTrainer = trainers.find { |t| t[:name] == trainer[:name] && t[:id] == trainerID }
     selectedTrainer[:pokemon].each do |defeatedBattler|
       if pokemon_data.key?(defeatedBattler[:name])
         base_exp = pokemon_data[defeatedBattler[:name]][:base_exp]
