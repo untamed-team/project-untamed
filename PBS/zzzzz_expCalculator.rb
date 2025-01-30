@@ -465,10 +465,14 @@ end
 
 def main
   loop do
-    puts ""
     pokemon_team, expvar = input_pkmndata(POKEMON_GROWTH_DATA)
     location, obligatoryonly, difficulty_mode = input_trainerdata(TRAINERS_ROUTE_DATA)
     simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
+    puts ""
+    puts "    Do you want to do another simulation? (y/n):"
+    cunt = gets.chomp.downcase
+    cuntinue = cunt == "y"
+    break unless cuntinue
     puts ""
   end
 end
