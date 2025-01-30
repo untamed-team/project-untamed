@@ -58,9 +58,10 @@ def extract_trainer_data(input_file, output_file):
             pokemon_list.append(f'{{ name: "{pokemon_name}", level: {pokemon_level} }}')
         elif line.startswith("#-------------------------------"):
             if internal_name and external_name and area_main:
+                obligatory = "true" if area_mandatory == "M" else "false" if area_mandatory == "O" else "false"
                 if area_main not in extracted_data:
                     extracted_data[area_main] = []
-                extracted_data[area_main].append(f'{{ name: "{external_name}", id: {trainer_id}, obligatory: {"true" if area_mandatory else "false"}, pokemon: [{", ".join(pokemon_list)}] }}')
+                extracted_data[area_main].append(f'{{ name: "{external_name}", id: {trainer_id}, obligatory: {obligatory}, pokemon: [{", ".join(pokemon_list)}] }}')
             internal_name = ""
             external_name = ""
             trainer_id = "0"
