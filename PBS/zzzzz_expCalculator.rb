@@ -338,6 +338,10 @@ def simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data
     diff = 0 if diff == 1
     trainerID = trainer[:id] + diff
     selectedTrainer = trainers.find { |t| t[:name] == trainer[:name] && t[:id] == trainerID }
+    if selectedTrainer.nil?
+      puts "    ERROR: Trainer #{trainer[:name]} with ID #{trainerID} not found."
+      next
+    end
     selectedTrainer[:pokemon].each do |defeatedBattler|
       if pokemon_data.key?(defeatedBattler[:name])
         base_exp = pokemon_data[defeatedBattler[:name]][:base_exp]
