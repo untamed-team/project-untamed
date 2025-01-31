@@ -697,7 +697,7 @@ class Battle::AI
 				miniscore*=0.2
 				score*=miniscore
 			else
-				score*=0.1
+				#score*=0.1
 			end
 			if user.pbOpposingSide.effects[PBEffects::Spikes]>0
 				score*=0.9
@@ -738,7 +738,7 @@ class Battle::AI
 				miniscore*=0.2
 				score*=miniscore
 			else
-				score*=0.1
+				#score*=0.1
 			end
 			if user.pbOpposingSide.effects[PBEffects::ToxicSpikes]>0
 				score*=0.9
@@ -779,7 +779,7 @@ class Battle::AI
 				miniscore*=0.2
 				score*=miniscore
 			else
-				score*=0.1
+				#score*=0.1
 			end
 			score*=0.7 if pbHasHazardCleaningMove?(target)
 			if targetWillMove?(target, "status")
@@ -817,7 +817,7 @@ class Battle::AI
 				miniscore*=0.2
 				score*=miniscore
 			else
-				score*=0.1
+				#score*=0.1
 			end
 			score*=0.7 if pbHasHazardCleaningMove?(target)
 			if targetWillMove?(target, "status")
