@@ -999,8 +999,10 @@ class Battle::AI
 			score*=1.3
 		end
 		if move.function == "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1" # scale shot
-			# speed raise
-			if $player.difficulty_mode?("chaos") && !user.SetupMovesUsed.include?(move.id)
+			if $player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id)
+				score*=1.1
+			else
+				# speed raise
 				miniscore=125
 				if ospeed<(aspeed*(3.0/2.0)) && @battle.field.effects[PBEffects::TrickRoom] == 0
 					miniscore*=1.2
@@ -1119,51 +1121,52 @@ class Battle::AI
 					miniscore*=0.5
 				end
 				score*=miniscore
-			end
-			miniscore=100
-			# defense drop
-			if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
-				score*=1.5
-			else
-				userlivecount 	= @battle.pbAbleNonActiveCount(user.idxOwnSide)
-				targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
-				if targetSurvivesMove(move,user,target)
-					score*=0.9
-					if !userFasterThanTarget
-						score*=1.3
-					else
-						if target.moves.none? { |m| priorityAI(target,m,globalArray)>0 }
-							score*=1.2
-						end
-					end  
-					if target.moves.any? { |m| m&.healingMove? }
-						score*=0.5
-					end
-					if target.attack>target.spatk
-						score*=0.7
-					end
-					bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-					maxphys = (bestmove[3]=="physical")
-					if maxphys
-						score*=0.7
-					end
+				
+				# defense drop
+				miniscore=100
+				if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+					score*=1.5
 				else
-					targetlivecount -= 1
+					userlivecount 	= @battle.pbAbleNonActiveCount(user.idxOwnSide)
+					targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
+					if targetSurvivesMove(move,user,target)
+						score*=0.9
+						if !userFasterThanTarget
+							score*=1.3
+						else
+							if target.moves.none? { |m| priorityAI(target,m,globalArray)>0 }
+								score*=1.2
+							end
+						end  
+						if target.moves.any? { |m| m&.healingMove? }
+							score*=0.5
+						end
+						if target.attack>target.spatk
+							score*=0.7
+						end
+						bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+						maxphys = (bestmove[3]=="physical")
+						if maxphys
+							score*=0.7
+						end
+					else
+						targetlivecount -= 1
+					end
+					minimi=100
+					if targetlivecount > 0 
+						minimi*=@battle.pbParty(target.index).length
+						minimi/=100.0
+						minimi*=0.05
+						minimi = 1-minimi
+						miniscore*=minimi
+					end
+					if userlivecount == 0 && targetlivecount > 0 
+						score*=0.7
+					end
 				end
-				minimi=100
-				if targetlivecount > 0 
-					minimi*=@battle.pbParty(target.index).length
-					minimi/=100.0
-					minimi*=0.05
-					minimi = 1-minimi
-					miniscore*=minimi
-				end
-				if userlivecount == 0 && targetlivecount > 0 
-					score*=0.7
-				end
+				miniscore/=100.0
+				score*=miniscore
 			end
-			miniscore/=100.0
-			score*=miniscore
 		end
     #---------------------------------------------------------------------------
     when "HitOncePerUserTeamMember" # beat up
