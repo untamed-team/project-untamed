@@ -23,8 +23,8 @@ class CrustangRacing
 			place = "4th"
 		end
 		
-		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 8, Graphics.width, "Place: #{place}", @overlayBaseColor, @overlayShadowColor)
-		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 40, Graphics.width, "Lap: #{@lastLapCount}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 13, Graphics.width, "Place: #{place}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 45, Graphics.width, "Laps: #{@lastLapCount}", @overlayBaseColor, @overlayShadowColor)
 		
 		#KPH
 		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
@@ -35,6 +35,10 @@ class CrustangRacing
 		
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
 		drawFormattedTextEx(@khpOverlay, 120, 45, Graphics.width, "KM/H: #{@lastCurrentSpeed*CrustangRacingSettings::KPH_MULTIPLIER}", @overlayBaseColor, @overlayShadowColor)
+		
+		#draw remaining time in race
+		@raceTimerOverlay.clear
+		drawFormattedTextEx(@raceTimerOverlay, 120, 13, Graphics.width, "Time: #{@raceRemainingTime}", @overlayBaseColor, @overlayShadowColor)
 	end #def self.updateOverlayText
 		
 	def self.updateAnnouncementsText
@@ -551,7 +555,73 @@ class CrustangRacing
 	
 	end #def self.bumpedIntoSomeone
 	
+	def self.countdownToGo
+		#wait
+		waitTimer = Graphics.frame_rate
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			#subtract from waitTimer
+			waitTimer -= 1
+			break if waitTimer <= 0
+		end #loop do
+		
+		#play countdown sound
+		pbBGMPlay(CrustangRacingSettings::TRACK_COUNTDOWN_BGM, 200)
+		
+		@countdownTimerLengthBetween = Graphics.frame_rate * 2
+		countdownTimer = 3
+		3.times do
+			waitTimer = @countdownTimerLengthBetween
+			loop do
+				Graphics.update
+				pbUpdateSpriteHash(@sprites)
+				#subtract from waitTimer
+				waitTimer -= 1
+				break if waitTimer <= 0
+			end #loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			@countdownGOOverlay.clear
+			drawFormattedTextEx(@countdownGOOverlay, Graphics.width/2 -10, Graphics.height/2 -60, Graphics.width, "#{countdownTimer}", @overlayBaseColor, @overlayShadowColor)
+			countdownTimer -= 1
+		end #3.times do
+		
+		#wait
+		waitTimer = @countdownTimerLengthBetween
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			#subtract from waitTimer
+			waitTimer -= 1
+			break if waitTimer <= 0
+		end #loop do
+		
+		#display GO
+		@countdownGOOverlay.clear
+		drawFormattedTextEx(@countdownGOOverlay, Graphics.width/2 -26, Graphics.height/2 -60, Graphics.width, "GO", @overlayBaseColor, @overlayShadowColor)
+		
+		#wait
+		waitTimer = @countdownTimerLengthBetween + 10
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			#subtract from waitTimer
+			waitTimer -= 1
+			break if waitTimer <= 0
+		end #loop do
+		
+		@countingDownGoTimer = false
+		@countdownGOOverlay.clear
+		
+		#play full music track
+		pbBGMFade(0.0)
+		pbBGMPlay(CrustangRacingSettings::TRACK_BGM, 200)
+	end
+	
 	def self.main(enteredCrustang)
+		pbBGMFade(0.8)
+	
 		@enteredCrustang = enteredCrustang
 		self.setup
 		self.setupRacerHashes
@@ -560,16 +630,17 @@ class CrustangRacing
 		self.assignMoveEffects
 		self.drawMovesUI
 		self.setMiscVariables
-		
-		pbBGMPlay(CrustangRacingSettings::TRACK_BGM)
+		self.moveMiscSprites
+		self.updateHazardPositionOnScreen
+		self.updateRockyPatchPositionOnScreen
+		self.trackOverviewMovementUpdate
+
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
 			
-			#3 2 1 GO
-			
-			
-			
+			self.countdownToGo if @countingDownGoTimer != false
+				
 			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
 			self.moveMiscSprites
 			self.updateRacerPositionOnTrack
@@ -613,7 +684,14 @@ class CrustangRacing
 			self.aiLookForOpportunityToUseRockHazard #rock hazard
 			self.aiLookForOpportunityToUseMudHazard #mud hazard
 			self.aiLookForOpportunityToUseInvincibility #invincibility
+			
+			break if @raceEnded
 		end
+		self.endRace
 	end #def self.main
+	
+	def self.endRace
+		print "race over"
+	end #def self.endRace
 	
 end #class CrustangRacing

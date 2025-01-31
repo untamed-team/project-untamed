@@ -1,15 +1,18 @@
 class CrustangRacing
 	def self.chooseCrustang
 		choices = [_INTL("Rent a Crustang"), _INTL("Use my Crustang"), _INTL("Nevermind")]
-		choice = pbMessage(_INTL("Do you want to rent a Crustang or use your own?"), choices, -1)
+		choice = pbMessage(_INTL("Alright! Would you like to rent a Crustang from us or race with your own?"), choices, -1)
 		
 		case choice
 		when -1
+			pbMessage(_INTL("No sweat. Just let me know if you wanna race, yeah?"))
 			return
 		when 0
 			self.rentCrustang
 		when 1
 			self.chooseOwnCrustang
+		when 2
+			pbMessage(_INTL("No sweat. Just let me know if you wanna race, yeah?"))
 		end
 	end
 	
@@ -47,6 +50,13 @@ class CrustangRacing
 		enteredCrustang = $player.party[$game_variables[36]]
 		#restore user's original party if rented a Crustang
 		$player.party = @currentParty if !@currentParty.nil?
-		self.main(enteredCrustang) if $game_variables[36] != -1
-	end
+		if $game_variables[36] != -1
+			pbMessage(_INTL("A nice choice! Good luck out there!"))
+			pbFadeOutIn {
+				self.main(enteredCrustang)
+			}
+		else
+			pbMessage(_INTL("No sweat. Just let me know if you wanna race, yeah?"))
+		end #if $game_variables[36] != -1
+	end #def self.chooseOwnCrustang
 end

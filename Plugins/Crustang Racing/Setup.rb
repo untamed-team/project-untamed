@@ -125,6 +125,15 @@ class CrustangRacing
 		@sprites["lapsAndPlaceOverlay"].z = 999999
 		@lapsAndPlaceOverlay = @sprites["lapsAndPlaceOverlay"].bitmap
 		pbSetSystemFont(@lapsAndPlaceOverlay)
+		@lapsAndPlaceOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		
+		@sprites["raceTimer"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["raceTimer"].x = 0
+		@sprites["raceTimer"].y = 0
+		@sprites["raceTimer"].z = 999999
+		@raceTimerOverlay = @sprites["raceTimer"].bitmap
+		pbSetSystemFont(@raceTimerOverlay)
+		@raceTimerOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
 		
 		@sprites["announcementsPane"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
 		@sprites["announcementsPane"].x = 0
@@ -142,16 +151,15 @@ class CrustangRacing
 		self.placeRockyPatches
 		
 		#create a bitmap on which to write "3 2 1 GO"
-		@sprites["321GO"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
-		@sprites["321GO"].x = Graphics.width - @sprites["321GO"].width
-		@sprites["321GO"].y = Graphics.height - @sprites["321GO"].height
+		@sprites["321GO"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		@sprites["321GO"].x = 0
+		@sprites["321GO"].y = 0
 		@sprites["321GO"].z = 999999
 		@sprites["321GO"].opacity = 255
 		@countdownGOOverlay = @sprites["321GO"].bitmap
 		pbSetSystemFont(@countdownGOOverlay)
-		@countdownGOOverlay.font.size = MessageConfig::SMALL_FONT_SIZE + 3
-		#@sprites["321GO"].visible = false
-		
+		@countdownGOOverlay.font.size = 80
+		#@sprites["321GO"].visible = false		
 	end #def setup
 	
 	def self.placeRockyPatches
@@ -552,6 +560,12 @@ class CrustangRacing
 		
 		#for rng rolls
 		@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS
+		
+		#to count down the timer every second
+		@secondsTimer = Graphics.frame_rate
+		
+		#set initial time for race
+		@raceRemainingTime = CrustangRacingSettings::RACE_TIME_IN_SECONDS
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
