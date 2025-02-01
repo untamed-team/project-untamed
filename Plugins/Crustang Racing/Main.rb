@@ -575,6 +575,10 @@ class CrustangRacing
 			break if waitTimer <= 0
 		end #loop do
 		
+		#remember Ferrera music
+		@playingBGM = $game_system.getPlayingBGM
+		$game_system.bgm_pause
+		
 		#play countdown sound
 		pbBGMPlay(CrustangRacingSettings::TRACK_COUNTDOWN_BGM, 200)
 		
@@ -624,7 +628,6 @@ class CrustangRacing
 		@countdownGOOverlay.clear
 		
 		#play full music track
-		pbBGMFade(0.0)
 		pbBGMPlay(CrustangRacingSettings::TRACK_BGM, 200)
 	end
 	
@@ -701,6 +704,15 @@ class CrustangRacing
 		self.endRace
 	end #def self.main
 	
+	def self.pbEndScene
+		# Hide all sprites with FadeOut effect.
+		pbFadeOutAndHide(@sprites) { pbUpdateSpriteHash(@sprites) }
+		# Remove all sprites.
+		pbDisposeSpriteHash(@sprites)
+		# Remove the viewpoint.
+		@viewport.dispose
+	end
+	
 	def self.endRace
 		pbSEStop
 		pbSEPlay("Whistle Blow")
@@ -743,7 +755,8 @@ class CrustangRacing
 			break if @racerPlayer[:CurrentSpeed] <= 0
 		end
 		
-		print "stopped"
+		self.pbEndScene
+		$game_system.bgm_resume(@playingBGM)
 	end #def self.endRace
 	
 end #class CrustangRacing
