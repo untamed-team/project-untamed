@@ -333,6 +333,45 @@ class CrustangRacing
 		#Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
 	end #def self.updateRacerPlacement
 
+	def self.updateRacerTotalLaps
+		###################################
+		#============= Racer1 =============
+		###################################
+		laps = @racer1[:LapCount]
+		percentOfLap = @racer1[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer1[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		laps = @racer2[:LapCount]
+		percentOfLap = @racer2[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer2[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		laps = @racer3[:LapCount]
+		percentOfLap = @racer3[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer3[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Player =============
+		###################################
+		laps = @racerPlayer[:LapCount]
+		percentOfLap = @racerPlayer[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racerPlayer[:LapTotal] = laps + behindDecimal
+		
+		
+		#Console.echo_warn "laps is #{laps}"
+		#Console.echo_warn "behindDecimal is #{behindDecimal}"
+		#Console.echo_warn "LapTotal is #{@racerPlayer[:LapTotal]}"
+	end
+
 	def self.checkForCollisions(racer)
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
 		#collide with racers

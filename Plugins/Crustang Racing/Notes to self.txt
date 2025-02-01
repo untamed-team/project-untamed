@@ -1,21 +1,13 @@
 Notes to self:
 Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
+replace the pkmn icons on the overview
+change the color of other crustang
 
-Alright, organizing my thoughts for AI:
+fade out the scene when the race ends
+give rewards based on your placement and how many laps you did
+make the race cost money
+make renting a crustang cost additonal fee
+make summary screen available when choosing crustang to rent (maybe go right to summary page with crustang moves then ask to confirm choice)
 
-
-To do:
-
-
-
-
-Bugs:
-
-
-After events (polish):
 Add animation to overloading a racer
-Make shiny crustang opponents/rentables possible and make the overworld reflect shininess
-Make the game end after a certain number of laps or minutes
-Make summary in the crustang selection screen possible
-Make animation for overload

@@ -4,6 +4,7 @@ class CrustangRacingSettings
 #========================================================#
 TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
+SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5

@@ -583,7 +583,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -602,7 +602,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -621,7 +621,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -640,7 +640,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc

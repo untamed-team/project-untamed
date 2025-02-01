@@ -4,13 +4,14 @@ class CrustangRacing
 		#Laps and Placement
 		#@lapsAndPlaceOverlay
 		#drawFormattedTextEx(bitmap, x, y, width, text, baseColor = nil, shadowColor = nil, lineheight = 32)
+		@lapsAndPlaceOverlay.clear
 		if @lastLapCount != @racerPlayer[:LapCount]
 			@lastLapCount = @racerPlayer[:LapCount]
-			@lapsAndPlaceOverlay.clear
+			#@lapsAndPlaceOverlay.clear
 		end
 		if @lastPlacement != @racerPlayer[:CurrentPlacement]
 			@lastPlacement = @racerPlayer[:CurrentPlacement]
-			@lapsAndPlaceOverlay.clear
+			#@lapsAndPlaceOverlay.clear
 		end
 		case @racerPlayer[:CurrentPlacement]
 		when 1
@@ -24,7 +25,7 @@ class CrustangRacing
 		end
 		
 		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 13, Graphics.width, "Place: #{place}", @overlayBaseColor, @overlayShadowColor)
-		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 45, Graphics.width, "Laps: #{@lastLapCount}", @overlayBaseColor, @overlayShadowColor)
+		drawFormattedTextEx(@lapsAndPlaceOverlay, 20, 45, Graphics.width, "Laps: #{@racerPlayer[:LapTotal].round(2)}", @overlayBaseColor, @overlayShadowColor)
 		
 		#KPH
 		if @lastCurrentSpeed != @racerPlayer[:CurrentSpeed].truncate(1).to_f
@@ -403,6 +404,7 @@ class CrustangRacing
 		#============= Racer1 =============
 		###################################
 		@racer1[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer1[:BoostingStatus] != true && @racer1[:Bumped] != true && @racer1[:SpinOutTimer] <= 0
+		@racer1[:DesiredSpeed] = 0 if @raceEnded
 		
 		if @racer1[:BoostingStatus] == true #boosting
 			if @racer1[:CurrentSpeed].floor < @racer1[:DesiredSpeed]
@@ -419,6 +421,7 @@ class CrustangRacing
 		#decelerate
 		if @racer1[:CurrentSpeed].floor > @racer1[:DesiredSpeed]
 			@racer1[:CurrentSpeed] -= @racer1[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			@racer1[:CurrentSpeed] -= @racer1[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_STOP_AT_END.to_f * Graphics.frame_rate.to_f) if @raceEnded
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -436,6 +439,7 @@ class CrustangRacing
 		#============= Racer2 =============
 		###################################
 		@racer2[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer2[:BoostingStatus] != true && @racer2[:Bumped] != true && @racer2[:SpinOutTimer] <= 0
+		@racer2[:DesiredSpeed] = 0 if @raceEnded
 		
 		if @racer2[:BoostingStatus] == true #boosting
 			if @racer2[:CurrentSpeed].floor < @racer2[:DesiredSpeed]
@@ -452,6 +456,7 @@ class CrustangRacing
 		#decelerate
 		if @racer2[:CurrentSpeed].floor > @racer2[:DesiredSpeed]
 			@racer2[:CurrentSpeed] -= @racer2[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			@racer2[:CurrentSpeed] -= @racer2[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_STOP_AT_END.to_f * Graphics.frame_rate.to_f) if @raceEnded
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -469,6 +474,7 @@ class CrustangRacing
 		#============= Racer3 =============
 		###################################
 		@racer3[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racer3[:BoostingStatus] != true && @racer3[:Bumped] != true && @racer3[:SpinOutTimer] <= 0
+		@racer3[:DesiredSpeed] = 0 if @raceEnded
 		
 		if @racer3[:BoostingStatus] == true #boosting
 			if @racer3[:CurrentSpeed].floor < @racer3[:DesiredSpeed]
@@ -485,6 +491,7 @@ class CrustangRacing
 		#decelerate
 		if @racer3[:CurrentSpeed].floor > @racer3[:DesiredSpeed]
 			@racer3[:CurrentSpeed] -= @racer3[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			@racer3[:CurrentSpeed] -= @racer3[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_STOP_AT_END.to_f * Graphics.frame_rate.to_f) if @raceEnded
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -502,6 +509,7 @@ class CrustangRacing
 		#============= Player =============
 		###################################
 		@racerPlayer[:DesiredSpeed] = CrustangRacingSettings::TOP_BASE_SPEED if @racerPlayer[:BoostingStatus] != true && @racerPlayer[:Bumped] != true && @racerPlayer[:SpinOutTimer] <= 0
+		@racerPlayer[:DesiredSpeed] = 0 if @raceEnded
 		
 		if @racerPlayer[:BoostingStatus] == true #boosting
 			if @racerPlayer[:CurrentSpeed].floor < @racerPlayer[:DesiredSpeed]
@@ -518,6 +526,7 @@ class CrustangRacing
 		#decelerate
 		if @racerPlayer[:CurrentSpeed].floor > @racerPlayer[:DesiredSpeed]
 			@racerPlayer[:CurrentSpeed] -= @racerPlayer[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_NORMALIZE_SPEED.to_f * Graphics.frame_rate.to_f)
+			@racerPlayer[:CurrentSpeed] -= @racerPlayer[:PreviousDesiredSpeed] / (CrustangRacingSettings::SECONDS_TO_STOP_AT_END.to_f * Graphics.frame_rate.to_f) if @raceEnded
 		end
 		
 		#after speeding up or slowing down, if the floor of the current speed is exactly the desired speed, set the current speed to its floor
@@ -634,13 +643,14 @@ class CrustangRacing
 		self.updateHazardPositionOnScreen
 		self.updateRockyPatchPositionOnScreen
 		self.trackOverviewMovementUpdate
+		self.updateOverlayText
 
 		loop do
 			Graphics.update
 			pbUpdateSpriteHash(@sprites)
 			
 			self.countdownToGo if @countingDownGoTimer != false
-				
+			
 			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
 			self.moveMiscSprites
 			self.updateRacerPositionOnTrack
@@ -659,6 +669,7 @@ class CrustangRacing
 			self.updateRacerPlacement
 			self.updateOverlayText
 			self.checkForLap
+			self.updateRacerTotalLaps
 			self.updateSpinOutRangeSprites
 			self.updateOverloadRangeSprites
 			self.updateRacerHue
@@ -691,7 +702,48 @@ class CrustangRacing
 	end #def self.main
 	
 	def self.endRace
-		print "race over"
+		pbSEStop
+		pbSEPlay("Whistle Blow")
+		pbBGMFade(CrustangRacingSettings::SECONDS_TO_STOP_AT_END)
+		#slow down Crustang
+		@racer1[:DesiredSpeed] = 0
+		@racer2[:DesiredSpeed] = 0
+		@racer3[:DesiredSpeed] = 0
+		@racerPlayer[:DesiredSpeed] = 0
+		
+		loop do
+			Graphics.update
+			pbUpdateSpriteHash(@sprites)
+			#$game_system.update #for fading the audio
+			
+			self.trackMovementUpdate #keep this as high up in the loop as possible below Graphics updates
+			self.moveMiscSprites
+			self.updateRacerPositionOnTrack
+			self.updateRacerPositionOnScreen
+			self.updateHazardPositionOnScreen
+			self.updateRockyPatchPositionOnScreen
+			self.trackOverviewMovementUpdate
+			self.updateTimers
+			self.accelerateDecelerate
+			self.checkForCollisions(@racer1)
+			self.checkForCollisions(@racer2)
+			self.checkForCollisions(@racer3)
+			self.checkForCollisions(@racerPlayer)
+			self.updateSpinOutAnimation
+			#self.updateRacerPlacement
+			#self.updateOverlayText
+			#self.checkForLap
+			#self.updateRacerTotalLaps
+			self.updateSpinOutRangeSprites
+			self.updateOverloadRangeSprites
+			self.updateRacerHue
+			#self.monitorUpcomingHazards
+			#self.updateAnnouncementsText
+			
+			break if @racerPlayer[:CurrentSpeed] <= 0
+		end
+		
+		print "stopped"
 	end #def self.endRace
 	
 end #class CrustangRacing
