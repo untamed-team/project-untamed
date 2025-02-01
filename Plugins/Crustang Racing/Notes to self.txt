@@ -4,7 +4,7 @@ Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 replace the pkmn icons on the overview
 change the color of other crustang
 
-fade out the scene when the race ends
+
 give rewards based on your placement and how many laps you did
 make the race cost money
 make renting a crustang cost additonal fee

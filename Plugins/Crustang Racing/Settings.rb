@@ -123,10 +123,21 @@ RENTABLE_CRUSTANG = [
 {TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
 
+COST_TO_RACE = 300
+
 #========================================================#
 #==================== MISC SETTINGS ====================#
 #========================================================#
 #usually set to same as SECONDS_TO_NORMALIZE_SPEED
+#amount of time needed to pass after race starts before moves and boost are usable
 INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS = SECONDS_TO_NORMALIZE_SPEED
+
+PRIZE_POOL = [
+pool1 = [:POKETOY, :POKETOY, :POKETOY, :EVERSTONE, :EVERSTONE, :EVERSTONE, :HONEY, :HONEY, :HONEY, :HONEY, :HONEY, :POKEFLUTE, :YELLOWFLUTE, :YELLOWFLUTE, :XACCURACY, :XACCURACY], #5 laps
+pool2 = [:SUPERPOTION, :SUPERPOTION, :SUPERPOTION, :TIMERBALL, :DUSKBALL, :GREATBALL, :GREATBALL, :GREATBALL, :SMOKEBALL, :SMOKEBALL, :SMOKEBALL, :GRIPCLAW], #8 laps
+pool4 = [:NUGGET, :REVIVE, :ULTRABALL, :ULTRABALL, :PEARL, :OLDGATEAU, :FRIENDBALL, :FRIENDBALL, :FRIENDBALL, :SAFARIBALL, :SAFARIBALL, :SAFARIBALL, :SPORTBALL, :SPORTBALL, :SPORTBALL, :TINYMUSHROOM, :TINYMUSHROOM] #10 laps
+]
+
+REWARD_FOR_PERSONAL_BEST = :RARECANDY
 
 end #class CrustangRacingSettings

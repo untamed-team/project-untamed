@@ -575,13 +575,8 @@ class CrustangRacing
 			break if waitTimer <= 0
 		end #loop do
 		
-		#remember Ferrera music
-		@playingBGM = $game_system.getPlayingBGM
-		$game_system.bgm_pause
-		$game_system.bgm_resume(@playingBGM)
-		
 		#play countdown sound
-		##############pbBGMPlay(CrustangRacingSettings::TRACK_COUNTDOWN_BGM, 200)
+		pbBGMPlay(CrustangRacingSettings::TRACK_COUNTDOWN_BGM, 200)
 		
 		@countdownTimerLengthBetween = Graphics.frame_rate * 2
 		countdownTimer = 3
@@ -633,6 +628,9 @@ class CrustangRacing
 	end
 	
 	def self.main(enteredCrustang)
+		#remember Ferrera music
+		@playingBGM = $game_system.getPlayingBGM
+		$game_system.bgm_pause		
 		pbBGMFade(0.8)
 	
 		@enteredCrustang = enteredCrustang
@@ -757,7 +755,7 @@ class CrustangRacing
 		end
 		
 		self.pbEndScene
-		#$game_system.bgm_resume(@playingBGM)
+		$game_system.bgm_resume(@playingBGM)
 		
 	end #def self.endRace
 	
