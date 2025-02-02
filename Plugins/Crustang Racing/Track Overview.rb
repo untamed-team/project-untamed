@@ -83,6 +83,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer1[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer1 pointOnTrackOverview is #{@racer1[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer1[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer1[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
@@ -143,6 +144,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer2[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer2 pointOnTrackOverview is #{@racer2[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer2[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer2[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
@@ -203,6 +205,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer3 pointOnTrackOverview is #{@racer3[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer3[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer3[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs

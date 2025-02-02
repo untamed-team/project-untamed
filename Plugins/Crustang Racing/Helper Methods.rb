@@ -846,17 +846,14 @@ class CrustangRacing
 			if $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL2
 				pbMessage(_INTL("Well done! Here's your prize!"))
 				prize = CrustangRacingSettings::PRIZE_POOL[2].sample
-				print prize
 				pbReceiveItem(prize)
 			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL1
 				pbMessage(_INTL("Well done! Here's your prize!"))
 				prize = CrustangRacingSettings::PRIZE_POOL[1].sample
-				print prize
 				pbReceiveItem(prize)
 			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL0
 				pbMessage(_INTL("Well done! Here's your prize!"))
 				prize = CrustangRacingSettings::PRIZE_POOL[0].sample
-				print prize
 				pbReceiveItem(prize)
 			else
 				pbMessage(_INTL("Aw, looks like you didn't travel enough distance to get a prize..."))

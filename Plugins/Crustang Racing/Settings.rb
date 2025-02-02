@@ -8,7 +8,7 @@ SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5
-RACE_TIME_IN_SECONDS = 20#180
+RACE_TIME_IN_SECONDS = 180
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
@@ -131,7 +131,7 @@ COST_TO_RACE = 300
 #distance required to get prizes
 #if the player does nothing, they will travel >11 but <12 laps
 #if the player puts in maximum effort, they can get about 15 or 16 laps
-REQ_DISTANCE_FOR_POOL0 = 0#14
+REQ_DISTANCE_FOR_POOL0 = 14
 REQ_DISTANCE_FOR_POOL1 = 15
 REQ_DISTANCE_FOR_POOL2 = 16
 

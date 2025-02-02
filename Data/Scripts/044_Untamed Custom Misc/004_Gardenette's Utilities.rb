@@ -2003,9 +2003,10 @@ end #def getThisEvent
 #-----------------------------------------------------------------------------
 # * Discard all instance variables that are not set to nil. Otherwise, the trash collector will not reset it in the current game session
 #-----------------------------------------------------------------------------
-def pbDiscardInstanceVariables
-  self.instance_variables.each do |sym|
-    self.instance_variable_set(sym, nil) 
-    self.remove_instance_variable(sym)
+def pbDiscardInstanceVariables(instanceName = nil)
+  instanceName = self if instanceName.nil?
+  instanceName.instance_variables.each do |sym|
+    instanceName.instance_variable_set(sym, nil) 
+    instanceName.remove_instance_variable(sym)
   end
 end #def pbDiscardInstanceVariables

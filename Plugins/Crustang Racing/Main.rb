@@ -730,6 +730,7 @@ class CrustangRacing
 		pbSEStop
 		pbSEPlay("Whistle Blow")
 		pbBGMFade(CrustangRacingSettings::SECONDS_TO_STOP_AT_END)
+		pbBGSFade(CrustangRacingSettings::SECONDS_TO_STOP_AT_END)
 		#slow down Crustang
 		@racer1[:DesiredSpeed] = 0
 		@racer2[:DesiredSpeed] = 0
@@ -773,10 +774,5 @@ class CrustangRacing
 		
 		self.pbEndScene
 		$game_system.bgm_resume(@playingBGM)
-		
-		#after the scene has ended and we are back on the map from before the race started
-		self.givePrize
-		
-		pbDiscardInstanceVariables
 	end #def self.endRace
 end #class CrustangRacing
