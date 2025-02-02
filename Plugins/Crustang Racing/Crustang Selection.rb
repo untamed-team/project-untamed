@@ -51,6 +51,10 @@ class CrustangRacing
 		#restore user's original party if rented a Crustang
 		$player.party = @currentParty if !@currentParty.nil?
 		if $game_variables[36] != -1
+			#subtract money
+			$player.money -= CrustangRacingSettings::COST_TO_RACE
+			pbSEPlay("Mart buy item")
+			
 			pbMessage(_INTL("A nice choice! Good luck out there!"))
 			pbFadeOutIn {
 				self.main(enteredCrustang)
