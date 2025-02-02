@@ -2010,3 +2010,52 @@ def pbDiscardInstanceVariables(instanceName = nil)
     instanceName.remove_instance_variable(sym)
   end
 end #def pbDiscardInstanceVariables
+
+
+#-----------------------------------------------------------------------------
+# * Crustang Paint Job
+#-----------------------------------------------------------------------------
+def crustangPaintJobNPC
+  $game_variables[36] = 0
+
+  pbChooseTradablePokemon(36, 37,
+		proc { |pkmn| pkmn.isSpecies?(:CRUSTANG) }
+	)
+  pkmn = $player.party[$game_variables[36]]
+  if $game_variables[36] == -1
+    pbMessage(_INTL("Let me know if you ever want a paint job!"))
+    return
+  else
+    choices = [
+      _INTL("Classic"), #0
+      _INTL("Orange"), #1
+      _INTL("Yellow"), #2
+      _INTL("Green"), #3
+      _INTL("Blue"), #4
+      _INTL("Indigo"), #5
+      _INTL("Purple"), #6
+      _INTL("Hot Pink"), #7
+      _INTL("Black"), #8
+      _INTL("White"), #9
+      _INTL("Nevermind")
+    ]
+
+    new_form = pbMessage(_INTL("Which style would you like?"), choices, choices.length)
+    print new_form
+    if new_form == -1 || new_form == choices.length-1
+      pbMessage(_INTL("Let me know if you ever want a paint job!"))
+      return
+    elsif new_form == pkmn.form
+      pbMessage(_INTL("Looks like your #{pkmn.name} already has that paint job."))
+    else
+      #change form
+      pkmn.form = new_form
+      #subtract money
+      $player.money -= 3000
+      pbSEPlay("Mart buy item")
+      pbWait(1)
+      pbMessage(_INTL("Looking good!"))
+      FollowingPkmn.refresh
+    end #if new_form == pkmn.form
+  end #if $game_variables[36] == -1
+end #def crustangPaintJobNPC

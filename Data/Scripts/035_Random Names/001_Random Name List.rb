@@ -344,6 +344,7 @@ RANDOM_NAMES = [
 "Jewel",
 "Jiminy",
 "Joel",
+"John",
 "Johto",
 "Joker",
 "Joshing",
