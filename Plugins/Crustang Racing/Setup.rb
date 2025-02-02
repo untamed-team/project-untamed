@@ -224,7 +224,6 @@ class CrustangRacing
 		#sprite turn right
 		@sprites["racer1Pkmn"].src_rect = Rect.new(0, 128, charwidth / 4, charheight / 4)
 		@racer1[:RacerSprite] = @sprites["racer1Pkmn"]
-		@racer1[:RacerSprite].character_hue = 7 #green
 		
 		@sprites["racer1SpinOutRange"] = BitmapSprite.new(CrustangRacingSettings::SPINOUT_MAX_RANGE, CrustangRacingSettings::SPINOUT_MAX_RANGE, @viewport)
 		@sprites["racer1SpinOutRange"].x = @racer1[:RacerSprite].x - @sprites["racer1SpinOutRange"].width / 2
