@@ -2040,22 +2040,48 @@ def crustangPaintJobNPC
       _INTL("Nevermind")
     ]
 
-    new_form = pbMessage(_INTL("Which style would you like?"), choices, choices.length)
-    print new_form
-    if new_form == -1 || new_form == choices.length-1
-      pbMessage(_INTL("Let me know if you ever want a paint job!"))
-      return
-    elsif new_form == pkmn.form
-      pbMessage(_INTL("Looks like your #{pkmn.name} already has that paint job."))
-    else
+    loop do
+      new_form = pbMessage(_INTL("Which style would you like?"), choices, choices.length)
+      
+      #the selection matches current paint job
+      if new_form == pkmn.form
+        pbMessage(_INTL("Looks like your #{pkmn.name} already has that paint job."))
+        next #loop back to paint job choices
+      end
+
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Let me know if you ever want a paint job!"))
+        break
+      end
+
+      if pkmn.shiny?
+        shinyPath = "Shiny/"
+      else
+        ""
+      end
+      filePath = "CrustangPaintJob/OW/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]when following you."))
+    
+      filePath = "CrustangPaintJob/Front/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the front."))
+
+      filePath = "CrustangPaintJob/Back/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the back."))
+      decision = pbConfirmMessage("\\c[2]Do you want this style?")
+      
+      if decision == false
+        next #loop back to paint job choices
+      end
+
       #change form
       pkmn.form = new_form
       #subtract money
       $player.money -= 3000
       pbSEPlay("Mart buy item")
       pbWait(1)
-      pbMessage(_INTL("Looking good!"))
       FollowingPkmn.refresh
-    end #if new_form == pkmn.form
+      pbMessage(_INTL("Looking good!"))
+      break
+    end #loop do
   end #if $game_variables[36] == -1
 end #def crustangPaintJobNPC
