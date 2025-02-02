@@ -642,13 +642,10 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
 
   def pbEffectAfterAllHits(user, target)
     return if target.damageState.unaffected
-    if user.pbCanLowerStatStage?(:DEFENSE, user, self)
-      user.pbLowerStatStage(:DEFENSE, 1, user)
-    end
-    if user.pbCanRaiseStatStage?(:SPEED, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
-      user.pbRaiseStatStage(:SPEED, 1, user)
-      user.SetupMovesUsed.push(@id)
-    end
+    return if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
+    user.pbLowerStatStage(:DEFENSE, 1, user) if user.pbCanLowerStatStage?(:DEFENSE, user, self)
+    user.pbRaiseStatStage(:SPEED, 1, user) if user.pbCanRaiseStatStage?(:SPEED, user, self)
+    user.SetupMovesUsed.push(@id)
   end
 end
 

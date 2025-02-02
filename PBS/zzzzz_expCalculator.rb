@@ -1,48 +1,50 @@
 TRAINERS_ROUTE_DATA = {
   "Route2" => [
-    { name: "Juju", obligatory: true, pokemon: [{ name: "SKIDDO", level: 9 }, { name: "FLABEBE", level: 9 }] },
-    { name: "Gabriel", obligatory: true, pokemon: [{ name: "M_EKANS", level: 9 }, { name: "BUNNELBY", level: 9 }] },
-    { name: "William", obligatory: true, pokemon: [{ name: "TECHUPPI", level: 9 }, { name: "BUNNELBY", level: 9 }, { name: "WRENNER", level: 9 }] },
-    { name: "Rainer", obligatory: true, pokemon: [{ name: "LEDYBA", level: 10 }, { name: "BUDEW", level: 10 }] },
-    { name: "Ted", obligatory: true, pokemon: [{ name: "MAGIKARP", level: 1 }, { name: "MAGIKARP", level: 3 }, { name: "MAGIKARP", level: 5 }, { name: "MAGIKARP", level: 7 }, { name: "MAGIKARP", level: 9 }, { name: "FEEBAS", level: 10 }] },
-    { name: "Kaitlyn", obligatory: true, pokemon: [{ name: "PACUNA", level: 9 }, { name: "M_VANILLITE", level: 9 }] },
-    { name: "Samuel", obligatory: true, pokemon: [{ name: "LITWICK", level: 9 }, { name: "ZEAZAYA", level: 9 }, { name: "M_EKANS", level: 9 }] },
-    { name: "Lola", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 10 }, { name: "SKIDDO", level: 10 }, { name: "WRENNER", level: 10 }] },
-    { name: "Alisa", obligatory: true, pokemon: [{ name: "MINIMELO", level: 9 }, { name: "LEDYBA", level: 10 }] },
-    { name: "Mannie", obligatory: true, pokemon: [{ name: "SCATTERBUG", level: 10 }, { name: "CHICATTA", level: 10 }] },
-    { name: "Milly", obligatory: true, pokemon: [{ name: "PURRLOIN", level: 10 }, { name: "SUNKERN", level: 10 }, { name: "TECHUPPI", level: 10 }] },
+    { name: "Juju", id: 0, obligatory: true, pokemon: [{ name: "SKIDDO", level: 9 }, { name: "FLABEBE", level: 9 }] },
+    { name: "Gabriel", id: 0, obligatory: true, pokemon: [{ name: "M_EKANS", level: 9 }, { name: "BUNNELBY", level: 9 }] },
+    { name: "William", id: 0, obligatory: true, pokemon: [{ name: "TECHUPPI", level: 9 }, { name: "BUNNELBY", level: 9 }, { name: "WRENNER", level: 9 }] },
+    { name: "Rainer", id: 0, obligatory: true, pokemon: [{ name: "LEDYBA", level: 10 }, { name: "BUDEW", level: 10 }] },
+    { name: "Ted", id: 0, obligatory: true, pokemon: [{ name: "MAGIKARP", level: 1 }, { name: "MAGIKARP", level: 3 }, { name: "MAGIKARP", level: 5 }, { name: "MAGIKARP", level: 7 }, { name: "MAGIKARP", level: 9 }, { name: "FEEBAS", level: 10 }] },
+    { name: "Kaitlyn", id: 0, obligatory: true, pokemon: [{ name: "PACUNA", level: 9 }, { name: "M_VANILLITE", level: 9 }] },
+    { name: "Samuel", id: 0, obligatory: true, pokemon: [{ name: "LITWICK", level: 9 }, { name: "ZEAZAYA", level: 9 }, { name: "M_EKANS", level: 9 }] },
+    { name: "Lola", id: 0, obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 10 }, { name: "SKIDDO", level: 10 }, { name: "WRENNER", level: 10 }] },
+    { name: "Alisa", id: 0, obligatory: true, pokemon: [{ name: "MINIMELO", level: 9 }, { name: "LEDYBA", level: 10 }] },
+    { name: "Mannie", id: 0, obligatory: true, pokemon: [{ name: "SCATTERBUG", level: 10 }, { name: "CHICATTA", level: 10 }] },
+    { name: "Mannie", id: 100, obligatory: true, pokemon: [{ name: "SCATTERBUG", level: 10 }, { name: "CHICATTA", level: 10 }] },
+    { name: "Milly", id: 0, obligatory: true, pokemon: [{ name: "PURRLOIN", level: 10 }, { name: "SUNKERN", level: 10 }, { name: "TECHUPPI", level: 10 }] },
   ],
   "MonarcaWoods" => [
-    { name: "Dany", obligatory: true, pokemon: [{ name: "SPEWPA", level: 10 }, { name: "CHICATTA", level: 11 }] },
-    { name: "Connor", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 11 }, { name: "WRENNER", level: 11 }] },
-    { name: "Jimbly", obligatory: true, pokemon: [{ name: "BANAGNAW", level: 11 }, { name: "FINNEON", level: 11 }] },
-    { name: "Violet", obligatory: true, pokemon: [{ name: "FEEBAS", level: 10 }, { name: "LOTAD", level: 11 }] },
-    { name: "Fabian", obligatory: true, pokemon: [{ name: "PHANTUMP", level: 11 }, { name: "PACUNA", level: 11 }, { name: "M_EKANS", level: 11 }] },
-    { name: "Gloria", obligatory: true, pokemon: [{ name: "FLABEBE", level: 11 }, { name: "BUDEW", level: 12 }] },
-    { name: "Roberto", obligatory: true, pokemon: [{ name: "MINIMELO", level: 11 }, { name: "LEDYBA", level: 12 }] },
-    { name: "Francis", obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 12 }, { name: "CROMEN", level: 12 }] },
+    { name: "Dany", id: 0, obligatory: true, pokemon: [{ name: "SPEWPA", level: 10 }, { name: "CHICATTA", level: 11 }] },
+    { name: "Connor", id: 0, obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 11 }, { name: "WRENNER", level: 11 }] },
+    { name: "Jimbly", id: 0, obligatory: true, pokemon: [{ name: "BANAGNAW", level: 11 }, { name: "FINNEON", level: 11 }] },
+    { name: "Violet", id: 0, obligatory: true, pokemon: [{ name: "FEEBAS", level: 10 }, { name: "LOTAD", level: 11 }] },
+    { name: "Fabian", id: 0, obligatory: true, pokemon: [{ name: "PHANTUMP", level: 11 }, { name: "PACUNA", level: 11 }, { name: "M_EKANS", level: 11 }] },
+    { name: "Gloria", id: 0, obligatory: true, pokemon: [{ name: "FLABEBE", level: 11 }, { name: "BUDEW", level: 12 }] },
+    { name: "Roberto", id: 0, obligatory: true, pokemon: [{ name: "MINIMELO", level: 11 }, { name: "LEDYBA", level: 12 }] },
+    { name: "Francis", id: 0, obligatory: true, pokemon: [{ name: "HOOTHOOT", level: 12 }, { name: "CROMEN", level: 12 }] },
   ],
   "MonarcaCave" => [
-    { name: "Xavia", obligatory: true, pokemon: [{ name: "M_ROSELIA", level: 10 }, { name: "KNOGGIN", level: 12 }] },
-    { name: "Noah", obligatory: true, pokemon: [{ name: "KNOGGIN", level: 12 }, { name: "WOOBAT", level: 11 }, { name: "BUDEW", level: 13 }] },
-    { name: "Lucette", obligatory: true, pokemon: [{ name: "BUNNELBY", level: 11 }, { name: "WOOBAT", level: 12 }] },
+    { name: "Xavia", id: 0, obligatory: true, pokemon: [{ name: "M_ROSELIA", level: 10 }, { name: "KNOGGIN", level: 12 }] },
+    { name: "Noah", id: 0, obligatory: true, pokemon: [{ name: "KNOGGIN", level: 12 }, { name: "WOOBAT", level: 11 }, { name: "BUDEW", level: 13 }] },
+    { name: "Lucette", id: 0, obligatory: true, pokemon: [{ name: "BUNNELBY", level: 11 }, { name: "WOOBAT", level: 12 }] },
   ],
   "MonarcaSanctuary1" => [
-    { name: "Priscilla", obligatory: true, pokemon: [{ name: "PACUNA", level: 13 }, { name: "MAGNEMITE", level: 14 }, { name: "CHICATTA", level: 13 }] },
-    { name: "Lucas", obligatory: true, pokemon: [{ name: "WIMPOD", level: 13 }, { name: "SUNFLORA", level: 12 }] },
+    { name: "Priscilla", id: 0, obligatory: true, pokemon: [{ name: "PACUNA", level: 13 }, { name: "MAGNEMITE", level: 14 }, { name: "CHICATTA", level: 13 }] },
+    { name: "Lucas", id: 0, obligatory: true, pokemon: [{ name: "WIMPOD", level: 13 }, { name: "SUNFLORA", level: 12 }] },
   ],
   "MeloladoExterior" => [
-    { name: "Bernard", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 12 }, { name: "SNORUNT", level: 12 }, { name: "MAGNEMITE", level: 13 }] },
-    { name: "Donna", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "EEVEE", level: 14 }] },
-    { name: "Santos", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "FINNEON", level: 14 }] },
+    { name: "Bernard", id: 0, obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 12 }, { name: "SNORUNT", level: 12 }, { name: "MAGNEMITE", level: 13 }] },
+    { name: "Donna", id: 0, obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "EEVEE", level: 14 }] },
+    { name: "Santos", id: 0, obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 13 }, { name: "FINNEON", level: 14 }] },
   ],
   "CalojarroBeach" => [
-    { name: "Floyd", obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 14 }, { name: "LOMBRE", level: 15 }] },
-    { name: "Jennifer", obligatory: true, pokemon: [{ name: "VIVILLON", level: 15 }, { name: "SKITTY", level: 16 }] },
-    { name: "Edson", obligatory: true, pokemon: [{ name: "FINNEON", level: 14 }, { name: "CLOBBOPUS", level: 15 }] },
-    { name: "Claudia", obligatory: true, pokemon: [{ name: "PINCURCHIN", level: 13 }, { name: "BANAGNAW", level: 14 }] },
+    { name: "Floyd", id: 0, obligatory: true, pokemon: [{ name: "M_VANILLITE", level: 14 }, { name: "LOMBRE", level: 15 }] },
+    { name: "Jennifer", id: 0, obligatory: true, pokemon: [{ name: "VIVILLON", level: 15 }, { name: "SKITTY", level: 16 }] },
+    { name: "Edson", id: 0, obligatory: true, pokemon: [{ name: "FINNEON", level: 14 }, { name: "CLOBBOPUS", level: 15 }] },
+    { name: "Claudia", id: 0, obligatory: true, pokemon: [{ name: "PINCURCHIN", level: 13 }, { name: "BANAGNAW", level: 14 }] },
   ],
 }
+
 
 POKEMON_GROWTH_DATA = {
   "MOLLUCOTTA" => { base_exp: 62, growth_rate: "Parabolic" },
@@ -330,9 +332,17 @@ def calcExp(defeatedBattler, pkmn, expvar, partyLength)
   return exp
 end
 
-def simBattle(pkmn, trainers, expvar, partyLength, pokemon_data)
+def simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data)
   trainers.each do |trainer|
-    trainer[:pokemon].each do |defeatedBattler|
+    diff = (100 * difficulty_mode)
+    diff = 0 if diff == 1
+    trainerID = trainer[:id] + diff
+    selectedTrainer = trainers.find { |t| t[:name] == trainer[:name] && t[:id] == trainerID }
+    if selectedTrainer.nil?
+      puts "    ERROR: Trainer #{trainer[:name]} with ID #{trainerID} not found."
+      next
+    end
+    selectedTrainer[:pokemon].each do |defeatedBattler|
       if pokemon_data.key?(defeatedBattler[:name])
         base_exp = pokemon_data[defeatedBattler[:name]][:base_exp]
         defeatedBattler_data = {
@@ -354,14 +364,14 @@ def simBattle(pkmn, trainers, expvar, partyLength, pokemon_data)
   end
 end
 
-def simRoute(pokemon_team, location, obligatoryonly, expvar, trainers_data, pokemon_data)
+def simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, trainers_data, pokemon_data)
   trainers = trainers_data[location]
   unless obligatoryonly
     trainers = trainers.select { |trainer| trainer[:obligatory] }
   end
   partyLength = pokemon_team.length
   pokemon_team.each do |pkmn|
-    simBattle(pkmn, trainers, expvar, partyLength, pokemon_data)
+    simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data)
   end
 
   puts "    Simulation Results:"
@@ -446,13 +456,17 @@ def input_trainerdata(trainers_data)
   puts "    Do you want to fight all trainers? (y/n):"
   fight_all_trainers_input = gets.chomp.downcase
   obligatoryonly = fight_all_trainers_input == "y"
-  return [location, obligatoryonly]
+  #----------------
+  puts "    What difficulty mode? (0 = casual, 1 = hard, 2 = chaos):"
+  difficulty_mode = gets.chomp.to_i
+  difficulty_mode = [[difficulty_mode, 0].max, 2].min
+  return [location, obligatoryonly, difficulty_mode]
 end
 
 def main
   pokemon_team, expvar = input_pkmndata(POKEMON_GROWTH_DATA)
-  location, obligatoryonly = input_trainerdata(TRAINERS_ROUTE_DATA)
-  simRoute(pokemon_team, location, obligatoryonly, expvar, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
+  location, obligatoryonly, difficulty_mode = input_trainerdata(TRAINERS_ROUTE_DATA)
+  simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
 end
 
 main
