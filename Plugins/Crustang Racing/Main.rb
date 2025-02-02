@@ -1,5 +1,19 @@
-#Track Setup
+SaveData.register(:crustang_racing) do
+  save_value { $crustang_racing }
+  load_value { |value|  $crustang_racing = value }
+  new_game_value { CrustangRacing.new }
+end
+
 class CrustangRacing
+	attr_accessor :distance_personal_best
+	attr_accessor :previous_race_distance
+
+	def initialize
+		#create variables
+		@distance_personal_best = 0
+		@previous_race_distance = 0
+	end
+
 	def self.updateOverlayText
 		#Laps and Placement
 		#@lapsAndPlaceOverlay
@@ -754,9 +768,14 @@ class CrustangRacing
 			break if @racerPlayer[:CurrentSpeed] <= 0
 		end
 		
+		#save race details in Player data
+		$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal] if @distance_personal_best.nil? || @racerPlayer[:LapTotal] > @distance_personal_best
+		$crustang_racing.previous_race_distance = @racerPlayer[:LapTotal]
+		
+		print "distance: #{$crustang_racing.previous_race_distance}"
+		
 		self.pbEndScene
 		$game_system.bgm_resume(@playingBGM)
 		
 	end #def self.endRace
-	
 end #class CrustangRacing
