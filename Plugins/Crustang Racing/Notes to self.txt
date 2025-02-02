@@ -3,7 +3,7 @@ Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
 replace the pkmn icons on the overview
 change the color of other crustang
-give rewards based on your placement and how many laps you did
+make "FINISH" appear on screen when whistle blows
 make game keep track of your personal best and give personal best prize when you beat it
 make summary screen available when choosing crustang to rent (maybe go right to summary page with crustang moves then ask to confirm choice)
 

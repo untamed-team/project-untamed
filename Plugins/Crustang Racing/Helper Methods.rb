@@ -842,35 +842,47 @@ class CrustangRacing
 	end #def self.invincibilityMoveIsReady?(racer)
 	
 	def self.givePrize
-		#if the player does nothing, they will travel >11 but <12 laps
-		#if the player puts in maximum effort, they can get about 15 or 16 laps
-		if $crustang_racing.previous_race_distance >= 16
-			prize = CrustangRacingSettings::PRIZE_POOL[2].sample
-			print prize
-			pbReceiveItem(prize)
-		elsif $crustang_racing.previous_race_distance >= 15
-			prize = CrustangRacingSettings::PRIZE_POOL[1].sample
-			print prize
-			pbReceiveItem(prize)
-		elsif $crustang_racing.previous_race_distance >= 14
-			prize = CrustangRacingSettings::PRIZE_POOL[0].sample
-			print prize
-			pbReceiveItem(prize)
+		if @racerPlayer[:CurrentPlacement] == 1
+			if $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL2
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[2].sample
+				print prize
+				pbReceiveItem(prize)
+			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL1
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[1].sample
+				print prize
+				pbReceiveItem(prize)
+			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL0
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[0].sample
+				print prize
+				pbReceiveItem(prize)
+			else
+				pbMessage(_INTL("Aw, looks like you didn't travel enough distance to get a prize..."))
+			end
+		else
+			#did not make 1st place
+			pbMessage(_INTL("Aw, looks like you didn't make 1st place..."))
 		end
 		
-		self.recognizePersonalBest
+		#only recognize a PB if the player has raced before. No freebies on the first race
+		if @distance_personal_best.nil?
+			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
+		else
+			self.recognizePersonalBest
+		end #if @distance_personal_best.nil?
 	end #def self.givePrize
 		
 	def self.recognizePersonalBest
-		if @distance_personal_best.nil? || @racerPlayer[:LapTotal] > @distance_personal_best
+		if @racerPlayer[:LapTotal] > @distance_personal_best
 			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
 			#exclamation mark above this event
-			pbOverworldAnimation(event=$game_player.pbFacingEvent, id=3, tinting = false)
-			#pbMoveRoute(event = nil, [PBMoveRoute::TurnLeft])
+			pbOverworldAnimation(event=getThisEvent, id=3, tinting = false)
 			pbMessage(_INTL("WOAH! #{@racerPlayer[:LapTotal]} is a new personal best for you! Here, take one of these as a congratulations!"))
 			pbReceiveItem(CrustangRacingSettings::REWARD_FOR_PERSONAL_BEST)
-		end
-	end #def self.recognizePersonalBest
+		end #if @racerPlayer[:LapTotal] > @distance_personal_best
+	end #def self.recognizePersonalBest	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

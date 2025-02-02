@@ -1992,3 +1992,20 @@ def command_209(name=nil)
   character.force_move_route(@parameters[1])
   return true
 end
+
+#-----------------------------------------------------------------------------
+# * Get event that triggered this code
+#-----------------------------------------------------------------------------
+def getThisEvent
+  return pbMapInterpreter.get_character(0)
+end #def getThisEvent
+
+#-----------------------------------------------------------------------------
+# * Discard all instance variables that are not set to nil. Otherwise, the trash collector will not reset it in the current game session
+#-----------------------------------------------------------------------------
+def pbDiscardInstanceVariables
+  self.instance_variables.each do |sym|
+    self.instance_variable_set(sym, nil) 
+    self.remove_instance_variable(sym)
+  end
+end #def pbDiscardInstanceVariables

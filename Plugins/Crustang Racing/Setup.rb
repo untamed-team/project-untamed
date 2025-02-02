@@ -566,6 +566,7 @@ class CrustangRacing
 		
 		#set initial time for race
 		@raceRemainingTime = CrustangRacingSettings::RACE_TIME_IN_SECONDS
+		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
