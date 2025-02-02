@@ -54,7 +54,7 @@ class CrustangRacing
 			#subtract money
 			$player.money -= CrustangRacingSettings::COST_TO_RACE
 			pbSEPlay("Mart buy item")
-			
+			pbWait(1)
 			pbMessage(_INTL("A nice choice! Good luck out there!"))
 			pbFadeOutIn {
 				self.main(enteredCrustang)
