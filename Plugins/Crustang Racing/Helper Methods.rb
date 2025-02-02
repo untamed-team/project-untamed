@@ -841,6 +841,22 @@ class CrustangRacing
 		return false
 	end #def self.invincibilityMoveIsReady?(racer)
 	
+	def self.givePrize
+		if $crustang_racing.previous_race_distance >= 16
+			prize = CrustangRacingSettings::PRIZE_POOL[2].sample
+			print prize
+			pbReceiveItem(prize)
+		elsif $crustang_racing.previous_race_distance >= 15
+			prize = CrustangRacingSettings::PRIZE_POOL[1].sample
+			print prize
+			pbReceiveItem(prize)
+		elsif $crustang_racing.previous_race_distance >= 14
+			prize = CrustangRacingSettings::PRIZE_POOL[0].sample
+			print prize
+			pbReceiveItem(prize)
+		end
+	end
+	
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby
