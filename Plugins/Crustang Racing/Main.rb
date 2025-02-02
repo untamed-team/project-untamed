@@ -711,7 +711,7 @@ class CrustangRacing
 			self.aiLookForOpportunityToUseRockHazard #rock hazard
 			self.aiLookForOpportunityToUseMudHazard #mud hazard
 			self.aiLookForOpportunityToUseInvincibility #invincibility
-			
+
 			break if @raceEnded
 		end
 		self.endRace
@@ -771,10 +771,12 @@ class CrustangRacing
 		#save race details in Player data
 		$crustang_racing.previous_race_distance = @racerPlayer[:LapTotal]
 		
-		print "distance: #{$crustang_racing.previous_race_distance}"
-		
 		self.pbEndScene
 		$game_system.bgm_resume(@playingBGM)
 		
+		#after the scene has ended and we are back on the map from before the race started
+		self.givePrize
+		
+		pbDiscardInstanceVariables
 	end #def self.endRace
 end #class CrustangRacing

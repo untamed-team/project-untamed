@@ -8,7 +8,7 @@ SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5
-RACE_TIME_IN_SECONDS = 10#180
+RACE_TIME_IN_SECONDS = 20#180
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
@@ -126,11 +126,14 @@ RENTABLE_CRUSTANG = [
 COST_TO_RACE = 300
 
 #========================================================#
-#==================== MISC SETTINGS ====================#
+#==================== PRIZE SETTINGS ====================#
 #========================================================#
-#usually set to same as SECONDS_TO_NORMALIZE_SPEED
-#amount of time needed to pass after race starts before moves and boost are usable
-INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS = SECONDS_TO_NORMALIZE_SPEED
+#distance required to get prizes
+#if the player does nothing, they will travel >11 but <12 laps
+#if the player puts in maximum effort, they can get about 15 or 16 laps
+REQ_DISTANCE_FOR_POOL0 = 0#14
+REQ_DISTANCE_FOR_POOL1 = 15
+REQ_DISTANCE_FOR_POOL2 = 16
 
 PRIZE_POOL = [
 pool0 = [:POKETOY, :POKETOY, :POKETOY, :EVERSTONE, :EVERSTONE, :EVERSTONE, :HONEY, :HONEY, :HONEY, :HONEY, :HONEY, :POKEFLUTE, :YELLOWFLUTE, :YELLOWFLUTE, :XACCURACY, :XACCURACY], #14 laps
@@ -139,5 +142,12 @@ pool2 = [:NUGGET, :REVIVE, :ULTRABALL, :ULTRABALL, :PEARL, :OLDGATEAU, :FRIENDBA
 ]
 
 REWARD_FOR_PERSONAL_BEST = :RARECANDY
+
+#========================================================#
+#==================== MISC SETTINGS ====================#
+#========================================================#
+#usually set to same as SECONDS_TO_NORMALIZE_SPEED
+#amount of time needed to pass after race starts before moves and boost are usable
+INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS = SECONDS_TO_NORMALIZE_SPEED
 
 end #class CrustangRacingSettings
