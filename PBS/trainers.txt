@@ -849,6 +849,346 @@ Pokemon = BOWLLO,19
     Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
 #Area=Route3Cave_M
 #-------------------------------
+[BIKER,Jacob]
+LoseText = You stopped me in my tracks!
+Pokemon = M_EKANS,23
+    Moves = POISONFANG,GLARE,BITE,PURSUIT
+    Ability = SHEDSKIN
+Pokemon = GOHILA,24
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = MERCILESS
+#Area=Route5_M
+#-------------------------------
+[BIKER,Jacob,100]
+LoseText = You stopped me in my tracks!
+Pokemon = M_EKANS,23
+    Moves = POISONFANG,GLARE,BITE,PURSUIT
+    Ability = SHEDSKIN
+Pokemon = GOHILA,24
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = MERCILESS
+#Area=Route5_M
+#-------------------------------
+[BIKER,Wilbur]
+LoseText = I've crashed and burned!
+Pokemon = VULPIX,22
+    Moves = FIRESPIN,WILLOWISP,QUICKATTACK,CONFUSERAY
+    Ability = FLASHFIRE
+Pokemon = GOHILA,22
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = POISONTOUCH
+Pokemon = AVEOR,23
+    Moves = DOUBLEKICK,SANDTOMB,SPARK,PECK
+    Ability = STATIC
+#Area=Route5_M
+#-------------------------------
+[BIKER,Wilbur,100]
+LoseText = I've crashed and burned!
+Pokemon = VULPIX,22
+    Moves = FIRESPIN,WILLOWISP,QUICKATTACK,CONFUSERAY
+    Ability = FLASHFIRE
+Pokemon = GOHILA,22
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = POISONTOUCH
+Pokemon = AVEOR,23
+    Moves = DOUBLEKICK,SANDTOMB,SPARK,PECK
+    Ability = STATIC
+#Area=Route5_M
+#-------------------------------
+[BIKER,Matthias]
+LoseText = I think I got sand in my eye...
+Pokemon = M_CRABRAWLER,24
+    Moves = METALCLAW,PURSUIT,MUDBOMB,ROCKTOMB
+    Ability = SANDSTREAM
+Pokemon = AVEOR,25
+    Moves = AERIALACE,SPARK,THUNDERWAVE,SCORCHINGSANDS
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[BIKER,Matthias,100]
+LoseText = I think I got sand in my eye...
+Pokemon = M_CRABRAWLER,24
+    Moves = METALCLAW,PURSUIT,MUDBOMB,ROCKTOMB
+    Ability = SANDSTREAM
+Pokemon = AVEOR,25
+    Moves = AERIALACE,SPARK,THUNDERWAVE,SCORCHINGSANDS
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[BIKER,Charles]
+LoseText = No way, I'm the best around!
+Pokemon = GOHILA,24
+    Moves = TOXICSPIKES,SLUDGE,PARABOLICCHARGE,MUDBOMB
+    Ability = MERCILESS
+Pokemon = HELIOPTILE,24
+    Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
+    Ability = DRYSKIN
+Pokemon = M_CRABRAWLER,25
+    Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
+    Ability = TECHNICIAN
+#Area=Route5_M
+#-------------------------------
+[BIKER,Charles,100]
+LoseText = No way, I'm the best around!
+Pokemon = GOHILA,24
+    Moves = TOXICSPIKES,SLUDGE,PARABOLICCHARGE,MUDBOMB
+    Ability = MERCILESS
+Pokemon = HELIOPTILE,24
+    Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
+    Ability = DRYSKIN
+Pokemon = M_CRABRAWLER,25
+    Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
+    Ability = TECHNICIAN
+#Area=Route5_M
+#-------------------------------
+[BIKER,Ian]
+LoseText = You're a force to be reckoned with!
+Pokemon = ELTTAR,26
+    Moves = POISONFANG,BITE,GLARE,TAUNT
+    Ability = RATTLED
+#Area=Route5_M
+#-------------------------------
+[BIKER,Ian,100]
+LoseText = You're a force to be reckoned with!
+Pokemon = ELTTAR,26
+    Moves = POISONFANG,BITE,GLARE,TAUNT
+    Ability = RATTLED
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Katia]
+LoseText = Maybe I should rethink my strategy...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BRUTALSWING,CUT,ROAR
+    Ability = SOLIDROCK
+Pokemon = M_MUDBRAY,22
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,DOUBLEKICK
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,ASTONISH,HONECLAWS,SNATCH
+    Ability = INTIMIDATE
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Katia,100]
+LoseText = Maybe I should rethink my strategy...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BRUTALSWING,CUT,ROAR
+    Ability = SOLIDROCK
+Pokemon = M_MUDBRAY,22
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,DOUBLEKICK
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,ASTONISH,HONECLAWS,SNATCH
+    Ability = INTIMIDATE
+#Area=Route5_M
+#-------------------------------
+[HIKER_M,Pablo]
+LoseText = But I was prepared for anything!
+Pokemon = BARBOACH,22
+    Moves = WATERPULSE,AMNESIA,ROCKTOMB,MAGNITUDE
+    Ability = OBLIVIOUS
+Pokemon = KNOGGIN,24
+    Moves = LASHOUT,ROCKTOMB,HARDEN,SANDSTORM
+    Ability = SUPERLUCK
+Pokemon = TRAPINCH,24
+    Moves = DIG,BITE,SANDATTACK,BUGBITE
+    Ability = ARENATRAP
+#Area=Route5_M
+#-------------------------------
+[HIKER_M,Pablo,100]
+LoseText = But I was prepared for anything!
+Pokemon = BARBOACH,22
+    Moves = WATERPULSE,AMNESIA,ROCKTOMB,MAGNITUDE
+    Ability = OBLIVIOUS
+Pokemon = KNOGGIN,24
+    Moves = LASHOUT,ROCKTOMB,HARDEN,SANDSTORM
+    Ability = SUPERLUCK
+Pokemon = TRAPINCH,24
+    Moves = DIG,BITE,SANDATTACK,BUGBITE
+    Ability = ARENATRAP
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Maja]
+LoseText = Our defenses weren't enough...
+Pokemon = CACNEA,23
+    Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
+    Ability = IRONBARBS
+Pokemon = M_MUDBRAY,24
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
+Pokemon = M_MARACTUS,24
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Maja,100]
+LoseText = Our defenses weren't enough...
+Pokemon = CACNEA,23
+    Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
+    Ability = IRONBARBS
+Pokemon = M_MUDBRAY,24
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
+Pokemon = M_MARACTUS,24
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Route5_M
+#-------------------------------
+[RUINMANIAC_M,Ike]
+LoseText = I've discovered... Defeat?
+Pokemon = BALTOY,23
+    Moves = PSYBEAM,RAPIDSPIN,TRICKROOM,ANCIENTPOWER
+Pokemon = TRAPINCH,24
+    Moves = SANDTOMB,DIG,BITE,LASERFOCUS
+    Ability = HYPERCUTTER
+Pokemon = BURBRAWL,25
+    Moves = BULKUP,WINGATTACK,KARATECHOP,DETECT
+#Area=Route5_M
+#-------------------------------
+[RUINMANIAC_M,Ike,100]
+LoseText = I've discovered... Defeat?
+Pokemon = BALTOY,23
+    Moves = PSYBEAM,RAPIDSPIN,TRICKROOM,ANCIENTPOWER
+Pokemon = TRAPINCH,24
+    Moves = SANDTOMB,DIG,BITE,LASERFOCUS
+    Ability = HYPERCUTTER
+Pokemon = BURBRAWL,25
+    Moves = BULKUP,WINGATTACK,KARATECHOP,DETECT
+#Area=Route5_M
+#-------------------------------
+[SCRAPPER_F,Vanessa]
+LoseText = Aw scrap!
+Pokemon = BEAKPEEP,22
+    Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = M_CRABRAWLER,23
+    Moves = MUDBOMB,METALCLAW,WIDEGUARD,BRICKBREAK
+    Ability = HYPERCUTTER
+Pokemon = TRUBBISH,22
+    Moves = STOCKPILE,SWALLOW,POISONGAS,SLUDGE
+    Ability = STENCH
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,METALCLAW,ROCKTOMB,DEFENSECURL
+    Ability = MOMENTUM
+#Area=Route5_M
+#-------------------------------
+[SCRAPPER_F,Vanessa,100]
+LoseText = Aw scrap!
+Pokemon = BEAKPEEP,22
+    Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = M_CRABRAWLER,23
+    Moves = MUDBOMB,METALCLAW,WIDEGUARD,BRICKBREAK
+    Ability = HYPERCUTTER
+Pokemon = TRUBBISH,22
+    Moves = STOCKPILE,SWALLOW,POISONGAS,SLUDGE
+    Ability = STENCH
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,METALCLAW,ROCKTOMB,DEFENSECURL
+    Ability = MOMENTUM
+#Area=Route5_M
+#-------------------------------
+[ACETRAINER_F,Nancy]
+LoseText = Impressive...
+Pokemon = AVEOR,26
+    Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
+    Ability = STATIC
+Pokemon = POTASSOPOD,26
+    Moves = ACIDSPRAY,MEGADRAIN,RECOVER,GROWTH
+    Ability = SHEDSKIN
+Pokemon = FRIZZARD,27
+    Moves = BITINGCOLD,ICYWIND,DRAGONBREATH,CALMMIND
+Pokemon = ZARCOIL,27
+    Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
+#Area=SolecaDesert_O
+#-------------------------------
+[ACETRAINER_F,Nancy,100]
+LoseText = Impressive...
+Pokemon = AVEOR,26
+    Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
+    Ability = STATIC
+Pokemon = POTASSOPOD,26
+    Moves = ACIDSPRAY,MEGADRAIN,RECOVER,GROWTH
+    Ability = SHEDSKIN
+Pokemon = FRIZZARD,27
+    Moves = BITINGCOLD,ICYWIND,DRAGONBREATH,CALMMIND
+Pokemon = ZARCOIL,27
+    Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
+#Area=SolecaDesert_O
+#-------------------------------
+[RUINMANIAC_F,Rebeca]
+LoseText = I just couldn't find a weakness!
+Pokemon = BALTOY,25
+    Moves = ANCIENTPOWER,COSMICPOWER,PSYBEAM,TRIATTACK
+Pokemon = CACNEA,26
+    Moves = PAYBACK,GRASSKNOT,POISONJAB,GROWTH
+Pokemon = XATU,27
+    Moves = AIRSLASH,CONFUSERAY,PSYSHOCK,NIGHTSHADE
+    Ability = SYNCHRONIZE
+#Area=SolecaDesert_O
+#-------------------------------
+[RUINMANIAC_F,Rebeca,100]
+LoseText = I just couldn't find a weakness!
+Pokemon = BALTOY,25
+    Moves = ANCIENTPOWER,COSMICPOWER,PSYBEAM,TRIATTACK
+Pokemon = CACNEA,26
+    Moves = PAYBACK,GRASSKNOT,POISONJAB,GROWTH
+Pokemon = XATU,27
+    Moves = AIRSLASH,CONFUSERAY,PSYSHOCK,NIGHTSHADE
+    Ability = SYNCHRONIZE
+#Area=SolecaDesert_O
+#-------------------------------
+[TOURIST_M,Austin]
+LoseText = Can you at least tell me how to get out of here?
+Pokemon = FURFROU,26
+    Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
+Pokemon = LIEPARD,26
+    Moves = HONECLAWS,PURSUIT,FAKEOUT,FURYSWIPES
+    Ability = LIMBER
+#Area=SolecaDesert_O
+#-------------------------------
+[TOURIST_M,Austin,100]
+LoseText = Can you at least tell me how to get out of here?
+Pokemon = FURFROU,26
+    Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
+Pokemon = LIEPARD,26
+    Moves = HONECLAWS,PURSUIT,FAKEOUT,FURYSWIPES
+    Ability = LIMBER
+#Area=SolecaDesert_O
+#-------------------------------
+[HIKER_F,Evelyn]
+LoseText = You left me in the dust...
+Pokemon = KNOGGIN,26
+    Moves = LASHOUT,STRENGTH,ROAR,HARDEN
+    Ability = SOLIDROCK
+Pokemon = TERREON,27
+    Moves = MUDBOMB,DOUBLEEDGE,BITE,QUICKATTACK
+#Area=SolecaDesert_O
+#-------------------------------
+[HIKER_F,Evelyn,100]
+LoseText = You left me in the dust...
+Pokemon = KNOGGIN,26
+    Moves = LASHOUT,STRENGTH,ROAR,HARDEN
+    Ability = SOLIDROCK
+Pokemon = TERREON,27
+    Moves = MUDBOMB,DOUBLEEDGE,BITE,QUICKATTACK
+#Area=SolecaDesert_O
+#-------------------------------
+[SCIENTIST_M,Paul]
+LoseText = Wow, you rock!
+Pokemon = ELEGOOP,28
+    Moves = BULLDOZE,ROCKTOMB,STEALTHROCK,POISONFANG
+    Ability = GOOEY
+Pokemon = CHARCOPAL,28
+    Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
+    Ability = CRYSTALJAW
+#Area=SolecaDesert_O
+#-------------------------------
+[SCIENTIST_M,Paul,100]
+LoseText = Wow, you rock!
+Pokemon = ELEGOOP,28
+    Moves = BULLDOZE,ROCKTOMB,STEALTHROCK,POISONFANG
+    Ability = GOOEY
+Pokemon = CHARCOPAL,28
+    Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
+    Ability = CRYSTALJAW
+#Area=SolecaDesert_O
+#-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
 Pokemon = EEVEE,11

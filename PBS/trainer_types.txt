@@ -470,6 +470,46 @@ Name = Goldpanner
 Gender = Male
 BaseMoney = 32
 #-------------------------------
+[RUINMANIAC_M]
+Name = Ruin Maniac
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[RUINMANIAC_F]
+Name = Ruin Maniac
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[SCRAPPER_M]
+Name = Scrapper
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[SCRAPPER_F]
+Name = Scrapper
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[ACETRAINER_M]
+Name = Ace Trainer
+Gender = Male
+BaseMoney = 60
+#-------------------------------
+[ACETRAINER_F]
+Name = Ace Trainer
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[SCIENTIST_M]
+Name = Scientist
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[SCIENTIST_F]
+Name = Scientist
+Gender = Female
+BaseMoney = 48
+#-------------------------------
 [TRAINER_Reine]
 Name = Trainer
 Gender = Female
