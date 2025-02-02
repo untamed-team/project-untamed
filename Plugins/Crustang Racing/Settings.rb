@@ -8,7 +8,7 @@ SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5
-RACE_TIME_IN_SECONDS = 180
+RACE_TIME_IN_SECONDS = 10#180
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
@@ -21,7 +21,7 @@ TRACK_BGM = "Crustang Durby"
 RNG_ROLLS_TIMER_IN_SECONDS = 1 #rng rolls happen every X seconds
 PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################currently not used
 NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
-ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
+ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 4
 MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
 SOONEST_ROCKY_PATCH_CAN_APPEAR = 600
 LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
@@ -34,9 +34,9 @@ MAX_DISTANCE_TO_WANDER_STRAFE = nil #never set this to a number lower than MIN_D
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 12
+BOOST_BUTTON_COOLDOWN_SECONDS = 6
 BOOST_BUTTON = 0x20#Input::SPECIAL
-BOOST_LENGTH_SECONDS = 2
+BOOST_LENGTH_SECONDS = 1
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
 PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 70

@@ -842,6 +842,8 @@ class CrustangRacing
 	end #def self.invincibilityMoveIsReady?(racer)
 	
 	def self.givePrize
+		#if the player does nothing, they will travel >11 but <12 laps
+		#if the player puts in maximum effort, they can get about 15 or 16 laps
 		if $crustang_racing.previous_race_distance >= 16
 			prize = CrustangRacingSettings::PRIZE_POOL[2].sample
 			print prize
@@ -855,8 +857,20 @@ class CrustangRacing
 			print prize
 			pbReceiveItem(prize)
 		end
-	end
-	
+		
+		self.recognizePersonalBest
+	end #def self.givePrize
+		
+	def self.recognizePersonalBest
+		if @distance_personal_best.nil? || @racerPlayer[:LapTotal] > @distance_personal_best
+			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
+			#exclamation mark above this event
+			pbOverworldAnimation(event=$game_player.pbFacingEvent, id=3, tinting = false)
+			#pbMoveRoute(event = nil, [PBMoveRoute::TurnLeft])
+			pbMessage(_INTL("WOAH! #{@racerPlayer[:LapTotal]} is a new personal best for you! Here, take one of these as a congratulations!"))
+			pbReceiveItem(CrustangRacingSettings::REWARD_FOR_PERSONAL_BEST)
+		end
+	end #def self.recognizePersonalBest
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

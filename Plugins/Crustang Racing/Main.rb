@@ -769,7 +769,6 @@ class CrustangRacing
 		end
 		
 		#save race details in Player data
-		$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal] if @distance_personal_best.nil? || @racerPlayer[:LapTotal] > @distance_personal_best
 		$crustang_racing.previous_race_distance = @racerPlayer[:LapTotal]
 		
 		print "distance: #{$crustang_racing.previous_race_distance}"
