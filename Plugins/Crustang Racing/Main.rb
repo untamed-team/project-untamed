@@ -731,6 +731,9 @@ class CrustangRacing
 		pbSEPlay("Whistle Blow")
 		pbBGMFade(CrustangRacingSettings::SECONDS_TO_STOP_AT_END)
 		pbBGSFade(CrustangRacingSettings::SECONDS_TO_STOP_AT_END)
+		@countdownGOOverlay.clear
+		drawFormattedTextEx(@countdownGOOverlay, Graphics.width/2 -110, Graphics.height/2 -60, Graphics.width, "FINISH", @overlayBaseColor, @overlayShadowColor)
+		
 		#slow down Crustang
 		@racer1[:DesiredSpeed] = 0
 		@racer2[:DesiredSpeed] = 0
@@ -768,7 +771,7 @@ class CrustangRacing
 			
 			break if @racerPlayer[:CurrentSpeed] <= 0
 		end
-		
+		pbWait(Graphics.frame_rate)
 		#save race details in Player data
 		$crustang_racing.previous_race_distance = @racerPlayer[:LapTotal]
 		

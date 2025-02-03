@@ -38,7 +38,7 @@ class CrustangRacing
 			end
 		end
 		
-		self.chooseOwnCrustang		
+		self.chooseOwnCrustang
 	end
 	
 	def self.chooseOwnCrustang
