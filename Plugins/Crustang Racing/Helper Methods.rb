@@ -507,6 +507,7 @@ class CrustangRacing
 	end #def self.endInvincibility
 	
 	def self.cancellingMove?
+		@cancellingMove = false
 		@cancellingMove = true if @pressingMove1 && @pressingMove2
 		@cancellingMove = true if @pressingMove1 && @pressingMove3
 		@cancellingMove = true if @pressingMove1 && @pressingMove4
@@ -514,7 +515,6 @@ class CrustangRacing
 		@cancellingMove = true if @pressingMove2 && @pressingMove4
 		@cancellingMove = true if @pressingMove3 && @pressingMove4
 		@cancellingMove = false if !@pressingMove1 && !@pressingMove2 && !@pressingMove3 && !@pressingMove4
-		
 		return @cancellingMove
 	end #def self.cancellingMove?
 	
@@ -842,6 +842,7 @@ class CrustangRacing
 	end #def self.invincibilityMoveIsReady?(racer)
 	
 	def self.givePrize
+		return if $game_variables[36] == -1
 		if @racerPlayer[:CurrentPlacement] == 1
 			if $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL2
 				pbMessage(_INTL("Well done! Here's your prize!"))

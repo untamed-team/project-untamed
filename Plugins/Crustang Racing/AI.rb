@@ -221,7 +221,7 @@ class CrustangRacing
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
 				racer[:AvoidingSomething] = true
-				Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0
@@ -288,7 +288,7 @@ class CrustangRacing
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
 						racer[:AvoidingSomething] = true
-						Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						racer[:WanderingUp] = false
 						racer[:WanderingDown] = false
 						racer[:WanderStrafeDistance] = 0
@@ -346,7 +346,7 @@ class CrustangRacing
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
 						racer[:AvoidingSomething] = false
-						Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer1 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
@@ -412,7 +412,7 @@ class CrustangRacing
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
 				racer[:AvoidingSomething] = true
-				Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0
@@ -479,7 +479,7 @@ class CrustangRacing
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
 						racer[:AvoidingSomething] = true
-						Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						racer[:WanderingUp] = false
 						racer[:WanderingDown] = false
 						racer[:WanderStrafeDistance] = 0
@@ -537,7 +537,7 @@ class CrustangRacing
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
 						racer[:AvoidingSomething] = false
-						Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer2 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
@@ -603,7 +603,7 @@ class CrustangRacing
 			#should the racer strafe up or down to avoid the upcoming hazard?
 			if !hazardToAvoid.nil?
 				racer[:AvoidingSomething] = true
-				Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0
@@ -670,7 +670,7 @@ class CrustangRacing
 					#should the racer strafe up or down to avoid the upcoming rocky patch?
 					if !rockyPatchToAvoid.nil?
 						racer[:AvoidingSomething] = true
-						Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						racer[:WanderingUp] = false
 						racer[:WanderingDown] = false
 						racer[:WanderStrafeDistance] = 0
@@ -728,7 +728,7 @@ class CrustangRacing
 			
 					else #hazardToAvoid and rockyPatchToAvoid are both nil
 						racer[:AvoidingSomething] = false
-						Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
+						#Console.echo_warn "racer3 stops wandering to avoid something" if racer[:WanderStrafeDistance] > 0
 						
 						racer[:CannotGoUp] = false
 						racer[:CannotGoDown] = false
@@ -834,7 +834,7 @@ class CrustangRacing
 			end
 			
 			if !racer[:TargetingRacer].nil?
-				Console.echo_warn "racer1 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer1 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0
@@ -936,7 +936,7 @@ class CrustangRacing
 			end
 			
 			if !racer[:TargetingRacer].nil?
-				Console.echo_warn "racer2 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer2 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0
@@ -1038,7 +1038,7 @@ class CrustangRacing
 			end
 			
 			if !racer[:TargetingRacer].nil?
-				Console.echo_warn "racer3 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
+				#Console.echo_warn "racer3 stops wandering to target someone" if racer[:WanderStrafeDistance] > 0
 				racer[:WanderingUp] = false
 				racer[:WanderingDown] = false
 				racer[:WanderStrafeDistance] = 0

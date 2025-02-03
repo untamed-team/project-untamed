@@ -1,3 +1,5 @@
+# not actually a utilities page, just a "too lazy to create a new page for this"
+
 OLDSCHOOLBATTLE = 101
 INVERSEBATTLESWITCH = 100
 LOWEREXPGAINSWITCH = 99
@@ -1130,6 +1132,7 @@ def eggMoveTutor
         dadmovelist.push(i.id)
       end
       break if dadmovelist.nil?
+      pbMessage(_INTL("{1} is ready to bestow a move.", @father))
       chosen2 = screen.pbChoosePokemon
       break if chosen2 < 0
       @mother = $player.party[chosen2]
@@ -1201,4 +1204,97 @@ def eggMoveTutor
     end
   end
   return false
+end
+
+# radioactive code, needs testing
+TRASHENCOUNTERVAR = 125
+def trashEncounter(trash = 0)
+  if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
+    $game_variables[TRASHENCOUNTERVAR] = []
+    numTrash = 4
+    numTrash.times do                        # item, mon, time
+      $game_variables[TRASHENCOUNTERVAR].push([nil, nil, 0])
+    end
+  end
+
+  if $game_variables[TRASHENCOUNTERVAR][trash][0].nil?
+    ret = nil
+    pbFadeOutIn {
+      scene = PokemonBag_Scene.new
+      screen = PokemonBagScreen.new(scene, $bag)
+      ret = screen.pbChooseItemScreen
+    }
+    return if ret.nil?
+
+    trashHash = {
+      :CROMEN => [:NUGGET, :BIGNUGGET, :PEARL, :BIGPEARL, :PEARLSTRING, :COMETSHARD, :RELICGOLD],
+      :M_BURMY => [:GRASSMAIL, :FLAMEMAIL, :BUBBLEMAIL, :BLOOMMAIL, :TUNNELMAIL, :STEELMAIL, 
+                   :HEARTMAIL, :SNOWMAIL, :SPACEMAIL, :AIRMAIL, :MOSAICMAIL, :BRICKMAIL],
+      :TRUBBISH => [:BLACKSLUDGE, :LEFTOVERS]
+    }
+    trashHash2 = {
+      :EEVEE => [:MASTERBALL],
+      :SKITTY => [:FLUFFYTAIL],
+      :PURRLOIN => [:POKETOY]
+    }
+    unless $player.difficulty_mode?("chaos")
+      trashHash.merge!(trashHash2) { |key, oldval, newval| oldval }
+    end
+    $game_variables[TRASHENCOUNTERVAR][trash][0] = ret
+    trashHash.each do |species, item|
+      if item.include?(ret)
+        $game_variables[TRASHENCOUNTERVAR][trash][1] = species
+      else
+        $game_variables[TRASHENCOUNTERVAR][trash][1] = :TRUBBISH
+      end
+    end
+
+    present = pbGetTimeNow
+    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
+    $game_variables[TRASHENCOUNTERVAR][trash][2] = future
+    pbMessage(_INTL("You threw a {1} into the trash pile. Maybe something will get the bait?", ret))
+    return
+  else
+    trashcounter = $game_variables[TRASHENCOUNTERVAR][trash][1]
+    return if trashcounter.nil?
+
+    present = pbGetTimeNow
+    past = $game_variables[TRASHENCOUNTERVAR][trash][2]
+    timepassed = present>past
+
+    msg = rand(5..10)
+    message = ""
+    msg.times { message += ".   " }
+    pbMessage(_INTL(msg))
+
+    if timepassed
+      pbMessage(_INTL("!\\nSomething jumped out of the trash!"))
+    else
+      pbMessage(_INTL("...\\nThere is nothing of note here..."))
+      return
+    end
+
+    level = 10
+    level = [level - rand(1..10), 1].max
+    if level.between?(8..10)
+      pbMessage(_INTL("It looks quite fierce!"))
+    elsif level.between(5..7)
+      pbMessage(_INTL("It looks quite protective!"))
+    elsif level.between(2..4)
+      pbMessage(_INTL("It looks quite energetic!"))
+    else
+      pbMessage(_INTL("It looks quite young!"))
+    end
+
+    trashbattler = [trashcounter, level]
+    $game_temp.encounter_type = :none
+    $game_variables[TRASHENCOUNTERVAR][trash][0] = nil
+    $game_variables[TRASHENCOUNTERVAR][trash][1] = nil
+    $game_variables[TRASHENCOUNTERVAR][trash][2] = 0
+    EventHandlers.trigger(:on_wild_species_chosen, trashbattler)
+    WildBattle.start(trashbattler, can_override: false)
+    $game_temp.encounter_type = nil
+    $game_temp.force_single_battle = false
+    return
+  end
 end
