@@ -5,7 +5,9 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer1[:RacerSpriteForm]
+		
 		@sprites["racer1PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer1PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer1PkmnOverview"].width/4
         @sprites["racer1PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer1PkmnOverview"].height/4
@@ -19,7 +21,9 @@ class CrustangRacing
 		###################################
 		#============= Racer2 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer2[:RacerSpriteForm]
+		
 		@sprites["racer2PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer2PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer2PkmnOverview"].width/4
         @sprites["racer2PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer2PkmnOverview"].height/4
@@ -33,7 +37,9 @@ class CrustangRacing
 		###################################
 		#============= Racer3 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer3[:RacerSpriteForm]
+		
 		@sprites["racer3PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer3PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer3PkmnOverview"].width/4
         @sprites["racer3PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer3PkmnOverview"].height/4
@@ -47,7 +53,9 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
-		pokemon = Pokemon.new(:BATHYGIGAS, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racerPlayer[:RacerSpriteForm]
+		
 		@sprites["racerPlayerPkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racerPlayerPkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racerPlayerPkmnOverview"].width/4
         @sprites["racerPlayerPkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racerPlayerPkmnOverview"].height/4

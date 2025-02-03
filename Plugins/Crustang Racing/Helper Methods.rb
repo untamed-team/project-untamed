@@ -842,6 +842,7 @@ class CrustangRacing
 	end #def self.invincibilityMoveIsReady?(racer)
 	
 	def self.givePrize
+		return if $game_variables[36] == -1
 		if @racerPlayer[:CurrentPlacement] == 1
 			if $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL2
 				pbMessage(_INTL("Well done! Here's your prize!"))
