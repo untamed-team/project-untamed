@@ -1250,7 +1250,7 @@ def trashEncounter(trash = 0)
     end
 
     present = pbGetTimeNow
-    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40)) * UnrealTime::PROPORTION)
+    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
     $game_variables[TRASHENCOUNTERVAR][trash][2] = future
     pbMessage(_INTL("You threw a {1} into the trash pile. Maybe something will get the bait?", ret))
     return
