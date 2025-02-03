@@ -507,6 +507,7 @@ class CrustangRacing
 	end #def self.endInvincibility
 	
 	def self.cancellingMove?
+		@cancellingMove = false
 		@cancellingMove = true if @pressingMove1 && @pressingMove2
 		@cancellingMove = true if @pressingMove1 && @pressingMove3
 		@cancellingMove = true if @pressingMove1 && @pressingMove4
@@ -514,7 +515,6 @@ class CrustangRacing
 		@cancellingMove = true if @pressingMove2 && @pressingMove4
 		@cancellingMove = true if @pressingMove3 && @pressingMove4
 		@cancellingMove = false if !@pressingMove1 && !@pressingMove2 && !@pressingMove3 && !@pressingMove4
-		
 		return @cancellingMove
 	end #def self.cancellingMove?
 	
