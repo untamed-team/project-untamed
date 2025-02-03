@@ -2,7 +2,6 @@ Notes to self:
 Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
 
-definite issue with not being able to use moves if spinout move is canceled by using another move
 make summary screen available when choosing crustang to rent (maybe go right to summary page with crustang moves then ask to confirm choice)
 
 Add animation to overloading a racer
