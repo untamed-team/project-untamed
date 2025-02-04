@@ -1209,10 +1209,10 @@ end
 # radioactive code, needs testing
 TRASHENCOUNTERVAR = 125
 def trashEncounter(trash = 0)
-  trash = [[trash, 0].max, 3].min
+  numTrash = 4
+  trash = [[trash, 0].max, (numTrash - 1)].min
   if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
     $game_variables[TRASHENCOUNTERVAR] = []
-    numTrash = 4
     numTrash.times do                        # item, mon, time
       $game_variables[TRASHENCOUNTERVAR].push([nil, nil, 0])
     end
