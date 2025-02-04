@@ -1240,10 +1240,12 @@ def trashEncounter(trash = 0)
     unless $player.difficulty_mode?("chaos")
       trashHash.merge!(trashHash2) { |key, oldval, newval| oldval }
     end
+    $bag.remove(ret)
     $game_variables[TRASHENCOUNTERVAR][trash][0] = ret
     trashHash.each do |species, item|
       if item.include?(ret)
         $game_variables[TRASHENCOUNTERVAR][trash][1] = species
+        break
       else
         $game_variables[TRASHENCOUNTERVAR][trash][1] = :TRUBBISH
       end
@@ -1265,7 +1267,7 @@ def trashEncounter(trash = 0)
     msg = rand(5..10)
     message = ""
     msg.times { message += ".   " }
-    pbMessage(_INTL(msg))
+    pbMessage(_INTL(message))
 
     if timepassed
       pbMessage(_INTL("!\\nSomething jumped out of the trash!"))
@@ -1275,19 +1277,19 @@ def trashEncounter(trash = 0)
     end
 
     level = 10
-    level = [level - rand(1..10), 1].max
-    if level.between?(8..10)
+    level = [(level - rand(1..10)), 1].max
+    if level.between?(8,10)
       pbMessage(_INTL("It looks quite fierce!"))
-    elsif level.between(5..7)
+    elsif level.between?(5,7)
       pbMessage(_INTL("It looks quite protective!"))
-    elsif level.between(2..4)
+    elsif level.between?(2,4)
       pbMessage(_INTL("It looks quite energetic!"))
     else
       pbMessage(_INTL("It looks quite young!"))
     end
 
     trashbattler = [trashcounter, level]
-    $game_temp.encounter_type = :none
+    $game_temp.encounter_type = :Land
     $game_variables[TRASHENCOUNTERVAR][trash][0] = nil
     $game_variables[TRASHENCOUNTERVAR][trash][1] = nil
     $game_variables[TRASHENCOUNTERVAR][trash][2] = 0
