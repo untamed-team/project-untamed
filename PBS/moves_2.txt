@@ -2846,9 +2846,8 @@ Power = 130
 Accuracy = 90
 TotalPP = 5
 Target = Other
-FunctionCode = TwoTurnAttackFlinchTarget
+FunctionCode = TwoTurnAttack
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-EffectChance = 0
 Description = A second-turn attack move where critical hits land more easily.
 #-------------------------------
 [BRAVEBIRD]
@@ -6659,6 +6658,17 @@ FunctionCode = SleepTargetNextTurn
 Flags = CanProtect,CanMirrorMove
 Description = The user lets loose a huge yawn that lulls the target into falling asleep on the next turn.
 #-------------------------------
+[STUFFCHEEKS]
+Name = Stuff Cheeks
+Type = NORMAL
+Category = Status
+Power = 0
+Accuracy = 0
+TotalPP = 10
+Target = User
+FunctionCode = UserConsumeBerryRaiseDefense2
+Description = The user eats its held Berry, then sharply raises its Defense stat.
+#-------------------------------
 [BELCH]
 Name = Belch
 Type = POISON
@@ -8449,7 +8459,6 @@ TotalPP = 15
 Target = NearOther
 FunctionCode = HigherDamageInSunVSNonFireTypes
 Flags = CanProtect,CanMirrorMove,ThawsUser
-EffectChance = 10
 Description = Shoots boiling hot water. During Sun or Harsh Sun, it is not weakened against non Fire-type targets.
 #-------------------------------
 [SNIPESHOT]
@@ -8533,7 +8542,7 @@ Type = WATER
 Category = Special
 Power = 60
 Accuracy = 100
-TotalPP = 5
+TotalPP = 10
 Target = NearOther
 FunctionCode = SuperEffectiveAgainstSteel
 Flags = CanProtect,CanMirrorMove,Bomb
@@ -8732,7 +8741,7 @@ Type = PSYCHIC
 Category = Special
 Power = 60
 Accuracy = 100
-TotalPP = 20
+TotalPP = 10
 Target = NearOther
 FunctionCode = SuperEffectiveAgainstSteel
 Flags = CanProtect,CanMirrorMove
@@ -8776,17 +8785,6 @@ FunctionCode = LowerTargetSpDef1
 Flags = CanProtect,CanMirrorMove
 EffectChance = 10
 Description = The user whips up brutal winds around its target to attack. This may also lower the target’s Sp. Def stat.
-#-------------------------------
-[STUFFCHEEKS]
-Name = Stuff Cheeks
-Type = NORMAL
-Category = Status
-Power = 0
-Accuracy = 0
-TotalPP = 10
-Target = User
-FunctionCode = UserConsumeBerryRaiseDefense2
-Description = The user eats its held Berry, then sharply raises its Defense stat.
 #-------------------------------
 [BITINGCOLD]
 Name = Biting Cold
@@ -8897,6 +8895,103 @@ FunctionCode = UserConsumeTargetBerry
 Flags = Contact,CanProtect,CanMirrorMove,Biting
 Description = The target is bitten with sugary fangs. If the target is holding a Berry, the user eats it.
 #-------------------------------
+[BOOMINSTALL]
+Name = Virus Inject
+Type = QMARKS
+Category = Status
+Accuracy = 85
+TotalPP = 10
+Target = NearOther
+FunctionCode = BOOMInstall
+Flags = CanProtect,CanMirrorMove
+Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
+#-------------------------------
+[STALAGBITE]
+Name = Stalagbite
+Type = ROCK
+Category = Physical
+Power = 70
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = LowerTargetDefense1
+Flags = Contact,CanProtect,CanMirrorMove,Biting
+EffectChance = 20
+Description = The user bites down with rock-hard fangs formed from stalagmites. May lower the target's Defense stat.
+#-------------------------------
+[GLACIALGULF]
+Name = Glacial Gulf
+Type = ICE
+Category = Status
+Accuracy = 0
+TotalPP = 5
+Target = User
+FunctionCode = HealUserDependingOnHail
+Description = The user regains up to half of its max HP. It restores more HP in a hailstorm.
+#-------------------------------
+[EROSIONWAVE]
+Name = Erosion Wave
+Type = ROCK
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = LowerTargetSpDef1
+Flags = CanProtect,CanMirrorMove
+EffectChance = 10
+Description = Pummels the foe with a dust storm. This may also lower the target’s Sp. Def stat.
+#-------------------------------
+[OWTHEEDGE]
+Name = Ow The Edge
+Type = DARK
+Category = Physical
+Power = 120
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = RecoilThirdOfDamageDealt
+Flags = Contact,CanProtect,CanMirrorMove,Blade
+Description = The user teleports behind the target and slices, cutting itself as well.
+#-------------------------------
+[THINKFAST]
+Name = Think Fast
+Type = PSYCHIC
+Category = Physical
+Power = 40
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+Priority = 1
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+Description = The user quickly thinks up a weak psychic attack.
+#-------------------------------
+[TOXIRAVAGE]
+Name = Toxiravage
+Type = POISON
+Category = Physical
+Power = 70
+Accuracy = 100
+TotalPP = 5
+Target = NearOther
+Priority = 2
+FunctionCode = None
+Flags = Contact,CanProtect,CanMirrorMove
+Description = Sharp, toxic spikes impale the target. Always hits first.
+#-------------------------------
+[THOUSANDFOLDS]
+Name = Thousand Folds
+Type = STEEL
+Category = Physical
+Power = 90
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = RemoveProtections
+Flags = Contact,CanMirrorMove,Blade
+Description = A folded blade that tears through a target using Protect or Detect.
+#-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
 Type = GRASS
@@ -8909,11 +9004,59 @@ FunctionCode = PeperSpray
 Flags = CanProtect,CanMirrorMove,ThawsUser
 Description = Unleashes a spray of spicy vapors to attack. Powers up and hits all foes during Sun or Harsh Sun.
 #-------------------------------
+[CRIMSONSURGE]
+Name = Crimson Surge
+Type = WATER
+Category = Special
+Power = 45
+Accuracy = 100
+TotalPP = 10
+Target = NearOther
+FunctionCode = OverrideTargetStatusWithPoison
+Flags = CanProtect,CanMirrorMove
+Description = After doing damage, if the target has a status condition that is not poison, leave the target poisoned.
+#-------------------------------
+[TRIMTACKLE]
+Name = Trim Tackle
+Type = NORMAL
+Category = Physical
+Power = 90
+Accuracy = 100
+TotalPP = 15
+Target = NearOther
+FunctionCode = TypeIsUserFirstType
+Flags = CanProtect,CanMirrorMove,GravityBoosted
+Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
+#-------------------------------
+[HARDDRIVECRASH]
+Name = Hard Drive Crash
+Type = QMARKS
+Category = Special
+Power = 60
+Accuracy = 0
+TotalPP = 5
+Target = NearOther
+FunctionCode = LowerPPOfTargetLastMoveBy3
+Flags = CanProtect,CanMirrorMove
+Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.
+#-------------------------------
+[SPLINTERSHOT]
+Name = Splinter Shot
+Type = GRASS
+Category = Physical
+Power = 40
+Accuracy = 100
+TotalPP = 5
+Target = AllNearFoes
+FunctionCode = HitTwoTimesReload
+Flags = CanProtect,CanMirrorMove
+Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
+#-------------------------------
 [TITANSWRATH]
 Name = Titan's Wrath
 Type = QMARKS
 Category = Special
-Power = 110
+Power = 100
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
@@ -8983,6 +9126,8 @@ FunctionCode = HitThreeToFiveTimes
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
 #-------------------------------
+#-------------------------------
+#-------------------------------
 [PREMONITIONMOVE]
 Name = Premonition Dummy
 Type = QMARKS
@@ -8993,153 +9138,6 @@ TotalPP = 0
 Target = NearOther
 FunctionCode = AttackOneTurnLater
 Description = Move modified and used by Premonition.
-#-------------------------------
-[CRIMSONSURGE]
-Name = Crimson Surge
-Type = WATER
-Category = Special
-Power = 45
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = OverrideTargetStatusWithPoison
-Flags = CanProtect,CanMirrorMove
-Description = After doing damage, if the target has a status condition that is not poison, leave the target poisoned.
-#-------------------------------
-[EROSIONWAVE]
-Name = Erosion Wave
-Type = ROCK
-Category = Special
-Power = 90
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = LowerTargetSpDef1
-Flags = CanProtect,CanMirrorMove
-EffectChance = 20
-Description = Pummels the foe with a dust storm. May also lower the foe’s Sp. Def.
-#-------------------------------
-[OWTHEEDGE]
-Name = Ow The Edge
-Type = DARK
-Category = Physical
-Power = 120
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = RecoilThirdOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove,Blade
-Description = The user teleports behind the target and slices, cutting itself as well.
-#-------------------------------
-[THINKFAST]
-Name = Think Fast
-Type = PSYCHIC
-Category = Physical
-Power = 40
-Accuracy = 100
-TotalPP = 15
-Target = NearOther
-Priority = 1
-FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
-Description = The user quickly thinks up a weak psychic attack.
-#-------------------------------
-[TOXIRAVAGE]
-Name = Toxiravage
-Type = POISON
-Category = Physical
-Power = 70
-Accuracy = 100
-TotalPP = 5
-Target = NearOther
-Priority = 2
-FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
-Description = Sharp, toxic spikes impale the target. Always hits first.
-#-------------------------------
-[THOUSANDFOLDS]
-Name = Thousand Folds
-Type = STEEL
-Category = Physical
-Power = 90
-Accuracy = 100
-TotalPP = 10
-Target = NearOther
-FunctionCode = RemoveProtections
-Flags = Contact,CanMirrorMove,Blade
-Description = A folded blade that tears through a target using Protect or Detect.
-#-------------------------------
-[BOOMINSTALL]
-Name = Virus Inject
-Type = QMARKS
-Category = Status
-Accuracy = 85
-TotalPP = 10
-Target = NearOther
-FunctionCode = BOOMInstall
-Flags = CanProtect,CanMirrorMove
-Description = The user injects the foe with a BOOMing virus. Increases all damage taken by the foe by 25%.
-#-------------------------------
-[STALAGBITE]
-Name = Stalagbite
-Type = ROCK
-Category = Physical
-Power = 75
-Accuracy = 100
-TotalPP = 15
-Target = NearOther
-FunctionCode = LowerTargetDefense1
-Flags = Contact,CanProtect,CanMirrorMove,Biting
-EffectChance = 20
-Description = The user bites down with rock-hard fangs formed from stalagmites. May lower the target's Defense stat.
-#-------------------------------
-[GLACIALGULF]
-Name = Glacial Gulf
-Type = ICE
-Category = Status
-Accuracy = 0
-TotalPP = 5
-Target = User
-FunctionCode = HealUserDependingOnHail
-Description = The user regains up to half of its max HP. It restores more HP in a hailstorm.
-#-------------------------------
-[TRIMTACKLE]
-Name = Trim Tackle
-Type = NORMAL
-Category = Physical
-Power = 90
-Accuracy = 100
-TotalPP = 15
-Target = NearOther
-FunctionCode = TypeIsUserFirstType
-Flags = CanProtect,CanMirrorMove,GravityBoosted
-Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
-#-------------------------------
-[HARDDRIVECRASH]
-Name = Hard Drive Crash
-Type = QMARKS
-Category = Special
-Power = 60
-Accuracy = 0
-TotalPP = 5
-Target = NearOther
-FunctionCode = LowerPPOfTargetLastMoveBy3
-Flags = CanProtect,CanMirrorMove
-Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.
-#-------------------------------
-[SPLINTERSHOT]
-Name = Splinter Shot
-Type = GRASS
-Category = Physical
-Power = 40
-Accuracy = 100
-TotalPP = 5
-Target = AllNearFoes
-FunctionCode = HitTwoTimesReload
-Flags = CanProtect,CanMirrorMove
-Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
-#-------------------------------
-#-------------------------------
 #-------------------------------
 [SLIMESHOT]
 Name = Failsafe Slime Shot

@@ -1209,6 +1209,7 @@ end
 # radioactive code, needs testing
 TRASHENCOUNTERVAR = 125
 def trashEncounter(trash = 0)
+  trash = [[trash, 0].max, 3].min
   if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
     $game_variables[TRASHENCOUNTERVAR] = []
     numTrash = 4
@@ -1277,7 +1278,7 @@ def trashEncounter(trash = 0)
     end
 
     level = 10
-    level = [(level - rand(1..10)), 1].max
+    level = [(level - rand(10)), 1].max
     if level.between?(8,10)
       pbMessage(_INTL("It looks quite fierce!"))
     elsif level.between?(5,7)
