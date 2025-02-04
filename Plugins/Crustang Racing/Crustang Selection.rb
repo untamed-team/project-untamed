@@ -31,6 +31,7 @@ class CrustangRacing
 			pkmn.name = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:PkmnName]
 			pkmn.owner.gender = 3
 			pkmn.owner.name = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:TrainerName]
+			pkmn.gender = CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Gender]
 			pbAddToPartySilent(pkmn)
 			pkmn.moves = []
 			for j in 0...CrustangRacingSettings::RENTABLE_CRUSTANG[i][:Moves].length
@@ -110,7 +111,7 @@ def pbChooseRacingPokemon1(ableProc, allowIneligible = false)
 		choices = ["Choose", "Summary", "Nevermind"]
 		#pbShowCommands("Do what with #{pkmnid}?", commands, defaultValue = -1)
 		#@scene.pbShowCommands(_INTL("Do what with #{pkmnid}?"), choices, -1)
-		menuChoice = pbMessage(_INTL("Do what with #{$player.party[pkmnid].name}?"), choices, -1)
+		menuChoice = pbMessage(_INTL("Do what with #{$player.party[pkmnid].name}?"), choices, -1) {@scene.update}
         case menuChoice
 		when 0
 			#Choose
