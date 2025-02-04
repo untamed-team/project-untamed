@@ -8,7 +8,7 @@ SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5
-RACE_TIME_IN_SECONDS = 9999#180
+RACE_TIME_IN_SECONDS = 180
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
@@ -39,7 +39,7 @@ BOOST_BUTTON = 0x20#Input::SPECIAL
 BOOST_LENGTH_SECONDS = 1
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 70
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 85
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -58,7 +58,7 @@ SPINOUT_MIN_RANGE = 70
 SPINOUT_MAX_RANGE = 200
 SPINOUT_OUTLINE_WIDTH = 6
 SPINOUT_ROTATIONS_PER_SECOND = 2
-SPINOUT_DURATION_IN_SECONDS = 1
+SPINOUT_DURATION_IN_SECONDS = 4
 SPINOUT_REDUCE_SPEED_BY = 2
 SPINOUT_SE = "CR_Spinout"
 
@@ -69,7 +69,7 @@ INVINCIBLE_BGM = "CR_Invincible"
 OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200
 OVERLOAD_OUTLINE_WIDTH = 6
-OVERLOAD_DURATION_IN_SECONDS = 5
+OVERLOAD_DURATION_IN_SECONDS = 6
 OVERLOADED_STRAFE_SPEED = 2
 OVERLOADED_SE = "CR_Overloaded"
 
@@ -118,9 +118,9 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
-{TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
-{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
+{TrainerName: "Rental Ron", PkmnName: "Striker", Gender: 1, Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Mister Crab", Gender: 0, Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
+{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Gender: 1, Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
 
 COST_TO_RACE = 300
