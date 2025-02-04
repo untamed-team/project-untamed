@@ -1,3 +1,4 @@
+Contests rework ideas:
 contests notes:
 pkmn moves do not have set type like cool or smart
 Instead, a pkmn who has used X move many times, has proficiency in the move
