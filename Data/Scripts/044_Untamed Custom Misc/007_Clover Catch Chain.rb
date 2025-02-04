@@ -17,15 +17,15 @@ end
 
 def chainBonuses(mon,species)
   if $chain_species == species && !mon.shiny?
-    if    $chain_length.between?(5,9);       shinyrate = 2
-    elsif $chain_length.between?(10,19);     shinyrate = 4
-    elsif $chain_length.between?(20,29);     shinyrate = 8
-    elsif $chain_length.between?(30,49);     shinyrate = 16
-    elsif $chain_length.between?(50,74);     shinyrate = 32
-    elsif $chain_length.between?(75,99);     shinyrate = 64
-    elsif $chain_length.between?(100,149);   shinyrate = 96
-    elsif $chain_length.between?(150,199);   shinyrate = 128
-    elsif $chain_length > 200;               shinyrate = 256
+    if    $chain_length.between?(5,9);       shinyrate = 32
+    elsif $chain_length.between?(10,19);     shinyrate = 64
+    elsif $chain_length.between?(20,29);     shinyrate = 96
+    elsif $chain_length.between?(30,49);     shinyrate = 128
+    elsif $chain_length.between?(50,74);     shinyrate = 256
+    elsif $chain_length.between?(75,99);     shinyrate = 512
+    elsif $chain_length.between?(100,149);   shinyrate = 1024
+    elsif $chain_length.between?(150,199);   shinyrate = 2048
+    elsif $chain_length > 200;               shinyrate = 4096
     else
       shinyrate = Settings::SHINY_POKEMON_CHANCE
     end
