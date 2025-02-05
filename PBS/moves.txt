@@ -6313,6 +6313,7 @@ TotalPP = 10
 Target = User
 Priority = 4
 FunctionCode = ProtectUser
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = It enables the user to evade all attacks. Its chance of failing rises if it is used in succession.
 #-------------------------------
 [PSYCHUP]
@@ -6323,6 +6324,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserCopyTargetStatStages
+Flags = Contest_Smart,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user hypnotizes itself into copying any stat change made by the target.
 #-------------------------------
 [RECOVER]
@@ -6333,6 +6335,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHP
+Flags = Contest_Smart,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = Restoring its own cells, the user restores its own HP by half of its max HP.
 #-------------------------------
 [RECYCLE]
@@ -6343,6 +6346,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = RestoreUserConsumedItem
+Flags = Contest_Smart,Contest_Appeal_0,Contest_Effect_StealVoltagePreviousPokemon
 Description = The user recycles a held item that has been used in battle so it can be used again.
 #-------------------------------
 [REFLECTTYPE]
@@ -6364,6 +6368,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = CureUserBurnPoisonParalysis
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user rests to cure itself of a poisoning, burn, or paralysis.
 #-------------------------------
 [ROAR]
@@ -6375,7 +6380,7 @@ TotalPP = 20
 Target = NearOther
 Priority = -6
 FunctionCode = SwitchOutTargetStatusMove
-Flags = CanMirrorMove,Sound
+Flags = CanMirrorMove,Sound,Contest_Cool,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The target is scared off and replaced by another Pokémon in its party. In the wild, the battle ends.
 #-------------------------------
 [SAFEGUARD]
@@ -6386,6 +6391,7 @@ Accuracy = 0
 TotalPP = 25
 Target = UserSide
 FunctionCode = StartUserSideImmunityToInflictedStatus
+Flags = Contest_Beauty,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user creates a protective field that prevents status problems for five turns.
 #-------------------------------
 [SCARYFACE]
@@ -6396,7 +6402,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpeed2
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Next4
 Description = The user frightens the target with a scary face to harshly reduce its Speed stat.
 #-------------------------------
 [SCREECH]
@@ -6407,7 +6413,7 @@ Accuracy = 85
 TotalPP = 40
 Target = NearOther
 FunctionCode = LowerTargetDefense2
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Smart,Contest_Appeal_2,Contest_Effect_LowerVoltageOfAllJudges1
 Description = An earsplitting screech harshly reduces the target's Defense stat.
 #-------------------------------
 [SHARPEN]
@@ -6418,6 +6424,7 @@ Accuracy = 0
 TotalPP = 30
 Target = User
 FunctionCode = RaiseUserAttack1
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user reduces its polygon count to make itself more jagged, raising the Attack stat.
 #-------------------------------
 [SHELLSMASH]
@@ -6449,7 +6456,7 @@ Accuracy = 55
 TotalPP = 15
 Target = NearOther
 FunctionCode = SleepTarget
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = A soothing lullaby is sung in a calming voice that puts the target into a deep slumber.
 #-------------------------------
 [SKETCH]
@@ -6460,6 +6467,7 @@ Accuracy = 0
 TotalPP = 1
 Target = NearOther
 FunctionCode = ReplaceMoveWithTargetLastMoveUsed
+Flags = Contest_Smart,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
 Description = It enables the user to permanently learn the move last used by the foe. Once used, Sketch disappears.
 #-------------------------------
 [SLACKOFF]
@@ -6470,6 +6478,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHP
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user slacks off, restoring its own HP by up to half of its maximum HP.
 #-------------------------------
 [SLEEPTALK]
@@ -6480,6 +6489,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UseRandomUserMoveIfAsleep
+Flags = Contest_Cute,Contest_Appeal_3,Contest_Effect_Basic
 Description = While it is asleep, the user randomly uses one of the moves it knows.
 #-------------------------------
 [SMOKESCREEN]
@@ -6490,7 +6500,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_LowerVoltageOfAllJudges1
 Description = The user releases an obscuring cloud of smoke or ink. It reduces the target's accuracy.
 #-------------------------------
 [SOFTBOILED]
