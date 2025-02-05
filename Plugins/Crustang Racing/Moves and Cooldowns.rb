@@ -40,6 +40,7 @@ class CrustangRacing
 				#cancelling move, so reset the charged moves' charges
 				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+				#Console.echo_warn "canceled move 1"
 			end #if !self.cancellingMove?
 			@pressingMove1 = false
 		end
@@ -59,6 +60,7 @@ class CrustangRacing
 				#cancelling move, so reset the charged moves' charges
 				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+				#Console.echo_warn "canceled move 2"
 			end #if !self.cancellingMove?
 			@pressingMove2 = false
 		end
@@ -78,6 +80,7 @@ class CrustangRacing
 				#cancelling move, so reset the charged moves' charges
 				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+				#Console.echo_warn "canceled move 3"
 			end #if !self.cancellingMove?
 			@pressingMove3 = false
 		end
@@ -97,6 +100,7 @@ class CrustangRacing
 				#cancelling move, so reset the charged moves' charges
 				@racerPlayer[:SpinOutCharge] = CrustangRacingSettings::SPINOUT_MIN_RANGE
 				@racerPlayer[:OverloadCharge] = CrustangRacingSettings::OVERLOAD_MIN_RANGE
+				#Console.echo_warn "canceled move 4"
 			end #if !self.cancellingMove?
 			@pressingMove4 = false
 		end

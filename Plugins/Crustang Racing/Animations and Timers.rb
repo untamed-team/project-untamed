@@ -1,6 +1,21 @@
 class CrustangRacing
 	def self.updateTimers
 		###################################
+		#====== Race Remaining Time ======
+		###################################
+		if @secondsTimer <= 0
+			if @raceRemainingTime <= 0
+				@raceEnded = true
+			else
+				@raceRemainingTime -= 1
+				@secondsTimer = Graphics.frame_rate
+			end
+			
+		end
+		
+		@secondsTimer -= 1
+		
+		###################################
 		#============= Racer1 =============
 		###################################
 		#do not update cooldown sprites for non-player racers because they don't have any

@@ -32,11 +32,15 @@ I did my research, I promise.
 ###################################
 #============= Other =============
 ###################################
-Add a Pokemon summary page for viewing moves with contest descriptions.
-The descriptions are commented out in the Acting - Move Methods script.
 
-Support super shiny contestants. Currently the contest stage following characters do not account for super shiny sprites.
 
-I would like to make a debug function for selecting contestants' moves (will probably need to write to a PBS of some kind), but I would prefer to stray away from PBS because RPG Studio MK does not use PBS.
 
-I would like to make it much easier for developers to customize their contest experience and cut down on the amount of work it takes to understand and go through set up of this plugin.
+
+
+
+Important to have for demo 2:
+the accessories are small when putting on the pkmn during dress up - setting?
+Make a prize pool for each rank and give consolation prize for less than 1st
+Make prerequisites for pkmn to enter higher ranks (need ribbon from lower rank)
+Pokemon with only one move should not be able to join contests
+Make sure it's obvious (via trainer tips or something + in summary screen) that you can press SPECIAL to view contest move effects

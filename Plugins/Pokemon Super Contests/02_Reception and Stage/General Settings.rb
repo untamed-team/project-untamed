@@ -10,7 +10,7 @@ module ContestSettings
 SELECTED_POKEMON_VARIABLE = 32 #used for selecting a pokemon to enter
 SELECTED_POKEMON_NAME_VARIABLE = 33 #needed for selecting a pokemon
 
-TELEPORT_AFTER_CONTEST = 
+TELEPORT_AFTER_CONTEST = nil
 
 #=================#
 #==== RIBBONS ====#

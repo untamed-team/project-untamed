@@ -8,9 +8,14 @@
 ##########################################################
 def addPredefinedTutorMoves
   #start adding moves here
-  pbTutorNetAddSilent(:METRONOME,cost=1000,currency="$")
-  pbTutorNetAddSilent(:DRAININGKISS,cost=2000,currency="$")
-  pbTutorNetAddSilent(:EXCITE,cost=1000,currency="$")
+  if $player.difficulty_mode?("chaos")
+    pbTutorNetAddSilent(:METRONOME,6,:REDSHARD)
+    pbTutorNetAddSilent(:DRAININGKISS,8,:BLUESHARD)
+  else
+    pbTutorNetAddSilent(:METRONOME,cost=1000,currency="$")
+    pbTutorNetAddSilent(:DRAININGKISS,cost=2000,currency="$")
+    pbTutorNetAddSilent(:EXCITE,cost=1000,currency="$")
+  end
 end
 ##########################################################
 #added by Gardenette

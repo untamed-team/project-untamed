@@ -5,7 +5,9 @@ class CrustangRacing
 		###################################
 		#============= Racer1 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer1[:RacerSpriteForm]
+		
 		@sprites["racer1PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer1PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer1PkmnOverview"].width/4
         @sprites["racer1PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer1PkmnOverview"].height/4
@@ -19,7 +21,9 @@ class CrustangRacing
 		###################################
 		#============= Racer2 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer2[:RacerSpriteForm]
+		
 		@sprites["racer2PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer2PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer2PkmnOverview"].width/4
         @sprites["racer2PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer2PkmnOverview"].height/4
@@ -33,7 +37,9 @@ class CrustangRacing
 		###################################
 		#============= Racer3 =============
 		###################################
-		pokemon = Pokemon.new(:LILORINA, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racer3[:RacerSpriteForm]
+		
 		@sprites["racer3PkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racer3PkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racer3PkmnOverview"].width/4
         @sprites["racer3PkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racer3PkmnOverview"].height/4
@@ -47,7 +53,9 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
-		pokemon = Pokemon.new(:BATHYGIGAS, 1)
+		pokemon = Pokemon.new(:CRUSTANG, 1)
+		pokemon.form = @racerPlayer[:RacerSpriteForm]
+		
 		@sprites["racerPlayerPkmnOverview"] = PokemonBoxIcon.new(pokemon, @viewport)
         @sprites["racerPlayerPkmnOverview"].x = @trackEllipsesPoints[0][0] - @sprites["racerPlayerPkmnOverview"].width/4
         @sprites["racerPlayerPkmnOverview"].y = @trackEllipsesPoints[0][1] - @sprites["racerPlayerPkmnOverview"].height/4
@@ -83,6 +91,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer1[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer1 pointOnTrackOverview is #{@racer1[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer1[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer1[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer1[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
@@ -143,6 +152,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer2[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer2 pointOnTrackOverview is #{@racer2[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer2[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer2[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer2[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs
@@ -203,6 +213,7 @@ class CrustangRacing
 		
 		#how many pixels in distance is it on the X axis between this point and the next one coming up?
 		if @trackEllipsesPoints[@racer3[:PointOnTrackOverview]].nil?
+			#this line is here to alert me when there's a problem
 			print "trackEllipsesPoints is #{@trackEllipsesPoints}, racer3 pointOnTrackOverview is #{@racer3[:PointOnTrackOverview]}, and @trackEllipsesPoints[@racer3[:PointOnTrackOverview]] is  #{@trackEllipsesPoints[@racer3[:PointOnTrackOverview]]}"
 			distanceBetweenPixelsX = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][0] - nextPoint[0]).abs
 			distanceBetweenPixelsY = (@trackEllipsesPoints[@racer3[:PointOnTrackOverview]-1][1] - nextPoint[1]).abs

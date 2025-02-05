@@ -1992,3 +1992,96 @@ def command_209(name=nil)
   character.force_move_route(@parameters[1])
   return true
 end
+
+#-----------------------------------------------------------------------------
+# * Get event that triggered this code
+#-----------------------------------------------------------------------------
+def getThisEvent
+  return pbMapInterpreter.get_character(0)
+end #def getThisEvent
+
+#-----------------------------------------------------------------------------
+# * Discard all instance variables that are not set to nil. Otherwise, the trash collector will not reset it in the current game session
+#-----------------------------------------------------------------------------
+def pbDiscardInstanceVariables(instanceName = nil)
+  instanceName = self if instanceName.nil?
+  instanceName.instance_variables.each do |sym|
+    instanceName.instance_variable_set(sym, nil) 
+    instanceName.remove_instance_variable(sym)
+  end
+end #def pbDiscardInstanceVariables
+
+
+#-----------------------------------------------------------------------------
+# * Crustang Paint Job
+#-----------------------------------------------------------------------------
+def crustangPaintJobNPC
+  $game_variables[36] = 0
+
+  pbChooseTradablePokemon(36, 37,
+		proc { |pkmn| pkmn.isSpecies?(:CRUSTANG) }
+	)
+  pkmn = $player.party[$game_variables[36]]
+  if $game_variables[36] == -1
+    pbMessage(_INTL("Let me know if you ever want a paint job!"))
+    return
+  else
+    choices = [
+      _INTL("Classic"), #0
+      _INTL("Orange"), #1
+      _INTL("Yellow"), #2
+      _INTL("Green"), #3
+      _INTL("Blue"), #4
+      _INTL("Indigo"), #5
+      _INTL("Purple"), #6
+      _INTL("Hot Pink"), #7
+      _INTL("Black"), #8
+      _INTL("White"), #9
+      _INTL("Nevermind")
+    ]
+
+    loop do
+      new_form = pbMessage(_INTL("Which style would you like?"), choices, choices.length)
+      
+      #the selection matches current paint job
+      if new_form == pkmn.form
+        pbMessage(_INTL("Looks like your #{pkmn.name} already has that paint job."))
+        next #loop back to paint job choices
+      end
+
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Let me know if you ever want a paint job!"))
+        break
+      end
+
+      if pkmn.shiny?
+        shinyPath = "Shiny/"
+      else
+        ""
+      end
+      filePath = "CrustangPaintJob/OW/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]when following you."))
+    
+      filePath = "CrustangPaintJob/Front/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the front."))
+
+      filePath = "CrustangPaintJob/Back/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the back."))
+      decision = pbConfirmMessage("\\c[2]Do you want this style?")
+      
+      if decision == false
+        next #loop back to paint job choices
+      end
+
+      #change form
+      pkmn.form = new_form
+      #subtract money
+      $player.money -= 3000
+      pbSEPlay("Mart buy item")
+      pbWait(1)
+      FollowingPkmn.refresh
+      pbMessage(_INTL("Looking good!"))
+      break
+    end #loop do
+  end #if $game_variables[36] == -1
+end #def crustangPaintJobNPC

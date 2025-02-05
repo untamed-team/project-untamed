@@ -4,9 +4,11 @@ class CrustangRacingSettings
 #========================================================#
 TOP_BASE_SPEED = 10
 SECONDS_TO_NORMALIZE_SPEED = 5
+SECONDS_TO_STOP_AT_END = 3
 BASE_STRAFE_SPEED = 8
 BOOSTED_STRAFE_SPEED = 10
 KPH_MULTIPLIER = 5
+RACE_TIME_IN_SECONDS = 180
 COLLISION_SE = "Battle damage weak"
 SECONDS_TO_RECOVER_FROM_BUMP = 2
 ROCK_COLLISION_SE = "Rock Smash"
@@ -14,11 +16,12 @@ MUD_COLLISION_SE = "Anim/PRSFX- Sandstorm"
 HAZARD_ALARM_BGS = "CR_Hazard_Alarm"
 SE_SPAM_PREVENTION_WAIT_IN_SECONDS = 0.5
 UPCOMING_HAZARD_DETECTION_DISTANCE = 1000 #in pixels in front of the player (includes the gap between the player and edge of screen in front of them) #1000 distance at 10 base speed produces 4 chimes when a hazard is coming
+TRACK_COUNTDOWN_BGM = "Crustang Durby 321Go"
 TRACK_BGM = "Crustang Durby"
 RNG_ROLLS_TIMER_IN_SECONDS = 1 #rng rolls happen every X seconds
 PERCENT_CHANCE_TO_STRAFE_AWAY_FROM_HAZARDS = 100 ###########################currently not used
 NUMBER_OF_ROCKY_PATCHES_ON_TRACK = 4
-ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 2
+ROCKY_PATCH_SPEED = TOP_BASE_SPEED - 4
 MIN_DISTANCE_BETWEEN_ROCKY_PATCHES = 100
 SOONEST_ROCKY_PATCH_CAN_APPEAR = 600
 LATEST_ROCKY_PATCH_CAN_APPEAR = 100 #end of track minus this gives you the latest the patch can appear
@@ -31,12 +34,12 @@ MAX_DISTANCE_TO_WANDER_STRAFE = nil #never set this to a number lower than MIN_D
 #========================================================#
 #==================== BOOST SETTINGS ====================#
 #========================================================#
-BOOST_BUTTON_COOLDOWN_SECONDS = 3
+BOOST_BUTTON_COOLDOWN_SECONDS = 6
 BOOST_BUTTON = 0x20#Input::SPECIAL
-BOOST_LENGTH_SECONDS = 0.5
+BOOST_LENGTH_SECONDS = 1
 BOOST_SPEED = 16
 BOOST_SE = "CR_Boost"
-PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 70
+PERCENT_CHANCE_TO_BOOST_WHEN_AVAILABLE = 85
 
 #========================================================#
 #==================== MOVE SETTINGS ====================#
@@ -55,7 +58,7 @@ SPINOUT_MIN_RANGE = 70
 SPINOUT_MAX_RANGE = 200
 SPINOUT_OUTLINE_WIDTH = 6
 SPINOUT_ROTATIONS_PER_SECOND = 2
-SPINOUT_DURATION_IN_SECONDS = 1
+SPINOUT_DURATION_IN_SECONDS = 4
 SPINOUT_REDUCE_SPEED_BY = 2
 SPINOUT_SE = "CR_Spinout"
 
@@ -66,7 +69,7 @@ INVINCIBLE_BGM = "CR_Invincible"
 OVERLOAD_MIN_RANGE = 70
 OVERLOAD_MAX_RANGE = 200
 OVERLOAD_OUTLINE_WIDTH = 6
-OVERLOAD_DURATION_IN_SECONDS = 5
+OVERLOAD_DURATION_IN_SECONDS = 6
 OVERLOADED_STRAFE_SPEED = 2
 OVERLOADED_SE = "CR_Overloaded"
 
@@ -115,15 +118,36 @@ CONTESTANTS = [
 #=============== RENTAL CRUSTANG SETTINGS ===============#
 #========================================================#
 RENTABLE_CRUSTANG = [
-{TrainerName: "Rental Ron", PkmnName: "Striker", Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
-{TrainerName: "Rental Ron", PkmnName: "Mister Crab", Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
-{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
+{TrainerName: "Rental Ron", PkmnName: "Striker", Gender: 1, Moves: [:VISEGRIP, :REST, :MUDSLAP]}, #gives: spinOut, reduceCooldown, mudHazard
+{TrainerName: "Rental Ron", PkmnName: "Mister Crab", Gender: 0, Moves: [:ROCKTOMB, :RAPIDSPIN, :HELPINGHAND]}, #gives: rockHazard, secondBoost, overload
+{TrainerName: "Rental Ron", PkmnName: "MsJeavious", Gender: 1, Moves: [:VISEGRIP, :IRONDEFENSE, :HELPINGHAND]}, #gives: spinOut, invincible, overload
 ]
+
+COST_TO_RACE = 300
+
+#========================================================#
+#==================== PRIZE SETTINGS ====================#
+#========================================================#
+#distance required to get prizes
+#if the player does nothing, they will travel >11 but <12 laps
+#if the player puts in maximum effort, they can get about 15 or 16 laps
+REQ_DISTANCE_FOR_POOL0 = 14
+REQ_DISTANCE_FOR_POOL1 = 15
+REQ_DISTANCE_FOR_POOL2 = 16
+
+PRIZE_POOL = [
+pool0 = [:POKETOY, :POKETOY, :POKETOY, :EVERSTONE, :EVERSTONE, :EVERSTONE, :HONEY, :HONEY, :HONEY, :HONEY, :HONEY, :POKEFLUTE, :YELLOWFLUTE, :YELLOWFLUTE, :XACCURACY, :XACCURACY], #14 laps
+pool1 = [:SUPERPOTION, :SUPERPOTION, :SUPERPOTION, :TIMERBALL, :DUSKBALL, :GREATBALL, :GREATBALL, :GREATBALL, :SMOKEBALL, :SMOKEBALL, :SMOKEBALL, :GRIPCLAW], #15 laps
+pool2 = [:NUGGET, :REVIVE, :ULTRABALL, :ULTRABALL, :PEARL, :OLDGATEAU, :FRIENDBALL, :FRIENDBALL, :FRIENDBALL, :SAFARIBALL, :SAFARIBALL, :SAFARIBALL, :SPORTBALL, :SPORTBALL, :SPORTBALL, :TINYMUSHROOM, :TINYMUSHROOM] #16 laps
+]
+
+REWARD_FOR_PERSONAL_BEST = :RARECANDY
 
 #========================================================#
 #==================== MISC SETTINGS ====================#
 #========================================================#
 #usually set to same as SECONDS_TO_NORMALIZE_SPEED
+#amount of time needed to pass after race starts before moves and boost are usable
 INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS = SECONDS_TO_NORMALIZE_SPEED
 
 end #class CrustangRacingSettings

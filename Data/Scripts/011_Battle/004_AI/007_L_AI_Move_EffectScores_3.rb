@@ -2259,19 +2259,14 @@ class Battle::AI
 			if user.hasActiveItem?([:PERSIMBERRY, :LUMBERRY])
 				score*=1.3
 			end
-			if move.specialMove?(move.type)
-				if user.stages[:SPECIAL_ATTACK]>0
-					miniscore = (-5)*user.stages[:SPECIAL_ATTACK]
-					miniscore+=100
-					miniscore/=100.0
-					score*=miniscore
-				end
-			else
-				if user.stages[:ATTACK]>0
-					miniscore = (-5)*user.stages[:ATTACK]
-					miniscore+=100
-					miniscore/=100.0
-					score*=miniscore
+			unless $player.difficulty_mode?("chaos")
+				unless move.specialMove?(move.type)
+					if user.stages[:ATTACK]>0
+						miniscore = (-5)*user.stages[:ATTACK]
+						miniscore+=100
+						miniscore/=100.0
+						score*=miniscore
+					end
 				end
 			end
 			if targetlivecount>2
