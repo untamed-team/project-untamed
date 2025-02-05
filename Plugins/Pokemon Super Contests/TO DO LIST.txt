@@ -39,6 +39,7 @@ I did my research, I promise.
 
 
 Important to have for demo 2:
+the accessories are small when putting on the pkmn during dress up - setting?
 Make a prize pool for each rank and give consolation prize for less than 1st
 Make prerequisites for pkmn to enter higher ranks (need ribbon from lower rank)
 Pokemon with only one move should not be able to join contests

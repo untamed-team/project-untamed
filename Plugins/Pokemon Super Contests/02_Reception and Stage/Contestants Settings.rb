@@ -41,11 +41,11 @@ class ContestantSettings
 
 #===================== NORMAL RANK CONTESTANTS =====================#
 CONTESTANTS_NORMAL = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :PIKACHU,
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
 PkmnName: "Sparky", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 7, ConditionPoints: 12},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :SPINARAK,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
 PkmnName: "Webster", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 4, ConditionPoints: 18},
 
@@ -53,61 +53,61 @@ DressupPoints: 4, ConditionPoints: 18},
 PkmnName: "Snake", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 2, ConditionPoints: 19},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :PIDGEY,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
 PkmnName: "Polly", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 5, ConditionPoints: 8},
 ]
 
 CONTESTANTS_GREAT = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :PACHIRISU,
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
 PkmnName: "Cheeks", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 20, ConditionPoints: 150},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :ARIADOS,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
 PkmnName: "Legs", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 16, ConditionPoints: 128},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :ARBOK,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
 PkmnName: "Kobra", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 12, ConditionPoints: 114},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :PIDGEOTTO,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
 PkmnName: "Gust", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 10, ConditionPoints: 136},
 ]
 
 CONTESTANTS_ULTRA = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :MANECTRIC,
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
 PkmnName: "Bolt", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 30, ConditionPoints: 320},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :CROBAT,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
 PkmnName: "Wings", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 24, ConditionPoints: 290},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :RHYDON,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
 PkmnName: "Monster", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 18, ConditionPoints: 270},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :SCYTHER,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
 PkmnName: "Scissors", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 15, ConditionPoints: 300},
 ]
 
 CONTESTANTS_MASTER = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :AGGRON,
+{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
 PkmnName: "Tank", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 40, ConditionPoints: 600},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :TYRANITAR,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
 PkmnName: "Godzilla", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 32, ConditionPoints: 580},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :GARDEVOIR,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
 PkmnName: "Eva", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 24, ConditionPoints: 596},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :PIDGEOT,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
 PkmnName: "Gorgeous", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 20, ConditionPoints: 540},
 ]
