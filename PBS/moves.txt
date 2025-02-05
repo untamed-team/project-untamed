@@ -557,7 +557,7 @@ Accuracy = 100
 TotalPP = 25
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove,BitingContest_Tough,Contest_Appeal_3,Contest_Effect_Basic
+Flags = Contact,CanProtect,CanMirrorMove,Biting,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 30
 Description = The target is bitten with viciously sharp fangs. It may make the target flinch.
 #-------------------------------
@@ -6783,7 +6783,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = Unsanitary sludge is hurled at the target. It may also poison the target.
 #-------------------------------
@@ -6796,7 +6796,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 EffectChance = 30
 Description = The target is stabbed with a tentacle or arm seeped with poison. It may also poison the target.
 #-------------------------------
@@ -6809,7 +6809,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Blade,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 10
 Description = A slashing attack with a poisonous blade that may also poison the foe. Critical hits land more easily.
 #-------------------------------
@@ -6822,7 +6822,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = Unsanitary sludge is hurled at the target. It may also poison the target.
 #-------------------------------
@@ -6859,7 +6859,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = BadPoisonTarget
-Flags = Contact,CanProtect,CanMirrorMove,Biting
+Flags = Contact,CanProtect,CanMirrorMove,Biting,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 EffectChance = 50
 Description = The user bites the target with toxic fangs. It may also leave the target badly poisoned.
 #-------------------------------
@@ -6872,7 +6872,7 @@ Accuracy = 100
 TotalPP = 25
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 EffectChance = 10
 Description = The user hits the target with its tail. It may also poison the target. Critical hits land more easily.
 #-------------------------------
@@ -6885,7 +6885,7 @@ Accuracy = 100
 TotalPP = 30
 Target = AllNearFoes
 FunctionCode = LowerTargetSpDef1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 10
 Description = The foe is attacked with a spray of harsh acid. It may also lower the target's Sp. Def stat.
 #-------------------------------
@@ -6911,7 +6911,7 @@ Accuracy = 70
 TotalPP = 20
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 40
 Description = The target is attacked with a discharge of filthy gases. It may also poison the target.
 #-------------------------------
@@ -6924,7 +6924,7 @@ Accuracy = 100
 TotalPP = 35
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 EffectChance = 30
 Description = The user stabs the target with a poisonous stinger. This may also poison the target.
 #-------------------------------
@@ -6936,6 +6936,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserDefense2
+Flags = Contest_Tough,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user alters its cellular structure to liquefy itself, sharply raising its Defense stat.
 #-------------------------------
 [BANEFULBUNKER]
@@ -6978,7 +6979,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = NegateTargetAbility
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user hurls up its stomach acids on the foe. The fluid negates the effect of the target's Ability.
 #-------------------------------
 [POISONGAS]
@@ -6989,7 +6990,7 @@ Accuracy = 90
 TotalPP = 40
 Target = AllNearFoes
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
 Description = A cloud of poison gas is sprayed in the face of opposing Pokémon. It may poison those hit.
 #-------------------------------
 [POISONPOWDER]
@@ -7000,7 +7001,7 @@ Accuracy = 75
 TotalPP = 35
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove,Powder
+Flags = CanProtect,CanMirrorMove,Powder,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user scatters a cloud of poisonous dust on the target. It may poison the target.
 #-------------------------------
 [PURIFY]
@@ -7022,7 +7023,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = BadPoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = A move that leaves the target badly poisoned. Its poison damage worsens every turn.
 #-------------------------------
 [TOXICSPIKES]
@@ -7033,6 +7034,7 @@ Accuracy = 0
 TotalPP = 20
 Target = FoeSide
 FunctionCode = AddToxicSpikesToFoeSide
+Flags = Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user lays a trap of poison spikes at the foe's feet. They poison foes that switch into battle.
 #-------------------------------
 [TOXICTHREAD]
@@ -7078,7 +7080,7 @@ Accuracy = 90
 TotalPP = 5
 Target = NearOther
 FunctionCode = LowerUserSpAtk2
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The user attacks the target at full power. The attack's recoil harshly reduces the user's Sp. Atk stat.
 #-------------------------------
 [FUTURESIGHT]
@@ -7090,6 +7092,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = AttackTwoTurnsLater
+Flags = Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = Two turns after this move is used, a hunk of psychic energy attacks the target.
 #-------------------------------
 [SYNCHRONOISE]
@@ -7113,7 +7116,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = HealUserByHalfOfDamageDoneIfTargetAsleep
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_1,Contest_Effect_Plus3If2VoltageInARow
 Description = The user eats the dreams of a sleeping foe. It absorbs half the damage caused to heal the user's HP.
 #-------------------------------
 [PHOTONGEYSER]
@@ -7162,7 +7165,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 10
 Description = The target is hit by a strong telekinetic force. It may also reduce the target's Sp. Def stat.
 #-------------------------------
@@ -7211,7 +7214,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 10
 Description = The user attacks with an odd, unseeable power. It may also make the target flinch.
 #-------------------------------
@@ -7248,7 +7251,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 20
 Description = The user focuses its willpower to its head and attacks the foe. It may also make the target flinch.
 #-------------------------------
@@ -7261,7 +7264,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 EffectChance = 50
 Description = The user lets loose a damaging burst of light. It may also reduce the target's Sp. Def stat.
 #-------------------------------
@@ -7274,7 +7277,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = LowerTargetSpAtk1
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 EffectChance = 50
 Description = A mistlike flurry of down envelops and damages the target. It may also lower the target's Sp. Atk.
 #-------------------------------
@@ -7287,7 +7290,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = The user tears at the target with blades formed by psychic power. Critical hits land more easily.
 #-------------------------------
 [PSYBEAM]
@@ -7299,7 +7302,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 10
 Description = The target is attacked with a peculiar ray. It may also cause confusion.
 #-------------------------------
@@ -7325,7 +7328,7 @@ Accuracy = 100
 TotalPP = 25
 Target = NearOther
 FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 10
 Description = The target is hit by a weak telekinetic force. It may also leave the target confused.
 #-------------------------------
@@ -7350,7 +7353,7 @@ Accuracy = 100
 TotalPP = 20
 Target = None
 Priority = -5
-FunctionCode = CounterSpecialDamage
+FunctionCode = CounterSpecialDamage,Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Flags = CanProtect
 Description = A retaliation move that counters any special attack, inflicting double the damage taken.
 #-------------------------------
@@ -7363,7 +7366,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FixedDamageUserLevelRandom
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is attacked with an odd psychic wave. The attack varies in intensity.
 #-------------------------------
 [AGILITY]
@@ -7374,6 +7377,7 @@ Accuracy = 0
 TotalPP = 30
 Target = User
 FunctionCode = RaiseUserSpeed2
+Flags = Contest_Cool,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user relaxes and lightens its body to move faster. It sharply boosts the Speed stat.
 #-------------------------------
 [ALLYSWITCH]
@@ -7395,6 +7399,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserSpDef2
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user temporarily empties its mind to forget its concerns. It sharply raises the user's Sp. Def stat.
 #-------------------------------
 [BARRIER]
@@ -7405,6 +7410,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserDefense2
+Flags = Contest_Cool,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user throws up a sturdy wall that sharply raises its Defense stat.
 #-------------------------------
 [CALMMIND]
@@ -7415,6 +7421,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserSpAtkSpDef1
+Flags = Contest_Smart,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user quietly focuses its mind and calms its spirit to raise its Sp. Atk and Sp. Def stats.
 #-------------------------------
 [COSMICPOWER]
@@ -7425,6 +7432,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserDefSpDef1
+Flags = Contest_Cool,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user absorbs a mystical power from space to raise its Defense and Sp. Def stats.
 #-------------------------------
 [GRAVITY]
@@ -7435,6 +7443,7 @@ Accuracy = 0
 TotalPP = 5
 Target = BothSides
 FunctionCode = StartGravity
+Flags = Contest_Beauty,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = Gravity is intensified for five turns, making moves involving flying unusable and negating Levitation.
 #-------------------------------
 [GUARDSPLIT]
@@ -7456,7 +7465,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserTargetSwapDefSpDefStages
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = The user employs its psychic power to switch changes to its Defense and Sp. Def with the target.
 #-------------------------------
 [HEALBLOCK]
@@ -7467,7 +7476,7 @@ Accuracy = 100
 TotalPP = 15
 Target = AllNearFoes
 FunctionCode = DisableTargetHealingMoves
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = For five turns, the foe is prevented from using any moves, Abilities, or held items that recover HP.
 #-------------------------------
 [HEALPULSE]
@@ -7489,6 +7498,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UserFaintsHealAndCureReplacement
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user faints. In return, the Pokémon taking its place will have its HP restored and status cured.
 #-------------------------------
 [HEARTSWAP]
@@ -7499,7 +7509,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserTargetSwapStatStages
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = The user employs its psychic power to switch stat changes with the target.
 #-------------------------------
 [HYPNOSIS]
@@ -7510,7 +7520,7 @@ Accuracy = 60
 TotalPP = 20
 Target = NearOther
 FunctionCode = SleepTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user employs hypnotic suggestion to make the target fall into a deep sleep.
 #-------------------------------
 [IMPRISON]
@@ -7521,6 +7531,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = DisableTargetMovesKnownByUser
+Flags = Contest_Smart,Contest_Appeal_1,Contest_Effect_Plus3If2VoltageInARow
 Description = If the foe knows any move also known by the user, the foe is prevented from using it.
 #-------------------------------
 [INSTRUCT]
@@ -7542,7 +7553,7 @@ Accuracy = 80
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user distracts the target by bending a spoon. It lowers the target's accuracy.
 #-------------------------------
 [LIGHTSCREEN]
@@ -7553,6 +7564,7 @@ Accuracy = 0
 TotalPP = 30
 Target = UserSide
 FunctionCode = StartWeakenSpecialDamageAgainstUserSide
+Flags = Contest_Beauty,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = A wondrous wall of light is put up to suppress damage from special attacks for five turns.
 #-------------------------------
 [LUNARDANCE]
@@ -7563,7 +7575,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UserFaintsHealAndCureReplacementRestorePP
-Flags = Dance
+Flags = Dance,Contest_Beauty,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user faints. In return, the Pokémon taking its place will have its status and HP fully restored.
 #-------------------------------
 [MAGICCOAT]
@@ -7575,6 +7587,7 @@ TotalPP = 15
 Target = User
 Priority = 4
 FunctionCode = BounceBackProblemCausingStatusMoves
+Flags = Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Description = A barrier reflects back to the target moves like Leech Seed and moves that damage status.
 #-------------------------------
 [MAGICPOWDER]
@@ -7607,6 +7620,7 @@ Accuracy = 0
 TotalPP = 40
 Target = User
 FunctionCode = RaiseUserAttack1
+Flags = Contest_Beauty,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user meditates to awaken the power deep within its body and raise its Attack stat.
 #-------------------------------
 [MIRACLEEYE]
@@ -7617,7 +7631,7 @@ Accuracy = 0
 TotalPP = 40
 Target = NearOther
 FunctionCode = StartNegateTargetEvasionStatStageAndDarkImmunity
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_1,Contest_Effect_Plus3If2VoltageInARow
 Description = Enables the user to hit a Dark type with any type of move. It also enables the user to hit an evasive foe.
 #-------------------------------
 [POWERSPLIT]
@@ -7639,7 +7653,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserTargetSwapAtkSpAtkStages
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = The user employs its psychic power to switch changes to its Attack and Sp. Atk with the target.
 #-------------------------------
 [POWERTRICK]
@@ -7650,6 +7664,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UserSwapBaseAtkDef
+Flags = Contest_Cool,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = The user employs its psychic power to switch its Attack with its Defense stat.
 #-------------------------------
 [PSYCHICTERRAIN]
@@ -7670,7 +7685,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = GiveUserStatusToTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = Using its psychic power of suggestion, the user transfers its status problems to the target.
 #-------------------------------
 [REFLECT]
@@ -7681,6 +7696,7 @@ Accuracy = 0
 TotalPP = 20
 Target = UserSide
 FunctionCode = StartWeakenPhysicalDamageAgainstUserSide
+Flags = Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = A wondrous wall of light is put up to suppress damage from physical attacks for five turns.
 #-------------------------------
 [REST]
@@ -7691,6 +7707,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = HealUserFullyAndFallAsleep
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user goes to sleep for two turns. It fully restores the user's HP and heals any status problem.
 #-------------------------------
 [ROLEPLAY]
@@ -7701,6 +7718,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = SetUserAbilityToTargetAbility
+Flags = Contest_Cute,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
 Description = The user mimics the target completely, copying the target's natural Ability.
 #-------------------------------
 [SKILLSWAP]
@@ -7711,7 +7729,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserTargetSwapAbilities
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_0,Contest_Effect_StealVoltagePreviousPokemon
 Description = The user employs its psychic power to exchange Abilities with the target.
 #-------------------------------
 [SPEEDSWAP]
@@ -7745,6 +7763,7 @@ TotalPP = 20
 Target = User
 Priority = -6
 FunctionCode = SwitchOutUserStatusMove
+Flags = Contest_Cool,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user switches place with a party Pokémon. Also warps to the last Pokémon Center visited.
 #-------------------------------
 [TRICK]
@@ -7755,7 +7774,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = UserTargetSwapItems
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_0,Contest_Effect_StealVoltagePreviousPokemon
 Description = The user catches the target off guard and swaps its held item with its own.
 #-------------------------------
 [TRICKROOM]
@@ -7767,7 +7786,7 @@ TotalPP = 5
 Target = BothSides
 Priority = -7
 FunctionCode = StartSlowerBattlersActFirst
-Flags = CanMirrorMove
+Flags = CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_RandomOrder
 Description = The user creates a bizarre area in which slower Pokémon get to move first for five turns.
 #-------------------------------
 [WONDERROOM]
@@ -7791,7 +7810,7 @@ Accuracy = 80
 TotalPP = 5
 Target = NearOther
 FunctionCode = RecoilHalfOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The user attacks the foe with a hazardous, full-power headbutt. The user also takes terrible damage.
 #-------------------------------
 [ROCKWRECKER]
@@ -7803,7 +7822,7 @@ Accuracy = 90
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The user launches a huge boulder at the target to attack. It must rest on the next turn, however.
 #-------------------------------
 [METEORBEAM]
@@ -7840,7 +7859,7 @@ Accuracy = 80
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 Description = The user stabs the foe with sharpened stones from below. It has a high critical-hit ratio.
 #-------------------------------
 [POWERGEM]
@@ -7852,7 +7871,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user attacks with a ray of light that sparkles as if it were made of gemstones.
 #-------------------------------
 [ROCKSLIDE]
@@ -7864,7 +7883,7 @@ Accuracy = 90
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = FlinchTarget
-Flags = CanProtect,CanMirrorMove,GravityBoosted
+Flags = CanProtect,CanMirrorMove,GravityBoosted,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 30
 Description = Large boulders are hurled at the foes to inflict damage. It may also make the targets flinch.
 #-------------------------------
@@ -7877,7 +7896,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = RaiseUserMainStats1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 10
 Description = The user attacks with a prehistoric power. It may also raise all the user's stats at once.
 #-------------------------------
@@ -7890,7 +7909,7 @@ Accuracy = 95
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove,GravityBoosted
+Flags = CanProtect,CanMirrorMove,GravityBoosted,Contest_Smart,Contest_Appeal_2,Contest_Effect_Next4
 EffectChance = 100
 Description = Boulders are hurled at the target. It also lowers the target's Speed by preventing its movement.
 #-------------------------------
@@ -7903,7 +7922,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user picks up and throws a small rock at the target to attack.
 #-------------------------------
 [SMACKDOWN]
@@ -7940,7 +7959,7 @@ Accuracy = 90
 TotalPP = 20
 Target = NearOther
 FunctionCode = MultiTurnAttackPowersUpEachTurn
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_CanPerformMoveTwiceInARow
 Description = The user continually rolls into the target over five turns. It becomes stronger each time it hits.
 #-------------------------------
 [ROCKBLAST]
@@ -7952,7 +7971,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = HitTwoToFiveTimes
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_2,Contest_Effect_CanPerformMoveTwiceInARow
 Description = The user hurls hard rocks at the target. Two to five rocks are launched in quick succession.
 #-------------------------------
 [ROCKPOLISH]
@@ -7963,6 +7982,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = RaiseUserSpeed2
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user polishes its body to reduce drag. It can sharply raise the Speed stat.
 #-------------------------------
 [SANDSTORM]
@@ -7973,6 +7993,7 @@ Accuracy = 0
 TotalPP = 10
 Target = BothSides
 FunctionCode = StartSandstormWeather
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = Summons a five-turn sandstorm to hurt all combatants except the Rock, Ground, and Steel types.
 #-------------------------------
 [STEALTHROCK]
@@ -7983,6 +8004,7 @@ Accuracy = 0
 TotalPP = 20
 Target = FoeSide
 FunctionCode = AddStealthRocksToFoeSide
+Flags = Contest_Cool,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user lays a trap of stones that harm foes switching in. It deals more damage to airborne Pokémon.
 #-------------------------------
 [TARSHOT]
@@ -8016,6 +8038,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackTwoTurnsLater
+Flags = Contest_Cool,Contest_Appeal_2,Contest_Effect_Next1
 Description = Two turns after this move is used, the user blasts the target with a concentrated bundle of light.
 #-------------------------------
 [STEELBEAM]
@@ -8075,7 +8098,7 @@ Accuracy = 75
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetDefense1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = The target is slammed with a steel-hard tail. It may also lower the target's Defense stat.
 #-------------------------------
@@ -8100,7 +8123,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = RaiseUserAttack1
-Flags = Contact,CanProtect,CanMirrorMove,Punching,GravityBoosted
+Flags = Contact,CanProtect,CanMirrorMove,Punching,GravityBoosted,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 20
 Description = The target is hit with a hard punch fired like a meteor. It may also raise the user's Attack.
 #-------------------------------
@@ -8126,7 +8149,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpDef1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 10
 Description = The user gathers all its light energy and releases it at once. It may also lower the target's Sp. Def stat.
 #-------------------------------
@@ -8139,7 +8162,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = The foe slams the target with its steel-hard head. It may also make the target flinch.
 #-------------------------------
@@ -8164,7 +8187,7 @@ Accuracy = 90
 TotalPP = 25
 Target = NearOther
 FunctionCode = RaiseUserDefense1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 10
 Description = The target is hit with wings of steel. It may also raise the user's Defense stat.
 #-------------------------------
@@ -8190,7 +8213,7 @@ Accuracy = 85
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 30
 Description = The user looses a flash of energy from its polished body. It may also lower the target's accuracy.
 #-------------------------------
@@ -8203,7 +8226,7 @@ Accuracy = 0
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user launches steel bombs that stick to the target. This attack will not miss.
 #-------------------------------
 [GEARGRIND]
@@ -8227,7 +8250,7 @@ Accuracy = 95
 TotalPP = 35
 Target = NearOther
 FunctionCode = RaiseUserAttack1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 10
 Description = The target is raked with steel claws. It may also raise the user's Attack stat.
 #-------------------------------
@@ -8241,7 +8264,7 @@ TotalPP = 30
 Target = NearOther
 Priority = 1
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,Punching
+Flags = Contact,CanProtect,CanMirrorMove,Punching,Contest_Smart,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user strikes the target with tough punches as fast as bullets. This move always goes first.
 #-------------------------------
 [GYROBALL]
@@ -8253,7 +8276,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = PowerHigherWithTargetFasterThanUser
-Flags = Contact,CanProtect,CanMirrorMove,Bomb
+Flags = Contact,CanProtect,CanMirrorMove,Bomb,Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Description = The user tackles the target with a high-speed spin. The slower the user, the greater the damage.
 #-------------------------------
 [HEAVYSLAM]
@@ -8265,7 +8288,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = PowerHigherWithUserHeavierThanTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
+Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted,Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Description = The user slams into the foe with its heavy body. The heavier the user, the greater the damage.
 #-------------------------------
 [METALBURST]
@@ -8277,7 +8300,7 @@ Accuracy = 100
 TotalPP = 10
 Target = None
 FunctionCode = CounterDamagePlusHalf
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Description = The user retaliates with much greater power against the target that last inflicted damage on it.
 #-------------------------------
 [AUTOTOMIZE]
@@ -8308,6 +8331,7 @@ Accuracy = 0
 TotalPP = 15
 Target = User
 FunctionCode = RaiseUserDefense2
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user hardens its body's surface like iron, sharply raising its Defense stat.
 #-------------------------------
 [KINGSSHIELD]
@@ -8329,7 +8353,7 @@ Accuracy = 85
 TotalPP = 40
 Target = NearOther
 FunctionCode = LowerTargetSpDef2
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Smart,Contest_Appeal_2,Contest_Effect_LowerVoltageOfAllJudges1
 Description = A horrible sound like scraping metal harshly reduces the target's Sp. Def stat.
 #-------------------------------
 [SHIFTGEAR]
@@ -8351,7 +8375,7 @@ Accuracy = 90
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The target is hit with a watery blast. The user must rest on the next turn, however.
 #-------------------------------
 [WATERSPOUT]
@@ -8363,7 +8387,7 @@ Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = PowerHigherWithUserHP
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The user spouts water to damage the foe. The lower the user's HP, the less powerful it becomes.
 #-------------------------------
 [HYDROPUMP]
@@ -8375,7 +8399,7 @@ Accuracy = 80
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = The target is blasted by a huge volume of water launched under great pressure.
 #-------------------------------
 [ORIGINPULSE]
@@ -8412,7 +8436,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 Description = The target is hammered with a large pincer. Critical hits land more easily.
 #-------------------------------
 [AQUATAIL]
@@ -8424,7 +8448,7 @@ Accuracy = 90
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user attacks by swinging its tail as if it were a vicious wave in a raging storm.
 #-------------------------------
 [MUDDYWATER]
@@ -8436,7 +8460,7 @@ Accuracy = 85
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = The user attacks by shooting muddy water at the opposing team. It may also lower the target's accuracy.
 #-------------------------------
@@ -8462,7 +8486,7 @@ Accuracy = 100
 TotalPP = 15
 Target = AllNearOthers
 FunctionCode = DoublePowerIfTargetUnderwater
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = It swamps the area around the user with a giant wave. It can also be used for crossing water.
 #-------------------------------
 [FISHIOUSREND]
@@ -8499,7 +8523,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TwoTurnAttackInvulnerableUnderwater
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_1,Contest_Effect_Plus3IfNoPokemonChoseJudge
 Description = Diving on the first turn, the user rises and hits on the next turn. It can be used to dive in the ocean.
 #-------------------------------
 [SCALD]
@@ -8548,7 +8572,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 20
 Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
 #-------------------------------
@@ -8574,7 +8598,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = DoublePowerIfTargetHPLessThanHalf
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 Description = If the target's HP is down to about half, this attack will hit with double the power.
 #-------------------------------
 [BUBBLEBEAM]
@@ -8586,7 +8610,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Next4
 EffectChance = 10
 Description = A spray of bubbles is forcefully ejected at the target. It may also lower its Speed stat.
 #-------------------------------
@@ -8599,7 +8623,7 @@ Accuracy = 85
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 EffectChance = 50
 Description = The user attacks by spraying ink in the foe's face or eyes. It may also lower the target's accuracy.
 #-------------------------------
@@ -8624,7 +8648,7 @@ Accuracy = 100
 TotalPP = 20
 Target = Other
 FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Pulse
+Flags = CanProtect,CanMirrorMove,Pulse,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 EffectChance = 20
 Description = The user attacks the target with a pulsing blast of water. It may also confuse the target.
 #-------------------------------
@@ -8638,7 +8662,7 @@ TotalPP = 20
 Target = NearOther
 Priority = 1
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first.
 #-------------------------------
 [BUBBLE]
@@ -8650,7 +8674,7 @@ Accuracy = 100
 TotalPP = 30
 Target = AllNearFoes
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_Next4
 EffectChance = 10
 Description = A spray of countless bubbles is jetted at the opposing team. It may also lower the targets' Speed stats.
 #-------------------------------
@@ -8663,7 +8687,7 @@ Accuracy = 100
 TotalPP = 25
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is blasted with a forceful shot of water.
 #-------------------------------
 [CLAMP]
@@ -8675,7 +8699,7 @@ Accuracy = 85
 TotalPP = 15
 Target = NearOther
 FunctionCode = BindTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is clamped and squeezed by the user's very thick and sturdy shell for four to five turns.
 #-------------------------------
 [WHIRLPOOL]
@@ -8687,7 +8711,7 @@ Accuracy = 85
 TotalPP = 15
 Target = NearOther
 FunctionCode = BindTargetDoublePowerIfTargetUnderwater
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_0,Contest_Effect_HigherScoreTheLaterPerforms
 Description = Traps foes in a violent swirling whirlpool for four to five turns.
 #-------------------------------
 [SURGINGSTRIKES]
@@ -8723,6 +8747,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = StartHealUserEachTurn
+Flags = Contest_Beauty,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user envelops itself in a veil made of water. It regains some HP on every turn.
 #-------------------------------
 [LIFEDEW]
@@ -8744,6 +8769,7 @@ Accuracy = 0
 TotalPP = 5
 Target = BothSides
 FunctionCode = StartRainWeather
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user summons a heavy rain that falls for five turns, powering up Water-type moves.
 #-------------------------------
 [SOAK]
@@ -8765,6 +8791,7 @@ Accuracy = 0
 TotalPP = 15
 Target = BothSides
 FunctionCode = StartWeakenFireMoves
+Flags = Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user soaks itself with water. The move weakens Fire-type moves while the user is in the battle.
 #-------------------------------
 [WITHDRAW]
@@ -8776,6 +8803,7 @@ Accuracy = 0
 TotalPP = 40
 Target = User
 FunctionCode = RaiseUserDefense1
+Flags = Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user withdraws its body into its hard shell, raising its Defense stat.
 ################### New Moves ###################
 [SLIMESHOT]
