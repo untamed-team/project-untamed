@@ -4706,7 +4706,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = FailsIfUserHasUnusedMove
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_0,Contest_Effect_HigherScoreTheLaterPerforms
 Description = This move can be used only after the user has used all the other moves it knows in the battle.
 #-------------------------------
 [SKULLBASH]
@@ -4718,7 +4718,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TwoTurnAttackChargeRaiseUserDefense1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_1,Contest_Effect_Plus3IfNoPokemonChoseJudge
 Description = The user tucks in its head to raise its Defense in the first turn, then rams the foe on the next turn.
 #-------------------------------
 [DOUBLEEDGE]
@@ -4730,7 +4730,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = RecoilThirdOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_0,Contest_Effect_Plus15IfAllChoseSameJudge
 Description = A reckless, life-risking tackle. It also damages the user by a fairly large amount, however.
 #-------------------------------
 [HEADCHARGE]
@@ -4754,7 +4754,7 @@ Accuracy = 75
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 Description = The target is attacked by a kick launched with muscle-packed power.
 #-------------------------------
 [MULTIATTACK]
@@ -4790,7 +4790,7 @@ Accuracy = 100
 TotalPP = 10
 Target = RandomNearFoe
 FunctionCode = MultiTurnAttackConfuseUserAtEnd
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_CanPerformMoveTwiceInARow
 Description = The user rampages and attacks for two to three turns. It then becomes confused, however.
 #-------------------------------
 [EGGBOMB]
@@ -4802,7 +4802,7 @@ Accuracy = 75
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = A large egg is hurled at the target with maximum force to inflict damage.
 #-------------------------------
 [JUDGMENT]
@@ -4814,7 +4814,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TypeDependsOnUserPlate
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_RandomOrder
 Description = The user releases countless shots of light. Its type varies with the kind of Plate the user is holding.
 #-------------------------------
 [HYPERVOICE]
@@ -4826,7 +4826,7 @@ Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user lets loose a horribly echoing shout with the power to inflict damage.
 #-------------------------------
 [REVELATIONDANCE]
@@ -4850,7 +4850,7 @@ Accuracy = 85
 TotalPP = 20
 Target = NearOther
 FunctionCode = ConfuseTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 20
 Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
 #-------------------------------
@@ -4863,7 +4863,7 @@ Accuracy = 85
 TotalPP = 20
 Target = NearOther
 FunctionCode = RecoilQuarterOfDamageDealt
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = A reckless, full-body charge attack for slamming into the foe. It also damages the user a little.
 #-------------------------------
 [UPROAR]
@@ -4875,7 +4875,7 @@ Accuracy = 100
 TotalPP = 10
 Target = RandomNearFoe
 FunctionCode = MultiTurnAttackPreventSleeping
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cute,Contest_Appeal_2,Contest_Effect_LowerVoltageOfAllJudges1
 Description = The user attacks in an uproar for three turns. Over that time, no one can fall asleep.
 #-------------------------------
 [BODYSLAM]
@@ -4887,7 +4887,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = ParalyzeTarget
-Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted
+Flags = Contact,CanProtect,CanMirrorMove,TramplesMinimize,GravityBoosted,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 30
 Description = The user drops onto the target with its full body weight. It may leave the target with paralysis.
 #-------------------------------
@@ -4901,7 +4901,7 @@ TotalPP = 5
 Target = NearOther
 Priority = 2
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user charges the target at blinding speed. This attack always goes before any other move.
 #-------------------------------
 [HYPERFANG]
@@ -4913,7 +4913,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove,Biting
+Flags = Contact,CanProtect,CanMirrorMove,Biting,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 10
 Description = The user bites hard on the target with its sharp front fangs. It may also make the target flinch.
 #-------------------------------
@@ -4926,7 +4926,7 @@ Accuracy = 85
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,Punching
+Flags = Contact,CanProtect,CanMirrorMove,Punching,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 Description = The target is slugged by a punch thrown with muscle-packed power.
 #-------------------------------
 [RAZORWIND]
@@ -4938,7 +4938,7 @@ Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = TwoTurnAttack
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
+Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade,Contest_Cool,Contest_Appeal_1,Contest_Effect_Plus3IfNoPokemonChoseJudge
 Description = A two-turn attack. Blades of wind hit the foe on the second turn. Critical hits land more easily.
 #-------------------------------
 [SLAM]
@@ -4950,7 +4950,7 @@ Accuracy = 75
 TotalPP = 20
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is slammed with a long tail, vines, etc., to inflict damage.
 #-------------------------------
 [STRENGTH]
@@ -4962,7 +4962,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,Punching
+Flags = Contact,CanProtect,CanMirrorMove,Punching,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is slugged with a punch thrown at maximum power.
 #-------------------------------
 [TRIATTACK]
@@ -4974,7 +4974,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = ParalyzeBurnOrFreezeTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 20
 Description = The user strikes with a simultaneous three-beam attack. May also inflict paralysis, burn or frostbite on the target.
 #-------------------------------
@@ -4987,7 +4987,7 @@ Accuracy = 95
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetDefense1
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 50
 Description = The user slashes the target with hard and sharp claws. It may also lower the target's Defense.
 #-------------------------------
