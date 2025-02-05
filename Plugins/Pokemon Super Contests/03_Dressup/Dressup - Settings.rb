@@ -16,7 +16,7 @@ DRESSUP_TIME = 60
 #of accessories like 9 black fluff, etc. Making the accessories small will reduce
 #clutter, and the item goes to full size when being dragged or when attached to
 #the pokemon
-DRESS_UP_ITEMS_SMALL = true
+DRESS_UP_ITEMS_SMALL = false
 
 #when creating a contestant image, this is set to true by default since the
 #script gives 9 of each accessory to work with
