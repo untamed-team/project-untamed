@@ -6511,6 +6511,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = HealUserHalfOfTotalHP
+Flags = Contest_Beauty,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user restores its own HP by up to half of its maximum HP. May also be used in the field to heal HP.
 #-------------------------------
 [SPLASH]
@@ -6521,6 +6522,7 @@ Accuracy = 0
 TotalPP = 40
 Target = User
 FunctionCode = DoesNothingUnusableInGravity
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_RaiseScoreIfVoltageLow
 Description = The user just flops and splashes around to no effect at all...
 #-------------------------------
 [SPOTLIGHT]
@@ -6543,6 +6545,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = UserAddStockpileRaiseDefSpDef1
+Flags = Contest_Tough,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = The user charges up power and raises both its Defense and Sp. Def. The move can be used three times.
 #-------------------------------
 [SUBSTITUTE]
@@ -6553,6 +6556,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = UserMakeSubstitute
+Flags = Contest_Smart,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
 Description = The user makes a copy of itself using some of its HP. The copy serves as the user's decoy.
 #-------------------------------
 [SUPERSONIC]
@@ -6563,7 +6567,7 @@ Accuracy = 55
 TotalPP = 20
 Target = NearOther
 FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user generates odd sound waves from its body. It may confuse the target.
 #-------------------------------
 [SWAGGER]
@@ -6574,7 +6578,7 @@ Accuracy = 85
 TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetAttack2ConfuseTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user enrages and confuses the target. However, it also sharply raises the target's Attack stat.
 #-------------------------------
 [SWALLOW]
@@ -6585,6 +6589,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = HealUserDependingOnUserStockpile
+Flags = Contest_Tough,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The power stored using the move Stockpile is absorbed by the user to heal its HP.
 #-------------------------------
 [SWEETSCENT]
@@ -6595,7 +6600,7 @@ Accuracy = 100
 TotalPP = 20
 Target = AllNearFoes
 FunctionCode = LowerTargetEvasion2
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = A sweet scent that lowers the foe's evasiveness. It also lures wild Pokémon if used in grass, etc.
 #-------------------------------
 [SWORDSDANCE]
@@ -6606,7 +6611,7 @@ Accuracy = 0
 TotalPP = 10
 Target = User
 FunctionCode = RaiseUserAttack2
-Flags = Dance
+Flags = Dance,Contest_Beauty,Contest_Appeal_0,Contest_Effect_DoubleScoreNextTurn
 Description = A frenetic dance to uplift the fighting spirit. It sharply raises the user's Attack stat.
 #-------------------------------
 [TAILWHIP]
@@ -6617,7 +6622,7 @@ Accuracy = 100
 TotalPP = 30
 Target = AllNearFoes
 FunctionCode = LowerTargetDefense1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user wags its tail cutely, making opposing Pokémon less wary and lowering their Defense stat.
 #-------------------------------
 [TEARFULLOOK]
@@ -6649,7 +6654,7 @@ Accuracy = 100
 TotalPP = 20
 Target = AllNearOthers
 FunctionCode = ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Dance
+Flags = CanProtect,CanMirrorMove,Dance,Contest_Cute,Contest_Appeal_2,Contest_Effect_RandomOrder
 Description = The user performs a wobbly dance that confuses the Pokémon around it.
 #-------------------------------
 [TICKLE]
@@ -6660,7 +6665,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = LowerTargetAtkDef1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user tickles the target into laughing, reducing its Attack and Defense stats.
 #-------------------------------
 [TRANSFORM]
@@ -6671,6 +6676,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = TransformUserIntoTarget
+Flags = Contest_Smart,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
 Description = The user transforms into a copy of the target right down to having the same move set.
 #-------------------------------
 [WHIRLWIND]
@@ -6682,7 +6688,7 @@ TotalPP = 20
 Target = NearOther
 Priority = -6
 FunctionCode = SwitchOutTargetStatusMove
-Flags = CanMirrorMove
+Flags = CanMirrorMove,Contest_Smart,Contest_Appeal_0,Contest_Effect_Plus15IfAllChoseSameJudge
 Description = The foe is blown away, to be replaced by another Pokémon in its party. In the wild, the battle ends.
 #-------------------------------
 [WISH]
@@ -6703,6 +6709,7 @@ Accuracy = 0
 TotalPP = 30
 Target = User
 FunctionCode = RaiseUserAtkSpAtk1
+Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = The user is roused, and its Attack and Sp. Atk stats increase.
 #-------------------------------
 [YAWN]
@@ -6713,7 +6720,7 @@ Accuracy = 0
 TotalPP = 10
 Target = NearOther
 FunctionCode = SleepTargetNextTurn
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user lets loose a huge yawn that lulls the target into falling asleep on the next turn.
 #-------------------------------
 [BELCH]
@@ -6737,7 +6744,7 @@ Accuracy = 80
 TotalPP = 5
 Target = NearOther
 FunctionCode = PoisonTarget
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 30
 Description = The user shoots filthy garbage at the target to attack. It may also poison the target.
 #-------------------------------
