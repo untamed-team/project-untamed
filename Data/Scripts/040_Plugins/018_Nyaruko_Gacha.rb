@@ -89,7 +89,7 @@ class LootBox
     rare       = RARE
     s_rare     = SUPER_RARE
     u_rare     = ULTRA_RARE
-    p_rare     = PENIS_RARE
+    pussy_rare = PENIS_RARE
     
     sprites={}
     sprites["bg"] = Sprite.new
@@ -132,16 +132,16 @@ class LootBox
             random_val = random_val * 0.8
             random_val = random_val.to_i
           end
-          random_val = 0 if i == 3 && gachaamt == 3
+          random_val = semiRandomRNG(0..7) if i == 3 && gachaamt == 3
 
           case random_val
             when 0..3 # 4
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
               pbWait(20)
-              pokeman = semiRandomRNG(p_rare.length, gachaamt)
+              pokeman = semiRandomRNG(pussy_rare.length, gachaamt)
               sprites["icon#{i}"].item = GameData::Item.get(:GOLDTICKET).id
-              pbMessage(_INTL("\\me[{1}]You obtained a \\c[1]{2}\\c[0]!\\wtnp[30]", "Item get", p_rare[pokeman].to_s))
-              $PokemonGlobal.ticketStorage.push(p_rare[pokeman])
+              pbMessage(_INTL("\\me[{1}]You obtained a \\c[1]{2}\\c[0]!\\wtnp[30]", "Item get", pussy_rare[pokeman].to_s))
+              $PokemonGlobal.ticketStorage.push(pussy_rare[pokeman])
             when 4..10 # 7
               sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
               pbWait(20)
@@ -174,7 +174,7 @@ class LootBox
               pbReceiveItem(common[item])
             end
             
-            if $game_variables[GACHA_USED] % 100 == 0
+            if $game_variables[GACHA_USED] % 50 == 0
               pbMessage(_INTL("Congratulations Highroller! You've earned a Gold Milage Ticket for your dedication!"))
               $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
             end
@@ -232,9 +232,9 @@ def ticketExchangeNPC
       if selectedCommander == "A #{str} for 1 #{ticketExchange[str]}"
         $game_switches[NOINITIALVALUES] = true
         pbMessage(_INTL("You exchanged 1 #{str} for..."))
+        $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
         pkmn = ticketReward(index)
         pbAddPokemon(pkmn)
-        $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
         $game_switches[NOINITIALVALUES] = oldv
       end
     end
@@ -243,7 +243,8 @@ end
 
 def ticketReward(id)
   t_array = TICKETMONS_ARRAY
-  pkmn = Pokemon.new(t_array[id][0], (pbBalancedLevel($player.party) - 10))
+  level = [(pbBalancedLevel($player.party) - 10), 1].max
+  pkmn = Pokemon.new(t_array[id][0], level)
   pkmn.ability_index = t_array[id][1] if !t_array[id][1].nil?
   pkmn.item = t_array[id][2] if !t_array[id][2].nil?
   pkmn.form = t_array[id][3] if !t_array[id][3].nil?

@@ -8354,7 +8354,7 @@ TotalPP = 5
 Target = User
 Priority = 4
 FunctionCode = ProtectUserFromDamagingMovesKingsShield
-Description = Protects itself from damage. It also harshly lowers the Attack of attackers that make contact.
+Description = Protects itself from damage. It also lowers the Atk of those who dare make contact.
 #-------------------------------
 [METALSOUND]
 Name = Metal Sound

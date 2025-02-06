@@ -1249,8 +1249,14 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HitsTargetInSkyGroundsTarget" # smack down
 		miniscore=100
-		if !userFasterThanTarget
-			if target.pbHasMove?(:BOUNCE) || target.pbHasMove?(:FLY) || target.pbHasMove?(:SKYDROP)
+		if userFasterThanTarget
+			if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+									   "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+									   "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+				miniscore*=1.5
+			end
+		else
+			if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
 				miniscore*=1.3
 			end
 		end
@@ -1266,8 +1272,8 @@ class Battle::AI
 			score*=2.0 if user.moves.any? { |m| m&.accuracy <= 70 }
 			@battle.pbParty(user.index).each_with_index do |pkmn, i|
 				next if !pkmn || pkmn.fainted?
-				pkmn.moves.each do |move|
-					gravMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move.id))
+				pkmn.moves.each do |moove|
+					gravMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(moove.id))
 					score*=0.5 if gravMov.unusableInGravity?
 					score*=1.2 if gravMov.boostedByGravity?
 					score*=1.3 if gravMov.accuracy <= 70

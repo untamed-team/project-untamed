@@ -855,12 +855,12 @@ def pbGiveDexReward
         pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1])
       end
     end
-    pbMessage(_INTL("When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
-    pbMessage(_INTL("Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
     $game_variables[DEXREWARDSVAR] += 1
   else
-    pbMessage(_INTL("When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-    pbMessage(_INTL("Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
     return false
   end
   return true
