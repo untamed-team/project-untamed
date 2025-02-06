@@ -115,7 +115,10 @@ class ContestContestant
     pbMessage(_INTL("Which Pokémon would you like to enter?"))
 
     #using pbChooseTradablePokemon because it already rules out eggs and shadow Pokemon
-    pbChooseTradablePokemon(ContestSettings::SELECTED_POKEMON_VARIABLE, ContestSettings::SELECTED_POKEMON_NAME_VARIABLE)
+    pbChooseRacingPokemon(ContestSettings::SELECTED_POKEMON_VARIABLE, ContestSettings::SELECTED_POKEMON_NAME_VARIABLE,
+			proc { |pkmn| pkmn.moves.length >= 2 }
+		)
+	
     if $game_variables[ContestSettings::SELECTED_POKEMON_VARIABLE] == -1
       #player did not choose a pokemon
       ContestReception.nevermind
