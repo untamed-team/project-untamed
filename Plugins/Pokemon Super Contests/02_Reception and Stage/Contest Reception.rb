@@ -110,14 +110,39 @@ end #class ContestTypeRank
 #start choose pokemon scene
 class ContestContestant
   def self.choosePokemonForContest
-    
+    rank = ContestTypeRank.getChosenRank
+	type = ContestTypeRank.getChosenType
+	
     #choose the contestant pokemon
     pbMessage(_INTL("Which Pokémon would you like to enter?"))
 
     #using pbChooseTradablePokemon because it already rules out eggs and shadow Pokemon
-    pbChooseRacingPokemon(ContestSettings::SELECTED_POKEMON_VARIABLE, ContestSettings::SELECTED_POKEMON_NAME_VARIABLE,
-			proc { |pkmn| pkmn.moves.length >= 2 }
-		)
+    pbChooseTradablePokemon(ContestSettings::SELECTED_POKEMON_VARIABLE, ContestSettings::SELECTED_POKEMON_NAME_VARIABLE,
+			proc { |pkmn|
+			next false if pkmn.moves.length <= 1
+			next false if rank == "Great" && type == "Coolness" && !pkmn.hasRibbon?(:SINNOHCOOL)
+			next false if rank == "Ultra" && type == "Coolness" && !pkmn.hasRibbon?(:SINNOHCOOLSUPER)
+			next false if rank == "Master" && type == "Coolness" && !pkmn.hasRibbon?(:SINNOHCOOLHYPER)
+			
+			next false if rank == "Great" && type == "Beauty" && !pkmn.hasRibbon?(:SINNOHBEAUTY)
+			next false if rank == "Ultra" && type == "Beauty" && !pkmn.hasRibbon?(:SINNOHBEAUTYSUPER)
+			next false if rank == "Master" && type == "Beauty" && !pkmn.hasRibbon?(:SINNOHBEAUTYHYPER)
+			
+			next false if rank == "Great" && type == "Cuteness" && !pkmn.hasRibbon?(:SINNOHCUTE)
+			next false if rank == "Ultra" && type == "Cuteness" && !pkmn.hasRibbon?(:SINNOHCUTESUPER)
+			next false if rank == "Master" && type == "Cuteness" && !pkmn.hasRibbon?(:SINNOHCUTEHYPER)
+			
+			next false if rank == "Great" && type == "Smartness" && !pkmn.hasRibbon?(:SINNOHSMART)
+			next false if rank == "Ultra" && type == "Smartness" && !pkmn.hasRibbon?(:SINNOHSMARTSUPER)
+			next false if rank == "Master" && type == "Smartness" && !pkmn.hasRibbon?(:SINNOHSMARTHYPER)
+			
+			next false if rank == "Great" && type == "Toughness" && !pkmn.hasRibbon?(:SINNOHTOUGH)
+			next false if rank == "Ultra" && type == "Toughness" && !pkmn.hasRibbon?(:SINNOHTOUGHSUPER)
+			next false if rank == "Master" && type == "Toughness" && !pkmn.hasRibbon?(:SINNOHTOUGHHYPER)
+			
+			next true
+			}
+	)
 	
     if $game_variables[ContestSettings::SELECTED_POKEMON_VARIABLE] == -1
       #player did not choose a pokemon
