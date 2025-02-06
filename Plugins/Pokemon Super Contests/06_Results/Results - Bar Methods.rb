@@ -1,5 +1,11 @@
 class Results
   def self.setPointsProportion
+  
+  print @chosenContestants[0]
+  print @chosenContestants[1]
+  print @chosenContestants[2]
+  print @chosenContestants[3]
+  
     #the max pixels you can go for each tally is 128
     #I need to make points proportional, where max is 128 "points"
     #the top scoring pokemon is given 33 points total, so split up into 3

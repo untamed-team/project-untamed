@@ -11,9 +11,9 @@ module ContestSettings
 #{Name: "Judge Name", Sprite: "Sprite to Use in Graphics/Characters"}
 
 JUDGES = [
-{Name: "Lupe", Sprite: "trainer_COOLTRAINER_M"},
-{Name: "Salvador", Sprite: "trainer_GENTLEMAN"},
-{Name: "Graciela", Sprite: "trainer_LADY"}
+{Name: "Lupe", Sprite: "trchar069"},
+{Name: "Salvador", Sprite: "trchar059"},
+{Name: "Graciela", Sprite: "trchar063"}
 ]
 
 #the amount to shift the judge sprites left/right/up/down
