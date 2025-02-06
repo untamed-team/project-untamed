@@ -104,7 +104,6 @@ class Acting
       
       #convert all chosenMoves into actual moves instead of just IDs
       temp = []
-	  print chosenMoves
       for i in 0...chosenMoves.length
         temp.push(Pokemon::Move.new(chosenMoves[i]))
       end

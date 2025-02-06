@@ -76,7 +76,6 @@ class Contest_Save_Data
     case arg
     when "Previous"
       winner = @lastContestWinner
-	  print @lastContestWinner
       if winner.nil?
         pbMessage(_INTL("Nobody has won a contest recently..."))
       else
