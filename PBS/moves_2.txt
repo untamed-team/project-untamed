@@ -8311,7 +8311,7 @@ Accuracy = 100
 TotalPP = 10
 Target = None
 FunctionCode = CounterDamagePlusHalf
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_DoubleScoreIfFinalTurn
 Description = The user retaliates with much greater power against the target that last inflicted damage on it.
 #-------------------------------
 [AUTOTOMIZE]
@@ -8342,6 +8342,7 @@ Accuracy = 0
 TotalPP = 15
 Target = User
 FunctionCode = RaiseUserDefense2
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user hardens its body's surface like iron, sharply raising its Defense stat.
 #-------------------------------
 [KINGSSHIELD]
@@ -8363,7 +8364,7 @@ Accuracy = 100
 TotalPP = 40
 Target = NearOther
 FunctionCode = LowerTargetSpDef2
-Flags = CanProtect,CanMirrorMove,Sound
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Smart,Contest_Appeal_2,Contest_Effect_LowerVoltageOfAllJudges1
 Description = A horrible sound like scraping metal harshly reduces the target's Sp. Def stat.
 #-------------------------------
 [SHIFTGEAR]
@@ -8385,7 +8386,7 @@ Accuracy = 100
 TotalPP = 5
 Target = NearOther
 FunctionCode = AttackAndSkipNextTurn
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The target is hit with a watery blast. The user must rest on the next turn, however.
 #-------------------------------
 [WATERSPOUT]
@@ -8397,7 +8398,7 @@ Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = PowerHigherWithUserHP
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus3IfPreviousPokemonHitMaxVoltage
 Description = The user spouts water to damage the foe. The lower the user's HP, the less powerful it becomes.
 #-------------------------------
 [HYDROPUMP]
@@ -8409,7 +8410,7 @@ Accuracy = 80
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = The target is blasted by a huge volume of water launched under great pressure.
 #-------------------------------
 [ORIGINPULSE]
@@ -8446,7 +8447,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate
+Flags = Contact,CanProtect,CanMirrorMove,HighCriticalHitRate,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 Description = The target is hammered with a large pincer. Critical hits land more easily.
 #-------------------------------
 [AQUATAIL]
@@ -8458,7 +8459,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_3,Contest_Effect_Basic
 Description = The user attacks by swinging its tail as if it were a vicious wave in a raging storm.
 #-------------------------------
 [MUDDYWATER]
@@ -8470,7 +8471,7 @@ Accuracy = 100
 TotalPP = 10
 Target = AllNearFoes
 FunctionCode = LowerTargetAccuracy1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfLast
 EffectChance = 30
 Description = The user attacks by shooting muddy water at the opposing team. It may also lower the target's accuracy.
 #-------------------------------
@@ -8496,7 +8497,7 @@ Accuracy = 100
 TotalPP = 15
 Target = AllNearOthers
 FunctionCode = DoublePowerIfTargetUnderwater
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = It swamps the area around the user with a giant wave. It can also be used for crossing water.
 #-------------------------------
 [FISHIOUSREND]
@@ -8533,7 +8534,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TwoTurnAttackInvulnerableUnderwater
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_1,Contest_Effect_Plus3IfNoPokemonChoseJudge
 Description = Diving on the first turn, the user rises and hits on the next turn. It can be used to dive in the ocean.
 #-------------------------------
 [SCALD]
@@ -8581,7 +8582,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = FlinchTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 EffectChance = 20
 Description = The user charges at the target and may make it flinch. It can also be used to climb a waterfall.
 #-------------------------------
@@ -8607,7 +8608,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = DoublePowerIfTargetHPLessThanHalf
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 Description = If the target's HP is down to about half, this attack will hit with double the power.
 #-------------------------------
 [BUBBLEBEAM]
@@ -8619,7 +8620,7 @@ Accuracy = 100
 TotalPP = 20
 Target = NearOther
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Next4
 EffectChance = 10
 Description = A spray of bubbles is forcefully ejected at the target. It may also lower its Speed stat.
 #-------------------------------
@@ -8632,7 +8633,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = SuperEffectiveAgainstSteel
-Flags = CanProtect,CanMirrorMove,Bomb
+Flags = CanProtect,CanMirrorMove,Bomb,Contest_Tough,Contest_Appeal_2,Contest_Effect_Plus2IfVoltageUp
 Description = The user attacks by spraying ink with enormous force. It's super-effective on Steel-types.
 #-------------------------------
 [FLIPTURN]
@@ -8656,7 +8657,7 @@ Accuracy = 100
 TotalPP = 15
 Target = Other
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,Pulse,HighCriticalHitRate
+Flags = CanProtect,CanMirrorMove,Pulse,HighCriticalHitRate,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
 Description = The user attacks the target with a pulsing blast of water. High critical-hit rate.
 #-------------------------------
 [AQUAJET]
@@ -8669,7 +8670,7 @@ TotalPP = 20
 Target = NearOther
 Priority = 1
 FunctionCode = None
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Next1
 Description = The user lunges at the target at a speed that makes it almost invisible. It is sure to strike first.
 #-------------------------------
 [BUBBLE]
@@ -8681,7 +8682,7 @@ Accuracy = 100
 TotalPP = 30
 Target = AllNearFoes
 FunctionCode = LowerTargetSpeed1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_Next4
 EffectChance = 10
 Description = A spray of countless bubbles is jetted at the opposing team. It may also lower the targets' Speed stats.
 #-------------------------------
@@ -8694,7 +8695,7 @@ Accuracy = 100
 TotalPP = 25
 Target = NearOther
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is blasted with a forceful shot of water.
 #-------------------------------
 [CLAMP]
@@ -8706,7 +8707,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = BindTarget
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_3,Contest_Effect_Basic
 Description = The target is clamped and squeezed by the user's very thick and sturdy shell for four to five turns.
 #-------------------------------
 [WHIRLPOOL]
@@ -8718,7 +8719,7 @@ Accuracy = 100
 TotalPP = 15
 Target = NearOther
 FunctionCode = BindTargetDoublePowerIfTargetUnderwater
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_0,Contest_Effect_HigherScoreTheLaterPerforms
 Description = Traps foes in a violent swirling whirlpool for four to five turns.
 #-------------------------------
 [SURGINGSTRIKES]
@@ -8754,6 +8755,7 @@ Accuracy = 0
 TotalPP = 20
 Target = User
 FunctionCode = StartHealUserEachTurn
+Flags = Contest_Beauty,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
 Description = Enveloping itself in a water ring, the user regains some HP every turn and is immune to burns.
 #-------------------------------
 [LIFEDEW]
@@ -8775,6 +8777,7 @@ Accuracy = 0
 TotalPP = 5
 Target = BothSides
 FunctionCode = StartRainWeather
+Flags = Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user summons a heavy rain that falls for five turns, powering up Water-type moves.
 #-------------------------------
 [SOAK]
@@ -8796,6 +8799,7 @@ Accuracy = 0
 TotalPP = 15
 Target = BothSides
 FunctionCode = StartWeakenFireMoves
+Flags = Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user soaks itself with water. The move weakens Fire-type moves while the user is in the battle.
 #-------------------------------
 [WITHDRAW]
@@ -8807,6 +8811,7 @@ Accuracy = 0
 TotalPP = 40
 Target = User
 FunctionCode = RaiseUserDefense1
+Flags = Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageUpSameTurn
 Description = The user withdraws its body into its hard shell, raising its Defense stat.
 ################### New Moves ###################
 #-------------------------------
