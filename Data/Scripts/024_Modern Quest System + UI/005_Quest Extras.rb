@@ -1,7 +1,6 @@
 def pbChoosePumpkaboo
   $game_variables[36] = 0
-  pkmn = pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.isSpecies?(:PUMPKABOO) })
-  print pkmn.name
+  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.isSpecies?(:PUMPKABOO) })
 end
 
 def pbPumpkabooQuestReward
