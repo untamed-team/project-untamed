@@ -36,7 +36,3 @@ I did my research, I promise.
 
 
 
-
-
-Important to have for demo 2:
-Make sure it's obvious (via trainer tips or something + in summary screen) that you can press SPECIAL to view contest move effects
