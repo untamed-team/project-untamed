@@ -849,6 +849,100 @@ Pokemon = BOWLLO,19
     Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
 #Area=Route3Cave_M
 #-------------------------------
+[RANCHERO_M,Bosco]
+LoseText = A shocking defeat!
+Pokemon = FLAAFFY,24
+    Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_M,Bosco,100]
+LoseText = A shocking defeat!
+Pokemon = FLAAFFY,24
+    Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
+#Area=Asterado_O
+#-------------------------------
+[FISHER_F,Zoey]
+LoseText = I feel like a fish out of water!
+Pokemon = FEEBAS,21
+    Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
+    Ability = OBLIVIOUS
+Pokemon = ATELANGLER,24
+    Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
+    Ability = BAITEDLINE
+#Area=Asterado_O
+#-------------------------------
+[FISHER_F,Zoey,100]
+LoseText = I feel like a fish out of water!
+Pokemon = FEEBAS,21
+    Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
+    Ability = OBLIVIOUS
+Pokemon = ATELANGLER,24
+    Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
+    Ability = BAITEDLINE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_F,Nicole]
+LoseText = Are these boots not made for winning?
+Pokemon = HERDIER,21
+    Moves = RETALIATE,BITE,BABYDOLLEYES,WORKUP
+    Ability = INTIMIDATE
+Pokemon = SKIDDO,22
+    Moves = MEGAKICK,RAZORLEAF,GROWTH,WORRYSEED
+Pokemon = M_MUDBRAY,23
+    Moves = DOUBLEKICK,MUDBOMB,FAIRYWIND,EXCITE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_F,Nicole,100]
+LoseText = Are these boots not made for winning?
+Pokemon = HERDIER,21
+    Moves = RETALIATE,BITE,BABYDOLLEYES,WORKUP
+    Ability = INTIMIDATE
+Pokemon = SKIDDO,22
+    Moves = MEGAKICK,RAZORLEAF,GROWTH,WORRYSEED
+Pokemon = M_MUDBRAY,23
+    Moves = DOUBLEKICK,MUDBOMB,FAIRYWIND,EXCITE
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian]
+LoseText = Nothing lustrous about that...
+Pokemon = MAGIKARP,18
+    Form = 2
+    Shiny = true
+    Moves = SPLASH,SMACKDOWN
+Pokemon = BANAGNAW,21
+    Shiny = true
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = true
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = true
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,100]
+LoseText = Nothing lustrous about that...
+Pokemon = MAGIKARP,18
+    Form = 2
+    Shiny = true
+    Moves = SPLASH,SMACKDOWN
+Pokemon = BANAGNAW,21
+    Shiny = true
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = true
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = true
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
 [BIKER,Jacob]
 LoseText = You stopped me in my tracks!
 Pokemon = M_EKANS,23
