@@ -131,7 +131,7 @@ module QuestModule
   }
   Quest5 = {
     :ID => "5",
-    :Name => "An Old Friend",
+    :Name => "A New Friend",
     :QuestGiver => "Farmer Gabriel",
     :QuestGiverSprite => "NPC Farmer",
     :QuestGiverDescSprite => "FARMER",
