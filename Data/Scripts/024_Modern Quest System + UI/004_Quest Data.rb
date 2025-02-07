@@ -91,12 +91,14 @@ module QuestModule
     :QuestGiver => "Professor Ceiba",
     :QuestGiverSprite => "trainer_PROFESSOR",
     :QuestGiverDescSprite => "CEIBA",
-    :Stage1 => "Take on the Gym in San Cerigold Town.",
-    :Stage2 => "Take on the Gym in Calojarro.",
+    :Stage1 => "Defeat the gym in San Cerigold Town.",
+    :Stage2 => "Defeat the gym in Calojarro.",
+    :Stage3 => "Defeat the gym in Ferrera Town.",
     :Location1 => "San Cerigold Town",
-    :Location1 => "Calojarro",
+    :Location2 => "Calojarro",
+    :Location3 => "Ferrera Town",
     :QuestDescription => "Defeat all gyms in the Mazah Region.",
-    :RewardString => "Main Story",
+    :RewardString => "Adventure!",
     }
   Quest3 = {
     :ID => "3",
@@ -111,7 +113,7 @@ module QuestModule
     :Location2 => "Hacienda Fields",
     :Location3 => "Route 1",
     :QuestDescription => "Find the stolen CropMaster plans.",
-    :RewardString => "Main Story",
+    :RewardString => "Adventure!",
   }
   Quest4 = {
     :ID => "4",
@@ -124,25 +126,19 @@ module QuestModule
     :Location1 => "Hacienda Fields",
     :Location2 => "Hacienda",
     :QuestDescription => "Our crops have been disappearing. Find out what happened to the food!",
-    :RewardString => "Aspear Berry",
+    :RewardString => "$200, Protein",
     :ReadyAtStart => true,
   }
   Quest5 = {
     :ID => "5",
-    :Name => "The Many Sizes of Pumpkaboo",
+    :Name => "An Old Friend",
     :QuestGiver => "Farmer Gabriel",
     :QuestGiverSprite => "NPC Farmer",
     :QuestGiverDescSprite => "FARMER",
-    :Stage1 => "Show Gabriel different Pumpkaboo.",
-    :Stage2 => "Make some space in your party or Pokémon storage.",
-    :Task1 => ["Show a Small Pumpkaboo",1,false],
-    :Task2 => ["Show an Average Pumpkaboo",1,false],
-    :Task3 => ["Show a Large Pumpkaboo",1,false],
-    :Task4 => ["Show a Super Size Pumpkaboo",1,false],
+    :Stage1 => "Gift a Pumpkaboo to Farmer Gabriel.",
     :Location1 => "Hacienda Fields",
-    :Location2 => "Hacienda Fields",
-    :QuestDescription => "Collect each of Pumpkaboo's forms and show them to Farmer Gabriel.",
-    :RewardString => "Phantump",
+    :QuestDescription => "Gift a Pumpkaboo to Farmer Gabriel.",
+    :RewardString => "$300",
     :ReadyAtStart => true,
   }
   Quest6 = {
