@@ -510,6 +510,26 @@ Name = Scientist
 Gender = Female
 BaseMoney = 48
 #-------------------------------
+[RANCHERO_F]
+Name = Ranchero
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[RANCHERO_M]
+Name = Ranchero
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[SHINYHUNTER_F]
+Name = Shiny Hunter
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[SHINYHUNTER_M]
+Name = Shiny Hunter
+Gender = Male
+BaseMoney = 60
+#-------------------------------
 [TRAINER_Reine]
 Name = Trainer
 Gender = Female
