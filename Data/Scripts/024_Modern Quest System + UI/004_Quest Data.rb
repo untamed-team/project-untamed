@@ -203,6 +203,17 @@ module QuestModule
     :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
     :Location3 => "Route 5",
   }
+  Quest10 = {
+    :ID => "10",
+    :Name => "Day of the Flowing Petals",
+    :QuestDescription => "Enjoy the festival in San Cerigold Town! The gym is sure to open during the festival.",
+    :QuestGiver => "",
+    :QuestGiverSprite => "",
+    :QuestGiverDescSprite => "",
+    :RewardString => "Some relaxation.",
+    :Stage1 => "Enjoy the festival in San Cerigold Town.",
+    :Location1 => "San Cerigold Town",
+  }
   
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
