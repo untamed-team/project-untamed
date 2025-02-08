@@ -150,6 +150,7 @@ module QuestModule
     :Stage1 => "Show Matteo a Cafécaracha",
     :Location1 => "San Cerigold Town",
     :QuestDescription => "Matteo wants to see a Cafécaracha since they're apparently packed full of energy.",
+    :RewardString => "Electric Seed",
     :ReadyAtStart => true,
   }
   Quest7 = {
@@ -158,11 +159,12 @@ module QuestModule
     :QuestGiver => "Jacobo",
     :QuestGiverSprite => "trainer_OLDMAN",
     :QuestGiverDescSprite => "GENTLEMAN",
-    :Stage1 => "Find the missing Techuppi.",
-    :Stage2 => "Return to Jacobo",
-    :Location1 => "???",
-    :Location2 => "San Cerigold Town",
-    :QuestDescription => "Jocobo is missing his Techuppi! Find it for him.",
+    :Stage1 => "Search for Scamp around water.",
+    :Stage2 => "Search for Scamp in the cemetery.",
+    :Stage4 => "Return to Jacobo",
+    :Location1 => "San Cerigold Town",
+    :Location2 => "San Cerigold Cemetery",
+    :QuestDescription => "Jocobo is missing his Techuppi, Scamp! He said Scamp likes to play in water.",
     :ReadyAtStart => true,
   }
   Quest8 = {
