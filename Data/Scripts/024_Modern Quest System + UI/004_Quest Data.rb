@@ -160,10 +160,13 @@ module QuestModule
     :QuestGiverSprite => "trainer_OLDMAN",
     :QuestGiverDescSprite => "GENTLEMAN",
     :Stage1 => "Search for Scamp around water.",
-    :Stage2 => "Search for Scamp in the cemetery.",
+    :Stage2 => "Search for Scamp in Route 2.",
+    :Stage3 => "Search for Scamp in Calojarro.",
     :Stage4 => "Return to Jacobo",
     :Location1 => "San Cerigold Town",
-    :Location2 => "San Cerigold Cemetery",
+    :Location2 => "Route 2",
+    :Location3 => "Calojarro",
+    :Location4 => "San Cerigold Town",
     :QuestDescription => "Jocobo is missing his Techuppi, Scamp! He said Scamp likes to play in water.",
     :ReadyAtStart => true,
   }
@@ -202,17 +205,6 @@ module QuestModule
     :Location2 => "Route 3",
     :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
     :Location3 => "Route 5",
-  }
-  Quest10 = {
-    :ID => "10",
-    :Name => "Day of the Flowing Petals",
-    :QuestDescription => "Enjoy the festival in San Cerigold Town! The gym is sure to open during the festival.",
-    :QuestGiver => "",
-    :QuestGiverSprite => "",
-    :QuestGiverDescSprite => "",
-    :RewardString => "Some relaxation.",
-    :Stage1 => "Enjoy the festival in San Cerigold Town.",
-    :Location1 => "San Cerigold Town",
   }
   
   # Here's the simplest example of a single-stage quest with everything specified
