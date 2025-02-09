@@ -207,7 +207,18 @@ module QuestModule
     :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
     :Location3 => "Route 5",
   }
-  
+  Quest10 = {
+    :ID => "10",
+    :Name => "Lost Prospector",
+    :QuestDescription => "A prospector has gone missing in Dorado Mine. Bring a Mingot with you to help with the search!",
+    :QuestGiver => "Minerva",
+    :QuestGiverSprite => "NPC_Proespector_M",
+    :QuestGiverDescSprite => "PROSPECTOR",
+    :Stage1 => "Find the prospector's missing brother.",
+    :Location1 => "Dorado Mine",
+    :RewardString => "Big Nugget",
+    :ReadyAtStart => true,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",
