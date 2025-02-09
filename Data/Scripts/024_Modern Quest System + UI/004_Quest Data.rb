@@ -168,7 +168,7 @@ module QuestModule
     :Location3 => "Calojarro",
     :Location4 => "San Cerigold Town",
     :QuestDescription => "Jacobo is missing his Techuppi, Scamp! He said Scamp likes to play in water.",
-    :RewardString => "$400",
+    :RewardString => "$800",
     :ReadyAtStart => true,
   }
   Quest8 = {
