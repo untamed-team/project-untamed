@@ -219,6 +219,18 @@ module QuestModule
     :RewardString => "Big Nugget",
     :ReadyAtStart => true,
   }
+  Quest11 = {
+    :ID => "11",
+    :Name => "Raspado Enthusiasts",
+    :QuestDescription => "Two tourists each need an icey treat to cool down on the beach.",
+    :QuestGiver => "Jimmy",
+    :QuestGiverSprite => "TOURIST 1",
+    :QuestGiverDescSprite => "TOURIST_M",
+    :Stage1 => "Find and bring two Melolado Cones to the tourists on the beach.",
+    :Location1 => "Calojarro",
+    :RewardString => "Your money back plus maybe a tip?",
+    :ReadyAtStart => true,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",

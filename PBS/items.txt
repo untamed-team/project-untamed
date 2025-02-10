@@ -6323,15 +6323,15 @@ Price = 0
 Flags = KeyItem
 Description = It's a special Pokéball that belongs to Professor Ceiba.
 #-------------------------------
-[CERIGOLDCONE]
-Name = Cerigoldcone
-NamePlural = Cerigoldcones
+[MELOLADOCONE]
+Name = Melolado Cone
+NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
