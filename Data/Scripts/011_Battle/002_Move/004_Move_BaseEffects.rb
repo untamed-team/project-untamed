@@ -338,7 +338,7 @@ class Battle::Move::TwoTurnMove < Battle::Move
           @battle.pbCommonAnimation("UseItem", user)
         end
         @battle.pbDisplay(_INTL("{1} became fully charged due to its Power Herb!", user.pbThis))
-        user.pbConsumeItem if $game_variables[MECHANICSVAR] < 3 # chaos mode #by low
+        user.pbConsumeItem if !$player.difficulty_mode?("chaos") # chaos mode #by low
       end
     end
     pbAttackingTurnMessage(user, targets) if @damagingTurn

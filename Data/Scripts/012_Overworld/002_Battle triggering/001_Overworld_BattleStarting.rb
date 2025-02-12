@@ -573,6 +573,7 @@ class TrainerBattle
           trainer = pbLoadTrainer(trainer_type, trainer_name, arg)
           pbMissingTrainer(trainer_type, trainer_name, arg) if !trainer
           trainer = pbLoadTrainer(trainer_type, trainer_name, arg) if !trainer   # Try again
+          trainer.rngversion = arg #by low
           raise _INTL("Trainer for data '{1}, {2}, {3}' is not defined.", trainer_type, trainer_name, arg) if !trainer
           EventHandlers.trigger(:on_trainer_load, trainer)
           trainer_array.push(trainer)

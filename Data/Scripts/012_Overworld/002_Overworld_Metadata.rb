@@ -107,7 +107,8 @@ class PokemonGlobalMetadata
     @pokerusTime          = nil
     # Save file
     @safesave             = false
-    @ddtspray             = false #by low
+    #by low
+    @ddtspray             = false
   end
 
   def encounter_version=(value)

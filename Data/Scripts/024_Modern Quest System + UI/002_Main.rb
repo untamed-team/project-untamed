@@ -1,3 +1,13 @@
+#Code I use a lot:
+#activateQuest(:Quest#)
+#completeQuest(:Quest#)
+#advanceQuestToStage(:Quest#, STAGENUMBER)
+#readyQuest(:Quest#)
+#quest_marker Quest# true (the true or false is whether this event should be the turnin location, have the question mark) 1 (the number at the end is what stage this event should have the question mark, optional)
+#turninQuest(:Quest#)
+#getActiveQuests.include?(:Quest#)
+#getCompletedQuests.include?(:Quest#)
+
 #===============================================================================
 # This class holds the information for an individual quest
 #===============================================================================
@@ -198,7 +208,7 @@ class Player_Quests
       end
     end
     @active_quests.push(Quest.new(quest,color,story))
-    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New objective discovered!</c2>\nCheck your objective list <icon=menuObjectives> in the menu for more details!</ac>",QUEST_JINGLE))
+    pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>New objective discovered!</c2>\nCheck the Objectives app <icon=menuObjectives> from your Blukberry Phone for more details!</ac>",QUEST_JINGLE))
     #update quest indicators
     QuestIndicator.initialize
   end
@@ -677,8 +687,14 @@ def taskCompleteJingle
   pbMessage(_INTL("\\se[{1}]<ac><c2=#{colorQuest("red")}>Task completed!</c2>\nYour objective list has been updated!</ac>",QUEST_JINGLE))
 end
 
+def isQuestActive(quest)
+  arr = getActiveQuests
+  return true if arr.include?(quest) && !isQuestComplete(quest) #then it's active but not completed, so ret true
+  return false if !arr.include?(quest) #then it's not active, so ret false
+end
+
 def isQuestComplete(quest)
-  arr = getCompletedQuests(quest)
+  arr = getCompletedQuests
   return true if arr.include?(quest) #then it's completed, so ret true
   return false if !arr.include?(quest) #then it's not completed, so ret false
 end

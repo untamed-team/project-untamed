@@ -349,14 +349,16 @@ class PokemonStorageScene
       end
       self.update
       t = @grabber.holding_anything? && !@grabber.carrying
-      if Input.trigger?(Input::JUMPUP) && !t
+      #if Input.trigger?(Input::JUMPUP) && !t
+	  if Input.press?(Input::CTRL) && Input.trigger?(Input::LEFT) && !t #edited by Gardenette
         pbPlayCursorSE
         nextbox = (@storage.currentBox + @storage.maxBoxes - 1) % @storage.maxBoxes
         pbSwitchBoxToLeft(nextbox)
         @storage.currentBox = nextbox
         pbUpdateOverlay(selection)
         pbSetMosaic(selection)
-      elsif Input.trigger?(Input::JUMPDOWN) && !t
+      #elsif Input.trigger?(Input::JUMPDOWN) && !t
+	  elsif Input.press?(Input::CTRL) && Input.trigger?(Input::RIGHT) && !t #edited by Gardenette
         pbPlayCursorSE
         nextbox = (@storage.currentBox + 1) % @storage.maxBoxes
         pbSwitchBoxToRight(nextbox)

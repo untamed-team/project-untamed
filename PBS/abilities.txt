@@ -154,12 +154,12 @@ Description = Contact with the Pokémon may poison the attacker.
 #-------------------------------
 [INNERFOCUS]
 Name = Inner Focus
-Description = The Pokémon is protected from flinching.
+Description = Prevents the Pokémon from flinching.
 #-------------------------------
 [MAGMAARMOR]
 Name = Magma Armor
 Flags = FasterEggHatching
-Description = Prevents the Pokémon from becoming frozen.
+Description = Prevents the Pokémon from getting frostbite.
 #-------------------------------
 [WATERVEIL]
 Name = Water Veil
@@ -308,7 +308,7 @@ Description = Eliminates the effects of weather.
 #-------------------------------
 [TANGLEDFEET]
 Name = Tangled Feet
-Description = Raises evasion if the Pokémon is confused.
+Description = Raises Speed if the Pokémon is confused.
 #-------------------------------
 [MOTORDRIVE]
 Name = Motor Drive
@@ -412,7 +412,7 @@ Description = Prevents problems with status in sunny weather.
 #-------------------------------
 [KLUTZ]
 Name = Klutz
-Description = The Pokémon can't use any held items.
+Description = This Pokémon doesn't understand held items.
 #-------------------------------
 [MOLDBREAKER]
 Name = Mold Breaker
@@ -568,7 +568,7 @@ Description = Sharply raises one stat, resets the previous boost.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
-Description = Protects the Pokémon from damage from weather.
+Description = Negates powder moves, weather, and hazard damage. 
 #-------------------------------
 [POISONTOUCH]
 Name = Poison Touch
@@ -772,7 +772,7 @@ Description = Boosts Defense when hit by a direct attack.
 #-------------------------------
 [WIMPOUT]
 Name = Wimp Out
-Description = Cowardly switches out if its HP becomes half or less.
+Description = Switches out if its HP becomes half or less.
 #-------------------------------
 [EMERGENCYEXIT]
 Name = Emergency Exit
@@ -1147,10 +1147,6 @@ Description = User moves are Super Effective on Dragon-types.
 Name = Premonition
 Description = STAB moves hit again weaker. Boosts Future Sight.
 #-------------------------------
-[ANGELICBEAUTY]
-Name = Angelic Beauty
-Description = Indirect contact with it may confuse the attacker.
-#-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
 Description = Boosts Fire-type moves in a hailstorm.
@@ -1167,25 +1163,35 @@ Description = Gradually regains HP in sunshine.
 Name = Presage
 Description = Changes the weather for a turn before attacking.
 #-------------------------------
-[HONORBOUND]
-Name = Honor-bound
-Description = User cannot switch-out when below half health.
-#-------------------------------
-[OVERWRITE]
-Name = Overwrite
-Description = The user's first move determines the user's type.
-#-------------------------------
-[SPOOPERAURA]
-Name = Spooper Aura
-Description = Powers up each Pokémon's Ghost-type moves.
+[VOLTAICSPIRIT]
+Name = Voltaic Spirit
+Description = Powers up Electric-type moves.
 #-------------------------------
 [ARTILLERIST]
 Name = Artillerist
 Description = Powers up ball and bomb moves.
 #-------------------------------
-[VOLTAICSPIRIT]
-Name = Voltaic Spirit
-Description = Powers up Electric-type moves.
+[OVERWRITE]
+Name = Overwrite
+Description = The user's first move determines the user's type.
+#-------------------------------
+[DUBIOUS]
+Name = Dubious
+Description = The user transforms into a random non-fainted ally.
+#-------------------------------
+# 
+#-------------------------------
+[ANGELICBEAUTY]
+Name = Angelic Beauty
+Description = Indirect contact with it may confuse the attacker.
+#-------------------------------
+[HONORBOUND]
+Name = Honor-bound
+Description = User cannot switch-out when below half health.
+#-------------------------------
+[SPOOPERAURA]
+Name = Spooper Aura
+Description = Powers up each Pokémon's Ghost-type moves.
 #-------------------------------
 [SHOWTIME]
 Name = Showtime
@@ -1193,5 +1199,17 @@ Description = Changes for the finale. Targeted during finale.
 #-------------------------------
 [DUSTSENTINEL]
 Name = Dust Sentinel
-Description = Creates Sandstorm, buffs itself during sand.
+Description = Creates Sandstorm, user has the effects of Sand Force.
+#-------------------------------
+[ECHOCHAMBER]
+Name = Echo Chamber
+Description = Heals w/ sound; next sound status move: +1 prio.
+#-------------------------------
+[ACCUMULATOR]
+Name = Accumulator
+Description = Accumulates Stockpiles if the user has no held items.
+#-------------------------------
+[ENTOINSTINCTS]
+Name = Ento Instincts
+Description = Powers up ally Pokémon's Bug-type moves.
 #-------------------------------

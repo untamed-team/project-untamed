@@ -279,55 +279,58 @@ module Battle::AbilityEffects
 
   #=============================================================================
 
-  def self.triggerDamageCalcFromUser(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromUser(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
-      DamageCalcFromUser.trigger(i, user, target, move, mults, base_damage, type)
+      DamageCalcFromUser.trigger(i, user, target, move, mults, base_damage, type, aiweather)
     end	
   end
 
-  def self.triggerDamageCalcFromAlly(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromAlly(ability, user, target, move, mults, base_damage, type, aiweather = nil)
     user.allAllies.each do |b|
       if b.hasActiveAbility?(ability.id) && !$aam_DamageCalcFromAlly.include?(b)
         $aam_DamageCalcFromAlly.push(b)
         for i in b.abilityMutationList
           $aamName=GameData::Ability.get(i).name
-          DamageCalcFromAlly.trigger(i, user, target, move, mults, base_damage, type)
+          DamageCalcFromAlly.trigger(i, user, target, move, mults, base_damage, type, aiweather)
         end	
       end  
     end 
   end
 
-  def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
-      DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type)
+      DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
     end	
   end
 
-  def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
     for i in user.abilityMutationList
+      next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
     end	
   end
 
-  def self.triggerDamageCalcFromTargetAlly(ability, user, target, move, mults, base_damage, type)
+  def self.triggerDamageCalcFromTargetAlly(ability, user, target, move, mults, base_damage, type, aiweather = nil)
     target.allAllies.each do |b|
       if b.hasActiveAbility?(ability.id) && !$aam_DamageCalcFromTargetAlly.include?(b)
         $aam_DamageCalcFromTargetAlly.push(b)
         for i in b.abilityMutationList
           $aamName=GameData::Ability.get(i).name
-          DamageCalcFromTargetAlly.trigger(i, user, target, move, mults, base_damage, type)
+          DamageCalcFromTargetAlly.trigger(i, user, target, move, mults, base_damage, type, aiweather)
         end	
       end  
     end 
   end
 
-  def self.triggerCriticalCalcFromUser(ability, user, target, crit_stage)
+  def self.triggerCriticalCalcFromUser(ability, user, target, move, crit_stage)
     for i in user.abilityMutationList
       $aamName=GameData::Ability.get(i).name
-      crit_stage =  trigger(CriticalCalcFromUser, i, user, target, crit_stage, ret: crit_stage)
+      crit_stage =  trigger(CriticalCalcFromUser, i, user, target, move, crit_stage, ret: crit_stage)
     end	
 	  return crit_stage
   end
@@ -575,8 +578,8 @@ Battle::AbilityEffects::OnBeingHitSpirit.add(:WANDERINGSPIRIT,
 Battle::AbilityEffects::ChangeOnBattlerFainting.add(:POWEROFALCHEMY,
   proc { |ability, battler, fainted, battle|
     next if battler.opposes?(fainted)
-    next if fainted.ungainableAbility? ||
-       [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
+    next if (fainted.ungainableAbility? && fainted.ability_id != :NEUTRALIZINGGAS) || 
+            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
     battle.pbShowAbilitySplash(battler, true)
     index=0
     for i in 0..battler.abilityMutationList.length
@@ -590,13 +593,23 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.add(:POWEROFALCHEMY,
       end  
     end    
     if battler.hasAbilityMutation?
-      battler.abilityMutationList[index] = fainted.ability.id
+      if fainted.hasAbilityMutation?
+        battler.abilityMutationList.delete(ability)
+        fainted_abilist = fainted.abilityMutationList - battler.abilityMutationList
+        battler.abilityMutationList.concat(fainted_abilist).uniq!
+      else
+        battler.abilityMutationList[index] = fainted.ability.id
+      end
     else
       battler.ability = fainted.ability
     end    
     $aamName=fainted.abilityName
-    battle.pbReplaceAbilitySplash(battler)
-    battle.pbDisplay(_INTL("{1}'s {2} was taken over!", fainted.pbThis, fainted.abilityName))
+    if fainted.hasAbilityMutation? && battler.hasAbilityMutation?
+      battle.pbDisplay(_INTL("{1}'s abilities were taken over!",fainted.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} was taken over!",fainted.pbThis,fainted.abilityName))
+      battle.pbReplaceAbilitySplash(battler)
+    end
     battle.pbHideAbilitySplash(battler)
     #print battler.abilityMutationList
   }
@@ -606,7 +619,8 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 
 Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
   proc { |ability,battler,fainted,battle|
-    next if fainted.ungainableAbility? || [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
+    next if (fainted.ungainableAbility? && fainted.ability_id != :NEUTRALIZINGGAS) || 
+            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD, :PROTEAN, :COLORCHANGE].include?(fainted.ability_id)
     battle.pbShowAbilitySplash(battler, true)
     index=0
     for i in 0..battler.abilityMutationList.length
@@ -618,14 +632,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
     if battler.hasAbilityMutation?
       if fainted.hasAbilityMutation?
         battler.abilityMutationList.delete(:SEANCE) # get rid of seance
-        fainted_abilist = []
-        for i in fainted.abilityMutationList
-          fainted_abilist.push(i)
-        end
-        fainted_abilist |= [] # remove dupes
-        for i in fainted_abilist
-          battler.abilityMutationList.push(i)
-        end
+        fainted_abilist = fainted.abilityMutationList - battler.abilityMutationList
+        battler.abilityMutationList.concat(fainted_abilist).uniq!
       else
         battler.abilityMutationList[index] = fainted.ability.id
       end
@@ -633,7 +641,7 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
       battler.ability = fainted.ability
     end     
     $aamName=fainted.abilityName
-    if fainted.hasAbilityMutation?
+    if fainted.hasAbilityMutation? && battler.hasAbilityMutation?
       battle.pbDisplay(_INTL("{1}'s abilities were taken!",fainted.pbThis))
     else
       battle.pbDisplay(_INTL("{1}'s {2} was taken!",fainted.pbThis,fainted.abilityName))
@@ -652,8 +660,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
 Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
   proc { |ability, battler|
     next if battler.status != :POISON
-	next if battler.abilityMutationList.include?(:TOXICBOOST)
-	next if battler.abilityMutationList.include?(:POISONHEAL)
+    next if battler.abilityMutationList.include?(:TOXICBOOST)
+    next if battler.abilityMutationList.include?(:POISONHEAL)
     battler.battle.pbShowAbilitySplash(battler)
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH

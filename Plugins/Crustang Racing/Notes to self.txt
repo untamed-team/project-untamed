@@ -1,0 +1,4 @@
+Notes to self:
+Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
+
+Add animation to overloading a racer

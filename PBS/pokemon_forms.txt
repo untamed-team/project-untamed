@@ -7,6 +7,7 @@ FormName = Mega Noctavispa
 MegaStone = NOCTAVISPITE
 BaseStats = 65,134,78,107,107,69
 Abilities = INTIMIDATE
+HiddenAbilities = INTIMIDATE
 Height = 0.9
 Weight = 18.6
 #-------------------------------
@@ -17,6 +18,7 @@ Type1 = POISON
 Type2 = ELECTRIC
 BaseStats = 97,63,71,111,145,113
 Abilities = CORROSION
+HiddenAbilities = CORROSION
 Height = 0.3
 Weight = 3.5
 #-------------------------------
@@ -27,6 +29,7 @@ Type1 = NORMAL
 Type2 = WATER
 BaseStats = 95,133,106,109,58,85
 Abilities = BAITEDLINE
+HiddenAbilities = BAITEDLINE
 Height = 1.9
 Weight = 46.7
 Color = Yellow
@@ -37,6 +40,7 @@ FormName = Mega Chixulob
 MegaStone = CHIXULITE
 BaseStats = 75,107,78,138,156,71
 Abilities = DRAGONSMAW
+HiddenAbilities = DRAGONSMAW
 Height = 72.0
 Weight = 3580.0
 #-------------------------------
@@ -47,18 +51,20 @@ Type1 = PSYCHIC
 Type2 = FIRE
 BaseStats = 75,87,71,98,123,126
 Abilities = PREMONITION
-Height = 1.5
-Weight = 16.7
+HiddenAbilities = PREMONITION
+Height = 1.9
+Weight = 19.7
 #-------------------------------
 [FLYGON,1]
 FormName = Mega Flygon
 MegaStone = FLYGONITE
-Type1 = DRAGON
-Type2 = BUG
+Type1 = BUG
+Type2 = DRAGON
 BaseStats = 100,130,80,120,130,80
 Abilities = COMPOUNDEYES
-Height = 2.0
-Weight = 81.6
+HiddenAbilities = COMPOUNDEYES
+Height = 2.6
+Weight = 117.9
 Shape = MultiWinged
 #-------------------------------
 [MILOTIC,1]
@@ -68,6 +74,7 @@ Type1 = WATER
 Type2 = FAIRY
 BaseStats = 95,60,99,91,130,165
 Abilities = DAZZLING
+HiddenAbilities = DAZZLING
 Height = 7.6
 Weight = 193.4
 #-------------------------------
@@ -76,6 +83,7 @@ FormName = Mega Suchobile
 MegaStone = SUCHOBITE
 BaseStats = 110,140,95,40,140,90
 Abilities = STRONGJAW
+HiddenAbilities = STRONGJAW
 Height = 2.7
 Weight = 345.6
 #------------------------------- 
@@ -84,6 +92,7 @@ FormName = Mega Skarmory
 MegaStone = SKARMORITE
 BaseStats = 65,135,145,95,40,85
 Abilities = BATTLEARMOR
+HiddenAbilities = BATTLEARMOR
 Height = 1.9
 Weight = 60.3
 Shape = MultiWinged
@@ -91,130 +100,253 @@ Shape = MultiWinged
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
 MegaStone = BEHEEYEMITE
-Type1 = PSYCHIC
-Type2 = ELECTRIC
+Types = PSYCHIC,ELECTRIC
 BaseStats = 75,85,95,60,145,125
 Abilities = MAGNETPULL
+HiddenAbilities = MAGNETPULL
+Height = 2.5
+Weight = 44.8
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
 MegaStone = GOLURKITE
-Type1 = GROUND
-Type2 = FLYING
+Types = GROUND,FLYING
 BaseStats = 89,134,105,105,70,80
 Abilities = AERILATE
+HiddenAbilities = AERILATE
+Height = 1.7
+Weight = 300.0
+Shape = HeadArms
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
 MegaStone = HAWLUCHITE
-BaseStats = 78,120,85,143,94,83
+BaseStats = 78,120,85,140,94,83
 Abilities = VOLTAICSPIRIT
+HiddenAbilities = VOLTAICSPIRIT
+Height = 0.9
+Weight = 38.3
+Color = Red
 #------------------------------- 
 [CACTURNE,1]
 FormName = Mega Cacturne
 MegaStone = CACTURNITE
 BaseStats = 70,135,80,75,135,80
 Abilities = SANDRUSH
+HiddenAbilities = SANDRUSH
+Height = 1.6
+Weight = 92.1
 #------------------------------- 
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
-Type1 = ICE
-Type2 = FIRE
-BaseStats = 70,75,100,145,100,95
+Types = ICE,FIRE
+BaseStats = 70,65,100,95,145,100
 Abilities = ICESCALES
+HiddenAbilities = ICESCALES
+Height = 1.4
+Weight = 51.0
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
 MegaStone = CHIMECHITE
-Type1 = PSYCHIC
-Type2 = STEEL
-BaseStats = 75,60,100,80,120,130
+Types = PSYCHIC,STEEL
+BaseStats = 75,50,100,80,120,130
 Abilities = LEVITATE
+HiddenAbilities = LEVITATE
+Height = 0.9
+Weight = 3.4
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
 MegaStone = PORYGONZITE
 BaseStats = 85,118,85,102,150,95
 Abilities = OVERWRITE
+HiddenAbilities = OVERWRITE
+Height = 1.1
+Weight = 38.7
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
 MegaStone = MAGCARGOITE
-Type1 = FIRE
-Type2 = STEEL
+Types = FIRE,STEEL
 BaseStats = 60,50,160,30,130,100
 Abilities = REGENERATOR
+HiddenAbilities = REGENERATOR
+Height = 1.1
+Weight = 120.5
 #------------------------------- 
 [SPECTERZAL,1]
 FormName = Mega Specterzal
 MegaStone = SPECTERZITE
-BaseStats = 120,145,86,96,115,95
+BaseStats = 120,145,86,96,105,95
 Abilities = TOUGHCLAWS
+HiddenAbilities = TOUGHCLAWS
+Height = 5.6
+Weight = 237.2
 #------------------------------- 
 [TREVENANT,1]
 FormName = Mega Trevenant
 MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
-Abilities = TRIAGE
+Abilities = GRASSYSURGE
+HiddenAbilities = GRASSYSURGE
+Height = 3.0
+Weight = 89.5
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
 MegaStone = M_ROSERADITE
 BaseStats = 70,70,95,110,130,145
 Abilities = SEANCE
+HiddenAbilities = SEANCE
+Height = 1.0
+Weight = 14.8
+Color = Black
 #------------------------------- 
 [LUPACABRA,1]
 FormName = Mega Lupacabra
 MegaStone = LUPACABRITE
-Type1 = DARK
-Type2 = FIGHTING
+Types = DARK,FIGHTING
 BaseStats = 80,135,135,80,55,105
 Abilities = MOXIE
+HiddenAbilities = MOXIE
+Height = 2.1
+Weight = 140.0
 #------------------------------- 
 [ZOLUPINE,1]
 FormName = Mega Zolupine
 MegaStone = ZOLUPINEITE
-Type1 = GHOST
-Type2 = WATER
-BaseStats = 60,80,70,125,135,125
+Types = GHOST,WATER
+BaseStats = 60,95,70,125,135,125
 Abilities = NOGUARD
+HiddenAbilities = NOGUARD
+Height = 1.6
+Weight = 115.6
 #------------------------------- 
 [ROADRAPTOR,1]
 FormName = Mega Roadraptor
 MegaStone = ROADRAPTORITE
-Type1 = ELECTRIC
-Type2 = FLYING
 BaseStats = 70,134,62,150,85,89
 Abilities = GALEWINGS
+HiddenAbilities = GALEWINGS
+Height = 1.0
+Weight = 27.0
 #------------------------------- 
 [FRIZZARD,1]
 FormName = Mega Frizzard
 MegaStone = FRIZZARDITE
 BaseStats = 80,75,99,85,145,121
 Abilities = THERMOCOOL
+HiddenAbilities = THERMOCOOL
+Height = 1.7
+Weight = 87.9
 #------------------------------- 
 [ZARCOIL,1]
 FormName = Mega Zarcoil
 MegaStone = ZARCOILITE
 BaseStats = 80,145,99,121,85,75
 Abilities = THERMOHEAT
+HiddenAbilities = THERMOHEAT
+Height = 1.3
+Weight = 78.2
 #------------------------------- #
 [LAGUNA,1]
 FormName = Mega Laguna
 MegaStone = LAGUNITE
-Type1 = ICE
-Type2 = FAIRY
-BaseStats = 50,55,80,95,110,130
+Types = ICE,FAIRY
+BaseStats = 50,60,80,95,110,130
 Abilities = FURCOAT
+HiddenAbilities = FURCOAT
+Height = 0.8
+Weight = 14.0
+#-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 75,75,135,20,75,125
+Abilities = MAGICBOUNCE
+HiddenAbilities = MAGICBOUNCE
+Weight = 161.0
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
 #-------------------------------
 [LEDIAN,1]
 FormName = Mega Ledian
 MegaStone = LEDINITE
-Type1 = BUG
-Type2 = FIGHTING
+Types = BUG,FIGHTING
 BaseStats = 55,130,90,105,15,120
 Abilities = IRONFIST
+HiddenAbilities = IRONFIST
+Height = 1.4
+Weight = 42.5
+#-------------------------------
+[AMPHAROS,1]
+FormName = Mega Ampharos
+MegaStone = AMPHAROSITE
+Types = ELECTRIC,DRAGON
+BaseStats = 90,95,105,45,165,110
+BaseExp = 305
+Abilities = MOLDBREAKER
+HiddenAbilities = MOLDBREAKER
+Pokedex = Massive amounts of energy intensely stimulated Ampharos's cells, apparently awakening its long-sleeping dragon's blood.
+Generation = 6
+#-------------------------------
+[CAMERUPT,1]
+FormName = Mega Camerupt
+MegaStone = CAMERUPTITE
+BaseStats = 70,120,100,20,145,105
+BaseExp = 196
+Abilities = SHEERFORCE
+HiddenAbilities = SHEERFORCE
+Height = 2.5
+Weight = 320.5
+Generation = 6
+#-------------------------------
+[ABOMASNOW,1]
+FormName = Mega Abomasnow
+MegaStone = ABOMASITE
+BaseStats = 90,132,105,30,132,105
+BaseExp = 208
+HiddenAbilities = SNOWWARNING
+Height = 2.7
+Weight = 185.0
+Generation = 6
+#-------------------------------
+[MAWILE,1]
+FormName = Mega Mawile
+MegaStone = MAWILITE
+BaseStats = 50,105,125,50,55,95
+BaseExp = 168
+Abilities = HUGEPOWER
+HiddenAbilities = HUGEPOWER
+Height = 1.0
+Weight = 23.5
+Pokedex = Its two sets of jaws thrash about violently as if they each had a will of their own. One gnash from them can turn a boulder to dust.
+Generation = 6
+#-------------------------------
+[BANETTE,1]
+FormName = Mega Banette
+MegaStone = BANETTITE
+BaseStats = 64,165,75,75,93,83
+BaseExp = 194
+Abilities = PRANKSTER
+HiddenAbilities = PRANKSTER
+Height = 1.2
+Weight = 13.0
+Pokedex = Extraordinary energy amplifies its cursing power to such an extent that it can't help but curse its own Trainer.
+Generation = 6
+#-------------------------------
+[GLALIE,1]
+FormName = Mega Glalie
+MegaStone = GLALITITE
+BaseStats = 85,125,85,105,125,85
+BaseExp = 203
+Abilities = REFRIGERATE
+HiddenAbilities = REFRIGERATE
+Height = 2.1
+Weight = 350.2
+Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
+Generation = 6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
@@ -329,6 +461,8 @@ Type1 = STEEL
 Type2 = ELECTRIC
 BaseStats = 75,125,150,88,70,70
 Abilities = MOTORDRIVE
+Height = 0.6
+Weight = 25.8
 #-------------------------------
 [BEAKRAFT,3]
 FormName = Mega Beakraft ♀
@@ -338,6 +472,8 @@ Type1 = STEEL
 Type2 = ELECTRIC
 BaseStats = 75,150,88,125,70,70
 Abilities = MOTORDRIVE
+Height = 0.6
+Weight = 25.8
 #-------------------------------
 #-------------------------------
 [CROACROZEN,1]
@@ -346,6 +482,7 @@ Type1 = POISON
 Type2 = ICE
 BaseStats = 95,45,145,25,80,115
 Weight = 10.4
+Color = Blue
 #------------------------------- # 520 bst
 [STRELAVISON,1]
 FormName = Swarm Form
@@ -379,7 +516,7 @@ Pokedex = This is the form Castform takes when covered in snow. Its body becomes
 FormName = Sandy Form
 Types = GROUND
 Color = Brown
-Pokedex = catsform so cute i want to pat it
+Pokedex = This is the form Castform takes when covered in sand. Its body becomes a rough dust-like material, which is excellent replacement for steel wool.
 #-------------------------------
 [MAGIKARP,2]
 FormName = Mazian Magikarp
@@ -525,4 +662,3 @@ FormName = Blue Flower
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
-#-------------------------------

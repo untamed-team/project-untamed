@@ -207,6 +207,42 @@ SpecialBattleIntroAnimations.register("vs_trainer_animation", 60,   # Priority 6
   }
 )
 
+
+
+
+#===============================================================================
+# Play the HGSS "VSTrainer" battle transition animation for any single trainer
+# battle where the following graphics exist in the Graphics/Transitions/
+# folder for the opponent:
+#   * "hgss_vs_TRAINERTYPE.png" and "hgss_vsBar_TRAINERTYPE.png"
+# This animation makes use of $game_temp.transition_animation_data, and expects
+# it to be an array like so: [:TRAINERTYPE, "display name"]
+#===============================================================================
+SpecialBattleIntroAnimations.register("vs_trainer_animation", 60,   # Priority 60
+  proc { |battle_type, foe, location|   # Condition
+    next false if battle_type != 1 && !$game_switches[116]  # Single trainer battle but allowed for Mateo and Mercedes battle (M&M switch is enabled)
+    tr_type = foe[0].trainer_type
+    next pbResolveBitmap("Graphics/Transitions/hgss_vs_#{tr_type}") &&
+         pbResolveBitmap("Graphics/Transitions/hgss_vsBar_#{tr_type}")
+  },
+  proc { |viewport, battle_type, foe, location|   # Animation
+    #if Mateo & Mercedes
+    if $game_switches[116]
+      $game_temp.transition_animation_data = [foe[0].trainer_type, "Mateo & Mercedes"]
+      pbBattleAnimationCore("VSTrainer", viewport, location, 1)
+      $game_temp.transition_animation_data = nil
+    else
+      #not Mateo & Mercedes
+      $game_temp.transition_animation_data = [foe[0].trainer_type, foe[0].name]
+      pbBattleAnimationCore("VSTrainer", viewport, location, 1)
+      $game_temp.transition_animation_data = nil
+    end
+  }
+)
+
+
+
+
 #===============================================================================
 # Play the "VSEliteFour" battle transition animation for any single trainer
 # battle where the following graphics exist in the Graphics/Transitions/

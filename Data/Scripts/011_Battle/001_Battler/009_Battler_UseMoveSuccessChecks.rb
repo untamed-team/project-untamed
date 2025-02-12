@@ -25,7 +25,8 @@ class Battle::Battler
       return false
     end
     # Gravity
-    if @battle.field.effects[PBEffects::Gravity] > 0 && move.unusableInGravity?
+    # float stone changes #by low
+    if @battle.field.effects[PBEffects::Gravity] > 0 && move.unusableInGravity? && !hasActiveItem?(:FLOATSTONE)
       if showMessages
         msg = _INTL("{1} can't use {2} because of gravity!", pbThis, move.name)
         (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
@@ -83,9 +84,9 @@ class Battle::Battler
       end
       return false
     end
-    # Assault Vest (prevents choosing status moves but doesn't prevent
-    # executing them)
-    if hasActiveItem?(:ASSAULTVEST) && move.statusMove? && move.id != :MEFIRST && commandPhase
+    # Assault Vest (prevents choosing status moves but doesn't prevent executing them)
+    # melee vest #by low
+    if hasActiveItem?([:ASSAULTVEST, :MELEEVEST]) && move.statusMove? && move.id != :MEFIRST && commandPhase
       if showMessages
         msg = _INTL("The effects of the {1} prevent status moves from being used!", itemName)
         (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
@@ -224,7 +225,7 @@ class Battle::Battler
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!", pbThis))
         @battle.pbHideAbilitySplash(self)
-				if !move.healingMove? # Truant buff #by low
+				unless move.usableWhenTruanting? # Truant buff #by low
 					@lastMoveFailed = true
 					return false
 				end
@@ -258,7 +259,7 @@ class Battle::Battler
     end
     # Paralysis
     if @status == :PARALYSIS 
-			if $game_variables[MECHANICSVAR] >= 3 #by low
+			if $player.difficulty_mode?("chaos") #by low
 				#nothing
 			else
 				if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 #by low

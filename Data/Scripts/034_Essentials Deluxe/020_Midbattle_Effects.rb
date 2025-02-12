@@ -34,7 +34,8 @@ $DELUXE_BATTLE_EFFECTS = {
     PBEffects::SmackDown,
     PBEffects::TarShot,
     PBEffects::Torment,
-    PBEffects::WaterSport
+    PBEffects::WaterSport,
+    PBEffects::HoldingHand
   ],
   :battler_default_zero => [
     PBEffects::Charge,
@@ -241,8 +242,10 @@ class Battle::Battler
           end
         end
       when PBEffects::Gravity
+        # float stone changes #by low
         if @battle.field.effects[PBEffects::Gravity] > 0
           @battle.allBattlers.each do |b|
+            next if b.hasActiveItem?(:FLOATSTONE)
             showMessage = false
             if b.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
                                   "TwoTurnAttackInvulnerableInSkyParalyzeTarget",

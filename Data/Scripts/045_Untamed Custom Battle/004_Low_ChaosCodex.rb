@@ -52,7 +52,7 @@ MenuHandlers.add(:battle_guide, :status_page_sleep, {
   "name"        => _INTL(" - Sleep"),
   "parent"      => :status_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]When <b>asleep</b>, a Pokémon will be unable to do anything for 2 turns. No more than 1 Pokémon per team can be put asleep at a time. \\nStatus moves are the most common way of causing sleep, however, most of them are inaccurate."))
+		pbMessage(_INTL("\\l[5]When <b>asleep</b>, a Pokémon will be unable to do anything for 2 turns. No more than 1 Pokémon on the AI's side can be put asleep at a time. \\nStatus moves are the most common way of causing sleep, however, most of them are inaccurate."))
 	}
 })
 
@@ -132,7 +132,7 @@ MenuHandlers.add(:battle_guide, :wtz_page_w_winds, {
   "name"        => _INTL(" - Strong Winds"),
   "parent"      => :wtz_page,
 	"effect"      => proc {
-		pbMessage(_INTL("During Strong Winds, Flying-type Pokémon have no Flying related weaknesses."))
+		pbMessage(_INTL("\\l[5]During Strong Winds, Flying-type Pokémon have no Flying related weaknesses."))
 	}
 })
 
@@ -180,7 +180,7 @@ MenuHandlers.add(:battle_guide, :wtz_page_z_whatisthis, {
   "name"        => _INTL("What are Type Zones?"),
   "parent"      => :wtz_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[3]Type Zones affect the entire battlefield and boost the damage of moves of their corresponding type by 1.5x. Only one type zone can be active at once."))
+		pbMessage(_INTL("\\l[3]Type Zones affect the entire battlefield and boost the damage of moves of their corresponding type by 1.25x. Only one type zone can be active at once."))
 	}
 })
 
@@ -212,7 +212,7 @@ MenuHandlers.add(:battle_guide, :moves_page_flinch, {
   "name"        => _INTL("Flinch"),
   "parent"      => :moves_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]When <b>flinched</b>, a Pokémon will be unable to do anything for the rest of the turn. Pokémon cannot be flinched on the first turn of the battle, unless the move used was <b>Fake Out</b>. Flinched Pokémon are immune to flinches for the next turn."))
+		pbMessage(_INTL("\\l[5]When <b>flinched</b>, a Pokémon will be unable to do anything for the rest of the turn. \\nPokémon cannot be flinched on the first turn of the battle, unless the move used was <b>Fake Out</b>. \\nFlinched Pokémon are immune to flinches for the next turn. \\nPokémon with Inner Focus allies are immune to flinches."))
 	}
 })
 
@@ -228,7 +228,7 @@ MenuHandlers.add(:battle_guide, :moves_page_misc, {
   "name"        => _INTL("Specific Moves"),
   "parent"      => :moves_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> does damage equal to 1/10th HP, has a maximum damage of 100 HP and heals only 50% of the damage dealt."))
+		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> has a maximum damage of 100 HP and heals only 75% of the damage dealt."))
 	}
 })
 
@@ -237,7 +237,7 @@ MenuHandlers.add(:battle_guide, :moves_page_misc, {
 MenuHandlers.add(:battle_guide, :trainers_page, {
   "name"        => _INTL("Trainer Changes... (Spoiler Warning!)"),
   "parent"      => :main,
-  "description" => _INTL("What should I expect from trainers?")
+  "description" => _INTL("What should I expect from late-game trainers?")
 })
 
 MenuHandlers.add(:battle_guide, :trainers_page_gimmick, {
@@ -252,7 +252,7 @@ MenuHandlers.add(:battle_guide, :trainers_page_megas, {
   "name"        => _INTL("M.E.M."),
   "parent"      => :trainers_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]Specific Pokémon may have a mutation called <b>Mega Evolution Mutation</b>. \\nThis mutation allows for the affected Pokémon to Mega Evolve (if possible) regardless of held item or if a previous Pokémon has already Mega Evolved on their side."))
+		pbMessage(_INTL("\\l[5]Specific Pokémon may have a mutation called <b>Mega Evolution Mutation</b>. \\nThis mutation allows for the affected Pokémon to Mega Evolve (if possible) regardless of held item or if a previous Pokémon has already Mega Evolved on their side. \\nA gray mega symbol signifies that a Pokémon has this mutation."))
 	}
 })
 
@@ -260,7 +260,7 @@ MenuHandlers.add(:battle_guide, :trainers_page_ability, {
   "name"        => _INTL("A.A.M"),
   "parent"      => :trainers_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]Specific Pokémon may have a mutation called <b>All Abilities Mutation</b>. \\nThis mutation allows for the affected Pokémon to all their possible abilities active at once. \\nAs an example, with this mutation a Excadrill can have <b>Sand Rush</b>, <b>Sand Force</b> and <b>Mold Breaker</b> all active at the same time."))
+		pbMessage(_INTL("\\l[5]Specific Pokémon may have a mutation called <b>All Abilities Mutation</b>. \\nThis mutation allows for the affected Pokémon to all their possible abilities active at once. \\nAs an example, with this mutation a Excadrill can have <b>Sand Rush</b>, <b>Sand Force</b> and <b>Mold Breaker</b> all active at the same time. \\nA golden DNA symbol signifies that a Pokémon has this mutation."))
 	}
 })
 

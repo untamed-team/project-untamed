@@ -9,7 +9,7 @@ but please keep them in this order for readability's sake
     :QuestGiverSprite => "NPC Dad"                            # The name of the file in Graphics/Characters to appear next to the quest name. The sprite used for the quest giver
     :QuestGiverDescSprite => "COOLTRAINER_M"                  # The name of the file in Graphics/Trainers to appear next to the quest description. The sprite used for the quest giver in the quest description
     :StageY => "Do something"                                 # The DESCRIPTION for each stage of the quest (you can have as many stages as 
-    :TurninConditionY => proc { $player.has_species?(:PIKACHU) }, #The CONDITION under which you want the quest to be automatically detected as available for TURNIN at stage Y. Copy and paste ":TurninCondition1 => proc { $player.has_species?(:PIKACHU) }," and only change what is inside the curly braces { }
+    :TurninConditionY => proc { $player.has_species?(:PIKACHU) }, #The CONDITION under which you want the quest to be automatically detected as available for TURNIN at stage Y. Copy and paste ":TurninCondition1 => proc { $player.has_species?(:PIKACHU) }", and only change what is inside the curly braces { }
     .                                                         # you'd like), must fit in 1 line of text
     :TaskZ => ["Do a smaller something", Y, false]            # A sub-objective of Stage Y (follows the data's numeration), THE LAST VALUE 
     .                                                         # MUST ALWAYS BE FALSE (it will be set to true only in the player's active
@@ -87,14 +87,18 @@ module QuestModule
   }
   Quest2 = {
     :ID => "2",
-    :Name => "To San Cerigold",
+    :Name => "Victory Road",
     :QuestGiver => "Professor Ceiba",
     :QuestGiverSprite => "trainer_PROFESSOR",
     :QuestGiverDescSprite => "CEIBA",
-    :Stage1 => "Take on the Gym in San Cerigold Town.",
+    :Stage1 => "Defeat the gym in San Cerigold Town.",
+    :Stage2 => "Defeat the gym in Calojarro.",
+    :Stage3 => "Defeat the gym in Ferrera Town.",
     :Location1 => "San Cerigold Town",
-    :QuestDescription => "Defeat the gym in San Cerigold Town as part of the gym challenge.",
-    :RewardString => "Main Story",
+    :Location2 => "Calojarro",
+    :Location3 => "Ferrera Town",
+    :QuestDescription => "Defeat all gyms in the Mazah Region.",
+    :RewardString => "Adventure!",
     }
   Quest3 = {
     :ID => "3",
@@ -109,7 +113,7 @@ module QuestModule
     :Location2 => "Hacienda Fields",
     :Location3 => "Route 1",
     :QuestDescription => "Find the stolen CropMaster plans.",
-    :RewardString => "Main Story",
+    :RewardString => "Adventure!",
   }
   Quest4 = {
     :ID => "4",
@@ -122,25 +126,19 @@ module QuestModule
     :Location1 => "Hacienda Fields",
     :Location2 => "Hacienda",
     :QuestDescription => "Our crops have been disappearing. Find out what happened to the food!",
-    :RewardString => "Aspear Berry",
+    :RewardString => "$200, Protein",
     :ReadyAtStart => true,
   }
   Quest5 = {
     :ID => "5",
-    :Name => "The Many Sizes of Pumpkaboo",
+    :Name => "A New Friend",
     :QuestGiver => "Farmer Gabriel",
     :QuestGiverSprite => "NPC Farmer",
     :QuestGiverDescSprite => "FARMER",
-    :Stage1 => "Show Gabriel different Pumpkaboo.",
-    :Stage2 => "Make some space in your party or Pokémon storage.",
-    :Task1 => ["Show a Small Pumpkaboo",1,false],
-    :Task2 => ["Show an Average Pumpkaboo",1,false],
-    :Task3 => ["Show a Large Pumpkaboo",1,false],
-    :Task4 => ["Show a Super Size Pumpkaboo",1,false],
+    :Stage1 => "Gift a Pumpkaboo to Farmer Gabriel.",
     :Location1 => "Hacienda Fields",
-    :Location2 => "Hacienda Fields",
-    :QuestDescription => "Collect each of Pumpkaboo's forms and show them to Farmer Gabriel.",
-    :RewardString => "Phantump",
+    :QuestDescription => "Gift a Pumpkaboo to Farmer Gabriel.",
+    :RewardString => "$300",
     :ReadyAtStart => true,
   }
   Quest6 = {
@@ -152,6 +150,7 @@ module QuestModule
     :Stage1 => "Show Matteo a Cafécaracha",
     :Location1 => "San Cerigold Town",
     :QuestDescription => "Matteo wants to see a Cafécaracha since they're apparently packed full of energy.",
+    :RewardString => "Electric Seed",
     :ReadyAtStart => true,
   }
   Quest7 = {
@@ -160,11 +159,16 @@ module QuestModule
     :QuestGiver => "Jacobo",
     :QuestGiverSprite => "trainer_OLDMAN",
     :QuestGiverDescSprite => "GENTLEMAN",
-    :Stage1 => "Find the missing Techuppi.",
-    :Stage2 => "Return to Jacobo",
-    :Location1 => "???",
-    :Location2 => "San Cerigold Town",
-    :QuestDescription => "Jocobo is missing his Techuppi! Find it for him.",
+    :Stage1 => "Search for Scamp around water.",
+    :Stage2 => "Search for Scamp in Route 2.",
+    :Stage3 => "Search for Scamp in Calojarro.",
+    :Stage4 => "Return to Jacobo",
+    :Location1 => "San Cerigold Town",
+    :Location2 => "Route 2",
+    :Location3 => "Calojarro",
+    :Location4 => "San Cerigold Town",
+    :QuestDescription => "Jacobo is missing his Techuppi, Scamp! He said Scamp likes to play in water.",
+    :RewardString => "Timer Ball, $800",
     :ReadyAtStart => true,
   }
   Quest8 = {
@@ -173,6 +177,7 @@ module QuestModule
     :QuestGiver => "Alex",
     :QuestGiverSprite => "trchar019",
     :QuestGiverDescSprite => "PICNICKER",
+    :RewardString => "Camping Gear",
     :Stage1 => "Camp with your Pokémon.",
     :Task1 => ["Pet your Pokémon",1,false],
     :Task2 => ["Feed your Pokémon",1,false],
@@ -183,7 +188,66 @@ module QuestModule
     :QuestDescription => "Alex has loaned you her camping gear so you can experience camping with your Pokémon.",
     :ReadyAtStart => true,
   }
-  
+  Quest9 = {
+    :ID => "9",
+    :Name => "Ol' Rusty",
+    :QuestDescription => "Beat the gold panners to earn the greatest things they've found!",
+    :ReadyAtStart => true,
+    :QuestGiver => "Leo",
+    :QuestGiverSprite => "NPC_Gold_Panner_M",
+    :QuestGiverDescSprite => "GOLDPANNER",
+    :RewardString => "Something shiny!",
+    :Stage1 => "Beat the three gold panners.",
+    :Task1 => ["Defeat Gold Panner Leo",1,false],
+    :Task2 => ["Defeat Gold Panner Martina",1,false],
+    :Task3 => ["Defeat Gold Panner Amalia",1,false],
+    :Location1 => "Route 3",
+    :Stage2 => "Talk to Gold Panner Leo.",
+    :Location2 => "Route 3",
+    :Stage3 => "Take the bike pieces to a woman at the Shady Shuckle.",
+    :Location3 => "Route 5",
+  }
+  Quest10 = {
+    :ID => "10",
+    :Name => "Lost Prospector",
+    :QuestDescription => "A prospector has gone missing in Dorado Mine. Bring a Mingot with you to help with the search!",
+    :QuestGiver => "Minerva",
+    :QuestGiverSprite => "NPC_Proespector_M",
+    :QuestGiverDescSprite => "PROSPECTOR",
+    :Stage1 => "Find the prospector's missing brother.",
+    :Location1 => "Dorado Mine",
+    :RewardString => "Big Nugget",
+    :ReadyAtStart => true,
+  }
+  Quest11 = {
+    :ID => "11",
+    :Name => "Raspado Enthusiasts",
+    :QuestDescription => "Two tourists each need an icey treat to cool down on the beach.",
+    :QuestGiver => "Jimmy",
+    :QuestGiverSprite => "TOURIST 1",
+    :QuestGiverDescSprite => "TOURIST_M",
+    :Stage1 => "Find and bring two Melolado Cones to the tourists on the beach.",
+    :TurninCondition1 => proc { $bag.has?(:MELOLADOCONE,2) },
+    :Location1 => "Calojarro",
+    :RewardString => "Your money back plus maybe a tip?",
+    :ReadyAtStart => true,
+  }
+  Quest12 = {
+    :ID => "12",
+    :Name => "Honest Work",
+    :QuestDescription => "Grandpa needs someone to help with work around the ranch.",
+    :QuestGiver => "Eustace",
+    :QuestGiverSprite => "NPC 18",
+    :QuestGiverDescSprite => "GENTLEMAN",
+    :Stage1 => "Feed Oran berries to the Gogoat in the barn.",
+    :Location1 => "Asterado Ranch",
+    :Stage2 => "Clear rocks and trees from the field, and take care of the bug Pokémon.",
+    :Location2 => "Asterado Ranch",
+    :Stage3 => "Stop the K'noggin in the barn!",
+    :Location3 => "Asterado Ranch",
+    :RewardString => "Something from the ranch!",
+    :ReadyAtStart => false,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",

@@ -21,16 +21,16 @@ class Battle::Scene::PokemonDataBox < Sprite
 
   def draw_mutation_icon
     filename = nil
-    specialX = (@battler.opposes?(0)) ? 198 : -18
+    specialX = (@battler.opposes?(0)) ? 214 : -18
     ypos = 30
     if @battler.hasAbilityMutation? && Settings::AAM_MUTATION_ICON
       if Settings::GLOBAL_MUTATION
         if Settings::GLOBAL_MUTATION_ICON
-          filename = "Graphics/Pictures/icon_aam"
+          filename = "Graphics/Pictures/Battle/icon_aam"
           pbDrawImagePositions(self.bitmap, [[filename, @spriteBaseX + specialX, ypos]]) if filename
         end
       else    
-        filename = "Graphics/Pictures/icon_aam"
+        filename = "Graphics/Pictures/Battle/icon_aam"
         pbDrawImagePositions(self.bitmap, [[filename, @spriteBaseX + specialX, ypos]]) if filename
       end
     end  
@@ -51,7 +51,7 @@ end
 
 def pbDisplayAbilityMutation(pokemon, overlay, xpos, ypos, vertical = false)
   imagepos = []
-  path = "Graphics/Pictures/icon_aam"
+  path = "Graphics/Pictures/Battle/icon_aam"
   if pokemon.hasAbilityMutation? && Settings::AAM_MUTATION_ICON
     if Settings::GLOBAL_MUTATION
       if Settings::GLOBAL_MUTATION_ICON       

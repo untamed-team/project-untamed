@@ -292,10 +292,10 @@ end
 #===============================================================================
 # Increases the user's evasion by 1 stage. (Double Team)
 #===============================================================================
-class Battle::Move::RaiseUserEvasion1 < Battle::Move::StatUpMove
+class Battle::Move::RaiseUserEvasion1 < Battle::Move::MultiStatUpMove
   def initialize(battle, move)
     super
-    @statUp = [:EVASION, 1]
+    @statUp = [:ACCURACY, 1, :SPEED, 1]
   end
 end
 
@@ -312,10 +312,10 @@ end
 #===============================================================================
 # Increases the user's evasion by 2 stages. Minimizes the user. (Minimize)
 #===============================================================================
-class Battle::Move::RaiseUserEvasion2MinimizeUser < Battle::Move::StatUpMove
+class Battle::Move::RaiseUserEvasion2MinimizeUser < Battle::Move::MultiStatUpMove
   def initialize(battle, move)
     super
-    @statUp = [:EVASION, 2]
+    @statUp = [:ACCURACY, 2, :SPEED, 1]
   end
 
   def pbEffectGeneral(user)
@@ -778,6 +778,7 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -791,13 +792,15 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
   def pbEffectAgainstTarget(user, target)
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
       target.pbRaiseStatStage(:ATTACK, 2, user)
+      target.SetupMovesUsed.push(@id)
     end
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
 end
 
 #===============================================================================
-# Increases the target's Special Attack by 1 stage. Confuses the target. (Flatter)
+# Increases the target's Special Attack by 1 or 2 stage(s). 
+# Confuses the target. (Flatter)
 #===============================================================================
 class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   def canMagicCoat?; return true; end
@@ -807,6 +810,7 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
+      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -818,8 +822,10 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
+    raise_num = ($player.difficulty_mode?("chaos")) ? 2 : 1 #by low
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
+      target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user)
+      target.SetupMovesUsed.push(@id)
     end
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
@@ -1215,6 +1221,8 @@ class Battle::Move::LowerTargetEvasion1RemoveSideEffects < Battle::Move::TargetS
                     targetOpposingSide.effects[PBEffects::ToxicSpikes] > 0 ||
                     targetOpposingSide.effects[PBEffects::StickyWeb] > 0)
     return false if Settings::MECHANICS_GENERATION >= 8 && @battle.field.terrain != :None
+    return false if targetSide.effects[PBEffects::Tailwind] > 0 || 
+                    targetOpposingSide.effects[PBEffects::Tailwind] > 0
     return super
   end
 
@@ -1282,6 +1290,11 @@ class Battle::Move::LowerTargetEvasion1RemoveSideEffects < Battle::Move::TargetS
         @battle.pbDisplay(_INTL("The weirdness disappeared from the battlefield."))
       end
       @battle.field.terrain = :None
+    end
+    if target.pbOwnSide.effects[PBEffects::Tailwind] > 0 || target.pbOpposingSide.effects[PBEffects::Tailwind] > 0
+      target.pbOwnSide.effects[PBEffects::Tailwind] = 0
+      target.pbOpposingSide.effects[PBEffects::Tailwind] = 0
+      @battle.pbDisplay(_INTL("Tailwinds petered out."))
     end
   end
 end

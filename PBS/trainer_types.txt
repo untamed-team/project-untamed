@@ -30,8 +30,11 @@ VictoryBGM = Victory - Emilio
 #-------------------------------
 [RIVAL2]
 Name = Rival
-Gender = Male
-BaseMoney = 36
+Gender = Female
+BaseMoney = 16
+IntroBGM = Encounter - Emilio
+BattleBGM = Battle - Emilio
+VictoryBGM = Victory - Emilio
 #-------------------------------
 [AROMALADY]
 Name = Aroma Lady
@@ -53,9 +56,29 @@ Name = Bird Keeper
 Gender = Male
 BaseMoney = 32
 #-------------------------------
+[BIRDKEEPER_M]
+Name = Bird Keeper
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[BIRDKEEPER_F]
+Name = Bird Keeper
+Gender = Female
+BaseMoney = 32
+#-------------------------------
 [BUGCATCHER]
 Name = Bug Catcher
 Gender = Male
+BaseMoney = 16
+#-------------------------------
+[BUGCATCHER_M]
+Name = Bug Catcher
+Gender = Male
+BaseMoney = 16
+#-------------------------------
+[BUGCATCHER_F]
+Name = Bug Catcher
+Gender = Female
 BaseMoney = 16
 #-------------------------------
 [BURGLAR]
@@ -81,6 +104,16 @@ BaseMoney = 48
 [FISHERMAN]
 Name = Fisherman
 Gender = Male
+BaseMoney = 32
+#-------------------------------
+[FISHER_M]
+Name = Fisher
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[FISHER_F]
+Name = Fisher
+Gender = Female
 BaseMoney = 32
 #-------------------------------
 [GAMBLER]
@@ -171,6 +204,16 @@ BaseMoney = 24
 [CAMPER]
 Name = Camper
 Gender = Male
+BaseMoney = 16
+#-------------------------------
+[CAMPER_M]
+Name = Camper
+Gender = Male
+BaseMoney = 16
+#-------------------------------
+[CAMPER_F]
+Name = Camper
+Gender = Female
 BaseMoney = 16
 #-------------------------------
 [PICNICKER]
@@ -387,7 +430,130 @@ Name = Psychic
 Gender = Female
 BaseMoney = 32
 #-------------------------------
-[TOURIST]
+[TOURIST_M]
 Name = Tourist
-Gender = Unknown
+Gender = Male
 BaseMoney = 32
+#-------------------------------
+[TOURIST_F]
+Name = Tourist
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[HIKER_M]
+Name = Hiker
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[HIKER_F]
+Name = Hiker
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[WAREHOUSEWORKER_M]
+Name = Warehouse Worker
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[WAREHOUSEWORKER_F]
+Name = Warehouse Worker
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[GOLDPANNER_F]
+Name = Goldpanner
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[GOLDPANNER_M]
+Name = Goldpanner
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[RUINMANIAC_M]
+Name = Ruin Maniac
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[RUINMANIAC_F]
+Name = Ruin Maniac
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[SCRAPPER_M]
+Name = Scrapper
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[SCRAPPER_F]
+Name = Scrapper
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[ACETRAINER_M]
+Name = Ace Trainer
+Gender = Male
+BaseMoney = 60
+#-------------------------------
+[ACETRAINER_F]
+Name = Ace Trainer
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[SCIENTIST_M]
+Name = Scientist
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[SCIENTIST_F]
+Name = Scientist
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[RANCHERO_F]
+Name = Ranchero
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[RANCHERO_M]
+Name = Ranchero
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[SHINYHUNTER_F]
+Name = Shiny Hunter
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[SHINYHUNTER_M]
+Name = Shiny Hunter
+Gender = Male
+BaseMoney = 60
+#-------------------------------
+[TRAINER_Reine]
+Name = Trainer
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[LEADER_Thalia]
+Name = Gym Leader
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[LEADER_Mateo]
+Name = Gym Leader
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[LEADER_Mercedes]
+Name = Gym Leader
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader

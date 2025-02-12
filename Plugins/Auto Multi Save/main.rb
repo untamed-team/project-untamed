@@ -216,30 +216,33 @@ class PokemonLoad_Scene
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
-    addBackgroundOrColoredPlane(@sprites, "background", "loadbg", Color.new(248, 248, 248), @viewport)
+    addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
     y = 32
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,
         frame_count, stats, map_id, @viewport
       )
-      @sprites["panel#{i}"].x = 48
+      x = (show_continue && i == 0) ? 126 : 352
+      @sprites["panel#{i}"].x = x
       @sprites["panel#{i}"].y = y
       @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 224 : 48
+      y += (show_continue && i == 0) ? 54 : 54
     end
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].viewport = @viewport
     @sprites["cmdwindow"].visible  = false
     
     #added by Gardenette
+    arrowsX = 40
+    arrowsY = 56
     @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
-    @sprites["leftarrow"].x = 40
-    @sprites["leftarrow"].y = Graphics.height/2 - 40 - @sprites["leftarrow"].bitmap.height/16
+    @sprites["leftarrow"].x = arrowsX
+    @sprites["leftarrow"].y = arrowsY - @sprites["leftarrow"].bitmap.height/16
     @sprites["leftarrow"].visible = false
     @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
-    @sprites["rightarrow"].x = Graphics.width - 40 - @sprites["rightarrow"].bitmap.width
-    @sprites["rightarrow"].y = Graphics.height/2 - 40 - @sprites["rightarrow"].bitmap.height/16 
+    @sprites["rightarrow"].x = arrowsX + 10 + @sprites["rightarrow"].bitmap.width*6
+    @sprites["rightarrow"].y = arrowsY - @sprites["rightarrow"].bitmap.height/16 
     @sprites["rightarrow"].visible = false
     getNumberSavesTaken
     if @savesTaken > 1
@@ -502,20 +505,12 @@ class PokemonSave_Scene
            "#{dex}" +
            "#{datetime_str}"
 	
-	
-	
-	
-	
-	
-	
     @sprites["locwindow"] = Window_AdvancedTextPokemon.new(loctext)
     @sprites["locwindow"].viewport = @viewport
     @sprites["locwindow"].x = 0
     @sprites["locwindow"].y = 0
     @sprites["locwindow"].width = 228 if @sprites["locwindow"].width < 228
     @sprites["locwindow"].visible = true
-	
-	
   end
 
   def pbEndScreen
@@ -545,7 +540,7 @@ class PokemonSaveScreen
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
 		pbTipCardsGrouped(:MULTISAVE)
-    end
+	end
     
     ret = false
     loop do
@@ -599,6 +594,10 @@ class PokemonSaveScreen
         pbSEPlay('GUI save choice')
         ret = doSave(slot)
       end
+	else
+		pbPlayCancelSE
+        canceled = true
+		return canceled
     end
     pbPlayCloseMenuSE if !ret
     return ret

@@ -8,52 +8,9 @@ class Battle::Move::UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack < Ba
 end
 
 #===============================================================================
-# Future Sight but complicated (Supernova)
-# why did i agree to this
-#===============================================================================
-# doesnt impact crater imply that the attacker already landed? 
-# wouldnt something like meteor crash make more sense since its the action and not the aftermath?
-#===============================================================================
-class Battle::Move::Supernova < Battle::Move
-  def targetsPosition?; return true; end
-
-  def pbAccuracyCheck(user, target)
-    return true if !@battle.futureSight
-    return super
-  end
-
-  def pbDisplayUseMessage(user)
-    super if !@battle.futureSight
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    if !@battle.futureSight &&
-       @battle.positions[target.index].effects[PBEffects::FutureSightCounter] > 0
-      @battle.pbDisplay(_INTL("But it failed!")) if show_message
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    return if @battle.futureSight   # Attack is hitting
-    effects = @battle.positions[target.index].effects
-    effects[PBEffects::FutureSightCounter]        = 3
-    effects[PBEffects::FutureSightMove]           = :SUPERNOVA_ALT
-    effects[PBEffects::FutureSightUserIndex]      = user.index
-    effects[PBEffects::FutureSightUserPartyIndex] = user.pokemonIndex
-    @battle.pbDisplay(_INTL("{1} chose Doom Desire as its destiny!", user.pbThis))
-  end
-
-  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    hitNum = 1 if !@battle.futureSight   # Charging anim
-    super
-  end
-end
-
-#===============================================================================
-# The damage is based on the user's highest attacking stat. 
+# The damage is based on the user's highest plain, non-HP stat. 
 # The move's type is set by the user's type.
+# The move's animation is set by the user's type.
 # (Titan's Wrath)
 #===============================================================================
 class Battle::Move::TitanWrath < Battle::Move
@@ -98,6 +55,30 @@ class Battle::Move::TitanWrath < Battle::Move
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
+  end
+  
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    userTypes = user.pbTypes(true)
+    type_moves = {
+      special: {
+        :NORMAL => :HYPERBEAM, 
+        :ROCK => :POWERGEM, :ICE => :SHEERCOLD, :STEEL => :STEELBEAM,
+        :ELECTRIC => :THUNDER, :DRAGON => :ETERNABEAM, 
+        :GRASS => :SOLARBEAM, :FIGHTING => :FOCUSBLAST, :FAIRY => :LIGHTOFRUIN
+      },
+      physical: {
+        :NORMAL => :GIGAIMPACT, 
+        :ROCK => :STONEEDGE, :ICE => :ICICLECRASH, :STEEL => :STEELROLLER,
+        :ELECTRIC => :FUSIONBOLT, :DRAGON => :OUTRAGE, 
+        :GRASS => :POWERWHIP, :FIGHTING => :CLOSECOMBAT, :FAIRY => :NATURESMADNESS
+      }
+    }
+  
+    category = @calcCategory == 1 ? :special : :physical
+    type = userTypes[0]
+    id = type_moves[category][type] if type_moves[category][type] && 
+                                       GameData::Move.exists?(type_moves[category][type])
+    super
   end
 end
 
@@ -156,7 +137,7 @@ class Battle::Move::Rebalancing < Battle::Move
 end
 
 #===============================================================================
-# gets 3x on rain
+# gets 2.25x on rain
 # in theory it nullifies the nerfs/buffs of a fire type move on those weathers
 # (Steam Burst)
 #===============================================================================
@@ -204,10 +185,11 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
 
   def pbNumHits(user, targets)
     hitChances = [
-      3, 3, 3, 3, 3, 3, 3, 3,
-      4, 4, 4, 4, 
-      5
+      3, 3, 3, 3, 3, 3, 3,
+      3, 3, 3, 3, 3, 3, 3,
+      4, 4, 4, 5, 5, 5
     ]
+    hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
     r = hitChances.length - 1 if user.hasActiveAbility?(:SKILLLINK)
     return hitChances[r]
@@ -280,13 +262,37 @@ class Battle::Move::OverrideTargetStatusWithPoison < Battle::Move
     return if target.damageState.substitute
 		return if target.poisoned?
 		if target.pbCanInflictStatus?(:POISON, user, false, self, true)
-			if $game_variables[MECHANICSVAR] >= 3 && target.status != :NONE
-				target.pbPoison(user, nil, false) 
-			end
-			if $game_variables[MECHANICSVAR] < 3
+			if $player.difficulty_mode?("chaos")
+				target.pbPoison(user, nil, false) if target.status != :NONE
+      else
 				target.pbPoison(user, nil, false)
 			end
 		end
+  end
+end
+
+#===============================================================================
+# Lower's the base power of incoming attacks for the ally's by 2/3. (Holding Hand)
+#===============================================================================
+class Battle::Move::HoldingHandsShamefully < Battle::Move
+  def ignoresSubstitute?(user); return true; end
+
+  def pbFailsAgainstTarget?(user, target, show_message)
+    if target.fainted? || target.effects[PBEffects::HoldingHand]
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+    return false
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    target.effects[PBEffects::HoldingHand] = true
+    if user.gender != target.gender && user.gender != 2 && target.gender != 2
+      @battle.pbDisplay(_INTL("{1} is holding hands with {2}!", user.pbThis, target.pbThis(true)))
+      @battle.pbDisplay(_INTL("How romantic! How lewd!")) if rand(2) == 0
+    else
+      @battle.pbDisplay(_INTL("{1} is ready to protect {2}!", user.pbThis, target.pbThis(true)))
+    end
   end
 end
 
@@ -315,12 +321,18 @@ class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
 end
 
 #===============================================================================
-# changes type to fire during sun or harsh sun (Pepper Spray)
+# typo on function code is intentional (Pepper Spray)
 #===============================================================================
-class Battle::Move::ChangeTypeToFireDuringSun < Battle::Move
-  def pbBaseType(user)
-    return :FIRE if [:Sun, :HarshSun].include?(user.effectiveWeather)
-    return @type
+class Battle::Move::PeperSpray < Battle::Move
+  def pbTarget(user)
+    return GameData::Target.get(:AllNearFoes) if [:Sun, :HarshSun].include?(user.effectiveWeather) && self.type == :GRASS
+    return super
+  end
+
+  def pbBaseDamage(baseDmg, user, target)
+    peper_dmg_mult = (@battle.field.abilityWeather) ? 5 / 4 : 4 / 3
+    baseDmg *= peper_dmg_mult if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return baseDmg
   end
 end
 
@@ -329,9 +341,77 @@ end
 # ignores desolate land vaporization vs non fire types (scald)
 #===============================================================================
 class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
-  def pbBaseDamage(baseDmg, user, target)
-		scald_damage_multiplier = (@battle.field.abilityWeather) ? 1.5 : 2
-    baseDmg *= scald_damage_multiplier if user.effectiveWeather == :Sun && !target.pbHasType?(:FIRE)
-    return baseDmg
+  # in 003_MoveUsageCalculations
+end
+
+#===============================================================================
+# Hits two times, ignores multi target debuff, phys or spec. (Splinter Shot)
+#===============================================================================
+class Battle::Move::HitTwoTimesReload < Battle::Move
+  def initialize(battle, move)
+    super
+    @calcCategory = 1
+  end
+  def physicalMove?(thisType = nil); return (@calcCategory == 0); end
+  def specialMove?(thisType = nil);  return (@calcCategory == 1); end
+  def pbOnStartUse(user, targets)
+    # Calculate user's effective attacking value
+    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    atk        = user.attack
+    atkStage   = user.stages[:ATTACK] + 6
+    realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
+    spAtk      = user.spatk
+    spAtkStage = user.stages[:SPECIAL_ATTACK] + 6
+    realSpAtk  = (spAtk.to_f * stageMul[spAtkStage] / stageDiv[spAtkStage]).floor
+    # Determine move's category
+    @calcCategory = (realAtk > realSpAtk) ? 0 : 1
+  end
+
+  def pbDisplayChargeMessage(user)
+    @battle.pbCommonAnimation("FocusPunch", user)
+    @battle.pbDisplay(_INTL("{1} is reloading!", user.pbThis))
+  end
+  def multiHitMove?;            return true; end
+  def pbNumHits(user, targets); return 2;    end
+end
+
+#===============================================================================
+# Increases the damage recived from all sources by 25%. (Virus Inject)
+#===============================================================================
+class Battle::Move::BOOMInstall < Battle::Move
+  def canMagicCoat?; return statusMove?; end
+  
+  def pbFailsAgainstTarget?(user, target, show_message)
+    return if damagingMove?
+    if target.effects[PBEffects::BoomInstalled]
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    return if damagingMove?
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
+
+  def pbAdditionalEffect(user, target)
+    return if statusMove?
+    return if target.effects[PBEffects::BoomInstalled]
+    pbSEPlay("BOOM") if rand(2) == 0
+    target.effects[PBEffects::BoomInstalled] = true
+    @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
+  end
+end
+
+#===============================================================================
+# Heals user by 1/2 of its max HP, or 2/3 of its max HP in a hailstorm
+#===============================================================================
+class Battle::Move::HealUserDependingOnHail < Battle::Move::HealingMove
+  def pbHealAmount(user)
+    return (user.totalhp * 2 / 3.0).round if user.effectiveWeather == :Hail
+    return (user.totalhp / 2.0).round
   end
 end

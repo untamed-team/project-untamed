@@ -580,15 +580,15 @@ def pbDrawTrainerCardFront
 end
 
 #===============================================================================
-# Max out AI for all Trainer Types
+# (actually) Max out AI for all Trainer Types
 #===============================================================================
 module PBTrainerAI
   # Minimum skill level to be in each AI category.
-  def self.minimumSkill; return 255;   end
-  def self.mediumSkill;  return 255;  end
-  def self.highSkill;    return 255;  end
-  def self.bestSkill;    return 255; end
-  end
+  def self.minimumSkill; return 0;   end
+  def self.mediumSkill;  return 0;  end
+  def self.highSkill;    return 0;  end
+  def self.bestSkill;    return 0; end
+end
   
   
   
@@ -636,7 +636,7 @@ def pbFishing(hasEncounter, rodType = 1)
 #      hookChance += 15
     else
       pbFishingEnd {
-        pbMessageDisplay(msgWindow, _INTL("Reeled it in too fast..."))
+        pbMessageDisplay(msgWindow, _INTL("There seems to be nothing here..."))
       }
       break
     end
@@ -817,7 +817,7 @@ class PokemonEncounters
         #added by Gardenette for EnCORNters
         if !ret && $game_map.terrain_tag($game_player.x, $game_player.y).id_number == 18
           ret = find_valid_encounter_type_for_time(:Corn, time)
-      end
+        end
         
       
         ret = find_valid_encounter_type_for_time(:Land, time) if !ret
@@ -1052,7 +1052,8 @@ module Battle::CatchAndStoreMixin
       end
     end
 		# setting initial values #by low
-		if $game_variables[MECHANICSVAR] >= 2
+		if $player.difficulty_mode?("hard")
+			pkmn.obtain_method = 4 if pbIsBadPokemon?(pkmn)
 			if !$game_switches[NOINITIALVALUES]
 				if pbDisplayConfirm(_INTL("Would you like to set initial values for {1}?", pkmn.name))
 					# choosing an ability
@@ -1748,8 +1749,351 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
 )
 
 #===============================================================================
+# Pokecenter Animations (to account for player outfits)
+#===============================================================================
+def playCenterAnimGivePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+    #turn up
+    PBMoveRoute::TurnUp,
+  ])
+end
+
+def playCenterAnimTakePkmn
+  characterGraphic = "pokecenter_"
+  if $Trainer.male?
+    characterGraphic = characterGraphic + "boy"
+  else
+    characterGraphic = characterGraphic + "girl"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  charset = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 2,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 3,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    #turn down
+    PBMoveRoute::TurnDown,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 1,
+    PBMoveRoute::Wait, 3,
+    PBMoveRoute::Graphic, characterGraphic, 0, 2, 0,
+    PBMoveRoute::Wait, 3,
+    #turn up
+    PBMoveRoute::TurnUp,
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+    PBMoveRoute::Graphic, charset, 0, 8, 0,
+  ])
+end
+
+#===============================================================================
 # Crash Prevention
 #===============================================================================
 #to prevent a crash with save files that were created when my Tutorial Tips existed
 class Tips
 end
+
+#===============================================================================
+# Change Pkmn in Ranch Yard
+#===============================================================================
+#change the pokemon in the Asterado Ranch backyard
+#takes event numbers as arguments
+def pbChangeRanchPkmn(pkmnEvent1=nil, pkmnEvent2=nil)
+  #get the pkmn currently deposited into the daycare
+  #if DayCare.count > 0
+  #  DayCare.get_details(0, 3, 4)
+  #end
+  
+  #pkmn1
+  if !$PokemonGlobal.day_care[0].pokemon.nil?
+    pkmn1 = $PokemonGlobal.day_care[0].pokemon
+
+    #get the pkmn form
+    #if form is greater than 0, set pkmn_genderform to species_formNumber so the
+    #file_path goes to the correct iteration of that species
+    if pkmn1.form > 0
+      pkmn_genderform = (_INTL("{1}_{2}",pkmn1.species,pkmn1.form))
+    else
+      pkmn_genderform = pkmn1.species
+    end
+
+    #if the pokemon has a different form based on gender 
+    if pkmn1.species == :M_ROSELIA || pkmn1.species == :M_ROSERADE
+      if pkmn1.gender > 0
+        #the pokemon is female
+        pkmn_genderform = (_INTL("{1}_female",pkmn1.species))
+      else
+        pkmn_genderform = pkmn1.species
+      end
+    end
+
+    if pkmn1.shiny?
+      #set path to followers shiny
+      file_path = sprintf("Followers Shiny/%s", pkmn_genderform)
+    else
+      #set path to followers
+      file_path = sprintf("Followers/%s", pkmn_genderform)
+    end
+
+    #changes the event number (like event 1, event 2, etc. on the map
+    #into the graphic specified
+    pbMoveRoute($game_map.events[pkmnEvent1], [
+      PBMoveRoute::Graphic, file_path, 0, 2, 0,
+      PBMoveRoute::StepAnimeOn,
+      PBMoveRoute::ThroughOff
+    ])
+  end #if !$PokemonGlobal.day_care[0].nil?
+
+  #pkmn2
+  if !$PokemonGlobal.day_care[1].pokemon.nil?
+    pkmn2 = $PokemonGlobal.day_care[1].pokemon
+
+    #get the pkmn form
+    #if form is greater than 0, set pkmn_genderform to species_formNumber so the
+    #file_path goes to the correct iteration of that species
+    if pkmn2.form > 0
+      pkmn_genderform = (_INTL("{1}_{2}",pkmn2.species,pkmn2.form))
+    else
+      pkmn_genderform = pkmn2.species
+    end
+
+    #if the pokemon has a different form based on gender 
+    if pkmn2.species == :M_ROSELIA || pkmn2.species == :M_ROSERADE
+      if pkmn2.gender > 0
+        #the pokemon is female
+        pkmn_genderform = (_INTL("{1}_female",pkmn2.species))
+      else
+        pkmn_genderform = pkmn2.species
+      end
+    end
+
+    if pkmn2.shiny?
+      #set path to followers shiny
+      file_path = sprintf("Followers Shiny/%s", pkmn_genderform)
+    else
+      #set path to followers
+      file_path = sprintf("Followers/%s", pkmn_genderform)
+    end
+
+    #changes the event number (like event 1, event 2, etc. on the map
+    #into the graphic specified
+    pbMoveRoute($game_map.events[pkmnEvent2], [
+      PBMoveRoute::Graphic, file_path, 0, 2, 0,
+      PBMoveRoute::StepAnimeOn,
+      PBMoveRoute::ThroughOff
+    ])
+  end #if !$PokemonGlobal.day_care[0].nil?
+end #def pbChangeRanchPkmn
+
+def talkToRanchPkmn(daycareSlot)
+  pkmn = $PokemonGlobal.day_care[daycareSlot].pokemon
+  return if pkmn.nil?
+  species = pkmn.species.to_s
+	pbSEPlay("Cries/"+species,100)
+  
+  
+  #say things based on how much pkmn gets along with partner, how many levels it's gained, etc.
+  compat = $PokemonGlobal.day_care.get_compatibility
+  levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
+
+  #pbMessage(_INTL("{1} seems like it would rather be adventuring with you.", pkmn.name))
+
+chance = rand(5)
+case chance
+when 0
+  #comment based on levels gained
+  if levelsGained <= 0
+    pbMessage(_INTL("{1} is training to be the very best!", pkmn.name))
+  elsif levelsGained.between?(1,5)
+    pbMessage(_INTL("{1} wants to show you how strong it's gotten!", pkmn.name))
+  else
+    pbMessage(_INTL("{1} is ready for another adventure with you.", pkmn.name))
+  end
+when 1
+  #comment based on compatibility with other pkmn in daycare slot
+  case compat
+  when 0
+    #0 - rather play with other pkmn
+    pbMessage(_INTL("{1} seems very content.", pkmn.name))
+  when 1
+    #1 - don't like each other much
+    pbMessage(_INTL("{1} is daydreaming.", pkmn.name))
+  when 2
+    #2 - get along
+    pbMessage(_INTL("{1} seems to be having fun.", pkmn.name))
+  when 3
+    #3 - get along very well
+    pbMessage(_INTL("{1} looks like it could stay here forever.", pkmn.name))
+  end
+when 2
+  pbMessage(_INTL("{1} seems very content.", pkmn.name))
+when 3
+  pbMessage(_INTL("{1} is thinking about how kind Grandma is.", pkmn.name))
+when 4
+  pbMessage(_INTL("{1} is drooling and thinking about Grandpa's homemade Pokémon food.", pkmn.name))
+end
+  
+  #levelsGained = $PokemonGlobal.day_care[daycareSlot].level_gain
+  #print levelsGained
+  #pbMessage(_INTL("{1} seems happy at the moment.", pkmn.name))
+
+end
+
+#-----------------------------------------------------------------------------
+# * Set Move Route - edited to take into account multiple followers
+#-----------------------------------------------------------------------------
+#use like so:
+#follower_move_route("Reine")
+def command_209(name=nil)
+  character = get_character(@parameters[0])
+  if @follower_move_route
+    #character = Followers.get(@follower_move_route_id)
+    character = $game_temp.followers.get_follower_by_name(name)
+    @follower_move_route = false
+    @follower_move_route_id = nil
+  end
+  return true if character.nil?
+  character.force_move_route(@parameters[1])
+  return true
+end
+
+#-----------------------------------------------------------------------------
+# * Get event that triggered this code
+#-----------------------------------------------------------------------------
+def getThisEvent
+  return pbMapInterpreter.get_character(0)
+end #def getThisEvent
+
+#-----------------------------------------------------------------------------
+# * Discard all instance variables that are not set to nil. Otherwise, the trash collector will not reset it in the current game session
+#-----------------------------------------------------------------------------
+def pbDiscardInstanceVariables(instanceName = nil)
+  instanceName = self if instanceName.nil?
+  instanceName.instance_variables.each do |sym|
+    instanceName.instance_variable_set(sym, nil) 
+    instanceName.remove_instance_variable(sym)
+  end
+end #def pbDiscardInstanceVariables
+
+
+#-----------------------------------------------------------------------------
+# * Crustang Paint Job
+#-----------------------------------------------------------------------------
+def crustangPaintJobNPC
+  $game_variables[36] = 0
+
+  pbChooseTradablePokemon(36, 37,
+		proc { |pkmn| pkmn.isSpecies?(:CRUSTANG) }
+	)
+  pkmn = $player.party[$game_variables[36]]
+  if $game_variables[36] == -1
+    pbMessage(_INTL("Let me know if you ever want a paint job!"))
+    return
+  else
+    choices = [
+      _INTL("Classic"), #0
+      _INTL("Orange"), #1
+      _INTL("Yellow"), #2
+      _INTL("Green"), #3
+      _INTL("Blue"), #4
+      _INTL("Indigo"), #5
+      _INTL("Purple"), #6
+      _INTL("Hot Pink"), #7
+      _INTL("Black"), #8
+      _INTL("White"), #9
+      _INTL("Nevermind")
+    ]
+
+    loop do
+      new_form = pbMessage(_INTL("Which style would you like?"), choices, choices.length)
+      
+      #the selection matches current paint job
+      if new_form == pkmn.form
+        pbMessage(_INTL("Looks like your #{pkmn.name} already has that paint job."))
+        next #loop back to paint job choices
+      end
+
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Let me know if you ever want a paint job!"))
+        break
+      end
+
+      if pkmn.shiny?
+        shinyPath = "Shiny/"
+      else
+        ""
+      end
+      filePath = "CrustangPaintJob/OW/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]when following you."))
+    
+      filePath = "CrustangPaintJob/Front/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the front."))
+
+      filePath = "CrustangPaintJob/Back/#{shinyPath}CRUSTANG_#{new_form}"
+      pbMessage(_INTL("\\f[#{filePath}]This is #{pkmn.name} \\c[1]from the back."))
+      decision = pbConfirmMessage("\\c[2]Do you want this style?")
+      
+      if decision == false
+        next #loop back to paint job choices
+      end
+
+      #change form
+      pkmn.form = new_form
+      #subtract money
+      $player.money -= 3000
+      pbSEPlay("Mart buy item")
+      pbWait(1)
+      FollowingPkmn.refresh
+      pbMessage(_INTL("Looking good!"))
+      break
+    end #loop do
+  end #if $game_variables[36] == -1
+end #def crustangPaintJobNPC
+
+#-----------------------------------------------------------------------------
+# * Player Receive Money (common for quest rewards)
+#-----------------------------------------------------------------------------
+def pbPlayerReceiveMoney(amount, multiplier=1)
+  pbSEPlay("Mart buy item", 80)
+  amount = (amount * multiplier)
+  pbMessage("\\PN received $#{amount}!")
+  $player.money += amount
+end #def pbPlayerReceiveMoney

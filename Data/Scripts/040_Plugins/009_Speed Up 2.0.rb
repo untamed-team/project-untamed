@@ -34,7 +34,7 @@ module Input
   end
 end
 
-SPEEDUP_STAGES = [1,2,3,5]
+SPEEDUP_STAGES = [1,5]
 $GameSpeed = 0
 $frame = 0
 $CanToggle = true

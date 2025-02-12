@@ -61,6 +61,7 @@ Jackeroni216
 Kaloja
 King Tapia
 Kutas Kitti
+Lightbulb15
 Magiscarf
 Phyromatical
 Pint Sized Kiwi
@@ -248,6 +249,7 @@ Tyler (MANGO) Jackson
 Eventing
 --------
 Gardenette
+Geoswag
 Kaloja
 Kutas Kitti
 Low
@@ -473,6 +475,10 @@ http404error
 
 Automatic Level Scaling:
 Benitex
+
+Autoscroll:
+Gardenette
+Wachunga
 
 Bag Screen with Interactable Party:
 DiegoWT

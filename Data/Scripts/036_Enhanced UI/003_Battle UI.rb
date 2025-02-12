@@ -123,15 +123,15 @@ class Battle::Scene
     @dmg_shadow = @acc_shadow = @eff_shadow = SHADOW_LIGHT
     damage = base_dmg = calc_dmg = move.baseDamage
     stab = 1
-    if battler.tera? || (battler.power_trigger && @sprites["fightWindow"].teraType > 0)
-      if battler.tera_type == type && battler.pokemon.types.include?(type)
-        stab = 2
-      elsif battler.tera_type == type || battler.pokemon.types.include?(type)
-        stab = 1.5
-      end
-    else
+    #if battler.tera? || (battler.power_trigger && @sprites["fightWindow"].teraType > 0)
+    #  if battler.tera_type == type && battler.pokemon.types.include?(type)
+    #    stab = 2
+    #  elsif battler.tera_type == type || battler.pokemon.types.include?(type)
+    #    stab = 1.5
+    #  end
+    #else
       stab = 1.5 if battler.pbHasType?(type)
-    end
+    #end
     if move.damagingMove?
       if pbVariablePowerFunctions.include?(move.function) ||
          # Natural Gift called here specifically to check for a berry first.
@@ -237,7 +237,11 @@ class Battle::Scene
 	  "UserFaintsPowersUpInMistyTerrainExplosive", # Misty Explosion
 	  "ThrowUserItemAtTarget",                     # Fling
 	  "HitsAllFoesAndPowersUpInPsychicTerrain",    # Expanding Force
-	  "PowerDependsOnUserStockpile"                # Spit Up
+	  "PowerDependsOnUserStockpile",                # Spit Up
+    "PeperSpray",
+    #"HigherDamageInSunVSNonFireTypes",
+    "DoubleDamageIfTargetHasChoiceItem",
+    "HigherDamageInRain"
 	]
   end
   
@@ -717,25 +721,36 @@ class Battle::Scene
       textPos.push([@battle.pbGetOwnerFromBattlerIndex(battler.index).name, xpos + 32, ypos + 6, 2, BASE_LIGHT, SHADOW_LIGHT])
     end
     # Battler's last move used.
-    if battler.lastMoveUsed
+    if battler.lastMoveUsed && !battler.hasAbilityMutation?
       movename = GameData::Move.get(battler.lastMoveUsed).name
-	  movename = movename[0..12] + "..." if movename.length > 16
+	    movename = movename[0..12] + "..." if movename.length > 16
       textPos.push([_INTL("Used: #{movename}"), xpos + 348, ypos + 106, 2, BASE_LIGHT, SHADOW_LIGHT])
     end
     #---------------------------------------------------------------------------
     # Battler info for player-owned Pokemon.
     if battler.pbOwnedByPlayer?
-      imagePos.push(
-        [@path + "battler_owner", xpos + 36, iconY + 11],
-        [@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24],
-        [@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24]
+      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
+      textPos.push(
+        [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
+        [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
       )
+      imagePos.push([@path + "battler_owner", xpos + 36, iconY + 11])
+      textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
+    end
+    if battler.hasAbilityMutation?
+      for i in 0..battler.abilityMutationList.length
+        next if battler.abilityMutationList[i].nil?
+        imagePos.push([@path + "battle_info_panel", panelX, (65 + (i * 24)), 0, 0, 218, 24])
+        textPos.push(
+          [_INTL("Abil."), xpos + 272, ypos + (44 + (i * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
+          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (i * 24)), 2, BASE_DARK, SHADOW_DARK]
+        )
+      end
+    else
+      imagePos.push([@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24])
       textPos.push(
         [_INTL("Abil."), xpos + 272, ypos + 44, 2, BASE_LIGHT, SHADOW_LIGHT],
-        [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
-        [_INTL("{1}", battler.abilityName), xpos + 375, ypos + 44, 2, BASE_DARK, SHADOW_DARK],
-        [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
-        [sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT]
+        [_INTL("{1}", battler.abilityName), xpos + 375, ypos + 44, 2, BASE_DARK, SHADOW_DARK]
       )
     end
     #---------------------------------------------------------------------------
@@ -814,8 +829,7 @@ class Battle::Scene
       $player.pokedex.owned?(poke.species) ||
       $player.pokedex.battled_count(poke.species) > 0
     )
-    unknown_species = false #if Settings::ALWAYS_DISPLAY_TYPES
-    #~ unknown_species = true if battler.celestial?
+    unknown_species = false
     # Displays the "???" type on newly encountered species, or battlers with no typing.
     displayTypes = [:QMARKS] if unknown_species || displayTypes.empty?
 		case displayTypes.length #triple type UI #by low
@@ -975,6 +989,7 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
+    effects.push(["Virus Inject", "---"]) if battler.effects[PBEffects::BoomInstalled]
     # Draws panels and text for all relevant battle effects affecting the battler.
     effects.each_with_index do |effect, i|
       break if i == 8

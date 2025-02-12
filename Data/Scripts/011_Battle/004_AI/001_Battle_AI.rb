@@ -55,16 +55,4 @@ class Battle::AI
     end
     return false
   end
-
-  #=============================================================================
-  # Choose an action
-  #=============================================================================
-  def pbDefaultChooseEnemyCommand(idxBattler)
-    return if pbEnemyShouldUseItem?(idxBattler)
-    return if pbEnemyShouldWithdraw?(idxBattler) #old switching method
-		#~ return if pbShouldSwitch?(idxBattler) #messy switching method
-    return if @battle.pbAutoFightMenu(idxBattler)
-    @battle.pbRegisterMegaEvolution(idxBattler) if pbEnemyShouldMegaEvolve?(idxBattler)
-    pbChooseMoves(idxBattler)
-  end
 end

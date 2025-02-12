@@ -82,6 +82,7 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
       @overlay.x = self.x
       @overlay.y = self.y
       pbSetNarrowFont(@overlay.bitmap)
+      #pbSetSystemFont(@overlay.bitmap)
       addSprite("overlay", @overlay)
       @infoOverlay = BitmapSprite.new(Graphics.width, Graphics.height - self.y, viewport)
       @infoOverlay.x = self.x
@@ -197,7 +198,9 @@ class Battle::Scene::FightMenu < Battle::Scene::MenuBase
       if GET_MOVE_TEXT_COLOR_FROM_MOVE_BUTTON && moves[i].display_type(@battler)
         moveNameBase = button.bitmap.get_pixel(10, button.src_rect.y + 34)
       end
-      textPos.push([moves[i].short_name, x, y, 2, moveNameBase, TEXT_SHADOW_COLOR])
+      #textPos.push([moves[i].short_name, x, y, 2, moveNameBase, TEXT_SHADOW_COLOR])
+      moveNameShadow = Color.new(44,42,52)
+      textPos.push([moves[i].short_name, x, y, 2, moveNameBase, moveNameShadow])
       if PluginManager.installed?("PLA Battle Styles") && @battler.style_trigger > 0
         next if !moves[i].mastered?
         imagePos.push(["Graphics/Plugins/PLA Battle Styles/mastered_icon", button.x - self.x, button.y - self.y + 3])
@@ -230,6 +233,8 @@ class Battle
     return pbAutoChooseMove(idxBattler) if !pbCanShowFightMenu?(idxBattler)
     return true if pbAutoFightMenu(idxBattler)
     ret = false
+    @battlers[idxBattler].pokemon.willmega = false
+    @battlers[idxBattler].display_base_moves
     mechanics = []
     mechanics.push(pbCanMegaEvolve?(idxBattler))
     mechanics.push((PluginManager.installed?("ZUD Mechanics"))       ? pbCanUltraBurst?(idxBattler)   : false)
@@ -353,6 +358,7 @@ class Battle::Scene
         pbSelectBattler(idxBattler)
         needFullRefresh = false
       end
+      pbUpdateMegaEvolutionMove(idxBattler) #by low
       if needRefresh
         pbFightMenu_RefreshMechanic(mechanic, idxBattler, cw)
         needRefresh = false
@@ -385,6 +391,7 @@ class Battle::Scene
       #-------------------------------------------------------------------------
       # Cancel Selection
       elsif Input.trigger?(Input::BACK)
+        battler.display_base_moves #by low
         break if yield pbFightMenu_Cancel(mechanic, battler, cw)
         needRefresh = true
       #-------------------------------------------------------------------------
@@ -422,6 +429,28 @@ class Battle::Scene
     @lastMove[idxBattler] = cw.index
   end
   
+  def pbUpdateMegaEvolutionMove(idxBattler) #by low
+    megaBattler = @battle.battlers[idxBattler]
+    return if !MEGA_EVO_MOVESET.key?(megaBattler.pokemon.species)
+    return if !$player.difficulty_mode?("chaos")
+    oldmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][0]
+    newmove = MEGA_EVO_MOVESET[megaBattler.pokemon.species][1]
+    return if !oldmove || !newmove
+    if megaBattler.pokemon.willmega || megaBattler.mega?
+      megaBattler.moves.each_with_index do |m, i|
+        megaBattler.base_moves.push(megaBattler.moves[i])
+        next if m.id != oldmove
+        megaBattler.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
+        megaBattler.moves[i].pp       = 5
+        megaBattler.moves[i].total_pp = 5
+        needRefresh = true 
+      end
+    else
+      megaBattler.display_base_moves
+      needRefresh = true 
+    end
+  end
+
   #-----------------------------------------------------------------------------
   # Returns an available battle mechanic, if any.
   #-----------------------------------------------------------------------------
@@ -465,6 +494,7 @@ class Battle::Scene
     ret = cw.index
     cancel = DXTriggers::MENU_TRIGGER_CANCEL
     case mechanic
+    when :mega
     when :zmove
       if cw.mode == 2
         if !battler.hasCompatibleZMove?(battler.moves[cw.index])

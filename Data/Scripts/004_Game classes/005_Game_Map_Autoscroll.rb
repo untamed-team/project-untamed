@@ -109,6 +109,7 @@ class Interpreter
       end
       count = count_x == 0 ? count_y.abs : count_x.abs
     else
+      print "else statement is firing"
       @diag = true
       dir = nil
       if count_x > 0

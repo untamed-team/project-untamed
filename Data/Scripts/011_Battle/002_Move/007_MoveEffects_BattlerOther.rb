@@ -201,7 +201,7 @@ class Battle::Move::ParalyzeFlinchTarget < Battle::Move
     if target.pbCanParalyze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbParalyze(user)
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -251,7 +251,7 @@ class Battle::Move::BurnFlinchTarget < Battle::Move
     if target.pbCanBurn?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbBurn(user)
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -311,7 +311,7 @@ class Battle::Move::FreezeFlinchTarget < Battle::Move
     if target.pbCanFreeze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbFreeze
     end
-    target.pbFlinch(user) if @battle.pbRandom(100) < chance
+    target.pbFlinch(user)
   end
 end
 
@@ -385,7 +385,7 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
   def canSnatch?; return true; end
 
   def pbMoveFailed?(user, targets)
-    if ![:BURN, :POISON, :PARALYSIS].include?(user.status)
+    if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -402,6 +402,8 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
       @battle.pbDisplay(_INTL("{1} cured its poisoning!", user.pbThis))
     when :PARALYSIS
       @battle.pbDisplay(_INTL("{1} cured its paralysis!", user.pbThis))
+    when :FREEZE
+      @battle.pbDisplay(_INTL("{1} healed its frostbite!", user.pbThis))
     end
   end
 end
@@ -523,6 +525,7 @@ class Battle::Move::StartUserSideImmunityToInflictedStatus < Battle::Move
 
   def pbEffectGeneral(user)
     user.pbOwnSide.effects[PBEffects::Safeguard] = 5
+    user.pbOwnSide.effects[PBEffects::Safeguard] = 7 if user.hasActiveItem?(:LIGHTCLAY)
     @battle.pbDisplay(_INTL("{1} became cloaked in a mystical veil!", user.pbTeam))
   end
 end
@@ -535,12 +538,12 @@ class Battle::Move::FlinchTarget < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     return if damagingMove?
-    target.pbFlinch(user) if @battle.turnCount >= 1 #by low
+    target.pbFlinch(user)
   end
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbFlinch(user) if @battle.turnCount >= 1 #by low
+    target.pbFlinch(user)
   end
 end
 
@@ -568,7 +571,7 @@ class Battle::Move::FlinchTargetFailsIfNotUserFirstTurn < Battle::Move
 	
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbFlinch(user)
+    target.pbFlinch(user, true) #by low
   end
 	
   def pbMoveFailed?(user, targets)

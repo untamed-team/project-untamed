@@ -742,7 +742,7 @@ def pbSurf
   if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_SURF, false) || (!$DEBUG && !movefinder)
     return false
   end
-  if pbConfirmMessage(_INTL("The water is a deep blue color... Would you like to use Surf on it?"))
+  if pbConfirmMessage(_INTL("The water looks deep enough to surf on... Would you like to use Surf on it?"))
     speciesname = (movefinder) ? movefinder.name : $player.name
     pbMessage(_INTL("{1} used {2}!", speciesname, GameData::Move.get(move).name))
     pbCancelVehicles

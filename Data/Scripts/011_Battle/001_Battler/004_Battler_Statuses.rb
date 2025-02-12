@@ -290,8 +290,8 @@ class Battle::Battler
     return pbHasStatus?(:SLEEP)
   end
 
-  def pbCanSleep?(user, showMessages, move = nil, ignoreStatus = false)
-    if pbHasStatusPokemon?(:SLEEP) #by low
+  def pbCanSleep?(user, showMessages, move = nil, ignoreStatus = false, restcheck = false)
+    if pbHasStatusPokemon?(:SLEEP) && !restcheck && user.pbOwnedByPlayer? #by low
       @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true))) if showMessages
       return false
     end
@@ -300,7 +300,7 @@ class Battle::Battler
 
   def pbCanSleepYawn?
     if pbHasStatusPokemon?(:SLEEP) #by low
-      @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true))) if showMessages
+      @battle.pbDisplay(_INTL("But {1} couldn't sleep!", pbThis(true)))
       return false
     end
     return false if self.status != :NONE
@@ -339,7 +339,7 @@ class Battle::Battler
     pbInflictStatus(:SLEEP, pbSleepDuration(duration), msg)
   end
 
-  def pbSleepDuration(duration = -1)
+  def pbSleepDuration(duration = -1, status = :None)
 		#############################################
 		# edits to be more consitent #by low
 		# 2 turns of sleep, no matter who moved first
@@ -350,7 +350,7 @@ class Battle::Battler
 		end
 		#############################################
     duration = (duration / 2).floor if hasActiveAbility?(:EARLYBIRD)
-    duration = (duration / 2).floor if hasAbilityMutation?
+    duration = (duration / 2).floor if hasAbilityMutation? && status == :DIZZY
     return duration
   end
 
@@ -370,7 +370,7 @@ class Battle::Battler
   end
 
   def pbPoison(user = nil, msg = nil, toxic = false)
-		if $game_variables[MECHANICSVAR] >= 3 # on "low mode" #by low
+		if $player.difficulty_mode?("chaos") # on "low mode" #by low
 			pbInflictStatus(:POISON, 1, msg, user)
 		else
 			pbInflictStatus(:POISON, (toxic) ? 1 : 0, msg, user)
@@ -413,7 +413,7 @@ class Battle::Battler
 
   def pbParalyze(user = nil, msg = nil)
 		# paralyzis rework #by low
-    pbInflictStatus(:PARALYSIS, ($game_variables[MECHANICSVAR] >= 3) ? pbSleepDuration(7) : 0, msg, user)
+    pbInflictStatus(:PARALYSIS, ($player.difficulty_mode?("chaos")) ? pbSleepDuration(7) : 0, msg, user)
   end
 
   #=============================================================================
@@ -447,7 +447,7 @@ class Battle::Battler
   end
 
   def pbDizzy(user = nil, msg = nil)
-    pbInflictStatus(:DIZZY, pbSleepDuration, msg, user)
+    pbInflictStatus(:DIZZY, pbSleepDuration(-1, :DIZZY), msg, user)
   end
 
   #=============================================================================
@@ -505,7 +505,7 @@ class Battle::Battler
   #=============================================================================
   def pbCanConfuse?(user = nil, showMessages = true, move = nil, selfInflicted = false)
     return false if fainted?
-		if $game_variables[MECHANICSVAR] >= 3
+		if $player.difficulty_mode?("chaos")
 			return pbCanDizzy?(user, showMessages, move)
 		end
 		if pbHasType?(:PSYCHIC) #by low
@@ -551,7 +551,7 @@ class Battle::Battler
   end
 
   def pbConfuse(msg = nil)
-		if $game_variables[MECHANICSVAR] >= 3
+		if $player.difficulty_mode?("chaos")
 			pbInflictStatus(:DIZZY, pbSleepDuration, msg) # this technically buffs early bird but i think its cool so i will leave it
 		else
 			@effects[PBEffects::Confusion] = pbConfusionDuration
@@ -645,11 +645,18 @@ class Battle::Battler
   end
 
   #=============================================================================
-  # Flinching edits #by low
+  # Flinching
   #=============================================================================
-  def pbFlinch(_user = nil)
+  def pbFlinch(_user = nil, fakuout = false)
     return if hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
-		return false if @effects[PBEffects::NoFlinch] > 0
+    # first turn immunity, no flinch, inner focus buff #by low
+    return if @effects[PBEffects::NoFlinch] > 0
+    allAllies.each do |b|
+      break if !$player.difficulty_mode?("chaos")
+      next unless b.hasActiveAbility?(:INNERFOCUS) && !@battle.moldBreaker
+      return
+    end
+    return if @battle.turnCount == 0 && !fakuout
     @effects[PBEffects::Flinch] = true
     @effects[PBEffects::NoFlinch] = 2
   end

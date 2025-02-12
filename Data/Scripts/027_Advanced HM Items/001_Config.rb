@@ -13,7 +13,7 @@ module AdvancedHMItems
 
 ROCKSMASH_CONFIG = {
     :internal_name      => :ROCKSMASHITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -21,7 +21,7 @@ ROCKSMASH_CONFIG = {
 
 CUT_CONFIG = {
     :internal_name      => :CUTITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -29,7 +29,7 @@ CUT_CONFIG = {
 
 STRENGTH_CONFIG = {
     :internal_name      => :STRENGTHITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -37,7 +37,7 @@ STRENGTH_CONFIG = {
 
 SURF_CONFIG = {
     :internal_name      => :SURFITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -45,7 +45,7 @@ SURF_CONFIG = {
 
 FLY_CONFIG = {
     :internal_name      => :FLYITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -53,7 +53,7 @@ FLY_CONFIG = {
 
 HEADBUTT_CONFIG = {
     :internal_name      => :HEADBUTTITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false
@@ -61,7 +61,7 @@ HEADBUTT_CONFIG = {
 
 FLASH_CONFIG = {
     :internal_name      => :FLASHITEM,
-    :active             => true,
+    :active             => false,
     :needed_badge       => 0,
     :needed_switches    => [],
     :use_in_debug       => false

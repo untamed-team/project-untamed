@@ -711,7 +711,7 @@ Pocket = 1
 Price = 3000
 SellPrice = 2000
 Flags = Fling_30
-Description = A very light stone. It reduces the weight of a Pokémon when held.
+Description = A very light stone. Halves the users weight and makes them immune to opposing Gravity effects.
 #-------------------------------
 [DESTINYKNOT]
 Name = Destiny Knot
@@ -738,6 +738,14 @@ Pocket = 1
 Price = 1000
 Flags = Fling_80
 Description = An item to be held by a Pokémon. This offensive vest raises Sp. Def but prevents the use of status moves.
+#-------------------------------
+[MELEEVEST]
+Name = Melee Vest
+NamePlural = Melee Vests
+Pocket = 1
+Price = 1000
+Flags = Fling_80
+Description = An item to be held by a Pokémon. This defensive vest raises Defense but prevents the use of status moves.
 #-------------------------------
 [SAFETYGOGGLES]
 Name = Safety Goggles
@@ -1068,7 +1076,7 @@ NamePlural = Adrenaline Orbs
 Pocket = 1
 Price = 300
 Flags = Fling_30
-Description = An item to be held by a Pokémon. It boosts Speed when intimidated. It can be used only once.
+Description = An item to be held by a Pokémon. It boosts Speed when Intimidated or "Grim Tears"ed, once.
 #-------------------------------
 [ROOMSERVICE]
 Name = Room Service
@@ -2963,9 +2971,9 @@ BattleUse = OnPokemon
 Flags = Fling_30
 Description = A very sweet and refreshing drink. It can be used to restore 70 HP to a single Pokémon.
 #-------------------------------
-[MOOMOOMILK]
-Name = Moomoo Milk
-NamePlural = Moomoo Milks
+[GOGOATMILK]
+Name = Gogoat Milk
+NamePlural = Gogoat Milks
 Pocket = 2
 Price = 600
 FieldUse = OnPokemon
@@ -3085,7 +3093,7 @@ Description = It maximally raises the top PP of a selected move that has been le
 Name = HP Up
 NamePlural = HP Ups
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into a neutral one.
@@ -3094,7 +3102,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Protein
 NamePlural = Proteins
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Attack-boosting one.
@@ -3103,7 +3111,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Iron
 NamePlural = Irons
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Defense-boosting one.
@@ -3112,7 +3120,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Calcium
 NamePlural = Calciums
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Attack-boosting one.
@@ -3121,7 +3129,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Zinc
 NamePlural = Zincs
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Defense-boosting one.
@@ -3130,7 +3138,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Carbos
 NamePlural = Carbos
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Speed-boosting one.
@@ -3807,7 +3815,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_80
 Move = SCATTERDUST
-Description = The user attacks by scattering a cloud of coarse debris. This may also lower the Speed stat of opposing Pokémon.
+Description = The user attacks by scattering a cloud of coarse debris.
 #-------------------------------
 [TM10]
 Name = TM10
@@ -4597,7 +4605,7 @@ Price = 5500
 FieldUse = TM
 Flags = Fling_110
 Move = GEODEBURST
-Description = The user attacks its target with a hail of glittering crystals. This may also make the target flinch.
+Description = The user attacks its target with a hail of glittering crystals.
 #-------------------------------
 [TM89]
 Name = TM89
@@ -4799,6 +4807,16 @@ Flags = Fling_65
 Move = HIDDENPOWER
 Description = A unique attack that varies in type depending on the Pokémon using it.
 #-------------------------------
+[TM109]
+Name = TM109
+NamePlural = TM109s
+Pocket = 4
+Price = 3000
+FieldUse = TM
+Flags = Fling_70
+Move = SECRETPOWER
+Description = An attack move with effects that vary depending on the user's environment.
+#-------------------------------
 [HM01]
 Name = HM01
 NamePlural = HM01s
@@ -4960,6 +4978,16 @@ FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
 Description = It may be used or held by a Pokémon to heal the user's HP a little.
+#-------------------------------
+[NYLOBERRY]
+Name = Nylo Berry
+NamePlural = Nylo Berries
+Pocket = 5
+Price = 20
+FieldUse = OnPokemon
+BattleUse = OnPokemon
+Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
+Description = If held by a Pokémon, it fully restores the user in a pinch and make them fall asleep.
 #-------------------------------
 [FIGYBERRY]
 Name = Figy Berry
@@ -6295,15 +6323,15 @@ Price = 0
 Flags = KeyItem
 Description = It's a special Pokéball that belongs to Professor Ceiba.
 #-------------------------------
-[CERIGOLDCONE]
-Name = Cerigoldcone
-NamePlural = Cerigoldcones
+[MELOLADOCONE]
+Name = Melolado Cone
+NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
@@ -6601,15 +6629,6 @@ FieldUse = Direct
 Flags = KeyItem
 Description = Heals your party. Recharges at the PokéCenter. CTRL + Auto Heal to activate in party menu.
 #-------------------------------
-[EMPTYPOKEVIAL]
-Name = PokéVial
-NamePlural = PokéVials
-Pocket = 8
-Price = 0
-FieldUse = Direct
-Flags = KeyItem
-Description = A vial that used to contain a juice that would heal your party. Recharge it at the PokéCenter.
-#-------------------------------
 [PORTABLEPC]
 Name = Portable PC
 NamePlural = Portable PCs
@@ -6635,7 +6654,7 @@ Pocket = 5
 Price = 200
 FieldUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
-Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+Description = A berry filled with coloring with a disguising taste. It changes a Pokémon’s color when eaten.
 #-------------------------------
 [CAMPINGGEAR]
 Name = Camping Gear
@@ -6719,42 +6738,42 @@ Description = An item for checking a Pokémon's contest stats.
 Name = Candy Base
 NamePlural = Candy Bases
 Pocket = 1
-Price = 100
+Price = 50
 Description = A mixture to make candy.
 #-------------------------------
 [REDCANDYBASE]
 Name = Red Candy Base
 NamePlural = Red Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy red!
 #-------------------------------
 [BLUECANDYBASE]
 Name = Blue Candy Base
 NamePlural = Blue Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy blue!
 #-------------------------------
 [PINKCANDYBASE]
 Name = Pink Candy Base
 NamePlural = Pink Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy pink!
 #-------------------------------
 [GREENCANDYBASE]
 Name = Green Candy Base
 NamePlural = Green Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy green!
 #-------------------------------
 [YELLOWCANDYBASE]
 Name = Yellow Candy Base
 NamePlural = Yellow Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy yellow!
 #-------------------------------
 [ADVENTUREGUIDE]
@@ -6765,3 +6784,57 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A convenient notebook that contains all the advice a Trainer receives out on an adventure.
+#-------------------------------
+[GOLDCAMERA]
+Name = Golden Camera
+NamePlural = Golden Camera
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Tracks any movement without blur. Selling the footage to TETRA is automatic and non-negotiable.
+#-------------------------------
+[GOLDTICKET]
+Name = Dummy Ticket
+NamePlural = Dummy Ticket
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Dummy Ticket.
+#-------------------------------
+[ROSEDIAMOND]
+Name = Rose Diamond
+NamePlural = Rose Diamonds
+Pocket = 1
+Price = 38000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A vibrant pink diamond sculpted into a beautiful flower shape. It is loved by a certain Pokémon.
+#-------------------------------
+[RUSTYHANDLEBARS]
+Name = Rusty Handlebars
+NamePlural = Rusty Handlebars
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An old, rusted set of handlebars that might have belonged to a bicycle.
+#-------------------------------
+[RUSTYPEDAL]
+Name = Rusty Pedal
+NamePlural = Rusty Pedals
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An old, rusted pedal spoke that might have belonged to a bicycle.
+#-------------------------------
+[RUSTYTOPTUBE]
+Name = Rusty Top Tube
+NamePlural = Rusty Top Tubes
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An old, rusted top tube that might have belonged to a bicycle.

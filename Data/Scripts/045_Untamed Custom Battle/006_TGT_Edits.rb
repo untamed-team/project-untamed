@@ -81,9 +81,11 @@ class NPCTrainer < Trainer
   attr_accessor :lose_text
   attr_accessor :win_text
   attr_accessor :gimmick #by low
+  attr_accessor :rngversion #by low
 
   def initialize(name, trainer_type)
     super
+    @rngversion = 0
     @items     = []
     @lose_text = nil
     @win_text  = nil
@@ -145,8 +147,8 @@ or dont
     return if @field.weather == newWeather
     @field.weather = newWeather
     duration = (fixedDuration) ? 5 : -1
-    if duration > 0 && user && user.itemActive? && !user.hasActiveAbility?(:FREEZEOVER) #by low
-      duration = Battle::ItemEffects.triggerWeatherExtender(user.item, @field.weather,duration, user, self)
+    if duration > 0 && user && user.itemActive?
+      duration = Battle::ItemEffects.triggerWeatherExtender(user.item, @field.weather,duration, user, self) if !user.hasActiveAbility?([:FREEZEOVER, :FORECAST]) #by low
     end
 		if duration > 0 && @field.defaultWeather != :None #by low
 			duration = (duration / 3).floor
@@ -217,92 +219,67 @@ or dont
 		# the great TGT list
 		if trainerBattle?
 			@opponent.each_with_index do |trainer, i|
-				funstuff = trainer.gimmick.to_s
-				
-        gimmickString = funstuff.clone
-        polishedarray = []
-        
-        loop do
-          if !gimmickString.include?("_")
-            #no more separators, so one item remains in the string
-            #push the remainer of gimmickString into  polishedarray
-            polishedarray.push(gimmickString)
-            break
-          end #if !gimmickString.include?("_")
-					
-          for c in 0...gimmickString.length
-            if gimmickString[c] == "_"
-              #found a separator
-              separatorPosition = c
-              
-              #add findings to polishedArray
-              polishedarray.push(gimmickString[0...c])
-              
-              #delete finding from array and start over
-              #replace the finding with nothing, removing it from the string
-              gimmickString[0,c+1]=""
-              break
+        funstuff = trainer.gimmick.to_s
+        polishedarray = funstuff.split('_')
+
+        weatherHash = {
+          "sun"  => :Sun,  "harshsun"  => :HarshSun,
+          "rain" => :Rain, "heavyrain" => :HeavyRain,
+          "hail" => :Hail, "sandstorm" => :Sandstorm,
+          "strongwinds" => :StrongWinds, 
+          "shadowsky"   => :ShadowSky
+        }
+        terrainHash = {
+          "electricterrain" => :Electric, "grassyterrain" => :Grassy, 
+          "psychicterrain"  => :Psychic,  "mistyterrain"  => :Misty
+        }
+        zoneHash = {
+          "normalzone" => :NORMAL, "fightingzone" => :FIGHTING, "poisonzone" => :POISON, 
+          "groundzone" => :GROUND, "flyingzone"   => :FLYING,   "bugzone"    => :BUG,
+          "rockzone"   => :ROCK,   "ghostzone"    => :GHOST,    "icezone"    => :ICE,
+          "dragonzone" => :DRAGON, "darkzone"     => :DARK,     "steelzone"  => :STEEL, 
+          "fairyzone"  => :FAIRY,  "qmarkszone"   => :QMARKS
+        }
+        effectHash = {
+          "trickroom" => :TrickRoom, "wonderroom" => :WonderRoom, "magicroom" => :MagicRoom,
+          "gravity" => :Gravity, "tailwind" => :Tailwind, 
+          "lightscreen" => :LightScreen, "reflect" => :Reflect, "auroraveil" => :AuroraVeil,
+          "mist" => :Mist, "safeguard" => :Safeguard, "luckychant" => :LuckyChant,
+          "statdropimmunity" => :StatDropImmunity
+        }
+        hazardsHash = {
+          "spikes"    => :Spikes,    "toxicspikes" => :ToxicSpikes, 
+          "stickyweb" => :StickyWeb, "stealthrock" => :StealthRock
+        }
+        polishedarray.each do |gimmick|
+          gimmick_downcase = gimmick.downcase
+          if weatherHash[gimmick_downcase]
+            @field.weather = weatherHash[gimmick_downcase]
+          elsif terrainHash[gimmick_downcase]
+            @field.terrain = terrainHash[gimmick_downcase]
+          elsif zoneHash[gimmick_downcase]
+            @field.typezone = zoneHash[gimmick_downcase]
+          elsif effectHash[gimmick_downcase]
+            if ["trickroom", "wonderroom", "magicroom", "gravity"].include?(gimmick_downcase)
+              @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
+            elsif ["statdropimmunity"].include?(gimmick_downcase)
+              @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true
+            else
+              @field.weather = :Hail if gimmick_downcase == "auroraveil"
+              @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
             end
-          end #for c in 0...gimmickString.length
-        end #loop do
-				
-				#~ print "#{polishedarray}"
-				#~ castername = trainer.full_name
-				#~ print "#{castername}"
-				for i in 0...polishedarray.length
-					case polishedarray[i]
-					# weather
-					when "Sun" 							then @field.weather = :Sun
-					when "Rain" 						then @field.weather = :Rain
-					when "Sandstorm" 				then @field.weather = :Sandstorm
-					when "Hail" 						then @field.weather = :Hail
-					when "HarshSun" 				then @field.weather = :HarshSun
-					when "HeavyRain" 				then @field.weather = :HeavyRain
-					when "StrongWinds"			then @field.weather = :StrongWinds
-					when "ShadowSky" 				then @field.weather = :ShadowSky
-					# terrains
-					when "ElectricTerrain" 	then @field.terrain = :Electric
-					when "GrassyTerrain" 		then @field.terrain = :Grassy
-					when "MistyTerrain" 		then @field.terrain = :Misty
-					when "PsychicTerrain" 	then @field.terrain = :Psychic
-					# zones
-					when "NormalZone"				then @field.typezone = :NORMAL
-					when "FightingZone"			then @field.typezone = :FIGHTING
-					when "PoisonZone"				then @field.typezone = :POISON
-					when "GroundZone"				then @field.typezone = :GROUND
-					when "FlyingZone"				then @field.typezone = :FLYING
-					when "BugZone"					then @field.typezone = :BUG
-					when "RockZone"					then @field.typezone = :ROCK
-					when "GhostZone"				then @field.typezone = :GHOST
-					when "IceZone"					then @field.typezone = :ICE
-					when "DragonZone"				then @field.typezone = :DRAGON
-					when "DarkZone"					then @field.typezone = :DARK
-					when "SteelZone"				then @field.typezone = :STEEL
-					when "FairyZone"				then @field.typezone = :FAIRY
-					when "QMARKSZone"				then @field.typezone = :QMARKS
-					# rooms
-					when "TrickRoom"				then @field.effects[PBEffects::TrickRoom]   = 999
-					when "WonderRoom"				then @field.effects[PBEffects::WonderRoom]  = 999
-					when "MagicRoom"				then @field.effects[PBEffects::MagicRoom]   = 999
-					# misc 
-					# sides[1] == AI, sides[0] == Player
-					when "Gravity"					then @field.effects[PBEffects::Gravity] 	  		= 999
-					when "Tailwind"					then @sides[1].effects[PBEffects::Tailwind] 		= 999
-					when "LightScreen"			then @sides[1].effects[PBEffects::LightScreen] 	= 999
-					when "Reflect"					then @sides[1].effects[PBEffects::Reflect] 			= 999
-					when "Mist"							then @sides[1].effects[PBEffects::Mist] 				= 999
-					when "Safeguard"				then @sides[1].effects[PBEffects::Safeguard] 		= 999
-					when "LuckyChant"				then @sides[1].effects[PBEffects::LuckyChant] 	= 999
-					when "AuroraVeil"				then @sides[1].effects[PBEffects::AuroraVeil] 	= 999; @field.weather = :Hail
-					when "StatDropImmunity"	then @sides[1].effects[PBEffects::StatDropImmunity] = true
-					when "Spikes"						then @sides[0].effects[PBEffects::Spikes]  			+= 1
-					when "ToxicSpikes"			then @sides[0].effects[PBEffects::ToxicSpikes]  += 1
-					when "StickyWeb"				then @sides[0].effects[PBEffects::StickyWeb]  	+= 3 # = true
-					when "StealthRock"			then @sides[0].effects[PBEffects::StealthRock]  = true
-					end
-				end
-			end
-		end
+          elsif hazardsHash[gimmick_downcase]
+            if ["stealthrock"].include?(gimmick_downcase)
+              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] = true
+            else
+              # for every item in the array that mentions these hazards, one more "layer" is added
+              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 1
+              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if gimmick_downcase == "stickyweb"
+            end
+          end
+        end
+      end
+    end
     # Weather announcement
     weather_data = GameData::BattleWeather.try_get(@field.weather)
     pbCommonAnimation(weather_data.animation) if weather_data
@@ -318,8 +295,9 @@ or dont
     when :HarshSun    then pbDisplay(_INTL("The sunlight is extremely harsh."))
     when :HeavyRain   then pbDisplay(_INTL("It is raining heavily."))
     when :StrongWinds then pbDisplay(_INTL("The wind is strong."))
-    when :ShadowSky   then pbDisplay(_INTL("The sky is shadowy."))
+    when :ShadowSky   then pbDisplay(_INTL("Darkness engulfs the sky."))
     end
+
     # Terrain announcement
     terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
     pbCommonAnimation(terrain_data.animation) if terrain_data
@@ -328,43 +306,53 @@ or dont
 			@field.terrainDuration = -1
 		end
     case @field.terrain
-    when :Electric
-      pbDisplay(_INTL("An electric current runs across the battlefield!"))
-    when :Grassy
-      pbDisplay(_INTL("Grass is covering the battlefield!"))
-    when :Misty
-      pbDisplay(_INTL("Mist swirls about the battlefield!"))
-    when :Psychic
-      pbDisplay(_INTL("The battlefield is weird!"))
+    when :Electric then pbDisplay(_INTL("An electric current runs across the battlefield!"))
+    when :Grassy   then pbDisplay(_INTL("Grass is covering the battlefield!"))
+    when :Misty    then pbDisplay(_INTL("Mist swirls about the battlefield!"))
+    when :Psychic  then pbDisplay(_INTL("The battlefield is weird!"))
     end
+
     # Zones announcement
     if @field.typezone != :None && GameData::Type.exists?(@field.typezone)
 			typeofzone = GameData::Type.get(@field.typezone).name
 			pbDisplay(_INTL("A {1} Zone was summoned, it will power up {1}-type attacks!",typeofzone))
 		end
+
+    # mms
 		@sides[1].effects[PBEffects::Reflect] 		= 999 if $game_variables[MASTERMODEVARS][1]==true
 		@sides[1].effects[PBEffects::LightScreen] = 999 if $game_variables[MASTERMODEVARS][2]==true
 		@sides[1].effects[PBEffects::StatDropImmunity] = true if $game_variables[MASTERMODEVARS][11]==true
-		# Room effects / general effects announcement
-		pbDisplay(_INTL("The dimensions are twisted!")) if @field.effects[PBEffects::TrickRoom] > 0
-		pbDisplay(_INTL("A bizzare area in which the Defense stats are swapped has appeared!")) if @field.effects[PBEffects::WonderRoom] > 0
-		pbDisplay(_INTL("A bizzare area in which items have no effect has appeared!"))if @field.effects[PBEffects::MagicRoom] > 0
-		pbDisplay(_INTL("Gravity intensified!")) if @field.effects[PBEffects::Gravity] > 0
-		pbDisplay(_INTL("A Tailwind blows from behind the enemy's team!")) if @sides[1].effects[PBEffects::Tailwind] > 0
-		pbDisplay(_INTL("A wall of light specially protects the enemy's team!"))  if @sides[1].effects[PBEffects::LightScreen] > 0
-		pbDisplay(_INTL("A wall of light physically protects the enemy's team!")) if @sides[1].effects[PBEffects::Reflect] > 0
-		pbDisplay(_INTL("A beautiful aurora protects the enemy's team!")) if @sides[1].effects[PBEffects::AuroraVeil] > 0
-		pbDisplay(_INTL("The enemy's team is shrouded in mist!")) if @sides[1].effects[PBEffects::Mist] > 0
-		pbDisplay(_INTL("The enemy's team is cloaked in a mystical veil!")) if @sides[1].effects[PBEffects::Safeguard] > 0
-		pbDisplay(_INTL("The opponent chants an incantation towards the sky!")) if @sides[1].effects[PBEffects::LuckyChant] > 0
-		pbDisplay(_INTL("A mystical enchant protects the enemy from all stat drops!")) if @sides[1].effects[PBEffects::StatDropImmunity]
-		if @sides[0].effects[PBEffects::Spikes] > 0 || @sides[0].effects[PBEffects::ToxicSpikes] > 0 ||
+		
+    # Misc announcements
+    effectHashMsgs_field = {
+      PBEffects::TrickRoom  => "The battlefield twists and contorts!",
+      PBEffects::WonderRoom => "A bizzare area in where Defense stats are swapped has emerged!",
+      PBEffects::MagicRoom  => "A strange area where items lose their effects has appeared!",
+      PBEffects::Gravity    => "An intense gravitational force takes hold!"
+    }
+    effectHashMsgs_field.each do |effect, msg|
+      next if @field.effects[effect] == 0
+      pbDisplay(_INTL(msg))
+    end
+    
+    effectHashMsgs_side = {
+      PBEffects::Tailwind    => "The enemy's team is propelled by a strong Tailwind!",
+      PBEffects::LightScreen => "A wall of light specially protects the enemy's team!",
+      PBEffects::Reflect     => "A wall of light physically protects the enemy's team!",
+      PBEffects::AuroraVeil  => "A beautiful aurora protects the enemy's team!",
+      PBEffects::Mist        => "The enemy's team is shrouded in mist!",
+      PBEffects::Safeguard   => "The enemy's team is cloaked in a mystical veil!",
+      PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!"
+    }
+    effectHashMsgs_side.each do |effect, msg|
+      next if @sides[1].effects[effect] == 0
+      pbDisplay(_INTL(msg))
+    end
+		pbDisplay(_INTL("The opponent is immune to all stat drops!")) if @sides[1].effects[PBEffects::StatDropImmunity]
+		if @sides[0].effects[PBEffects::Spikes] > 0    || @sides[0].effects[PBEffects::ToxicSpikes] > 0 ||
 			 @sides[0].effects[PBEffects::StickyWeb] > 0 || @sides[0].effects[PBEffects::StealthRock]
 			pbDisplay(_INTL("Hazards are scattered all around your side of the field!"))
 		end
-    #~ print "#{@field.defaultWeather},#{@field.defaultTerrain}"
-		#~ print "#{@field.weatherDuration},#{@field.terrainDuration}"
-		#~ print battle.turnCount
 		# Abilities upon entering battle
     pbOnAllBattlersEnteringBattle
     # Main battle loop

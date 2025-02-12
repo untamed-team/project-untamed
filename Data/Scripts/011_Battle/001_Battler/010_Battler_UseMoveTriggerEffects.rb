@@ -123,7 +123,7 @@ class Battle::Battler
         if numFainted > 0 && user.form == 0
           @battle.battleBond[user.index & 1][user.pokemonIndex] = true
           @battle.pbDisplayBrief(_INTL("Showtimes are on the hour, not a moment before and not a moment later!"))
-          @battle.pbShowAbilitySplash(user)
+          @battle.pbShowAbilitySplash(user, true)
 					@battle.scene.pbAnimation(:SPOTLIGHT, user, user)
           user.pbChangeForm(1, _INTL("Now is my time to shine!"))
           @battle.pbHideAbilitySplash(user)
@@ -179,7 +179,8 @@ class Battle::Battler
     # Target's held item (Eject Button, Red Card, Eject Pack)
     @battle.pbPriority(true).each do |b|
       if targets.any? { |targetB| targetB.index == b.index } &&
-         !b.damageState.unaffected && b.damageState.calcDamage > 0 && b.itemActive?
+         !b.damageState.unaffected && b.damageState.calcDamage > 0 && b.itemActive? && 
+         (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
         Battle::ItemEffects.triggerAfterMoveUseFromTarget(b.item, b, user, move, switched_battlers, @battle)
       end
       # Target's Eject Pack

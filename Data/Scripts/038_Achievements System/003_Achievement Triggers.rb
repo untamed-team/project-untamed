@@ -156,11 +156,13 @@ end
 end
 
 #the below method is handled in the Evolve from Party script
-alias achieve_pbUseItem pbUseItem
-def pbUseItem(*args)
-  ret=achieve_pbUseItem(*args)
-  if ret==1 || ret==3
-    Achievements.incrementProgress("ITEMS_USED",1)
+class PokemonParty_Scene
+  alias achieve_pbUseItem pbUseItem
+  def pbUseItem(*args)
+    ret=achieve_pbUseItem(*args)
+    if ret==1 || ret==3
+      Achievements.incrementProgress("ITEMS_USED",1)
+    end
   end
 end
 

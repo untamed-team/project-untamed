@@ -64,29 +64,7 @@ class Battle::Battler
   # Called when a Pokémon (self) enters battle, at the end of each move used,
   # and at the end of each round.
   def pbContinualAbilityChecks(onSwitchIn = false)
-    # Check for end of primordial weather
-    @battle.pbEndPrimordialWeather
-    # Trace
-    if hasActiveAbility?(:TRACE)
-      # NOTE: In Gen 5 only, Trace only triggers upon the Trace bearer switching
-      #       in and not at any later times, even if a traceable ability turns
-      #       up later. Essentials ignores this, and allows Trace to trigger
-      #       whenever it can even in Gen 5 battle mechanics.
-      choices = @battle.allOtherSideBattlers(@index).select { |b|
-        next !b.ungainableAbility? &&
-             ![:POWEROFALCHEMY, :RECEIVER, :TRACE].include?(b.ability_id)
-      }
-      if choices.length > 0
-        choice = choices[@battle.pbRandom(choices.length)]
-        @battle.pbShowAbilitySplash(self)
-        self.ability = choice.ability
-        @battle.pbDisplay(_INTL("{1} traced {2}'s {3}!", pbThis, choice.pbThis(true), choice.abilityName))
-        @battle.pbHideAbilitySplash(self)
-        if !onSwitchIn && (unstoppableAbility? || abilityActive?)
-          Battle::AbilityEffects.triggerOnSwitchIn(self.ability, self, @battle)
-        end
-      end
-    end
+    # ded
   end
 
   #=============================================================================
@@ -397,7 +375,7 @@ class Battle::Battler
     end
     amt = @totalhp / fraction_to_heal
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self, forced)
       amt *= 2
@@ -429,7 +407,7 @@ class Battle::Battler
     return false if !pbCanRaiseStatStage?(stat, self)
     used_item_name = GameData::Item.get(item_to_use).name
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self, forced)
       increment *= 2
@@ -448,7 +426,7 @@ class Battle::Battler
     mults[:final_damage_multiplier] /= 2
     @damageState.berryWeakened = true
     ripening = false
-		$game_temp.party_berries_eaten_number[self.pokemonIndex] += 1 #by low
+		pbRaiseTropiusEvolutionStep(self) #by low
     if hasActiveAbility?(:RIPEN)
       @battle.pbShowAbilitySplash(self)
       mults[:final_damage_multiplier] /= 2

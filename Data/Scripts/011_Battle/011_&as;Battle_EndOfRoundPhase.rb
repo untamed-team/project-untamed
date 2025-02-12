@@ -20,13 +20,14 @@ class Battle
       # Check for form changes caused by the weather changing
       allBattlers.each { |battler| battler.pbCheckFormOnWeatherChange }
       # Start up the default weather
-			if @field.defaultWeather != :None
-				pbStartWeather(nil, @field.defaultWeather)
-			elsif @field.presageBackup[0] != :None # presage stuff  #by low
-				pbStartWeather(nil, @field.presageBackup[0], false, true, false, @field.presageBackup[1])
-				@field.abilityWeather = @field.presageBackup[2]
-				#~ echo ("\nWas the previous "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
-			end
+      if @field.defaultWeather != :None
+        @field.abilityWeather = false
+        pbStartWeather(nil, @field.defaultWeather)
+      elsif @field.presageBackup[0] != :None # presage stuff  #by low
+        pbStartWeather(nil, @field.presageBackup[0], false, true, false, @field.presageBackup[1])
+        @field.abilityWeather = @field.presageBackup[2]
+        #~ echo ("\nWas the previous "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
+      end
       return if @field.weather == :None
     end
     # Weather continues
@@ -112,7 +113,7 @@ class Battle
     moveUser.pbUseMoveSimple(move, position_index)
     @futureSight = false
     moveUser.lastMoveFailed = userLastMoveFailed
-		moveUser.premonitionMove = 0  # Premonition #by low
+    moveUser.premonitionMove = 0  # Premonition #by low
     @battlers[position_index].pbFaint if @battlers[position_index].fainted?
     position.effects[PBEffects::FutureSightCounter]        = 0
     position.effects[PBEffects::FutureSightMove]           = nil
@@ -171,7 +172,7 @@ class Battle
   # End Of Round various healing effects
   #=============================================================================
   def pbEORHealingEffects(priority)
-		# Cologne Case #by low
+    # Cologne Case #by low
     # Aqua Ring
     priority.each do |battler|
       next if !battler.effects[PBEffects::AquaRing]
@@ -197,18 +198,27 @@ class Battle
       recipient = @battlers[battler.effects[PBEffects::LeechSeed]]
       next if !recipient || recipient.fainted?
       pbCommonAnimation("LeechSeed", recipient, battler)
-			# leech seed nerf #by low
-			math = ($game_variables[MECHANICSVAR] >= 3) ? 10 : 8
-			dmg = battler.totalhp / math
-			dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
+      # leech seed nerf #by low
+      dmg = battler.totalhp / 8
+      dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
       battler.pbTakeEffectDamage(dmg) { |hp_lost|
-				true_hp_lost = hp_lost
-				true_hp_lost /= 2 if $game_variables[MECHANICSVAR] >= 3 && battler.pbOwnedByPlayer?
+        true_hp_lost = hp_lost
+        true_hp_lost *= 0.75 if recipient.pbOwnedByPlayer?
         recipient.pbRecoverHPFromDrain(true_hp_lost, battler,
                                        _INTL("{1}'s health is sapped by Leech Seed!", battler.pbThis))
         recipient.pbAbilitiesOnDamageTaken
       }
       recipient.pbFaint if recipient.fainted?
+      if !battler.fainted?
+        if $player.difficulty_mode?("chaos")
+          battler.effects[PBEffects::LeechSeedCount] -= 1
+          if battler.effects[PBEffects::LeechSeedCount] <= 0
+            battler.effects[PBEffects::LeechSeed]      = -1
+            battler.effects[PBEffects::LeechSeedCount] = 0
+            pbDisplay(_INTL("{1} was freed from the leech!", battler.pbThis))
+          end
+        end
+      end
     end
   end
 
@@ -216,91 +226,6 @@ class Battle
   # End Of Round deal damage from status problems
   #=============================================================================
   def pbEORStatusProblemDamage(priority)
-    # Damage from poisoning
-    priority.each do |battler|
-      next if battler.fainted?
-      next if battler.status != :POISON
-      next if battler.hasActiveAbility?(:TOXICBOOST) #by low
-      if battler.statusCount > 0
-        battler.effects[PBEffects::Toxic] += 1
-        battler.effects[PBEffects::Toxic] = 16 if battler.effects[PBEffects::Toxic] > 16
-      end
-      if battler.hasActiveAbility?(:POISONHEAL)
-        if battler.canHeal?
-          anim_name = GameData::Status.get(:POISON).animation
-          pbCommonAnimation(anim_name, battler) if anim_name
-          pbShowAbilitySplash(battler)
-          battler.pbRecoverHP(battler.totalhp / 8)
-          if Scene::USE_ABILITY_SPLASH
-            pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
-          else
-            pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
-          end
-          pbHideAbilitySplash(battler)
-        end
-      elsif battler.takesIndirectDamage?
-        battler.droppedBelowHalfHP = false
-        dmg = battler.totalhp / 8
-				if battler.statusCount > 0
-					if $game_variables[DIFFICULTYVAR] > 0 #by low
-						if battler.effects[PBEffects::Toxic] > 2
-							dmg = battler.totalhp / 4
-							battler.effects[PBEffects::Toxic] = 0
-							battler.statusCount = 2 #for "pbContinueStatus" to say a different message
-							#~ print "super damage"
-						end
-					else
-						dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
-					end
-				end
-        battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-        battler.pbItemHPHealCheck
-        battler.pbAbilitiesOnDamageTaken
-        battler.pbFaint if battler.fainted?
-        battler.droppedBelowHalfHP = false
-      end
-    end
-    # Damage from burn
-    priority.each do |battler|
-      next if battler.status != :BURN || !battler.takesIndirectDamage? || battler.hasActiveAbility?(:FLAREBOOST) #by low
-      battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
-      dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:HEATPROOF)
-      battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-      battler.pbItemHPHealCheck
-      battler.pbAbilitiesOnDamageTaken
-      battler.pbFaint if battler.fainted?
-      battler.droppedBelowHalfHP = false
-    end
-    # Damage from frostbite #by low
-    priority.each do |battler|
-      next if battler.status != :FROZEN || !battler.takesIndirectDamage?
-      battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
-      dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:THICKFAT)
-      battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
-      battler.pbItemHPHealCheck
-      battler.pbAbilitiesOnDamageTaken
-      battler.pbFaint if battler.fainted?
-      battler.droppedBelowHalfHP = false
-    end
-		# dizzy #by low
-    priority.each do |battler|
-      next if battler.status != :DIZZY
-      battler.statusCount -= 1
-      if battler.statusCount <= 0
-        battler.pbCureStatus
-      else
-				battler.pbContinueStatus
-			end
-    end
-		# paralyzis rework #by low
-    priority.each do |battler|
-      next if battler.status != :PARALYSIS
-      next if $game_variables[DIFFICULTYVAR] == 0
-      battler.statusCount -= 1
-      battler.pbCureStatus if battler.statusCount <= 0
-    end
   end
 
   #=============================================================================
@@ -579,7 +504,7 @@ class Battle
         pbDisplay(_INTL("{1} is making an uproar!", battler.pbThis))
       end
     end
-		# moved slow start counter to *Battle_AbilityEffects #by low
+    # moved slow start counter to *Battle_AbilityEffects #by low
   end
 
   #=============================================================================
@@ -668,7 +593,7 @@ class Battle
       end
     end
     # Self-curing of status due to affection
-		# this is disgusting, fuck off
+    # this is disgusting, fuck off
     if Settings::AFFECTION_EFFECTS && @internalBattle
       priority.each do |battler|
         next if battler.fainted? || battler.status == :NONE
@@ -724,12 +649,12 @@ class Battle
     end
     # Effects that apply to a side that wear off after a number of rounds
     2.times { |side| 
-			pbEOREndSideEffects(side, priority)
-			if @field.weather != :Hail && @sides[side].effects[PBEffects::AuroraVeil] > 0 #by low
-				@sides[side].effects[PBEffects::AuroraVeil] = 0
-				pbDisplay(_INTL("Due to the lack of Hail, {1}'s Aurora Veil wore off!", @battlers[side].pbTeam))
-			end
-		}
+      pbEOREndSideEffects(side, priority)
+      if @field.weather != :Hail && @sides[side].effects[PBEffects::AuroraVeil] > 0 #by low
+        @sides[side].effects[PBEffects::AuroraVeil] = 0
+        pbDisplay(_INTL("Due to the lack of Hail, {1}'s Aurora Veil wore off!", @battlers[side].pbTeam))
+      end
+    }
     # Effects that apply to the whole field that wear off after a number of rounds
     pbEOREndFieldEffects(priority)
     # End of terrains
@@ -762,25 +687,20 @@ class Battle
     pbEORShiftDistantBattlers
     # Try to make Trace work, check for end of primordial weather
     priority.each { |battler| battler.pbContinualAbilityChecks }
-		allBattlers.each do |battler| # the big funny #by low
-			if battler.pbOwnedByPlayer?
-				if $game_temp.party_speed_boost_number && $game_temp.party_speed_boost_number[battler.pokemonIndex]
-					$game_temp.party_speed_boost_number[battler.pokemonIndex] = battler.stages[:SPEED]
-				end
-				
-				battler.pokemon.evolution_steps += 1 if battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky") && battler.isSpecies?(:DUNSPARCE)
-				#~ print battler.pokemon.evolution_steps
-				for i in $Trainer.party
-					if [:BANAGNAW, :NANAHI, :POTASSOPOD].include?(i.species) && i.fainted?
-						$game_temp.party_dead_bananas[battler.pokemonIndex] += 1
-					end
-				end
-				#print "#{$game_temp.party_speed_boost_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_berries_eaten_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_fly_turns_number[battler.pokemonIndex]}"
-				#print "#{$game_temp.party_dead_bananas[battler.pokemonIndex]}"
-			end
-		end
+    allBattlers.each do |battler| # the big funny #by low
+      if battler.pbOwnedByPlayer?
+        if $game_temp.party_speed_boost_number && $game_temp.party_speed_boost_number[battler.pokemonIndex]
+          $game_temp.party_speed_boost_number[battler.pokemonIndex] = battler.stages[:SPEED]
+        end
+        
+        battler.pokemon.evolution_steps += 1 if battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky") && battler.isSpecies?(:DUNSPARCE)
+        for i in $Trainer.party
+          if [:BANAGNAW, :NANAHI, :POTASSOPOD].include?(i.species) && i.fainted?
+            $game_temp.party_dead_bananas[battler.pokemonIndex] += 1
+          end
+        end
+      end
+    end
     # Reset/count down battler-specific effects (no messages)
     allBattlers.each do |battler|
       battler.effects[PBEffects::BanefulBunker]    = false
@@ -817,10 +737,12 @@ class Battle
       battler.effects[PBEffects::SpikyShield]      = false
       battler.effects[PBEffects::Spotlight]        = 0
       battler.effects[PBEffects::ThroatChop]       -= 1 if battler.effects[PBEffects::ThroatChop] > 0
-			# new effects #by low
+      # new effects #by low
       battler.effects[PBEffects::NoFlinch]         -= 1 if battler.effects[PBEffects::NoFlinch] > 0
       battler.effects[PBEffects::ZealousDance]     -= 1 if battler.effects[PBEffects::ZealousDance] > 0
-			battler.pokemon.willmega 										 = false
+      battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
+      battler.effects[PBEffects::HoldingHand]      = false
+      battler.pokemon.willmega                     = false
       battler.lastHPLost                           = 0
       battler.lastHPLostFromFoe                    = 0
       battler.droppedBelowHalfHP                   = false

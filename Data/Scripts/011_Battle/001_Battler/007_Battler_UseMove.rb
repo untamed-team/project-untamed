@@ -213,40 +213,43 @@ class Battle::Battler
         pbChangeForm(0, _INTL("{1} changed to Shield Forme!", pbThis))
       end
     end
-		# Presage #by low (placed here so it triggers before doing damage)
-		if self.hasActiveAbility?(:PRESAGE)
-			weather_hash = {
-				"RaiseUserAtkSpAtk1Or2InSun"	=> :Sun, # growth
-				"HealUserDependingOnWeather"	=> :Sun, # morning sun
-				"TwoTurnAttackOneTurnInSun"		=> :Sun, # solar beam / solar blade
-				"FreezeTargetAlwaysHitsInHail"	=> :Hail, # blizzard
-				"HealUserDependingOnSandstorm"	=> :Sandstorm, # shore up
-				"StartUserSideDoubleSpeed"			=> :StrongWinds,  # tailwind
-				"ConfuseTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # hurricane
-				"ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # thunder
-				"HigherDamageInRain"														=> :Rain  # stream burst
-			}
-			if move.function != "TypeAndPowerDependOnWeather"
-				new_weather = weather_hash[move.function]
-				if !new_weather && move.damagingMove?
-					case move.type
-						when :FIRE
-							new_weather = :Sun
-						when :WATER
-							new_weather = :Rain
-						when :ICE
-							new_weather = :Hail
-						when :GROUND, :ROCK
-							new_weather = :Sandstorm
-						when :NORMAL
-							new_weather = :None
-						when :QMARKS
-							new_weather = :ShadowSky
-					end
-				end
-			end
-			battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
-		end
+    # Presage #by low (placed here so it triggers before doing damage)
+    if self.hasActiveAbility?(:PRESAGE)
+      weather_hash = {
+        "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+        "HealUserDependingOnWeather" => :Sun, # morning sun
+        "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+        "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+        "HealUserDependingOnHail"      => :Hail, # glacial gulf
+        "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+        "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+        "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+        "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+        "HigherDamageInRain"                            => :Rain, # stream burst
+        "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+        "PeperSpray"                                    => :Sun   # pepper spray
+      }
+      if move.function != "TypeAndPowerDependOnWeather"
+        new_weather = weather_hash[move.function]
+        if !new_weather && move.damagingMove?
+          case move.type
+            when :FIRE
+              new_weather = :Sun
+            when :WATER
+              new_weather = :Rain
+            when :ICE
+              new_weather = :Hail
+            when :GROUND, :ROCK
+              new_weather = :Sandstorm
+            when :NORMAL
+              new_weather = :None
+            when :QMARKS
+              new_weather = :ShadowSky
+          end
+        end
+      end
+      battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
+    end
     # Calculate the move's type during this usage
     move.calcType = move.pbCalcType(self)
     # Start effect of Mold Breaker
@@ -354,7 +357,7 @@ class Battle::Battler
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
-      if ![:Rain, :HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
+      if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
           @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
         }
@@ -492,10 +495,13 @@ class Battle::Battler
             move.pbEffectivenessMessage(user, b, targets.length)
           end
         end
-        if realNumHits == 1
-          @battle.pbDisplay(_INTL("Hit 1 time!"))
-        elsif realNumHits > 1
-          @battle.pbDisplay(_INTL("Hit {1} times!", realNumHits))
+        # ignore the normal multi hit text Splinter Shot #by low
+        if move.function != "HitTwoTimesReload"
+          if realNumHits == 1
+            @battle.pbDisplay(_INTL("Hit 1 time!"))
+          elsif realNumHits > 1
+            @battle.pbDisplay(_INTL("Hit {1} times!", realNumHits))
+          end
         end
       end
       # Magic Coat's bouncing back (move has targets)
@@ -830,6 +836,12 @@ class Battle::Battler
         b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
       end
     end
+    # redundant text for Splinter Shot #by low
+    if move.function == "HitTwoTimesReload"
+      mimicHitNum = hitNum + 1
+      roundnabout = (mimicHitNum > 1) ? "rounds" : "round"
+      @battle.pbDisplay(_INTL("{1} {2}!", mimicHitNum, roundnabout))
+    end
     # Fainting
     targets.each { |b| b.pbFaint if b&.fainted? }
     user.pbFaint if user.fainted?
@@ -839,7 +851,7 @@ class Battle::Battler
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
 		# damage message #by low
-		if $game_variables[MECHANICSVAR] >= 2
+		if $player.difficulty_mode?("hard")
 			targets.each do |b|
 				if b.damageState.calcDamage > 0
 					damagetotal = b.damageState.calcDamage

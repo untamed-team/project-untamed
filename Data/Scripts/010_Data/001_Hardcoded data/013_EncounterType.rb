@@ -175,3 +175,17 @@ GameData::EncounterType.register({
   :type           => :land,
   :trigger_chance => 21
 })
+
+#by gardenette
+GameData::EncounterType.register({
+  :id             => :CornDay,
+  :type           => :land,
+  :trigger_chance => 21
+})
+
+#by gardenette
+GameData::EncounterType.register({
+  :id             => :CornNight,
+  :type           => :land,
+  :trigger_chance => 21
+})

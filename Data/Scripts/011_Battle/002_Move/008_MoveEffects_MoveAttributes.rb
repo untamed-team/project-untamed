@@ -69,7 +69,7 @@ end
 #===============================================================================
 class Battle::Move::OHKO < Battle::Move::FixedDamageMove
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.level >= user.level #by low
+    if target.level >= user.level
       @battle.pbDisplay(_INTL("{1} is unaffected!", target.pbThis)) if show_message
       return true
     end
@@ -206,6 +206,7 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [(user.happiness * 2 / 5).floor, 1].max
   end
 end
@@ -215,20 +216,21 @@ end
 #===============================================================================
 class Battle::Move::PowerLowerWithUserHappiness < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
+    return 102 if !user.pbOwnedByPlayer?
     return [((255 - user.happiness) * 2 / 5).floor, 1].max
   end
 end
 
 #===============================================================================
-# Power increases with the user's positive stat changes (ignores negative ones).
-# (Power Trip, Stored Power)
+# Power depends on the user's stat changes. (Power Trip, Stored Power)
 #===============================================================================
 class Battle::Move::PowerHigherWithUserPositiveStatStages < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
     mult = 1
-    GameData::Stat.each_battle { |s| mult += user.stages[s.id] if user.stages[s.id] > 0 }
+    GameData::Stat.each_battle { |s| mult += user.stages[s.id] }
+    mult = [1, mult].max
     return 20 * mult
-  end
+  end  
 end
 
 #===============================================================================
@@ -355,7 +357,7 @@ class Battle::Move::PowerHigherWithConsecutiveUseOnUserSide < Battle::Move
     if !user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed]
       user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] = (oldVal >= 5) ? 5 : oldVal + 1
     end
-    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true
+    user.pbOwnSide.effects[PBEffects::EchoedVoiceUsed] = true if user.pbOwnedByPlayer?
   end
 
   def pbBaseDamage(baseDmg, user, target)
@@ -364,66 +366,72 @@ class Battle::Move::PowerHigherWithConsecutiveUseOnUserSide < Battle::Move
 end
 
 #===============================================================================
-# Power is chosen at random. Power is doubled if the target is using Dig. Hits
-# some semi-invulnerable targets. (Magnitude) #edited #by low
+# Power is chosen at semi-random. Power is doubled if the target is using Dig.
+# Hits some semi-invulnerable targets. (Magnitude) #edited #by low
 #===============================================================================
 class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
   def hitsDiggingTargets?; return true; end
 
   def pbOnStartUse(user, targets)
     baseDmg = [10, 30, 50, 70, 90, 110, 130]
-		if user.level<=16
-			magnitudes=[
-				 4,
-				 5,5,
-				 5,5,5,5,
-				 5,5,5,6,6,6,
-				 6,6,6,6,
-				 6,6,
-				 6
-			]			
-		elsif user.level<=24
-			magnitudes=[
-				 5,
-				 5,5,
-				 6,6,6,6,
-				 6,6,6,6,6,6,
-				 6,6,6,6,
-				 7,7,
-				 7
-			]
-		elsif user.level<=33
-			magnitudes=[
-				 5,
-				 6,6,
-				 7,7,7,7,
-				 7,7,7,7,7,7,
-				 7,7,7,7,
-				 7,7,
-				 8
-			]
-		elsif user.level<=44											
-			magnitudes=[
-				 6,
-				 7,7,
-				 7,7,7,7,
-				 7,7,7,7,7,7,
-				 8,8,8,8,
-				 8,8,
-				 9
-			]
-		else	
-			magnitudes=[
-				 7,
-				 7,7,
-				 8,8,8,8,
-				 8,8,8,8,8,8,
-				 8,8,8,8,
-				 9,9,
-				 10
-			]	
-		end
+    
+    magnitudes = case user.level
+      when 0..16
+        [
+          4,
+          5,5,
+          5,5,5,5,
+          5,5,5,6,6,6,
+          6,6,6,6,
+          6,6,
+          6
+        ]
+      when 17..24
+        [
+          5,
+          5,5,
+          6,6,6,6,
+          6,6,6,6,6,6,
+          6,6,6,6,
+          7,7,
+          7
+        ]
+      when 25..33
+        [
+          5,
+          6,6,
+          7,7,7,7,
+          7,7,7,7,7,7,
+          7,7,7,7,
+          7,7,
+          8
+        ]
+      when 34..44
+        [
+          6,
+          7,7,
+          7,7,7,7,
+          7,7,7,7,7,7,
+          8,8,8,8,
+          8,8,
+          9
+        ]
+      else
+        [
+          7,
+          7,7,
+          8,8,8,8,
+          8,8,8,8,8,8,
+          8,8,8,8,
+          9,9,
+          10
+        ]
+    end
     magni = magnitudes[@battle.pbRandom(magnitudes.length)]
+    if !user.pbOwnedByPlayer?
+      magni += 1
+      magni = [magni, magnitudes.max].min
+    end
     @magnitudeDmg = baseDmg[magni - 4]
     @battle.pbDisplay(_INTL("Magnitude {1}!", magni))
   end
@@ -450,15 +458,14 @@ class Battle::Move::DoublePowerIfTargetHPLessThanHalf < Battle::Move
 end
 
 #===============================================================================
-# Power is doubled if the user is burned, poisoned or paralyzed. (Facade)
-# Burn's halving of Attack is negated (new mechanics).
+# Power is doubled if the user has a status problem. (Facade) #by low
+# Burn's halving of Attack is negated. Power caps at 120.
 #===============================================================================
 class Battle::Move::DoublePowerIfUserPoisonedBurnedParalyzed < Battle::Move
   def damageReducedByBurn?; return Settings::MECHANICS_GENERATION <= 5; end
 
   def pbBaseDamage(baseDmg, user, target)
-    baseDmg *= 2 if user.poisoned? || user.burned? || user.paralyzed?
-    return baseDmg
+    return user.pbHasAnyStatus? ? baseDmg * 2 : baseDmg
   end
 end
 
@@ -487,9 +494,10 @@ end
 #===============================================================================
 class Battle::Move::DoublePowerIfTargetPoisoned < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    if target.poisoned? &&
-       (target.effects[PBEffects::Substitute] == 0 || ignoresSubstitute?(user))
-      baseDmg *= 2
+    return baseDmg if !target.poisoned?
+    if target.effects[PBEffects::Substitute] == 0 || ignoresSubstitute?(user)
+      mult = (user.hasActiveAbility?(:MERCILESS) && target.damageState.critical && user.pbOwnedByPlayer?) ? 1.5 : 2
+      baseDmg *= mult
     end
     return baseDmg
   end
@@ -523,9 +531,10 @@ end
 #===============================================================================
 class Battle::Move::DoublePowerIfTargetStatusProblem < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    if target.pbHasAnyStatus? &&
-       (target.effects[PBEffects::Substitute] == 0 || ignoresSubstitute?(user))
-      baseDmg *= 2
+    return baseDmg if !target.pbHasAnyStatus?
+    if target.effects[PBEffects::Substitute] == 0 || ignoresSubstitute?(user)
+      mult = (user.hasActiveAbility?(:MERCILESS) && target.damageState.critical && user.pbOwnedByPlayer?) ? 1.5 : 2
+      baseDmg *= mult
     end
     return baseDmg
   end
@@ -1360,35 +1369,7 @@ end
 # NOTE: This allows Hidden Power to be Fairy-type (if you have that type in your
 #       game). I don't care that the official games don't work like that.
 def pbHiddenPower(pkmn)
-  iv = pkmn.iv
-  idxType = 0
-  power = 60
-  types = []
-  GameData::Type.each do |t|
-    types[t.icon_position] ||= []
-    types[t.icon_position].push(t.id) if !t.pseudo_type && ![:NORMAL, :SHADOW].include?(t.id)
-  end
-  types.flatten!.compact!
-  idxType |= (iv[:HP] & 1)
-  idxType |= (iv[:ATTACK] & 1) << 1
-  idxType |= (iv[:DEFENSE] & 1) << 2
-  idxType |= (iv[:SPEED] & 1) << 3
-  idxType |= (iv[:SPECIAL_ATTACK] & 1) << 4
-  idxType |= (iv[:SPECIAL_DEFENSE] & 1) << 5
-  idxType = (types.length - 1) * idxType / 63
-  type = types[idxType]
-  if Settings::MECHANICS_GENERATION <= 5
-    powerMin = 30
-    powerMax = 70
-    power |= (iv[:HP] & 2) >> 1
-    power |= (iv[:ATTACK] & 2)
-    power |= (iv[:DEFENSE] & 2) << 1
-    power |= (iv[:SPEED] & 2) << 2
-    power |= (iv[:SPECIAL_ATTACK] & 2) << 3
-    power |= (iv[:SPECIAL_DEFENSE] & 2) << 4
-    power = powerMin + ((powerMax - powerMin) * power / 63)
-  end
-  return [type, power]
+  #check demice_gerenal_ivs
 end
 
 #===============================================================================
@@ -1605,6 +1586,10 @@ class Battle::Move::TypeAndPowerDependOnWeather < Battle::Move
       ret = :ROCK if GameData::Type.exists?(:ROCK)
     when :Hail
       ret = :ICE if GameData::Type.exists?(:ICE)
+    when :StrongWinds
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
+    when :ShadowSky
+      ret = :QMARKS if GameData::Type.exists?(:QMARKS)
     end
     return ret
   end

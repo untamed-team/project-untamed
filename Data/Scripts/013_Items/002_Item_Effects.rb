@@ -26,7 +26,7 @@ ItemHandlers::UseFromBag.add(:ESCAPEROPE, proc { |item|
     next 0
   end
   if ($PokemonGlobal.escapePoint rescue false) && $PokemonGlobal.escapePoint.length > 0
-    next 2   # End screen and use item
+    next 2
   end
   pbMessage(_INTL("Can't use that here."))
   next 0

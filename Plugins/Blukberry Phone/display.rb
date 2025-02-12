@@ -3,7 +3,7 @@ class PhoneScene
 		#selectable = PhoneScene::APPS.clone #this will be changed later
 		selectable = []
 		for i in 0...PhoneScene::APPS.length
-			selectable.push(PhoneScene::APPS[i]) if PhoneScene::APPS[i][:condition]
+			selectable.push(PhoneScene::APPS[i]) if PhoneScene::APPS[i][:condition].call #if calling the process block and therefore evaluation the condition returns 'true'
 		end
 		return selectable
 	end #def getSelectableApps
@@ -11,7 +11,8 @@ class PhoneScene
 	def getMaxPages
 		numOfPages = @selectableApps.length / (@maxAppsPerRow * @maxRowsOnScreen)
 		#if there's a remainder, add another page
-		numOfPages += 1 if numOfPages > 0
+		remainder = (@selectableApps.length).remainder((@maxAppsPerRow * @maxRowsOnScreen))
+		numOfPages += 1 if remainder > 0
 		return numOfPages
 	end #def getMaxPages
 	
@@ -62,7 +63,6 @@ class PhoneScene
 	def drawApps
 		#clear apps from previous page
 		pbDisposeSpriteHash(@appSprites)
-	
 		@selectableApps = getSelectableApps
 		@maxAppsPerRow = PhoneScene::MAX_APPS_PER_ROW
 		@maxRowsOnScreen = PhoneScene::APP_ROWS_ON_SCREEN

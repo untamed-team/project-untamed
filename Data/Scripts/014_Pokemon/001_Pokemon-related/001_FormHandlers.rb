@@ -795,18 +795,19 @@ MultipleForms.copy(:KOFFING, :MIMEJR)
 #by low
 MultipleForms.register(:FURFROU, {
   "onSetForm" => proc { |pkmn, form, oldForm|
-    form_moves = [
-      :MOONBLAST,    # Heart
-      :TRIPLEAXEL,   # Star
-      :HEADSMASH,    # Diamond
-      :DISCHARGE,    # Debutante
-      :PSYSHOCK,     # Matron
-      :TROPKICK,     # Dandy
-      :HYDROPUMP,    # La Reine
-      :CLOSECOMBAT,  # Kabuki
-      :SHADOWBALL    # Pharaoh
-    ]
-    if $game_variables[MECHANICSVAR] < 3
+    if $player.difficulty_mode?("chaos")
+    else
+      form_moves = [
+        :MOONBLAST,    # Heart
+        :TRIPLEAXEL,   # Star
+        :HEADSMASH,    # Diamond
+        :DISCHARGE,    # Debutante
+        :PSYSHOCK,     # Matron
+        :TROPKICK,     # Dandy
+        :HYDROPUMP,    # La Reine
+        :CLOSECOMBAT,  # Kabuki
+        :SHADOWBALL    # Pharaoh
+      ]
       # Find a known move that should be forgotten
       old_move_index = -1
       pkmn.moves.each_with_index do |move, i|
@@ -818,7 +819,7 @@ MultipleForms.register(:FURFROU, {
       new_move_id = (form > 0) ? form_moves[form - 1] : nil
       new_move_id = nil if !GameData::Move.exists?(new_move_id)
       if new_move_id.nil? && old_move_index >= 0 && pkmn.numMoves == 1
-        new_move_id = :RETURN
+        new_move_id = :TAKEDOWN
         new_move_id = nil if !GameData::Move.exists?(new_move_id)
         raise _INTL("Furfrou is trying to forget its last move, but there isn't another move to replace it with.") if new_move_id.nil?
       end

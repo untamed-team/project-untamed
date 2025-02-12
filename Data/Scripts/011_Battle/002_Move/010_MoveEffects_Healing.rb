@@ -7,7 +7,7 @@ class Battle::Move::HealUserFullyAndFallAsleep < Battle::Move::HealingMove
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    return true if !user.pbCanSleep?(user, true, self, true)
+    return true if !user.pbCanSleep?(user, true, self, true, true)
     return true if super
     return false
   end
@@ -130,28 +130,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-    # Calculate target's effective attack value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
-    atk      = (target.attack/2)
-    atkStage = target.stages[:ATTACK] + 6
-    healAmt = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
-    # Reduce target's Attack stat
-    if target.pbCanLowerStatStage?(:ATTACK, user, self)
-      target.pbLowerStatStage(:ATTACK, 1, user)
-    end
-    # Heal user
-    if target.hasActiveAbility?(:LIQUIDOOZE)
-      @battle.pbShowAbilitySplash(target)
-      user.pbReduceHP(healAmt)
-      @battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!", user.pbThis))
-      @battle.pbHideAbilitySplash(target)
-      user.pbItemHPHealCheck
-    elsif user.canHeal?
-      healAmt = (healAmt * 1.3).floor if user.hasActiveItem?(:BIGROOT)
-      user.pbRecoverHP(healAmt)
-      @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
-    end
+    # 001_battle bug fixes.rb
   end
 end
 
@@ -415,6 +394,7 @@ end
 #===============================================================================
 # Seeds the target. Seeded Pokémon lose 1/8 of max HP at the end of each round,
 # and the Pokémon in the user's position gains the same amount. (Leech Seed)
+# (now has a turn ticking timer) #by low
 #===============================================================================
 class Battle::Move::StartLeechSeedTarget < Battle::Move
   def canMagicCoat?; return true; end
@@ -438,6 +418,7 @@ class Battle::Move::StartLeechSeedTarget < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     target.effects[PBEffects::LeechSeed] = user.index
+    target.effects[PBEffects::LeechSeedCount] = 3 #by low
     @battle.pbDisplay(_INTL("{1} was seeded!", target.pbThis))
   end
 end

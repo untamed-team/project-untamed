@@ -63,6 +63,7 @@ class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
     elsif r < 80
       @presentDmg = 120
     end
+    @presentDmg = 120 if !user.pbOwnedByPlayer?
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
@@ -301,7 +302,7 @@ class Battle::Move::EffectDependsOnEnvironment < Battle::Move
     when 1  then id = :THUNDERSHOCK if GameData::Move.exists?(:THUNDERSHOCK)
     when 2  then id = :VINEWHIP if GameData::Move.exists?(:VINEWHIP)
     when 3  then id = :FAIRYWIND if GameData::Move.exists?(:FAIRYWIND)
-    when 4  then id = :CONFUSIO if GameData::Move.exists?(:CONFUSION)
+    when 4  then id = :CONFUSION if GameData::Move.exists?(:CONFUSION)
     when 5  then id = :WATERPULSE if GameData::Move.exists?(:WATERPULSE)
     when 6  then id = :MUDSHOT if GameData::Move.exists?(:MUDSHOT)
     when 7  then id = :ROCKTHROW if GameData::Move.exists?(:ROCKTHROW)
@@ -584,6 +585,7 @@ end
 #===============================================================================
 # Heals user depending on the user's stockpile (X). Resets the stockpile to 0.
 # Decreases the user's Defense and Special Defense by X stages each. (Swallow)
+# edited a lil bit for accumulator #by low
 #===============================================================================
 class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
   def healingMove?; return true; end
@@ -594,9 +596,9 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
       @battle.pbDisplay(_INTL("But it failed to swallow a thing!"))
       return true
     end
-    if !user.canHeal? &&
-       user.effects[PBEffects::StockpileDef] == 0 &&
-       user.effects[PBEffects::StockpileSpDef] == 0
+    if !user.canHeal? #&&
+       #user.effects[PBEffects::StockpileDef] == 0 &&
+       #user.effects[PBEffects::StockpileSpDef] == 0
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -613,21 +615,24 @@ class Battle::Move::HealUserDependingOnUserStockpile < Battle::Move
     if user.pbRecoverHP(hpGain) > 0
       @battle.pbDisplay(_INTL("{1}'s HP was restored.", user.pbThis))
     end
-    @battle.pbDisplay(_INTL("{1}'s stockpiled effect wore off!", user.pbThis))
-    showAnim = true
-    if user.effects[PBEffects::StockpileDef] > 0 &&
-       user.pbCanLowerStatStage?(:DEFENSE, user, self)
-      if user.pbLowerStatStage(:DEFENSE, user.effects[PBEffects::StockpileDef], user, showAnim)
-        showAnim = false
+    noDefBoost = user.effects[PBEffects::StockpileDef] == 0 && user.effects[PBEffects::StockpileSpDef] == 0
+    unless noDefBoost
+      @battle.pbDisplay(_INTL("{1}'s stockpiled effect wore off!", user.pbThis))
+      showAnim = true
+      if user.effects[PBEffects::StockpileDef] > 0 &&
+        user.pbCanLowerStatStage?(:DEFENSE, user, self)
+        if user.pbLowerStatStage(:DEFENSE, user.effects[PBEffects::StockpileDef], user, showAnim)
+          showAnim = false
+        end
       end
+      if user.effects[PBEffects::StockpileSpDef] > 0 &&
+        user.pbCanLowerStatStage?(:SPECIAL_DEFENSE, user, self)
+        user.pbLowerStatStage(:SPECIAL_DEFENSE, user.effects[PBEffects::StockpileSpDef], user, showAnim)
+      end
+      user.effects[PBEffects::StockpileDef]   = 0
+      user.effects[PBEffects::StockpileSpDef] = 0
     end
-    if user.effects[PBEffects::StockpileSpDef] > 0 &&
-       user.pbCanLowerStatStage?(:SPECIAL_DEFENSE, user, self)
-      user.pbLowerStatStage(:SPECIAL_DEFENSE, user.effects[PBEffects::StockpileSpDef], user, showAnim)
-    end
-    user.effects[PBEffects::Stockpile]      = 0
-    user.effects[PBEffects::StockpileDef]   = 0
-    user.effects[PBEffects::StockpileSpDef] = 0
+    user.effects[PBEffects::Stockpile]        = 0
   end
 end
 
@@ -895,6 +900,7 @@ end
 
 #===============================================================================
 # Uses a random move that exists. (Metronome)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomMove < Battle::Move
   def callsAnotherMove?; return true; end
@@ -983,12 +989,16 @@ class Battle::Move::UseRandomMove < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    user.pbUseMoveSimple(@metronomeMove)
+    move = @metronomeMove
+    move = user.prepickedMove if !user.prepickedMove.nil?
+    user.pbUseMoveSimple(move)
+    user.prepickedMove = nil
   end
 end
 
 #===============================================================================
 # Uses a random move known by any non-user Pokémon in the user's party. (Assist)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
   def callsAnotherMove?; return true; end
@@ -1097,12 +1107,15 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
 
   def pbEffectGeneral(user)
     move = @assistMoves[@battle.pbRandom(@assistMoves.length)]
+    move = user.prepickedMove if !user.prepickedMove.nil?
     user.pbUseMoveSimple(move)
+    user.prepickedMove = nil
   end
 end
 
 #===============================================================================
 # Uses a random move the user knows. Fails if user is not asleep. (Sleep Talk)
+# edited so the AI can see the random move that will be used #by low
 #===============================================================================
 class Battle::Move::UseRandomUserMoveIfAsleep < Battle::Move
   def usableWhenAsleep?; return true; end
@@ -1164,8 +1177,13 @@ class Battle::Move::UseRandomUserMoveIfAsleep < Battle::Move
   end
 
   def pbEffectGeneral(user)
-    choice = @sleepTalkMoves[@battle.pbRandom(@sleepTalkMoves.length)]
-    user.pbUseMoveSimple(user.moves[choice].id, user.pbDirectOpposing.index)
+    if !user.prepickedMove.nil?
+      user.pbUseMoveSimple(user.prepickedMove, user.pbDirectOpposing.index)
+      user.prepickedMove = nil
+    else
+      choice = @sleepTalkMoves[@battle.pbRandom(@sleepTalkMoves.length)]
+      user.pbUseMoveSimple(user.moves[choice].id, user.pbDirectOpposing.index)
+    end
   end
 end
 

@@ -378,7 +378,7 @@ class PokeblockCondition_Scene
 	PENTAGON_OUTLINE_COLOR = Color.new(165,83,147)
 	PENTAGON_BACK_COLOR = Color.white
 	PENTAGON_STAT_COLOR = Color.new(71,226,191)
-	SIMPLE 		   = PokeblockSettings::SIMPLIFIED_BERRY_BLENDING
+	SIMPLE 		   = false#PokeblockSettings::SIMPLIFIED_BERRY_BLENDING
 	NO_SHEEN	   = PokeblockSettings::DONT_USE_SHEEN
 	
 	def initialize(block,party)

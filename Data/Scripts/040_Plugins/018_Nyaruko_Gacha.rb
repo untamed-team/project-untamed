@@ -1,207 +1,367 @@
 #Script de lootboxes creado por Nyaruko
 #Si metes micropagos no me hago responsable
+#edited, heavily, maybe even a little bit too much #by low
+POSSIBLE_TICKETS = ["Ticket A", "Ticket B", "Ticket C", "Gold Milage Ticket"]
+GACHA_COST = 100 # in coins
+GACHA_PITY = 4   # in gold tickets
+TICKET_EXCHANGE_TXT = { # just meaningless text, though every tickets needs to be mentioned here
+  "Ticket A" => "Hex Sex",
+  "Ticket B" => "Zinnia Plush",
+  "Ticket C" => "Elegg Figurine"
+}
 
-#edited, heavily(?) #by low
-COMMON 		 = [:POTION,:POKEBALL,:ANTIDOTE,:BURNHEAL,:PARALYZEHEAL,:ICEHEAL] # 50%
-UNCOMMON 	 = [:AWAKENING,:GREATBALL,:HPUP,:PROTEIN,:IRON,:CALCIUM,:ZINC,:CARBOS] # 25%
-RARE 			 = [:FULLHEAL,:ULTRABALL,:HYPERPOTION,:LUCKYEGG] # 14%
-SUPER_RARE = [:REVIVE,:QUICKBALL,:SHINYBERRY] # 7%
-ULTRA_RARE = [:SACREDASH,:MASTERBALL] # 3%
-PENIS_RARE = [[:PACUNA, 0, :LEFTOVERS],[:PACUNA, 1, :STICKYBARB]] # 1% (pokeman, ability_index, item, form)
+COMMON     = [:POTION, :ANTIDOTE, :BURNHEAL, :PARALYZEHEAL, :ICEHEAL, :POKEBALL, :REPEL, :CHARIZARDITEY, :CHARIZARDITEX]
+UNCOMMON   = [:SUPERPOTION, :AWAKENING, :GREATBALL, :SUPERREPEL, :HPUP, :PROTEIN, :IRON, :CALCIUM, :ZINC, :CARBOS]
+RARE       = [:HYPERPOTION, :FULLHEAL, :REVIVALHERB, :ULTRABALL, :MAXREPEL, :PEARL, :OLDGATEAU]
+SUPER_RARE = [:MAXPOTION, :REVIVE, :QUICKBALL, :STARDUST, :RARECANDY, :SHINYBERRY]
+ULTRA_RARE = [:FULLRESTORE, :MAXREVIVE, :MASTERBALL, :NUGGET]
+PENIS_RARE = POSSIBLE_TICKETS.reject { |tckt| tckt == "Gold Milage Ticket" }
+# (pokeman species, ability_index, item, form)
+TICKETMONS_ARRAY = [[:PACUNA, 0, :LEFTOVERS],[:NOCTAVISPA, 1, :STICKYBARB],[:BANAGNAW, 1, :SPLASHPLATE]] 
+# index 0 = ticket A, index 1 = ticket B, etcetc
+
+# game variables, do not edit
+GACHA_USED = 97
+GACHA_TIME = 96
+
+# to call this scene, use gachaPullsNPC on a npc
+# the first time the player interacts with the npc; the NPC needs to force the player to pull only 3 times
+
+class PokemonGlobalMetadata
+  attr_accessor :ticketStorage
+  attr_accessor :goldencamera
+  alias initialize_gamble initialize
+  def initialize
+    initialize_gamble
+    super
+    @ticketStorage = []
+    @goldencamera  = false
+  end
+  # golden camera is mentioned in the following defs:
+  # pbGainMoney, pbCalcDamage, pbRoughDamage
+end
+
+def gachaPullsNPC
+  commands = []
+  pulloptions = []
+  [1, 3, 5, 10].each do |i|
+    totalpullcost = i * GACHA_COST
+    next if totalpullcost > $player.coins
+    commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
+    pulloptions.push([i, totalpullcost])
+  end
+  commands.push(_INTL("Cancel"))
+
+  helpwindow = Window_UnformattedTextPokemon.new("")
+  helpwindow.visible = false
+  cmd = UIHelper.pbShowCommands(helpwindow,"",commands) {}
+  Input.update
+  selectedCommander = commands[cmd]
+  if selectedCommander == "Cancel"
+    return false
+  else
+    pulloptions.each do |pullamount, totalpullcost|
+      if selectedCommander == "Pull #{pullamount} time(s) at the cost of #{totalpullcost} coins?"
+        $player.coins -= totalpullcost
+        LootBox.new.pbStartMainScene(pullamount)
+        pbMessage(_INTL("Thank you, Highroller. Please come again!"))
+        return true
+      end
+    end
+  end
+end
+
 
 class LootBox
-  def pbStartMainScene
+  def pbStartMainScene(pullamount = 3)
+    if $PokemonGlobal.ticketStorage.nil?
+      $PokemonGlobal.ticketStorage = []
+    end
     viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
     viewport.z = 99999
-    random1 = rand(100)
-    random2 = rand(100)
-    random3 = rand(100)
-    common 		= COMMON
-    uncommon 	= UNCOMMON
-    rare 			= RARE
-    s_rare 		= SUPER_RARE
-    u_rare 		= ULTRA_RARE
-    p_rare 		= PENIS_RARE
+
+    $game_variables[GACHA_TIME] = Time.now.to_i
+    gachaamt = $game_variables[GACHA_USED]
+    random0 = semiRandomRNG(85..100, gachaamt)
+    
+    common     = COMMON
+    uncommon   = UNCOMMON
+    rare       = RARE
+    s_rare     = SUPER_RARE
+    u_rare     = ULTRA_RARE
+    pussy_rare = PENIS_RARE
     
     sprites={}
-    sprites["bg"]=Sprite.new
-    sprites["bg"].z=99998
+    sprites["bg"] = Sprite.new
+    sprites["bg"].z = 99998
     sprites["bg"].bitmap = RPG::Cache.load_bitmap("Graphics/Pictures/Lootboxes/","background")
     
-    sprites["bolsa"]=IconSprite.new(0,0,viewport)
+    sprites["bolsa"] = IconSprite.new(0,0,viewport)
     sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_closed")
-    sprites["bolsa"].x =157
-    sprites["bolsa"].y =256
-    
-    sprites["item1"]=IconSprite.new(0,0,viewport)    
-    sprites["item1"].x = 227
-    sprites["item1"].y = 135
-    
-    sprites["item2"]=IconSprite.new(0,0,viewport)    
-    sprites["item2"].x = 99
-    sprites["item2"].y = 135
-    
-    sprites["item3"]=IconSprite.new(0,0,viewport)   
-    sprites["item3"].x = 355
-    sprites["item3"].y = 135
+    sprites["bolsa"].x = 157
+    sprites["bolsa"].y = 256
 
-    sprites["icon1"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon1"].x = 260
-    sprites["icon1"].y = 195
-    
-    sprites["icon2"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon2"].x = 134
-    sprites["icon2"].y = 195
-    
-    sprites["icon3"] = ItemIconSprite.new(0, 0, nil, viewport)
-    sprites["icon3"].x = 389
-    sprites["icon3"].y = 195
+    sprite_cords = GACHA_SPRITES_COORDINATES[pullamount]
+    sprite_cords[:items].each_with_index do |pos, index|
+      break if index + 1 > pullamount
+      sprites["item#{index + 1}"] = IconSprite.new(0, 0, viewport)
+      sprites["item#{index + 1}"].x = pos[:x]
+      sprites["item#{index + 1}"].y = pos[:y]
+    end
+    sprite_cords[:icons].each_with_index do |pos, index|
+      break if index + 1 > pullamount
+      sprites["icon#{index + 1}"] = ItemIconSprite.new(0, 0, nil, viewport)
+      sprites["icon#{index + 1}"].x = pos[:x]
+      sprites["icon#{index + 1}"].y = pos[:y]
+    end
     
     sprites["overlay"]=BitmapSprite.new(Graphics.width, Graphics.height, viewport)
     
     loop do
       Graphics.update
       Input.update
-      #if Input.trigger?(Input::C)
+      if Input.trigger?(Input::USE)
         pbSEPlay("select")
         pbWait(20)
         sprites["bolsa"].setBitmap("Graphics/Pictures/Lootboxes/bag_open")
-        
-				#~ print "#{random1}, #{random2}, #{random3}"
-				# item n1
-				if random1 == 1
-					sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
-          pbWait(20)
-          pokeman1 = rand(p_rare.length)
-					pkmn = Pokemon.new(p_rare[pokeman1][0], (pbBalancedLevel($Trainer.party) - 1))
-					pkmn.ability_index = p_rare[pokeman1][1] if !p_rare[pokeman1][1].nil?
-					pkmn.item = p_rare[pokeman1][2] if !p_rare[pokeman1][2].nil?
-					pkmn.form = p_rare[pokeman1][3] if !p_rare[pokeman1][3].nil?
-          sprites["item1"].setBitmap(GameData::Species.front_sprite_filename(pkmn.species, pkmn.form))
-          pbAddPokemon(pkmn)
-				elsif random1 >= 1 && random1 < 3
-          sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
-          pbWait(20)
-          item1=rand(u_rare.length)
-					sprites["icon1"].item = GameData::Item.get(u_rare[item1]).id
-          pbReceiveItem(u_rare[item1])
-				elsif random1 >= 3 && random1 < 7
-          sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
-          pbWait(20)
-          item1=rand(s_rare.length)
-					sprites["icon1"].item = GameData::Item.get(s_rare[item1]).id
-          pbReceiveItem(s_rare[item1])
-				elsif random1 >= 14  && random1 < 25
-          sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
-          pbWait(20)
-          item1=rand(rare.length)
-					sprites["icon1"].item = GameData::Item.get(rare[item1]).id
-          pbReceiveItem(rare[item1])
-				elsif random1 >= 25  && random1 < 50
-          sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
-          pbWait(20)
-          item1=rand(uncommon.length)
-					sprites["icon1"].item = GameData::Item.get(uncommon[item1]).id
-          pbReceiveItem(uncommon[item1])
-				else
-          sprites["item1"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
-          pbWait(20)
-          item1=rand(common.length)
-					sprites["icon1"].item = GameData::Item.get(common[item1]).id
-          pbReceiveItem(common[item1])
-				end
-				
-				# item n2
-				if random2 == 1
-					sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
-          pbWait(20)
-          pokeman2 = rand(p_rare.length)
-					pkmn = Pokemon.new(p_rare[pokeman2][0], (pbBalancedLevel($Trainer.party) - 1))
-					pkmn.ability_index = p_rare[pokeman2][1] if !p_rare[pokeman2][1].nil?
-					pkmn.item = p_rare[pokeman2][2] if !p_rare[pokeman2][2].nil?
-					pkmn.form = p_rare[pokeman2][3] if !p_rare[pokeman2][3].nil?
-          sprites["item2"].setBitmap(GameData::Species.front_sprite_filename(pkmn.species, pkmn.form))
-          pbAddPokemon(pkmn)
-				elsif random2 >= 1 && random2 < 3
-          sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
-          pbWait(20)
-          item2=rand(u_rare.length)
-					sprites["icon2"].item = GameData::Item.get(u_rare[item2]).id
-          pbReceiveItem(u_rare[item2])
-				elsif random2 >= 3 && random2 < 7
-          sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
-          pbWait(20)
-          item2=rand(s_rare.length)
-					sprites["icon2"].item = GameData::Item.get(s_rare[item2]).id
-          pbReceiveItem(s_rare[item2])
-				elsif random2 >= 14  && random2 < 25
-          sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
-          pbWait(20)
-          item2=rand(rare.length)
-					sprites["icon2"].item = GameData::Item.get(rare[item2]).id
-          pbReceiveItem(rare[item2])
-				elsif random2 >= 25  && random2 < 50
-          sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
-          pbWait(20)
-          item2=rand(uncommon.length)
-					sprites["icon2"].item = GameData::Item.get(uncommon[item2]).id
-          pbReceiveItem(uncommon[item2])
-				else
-          sprites["item2"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
-          pbWait(20)
-          item2=rand(common.length)
-					sprites["icon2"].item = GameData::Item.get(common[item2]).id
-          pbReceiveItem(common[item2])
-				end
-				
-				# item n3
-				if random3 == 1
-					sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
-          pbWait(20)
-          pokeman3 = rand(p_rare.length)
-					pkmn = Pokemon.new(p_rare[pokeman3][0], (pbBalancedLevel($Trainer.party) - 1))
-					pkmn.ability_index = p_rare[pokeman3][1] if !p_rare[pokeman3][1].nil?
-					pkmn.item = p_rare[pokeman3][2] if !p_rare[pokeman3][2].nil?
-					pkmn.form = p_rare[pokeman3][3] if !p_rare[pokeman3][3].nil?
-          sprites["item3"].setBitmap(GameData::Species.front_sprite_filename(pkmn.species, pkmn.form))
-          pbAddPokemon(pkmn)
-				elsif random3 >= 1 && random3 < 3
-          sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
-          pbWait(20)
-          item3=rand(u_rare.length)
-					sprites["icon3"].item = GameData::Item.get(u_rare[item3]).id
-          pbReceiveItem(u_rare[item3])
-				elsif random3 >= 3 && random3 < 7
-          sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
-          pbWait(20)
-          item3=rand(s_rare.length)
-					sprites["icon3"].item = GameData::Item.get(s_rare[item3]).id
-          pbReceiveItem(s_rare[item3])
-				elsif random3 >= 14  && random3 < 25
-          sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
-          pbWait(20)
-          item3=rand(rare.length)
-					sprites["icon3"].item = GameData::Item.get(rare[item3]).id
-          pbReceiveItem(rare[item3])
-				elsif random3 >= 25  && random3 < 50
-          sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
-          pbWait(20)
-          item3=rand(uncommon.length)
-					sprites["icon3"].item = GameData::Item.get(uncommon[item3]).id
-          pbReceiveItem(uncommon[item3])
-				else
-          sprites["item3"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
-          pbWait(20)
-          item3=rand(common.length)
-					sprites["icon3"].item = GameData::Item.get(common[item3]).id
-          pbReceiveItem(common[item3])
-				end
-				pbWait(10)
-				pbFadeOutAndHide(sprites){pbUpdateSpriteHash(sprites)}
-				pbDisposeSpriteHash(sprites)
-				viewport.dispose if viewport
-				break
-     # end  
+        for i in 1..pullamount
+          $game_variables[GACHA_USED] += 1
+          gachaamt = $game_variables[GACHA_USED]
+          random_val = semiRandomRNG(random0, gachaamt)
+          if Time.now.to_i - $game_variables[GACHA_TIME] > 172800 # 2 days
+            random_val = random_val * 0.8
+            random_val = random_val.to_i
+          end
+          random_val = semiRandomRNG(0..7) if i == 3 && gachaamt == 3
+
+          case random_val
+            when 0..3 # 4
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_p_rare")
+              pbWait(20)
+              pokeman = semiRandomRNG(pussy_rare.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(:GOLDTICKET).id
+              pbMessage(_INTL("\\me[{1}]You obtained a \\c[1]{2}\\c[0]!\\wtnp[30]", "Item get", pussy_rare[pokeman].to_s))
+              $PokemonGlobal.ticketStorage.push(pussy_rare[pokeman])
+            when 4..10 # 7
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_u_rare")
+              pbWait(20)
+              item = semiRandomRNG(u_rare.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(u_rare[item]).id
+              pbReceiveItem(u_rare[item])
+            when 11..21 # 11
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_s_rare")
+              pbWait(20)
+              item = semiRandomRNG(s_rare.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(s_rare[item]).id
+              pbReceiveItem(s_rare[item])
+            when 22..42 # 21
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_rare")
+              pbWait(20)
+              item = semiRandomRNG(rare.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(rare[item]).id
+              pbReceiveItem(rare[item])
+            when 48..73 # 26
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_uncommon")
+              pbWait(20)
+              item = semiRandomRNG(uncommon.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(uncommon[item]).id
+              pbReceiveItem(uncommon[item])
+            else        # 32
+              sprites["item#{i}"].setBitmap("Graphics/Pictures/Lootboxes/item_common")
+              pbWait(20)
+              item = semiRandomRNG(common.length, gachaamt)
+              sprites["icon#{i}"].item = GameData::Item.get(common[item]).id
+              pbReceiveItem(common[item])
+            end
+            
+            if $game_variables[GACHA_USED] % 50 == 0
+              pbMessage(_INTL("Congratulations Highroller! You've earned a Gold Milage Ticket for your dedication!"))
+              $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
+            end
+        end
+        pbWait(10)
+        pbFadeOutAndHide(sprites){pbUpdateSpriteHash(sprites)}
+        pbDisposeSpriteHash(sprites)
+        viewport.dispose if viewport
+        break
+      end  
     end  
   end
-end  
+end
+
+def ticketExchangeNPC
+  commands = []
+  commands.push(_INTL("My Tickets"))
+  counts = Hash.new(0)
+  $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
+  ticketExchange = TICKET_EXCHANGE_TXT
+  duped=false
+  counts.each do |str, count|
+    unless str == "Gold Milage Ticket"
+      commands.push(_INTL("A #{str} for 1 #{ticketExchange[str]}")) if count >= 1
+      duped=true if count > 1
+    end
+  end
+  commands.push(_INTL("2 Dupe Tickets for 1 Milage Ticket")) if duped
+  commands.push(_INTL("Cancel"))
+
+  helpwindow = Window_UnformattedTextPokemon.new("")
+  helpwindow.visible = false
+  cmd = UIHelper.pbShowCommands(helpwindow,"You can exchange tickets for various things.",commands) {}
+  Input.update
+  selectedCommander = commands[cmd]
+  case selectedCommander
+  when "Cancel"
+    return false
+  when "My Tickets"
+    ticketbag = POSSIBLE_TICKETS.map { |b| "#{b}: #{counts[b]}" }.join("\n")
+    pbMessage(_INTL("You have the following tickets:\n#{ticketbag}"))
+  when "2 Dupe Tickets for 1 Milage Ticket"
+    counts.each do |str, count|
+      if count > 1 && str != "Gold Milage Ticket"
+        $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
+        $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
+        $PokemonGlobal.ticketStorage.push("Gold Milage Ticket")
+        pbMessage(_INTL("You exchanged 2 #{str} for 1 Milage Tickets."))
+        break
+      end
+    end
+  else
+    oldv = $game_switches[NOINITIALVALUES]
+    ticketExchange.each_with_index do |(str, count), index|
+      if selectedCommander == "A #{str} for 1 #{ticketExchange[str]}"
+        $game_switches[NOINITIALVALUES] = true
+        pbMessage(_INTL("You exchanged 1 #{str} for..."))
+        $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index(str))
+        pkmn = ticketReward(index)
+        pbAddPokemon(pkmn)
+        $game_switches[NOINITIALVALUES] = oldv
+      end
+    end
+  end
+end
+
+def ticketReward(id)
+  t_array = TICKETMONS_ARRAY
+  level = [(pbBalancedLevel($player.party) - 10), 1].max
+  pkmn = Pokemon.new(t_array[id][0], level)
+  pkmn.ability_index = t_array[id][1] if !t_array[id][1].nil?
+  pkmn.item = t_array[id][2] if !t_array[id][2].nil?
+  pkmn.form = t_array[id][3] if !t_array[id][3].nil?
+  pkmn.makeFemale if !pkmn.singleGendered?
+  pkmn.owner = Pokemon::Owner.new_foreign("Mustang", 0)
+  pkmn.obtain_method = 4
+  return pkmn
+end
+
+def goldTicketExchangeNPC
+  pity = GACHA_PITY
+  commands = []
+  commands.push(_INTL("My Tickets"))
+  counts = Hash.new(0)
+  $PokemonGlobal.ticketStorage.each { |str| counts[str] += 1 }
+  if counts["Gold Milage Ticket"] >= pity
+    PENIS_RARE.each { |tckt|
+      commands.push(_INTL("#{pity} Milage Tickets for 1 #{tckt}"))
+    }
+  end
+  commands.push(_INTL("Cancel"))
+
+  helpwindow = Window_UnformattedTextPokemon.new("")
+  helpwindow.visible = false
+  cmd = UIHelper.pbShowCommands(helpwindow,"You can exchange milage tickets for various things.",commands) {}
+  Input.update
+  selectedCommander = commands[cmd]
+  case selectedCommander
+  when "Cancel"
+    return false
+  when "My Tickets"
+    ticketbag = POSSIBLE_TICKETS.map { |b| "#{b}: #{counts[b]}" }.join("\n")
+    pbMessage(_INTL("You have the following tickets:\n#{ticketbag}"))
+  else
+    PENIS_RARE.each do |ticket|
+      if selectedCommander == "#{pity} Milage Tickets for 1 #{ticket}"
+        pity.times do
+          $PokemonGlobal.ticketStorage.delete_at($PokemonGlobal.ticketStorage.index("Gold Milage Ticket"))
+        end
+        $PokemonGlobal.ticketStorage.push(ticket)
+        pbMessage(_INTL("You exchanged #{pity} Milage Tickets for 1 #{ticket}."))
+      end
+    end
+  end
+end
+
+#===============================================================================
+# settings too big to be added at the top
+#===============================================================================
+
+ItemHandlers::UseInField.add(:GOLDCAMERA,proc { |item|
+  $PokemonGlobal.goldencamera = !$PokemonGlobal.goldencamera
+  if $PokemonGlobal.goldencamera
+    pbMessage(_INTL("The camera was turned on. It will make your Pokemon weaker but it will give you coins passively."))
+  else
+    pbMessage(_INTL("The camera was turned off."))
+  end
+  next true
+})
+
+GACHA_SPRITES_COORDINATES = {
+  1 => {
+    items: [{ x: 227, y: 135 }],
+    icons: [{ x: 260, y: 195 }]
+  },
+  3 => {
+    items: [
+      { x: 227, y: 135 },
+      { x: 99, y: 135 },
+      { x: 355, y: 135 }
+    ],
+    icons: [
+      { x: 260, y: 195 },
+      { x: 134, y: 195 },
+      { x: 389, y: 195 }
+    ]
+  },
+  5 => {
+    items: [
+      { x: 227, y: 135 },
+      { x: 139, y: 135 },
+      { x: 315, y: 135 },
+      { x: 51, y: 135 },
+      { x: 403, y: 135 }
+    ],
+    icons: [
+      { x: 260, y: 195 },
+      { x: 174, y: 195 },
+      { x: 349, y: 195 },
+      { x: 85, y: 195 },
+      { x: 438, y: 195 }
+    ]
+  },
+  10 => {
+    items: [
+      { x: 227, y: 55 },
+      { x: 139, y: 55 },
+      { x: 315, y: 55 },
+      { x: 51, y: 55 },
+      { x: 403, y: 55 },
+      { x: 227, y: 175 },
+      { x: 139, y: 175 },
+      { x: 315, y: 175 },
+      { x: 51, y: 175 },
+      { x: 403, y: 175 }
+    ],
+    icons: [
+      { x: 260, y: 115 },
+      { x: 174, y: 115 },
+      { x: 349, y: 115 },
+      { x: 85, y: 115 },
+      { x: 438, y: 115 },
+      { x: 260, y: 235 },
+      { x: 174, y: 235 },
+      { x: 349, y: 235 },
+      { x: 85, y: 235 },
+      { x: 438, y: 235 }
+    ]
+  }
+}
