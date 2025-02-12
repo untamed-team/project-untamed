@@ -9,7 +9,7 @@ but please keep them in this order for readability's sake
     :QuestGiverSprite => "NPC Dad"                            # The name of the file in Graphics/Characters to appear next to the quest name. The sprite used for the quest giver
     :QuestGiverDescSprite => "COOLTRAINER_M"                  # The name of the file in Graphics/Trainers to appear next to the quest description. The sprite used for the quest giver in the quest description
     :StageY => "Do something"                                 # The DESCRIPTION for each stage of the quest (you can have as many stages as 
-    :TurninConditionY => proc { $player.has_species?(:PIKACHU) }, #The CONDITION under which you want the quest to be automatically detected as available for TURNIN at stage Y. Copy and paste ":TurninCondition1 => proc { $player.has_species?(:PIKACHU) }," and only change what is inside the curly braces { }
+    :TurninConditionY => proc { $player.has_species?(:PIKACHU) }, #The CONDITION under which you want the quest to be automatically detected as available for TURNIN at stage Y. Copy and paste ":TurninCondition1 => proc { $player.has_species?(:PIKACHU) }", and only change what is inside the curly braces { }
     .                                                         # you'd like), must fit in 1 line of text
     :TaskZ => ["Do a smaller something", Y, false]            # A sub-objective of Stage Y (follows the data's numeration), THE LAST VALUE 
     .                                                         # MUST ALWAYS BE FALSE (it will be set to true only in the player's active
@@ -227,6 +227,7 @@ module QuestModule
     :QuestGiverSprite => "TOURIST 1",
     :QuestGiverDescSprite => "TOURIST_M",
     :Stage1 => "Find and bring two Melolado Cones to the tourists on the beach.",
+    :TurninCondition1 => proc { $bag.has?(:MELOLADOCONE,2) },
     :Location1 => "Calojarro",
     :RewardString => "Your money back plus maybe a tip?",
     :ReadyAtStart => true,

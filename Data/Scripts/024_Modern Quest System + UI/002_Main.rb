@@ -5,6 +5,8 @@
 #readyQuest(:Quest#)
 #quest_marker Quest# true (the true or false is whether this event should be the turnin location, have the question mark) 1 (the number at the end is what stage this event should have the question mark, optional)
 #turninQuest(:Quest#)
+#getActiveQuests.include?(:Quest#)
+#getCompletedQuests.include?(:Quest#)
 
 #===============================================================================
 # This class holds the information for an individual quest
