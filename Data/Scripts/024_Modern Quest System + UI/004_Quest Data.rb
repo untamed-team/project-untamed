@@ -232,6 +232,22 @@ module QuestModule
     :RewardString => "Your money back plus maybe a tip?",
     :ReadyAtStart => true,
   }
+  Quest11 = {
+    :ID => "12",
+    :Name => "Honest Work",
+    :QuestDescription => "Grandpa needs someone to help with work around the ranch.",
+    :QuestGiver => "Eustace",
+    :QuestGiverSprite => "NPC 18",
+    :QuestGiverDescSprite => "GENTLEMAN",
+    :Stage1 => "Feed Oran berries to the Gogoat in the barn.",
+    :Location1 => "Asterado Ranch",
+    :Stage2 => "Clear rocks and trees from the field, and take care of the bug Pokémon.",
+    :Location2 => "Asterado Ranch",
+    :Stage3 => "Stop the K'noggin in the barn!",
+    :Location3 => "Asterado Ranch",
+    :RewardString => "Something from the ranch!",
+    :ReadyAtStart => true,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",
