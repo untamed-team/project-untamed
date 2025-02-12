@@ -232,7 +232,7 @@ module QuestModule
     :RewardString => "Your money back plus maybe a tip?",
     :ReadyAtStart => true,
   }
-  Quest11 = {
+  Quest12 = {
     :ID => "12",
     :Name => "Honest Work",
     :QuestDescription => "Grandpa needs someone to help with work around the ranch.",
@@ -246,7 +246,7 @@ module QuestModule
     :Stage3 => "Stop the K'noggin in the barn!",
     :Location3 => "Asterado Ranch",
     :RewardString => "Something from the ranch!",
-    :ReadyAtStart => true,
+    :ReadyAtStart => false,
   }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
