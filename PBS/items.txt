@@ -2971,9 +2971,9 @@ BattleUse = OnPokemon
 Flags = Fling_30
 Description = A very sweet and refreshing drink. It can be used to restore 70 HP to a single Pokémon.
 #-------------------------------
-[MOOMOOMILK]
-Name = Moomoo Milk
-NamePlural = Moomoo Milks
+[GOGOATMILK]
+Name = Gogoat Milk
+NamePlural = Gogoat Milks
 Pocket = 2
 Price = 600
 FieldUse = OnPokemon
