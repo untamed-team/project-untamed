@@ -1838,7 +1838,9 @@ end
 #takes event numbers as arguments
 def pbChangeRanchPkmn(pkmnEvent1=nil, pkmnEvent2=nil)
   #get the pkmn currently deposited into the daycare
-  DayCare.get_details(pbGet(1), 3, 4)
+  #if DayCare.count > 0
+  #  DayCare.get_details(0, 3, 4)
+  #end
   
   #pkmn1
   if !$PokemonGlobal.day_care[0].pokemon.nil?
