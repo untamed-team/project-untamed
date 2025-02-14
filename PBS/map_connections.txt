@@ -25,7 +25,7 @@
 # Route 4 - Top East (47) - Asterado Ranch (45)
 47,North,0,45,South,33
 # Mini Field (69) - Asterado Ranch (45)
-69,East,0,45,West,20
+69,East,0,45,West,17
 # Route 3-4 Transfer Map (117) - Route 4 - Top East (47)
 117,West,0,47,East,3
 # Route 3 (29) - Route 3-4 Transfer Map (117)
