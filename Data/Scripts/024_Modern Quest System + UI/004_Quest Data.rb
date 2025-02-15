@@ -245,6 +245,8 @@ module QuestModule
     :Location2 => "Asterado Ranch",
     :Stage3 => "Stop the K'noggin in the barn!",
     :Location3 => "Asterado Ranch",
+    :Stage4 => "Talk to Grandpa in his house for your reward.",
+    :Location4 => "Asterado Ranch",
     :RewardString => "Something from the ranch!",
     :ReadyAtStart => false,
   }
