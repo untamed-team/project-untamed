@@ -675,7 +675,7 @@ class Battle::AI
                     miniscore*=1.3
                 end
             end
-            # confusion/dizzy with hurricane is unlikely for chaos mode, so skip applying the calc
+            # confusion/dizzy with hurricane is unlikely for chaos mode, so skip applying the mult
             if move.baseDamage>0
                 miniscore-=100
                 if move.addlEffect.to_f != 100

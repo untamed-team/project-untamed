@@ -558,7 +558,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "RecoilQuarterOfDamageDealt" # take down / wild charge
-        if !user.hasActiveAbility?(:ROCKHEAD) || !user.takesIndirectDamage?
+        if !user.hasActiveAbility?(:ROCKHEAD) && user.takesIndirectDamage?
             score *= 0.9
             if user.hp==user.totalhp && (user.hasActiveAbility?(:STURDY) || user.hasActiveItem?(:FOCUSSASH))
                 score *= 0.7
@@ -571,7 +571,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "RecoilThirdOfDamageDealt", "RecoilThirdOfDamageDealtParalyzeTarget", "RecoilThirdOfDamageDealtBurnTarget" 
         # brave bird / wood hammer / general recoil check
-        if !user.hasActiveAbility?(:ROCKHEAD) || !user.takesIndirectDamage?
+        if !user.hasActiveAbility?(:ROCKHEAD) && user.takesIndirectDamage?
             score *= 0.9
             if user.hp==user.totalhp && (user.hasActiveAbility?(:STURDY) || user.hasActiveItem?(:FOCUSSASH))
                 score *= 0.7
@@ -644,7 +644,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "RecoilHalfOfDamageDealt" # head smash / light of ruin
-        if !user.hasActiveAbility?(:ROCKHEAD) || !user.takesIndirectDamage?
+        if !user.hasActiveAbility?(:ROCKHEAD) && user.takesIndirectDamage?
             score *= 0.9
             if user.hp==user.totalhp && (user.hasActiveAbility?(:STURDY) || user.hasActiveItem?(:FOCUSSASH))
                 score *= 0.7
