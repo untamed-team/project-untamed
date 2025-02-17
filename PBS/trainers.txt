@@ -607,7 +607,7 @@ Pokemon = PHANTUMP,14
     Nature = ADAMANT
     Item = STARFBERRY
     IV = 7,3,3,3,3,3
-    Shiny = true
+    Shiny = yes
 #Area=MonarcaWoods_O
 #-------------------------------
 [HIKER_F,Xavia]
