@@ -336,7 +336,7 @@ Pokemon = M_EKANS,9
 #Area=Route2_M
 #-------------------------------
 [TOURIST_M,Samuel,100]
-LoseText = Cowabummer!
+LoseText = I should have brought my Beartic!
 Pokemon = M_EKANS,9
     Moves = BEATUP,POISONSTING,WARP
 Pokemon = ZEAZAYA,9
@@ -519,7 +519,11 @@ Pokemon = BUDEW,12
 [AROMALADY,Gloria,100]
 LoseText = Not my beautiful flowers!
 Pokemon = FLABEBE,11
+    Moves = COPYCAT,FAIRYWIND,TEARFULLOOK,SAFEGUARD
 Pokemon = BUDEW,12
+    Moves = SYNTHESIS,SUNNYDAY,MAGICALLEAF,HIDDENPOWER
+    Item = OCCABERRY
+    HiddenPowerType = FIRE
 #Area=MonarcaWoods_M
 #-------------------------------
 [BUGCATCHER_M,Roberto]
@@ -530,8 +534,12 @@ Pokemon = LEDYBA,12
 #-------------------------------
 [BUGCATCHER_M,Roberto,100]
 LoseText = No fair, did you use bug repellent? Harumph!
-Pokemon = MINIMELO,11
 Pokemon = LEDYBA,12
+    Moves = COMETPUNCH,FAKEOUT,REFLECT,ENCORE
+    Ability = SWARM
+Pokemon = MINIMELO,11
+    Moves = DEFENSECURL,STRUGGLEBUG,GASTROACID,SECRETPOWER
+    Ability = SWEETVEIL
 #Area=MonarcaWoods_M
 #-------------------------------
 [BIRDKEEPER_M,Francis]
@@ -542,8 +550,12 @@ Pokemon = CROMEN,12
 #-------------------------------
 [BIRDKEEPER_M,Francis,100]
 LoseText = And down I go...
-Pokemon = HOOTHOOT,12
 Pokemon = CROMEN,12
+    Moves = SPITE,CONFUSION,METRONOME,WONDERROOM
+    Ability = UNNERVE
+Pokemon = CROMEN,12
+    Moves = TAUNT,CONFUSION,METRONOME,DRAININGKISS
+    Ability = QUEENLYMAJESTY
 #Area=MonarcaWoods_M
 #-------------------------------
 [BUGCATCHER_M,Curtis]
@@ -557,9 +569,11 @@ Pokemon = VIVILLON,13
 [BUGCATCHER_M,Curtis,100]
 LoseText = You're really starting to bug me!
 Pokemon = CHICATTA,12
-    Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
+    Moves = FURYCUTTER,STRINGSHOT,HONECLAWS,BUGBITE
+    Ability = HYPERCUTTER
 Pokemon = VIVILLON,13
-    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,STUNSPORE
+    Ability = COMPOUNDEYES
 #Area=MonarcaWoods_O
 #-------------------------------
 [POKEMONRANGER_M,Benjamin]
@@ -572,6 +586,10 @@ Pokemon = BURBRAWL,14
 LoseText = We did our best!
 Pokemon = BURBRAWL,14
     Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+    Ability = LEVITATE
+Pokemon = BALTOY,14
+    Moves = MUDSHOT,RAPIDSPIN,CONFUSION,HARDEN
+    Ability = LEVITATE
 #Area=MonarcaWoods_O
 #-------------------------------
 [POKEMONRANGER_F,Penelope]
@@ -582,8 +600,14 @@ Pokemon = PHANTUMP,14
 #-------------------------------
 [POKEMONRANGER_F,Penelope,100]
 LoseText = I went easy on you!
+Gimmick = WaterSport
 Pokemon = PHANTUMP,14
-    Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+    Moves = INGRAIN,ASTONISH,LEECHSEED,POWERUPPUNCH
+    Ability = HARVEST
+    Nature = ADAMANT
+    Item = STARFBERRY
+    IV = 7,3,3,3,3,3
+    Shiny = true
 #Area=MonarcaWoods_O
 #-------------------------------
 [HIKER_F,Xavia]
