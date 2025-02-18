@@ -245,7 +245,8 @@ or dont
           "gravity" => :Gravity, "tailwind" => :Tailwind, 
           "lightscreen" => :LightScreen, "reflect" => :Reflect, "auroraveil" => :AuroraVeil,
           "mist" => :Mist, "safeguard" => :Safeguard, "luckychant" => :LuckyChant,
-          "statdropimmunity" => :StatDropImmunity
+          "statdropimmunity" => :StatDropImmunity, 
+          "watersport" => :WaterSportField, "mudsport" => :MudSportField
         }
         hazardsHash = {
           "spikes"    => :Spikes,    "toxicspikes" => :ToxicSpikes, 
@@ -260,7 +261,8 @@ or dont
           elsif zoneHash[gimmick_downcase]
             @field.typezone = zoneHash[gimmick_downcase]
           elsif effectHash[gimmick_downcase]
-            if ["trickroom", "wonderroom", "magicroom", "gravity"].include?(gimmick_downcase)
+            if ["trickroom", "wonderroom", "magicroom", "gravity", 
+                "watersport", "mudsport"].include?(gimmick_downcase)
               @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
             elsif ["statdropimmunity"].include?(gimmick_downcase)
               @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true
@@ -328,7 +330,9 @@ or dont
       PBEffects::TrickRoom  => "The battlefield twists and contorts!",
       PBEffects::WonderRoom => "A bizzare area in where Defense stats are swapped has emerged!",
       PBEffects::MagicRoom  => "A strange area where items lose their effects has appeared!",
-      PBEffects::Gravity    => "An intense gravitational force takes hold!"
+      PBEffects::Gravity    => "An intense gravitational force takes hold!",
+      PBEffects::WaterSportField => "Fire's power has been weakened!",
+      PBEffects::MudSportField   => "Electricity's power has been weakened!"
     }
     effectHashMsgs_field.each do |effect, msg|
       next if @field.effects[effect] == 0

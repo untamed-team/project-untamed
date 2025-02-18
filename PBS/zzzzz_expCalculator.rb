@@ -454,10 +454,11 @@ def calcExp(defeatedBattler, pkmn, expvar, partyLength)
 end
 
 def simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data)
+  cap = {0 => 100, 1 => 200, 2 => 300} # quite possibly one of the most sloppy ways to fix this, but i dont care
   trainers.each do |trainer|
     diff = (100 * difficulty_mode)
-    diff = 0 if diff == 1
     trainerID = trainer[:id] + diff
+    next if trainerID >= cap[difficulty_mode]
     selectedTrainer = trainers.find { |t| t[:name] == trainer[:name] && t[:id] == trainerID }
     if selectedTrainer.nil?
       puts "    ERROR: Trainer #{trainer[:name]} with ID #{trainerID} not found."

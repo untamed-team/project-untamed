@@ -53,7 +53,44 @@ Land,21
 Land,21
     20,SKIDDO,6,7
     25,FLABEBE,6,7
-    25,M_EKANS,6,7
+    25,WRENNER,6,7
     15,WORMOTE,6,7
-    10,WRENNER,6,7
-    5,M_MEOWTH,6,7
+    15,M_EKANS,6,7
+#-------------------------------
+[031] # Monarca
+Land,21
+    30,MINIMELO,7,7
+    20,WRENNER,8,8
+    20,PACUNA,8,8
+    20,PHANTUMP,8,8
+    10,M_EKANS,7,7
+#-------------------------------
+[034] # Monarca Cave
+Cave,5
+    20,BUDEW,8,8
+    20,FLABEBE,9,9
+    20,BALTOY,8,8
+    20,KNOGGIN,8,8
+    20,CHICATTA,10,10
+Land,21
+    25,BUDEW,8,8
+    25,FLABEBE,9,9
+    25,CHICATTA,9,9
+    20,BALTOY,8,8
+    5,KNOGGIN,8,8
+#-------------------------------
+[035] # Monarca Cave 2
+Cave,5
+    20,BUDEW,8,8
+    20,FLABEBE,9,9
+    20,BALTOY,8,8
+    20,KNOGGIN,8,8
+    20,CHICATTA,10,10
+#-------------------------------
+[106] # Butterfly Sanctuary Entrance
+Land,21
+    30,LEDYBA,9,9
+    30,SCATTERBUG,7
+    20,WORMOTE,10
+    15,SPEWPA,9
+    5,BURBRAWL,8,8

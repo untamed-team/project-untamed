@@ -4143,10 +4143,9 @@ Power = 70
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = BurnTarget
+FunctionCode = PeperSpray
 Flags = CanProtect,CanMirrorMove,ThawsUser
-EffectChance = 30
-Description = The user throws scorching sand at the target to attack. This may also burn the target.
+Description = Scorching sand is thrown at the target. Power is increased during Sun or Harsh Sun.
 #-------------------------------
 [BONECLUB]
 Name = Bone Club

@@ -1838,7 +1838,9 @@ end
 #takes event numbers as arguments
 def pbChangeRanchPkmn(pkmnEvent1=nil, pkmnEvent2=nil)
   #get the pkmn currently deposited into the daycare
-  DayCare.get_details(pbGet(1), 3, 4)
+  #if DayCare.count > 0
+  #  DayCare.get_details(0, 3, 4)
+  #end
   
   #pkmn1
   if !$PokemonGlobal.day_care[0].pokemon.nil?
@@ -2085,3 +2087,13 @@ def crustangPaintJobNPC
     end #loop do
   end #if $game_variables[36] == -1
 end #def crustangPaintJobNPC
+
+#-----------------------------------------------------------------------------
+# * Player Receive Money (common for quest rewards)
+#-----------------------------------------------------------------------------
+def pbPlayerReceiveMoney(amount, multiplier=1)
+  pbSEPlay("Mart buy item", 80)
+  amount = (amount * multiplier)
+  pbMessage("\\PN received $#{amount}!")
+  $player.money += amount
+end #def pbPlayerReceiveMoney
