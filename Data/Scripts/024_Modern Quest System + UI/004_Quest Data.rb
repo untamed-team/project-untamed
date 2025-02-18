@@ -253,11 +253,11 @@ module QuestModule
   Quest13 = {
     :ID => "13",
     :Name => "All that Glitters",
-    :QuestDescription => "David noticed something a little strange about a Pokémon in Asterado Lake... Help him find that Pokémon.",
+    :QuestDescription => "David saw a shiny Magikarp in Asterado Lake! Help him find it!",
     :QuestGiver => "David",
     :QuestGiverSprite => "NPC Shiny Hunter",
     :QuestGiverDescSprite => "SHINYHUNTER",
-    :Stage1 => "Help David find the Pokémon he saw.",
+    :Stage1 => "Help David find the shiny Magikarp in Asterado Lake.",
     :Location1 => "Asterado Ranch",
     :RewardString => '"Good money"',
     :ReadyAtStart => true,
