@@ -489,14 +489,14 @@ Pokemon = LOTAD,11
     HiddenPowerType = ICE
 #Area=MonarcaWoods_M
 #-------------------------------
-[POKEMONRANGER_F,Fabian]
+[POKEMONRANGER_F,Fernanda]
 LoseText = What a great battle! I wish I could have won...
 Pokemon = PHANTUMP,11
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
 #Area=MonarcaWoods_M
 #-------------------------------
-[POKEMONRANGER_F,Fabian,100]
+[POKEMONRANGER_F,Fernanda,100]
 LoseText = What a great battle! I wish I could have won...
 Pokemon = EEVEE,11
     Moves = EXPLOSION,SELFDESTRUCT,MISTYEXPLOSION,MEMENTO
