@@ -338,7 +338,7 @@ Pokemon = M_EKANS,9
 [TOURIST_M,Samuel,100]
 LoseText = I should have brought my Beartic!
 Pokemon = M_EKANS,9
-    Moves = BEATUP,POISONSTING,WARP
+    Moves = BEATUP,POISONSTING,WRAP
 Pokemon = ZEAZAYA,9
     Moves = SUNNYDAY,COTTONSPORE,MEGADRAIN
     Ability = HARVEST
