@@ -4835,6 +4835,32 @@ class Battle::AI
         elsif target.opposes?(user) || ($player.difficulty_mode?("chaos") && target.SetupMovesUsed.include?(move.id))
             score -= 100
         else
+            miniscore=120
+            if target.burned? || target.frozen?
+                miniscore*=0.5
+            end
+            if target.paralyzed?
+                miniscore*=0.5
+            end
+            if (target.hp.to_f)/target.totalhp>0.75
+                miniscore*=1.2
+            end
+            if (target.hp.to_f)/target.totalhp<0.33
+                miniscore*=0.3
+            end
+            if (target.hp.to_f)/target.totalhp<0.75 && (target.hasActiveAbility?(:EMERGENCYEXIT) || target.hasActiveAbility?(:WIMPOUT) || target.hasActiveItem?(:EJECTBUTTON))
+                miniscore*=0.3
+            end
+            if target.hasActiveAbility?(:SIMPLE)
+                miniscore*=2
+            end
+            physmove=target.moves.any? { |m| m&.physicalMove?(m&.type) }
+            specmove=target.moves.any? { |m| m&.specialMove?(m&.type) }
+            if (physmove && !target.statStageAtMax?(:ATTACK)) ||
+               (specmove && !target.statStageAtMax?(:SPECIAL_ATTACK))
+                miniscore/=100.0
+                score*=miniscore
+            end
             score -= target.stages[:ATTACK] * 20
             score -= target.stages[:SPECIAL_ATTACK] * 20
             score *= -1
