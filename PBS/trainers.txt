@@ -1026,6 +1026,258 @@ Pokemon = M_MARACTUS,23
     Ability = FLAMEBODY
 #Area=Asterado_O
 #-------------------------------
+[HIKER_M,Leron]
+LoseText = Not solid enough, I guess?
+Pokemon = KNOGGIN,21
+    Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
+    Ability = SOLIDROCK
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Leron,100]
+LoseText = Not solid enough, I guess?
+Pokemon = KNOGGIN,21
+    Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
+    Ability = SOLIDROCK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_F,Nereida]
+LoseText = I'll never take off at this rate...
+Pokemon = NATU,21
+    Moves = PSYWAVE,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = EARLYBIRD
+Pokemon = MURKROW,22
+    Moves = PURSUIT,WINGATTACK,ASTONISH,NIGHTSHADE
+    Ability = SUPERLUCK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_F,Nereida,100]
+LoseText = I'll never take off at this rate...
+Pokemon = NATU,21
+    Moves = PSYWAVE,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = EARLYBIRD
+Pokemon = MURKROW,22
+    Moves = PURSUIT,WINGATTACK,ASTONISH,NIGHTSHADE
+    Ability = SUPERLUCK
+#Area=Route4_M
+#-------------------------------
+[CAMPER_M,Adrian]
+LoseText = How'd you let this happen?
+Pokemon = LUMIPOP,22
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,MIRACLEEYE
+    Ability = INTIMIDATE
+#Area=Route4_M
+#-------------------------------
+[CAMPER_M,Adrian,100]
+LoseText = How'd you let this happen?
+Pokemon = LUMIPOP,22
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,MIRACLEEYE
+    Ability = INTIMIDATE
+#Area=Route4_M
+#-------------------------------
+[CAMPER_F,Alexis]
+LoseText = I told you we should've caught more Pokémon!
+Pokemon = HELIOPTILE,22
+    Moves = THUNDERSHOCK,TAILWHIP,CHARGE,QUICKATTACK
+    Ability = DRYSKIN
+#Area=Route4_M
+#-------------------------------
+[CAMPER_F,Alexis,100]
+LoseText = I told you we should've caught more Pokémon!
+Pokemon = HELIOPTILE,22
+    Moves = THUNDERSHOCK,TAILWHIP,CHARGE,QUICKATTACK
+    Ability = DRYSKIN
+#Area=Route4_M
+#-------------------------------
+[HIKER_F,Eleanora]
+LoseText = Where did I go astray...
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,HONECLAWS,BITE,ASTONISH
+    Ability = PRESSURE
+#Area=Route4_M
+#-------------------------------
+[HIKER_F,Eleanora,100]
+LoseText = Where did I go astray...
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,HONECLAWS,BITE,ASTONISH
+    Ability = PRESSURE
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_M,Sydney]
+LoseText = I call fowl!
+Pokemon = BURBRAWL,21
+    Moves = WORKUP,AIRCUTTER,KARATECHOP,REVENGE
+Pokemon = AVEOR,22
+    Moves = QUICKATTACK,SPARK,CHARGE,PECK
+    Ability = STATIC
+Pokemon = CROMEN,23
+    Moves = GUST,COVET,EXTRASENSORY,EXCITE
+    Ability = FRISK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_M,Sydney,100]
+LoseText = I call fowl!
+Pokemon = BURBRAWL,21
+    Moves = WORKUP,AIRCUTTER,KARATECHOP,REVENGE
+Pokemon = AVEOR,22
+    Moves = QUICKATTACK,SPARK,CHARGE,PECK
+    Ability = STATIC
+Pokemon = CROMEN,23
+    Moves = GUST,COVET,EXTRASENSORY,EXCITE
+    Ability = FRISK
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Michael]
+LoseText = That won't do!
+Pokemon = WRRAZAL,22
+    Moves = ROCKTOMB,SCREECH,SMACKDOWN,ASTONISH
+    Ability = INTIMIDATE
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Michael,100]
+LoseText = That won't do!
+Pokemon = WRRAZAL,22
+    Moves = ROCKTOMB,SCREECH,SMACKDOWN,ASTONISH
+    Ability = INTIMIDATE
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+#Area=Route4_M
+#-------------------------------
+[TOURIST_F,Karmen]
+LoseText = That certainly gets old though...
+Pokemon = DUNSPARCE,23
+    Moves = ANCIENTPOWER,FLAIL,GLARE,MUDSLAP
+    Ability = SERENEGRACE
+#Area=Route4_M
+#-------------------------------
+[TOURIST_F,Karmen,100]
+LoseText = That certainly gets old though...
+Pokemon = DUNSPARCE,23
+    Moves = ANCIENTPOWER,FLAIL,GLARE,MUDSLAP
+    Ability = SERENEGRACE
+#Area=Route4_M
+#-------------------------------
+[FISHER_M,Esteban]
+LoseText = This was the win that got away!
+Pokemon = BARBOACH,22
+    Moves = MAGNITUDE,WATERPULSE,SPARK,AMNESIA
+    Ability = ANTICIPATION
+Pokemon = FINNEON,23
+    Moves = WATERPULSE,GUST,AURORABEAM,AGILITY
+    Ability = STORMDRAIN
+Pokemon = WIMPOD,24
+    Moves = STRUGGLEBUG,AQUAJET,METALCLAW,SANDATTACK
+#Area=Route4_M
+#-------------------------------
+[FISHER_M,Esteban,100]
+LoseText = This was the win that got away!
+Pokemon = BARBOACH,22
+    Moves = MAGNITUDE,WATERPULSE,SPARK,AMNESIA
+    Ability = ANTICIPATION
+Pokemon = FINNEON,23
+    Moves = WATERPULSE,GUST,AURORABEAM,AGILITY
+    Ability = STORMDRAIN
+Pokemon = WIMPOD,24
+    Moves = STRUGGLEBUG,AQUAJET,METALCLAW,SANDATTACK
+#Area=Route4_M
+#-------------------------------
+[RUINMANIAC_F,Page]
+LoseText = I'm still searching for the secret to victory...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BITE,HARDEN,TACKLE
+    Ability = SUPERLUCK
+Pokemon = BALTOY,23
+    Moves = CALMMIND,MUDSLAP,ANCIENTPOWER,PSYBEAM
+#Area=Route4_M
+#-------------------------------
+[RUINMANIAC_F,Page,100]
+LoseText = I'm still searching for the secret to victory...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BITE,HARDEN,TACKLE
+    Ability = SUPERLUCK
+Pokemon = BALTOY,23
+    Moves = CALMMIND,MUDSLAP,ANCIENTPOWER,PSYBEAM
+#Area=Route4_M
+#-------------------------------
+[ADMIN_Xandra,Xandra]
+LoseText = I must have miscalculated...
+Gimmick = Tailwind
+Pokemon = WIMPOD,24
+    EV = 24,0,24,0,0,24
+    Moves = AQUAJET,STRUGGLEBUG,ASSURANCE,ROLLOUT
+Pokemon = FLITJITTER,25
+    EV = 24,0,24,24,0,0
+    Moves = STRUGGLEBUG,ENERGYBALL,TAILWIND,THUNDERBOLT
+Pokemon = CHARCOPAL,24
+    EV = 0,0,0,24,24,24
+    Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
+    Ability = CRYSTALJAW
+Pokemon = MAGNEMITE,25
+    EV = 0,24,24,0,24,0
+    Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
+    Ability = STURDY
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Xandra,Xandra,100]
+LoseText = I must have miscalculated...
+Gimmick = Tailwind
+Pokemon = WIMPOD,24
+    EV = 24,0,24,0,0,24
+    Moves = AQUAJET,STRUGGLEBUG,ASSURANCE,ROLLOUT
+Pokemon = FLITJITTER,25
+    EV = 24,0,24,24,0,0
+    Moves = STRUGGLEBUG,ENERGYBALL,TAILWIND,THUNDERBOLT
+Pokemon = CHARCOPAL,24
+    EV = 0,0,0,24,24,24
+    Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
+    Ability = CRYSTALJAW
+Pokemon = MAGNEMITE,25
+    EV = 0,24,24,0,24,0
+    Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
+    Ability = STURDY
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Idelfonso,Idelfonso]
+LoseText = Dag nabbit!
+Gimmick = Spikes,Spikes
+Pokemon = MINGOT,24
+    EV = 0,24,0,48,0,0
+    Moves = DIG,QUICKATTACK,METALCLAW,HONECLAWS
+    Ability = LONGREACH
+Pokemon = DIGGERSBY,25
+    EV = 24,0,24,24,0,0
+    Moves = QUICKATTACK,SPIKES,DOUBLEKICK,BULLDOZE
+    Ability = HUGEPOWER
+Pokemon = ELEGOOP,24
+    EV = 24,24,24,0,0,0
+    Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
+    Ability = GOOEY
+Pokemon = BURBRAWL,25
+    EV = 24,0,24,0,0,24
+    Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Idelfonso,Idelfonso,100]
+LoseText = Dag nabbit!
+Gimmick = Spikes,Spikes
+Pokemon = MINGOT,24
+    EV = 0,24,0,48,0,0
+    Moves = DIG,QUICKATTACK,METALCLAW,HONECLAWS
+    Ability = LONGREACH
+Pokemon = DIGGERSBY,25
+    EV = 24,0,24,24,0,0
+    Moves = QUICKATTACK,SPIKES,DOUBLEKICK,BULLDOZE
+    Ability = HUGEPOWER
+Pokemon = ELEGOOP,24
+    EV = 24,24,24,0,0,0
+    Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
+    Ability = GOOEY
+Pokemon = BURBRAWL,25
+    EV = 24,0,24,0,0,24
+    Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
+#Area=CanyonTemple_M
+#-------------------------------
 [BIKER,Jacob]
 LoseText = You stopped me in my tracks!
 Pokemon = M_EKANS,23
@@ -1365,6 +1617,136 @@ Pokemon = CHARCOPAL,28
     Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
     Ability = CRYSTALJAW
 #Area=SolecaDesert_O
+#-------------------------------
+[SCRAPPER_M,Hugo]
+LoseText = Taken out!
+Pokemon = TRUBBISH,24
+    Moves = SLUDGE,CLEARSMOG,STOCKPILE,SWALLOW
+    Ability = STENCH
+Pokemon = M_CRABRAWLER,25
+    Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Hugo,100]
+LoseText = Taken out!
+Pokemon = TRUBBISH,24
+    Moves = SLUDGE,CLEARSMOG,STOCKPILE,SWALLOW
+    Ability = STENCH
+Pokemon = M_CRABRAWLER,25
+    Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Shirley]
+LoseText = Gah! Foiled again...
+Pokemon = BEAKPEEP,24
+    Moves = STEELWING,ROCKSMASH,METALCLAW,HEADBUTT
+    Ability = BIGPECKS
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Shirley,100]
+LoseText = Gah! Foiled again...
+Pokemon = BEAKPEEP,24
+    Moves = STEELWING,ROCKSMASH,METALCLAW,HEADBUTT
+    Ability = BIGPECKS
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Jaxon]
+LoseText = Wow, you're strong! You should battle my sister too!
+Pokemon = FRIZZARD,25
+    Moves = DRAGONBREATH,AURORABEAM,ICYWIND,BITINGCOLD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Jaxon,100]
+LoseText = Wow, you're strong! You should battle my sister too!
+Pokemon = FRIZZARD,25
+    Moves = DRAGONBREATH,AURORABEAM,ICYWIND,BITINGCOLD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Tasha]
+LoseText = Man, you're tough! You should battle my brother too!
+Pokemon = ZARCOIL,25
+    Moves = BREAKINGSWIPE,FLAMECHARGE,SMOKESCREEN,WILLOWISP
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Tasha,100]
+LoseText = Man, you're tough! You should battle my brother too!
+Pokemon = ZARCOIL,25
+    Moves = BREAKINGSWIPE,FLAMECHARGE,SMOKESCREEN,WILLOWISP
+#Area=Route6_M
+#-------------------------------
+[MECHANIC_F,Maya]
+LoseText = Looks like I can't fix that...
+Pokemon = MAGNEMITE,25
+    Moves = SCREECH,SPARK,THUNDERWAVE,EXPLOSION
+    Ability = MAGNETPULL
+Pokemon = HELIOLISK,26
+    Moves = BULLDOZE,THUNDERBOLT,QUICKATTACK,FIREPUNCH
+    Ability = DRYSKIN
+#Area=Route6_M
+#-------------------------------
+[MECHANIC_F,Maya,100]
+LoseText = Looks like I can't fix that...
+Pokemon = MAGNEMITE,25
+    Moves = SCREECH,SPARK,THUNDERWAVE,EXPLOSION
+    Ability = MAGNETPULL
+Pokemon = HELIOLISK,26
+    Moves = BULLDOZE,THUNDERBOLT,QUICKATTACK,FIREPUNCH
+    Ability = DRYSKIN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Pedro]
+LoseText = Maybe I should have... been more resourceful?
+Pokemon = BOWLLO,24
+    Moves = ROLLOUT,METALCLAW,HEADBUTT,DIG
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Pedro,100]
+LoseText = Maybe I should have... been more resourceful?
+Pokemon = BOWLLO,24
+    Moves = ROLLOUT,METALCLAW,HEADBUTT,DIG
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Elaine]
+LoseText = I'll just have to try twice as hard next time...
+Pokemon = TRUBBISH,25
+    Moves = ACIDSPRAY,AMNESIA,TAKEDOWN,POISONGAS
+    Ability = AFTERMATH
+Pokemon = BEAKPEEP,26
+    Moves = STEELWING,PLUCK,ROCKSMASH,IRONDEFENSE
+    Ability = EARLYBIRD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Elaine,100]
+LoseText = I'll just have to try twice as hard next time...
+Pokemon = TRUBBISH,25
+    Moves = ACIDSPRAY,AMNESIA,TAKEDOWN,POISONGAS
+    Ability = AFTERMATH
+Pokemon = BEAKPEEP,26
+    Moves = STEELWING,PLUCK,ROCKSMASH,IRONDEFENSE
+    Ability = EARLYBIRD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Héctor]
+LoseText = So will I! Which means we'll be four times as strong!
+Pokemon = M_CRABRAWLER,25
+    Moves = MUDBOMB,STRENGTH,TAUNT,METALCLAW
+    Ability = HYPERCUTTER
+Pokemon = MAGNEMITE,26
+    Moves = THUNDERWAVE,ELECTROBALL,SPARK,SCREECH
+    Ability = STURDY
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Héctor,100]
+LoseText = So will I! Which means we'll be four times as strong!
+Pokemon = M_CRABRAWLER,25
+    Moves = MUDBOMB,STRENGTH,TAUNT,METALCLAW
+    Ability = HYPERCUTTER
+Pokemon = MAGNEMITE,26
+    Moves = THUNDERWAVE,ELECTROBALL,SPARK,SCREECH
+    Ability = STURDY
+#Area=Route6_M
 #-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
