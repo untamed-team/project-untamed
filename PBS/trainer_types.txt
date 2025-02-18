@@ -520,6 +520,16 @@ Name = Ranchero
 Gender = Male
 BaseMoney = 32
 #-------------------------------
+[MECHANIC_M]
+Name = Mechanic
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[MECHANIC_F]
+Name = Mechanic
+Gender = Female
+BaseMoney = 48
+#-------------------------------
 [SHINYHUNTER_F]
 Name = Shiny Hunter
 Gender = Female
@@ -557,3 +567,18 @@ Gender = Female
 BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[ADMIN_Xandra]
+Name = Neo Admin
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[ADMIN_Idelfonso]
+Name = Eon Admin
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
