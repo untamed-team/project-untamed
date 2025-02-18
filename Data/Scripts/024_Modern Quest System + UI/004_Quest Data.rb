@@ -250,6 +250,18 @@ module QuestModule
     :RewardString => "Something from the ranch!",
     :ReadyAtStart => false,
   }
+  Quest13 = {
+    :ID => "13",
+    :Name => "All that Glitters",
+    :QuestDescription => "David noticed something a little strange about a Pokémon in Asterado Lake... Help him find that Pokémon.",
+    :QuestGiver => "David",
+    :QuestGiverSprite => "NPC Shiny Hunter",
+    :QuestGiverDescSprite => "SHINYHUNTER",
+    :Stage1 => "Help David find the Pokémon he saw.",
+    :Location1 => "Asterado Ranch",
+    :RewardString => '"Good money"',
+    :ReadyAtStart => true,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",
