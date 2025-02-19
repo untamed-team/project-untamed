@@ -1033,12 +1033,8 @@ Pokemon = BOWLLO,19
 #-------------------------------
 [RANCHERO_M,Bosco]
 LoseText = A shocking defeat!
-Pokemon = FLAAFFY,19
-    Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
-    Ability = STATIC
-    Nature = SERIOUS
-    IV = 22,22,22,22,24,24
-    Shiny = yes
+Pokemon = FLAAFFY,22
+    Moves = COTTONSPORE,THUNDERSHOCK,TAKEDOWN,THUNDERWAVE
 #Area=Asterado_O
 #-------------------------------
 [RANCHERO_M,Bosco,100]
@@ -1059,12 +1055,9 @@ LoseText = I feel like a fish out of water!
 Pokemon = FEEBAS,20
     Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
     Ability = OBLIVIOUS
-Pokemon = ATELANGLER,20
+Pokemon = ATELANGLER,22
     Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
     Ability = BAITEDLINE
-    Nature = SERIOUS
-    IV = 17,19,20,19,18,19
-    Shiny = yes
 #Area=Asterado_O
 #-------------------------------
 [FISHER_F,Zoey,100]
@@ -1522,16 +1515,18 @@ Pokemon = M_CRABRAWLER,25
 #-------------------------------
 [BIKER,Ian]
 LoseText = You're a force to be reckoned with!
-Pokemon = ELTTAR,26
+Pokemon = ELTTAR,24
     Moves = POISONFANG,BITE,GLARE,TAUNT
-    Ability = RATTLED
+    Ability = STRONGJAW
+    Nature = ADAMANT
 #Area=Route5_M
 #-------------------------------
 [BIKER,Ian,100]
 LoseText = You're a force to be reckoned with!
-Pokemon = ELTTAR,26
+Pokemon = ELTTAR,24
     Moves = POISONFANG,BITE,GLARE,TAUNT
-    Ability = RATTLED
+    Ability = STRONGJAW
+    Nature = ADAMANT
 #Area=Route5_M
 #-------------------------------
 [HIKER_F,Katia]
