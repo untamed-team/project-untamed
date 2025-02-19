@@ -1109,6 +1109,7 @@ Pokemon = MAGIKARP,18
     Shiny = yes
     Moves = SPLASH,SMACKDOWN
 Pokemon = BANAGNAW,21
+    Name = Slippy
     Shiny = yes
     Moves = DIVE,BITE,LEAFAGE,AQUAJET
     Ability = GLUTTONY
