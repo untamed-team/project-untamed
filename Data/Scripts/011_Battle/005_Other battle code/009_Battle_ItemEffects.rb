@@ -318,9 +318,17 @@ Battle::ItemEffects::HPHeal.add(:LANSATBERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumePinchBerry?
     next false if battler.effects[PBEffects::FocusEnergy] >= 2
-    battle.pbCommonAnimation("EatBerry", battler) if !forced
+    amt = 2
+    ripening = false
 		pbRaiseTropiusEvolutionStep(battler) #by low
-    battler.effects[PBEffects::FocusEnergy] = 2
+    if battler.hasActiveAbility?(:RIPEN)
+      battle.pbShowAbilitySplash(battler, forced)
+      amt *= 2
+      ripening = true
+    end
+    battle.pbCommonAnimation("EatBerry", battler) if !forced
+    battle.pbHideAbilitySplash(battler) if ripening
+    battler.effects[PBEffects::FocusEnergy] = amt
     itemName = GameData::Item.get(item).name
     if forced
       battle.pbDisplay(_INTL("{1} got pumped from the {2}!", battler.pbThis, itemName))

@@ -1026,39 +1026,56 @@ Pokemon = BOWLLO,19
 [HIKER_F,Cassie,100]
 LoseText = Looks like you're the one who's on a roll...
 Pokemon = BOWLLO,19
-    Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+    Moves = ROLLOUT,CUT,DEFENSECURL,PROTECT
+    Ability = MOMENTUM
+    Item = METRONOME
 #Area=Route3Cave_M
 #-------------------------------
 [RANCHERO_M,Bosco]
 LoseText = A shocking defeat!
-Pokemon = FLAAFFY,24
+Pokemon = FLAAFFY,19
     Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
+    Ability = STATIC
+    Nature = SERIOUS
+    IV = 22,22,22,22,24,24
+    Shiny = yes
 #Area=Asterado_O
 #-------------------------------
 [RANCHERO_M,Bosco,100]
 LoseText = A shocking defeat!
-Pokemon = FLAAFFY,24
-    Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
+Gimmick = PoisonZone
+Pokemon = EELEKTRIK,19
+    Moves = ZINGZAP,POISONTAIL,GIGADRAIN,HIDDENPOWER
+    Ability = LEVITATE
+    Nature = SASSY
+    Item = EXPERTBELT
+    IV = 10,5,5,5,5,5
+    Shiny = yes
+    HiddenPowerType = ICE
 #Area=Asterado_O
 #-------------------------------
 [FISHER_F,Zoey]
 LoseText = I feel like a fish out of water!
-Pokemon = FEEBAS,21
+Pokemon = FEEBAS,20
     Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
     Ability = OBLIVIOUS
-Pokemon = ATELANGLER,24
+Pokemon = ATELANGLER,20
     Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
     Ability = BAITEDLINE
+    Nature = SERIOUS
+    IV = 17,19,20,19,18,19
+    Shiny = yes
 #Area=Asterado_O
 #-------------------------------
 [FISHER_F,Zoey,100]
 LoseText = I feel like a fish out of water!
-Pokemon = FEEBAS,21
-    Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
+Pokemon = FEEBAS,20
+    Moves = MIRRORCOAT,FLAIL,CONFUSERAY,TACKLE
     Ability = OBLIVIOUS
-Pokemon = ATELANGLER,24
-    Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
-    Ability = BAITEDLINE
+    Item = FOCUSSASH
+Pokemon = ATELANGLER,20
+    Moves = FAKEOUT,DOUBLEHIT,BRUTALSWING,SLEEPTALK
+    Ability = COMATOSE
 #Area=Asterado_O
 #-------------------------------
 [RANCHERO_F,Nicole]
@@ -1073,54 +1090,73 @@ Pokemon = M_MUDBRAY,23
 #Area=Asterado_O
 #-------------------------------
 [RANCHERO_F,Nicole,100]
-LoseText = Are these boots not made for winning?
-Pokemon = HERDIER,21
-    Moves = RETALIATE,BITE,BABYDOLLEYES,WORKUP
-    Ability = INTIMIDATE
-Pokemon = SKIDDO,22
-    Moves = MEGAKICK,RAZORLEAF,GROWTH,WORRYSEED
-Pokemon = M_MUDBRAY,23
-    Moves = DOUBLEKICK,MUDBOMB,FAIRYWIND,EXCITE
+LoseText = You just increased my debt...
+Pokemon = FURFROU,21
+    Moves = MIMIC,METRONOME,BABYDOLLEYES,HEADBUTT
+    Ability = FURCOAT
+Pokemon = SKIDDO,21
+    Moves = ROCKTOMB,BULLETSEED,GROWTH,SYNTHESIS
+    Ability = TILEWORKER
+Pokemon = M_MUDBRAY,21
+    Moves = MUDBOMB,FAIRYWIND,METRONOME,EXCITE
+    Ability = SWEETVEIL
 #Area=Asterado_O
 #-------------------------------
 [SHINYHUNTER_M,Florian]
 LoseText = Nothing lustrous about that...
 Pokemon = MAGIKARP,18
     Form = 2
-    Shiny = true
+    Shiny = yes
     Moves = SPLASH,SMACKDOWN
 Pokemon = BANAGNAW,21
-    Shiny = true
+    Shiny = yes
     Moves = DIVE,BITE,LEAFAGE,AQUAJET
     Ability = GLUTTONY
 Pokemon = LUMIPOP,21
-    Shiny = true
+    Shiny = yes
     Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
     Ability = INTIMIDATE
 Pokemon = M_MARACTUS,23
-    Shiny = true
+    Shiny = yes
     Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
     Ability = FLAMEBODY
 #Area=Asterado_O
 #-------------------------------
 [SHINYHUNTER_M,Florian,100]
 LoseText = Nothing lustrous about that...
-Pokemon = MAGIKARP,18
-    Form = 2
-    Shiny = true
-    Moves = SPLASH,SMACKDOWN
 Pokemon = BANAGNAW,21
-    Shiny = true
-    Moves = DIVE,BITE,LEAFAGE,AQUAJET
-    Ability = GLUTTONY
+    Moves = BRICKBREAK,ICEFANG,AQUAJET,GROWTH
+    Ability = RIPEN
+    Item = LANSATBERRY
+    Nature = CAREFUL
+    Shiny = yes
 Pokemon = LUMIPOP,21
-    Shiny = true
-    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
-    Ability = INTIMIDATE
-Pokemon = M_MARACTUS,23
-    Shiny = true
-    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Moves = ACID,HIDDENPOWER,MIRACLEEYE,TOXIC
+    Ability = SHEDSKIN
+    Item = SHUCABERRY
+    Nature = MODEST
+    HiddenPowerType = PSYCHIC
+    Shiny = yes
+Pokemon = M_MARACTUS,21
+    Moves = WILLOWISP,MEGADRAIN,LEECHSEED,REST
     Ability = FLAMEBODY
+    Item = CHESTOBERRY
+    Nature = BOLD
+    Shiny = yes
+Pokemon = GOLETT,21
+    Moves = DIG,SHADOWPUNCH,FIREPUNCH,THUNDERPUNCH
+    Ability = IRONFIST
+    Item = POWERHERB
+    Nature = ADAMANT
+    Shiny = yes
+Pokemon = GYARADOS,22
+    Moves = WATERPULSE,HIDDENPOWER,ROCKBLAST,IRONDEFENSE
+    Ability = FULLMETALBODY
+    Item = ROCKGEM
+    Nature = QUIET
+    HiddenPowerType = DRAGON
+    Form = 2
+    Shiny = yes
 #Area=Asterado_O
 #-------------------------------
 [HIKER_M,Leron]
@@ -1132,6 +1168,9 @@ Pokemon = KNOGGIN,21
 #-------------------------------
 [HIKER_M,Leron,100]
 LoseText = Not solid enough, I guess?
+Pokemon = BOWLLO,21
+    Moves = RAPIDSPIN,ROCKTOMB,DEFENSECURL,CUT
+    Ability = FILTER
 Pokemon = KNOGGIN,21
     Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
     Ability = SOLIDROCK
@@ -1150,11 +1189,12 @@ Pokemon = MURKROW,22
 [BIRDKEEPER_F,Nereida,100]
 LoseText = I'll never take off at this rate...
 Pokemon = NATU,21
-    Moves = PSYWAVE,CONFUSERAY,NIGHTSHADE,PECK
-    Ability = EARLYBIRD
-Pokemon = MURKROW,22
-    Moves = PURSUIT,WINGATTACK,ASTONISH,NIGHTSHADE
+    Moves = FUTURESIGHT,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = SYNCHRONIZE
+Pokemon = MURKROW,21
+    Moves = PURSUIT,AERIALACE,FEINTATTACK,MIRRORMOVE
     Ability = SUPERLUCK
+    Item = SCOPELENS
 #Area=Route4_M
 #-------------------------------
 [CAMPER_M,Adrian]
@@ -1166,9 +1206,14 @@ Pokemon = LUMIPOP,22
 #-------------------------------
 [CAMPER_M,Adrian,100]
 LoseText = How'd you let this happen?
-Pokemon = LUMIPOP,22
-    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,MIRACLEEYE
-    Ability = INTIMIDATE
+Pokemon = TERREON,22
+    Moves = SANDSTORM,MUDSHOT,SPIKES,ROCKBLAST
+    Ability = GOOEY
+    Item = SMOOTHROCK
+Pokemon = JAWSTER,21
+    Moves = PROTECT,ROAR,FLY,TOXIC
+    Ability = SANDVEIL
+    Item = LEFTOVERS
 #Area=Route4_M
 #-------------------------------
 [CAMPER_F,Alexis]
@@ -1180,9 +1225,15 @@ Pokemon = HELIOPTILE,22
 #-------------------------------
 [CAMPER_F,Alexis,100]
 LoseText = I told you we should've caught more Pokémon!
-Pokemon = HELIOPTILE,22
-    Moves = THUNDERSHOCK,TAILWHIP,CHARGE,QUICKATTACK
-    Ability = DRYSKIN
+Pokemon = HELIOPTILE,21
+    Moves = PARABOLICCHARGE,THUNDERWAVE,CHARGE,HIDDENPOWER
+    Ability = SANDVEIL
+    HiddenPowerType = NORMAL
+Pokemon = TRAPINCH,21
+    Moves = SANDTOMB,PROTECT,QUICKATTACK,SANDSTORM
+    Ability = SHEERFORCE
+    Item = EVIOLITE
+    IV = 0,0,7,0,0,7
 #Area=Route4_M
 #-------------------------------
 [HIKER_F,Eleanora]
@@ -1194,9 +1245,9 @@ Pokemon = WRRAZAL,23
 #-------------------------------
 [HIKER_F,Eleanora,100]
 LoseText = Where did I go astray...
-Pokemon = WRRAZAL,23
-    Moves = SMACKDOWN,HONECLAWS,BITE,ASTONISH
-    Ability = PRESSURE
+Pokemon = CARBINK,22
+    Moves = SMACKDOWN,PSYWAVE,REFLECT,IRONHEAD
+    Ability = CLEARBODY
 #Area=Route4_M
 #-------------------------------
 [BIRDKEEPER_M,Sydney]
@@ -1214,13 +1265,14 @@ Pokemon = CROMEN,23
 [BIRDKEEPER_M,Sydney,100]
 LoseText = I call fowl!
 Pokemon = BURBRAWL,21
-    Moves = WORKUP,AIRCUTTER,KARATECHOP,REVENGE
-Pokemon = AVEOR,22
-    Moves = QUICKATTACK,SPARK,CHARGE,PECK
-    Ability = STATIC
-Pokemon = CROMEN,23
-    Moves = GUST,COVET,EXTRASENSORY,EXCITE
-    Ability = FRISK
+    Moves = WORKUP,WINGATTACK,KARATECHOP,ENDURE
+    Item = LIECHIBERRY
+Pokemon = AVEOR,21
+    Moves = QUICKATTACK,SPARK,DOUBLEKICK,PECK
+    Ability = RUNAWAY
+Pokemon = CROMEN,22
+    Moves = DRAININGKISS,COVET,EXTRASENSORY,EXCITE
+    Ability = UNNERVE
 #Area=Route4_M
 #-------------------------------
 [HIKER_M,Michael]
