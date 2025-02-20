@@ -553,9 +553,12 @@ def simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, tr
   end
 
   puts "    Simulation Results:"
+  msg = "      "
   pokemon_team.each do |pkmn|
     puts "      #{pkmn[:name]} - Level: #{pkmn[:level]}, Current EXP: #{pkmn[:current_exp]}, Total EXP Earned: #{pkmn[:total_exp_earned]}"
+    msg += "#{pkmn[:name]} #{pkmn[:level]} #{pkmn[:current_exp]},"
   end
+  puts msg
 end
 
 def simLevelUp(pkmn)
@@ -596,24 +599,25 @@ def simLevelUp(pkmn)
 end
 
 def input_pkmndata(pokemon_data)
-  puts "    Enter the number of Pokémon in your team (1-6):"
-  team_size = gets.chomp.to_i
-  team_size = [[team_size, 1].max, 6].min
-  #----------------
   pokemon_team = []
-  team_size.times do
-    puts "    Enter the [internal] name of your Pokémon:"
-    name = gets.chomp.upcase
-    puts "    Enter the level of #{name}:"
-    level = gets.chomp.to_i
+  puts "    Enter the names and levels in the format 'NAME LEVEL START_EXP' (e.g., 'CHIXULOB 50 1745, TITANOTROP 55 0')."
+  puts "    PS: pkmn names are case unsensitve. If no level/start exp is given, they will default to level 1/start exp 0"
+  input = gets.chomp
+  team_size = input.split(',').first(6)
+  team_size.each do |poke|
+    name, level, explefties = poke.strip.split
+    name = name.upcase
+    level = level.to_i
     level = [[level, 1].max, 100].min
+    explefties = explefties.to_i
+    explefties = [explefties, 0].max
     if pokemon_data.key?(name)
       pokemon_team << { name: name, level: level, 
-                        current_exp: 0, total_exp_earned: 0, 
+                        current_exp: explefties, total_exp_earned: 0, 
                         base_exp: pokemon_data[name][:base_exp], 
                         growth_rate: pokemon_data[name][:growth_rate] }
     else
-      puts "    ERROR: Pokémon not found in the database. Please try again."
+      puts "    ERROR: #{name} not found in the database. Please try again."
       return input_pkmndata(pokemon_data)
     end
   end
@@ -648,8 +652,9 @@ def main
     simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
     puts ""
     puts "    Do you want to do another simulation? (y/n):"
-    cunt = gets.chomp.downcase
-    cuntinue = cunt == "y"
+    # "cunt" is too offensive for some online compilers, please understand
+    cunny = gets.chomp.downcase
+    cuntinue = cunny == "y"
     break unless cuntinue
     puts ""
   end

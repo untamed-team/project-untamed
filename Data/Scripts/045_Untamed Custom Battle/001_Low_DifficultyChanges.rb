@@ -83,13 +83,15 @@ class Battle
               new_index = pbLastInTeam(idxBattler)
               idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
             end
-            if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                      opponent.full_name, enemyParty[idxPartyForName].name))
-              idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-              if idxPlayerPartyNew >= 0
-                pbMessageOnRecall(@battlers[0])
-                pbRecallAndReplace(0, idxPlayerPartyNew)
-                switched.push(0)
+            unless isWildBoss?(opponent)
+              if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
+                                        opponent.full_name, enemyParty[idxPartyForName].name))
+                idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
+                if idxPlayerPartyNew >= 0
+                  pbMessageOnRecall(@battlers[0])
+                  pbRecallAndReplace(0, idxPlayerPartyNew)
+                  switched.push(0)
+                end
               end
             end
           end

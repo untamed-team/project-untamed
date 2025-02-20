@@ -220,7 +220,7 @@ or dont
 		if trainerBattle?
 			@opponent.each_with_index do |trainer, i|
         funstuff = trainer.gimmick.to_s
-        polishedarray = funstuff.split('_')
+        polishedarray = funstuff.split(',').map(&:strip)
 
         weatherHash = {
           "sun"  => :Sun,  "harshsun"  => :HarshSun,
@@ -240,13 +240,15 @@ or dont
           "dragonzone" => :DRAGON, "darkzone"     => :DARK,     "steelzone"  => :STEEL, 
           "fairyzone"  => :FAIRY,  "qmarkszone"   => :QMARKS
         }
-        effectHash = {
+        fieldHash = {
           "trickroom" => :TrickRoom, "wonderroom" => :WonderRoom, "magicroom" => :MagicRoom,
-          "gravity" => :Gravity, "tailwind" => :Tailwind, 
+          "gravity" => :Gravity, "watersport" => :WaterSportField, "mudsport" => :MudSportField
+        }
+        effectHash = {
+          "statdropimmunity" => :StatDropImmunity, "tailwind" => :Tailwind, 
           "lightscreen" => :LightScreen, "reflect" => :Reflect, "auroraveil" => :AuroraVeil,
           "mist" => :Mist, "safeguard" => :Safeguard, "luckychant" => :LuckyChant,
-          "statdropimmunity" => :StatDropImmunity, 
-          "watersport" => :WaterSportField, "mudsport" => :MudSportField
+          "rainbow" => :Rainbow
         }
         hazardsHash = {
           "spikes"    => :Spikes,    "toxicspikes" => :ToxicSpikes, 
@@ -260,11 +262,10 @@ or dont
             @field.terrain = terrainHash[gimmick_downcase]
           elsif zoneHash[gimmick_downcase]
             @field.typezone = zoneHash[gimmick_downcase]
+          elsif fieldHash[gimmick_downcase]
+            @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
           elsif effectHash[gimmick_downcase]
-            if ["trickroom", "wonderroom", "magicroom", "gravity", 
-                "watersport", "mudsport"].include?(gimmick_downcase)
-              @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
-            elsif ["statdropimmunity"].include?(gimmick_downcase)
+            if ["statdropimmunity"].include?(gimmick_downcase)
               @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true
             else
               @field.weather = :Hail if gimmick_downcase == "auroraveil"
@@ -346,7 +347,8 @@ or dont
       PBEffects::AuroraVeil  => "A beautiful aurora protects the enemy's team!",
       PBEffects::Mist        => "The enemy's team is shrouded in mist!",
       PBEffects::Safeguard   => "The enemy's team is cloaked in a mystical veil!",
-      PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!"
+      PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!",
+      PBEffects::Rainbow     => "A rainbow appeared in the sky on the opponent's side!" 
     }
     effectHashMsgs_side.each do |effect, msg|
       next if @sides[1].effects[effect] == 0

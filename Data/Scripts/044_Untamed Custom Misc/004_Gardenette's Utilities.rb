@@ -653,8 +653,16 @@ def pbTroll
 end
 
 #===============================================================================
-# Differentiate between pumpkaboo sizes
+# Differentiate between pumpkaboo sizes and "wild pkmn" (trainer class) edits
 #===============================================================================
+def isWildBoss?(opp) #by low
+  if opp.is_a?(Array)
+    return opp.any? { |opponent| opponent.trainer_type == :WILD_PKMN }
+  else
+    return opp.trainer_type == :WILD_PKMN
+  end
+end
+
 class Battle
 def pbStartBattleSendOut(sendOuts)
     # "Want to battle" messages
@@ -662,29 +670,19 @@ def pbStartBattleSendOut(sendOuts)
       foeParty = pbParty(1)
       case foeParty.length
       when 1
-        #added by Gardenette to help differentiate between pumpkaboo sizes in
-        #the wild
-        if foeParty[0].isSpecies?(:PUMPKABOO)
+        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        #added by Gardenette to help differentiate between pumpkaboo sizes in the wild
         #give messages depending on form (size)
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
-          if foeParty[0].form == 0
-            #small
-            pbDisplayPaused(_INTL("It looks pretty small!"))
-          end
-          if foeParty[0].form == 1
-            #average
-            pbDisplayPaused(_INTL("It looks to be average size!"))
-          end
-          if foeParty[0].form == 2
-            #large
-            pbDisplayPaused(_INTL("It looks pretty large!"))
-          end
-          if foeParty[0].form == 3
-            #super size
-            pbDisplayPaused(_INTL("Woah, it's so big!"))
-          end
-        else
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        if foeParty[0].isSpecies?(:PUMPKABOO) || foeParty[0].isSpecies?(:GOURGEIST) 
+          countrybumpkin = {
+            0 => "It looks pretty small!", #small
+            1 => "It looks to be average size!", #average
+            2 => "It looks pretty large!", #large
+            3 => "Woah! It's so big!" #super size
+          }
+          bumpkinmsg = countrybumpkin[foeParty[0].form]
+          pbDisplayPaused(_INTL(bumpkinmsg))
+          pbDisplayPaused(_INTL("thats what she said")) if foeParty[0].form == 3 && rand(10) == 0
         end
       when 2
         pbDisplayPaused(_INTL("Oh! A wild {1} and {2} appeared!", foeParty[0].name,
@@ -694,15 +692,19 @@ def pbStartBattleSendOut(sendOuts)
                               foeParty[1].name, foeParty[2].name))
       end
     else   # Trainer battle
-      case @opponent.length
-      when 1
-        pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
-      when 2
-        pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
-                              @opponent[1].full_name))
-      when 3
-        pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
-                              @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+      if isWildBoss?(@opponent)
+        pbDisplayPaused(_INTL("...Something is approaching!"))
+      else
+        case @opponent.length
+        when 1
+          pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
+        when 2
+          pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
+                                @opponent[1].full_name))
+        when 3
+          pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
+                                @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+        end
       end
     end
     # Send out Pokémon (opposing trainers first)
@@ -716,15 +718,28 @@ def pbStartBattleSendOut(sendOuts)
         next if side == 0 && i == 0   # The player's message is shown last
         msg += "\r\n" if msg.length > 0
         sent = sendOuts[side][i]
-        case sent.length
-        when 1
-          msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
-        when 2
-          msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name)
-        when 3
-          msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+        if isWildBoss?(t)
+          case sent.length
+          when 1
+            msg += _INTL("A {1} is on a rampage!", @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("Both {1} and {2} are on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1}, {2} and {3} are all on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
+        else
+          case sent.length
+          when 1
+            msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
         end
         toSendOut.concat(sent)
       end

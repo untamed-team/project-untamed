@@ -582,3 +582,8 @@ BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
+[WILD_PKMN]
+Name = Wild Pokemon
+Gender = Male
+BaseMoney = 10
+#-------------------------------

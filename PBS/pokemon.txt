@@ -6653,6 +6653,33 @@ Category = Radiator
 Pokedex = While its burning body is already dangerous on its own, this excessively hostile Pokémon also has large and very sharp fangs.
 Generation = 8
 #-------------------------------
+[AUDINO]
+Name = Audino
+Types = NORMAL
+BaseStats = 103,60,86,50,60,86
+GenderRatio = Female50Percent
+GrowthRate = Fast
+BaseExp = 390
+EVs = HP,2
+CatchRate = 255
+Happiness = 50
+Abilities = HEALER,REGENERATOR
+HiddenAbilities = KLUTZ
+Moves = 1,POUND,1,PLAYNICE,4,DISARMINGVOICE,9,BABYDOLLEYES,12,HELPINGHAND,16,GROWL,20,ZENHEADBUTT,24,LIFEDEW,28,AFTERYOU,32,TAKEDOWN,36,SIMPLEBEAM,40,HYPERVOICE,44,HEALPULSE,48,DOUBLEEDGE,52,ENTRAINMENT,56,MISTYTERRAIN,60,LASTRESORT
+TutorMoves = ALLYSWITCH,BLIZZARD,BODYSLAM,CALMMIND,DAZZLINGGLEAM,DIG,DRAININGKISS,DRAINPUNCH,FIREBLAST,FIREPUNCH,FLAMETHROWER,GRASSKNOT,HELPINGHAND,HYPERVOICE,ICEBEAM,ICEPUNCH,ICYWIND,IRONTAIL,LIGHTSCREEN,PSYCHIC,PSYSHOCK,RAINDANCE,REFLECT,ROUND,SAFEGUARD,SHADOWBALL,SOLARBEAM,SUNNYDAY,SURF,THUNDER,THUNDERBOLT,THUNDERPUNCH,THUNDERWAVE,TRICKROOM,WILDCHARGE,WORKUP,ZENHEADBUTT
+EggMoves = HEALINGWISH,SWEETKISS,WISH,YAWN
+EggGroups = Fairy
+HatchSteps = 5120
+Height = 1.1
+Weight = 31.0
+Color = Pink
+Shape = BipedalTail
+Category = Hearing
+Pokedex = Its auditory sense is astounding. It has a radar-like ability to understand its surrounding through slight sounds.
+Generation = 5
+WildItemCommon = ORANBERRY
+WildItemUncommon = SITRUSBERRY
+#-------------------------------
 # do not remove "Failsafe_" pokemon, i need them defined even if they are unused
 [LEDORADO] # <-- saltilton's mega but regular evo
 Name = Failsafe_Ledorado
