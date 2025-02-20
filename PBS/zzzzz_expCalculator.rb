@@ -596,16 +596,15 @@ def simLevelUp(pkmn)
 end
 
 def input_pkmndata(pokemon_data)
-  puts "    Enter the number of Pokémon in your team (1-6):"
-  team_size = gets.chomp.to_i
-  team_size = [[team_size, 1].max, 6].min
-  #----------------
   pokemon_team = []
-  team_size.times do
-    puts "    Enter the [internal] name of your Pokémon:"
-    name = gets.chomp.upcase
-    puts "    Enter the level of #{name}:"
-    level = gets.chomp.to_i
+  puts "    Enter the names and levels in the format 'NAME LEVEL' (e.g., 'CHIXULOB 50, TITANOTROP 55')."
+  puts "    PS: pkmn names are case unsensitve. If no level is given, this will default to level 1"
+  input = gets.chomp
+  team_size = input.split(',').first(6)
+  team_size.each do |poke|
+    name, level = poke.strip.split
+    name = name.upcase
+    level = level.to_i
     level = [[level, 1].max, 100].min
     if pokemon_data.key?(name)
       pokemon_team << { name: name, level: level, 
@@ -613,7 +612,7 @@ def input_pkmndata(pokemon_data)
                         base_exp: pokemon_data[name][:base_exp], 
                         growth_rate: pokemon_data[name][:growth_rate] }
     else
-      puts "    ERROR: Pokémon not found in the database. Please try again."
+      puts "    ERROR: #{name} not found in the database. Please try again."
       return input_pkmndata(pokemon_data)
     end
   end
@@ -648,8 +647,9 @@ def main
     simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
     puts ""
     puts "    Do you want to do another simulation? (y/n):"
-    cunt = gets.chomp.downcase
-    cuntinue = cunt == "y"
+    # "cunt" is too offensive for some online compilers, please understand
+    cunny = gets.chomp.downcase
+    cuntinue = cunny == "y"
     break unless cuntinue
     puts ""
   end
