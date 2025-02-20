@@ -1303,8 +1303,8 @@ Pokemon = DUNSPARCE,23
 #-------------------------------
 [TOURIST_F,Karmen,100]
 LoseText = Well, how did it taste?
-Pokemon = DUNSPARCE,23
 Gimmick = Rainbow, NormalZone
+Pokemon = DUNSPARCE,23
     Moves = ANCIENTPOWER,TRIATTACK,BODYSLAM,HEX
     Ability = SERENEGRACE
     Item = ROCKGEM
