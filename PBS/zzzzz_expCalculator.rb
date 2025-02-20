@@ -553,7 +553,7 @@ def simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, tr
   end
 
   puts "    Simulation Results:"
-  msg = ""
+  msg = "      "
   pokemon_team.each do |pkmn|
     puts "      #{pkmn[:name]} - Level: #{pkmn[:level]}, Current EXP: #{pkmn[:current_exp]}, Total EXP Earned: #{pkmn[:total_exp_earned]}"
     msg += "#{pkmn[:name]} #{pkmn[:level]} #{pkmn[:current_exp]},"
