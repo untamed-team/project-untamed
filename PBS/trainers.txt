@@ -1695,7 +1695,7 @@ Pokemon = BOWLLO,23
     Ability = MOMENTUM
 #Area=Route5_M
 #-------------------------------
-[ACETRAINER_F,Nancy]
+[RISINGSTAR_F,Nancy]
 LoseText = Impressive...
 Pokemon = AVEOR,26
     Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
@@ -1709,7 +1709,7 @@ Pokemon = ZARCOIL,27
     Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
 #Area=SolecaDesert_O
 #-------------------------------
-[ACETRAINER_F,Nancy,100]
+[RISINGSTAR_F,Nancy,100]
 LoseText = Impressive...
 Pokemon = AVEOR,26
     Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
