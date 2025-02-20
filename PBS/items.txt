@@ -5329,7 +5329,7 @@ NamePlural = Roseli Berries
 Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_80
-Description = If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fairy-type attack.
+Description = Weakens a supereffective Fairy-type attack against the holding Pokémon.
 #-------------------------------
 [CHILANBERRY]
 Name = Chilan Berry
