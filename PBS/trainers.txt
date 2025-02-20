@@ -1033,12 +1033,8 @@ Pokemon = BOWLLO,19
 #-------------------------------
 [RANCHERO_M,Bosco]
 LoseText = A shocking defeat!
-Pokemon = FLAAFFY,19
-    Moves = COTTONSPORE,ELECTROBALL,CHARGE,THUNDERWAVE
-    Ability = STATIC
-    Nature = SERIOUS
-    IV = 22,22,22,22,24,24
-    Shiny = yes
+Pokemon = FLAAFFY,22
+    Moves = COTTONSPORE,THUNDERSHOCK,TAKEDOWN,THUNDERWAVE
 #Area=Asterado_O
 #-------------------------------
 [RANCHERO_M,Bosco,100]
@@ -1059,12 +1055,9 @@ LoseText = I feel like a fish out of water!
 Pokemon = FEEBAS,20
     Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
     Ability = OBLIVIOUS
-Pokemon = ATELANGLER,20
+Pokemon = ATELANGLER,22
     Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
     Ability = BAITEDLINE
-    Nature = SERIOUS
-    IV = 17,19,20,19,18,19
-    Shiny = yes
 #Area=Asterado_O
 #-------------------------------
 [FISHER_F,Zoey,100]
@@ -1303,11 +1296,11 @@ Pokemon = DUNSPARCE,23
 #-------------------------------
 [TOURIST_F,Karmen,100]
 LoseText = Well, how did it taste?
-Gimmick = Rainbow, NormalZone
+Gimmick = Rainbow
 Pokemon = DUNSPARCE,23
-    Moves = ANCIENTPOWER,TRIATTACK,BODYSLAM,HEX
+    Moves = ANCIENTPOWER,TRIATTACK,ROOST,HEX
     Ability = SERENEGRACE
-    Item = ROCKGEM
+    Item = EVIOLITE
 #Area=Route4_M
 #-------------------------------
 [FISHER_M,Esteban]
@@ -1324,14 +1317,15 @@ Pokemon = WIMPOD,24
 #-------------------------------
 [FISHER_M,Esteban,100]
 LoseText = This was the win that got away!
-Pokemon = BARBOACH,22
-    Moves = MAGNITUDE,WATERPULSE,SPARK,AMNESIA
-    Ability = ANTICIPATION
-Pokemon = FINNEON,23
-    Moves = WATERPULSE,GUST,AURORABEAM,AGILITY
-    Ability = STORMDRAIN
-Pokemon = WIMPOD,24
-    Moves = STRUGGLEBUG,AQUAJET,METALCLAW,SANDATTACK
+Pokemon = PHYTIDE,22
+    Moves = AQUARING,SUNNYDAY,MEGADRAIN,TOXIC
+    Ability = HEALINGSUN
+    Nature = BOLD
+Pokemon = GULPI,23
+    Moves = CRUNCH,SPARK,ROCKTHROW,CHARGE
+Pokemon = BANAGNAW,24
+    Moves = SCALD,GROWTH,MAGICALLEAF,ICYWIND
+    Ability = SOLARPOWER
 #Area=Route4_M
 #-------------------------------
 [RUINMANIAC_F,Page]
@@ -1524,16 +1518,18 @@ Pokemon = M_CRABRAWLER,25
 #-------------------------------
 [BIKER,Ian]
 LoseText = You're a force to be reckoned with!
-Pokemon = ELTTAR,26
+Pokemon = ELTTAR,24
     Moves = POISONFANG,BITE,GLARE,TAUNT
-    Ability = RATTLED
+    Ability = STRONGJAW
+    Nature = ADAMANT
 #Area=Route5_M
 #-------------------------------
 [BIKER,Ian,100]
 LoseText = You're a force to be reckoned with!
-Pokemon = ELTTAR,26
+Pokemon = ELTTAR,24
     Moves = POISONFANG,BITE,GLARE,TAUNT
-    Ability = RATTLED
+    Ability = STRONGJAW
+    Nature = ADAMANT
 #Area=Route5_M
 #-------------------------------
 [HIKER_F,Katia]
