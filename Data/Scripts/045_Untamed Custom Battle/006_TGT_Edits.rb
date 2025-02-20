@@ -348,7 +348,7 @@ or dont
       PBEffects::Mist        => "The enemy's team is shrouded in mist!",
       PBEffects::Safeguard   => "The enemy's team is cloaked in a mystical veil!",
       PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!",
-      PBEffects::Rainbow     => "A rainbow appeared in the sky on opponent's side!" 
+      PBEffects::Rainbow     => "A rainbow appeared in the sky on the opponent's side!" 
     }
     effectHashMsgs_side.each do |effect, msg|
       next if @sides[1].effects[effect] == 0

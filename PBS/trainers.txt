@@ -1464,12 +1464,14 @@ Pokemon = GOHILA,24
 #-------------------------------
 [BIKER,Jacob,100]
 LoseText = You stopped me in my tracks!
-Pokemon = M_EKANS,23
-    Moves = POISONFANG,GLARE,BITE,PURSUIT
-    Ability = SHEDSKIN
+Pokemon = TRUBBISH,23
+    Moves = POISONFANG,TOXICSPIKES,HEX,TAUNT
+    Ability = POISONPOINT
+    Item = MENTALHERB
 Pokemon = GOHILA,24
-    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
-    Ability = MERCILESS
+    Moves = SNARL,VENOSHOCK,POISONGAS,CORROSIVEGAS
+    Ability = CORROSION
+    Item = SHUCABERRY
 #Area=Route5_M
 #-------------------------------
 [BIKER,Wilbur]
@@ -1487,15 +1489,16 @@ Pokemon = AVEOR,23
 #-------------------------------
 [BIKER,Wilbur,100]
 LoseText = I've crashed and burned!
-Pokemon = VULPIX,22
-    Moves = FIRESPIN,WILLOWISP,QUICKATTACK,CONFUSERAY
-    Ability = FLASHFIRE
+Pokemon = CAFECARACHA,22
+    Moves = DISCHARGE,CHARGEBEAM,QUICKATTACK,METRONOME
+    Ability = MOTORDRIVE
 Pokemon = GOHILA,22
-    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Moves = SNARL,SLUDGE,THUNDERWAVE,HIDDENPOWER
     Ability = POISONTOUCH
+    HiddenPowerType = ICE
 Pokemon = AVEOR,23
-    Moves = DOUBLEKICK,SANDTOMB,SPARK,PECK
-    Ability = STATIC
+    Moves = DOUBLEKICK,SANDTOMB,ELECTROBALL,PECK
+    Ability = RUNAWAY
 #Area=Route5_M
 #-------------------------------
 [BIKER,Matthias]
@@ -1511,10 +1514,10 @@ Pokemon = AVEOR,25
 [BIKER,Matthias,100]
 LoseText = I think I got sand in my eye...
 Pokemon = M_CRABRAWLER,24
-    Moves = METALCLAW,PURSUIT,MUDBOMB,ROCKTOMB
-    Ability = SANDSTREAM
-Pokemon = AVEOR,25
-    Moves = AERIALACE,SPARK,THUNDERWAVE,SCORCHINGSANDS
+    Moves = METALCLAW,PURSUIT,SANDSTORM,WORKUP
+    Ability = SANDRUSH
+Pokemon = AVEOR,24
+    Moves = AERIALACE,SPARK,STEELWING,SCORCHINGSANDS
     Ability = SANDFORCE
 #Area=Route5_M
 #-------------------------------
@@ -1533,12 +1536,12 @@ Pokemon = M_CRABRAWLER,25
 #-------------------------------
 [BIKER,Charles,100]
 LoseText = No way, I'm the best around!
-Pokemon = GOHILA,24
-    Moves = TOXICSPIKES,SLUDGE,PARABOLICCHARGE,MUDBOMB
-    Ability = MERCILESS
 Pokemon = HELIOPTILE,24
     Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
     Ability = DRYSKIN
+Pokemon = BALTOY,24
+    Moves = COSMICPOWER,ANCIENTPOWER,PSYBEAM,MUDSHOT
+    Ability = LEVITATE
 Pokemon = M_CRABRAWLER,25
     Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
     Ability = TECHNICIAN
@@ -1554,10 +1557,14 @@ Pokemon = ELTTAR,24
 #-------------------------------
 [BIKER,Ian,100]
 LoseText = You're a force to be reckoned with!
+Gimmick = ToxicSpikes
 Pokemon = ELTTAR,24
-    Moves = POISONFANG,BITE,GLARE,TAUNT
-    Ability = STRONGJAW
-    Nature = ADAMANT
+    Moves = POISONFANG,ROCKTOMB,VENOSHOCK,AQUATAIL
+    Ability = UNNERVE
+    Nature = SERIOUS
+    Item = MELEEVEST
+    IV = 15,0,10,0,10,10
+    Shiny = yes
 #Area=Route5_M
 #-------------------------------
 [HIKER_F,Katia]
