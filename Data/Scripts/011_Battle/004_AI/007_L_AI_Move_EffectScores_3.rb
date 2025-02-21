@@ -1124,6 +1124,7 @@ class Battle::AI
                 
                 # defense drop
                 miniscore=100
+                miniscore*=1.3 if user.hasActiveItem?(:WHITEHERB)
                 if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
                     score*=1.5
                 else
@@ -1131,7 +1132,7 @@ class Battle::AI
                     targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
                     if targetSurvivesMove(move,user,target)
                         score*=0.9
-                        if !userFasterThanTarget
+                        if !userFasterThanTarget && !user.hasActiveItem?(:WHITEHERB)
                             score*=1.3
                         else
                             if target.moves.none? { |m| priorityAI(target,m,globalArray)>0 }
@@ -5034,6 +5035,10 @@ class Battle::AI
                 line.puts "-------Metronome Start--------"
             end
         end
+        userMoves = []
+        user.eachMove do |m|
+            userMoves.push(m.id)
+        end
         moveBlacklist = [
             "FlinchTargetFailsIfUserNotAsleep","TargetActsNext","TargetActsLast",
             "TargetUsesItsLastUsedMoveAgain","Struggle","FailsIfUserNotConsumedBerry",
@@ -5060,7 +5065,7 @@ class Battle::AI
             next if moveBlacklist.include?(move_data.function_code)
             next if move_data.has_flag?("CannotMetronome")
             next if move_data.type == :SHADOW
-            next if user.SetupMovesUsed.include?(move_data.id)
+            next if user.SetupMovesUsed.include?(move_data.id) || userMoves.include?(move_data.id)
             metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
             metroScore = pbGetMoveScore(metroMov, user, target, skill)
             next if metroScore <= 1
