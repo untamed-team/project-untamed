@@ -592,4 +592,51 @@ module EssentialsDeluxe
       :speech => "No mercy! Show them your rage, {1}!"
     }
   }
+
+  #-----------------------------------------------------------------------------
+  # Mazah battles start here
+  #-----------------------------------------------------------------------------
+
+  GYM2_SPEEDPLAYER_ATTACKOPP = {
+    "turnCommand" => {
+      :text    => "Adrenaline rushes through you and your Pokemon!",
+      :speech  => [:Opposing, "Thou shalln't beest so estactic, mine own blade and soul shall cleave right through!"]
+    },
+    "turnEnd_repeat" => {
+      :delay   => ["halfHP", "lowHP"],
+      :speech  => [:Opposing, "Oh ho? thee shiver right at which hour things did start getting intresting?"],
+      :anim    => [:SCARYFACE, :Opposing],
+      :stats   => [:SPEED, -1]
+    },
+    "afterNext_repeat" => { # player
+      :anim    => [:AGILITY, :Self],
+      :stats   => [:SPEED, 1]
+    },
+    "afterNext_foe_repeat" => { # AI
+      :anim    => [:WORKUP, :Self],
+      :stats   => [:ATTACK, 1, :SPECIAL_ATTACK, 1]
+    }
+  }
+
+  GYM2_ATTACKPLAYER_SPEEDOPP = {
+    "turnCommand" => {
+      :text    => "A sense of bravery overflows you and your Pokemon!",
+      :speech  => [:Opposing, "Thou shalln't beest so brave, mine own wits shall shineth through thee!"]
+    },
+    "turnEnd_repeat" => {
+      :delay   => ["halfHP", "lowHP"],
+      :speech  => [:Opposing, "Oh ho? thee shiver right at which hour things did start getting intresting?"],
+      :anim    => [:SCARYFACE, :Opposing],
+      :stats   => [:ATTACK, -1, :SPECIAL_ATTACK, -1]
+    },
+    "afterNext_repeat" => { # player
+      :anim    => [:WORKUP, :Self],
+      :stats   => [:ATTACK, 1, :SPECIAL_ATTACK, 1]
+    },
+    "afterNext_foe_repeat" => { # AI
+      :anim    => [:AGILITY, :Self],
+      :stats   => [:SPEED, 1]
+    }
+  }
+  
 end
