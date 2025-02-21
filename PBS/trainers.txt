@@ -2307,7 +2307,7 @@ Pokemon = EXPURSUM,25
 #-------- TEST BATTLES ---------
 #-------------------------------
 #-------------------------------
-[HEXMANIAC,zinnia,1]
+[HEXMANIAC,zinnia,0]
 LoseText = sex
 Pokemon = NOCTAVISPA,10
     IV = 10,10,10,10,10,10
@@ -2335,3 +2335,21 @@ Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
+#-------------------------------
+[WILD_PKMN,crust,0]
+LoseText = sex
+Pokemon = CRUSTANG,10
+    IV = 10,10,10,10,10,10
+#-------------------------------
+[WILD_PKMN,crust,100]
+LoseText = sex
+Pokemon = CRUSTANG,10
+    IV = 10,10,10,10,10,10
+Pokemon = CRUSTANG,20
+    IV = 10,10,10,10,10,10
+Pokemon = CRUSTANG,30
+    IV = 10,10,10,10,10,10
+Pokemon = CRUSTANG,40
+    IV = 10,10,10,10,10,10
+Pokemon = CRUSTANG,50
+    IV = 10,10,10,10,10,10

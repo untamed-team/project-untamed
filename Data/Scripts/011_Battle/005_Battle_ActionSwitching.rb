@@ -181,7 +181,7 @@ class Battle
       end
     else
       oppon = @player[0]
-      oppon = @opponent[pbGetOwnerIndexFromBattlerIndex(idxBattler)] if opposes?(idxBattler)
+      oppon = @opponent[pbGetOwnerIndexFromBattlerIndex(battler.index)] if opposes?(battler.index)
       if isWildBoss?(oppon) #by low
         pbDisplayBrief(_INTL("{1} is retreating!", battler.name))
       else
