@@ -621,13 +621,13 @@ def input_pkmndata(pokemon_data)
       return input_pkmndata(pokemon_data)
     end
   end
-  #----------------
-  puts "    Enter the experience variable (33 or 50):"
-  expvar = gets.chomp.to_i
-  return [pokemon_team, expvar]
+  return pokemon_team
 end
 
 def input_trainerdata(trainers_data)
+  puts "    Enter the experience variable (33 or 50):"
+  expvar = gets.chomp.to_i
+  #----------------
   puts "    Enter the location (case sensitive):"
   location = gets.chomp
   unless trainers_data.key?(location)
@@ -642,13 +642,16 @@ def input_trainerdata(trainers_data)
   puts "    What difficulty mode? (0 = casual, 1 = hard, 2 = chaos):"
   difficulty_mode = gets.chomp.to_i
   difficulty_mode = [[difficulty_mode, 0].max, 2].min
-  return [location, obligatoryonly, difficulty_mode]
+  return [location, obligatoryonly, difficulty_mode, expvar]
 end
 
 def main
+  pokemon_team = nil
   loop do
-    pokemon_team, expvar = input_pkmndata(POKEMON_GROWTH_DATA)
-    location, obligatoryonly, difficulty_mode = input_trainerdata(TRAINERS_ROUTE_DATA)
+    if pokemon_team.nil?
+      pokemon_team = input_pkmndata(POKEMON_GROWTH_DATA)
+    end
+    location, obligatoryonly, difficulty_mode, expvar = input_trainerdata(TRAINERS_ROUTE_DATA)
     simRoute(pokemon_team, location, obligatoryonly, expvar, difficulty_mode, TRAINERS_ROUTE_DATA, POKEMON_GROWTH_DATA)
     puts ""
     puts "    Do you want to do another simulation? (y/n):"
@@ -656,6 +659,10 @@ def main
     cunny = gets.chomp.downcase
     cuntinue = cunny == "y"
     break unless cuntinue
+    puts "    Do you want keep the current team data? (y/n):"
+    uoh = gets.chomp.downcase
+    seggs = uoh == "y"
+    pokemon_team = nil unless seggs
     puts ""
   end
 end
