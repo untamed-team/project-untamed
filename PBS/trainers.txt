@@ -1870,13 +1870,15 @@ Pokemon = WRRAZAL,23
 [HIKER_F,Katia,100]
 LoseText = Maybe I should rethink my strategy...
 Pokemon = KNOGGIN,22
-    Moves = ROCKTOMB,BRUTALSWING,CUT,ROAR
-    Ability = SOLIDROCK
+    Moves = ROCKTHROW,BRUTALSWING,SUBMISSION,TAKEDOWN
+    Ability = ROCKHEAD
 Pokemon = M_MUDBRAY,22
-    Moves = FAIRYWIND,MUDBOMB,EXCITE,DOUBLEKICK
+    Moves = FAIRYWIND,HIDDENPOWER,EXCITE,DOUBLEKICK
+    Ability = SWEETVEIL
+    HiddenPowerType = FIRE
 Pokemon = WRRAZAL,23
-    Moves = SMACKDOWN,ASTONISH,HONECLAWS,SNATCH
-    Ability = INTIMIDATE
+    Moves = ROCKTOMB,ASTONISH,STEELWING,SNATCH
+    Ability = PRESSURE
 #Area=Route5_M
 #-------------------------------
 [HIKER_M,Pablo]
@@ -1894,15 +1896,15 @@ Pokemon = TRAPINCH,24
 #-------------------------------
 [HIKER_M,Pablo,100]
 LoseText = But I was prepared for anything!
-Pokemon = BARBOACH,22
-    Moves = WATERPULSE,AMNESIA,ROCKTOMB,MAGNITUDE
-    Ability = OBLIVIOUS
 Pokemon = KNOGGIN,24
-    Moves = LASHOUT,ROCKTOMB,HARDEN,SANDSTORM
-    Ability = SUPERLUCK
-Pokemon = TRAPINCH,24
-    Moves = DIG,BITE,SANDATTACK,BUGBITE
-    Ability = ARENATRAP
+    Moves = ASSURANCE,ROCKTOMB,SPIKES,SANDSTORM
+    Ability = STURDY
+Pokemon = TERREON,22
+    Moves = ROCKBLAST,MUDSHOT,BODYSLAM,TOXIC
+    Ability = NOGUARD
+Pokemon = TRAPINCH,23
+    Moves = LASERFOCUS,BITE,SANDTOMB,BUGBITE
+    Ability = SANDFORCE
 #Area=Route5_M
 #-------------------------------
 [HIKER_F,Maja]
@@ -1920,13 +1922,16 @@ Pokemon = M_MARACTUS,24
 [HIKER_F,Maja,100]
 LoseText = Our defenses weren't enough...
 Pokemon = CACNEA,23
-    Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
-    Ability = IRONBARBS
+    Moves = SWITCHEROO,SPIKYSHIELD,SPIKES,NEEDLEARM
+    Ability = ROUGHSKIN
+    Item = STICKYBARB
 Pokemon = M_MUDBRAY,24
-    Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
+    Moves = FAIRYWIND,MUDBOMB,BULLDOZE,METRONOME
+    Ability = CLEARBODY
 Pokemon = M_MARACTUS,24
-    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,INGRAIN
     Ability = FLAMEBODY
+    Item = BIGROOT
 #Area=Route5_M
 #-------------------------------
 [RUINMANIAC_M,Ike]
@@ -1943,12 +1948,15 @@ Pokemon = BURBRAWL,25
 [RUINMANIAC_M,Ike,100]
 LoseText = I've discovered... Defeat?
 Pokemon = BALTOY,23
-    Moves = PSYBEAM,RAPIDSPIN,TRICKROOM,ANCIENTPOWER
+    Moves = PSYBEAM,EXPLOSION,TRICKROOM,ANCIENTPOWER
+    Ability = LEVITATE
+    Item = IRONBALL
+Pokemon = M_NOSEPASS,23
+    Moves = CURSE,ROCKTOMB,KARATECHOP,BLOCK
+    Ability = STEADFAST
 Pokemon = TRAPINCH,24
-    Moves = SANDTOMB,DIG,BITE,LASERFOCUS
+    Moves = MAGNITUDE,BITE,SCREECH,BUGBITE
     Ability = HYPERCUTTER
-Pokemon = BURBRAWL,25
-    Moves = BULKUP,WINGATTACK,KARATECHOP,DETECT
 #Area=Route5_M
 #-------------------------------
 [SCRAPPER_F,Vanessa]
@@ -1973,14 +1981,15 @@ Pokemon = BEAKPEEP,22
     Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
     Ability = BIGPECKS
 Pokemon = M_CRABRAWLER,23
-    Moves = MUDBOMB,METALCLAW,WIDEGUARD,BRICKBREAK
+    Moves = MAGNITUDE,METALCLAW,PROTECT,BRICKBREAK
     Ability = HYPERCUTTER
 Pokemon = TRUBBISH,22
-    Moves = STOCKPILE,SWALLOW,POISONGAS,SLUDGE
-    Ability = STENCH
+    Moves = SECRETPOWER,BRUTALSWING,POISONGAS,SLUDGE
+    Ability = AFTERMATH
 Pokemon = BOWLLO,23
-    Moves = ROLLOUT,METALCLAW,ROCKTOMB,DEFENSECURL
+    Moves = ROLLOUT,METALCLAW,HONECLAWS,DEFENSECURL
     Ability = MOMENTUM
+    Item = METRONOME
 #Area=Route5_M
 #-------------------------------
 [RISINGSTAR_F,Nancy]
@@ -1999,16 +2008,16 @@ Pokemon = ZARCOIL,27
 #-------------------------------
 [RISINGSTAR_F,Nancy,100]
 LoseText = Impressive...
-Pokemon = AVEOR,26
-    Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
-    Ability = STATIC
-Pokemon = POTASSOPOD,26
-    Moves = ACIDSPRAY,MEGADRAIN,RECOVER,GROWTH
-    Ability = SHEDSKIN
+Pokemon = GUSTEON,26
+    Moves = TAILWIND,QUICKATTACK,TAKEDOWN,AERIALACE
+    Ability = CLEARBODY
+Pokemon = BEAKPEEP,26
+    Moves = ROCKSMASH,IRONDEFENSE,METALCLAW,METRONOME
+    Ability = EARLYBIRD
 Pokemon = FRIZZARD,27
-    Moves = BITINGCOLD,ICYWIND,DRAGONBREATH,CALMMIND
+    Moves = BITINGCOLD,AURORABEAM,DRAGONBREATH,CALMMIND
 Pokemon = ZARCOIL,27
-    Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
+    Moves = WILLOWISP,FLAMEWHEEL,DRAGONTAIL,HONECLAWS
 #Area=SolecaDesert_O
 #-------------------------------
 [RUINMANIAC_F,Rebeca]
@@ -2025,12 +2034,16 @@ Pokemon = XATU,27
 [RUINMANIAC_F,Rebeca,100]
 LoseText = I just couldn't find a weakness!
 Pokemon = BALTOY,25
-    Moves = ANCIENTPOWER,COSMICPOWER,PSYBEAM,TRIATTACK
-Pokemon = CACNEA,26
-    Moves = PAYBACK,GRASSKNOT,POISONJAB,GROWTH
-Pokemon = XATU,27
-    Moves = AIRSLASH,CONFUSERAY,PSYSHOCK,NIGHTSHADE
+    Moves = MUDSHOT,EXPLOSION,PSYBEAM,SUNNYDAY
+    Ability = LEVITATE
+Pokemon = FRIZZARD,26
+    Moves = DRAGONBREATH,TRIATTACK,HAZE,TAUNT
+    Ability = HEALINGSUN
+    Item = LEFTOVERS
+Pokemon = XATU,26
+    Moves = AIRSLASH,METRONOME,HIDDENPOWER,NIGHTSHADE
     Ability = SYNCHRONIZE
+    HiddenPowerType = FIRE
 #Area=SolecaDesert_O
 #-------------------------------
 [TOURIST_M,Austin]
@@ -2046,9 +2059,9 @@ Pokemon = LIEPARD,26
 LoseText = Can you at least tell me how to get out of here?
 Pokemon = FURFROU,26
     Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
-Pokemon = LIEPARD,26
-    Moves = HONECLAWS,PURSUIT,FAKEOUT,FURYSWIPES
-    Ability = LIMBER
+Pokemon = M_MEOWTH,26
+    Moves = SNATCH,DOUBLEKICK,FAKEOUT,FURYSWIPES
+    Ability = SCRAPPY
 #Area=SolecaDesert_O
 #-------------------------------
 [HIKER_F,Evelyn]
@@ -2062,11 +2075,12 @@ Pokemon = TERREON,27
 #-------------------------------
 [HIKER_F,Evelyn,100]
 LoseText = You left me in the dust...
-Pokemon = KNOGGIN,26
-    Moves = LASHOUT,STRENGTH,ROAR,HARDEN
-    Ability = SOLIDROCK
-Pokemon = TERREON,27
-    Moves = MUDBOMB,DOUBLEEDGE,BITE,QUICKATTACK
+Pokemon = GUSTEON,26
+    Moves = QUICKATTACK,HIDDENPOWER,MIRRORMOVE,AERIALACE
+    HiddenPowerType = GROUND
+Pokemon = TERREON,26
+    Moves = QUICKATTACK,HIDDENPOWER,BITE,MUDBOMB
+    HiddenPowerType = FLYING
 #Area=SolecaDesert_O
 #-------------------------------
 [SCIENTIST_M,Paul]
@@ -2082,7 +2096,7 @@ Pokemon = CHARCOPAL,28
 [SCIENTIST_M,Paul,100]
 LoseText = Wow, you rock!
 Pokemon = ELEGOOP,28
-    Moves = BULLDOZE,ROCKTOMB,STEALTHROCK,POISONFANG
+    Moves = POISONGAS,ROCKTOMB,STEALTHROCK,POISONFANG
     Ability = GOOEY
 Pokemon = CHARCOPAL,28
     Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
@@ -2102,8 +2116,8 @@ Pokemon = M_CRABRAWLER,25
 [SCRAPPER_M,Hugo,100]
 LoseText = Taken out!
 Pokemon = TRUBBISH,24
-    Moves = SLUDGE,CLEARSMOG,STOCKPILE,SWALLOW
-    Ability = STENCH
+    Moves = EXPLOSION,SPIKES,TOXICSPIKES,FLAMETHROWER
+    Ability = AFTERMATH
 Pokemon = M_CRABRAWLER,25
     Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
     Ability = TECHNICIAN
@@ -2119,8 +2133,9 @@ Pokemon = BEAKPEEP,24
 [SCRAPPER_F,Shirley,100]
 LoseText = Gah! Foiled again...
 Pokemon = BEAKPEEP,24
-    Moves = STEELWING,ROCKSMASH,METALCLAW,HEADBUTT
+    Moves = BULKUP,WORKUP,SWORDSDANCE,METRONOME
     Ability = BIGPECKS
+    Item = SITRUSBERRY
 #Area=Route6_M
 #-------------------------------
 [SCRAPPER_M,Jaxon]
@@ -2132,7 +2147,8 @@ Pokemon = FRIZZARD,25
 [SCRAPPER_M,Jaxon,100]
 LoseText = Wow, you're strong! You should battle my sister too!
 Pokemon = FRIZZARD,25
-    Moves = DRAGONBREATH,AURORABEAM,ICYWIND,BITINGCOLD
+    Moves = DRAGONBREATH,FROSTBREATH,HAIL,BITINGCOLD
+    Ability = ICEBODY
 #Area=Route6_M
 #-------------------------------
 [SCRAPPER_F,Tasha]
@@ -2144,7 +2160,9 @@ Pokemon = ZARCOIL,25
 [SCRAPPER_F,Tasha,100]
 LoseText = Man, you're tough! You should battle my brother too!
 Pokemon = ZARCOIL,25
-    Moves = BREAKINGSWIPE,FLAMECHARGE,SMOKESCREEN,WILLOWISP
+    Moves = HIDDENPOWER,SCORCHINGSANDS,SUNNYDAY,FLAMEWHEEL
+    Ability = HEALINGSUN
+    HiddenPowerType = DRAGON
 #Area=Route6_M
 #-------------------------------
 [MECHANIC_F,Maya]
@@ -2159,12 +2177,15 @@ Pokemon = HELIOLISK,26
 #-------------------------------
 [MECHANIC_F,Maya,100]
 LoseText = Looks like I can't fix that...
-Pokemon = MAGNEMITE,25
-    Moves = SCREECH,SPARK,THUNDERWAVE,EXPLOSION
-    Ability = MAGNETPULL
+Pokemon = CHISPEKA,25
+    Moves = FAKEOUT,SPARK,CUT,HIDDENPOWER
+    Ability = CHEEKPOUCH
+    Item = LIECHIBERRY
+    HiddenPowerType = FIGHTING
 Pokemon = HELIOLISK,26
-    Moves = BULLDOZE,THUNDERBOLT,QUICKATTACK,FIREPUNCH
+    Moves = DRAGONPULSE,PARABOLICCHARGE,QUICKATTACK,SCALESHOT
     Ability = DRYSKIN
+    Item = WHITEHERB
 #Area=Route6_M
 #-------------------------------
 [SCRAPPER_M,Pedro]
@@ -2175,9 +2196,15 @@ Pokemon = BOWLLO,24
 #-------------------------------
 [SCRAPPER_M,Pedro,100]
 LoseText = Maybe I should have... been more resourceful?
+Gimmick = Sandstorm, RockZone
 Pokemon = BOWLLO,24
-    Moves = ROLLOUT,METALCLAW,HEADBUTT,DIG
-#Area=Route6_M
+    Moves = ROLLOUT,DEFENSECURL,CUT
+    Ability = MOMENTUM
+    Item = METRONOME
+    Nature = JOLLY
+    IV = 20,0,10,0,0,10
+    Shiny = yes
+#Area=Route6_O
 #-------------------------------
 [SCRAPPER_F,Elaine]
 LoseText = I'll just have to try twice as hard next time...
@@ -2191,12 +2218,13 @@ Pokemon = BEAKPEEP,26
 #-------------------------------
 [SCRAPPER_F,Elaine,100]
 LoseText = I'll just have to try twice as hard next time...
-Pokemon = TRUBBISH,25
-    Moves = ACIDSPRAY,AMNESIA,TAKEDOWN,POISONGAS
-    Ability = AFTERMATH
-Pokemon = BEAKPEEP,26
-    Moves = STEELWING,PLUCK,ROCKSMASH,IRONDEFENSE
-    Ability = EARLYBIRD
+Pokemon = RUSTACHE,26
+    Moves = RETURN,BULLETPUNCH,BRUTALSWING,ROCKTOMB
+    Ability = TOUGHCLAWS
+    Item = LUMBERRY
+Pokemon = SABLEYE,25
+    Moves = FAKEOUT,DETECT,KNOCKOFF,NIGHTSHADE
+    Ability = KEENEYE
 #Area=Route6_M
 #-------------------------------
 [SCRAPPER_M,Héctor]
@@ -2212,11 +2240,12 @@ Pokemon = MAGNEMITE,26
 [SCRAPPER_M,Héctor,100]
 LoseText = So will I! Which means we'll be four times as strong!
 Pokemon = M_CRABRAWLER,25
-    Moves = MUDBOMB,STRENGTH,TAUNT,METALCLAW
+    Moves = SWAGGER,SNARL,SEISMICTOSS,WIDEGUARD
     Ability = HYPERCUTTER
-Pokemon = MAGNEMITE,26
-    Moves = THUNDERWAVE,ELECTROBALL,SPARK,SCREECH
-    Ability = STURDY
+Pokemon = MAWILE,26
+    Moves = SWEETTOOTH,ROCKSMASH,SLAM,IRONDEFENSE
+    Ability = INTIMIDATE
+    Item = FIGHTINGGEM
 #Area=Route6_M
 #-------------------------------
 [TRAINER_Reine,Reine]
