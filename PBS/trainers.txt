@@ -1031,6 +1031,294 @@ Pokemon = BOWLLO,19
     Item = METRONOME
 #Area=Route3Cave_M
 #-------------------------------
+[MINER_F,Mirabel]
+LoseText = Good thing I'm better at mining than battling!
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,MUDSLAP,RAPIDSPIN
+    Ability = SANDFORCE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Mirabel,100]
+LoseText = Good thing I'm better at mining than battling!
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,MUDSLAP,RAPIDSPIN
+    Ability = SANDFORCE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Luna]
+LoseText = I've dug too deep!
+Pokemon = BUNNELBY,19
+    Moves = QUICKATTACK,LEER,MUDSHOT,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = MINGOT,20
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,DIG
+    Ability = LONGREACH
+Pokemon = WOOBAT,21
+    Moves = AIRCUTTER,SWEETTOOTH,WORKUP,ENDEAVOR
+    Ability = UNAWARE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Luna,100]
+LoseText = I've dug too deep!
+Pokemon = BUNNELBY,19
+    Moves = QUICKATTACK,LEER,MUDSHOT,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = MINGOT,20
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,DIG
+    Ability = LONGREACH
+Pokemon = WOOBAT,21
+    Moves = AIRCUTTER,SWEETTOOTH,WORKUP,ENDEAVOR
+    Ability = UNAWARE
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_M,Adam]
+LoseText = I promise I won't break down...
+Pokemon = CAFECARACHA,19
+    Moves = ROLLOUT,STRUGGLEBUG,CHARGE,THUNDERSHOCK
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_M,Adam,100]
+LoseText = I promise I won't break down...
+Pokemon = CAFECARACHA,19
+    Moves = ROLLOUT,STRUGGLEBUG,CHARGE,THUNDERSHOCK
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Henry]
+LoseText = Gah! I'll work harder next time.
+Pokemon = DIGGERSBY,20
+    Moves = MUDSHOT,QUICKATTACK,DOUBLEKICK,LEER
+    Ability = CHEEKPOUCH
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Henry,100]
+LoseText = Gah! I'll work harder next time.
+Pokemon = DIGGERSBY,20
+    Moves = MUDSHOT,QUICKATTACK,DOUBLEKICK,LEER
+    Ability = CHEEKPOUCH
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_F,Erica]
+LoseText = Results confirm defeat, refinement of strategy is needed.
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = STURDY
+Pokemon = TRUBBISH,20
+    Moves = SLUDGE,CLEARSMOG,POISONGAS,POUND
+    Ability = STENCH
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_F,Erica,100]
+LoseText = Results confirm defeat, refinement of strategy is needed.
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = STURDY
+Pokemon = TRUBBISH,20
+    Moves = SLUDGE,CLEARSMOG,POISONGAS,POUND
+    Ability = STENCH
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Kevin]
+LoseText = But I even looked at all the motivational posters today!
+Pokemon = MINGOT,21
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,DIG
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Kevin,100]
+LoseText = But I even looked at all the motivational posters today!
+Pokemon = MINGOT,21
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,DIG
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[DOCTOR_M,Miguel]
+LoseText = Good thing I can heal my own Pokémon too... 
+Pokemon = AUDINO,19
+    Moves = POUND,PLAYNICE,DISARMINGVOICE,CALMMIND
+    Ability = HEALER
+Pokemon = VIVILLON,19
+    Moves = LIGHTSCREEN,PSYBEAM,GUST,SCATTERDUST
+    Ability = FRIENDGUARD
+Pokemon = M_VANILLITE,20
+    Moves = ICYWIND,AROMATHERAPY,CONFUSION,MIST
+    Ability = HEALER
+#Area=GoldMine_O
+#-------------------------------
+[DOCTOR_M,Miguel,100]
+LoseText = Good thing I can heal my own Pokémon too... 
+Pokemon = AUDINO,19
+    Moves = POUND,PLAYNICE,DISARMINGVOICE,CALMMIND
+    Ability = HEALER
+Pokemon = VIVILLON,19
+    Moves = LIGHTSCREEN,PSYBEAM,GUST,SCATTERDUST
+    Ability = FRIENDGUARD
+Pokemon = M_VANILLITE,20
+    Moves = ICYWIND,AROMATHERAPY,CONFUSION,MIST
+    Ability = HEALER
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Leonora]
+LoseText = I didn't lose, I just haven't won yet!
+Pokemon = BOWLLO,20
+    Moves = DEFENSECURL,ROLLOUT,METALCLAW,MUDSLAP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Leonora,100]
+LoseText = I didn't lose, I just haven't won yet!
+Pokemon = BOWLLO,20
+    Moves = DEFENSECURL,ROLLOUT,METALCLAW,MUDSLAP
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_M,Carlos]
+LoseText = Perhaps my methodology wasn't scientific enough?
+Pokemon = M_DITTO,20
+    Moves = TRANSFORM
+    Ability = PRANKSTER
+Pokemon = LUMIPOP,21
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,CALMMIND
+    Ability = ILLUMINATE
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_M,Carlos,100]
+LoseText = Perhaps my methodology wasn't scientific enough?
+Pokemon = M_DITTO,20
+    Moves = TRANSFORM
+    Ability = PRANKSTER
+Pokemon = LUMIPOP,21
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,CALMMIND
+    Ability = ILLUMINATE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Justin]
+LoseText = You're a tough rock to crack!
+Pokemon = SWOOBAT,23
+    Moves = SWEETTOOTH,AIRCUTTER,CALMMIND,TAUNT
+    Ability = KLUTZ
+#Area=GoldMine_O
+#-------------------------------
+[MINER_M,Justin,100]
+LoseText = You're a tough rock to crack!
+Pokemon = SWOOBAT,23
+    Moves = SWEETTOOTH,AIRCUTTER,CALMMIND,TAUNT
+    Ability = KLUTZ
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Desirée]
+LoseText = I'm really stuck in a rut...
+Pokemon = DIGGERSBY,22
+    Moves = QUICKATTACK,BULLDOZE,FLAIL,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = BOWLLO,23
+    Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+Pokemon = MINGOT,24
+    Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
+    Ability = LONGREACH
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Desirée,100]
+LoseText = I'm really stuck in a rut...
+Pokemon = DIGGERSBY,22
+    Moves = QUICKATTACK,BULLDOZE,FLAIL,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = BOWLLO,23
+    Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+Pokemon = MINGOT,24
+    Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
+    Ability = LONGREACH
+#Area=GoldMine_O
+#-------------------------------
+[MECHANIC_F,Marcia]
+LoseText = Together we are strong...
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = MAGNETPULL
+Pokemon = M_CRABRAWLER,20
+    Moves = METALCLAW,PURSUIT,MUDSLAP,VISEGRIP
+    Ability = TECHNICIAN
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_F,Marcia,100]
+LoseText = Together we are strong...
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = MAGNETPULL
+Pokemon = M_CRABRAWLER,20
+    Moves = METALCLAW,PURSUIT,MUDSLAP,VISEGRIP
+    Ability = TECHNICIAN
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Melissa]
+LoseText = But not strong enough?
+Pokemon = WOOBAT,19
+    Moves = AIRCUTTER,ENDEAVOR,SWEETTOOTH,DRAININGKISS
+    Ability = UNAWARE
+Pokemon = KNOGGIN,20
+    Moves = ROCKTOMB,BITE,BODYSLAM,CUT
+    Ability = SOLIDROCK
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Melissa,100]
+LoseText = But not strong enough?
+Pokemon = WOOBAT,19
+    Moves = AIRCUTTER,ENDEAVOR,SWEETTOOTH,DRAININGKISS
+    Ability = UNAWARE
+Pokemon = KNOGGIN,20
+    Moves = ROCKTOMB,BITE,BODYSLAM,CUT
+    Ability = SOLIDROCK
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_F,Domênica]
+LoseText = The gold's good but the victory isn't there yet!
+Pokemon = BARBOACH,21
+    Moves = WATERPULSE,MAGNITUDE,ICYWIND,WHIRLPOOL
+    Ability = ANTICIPATION
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_F,Domênica,100]
+LoseText = The gold's good but the victory isn't there yet!
+Pokemon = BARBOACH,21
+    Moves = WATERPULSE,MAGNITUDE,ICYWIND,WHIRLPOOL
+    Ability = ANTICIPATION
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_M,Salvador]
+LoseText = Shucks, nothing but pyrite!
+Pokemon = MAGIKARP,19
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,21
+    Moves = HONECLAWS,LICK,METALCLAW,QUICKATTACK
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_M,Salvador,100]
+LoseText = Shucks, nothing but pyrite!
+Pokemon = MAGIKARP,19
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,21
+    Moves = HONECLAWS,LICK,METALCLAW,QUICKATTACK
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[RUINMANIAC_M,Diego]
+LoseText = At least the temple is nice to look at...
+Pokemon = BALTOY,21
+    Moves = PSYBEAM,ANCIENTPOWER,MUDSLAP,SANDSTORM
+Pokemon = KNOGGIN,22
+    Moves = BRUTALSWING,ROCKTOMB,SNARL,HARDEN
+    Ability = SUPERLUCK
+#Area=GoldMine_M
+#-------------------------------
+[RUINMANIAC_M,Diego,100]
+LoseText = At least the temple is nice to look at...
+Pokemon = BALTOY,21
+    Moves = PSYBEAM,ANCIENTPOWER,MUDSLAP,SANDSTORM
+Pokemon = KNOGGIN,22
+    Moves = BRUTALSWING,ROCKTOMB,SNARL,HARDEN
+    Ability = SUPERLUCK
+#Area=GoldMine_M
+#-------------------------------
 [RANCHERO_M,Bosco]
 LoseText = A shocking defeat!
 Pokemon = FLAAFFY,22
@@ -1704,7 +1992,7 @@ Pokemon = BOWLLO,23
     Item = METRONOME
 #Area=Route5_M
 #-------------------------------
-[ACETRAINER_F,Nancy]
+[RISINGSTAR_F,Nancy]
 LoseText = Impressive...
 Pokemon = AVEOR,26
     Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
@@ -1718,7 +2006,7 @@ Pokemon = ZARCOIL,27
     Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
 #Area=SolecaDesert_O
 #-------------------------------
-[ACETRAINER_F,Nancy,100]
+[RISINGSTAR_F,Nancy,100]
 LoseText = Impressive...
 Pokemon = GUSTEON,26
     Moves = TAILWIND,QUICKATTACK,TAKEDOWN,AERIALACE

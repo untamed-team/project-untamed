@@ -500,6 +500,16 @@ Name = Ace Trainer
 Gender = Female
 BaseMoney = 60
 #-------------------------------
+[RISINGSTAR_F]
+Name = Rising Star
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[RISINGSTAR_M]
+Name = Rising Star
+Gender = Male
+BaseMoney = 60
+#-------------------------------
 [SCIENTIST_M]
 Name = Scientist
 Gender = Male
@@ -528,6 +538,26 @@ BaseMoney = 48
 [MECHANIC_F]
 Name = Mechanic
 Gender = Female
+BaseMoney = 48
+#-------------------------------
+[MINER_M]
+Name = Miner
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[MINER_F]
+Name = Miner
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[DOCTOR_F]
+Name = Doctor
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[DOCTOR_M]
+Name = Doctor
+Gender = Male
 BaseMoney = 48
 #-------------------------------
 [SHINYHUNTER_F]
