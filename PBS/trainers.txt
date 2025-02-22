@@ -876,6 +876,116 @@ Pokemon = FEEBAS,14
     IV = 6,6,6,0,6,6
 #Area=CalojarroBeach_M
 #-------------------------------
+[RISINGSTAR_F,Ivette]
+LoseText = I-I lost? But… This isn’t fair!
+Gimmick = Gravity
+Pokemon = EEVEE,15
+    Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
+    Ability = RUNAWAY
+Pokemon = HOOTHOOT,15
+    Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
+    Ability = INSOMNIA
+Pokemon = BUNNELBY,16
+    Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
+    Ability = PICKUP
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_F,Ivette,100]
+LoseText = I-I lost? But… This isn’t fair!
+Gimmick = Gravity
+Pokemon = EEVEE,15
+    Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
+    Ability = RUNAWAY
+Pokemon = HOOTHOOT,15
+    Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
+    Ability = INSOMNIA
+Pokemon = BUNNELBY,16
+    Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
+    Ability = PICKUP
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel]
+LoseText = You just had to rain on my parade, didn't you?
+Gimmick = Rain
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = DRYSKIN
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,100]
+LoseText = You just had to rain on my parade, didn't you?
+Gimmick = Rain
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = DRYSKIN
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,1]
+LoseText = I've been hung out to dry...
+Gimmick = Sun
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = SOLARPOWER
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,101]
+LoseText = I've been hung out to dry...
+Gimmick = Sun
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = SOLARPOWER
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_M,Max]
+LoseText = No, defeat, my only weakness!
+Pokemon = SKITTY,15
+    Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
+    Ability = NORMALIZE
+Pokemon = PACUNA,16
+    Moves = BITE,SWEETTOOTH,COVET,CUT
+    Ability = DAZZLING
+Pokemon = LICKITUNG,16
+    Moves = WORKUP,LICK,FACADE,ROCKTOMB
+    Ability = OWNTEMPO
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_M,Max,100]
+LoseText = No, defeat, my only weakness!
+Pokemon = SKITTY,15
+    Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
+    Ability = NORMALIZE
+Pokemon = PACUNA,16
+    Moves = BITE,SWEETTOOTH,COVET,CUT
+    Ability = DAZZLING
+Pokemon = LICKITUNG,16
+    Moves = WORKUP,LICK,FACADE,ROCKTOMB
+    Ability = OWNTEMPO
+#Area=Gym2_M
+#-------------------------------
 [LEADER_Thalia,Thalia]
 LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
 Pokemon = FURFROU,16
@@ -2250,19 +2360,91 @@ Pokemon = MAWILE,26
 #-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
-Pokemon = EEVEE,11
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
 #-------------------------------
 [TRAINER_Reine,Reine,100]
 LoseText = ...
-Pokemon = EEVEE,11
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
 #-------------------------------
 [TRAINER_Reine,Reine,1] #battle in sanctuary after Neo grunts
 LoseText = Well done.
-Pokemon = EEVEE,12
+Pokemon = VIVILLON,31
+    Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
+    Ability = FRIENDGUARD
+    Item = FOCUSSASH
+    Nature = TIMID
+Pokemon = LEDIAN,32
+    Moves = POWERUPPUNCH,MACHPUNCH,SKITTERSMACK,ICEPUNCH
+    Ability = IRONFIST
+    Item = EXPERTBELT
+    Nature = ADAMANT
+Pokemon = FLITJITTER,33
+    Moves = ELECTROBALL,NUZZLE,STRUGGLEBUG,DOUBLETEAM
+    Ability = ELECTRICSURGE
+    Item = MAGNET
+    Nature = NAIVE
+Pokemon = NOCTAVISPA,34
+    Moves = TAUNT,XSCISSOR,THIEF,DUALWINGBEAT
+    Ability = UNNERVE
+    Item = SITRUSBERRY
+    Nature = JOLLY
+Pokemon = VIBRAVA,35
+    Moves = DIG,STEELWING,DRAGONBREATH,ROAR
+    Item = LIFEORB
+    Nature = SERIOUS
+Pokemon = PAPELLAUDE,36
+    Moves = SCATTERDUST,HYPERVOICE,DAZZLINGGLEAM,ENERGYBALL
+    Ability = COMPETITIVE
+    Item = THROATSPRAY
+    Nature = MODEST
+#Area=Demo2Boss_O
 #-------------------------------
 [TRAINER_Reine,Reine,101]
 LoseText = Well done.
-Pokemon = EEVEE,12
+Pokemon = VIVILLON,31
+    Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
+    Ability = FRIENDGUARD
+    Item = FOCUSSASH
+    Nature = TIMID
+Pokemon = LEDIAN,32
+    Moves = POWERUPPUNCH,MACHPUNCH,SKITTERSMACK,ICEPUNCH
+    Ability = IRONFIST
+    Item = EXPERTBELT
+    Nature = ADAMANT
+Pokemon = FLITJITTER,33
+    Moves = ELECTROBALL,NUZZLE,STRUGGLEBUG,DOUBLETEAM
+    Ability = ELECTRICSURGE
+    Item = MAGNET
+    Nature = NAIVE
+Pokemon = NOCTAVISPA,34
+    Moves = TAUNT,XSCISSOR,THIEF,DUALWINGBEAT
+    Ability = UNNERVE
+    Item = SITRUSBERRY
+    Nature = JOLLY
+Pokemon = VIBRAVA,35
+    Moves = DIG,STEELWING,DRAGONBREATH,ROAR
+    Item = LIFEORB
+    Nature = SERIOUS
+Pokemon = PAPELLAUDE,36
+    Moves = SCATTERDUST,HYPERVOICE,DAZZLINGGLEAM,ENERGYBALL
+    Ability = COMPETITIVE
+    Item = THROATSPRAY
+    Nature = MODEST
+#Area=Demo2Boss_O
 #-------------------------------
 [LEADER_Mateo, Mateo]
 LoseText = ...
