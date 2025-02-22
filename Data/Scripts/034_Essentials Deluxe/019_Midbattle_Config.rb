@@ -599,14 +599,17 @@ module EssentialsDeluxe
 
   GYM2_SPEEDPLAYER_ATTACKOPP = {
     "turnCommand" => {
-      :text    => "Adrenaline rushes through you and your Pokemon!",
-      :speech  => [:Opposing, "Thou shalln't beest so estactic, mine own blade and soul shall cleave right through!"]
+      :speech  => ["Adrenaline rushes through you and your Pokemon!",
+                   :Opposing, "Thou shalln't beest so estactic, mine own blade and soul shall cleave right through!"],
+      :battler => :Opposing,
+      :anim    => [:WORKUP, :Self],
+      :stats   => [:ATTACK, 1, :SPECIAL_ATTACK, 1]
     },
-    "turnEnd_repeat" => {
+    "turnEnd" => {
       :delay   => ["halfHP", "lowHP"],
       :speech  => [:Opposing, "Oh ho? thee shiver right at which hour things did start getting intresting?"],
       :anim    => [:SCARYFACE, :Opposing],
-      :stats   => [:SPEED, -1]
+      :stats   => [:SPEED, -2]
     },
     "afterNext_repeat" => { # player
       :anim    => [:AGILITY, :Self],
@@ -620,14 +623,17 @@ module EssentialsDeluxe
 
   GYM2_ATTACKPLAYER_SPEEDOPP = {
     "turnCommand" => {
-      :text    => "A sense of bravery overflows you and your Pokemon!",
-      :speech  => [:Opposing, "Thou shalln't beest so brave, mine own wits shall shineth through thee!"]
+      :speech  => ["A sense of bravery overflows you and your Pokemon!",
+                   :Opposing, "Thou shalln't beest so brave, mine own wits shall shineth through thee!"],
+      :battler => :Opposing,
+      :anim    => [:AGILITY, :Self],
+      :stats   => [:SPEED, 1]
     },
-    "turnEnd_repeat" => {
+    "turnEnd" => {
       :delay   => ["halfHP", "lowHP"],
       :speech  => [:Opposing, "Oh ho? thee shiver right at which hour things did start getting intresting?"],
       :anim    => [:SCARYFACE, :Opposing],
-      :stats   => [:ATTACK, -1, :SPECIAL_ATTACK, -1]
+      :stats   => [:ATTACK, -2, :SPECIAL_ATTACK, -2]
     },
     "afterNext_repeat" => { # player
       :anim    => [:WORKUP, :Self],
