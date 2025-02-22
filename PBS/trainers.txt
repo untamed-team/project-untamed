@@ -882,12 +882,15 @@ Gimmick = Gravity
 Pokemon = EEVEE,15
     Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HOOTHOOT,15
     Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
     Ability = INSOMNIA
+    Nature = HARDY
 Pokemon = BUNNELBY,16
     Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
     Ability = PICKUP
+    Nature = SERIOUS
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_F,Ivette,100]
@@ -896,12 +899,15 @@ Gimmick = Gravity
 Pokemon = EEVEE,15
     Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HOOTHOOT,15
     Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
     Ability = INSOMNIA
+    Nature = HARDY
 Pokemon = BUNNELBY,16
     Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
     Ability = PICKUP
+    Nature = SERIOUS
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel]
@@ -910,12 +916,15 @@ Gimmick = Rain
 Pokemon = WRENNER,15
     Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HELIOPTILE,15
     Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
     Ability = DRYSKIN
+    Nature = HARDY
 Pokemon = DUNSPARCE,16
     Moves = HEADBUTT,HEX,BITE,ICYWIND
     Ability = RUNAWAY
+    Nature = RELAXED
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel,100]
@@ -924,12 +933,15 @@ Gimmick = Rain
 Pokemon = WRENNER,15
     Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HELIOPTILE,15
     Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
     Ability = DRYSKIN
+    Nature = HARDY
 Pokemon = DUNSPARCE,16
     Moves = HEADBUTT,HEX,BITE,ICYWIND
     Ability = RUNAWAY
+    Nature = RELAXED
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel,1]
@@ -938,12 +950,15 @@ Gimmick = Sun
 Pokemon = WRENNER,15
     Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HELIOPTILE,15
     Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
     Ability = SOLARPOWER
+    Nature = HARDY
 Pokemon = DUNSPARCE,16
     Moves = HEADBUTT,HEX,BITE,ICYWIND
     Ability = RUNAWAY
+    Nature = RELAXED
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel,101]
@@ -952,12 +967,15 @@ Gimmick = Sun
 Pokemon = WRENNER,15
     Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
     Ability = RUNAWAY
+    Nature = DOCILE
 Pokemon = HELIOPTILE,15
     Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
     Ability = SOLARPOWER
+    Nature = HARDY
 Pokemon = DUNSPARCE,16
     Moves = HEADBUTT,HEX,BITE,ICYWIND
     Ability = RUNAWAY
+    Nature = RELAXED
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max]
@@ -965,12 +983,15 @@ LoseText = No, defeat, my only weakness!
 Pokemon = SKITTY,15
     Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
     Ability = NORMALIZE
+    Nature = TIMID
 Pokemon = PACUNA,16
     Moves = BITE,SWEETTOOTH,COVET,CUT
     Ability = DAZZLING
+    Nature = JOLLY
 Pokemon = LICKITUNG,16
     Moves = WORKUP,LICK,FACADE,ROCKTOMB
     Ability = OWNTEMPO
+    Nature = ADAMANT
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max,100]
@@ -978,12 +999,15 @@ LoseText = No, defeat, my only weakness!
 Pokemon = SKITTY,15
     Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
     Ability = NORMALIZE
+    Nature = TIMID
 Pokemon = PACUNA,16
     Moves = BITE,SWEETTOOTH,COVET,CUT
     Ability = DAZZLING
+    Nature = JOLLY
 Pokemon = LICKITUNG,16
     Moves = WORKUP,LICK,FACADE,ROCKTOMB
     Ability = OWNTEMPO
+    Nature = ADAMANT
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia]
@@ -991,15 +1015,19 @@ LoseText = Failure… is… a catalyst for its rectification… I… fear no los
 Pokemon = FURFROU,16
     Form = 5
     Moves = HEADBUTT,ROUND,TAILWHIP,ZENHEADBUTT
+    Nature = HARDY
 Pokemon = EEVEE,17
     Moves = EXCITE,SNARL,GROWL,ROUND
     Ability = RUNAWAY
+    Nature = MODEST
 Pokemon = DELCATTY,17
     Moves = FAKEOUT,ROUND,TAUNT,FURYSWIPES
     Ability = NORMALIZE
+    Nature = ADAMANT
 Pokemon = LAGUNA,18
     Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
     Ability = DAZZLING
+    Nature = SERIOUS
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia,100]
