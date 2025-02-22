@@ -1523,10 +1523,6 @@ Pokemon = M_MUDBRAY,21
 #-------------------------------
 [SHINYHUNTER_M,Florian]
 LoseText = Nothing lustrous about that...
-Pokemon = MAGIKARP,18
-    Form = 2
-    Shiny = yes
-    Moves = SPLASH,SMACKDOWN
 Pokemon = BANAGNAW,21
     Name = Slippy
     Shiny = yes
@@ -1568,14 +1564,6 @@ Pokemon = GOLETT,21
     Ability = IRONFIST
     Item = POWERHERB
     Nature = ADAMANT
-    Shiny = yes
-Pokemon = GYARADOS,22
-    Moves = WATERPULSE,HIDDENPOWER,ROCKBLAST,IRONDEFENSE
-    Ability = FULLMETALBODY
-    Item = ROCKGEM
-    Nature = QUIET
-    HiddenPowerType = DRAGON
-    Form = 2
     Shiny = yes
 #Area=Asterado_O
 #-------------------------------
