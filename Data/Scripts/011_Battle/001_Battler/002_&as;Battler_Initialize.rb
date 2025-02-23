@@ -166,8 +166,6 @@ class Battle::Battler
     @lastRoundMoveFailed   = false
     @movesUsed             = []
     @turnCount             = 0
-		#by low
-    @remaningHPBars = (self.isBossPokemon?) ? 3 : 0 
     @effects[PBEffects::Attract]             = -1
     @battle.allBattlers.each do |b|   # Other battlers no longer attracted to self
       b.effects[PBEffects::Attract] = -1 if b.effects[PBEffects::Attract] == @index

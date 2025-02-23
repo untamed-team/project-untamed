@@ -87,7 +87,8 @@ class Pokemon
   # @return [Integer] the progress of this Pokémon evolution method #by low
   attr_accessor :evolution_steps
   attr_accessor :willmega
-	attr_accessor :sketchMove # necturna clause #by low
+  attr_accessor :sketchMove # necturna clause #by low
+  attr_accessor :remaningHPBars
 
   # Max total IVs
   IV_STAT_LIMIT = 1000#31 #by low
@@ -1227,7 +1228,9 @@ class Pokemon
     @personalID       = rand(2**16) | (rand(2**16) << 16)
     @hp               = 1
     @totalhp          = 1
-    @evolution_steps  = 0 #by low
+    #by low
+    @evolution_steps  = 0
+    @remaningHPBars   = 0
 		@willmega					= false
 		@sketchMove				= nil
     calc_stats

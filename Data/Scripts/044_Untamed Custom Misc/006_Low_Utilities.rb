@@ -514,7 +514,13 @@ class Pokemon
     return 1 if base == 1   # For Shedinja
     ev = 0 if $player.difficulty_mode?("chaos")
     # made ivs be a brute stat boost #by low
-    return (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
+    hp = (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
+    if !self.remaningHPBars
+      self.remaningHPBars = 0
+    else
+      hp *= self.remaningHPBars if self.remaningHPBars > 0
+    end
+    return hp
   end
   
   def calcStat(base, level, iv, ev, nat, realStat = :HP)
