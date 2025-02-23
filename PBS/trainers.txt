@@ -2623,8 +2623,9 @@ Pokemon = HUMMIPUMMEL,50
 #-------------------------------
 [WILD_PKMN,crust,0]
 LoseText = sex
-Pokemon = CRUSTANG,10
+Pokemon = CRUSTANG,50
     IV = 10,10,10,10,10,10
+	BOSS = true
 #-------------------------------
 [WILD_PKMN,crust,100]
 LoseText = sex
