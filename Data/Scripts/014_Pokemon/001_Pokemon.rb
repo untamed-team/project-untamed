@@ -1230,9 +1230,9 @@ class Pokemon
     @totalhp          = 1
     #by low
     @evolution_steps  = 0
-    @remaningHPBars   = 0
-		@willmega					= false
-		@sketchMove				= nil
+    @remaningHPBars   = [0, 0] # current, max hp bar
+    @willmega         = false
+    @sketchMove       = nil
     calc_stats
     if @form == 0 && recheck_form
       f = MultipleForms.call("getFormOnCreation", self)
