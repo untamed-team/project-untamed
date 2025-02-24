@@ -754,7 +754,7 @@ class Battle::Move::UseLastMoveUsed < Battle::Move
   end
 
   def pbMoveFailed?(user, targets)
-    if !@copied_move ||
+    if !@copied_move || GameData::Move.get(@copied_move).has_flag?("CannotSketch") ||
        @moveBlacklist.include?(GameData::Move.get(@copied_move).function_code)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
@@ -821,7 +821,7 @@ class Battle::Move::UseMoveTargetIsAboutToUse < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     return true if pbMoveFailedTargetAlreadyMoved?(target, show_message)
     oppMove = @battle.choices[target.index][2]
-    if !oppMove || oppMove.statusMove? || @moveBlacklist.include?(oppMove.function)
+    if !oppMove || oppMove.statusMove? || @moveBlacklist.include?(oppMove.function) || oppMove.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -1094,6 +1094,7 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
       next if Settings::MECHANICS_GENERATION >= 6 && pkmn.egg?
       pkmn.moves.each do |move|
         next if @moveBlacklist.include?(move.function_code)
+        next if move.has_flag?("CannotSketch")
         next if move.type == :SHADOW
         @assistMoves.push(move.id)
       end
@@ -1245,7 +1246,8 @@ class Battle::Move::ReplaceMoveThisBattleWithTargetLastMoveUsed < Battle::Move
     if !lastMoveData ||
        user.pbHasMove?(target.lastRegularMoveUsed) ||
        @moveBlacklist.include?(lastMoveData.function_code) ||
-       lastMoveData.type == :SHADOW
+       lastMoveData.type == :SHADOW ||
+       lastMoveData.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -1292,7 +1294,8 @@ class Battle::Move::ReplaceMoveWithTargetLastMoveUsed < Battle::Move
     if !lastMoveData ||
        user.pbHasMove?(target.lastRegularMoveUsed) ||
        @moveBlacklist.include?(lastMoveData.function_code) ||
-       lastMoveData.type == :SHADOW
+       lastMoveData.type == :SHADOW ||
+       lastMoveData.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
