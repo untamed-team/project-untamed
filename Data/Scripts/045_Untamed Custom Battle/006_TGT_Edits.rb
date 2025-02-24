@@ -278,7 +278,7 @@ or dont
             else
               # for every item in the array that mentions these hazards, one more "layer" is added
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 1
-              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if gimmick_downcase == "stickyweb"
+              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if ["stickyweb", "seaoffire", "swamp"].include?(gimmick_downcase)
             end
           end
         end
