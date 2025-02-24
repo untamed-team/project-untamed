@@ -389,6 +389,11 @@ class Battle::AI
                 score *= 0.5
             end
         end
+        # account for chip healing from echo chamber
+        if user.hasActiveAbility?(:ECHOCHAMBER) && (move.soundMove? && move.statusMove?)
+            missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
+            score += missinghp * (1.0 / 8)
+        end
         # Don't prefer moves that are ineffective because of abilities or effects
         return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
         score = score.to_i
@@ -539,7 +544,8 @@ class Battle::AI
             end
         end
         if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
-            (move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?)
+           (move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?) ||
+           (user.hasActiveAbility?(:ECHOCHAMBER) && move.soundMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
             if target.hasActiveAbility?(:LIQUIDOOZE)
                 damagePercentage -= missinghp*0.5
