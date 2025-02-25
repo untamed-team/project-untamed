@@ -21,6 +21,8 @@ class Pokemon
 	end
 end
 
+# array "@remaning HPBars" is [current hp bars, max hp bars]
+$DEBUG = true
 class Battle::Battler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
@@ -28,14 +30,15 @@ class Battle::Battler
 	
   ################################################################################
 
-  def pbEffectsOnHPBarBreak(boss) 
+  def pbEffectsOnHPBarBreak(boss)
+    hpbarbreak = boss.pokemon.remaningHPBars[0]
     case boss.species
     when :NOCTAVISPA
-      if boss.pokemon.remaningHPBars == 1
+      if hpbarbreak == 1
         @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!",self.pbThis))
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
-      elsif boss.pokemon.remaningHPBars == 2
+      elsif hpbarbreak== 2
         pbChangeTypeZone(boss, :DARK, "Noctavispa's  malice summoned a Dark Zone!")
         pbChangeUserItemMidTurn(boss, :STARFBERRY)
         pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
@@ -44,11 +47,11 @@ class Battle::Battler
         end
       end
     when :CRUSTANG
-      if boss.pokemon.remaningHPBars == 1
+      if hpbarbreak == 1
         @battle.pbDisplayBrief(_INTL("1 left"))
-      elsif boss.pokemon.remaningHPBars == 2
+      elsif hpbarbreak == 2
         @battle.pbDisplayBrief(_INTL("2 left"))
-      elsif boss.pokemon.remaningHPBars == 3
+      elsif hpbarbreak == 3
         @battle.pbDisplayBrief(_INTL("3 left"))
       end
     end
@@ -157,9 +160,9 @@ class Battle::Battler
     amt = 1 if amt < 1 && !fainted?
     breakbar = 0
     if self.isBossPokemon?
-      normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars)
+      normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
       amt2 = amt
-      point = [self.pokemon.remaningHPBars, 1].max
+      point = [self.pokemon.remaningHPBars[0], 1].max
       point.times do |i|
         if amt2 >= normalHP
           breakbar += 1
@@ -179,7 +182,7 @@ class Battle::Battler
     end
     if breakbar > 0 
       breakbar.times do
-        self.pokemon.remaningHPBars -= 1
+        self.pokemon.remaningHPBars[0] -= 1
         pbEffectsOnHPBarBreak(self)
         echoln "here the hp bars ICONS drawed by the UI should update to account for the new amount, though in a ideal world, it should happen only after the hp change animation stops"
       end
@@ -202,9 +205,9 @@ class Battle::Scene::PokemonDataBox < Sprite
     w = 0
     if self.hp > 0
       echoln "here should be calc'd the individual %% of the current HP bar"
-      if @battler.pokemon.remaningHPBars > 0
-        normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars)
-        currentHP = self.hp / @battler.pokemon.remaningHPBars
+      if @battler.pokemon.remaningHPBars[0] > 0
+        normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars[1])
+        currentHP = self.hp / @battler.pokemon.remaningHPBars[1]
         w = @hpBarBitmap.width.to_f * currentHP / normalHP
       else
         normalHP = @battler.totalhp
@@ -242,9 +245,9 @@ class Battle::Scene::PokemonDataBox < Sprite
 
   def draw_bossHPBars
     return if !@battler.isBossPokemon?
-    return if @battler.pokemon.remaningHPBars == 0
+    return if @battler.pokemon.remaningHPBars[0] == 0
     i = 0
-    @battler.pokemon.remaningHPBars.times do
+    @battler.pokemon.remaningHPBars[0].times do
       pbDrawImagePositions(self.bitmap,
         [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
       )

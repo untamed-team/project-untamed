@@ -20,9 +20,9 @@ class Player < Trainer
     when "normal"
       return true if @difficulty == 0 && @mechanics >= 1
     when "hard"
-      return true if @difficulty == 1 && @mechanics >= 2
+      return true if @difficulty >= 1 && @mechanics >= 2
     when "chaos"
-      return true if @difficulty == 1 && @mechanics >= 3
+      return true if @difficulty >= 2 && @mechanics >= 3
     else
       return false
     end
@@ -443,7 +443,7 @@ class DifficultySelectMenuScreen
         when 4   # meme
           if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
             $player.mechanics=3
-            $player.difficulty=1
+            $player.difficulty=2
             enditall=true
           end
         end

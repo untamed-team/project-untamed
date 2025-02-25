@@ -99,8 +99,8 @@ module GameData
 					pkmn.iv[s.id] += 10 unless s.id == :HP
 				end
 			end
-			if pkmn.isBossPokemon? && pkmn.remaningHPBars == 0
-				pkmn.remaningHPBars = 4
+			if pkmn.isBossPokemon? && pkmn.remaningHPBars[1] == 0
+				pkmn.remaningHPBars = [4, 4]
 			end
 			pkmn.calc_stats
       	end

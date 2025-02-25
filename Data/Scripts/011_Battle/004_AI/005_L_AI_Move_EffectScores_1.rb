@@ -756,6 +756,7 @@ class Battle::AI
                 end
             end
         end
+        score = 0 if user.pbOpposingSide.effects[PBEffects::ToxicSpikes] >= 1 && $player.difficulty_mode?("chaos")
     #---------------------------------------------------------------------------
     when "AddStealthRocksToFoeSide" # stealth rock
         if user.pbOpposingSide.effects[PBEffects::StealthRock]

@@ -515,11 +515,8 @@ class Pokemon
     ev = 0 if $player.difficulty_mode?("chaos")
     # made ivs be a brute stat boost #by low
     hp = (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
-    if !self.remaningHPBars
-      self.remaningHPBars = 0
-    else
-      hp *= self.remaningHPBars if self.remaningHPBars > 0
-    end
+    self.remaningHPBars = [0, 0] if !self.remaningHPBars
+    hp *= self.remaningHPBars[1] if self.remaningHPBars[1] > 0
     return hp
   end
   
