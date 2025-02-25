@@ -2320,7 +2320,7 @@ Habitat = Urban
 Category = Evolution
 Pokedex = It possesses a unique genetic makeup, allowing it to evolve into many different forms. Two of these evolutions were recently discovered in the Mazah region.
 Generation = 1
-Evolutions = VAPOREON,Item,WATERSTONE,JOLTEON,Item,THUNDERSTONE,FLAREON,Item,FIRESTONE,LEAFEON,LocationFlag,MossRock,LEAFEON,Item,LEAFSTONE,GLACEON,LocationFlag,IceRock,GLACEON,Item,ICESTONE,SYLVEON,HappinessMoveType,FAIRY,ESPEON,HappinessDay,,UMBREON,HappinessNight,,TERREON,Location,999,GUSTEON,Location,999
+Evolutions = VAPOREON,Item,WATERSTONE,JOLTEON,Item,THUNDERSTONE,FLAREON,Item,FIRESTONE,LEAFEON,LocationFlag,MossRock,LEAFEON,Item,LEAFSTONE,GLACEON,LocationFlag,IceRock,GLACEON,Item,ICESTONE,SYLVEON,HappinessMoveType,FAIRY,ESPEON,HappinessDay,,UMBREON,HappinessNight,,TERREON,LocationFlag,DeepUnderground,GUSTEON,LocationFlag,HighAltitude
 #-------------------------------
 [VAPOREON]
 Name = Vaporeon
