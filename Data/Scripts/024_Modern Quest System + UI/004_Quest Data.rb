@@ -262,6 +262,26 @@ module QuestModule
     :RewardString => '"Good money"',
     :ReadyAtStart => true,
   }
+  Quest14 = {
+    :ID => "14",
+    :Name => "Eeveelution Beginner",
+    :QuestDescription => "Taylor needs help finding out what her Eevee wants to evolve into.",
+    :QuestGiver => "Taylor",
+    :QuestGiverSprite => "NPC Shiny Hunter",
+    :QuestGiverDescSprite => "SHINYHUNTER_M",
+    :Stage1 => "Show Taylor a Water or Fire-type Pokémon.",
+    :Location1 => "Calojarro",
+    :Stage2 => "Battle Taylor with a Dark or Psychic-type Pokémon in your party.",
+    :Location2 => "Calojarro",
+    :Stage3 => "Show Taylor a Pokémon with a powerful Ice or Grass-type move (55+ power).",
+    :Location3 => "Calojarro",
+    :Stage4 => "Talk to Taylor with a Water or Fire-type Pokémon in your party.",
+    :Location4 => "Calojarro",
+    :Stage5 => "Find Taylor and her Eevee at #{$game_variables[135]}.",
+    :Location5 => "#{$game_variables[135]}",
+    :RewardString => "Eevee",
+    :ReadyAtStart => true,
+  }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {
 #    :ID => "1",
