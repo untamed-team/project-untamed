@@ -69,7 +69,6 @@ def markQuestTaskComplete(quest,task,complete=true,color=nil,story=false)
 =end
 
 module QuestModule
-  
   # You don't actually need to add any information, but the respective fields in the UI will be blank or "???"
   # I included this here mostly as an example of what not to do, but also to show it's a thing that exists
   Quest1 = {
@@ -277,8 +276,10 @@ module QuestModule
     :Location3 => "Calojarro",
     :Stage4 => "Talk to Taylor with a Water or Fire-type Pokémon in your party.",
     :Location4 => "Calojarro",
-    #:Stage5 => "Find Taylor and her Eevee at #{$game_variables[135]}.",
-    #:Location5 => "#{$game_variables[135]}",
+    #:Stage5 => "Find Taylor and her Eevee at #{($game_variables[135] if $game_variables[135])}.",
+    :Stage5 => "Find Taylor and her Eevee at #{!$game_variables.nil? ? $game_variables[135] : 0}.",
+    #:Location5 => "#{($game_variables[135] if $game_variables[135])}",
+    :Location5 => "#{!$game_variables.nil? ? $game_variables[135] : 0}",
     :RewardString => "Eevee",
     :ReadyAtStart => true,
   }
