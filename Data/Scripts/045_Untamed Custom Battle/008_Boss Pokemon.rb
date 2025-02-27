@@ -48,13 +48,10 @@ class Battle::Battler
     when :CRUSTANG
       if hpbarbreak == 0
         @battle.pbDisplay(_INTL("1 left"))
-        echoln hpbarbreak
       elsif hpbarbreak == 1
         @battle.pbDisplay(_INTL("2 left"))
-        echoln hpbarbreak
       elsif hpbarbreak == 2
         @battle.pbDisplay(_INTL("3 left"))
-        echoln hpbarbreak
       end
     end
     @battle.scene.sprites["dataBox_#{boss.index}"].refresh
@@ -191,6 +188,62 @@ class Battle::Battler
     end
     return amt
   end
+  
+  def pbRecoverHPFromDrain(amt, target, msg = nil, ignoremsg = false)
+    if target.hasActiveAbility?(:LIQUIDOOZE, true)
+      @battle.pbShowAbilitySplash(target)
+      pbReduceHP(amt)
+      @battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!", pbThis))
+      @battle.pbHideAbilitySplash(target)
+      pbItemHPHealCheck
+    else
+      if !ignoremsg
+        msg = _INTL("{1} had its energy drained!", target.pbThis) if nil_or_empty?(msg)
+        @battle.pbDisplay(msg)
+      end
+      if canHeal?
+        amt = (amt * 1.3).floor if hasActiveItem?(:BIGROOT)
+        pbRecoverHP(amt)
+      end
+    end
+  end
+
+  # array "@remaning HPBars" is [current hp bars, max hp bars]
+  def pbRecoverHP(amt, anim = true, anyAnim = true, damagemove = false)
+    amt = amt.round
+    amt = @totalhp - @hp if amt > @totalhp - @hp
+    amt = 1 if amt < 1 && @hp < @totalhp
+    restorebar = 0
+    if self.isBossPokemon?
+      normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      amt2 = amt
+      #echoln "heal amt: #{amt2}. hp normal: #{normalHP}"
+      self.pokemon.remaningHPBars[1].times do |i|
+        if amt2 >= normalHP
+          restorebar += 1
+          amt2 -= normalHP
+          #echoln restorebar
+        end
+      end
+    end
+    oldHP = @hp
+    amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
+    #amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
+    amt = @totalhp - @hp if amt > @totalhp - @hp
+    self.hp += amt
+    PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
+    raise _INTL("HP less than 0") if @hp < 0
+    raise _INTL("HP greater than total HP") if @hp > @totalhp
+    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
+    if self.isBossPokemon?
+      restorebar.times do # more fluid
+        self.pokemon.remaningHPBars[0] += 1
+        @battle.scene.sprites["dataBox_#{self.index}"].refresh
+      end
+    end
+    @droppedBelowHalfHP = false if @hp >= @totalhp / 2
+    return amt
+  end
 end
 
 class Battle::Scene::PokemonDataBox < Sprite
@@ -208,7 +261,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     remainingPoints = 0
     if self.hp > 0
       #echoln "here should be calc'd the individual %% of the current HP bar"
-      if @battler.pokemon.remaningHPBars[0] > 0
+      if @battler.pokemon.remaningHPBars[1] > 0
         normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars[1])
         currentHP = self.hp % normalHP.to_i == 0 ? self.hp / @battler.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
         w = @hpBarBitmap.width.to_f * currentHP / normalHP
