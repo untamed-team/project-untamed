@@ -11,3 +11,8 @@ def pbPumpkabooQuestReward
   pkmn.calc_stats
   pbAddForeignPokemon(pkmn, 5, _I("Gabriel"), _I("Stumpy"))
 end
+
+def pbChooseWaterOrFireType
+  $game_variables[36] = 0
+  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.types.contains?(:FIRE)|| pkmn.types.contains?(:WATER)})
+end
