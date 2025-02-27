@@ -277,8 +277,8 @@ module QuestModule
     :Location3 => "Calojarro",
     :Stage4 => "Talk to Taylor with a Water or Fire-type Pokémon in your party.",
     :Location4 => "Calojarro",
-    :Stage5 => "Find Taylor and her Eevee at #{$game_variables[135]}.",
-    :Location5 => "#{$game_variables[135]}",
+    #:Stage5 => "Find Taylor and her Eevee at #{$game_variables[135]}.",
+    #:Location5 => "#{$game_variables[135]}",
     :RewardString => "Eevee",
     :ReadyAtStart => true,
   }
