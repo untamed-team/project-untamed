@@ -22,7 +22,6 @@ class Pokemon
 end
 
 # array "@remaning HPBars" is [current hp bars, max hp bars]
-$DEBUG = true
 class Battle::Battler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
@@ -199,7 +198,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     @hpNumbers.bitmap.clear
     return if !@battler.pokemon
     # Show HP numbers
-    if true#@showHP
+    if @showHP
       pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, -2, 1) #stygma
       pbDrawNumber(-1, @hpNumbers.bitmap, 54, -2)   # / char
       pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, -2)
