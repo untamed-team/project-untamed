@@ -38,7 +38,7 @@ class Battle::Battler
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
       elsif hpbarbreak== 2
-        pbChangeTypeZone(boss, :DARK, "Noctavispa's  malice summoned a Dark Zone!")
+        pbChangeTypeZone(:DARK, "Noctavispa's  malice summoned a Dark Zone!")
         pbChangeUserItemMidTurn(boss, :STARFBERRY)
         pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
         boss.eachOpposing do |b|
@@ -138,7 +138,7 @@ class Battle::Battler
     end
   end
 
-  def pbChangeTypeZone(user, newZone, msg = nil)
+  def pbChangeTypeZone(newZone, msg = nil)
     return if @battle.field.terrain == newZone
     @battle.field.terrain = newZone
     if msg.nil?

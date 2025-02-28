@@ -10,10 +10,11 @@ module GameData
   # your data. You can just add it to the existing hash.
   #-----------------------------------------------------------------------------
     SCHEMA["AAM"] = [:abilityMutation, "b"]
-    SCHEMA["MEM"] = [:megaevoMutation, "b"] #low MEM edits
-    SCHEMA["BOSS"] = [:bossmonMutation,"b"] #low MEM edits
+    SCHEMA["MEM"] = [:megaevoMutation, "b"]
+    SCHEMA["BOSS"] = [:bossmonMutation,"u"]
     SCHEMA["Status"] = [:status,       "s"]
     SCHEMA["HiddenPowerType"] = [:hp_type, "q"]
+
     SCHEMA["Gimmick"] = [:gimmick,     "q"] #note: this is a trait of the trainer, not a specific pokemon
 	# for TGT
 	def initialize(hash)
@@ -82,7 +83,11 @@ module GameData
 			end
 			pkmn.abilityMutation = true if pkmn_data[:abilityMutation]
 			pkmn.megaevoMutation = true if pkmn_data[:megaevoMutation]
-			pkmn.bossmonMutation = true if pkmn_data[:bossmonMutation]
+			if pkmn_data[:bossmonMutation]
+				pkmn.bossmonMutation = true
+				hpbars = pkmn_data[:bossmonMutation] + 1
+				pkmn.remaningHPBars = [hpbars, hpbars] # [current hp bars, max hp bars]
+			end
 			if pkmn_data[:hp_type] && !pkmn_data[:hp_type].empty?
 				pkmn.hptype = hptypeHash[pkmn_data[:hp_type].upcase]
 			end
@@ -96,11 +101,8 @@ module GameData
 			if pkmn.level >= 40 && !pkmn.abilityMutation && pkmn_data[:nature].empty?
 				pkmn.nature = :SERIOUS
 				GameData::Stat.each_main do |s|
-					pkmn.iv[s.id] += 10 unless s.id == :HP
+					pkmn.iv[s.id] += 10
 				end
-			end
-			if pkmn.isBossPokemon? && pkmn.remaningHPBars[1] == 0
-				pkmn.remaningHPBars = [4, 4]
 			end
 			pkmn.calc_stats
       	end

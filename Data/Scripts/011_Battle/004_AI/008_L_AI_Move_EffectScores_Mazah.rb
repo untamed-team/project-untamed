@@ -831,7 +831,8 @@ class Battle::AI
         if targetPosi.effects[PBEffects::FutureSightCounter] == 1
             futureMove = targetPosi.effects[PBEffects::FutureSightMove]
             return 0 if futureMove.nil?
-            moveUser = sacrifice = nil
+            moveUser = nil
+            sacrifice = nil
             @battle.allBattlers.each do |battler|
                 next if battler.opposes?(targetPosi.effects[PBEffects::FutureSightUserIndex])
                 sacrifice = battler
