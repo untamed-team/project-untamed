@@ -235,11 +235,13 @@ class Battle::Battler
     raise _INTL("HP less than 0") if @hp < 0
     raise _INTL("HP greater than total HP") if @hp > @totalhp
     @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
-    if self.isBossPokemon?
+    if self.isBossPokemon? && restorebar > 0
       restorebar.times do # more fluid
         self.pokemon.remaningHPBars[0] += 1
+        @battle.scene.pbAnimation(:PROTECT, self, self)
         @battle.scene.sprites["dataBox_#{self.index}"].refresh
       end
+      @battle.pbDisplay(_INTL("{1} restored {2} of its shields!", pbThis, restorebar))
     end
     @droppedBelowHalfHP = false if @hp >= @totalhp / 2
     return amt
