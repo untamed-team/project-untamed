@@ -22,6 +22,7 @@ class Pokemon
 end
 
 # array "@remaning HPBars" is [current hp bars, max hp bars]
+$DEBUG = true
 class Battle::Battler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
@@ -32,32 +33,32 @@ class Battle::Battler
   def pbEffectsOnHPBarBreak(boss)
     hpbarbreak = boss.pokemon.remaningHPBars[0] - 1
     case boss.species
-    when :NOCTAVISPA
-      if hpbarbreak == 1
+    when :NOCTAVISPA # test battle
+      case hpbarbreak
+      when 0
         @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!",self.pbThis))
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
-      elsif hpbarbreak== 2
-        pbChangeTypeZone(:DARK, "Noctavispa's  malice summoned a Dark Zone!")
+      when 1
+        pbChangeTypeZone(:DARK, "Noctavispa's malice summoned a Dark Zone!")
         pbChangeUserItemMidTurn(boss, :STARFBERRY)
         pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
         boss.eachOpposing do |b|
           pbLowerStatsMidTurn(b, [:SPECIAL_ATTACK, 2, :SPEED, 3])
         end
       end
-    when :CRUSTANG
-      if hpbarbreak == 0
-        @battle.pbDisplay(_INTL("1 left"))
-      elsif hpbarbreak == 1
-        @battle.pbDisplay(_INTL("2 left"))
-      elsif hpbarbreak == 2
-        @battle.pbDisplay(_INTL("3 left"))
+    when :CRUSTANG # steel gym fight
+      case hpbarbreak
+      when 0
+        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!",self.pbThis))
+        pbUseExtraMidTurnMove(boss, :SHARPEN, boss)
       end
     end
     @battle.scene.sprites["dataBox_#{boss.index}"].refresh
   end
 
   def pbUseExtraMidTurnMove(boss, move, target)
+    # has the side effect of making the "boss" unable to die in a single hit. Neat?
     # recording the move that the AI choose
     oldCurrentMove = boss.currentMove
     oldLastRoundMoved = boss.lastRoundMoved
@@ -212,6 +213,7 @@ class Battle::Battler
   def pbRecoverHP(amt, anim = true, anyAnim = true, damagemove = false)
     amt = amt.round
     amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
+    #amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
     amt = @totalhp - @hp if amt > @totalhp - @hp
     amt = 1 if amt < 1 && @hp < @totalhp
     restorebar = 0
@@ -228,8 +230,6 @@ class Battle::Battler
       end
     end
     oldHP = @hp
-    #amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
-    amt = @totalhp - @hp if amt > @totalhp - @hp
     self.hp += amt
     PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
     raise _INTL("HP less than 0") if @hp < 0
@@ -276,6 +276,7 @@ class Battle::Scene::PokemonDataBox < Sprite
       w = 1 if w < 1
       # NOTE: The line below snaps the bar's width to the nearest 2 pixels, to
       #       fit in with the rest of the graphics which are doubled in size.
+      w = @hpBar.bitmap.width if w > @hpBar.bitmap.width
       w = ((w / 2.0).round) * 2
     end
     if @battler.isBossPokemon?

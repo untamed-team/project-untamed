@@ -3737,4 +3737,4 @@ Pokemon = CRUSTANG,50
 LoseText = sex
 Pokemon = CRUSTANG,50
     IV = 10,10,10,10,10,10
-	BOSS = 3
+	BOSS = 1
