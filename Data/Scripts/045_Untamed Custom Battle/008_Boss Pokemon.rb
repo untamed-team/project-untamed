@@ -211,6 +211,7 @@ class Battle::Battler
   # array "@remaning HPBars" is [current hp bars, max hp bars]
   def pbRecoverHP(amt, anim = true, anyAnim = true, damagemove = false)
     amt = amt.round
+    amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
     amt = @totalhp - @hp if amt > @totalhp - @hp
     amt = 1 if amt < 1 && @hp < @totalhp
     restorebar = 0
@@ -227,7 +228,6 @@ class Battle::Battler
       end
     end
     oldHP = @hp
-    amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
     #amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
     amt = @totalhp - @hp if amt > @totalhp - @hp
     self.hp += amt
