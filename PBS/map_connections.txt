@@ -12,8 +12,6 @@
 72,West,0,23,East,5
 # Route 2 (26) - Route 1 (48)
 26,West,52,48,East,0
-# Daycare CenterInterior (28) - Calojarro Plaza (36)
-28,South,0,36,North,0
 # Monarca (31) - Melolado (39)
 31,South,35,39,North,0
 # Connection to Hacienda (61) - Route 1 (48)
@@ -22,11 +20,13 @@
 79,East,27,61,West,0
 # Racing Track (72) - Ferrera (66)
 72,South,0,66,North,0
-# Asterado Ranch (45) - Route 4 - Top East (47)
-45,South,33,47,North,0
+# Calojarro Plaza (36) - Daycare CenterInterior (28)
+36,North,0,28,South,0
+# Route 4 - Top East (47) - Asterado Ranch (45)
+47,North,0,45,South,57
 # Route 3-4 Transfer Map (117) - Route 4 - Top East (47)
 117,West,0,47,East,3
+# Route 3 (29) - Route 3-4 Transfer Map (117)
+29,West,52,117,East,0
 # Calojarro (51) - Route 3 (29)
 51,South,0,29,North,28
-# Route 3-4 Transfer Map (117) - Route 3 (29)
-117,East,0,29,West,52

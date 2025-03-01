@@ -500,6 +500,16 @@ Name = Ace Trainer
 Gender = Female
 BaseMoney = 60
 #-------------------------------
+[RISINGSTAR_F]
+Name = Rising Star
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[RISINGSTAR_M]
+Name = Rising Star
+Gender = Male
+BaseMoney = 60
+#-------------------------------
 [SCIENTIST_M]
 Name = Scientist
 Gender = Male
@@ -509,6 +519,56 @@ BaseMoney = 48
 Name = Scientist
 Gender = Female
 BaseMoney = 48
+#-------------------------------
+[RANCHERO_F]
+Name = Ranchero
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[RANCHERO_M]
+Name = Ranchero
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[MECHANIC_M]
+Name = Mechanic
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[MECHANIC_F]
+Name = Mechanic
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[MINER_M]
+Name = Miner
+Gender = Male
+BaseMoney = 32
+#-------------------------------
+[MINER_F]
+Name = Miner
+Gender = Female
+BaseMoney = 32
+#-------------------------------
+[DOCTOR_F]
+Name = Doctor
+Gender = Female
+BaseMoney = 48
+#-------------------------------
+[DOCTOR_M]
+Name = Doctor
+Gender = Male
+BaseMoney = 48
+#-------------------------------
+[SHINYHUNTER_F]
+Name = Shiny Hunter
+Gender = Female
+BaseMoney = 60
+#-------------------------------
+[SHINYHUNTER_M]
+Name = Shiny Hunter
+Gender = Male
+BaseMoney = 60
 #-------------------------------
 [TRAINER_Reine]
 Name = Trainer
@@ -537,3 +597,23 @@ Gender = Female
 BaseMoney = 100
 BattleBGM = Battle - Gym Leader
 VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[ADMIN_Xandra]
+Name = Neo Admin
+Gender = Female
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[ADMIN_Idelfonso]
+Name = Eon Admin
+Gender = Male
+BaseMoney = 100
+BattleBGM = Battle - Gym Leader
+VictoryBGM = Victory - Gym Leader
+#-------------------------------
+[WILD_PKMN]
+Name = Wild Pokemon
+Gender = Male
+BaseMoney = 10
+#-------------------------------

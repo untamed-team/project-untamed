@@ -20,9 +20,9 @@ class Player < Trainer
     when "normal"
       return true if @difficulty == 0 && @mechanics >= 1
     when "hard"
-      return true if @difficulty == 1 && @mechanics >= 2
+      return true if @difficulty >= 1 && @mechanics >= 2
     when "chaos"
-      return true if @difficulty == 1 && @mechanics >= 3
+      return true if @difficulty >= 2 && @mechanics >= 3
     else
       return false
     end
@@ -83,13 +83,15 @@ class Battle
               new_index = pbLastInTeam(idxBattler)
               idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
             end
-            if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                      opponent.full_name, enemyParty[idxPartyForName].name))
-              idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-              if idxPlayerPartyNew >= 0
-                pbMessageOnRecall(@battlers[0])
-                pbRecallAndReplace(0, idxPlayerPartyNew)
-                switched.push(0)
+            unless isWildBoss?(opponent)
+              if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
+                                        opponent.full_name, enemyParty[idxPartyForName].name))
+                idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
+                if idxPlayerPartyNew >= 0
+                  pbMessageOnRecall(@battlers[0])
+                  pbRecallAndReplace(0, idxPlayerPartyNew)
+                  switched.push(0)
+                end
               end
             end
           end
@@ -441,7 +443,7 @@ class DifficultySelectMenuScreen
         when 4   # meme
           if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
             $player.mechanics=3
-            $player.difficulty=1
+            $player.difficulty=2
             enditall=true
           end
         end

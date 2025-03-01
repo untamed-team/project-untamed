@@ -17,6 +17,9 @@ class ContestStage
   end
   
   def self.pbMainAfterResults(winner, winnerNumber)
+	#reset variable tracking what rank the player just won
+	$game_variables[126] = 0
+  
     pbSEPlay("Contests_Crowd",80,100)
     #whistle
     pbSEPlay("Contests_Whistle",80,100)
@@ -72,6 +75,18 @@ class ContestStage
       pbMEPlay("Item get")
       pbWait(1 * Graphics.frame_rate)
       pbMoveRoute($game_player, [PBMoveRoute::TurnDown])
+	  
+	  #save the rank level to be returned after the player leaves the contest
+		case @chosenRank
+		when "Normal"
+			$game_variables[126] = 1
+		when "Great"
+			$game_variables[126] = 2
+		when "Ultra"
+			$game_variables[126] = 3
+		when "Master"
+			$game_variables[126] = 4
+		end
     end #case winner
     
     pbMoveRoute($game_map.events[@announcerEvent.id], [PBMoveRoute::TurnDown])
@@ -99,4 +114,26 @@ class ContestStage
     #the script ends and control goes back to the autorun/parallel process event
     #in the contestant hall to teleport the contestant back to reception
   end
+  
+  def self.givePrize
+	case $game_variables[126]
+	when 0
+		pbMessage(_INTL("I'm sorry, but it looks like you didn't win anything this time. Better luck next time."))
+	when 1
+		prize = ContestSettings::PRIZE_POOL_NORMAL.sample
+	when 2
+		prize = ContestSettings::PRIZE_POOL_GREAT.sample
+	when 3
+		prize = ContestSettings::PRIZE_POOL_ULTRA.sample
+	when 4
+		prize = ContestSettings::PRIZE_POOL_MASTER.sample
+	end
+	
+	if $game_variables[126] > 0
+		pbMessage(_INTL("Congratulations! Here is your prize."))
+		num = 1
+		num = 10 if GameData::Item.get(prize).is_berry?
+		pbReceiveItem(prize,num)
+	end
+  end #def self.givePrize
 end #class ContestStage

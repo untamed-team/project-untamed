@@ -229,7 +229,7 @@ class Battle::Move::PowerHigherWithUserPositiveStatStages < Battle::Move
     mult = 1
     GameData::Stat.each_battle { |s| mult += user.stages[s.id] }
     mult = [1, mult].max
-    return 20 * mult
+    return [20 * mult, 200].min
   end  
 end
 
@@ -239,9 +239,10 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithTargetPositiveStatStages < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    mult = 3
+    mult = 1
     GameData::Stat.each_battle { |s| mult += target.stages[s.id] if target.stages[s.id] > 0 }
-    return [20 * mult, 200].min
+    mult = [1, mult].max
+    return 20 * mult
   end
 end
 

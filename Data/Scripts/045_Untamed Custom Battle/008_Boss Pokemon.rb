@@ -21,34 +21,44 @@ class Pokemon
 	end
 end
 
+# array "@remaning HPBars" is [current hp bars, max hp bars]
+$DEBUG = true
 class Battle::Battler
-  attr_accessor :remaningHPBars
-
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
   end
 	
   ################################################################################
 
-  def pbEffectsOnHPBarBreak(boss) 
+  def pbEffectsOnHPBarBreak(boss)
+    hpbarbreak = boss.pokemon.remaningHPBars[0] - 1
     case boss.species
-    when :NOCTAVISPA
-      if boss.remaningHPBars == 1
+    when :NOCTAVISPA # test battle
+      case hpbarbreak
+      when 0
         @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!",self.pbThis))
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
-      elsif boss.remaningHPBars == 2
-        pbChangeTypeZone(boss, :DARK, "Noctavispa's  malice summoned a Dark Zone!")
+      when 1
+        pbChangeTypeZone(:DARK, "Noctavispa's malice summoned a Dark Zone!")
         pbChangeUserItemMidTurn(boss, :STARFBERRY)
         pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
         boss.eachOpposing do |b|
           pbLowerStatsMidTurn(b, [:SPECIAL_ATTACK, 2, :SPEED, 3])
         end
       end
+    when :CRUSTANG # steel gym fight
+      case hpbarbreak
+      when 0
+        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!",self.pbThis))
+        pbUseExtraMidTurnMove(boss, :SHARPEN, boss)
+      end
     end
+    @battle.scene.sprites["dataBox_#{boss.index}"].refresh
   end
 
   def pbUseExtraMidTurnMove(boss, move, target)
+    # has the side effect of making the "boss" unable to die in a single hit. Neat?
     # recording the move that the AI choose
     oldCurrentMove = boss.currentMove
     oldLastRoundMoved = boss.lastRoundMoved
@@ -129,7 +139,7 @@ class Battle::Battler
     end
   end
 
-  def pbChangeTypeZone(user, newZone, msg = nil)
+  def pbChangeTypeZone(newZone, msg = nil)
     return if @battle.field.terrain == newZone
     @battle.field.terrain = newZone
     if msg.nil?
@@ -149,11 +159,15 @@ class Battle::Battler
     amt *= (5.0 / 4.0) if self.effects[PBEffects::BoomInstalled]
     amt = @hp if amt > @hp
     amt = 1 if amt < 1 && !fainted?
-    survDmg = false
+    breakbar = 0
     if self.isBossPokemon?
-      if self.remaningHPBars>0 && amt == @hp
-        amt=amt-1
-        survDmg=true
+      normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      amt2 = amt
+      self.pokemon.remaningHPBars[0].times do |i|
+        if amt2 >= normalHP
+          breakbar += 1
+          amt2 -= normalHP
+        end
       end
     end
     oldHP = @hp
@@ -166,97 +180,161 @@ class Battle::Battler
       @droppedBelowHalfHP = true if @hp < @totalhp / 2 && @hp + amt >= @totalhp / 2
       @tookDamageThisRound = true
     end
-    if survDmg
-      self.remaningHPBars-=1
-      self.pbRecoverHP(self.totalhp,true)
-      pbEffectsOnHPBarBreak(self)
+    if breakbar > 0 
+      breakbar.times do
+        self.pokemon.remaningHPBars[0] -= 1
+        pbEffectsOnHPBarBreak(self)
+        #echoln "here the hp bars ICONS drawed by the UI should update to account for the new amount, though in a ideal world, it should happen only after the hp change animation stops"
+      end
     end
     return amt
+  end
+  
+  def pbRecoverHPFromDrain(amt, target, msg = nil, ignoremsg = false)
+    if target.hasActiveAbility?(:LIQUIDOOZE, true)
+      @battle.pbShowAbilitySplash(target)
+      pbReduceHP(amt)
+      @battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!", pbThis))
+      @battle.pbHideAbilitySplash(target)
+      pbItemHPHealCheck
+    else
+      if !ignoremsg
+        msg = _INTL("{1} had its energy drained!", target.pbThis) if nil_or_empty?(msg)
+        @battle.pbDisplay(msg)
+      end
+      if canHeal?
+        amt = (amt * 1.3).floor if hasActiveItem?(:BIGROOT)
+        pbRecoverHP(amt)
+      end
+    end
+  end
+
+  # array "@remaning HPBars" is [current hp bars, max hp bars]
+  def pbRecoverHP(amt, anim = true, anyAnim = true, damagemove = false)
+    amt = amt.round
+    amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
+    #amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
+    amt = @totalhp - @hp if amt > @totalhp - @hp
+    amt = 1 if amt < 1 && @hp < @totalhp
+    restorebar = 0
+    if self.isBossPokemon?
+      normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      amt2 = amt
+      #echoln "heal amt: #{amt2}. hp normal: #{normalHP}"
+      self.pokemon.remaningHPBars[1].times do |i|
+        if amt2 >= normalHP
+          restorebar += 1
+          amt2 -= normalHP
+          #echoln restorebar
+        end
+      end
+    end
+    oldHP = @hp
+    self.hp += amt
+    PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
+    raise _INTL("HP less than 0") if @hp < 0
+    raise _INTL("HP greater than total HP") if @hp > @totalhp
+    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
+    if self.isBossPokemon? && restorebar > 0
+      restorebar.times do # more fluid
+        self.pokemon.remaningHPBars[0] += 1
+        @battle.scene.pbAnimation(:PROTECT, self, self)
+        @battle.scene.sprites["dataBox_#{self.index}"].refresh
+      end
+      @battle.pbDisplay(_INTL("{1} restored {2} of its shields!", pbThis, restorebar))
+    end
+    @droppedBelowHalfHP = false if @hp >= @totalhp / 2
+    return amt
+  end
+end
+
+class Battle::Scene::PokemonDataBox < Sprite
+  def refreshHP
+    @hpNumbers.bitmap.clear
+    return if !@battler.pokemon
+    # Show HP numbers
+    if @showHP
+      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, -2, 1) #stygma
+      pbDrawNumber(-1, @hpNumbers.bitmap, 54, -2)   # / char
+      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, -2)
+    end
+    # Resize HP bar(s)
+    w = 0
+    remainingPoints = 0
+    if self.hp > 0
+      #echoln "here should be calc'd the individual %% of the current HP bar"
+      if @battler.pokemon.remaningHPBars[1] > 0
+        normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars[1])
+        currentHP = self.hp % normalHP.to_i == 0 ? self.hp / @battler.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
+        w = @hpBarBitmap.width.to_f * currentHP / normalHP
+      else
+        normalHP = @battler.totalhp
+        currentHP = self.hp
+        w = @hpBarBitmap.width.to_f * currentHP / normalHP
+      end
+      remainingPoints = (self.hp / normalHP).ceil.to_i - 1
+      w = 1 if w < 1
+      # NOTE: The line below snaps the bar's width to the nearest 2 pixels, to
+      #       fit in with the rest of the graphics which are doubled in size.
+      w = @hpBar.bitmap.width if w > @hpBar.bitmap.width
+      w = ((w / 2.0).round) * 2
+    end
+    if @battler.isBossPokemon?
+      @hpBar.src_rect.x = @hpBar.bitmap.width - w if !@showHP
+      @hpBar.src_rect.width = w
+      hpColor = 0                                      # Green bar
+      hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
+      hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
+      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
+      @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
+      if remainingPoints > 0
+        @hpBar2.src_rect.x = 0
+        @hpBar2.visible = true
+				@hpBar2.src_rect.width = @hpBar.bitmap.width
+      else
+        @hpBar2.visible = false
+      end
+      draw_bossHPBars
+    else
+      @hpBar.src_rect.width = w
+      hpColor = 0                                      # Green bar
+      hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
+      hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
+      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
+      @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
+    end
+  end
+
+  def updateHPAnimation
+    return if !@animatingHP
+    if @currentHP < @endHP      # Gaining HP
+      @currentHP += @hpIncPerFrame
+      @currentHP = @endHP if @currentHP >= @endHP
+    elsif @currentHP > @endHP   # Losing HP
+      @currentHP -= @hpIncPerFrame
+      @currentHP = @endHP if @currentHP <= @endHP
+    end
+    # Refresh the HP bar/numbers
+    refreshHP
+    draw_bossHPBars
+    @animatingHP = false if @currentHP == @endHP
+  end
+
+  def draw_bossHPBars
+    return if !@battler.isBossPokemon?
+    hpbars = @battler.pokemon.remaningHPBars[0] - 1
+    i = 0
+    hpbars.times do
+      pbDrawImagePositions(self.bitmap,
+        [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
+      )
+      i += 16
+    end
   end
 end
 
 class Battle::FakeBattler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
-  end
-end
-
-class Battle::Move
-  def pbReduceDamage(user, target)
-    damage = target.damageState.calcDamage
-    # Substitute takes the damage
-    if target.damageState.substitute
-      damage = target.effects[PBEffects::Substitute] if damage > target.effects[PBEffects::Substitute]
-      target.damageState.hpLost       = damage
-      target.damageState.totalHPLost += damage
-      return
-    end
-    # Disguise/Ice Face takes the damage
-    return if target.damageState.disguise || target.damageState.iceFace
-    # Target takes the damage
-    if damage >= target.hp
-      damage = target.hp
-      # Survive a lethal hit with 1 HP effects
-      if nonLethal?(user, target)
-        damage -= 1
-      elsif target.effects[PBEffects::Endure]
-        target.damageState.endured = true
-        damage -= 1
-      elsif damage == target.totalhp
-        if target.hasActiveAbility?(:STURDY) && !@battle.moldBreaker
-          target.damageState.sturdy = true
-          damage -= 1
-        elsif target.hasActiveItem?(:FOCUSSASH) && target.hp == target.totalhp
-          target.damageState.focusSash = true
-          damage -= 1
-        elsif target.hasActiveItem?(:FOCUSBAND) && @battle.pbRandom(100) < 10
-          target.damageState.focusBand = true
-          damage -= 1
-        end
-      end
-    end
-    damage = 0 if damage < 0
-    target.damageState.hpLost       = damage
-    target.damageState.totalHPLost += damage
-  end
-
-  def pbEndureKOMessage(target)
-    if target.damageState.disguise
-      @battle.pbShowAbilitySplash(target)
-      if Battle::Scene::USE_ABILITY_SPLASH
-        @battle.pbDisplay(_INTL("Its disguise served it as a decoy!"))
-      else
-        @battle.pbDisplay(_INTL("{1}'s disguise served it as a decoy!", target.pbThis))
-      end
-      @battle.pbHideAbilitySplash(target)
-      target.pbChangeForm(1, _INTL("{1}'s disguise was busted!", target.pbThis))
-      target.pbReduceHP(target.totalhp / 8, false) if Settings::MECHANICS_GENERATION >= 8
-    elsif target.damageState.iceFace
-      @battle.pbShowAbilitySplash(target)
-      if !Battle::Scene::USE_ABILITY_SPLASH
-        @battle.pbDisplay(_INTL("{1}'s {2} activated!", target.pbThis, target.abilityName))
-      end
-      target.pbChangeForm(1, _INTL("{1} transformed!", target.pbThis))
-      @battle.pbHideAbilitySplash(target)
-    elsif target.damageState.endured
-      @battle.pbDisplay(_INTL("{1} endured the hit!", target.pbThis))
-    elsif target.damageState.sturdy
-      @battle.pbShowAbilitySplash(target)
-      if Battle::Scene::USE_ABILITY_SPLASH
-        @battle.pbDisplay(_INTL("{1} endured the hit!", target.pbThis))
-      else
-        @battle.pbDisplay(_INTL("{1} hung on with Sturdy!", target.pbThis))
-      end
-      @battle.pbHideAbilitySplash(target)
-    elsif target.damageState.focusSash
-      @battle.pbCommonAnimation("UseItem", target)
-      @battle.pbDisplay(_INTL("{1} hung on using its Focus Sash!", target.pbThis))
-      target.pbConsumeItem
-    elsif target.damageState.focusBand
-      @battle.pbCommonAnimation("UseItem", target)
-      @battle.pbDisplay(_INTL("{1} hung on using its Focus Band!", target.pbThis))
-    elsif target.damageState.affection_endured
-      @battle.pbDisplay(_INTL("{1} toughed it out so you wouldn't feel sad!", target.pbThis))
-    end
   end
 end

@@ -2971,9 +2971,9 @@ BattleUse = OnPokemon
 Flags = Fling_30
 Description = A very sweet and refreshing drink. It can be used to restore 70 HP to a single Pokémon.
 #-------------------------------
-[MOOMOOMILK]
-Name = Moomoo Milk
-NamePlural = Moomoo Milks
+[GOGOATMILK]
+Name = Gogoat Milk
+NamePlural = Gogoat Milks
 Pocket = 2
 Price = 600
 FieldUse = OnPokemon
@@ -5329,7 +5329,7 @@ NamePlural = Roseli Berries
 Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_80
-Description = If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fairy-type attack.
+Description = Weakens a supereffective Fairy-type attack against the holding Pokémon.
 #-------------------------------
 [CHILANBERRY]
 Name = Chilan Berry
@@ -6323,15 +6323,15 @@ Price = 0
 Flags = KeyItem
 Description = It's a special Pokéball that belongs to Professor Ceiba.
 #-------------------------------
-[CERIGOLDCONE]
-Name = Cerigoldcone
-NamePlural = Cerigoldcones
+[MELOLADOCONE]
+Name = Melolado Cone
+NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
@@ -6738,42 +6738,42 @@ Description = An item for checking a Pokémon's contest stats.
 Name = Candy Base
 NamePlural = Candy Bases
 Pocket = 1
-Price = 100
+Price = 50
 Description = A mixture to make candy.
 #-------------------------------
 [REDCANDYBASE]
 Name = Red Candy Base
 NamePlural = Red Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy red!
 #-------------------------------
 [BLUECANDYBASE]
 Name = Blue Candy Base
 NamePlural = Blue Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy blue!
 #-------------------------------
 [PINKCANDYBASE]
 Name = Pink Candy Base
 NamePlural = Pink Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy pink!
 #-------------------------------
 [GREENCANDYBASE]
 Name = Green Candy Base
 NamePlural = Green Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy green!
 #-------------------------------
 [YELLOWCANDYBASE]
 Name = Yellow Candy Base
 NamePlural = Yellow Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy yellow!
 #-------------------------------
 [ADVENTUREGUIDE]

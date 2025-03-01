@@ -653,8 +653,16 @@ def pbTroll
 end
 
 #===============================================================================
-# Differentiate between pumpkaboo sizes
+# Differentiate between pumpkaboo sizes and "wild pkmn" (trainer class) edits
 #===============================================================================
+def isWildBoss?(opp) #by low
+  if opp.is_a?(Array)
+    return opp.any? { |opponent| opponent.trainer_type == :WILD_PKMN }
+  else
+    return opp.trainer_type == :WILD_PKMN
+  end
+end
+
 class Battle
 def pbStartBattleSendOut(sendOuts)
     # "Want to battle" messages
@@ -662,29 +670,19 @@ def pbStartBattleSendOut(sendOuts)
       foeParty = pbParty(1)
       case foeParty.length
       when 1
-        #added by Gardenette to help differentiate between pumpkaboo sizes in
-        #the wild
-        if foeParty[0].isSpecies?(:PUMPKABOO)
+        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        #added by Gardenette to help differentiate between pumpkaboo sizes in the wild
         #give messages depending on form (size)
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
-          if foeParty[0].form == 0
-            #small
-            pbDisplayPaused(_INTL("It looks pretty small!"))
-          end
-          if foeParty[0].form == 1
-            #average
-            pbDisplayPaused(_INTL("It looks to be average size!"))
-          end
-          if foeParty[0].form == 2
-            #large
-            pbDisplayPaused(_INTL("It looks pretty large!"))
-          end
-          if foeParty[0].form == 3
-            #super size
-            pbDisplayPaused(_INTL("Woah, it's so big!"))
-          end
-        else
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        if foeParty[0].isSpecies?(:PUMPKABOO) || foeParty[0].isSpecies?(:GOURGEIST) 
+          countrybumpkin = {
+            0 => "It looks pretty small!", #small
+            1 => "It looks to be average size!", #average
+            2 => "It looks pretty large!", #large
+            3 => "Woah! It's so big!" #super size
+          }
+          bumpkinmsg = countrybumpkin[foeParty[0].form]
+          pbDisplayPaused(_INTL(bumpkinmsg))
+          pbDisplayPaused(_INTL("thats what she said")) if foeParty[0].form == 3 && rand(10) == 0
         end
       when 2
         pbDisplayPaused(_INTL("Oh! A wild {1} and {2} appeared!", foeParty[0].name,
@@ -694,15 +692,19 @@ def pbStartBattleSendOut(sendOuts)
                               foeParty[1].name, foeParty[2].name))
       end
     else   # Trainer battle
-      case @opponent.length
-      when 1
-        pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
-      when 2
-        pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
-                              @opponent[1].full_name))
-      when 3
-        pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
-                              @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+      if isWildBoss?(@opponent)
+        pbDisplayPaused(_INTL("...Something is approaching!"))
+      else
+        case @opponent.length
+        when 1
+          pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
+        when 2
+          pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
+                                @opponent[1].full_name))
+        when 3
+          pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
+                                @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+        end
       end
     end
     # Send out Pokémon (opposing trainers first)
@@ -716,15 +718,28 @@ def pbStartBattleSendOut(sendOuts)
         next if side == 0 && i == 0   # The player's message is shown last
         msg += "\r\n" if msg.length > 0
         sent = sendOuts[side][i]
-        case sent.length
-        when 1
-          msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
-        when 2
-          msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name)
-        when 3
-          msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+        if isWildBoss?(t)
+          case sent.length
+          when 1
+            msg += _INTL("A {1} is on a rampage!", @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("Both {1} and {2} are on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1}, {2} and {3} are all on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
+        else
+          case sent.length
+          when 1
+            msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
         end
         toSendOut.concat(sent)
       end
@@ -1838,7 +1853,9 @@ end
 #takes event numbers as arguments
 def pbChangeRanchPkmn(pkmnEvent1=nil, pkmnEvent2=nil)
   #get the pkmn currently deposited into the daycare
-  DayCare.get_details(pbGet(1), 3, 4)
+  #if DayCare.count > 0
+  #  DayCare.get_details(0, 3, 4)
+  #end
   
   #pkmn1
   if !$PokemonGlobal.day_care[0].pokemon.nil?
@@ -2085,3 +2102,182 @@ def crustangPaintJobNPC
     end #loop do
   end #if $game_variables[36] == -1
 end #def crustangPaintJobNPC
+
+#-----------------------------------------------------------------------------
+# * Player Receive Money (common for quest rewards)
+#-----------------------------------------------------------------------------
+def pbPlayerReceiveMoney(amount, multiplier=1)
+  pbSEPlay("Mart buy item", 80)
+  amount = (amount * multiplier)
+  pbMessage("\\PN received $#{amount}!")
+  $player.money += amount
+end #def pbPlayerReceiveMoney
+
+#==================================================================================
+# Blacking out animation - edited to deregister partner trainer upon blacking out
+#==================================================================================
+def pbStartOver(gameover = false)
+  if pbInBugContest?
+    pbBugContestStartOver
+    return
+  end
+  $stats.blacked_out_count += 1
+  $player.heal_party
+  if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId >= 0
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
+    else
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+    end
+    pbCancelVehicles
+    Followers.clear
+    pbDeregisterPartner #added by Gardenette
+    $game_switches[Settings::STARTING_OVER_SWITCH] = true
+    $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
+    $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
+    $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
+    $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
+    $scene.transfer_player if $scene.is_a?(Scene_Map)
+    $game_map.refresh
+  else
+    homedata = GameData::PlayerMetadata.get($player.character_ID)&.home
+    homedata = GameData::Metadata.get.home if !homedata
+    if homedata && !pbRgssExists?(sprintf("Data/Map%03d.rxdata", homedata[0]))
+      if $DEBUG
+        pbMessage(_ISPRINTF("Can't find the map 'Map{1:03d}' in the Data folder. The game will resume at the player's position.", homedata[0]))
+      end
+      $player.heal_party
+      return
+    end
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back home."))
+    else
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back home, protecting your exhausted Pokémon from any further harm..."))
+    end
+    if homedata
+      pbCancelVehicles
+      Followers.clear
+      pbDeregisterPartner #added by Gardenette
+      $game_switches[Settings::STARTING_OVER_SWITCH] = true
+      $game_temp.player_new_map_id    = homedata[0]
+      $game_temp.player_new_x         = homedata[1]
+      $game_temp.player_new_y         = homedata[2]
+      $game_temp.player_new_direction = homedata[3]
+      $scene.transfer_player if $scene.is_a?(Scene_Map)
+      $game_map.refresh
+    else
+      $player.heal_party
+      pbDeregisterPartner #added by Gardenette
+    end
+  end
+  pbEraseEscapePoint
+end
+
+#==================================================================================
+# My Eevee-related Easter egg
+#==================================================================================
+def mcr_wttbp
+=begin
+When I was a young boy,
+My father took me to Pewter City
+To see the gym in town.
+
+He said, "Son when you grow up,
+Would you be a trainer and a victor
+Deserving of a crown?"
+He said "Will you defeat them,
+The leaders, and all the other trainers,
+With that Eevee of yours?"
+"Because one day I'll leave you,
+A champion who got all of the badges,
+And joined the Elite Four."
+
+When I was a young boy,
+My father took me to Pewter City
+To see the gym in town.
+
+He said, "Son when you grow up,
+Would you be a trainer and a victor
+Deserving of a crown?"
+
+Sometimes I get the feeling he's watching over me.
+And other times I feel like I'm a fool.
+And through it all, the rise and fall, the vict'ries and defeats,
+And though you're gone I'll make sure that I rule.
+
+With Flareon
+With Flareon
+And though you're not right here to see me
+I promise I'll use Flareon
+Use Flareon
+And in my heart I can't contain it
+My badges will explain it.
+
+I'll start it off with Pewter, Cerulean is next.
+Vermillion will surely feel my wrath.
+Then Celadon, Fuscia, Saffron
+Will go down in defeat!
+Cinnabar Island then Viridian
+
+With Flareon
+With Flareon
+And though you're not right here to see me
+I promise I'll use Flareon
+Use Flareon
+And though you're champion, I'll beat you
+Your weary son will find you
+
+On and on I'll carry through the fears
+Ooh oh ohhhh
+Blood and sweat and gritted teeth and tears
+Ooh oh ohhhh
+Take a look at me cause I'm fin'lly here at last!
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight
+I won't explain or say I'm sorry
+I'm unashamed, I'm gonna sweep your team
+Give a cheer for my dear Eevee
+Listen here, we're gonna reign supreme
+I'm just a man, I'm not a hero
+Just a boy, who wants to see his dad
+I'm just a man, I'm not a hero
+I
+Will
+Win!
+
+With Flareon
+With Flareon
+I'm almost there to see my father
+I promised I'd use Flareon
+Use Flareon
+And when I get there and I fight him,
+I promise I'll use Flareon
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight (with Flareon)
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight (with Flareon)
+=end
+
+  pbBGMPlay("MCR-WTTBP-Vocals")
+  #lock user input so text cannot be skipped, but you will be able to back out with the CANCEL button
+  loop do
+    $GameSpeed = 0
+    pbMessage(_INTL("\\ts[]<icon=music_note>\\wtnp[#{20*12.7}]"))
+    pbMessage(_INTL("\\ts[]When I was\\wtnp[#{20*1.5}] \\ts[]a young boy,\\wtnp[#{20*1.5}] \\ts[]my father\\wtnp[#{20*1.5}] \\ts[]took me to Pewter City\\wtnp[#{20*3}] \\ts[]to see the gym in town.\\wtnp[#{20*4.6}]"))
+    pbMessage(_INTL("\\ts[]He said, 'Son when\\wtnp[#{20*1.7}] \\ts[]you grow up,\\wtnp[#{20*1.7}] \\ts[]would you be\\wtnp[#{20*1.7}] "))
+    pbMessage(_INTL("\\ts[]a trainer and a victor\\wtnp[#{20*3}] \\ts[]deserving of a crown?'\\wtnp[#{20*4.4}]"))
+    pbMessage(_INTL("\\ts[]He said 'Will you\\wtnp[#{20*1.5}] \\ts[]defeat them,'\\wtnp[#{20*1.5}]"))
+    pbMessage(_INTL("\\ts[]the leaders,\\wtnp[#{20*1.5}] \\ts[]and all the other trainers,\\wtnp[#{20*3}]"))
+    pbMessage(_INTL("\\ts[]with that Eevee of yours?'\\wtnp[#{20*12.5}]")) 
+
+  end
+end #def mcr_wttbp

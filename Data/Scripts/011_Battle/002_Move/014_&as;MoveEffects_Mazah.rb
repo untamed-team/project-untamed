@@ -325,7 +325,7 @@ end
 #===============================================================================
 class Battle::Move::PeperSpray < Battle::Move
   def pbTarget(user)
-    return GameData::Target.get(:AllNearFoes) if [:Sun, :HarshSun].include?(user.effectiveWeather)
+    return GameData::Target.get(:AllNearFoes) if [:Sun, :HarshSun].include?(user.effectiveWeather) && self.type == :GRASS
     return super
   end
 

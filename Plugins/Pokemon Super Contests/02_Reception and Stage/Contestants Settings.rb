@@ -41,74 +41,146 @@ class ContestantSettings
 
 #===================== NORMAL RANK CONTESTANTS =====================#
 CONTESTANTS_NORMAL = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
-PkmnName: "Sparky", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Sam", TrainerCharacter: "NPC 26", PkmnSpecies: :FLABEBE,
+PkmnName: "Bebbe", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 7, ConditionPoints: 12},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
-PkmnName: "Webster", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :CHICATTA,
+PkmnName: "Carly", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 4, ConditionPoints: 18},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
-PkmnName: "Snake", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :DRILBUR,
+PkmnName: "David", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 2, ConditionPoints: 19},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
-PkmnName: "Polly", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :FINNEON,
+PkmnName: "Dory", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 5, ConditionPoints: 8},
+
+{TrainerName: "Dalid", TrainerCharacter: "NPC 05", PkmnSpecies: :LEDYBA,
+PkmnName: "Lady", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 7, ConditionPoints: 12},
+
+{TrainerName: "Thomas", TrainerCharacter: "NPC 06", PkmnSpecies: :SUNKERN,
+PkmnName: "Lilly", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 4, ConditionPoints: 18},
+
+{TrainerName: "Bruno", TrainerCharacter: "NPC 10", PkmnSpecies: :MINIMELO,
+PkmnName: "Minimo", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 2, ConditionPoints: 19},
+
+{TrainerName: "Jillian", TrainerCharacter: "NPC 11", PkmnSpecies: :PACUNA,
+PkmnName: "Pachi", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 5, ConditionPoints: 8},
+
+{TrainerName: "Juan", TrainerCharacter: "NPC 13", PkmnSpecies: :WRENNER,
+PkmnName: "Rickard", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 7, ConditionPoints: 12},
+
+{TrainerName: "Vivian", TrainerCharacter: "NPC 14", PkmnSpecies: :EKANS,
+PkmnName: "Snake", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 4, ConditionPoints: 18},
+
+{TrainerName: "Leonard", TrainerCharacter: "NPC 25", PkmnSpecies: :EEVEE,
+PkmnName: "Sweetie", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 2, ConditionPoints: 19},
 ]
 
 CONTESTANTS_GREAT = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
-PkmnName: "Cheeks", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Sam", TrainerCharacter: "NPC 26", PkmnSpecies: :M_ROSELIA,
+PkmnName: "Butter", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 20, ConditionPoints: 150},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
-PkmnName: "Legs", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :PORYGON,
+PkmnName: "Eugene", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 16, ConditionPoints: 128},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :ARBOK,
 PkmnName: "Kobra", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 12, ConditionPoints: 114},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
-PkmnName: "Gust", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :UMBREON,
+PkmnName: "Lord Dark", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 10, ConditionPoints: 136},
+
+{TrainerName: "Dalid", TrainerCharacter: "NPC 05", PkmnSpecies: :LAGUNA,
+PkmnName: "Mochi", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 20, ConditionPoints: 150},
+
+{TrainerName: "Thomas", TrainerCharacter: "NPC 06", PkmnSpecies: :WHISCASH,
+PkmnName: "Muddy", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 16, ConditionPoints: 128},
+
+{TrainerName: "Bruno", TrainerCharacter: "NPC 10", PkmnSpecies: :NOCTAVISPA,
+PkmnName: "Noct", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 12, ConditionPoints: 114},
+
+{TrainerName: "Jillian", TrainerCharacter: "NPC 11", PkmnSpecies: :AVEOR,
+PkmnName: "Rickard", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 10, ConditionPoints: 136},
+
+{TrainerName: "Juan", TrainerCharacter: "NPC 13", PkmnSpecies: :VAPOREON,
+PkmnName: "Salsa", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 20, ConditionPoints: 150},
 ]
 
 CONTESTANTS_ULTRA = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
-PkmnName: "Bolt", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Sam", TrainerCharacter: "NPC 26", PkmnSpecies: :HONCHKROW,
+PkmnName: "Boss", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 30, ConditionPoints: 320},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
-PkmnName: "Wings", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :BLAZEA,
+PkmnName: "Corn", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 24, ConditionPoints: 290},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
-PkmnName: "Monster", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :LUPACABRA,
+PkmnName: "George", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 18, ConditionPoints: 270},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
-PkmnName: "Scissors", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :GLACEON,
+PkmnName: "Ice-cream", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 15, ConditionPoints: 300},
+
+{TrainerName: "Dalid", TrainerCharacter: "NPC 05", PkmnSpecies: :LEAFEON,
+PkmnName: "Leafy", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 30, ConditionPoints: 320},
+
+{TrainerName: "Thomas", TrainerCharacter: "NPC 06", PkmnSpecies: :ESPEON,
+PkmnName: "Lollipop", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 24, ConditionPoints: 290},
+
+{TrainerName: "Bruno", TrainerCharacter: "NPC 10", PkmnSpecies: :ROADRAPTOR,
+PkmnName: "Rickard", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 18, ConditionPoints: 270},
+
+{TrainerName: "Jillian", TrainerCharacter: "NPC 11", PkmnSpecies: :EEVEE,
+PkmnName: "Sandwich", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 15, ConditionPoints: 300},
 ]
 
 CONTESTANTS_MASTER = [
-{TrainerName: "Sam", TrainerCharacter: "NPC 01", PkmnSpecies: :EKANS,
-PkmnName: "Tank", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Sam", TrainerCharacter: "NPC 26", PkmnSpecies: :LUDICOLO,
+PkmnName: "Luve", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 40, ConditionPoints: 600},
 
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :EKANS,
-PkmnName: "Godzilla", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :DELCATTY,
+PkmnName: "Majesty", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 32, ConditionPoints: 580},
 
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :EKANS,
-PkmnName: "Eva", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :MILOTIC,
+PkmnName: "Milo", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 24, ConditionPoints: 596},
 
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :EKANS,
-PkmnName: "Gorgeous", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
+{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :TROPIUS,
+PkmnName: "Mr. Flowy", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 20, ConditionPoints: 540},
+
+{TrainerName: "Dalid", TrainerCharacter: "NPC 05", PkmnSpecies: :M_ROSERADE,
+PkmnName: "Skully", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,
+DressupPoints: 24, ConditionPoints: 596},
+
+{TrainerName: "Thomas", TrainerCharacter: "NPC 06", PkmnSpecies: :NINETALES,
+PkmnName: "Spot", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 20, ConditionPoints: 540},
 ]
 
