@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [0]
 MOLLUCOTTA,EXPURSUM,GASTRONAUT
@@ -13,7 +13,6 @@ SUNKERN,SUNFLORA
 TECHUPPI,LUPACABRA
 ZOLUPINE
 BUDEW,M_ROSELIA,M_ROSERADE
-EKANS,ARBOK
 HOOTHOOT,NOCTOWL
 CAFECARACHA,FLITJITTER
 LOTAD,LOMBRE,LUDICOLO

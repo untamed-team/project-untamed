@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [MOLLUCOTTA]
 BackSprite = 0,30
@@ -191,18 +191,6 @@ BackSprite = 0,18
 FrontSprite = -2,20
 ShadowX = 0
 ShadowSize = 2
-#-------------------------------
-[EKANS]
-BackSprite = 0,22
-FrontSprite = 0,31
-ShadowX = 0
-ShadowSize = 2
-#-------------------------------
-[ARBOK]
-BackSprite = 0,10
-FrontSprite = 0,20
-ShadowX = 0
-ShadowSize = 3
 #-------------------------------
 [HOOTHOOT]
 BackSprite = 0,25
