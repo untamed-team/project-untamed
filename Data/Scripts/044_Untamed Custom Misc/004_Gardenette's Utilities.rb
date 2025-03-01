@@ -2177,4 +2177,104 @@ end
 # My Eevee-related Easter egg
 #==================================================================================
 def mcr_wttbp
+=begin
+When I was a young boy,
+My father took me to Pewter City
+To see the gym in town.
+
+He said, "Son when you grow up,
+Would you be a trainer and a victor
+Deserving of a crown?"
+He said "Will you defeat them,
+The leaders, and all the other trainers,
+With that Eevee of yours?"
+"Because one day I'll leave you,
+A champion who got all of the badges,
+And joined the Elite Four."
+
+When I was a young boy,
+My father took me to Pewter City
+To see the gym in town.
+
+He said, "Son when you grow up,
+Would you be a trainer and a victor
+Deserving of a crown?"
+
+Sometimes I get the feeling he's watching over me.
+And other times I feel like I'm a fool.
+And through it all, the rise and fall, the vict'ries and defeats,
+And though you're gone I'll make sure that I rule.
+
+With Flareon
+With Flareon
+And though you're not right here to see me
+I promise I'll use Flareon
+Use Flareon
+And in my heart I can't contain it
+My badges will explain it.
+
+I'll start it off with Pewter, Cerulean is next.
+Vermillion will surely feel my wrath.
+Then Celadon, Fuscia, Saffron
+Will go down in defeat!
+Cinnabar Island then Viridian
+
+With Flareon
+With Flareon
+And though you're not right here to see me
+I promise I'll use Flareon
+Use Flareon
+And though you're champion, I'll beat you
+Your weary son will find you
+
+On and on I'll carry through the fears
+Ooh oh ohhhh
+Blood and sweat and gritted teeth and tears
+Ooh oh ohhhh
+Take a look at me cause I'm fin'lly here at last!
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight
+I won't explain or say I'm sorry
+I'm unashamed, I'm gonna sweep your team
+Give a cheer for my dear Eevee
+Listen here, we're gonna reign supreme
+I'm just a man, I'm not a hero
+Just a boy, who wants to see his dad
+I'm just a man, I'm not a hero
+I
+Will
+Win!
+
+With Flareon
+With Flareon
+I'm almost there to see my father
+I promised I'd use Flareon
+Use Flareon
+And when I get there and I fight him,
+I promise I'll use Flareon
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight (with Flareon)
+
+Do or die, you'll never shake me
+Because my dad; he really raised me right
+Go and try, you'll never break me
+I want it all, I'm gonna win this fight (with Flareon)
+=end
+
+  pbBGMPlay("MCR-WTTBP-Vocals")
+  #lock user input so text cannot be skipped, but you will be able to back out with the CANCEL button
+  loop do
+    $GameSpeed = 0
+    pbMessage(_INTL("\\ts[]<icon=music_note>\\wtnp[#{20*12.7}]"))
+    pbMessage(_INTL("\\ts[]When I was\\wtnp[#{20*1.5}] \\ts[]a young boy,\\wtnp[#{20*1.5}] \\ts[]my father\\wtnp[#{20*1.5}] \\ts[]took me to Pewter City\\wtnp[#{20*3}] \\ts[]to see the gym in town.\\wtnp[#{20*4.6}]"))
+    pbMessage(_INTL("\\ts[]He said, 'Son when\\wtnp[#{20*1.7}] \\ts[]you grow up,\\wtnp[#{20*1.7}] \\ts[]would you be\\wtnp[#{20*1.7}] "))
+    pbMessage(_INTL("\\ts[]a trainer and a victor\\wtnp[#{20*3}] \\ts[]deserving of a crown?'\\wtnp[#{20*4.4}]"))
+    
+  end
 end #def mcr_wttbp
