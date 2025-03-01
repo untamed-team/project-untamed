@@ -2172,3 +2172,9 @@ def pbStartOver(gameover = false)
   end
   pbEraseEscapePoint
 end
+
+#==================================================================================
+# My Eevee-related Easter egg
+#==================================================================================
+def mcr_wttbp
+end #def mcr_wttbp
