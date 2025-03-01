@@ -2275,6 +2275,9 @@ I want it all, I'm gonna win this fight (with Flareon)
     pbMessage(_INTL("\\ts[]When I was\\wtnp[#{20*1.5}] \\ts[]a young boy,\\wtnp[#{20*1.5}] \\ts[]my father\\wtnp[#{20*1.5}] \\ts[]took me to Pewter City\\wtnp[#{20*3}] \\ts[]to see the gym in town.\\wtnp[#{20*4.6}]"))
     pbMessage(_INTL("\\ts[]He said, 'Son when\\wtnp[#{20*1.7}] \\ts[]you grow up,\\wtnp[#{20*1.7}] \\ts[]would you be\\wtnp[#{20*1.7}] "))
     pbMessage(_INTL("\\ts[]a trainer and a victor\\wtnp[#{20*3}] \\ts[]deserving of a crown?'\\wtnp[#{20*4.4}]"))
-    
+    pbMessage(_INTL("\\ts[]He said 'Will you\\wtnp[#{20*1.5}] \\ts[]defeat them,'\\wtnp[#{20*1.5}]"))
+    pbMessage(_INTL("\\ts[]the leaders,\\wtnp[#{20*1.5}] \\ts[]and all the other trainers,\\wtnp[#{20*3}]"))
+    pbMessage(_INTL("\\ts[]with that Eevee of yours?'\\wtnp[#{20*12.5}]")) 
+
   end
 end #def mcr_wttbp
