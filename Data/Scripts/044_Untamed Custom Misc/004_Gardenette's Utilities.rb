@@ -2271,8 +2271,7 @@ I want it all, I'm gonna win this fight (with Flareon)
   #lock user input so text cannot be skipped, but you will be able to back out with the CANCEL button
   loop do
     $GameSpeed = 0
-    msgWin = pbMessage(_INTL("\\ts[]<icon=music_note>\\wtnp[#{20*1}]")).msgwindow
-    print msgWin
+    pbMessageWindowCustom(_INTL("\\ts[]testing"), clear=false)
     print "test"
     pbMessage(_INTL("\\ts[]<icon=music_note>\\wtnp[#{20*12.7}]"))
     pbMessage(_INTL("\\ts[]When I was\\wtnp[#{20*1.5}] \\ts[]a young boy,\\wtnp[#{20*1.5}] \\ts[]my father\\wtnp[#{20*1.5}] \\ts[]took me to Pewter City\\wtnp[#{20*3}] \\ts[]to see the gym in town.\\wtnp[#{20*4.6}]"))
@@ -2298,3 +2297,22 @@ I want it all, I'm gonna win this fight (with Flareon)
 
   end
 end #def mcr_wttbp
+
+#==================================================================================
+# Custom Message Window
+#==================================================================================
+def pbMessageWindowCustom(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, clear=true, &block)
+  ret = 0
+  msgwindow = pbCreateMessageWindow(nil, skin)
+  if commands
+    ret = pbMessageDisplay(msgwindow, message, true,
+                           proc { |msgwindow|
+                             next Kernel.pbShowCommands(msgwindow, commands, cmdIfCancel, defaultCmd, &block)
+                           }, &block)
+  else
+    pbMessageDisplay(msgwindow, message, &block)
+  end
+  pbDisposeMessageWindow(msgwindow) if clear != false
+  Input.update
+  return msgwindow
+end
