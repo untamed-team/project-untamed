@@ -1095,6 +1095,63 @@ Pokemon = BANAGNAW,14
     Item = IAPAPABERRY
 #Area=MeloladoExterior_M
 #-------------------------------
+[LASS,Immy]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS,Immy,100]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS,Immy,200]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[RISINGSTAR_F,Grace]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,100]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,200]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_M,Nicco]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,100]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,200]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
 [TOURIST_M,Floyd]
 LoseText = Woah dude, chill out!
 Pokemon = M_VANILLITE,14
