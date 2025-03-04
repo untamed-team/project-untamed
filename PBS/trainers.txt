@@ -919,6 +919,39 @@ Pokemon = CACNEA,11
     Item = STICKYBARB
 #Area=MonarcaCave_M
 #-------------------------------
+[TRAINER_Reine,Reine]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
+[TRAINER_Reine,Reine,100]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
+[TRAINER_Reine,Reine,200]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
 [NEOGRUNT_F,Priscilla]
 LoseText = L-let's get out of here!
 Pokemon = PACUNA,13
@@ -1485,6 +1518,7 @@ Pokemon = LAGUNA,18
     Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
     Ability = DAZZLING
     Nature = SERIOUS
+    Ace = yes
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia,100]
@@ -1505,6 +1539,7 @@ Pokemon = LAGUNA,18
     Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
     Ability = DAZZLING
     Nature = SERIOUS
+    Ace = yes
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia,200]
@@ -2652,6 +2687,7 @@ Pokemon = CHARCOPAL,24
     EV = 0,0,0,24,24,24
     Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
     Ability = CRYSTALJAW
+    Ace = yes
 Pokemon = MAGNEMITE,25
     EV = 0,24,24,0,24,0
     Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
@@ -2671,6 +2707,7 @@ Pokemon = CHARCOPAL,24
     EV = 0,0,0,24,24,24
     Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
     Ability = CRYSTALJAW
+    Ace = yes
 Pokemon = MAGNEMITE,25
     EV = 0,24,24,0,24,0
     Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
@@ -2726,6 +2763,7 @@ Pokemon = ELEGOOP,24
     EV = 24,24,24,0,0,0
     Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
     Ability = GOOEY
+    Ace = yes
 Pokemon = BURBRAWL,25
     EV = 24,0,24,0,0,24
     Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
@@ -2746,6 +2784,7 @@ Pokemon = ELEGOOP,24
     EV = 24,24,24,0,0,0
     Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
     Ability = GOOEY
+    Ace = yes
 Pokemon = BURBRAWL,25
     EV = 24,0,24,0,0,24
     Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
@@ -3525,39 +3564,6 @@ Pokemon = MAWILE,26
     Ability = INTIMIDATE
     Item = FIGHTINGGEM
 #Area=Route6_M
-#-------------------------------
-[TRAINER_Reine,Reine]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
-#-------------------------------
-[TRAINER_Reine,Reine,100]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
-#-------------------------------
-[TRAINER_Reine,Reine,200]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,1]
 LoseText = Well done.
@@ -3590,6 +3596,7 @@ Pokemon = PAPELLAUDE,36
     Ability = COMPETITIVE
     Item = THROATSPRAY
     Nature = MODEST
+    Ace = yes
 #Area=Demo2Boss_O
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,101]
@@ -3623,6 +3630,7 @@ Pokemon = PAPELLAUDE,36
     Ability = COMPETITIVE
     Item = THROATSPRAY
     Nature = MODEST
+    Ace = yes
 #Area=Demo2Boss_O
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,201]
