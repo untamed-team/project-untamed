@@ -97,6 +97,7 @@ class Battle::Scene::PokemonDataBox < Sprite
       @hpBar2.bitmap = @hpBarBitmap2.bitmap
       @hpBar2.src_rect.height = @hpBarBitmap2.height / 3
       @sprites["hpBar2"] = @hpBar2
+      @hpBar2.visible = false
     end
     # Create sprite wrapper that displays Exp bar
     @expBar = Sprite.new(viewport)

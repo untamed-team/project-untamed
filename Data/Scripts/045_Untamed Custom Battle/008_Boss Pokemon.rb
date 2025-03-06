@@ -22,7 +22,6 @@ class Pokemon
 end
 
 # array "@remaning HPBars" is [current hp bars, max hp bars]
-$DEBUG = true
 class Battle::Battler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
