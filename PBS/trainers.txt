@@ -80,13 +80,13 @@ Pokemon = WRENNER,4
 #-------------------------------
 [BUGCATCHER_M,Marco]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
+Pokemon = MINIMELO,3
 Pokemon = LEDYBA,4
 #Area=Route1_M
 #-------------------------------
 [BUGCATCHER_M,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
+Pokemon = MINIMELO,3
 Pokemon = LEDYBA,4
 #Area=Route1_M
 #-------------------------------
@@ -138,12 +138,12 @@ Pokemon = TECHUPPI,5
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
+Pokemon = ZEAZAYA,5
 #Area=Hacienda2_M
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
+Pokemon = ZEAZAYA,5
 #Area=Hacienda2_M
 #-------------------------------
 [FARMER,Abraham,200]
@@ -294,13 +294,13 @@ Pokemon = M_ROSELIA,9
 #-------------------------------
 [LASS,Juju]
 LoseText = Aren't my Pokémon so cute?
-Pokemon = SKIDDO,9
+Pokemon = SKIDDO,8
 Pokemon = FLABEBE,9
 #Area=Route2_M
 #-------------------------------
 [LASS,Juju,100]
 LoseText = Aren't my Pokémon so cute?
-Pokemon = SKIDDO,9
+Pokemon = SKIDDO,8
 Pokemon = FLABEBE,9
 #Area=Route2_M
 #-------------------------------
@@ -342,15 +342,15 @@ Pokemon = WRENNER,9
 #-------------------------------
 [TOURIST_M,William]
 LoseText = She will come back. She always does.
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
+Pokemon = TECHUPPI,7
+Pokemon = BUNNELBY,8
 Pokemon = WRENNER,9
 #Area=Route2_M
 #-------------------------------
 [TOURIST_M,William,100]
 LoseText = She will come back. She always does.
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
+Pokemon = TECHUPPI,7
+Pokemon = BUNNELBY,8
 Pokemon = WRENNER,9
 #Area=Route2_M
 #-------------------------------
@@ -368,14 +368,14 @@ Pokemon = GOHILA,10
 #-------------------------------
 [LAD,Rainer]
 LoseText = Wait, I lost?
-Pokemon = LEDYBA,10
+Pokemon = LEDYBA,9
 Pokemon = BUDEW,10
     Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
 #Area=Route2_M
 #-------------------------------
 [LAD,Rainer,100]
 LoseText = Wait, I lost?
-Pokemon = LEDYBA,10
+Pokemon = LEDYBA,9
 Pokemon = BUDEW,10
     Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
 #Area=Route2_M
@@ -396,20 +396,30 @@ Pokemon = WORMOTE,9
 [FISHER_M,Ted]
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = MAGIKARP,1
+    Form = 2
 Pokemon = MAGIKARP,3
+    Form = 2
 Pokemon = MAGIKARP,5
+    Form = 2
 Pokemon = MAGIKARP,7
+    Form = 2
 Pokemon = MAGIKARP,9
+    Form = 2
 Pokemon = FEEBAS,10
 #Area=Route2_M
 #-------------------------------
 [FISHER_M,Ted,100]
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = MAGIKARP,1
+    Form = 2
 Pokemon = MAGIKARP,3
+    Form = 2
 Pokemon = MAGIKARP,5
+    Form = 2
 Pokemon = MAGIKARP,7
+    Form = 2
 Pokemon = MAGIKARP,9
+    Form = 2
 Pokemon = FEEBAS,10
 #Area=Route2_M
 #-------------------------------
@@ -451,14 +461,14 @@ Pokemon = M_VANILLITE,9
 #-------------------------------
 [TOURIST_M,Samuel]
 LoseText = Cowabummer!
-Pokemon = LITWICK,9
+Pokemon = LITWICK,8
 Pokemon = ZEAZAYA,9
 Pokemon = M_EKANS,9
 #Area=Route2_M
 #-------------------------------
 [TOURIST_M,Samuel,100]
 LoseText = Cowabummer!
-Pokemon = LITWICK,9
+Pokemon = LITWICK,8
 Pokemon = ZEAZAYA,9
 Pokemon = M_EKANS,9
 #Area=Route2_M
@@ -479,15 +489,15 @@ Pokemon = LITWICK,9
 #-------------------------------
 [CAMPER_F,Lola]
 LoseText = If only my battling skills were are sharp as my survival skills...
-Pokemon = HOOTHOOT,10
-Pokemon = SKIDDO,10
+Pokemon = HOOTHOOT,8
+Pokemon = SKIDDO,9
 Pokemon = WRENNER,10
 #Area=Route2_M
 #-------------------------------
 [CAMPER_F,Lola,100]
 LoseText = If only my battling skills were are sharp as my survival skills...
-Pokemon = HOOTHOOT,10
-Pokemon = SKIDDO,10
+Pokemon = HOOTHOOT,8
+Pokemon = SKIDDO,9
 Pokemon = WRENNER,10
 #Area=Route2_M
 #-------------------------------
@@ -551,14 +561,14 @@ Pokemon = CHICATTA,10
 #-------------------------------
 [YOUNGSTER_F,Milly]
 LoseText = No way, let me try again!
-Pokemon = PURRLOIN,10
+Pokemon = PURRLOIN,9
 Pokemon = SUNKERN,10
 Pokemon = TECHUPPI,10
 #Area=Route2_M
 #-------------------------------
 [YOUNGSTER_F,Milly,100]
 LoseText = No way, let me try again!
-Pokemon = PURRLOIN,10
+Pokemon = PURRLOIN,9
 Pokemon = SUNKERN,10
 Pokemon = TECHUPPI,10
 #Area=Route2_M
@@ -669,14 +679,14 @@ Pokemon = LOTAD,11
 #-------------------------------
 [POKEMONRANGER_F,Fernanda]
 LoseText = What a great battle! I wish I could have won...
-Pokemon = PHANTUMP,11
+Pokemon = PHANTUMP,10
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
 #Area=MonarcaWoods_M
 #-------------------------------
 [POKEMONRANGER_F,Fernanda,100]
 LoseText = What a great battle! I wish I could have won...
-Pokemon = PHANTUMP,11
+Pokemon = PHANTUMP,10
 Pokemon = PACUNA,11
 Pokemon = M_EKANS,11
 #Area=MonarcaWoods_M
@@ -719,13 +729,13 @@ Pokemon = BUDEW,12
 #-------------------------------
 [BUGCATCHER_M,Roberto]
 LoseText = No fair, did you use bug repellent? Harumph!
-Pokemon = MINIMELO,11
+Pokemon = MINIMELO,10
 Pokemon = LEDYBA,12
 #Area=MonarcaWoods_M
 #-------------------------------
 [BUGCATCHER_M,Roberto,100]
 LoseText = No fair, did you use bug repellent? Harumph!
-Pokemon = MINIMELO,11
+Pokemon = MINIMELO,10
 Pokemon = LEDYBA,12
 #Area=MonarcaWoods_M
 #-------------------------------
@@ -741,13 +751,13 @@ Pokemon = MINIMELO,11
 #-------------------------------
 [BIRDKEEPER_M,Francis]
 LoseText = And down I go...
-Pokemon = HOOTHOOT,12
+Pokemon = HOOTHOOT,11
 Pokemon = CROMEN,12
 #Area=MonarcaWoods_M
 #-------------------------------
 [BIRDKEEPER_M,Francis,100]
 LoseText = And down I go...
-Pokemon = HOOTHOOT,12
+Pokemon = HOOTHOOT,11
 Pokemon = CROMEN,12
 #Area=MonarcaWoods_M
 #-------------------------------
@@ -909,6 +919,39 @@ Pokemon = CACNEA,11
     Item = STICKYBARB
 #Area=MonarcaCave_M
 #-------------------------------
+[TRAINER_Reine,Reine]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
+[TRAINER_Reine,Reine,100]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
+[TRAINER_Reine,Reine,200]
+LoseText = ...
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
+#-------------------------------
 [NEOGRUNT_F,Priscilla]
 LoseText = L-let's get out of here!
 Pokemon = PACUNA,13
@@ -995,9 +1038,9 @@ Pokemon = LUMIPOP,13
 LoseText = Now that's cold!
 Pokemon = M_VANILLITE,12
     Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
-Pokemon = SNORUNT,12
-    Moves = BITE,LEER,ASTONISH,POWDERSNOW
-    Ability = MOODY
+Pokemon = LICKITUNG,12
+    Moves = LICK,DEFENSECURL,ROLLOUT,SEISMICTOSS
+    Ability = OWNTEMPO
 Pokemon = MAGNEMITE,13
     Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
 #Area=MeloladoExterior_M
@@ -1006,9 +1049,9 @@ Pokemon = MAGNEMITE,13
 LoseText = Now that's cold!
 Pokemon = M_VANILLITE,12
     Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
-Pokemon = SNORUNT,12
-    Moves = BITE,LEER,ASTONISH,POWDERSNOW
-    Ability = MOODY
+Pokemon = LICKITUNG,12
+    Moves = LICK,DEFENSECURL,ROLLOUT,SEISMICTOSS
+    Ability = OWNTEMPO
 Pokemon = MAGNEMITE,13
     Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
 #Area=MeloladoExterior_M
@@ -1084,6 +1127,63 @@ Pokemon = BANAGNAW,14
     Nature = ADAMANT
     Item = IAPAPABERRY
 #Area=MeloladoExterior_M
+#-------------------------------
+[LASS,Immy]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS,Immy,100]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS,Immy,200]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[RISINGSTAR_F,Grace]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,100]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,200]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_M,Nicco]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,100]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,200]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
 #-------------------------------
 [TOURIST_M,Floyd]
 LoseText = Woah dude, chill out!
@@ -1418,6 +1518,7 @@ Pokemon = LAGUNA,18
     Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
     Ability = DAZZLING
     Nature = SERIOUS
+    Ace = yes
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia,100]
@@ -1438,6 +1539,7 @@ Pokemon = LAGUNA,18
     Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
     Ability = DAZZLING
     Nature = SERIOUS
+    Ace = yes
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia,200]
@@ -2585,6 +2687,7 @@ Pokemon = CHARCOPAL,24
     EV = 0,0,0,24,24,24
     Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
     Ability = CRYSTALJAW
+    Ace = yes
 Pokemon = MAGNEMITE,25
     EV = 0,24,24,0,24,0
     Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
@@ -2604,6 +2707,7 @@ Pokemon = CHARCOPAL,24
     EV = 0,0,0,24,24,24
     Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
     Ability = CRYSTALJAW
+    Ace = yes
 Pokemon = MAGNEMITE,25
     EV = 0,24,24,0,24,0
     Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
@@ -2659,6 +2763,7 @@ Pokemon = ELEGOOP,24
     EV = 24,24,24,0,0,0
     Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
     Ability = GOOEY
+    Ace = yes
 Pokemon = BURBRAWL,25
     EV = 24,0,24,0,0,24
     Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
@@ -2679,6 +2784,7 @@ Pokemon = ELEGOOP,24
     EV = 24,24,24,0,0,0
     Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
     Ability = GOOEY
+    Ace = yes
 Pokemon = BURBRAWL,25
     EV = 24,0,24,0,0,24
     Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
@@ -3458,39 +3564,6 @@ Pokemon = MAWILE,26
     Ability = INTIMIDATE
     Item = FIGHTINGGEM
 #Area=Route6_M
-#-------------------------------
-[TRAINER_Reine,Reine]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
-#-------------------------------
-[TRAINER_Reine,Reine,100]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
-#-------------------------------
-[TRAINER_Reine,Reine,200]
-LoseText = ...
-Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
-Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
-    Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
-    Ability = HYPERCUTTER
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,1]
 LoseText = Well done.
@@ -3523,6 +3596,7 @@ Pokemon = PAPELLAUDE,36
     Ability = COMPETITIVE
     Item = THROATSPRAY
     Nature = MODEST
+    Ace = yes
 #Area=Demo2Boss_O
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,101]
@@ -3556,6 +3630,7 @@ Pokemon = PAPELLAUDE,36
     Ability = COMPETITIVE
     Item = THROATSPRAY
     Nature = MODEST
+    Ace = yes
 #Area=Demo2Boss_O
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,201]
