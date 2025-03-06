@@ -284,7 +284,17 @@ class Battle::AI
       userSpeed = pbRoughStat(user, :SPEED, skill)
       baseDmg = [[(25 * targetSpeed / userSpeed).floor, 150].min, 1].max
     when "RandomlyDamageOrHealTarget"   # Present
-      baseDmg = (user.pbOwnedByPlayer?) ? 40 : 120
+      averagegift = [23, 37, 54, 64, 76]
+      maxgift = [40, 60, 80, 100, 120]
+      lvl = case user.level
+        when 0..16 then 0
+        when 17..24 then 1
+        when 25..33 then 2
+        when 34..44 then 3
+        else 4
+      end
+      baseDmg = averagegift[lvl]
+      baseDmg = maxgift[lvl] if !user.pbOwnedByPlayer?
     when "TypeAndPowerDependOnWeather"
       baseDmg *= 2 if user.effectiveWeather != :None || 
                       globalArray.any? { |element| element.include?("weather") }

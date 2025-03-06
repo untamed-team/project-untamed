@@ -162,11 +162,12 @@ class Battle::Battler
     breakbar = 0
     if self.isBossPokemon?
       normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      currentHP = self.hp % normalHP.to_i == 0 ? self.hp / self.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
       amt2 = amt
       self.pokemon.remaningHPBars[0].times do |i|
-        if amt2 >= normalHP
+        if amt2 >= currentHP
           breakbar += 1
-          amt2 -= normalHP
+          amt2 -= currentHP
         end
       end
     end
@@ -184,7 +185,6 @@ class Battle::Battler
       breakbar.times do
         self.pokemon.remaningHPBars[0] -= 1
         pbEffectsOnHPBarBreak(self)
-        #echoln "here the hp bars ICONS drawed by the UI should update to account for the new amount, though in a ideal world, it should happen only after the hp change animation stops"
       end
     end
     return amt
@@ -219,13 +219,12 @@ class Battle::Battler
     restorebar = 0
     if self.isBossPokemon?
       normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      currentHP = self.hp % normalHP.to_i == 0 ? self.hp / self.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
       amt2 = amt
-      #echoln "heal amt: #{amt2}. hp normal: #{normalHP}"
       self.pokemon.remaningHPBars[1].times do |i|
-        if amt2 >= normalHP
+        if amt2 >= currentHP
           restorebar += 1
-          amt2 -= normalHP
-          #echoln restorebar
+          amt2 -= currentHP
         end
       end
     end
@@ -285,9 +284,11 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 0                                      # Green bar
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
-      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
       if remainingPoints > 0
+        @hpBar2.y = @hpBar.y
+        @hpBar2.x = @hpBar.x
+        @hpBar2.z = @hpBar.z - 1
         @hpBar2.src_rect.x = 0
         @hpBar2.visible = true
 				@hpBar2.src_rect.width = @hpBar.bitmap.width
@@ -300,7 +301,6 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 0                                      # Green bar
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
-      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
     end
   end

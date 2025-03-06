@@ -4249,6 +4249,7 @@ class Battle::AI
                 end
             end
             speedcheck=0
+            speedcheck+= 1 if userFasterThanTarget
             target.allAllies.each do |m|
                 speedcheck+= 1 if aspeed < pbRoughStat(m, :SPEED, skill)
             end
