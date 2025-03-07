@@ -260,8 +260,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     w = 0
     remainingPoints = 0
     if self.hp > 0
-      #echoln "here should be calc'd the individual %% of the current HP bar"
-      if @battler.pokemon.remaningHPBars[1] > 0
+      if @battler.pokemon.remaningHPBars[1] > 0 && @battler.pokemon.remaningHPBars[0] > 0
         normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars[1])
         currentHP = self.hp % normalHP.to_i == 0 ? self.hp / @battler.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
         w = @hpBarBitmap.width.to_f * currentHP / normalHP
