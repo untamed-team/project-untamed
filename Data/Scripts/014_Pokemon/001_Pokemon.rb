@@ -89,6 +89,7 @@ class Pokemon
   attr_accessor :willmega
   attr_accessor :sketchMove # necturna clause #by low
   attr_accessor :remaningHPBars
+  attr_accessor :hpbarsstorage
 
   # Max total IVs
   IV_STAT_LIMIT = 1000#31 #by low
@@ -1231,6 +1232,7 @@ class Pokemon
     #by low
     @evolution_steps  = 0
     @remaningHPBars   = [0, 0] # current, max hp bar
+    @hpbarsstorage    = [0, 0] # break, restore hp bar
     @willmega         = false
     @sketchMove       = nil
     calc_stats

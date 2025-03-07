@@ -269,11 +269,7 @@ class Battle
     priority.each do |battler|
       next if battler.status != :DIZZY
       battler.statusCount -= 1
-      if battler.statusCount <= 0
-        battler.pbCureStatus
-      else
-        battler.pbContinueStatus
-      end
+      battler.pbCureStatus if battler.statusCount <= 0
     end
     # paralyzis rework #by low
     priority.each do |battler|
