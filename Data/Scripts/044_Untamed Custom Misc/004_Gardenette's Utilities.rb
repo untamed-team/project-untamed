@@ -2184,7 +2184,6 @@ def self.showMoveAnimationOnScreen(moveSymbol, userEventID, targetEventID)
   hitNum=0
   
   #get event object from eventID
-  
   userEvent = $game_map.events[userEventID]
   targetEvent = $game_map.events[targetEventID]
 
@@ -2205,6 +2204,8 @@ def self.showMoveAnimationOnScreen(moveSymbol, userEventID, targetEventID)
   end
 
   move = GameData::Move.get(moveSymbol)
+  $game_variables[2] = move
+  $game_variables[4] = move.name
   moveID = GameData::Move.get(move)
   atself = move.target == GameData::Target.get(:User)
 
