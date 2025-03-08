@@ -1128,21 +1128,21 @@ Pokemon = BANAGNAW,14
     Item = IAPAPABERRY
 #Area=MeloladoExterior_M
 #-------------------------------
-[LASS,Immy]
+[LASS4,Immy]
 LoseText = Oh no, I lost...
 Pokemon = EEVEE,14
     Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
     Ability = ANTICIPATION
     Nature = CAREFUL
 #-------------------------------
-[LASS,Immy,100]
+[LASS4,Immy,100]
 LoseText = Oh no, I lost...
 Pokemon = EEVEE,14
     Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
     Ability = ANTICIPATION
     Nature = CAREFUL
 #-------------------------------
-[LASS,Immy,200]
+[LASS4,Immy,200]
 LoseText = Oh no, I lost...
 Pokemon = EEVEE,14
     Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
