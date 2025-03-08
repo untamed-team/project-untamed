@@ -22,7 +22,6 @@ class Pokemon
 end
 
 # array "@remaning HPBars" is [current hp bars, max hp bars]
-$DEBUG = true
 class Battle::Battler
   def isBossPokemon?
     return (@pokemon) ? @pokemon.isBossPokemon? : false
@@ -31,12 +30,14 @@ class Battle::Battler
   ################################################################################
 
   def pbEffectsOnHPBarBreak(boss)
+    @battle.scene.sprites["dataBox_#{boss.index}"].refresh
+    @battle.scene.pbAnimation(:BRICKBREAK, boss.pbDirectOpposing, boss)
     hpbarbreak = boss.pokemon.remaningHPBars[0] - 1
     case boss.species
     when :NOCTAVISPA # test battle
       case hpbarbreak
       when 0
-        @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!",self.pbThis))
+        @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!", boss.pbThis))
         pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
         pbCureMidTurn(boss, true, true)
       when 1
@@ -50,11 +51,16 @@ class Battle::Battler
     when :CRUSTANG # steel gym fight
       case hpbarbreak
       when 0
-        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!",self.pbThis))
+        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!", boss.pbThis))
         pbUseExtraMidTurnMove(boss, :SHARPEN, boss)
       end
     end
+  end
+  
+  def pbEffectsOnHPBarRestore(boss)
     @battle.scene.sprites["dataBox_#{boss.index}"].refresh
+    @battle.scene.pbAnimation(:PROTECT, boss, boss)
+    @battle.pbDisplay(_INTL("{1} restored 1 of its shields!", boss.pbThis))
   end
 
   def pbUseExtraMidTurnMove(boss, move, target)
@@ -162,11 +168,12 @@ class Battle::Battler
     breakbar = 0
     if self.isBossPokemon?
       normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      currentHP = self.hp % normalHP.to_i == 0 ? self.hp / self.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
       amt2 = amt
       self.pokemon.remaningHPBars[0].times do |i|
-        if amt2 >= normalHP
+        if amt2 >= currentHP
           breakbar += 1
-          amt2 -= normalHP
+          amt2 -= currentHP
         end
       end
     end
@@ -180,12 +187,8 @@ class Battle::Battler
       @droppedBelowHalfHP = true if @hp < @totalhp / 2 && @hp + amt >= @totalhp / 2
       @tookDamageThisRound = true
     end
-    if breakbar > 0 
-      breakbar.times do
-        self.pokemon.remaningHPBars[0] -= 1
-        pbEffectsOnHPBarBreak(self)
-        #echoln "here the hp bars ICONS drawed by the UI should update to account for the new amount, though in a ideal world, it should happen only after the hp change animation stops"
-      end
+    if self.isBossPokemon? && breakbar > 0
+      self.pokemon.hpbarsstorage[0] = breakbar
     end
     return amt
   end
@@ -219,30 +222,25 @@ class Battle::Battler
     restorebar = 0
     if self.isBossPokemon?
       normalHP = (1.0 * self.totalhp / self.pokemon.remaningHPBars[1])
+      currentHP = self.hp % normalHP.to_i == 0 ? self.hp / self.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
       amt2 = amt
-      #echoln "heal amt: #{amt2}. hp normal: #{normalHP}"
       self.pokemon.remaningHPBars[1].times do |i|
-        if amt2 >= normalHP
+        if amt2 >= currentHP
           restorebar += 1
-          amt2 -= normalHP
-          #echoln restorebar
+          amt2 -= currentHP
         end
       end
+      restorebar = [restorebar, (self.pokemon.remaningHPBars[1] - 1)].min
     end
     oldHP = @hp
     self.hp += amt
     PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
     raise _INTL("HP less than 0") if @hp < 0
     raise _INTL("HP greater than total HP") if @hp > @totalhp
-    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
     if self.isBossPokemon? && restorebar > 0
-      restorebar.times do # more fluid
-        self.pokemon.remaningHPBars[0] += 1
-        @battle.scene.pbAnimation(:PROTECT, self, self)
-        @battle.scene.sprites["dataBox_#{self.index}"].refresh
-      end
-      @battle.pbDisplay(_INTL("{1} restored {2} of its shields!", pbThis, restorebar))
+      self.pokemon.hpbarsstorage[1] = restorebar
     end
+    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
     @droppedBelowHalfHP = false if @hp >= @totalhp / 2
     return amt
   end
@@ -262,8 +260,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     w = 0
     remainingPoints = 0
     if self.hp > 0
-      #echoln "here should be calc'd the individual %% of the current HP bar"
-      if @battler.pokemon.remaningHPBars[1] > 0
+      if @battler.pokemon.remaningHPBars[1] > 0 && @battler.pokemon.remaningHPBars[0] > 0
         normalHP = (1.0 * @battler.totalhp / @battler.pokemon.remaningHPBars[1])
         currentHP = self.hp % normalHP.to_i == 0 ? self.hp / @battler.pokemon.remaningHPBars[0] : self.hp % normalHP.ceil.to_i
         w = @hpBarBitmap.width.to_f * currentHP / normalHP
@@ -285,9 +282,11 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 0                                      # Green bar
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
-      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
       if remainingPoints > 0
+        @hpBar2.y = @hpBar.y
+        @hpBar2.x = @hpBar.x
+        @hpBar2.z = @hpBar.z - 1
         @hpBar2.src_rect.x = 0
         @hpBar2.visible = true
 				@hpBar2.src_rect.width = @hpBar.bitmap.width
@@ -300,7 +299,6 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 0                                      # Green bar
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
-      #echoln "here a second HP bar should be shown underneath the first one if the remaining hp bars is higher than 0 and the current HP bar is less than 100%%"
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
     end
   end
@@ -318,6 +316,24 @@ class Battle::Scene::PokemonDataBox < Sprite
     refreshHP
     draw_bossHPBars
     @animatingHP = false if @currentHP == @endHP
+    if !@animatingHP && @battler.isBossPokemon?
+      breakbar = @battler.pokemon.hpbarsstorage[0]
+      if breakbar > 0
+        breakbar.times do
+          @battler.pokemon.remaningHPBars[0] -= 1
+          @battler.pbEffectsOnHPBarBreak(@battler)
+        end
+        @battler.pokemon.hpbarsstorage[0] = 0
+      end
+      restorebar = @battler.pokemon.hpbarsstorage[1]
+      if restorebar > 0
+        restorebar.times do
+          @battler.pokemon.remaningHPBars[0] += 1
+          @battler.pbEffectsOnHPBarRestore(@battler)
+        end
+        @battler.pokemon.hpbarsstorage[1] = 0
+      end
+    end
   end
 
   def draw_bossHPBars

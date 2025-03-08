@@ -850,16 +850,16 @@ class Battle::Battler
        targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
-		# damage message #by low
-		if $player.difficulty_mode?("hard")
-			targets.each do |b|
-				if b.damageState.calcDamage > 0
-					damagetotal = b.damageState.calcDamage
-					damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
-					@battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
-				end
-			end
-		end
+    # damage message #by low
+    if $player.difficulty_mode?("hard")
+      targets.each do |b|
+        if b.damageState.calcDamage > 0
+          damagetotal = b.damageState.calcDamage
+          damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
+          @battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
+        end
+      end
+    end
     return true
   end
 end

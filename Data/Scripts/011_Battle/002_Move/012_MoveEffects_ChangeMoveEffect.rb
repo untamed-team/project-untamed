@@ -54,16 +54,64 @@ end
 #===============================================================================
 class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
   def pbOnStartUse(user, targets)
-    @presentDmg = 0   # 0 = heal, >0 = damage
-    r = @battle.pbRandom(100)
-    if r < 40
-      @presentDmg = 40
-    elsif r < 70
-      @presentDmg = 80
-    elsif r < 80
-      @presentDmg = 120
+    baseDmg = [0, 20, 40, 60, 80, 100, 120]
+    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "enormous"]
+    r = case user.level
+      when 0..16
+        [
+          0,
+          0,0,
+          0,1,1,1,
+          1,1,1,1,1,2,
+          2,2,2,2,
+          2,2,
+          2
+        ]
+      when 17..24
+        [
+          0,
+          0,1,
+          2,2,2,2,
+          2,2,2,2,2,2,
+          2,2,2,2,
+          3,3,
+          3
+        ]
+      when 25..33
+        [
+          0,
+          1,2,
+          3,3,3,3,
+          3,3,3,3,3,3,
+          3,3,3,3,
+          3,3,
+          4
+        ]
+      when 34..44
+        [
+          0,
+          2,3,
+          3,3,3,3,
+          3,3,3,3,3,3,
+          4,4,4,4,
+          4,4,
+          5
+        ]
+      else
+        [
+          0,
+          2,3,
+          4,4,4,4,
+          4,4,4,4,4,4,
+          4,4,4,4,
+          5,5,
+          6
+        ]
     end
-    @presentDmg = 120 if !user.pbOwnedByPlayer?
+    rando = r[@battle.pbRandom(r.length)]
+    rando = r.max if !user.pbOwnedByPlayer?
+    @presentDmg = baseDmg[rando]
+    @battle.pbDisplay(_INTL("{1} threw a #{prTrait[rando]} present!", user.pbThis))
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)

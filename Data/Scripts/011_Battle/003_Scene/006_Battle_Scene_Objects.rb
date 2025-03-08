@@ -92,10 +92,12 @@ class Battle::Scene::PokemonDataBox < Sprite
     @hpBar.src_rect.height = @hpBarBitmap.height / 3
     @sprites["hpBar"] = @hpBar
     if @battler.isBossPokemon?
+      @hpBarBitmap2 = AnimatedBitmap.new("Graphics/Pictures/Battle/overlay_hp2")
       @hpBar2 = Sprite.new(viewport)
-      @hpBar2.bitmap = @hpBarBitmap.bitmap
-      @hpBar2.src_rect.height = @hpBarBitmap.height / 3
+      @hpBar2.bitmap = @hpBarBitmap2.bitmap
+      @hpBar2.src_rect.height = @hpBarBitmap2.height / 3
       @sprites["hpBar2"] = @hpBar2
+      @hpBar2.visible = false
     end
     # Create sprite wrapper that displays Exp bar
     @expBar = Sprite.new(viewport)
