@@ -24,13 +24,16 @@ end
 
 def pbChoosePkmnWithPowerfulIceOrGrassMove
   $game_variables[36] = 0
-  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.moves.any? { |m| (m&.type == :ICE || m&.type == :GRASS) && m&.base_damage >= 55 }
-    #(hasMoveWithTypeAndBP?(pkmn, :GRASS, 55, ">="))})
-  })
+  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.moves.any? { |m| (m&.type == :ICE || m&.type == :GRASS) && m&.base_damage >= 55 }})
 end #def pbChoosePkmnWithPowerfulIceOrGrassMove
 
-def hasMoveWithTypeAndBP?(pkmn, type, bp, operator)
+def pbUsePowerfulIceOrGrassMove(pkmn)
   for move in pkmn.moves
-    next if (move.type == :ICE || move.type == :GRASS) && move.base_damage >= 55
-  end #for move
-end #def hasMoveWithTypeAndBP?(type, bp, operator)
+    #find the first ice or grass move with 55+ bp
+    moveSymbol = move.id if (move.type == :ICE || move.type == :GRASS) && move.base_damage >= 55
+  end
+
+  userEventID = $game_player
+  targetEventID = 2
+  GardenUtil.showMoveAnimationOnScreen(moveSymbol, userEventID, targetEventID)
+end #def pbUsePowerfulIceOrGrassMove
