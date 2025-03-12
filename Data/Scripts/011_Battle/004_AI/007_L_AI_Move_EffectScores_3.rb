@@ -5277,18 +5277,18 @@ class Battle::AI
             lastmove = nil
             if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
                 if !target.lastRegularMoveUsed.nil?
-                    lastmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
+                    lastmove = target.lastRegularMoveUsed
                 end
             else
                 if targetWillMove?(target)
-                    lastmove = @battle.choices[target.index][2]
+                    lastmove = @battle.choices[target.index][2].id
                 end
             end
             if lastmove.nil?
                 score = 0
             else
                 user.eachMove do |m|
-                    next unless m.id == lastmove.id
+                    next unless m.id == lastmove
                     score = 0
                     break
                 end
