@@ -4585,7 +4585,7 @@ class Battle::AI
             else
                 if targetWillMove?(target)
                     realtype = pbRoughType(@battle.choices[target.index][2], target, 100)
-                    score*=1.5 if realtype == :FIRE
+                    score*=1.5 if realtype == :FIRE && @battle.choices[target.index][2].damagingMove?
                 end
             end   
         else
