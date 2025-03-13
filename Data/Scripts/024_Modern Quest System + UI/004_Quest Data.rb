@@ -278,6 +278,8 @@ module QuestModule
     :Location4 => "Calojarro",
     :Stage5 => "Find Immy and her Eevee at #{!$game_variables.nil? ? $game_variables[135] : 0}.",
     :Location5 => "#{!$game_variables.nil? ? $game_variables[135] : 0}",
+    :Stage6 => "Claim your reward from Grace and Nicco at Immy's house.",
+    :Location6 => "Calojarro",
     :RewardString => "Eevee",
     :ReadyAtStart => true,
   }
