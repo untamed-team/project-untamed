@@ -115,7 +115,7 @@ class Battle::AI
         # Powder (the move) logic
         if type == :FIRE && targetWillMove?(target)
             targetMove = @battle.choices[target.index][2]
-            if targetMove.function == "TargetNextFireMoveDamagesTarget"
+            if targetMove.function == "TargetNextFireMoveDamagesTarget" && user.affectedByPowder?
                 thisprio = priorityAI(user, move, globalArray)
                 thatprio = priorityAI(target, targetMove, globalArray)
                 return 0 if thatprio > thisprio
