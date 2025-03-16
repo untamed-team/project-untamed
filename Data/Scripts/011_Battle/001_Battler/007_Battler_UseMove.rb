@@ -353,13 +353,13 @@ class Battle::Battler
     move.pbOnStartUse(user, targets)
     # Self-thawing due to the move
     # Powder
-    if user.effects[PBEffects::Powder] && move.calcType == :FIRE
+    if user.effects[PBEffects::Powder] && move.calcType == :FIRE && move.damagingMove?
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
       if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
-          @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
+          @battle.pbDisplay(_INTL("{1} was hurt!", user.pbThis))
         }
         @battle.pbGainExp   # In case user is KO'd by this
       end

@@ -308,17 +308,12 @@ class Battle::AI
     when "DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
       if move.function == "RandomPowerDoublePowerIfTargetUnderground"
         # Average damage dealt for each stage
-        case user.level
-          when 0..16
-            baseDmg = 48
-          when 17..24
-            baseDmg = 65
-          when 25..33
-            baseDmg = 82
-          when 34..44
-            baseDmg = 94
-          else
-            baseDmg = 108
+        baseDmg = case user.level
+          when 0..16 then 48
+          when 17..24 then 65
+          when 25..33 then 82
+          when 34..44 then 94
+          else 108
         end
       end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig

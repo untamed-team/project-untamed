@@ -274,10 +274,12 @@ module QuestModule
     :Location2 => "Calojarro",
     :Stage3 => "Show Immy a Pokémon with a powerful Ice or Grass-type move (55+ power).",
     :Location3 => "Calojarro",
-    :Stage4 => "Talk to Immy with a Water or Fire-type Pokémon in your party.",
+    :Stage4 => "Battle Immy's siblings alongside her. Let Immy or her siblings know when you're ready.",
     :Location4 => "Calojarro",
     :Stage5 => "Find Immy and her Eevee at #{!$game_variables.nil? ? $game_variables[135] : 0}.",
     :Location5 => "#{!$game_variables.nil? ? $game_variables[135] : 0}",
+    :Stage6 => "Claim your reward from Grace and Nicco at Immy's house.",
+    :Location6 => "Calojarro",
     :RewardString => "Eevee",
     :ReadyAtStart => true,
   }
