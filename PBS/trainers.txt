@@ -1,4 +1,4 @@
-﻿# See the documentation on the wiki to learn how to edit this file.
+# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
@@ -3095,7 +3095,7 @@ Pokemon = TRAPINCH,23
 LoseText = Our defenses weren't enough...
 Pokemon = CACNEA,23
     Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
-    Ability = IRONBARBS
+    Ability = SANDVEIL
 Pokemon = M_MUDBRAY,24
     Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
 Pokemon = M_MARACTUS,24
@@ -3107,7 +3107,7 @@ Pokemon = M_MARACTUS,24
 LoseText = Our defenses weren't enough...
 Pokemon = CACNEA,23
     Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
-    Ability = IRONBARBS
+    Ability = SANDVEIL
 Pokemon = M_MUDBRAY,24
     Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
 Pokemon = M_MARACTUS,24
