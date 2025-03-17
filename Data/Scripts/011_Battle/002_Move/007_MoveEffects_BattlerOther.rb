@@ -195,12 +195,12 @@ class Battle::Move::ParalyzeFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanParalyze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbParalyze(user)
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end
@@ -245,12 +245,12 @@ class Battle::Move::BurnFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanBurn?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbBurn(user)
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end
@@ -305,12 +305,12 @@ class Battle::Move::FreezeFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanFreeze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbFreeze
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end

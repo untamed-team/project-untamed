@@ -237,14 +237,16 @@ class Battle::AI
                 end
             end
             if move.baseDamage>0
-                if move.addlEffect.to_f == 100
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "ParalyzeFlinchTarget"
+                if addEffect == 100
                     if !user.hasActiveAbility?(:SHEERFORCE) && move.id == :NUZZLE
                         score*=1.37 # twave's usual score boost
                         score*=1.1 if target.moves.any? { |j| j&.id == :TAUNT }
                     end
                 else
                     miniscore-=100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                     miniscore+=100
                 end
@@ -284,8 +286,8 @@ class Battle::AI
         if target.pbCanBurn?(user, false)
             miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, globalArray, 100)
             ministat=0
-            ministat+=target.stages[:SPECIAL_ATTACK]
-            ministat+=target.stages[:SPECIAL_DEFENSE]
+            ministat+=target.stages[:ATTACK]
+            ministat+=target.stages[:DEFENSE]
             ministat+=target.stages[:SPEED]
             if ministat>0
                 minimini=5*ministat
@@ -295,8 +297,10 @@ class Battle::AI
             end
             if move.baseDamage>0
                 miniscore-=100
-                if move.addlEffect.to_f != 100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "BurnFlinchTarget"
+                if addEffect != 100
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
@@ -341,8 +345,10 @@ class Battle::AI
             end
             if move.baseDamage>0
                 miniscore-=100
-                if move.addlEffect.to_f != 100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "FreezeFlinchTarget"
+                if addEffect != 100
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)

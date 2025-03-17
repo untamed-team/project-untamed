@@ -2787,11 +2787,11 @@ class Battle::AI
             if target.effects[PBEffects::HyperBeam]>0
                 score*=1.2
             end
-            ministat = target.attack
+            ministat = (target.attack / 2)
             ministat/=(user.totalhp).to_f
             ministat+=0.5
             score*=ministat
-            if target.hasActiveAbility?(:LIQUIDOOZE)
+            if target.hasActiveAbility?(:LIQUIDOOZE,false,mold_broken) || target.hasActiveAbility?(:CONTRARY)
                 score*=0.2
             end
             if user.hasActiveItem?([:BIGROOT, :COLOGNECASE])
@@ -2865,7 +2865,7 @@ class Battle::AI
         end
         miniscore *= 0.75 #arbitrary multiplier to make it value the HP less
         miniscore+=1
-        if target.hasActiveAbility?(:LIQUIDOOZE)
+        if target.hasActiveAbility?(:LIQUIDOOZE,false,mold_broken)
             miniscore = (2-miniscore)
             score*=miniscore
         else
@@ -2890,7 +2890,7 @@ class Battle::AI
                 miniscore*=1.3
             end
             miniscore+=1
-            if target.hasActiveAbility?(:LIQUIDOOZE)
+            if target.hasActiveAbility?(:LIQUIDOOZE,false,mold_broken)
                 miniscore = (2-miniscore)
                 score*=miniscore
             else
@@ -2919,7 +2919,7 @@ class Battle::AI
         end
         miniscore *= 0.9 #arbitrary multiplier to make it value the HP less
         miniscore+=1
-        if target.hasActiveAbility?(:LIQUIDOOZE)
+        if target.hasActiveAbility?(:LIQUIDOOZE,false,mold_broken)
             miniscore = (2-miniscore)
             score*=miniscore
         else
@@ -3248,7 +3248,7 @@ class Battle::AI
             ministat+=100
             ministat/=100.0
             score*=ministat
-            if target.hasActiveAbility?(:LIQUIDOOZE) || target.effects[PBEffects::Substitute]>0
+            if target.hasActiveAbility?(:LIQUIDOOZE,false,mold_broken) || target.effects[PBEffects::Substitute]>0
                 score*=0
             end
         else

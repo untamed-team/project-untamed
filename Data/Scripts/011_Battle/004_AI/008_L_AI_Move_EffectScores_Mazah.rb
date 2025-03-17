@@ -2029,9 +2029,9 @@ class Battle::AI
             megaSpecies = j.pokemon.species
             if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
               (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
-                  effectne = megaChecks[megaSpecies][1]
-                  jspeed = pbRoughStat(j,:SPEED,100,false)
-                 if effectne.include?("weather")
+                effectne = megaChecks[megaSpecies][1]
+                jspeed = pbRoughStat(j,:SPEED,100,false)
+                if effectne.include?("weather")
                     if jspeed < slowestWeatherSpeed
                         slowestWeather = effectne
                         slowestWeatherSpeed = jspeed
@@ -2047,7 +2047,7 @@ class Battle::AI
             end
         end
         globalArray.push(slowestWeather) if slowestWeather
-          globalArray.push(slowestTerrain) if slowestTerrain
+        globalArray.push(slowestTerrain) if slowestTerrain
 
         # airlock/cloud9 interaction
         weatherNeg = false

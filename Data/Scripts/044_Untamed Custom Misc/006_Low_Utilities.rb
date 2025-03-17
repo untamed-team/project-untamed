@@ -367,10 +367,11 @@ GameData::Evolution.register({
 })
 
 #===============================================================================
-# powertrip
+# powertrip + Noseponch
 #===============================================================================
 def pbFieldEvolutionCheck(hm_used)
   return if hm_used.nil?
+  partycount = $player.party.count
   $player.party.each_with_index do |pkmn, index|
     next if !pkmn || pkmn.egg?
     next if pkmn.fainted?
@@ -389,6 +390,9 @@ def pbFieldEvolutionCheck(hm_used)
           new_species = evo2.to_sym
         end
       end
+    end
+    if pkmn.isSpecies?(:M_NOSEPASS) && pkmn.level >= 30 && hm_used == "king of the ring" && partycount == 1
+      new_species = :NOSEPONCH
     end
     next if new_species.nil?
     pbWait(60)
