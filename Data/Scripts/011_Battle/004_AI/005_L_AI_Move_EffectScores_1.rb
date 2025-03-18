@@ -56,7 +56,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "FailsUnlessTargetSharesTypeWithUser" # synchronoise
       if !(user.types[0] && target.pbHasType?(user.types[0], true)) &&
-         !(user.types[1] && target.pbHasType?(user.types[1], true))
+         !(user.types[1] && target.pbHasType?(user.types[1], true)) &&
+         !(user.types[2] && target.pbHasType?(user.types[2], true))
         score = 0
       end
     #---------------------------------------------------------------------------

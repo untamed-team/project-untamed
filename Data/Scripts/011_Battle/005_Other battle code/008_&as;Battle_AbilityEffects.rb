@@ -3490,7 +3490,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
     battle.pbAnimation(:TRANSFORM, battler, choice)
     battle.scene.pbChangePokemon(battler, choice.pokemon)
     battler.pbTransform(choice)
-    battler.effects[PBEffects::Type3] = :DARK
+    battler.effects[PBEffects::Type3] = :DARK if battler.types.length < 3
   }
 )
 
@@ -3630,6 +3630,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
 
 Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
   proc { |ability, battler, battle, ability_changed|
+    # small edits #by low
+    next if battler.types.length >= 3
     if battle.field.terrain == :None && battle.field.typezone == :None
       # Revert to original typing
       battle.pbShowAbilitySplash(battler)
@@ -3651,7 +3653,6 @@ Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
         new_type = nil if !type_data
         new_type_name = type_data.name if type_data
       else
-        # small edits #by low
         new_type = battle.field.typezone
         if new_type
           type_data = GameData::Type.try_get(new_type)

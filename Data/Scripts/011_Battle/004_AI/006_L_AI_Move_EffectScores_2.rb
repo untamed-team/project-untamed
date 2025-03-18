@@ -881,8 +881,9 @@ class Battle::AI
         else
             score*=1.1
         end
+        tTypes = typesAI(target, user, skill)
         if target.pbHasType?(:GHOST, true) || !target.canChangeType? || 
-                target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
+           target.hasActiveAbility?([:PROTEAN, :COLORCHANGE]) || tTypes.length >= 3
             score*=0
         end
     #---------------------------------------------------------------------------
@@ -904,8 +905,9 @@ class Battle::AI
         else
             score*=1.1
         end
+        tTypes = typesAI(target, user, skill)
         if target.pbHasType?(:GRASS, true) || !target.canChangeType? || 
-                target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
+           target.hasActiveAbility?([:PROTEAN, :COLORCHANGE]) || tTypes.length >= 3
             score*=0
         end
     #---------------------------------------------------------------------------

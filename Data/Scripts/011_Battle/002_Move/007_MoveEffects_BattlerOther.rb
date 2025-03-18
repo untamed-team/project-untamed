@@ -905,7 +905,8 @@ class Battle::Move::AddGhostTypeToTarget < Battle::Move
   def canMagicCoat?; return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if !GameData::Type.exists?(:GHOST) || target.pbHasType?(:GHOST) || !target.canChangeType?
+    if !GameData::Type.exists?(:GHOST) || target.pbHasType?(:GHOST) || 
+       !target.canChangeType? || target.types.length >= 3
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -926,7 +927,8 @@ class Battle::Move::AddGrassTypeToTarget < Battle::Move
   def canMagicCoat?; return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if !GameData::Type.exists?(:GRASS) || target.pbHasType?(:GRASS) || !target.canChangeType?
+    if !GameData::Type.exists?(:GRASS) || target.pbHasType?(:GRASS) || 
+       !target.canChangeType? || target.types.length >= 3
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
