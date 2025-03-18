@@ -3891,16 +3891,92 @@ class Battle::AI
             score=0
         end
     #---------------------------------------------------------------------------
-    when "RemoveTargetItem" # knock off
-        if target.effects[PBEffects::Substitute]<=0
+    when "RemoveTargetItem", "CorrodeTargetItem" # knock off, Corrosive Gas
+        score = 0 if @battle.corrosiveGas[target.index % 2][target.pokemonIndex] && move.function == "CorrodeTargetItem"
+        if target.effects[PBEffects::Substitute]<=0 && score > 0
             if !target.hasActiveAbility?(:STICKYHOLD) && target.item && !target.unlosableItem?(target.item)
                 score*=1.1
                 if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
                     score*=1.3
+                    if target.moves.any? { |m| m&.healingMove? } || target.hasActiveAbility?(:REGENERATOR)
+                        score*=1.1
+                    else
+                        score*=1.3
+                    end
                 end    
-                if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
+                if target.hasActiveItem?(:LIFEORB)
                     score*=1.2
-                end        
+                    score*=1.2 if target.hasActiveAbility?([:SHEERFORCE, :MAGICGUARD])
+                end
+                if target.hasActiveItem?([:CHOICESCARF, :CHOICEBAND, :CHOICESPECS])
+                    score*=1.2
+                    score*=1.2 if target.hasActiveAbility?([:MOXIE, :SOULHEART])
+                    if target.hasActiveItem?(:CHOICESCARF)
+                        score*=1.2 if (aspeed < ospeed)
+                        score*=1.3 if (aspeed > (ospeed / 1.5))
+                    end
+                end
+                if target.hasActiveItem?([:ASSAULTVEST, :MELEEVEST])
+                    score*=1.2
+                    if target.hasActiveItem?(:ASSAULTVEST) && 
+                       pbRoughStat(user, :ATTACK, skill) < pbRoughStat(user, :SPECIAL_ATTACK, skill)
+                        score*=1.2
+                    end
+                    if target.hasActiveItem?(:MELEEVEST) && 
+                       pbRoughStat(user, :ATTACK, skill) > pbRoughStat(user, :SPECIAL_ATTACK, skill)
+                        score*=1.2
+                    end
+                end
+                if target.hasActiveItem?([:SITRUSBERRY, :NYLOBERRY, :LUMBERRY, :LEPPABERRY])
+                    score*=1.3
+                end
+                if target.hasActiveItem?([:PETAYABERRY, :LIECHIBERRY, :SALACBERRY, :CUSTAPBERRY])
+                    score*=1.4
+                end
+                if target.hasActiveItem?([:LAGGINGTAIL, :FULLINCENSE, :STICKYBARB])
+                    if target.pbHasMoveFunction?("UserTargetSwapItems") || 
+                      (target.pbHasMoveFunction?("TargetTakesUserItem") && !user.item)
+                        score*=1.2
+                    else
+                        score*=0.5
+                    end
+                end
+                if target.hasActiveItem?(:WEAKNESSPOLICY)
+                    score*=1.1
+                    supervar = false
+                    for i in user.moves
+                        break if supervar
+                        typeMod = pbCalcTypeMod(i.type, user, target)
+                        supervar = true if Effectiveness.super_effective?(typeMod)
+                    end
+                    if supervar
+                        score*=1.5
+                    else
+                        score*=1.2
+                    end
+                end
+                if target.hasActiveItem?(:EVIOLITE) && target.pokemon.species_data.get_evolutions(true).length > 0
+                    score*=1.3
+                end
+                if target.hasActiveItem?(:ROCKYHELMET) #&& !move.contactMove?
+                    score*=1.3
+                    score*=1.2 if target.hasActiveAbility?([:ROUGHSKIN, :IRONBARBS])
+                end
+                if target.hasActiveItem?(:WHITEHERB) && userFasterThanTarget
+                    if target.moves.any? { |j| [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(j&.id) }
+                        score*=1.5
+                    end
+                end
+                if target.hasActiveItem?([:TOXICORB, :FLAMEORB])
+                    if target.pbHasAnyStatus?
+                        score*=1.3 if target.pbHasMoveFunction?("GiveUserStatusToTarget")
+                    else
+                        if target.pbHasMoveFunction?("GiveUserStatusToTarget", "DoublePowerIfUserPoisonedBurnedParalyzed") || 
+                           target.hasActiveAbility?([:GUTS, :TOXICBOOST, :FLAREBOOST, :MARVELSCALE, :QUICKFEET])
+                            score*=1.5
+                        end
+                    end
+                end
             end
         end
     #---------------------------------------------------------------------------
@@ -3913,24 +3989,6 @@ class Battle::AI
                 score*=0.8
             end
          end
-    #---------------------------------------------------------------------------
-    when "CorrodeTargetItem" # Corrosive Gas
-        if @battle.corrosiveGas[target.index % 2][target.pokemonIndex]
-            score = 0
-        else
-            if target.effects[PBEffects::Substitute]<=0
-                if !target.hasActiveAbility?(:STICKYHOLD) &&
-                   target.item && !target.unlosableItem?(target.item)
-                    score*=1.1
-                    if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
-                        score*=1.2
-                    end    
-                    if target.hasActiveItem?([:LIFEORB, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, :ASSAULTVEST, :MELEEVEST])
-                        score*=1.1
-                    end        
-                end
-            end
-        end
     #---------------------------------------------------------------------------
     when "StartTargetCannotUseItem" # embargo
         initialscores = score
