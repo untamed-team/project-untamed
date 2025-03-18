@@ -855,7 +855,7 @@ class Battle::Battler
       targets.each do |b|
         if b.damageState.calcDamage > 0
           damagetotal = b.damageState.calcDamage
-          damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
+          #damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
           @battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
         end
       end
