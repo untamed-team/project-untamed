@@ -1227,7 +1227,7 @@ class Battle::AI
             if target.pbHasType?(:GROUND, true)
                 score*=3
             end
-            if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target)
+            if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target, "dmg")
                 if @battle.choices[target.index][2].type == :GROUND
                     score*=3
                 end
