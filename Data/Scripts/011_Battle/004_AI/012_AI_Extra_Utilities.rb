@@ -27,9 +27,9 @@ class Battle::AI
     end
     
     
-  #=============================================================================
-  # Damage calculation (v2)
-  #=============================================================================
+    #=============================================================================
+    # Damage calculation (v2)
+    #=============================================================================
     def pbRoughDamage(move, user, target, skill, baseDmg=0)
         skill=100
         baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
@@ -191,7 +191,7 @@ class Battle::AI
             if !moldBreaker
                 expectedTargetWeather = expectedWeather
                 if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedTargetWeather) && 
-                     target.hasActiveItem?(:UTILITYUMBRELLA)
+                   target.hasActiveItem?(:UTILITYUMBRELLA)
                     expectedTargetWeather = :None
                 end
                 old_ability = nil
@@ -215,7 +215,7 @@ class Battle::AI
                 next if !b.abilityActive?
                 expectedBWeather = expectedWeather
                 if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedBWeather) && 
-                     b.hasActiveItem?(:UTILITYUMBRELLA)
+                   b.hasActiveItem?(:UTILITYUMBRELLA)
                     expectedBWeather = :None
                 end
                 Battle::AbilityEffects.triggerDamageCalcFromTargetAlly(
@@ -266,12 +266,12 @@ class Battle::AI
         # Helping Hand - n/a
         # Charge
         if skill >= PBTrainerAI.mediumSkill &&
-             user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
+           user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
             multipliers[:base_damage_multiplier] *= 2
         end
         # Zealous Dance
         if skill >= PBTrainerAI.mediumSkill &&
-             user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
+           user.effects[PBEffects::ZealousDance] > 0 && type == :FIRE
             multipliers[:base_damage_multiplier] *= 1.5
         end
         # Mud Sport and Water Sport
@@ -615,7 +615,7 @@ class Battle::AI
         return false
     end    
     
-      def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
+    def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
         return true if !move
         mold_broken=moldbroken(attacker,opponent,move)
         damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
@@ -688,7 +688,7 @@ class Battle::AI
         physorspec= "none"
         for j in user.moves
             if user.effects[PBEffects::ChoiceBand] &&
-                user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+               user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
                 if user.lastMoveUsed && user.pbHasMove?(user.lastMoveUsed)
                     next if j.id!=user.lastMoveUsed
                 end
@@ -977,7 +977,7 @@ class Battle::AI
         return diff if both
     end
 
-      def wasUserAbilityActivated?(user) 
+    def wasUserAbilityActivated?(user) 
         return @battle.activedAbility[user.index & 1][user.pokemonIndex]
     end
 end

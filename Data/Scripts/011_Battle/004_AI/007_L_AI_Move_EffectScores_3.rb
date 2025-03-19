@@ -3737,11 +3737,11 @@ class Battle::AI
            target.item && !target.unlosableItem?(target.item)
             miniscore = 1.2
             case target.item_id
-            when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+            when :LEFTOVERS, :LIFEORB, :LUMBERRY, :SITRUSBERRY
                 miniscore*=1.5
             when :ASSAULTVEST, :MELEEVEST, :ROCKYHELMET
                 miniscore*=1.3
-            when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
+            when :FOCUSSASH, :MUSCLEBAND, :WISEGLASSES, :EXPERTBELT, :WIDELENS
                 miniscore*=1.2
             when :CHOICESCARF
                 if aspeed<ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
@@ -3757,7 +3757,7 @@ class Battle::AI
                 else
                     miniscore*=0.5
                 end
-            when :TOXICORB,  :FLAMEORB,  :LAGGINGTAIL,  :IRONBALL,  :STICKYBARB
+            when :TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB, :RINGTARGET
                 miniscore*=0.5
             end
             score*=miniscore
@@ -3783,8 +3783,38 @@ class Battle::AI
                 else
                     score*=0.5
                 end
-            when :TOXICORB,  :FLAMEORB,  :LAGGINGTAIL,  :IRONBALL,  :STICKYBARB
+            when :TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB
                 score*=1.3
+            when :RINGTARGET
+                immutype = nil
+                if target.pbHasType?(:NORMAL, true)
+                    immutype = :GHOST
+                elsif target.pbHasType?(:FLYING, true)
+                    immutype = :GROUND
+                elsif target.pbHasType?(:GROUND, true)
+                    immutype = :ELECTRIC
+                elsif target.pbHasType?(:GHOST, true)
+                    immutype = :NORMAL
+                elsif target.pbHasType?(:STEEL, true)
+                    immutype = :POISON
+                elsif target.pbHasType?(:DARK, true)
+                    immutype = :PSYCHIC
+                elsif target.pbHasType?(:FAIRY, true)
+                    immutype = :DRAGON
+                end
+                unless immutype.nil?
+                    @battle.pbParty(user.index).each do |pkmn|
+                        next if pkmn.nil?
+                        pkmn.moves.each do |m|
+                            score*=1.2 if m.type == immutype
+                        end
+                    end
+                end
+                if target.hasActiveAbility?(:PROTEAN)
+                    if target.moves.any? { |m| [:NORMAL,:FLYING,:GROUND,:GHOST,:STEEL,:DARK,:FAIRY].include?(m&.type) }
+                        minimini*=1.5
+                    end
+                end
             end
         else
             score=0 if move.statusMove?
@@ -3797,11 +3827,11 @@ class Battle::AI
             minimini  = 0.8
             if target.item && !target.unlosableItem?(target.item)
                 case target.item_id
-                when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+                when :LEFTOVERS, :LIFEORB, :LUMBERRY, :SITRUSBERRY
                     miniscore*=1.5
-                when :ASSAULTVEST, :MELEEVEST,  :ROCKYHELMET
+                when :ASSAULTVEST, :MELEEVEST, :ROCKYHELMET
                     miniscore*=1.3
-                when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
+                when :FOCUSSASH, :MUSCLEBAND, :WISEGLASSES, :EXPERTBELT, :WIDELENS
                     miniscore*=1.2
                 when :CHOICESCARF
                     if aspeed<ospeed && @battle.field.effects[PBEffects::TrickRoom]==0
@@ -3817,17 +3847,17 @@ class Battle::AI
                     else
                         miniscore*=0.5
                     end
-                when :TOXICORB,  :FLAMEORB,  :LAGGINGTAIL,  :IRONBALL,  :STICKYBARB
+                when :TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB
                     miniscore*=0.5
                 end
             end
             if user.item && !user.unlosableItem?(user.item)
                 case user.item_id
-                when :LEFTOVERS,  :LIFEORB,  :LUMBERRY,  :SITRUSBERRY
+                when :LEFTOVERS, :LIFEORB, :LUMBERRY, :SITRUSBERRY
                     minimini*=0.5
-                when :ASSAULTVEST, :MELEEVEST,  :ROCKYHELMET
+                when :ASSAULTVEST, :MELEEVEST, :ROCKYHELMET
                     minimini*=0.7
-                when :FOCUSSASH,  :MUSCLEBAND,  :WISEGLASSES,  :EXPERTBELT,  :WIDELENS
+                when :FOCUSSASH, :MUSCLEBAND, :WISEGLASSES, :EXPERTBELT, :WIDELENS
                     minimini*=0.8
                 when :CHOICESCARF
                     if !userFasterThanTarget
@@ -3851,8 +3881,38 @@ class Battle::AI
                         minimini*=0.5
                     end
                     minimini*=1.3 if !target.pbHasType?(:POISON, true)
-                when :TOXICORB,  :FLAMEORB,  :LAGGINGTAIL,  :IRONBALL,  :STICKYBARB
-                    minimini*=0.5
+                when :TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB
+                    minimini*=1.5
+                when :RINGTARGET
+                    immutype = nil
+                    if target.pbHasType?(:NORMAL, true)
+                        immutype = :GHOST
+                    elsif target.pbHasType?(:FLYING, true)
+                        immutype = :GROUND
+                    elsif target.pbHasType?(:GROUND, true)
+                        immutype = :ELECTRIC
+                    elsif target.pbHasType?(:GHOST, true)
+                        immutype = :NORMAL
+                    elsif target.pbHasType?(:STEEL, true)
+                        immutype = :POISON
+                    elsif target.pbHasType?(:DARK, true)
+                        immutype = :PSYCHIC
+                    elsif target.pbHasType?(:FAIRY, true)
+                        immutype = :DRAGON
+                    end
+                    unless immutype.nil?
+                        @battle.pbParty(user.index).each do |pkmn|
+                            next if pkmn.nil?
+                            pkmn.moves.each do |m|
+                                score*=1.2 if m.type == immutype
+                            end
+                        end
+                    end
+                    if target.hasActiveAbility?(:PROTEAN)
+                        if target.moves.any? { |m| [:NORMAL,:FLYING,:GROUND,:GHOST,:STEEL,:DARK,:FAIRY].include?(m&.type) }
+                            minimini*=1.5
+                        end
+                    end
                 end
             end
             score*=(miniscore*minimini)
@@ -6286,7 +6346,7 @@ class Battle::AI
                     score*=0.3
                 else
                     if target.stages[:SPEED]>0
-                        if (target.pbHasType?(:DARK, true) || !user.hasActiveAbility?(:PRANKSTER)) || target.hasActiveAbility?(:SPEEDBOOST)
+                        if (target.pbHasType?(:DARK, true) && user.hasActiveAbility?(:PRANKSTER)) || target.hasActiveAbility?(:SPEEDBOOST)
                             score*=0.5
                         else
                             score*=2
