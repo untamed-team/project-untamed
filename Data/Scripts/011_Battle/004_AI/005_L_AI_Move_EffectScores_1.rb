@@ -6012,7 +6012,7 @@ class Battle::AI
                 end
             end
         end
-         score = 0 if count == 0
+        score = 0 if count == 0
     #---------------------------------------------------------------------------
     when "UserTargetSwapAtkSpAtkStages" # power swap
         stages=0
@@ -6220,7 +6220,8 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "ResetAllBattlersStatStages" # haze
-        miniscore = minimini = 0
+        miniscore = 0
+        minimini = 0
         @battle.allBattlers.each do |b|
             if b.opposes?(user)
                 stages=0
@@ -6261,6 +6262,8 @@ class Battle::AI
             minimini*=1.1
             # check target for stat decreasing moves
             minimini*=1.3 if pbHasDebuffMove?(target)
+        else
+            minimini = 0
         end
         score*=minimini
     #---------------------------------------------------------------------------

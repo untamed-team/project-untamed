@@ -920,7 +920,7 @@ class Battle::AI
             score = 0
         else
             miniscore=100
-            userlivecount     = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+            userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
             targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
             if targetSurvivesMove(move,user,target)
                 score*=0.9
