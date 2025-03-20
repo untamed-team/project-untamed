@@ -338,51 +338,15 @@ class DifficultySelectMenu_Scene
     shadow = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
     overlay.font.size = 22
 
-    # this could be more compact but whatever im gonna pull a yandev
-    case page
-    when 1
-      #Freeze replaced with frostbite
-      #Hail buff
-      #Sleep no longer random
-      #EVs rework (post game)
-      #IVs removed
-      #Evasion boosting removed
-      #Bug SE against Fairy
-      #No level cap
-      #No item cap
-      #Set or switch style
-      #Pokemon type changes
-      #Pokemon stat changes
-      #Move Changes
-      #Ability Changes
-      #Evo Method changes
+    difficulty_desc = [
+      "The typical main series Pokémon experience.\n\nMinor Pokémon, move, ability, type, and battle feature adjustments have been made, along with other changes to the typical format.\nCheck the Project Untamed Wiki for more changes.",
+      "Casual mode with some extra limitations for added difficulty.\n\n-Experience has diminishing returns\n-Only 10 items allowed per trainer battle\n-Select limited number of Pokémon for gym battles\nCheck the Project Untamed Wiki for more changes.",
+      "For expert trainers looking for a challenge.\n\n-More difficult trainers\n-Experience caps\n-No items in battle\n-Set style enforced\nCheck the Project Untamed Wiki for more changes.",
+      "Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\n\n-Major Pokemon stats, abilities, learnset, distribution differences.\n-Certain move and battle features changed or removed.\n-New gimmicks (Type Zones, AAM, etc.)\n-Completely overhauled trainers.\nCheck Chaos Codex ingame for more Info."
+    ]
+    @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_#{page - 1}"))
+    difficultyDesc = _INTL(difficulty_desc[page - 1])
 
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
-      difficultyDesc = _INTL("Freeze replaced with Frostbite\nHail buff\nSleep no longer random\nEVs rework (post game)\nIVs reworked\nCheck the Project Untamed Wiki for more changes.")
-    when 2
-      #All of the above BUT
-      #Soft level cap (exp has diminishing returns)
-      #Soft item cap (10 items allowed)
-      #Select limited pokemon before gym battle
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
-      difficultyDesc = _INTL("All changes in Casual mode, plus:\nSoft level cap (exp has diminishing returns)\nSoft item cap (10 items allowed per battle)\nSelect limited number of Pokémon before gym battles\nCheck the Project Untamed Wiki for more changes.")
-    when 3
-      #All of the above BUT
-      #Hard level cap (no exp above certain level)
-      #Hard item cap (no items in battle)
-      #Set style enforced
-      #Sleep clause
-      #More difficult trainers
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
-      difficultyDesc = _INTL("All changes in Normal mode, plus:\nHard level cap (no exp above certain level)\nCannot use items in battle\nSet style enforced\nSleep clause\nMore difficult trainers\nCheck the Project Untamed Wiki for more changes.")
-    when 4
-      #notes to come
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
-      difficultyDesc = _INTL("NOTE: Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\nPokemon stats, abilities, learnset and distribution differences.\nCertain move and battle effects changed or removed.\n'Extremely' difficult trainers.\nStatus effects changed.\nCheck Chaos Codex ingame for more Info.")
-    end
     #difficulty name, always present
     drawFormattedTextEx(bitmap=overlay, x=52, y=52, width=overlay.width-58, text=_INTL("Casual"), baseColor=base, shadowColor=shadow, lineheight=16)
     drawFormattedTextEx(bitmap=overlay, x=122, y=52, width=overlay.width-58, text=_INTL("Normal"), baseColor=base, shadowColor=shadow, lineheight=16)
