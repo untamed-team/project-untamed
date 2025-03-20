@@ -663,7 +663,7 @@ POKEMON_GROWTH_DATA = {
 }
 
 def calcExp(defeatedBattler, pkmn, expvar, partyLength)
-  return 0 if pkmn[:level] - defeatedBattler[:level] >= 3
+  return 0 if pkmn[:level] - defeatedBattler[:level] >= 3 || pkmn[:level] >= 100
   a = defeatedBattler[:level] * defeatedBattler[:pokemon][:base_exp]
   exp = (a / partyLength).floor * partyLength # change is minor but does exist due to .floor
   exp = (exp * (100 + expvar * (defeatedBattler[:level] - pkmn[:level])) / 100).floor

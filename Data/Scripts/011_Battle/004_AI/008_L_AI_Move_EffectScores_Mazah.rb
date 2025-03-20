@@ -1751,7 +1751,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?([:PUNKROCK, :AMPLIFIER])
             echo("\nPunk / Amp Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.soundMove? }
         end 
         if target.hasActiveAbility?(:CONTRARY)
             echo("\nContrary Disrupt") if $AIGENERALLOG
@@ -1831,7 +1831,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?(:TOUGHCLAWS)
             echo("\nTough Claws Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.contactMove? }
         end
         if target.hasActiveAbility?(:UNSEENFIST)
             echo("\nUnseen Fist Disrupt") if $AIGENERALLOG
