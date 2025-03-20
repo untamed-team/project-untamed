@@ -29,38 +29,38 @@ class Battle::Battler
 	
   ################################################################################
 
-  def pbEffectsOnHPBarBreak(boss)
-    @battle.scene.sprites["dataBox_#{boss.index}"].refresh
-    @battle.scene.pbAnimation(:BRICKBREAK, boss.pbDirectOpposing, boss)
-    hpbarbreak = boss.pokemon.remaningHPBars[0] - 1
-    case boss.species
+  def pbEffectsOnHPBarBreak
+    @battle.scene.sprites["dataBox_#{self.index}"].refresh
+    @battle.scene.pbAnimation(:BRICKBREAK, self.pbDirectOpposing, self)
+    hpbarbreak = self.pokemon.remaningHPBars[0] - 1
+    case self.species
     when :NOCTAVISPA # test battle
       case hpbarbreak
       when 0
-        @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!", boss.pbThis))
-        pbUseExtraMidTurnMove(boss, :DEFENDORDER, boss)
-        pbCureMidTurn(boss, true, true)
+        @battle.pbDisplayBrief(_INTL("{1}'s servants were ordered to help!", self.pbThis))
+        pbUseExtraMidTurnMove(self, :DEFENDORDER, self)
+        pbCureMidTurn(self, true, true)
       when 1
         pbChangeTypeZone(:DARK, "Noctavispa's malice summoned a Dark Zone!")
-        pbChangeUserItemMidTurn(boss, :STARFBERRY)
-        pbRaiseStatsMidTurn(boss, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
-        boss.eachOpposing do |b|
+        pbChangeUserItemMidTurn(self, :STARFBERRY)
+        pbRaiseStatsMidTurn(self, [:SPECIAL_DEFENSE, 2, :SPEED, 3])
+        self.eachOpposing do |b|
           pbLowerStatsMidTurn(b, [:SPECIAL_ATTACK, 2, :SPEED, 3])
         end
       end
     when :CRUSTANG # steel gym fight
       case hpbarbreak
       when 0
-        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!", boss.pbThis))
-        pbUseExtraMidTurnMove(boss, :SHARPEN, boss)
+        @battle.pbDisplayBrief(_INTL("{1}'s sharpens itself with nearby parts!", self.pbThis))
+        pbUseExtraMidTurnMove(self, :SHARPEN, self)
       end
     end
   end
   
-  def pbEffectsOnHPBarRestore(boss)
-    @battle.scene.sprites["dataBox_#{boss.index}"].refresh
-    @battle.scene.pbAnimation(:PROTECT, boss, boss)
-    @battle.pbDisplay(_INTL("{1} restored 1 of its shields!", boss.pbThis))
+  def pbEffectsOnHPBarRestore
+    @battle.scene.sprites["dataBox_#{self.index}"].refresh
+    @battle.scene.pbAnimation(:PROTECT, self, self)
+    @battle.pbDisplay(_INTL("{1} restored 1 of its shields!", self.pbThis))
   end
 
   def pbUseExtraMidTurnMove(boss, move, target)
@@ -321,7 +321,7 @@ class Battle::Scene::PokemonDataBox < Sprite
       if breakbar > 0
         breakbar.times do
           @battler.pokemon.remaningHPBars[0] -= 1
-          @battler.pbEffectsOnHPBarBreak(@battler)
+          @battler.pbEffectsOnHPBarBreak
         end
         @battler.pokemon.hpbarsstorage[0] = 0
       end
@@ -329,7 +329,7 @@ class Battle::Scene::PokemonDataBox < Sprite
       if restorebar > 0
         restorebar.times do
           @battler.pokemon.remaningHPBars[0] += 1
-          @battler.pbEffectsOnHPBarRestore(@battler)
+          @battler.pbEffectsOnHPBarRestore
         end
         @battler.pokemon.hpbarsstorage[1] = 0
       end

@@ -700,6 +700,7 @@ Battle::ItemEffects::PriorityBracketChange.copy(:LAGGINGTAIL, :FULLINCENSE)
 
 Battle::ItemEffects::PriorityBracketChange.add(:QUICKCLAW,
   proc { |item, battler, battle|
+    next 0 if !$player.difficulty_mode?("easy")
     next 1 if battle.pbRandom(100) < 20
   }
 )
