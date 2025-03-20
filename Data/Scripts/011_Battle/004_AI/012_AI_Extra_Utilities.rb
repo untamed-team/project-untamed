@@ -911,8 +911,14 @@ class Battle::AI
             end
             healing += 0.0625 if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
             healing += 0.0625 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
-            healing += 0.0625 if user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
-            healing += 0.0625 if user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(user.effectiveWeather)
+            if user.hasActiveAbility?(:RAINDISH)
+                healing += 0.0625 if [:Rain, :HeavyRain].include?(user.effectiveWeather)
+                healing += 0.0625 if [:HeavyRain].include?(user.effectiveWeather)
+            end
+            if user.hasActiveAbility?(:HEALINGSUN)
+                healing += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather)
+                healing += 0.0625 if [:HarshSun].include?(user.effectiveWeather)
+            end
             healing += 0.0625 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
             healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)
             healing += 0.125 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)

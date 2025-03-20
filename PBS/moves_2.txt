@@ -6575,7 +6575,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetAttack2ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user enrages and dizzies the target. However, it also sharply raises the target's Attack stat.
 #-------------------------------
 [SWALLOW]
