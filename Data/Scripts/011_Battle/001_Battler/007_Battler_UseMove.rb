@@ -215,21 +215,24 @@ class Battle::Battler
     end
     # Presage #by low (placed here so it triggers before doing damage)
     if self.hasActiveAbility?(:PRESAGE)
-      weather_hash = {
-        "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
-        "HealUserDependingOnWeather" => :Sun, # morning sun
-        "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
-        "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
-        "HealUserDependingOnHail"      => :Hail, # glacial gulf
-        "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
-        "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
-        "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
-        "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
-        "HigherDamageInRain"                            => :Rain, # stream burst
-        "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
-        "PeperSpray"                                    => :Sun   # pepper spray
-      }
-      if move.function != "TypeAndPowerDependOnWeather"
+      if move.function == "TypeAndPowerDependOnWeather"
+        possible_weathers = [:Sun, :Rain, :Sandstorm, :Hail, :StrongWinds, :ShadowSky]
+        new_weather = possible_weathers[@battle.pbRandom(possible_weathers.length)] if $player.difficulty_mode?("easy")
+      else
+        weather_hash = {
+          "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+          "HealUserDependingOnWeather" => :Sun, # morning sun
+          "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+          "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+          "HealUserDependingOnHail"      => :Hail, # glacial gulf
+          "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+          "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+          "HigherDamageInRain"                            => :Rain, # stream burst
+          "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+          "PeperSpray"                                    => :Sun   # pepper spray
+        }
         new_weather = weather_hash[move.function]
         if !new_weather && move.damagingMove?
           case move.type
