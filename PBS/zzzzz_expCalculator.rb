@@ -695,6 +695,7 @@ def simBattle(pkmn, trainers, expvar, partyLength, difficulty_mode, pokemon_data
         while pkmn[:current_exp] >= simLevelUp(pkmn)
           pkmn[:level] += 1
           pkmn[:current_exp] -= simLevelUp(pkmn)
+          pkmn[:current_exp] = 0 if pkmn[:level] >= 100
         end
         pkmn[:current_exp] = [pkmn[:current_exp], 0].max
       else
