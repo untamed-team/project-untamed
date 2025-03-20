@@ -444,12 +444,12 @@ Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
 		pbRaiseTropiusEvolutionStep(battler) #by low
     battle.pbCommonAnimation("EatBerry", battler) if !forced
     amt = battler.totalhp
-    amt *= 1 / 2.0 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
+    amt /= 1.5 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
     battler.pbRecoverHP(amt)
     itemName = GameData::Item.get(item).name
     if forced
       PBDebug.log("[Item triggered] Forced consuming of #{itemName}")
-      battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
+      battler.pbSleepSelf(_INTL("{1}'s HP was restored and it went to sleep.", battler.pbThis), 3)
     else
       battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
     end
