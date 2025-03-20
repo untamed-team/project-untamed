@@ -334,8 +334,8 @@ class DifficultySelectMenu_Scene
   def drawPage(page)
     overlay = @sprites["overlay"].bitmap
     overlay.clear
-    base   = MessageConfig::DARK_TEXT_MAIN_COLOR
-    shadow = MessageConfig::DARK_TEXT_SHADOW_COLOR
+    base   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
+    shadow = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
     overlay.font.size = 22
 
     # this could be more compact but whatever im gonna pull a yandev
@@ -390,9 +390,9 @@ class DifficultySelectMenu_Scene
     drawFormattedTextEx(bitmap=overlay, x=260, y=52, width=overlay.width-58, text=_INTL("Chaos"), baseColor=base, shadowColor=shadow, lineheight=16)
 
     # fs = font size
-    difficultyDesc = "<fs=24>" + difficultyDesc + "</fs>"
+    difficultyDesc = "<fs=24><al>" + difficultyDesc + "</al></fs>"
     #difficulty description, changes per page
-    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
+    drawFormattedTextEx(bitmap=overlay, x=64, y=88, width=overlay.width-120, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
   end
   
   def pbEndScene
