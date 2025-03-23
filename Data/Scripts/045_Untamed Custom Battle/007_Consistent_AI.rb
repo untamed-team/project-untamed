@@ -1,4 +1,7 @@
 class Battle::AI
+    # kiriya flags
+    $aisuckercheck = [false, 0]
+
     # kiriya ai log settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
     $AIMASTERLOG = (false && $DEBUG)
@@ -36,6 +39,19 @@ class Battle::AI
         # Get scores and targets for each move
         # NOTE: A move is only added to the choices array if it has a non-zero
         #       score.
+        user.eachOpposing do |b|
+            if targetWillMove?(b, "dmg")
+                targetMove = @battle.choices[b.index][2]
+                if targetMove.function == "FailsIfTargetActed" && user.moves.any? { |i| i.statusMove? }
+                    suckerp = 80
+                    suckerp = 66 if b.moves.any? { |i| i.statusMove? }
+                    if rand(100) < suckerp
+                        echoln("\n'prediction(2)'")
+                        $aisuckercheck = [true, b]
+                    end
+                end
+            end
+        end
         choices     = []
         user.eachMoveWithIndex do |_m, i|
             next if !@battle.pbCanChooseMove?(idxBattler, i, false)
@@ -266,6 +282,7 @@ class Battle::AI
         if @battle.choices[idxBattler][2]
             PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use #{@battle.choices[idxBattler][2].name}")
         end
+        $aisuckercheck = [false, 0]
     end
   
     #=============================================================================
@@ -476,6 +493,28 @@ class Battle::AI
                         score=1
                         realDamage=0 
                     end
+                end
+            end
+        end
+        if $aisuckercheck[0]
+            user.eachOpposing do |b|
+                next unless $aisuckercheck[1] == b
+                suckermove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SUCKERPUNCH))
+                thisprio = priorityAI(user,move)
+                thatprio = priorityAI(b,suckermove)
+                if thisprio > thatprio
+                    prioCreep = true
+                elsif thisprio == thatprio
+                    aspeed = pbRoughStat(user,:SPEED,skill)
+                    ospeed = pbRoughStat(target,:SPEED,skill)
+                    prioCreep = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                else
+                    prioCreep = false
+                end
+                if !prioCreep
+                    echo("\n'Predicting' that the opponent will use sucker punch and user is 'outspeed', thus removing #{move.name}")
+                    realDamage=0
+                    score=0
                 end
             end
         end
