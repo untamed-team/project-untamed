@@ -506,13 +506,13 @@ class Battle::AI
                     prioCreep = true
                 elsif thisprio == thatprio
                     aspeed = pbRoughStat(user,:SPEED,skill)
-                    ospeed = pbRoughStat(target,:SPEED,skill)
+                    ospeed = pbRoughStat(b,:SPEED,skill)
                     prioCreep = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
                 else
                     prioCreep = false
                 end
                 if !prioCreep
-                    echo("\n'Predicting' that the opponent will use sucker punch and user is 'outspeed', thus removing #{move.name}")
+                    echo("\n'Predicting' that a opponent will use sucker punch and user is 'outspeed', thus removing #{move.name}")
                     realDamage=0
                     score=0
                 end
