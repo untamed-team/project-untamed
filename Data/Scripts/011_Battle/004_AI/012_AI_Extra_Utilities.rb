@@ -238,7 +238,9 @@ class Battle::AI
             end
         end
         # klutz buff #by low
-        if skill >= PBTrainerAI.bestSkill && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos")) &&
+        klut = user.hasActiveAbility?(:KLUTZ)
+        klut = false if !$player.difficulty_mode?("chaos")
+        if skill >= PBTrainerAI.bestSkill && !klut &&
            target.itemActive? && target.item && !target.item.is_berry?
             Battle::ItemEffects.triggerDamageCalcFromTarget(
                 target.item, user, target, move, multipliers, baseDmg, type
@@ -300,8 +302,10 @@ class Battle::AI
             multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
             multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER, :PRISMARMOR],false,moldBreaker)
             
-            if (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos")) && 
-               target.itemActive? && target.item
+            # klutz buff #by low
+            klut = user.hasActiveAbility?(:KLUTZ)
+            klut = false if !$player.difficulty_mode?("chaos")
+            if target.itemActive? && target.item && !klut
                 berryTypesArray = {
                     :OCCABERRY   => :FIRE,
                     :PASSHOBERRY => :WATER,

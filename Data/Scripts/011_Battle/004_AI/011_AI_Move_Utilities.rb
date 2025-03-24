@@ -483,8 +483,9 @@ class Battle::AI
       )
     end
     # klutz buff #by low
-    if skill >= PBTrainerAI.bestSkill && target.itemActive? && 
-      (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if skill >= PBTrainerAI.bestSkill && target.itemActive? && !klut
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, move, type
       )
