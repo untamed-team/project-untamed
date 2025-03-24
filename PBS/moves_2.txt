@@ -7850,7 +7850,7 @@ Description = Gathers space power and boosts its Sp. Atk stat on the first turn,
 [DIAMONDSTORM]
 Name = Diamond Storm
 Type = ROCK
-Category = Special
+Category = Physical
 Power = 95
 Accuracy = 100
 TotalPP = 5
@@ -8966,13 +8966,13 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 90
-Accuracy = 90
+Power = 100
+Accuracy = 100
 TotalPP = 10
-Target = NearOther
+Target = AllNearOthers
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-Description = The user attacks by scattering a cloud of coarse debris. Critical hits land more easily.
+Flags = CanProtect,CanMirrorMove
+Description = The user attacks everything around it by scattering a cloud of coarse debris.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth

@@ -393,8 +393,8 @@ class Battle::Battler
             target.damageState.protected = true
             @battle.successStates[user.index].protected = true
             if move.pbContactMove?(user) && user.affectedByContactEffect? &&
-              user.pbCanLowerStatStage?(:DEFENSE, target)
-              user.pbLowerStatStage(:DEFENSE, 2, target)
+               user.pbCanLowerStatStage?(:DEFENSE, target)
+              user.pbLowerStatStage(:DEFENSE, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, target)
             end
             return false
           end
