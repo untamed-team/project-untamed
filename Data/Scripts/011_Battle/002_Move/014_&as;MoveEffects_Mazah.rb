@@ -1,5 +1,5 @@
 #===============================================================================
-# The user's Special Defense user's Special Attack. (Psycrush)
+# Attacking stat is SpDef instead of SpAtk. (Psycrush)
 #===============================================================================
 class Battle::Move::UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack < Battle::Move
   def pbGetAttackStats(user, target)
@@ -48,7 +48,6 @@ class Battle::Move::TitanWrath < Battle::Move
 				@calcCategory = 1
 				statbranch = [user.speed, user.stages[:SPEED] + 6]
 		end
-		#~ @battle.pbDisplayPaused(_INTL("{1}, {2}, {3}", statbranch[0], statbranch[1], @calcCategory))
 		return statbranch
 	end
 	
@@ -137,19 +136,13 @@ class Battle::Move::Rebalancing < Battle::Move
 end
 
 #===============================================================================
-# gets 2.25x on rain
-# in theory it nullifies the nerfs/buffs of a fire type move on those weathers
+# gets 2.25x on rain, in theory it nullifies the nerf of a fire move on that weather and gives it a boost
+# "wait why is this so poorly coded when scald exists?" fuck you thats why 
 # (Steam Burst)
-#===============================================================================
-# i hate pseudos btw
 #===============================================================================
 class Battle::Move::HigherDamageInRain < Battle::Move
   def pbBaseDamage(baseDmg,user,target)
-    case @battle.pbWeather
-    when :Rain, :HeavyRain
-      baseDmg *= 1.5
-      baseDmg *= 1.5
-    end
+    baseDmg *= 2.25 if user.effectiveWeather == :Rain
     return baseDmg
   end
 end
@@ -187,7 +180,7 @@ class Battle::Move::HitThreeToFiveTimes < Battle::Move
     hitChances = [
       3, 3, 3, 3, 3, 3, 3,
       3, 3, 3, 3, 3, 3, 3,
-      4, 4, 4, 5, 5, 5
+      4, 4, 4, 4, 5, 5, 5
     ]
     hitChances.map! { |c| c <= 3 ? (c + 1) : c } if !user.pbOwnedByPlayer?
     r = @battle.pbRandom(hitChances.length)
@@ -198,7 +191,7 @@ end
 
 
 #===============================================================================
-# Attacks 1 round in the future. (Premonition dummy move) # Premonition
+# Attacks 1 round in the future. (Premonition dummy move)
 #===============================================================================
 class Battle::Move::AttackOneTurnLater < Battle::Move
   def pbMoveFailed?(user, targets)
@@ -255,6 +248,7 @@ end
 # Replaces the target's status condition with Poison if the target's previous
 # status condition was not Poison.
 #===============================================================================
+# ...or just sets the foe's status condition as poison
 # "well it's a signature move so why not make it the most powerful thing ever"
 #===============================================================================
 class Battle::Move::OverrideTargetStatusWithPoison < Battle::Move
@@ -298,7 +292,7 @@ end
 
 #===============================================================================
 # Deals double damage if the opponent initial item belongs to the "choice" brand
-# "Knocks Off" the opponent item if its a choice item
+# "Knocks Off" the opponent item if its a choice item (not used)
 #===============================================================================
 class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
@@ -321,7 +315,8 @@ class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
 end
 
 #===============================================================================
-# typo on function code is intentional (Pepper Spray)
+# higher base power in sun, hits multiple foes in sun if the move type is grass
+# typo on function code is intentional (Pepper Spray, Scorching Sands)
 #===============================================================================
 class Battle::Move::PeperSpray < Battle::Move
   def pbTarget(user)
@@ -337,7 +332,7 @@ class Battle::Move::PeperSpray < Battle::Move
 end
 
 #===============================================================================
-# higher dmg during sun vs not fire types
+# ignore final damage decrease during sun vs non fire types
 # ignores desolate land vaporization vs non fire types (scald)
 #===============================================================================
 class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
@@ -345,7 +340,8 @@ class Battle::Move::HigherDamageInSunVSNonFireTypes < Battle::Move
 end
 
 #===============================================================================
-# Hits two times, ignores multi target debuff, phys or spec. (Splinter Shot)
+# Hits two times. Ignores multi target debuff. 
+# Physical or Special, depends on what stat is higher. (Splinter Shot)
 #===============================================================================
 class Battle::Move::HitTwoTimesReload < Battle::Move
   def initialize(battle, move)
@@ -382,6 +378,12 @@ end
 class Battle::Move::BOOMInstall < Battle::Move
   def canMagicCoat?; return statusMove?; end
   
+  def pbBaseAccuracy(user, target)
+    acc = @accuracy
+    acc *= 1.1 if user.gender == 1 && move.statusMove?
+    return acc.floor
+  end
+  
   def pbFailsAgainstTarget?(user, target, show_message)
     return if damagingMove?
     if target.effects[PBEffects::BoomInstalled]
@@ -392,7 +394,7 @@ class Battle::Move::BOOMInstall < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     return if damagingMove?
-    pbSEPlay("BOOM") if rand(2) == 0
+    pbSEPlay("BOOM") if rand(2) == 0 && user.gender == 1
     target.effects[PBEffects::BoomInstalled] = true
     @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
   end
@@ -400,7 +402,7 @@ class Battle::Move::BOOMInstall < Battle::Move
   def pbAdditionalEffect(user, target)
     return if statusMove?
     return if target.effects[PBEffects::BoomInstalled]
-    pbSEPlay("BOOM") if rand(2) == 0
+    pbSEPlay("BOOM") if rand(2) == 0 && user.gender == 1
     target.effects[PBEffects::BoomInstalled] = true
     @battle.pbDisplay(_INTL("{1}'s code was corrupted!", target.pbThis))
   end
