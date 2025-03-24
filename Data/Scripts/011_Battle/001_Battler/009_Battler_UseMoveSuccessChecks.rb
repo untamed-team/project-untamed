@@ -215,6 +215,9 @@ class Battle::Battler
           return false
         end
       end
+    when :DIZZY #by low
+      self.statusCount -= 1
+      pbCureStatus if @statusCount <= 0
     end
     # Obedience check
     return false if !pbObedienceCheck?(choice)

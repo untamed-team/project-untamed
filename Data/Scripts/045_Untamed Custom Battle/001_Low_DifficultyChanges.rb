@@ -265,13 +265,8 @@ class Battle
       battler.pbFaint if battler.fainted?
       battler.droppedBelowHalfHP = false
     end
-    # dizzy #by low
-    priority.each do |battler|
-      next if battler.status != :DIZZY
-      battler.statusCount -= 1
-      battler.pbCureStatus if battler.statusCount <= 0
-    end
-    # paralyzis rework #by low
+    # dizzy is in pbTryUseMove
+    # paralyzis rework (doesn't deal damage, but cure happens at the end of the turn)
     priority.each do |battler|
       next if battler.status != :PARALYSIS
       next if !$player.difficulty_mode?("chaos")

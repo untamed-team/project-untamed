@@ -254,7 +254,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
-         if user.turnCount == 0
+        if user.turnCount == 0
             hasAlly = !user.allAllies.empty?
             if hasAlly
                 healcheck = target.moves.any? { |m| m&.healingMove? }

@@ -513,8 +513,8 @@ class Battle::AI
                 end
                 if !prioCreep
                     echo("\n'Predicting' that a opponent will use sucker punch and user is 'outspeed', thus removing #{move.name}")
+                    score=1
                     realDamage=0
-                    score=0
                 end
             end
         end
