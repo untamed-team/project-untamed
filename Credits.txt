@@ -5,16 +5,19 @@
 Main Development Team:
 BlueLightning
 Chespin_Craft
+FIE.F
 Gardenette
 Kaloja
 Kutas Kitti
 Lovely Werewolf
 Low
 Merry
-mhm
+Miiryx
+Owoodfin
 SpaceWestern
 Spork
 stygma
+the.SizzlePanda
 
 
 
@@ -63,6 +66,8 @@ King Tapia
 Kutas Kitti
 Lightbulb15
 Magiscarf
+Merry
+Moses
 Phyromatical
 Pint Sized Kiwi
 PokemonEclipse
@@ -85,6 +90,7 @@ Akikaze
 Applesaucior
 Banana 'Eduardo' Toast
 Bean Soup
+been
 Chespin_Craft
 Chromatech01
 Claire
@@ -112,6 +118,7 @@ Lorka_Grey
 LuckyBenjamin
 MadMillerMiller
 MasterMachi
+Merry
 painT
 Pelican
 Regal-Turtwig
@@ -141,6 +148,7 @@ DiegoWT
 Gardenette
 Gearjuice
 HingisDingus
+Hugo L.
 HwiteHwale
 Jack
 KameOtaku
@@ -169,14 +177,17 @@ Dan Bacon
 DomTom
 Fikolyte
 Gardenette
+Hugo L.
 HwiteHwale
 Jackster
 Jeremy K
 MadMillerMiller
 MasterMachi
+Moses
 Owoodfin
 Random Talking Bush
 Riot
+Sal_Aliz
 Saltilton
 Tyler (MANGO) Jackson
 WolfPP
@@ -195,21 +206,26 @@ Music
 Soundtrack:
 ENLS's Pre-Looped Music Library
 EntityUnknown
+FIE.F
 FNaF 6
 Jumpluff
 Laminnanne
 Lovely Werewolf
+Merry
 mhm
 Pokémon Clover
 Purple Hat of Awesome
 ReMX
 Rhythm Break
+rocker
 
 
 
 Pokémon Cries:
+FIE.F
 Gardenette
 Hummus
+Merry
 mhm
 Text 206
 
@@ -229,12 +245,14 @@ GreenJellybean
 ImaDeadMan
 Kaloja
 Kameleron
+Kami
 Kutas Kitti
 MadMillerMiller
 Merry
 RISH
 Shadows
 stygma
+Sushi Rollo
 Tyler (MANGO) Jackson
 
 
@@ -271,21 +289,32 @@ Angel
 Bean Soup
 BlueLightning
 Deino
+FIE.F
 Firedude
 Gardenette
+Hawkeyetri
+Hex mono
 HwiteHwale
+JayBeeMe
 Kameleron
+Kami
 Kyl-E
 Luc_
 LuckyBenjamin
 MasterMachi
 Merry
+Mudkip
 PaperTowelDealer
+Raiz
+Reahn
+Sal_Aliz
 Scandal
 Shilo
 sneakysnek
 stygma
+The_Virus
 ThisGrainCharacter
+TK SamuraiSasori
 Tyler Bland
 Yadriel J. Vento (HypnosEmblem)
 
@@ -302,6 +331,7 @@ Game Data & Balancing
 ---------------------
 Adam B.
 Amber W
+Box
 caesar
 DomTom
 Elm
@@ -310,6 +340,7 @@ FIE.F
 Gardenette
 Garreon
 Hare64
+Hawkeyetri
 HwiteHwale
 Kyl-E
 Low
@@ -319,6 +350,7 @@ Malarkey
 Merry
 Midbus
 mSilk
+Nightmareone
 noahthenumbat
 PaperTowelDealer
 ParaBellum
@@ -328,6 +360,7 @@ Señor Gallo de Caballo
 Shadows
 SpaceWestern
 stygma
+TK SamuraiSasori
 Waffler
 Zyuran
 
@@ -343,6 +376,7 @@ Zyuran
 Translating
 -----------
 Abstractpuppet
+Adoudidou
 Aelvric
 Basalte
 Cawa/Sasha
@@ -351,10 +385,12 @@ Elm
 Fitch
 Floriak
 Hey
+Korr
 Myztic
 Slepoy
 stygma
 Truegear
+vakozay
 Wowo
 Zylber7
 
@@ -377,8 +413,10 @@ das5198
 j
 Jamadxx
 Merry
+Moses
 Saltilton
 stygma
+TK SamuraiSasori
 Tom Buenbarril
 VentesTheFloof
 
@@ -791,6 +829,11 @@ No copyright infringements intended.
 Please support the official games!
 
 
+And lastly, our thanks to
+
+
+
+YOU
 ====================
 
 Link to Mazah Region Fangame Discord
