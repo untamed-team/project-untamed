@@ -865,7 +865,7 @@ class CrustangRacing
 		end
 		
 		#only recognize a PB if the player has raced before. No freebies on the first race
-		if @distance_personal_best.nil?
+		if $crustang_racing.distance_personal_best.nil?
 			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
 		else
 			self.recognizePersonalBest
@@ -873,14 +873,14 @@ class CrustangRacing
 	end #def self.givePrize
 		
 	def self.recognizePersonalBest
-		if @racerPlayer[:LapTotal] > @distance_personal_best
+		if @racerPlayer[:LapTotal] > $crustang_racing.distance_personal_best
 			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
 			#exclamation mark above this event
 			pbOverworldAnimation(event=getThisEvent, id=3, tinting = false)
 			pbMessage(_INTL("WOAH! #{@racerPlayer[:LapTotal]} is a new personal best for you! Here, take one of these as a congratulations!"))
 			pbReceiveItem(CrustangRacingSettings::REWARD_FOR_PERSONAL_BEST)
 		end #if @racerPlayer[:LapTotal] > @distance_personal_best
-	end #def self.recognizePersonalBest	
+	end #def self.recognizePersonalBest
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

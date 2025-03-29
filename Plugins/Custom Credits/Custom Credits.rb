@@ -298,6 +298,7 @@ Jumpluff
 Laminnanne
 Locrian
 Lovely Werewolf
+Materia Music Publishing
 Merry
 Pint Sized Kiwi
 Pokémon Clover
@@ -306,6 +307,7 @@ ReMX
 Rhythm Break
 rocker
 TheDopeyElephant
+Toby Fox
 
 
 
