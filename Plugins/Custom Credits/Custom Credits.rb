@@ -59,13 +59,13 @@ FIE.F
 Gardenette
 Kaloja
 Kutas Kitti
+LotusLich/Spork
 Lovely Werewolf
 Low
 Merry
 Miiryx
 Nifdoowo
 SpaceWestern
-Spork
 stygma
 the.SizzlePanda
 
@@ -106,11 +106,14 @@ Banana 'Eduardo' Toast
 BE_Infinity
 Cristata
 Derlo
+dipaolo
 Donlawride
 Gearjuice
 GreenJellybean
 Griffin L.
+Guill
 Jackeroni216
+k1-energy
 Kaloja
 King Tapia
 Kutas Kitti
@@ -118,6 +121,8 @@ Lightbulb15
 Magiscarf
 Merry
 Moses
+ormr_kin
+Phrog 
 Phyromatical
 Pint Sized Kiwi
 PokemonEclipse
@@ -126,7 +131,9 @@ Rider Dragon
 Saltilton
 Seiyouh
 ShadySheep
+StarDream
 stygma
+Sunfish
 the.sizzlepanda
 Tinytrashing
 Tyler Jones
@@ -141,6 +148,7 @@ Applesaucior
 Banana 'Eduardo' Toast
 Bean Soup
 been
+CeleryGuy
 Chespin_Craft
 Chromatech01
 Claire
@@ -157,22 +165,29 @@ Griffin L.
 Grimrose
 HingisDingus
 Hub-Bub
-The Picky Pixel Artist
-Igor!
 I'm Para
+Igor!
+Inks
 Jack
 Jeremy K
+Jhams
+k1-energy
 KameOtaku
+Locrian
 Loretze
 Lorka_Grey
+LotusLich/Spork
 LuckyBenjamin
 MadMillerMiller
 MasterMachi
 Merry
 painT
 Pelican
+Pint Sized Kiwi
+Phrog
 Regal-Turtwig
 RockTomb
+Sadistic Ivory Rosé
 Saltilton
 ShadySheep
 SietseML
@@ -180,39 +195,55 @@ Sodacat
 Solvaa
 SomeAllay
 SoundJack426
-Spork
+Sunfish
+The Picky Pixel Artist
 Venom_
 VentesTheFloof
 Waterleaf
 WillTheWall
+yeehaugh
+Yeem
+Yokaiju
+Yoli
 
 Trainers/NPCs:
 aball
 Akikaze
 AtomicReactor
 BamBoshBubb
+BSXD
+CeleryGuy
 Chespin_Craft
 Claire
 Cristata
+cubeofstone
+D3DKAT
+De_Liller
 DiegoWT
+Froot
 Gardenette
 Gearjuice
+Guill
 HingisDingus
 Hugo L.
 HwiteHwale
 Jack
+k1-energy
 KameOtaku
+Locomotivo
 Loretze
+LotusLich/Spork
 MadMillerMiller
 Maicerochico
 MILKMAN
 Neo-Spriteman
 Nifdoowo
 Omegabroski2
+PHxNX
+Porywagon
 PurpleZaffre
 RockTomb
 Saltilton
-Spork
 TheFallenRoyal
 VanillaSunshine
 VentesTheFloof
@@ -224,6 +255,7 @@ Basalte
 Chespin_Craft
 Cristata
 Dan Bacon
+dipaolo
 DomTom
 Fikolyte
 Gardenette
@@ -235,11 +267,13 @@ MadMillerMiller
 MasterMachi
 Moses
 Nifdoowo
+Pint Sized Kiwi
 Random Talking Bush
 Riot
 Sal_Aliz
 Saltilton
 Tyler (MANGO) Jackson
+Virus
 WolfPP
 
 
@@ -260,23 +294,26 @@ FIE.F
 FNaF 6
 Jumpluff
 Laminnanne
+Locrian
 Lovely Werewolf
 Merry
-mhm
+Pint Sized Kiwi
 Pokémon Clover
 Purple Hat of Awesome
 ReMX
 Rhythm Break
 rocker
+TheDopeyElephant
 
 
 
 Pokémon Cries:
+CeleryGuy
 FIE.F
 Gardenette
 Hummus
 Merry
-mhm
+Pint Sized Kiwi
 Text 206
 
 
@@ -290,20 +327,26 @@ Text 206
 
 Mapping
 -------
+dipaolo
+Elm
 Gardenette
 GreenJellybean
+Guill
 ImaDeadMan
+Jallensart
 Kaloja
 Kameleron
 Kami
 Kutas Kitti
 MadMillerMiller
 Merry
+Pint Sized Kiwi
 RISH
 Shadows
 stygma
 Sushi Rollo
 Tyler (MANGO) Jackson
+Virus
 
 
 
@@ -321,6 +364,7 @@ Geoswag
 Kaloja
 Kutas Kitti
 Low
+Pint Sized Kiwi
 SpaceWestern
 stygma
 
@@ -338,10 +382,13 @@ Story & Quests
 Angel
 Bean Soup
 BlueLightning
+BSXD
+CitrusCustard
 Deino
 FIE.F
 Firedude
 Gardenette
+Guill
 Hawkeyetri
 Hex mono
 HwiteHwale
@@ -349,23 +396,30 @@ JayBeeMe
 Kameleron
 Kami
 Kyl-E
+Inks
+Locomotivo
 Luc_
 LuckyBenjamin
 MasterMachi
+Merloc8
 Merry
+Miiryx
 Mudkip
 PaperTowelDealer
+PHxNX
 Raiz
 Reahn
 Sal_Aliz
 Scandal
 Shilo
 sneakysnek
+SP0RE
 stygma
 The_Virus
 ThisGrainCharacter
 TK SamuraiSasori
 Tyler Bland
+Virus
 Yadriel J. Vento (HypnosEmblem)
 
 
@@ -383,6 +437,8 @@ Adam B.
 Amber W
 Box
 caesar
+CitrusCustard
+dipaolo
 DomTom
 Elm
 Empyrean
@@ -399,11 +455,13 @@ MacheteMcGoo
 Malarkey
 Merry
 Midbus
+Miiryx
 mSilk
 Nightmareone
 noahthenumbat
 PaperTowelDealer
 ParaBellum
+Pint Sized Kiwi
 Robochef9000
 Scandal
 Señor Gallo de Caballo
@@ -411,6 +469,7 @@ Shadows
 SpaceWestern
 stygma
 TK SamuraiSasori
+Virus
 Waffler
 Zyuran
 
@@ -436,7 +495,9 @@ Fitch
 Floriak
 Hey
 Korr
+Motis
 Myztic
+SaraLaGusana
 Slepoy
 stygma
 Truegear
@@ -487,6 +548,7 @@ HingisDingus
 Kutas Kitti
 Luc_
 MasterMachi
+SP0RE
 stygma
 
 
@@ -503,7 +565,10 @@ Wiki
 B_Creative
 Chespin_Craft
 Chroma
+CitrusCustard
 Low
+Miiryx
+R. P. Genocraft
 
 
 
@@ -1040,7 +1105,7 @@ END
       Input.update
       update
 	  @timer += 1
-	  @sprites["skip"].opacity = 255 if @timer >= @skip_seconds * Graphics.frame_rate
+	  @sprites["skip"].opacity += 1 if @timer >= @skip_seconds * Graphics.frame_rate && @sprites["skip"].opacity < 255
       break if $scene != self
     end
     pbBGMFade(2.0)
