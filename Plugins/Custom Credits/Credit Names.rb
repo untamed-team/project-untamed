@@ -35,7 +35,7 @@ class Scene_Credits
   "SaraLaGusana" => "SaraLaGusana",
   "Pint Sized Kiwi" => "Pint Sized Kiwi",
   "Nifdoowo" => "Nifdoowo",
-  "NAME" => "FILE",
+  "godopolis" => "godopolis",
   "NAME" => "FILE",
   "NAME" => "FILE",
   "NAME" => "FILE",

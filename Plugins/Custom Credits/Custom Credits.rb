@@ -101,6 +101,7 @@ Graphics
 --------
 Tilesets:
 aball
+Allay
 Aveon Trainer
 Banana 'Eduardo' Toast
 BE_Infinity
@@ -144,6 +145,7 @@ Pokémon & Pokédex:
 A Slime Psycho
 aball
 Akikaze
+Allay
 Applesaucior
 Banana 'Eduardo' Toast
 Bean Soup
@@ -161,6 +163,7 @@ Fikolyte
 Firedude
 Floriak
 GamerCroc11
+godopolis
 Griffin L.
 Grimrose
 HingisDingus
@@ -193,7 +196,6 @@ ShadySheep
 SietseML
 Sodacat
 Solvaa
-SomeAllay
 SoundJack426
 Sunfish
 The Picky Pixel Artist
