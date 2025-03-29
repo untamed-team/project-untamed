@@ -2375,4 +2375,23 @@ end #def self.showMoveAnimationOnScreen(moveID, atself = false, hitNum=0)
 		return nil
 	end
 
+#=============================================================================
+# Check for CR demo
+#=============================================================================	
+def self.pbCheckCRRewards
+  if $game_variables[140] != true
+    #if the player met requirements in their save file of the CR demo
+    if pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61)
+      print "player has played 5+ races and exported settings"
+      $game_variables[140] = true
+    elsif pbSaveTest("Crustang Racing Demo","switch",62) #played at least 1 race
+      print "player has played at least 1 race"
+      $game_variables[140] = true
+    else
+      #no rewards to give
+      print "no rewards to give"
+    end
+  end
+end #def pbCheckCRRewards
+
 end #class GardenUtil
