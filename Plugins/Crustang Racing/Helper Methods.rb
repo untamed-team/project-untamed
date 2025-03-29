@@ -865,7 +865,7 @@ class CrustangRacing
 		end
 		
 		#only recognize a PB if the player has raced before. No freebies on the first race
-		if $crustang_racing.distance_personal_best.nil?
+		if $crustang_racing.distance_personal_best.nil? || $crustang_racing.distance_personal_best <= 0
 			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
 		else
 			self.recognizePersonalBest

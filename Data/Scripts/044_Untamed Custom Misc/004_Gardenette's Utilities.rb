@@ -2381,11 +2381,13 @@ end #def self.showMoveAnimationOnScreen(moveID, atself = false, hitNum=0)
 def self.pbCheckCRRewards
   if $game_variables[140] != true
     #if the player met requirements in their save file of the CR demo
-    if pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61)
+    print "cr demo switch 60: #{pbSingleSaveTest("Crustang Racing Demo","Switch",60)}"
+    print "cr demo switch 61: #{pbSingleSaveTest("Crustang Racing Demo","Switch",61)}"
+    if pbSingleSaveTest("Crustang Racing Demo","Switch",60) && pbSingleSaveTest("Crustang Racing Demo","Switch",61)
       print "player has played 5+ races and exported settings"
       $game_variables[140] = true
-    elsif pbSaveTest("Crustang Racing Demo","switch",62) #played at least 1 race
-      print "player has played at least 1 race"
+    elsif pbSingleSaveTest("Crustang Racing Demo","Exist") #save file exists
+      print "save file exists"
       $game_variables[140] = true
     else
       #no rewards to give
