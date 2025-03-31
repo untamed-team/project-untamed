@@ -272,8 +272,9 @@ class Battle::Scene::PokemonDataBox < Sprite
   def draw_shiny_icon
     return if !@battler.shiny?
     #shiny_x = (@battler.opposes?(0)) ? 206 : -6   # Foe's/player's
-    shiny_x = (@battler.opposes?(0)) ? 220 : 24   # Foe's/player's
-    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, 36]])
+    shiny_x = (@battler.opposes?(0)) ? 220 : 8   # Foe's/player's
+    shiny_y = (@battler.opposes?(0)) ? 36 : 48  # Foe's/player's
+    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, shiny_y]])
   end
 
   def draw_special_form_icon
