@@ -1,6 +1,6 @@
 class Pokemon
   # Number of times this pokemon has rolled for shininess
-  attr_reader   :shiny_roll_count
+  attr_accessor   :shiny_roll_count
 
   # Indicates full odds, not shininess - a non-shiny pokemon can still return true
   # on this, as long as no shiny odds changes were active when caught

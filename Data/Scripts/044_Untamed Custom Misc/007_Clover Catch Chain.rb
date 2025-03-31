@@ -30,7 +30,10 @@ def chainBonuses(mon,species)
       shinyrate = Settings::SHINY_POKEMON_CHANCE
     end
     v = (65_536 / shinyrate.to_f).ceil
-    mon.shiny = true if rand(65_536) < v
+    if rand(65_536) < v
+      mon.shiny = true
+      # Sets shiny roll count to 2 so this isn't registered as a full-odds shiny
+      mon.shiny_roll_count = 2
   end
 end
 
