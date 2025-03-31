@@ -280,7 +280,9 @@ class Battle::Scene::PokemonDataBox < Sprite
   def draw_special_form_icon
     # Mega Evolution/Primal Reversion icon
     if @battler.mega?
-      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + 8, 34]])
+      mega_x = (@battler.opposes?(0)) ? 222 : 6   # Foe's/player's
+      mega_y = (@battler.opposes?(0)) ? 36 : 49  # Foe's/player's
+      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + mega_x, mega_y]])
     elsif @battler.primal?
       filename = nil
       if @battler.isSpecies?(:GROUDON)
