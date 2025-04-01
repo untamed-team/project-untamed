@@ -139,6 +139,7 @@ or dont
     fixed_duration = false
     fixed_duration = true if (Settings::FIXED_DURATION_WEATHER_FROM_ABILITY && !$game_switches[OLDSCHOOLBATTLE]) &&
                              ![:HarshSun, :HeavyRain, :StrongWinds].include?(new_weather)
+    fixed_duration = false if presage
     pbStartWeather(battler, new_weather, fixed_duration, true, presage)
     # NOTE: The ability splash is hidden again in def pbStartWeather.
   end
@@ -169,7 +170,7 @@ or dont
     when :Hail        then pbDisplay(_INTL("It started to hail!"))
     when :HarshSun    then pbDisplay(_INTL("The sunlight turned extremely harsh!"))
     when :HeavyRain   then pbDisplay(_INTL("A heavy rain began to fall!"))
-    when :StrongWinds then pbDisplay(_INTL("Mysterious strong winds are protecting Flying-type Pokémon!"))
+    when :StrongWinds then pbDisplay(_INTL("Strong winds are protecting Flying-type Pokémon!"))
     when :ShadowSky   then pbDisplay(_INTL("A shadow sky appeared!"))
     when :None        then pbDisplay(_INTL("The sky was cleared!"))
     end

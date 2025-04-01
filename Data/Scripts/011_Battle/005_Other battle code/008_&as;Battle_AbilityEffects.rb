@@ -3452,13 +3452,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:OVERWRITE,
 )
 
 #by low
+# in theory, you could use skill swap and such on doubles with these abilities to dupe the effect of any
+# ability that uses the "activated?" commands. Sounds funny though so ill keep it for now
 Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
   proc { |ability, battler, battle, switch_in|
     next if !battle.wasUserAbilityActivated?(battler)
     battle.DeActivateUserAbility(battler)
-    # not in OnSwitchOut to prevent ability changes interfering
   }
 )
+Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR)
 
 Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   proc { |ability, battler, battle, switch_in|
@@ -3474,7 +3476,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
       next if pkmn.fainted?
       next if choices_blacklist.include?(pkmn.species)
       iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler)
-      next if iFake.ungainableAbility? || iFake.unstoppableAbility? || iFake.mega?
+      next if iFake.ungainableAbility? || iFake.mega?
       iBaseStats = iFake.pokemon.baseStats
       bstTotal = iBaseStats[:HP] + iBaseStats[:ATTACK] + iBaseStats[:DEFENSE] + iBaseStats[:SPECIAL_ATTACK] + iBaseStats[:SPECIAL_DEFENSE] + iBaseStats[:SPEED]
       next if bstTotal <= 0 || bstTotal >= 580

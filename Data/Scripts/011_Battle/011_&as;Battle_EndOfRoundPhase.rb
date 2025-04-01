@@ -9,6 +9,11 @@ class Battle
     @field.weatherDuration -= 1 if @field.weatherDuration > 0
     # Weather wears off
     if @field.weatherDuration == 0
+      if @field.weather == :ShadowSky # for presage funnies
+        priority.each do |battler|
+          pbEORWeatherDamage(battler)
+        end
+      end
       case @field.weather
       when :Sun       then pbDisplay(_INTL("The sunlight faded."))
       when :Rain      then pbDisplay(_INTL("The rain stopped."))

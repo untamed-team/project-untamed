@@ -300,7 +300,8 @@ class Battle::AI
             multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
             multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
             multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
-            multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER, :PRISMARMOR],false,moldBreaker)
+            multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
+            multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
             
             # klutz buff #by low
             klut = user.hasActiveAbility?(:KLUTZ)
@@ -917,11 +918,11 @@ class Battle::AI
             healing += 0.0625 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
             if user.hasActiveAbility?(:RAINDISH)
                 healing += 0.0625 if [:Rain, :HeavyRain].include?(user.effectiveWeather)
-                healing += 0.0625 if [:HeavyRain].include?(user.effectiveWeather)
+                healing += 0.0625 if user.effectiveWeather == :HeavyRain
             end
             if user.hasActiveAbility?(:HEALINGSUN)
                 healing += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather)
-                healing += 0.0625 if [:HarshSun].include?(user.effectiveWeather)
+                healing += 0.0625 if user.effectiveWeather == :HarshSun
             end
             healing += 0.0625 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
             healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)

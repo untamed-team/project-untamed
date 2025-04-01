@@ -1627,6 +1627,7 @@ class Battle::Move::TypeAndPowerDependOnTerrain < Battle::Move
     when :Psychic
       ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
     end
+    ret = :NORMAL if !user.affectedByTerrain?
     return ret
   end
 

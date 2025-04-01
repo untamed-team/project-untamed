@@ -359,9 +359,7 @@ class Battle::AI
         score -= 90 if user.pbOwnSide.effects[PBEffects::LuckyChant] > 0
     #---------------------------------------------------------------------------
     when "CannotMakeTargetFaint" # false swipe
-        if !targetSurvivesMove(move,user,target)
-            score*=0.1
-        end
+        score*=0.1 if !targetSurvivesMove(move,user,target)
     #---------------------------------------------------------------------------
     when "UserEnduresFaintingThisTurn" # endure
         if user.hp>1
@@ -877,7 +875,7 @@ class Battle::AI
                     if move.addlEffect.to_f != 100
                         miniscore*=(move.addlEffect.to_f/100.0)
                         miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
-                        miniscore*=1.36 # 2 hits = higher chances
+                        miniscore*=1.51 # 2 hits = higher chances
                     end
                     miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                     miniscore+=100
@@ -1137,8 +1135,10 @@ class Battle::AI
                 # defense drop
                 miniscore=100
                 miniscore*=1.3 if user.hasActiveItem?(:WHITEHERB)
-                if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+                if user.hasActiveAbility?(:CONTRARY)
                     score*=1.5
+                elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+                    score*=1.1
                 else
                     userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
                     targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)

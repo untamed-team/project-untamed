@@ -36,9 +36,7 @@ class Battle::AI
         # if !wildBattler
         #     skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
         # end
-        # Get scores and targets for each move
-        # NOTE: A move is only added to the choices array if it has a non-zero
-        #       score.
+        # Gather information regarding opposing Sucker Punch
         user.eachOpposing do |b|
             if targetWillMove?(b, "dmg")
                 targetMove = @battle.choices[b.index][2]
@@ -52,6 +50,9 @@ class Battle::AI
                 end
             end
         end
+        # Get scores and targets for each move
+        # NOTE: A move is only added to the choices array if it has a non-zero
+        #       score.
         choices     = []
         user.eachMoveWithIndex do |_m, i|
             next if !@battle.pbCanChooseMove?(idxBattler, i, false)

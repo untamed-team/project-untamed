@@ -4259,8 +4259,10 @@ class Battle::AI
       score += user.stages[:ATTACK] * 10
     #---------------------------------------------------------------------------
     when "LowerUserDefense1", "LowerUserDefense2" # Clanging Scales
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.5
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.1
         else
             miniscore=100
             userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -4301,8 +4303,10 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerUserSpAtk1", "LowerUserSpAtk2" # Overheat
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.7
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.15
         else
             miniscore=100
             userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -4341,8 +4345,10 @@ class Battle::AI
         score += user.stages[:SPECIAL_DEFENSE] * 10
     #---------------------------------------------------------------------------
     when "LowerUserSpeed1", "LowerUserSpeed2" # Hammer Arm
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.3
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.1
         else
             miniscore=100
             livecountuser    = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -4379,8 +4385,10 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerUserAtkDef1" # Superpower
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.7
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.15
         else
             miniscore=100
             livecountuser    = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -4421,8 +4429,10 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1" # close combat
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.5
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.15
         else
             miniscore=100
             livecountuser    = @battle.pbAbleNonActiveCount(user.idxOwnSide)
@@ -4460,8 +4470,10 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDefSpd1" # V-Create
-        if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+        if user.hasActiveAbility?(:CONTRARY)
             score*=1.7
+        elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+            score*=1.2
         else
             if targetSurvivesMove(move,user,target)
                 score*=0.8

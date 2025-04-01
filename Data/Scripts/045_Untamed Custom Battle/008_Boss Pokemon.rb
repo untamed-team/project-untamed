@@ -146,8 +146,8 @@ class Battle::Battler
   end
 
   def pbChangeTypeZone(newZone, msg = nil)
-    return if @battle.field.terrain == newZone
-    @battle.field.terrain = newZone
+    return if @battle.field.typezone == newZone
+    @battle.field.typezone = newZone
     if msg.nil?
       typeofzone = GameData::Type.get(@battle.field.typezone).name
       @battle.pbDisplayBrief(_INTL("A {1} Zone was summoned, it will power up {1}-type attacks!",typeofzone))
