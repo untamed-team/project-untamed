@@ -291,7 +291,7 @@ class Battle::AI
     #=============================================================================
     def pbGetMoveScore(move, user, target, skill = 100)
         # Set up initial values
-        # for 80 initScore, dmg move = OHKO if score = 230 
+        # for 80 initScore, dmg move = KO if score == 230 
         skill = 100
         initScore = 80
         # Main score calcuations

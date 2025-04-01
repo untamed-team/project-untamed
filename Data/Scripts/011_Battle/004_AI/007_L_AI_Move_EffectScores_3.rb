@@ -220,9 +220,9 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetInSky"
         if userFasterThanTarget && 
-            target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-                                    "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-                                    "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+           target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+                                   "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+                                   "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
             score *= 1.5
         end
         score*=1.2 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
@@ -237,6 +237,15 @@ class Battle::AI
     when "DoublePowerIfUserLostHPThisTurn" # Avalanche / Revenge
         if userFasterThanTarget
             score*=0.5
+        else
+            if targetWillMove?(target, "dmg")
+                score*=1.3
+            elsif targetWillMove?(target, "status")
+                score*=0.5
+                if pbHasSetupMove?(target, false)
+                    score*=0.5
+                end
+            end
         end
         if user.hp==user.totalhp
             score*=1.5
@@ -250,12 +259,6 @@ class Battle::AI
             if maxdam>user.hp
                 score*=0.3
             end
-        end
-        if pbHasSetupMove?(target, false)
-            score*=0.8
-        end
-        if targetWillMove?(target, "dmg")
-            score*=1.3
         end
         miniscore=user.hp*(1.0/user.totalhp)
         score*=miniscore
@@ -1134,12 +1137,13 @@ class Battle::AI
                 
                 # defense drop
                 miniscore=100
-                miniscore*=1.3 if user.hasActiveItem?(:WHITEHERB)
-                if user.hasActiveAbility?(:CONTRARY)
-                    score*=1.5
-                elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+                if user.hasActiveAbility?(:CONTRARY) || user.pbOwnSide.effects[PBEffects::StatDropImmunity]
                     score*=1.1
                 else
+                    if user.hasActiveItem?(:WHITEHERB)
+                        miniscore*=1.3
+                        miniscore*=1.4 if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
+                    end
                     userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
                     targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
                     if targetSurvivesMove(move,user,target)

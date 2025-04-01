@@ -137,7 +137,7 @@ class Battle::AI
       end
     end
     # only need the globalarray here since pbCalcType should get the type in the normal way
-    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain"].include?(move.function)
+    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain", "TargetMovesBecomeElectric"].include?(move.function)
       globalArray = pbGetMidTurnGlobalChanges
       if move.function == "TypeAndPowerDependOnWeather"
         if !user.hasActiveItem?(:UTILITYUMBRELLA)
@@ -146,11 +146,24 @@ class Battle::AI
         end
         ret = :ICE   if globalArray.include?("sand weather")
         ret = :ROCK  if globalArray.include?("hail weather")
-      elsif move.function == "TypeAndPowerDependOnTerrain"
+      elsif move.function == "TypeAndPowerDependOnTerrain" && user.affectedByTerrain?
         ret = :ELECTRIC if globalArray.include?("electric terrain")
         ret = :GRASS    if globalArray.include?("grassy terrain")
         ret = :FAIRY    if globalArray.include?("misty terrain")
         ret = :PSYCHIC  if globalArray.include?("psychic terrain")
+      end
+      # electrify logic
+      if targetWillMove?(target)
+        targetMove = @battle.choices[target.index][2]
+        if targetMove.function == "TargetMovesBecomeElectric"
+          thisprio = priorityAI(user, move, globalArray)
+          thatprio = priorityAI(target, targetMove, globalArray)
+          aspeed = pbRoughStat(user,:SPEED,skill)
+          ospeed = pbRoughStat(target,:SPEED,skill)
+          if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+            ret = :ELECTRIC
+          end
+        end
       end
     end
     return ret

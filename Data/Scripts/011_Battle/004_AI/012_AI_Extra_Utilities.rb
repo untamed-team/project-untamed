@@ -497,7 +497,8 @@ class Battle::AI
                 c += 1 if move.highCriticalRate?
                 c += user.effects[PBEffects::FocusEnergy]
                 c += 1 if user.inHyperMode? && move.type == :SHADOW
-                c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function)
+                c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function) ||
+                          user.effects[PBEffects::LaserFocus]
                 # DemICE: taking into account 100% crit rate.
                 stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
                 stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
