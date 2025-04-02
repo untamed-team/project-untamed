@@ -32,6 +32,7 @@ class PokemonSystem
     @sevolume      = 100   # Volume of sound effects
     @textinput     = 0     # Text input mode (0=cursor, 1=keyboard)
     @speedtoggle   = 0     # speed-up toggle (0=speed-up block, 1=speed-up unlocked) #by low
+    @expallSetting = 0     # exp all setting (0=on, 1=off) #by low
   end
 end
 
@@ -547,10 +548,20 @@ MenuHandlers.add(:options_menu, :screen_size, {
 
 MenuHandlers.add(:options_menu, :speedup, { #by low
   "name"        => _INTL("Speed-Up Commands"),
-  "order"       => 150,
+  "order"       => 160,
   "type"        => EnumOption,
   "parameters"  => [_INTL("Disabled"), _INTL("Toggable")],
   "description" => _INTL("Warning: May cause performance issues on lower-end hardware."),
   "get_proc"    => proc { next $PokemonSystem.speedtoggle },
   "set_proc"    => proc { |value, _scene| $PokemonSystem.speedtoggle = value }
+})
+
+MenuHandlers.add(:options_menu, :expallSet, { #by low
+  "name"        => _INTL("Exp All"),
+  "order"       => 150,
+  "type"        => EnumOption,
+  "parameters"  => [_INTL("Enabled"), _INTL("Disabled")],
+  "description" => _INTL("Exp All (has no effect on chaos mode)."),
+  "get_proc"    => proc { next $PokemonSystem.speedtoggle },
+  "set_proc"    => proc { |value, _scene| $PokemonSystem.expallSetting = value }
 })
