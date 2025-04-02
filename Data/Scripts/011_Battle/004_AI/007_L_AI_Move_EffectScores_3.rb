@@ -182,8 +182,6 @@ class Battle::AI
         score*=1.2 if user.hasActiveAbility?(:MOMENTUM)
         score*=1.2 if user.hasActiveItem?(:METRONOME)
     #---------------------------------------------------------------------------
-    when "RandomPowerDoublePowerIfTargetUnderground" # Magnitude
-    #---------------------------------------------------------------------------
     when "DoublePowerIfTargetHPLessThanHalf" # Brine
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserPoisonedBurnedParalyzed" # Facade
@@ -215,8 +213,19 @@ class Battle::AI
     when "DoublePowerIfUserHasNoItem" # Acrobatics
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetUnderwater" # Surf
+        if userFasterThanTarget && 
+           target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderwater")
+            score *= 1.5
+        end
+        score*=1.2 if target.moves.any? { |j| [:DIVE].include?(j&.id) }
     #---------------------------------------------------------------------------
-    when "DoublePowerIfTargetUnderground" # Earthquake
+    when "DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground" 
+        # Earthquake, Magnitude
+        if userFasterThanTarget && 
+           target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")
+            score *= 1.5
+        end
+        score*=1.2 if target.moves.any? { |j| [:DIG].include?(j&.id) }
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetInSky"
         if userFasterThanTarget && 
