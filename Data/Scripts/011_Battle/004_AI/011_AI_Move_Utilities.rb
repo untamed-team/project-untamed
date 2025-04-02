@@ -153,15 +153,17 @@ class Battle::AI
         ret = :PSYCHIC  if globalArray.include?("psychic terrain")
       end
       # electrify logic
-      if targetWillMove?(target)
-        targetMove = @battle.choices[target.index][2]
-        if targetMove.function == "TargetMovesBecomeElectric"
-          thisprio = priorityAI(user, move, globalArray)
-          thatprio = priorityAI(target, targetMove, globalArray)
-          aspeed = pbRoughStat(user,:SPEED,skill)
-          ospeed = pbRoughStat(target,:SPEED,skill)
-          if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-            ret = :ELECTRIC
+      user.eachOpposing do |b|
+        if targetWillMove?(b)
+          targetMove = @battle.choices[b.index][2]
+          if targetMove.function == "TargetMovesBecomeElectric"
+            thisprio = priorityAI(user, move, globalArray)
+            thatprio = priorityAI(b, targetMove, globalArray)
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(b,:SPEED,skill)
+            if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+              ret = :ELECTRIC
+            end
           end
         end
       end

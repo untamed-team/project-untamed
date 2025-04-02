@@ -637,7 +637,7 @@ Color = Blue
 Shape = Bipedal
 Habitat = Urban
 Category = Mange Dog
-Pokedex = Due to terrible rumors, Lupacabra has earned an unjustified reputation as a dangerous monster. If trained properly, they're incredibly loyal to their trainer.
+Pokedex = Rumors say that Lupacabra can maul three children in a single chomp. People, however, still insist that if trained properly, they are incredibly loyal to their trainer.
 Generation = 9
 #-------------------------------
 [ZOLUPINE]
