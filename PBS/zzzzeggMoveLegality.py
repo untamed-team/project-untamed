@@ -1,4 +1,3 @@
-# Function to parse the text file and extract relevant information
 def parse_pokemon_file(file_content):
     pokemon_data = {}
     current_pokemon = None
@@ -28,7 +27,6 @@ def parse_pokemon_file(file_content):
 
     return pokemon_data
 
-# Function to check if egg moves can be passed via breeding
 def check_egg_moves(pokemon_data):
     warnings = []
     
@@ -51,7 +49,7 @@ def check_egg_moves(pokemon_data):
     return warnings
 
 try:
-    user_input = input("pokemon.txt or pokemon_2.txt? (0 or 1)")
+    user_input = input("pokemon.txt or pokemon_2.txt? (0 or 1) ")
     if user_input.lower() == '0':
         input_file = 'pokemon.txt'
     else:
@@ -65,10 +63,10 @@ try:
         for warning in warnings:
             print(warning)
     else:
-        print("No warnings found.")
+        print("No warnings found. Congratz.")
 
 except Exception as e:
     print(f"An error occurred: {e}")
 
 
-input("Press Enter to exit...")
+input("Press Enter to exit.")
