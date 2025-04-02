@@ -39,7 +39,7 @@ def check_egg_moves(pokemon_data):
                 
                 for other_species, other_data in pokemon_data.items():
                     if other_species != species and any(group in other_data['egg_groups'] for group in data['egg_groups']):
-                        if egg_move in other_data['moves'] or egg_move in other_data['tutor_moves']:
+                        if egg_move in other_data['moves'] or egg_move in other_data['tutor_moves'] or egg_move in other_data['egg_moves']:
                             can_learn_move = True
                             break
                 
