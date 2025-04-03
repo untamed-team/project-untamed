@@ -3,18 +3,7 @@ class Battle::AI
   # Decide whether the opponent should use an item on the Pokémon
   #=============================================================================
   def pbEnemyShouldUseItem?(idxBattler)
-    user = @battle.battlers[idxBattler]
-    item, idxTarget = pbEnemyItemToUse(idxBattler)
-    return false if !item
-    # Determine target of item (always the Pokémon choosing the action)
-    useType = GameData::Item.get(item).battle_use
-    if [1, 2, 3].include?(useType)   # Use on Pokémon
-      idxTarget = @battle.battlers[idxTarget].pokemonIndex   # Party Pokémon
-    end
-    # Register use of item
-    @battle.pbRegisterItem(idxBattler, item, idxTarget)
-    PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use item #{GameData::Item.get(item).name}")
-    return true
+    return false
   end
 
   # NOTE: The AI will only consider using an item on the Pokémon it's currently
@@ -22,6 +11,8 @@ class Battle::AI
   def pbEnemyItemToUse(idxBattler)
     return nil if !@battle.internalBattle
     items = @battle.pbGetOwnerItems(idxBattler)
+    #items.push(:POTION, :FULLRESTORE, :AWAKENING, :ANTIDOTE, :BURNHEAL, :PARALYZEHEAL, :ICEHEAL, :FULLHEAL)
+    #items.push(:XATTACK, :XDEFENSE, :XSPATK, :XSPDEF, :XSPEED, :XACCURACY, :DIREHIT)
     return nil if !items || items.length == 0
     # Determine target of item (always the Pokémon choosing the action)
     idxTarget = idxBattler   # Battler using the item
@@ -53,7 +44,8 @@ class Battle::AI
       :ANTIDOTE, :PECHABERRY,
       :BURNHEAL, :RAWSTBERRY,
       :PARALYZEHEAL, :PARLYZHEAL, :CHERIBERRY,
-      :ICEHEAL, :ASPEARBERRY
+      :ICEHEAL, :ASPEARBERRY,
+      :PERSIMBERRY
     ]
     allStatusItems = [
       :FULLHEAL, :LAVACOOKIE, :OLDGATEAU, :CASTELIACONE, :LUMIOSEGALETTE,
@@ -97,6 +89,17 @@ class Battle::AI
     losthp = battler.totalhp - battler.hp
     preferFullRestore = (battler.hp <= battler.totalhp * 2 / 3 &&
        (battler.status != :NONE || battler.effects[PBEffects::Confusion] > 0))
+    # Kiriya Edits #by low
+    target = battler.pbDirectOpposing(true)
+    user = battler
+    skill = 100
+    hasPhysicalAttack = battler.moves.any? { |m| m&.physicalMove?(m&.type) }
+    hasSpecialAttack = battler.moves.any? { |m| m&.specialMove?(m&.type) }
+    aspeed = pbRoughStat(battler,:SPEED,skill)
+    ospeed = pbRoughStat(target,:SPEED,skill)
+    userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+    globalArray = pbGetMidTurnGlobalChanges
+    move = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SPLASH)) # dummy move for mold breaker checks
     # Find all usable items
     usableHPItems     = []
     usableStatusItems = []
@@ -139,32 +142,757 @@ class Battle::AI
       end
     end
     # Prioritise using a HP restoration item
-    if usableHPItems.length > 0 && (battler.hp <= battler.totalhp / 4 ||
-       (battler.hp <= battler.totalhp / 2 && pbAIRandom(100) < 30))
+    hpScore = 0
+    if usableHPItems.length > 0
+      hpScore = 100
       usableHPItems.sort! { |a, b| (a[1] == b[1]) ? a[2] <=> b[2] : a[1] <=> b[1] }
-      prevItem = nil
+      chosenhpitem = nil
       usableHPItems.each do |i|
-        return i[0], idxTarget if i[2] >= losthp
-        prevItem = i
+        if i[2] >= losthp
+          if i[0] == :FULLRESTORE
+            if battler.hasActiveAbility?(:GUTS) && hasPhysicalAttack &&
+              ((battler.burned? && !battler.hasActiveItem?(:FLAMEORB)) || 
+               (battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)))
+              break
+            elsif ((battler.hasActiveAbility?(:TOXICBOOST) && hasPhysicalAttack) ||
+                    battler.hasActiveAbility?(:POISONHEAL)) &&
+                    battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)
+              break
+            elsif battler.hasActiveAbility?(:FLAREBOOST) && hasSpecialAttack &&
+                  battler.burned? && !battler.hasActiveItem?(:FLAMEORB)
+              break
+            elsif battler.hasActiveAbility?(:MARVELSCALE) && hasSpecialAttack && 
+                 (battler.burned? && !battler.hasActiveItem?(:FLAMEORB))
+              break
+            elsif battler.hasActiveAbility?(:QUICKFEET) &&  
+                 ((battler.burned? && hasSpecialAttack && !battler.hasActiveItem?(:FLAMEORB)) ||
+                  (battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)) ||
+                  (battler.frozen? && hasPhysicalAttack) ||
+                  battler.paralyzed?)
+              break
+            end
+          end
+          chosenhpitem = i
+          break
+        end
+        chosenhpitem = i
       end
-      return prevItem[0], idxTarget
+      if chosenhpitem
+        heal = chosenhpitem[2]
+        heal = losthp if heal > losthp
+        heal -= (battler.totalhp/10) if battler.hasActiveItem?(:LIFEORB) && battler.takesIndirectDamage?
+        halfhealth = (battler.hp+heal)/2
+        maxdam = 0
+        maxmove = nil
+        maxattacker = target
+        battler.eachOpposing do |b|
+          next unless targetWillMove?(b)
+          bestmove=bestMoveVsTarget(b,battler,skill) # [maxdam,maxmove,maxprio,physorspec]
+          if bestmove[0] >= maxdam
+            maxdam = bestmove[0]
+            maxmove = bestmove[1]
+            maxattacker = b
+          end
+        end
+        if (target.status == :SLEEP && target.statusCount>1) && 
+           (!maxmove.usableWhenAsleep? && !target.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
+          maxdam = 0
+        end
+        if !targetSurvivesMove(maxmove,target,battler)
+          if maxdam > (battler.hp+heal)
+            hpScore=0
+          else
+            if maxdam>=halfhealth
+              hpScore*=0.1
+            else
+              hpScore*=2
+            end
+          end
+        else
+          if (maxdam * 1.5) > battler.hp
+            hpScore*=2
+          end
+          if !userFasterThanTarget
+            if (maxdam * 2)>battler.hp
+              hpScore*=2
+            end
+          end
+        end
+        hpchange=(EndofTurnHPChanges(battler,target,false,false,true)) # what % of our hp will change after end of turn effects go through
+        opphpchange=(EndofTurnHPChanges(target,battler,false,false,true)) # what % of our hp will change after end of turn effects go through
+        if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+          oppchipdamage=((target.totalhp*(1-hpchange)))
+        end
+        thisdam=maxdam#*1.1
+        hplost=(battler.totalhp-battler.hp)
+        if battler.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,battler,globalArray)
+          hpScore *= 0.1
+        end  
+        if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+          chipdamage=((battler.totalhp*(1-hpchange)))
+          thisdam+=chipdamage
+        elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+          healing=((battler.totalhp*(hpchange-1)))
+          thisdam-=healing if !(thisdam>battler.hp)
+        elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+          hpScore*=0
+        end
+        if thisdam>hplost
+          hpScore*=0.1
+        else
+          if @battle.pbAbleNonActiveCount(battler.idxOwnSide) == 0 && hplost<=(halfhealth)
+            hpScore*=0.01
+          end
+          if thisdam<=(halfhealth)
+            hpScore*=2
+          else
+            if userFasterThanTarget
+              if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+                hpScore*=0.3
+              end
+            end
+          end
+        end 
+        if pbHasSetupMove?(target)
+          hpScore*=0.3
+        end
+        if ((battler.hp.to_f)<=halfhealth)
+          hpScore*=1.5
+        else
+          hpScore*=0.2
+        end
+        hpScore/=(battler.effects[PBEffects::Toxic]) if battler.effects[PBEffects::Toxic]>0
+        if maxdam>halfhealth
+          hpScore*=0.2 
+        end
+        if target.hasActiveItem?(:METRONOME)
+          met=(1.0+target.effects[PBEffects::Metronome]*0.2) 
+          hpScore/=met
+        end 
+        if battler.paralyzed? || battler.effects[PBEffects::Confusion]>0
+          hpScore*=1.1 
+        end
+        if target.poisoned? || target.burned? || target.frozen? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
+          hpScore*=1.3
+          hpScore*=1.3 if target.effects[PBEffects::Toxic]>0
+          hpScore*=1.3 if battler.item == :BINDINGBAND
+        end
+        if ((battler.hp.to_f)/battler.totalhp)>0.8
+          hpScore*=0.1 
+        elsif ((battler.hp.to_f)/battler.totalhp)>0.6
+          hpScore*=0.6 
+        elsif ((battler.hp.to_f)/battler.totalhp)<0.25
+          hpScore*=2 
+        end
+      end
     end
     # Next prioritise using a status-curing item
-    if usableStatusItems.length > 0 && pbAIRandom(100) < 40
+    statusScore = 0
+    maxscore = 0
+    chosenstatusitem = nil
+    if usableStatusItems.length > 0
       usableStatusItems.sort! { |a, b| a[1] <=> b[1] }
-      return usableStatusItems[0][0], idxTarget
+      usableStatusItems.each do |i|
+        if i[1] == 7
+          if battler.hasActiveAbility?(:GUTS) && hasPhysicalAttack &&
+            ((battler.burned? && !battler.hasActiveItem?(:FLAMEORB)) || 
+             (battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)) ||
+             (battler.asleep? && battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")))
+            break
+          elsif ((battler.hasActiveAbility?(:TOXICBOOST) && hasPhysicalAttack) ||
+                  battler.hasActiveAbility?(:POISONHEAL)) &&
+                  battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)
+            break
+          elsif battler.hasActiveAbility?(:FLAREBOOST) && hasSpecialAttack &&
+                battler.burned? && !battler.hasActiveItem?(:FLAMEORB)
+            break
+          elsif battler.hasActiveAbility?(:MARVELSCALE) && hasSpecialAttack && 
+               (battler.burned? && !battler.hasActiveItem?(:FLAMEORB))
+            break
+          elsif battler.hasActiveAbility?(:QUICKFEET) &&  
+                ((battler.burned? && hasSpecialAttack && !battler.hasActiveItem?(:FLAMEORB)) ||
+                 (battler.poisoned? && !battler.hasActiveItem?(:TOXICORB)) ||
+                 (battler.frozen? && hasPhysicalAttack) ||
+                 battler.paralyzed?)
+            break
+          elsif battler.status==:SLEEP && (battler.statusCount == 1 || # comatose specific
+                                           target.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai"))
+            break
+          elsif battler.paralyzed? && (target.pbHasMove?(:THUNDERWAVE) || target.pbHasMove?(:GLARE) || target.pbHasMove?(:STUNSPORE))
+            break
+          elsif battler.burned? && (target.pbHasMove?(:WILLOWISP) || target.pbHasMove?(:SACREDFIRE) || target.pbHasMove?(:INFERNO) || !hasPhysicalAttack)
+            break
+          else
+            if (battler.status==:SLEEP && battler.statusCount>2 && 
+                !target.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai")) ||
+               (battler.burned? && !target.pbHasMove?(:WILLOWISP) && (!battler.hasActiveAbility?(:GUTS) && hasPhysicalAttack)) ||
+               (battler.frozen? && !target.pbHasMove?(:BITINGCOLD)) ||
+               (battler.paralyzed? && (target.pbHasMove?(:THUNDERWAVE) || target.pbHasMove?(:GLARE) || target.pbHasMove?(:STUNSPORE)))
+              statusScore = 100
+              bestmove = bestMoveVsTarget(target,battler,skill) # [maxdam,maxmove,maxprio,physorspec]
+              maxdam = bestmove[0]
+              maxmove = bestmove[1]
+              maxprio = bestmove[2]
+              halfhealth = (user.totalhp / 2)
+              thirdhealth = (user.totalhp / 3)
+              if targetSurvivesMove(maxmove,target,battler) || (target.status == :SLEEP && target.statusCount>1)
+                statusScore += 50
+                statusScore += 60 if (target.status == :SLEEP && target.statusCount>1)
+                statusScore += 60 if user.hasActiveAbility?(:SPEEDBOOST)
+                statusScore += 20 if halfhealth > maxdam
+                statusScore += 40 if thirdhealth > maxdam
+                aspeed *= 1.5 if user.hasActiveAbility?(:SPEEDBOOST)
+                ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST)
+                if battler.paralyzed?
+                  if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && 
+                     ((aspeed*4>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
+                    statusScore += 100
+                    mold_broken = moldbroken(user,target,move)
+                    if battler.pbHasMoveFunction?("FlinchTarget", "HitTwoTimesFlinchTarget") && 
+                       canFlinchTarget(user,target,mold_broken)
+                      statusScore += 80
+                      statusScore += 80 if battler.hasActiveAbility?(:SERENEGRACE)
+                    end
+                  end
+                else
+                  if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && maxdam>halfhealth
+                    if maxprio > 0
+                      if maxprio < user.hp
+                        statusScore += 90
+                      else  
+                        statusScore -= 90 
+                      end
+                    else
+                      statusScore -= 60 
+                    end
+                  else
+                    statusScore += 80
+                  end
+                end
+              end
+            elsif battler.dizzy? && !target.pbHasMove?(:CONFUSERAY)
+              statusScore = 100
+              minimi = getAbilityDisruptScore(move,target,battler,skill)
+              minimi = 1.0 / minimi
+              minimi /= 2 if battler.hasActiveAbility?(:TANGLEDFEET)
+              statusScore *= minimi
+            elsif battler.poisoned? && !target.pbHasMove?(:TOXIC)
+              statusScore = 100
+              bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+              maxdam=bestmove[0] 
+              maxmove=bestmove[1]
+              maxdam=0 if (target.status == :SLEEP && target.statusCount>1)
+              halfhealth = (user.totalhp / 2)
+              thirdhealth = (user.totalhp / 3)
+              if !targetSurvivesMove(maxmove,target,user)
+                if maxdam>(user.hp+halfhealth)
+                  statusScore=0
+                else
+                  if maxdam>=halfhealth
+                    if userFasterThanTarget
+                      statusScore*=0.5
+                    else
+                      statusScore*=0.1
+                    end
+                  else
+                    statusScore*=2
+                  end
+                end
+              else
+                if maxdam*1.5>user.hp
+                  statusScore*=2
+                end
+                if !userFasterThanTarget
+                  if maxdam*2>user.hp
+                    statusScore*=2
+                  end
+                end
+              end
+              hpchange=(EndofTurnHPChanges(battler,target,false,false,true)) # what % of our hp will change after end of turn effects go through
+              opphpchange=(EndofTurnHPChanges(target,battler,false,false,true)) # what % of our hp will change after end of turn effects go through
+              if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+                oppchipdamage=((target.totalhp*(1-hpchange)))
+              end
+              thisdam=maxdam#*1.1
+              hplost=(battler.totalhp-battler.hp)
+              if battler.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,battler,globalArray)
+                statusScore *= 0.1
+              end  
+              if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+                chipdamage=((battler.totalhp*(1-hpchange)))
+                thisdam+=chipdamage
+              elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+                healing=((battler.totalhp*(hpchange-1)))
+                thisdam-=healing if !(thisdam>battler.hp)
+              elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+                statusScore*=0
+              end
+              if thisdam>hplost
+                statusScore*=0.1
+              else
+                if @battle.pbAbleNonActiveCount(battler.idxOwnSide) == 0 && hplost<=(halfhealth)
+                  statusScore*=0.01
+                end
+                if thisdam<=(halfhealth)
+                  statusScore*=2
+                else
+                  if userFasterThanTarget
+                    if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+                      statusScore*=0.3
+                    end
+                  end
+                end
+              end
+              statusScore*=0.3 if pbHasSetupMove?(target)
+              if ((battler.hp.to_f)<=halfhealth)
+                statusScore*=1.5
+              else
+                statusScore*=0.8
+              end
+              statusScore*=0.8 if maxdam > halfhealth
+              if target.hasActiveItem?(:METRONOME)
+                met=(1.0+target.effects[PBEffects::Metronome]*0.2) 
+                statusScore/=met
+              end 
+              if target.poisoned? || target.burned? || target.frozen? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
+                statusScore*=1.3
+                statusScore*=1.3 if target.effects[PBEffects::Toxic]>0
+                statusScore*=1.3 if battler.item == :BINDINGBAND
+              end
+              if ((battler.hp.to_f)/battler.totalhp)>0.8
+                statusScore*=0.1 
+              elsif ((battler.hp.to_f)/battler.totalhp)>0.6
+                statusScore*=0.6 
+              elsif ((battler.hp.to_f)/battler.totalhp)<0.25
+                statusScore*=2 
+              end
+            else
+              statusScore=0
+            end
+          end
+        else
+          if (battler.status==:SLEEP && battler.statusCount>2 && !target.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai") && [:AWAKENING, :CHESTOBERRY, :BLUEFLUTE].include?(i[0])) ||
+             (battler.burned? && !target.pbHasMove?(:WILLOWISP) && (!battler.hasActiveAbility?(:GUTS) && hasPhysicalAttack) && [:BURNHEAL, :RAWSTBERRY].include?(i[0])) ||
+             (battler.frozen? && !target.pbHasMove?(:BITINGCOLD) && [:ICEHEAL, :ASPEARBERRY].include?(i[0])) ||
+             (battler.paralyzed? && (!target.pbHasMove?(:THUNDERWAVE) || !target.pbHasMove?(:GLARE) || !target.pbHasMove?(:STUNSPORE)) && [:PARALYZEHEAL, :PARLYZHEAL, :CHERIBERRY].include?(i[0]))
+            statusScore = 100
+            bestmove = bestMoveVsTarget(target,battler,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam = bestmove[0]
+            maxmove = bestmove[1]
+            maxprio = bestmove[2]
+            halfhealth = (user.totalhp / 2)
+            thirdhealth = (user.totalhp / 3)
+            if targetSurvivesMove(maxmove,target,battler) || (target.status == :SLEEP && target.statusCount>1)
+              statusScore += 50
+              statusScore += 60 if (target.status == :SLEEP && target.statusCount>1)
+              statusScore += 60 if user.hasActiveAbility?(:SPEEDBOOST)
+              statusScore += 20 if halfhealth > maxdam
+              statusScore += 40 if thirdhealth > maxdam
+              statusScore -= 60 if user.hasActiveAbility?(:QUICKFEET)
+              aspeed *= 1.5 if user.hasActiveAbility?(:SPEEDBOOST)
+              ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST)
+              if battler.paralyzed?
+                if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && 
+                   ((aspeed*4>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
+                  statusScore += 100
+                  mold_broken = moldbroken(user,target,move)
+                  if battler.pbHasMoveFunction?("FlinchTarget", "HitTwoTimesFlinchTarget") && 
+                     canFlinchTarget(user,target,mold_broken)
+                    statusScore += 80
+                    statusScore += 80 if battler.hasActiveAbility?(:SERENEGRACE)
+                  end
+                end
+              else
+                if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && maxdam>halfhealth
+                  if maxprio > 0
+                    if maxprio < user.hp
+                      statusScore += 90
+                    else  
+                      statusScore -= 90 
+                    end
+                  else
+                    statusScore -= 60 
+                  end
+                else
+                  statusScore += 80
+                end
+              end
+            end
+          elsif battler.dizzy? && !target.pbHasMove?(:CONFUSERAY) && [:PERSIMBERRY].include?(i[0])
+            statusScore = 100
+            minimi = getAbilityDisruptScore(move,target,battler,skill)
+            minimi = 1.0 / minimi
+            minimi /= 2 if battler.hasActiveAbility?(:TANGLEDFEET)
+            statusScore *= minimi
+          elsif battler.poisoned? && !target.pbHasMove?(:TOXIC) && [:ANTIDOTE, :PECHABERRY].include?(i[0])
+            statusScore = 100
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxdam=0 if (target.status == :SLEEP && target.statusCount>1)
+            halfhealth = (user.totalhp / 2)
+            thirdhealth = (user.totalhp / 3)
+            if !targetSurvivesMove(maxmove,target,user)
+              if maxdam > (user.hp + halfhealth)
+                statusScore=0
+              else
+                if maxdam>=halfhealth
+                  if userFasterThanTarget
+                    statusScore*=0.5
+                  else
+                    statusScore*=0.1
+                  end
+                else
+                  statusScore*=2
+                end
+              end
+            else
+              if maxdam*1.5>user.hp
+                statusScore*=2
+              end
+              if !userFasterThanTarget
+                if maxdam*2>user.hp
+                  statusScore*=2
+                end
+              end
+            end
+            hpchange=(EndofTurnHPChanges(battler,target,false,false,true)) # what % of our hp will change after end of turn effects go through
+            opphpchange=(EndofTurnHPChanges(target,battler,false,false,true)) # what % of our hp will change after end of turn effects go through
+            if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+              oppchipdamage=((target.totalhp*(1-hpchange)))
+            end
+            thisdam=maxdam#*1.1
+            hplost=(battler.totalhp-battler.hp)
+            if battler.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,battler,globalArray)
+              statusScore *= 0.1
+            end  
+            if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+              chipdamage=((battler.totalhp*(1-hpchange)))
+              thisdam+=chipdamage
+            elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+              healing=((battler.totalhp*(hpchange-1)))
+              thisdam-=healing if !(thisdam>battler.hp)
+            elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+              statusScore*=0
+            end
+            if thisdam>hplost
+              statusScore*=0.1
+            else
+              if @battle.pbAbleNonActiveCount(battler.idxOwnSide) == 0 && hplost<=(halfhealth)
+                statusScore*=0.01
+              end
+              if thisdam<=(halfhealth)
+                statusScore*=2
+              else
+                if userFasterThanTarget
+                  if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+                    statusScore*=0.3
+                  end
+                end
+              end
+            end
+            statusScore*=0.3 if pbHasSetupMove?(target)
+            if ((battler.hp.to_f)<=halfhealth)
+              statusScore*=1.5
+            else
+              statusScore*=0.8
+            end
+            statusScore*=0.8 if maxdam > halfhealth
+            if target.hasActiveItem?(:METRONOME)
+              met=(1.0+target.effects[PBEffects::Metronome]*0.2) 
+              statusScore/=met
+            end 
+            if target.poisoned? || target.burned? || target.frozen? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
+              statusScore*=1.3
+              statusScore*=1.3 if target.effects[PBEffects::Toxic]>0
+              statusScore*=1.3 if battler.item == :BINDINGBAND
+            end
+            if ((battler.hp.to_f)/battler.totalhp)>0.8
+              statusScore*=0.1 
+            elsif ((battler.hp.to_f)/battler.totalhp)>0.6
+              statusScore*=0.6 
+            elsif ((battler.hp.to_f)/battler.totalhp)<0.25
+              statusScore*=2 
+            end
+          else
+            statusScore=0
+          end
+        end
+        if statusScore>maxscore
+          chosenstatusitem=i
+          maxscore=statusScore
+        end
+      end
     end
     # Next try using an X item
-    if usableXItems.length > 0 && pbAIRandom(100) < 30
+    xitemScore = 0
+    maxscore = 0
+    chosenXitem = nil
+    if usableXItems.length > 0
       usableXItems.sort! { |a, b| (a[1] == b[1]) ? a[2] <=> b[2] : a[1] <=> b[1] }
-      prevItem = nil
+      roles = pbGetPokemonRole(user, target)
       usableXItems.each do |i|
-        break if prevItem && i[1] > prevItem[1]
-        return i[0], idxTarget if i[1] + i[2] >= 6
-        prevItem = i
+        xitemScore = 90
+        xitemScore -= 80 if user.moves.all? { |m| m.statusMove? }
+        xitemScore += 20 if roles.include?("Sweeper")
+        if user.hasActiveAbility?(:CONTRARY)
+          xitemScore = 0
+        else
+          case i[0]
+          when :XATTACK, :XATTACK2, :XATTACK3, :XATTACK6,
+               :XSPATK, :XSPATK2, :XSPATK3, :XSPATK6, :XSPECIAL, :XSPECIAL2, :XSPECIAL3, :XSPECIAL6
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxprio=bestmove[2]
+            halfhealth=(user.totalhp/2)
+            thirdhealth=(user.totalhp/3)
+            if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
+              xitemScore-=90
+            end  
+            if targetSurvivesMove(maxmove,target,user) || (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 40
+              xitemScore += 60 if (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 60 if user.hasActiveAbility?(:SPEEDBOOST)
+              xitemScore -= 50 if target.hasActiveAbility?(:SPEEDBOOST)
+              if canSleepTarget(target,user,globalArray) && !userFasterThanTarget
+                xitemScore-=90
+              end  
+              if !userFasterThanTarget && maxdam>halfhealth
+                if maxprio > 0
+                  xitemScore -= 60
+                else
+                  xitemScore += 60 
+                end
+              else
+                xitemScore += 80
+              end
+              xitemScore += 20 if halfhealth>maxdam
+              xitemScore += 40 if thirdhealth>maxdam
+            end 
+            xitemScore -= 50 if target.pbHasMoveFunction?("UserCopyTargetStatStages",
+                                                          "UserTargetSwapStatStages",
+                                                          "UserStealTargetPositiveStatStages") 
+                                                        # Psych Up, Heart Swap, Spectral Thief
+            xitemScore -= 50 if target.pbHasMove?(:CLEARSMOG) && !user.pbHasType?(:STEEL) # Clear Smog
+            if [:XATTACK, :XATTACK2, :XATTACK3, :XATTACK6].include?(i[0])
+              xitemScore -= user.stages[:ATTACK]*20
+              if user.statStageAtMax?(:ATTACK)
+                xitemScore -= 200
+              else
+                if hasPhysicalAttack
+                  xitemScore += 20
+                else
+                  xitemScore -= 200
+                end
+              end
+            else
+              xitemScore -= user.stages[:SPECIAL_ATTACK]*20
+              if user.statStageAtMax?(:SPECIAL_ATTACK)
+                xitemScore -= 200
+              else
+                if hasSpecialAttack
+                  xitemScore += 20
+                else
+                  xitemScore -= 200
+                end
+              end
+            end
+            xitemScore -= 60 if !roles.include?("Sweeper")
+          when :XDEFENSE, :XDEFENSE2, :XDEFENSE3, :XDEFENSE6, :XDEFEND2, :XDEFEND3, :XDEFEND6,
+               :XSPDEF, :XSPDEF2, :XSPDEF3, :XSPDEF6
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxprio=bestmove[2]
+            maxphys=(bestmove[3]=="physical")
+            maxspec=(bestmove[3]=="special")
+            halfhealth=(user.totalhp/2)
+            thirdhealth=(user.totalhp/3)
+            if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
+              xitemScore-=90
+            end
+            mult=1.0
+            if [:XSPDEF, :XSPDEF2, :XSPDEF3, :XSPDEF6].include?(i[0])
+              mult=mult/2 if maxspec
+            else
+              mult=mult/2 if maxphys
+            end
+            if targetSurvivesMove(maxmove,target,user,0,mult) || (target.status == :SLEEP && target.statusCount>1)
+              if target.pbHasMoveFunction?("HealUserHalfOfTotalHP", 
+                     "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", 
+                     "HealUserDependingOnWeather", "HealUserDependingOnSandstorm") ||
+                 battler.pbHasMoveFunction?("HealUserHalfOfTotalHP", 
+                     "HealUserHalfOfTotalHPLoseFlyingTypeThisTurn", 
+                     "HealUserDependingOnWeather", "HealUserDependingOnSandstorm")
+                xitemScore += 40
+              end
+              xitemScore += 20 if user.hasActiveAbility?(:SPEEDBOOST)
+              if [:XSPDEF, :XSPDEF2, :XSPDEF3, :XSPDEF6].include?(i[0])
+                if maxspec
+                  xitemScore += 30
+                  xitemScore += 20 if halfhealth>maxdam
+                end
+              else
+                if maxphys
+                  xitemScore += 30
+                  xitemScore += 20 if halfhealth>maxdam
+                end
+              end
+              xitemScore += 40 if thirdhealth>maxdam
+            end 
+            xitemScore -= 50 if target.pbHasMoveFunction?("UserCopyTargetStatStages",
+                                                          "UserTargetSwapStatStages",
+                                                          "UserStealTargetPositiveStatStages") 
+                                                        # Psych Up, Heart Swap, Spectral Thief
+            xitemScore -= 50 if target.pbHasMove?(:CLEARSMOG) && !user.pbHasType?(:STEEL) # Clear Smog
+            if [:XSPDEF, :XSPDEF2, :XSPDEF3, :XSPDEF6].include?(i[0])
+              if user.statStageAtMax?(:SPECIAL_DEFENSE)
+                xitemScore -= 200
+              else
+                xitemScore -= user.stages[:SPECIAL_DEFENSE]*20
+              end
+            else
+              if user.statStageAtMax?(:DEFENSE)
+                xitemScore -= 200
+              else
+                xitemScore -= user.stages[:DEFENSE]*20
+              end
+            end
+            xitemScore -= 40 if !roles.include?("Sweeper")
+          when :XSPEED, :XSPEED2, :XSPEED3, :XSPEED6
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxprio=bestmove[2]
+            halfhealth=(user.totalhp/2)
+            thirdhealth=(user.totalhp/3)
+            if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
+              xitemScore-=90
+            end
+            if targetSurvivesMove(maxmove,target,battler) || (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 20
+              xitemScore += 40 if thirdhealth>maxdam
+              if !userFasterThanTarget
+                xitemScore += 100
+                mold_broken = moldbroken(user,target,move)
+                if battler.pbHasMoveFunction?("FlinchTarget", "HitTwoTimesFlinchTarget") && 
+                   canFlinchTarget(user,target,mold_broken)
+                  xitemScore += 80
+                  xitemScore += 80 if battler.hasActiveAbility?(:SERENEGRACE)
+                end
+              end
+            end
+            xitemScore -= 50 if target.pbHasMoveFunction?("UserCopyTargetStatStages",
+                                                          "UserTargetSwapStatStages",
+                                                          "UserStealTargetPositiveStatStages") 
+                                                        # Psych Up, Heart Swap, Spectral Thief
+            xitemScore -= 50 if target.pbHasMove?(:CLEARSMOG) && !user.pbHasType?(:STEEL) # Clear Smog
+            if user.statStageAtMax?(:SPEED)
+              xitemScore -= 200
+            else
+              xitemScore -= user.stages[:SPEED]*20
+            end
+            xitemScore -= 40 if !roles.include?("Sweeper")
+          when :XACCURACY, :XACCURACY2, :XACCURACY3, :XACCURACY6
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxprio=bestmove[2]
+            halfhealth=(user.totalhp/2)
+            thirdhealth=(user.totalhp/3)
+            if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
+              xitemScore-=90
+            end
+            if targetSurvivesMove(maxmove,target,battler) || (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 40 if thirdhealth>maxdam
+              xitemScore += 40 if battler.moves.any? { |m| m&.accuracy <= 70 }
+              xitemScore += 60 if battler.pbHasMove?(:ZAPCANNON) || battler.pbHasMove?(:INFERNO)
+            end
+            xitemScore -= 50 if target.pbHasMoveFunction?("UserCopyTargetStatStages",
+                                                          "UserTargetSwapStatStages",
+                                                          "UserStealTargetPositiveStatStages") 
+                                                        # Psych Up, Heart Swap, Spectral Thief
+            xitemScore -= 50 if target.pbHasMove?(:CLEARSMOG) && !user.pbHasType?(:STEEL) # Clear Smog
+            if user.statStageAtMax?(:ACCURACY)
+              xitemScore -= 200
+            else
+              xitemScore -= user.stages[:ACCURACY]*20
+            end
+            xitemScore -= 70 if !roles.include?("Sweeper")
+          when :DIREHIT # unused
+            bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxprio=bestmove[2]
+            halfhealth=(user.totalhp/2)
+            thirdhealth=(user.totalhp/3)
+            if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
+              xitemScore-=90
+            end
+            hascrit = 0
+            hascrit = 2 if user.hasActiveAbility?([:SUPERLUCK, :SNIPER]) || user.hasActiveItem?(:SCOPELENS)
+            user.eachMove do |m|
+              next if !m.highCriticalRate?
+              hascrit +=1
+              break if hascrit>=2
+            end
+            if hascrit==2
+              xitemScore += 20
+            else
+              xitemScore -= 200
+            end
+            if targetSurvivesMove(maxmove,target,user) || (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 40
+              xitemScore += 60 if (target.status == :SLEEP && target.statusCount>1)
+              xitemScore += 60 if user.hasActiveAbility?(:SPEEDBOOST)
+              if canSleepTarget(target,user,globalArray) && !userFasterThanTarget
+                xitemScore-=90
+              end  
+              if !userFasterThanTarget && maxdam>halfhealth
+                if maxprio > 0
+                  xitemScore -= 60
+                else
+                  xitemScore += 60 
+                end
+              else
+                xitemScore += 80
+              end
+              xitemScore += 20 if halfhealth>maxdam
+              xitemScore += 40 if thirdhealth>maxdam
+            end 
+          end
+        end
+        if xitemScore>maxscore
+          chosenXitem=i
+          maxscore=xitemScore
+        end
       end
-      return prevItem[0], idxTarget
     end
-    return nil
+    
+    #print "#{chosenhpitem[0].name}, #{hpScore.to_s}" if chosenhpitem
+    #print "#{chosenstatusitem[0].name}, #{statusScore.to_s}" if chosenstatusitem
+    #print "#{chosenXitem[0].name}, #{xitemScore.to_s}" if chosenXitem
+    bestitem = [hpScore, statusScore, xitemScore].max
+    case bestitem
+    when hpScore
+      if chosenhpitem
+        return [chosenhpitem[0], hpScore], idxTarget
+      else
+        return [nil, hpScore], idxTarget
+      end
+    when statusScore
+      if chosenstatusitem
+        return [chosenstatusitem[0], statusScore], idxTarget
+      else
+        return [nil, statusScore], idxTarget
+      end
+    when xitemScore
+      if chosenXitem
+        return [chosenXitem[0], xitemScore], idxTarget
+      else
+        return [nil, xitemScore], idxTarget
+      end
+    end
   end
 end

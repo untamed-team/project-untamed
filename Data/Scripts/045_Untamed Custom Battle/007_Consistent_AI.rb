@@ -1,6 +1,7 @@
 class Battle::AI
     # kiriya flags
     $aisuckercheck = [false, 0]
+    $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
 
     # kiriya ai log settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
@@ -48,6 +49,11 @@ class Battle::AI
                         $aisuckercheck = [true, b]
                     end
                 end
+                if b.effects[PBEffects::ProtectRate] <= 0 && ["ProtectUserSideFromStatusMoves",
+                   "ProtectUserSideFromMultiTargetDamagingMoves", "ProtectUserSideFromPriorityMoves", 
+                   "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function)
+                    $aiguardcheck = [true, targetMove.function]
+                end
             end
         end
         # Get scores and targets for each move
@@ -83,6 +89,28 @@ class Battle::AI
             totalScore += c[1]
             echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler && $AIGENERALLOG
             maxScore = c[1] if maxScore < c[1]
+        end
+        # DemICE: Item usage AI has been moved here.
+        item, idxTarget = pbEnemyItemToUse(idxBattler)
+        if item
+            if item[0]
+                # Determine target of item (always the Pokémon choosing the action)
+                useType = GameData::Item.get(item[0]).battle_use
+                if [1, 2, 3].include?(useType)   # Use on Pokémon
+                    idxTarget = @battle.battlers[idxTarget].pokemonIndex   # Party Pokémon
+                end
+                party = @battle.pbParty(idxBattler)
+                if user.pokemonIndex == 0 && party.length>1
+                    item[1] *= 0.1 
+                    echo(item[0].name+": "+item[1].to_s+" discourage item usage on lead.\n")
+                end
+                if item[1]>maxScore
+                    # Register use of item
+                    @battle.pbRegisterItem(idxBattler,item[0],idxTarget)
+                    PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use item #{GameData::Item.get(item[0]).name}")
+                    return
+                end
+            end    
         end
         # Log the available choices
         if $INTERNAL
@@ -146,28 +174,6 @@ class Battle::AI
                 end
             end
         end
-        # Find any preferred moves and just choose from them
-        #if !wildBattler && maxScore > 100
-        #    #stDev = pbStdDev(choices)
-        #    #if stDev >= 40 && pbAIRandom(100) < 90
-        #    # DemICE removing randomness of AI
-        #    preferredMoves = []
-        #    choices.each do |c|
-        #        next if c[1] < 200 && c[1] < maxScore * 0.8
-        #        #preferredMoves.push(c)
-        #        # DemICE prefer ONLY the best move
-        #        preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
-        #        echoln(preferredMoves) if $AIGENERALLOG
-        #    end
-        #    if preferredMoves.length > 0
-        #        m = preferredMoves[pbAIRandom(preferredMoves.length)]
-        #        PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
-        #        @battle.pbRegisterMove(idxBattler, m[0], false)
-        #        @battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
-        #        return
-        #    end
-        #    #end
-        #end
         choices.shuffle! if user.wild?
         # Checking if switching is preferred
         if !user.wild? #!wildBattler
@@ -284,6 +290,7 @@ class Battle::AI
             PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use #{@battle.choices[idxBattler][2].name}")
         end
         $aisuckercheck = [false, 0]
+        $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
     end
   
     #=============================================================================
@@ -412,6 +419,21 @@ class Battle::AI
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
             score += missinghp * (1.0 / 8)
         end
+        # account for foe's multitarget protect moves
+        if $aiguardcheck[0]
+            checked = false
+            case $aiguardcheck[1]
+            when "ProtectUserSideFromMultiTargetDamagingMoves"
+                checked = true if user.index != target.index && move.pbTarget(user).num_targets > 1 && move.damagingMove?
+            when "ProtectUserSideFromStatusMoves"
+                checked = true if user.index != target.index && !move.pbTarget(user).targets_all && move.statusMove?
+            when "ProtectUserSideFromPriorityMoves"
+                checked = true if move.canProtectAgainst? && priorityAI(user,move) > 0
+            when "ProtectUserSideFromDamagingMovesIfUserFirstTurn"
+                checked = true if move.canProtectAgainst? && target.turnCount == 0 && move.damagingMove?
+            end
+            score *= (1 / 3.0) if checked
+        end
         # Don't prefer moves that are ineffective because of abilities or effects
         return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
         score = score.to_i
@@ -489,7 +511,7 @@ class Battle::AI
                 end
             else
                 if @battle.choices[target.index][1]
-                    if !@battle.choices[target.index][2].damagingMove? && rand(100) < 66    
+                    if @battle.choices[target.index][2].statusMove? && rand(100) < 66    
                         echo("\n'Predicting' that opponent will not attack and sucker will fail")
                         score=1
                         realDamage=0 
@@ -521,9 +543,8 @@ class Battle::AI
         end
 
         # try hitting mons that dont have available protect moves if it is a double battle
-        if target.allAllies.any? && pbHasSingleTargetProtectMove?(target) && 
-         !(user.hasActiveAbility?(:UNSEENFIST) && move.pbContactMove?(user))
-            realDamage *= (2 / 3.0)
+        if !(user.hasActiveAbility?(:UNSEENFIST) && move.contactMove?)
+            realDamage *= (2 / 3.0) if pbHasSingleTargetProtectMove?(target) && target.allAllies.any?
         end
 
         # Prefer flinching external effects (note that move effects which cause

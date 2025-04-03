@@ -3215,10 +3215,7 @@ class Battle::AI
         end
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
         specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-        if user.burned? && !specmove
-            miniscore*=0.5
-        end
-        if user.frozen? && !physmove
+        if (user.burned? && !specmove) || (user.frozen? && !physmove)
             miniscore*=0.5
         end
         if user.paralyzed?
