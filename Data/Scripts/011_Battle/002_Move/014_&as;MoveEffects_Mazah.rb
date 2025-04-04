@@ -380,7 +380,7 @@ class Battle::Move::BOOMInstall < Battle::Move
   
   def pbBaseAccuracy(user, target)
     acc = @accuracy
-    acc *= 1.1 if user.gender == 1 && move.statusMove?
+    acc *= 1.1 if user.gender == 1 && statusMove?
     return acc.floor
   end
   

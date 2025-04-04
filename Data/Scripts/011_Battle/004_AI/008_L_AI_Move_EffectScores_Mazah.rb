@@ -6,7 +6,7 @@ class Battle::AI
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -870,7 +870,7 @@ class Battle::AI
     end
 
     def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
@@ -1320,7 +1320,7 @@ class Battle::AI
     
     def getFieldDisruptScore(user, target, globalArray = [], skill = 100) 
         # probably redundant with the check WeatherBenefit script but eh
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedTerrain = procGlobalArray[1]
         # modified by JZ
@@ -2000,8 +2000,7 @@ class Battle::AI
     end
 
     # Megas' Mid Turn A.T.W. changes #############################################
-    # its a mess
-
+    # its a (slightly better) mess
     def pbGetMidTurnGlobalChanges
         globalArray = []
         megaChecks = {
@@ -2062,7 +2061,6 @@ class Battle::AI
         end
         globalArray.reject! { |w| w.include?("weather") } if weatherNeg
         globalArray.uniq!
-        #echoln globalArray
         return globalArray
     end
 
@@ -2089,7 +2087,7 @@ class Battle::AI
     
     def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
         skill = 100
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.nil?
+        globalArray = @megaGlobalArray if globalArray.nil?
         thisprio = priorityAI(user,move,globalArray)
         return score if thisprio == 0
         aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0

@@ -96,9 +96,11 @@ class Battle::AI
     hasPhysicalAttack = battler.moves.any? { |m| m&.physicalMove?(m&.type) }
     hasSpecialAttack = battler.moves.any? { |m| m&.specialMove?(m&.type) }
     aspeed = pbRoughStat(battler,:SPEED,skill)
+    aspeed *= 1.5 if battler.hasActiveAbility?(:SPEEDBOOST) && !battler.statStageAtMax?(:SPEED)
     ospeed = pbRoughStat(target,:SPEED,skill)
+    ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST) && !target.statStageAtMax?(:SPEED)
     userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     move = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SPLASH)) # dummy move for mold breaker checks
     # Find all usable items
     usableHPItems     = []
@@ -341,11 +343,9 @@ class Battle::AI
                 statusScore += 60 if user.hasActiveAbility?(:SPEEDBOOST)
                 statusScore += 20 if halfhealth > maxdam
                 statusScore += 40 if thirdhealth > maxdam
-                aspeed *= 1.5 if user.hasActiveAbility?(:SPEEDBOOST)
-                ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST)
                 if battler.paralyzed?
-                  if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && 
-                     ((aspeed*4>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
+                  if !userFasterThanTarget && 
+                     ((aspeed*2>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
                     statusScore += 100
                     mold_broken = moldbroken(user,target,move)
                     if battler.pbHasMoveFunction?("FlinchTarget", "HitTwoTimesFlinchTarget") && 
@@ -355,7 +355,7 @@ class Battle::AI
                     end
                   end
                 else
-                  if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && maxdam>halfhealth
+                  if !userFasterThanTarget && maxdam>halfhealth
                     if maxprio > 0
                       if maxprio < user.hp
                         statusScore += 90
@@ -489,11 +489,9 @@ class Battle::AI
               statusScore += 20 if halfhealth > maxdam
               statusScore += 40 if thirdhealth > maxdam
               statusScore -= 60 if user.hasActiveAbility?(:QUICKFEET)
-              aspeed *= 1.5 if user.hasActiveAbility?(:SPEEDBOOST)
-              ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST)
               if battler.paralyzed?
-                if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && 
-                   ((aspeed*4>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
+                if !userFasterThanTarget && 
+                   ((aspeed*2>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1))
                   statusScore += 100
                   mold_broken = moldbroken(user,target,move)
                   if battler.pbHasMoveFunction?("FlinchTarget", "HitTwoTimesFlinchTarget") && 
@@ -503,7 +501,7 @@ class Battle::AI
                   end
                 end
               else
-                if ((aspeed<ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>1)) && maxdam>halfhealth
+                if !userFasterThanTarget && maxdam>halfhealth
                   if maxprio > 0
                     if maxprio < user.hp
                       statusScore += 90

@@ -1,21 +1,27 @@
 class Battle::AI
+    # global array initialization
+    attr_accessor :megaGlobalArray
+    alias kiriya_initialize initialize
+    def initialize(battle)
+        kiriya_initialize(battle)
+        @megaGlobalArray = []
+    end
+
     # kiriya flags
     $aisuckercheck = [false, 0]
     $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
 
-    # kiriya ai log settings
+    # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
     $AIMASTERLOG = (false && $DEBUG)
     $AIGENERALLOG = (false && $DEBUG)
-    # game dies when instruct is used
-    # gastro acid can sometimes make kiriya skip turns?
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
                             "RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
-                            #"TargetUsesItsLastUsedMoveAgain",
+                            #"TargetUsesItsLastUsedMoveAgain", # game dies when instruct is used
                             "SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
                             "SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
-                            "UserTargetSwapAbilities", #"NegateTargetAbility", 
+                            "UserTargetSwapAbilities", #"NegateTargetAbility", # gastro acid can sometimes make kiriya skip turns?
                             "RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
                             "HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
                             "HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing"] 
@@ -34,14 +40,16 @@ class Battle::AI
         user        = @battle.battlers[idxBattler]
         wildBattler = user.wild? && !user.isBossPokemon?
         skill       = 100
+        @megaGlobalArray = pbGetMidTurnGlobalChanges
         # if !wildBattler
         #     skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
         # end
-        # Gather information regarding opposing Sucker Punch
+        # Gather information regarding opposing Sucker Punch and AoE Protect moves
         user.eachOpposing do |b|
             if targetWillMove?(b, "dmg")
                 targetMove = @battle.choices[b.index][2]
-                if targetMove.function == "FailsIfTargetActed" && user.moves.any? { |i| i.statusMove? }
+                if targetMove.function == "FailsIfTargetActed" && 
+                  (user.moves.any? { |i| i.statusMove? } || user.moves.any? { |i| priorityAI(user,i,@megaGlobalArray)>0 })
                     suckerp = 80
                     suckerp = 66 if b.moves.any? { |i| i.statusMove? }
                     if rand(100) < suckerp

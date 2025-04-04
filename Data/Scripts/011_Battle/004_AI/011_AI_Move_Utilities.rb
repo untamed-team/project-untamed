@@ -138,7 +138,7 @@ class Battle::AI
     end
     # only need the globalarray here since pbCalcType should get the type in the normal way
     if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain", "TargetMovesBecomeElectric"].include?(move.function)
-      globalArray = pbGetMidTurnGlobalChanges
+      globalArray = @megaGlobalArray
       if move.function == "TypeAndPowerDependOnWeather"
         if !user.hasActiveItem?(:UTILITYUMBRELLA)
           ret = :FIRE  if globalArray.include?("sun weather")
@@ -187,7 +187,7 @@ class Battle::AI
     end
     megaSpeed = false
     if (stat == :SPEED && dontignorespeb) && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
-      globalArray = pbGetMidTurnGlobalChanges
+      globalArray = @megaGlobalArray
       if globalArray.any? { |element| element.match?(/terrain|weather/) }
         megaSpeed = true
         weatherSpeed_hash = {
@@ -226,7 +226,7 @@ class Battle::AI
   # so much shit was missing from here what the fuck
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -264,8 +264,8 @@ class Battle::AI
       baseDmg = move.pbModifyDamage(baseDmg, user, target)
     # Gust, Twister, Venoshock, Smelling Salts, Wake-Up Slap, Facade, Hex, Brine,
     # Retaliate, Weather Ball, Return, Frustration, Eruption, Crush Grip,
-    # Stored Power, Punishment, Hidden Power, Fury Cutter, Echoed Voice,
-    # Trump Card, Flail, Electro Ball, Low Kick, Fling, Spit Up, Future Sight / Doom Desire
+    # Stored Power, Punishment, Hidden Power, Trump Card, Flail, Electro Ball, 
+    # Low Kick, Fling, Spit Up, Future Sight / Doom Desire
     when "DoublePowerIfTargetInSky",
          "FlinchTargetDoublePowerIfTargetInSky",
          "DoublePowerIfTargetPoisoned",
@@ -282,8 +282,6 @@ class Battle::AI
          "PowerHigherWithUserPositiveStatStages",
          "PowerHigherWithTargetPositiveStatStages",
          "TypeDependsOnUserIVs",
-         "PowerHigherWithConsecutiveUse",
-         "PowerHigherWithConsecutiveUseOnUserSide",
          "PowerHigherWithLessPP",
          "PowerLowerWithUserHP",
          "PowerHigherWithUserFasterThanTarget",
@@ -292,6 +290,16 @@ class Battle::AI
          "PowerDependsOnUserStockpile",
          "AttackTwoTurnsLater"
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
+    # Fury Cutter, Echoed Voice (counter goes up before usage)
+    when "PowerHigherWithConsecutiveUse",
+         "PowerHigherWithConsecutiveUseOnUserSide"
+      oldFury = user.effects[PBEffects::FuryCutter]
+      oldEcho = user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]
+      user.effects[PBEffects::FuryCutter] += 1
+      user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] += 1
+      baseDmg = move.pbBaseDamage(baseDmg, user, target)
+      user.effects[PBEffects::FuryCutter] = oldFury
+      user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] = oldEcho
     when "DoublePowerIfUserHasNoItem"   # Acrobatics
       baseDmg *= 2 if !user.item || user.hasActiveItem?(:FLYINGGEM)
     when "PowerHigherWithTargetFasterThanUser"   # Gyro Ball

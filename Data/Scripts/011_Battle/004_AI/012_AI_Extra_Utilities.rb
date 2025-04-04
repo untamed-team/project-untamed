@@ -108,7 +108,7 @@ class Battle::AI
             :defense_multiplier      => 1.0,
             :final_damage_multiplier => 1.0
         }
-        globalArray = pbGetMidTurnGlobalChanges
+        globalArray = @megaGlobalArray
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
@@ -567,7 +567,7 @@ class Battle::AI
                        (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))
         # DemICE: Mold Breaker implementation
         mold_broken = moldbroken(user,target,move)
-        globalArray = pbGetMidTurnGlobalChanges
+        globalArray = @megaGlobalArray
         procGlobalArray = processGlobalArray(globalArray)
         expectedTerrain = procGlobalArray[1]
         case type
@@ -634,8 +634,16 @@ class Battle::AI
             else
                 damage=1
             end
-        end            
-        return true if damage < opponent.hp
+        end
+        effectiveHP = opponent.hp
+        if multiarray
+            effectiveHP *= 1.25 if opponent.hasActiveItem?(:SITRUSBERRY)
+            effectiveHP *= 1.33 if opponent.hasActiveItem?([:AGUAVBERRY, :FIGYBERRY, :IAPAPABERRY, :MAGOBERRY, :WIKIBERRY])
+            effectiveHP *= 2 if opponent.hasActiveItem?(:NYLOBERRY)
+            effectiveHP += 10 if opponent.hasActiveItem?(:ORANBERRY)
+            effectiveHP += 20 if opponent.hasActiveItem?(:BERRYJUICE)
+        end
+        return true if damage < effectiveHP
         return false if priodamage>0
         if (opponent.hasActiveItem?(:FOCUSSASH) || opponent.hasActiveAbility?(:STURDY,false,mold_broken)) && opponent.hp==opponent.totalhp
             return false if multiarray
@@ -856,7 +864,7 @@ class Battle::AI
         if skip
             expectedTerrain = @battle.field.terrain
         else
-            globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+            globalArray = @megaGlobalArray if globalArray.empty?
             procGlobalArray = processGlobalArray(globalArray)
             expectedTerrain = procGlobalArray[1]
         end

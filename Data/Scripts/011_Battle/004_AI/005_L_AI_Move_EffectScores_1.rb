@@ -4,7 +4,7 @@ class Battle::AI
   #=============================================================================
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]

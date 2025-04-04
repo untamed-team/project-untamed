@@ -6,7 +6,7 @@ class Battle::AI
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -4055,7 +4055,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "DestroyTargetBerryOrGem" # incinerate
-        if !target.hasActiveAbility?(:STICKYHOLD) && target.effects[PBEffects::Substitute]<=0
+        if !target.hasActiveAbility?(:STICKYHOLD) && target.effects[PBEffects::Substitute]<=0 && target.item
             if target.item == :LUMBERRY || target.item == :SITRUSBERRY || target.item == :PETAYABERRY || 
                target.item == :LIECHIBERRY || target.item == :SALACBERRY || target.item == :CUSTAPBERRY
                 score*=1.3
