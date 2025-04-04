@@ -766,6 +766,7 @@ class Battle
     @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
     @slowstartCount  = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @overwriteType   = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
+    @movesRevealed   = [Array.new(@party1.length, []), Array.new(@party2.length, [])] #kiriya
     @numberOfUsedItems = [0,0]
   end
   def wasUserAbilityActivated?(user) 
@@ -787,6 +788,16 @@ class Battle
   end
   def WriteOverwriteType(user, move)
     @overwriteType[user.index & 1][user.pokemonIndex] = move.type
+  end
+
+  def addMoveRevealed(user, move_id)
+    @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+  end
+  def moveRevealed?(user, move_id)
+    return @movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
+  end
+  def getMovesRevealed(user)
+    return @movesRevealed[user.index & 1][user.pokemonIndex]
   end
 end
 

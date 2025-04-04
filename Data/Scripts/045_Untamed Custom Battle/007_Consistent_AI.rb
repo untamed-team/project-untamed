@@ -49,7 +49,7 @@ class Battle::AI
             if targetWillMove?(b, "dmg")
                 targetMove = @battle.choices[b.index][2]
                 if targetMove.function == "FailsIfTargetActed" && 
-                  (user.moves.any? { |i| i.statusMove? } || user.moves.any? { |i| priorityAI(user,i,@megaGlobalArray)>0 })
+                  (user.moves.any? { |i| i.statusMove? } || user.moves.any? { |i| priorityAI(user,i)>0 })
                     suckerp = 80
                     suckerp = 66 if b.moves.any? { |i| i.statusMove? }
                     if rand(100) < suckerp
@@ -57,10 +57,12 @@ class Battle::AI
                         $aisuckercheck = [true, b]
                     end
                 end
-                if b.effects[PBEffects::ProtectRate] <= 0 && ["ProtectUserSideFromStatusMoves",
-                   "ProtectUserSideFromMultiTargetDamagingMoves", "ProtectUserSideFromPriorityMoves", 
-                   "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function)
-                    $aiguardcheck = [true, targetMove.function]
+                if b.effects[PBEffects::ProtectRate] <= 0 
+                    if ["ProtectUserSideFromStatusMoves", "ProtectUserSideFromMultiTargetDamagingMoves", 
+                       "ProtectUserSideFromPriorityMoves", "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function) &&
+                       @battle.moveRevealed?(b, targetMove.id)
+                        $aiguardcheck = [true, targetMove.function]
+                    end
                 end
             end
         end
@@ -440,7 +442,7 @@ class Battle::AI
             when "ProtectUserSideFromDamagingMovesIfUserFirstTurn"
                 checked = true if move.canProtectAgainst? && target.turnCount == 0 && move.damagingMove?
             end
-            score *= (1 / 3.0) if checked
+            score *= (1 / 4.0) if checked
         end
         # Don't prefer moves that are ineffective because of abilities or effects
         return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
@@ -639,3 +641,4 @@ class Battle::AI
         return score
     end
 end
+# i have a parasocial relationship with this code. it would be funny if it wasnt so pathetic

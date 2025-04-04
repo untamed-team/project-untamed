@@ -290,6 +290,7 @@ class Battle::Battler
       @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
       @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
       @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
+      @battle.addMoveRevealed(self, move.id) # for Kiriya #by low
     end
     @battle.lastMoveUsed = move.id   # For Copycat
     @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws

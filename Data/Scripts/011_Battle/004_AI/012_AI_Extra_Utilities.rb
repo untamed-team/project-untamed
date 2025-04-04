@@ -31,6 +31,7 @@ class Battle::AI
     # Damage calculation (v2)
     #=============================================================================
     def pbRoughDamage(move, user, target, skill, baseDmg=0)
+        return 0 if user.effects[PBEffects::HyperBeam] > 0
         skill=100
         baseDmg = pbMoveBaseDamage(move, user, target, skill) if baseDmg==0
         # Fixed damage moves
@@ -570,6 +571,8 @@ class Battle::AI
         globalArray = @megaGlobalArray
         procGlobalArray = processGlobalArray(globalArray)
         expectedTerrain = procGlobalArray[1]
+        ignoresRedirect = user.hasActiveAbility?([:PROPELLERTAIL,:STALWART]) || 
+                          move.cannotRedirect? || move.targetsPosition?
         case type
         when :GROUND
             return true if target.airborneAI(mold_broken) && !move.hitsFlyingTargets?
@@ -577,11 +580,19 @@ class Battle::AI
             return true if target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
         when :WATER
             return true if target.hasActiveAbility?([:DRYSKIN,:STORMDRAIN,:WATERABSORB],false,mold_broken)
+            target.allAllies.each do |b|
+                return true if b.hasActiveAbility?(:STORMDRAIN) && !ignoresRedirect
+            end
         when :GRASS
             return true if target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
         when :ELECTRIC
             return true if target.hasActiveAbility?([:LIGHTNINGROD,:MOTORDRIVE,:VOLTABSORB],false,mold_broken)
             return true if (target.isSpecies?(:GOHILA) || target.isSpecies?(:ROADRAPTOR)) && target.pokemon.willmega && !mold_broken
+            target.allAllies.each do |b|
+                break if ignoresRedirect
+                return true if b.hasActiveAbility?(:LIGHTNINGROD) || 
+                              (b.isSpecies?(:ROADRAPTOR) && b.pokemon.willmega && !mold_broken)
+            end
             # i mean, road is already immune cuz ground, but idk maybe you gave it ring target
             # ¯\_(ツ)_/¯
         end
@@ -618,6 +629,23 @@ class Battle::AI
                        (user.hasActiveAbility?(:PRANKSTER) ||
                        (user.isSpecies?(:BANETTE) && user.pokemon.willmega && !$player.difficulty_mode?("chaos"))) && 
                        target.pbHasType?(:DARK, true) && target.opposes?(user)
+       
+        # not a perfect implementation of showtime/follow me, but it should work. Intentionally last
+        if !ignoresRedirect && !move.pbTarget(user).targets_all
+            target.allAllies.each do |b|
+                next unless b.hasActiveAbility?(:SHOWTIME)
+                return true if b.isSpecies?(:STRELAVISON) && b.turnCount > 0 && b.form == 1
+            end
+            target.allAllies.each do |b|
+                if targetWillMove?(b, "status")
+                    targetMove = @battle.choices[b.index][2]
+                    if targetMove.function == "RedirectAllMovesToUser" && @battle.moveRevealed?(b, targetMove.id)
+                        return false if targetMove.powderMove? && !user.affectedByPowder?
+                        return true
+                    end
+                end
+            end
+        end
         return false
     end    
     
