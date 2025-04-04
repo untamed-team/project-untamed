@@ -84,7 +84,11 @@ class Battle::AI
       :XACCURACY  => [:ACCURACY, (Settings::X_STAT_ITEMS_RAISE_BY_TWO_STAGES) ? 2 : 1],
       :XACCURACY2 => [:ACCURACY, 2],
       :XACCURACY3 => [:ACCURACY, 3],
-      :XACCURACY6 => [:ACCURACY, 6]
+      :XACCURACY6 => [:ACCURACY, 6],
+      # focus energy effect doesnt work here, so jank it is
+      :DIREHIT    => [:EVASION, 2],
+      :DIREHIT2   => [:EVASION, 2],
+      :DIREHIT3   => [:EVASION, 3]
     }
     losthp = battler.totalhp - battler.hp
     preferFullRestore = (battler.hp <= battler.totalhp * 2 / 3 &&
@@ -818,7 +822,7 @@ class Battle::AI
               xitemScore -= user.stages[:ACCURACY]*20
             end
             xitemScore -= 70 if !roles.include?("Sweeper")
-          when :DIREHIT # unused
+          when :DIREHIT, :DIREHIT2, :DIREHIT3
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam=bestmove[0] 
             maxmove=bestmove[1]
@@ -828,18 +832,25 @@ class Battle::AI
             if target.status != :SLEEP && canSleepTarget(user,target,globalArray) && userFasterThanTarget
               xitemScore-=90
             end
+            critbuff = 2
+            critbuff = 3 if [:DIREHIT3].include?(i[0])
             hascrit = 0
-            hascrit = 2 if user.hasActiveAbility?([:SUPERLUCK, :SNIPER]) || user.hasActiveItem?(:SCOPELENS)
+            hascrit += 1 if user.hasActiveAbility?(:SUPERLUCK)
+            hascrit += 1 if user.hasActiveItem?(:SCOPELENS)
             user.eachMove do |m|
-              next if !m.highCriticalRate?
+              next unless m.highCriticalRate?
               hascrit +=1
-              break if hascrit>=2
+              break
             end
-            if hascrit==2
+            if hascrit >= 3
+              xitemScore = -200
+            elsif (hascrit + critbuff) >= 3
               xitemScore += 20
+              xitemScore += 20 if user.hasActiveAbility?(:SNIPER)
             else
               xitemScore -= 200
             end
+            xitemScore -= 120 if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR])
             if targetSurvivesMove(maxmove,target,user) || (target.status == :SLEEP && target.statusCount>1)
               xitemScore += 40
               xitemScore += 60 if (target.status == :SLEEP && target.statusCount>1)
