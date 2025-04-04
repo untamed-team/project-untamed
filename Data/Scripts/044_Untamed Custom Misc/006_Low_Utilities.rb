@@ -759,6 +759,7 @@ class Battle
   attr_reader :activedAbility
   attr_reader :slowstartCount
   attr_reader :overwriteType
+  attr_reader :movesRevealed
   
   alias abilactivated_initialize initialize
   def initialize(scene, p1, p2, player, opponent)
