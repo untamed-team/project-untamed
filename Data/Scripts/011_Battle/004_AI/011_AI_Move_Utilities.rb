@@ -137,8 +137,8 @@ class Battle::AI
       end
     end
     # only need the globalarray here since pbCalcType should get the type in the normal way
-    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain"].include?(move.function)
-      globalArray = pbGetMidTurnGlobalChanges
+    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain", "TargetMovesBecomeElectric"].include?(move.function)
+      globalArray = @megaGlobalArray
       if move.function == "TypeAndPowerDependOnWeather"
         if !user.hasActiveItem?(:UTILITYUMBRELLA)
           ret = :FIRE  if globalArray.include?("sun weather")
@@ -146,11 +146,26 @@ class Battle::AI
         end
         ret = :ICE   if globalArray.include?("sand weather")
         ret = :ROCK  if globalArray.include?("hail weather")
-      elsif move.function == "TypeAndPowerDependOnTerrain"
+      elsif move.function == "TypeAndPowerDependOnTerrain" && user.affectedByTerrain?
         ret = :ELECTRIC if globalArray.include?("electric terrain")
         ret = :GRASS    if globalArray.include?("grassy terrain")
         ret = :FAIRY    if globalArray.include?("misty terrain")
         ret = :PSYCHIC  if globalArray.include?("psychic terrain")
+      end
+      # electrify logic
+      user.eachOpposing do |b|
+        if targetWillMove?(b)
+          targetMove = @battle.choices[b.index][2]
+          if targetMove.function == "TargetMovesBecomeElectric"
+            thisprio = priorityAI(user, move, globalArray)
+            thatprio = priorityAI(b, targetMove, globalArray)
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(b,:SPEED,skill)
+            if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+              ret = :ELECTRIC
+            end
+          end
+        end
       end
     end
     return ret
@@ -172,7 +187,7 @@ class Battle::AI
     end
     megaSpeed = false
     if (stat == :SPEED && dontignorespeb) && Settings::RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES && !$game_switches[OLDSCHOOLBATTLE]
-      globalArray = pbGetMidTurnGlobalChanges
+      globalArray = @megaGlobalArray
       if globalArray.any? { |element| element.match?(/terrain|weather/) }
         megaSpeed = true
         weatherSpeed_hash = {
@@ -211,7 +226,7 @@ class Battle::AI
   # so much shit was missing from here what the fuck
   #=============================================================================
   def pbMoveBaseDamage(move, user, target, skill)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -249,8 +264,8 @@ class Battle::AI
       baseDmg = move.pbModifyDamage(baseDmg, user, target)
     # Gust, Twister, Venoshock, Smelling Salts, Wake-Up Slap, Facade, Hex, Brine,
     # Retaliate, Weather Ball, Return, Frustration, Eruption, Crush Grip,
-    # Stored Power, Punishment, Hidden Power, Fury Cutter, Echoed Voice,
-    # Trump Card, Flail, Electro Ball, Low Kick, Fling, Spit Up, Future Sight / Doom Desire
+    # Stored Power, Punishment, Hidden Power, Trump Card, Flail, Electro Ball, 
+    # Low Kick, Fling, Spit Up, Future Sight / Doom Desire
     when "DoublePowerIfTargetInSky",
          "FlinchTargetDoublePowerIfTargetInSky",
          "DoublePowerIfTargetPoisoned",
@@ -267,8 +282,6 @@ class Battle::AI
          "PowerHigherWithUserPositiveStatStages",
          "PowerHigherWithTargetPositiveStatStages",
          "TypeDependsOnUserIVs",
-         "PowerHigherWithConsecutiveUse",
-         "PowerHigherWithConsecutiveUseOnUserSide",
          "PowerHigherWithLessPP",
          "PowerLowerWithUserHP",
          "PowerHigherWithUserFasterThanTarget",
@@ -277,6 +290,16 @@ class Battle::AI
          "PowerDependsOnUserStockpile",
          "AttackTwoTurnsLater"
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
+    # Fury Cutter, Echoed Voice (counter goes up before usage)
+    when "PowerHigherWithConsecutiveUse",
+         "PowerHigherWithConsecutiveUseOnUserSide"
+      oldFury = user.effects[PBEffects::FuryCutter]
+      oldEcho = user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter]
+      user.effects[PBEffects::FuryCutter] += 1
+      user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] += 1
+      baseDmg = move.pbBaseDamage(baseDmg, user, target)
+      user.effects[PBEffects::FuryCutter] = oldFury
+      user.pbOwnSide.effects[PBEffects::EchoedVoiceCounter] = oldEcho
     when "DoublePowerIfUserHasNoItem"   # Acrobatics
       baseDmg *= 2 if !user.item || user.hasActiveItem?(:FLYINGGEM)
     when "PowerHigherWithTargetFasterThanUser"   # Gyro Ball
@@ -284,7 +307,17 @@ class Battle::AI
       userSpeed = pbRoughStat(user, :SPEED, skill)
       baseDmg = [[(25 * targetSpeed / userSpeed).floor, 150].min, 1].max
     when "RandomlyDamageOrHealTarget"   # Present
-      baseDmg = (user.pbOwnedByPlayer?) ? 40 : 120
+      averagegift = [23, 37, 54, 64, 76]
+      maxgift = [40, 60, 80, 100, 120]
+      lvl = case user.level
+        when 0..16 then 0
+        when 17..24 then 1
+        when 25..33 then 2
+        when 34..44 then 3
+        else 4
+      end
+      baseDmg = averagegift[lvl]
+      baseDmg = maxgift[lvl] if !user.pbOwnedByPlayer?
     when "TypeAndPowerDependOnWeather"
       baseDmg *= 2 if user.effectiveWeather != :None || 
                       globalArray.any? { |element| element.include?("weather") }
@@ -298,17 +331,12 @@ class Battle::AI
     when "DoublePowerIfTargetUnderground", "RandomPowerDoublePowerIfTargetUnderground"   # Magnitude
       if move.function == "RandomPowerDoublePowerIfTargetUnderground"
         # Average damage dealt for each stage
-        case user.level
-          when 0..16
-            baseDmg = 48
-          when 17..24
-            baseDmg = 65
-          when 25..33
-            baseDmg = 82
-          when 34..44
-            baseDmg = 94
-          else
-            baseDmg = 108
+        baseDmg = case user.level
+          when 0..16 then 48
+          when 17..24 then 65
+          when 25..33 then 82
+          when 34..44 then 94
+          else 108
         end
       end
       baseDmg *= 2 if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground")   # Dig
@@ -478,8 +506,9 @@ class Battle::AI
       )
     end
     # klutz buff #by low
-    if skill >= PBTrainerAI.bestSkill && target.itemActive? && 
-      (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if skill >= PBTrainerAI.bestSkill && target.itemActive? && !klut
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, move, type
       )

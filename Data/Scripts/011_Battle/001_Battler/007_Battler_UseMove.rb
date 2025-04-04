@@ -215,21 +215,24 @@ class Battle::Battler
     end
     # Presage #by low (placed here so it triggers before doing damage)
     if self.hasActiveAbility?(:PRESAGE)
-      weather_hash = {
-        "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
-        "HealUserDependingOnWeather" => :Sun, # morning sun
-        "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
-        "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
-        "HealUserDependingOnHail"      => :Hail, # glacial gulf
-        "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
-        "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
-        "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
-        "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
-        "HigherDamageInRain"                            => :Rain, # stream burst
-        "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
-        "PeperSpray"                                    => :Sun   # pepper spray
-      }
-      if move.function != "TypeAndPowerDependOnWeather"
+      if move.function == "TypeAndPowerDependOnWeather"
+        possible_weathers = [:Sun, :Rain, :Sandstorm, :Hail, :StrongWinds, :ShadowSky]
+        new_weather = possible_weathers[@battle.pbRandom(possible_weathers.length)] if $player.difficulty_mode?("easy")
+      else
+        weather_hash = {
+          "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+          "HealUserDependingOnWeather" => :Sun, # morning sun
+          "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+          "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+          "HealUserDependingOnHail"      => :Hail, # glacial gulf
+          "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+          "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+          "HigherDamageInRain"                            => :Rain, # stream burst
+          "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+          "PeperSpray"                                    => :Sun   # pepper spray
+        }
         new_weather = weather_hash[move.function]
         if !new_weather && move.damagingMove?
           case move.type
@@ -353,13 +356,13 @@ class Battle::Battler
     move.pbOnStartUse(user, targets)
     # Self-thawing due to the move
     # Powder
-    if user.effects[PBEffects::Powder] && move.calcType == :FIRE
+    if user.effects[PBEffects::Powder] && move.calcType == :FIRE && move.damagingMove?
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
       if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
-          @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
+          @battle.pbDisplay(_INTL("{1} was hurt!", user.pbThis))
         }
         @battle.pbGainExp   # In case user is KO'd by this
       end
@@ -850,16 +853,16 @@ class Battle::Battler
        targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
-		# damage message #by low
-		if $player.difficulty_mode?("hard")
-			targets.each do |b|
-				if b.damageState.calcDamage > 0
-					damagetotal = b.damageState.calcDamage
-					damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
-					@battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
-				end
-			end
-		end
+    # damage message #by low
+    if $player.difficulty_mode?("hard")
+      targets.each do |b|
+        if b.damageState.calcDamage > 0
+          damagetotal = b.damageState.calcDamage
+          #damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
+          @battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
+        end
+      end
+    end
     return true
   end
 end

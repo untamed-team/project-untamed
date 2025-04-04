@@ -125,7 +125,6 @@ module PBEffects
   Momentum		        = 119
   SlipperyPeel        = 120
   MoodyMemory	        = 121
-  RemaningHPBars     	= 122
   HonorBound          = 123
   PrioEchoChamber     = 124
   BoomInstalled       = 125

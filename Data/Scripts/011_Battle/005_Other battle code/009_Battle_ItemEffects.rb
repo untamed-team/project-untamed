@@ -318,9 +318,17 @@ Battle::ItemEffects::HPHeal.add(:LANSATBERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumePinchBerry?
     next false if battler.effects[PBEffects::FocusEnergy] >= 2
-    battle.pbCommonAnimation("EatBerry", battler) if !forced
+    amt = 2
+    ripening = false
 		pbRaiseTropiusEvolutionStep(battler) #by low
-    battler.effects[PBEffects::FocusEnergy] = 2
+    if battler.hasActiveAbility?(:RIPEN)
+      battle.pbShowAbilitySplash(battler, forced)
+      amt *= 2
+      ripening = true
+    end
+    battle.pbCommonAnimation("EatBerry", battler) if !forced
+    battle.pbHideAbilitySplash(battler) if ripening
+    battler.effects[PBEffects::FocusEnergy] = amt
     itemName = GameData::Item.get(item).name
     if forced
       battle.pbDisplay(_INTL("{1} got pumped from the {2}!", battler.pbThis, itemName))
@@ -436,12 +444,12 @@ Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
 		pbRaiseTropiusEvolutionStep(battler) #by low
     battle.pbCommonAnimation("EatBerry", battler) if !forced
     amt = battler.totalhp
-    amt *= 1 / 2.0 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
+    amt /= 1.5 if battler.pbHasMoveFunction?("UseRandomUserMoveIfAsleep")
     battler.pbRecoverHP(amt)
     itemName = GameData::Item.get(item).name
     if forced
       PBDebug.log("[Item triggered] Forced consuming of #{itemName}")
-      battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
+      battler.pbSleepSelf(_INTL("{1}'s HP was restored and it went to sleep.", battler.pbThis), 3)
     else
       battler.pbSleepSelf(_INTL("{1} used its {2} and went to sleep!", battler.pbThis, itemName), 3)
     end
@@ -692,6 +700,7 @@ Battle::ItemEffects::PriorityBracketChange.copy(:LAGGINGTAIL, :FULLINCENSE)
 
 Battle::ItemEffects::PriorityBracketChange.add(:QUICKCLAW,
   proc { |item, battler, battle|
+    next 0 if !$player.difficulty_mode?("easy")
     next 1 if battle.pbRandom(100) < 20
   }
 )

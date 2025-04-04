@@ -180,8 +180,14 @@ class Battle
         pbDisplayBrief(_INTL("{1}, switch out! Come back!", battler.name))
       end
     else
-      owner = pbGetOwnerName(battler.index)
-      pbDisplayBrief(_INTL("{1} withdrew {2}!", owner, battler.name))
+      oppon = @player[0]
+      oppon = @opponent[pbGetOwnerIndexFromBattlerIndex(battler.index)] if opposes?(battler.index)
+      if isWildBoss?(oppon) #by low
+        pbDisplayBrief(_INTL("{1} is retreating!", battler.name))
+      else
+        owner = pbGetOwnerName(battler.index)
+        pbDisplayBrief(_INTL("{1} withdrew {2}!", owner, battler.name))
+      end
     end
   end
 
@@ -205,8 +211,14 @@ class Battle
         pbDisplayBrief(_INTL("Your opponent's weak! Get 'em, {1}!", newPkmnName))
       end
     else
-      owner = pbGetOwnerFromBattlerIndex(idxBattler)
-      pbDisplayBrief(_INTL("{1} sent out {2}!", owner.full_name, newPkmnName))
+      oppon = @player[0]
+      oppon = @opponent[pbGetOwnerIndexFromBattlerIndex(idxBattler)] if opposes?(idxBattler)
+      if isWildBoss?(oppon) #by low
+        pbDisplayBrief(_INTL("A {1} appeared!", newPkmnName))
+      else
+        owner = pbGetOwnerFromBattlerIndex(idxBattler)
+        pbDisplayBrief(_INTL("{1} sent out {2}!", owner.full_name, newPkmnName))
+      end
     end
   end
 

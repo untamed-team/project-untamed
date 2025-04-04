@@ -367,10 +367,11 @@ GameData::Evolution.register({
 })
 
 #===============================================================================
-# powertrip
+# powertrip + Noseponch
 #===============================================================================
 def pbFieldEvolutionCheck(hm_used)
   return if hm_used.nil?
+  partycount = $player.party.count
   $player.party.each_with_index do |pkmn, index|
     next if !pkmn || pkmn.egg?
     next if pkmn.fainted?
@@ -389,6 +390,9 @@ def pbFieldEvolutionCheck(hm_used)
           new_species = evo2.to_sym
         end
       end
+    end
+    if pkmn.isSpecies?(:M_NOSEPASS) && pkmn.level >= 30 && hm_used == "king of the ring" && partycount == 1
+      new_species = :NOSEPONCH
     end
     next if new_species.nil?
     pbWait(60)
@@ -514,7 +518,10 @@ class Pokemon
     return 1 if base == 1   # For Shedinja
     ev = 0 if $player.difficulty_mode?("chaos")
     # made ivs be a brute stat boost #by low
-    return (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
+    hp = (((((base * 2) + (ev / 4)) * level / 100).floor + level + 10) * (1+iv/100.0)).floor
+    self.remaningHPBars = [0, 0] if !self.remaningHPBars
+    hp *= self.remaningHPBars[1] if self.remaningHPBars[1] > 0
+    return hp
   end
   
   def calcStat(base, level, iv, ev, nat, realStat = :HP)

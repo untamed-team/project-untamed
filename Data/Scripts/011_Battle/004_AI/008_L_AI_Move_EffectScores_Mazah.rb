@@ -6,7 +6,7 @@ class Battle::AI
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -254,7 +254,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
-         if user.turnCount == 0
+        if user.turnCount == 0
             hasAlly = !user.allAllies.empty?
             if hasAlly
                 healcheck = target.moves.any? { |m| m&.healingMove? }
@@ -724,7 +724,7 @@ class Battle::AI
   end
     
     # Utilities Check ############################################################
-      # ill let you know that this is longer than the actual effect score part of this page
+    # ill let you know that this is longer than the actual effect score part of this page
     # it started so normal, how could i forsee me making this much coding?
     
     def pbHasSetupMove?(pokemon, countother = true)
@@ -770,7 +770,7 @@ class Battle::AI
     
     def pbHasPivotMove?(pokemon, countother = true)
         pivotarray = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 
-                        "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
+                      "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
         return true if movesetCheck(pokemon, pivotarray, countother)
         return true if pokemon.ability == :REGENERATOR && countother
         return false
@@ -831,7 +831,8 @@ class Battle::AI
         if targetPosi.effects[PBEffects::FutureSightCounter] == 1
             futureMove = targetPosi.effects[PBEffects::FutureSightMove]
             return 0 if futureMove.nil?
-            moveUser = sacrifice = nil
+            moveUser = nil
+            sacrifice = nil
             @battle.allBattlers.each do |battler|
                 next if battler.opposes?(targetPosi.effects[PBEffects::FutureSightUserIndex])
                 sacrifice = battler
@@ -869,7 +870,7 @@ class Battle::AI
     end
 
     def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
@@ -1018,7 +1019,7 @@ class Battle::AI
         roles = []
         if pokemon.is_a?(Battle::Battler) # used for a single (active) pokemon
             if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
-                 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
                 roles.push("Sweeper")
             end
             healingmove = pokemon.moves.any? { |m| m&.healingMove? }
@@ -1067,36 +1068,35 @@ class Battle::AI
                 roles.push("Baton Passer")
             end
             if pokemon.pbHasMoveFunction?("DisableTargetStatusMoves") || 
-                 [:CHOICEBAND, :CHOICESPECS].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS].include?(pokemon.item_id)
                 roles.push("Stallbreaker")
             end
             if pokemon.pbHasMoveFunction?("HealUserFullyAndFallAsleep") || 
-                 [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
-                 [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
-                    :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
-                 (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
+               [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
+               [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
+                :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
+               (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
                 roles.push("Status Absorber")
             end
             if [:SHADOWTAG, :ARENATRAP, :MAGNETPULL, :BAITEDLINE].include?(pokemon.ability)
                 roles.push("Trapper")
             end
             if pokemon.pbHasMoveFunction?("StartSunWeather", "StartRainWeather", "StartSandstormWeather", "StartHailWeather") || 
-                 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-                  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-                  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
-                 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-                 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
+               [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+                :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+               (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
+               (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Weather Setter")
             end
             if pokemon.pbHasMoveFunction?("StartElectricTerrain", "StartGrassyTerrain", "StartMistyTerrain", "StartPsychicTerrain") || 
-                 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-                 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
+               [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
+               (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Field Setter")
             end
             pokemonPartyEnd = @battle.pbTeamIndexRangeFromBattlerIndex(pokemon.index).length
@@ -1114,7 +1114,7 @@ class Battle::AI
                 movelist.push(movedummy)
             end
             if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
-                 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
                 roles.push("Sweeper")
             end
             healingmove = movelist.any? { |m| m&.healingMove? }
@@ -1210,9 +1210,9 @@ class Battle::AI
                 end
             end
             if restmove || [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
-                 [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
-                    :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
-                 (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
+               [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
+                :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
+               (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
                 roles.push("Status Absorber")
             end
             if [:SHADOWTAG, :ARENATRAP, :MAGNETPULL, :BAITEDLINE].include?(pokemon.ability)
@@ -1225,14 +1225,14 @@ class Battle::AI
                 end
             end
             if weathermove || 
-                 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-                  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-                  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
-                 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-                 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
+               [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
+                :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+                :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+               (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
+               (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Weather Setter")
             end
             terrainmove=false
@@ -1242,11 +1242,11 @@ class Battle::AI
                 end
             end
             if terrainmove || 
-                 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-                 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
+               [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
+               (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Field Setter")
             end
             if position == (party.length - 1)
@@ -1320,7 +1320,7 @@ class Battle::AI
     
     def getFieldDisruptScore(user, target, globalArray = [], skill = 100) 
         # probably redundant with the check WeatherBenefit script but eh
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedTerrain = procGlobalArray[1]
         # modified by JZ
@@ -1457,7 +1457,7 @@ class Battle::AI
         end
         fieldscore*=0.01
         return fieldscore
-      end
+    end
 
     def getAbilityDisruptScore(move,user,target,skill)
         abilityscore=100.0
@@ -1751,7 +1751,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?([:PUNKROCK, :AMPLIFIER])
             echo("\nPunk / Amp Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.soundMove? }
         end 
         if target.hasActiveAbility?(:CONTRARY)
             echo("\nContrary Disrupt") if $AIGENERALLOG
@@ -1831,7 +1831,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?(:TOUGHCLAWS)
             echo("\nTough Claws Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.contactMove? }
         end
         if target.hasActiveAbility?(:UNSEENFIST)
             echo("\nUnseen Fist Disrupt") if $AIGENERALLOG
@@ -1880,11 +1880,11 @@ class Battle::AI
         if target.hasActiveAbility?(:KLUTZ)
             if $player.difficulty_mode?("chaos")
                 itemsAffected = [:ASSAULTVEST, :MELEEVEST, :EVIOLITE, :BRIGHTPOWDER, :LAXINCENSE, 
-                                    :REDCARD, :EJECTBUTTON]
+                                 :REDCARD, :EJECTBUTTON]
                 itemsAffected.push(:OCCABERRY, :PASSHOBERRY, :WACANBERRY, :RINDOBERRY, :YACHEBERRY, 
-                                    :CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, 
-                                    :TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, 
-                                    :ROSELIBERRY, :BABIRIBERRY)
+                                   :CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, 
+                                   :TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, 
+                                   :ROSELIBERRY, :BABIRIBERRY)
                 abilityscore*=1.5 if itemsAffected.include?(user.item_id)
             end
             abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
@@ -2000,8 +2000,7 @@ class Battle::AI
     end
 
     # Megas' Mid Turn A.T.W. changes #############################################
-    # its a mess
-
+    # its a (slightly better) mess
     def pbGetMidTurnGlobalChanges
         globalArray = []
         megaChecks = {
@@ -2028,9 +2027,9 @@ class Battle::AI
             megaSpecies = j.pokemon.species
             if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
               (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
-                  effectne = megaChecks[megaSpecies][1]
-                  jspeed = pbRoughStat(j,:SPEED,100,false)
-                 if effectne.include?("weather")
+                effectne = megaChecks[megaSpecies][1]
+                jspeed = pbRoughStat(j,:SPEED,100,false)
+                if effectne.include?("weather")
                     if jspeed < slowestWeatherSpeed
                         slowestWeather = effectne
                         slowestWeatherSpeed = jspeed
@@ -2046,7 +2045,7 @@ class Battle::AI
             end
         end
         globalArray.push(slowestWeather) if slowestWeather
-          globalArray.push(slowestTerrain) if slowestTerrain
+        globalArray.push(slowestTerrain) if slowestTerrain
 
         # airlock/cloud9 interaction
         weatherNeg = false
@@ -2062,7 +2061,6 @@ class Battle::AI
         end
         globalArray.reject! { |w| w.include?("weather") } if weatherNeg
         globalArray.uniq!
-        #echoln globalArray
         return globalArray
     end
 
@@ -2089,7 +2087,7 @@ class Battle::AI
     
     def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
         skill = 100
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.nil?
+        globalArray = @megaGlobalArray if globalArray.nil?
         thisprio = priorityAI(user,move,globalArray)
         return score if thisprio == 0
         aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
@@ -2172,11 +2170,11 @@ class Battle::AI
                     end
                 end
                 if !fastermon && 
-                        target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-                                                    "TwoTurnAttackInvulnerableUnderground",
-                                                    "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-                                                    "TwoTurnAttackInvulnerableUnderwater",
-                                                    "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+                    target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+                                            "TwoTurnAttackInvulnerableUnderground",
+                                            "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+                                            "TwoTurnAttackInvulnerableUnderwater",
+                                            "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
                     echo("Player Pokemon is invulnerable. Score (for" + move.name + ") -300. \n")
                     score-=300
                 end
@@ -2189,7 +2187,7 @@ class Battle::AI
                 @battle.allSameSideBattlers(target.index).each do |b|
                     priobroken=moldbroken(user,b,move)
                     if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-                         !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+                       !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
                         # laguna/diancie can have priority immunity in pre-mega form
                         score-=300 
                         echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
@@ -2223,10 +2221,10 @@ class Battle::AI
                 if move.damagingMove?
                     score*=0.9
                     if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-                                                "TwoTurnAttackInvulnerableUnderground",
-                                                "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-                                                "TwoTurnAttackInvulnerableUnderwater",
-                                                "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+                                               "TwoTurnAttackInvulnerableUnderground",
+                                               "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+                                               "TwoTurnAttackInvulnerableUnderwater",
+                                               "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
                         echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
                         score*=2
                     end

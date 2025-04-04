@@ -2611,7 +2611,7 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:HEALER,
   proc { |ability, battler, battle|
     # healer buff #by low
     next if battler.turnCount == 0
-    next unless (battler.turnCount % 2 == 0) 
+    next unless battler.turnCount.even?
     hurtAlly = false
     battler.allAllies.each do |b|
       next if b.status == :NONE
@@ -2701,6 +2701,7 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
 
 Battle::AbilityEffects::EndOfRoundEffect.add(:SPEEDBOOST,
   proc { |ability, battler, battle|
+    next if battler.turnCount.even? && $player.difficulty_mode?("chaos") #by low
     # A Pokémon's turnCount is 0 if it became active after the beginning of a
     # round
     if battler.turnCount > 0 && battle.choices[battler.index][0] != :Run &&
@@ -3451,13 +3452,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:OVERWRITE,
 )
 
 #by low
+# in theory, you could use skill swap and such on doubles with these abilities to dupe the effect of any
+# ability that uses the "activated?" commands. Sounds funny though so ill keep it for now
 Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
   proc { |ability, battler, battle, switch_in|
     next if !battle.wasUserAbilityActivated?(battler)
     battle.DeActivateUserAbility(battler)
-    # not in OnSwitchOut to prevent ability changes interfering
   }
 )
+Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR)
 
 Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   proc { |ability, battler, battle, switch_in|
@@ -3473,7 +3476,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
       next if pkmn.fainted?
       next if choices_blacklist.include?(pkmn.species)
       iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler)
-      next if iFake.ungainableAbility? || iFake.unstoppableAbility? || iFake.mega?
+      next if iFake.ungainableAbility? || iFake.mega?
       iBaseStats = iFake.pokemon.baseStats
       bstTotal = iBaseStats[:HP] + iBaseStats[:ATTACK] + iBaseStats[:DEFENSE] + iBaseStats[:SPECIAL_ATTACK] + iBaseStats[:SPECIAL_DEFENSE] + iBaseStats[:SPEED]
       next if bstTotal <= 0 || bstTotal >= 580
@@ -3489,7 +3492,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
     battle.pbAnimation(:TRANSFORM, battler, choice)
     battle.scene.pbChangePokemon(battler, choice.pokemon)
     battler.pbTransform(choice)
-    battler.effects[PBEffects::Type3] = :DARK
+    battler.effects[PBEffects::Type3] = :DARK if battler.types.length < 3
   }
 )
 
@@ -3629,6 +3632,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
 
 Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
   proc { |ability, battler, battle, ability_changed|
+    # small edits #by low
+    next if battler.types.length >= 3
     if battle.field.terrain == :None && battle.field.typezone == :None
       # Revert to original typing
       battle.pbShowAbilitySplash(battler)
@@ -3650,7 +3655,6 @@ Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
         new_type = nil if !type_data
         new_type_name = type_data.name if type_data
       else
-        # small edits #by low
         new_type = battle.field.typezone
         if new_type
           type_data = GameData::Type.try_get(new_type)

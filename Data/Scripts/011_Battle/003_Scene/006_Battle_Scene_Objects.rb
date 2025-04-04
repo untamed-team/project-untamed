@@ -91,6 +91,14 @@ class Battle::Scene::PokemonDataBox < Sprite
     @hpBar.bitmap = @hpBarBitmap.bitmap
     @hpBar.src_rect.height = @hpBarBitmap.height / 3
     @sprites["hpBar"] = @hpBar
+    if @battler.isBossPokemon?
+      @hpBarBitmap2 = AnimatedBitmap.new("Graphics/Pictures/Battle/overlay_hp2")
+      @hpBar2 = Sprite.new(viewport)
+      @hpBar2.bitmap = @hpBarBitmap2.bitmap
+      @hpBar2.src_rect.height = @hpBarBitmap2.height / 3
+      @sprites["hpBar2"] = @hpBar2
+      @hpBar2.visible = false
+    end
     # Create sprite wrapper that displays Exp bar
     @expBar = Sprite.new(viewport)
     @expBar.bitmap = @expBarBitmap.bitmap
@@ -239,18 +247,6 @@ class Battle::Scene::PokemonDataBox < Sprite
 		end
   end
 
-  def draw_bossHPBars #by low
-    return if !@battler.isBossPokemon?
-    return if @battler.remaningHPBars == 0
-    i = 0
-    @battler.remaningHPBars.times do
-      pbDrawImagePositions(self.bitmap,
-        [["Graphics/Pictures/Battle/icon_HPBar", @spriteBaseX + i + 8, 48]]
-      )
-      i += 16
-    end
-  end
-
   def draw_gender
     gender = @battler.displayGender
     return if ![0, 1].include?(gender)
@@ -276,14 +272,17 @@ class Battle::Scene::PokemonDataBox < Sprite
   def draw_shiny_icon
     return if !@battler.shiny?
     #shiny_x = (@battler.opposes?(0)) ? 206 : -6   # Foe's/player's
-    shiny_x = (@battler.opposes?(0)) ? 220 : 24   # Foe's/player's
-    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, 36]])
+    shiny_x = (@battler.opposes?(0)) ? 220 : 8   # Foe's/player's
+    shiny_y = (@battler.opposes?(0)) ? 36 : 48  # Foe's/player's
+    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, shiny_y]])
   end
 
   def draw_special_form_icon
     # Mega Evolution/Primal Reversion icon
     if @battler.mega?
-      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + 8, 34]])
+      mega_x = (@battler.opposes?(0)) ? 222 : 6   # Foe's/player's
+      mega_y = (@battler.opposes?(0)) ? 36 : 49  # Foe's/player's
+      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + mega_x, mega_y]])
     elsif @battler.primal?
       filename = nil
       if @battler.isSpecies?(:GROUDON)
@@ -307,7 +306,6 @@ class Battle::Scene::PokemonDataBox < Sprite
     draw_background
     draw_name
     draw_level
-    #draw_bossHPBars
     draw_gender
     draw_status
     draw_shiny_icon
@@ -317,30 +315,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     refreshExp
   end
 
-  def refreshHP
-    @hpNumbers.bitmap.clear
-    return if !@battler.pokemon
-    # Show HP numbers
-    if @showHP
-      pbDrawNumber(self.hp, @hpNumbers.bitmap, 54, -2, 1) #stygma
-      pbDrawNumber(-1, @hpNumbers.bitmap, 54, -2)   # / char
-      pbDrawNumber(@battler.totalhp, @hpNumbers.bitmap, 70, -2)
-    end
-    # Resize HP bar
-    w = 0
-    if self.hp > 0
-      w = @hpBarBitmap.width.to_f * self.hp / @battler.totalhp
-      w = 1 if w < 1
-      # NOTE: The line below snaps the bar's width to the nearest 2 pixels, to
-      #       fit in with the rest of the graphics which are doubled in size.
-      w = ((w / 2.0).round) * 2
-    end
-    @hpBar.src_rect.width = w
-    hpColor = 0                                  # Green bar
-    hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
-    hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
-    @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
-    draw_bossHPBars
+  def refreshHP # check boss pokemon #by low
   end
 
   def refreshExp
@@ -352,19 +327,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     @expBar.src_rect.width = w
   end
 
-  def updateHPAnimation
-    return if !@animatingHP
-    if @currentHP < @endHP      # Gaining HP
-      @currentHP += @hpIncPerFrame
-      @currentHP = @endHP if @currentHP >= @endHP
-    elsif @currentHP > @endHP   # Losing HP
-      @currentHP -= @hpIncPerFrame
-      @currentHP = @endHP if @currentHP <= @endHP
-    end
-    # Refresh the HP bar/numbers
-    refreshHP
-    draw_bossHPBars #by low
-    @animatingHP = false if @currentHP == @endHP
+  def updateHPAnimation # check boss pokemon #by low
   end
 
   def updateExpAnimation

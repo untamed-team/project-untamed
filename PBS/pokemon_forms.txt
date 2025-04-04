@@ -347,6 +347,19 @@ Height = 2.1
 Weight = 350.2
 Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
 Generation = 6
+#-------------------------------
+[AUDINO,1]
+FormName = Mega Audino
+MegaStone = AUDINITE
+Types = NORMAL,FAIRY
+BaseStats = 103,60,126,50,80,126
+BaseExp = 425
+Abilities = HEALER
+HiddenAbilities = HEALER
+Height = 1.5
+Weight = 32.0
+Color = White
+Generation = 6
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------

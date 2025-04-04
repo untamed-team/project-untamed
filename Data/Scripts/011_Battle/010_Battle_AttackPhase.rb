@@ -72,7 +72,12 @@ class Battle
       b.lastMoveFailed = false   # Counts as a successful move for Stomping Tantrum
       item = @choices[b.index][1]
       next if !item
-      @numberOfUsedItems[b.index % 2] += 1 # items cap #by low
+      # items bag changes #by low
+      @numberOfUsedItems[b.index % 2] += 1
+      if b.pbOwnedByPlayer?
+        foe = b.pbDirectOpposing(true)
+        @opponent[pbGetOwnerIndexFromBattlerIndex(foe.index)].items.push(item)
+      end
       case GameData::Item.get(item).battle_use
       when 1, 2   # Use on Pokémon/Pokémon's move
         pbUseItemOnPokemon(item, @choices[b.index][2], b) if @choices[b.index][2] >= 0
