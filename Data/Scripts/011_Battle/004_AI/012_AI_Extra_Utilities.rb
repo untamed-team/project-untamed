@@ -473,7 +473,35 @@ class Battle::AI
         defense = [(defense * multipliers[:defense_multiplier]).round, 1].max
         damage  = ((((2.0 * user.level / 5) + 2).floor * baseDmg * atk / defense).floor / 50).floor + 2
         damage  = [(damage * multipliers[:final_damage_multiplier]).round, 1].max
-        # "AI-specific calculations below"
+        # AI-specific calculations below
+        # Multi-hit moves were calculated wrong
+        case move.function
+        when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
+             "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesFlinchTarget"
+          # Double Kick, Twineedle, Splinter Shot, Dragon Darts, Double Iron Bash
+          damage *= 2
+        when "HitThreeTimesAlwaysCriticalHit" # always crit moves (crit part) are dealt with on pbRoughDamage
+          damage *= 3
+        when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
+          damage *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
+        when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1", "HitTwoToFiveTimesOrThreeForAshGreninja"
+          # Fury Attack, Scale Shot, Water Shuriken
+          if user.hasActiveAbility?(:SKILLLINK)
+            damage *= 5
+          # might be wrong since grenig should have prio over skill link but lmao who cares
+          elsif user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
+            # 3 hits at 20 power = 4 hits at 15 power
+            damage *= 4
+          else
+            damage = (damage * 3.47).floor   # Average damage dealt
+          end
+        when "HitThreeToFiveTimes" # Queso Blast / Comet Punch
+          if user.hasActiveAbility?(:SKILLLINK)
+            damage *= 5
+          else
+            damage = (damage * 4.33).floor   # Average damage dealt
+          end
+        end
         # Increased critical hit rates
         if skill >= PBTrainerAI.mediumSkill
             c = 0

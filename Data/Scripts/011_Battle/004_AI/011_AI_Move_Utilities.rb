@@ -347,24 +347,6 @@ class Battle::AI
       baseDmg = move.pbNaturalGiftBaseDamage(user.item_id)
     when "PowerHigherWithUserHeavierThanTarget"   # Heavy Slam
       baseDmg = move.pbBaseDamage(baseDmg, user, target)
-    when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
-         "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesFlinchTarget"
-      # Double Kick, Twineedle, Splinter Shot, Dragon Darts, Double Iron Bash
-      baseDmg *= 2
-    when "HitThreeTimesAlwaysCriticalHit" # always crit moves (crit part) are dealt with on pbRoughDamage
-      baseDmg *= 3
-    when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
-      baseDmg *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
-    when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1", "HitTwoToFiveTimesOrThreeForAshGreninja"
-      # Fury Attack, Scale Shot, Water Shuriken
-      if user.hasActiveAbility?(:SKILLLINK)
-        baseDmg *= 5
-      elsif user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
-        # 3 hits at 20 power = 4 hits at 15 power
-        baseDmg *= 4
-      else
-        baseDmg = (baseDmg * 3.47).floor   # Average damage dealt
-      end
     when "HitOncePerUserTeamMember"   # Beat Up
       # DemICE beat-up was being calculated very wrong.
       beatUpList = []
@@ -377,6 +359,7 @@ class Battle::AI
         atk = @battle.pbParty(user.index)[i].baseStats[:ATTACK]
         baseDmg += 5+(atk/10)
       end
+      baseDmg *= 1.5 if user.hasActiveAbility?(:TECHNICIAN)
     when "TwoTurnAttackOneTurnInSun"   # Solar Beam
       baseDmg = move.pbBaseDamageMultiplier(baseDmg, user, target)
     when "MultiTurnAttackPowersUpEachTurn"   # Rollout
@@ -407,12 +390,6 @@ class Battle::AI
     when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie
       baseDmg *= 2.25 if user.effectiveWeather == :Rain
     #by low
-    when "HitThreeToFiveTimes" # Queso Blast / Comet Punch
-      if user.hasActiveAbility?(:SKILLLINK)
-        baseDmg *= 5
-      else
-        baseDmg = (baseDmg * 4.33).floor   # Average damage dealt
-      end
     when "DoubleDamageIfTargetHasChoiceItem" # unused
       if !target.unlosableItem?(target.item) && [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.item)
         baseDmg *= 2
