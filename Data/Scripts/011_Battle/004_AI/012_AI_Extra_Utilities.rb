@@ -102,7 +102,13 @@ class Battle::AI
             specdef = pbRoughStat(target, :SPECIAL_DEFENSE, skill, user, move, moldBreaker)
             initPhysDamage = physatk.to_f / physdef
             initSpecDamage = specatk.to_f / specdef
-            defense = (initPhysDamage > initSpecDamage) ? physdef : specdef
+            if initPhysDamage > initSpecDamage
+                atk = physatk
+                defense = physdef
+            else
+                atk = specatk
+                defense = specdef
+            end
         end
         # Account for Crystal Jaw
         if user.hasActiveAbility?(:CRYSTALJAW) && move.bitingMove?
