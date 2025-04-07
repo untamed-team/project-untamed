@@ -1612,7 +1612,7 @@ class Battle::AI
             echo("\nWonder Guard Disrupt") if $AIGENERALLOG
             wondervar=false
             for i in user.moves
-                typeMod = pbCalcTypeMod(i.type, user, target)
+                typeMod = pbCalcTypeMod(i.type, user, target, i)
                 wondervar=true if Effectiveness.super_effective?(typeMod)
             end
             if !wondervar
@@ -1915,7 +1915,7 @@ class Battle::AI
             supervar=false
             for i in target.moves
                 break if supervar
-                typeMod = pbCalcTypeMod(i.type, target, user)
+                typeMod = pbCalcTypeMod(i.type, target, user, i)
                 supervar=true if Effectiveness.super_effective?(typeMod)
             end
             abilityscore*=2.0 if supervar

@@ -39,9 +39,9 @@ class Battle::AI
         return baseDmg if ["CounterPhysicalDamage","CounterSpecialDamage","CounterDamagePlusHalf"].include?(move.function)
         # Get the move's type
         type = pbRoughType(move, user, skill)
-        typeMod = pbCalcTypeMod(type,user,target)
+        typeMod = pbCalcTypeMod(type, user, target, move)
         # Check if mold breaker applies
-        moldBreaker = moldbroken(user,target,move)
+        moldBreaker = moldbroken(user, target, move)
         ##### Calculate user's attack stat #####
         atk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
         if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
@@ -442,7 +442,6 @@ class Battle::AI
         end
         # Type effectiveness
         if skill >= PBTrainerAI.mediumSkill
-            #typemod = pbCalcTypeMod(type, user, target) # why are you calculating it again?
             multipliers[:final_damage_multiplier] *= typeMod.to_f / Effectiveness::NORMAL_EFFECTIVE
         end
         damagenerf = (1 / 2.0)
@@ -496,7 +495,7 @@ class Battle::AI
              "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesFlinchTarget"
           # Double Kick, Twineedle, Splinter Shot, Dragon Darts, Double Iron Bash
           damage *= 2
-        when "HitThreeTimesAlwaysCriticalHit" # always crit moves (crit part) are dealt with on pbRoughDamage
+        when "HitThreeTimesAlwaysCriticalHit" # always crit moves crit's are calculated later
           damage *= 3
         when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
           damage *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
@@ -605,8 +604,8 @@ class Battle::AI
             end
         end
         
-        type = pbRoughType(move,user,skill)
-        typeMod = pbCalcTypeMod(type,user,target)
+        type = pbRoughType(move, user, skill)
+        typeMod = pbCalcTypeMod(type, user, target, move)
         # Type effectiveness
         return true if (move.damagingMove? && Effectiveness.ineffective?(typeMod)) || 
                        (score <= 0 && !($movesToTargetAllies.include?(move.function) && !user.opposes?(target)))

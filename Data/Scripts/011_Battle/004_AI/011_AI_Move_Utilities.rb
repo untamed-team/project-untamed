@@ -26,8 +26,14 @@ class Battle::AI
   #=============================================================================
   # Move's type effectiveness
   #=============================================================================
-  def pbCalcTypeModSingle(moveType, defType, user, target)
+  def pbCalcTypeModSingle(moveType, defType, user, target, move=nil)
     ret = Effectiveness.calculate_one(moveType, defType)
+    if move
+      if (move.function == "FreezeTargetSuperEffectiveAgainstWater" && defType == :WATER) ||
+         (move.function == "SuperEffectiveAgainstSteel" && defType == :STEEL)
+        ret = Effectiveness::SUPER_EFFECTIVE_ONE
+      end
+    end
     if Effectiveness.ineffective_type?(moveType, defType)
       # Ring Target
       if target.hasActiveItem?(:RINGTARGET)
@@ -64,7 +70,7 @@ class Battle::AI
     return ret
   end
 
-  def pbCalcTypeMod(moveType, user, target)
+  def pbCalcTypeMod(moveType, user, target, move=nil)
     return Effectiveness::NORMAL_EFFECTIVE if !moveType
     return Effectiveness::NORMAL_EFFECTIVE if moveType == :GROUND &&
                                               hasTypeAI?(:FLYING, target, user, 100) &&
@@ -81,7 +87,7 @@ class Battle::AI
       end
     else
       tTypes.each_with_index do |type, i|
-        typeMods[i] = pbCalcTypeModSingle(moveType, type, user, target)
+        typeMods[i] = pbCalcTypeModSingle(moveType, type, user, target, move)
       end
     end
     # Multiply all effectivenesses together
