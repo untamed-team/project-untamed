@@ -40,19 +40,20 @@ class Battle::AI
         # Get the move's type
         type = pbRoughType(move, user, skill)
         typeMod = pbCalcTypeMod(type,user,target)
+        # Check if mold breaker applies
+        moldBreaker = moldbroken(user,target,move)
         ##### Calculate user's attack stat #####
-        # shellysidearm isnt being calc'd correctly, but i dont really care desu
-        atk = pbRoughStat(user, :ATTACK, skill)
+        atk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
         if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
-            atk = pbRoughStat(target, :ATTACK, skill)
+            atk = pbRoughStat(target, :ATTACK, skill, target, move, moldBreaker)
         elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
-            atk = pbRoughStat(user, :DEFENSE, skill)
+            atk = pbRoughStat(user, :DEFENSE, skill, target, move, moldBreaker)
         elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
-            atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill)
+            atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
         elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
-               "CategoryDependsOnHigherDamagePoisonTarget", 
-               "HitTwoTimesReload"].include?(move.function) # Photon Geyser, Shell Side Arm, Splinter Shot
-            atk = [pbRoughStat(user, :ATTACK, skill), pbRoughStat(user, :SPECIAL_ATTACK, skill)].max
+               "HitTwoTimesReload"].include?(move.function) # Photon Geyser, Splinter Shot
+            atk = [pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker), 
+                   pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)].max
         elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
             userStats = user.plainStats
             highestStatValue = higheststat = 0
@@ -62,40 +63,50 @@ class Battle::AI
                 higheststat = s.id
                 break
             end
-            atk = pbRoughStat(user, higheststat, skill)
+            atk = pbRoughStat(user, higheststat, skill, target, move, moldBreaker)
         elsif move.specialMove?(type)
             if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
-                atk = pbRoughStat(target, :SPECIAL_ATTACK, skill)
+                atk = pbRoughStat(target, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
             else
-                atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
+                atk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
             end
         end
-        if user.hasActiveAbility?(:CRYSTALJAW) && move.bitingMove?
-            atk = pbRoughStat(user, :SPECIAL_ATTACK, skill)
-        end
-        # taking in account intimidate from mons with AAM
-        if !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
+        # Account for intimidate from mons with AAM
+        if move.physicalMove?(type) && move.function != "UseUserBaseDefenseInsteadOfUserBaseAttack" && 
+          !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
             user.allOpposing.each do |b|
-                if (b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)) && 
-                   b.pokemon.willmega && b.hasAbilityMutation? && move.physicalMove?(type)
+                next unless b.pokemon.willmega && b.hasAbilityMutation?
+                if b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)
                     atk *= 2 / 3.0
                 end
             end
         end
         ##### Calculate target's defense stat #####
-        defense = pbRoughStat(target, :DEFENSE, skill)
+        defense = pbRoughStat(target, :DEFENSE, skill, target, move, moldBreaker)
         if move.specialMove?(type) && move.function != "UseTargetDefenseInsteadOfTargetSpDef" # Psyshock
-            defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
+            defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
         end
         if move.function == "TitanWrath" # Titan's Wrath (def calc)
             case higheststat
             when :ATTACK, :DEFENSE
-                defense = pbRoughStat(target, :DEFENSE, skill)
+                defense = pbRoughStat(target, :DEFENSE, skill, target, move, moldBreaker)
             when :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED
-                defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill)
+                defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
             end
-        elsif move.function == "CategoryDependsOnHigherDamagePoisonTarget" # Shell Side Arm (def calc)
-            defense = [pbRoughStat(target, :DEFENSE, skill), pbRoughStat(target, :SPECIAL_DEFENSE, skill)].min
+        end
+        ##### Calculate Shell Side Arm category #####
+        if move.function == "CategoryDependsOnHigherDamagePoisonTarget"
+            physatk = pbRoughStat(target, :ATTACK, skill, target, move, moldBreaker)
+            physdef = pbRoughStat(target, :DEFENSE, skill, target, move, moldBreaker)
+            specatk = pbRoughStat(target, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
+            specdef = pbRoughStat(target, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
+            initPhysDamage = physatk.to_f / physdef
+            initSpecDamage = specatk.to_f / specdef
+            defense = (initPhysDamage > initSpecDamage) ? physdef : specdef
+        end
+        # Account for Crystal Jaw
+        if user.hasActiveAbility?(:CRYSTALJAW) && move.bitingMove?
+            atk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
         end
         # Golden Camera calculation
         if $PokemonGlobal.goldencamera
@@ -123,7 +134,6 @@ class Battle::AI
             end
         end
         # Ability effects that alter damage
-        moldBreaker = moldbroken(user,target,move) # updated to take in the better mold breaker check
         if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
             # NOTE: These abilities aren't suitable for checking at the start of the
             #       round.    # DemICE: some of them.

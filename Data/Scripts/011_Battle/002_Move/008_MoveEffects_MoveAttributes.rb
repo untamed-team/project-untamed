@@ -1208,11 +1208,7 @@ class Battle::Move::CategoryDependsOnHigherDamagePoisonTarget < Battle::Move::Po
     physical_damage = real_attack.to_f / real_defense
     special_damage = real_special_attack.to_f / real_special_defense
     # Determine move's category
-    if physical_damage == special_damage
-      @calcCategry = @battle.pbRandom(2)
-    else
-      @calcCategory = (physical_damage > special_damage) ? 0 : 1
-    end
+    @calcCategory = (physical_damage > special_damage) ? 0 : 1
   end
 
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)

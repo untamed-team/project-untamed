@@ -21,36 +21,36 @@ class Battle::Move::TitanWrath < Battle::Move
 
   def physicalMove?(thisType = nil); return (@calcCategory == 0); end
   def specialMove?(thisType = nil);  return (@calcCategory == 1); end
-	
-	def pbGetAttackStats(user, target)
+  
+  def pbGetAttackStats(user, target)
     userStats = user.plainStats
     highestStatValue = 0;higheststat = 0;statbranch = [0,0]
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if userStats[s.id] < highestStatValue
-			higheststat = s.id
+      higheststat = s.id
       break
     end
-		case higheststat
-			when :ATTACK
-				@calcCategory = 0
-				statbranch = [user.attack, user.stages[:ATTACK] + 6]
-			when :DEFENSE
-				@calcCategory = 0
-				statbranch = [user.defense, user.stages[:DEFENSE] + 6]
-			when :SPECIAL_ATTACK
-				@calcCategory = 1
-				statbranch = [user.spatk, user.stages[:SPECIAL_ATTACK] + 6]
-			when :SPECIAL_DEFENSE
-				@calcCategory = 1
-				statbranch = [user.spdef, user.stages[:SPECIAL_DEFENSE] + 6]
-			when :SPEED
-				@calcCategory = 1
-				statbranch = [user.speed, user.stages[:SPEED] + 6]
-		end
-		return statbranch
-	end
-	
+    case higheststat
+    when :ATTACK
+      @calcCategory = 0
+      statbranch = [user.attack, user.stages[higheststat] + 6]
+    when :DEFENSE
+      @calcCategory = 0
+      statbranch = [user.defense, user.stages[higheststat] + 6]
+    when :SPECIAL_ATTACK
+      @calcCategory = 1
+      statbranch = [user.spatk, user.stages[higheststat] + 6]
+    when :SPECIAL_DEFENSE
+      @calcCategory = 1
+      statbranch = [user.spdef, user.stages[higheststat] + 6]
+    when :SPEED
+      @calcCategory = 1
+      statbranch = [user.speed, user.stages[higheststat] + 6]
+    end
+    return statbranch
+  end
+  
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
@@ -97,41 +97,41 @@ class Battle::Move::Rebalancing < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-		return true if target.SetupMovesUsed.include?(@id)
+    return true if target.SetupMovesUsed.include?(@id)
     targetStats = target.plainStats; highestStatValue = 0
     targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
-		GameData::Stat.each_main_battle do |s|
-			next if targetStats[s.id] < highestStatValue
-			if @TargetIsAlly
-				if !target.pbCanRaiseStatStage?(s.id, target)
-					@battle.pbDisplay(_INTL("But it failed!"))
-					return true 
-				end
-			else
-				if !target.pbCanLowerStatStage?(s.id, target)
-					@battle.pbDisplay(_INTL("But it failed!"))
-					return true 
-				end
-			end
-			break
-		end
+    GameData::Stat.each_main_battle do |s|
+      next if targetStats[s.id] < highestStatValue
+      if @TargetIsAlly
+        if !target.pbCanRaiseStatStage?(s.id, target)
+          @battle.pbDisplay(_INTL("But it failed!"))
+          return true 
+        end
+      else
+        if !target.pbCanLowerStatStage?(s.id, target)
+          @battle.pbDisplay(_INTL("But it failed!"))
+          return true 
+        end
+      end
+      break
+    end
     return false
   end
-	
+  
   def pbEffectAgainstTarget(user,target)
     targetStats = target.plainStats
     highestStatValue = 0
     targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
-		GameData::Stat.each_main_battle do |s|
-			next if targetStats[s.id] < highestStatValue
-			if @TargetIsAlly
-				target.pbRaiseStatStage(s.id, 1, target, true) if target.pbCanRaiseStatStage?(s.id, target)
-				target.SetupMovesUsed.push(@id)
-			else
-				target.pbLowerStatStage(s.id, 2, target, true) if target.pbCanLowerStatStage?(s.id, target)
-			end
-			break
-		end
+    GameData::Stat.each_main_battle do |s|
+      next if targetStats[s.id] < highestStatValue
+      if @TargetIsAlly
+        target.pbRaiseStatStage(s.id, 1, target, true) if target.pbCanRaiseStatStage?(s.id, target)
+        target.SetupMovesUsed.push(@id)
+      else
+        target.pbLowerStatStage(s.id, 2, target, true) if target.pbCanLowerStatStage?(s.id, target)
+      end
+      break
+    end
   end
 end
 
@@ -152,10 +152,10 @@ end
 #===============================================================================
 class Battle::Move::PowerUpDragonMove < Battle::Move
   def pbAdditionalEffect(user,target)
-		if user.effects[PBEffects::ZealousDance] <= 0
-			user.effects[PBEffects::ZealousDance] = 2
-			@battle.pbDisplay(_INTL("{1} began preparing a devastating blow!", user.pbThis))
-		end
+    if user.effects[PBEffects::ZealousDance] <= 0
+      user.effects[PBEffects::ZealousDance] = 2
+      @battle.pbDisplay(_INTL("{1} began preparing a devastating blow!", user.pbThis))
+    end
   end
 end
 
@@ -201,7 +201,7 @@ class Battle::Move::AttackOneTurnLater < Battle::Move
     end
     return false
   end
-	
+  
   def targetsPosition?; return true; end
 
   def pbDamagingMove?   # Stops damage being dealt in the setting-up turn
@@ -233,7 +233,7 @@ class Battle::Move::AttackOneTurnLater < Battle::Move
     effects[PBEffects::FutureSightMove]           = user.premonitionMove
     effects[PBEffects::FutureSightUserIndex]      = user.index
     effects[PBEffects::FutureSightUserPartyIndex] = user.pokemonIndex
-		#~ user.premonitionMove = 0
+    #~ user.premonitionMove = 0
     @battle.pbDisplay(_INTL("{1} created an unstable temporal rift around {2}!", user.pbThis, target.pbThis))
   end
 
@@ -254,14 +254,14 @@ end
 class Battle::Move::OverrideTargetStatusWithPoison < Battle::Move
   def pbEffectAgainstTarget(user, target)
     return if target.damageState.substitute
-		return if target.poisoned?
-		if target.pbCanInflictStatus?(:POISON, user, false, self, true)
-			if $player.difficulty_mode?("chaos")
-				target.pbPoison(user, nil, false) if target.status != :NONE
+    return if target.poisoned?
+    if target.pbCanInflictStatus?(:POISON, user, false, self, true)
+      if $player.difficulty_mode?("chaos")
+        target.pbPoison(user, nil, false) if target.status != :NONE
       else
-				target.pbPoison(user, nil, false)
-			end
-		end
+        target.pbPoison(user, nil, false)
+      end
+    end
   end
 end
 
@@ -296,10 +296,10 @@ end
 #===============================================================================
 class Battle::Move::DoubleDamageIfTargetHasChoiceItem < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-		if target.item &&
-			 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
-			baseDmg = (baseDmg * 2).round
-		end
+    if target.item &&
+       [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(target.initialItem)
+      baseDmg = (baseDmg * 2).round
+    end
     return baseDmg
   end
 

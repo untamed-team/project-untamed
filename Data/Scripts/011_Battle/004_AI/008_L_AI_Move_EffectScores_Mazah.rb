@@ -2028,7 +2028,7 @@ class Battle::AI
             if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
               (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
                 effectne = megaChecks[megaSpecies][1]
-                jspeed = pbRoughStat(j,:SPEED,100,false)
+                jspeed = pbRoughStat(j,:SPEED,100,nil,nil,false,false)
                 if effectne.include?("weather")
                     if jspeed < slowestWeatherSpeed
                         slowestWeather = effectne

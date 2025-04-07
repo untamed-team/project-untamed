@@ -171,7 +171,7 @@ class Battle::AI
     return ret
   end
 
-  def pbRoughStat(battler, stat, skill=100, dontignorespeb=true)
+  def pbRoughStat(battler, stat, skill=100, target=nil, move=nil, moldbroken=false, dontignorespeb=true)
     # WillMega / Mid-turn stat calcuation
     atkmul=defmul=spemul=spamul=spdmul=1
     if battler.pokemon.willmega
@@ -210,14 +210,31 @@ class Battle::AI
     stage = battler.stages[stat] + 6
     value = 0
     case stat
-    when :ATTACK          then value = battler.attack*atkmul
-    when :DEFENSE         then value = battler.defense*defmul
-    when :SPEED           then value = battler.speed*spemul
-    when :SPECIAL_ATTACK  then value = battler.spatk*spamul
-    when :SPECIAL_DEFENSE then value = battler.spdef*spdmul
+    when :ATTACK
+      value = battler.attack*atkmul
+      if target
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken)
+      end
+    when :DEFENSE
+      value = battler.defense*defmul
+      if target
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
+                        move.function == "IgnoreTargetDefSpDefEvaStatStages"
+      end
+    when :SPEED
+      value = battler.speed*spemul
+    when :SPECIAL_ATTACK
+      value = battler.spatk*spamul
+      if target
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken)
+      end
+    when :SPECIAL_DEFENSE
+      value = battler.spdef*spdmul
+      if target
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
+                        move.function == "IgnoreTargetDefSpDefEvaStatStages"
+      end
     end
-    #Console.echo_h2("Stats = #{battler.attack}, #{battler.defense}, #{battler.speed}, #{battler.spatk}, #{battler.spdef}") #if battler.pokemon.willmega
-    #Console.echo_h2("Multis = (#{atkmul}, #{(battler.attack*atkmul)}), (#{defmul}, #{(battler.defense*defmul)}), (#{spemul}, #{(battler.speed*spemul)}), (#{spamul}, #{(battler.spatk*spamul)}), (#{spdmul}, #{(battler.spdef*spdmul)})") #if battler.pokemon.willmega
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
