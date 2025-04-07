@@ -96,10 +96,10 @@ class Battle::AI
         end
         ##### Calculate Shell Side Arm category #####
         if move.function == "CategoryDependsOnHigherDamagePoisonTarget"
-            physatk = pbRoughStat(target, :ATTACK, skill, target, move, moldBreaker)
-            physdef = pbRoughStat(target, :DEFENSE, skill, target, move, moldBreaker)
-            specatk = pbRoughStat(target, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
-            specdef = pbRoughStat(target, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
+            physatk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
+            specatk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
+            physdef = pbRoughStat(target, :DEFENSE, skill, user, move, moldBreaker)
+            specdef = pbRoughStat(target, :SPECIAL_DEFENSE, skill, user, move, moldBreaker)
             initPhysDamage = physatk.to_f / physdef
             initSpecDamage = specatk.to_f / specdef
             defense = (initPhysDamage > initSpecDamage) ? physdef : specdef
