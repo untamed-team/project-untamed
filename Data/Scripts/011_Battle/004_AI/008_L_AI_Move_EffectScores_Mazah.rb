@@ -64,7 +64,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.7
+                    score *= 0.5
                     score *= 0.3 if pbHasSetupMove?(target, false)
                     score *= 0.2 if !targetMove.canMagicCoat?
                 else
@@ -135,7 +135,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.7
+                    score *= 0.5
                     score *= 0.3 if pbHasSetupMove?(target, false)
                     score *= 0.2 if !targetMove.canMagicCoat?
                 else
@@ -239,7 +239,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.2
+                    score *= 0.1
                 else
                     if !targetSurvivesMove(targetMove,target,user)
                         score *= 5.0

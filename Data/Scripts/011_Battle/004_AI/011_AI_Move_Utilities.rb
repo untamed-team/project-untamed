@@ -406,8 +406,16 @@ class Battle::AI
     when "DoublePowerIfTargetNotActed" # Fishious Rend / Bolt Beak
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
-      if @battle.choices[target.index][0] == :SwitchOut ||
-        ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+      fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+      if targetWillMove?(target) && fasterAtk
+        targetMove = @battle.choices[target.index][2]
+        thisprio = priorityAI(user, move, globalArray)
+        thatprio = priorityAI(target, targetMove, globalArray)
+        if thatprio > 0
+          fasterAtk = (thisprio >= thatprio) ? true : false
+        end
+      end
+      if @battle.choices[target.index][0] == :SwitchOut || fasterAtk
         baseDmg *= 2
       end
     when "HigherDamageInRain" # move i dont give 2 shits about is not properly implemented, wowie

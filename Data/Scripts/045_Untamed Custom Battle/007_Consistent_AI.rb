@@ -480,12 +480,32 @@ class Battle::AI
               (move.function == "TwoTurnAttackOneTurnInSun" && ![:Sun, :HarshSun].include?(user.effectiveWeather))) && 
               !user.hasActiveItem?(:POWERHERB))
             realDamage *= (2 / 3.0)
+            realDamage = 0 if pbHasSingleTargetProtectMove?(target,false)
         end
         # Special interaction for beeg guns hyper beam clones
         if move.function == "AttackAndSkipNextTurn"
             if [:PRISMATICLASER, :ETERNABEAM, :ROAROFTIME].include?(move.id) && !targetSurvivesMove(move,user,target)
             else
-                realDamage *= (2 / 3.0)
+                if targetWillMove?(target)
+                    targetMove = @battle.choices[target.index][2]
+                    if targetSurvivesMove(targetMove,target,user)
+                        realDamage *= 0.2
+                    else
+                        aspeed = pbRoughStat(user,:SPEED,skill)
+                        ospeed = pbRoughStat(target,:SPEED,skill)
+                        fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                        thisprio = priorityAI(user, move, globalArray)
+                        thatprio = priorityAI(target, targetMove, globalArray)
+                        if thatprio > 0
+                            fasterAtk = (thisprio >= thatprio) ? true : false
+                        end
+                        if fasterAtk
+                            realDamage *= 1.5
+                        else
+                            realDamage *= 0.2
+                        end
+                    end
+                end
             end
         end
         # Self-KO moves should avoided (under normal circumstances) if possible
@@ -495,11 +515,36 @@ class Battle::AI
             if user.hasActiveAbility?(:PARTYPOPPER)
                 innatemove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:HEALINGWISH))
                 innatescore = (pbGetMoveScore(innatemove, user, target, skill) / 2)
-                innatescore >= 35 ? (score += innatescore) : (realDamage *= (2 / 3.0))
+                innatescore >= 25 ? (score += innatescore) : (realDamage *= (2 / 3.0))
                 echoln "#{move.name}'s score (#{score}) was boosted due to party popper. #{innatescore}" if $AIGENERALLOG
             else
                 if user.allAllies.none? { |b| b.hasActiveAbility?(:SEANCE) }
-                    realDamage *= (2 / 3.0)
+                    wontMove = 0
+                    user.allOpposing.each do |m|
+                        if targetWillMove?(m)
+                            targetMove = @battle.choices[m.index][2]
+                            if targetSurvivesMove(targetMove,m,user)
+                                realDamage *= 0.2
+                            else
+                                aspeed = pbRoughStat(user,:SPEED,skill)
+                                ospeed = pbRoughStat(m,:SPEED,skill)
+                                fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                                thisprio = priorityAI(user, move, globalArray)
+                                thatprio = priorityAI(m, targetMove, globalArray)
+                                if thatprio > 0
+                                    fasterAtk = (thisprio >= thatprio) ? true : false
+                                end
+                                if fasterAtk
+                                    realDamage *= 1.5
+                                else
+                                    realDamage *= 0.2
+                                end
+                            end
+                        else
+                            wontMove += 1
+                        end
+                    end
+                    realDamage *= 0.2 if wontMove >= user.allOpposing.length
                 end
             end
         end

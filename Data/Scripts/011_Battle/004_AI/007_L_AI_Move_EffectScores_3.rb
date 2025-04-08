@@ -81,14 +81,14 @@ class Battle::AI
     when "PowerHigherWithUserHP" # Eruption / water spout / Dragon Energy
         if targetWillMove?(target)
             targetMove = @battle.choices[target.index][2]
-            if userFasterThanTarget || priorityAI(target,targetMove,globalArray) < 1
+            if userFasterThanTarget && priorityAI(target,targetMove,globalArray) < 1
                 if !targetSurvivesMove(move,user,target)
                     score*=1.3
                 end
             else
                 if targetMove.damagingMove?
                     if targetSurvivesMove(targetMove,target,user)
-                        damage = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+                        damage = pbRoughDamage(targetMove,target,user,skill)
                         score *= 1 - (damage / user.hp)
                     else
                         score*=0.01
@@ -102,7 +102,7 @@ class Battle::AI
     when "PowerLowerWithUserHP" # Flail / Reversal
         if targetWillMove?(target)
             targetMove = @battle.choices[target.index][2]
-            if userFasterThanTarget || priorityAI(target,targetMove,globalArray) < 1
+            if userFasterThanTarget && priorityAI(target,targetMove,globalArray) < 1
                 if !targetSurvivesMove(move,user,target)
                     score*=1.3
                 else
@@ -111,7 +111,7 @@ class Battle::AI
             else
                 if targetMove.damagingMove?
                     if targetSurvivesMove(targetMove,target,user)
-                        damage = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+                        damage = pbRoughDamage(targetMove,target,user,skill)
                         score *= 1 + (damage / user.hp)
                     else
                         score*=0.01
@@ -286,9 +286,18 @@ class Battle::AI
             score*=1.2
             score*=1.25 if move.baseDamage > 80
         else
-            if userFasterThanTarget
-                score*=1.2
-                score*=1.25 if move.baseDamage > 80
+            if targetWillMove?(target) && userFasterThanTarget
+                fasterAtk = userFasterThanTarget
+                targetMove = @battle.choices[target.index][2]
+                thisprio = priorityAI(user, move, globalArray)
+                thatprio = priorityAI(target, targetMove, globalArray)
+                if thatprio > 0
+                    fasterAtk = (thisprio >= thatprio) ? true : false
+                end
+                if fasterAtk
+                    score*=1.2
+                    score*=1.25 if move.baseDamage > 80
+                end
             end
         end
     #---------------------------------------------------------------------------
@@ -3353,7 +3362,8 @@ class Battle::AI
     when "UserFaintsExplosive" # explosion
         score*=0.7
         if user.hp==user.totalhp
-            score*=0.2
+            seancecheck = user.allAllies.any? { |b| b&.hasActiveAbility?(:SEANCE) }
+            score*=0.2 if !seancecheck
         else
             miniscore = user.hp*(1.0/user.totalhp)
             miniscore = 1-miniscore
@@ -3405,7 +3415,8 @@ class Battle::AI
     when "UserFaintsPowersUpInMistyTerrainExplosive" # misty explosion
         score*=0.7
         if user.hp==user.totalhp
-            score*=0.2
+            seancecheck = user.allAllies.any? { |b| b&.hasActiveAbility?(:SEANCE) }
+            score*=0.2 if !seancecheck
         else
             miniscore = user.hp*(1.0/user.totalhp)
             miniscore = 1-miniscore
@@ -4037,14 +4048,16 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "DestroyTargetBerryOrGem" # incinerate
-        if !target.hasActiveAbility?(:STICKYHOLD) && target.effects[PBEffects::Substitute]<=0 && target.item
-            if target.item == :LUMBERRY || target.item == :SITRUSBERRY || target.item == :PETAYABERRY || 
-               target.item == :LIECHIBERRY || target.item == :SALACBERRY || target.item == :CUSTAPBERRY
+        if target.item && !target.hasActiveAbility?(:STICKYHOLD) && target.effects[PBEffects::Substitute]<=0
+            if [:LUMBERRY, :SITRUSBERRY, :PETAYABERRY, :LIECHIBERRY, :SALACBERRY, :CUSTAPBERRY].include?(target.item)
                 score*=1.3
+            elsif target.item.is_gem?
+                score*=1.25
+                score*=1.2 if userFasterThanTarget
             elsif target.item.is_berry?
                 score*=1.2
             else
-                score*=0.8
+                score*=0.9
             end
          end
     #---------------------------------------------------------------------------
@@ -4333,22 +4346,32 @@ class Battle::AI
             end
         end
     #---------------------------------------------------------------------------
-    when "RedirectAllMovesToUser" # follow me
-        if user.allAllies.length == 0
-            score*=0
+    when "RedirectAllMovesToUser" # follow me / rage powder
+        ignoresRedirect = false
+        user.allOpposing.each do |m|
+            if m.hasActiveAbility?([:PROPELLERTAIL, :STALWART]) || 
+             (!m.affectedByPowder? && move.id == :RAGEPOWDER)
+                ignoresRedirect = true
+            end
+        end
+        if user.allAllies.length == 0 || ignoresRedirect
+            score=0
         else
             roles = pbGetPokemonRole(user, target)
             if roles.include?("Physical Wall") || roles.include?("Special Wall")
                 score*=1.2
             end
             user.allAllies.each do |m|
-                score*=1.3 if m.hasActiveAbility?(:MOODY)
                 if m.turnCount<1
                     score*=2
                 else
                     score*=1.2
                 end
+                score*=1.3 if m.hasActiveAbility?(:MOODY)
                 score*=1.3 if pbHasSetupMove?(m, false)
+                if m.pbHasMoveFunction?("StartSlowerBattlersActFirst") && @battle.field.effects[PBEffects::TrickRoom] == 0
+                    score*=1.5
+                end
             end
             if user.hp==user.totalhp
                 score*=1.2
@@ -5273,7 +5296,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UseRandomUserMoveIfAsleep" # sleep talk
         if user.asleep?
-            if user.statusCount <= 1
+            if user.statusCount <= 1 && !user.hasActiveAbility?(:COMATOSE)
                 score = 0
             else
                 if $AIMASTERLOG

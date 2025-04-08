@@ -1,4 +1,4 @@
-#Script de lootboxes creado por Nyaruko
+#Script de lootboxes creado por Nyaruko #(Nyaruko Yasaka is real?)
 #Si metes micropagos no me hago responsable
 #edited, heavily, maybe even a little bit too much #by low
 POSSIBLE_TICKETS = ["Ticket A", "Ticket B", "Ticket C", "Gold Milage Ticket"]
