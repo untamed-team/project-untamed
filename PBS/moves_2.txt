@@ -3723,14 +3723,13 @@ Description = The user scatters curious leaves that chase the target. This attac
 Name = Needle Arm
 Type = GRASS
 Category = Physical
-Power = 70
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = FlinchTarget
+FunctionCode = TrapUserAndTargetInBattle
 Flags = Contact,CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
-EffectChance = 30
-Description = The user attacks by wildly swinging its thorny arms. It may also make the target flinch.
+Description = Swinging its thorny arms, the user traps both itself and the target until either faint.
 #-------------------------------
 [RAZORLEAF]
 Name = Razor Leaf
