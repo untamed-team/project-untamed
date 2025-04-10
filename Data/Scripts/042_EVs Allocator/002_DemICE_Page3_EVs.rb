@@ -521,10 +521,6 @@ class PokemonSummary_Scene
           pbPlayDecisionSE
 		  pbEVAllocation
           dorefresh = true
-        elsif @page == 4
-          pbPlayDecisionSE
-          pbMoveSelection
-          dorefresh = true
         elsif @page == 5
           pbPlayDecisionSE
           pbRibbonSelection

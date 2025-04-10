@@ -826,9 +826,6 @@ TechSkylander1518
 Quicksave:
 Low
 
-Relearner from Party:
-Marin
-
 Save File Calls:
 TechSkylander1518
 

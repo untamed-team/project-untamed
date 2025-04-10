@@ -543,13 +543,18 @@ class PokemonSummary_Scene
 			pbPlayCloseMenuSE
 			break
 		  elsif Input.trigger?(Input::USE)
-			if @page == 4
+			# this is the script that is editing actually editing pbScene
+			if (@page == 3 && !$donteditEVs) && $bag.has?(:EVSALLOCATIONTOOL)
 			  pbPlayDecisionSE
-			  pbMoveSelection
+			  pbEVAllocation
 			  dorefresh = true
 			elsif @page == 5
 			  pbPlayDecisionSE
 			  pbRibbonSelection
+			  dorefresh = true
+			elsif @page == 4 && @inbattle
+			  pbPlayDecisionSE
+			  pbMoveSelection
 			  dorefresh = true
 			elsif !@inbattle
 			  pbPlayDecisionSE
