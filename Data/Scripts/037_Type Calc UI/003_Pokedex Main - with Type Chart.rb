@@ -13,9 +13,7 @@ class Window_Pokedex < Window_DrawableCommand
     @function_sprites = {}
     @function_sprites["function_cursor"] = Sprite.new(viewport)
     @function_sprites["function_cursor"].bitmap = Bitmap.new("Graphics/Pictures/Pokedex/function_cursor")
-
-    #current position of the function cursor (starts on Pokedex)
-    @cursorPos = 0
+    @cursorPos = 1 #current position of the function cursor (starts on Pokedex)
     
     @pokeballOwn  = AnimatedBitmap.new("Graphics/Pictures/Pokedex/icon_own")
     @pokeballSeen = AnimatedBitmap.new("Graphics/Pictures/Pokedex/icon_seen")
@@ -26,37 +24,41 @@ class Window_Pokedex < Window_DrawableCommand
   
   #added by Gardenette
   def updateCursorPos
-    if Input.trigger?(Input::RIGHT) && !$game_switches[84]
-      @cursorPos = 1
-      #print "type chart page"
-    end
+    dorefresh = false
     if Input.trigger?(Input::LEFT)
-      @cursorPos = 0
-      #print "pokedex page"
+      @cursorPos -= 1 
+      @cursorPos = 1 if @cursorPos > 3
+      @cursorPos = 3 if @cursorPos < 1
+      dorefresh = true
+    elsif Input.trigger?(Input::RIGHT) && !$game_switches[84]
+      @cursorPos += 1
+      @cursorPos = 1 if @cursorPos > 3
+      @cursorPos = 3 if @cursorPos < 1
+      dorefresh = true
     end
     
     if $game_switches[84]
-      #hide cursor
       @function_sprites["function_cursor"].visible = false
     else
       @function_sprites["function_cursor"].visible = true
     end
     
-    value = @cursorPos
-    case value
-    when @cursorPos = 0
-      #on the pokedex screen
-      @function_sprites["function_cursor"].x = Graphics.width / 4 - 66
+    if dorefresh
       @function_sprites["function_cursor"].y = 0
-    when @cursorPos = 1
-      #type chart page
-      @function_sprites["function_cursor"].x = Graphics.width - ((Graphics.width / 4) + 66)
-      @function_sprites["function_cursor"].y = 0
-      
-      #start the type chart page
-      pbPlayDecisionSE
-      pbTypeMatchUI
-      @cursorPos = 0
+      case @cursorPos
+      when 1 #pkdex
+        @function_sprites["function_cursor"].x = Graphics.width / 4 - 66
+      when 2 #type chart
+        @function_sprites["function_cursor"].x = Graphics.width - ((Graphics.width / 4) + 66)
+        pbPlayDecisionSE
+        pbTypeMatchUI
+        @cursorPos = 1
+      when 3 #type chart (species)
+        @function_sprites["function_cursor"].x = Graphics.width / 4 - 66
+        pbPlayDecisionSE
+        pbSpeciesTypeMatchUI
+        @cursorPos = 1
+      end
     end
   end
 
