@@ -461,6 +461,7 @@ class Battle::AI
         baseDmg = pbMoveBaseDamage(move, user, target, skill)
         realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
         mold_broken=moldbroken(user,target,move)
+        globalArray = @megaGlobalArray
 
         # Try make AI not trolled by disguise
         # priority over other calcs due to hyper beam
