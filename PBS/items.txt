@@ -1227,7 +1227,7 @@ Pocket = 1
 Price = 3000
 SellPrice = 2000
 Flags = Fling_80
-Description = An item to be held by a Pokémon. A light, sharp claw that lets the bearer move first occasionally.
+Description = An item to be held by a Pokémon. A light, sharp claw that affects the bearer's priority.
 #-------------------------------
 [FOCUSBAND]
 Name = Focus Band

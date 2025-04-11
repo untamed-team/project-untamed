@@ -720,6 +720,7 @@ Battle::ItemEffects::PriorityBracketUse.add(:CUSTAPBERRY,
 
 Battle::ItemEffects::PriorityBracketUse.add(:QUICKCLAW,
   proc { |item, battler, battle|
+    next if !$player.difficulty_mode?("easy")
     battle.pbCommonAnimation("UseItem", battler)
     battle.pbDisplay(_INTL("{1}'s {2} let it move first!", battler.pbThis, battler.itemName))
   }
@@ -1128,6 +1129,13 @@ Battle::ItemEffects::DamageCalcFromUser.add(:WATERGEM,
 Battle::ItemEffects::DamageCalcFromUser.add(:WISEGLASSES,
   proc { |item, user, target, move, mults, baseDmg, type|
     mults[:base_damage_multiplier] *= 1.1 if move.specialMove?
+  }
+)
+
+#by low
+Battle::ItemEffects::DamageCalcFromUser.add(:QUICKCLAW,
+  proc { |item, user, target, move, mults, baseDmg, type|
+    mults[:base_damage_multiplier] *= 1.2 if user.battle.choices[user.index][4] > 0
   }
 )
 

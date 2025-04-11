@@ -562,6 +562,6 @@ MenuHandlers.add(:options_menu, :expallSet, { #by low
   "type"        => EnumOption,
   "parameters"  => [_INTL("Enabled"), _INTL("Disabled")],
   "description" => _INTL("Exp All (has no effect on chaos mode)."),
-  "get_proc"    => proc { next $PokemonSystem.speedtoggle },
+  "get_proc"    => proc { next $PokemonSystem.expallSetting },
   "set_proc"    => proc { |value, _scene| $PokemonSystem.expallSetting = value }
 })

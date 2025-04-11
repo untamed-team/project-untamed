@@ -4269,7 +4269,8 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "UserConsumeTargetBerry" # bug bite
-        if target.effects[PBEffects::Substitute]==0 #&& target.item.is_berry?
+        if target.item && target.effects[PBEffects::Substitute]==0
+            score = 0 if !target.item.is_berry?
             case target.item
             when :LUMBERRY
                 score*=2 if user.pbHasAnyStatus?

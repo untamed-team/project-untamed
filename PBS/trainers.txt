@@ -3819,6 +3819,13 @@ Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
+Pokemon = GLALIE,50
+    Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
+    Ability = MOODY
+    Nature = QUIRKY
+    Item = QUICKCLAW
+    AAM = True
+    MEM = True
 #-------------------------------
 [WILD_PKMN,crust,0]
 LoseText = sex

@@ -612,7 +612,53 @@ class Battle::AI
             if targetSurvivesMove(maxmove,user,target)
                 realDamage *= 1.2 if (realDamage * 100.0 / maxdam) > 75
                 realDamage *= 1.2 if move.multiHitMove?
+                realDamage *= 1.3 if move.multiHitMove? && user.hasActiveAbility?(:SKILLLINK)
                 realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow] > 0
+                realDamage = target.hp * 0.99 if realDamage >= target.hp
+            end
+        end
+
+        # account for contact punishing traits
+        if move.pbContactMove?(user) && user.affectedByContactEffect? && user.takesIndirectDamage?
+            if target.hasActiveAbility?([:IRONBARBS,:ROUGHSKIN]) || target.hasActiveItem?(:ROCKYHELMET)
+                reflect = 0
+                reflect += 12.5 if target.hasActiveAbility?([:IRONBARBS,:ROUGHSKIN])
+                reflect += 16.7 if target.hasActiveItem?(:ROCKYHELMET)
+                case move.function
+                when "HitThreeTimesAlwaysCriticalHit", "HitThreeTimesPowersUpWithEachHit"
+                    reflect *= 3
+                when "HitTwoTimes", "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesReload", 
+                     "HitTwoTimesPoisonTarget", "HitTwoTimesFlinchTarget"
+                    reflect *= 2
+                when "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+                     "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1"
+                    if user.hasActiveAbility?(:SKILLLINK)
+                        reflect *= 5
+                    else
+                        reflect *= 3.47
+                    end
+                when "HitOncePerUserTeamMember"
+                    livecountuser = 0
+                    @battle.eachInTeamFromBattlerIndex(user.index) do |pkmn,i|
+                        next if !pkmn.able? || pkmn.status != :NONE
+                        livecountuser += 1
+                    end
+                    reflect *= livecountuser
+                when "HitThreeToFiveTimes"
+                    if user.hasActiveAbility?(:SKILLLINK)
+                        reflect *= 5
+                    else
+                        reflect *= 4.33
+                    end
+                end
+                reflect = reflect.to_i
+                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                if targetSurvivesMove(bestmove[1],target,user)
+                    damagePercentage -= reflect
+                    damagePercentage *= 0.6 if (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && user.hp == user.totalhp
+                end
+                hpreflected = reflect * user.totalhp / 100
+                damagePercentage *= 0.3 if hpreflected > user.totalhp
             end
         end
 

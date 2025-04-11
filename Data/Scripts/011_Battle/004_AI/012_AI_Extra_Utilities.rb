@@ -246,12 +246,15 @@ class Battle::AI
         if skill >= PBTrainerAI.mediumSkill && user.itemActive?
             # NOTE: These items aren't suitable for checking at the start of the
             #       round.     #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
-            itemBlacklist = [:EXPERTBELT]#,:LIFEORB]
+            itemBlacklist = [:EXPERTBELT, :QUICKCLAW]#,:LIFEORB]
             if !itemBlacklist.include?(user.item_id)
                 Battle::ItemEffects.triggerDamageCalcFromUser(
                     user.item, user, target, move, multipliers, baseDmg, type
                 )
                 user.effects[PBEffects::GemConsumed] = nil   # Untrigger consuming of Gems
+            end
+            if user.hasActiveItem?(:QUICKCLAW) && priorityAI(user,move,globalArray) > 0
+                multipliers[:base_damage_multiplier] *= 1.2
             end
         end
         # klutz buff #by low
@@ -922,7 +925,10 @@ class Battle::AI
                         sum += 5
                     end
                     pkmn.eachMove do |m|
-                        sum -= 1 if m.priority > 0
+                        if m.priority > 0
+                            sum -= 1
+                            sum -= 4 if pkmn.item == :QUICKCLAW && m.base_damage > 0
+                        end
                     end
                     sum += 5 if pkmn.pbHasMoveFunction?("TypeAndPowerDependOnTerrain", "HitsAllFoesAndPowersUpInPsychicTerrain")
                 end

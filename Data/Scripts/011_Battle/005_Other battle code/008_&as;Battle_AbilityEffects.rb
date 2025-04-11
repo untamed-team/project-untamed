@@ -889,6 +889,7 @@ Battle::AbilityEffects::PriorityChange.add(:ECHOCHAMBER,
 
 Battle::AbilityEffects::PriorityBracketChange.add(:QUICKDRAW,
   proc { |ability, battler, battle|
+    next 0 if $player.difficulty_mode?("hard")
     next 1 if battle.pbRandom(100) < 30
   }
 )
@@ -907,6 +908,7 @@ Battle::AbilityEffects::PriorityBracketChange.add(:STALL,
 
 Battle::AbilityEffects::PriorityBracketUse.add(:QUICKDRAW,
   proc { |ability, battler, battle|
+    next if $player.difficulty_mode?("hard")
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("{1} made {2} move faster!", battler.abilityName, battler.pbThis(true)))
     battle.pbHideAbilitySplash(battler)
