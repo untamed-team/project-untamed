@@ -5973,8 +5973,8 @@ class Battle::AI
             ministat/=100.0
             miniscore*=ministat
             if move.function == "TrapTargetInBattleLowerTargetDefSpDef1EachTurn"
-                miniscore*=1.3
-                miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
+                miniscore*=1.1
+                miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
                 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
                     miniscore*=0.1
                 end

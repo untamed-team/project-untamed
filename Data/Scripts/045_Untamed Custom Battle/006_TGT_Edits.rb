@@ -265,7 +265,7 @@ or dont
           elsif zoneHash[gimmick_downcase]
             @field.typezone = zoneHash[gimmick_downcase]
           elsif fieldHash[gimmick_downcase]
-            @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
+            @field.effects[PBEffects.const_get(fieldHash[gimmick_downcase])] = 999
           elsif effectHash[gimmick_downcase]
             if ["statdropimmunity"].include?(gimmick_downcase)
               @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true

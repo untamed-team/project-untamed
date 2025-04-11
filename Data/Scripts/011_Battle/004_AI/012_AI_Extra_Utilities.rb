@@ -52,8 +52,9 @@ class Battle::AI
             atk = pbRoughStat(user, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
         elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
                "HitTwoTimesReload"].include?(move.function) # Photon Geyser, Splinter Shot
-            atk = [pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker), 
-                   pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)].max
+            physatk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
+            specatk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
+            atk = [physatk, specatk].max
         elsif move.function == "TitanWrath" # Titan's Wrath (atk calc)
             userStats = user.plainStats
             highestStatValue = higheststat = 0
@@ -93,9 +94,14 @@ class Battle::AI
             when :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED
                 defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill, target, move, moldBreaker)
             end
-        end
-        ##### Calculate Shell Side Arm category #####
-        if move.function == "CategoryDependsOnHigherDamagePoisonTarget"
+        elsif ["CategoryDependsOnHigherDamageIgnoreTargetAbility", 
+               "HitTwoTimesReload"].include?(move.function) # Photon Geyser, Splinter Shot
+            if physatk > specatk
+                defense = pbRoughStat(target, :DEFENSE, skill, user, move, moldBreaker)
+            else
+                defense = pbRoughStat(target, :SPECIAL_DEFENSE, skill, user, move, moldBreaker)
+            end
+        elsif move.function == "CategoryDependsOnHigherDamagePoisonTarget" # Shell Side Arm
             physatk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
             specatk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
             physdef = pbRoughStat(target, :DEFENSE, skill, user, move, moldBreaker)
