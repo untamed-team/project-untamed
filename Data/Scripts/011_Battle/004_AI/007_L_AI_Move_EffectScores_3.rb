@@ -1228,13 +1228,11 @@ class Battle::AI
                             defStage = user.stages[:DEFENSE] + 6
                             defStage = [(defStage + livecountuser), 12].min
                             damage /= stageMul[defStage] / stageDiv[defStage]
-                            damage = damage * 100.0 / target.hp
-                            score += damage
                         else
-                            damage = damage * 100.0 / target.hp
-                            score += damage
                             score *= 0.2 if target.stages[:ATTACK]>0
                         end
+                        damage = damage * 100.0 / target.hp
+                        score += damage
                     else
                         score=0
                     end
