@@ -837,7 +837,7 @@ FullDesc = User's Normal-type moves become Flying-type and deal 1.2x damage.
 [PARENTALBOND]
 Name = Parental Bond
 Description = Parent and child each attacks.
-Description = All moves land a second hit for 25% damage.
+FullDesc = All moves land a second hit for 25% damage.
 #-------------------------------
 [DARKAURA]
 Name = Dark Aura
