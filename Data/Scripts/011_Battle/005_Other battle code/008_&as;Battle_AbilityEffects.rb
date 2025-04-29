@@ -2478,9 +2478,9 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
     next if battle.wasUserAbilityActivated?(target) || target.turnCount < 1
+    target.effects[PBEffects::SlipperyPeel] = true
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
-    target.effects[PBEffects::SlipperyPeel] = true
     battle.ActivateUserAbility(target) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     if user.hasActiveAbility?(:SUCTIONCUPS) && !battle.moldBreaker
       battle.pbShowAbilitySplash(user)
