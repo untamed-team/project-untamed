@@ -1441,7 +1441,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STEELWORKER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:STEELYSPIRIT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:final_damage_multiplier] *= 1.5 if type == :STEEL
+    mults[:final_damage_multiplier] *= 1.3 if type == :STEEL
   }
 )
 
@@ -1596,7 +1596,7 @@ Battle::AbilityEffects::DamageCalcFromAlly.add(:POWERSPOT,
 
 Battle::AbilityEffects::DamageCalcFromAlly.add(:STEELYSPIRIT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:final_damage_multiplier] *= 1.5 if type == :STEEL
+    mults[:final_damage_multiplier] *= 1.3 if type == :STEEL
   }
 )
 
@@ -2477,7 +2477,7 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
-    next if battle.wasUserAbilityActivated?(target)
+    next if battle.wasUserAbilityActivated?(target) || target.turnCount < 1
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
     target.effects[PBEffects::SlipperyPeel] = true

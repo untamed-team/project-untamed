@@ -504,6 +504,7 @@ class PokemonSummary_Scene
 	end
 
   def pbScene
+    # check 014_Summary.rb for the one that actually edits this code
     @pokemon.play_cry
     loop do
       Graphics.update
