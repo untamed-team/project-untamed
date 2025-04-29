@@ -579,6 +579,7 @@ class Battle::AI
             user.eachOpposing do |b|
                 next unless $aisuckercheck[1] == b
                 suckermove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SUCKERPUNCH))
+                break if pbCheckMoveImmunity(1, suckermove, b, user, 100)
                 thisprio = priorityAI(user,move)
                 thatprio = priorityAI(b,suckermove)
                 if thisprio > thatprio
