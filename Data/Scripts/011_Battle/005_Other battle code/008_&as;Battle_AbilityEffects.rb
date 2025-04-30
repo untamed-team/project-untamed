@@ -1861,6 +1861,7 @@ Battle::AbilityEffects::OnBeingHit.add(:COTTONDOWN,
     next if battle.allBattlers.none? { |b| b.pbCanLowerStatStage?(:SPEED, target) }
     battle.pbShowAbilitySplash(target)
     battle.allBattlers.each do |b|
+      next if b == target
       b.pbLowerStatStageByAbility(:SPEED, 1, target, false)
     end
     battle.pbHideAbilitySplash(target)
