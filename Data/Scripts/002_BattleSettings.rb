@@ -2,7 +2,7 @@ module Settings
   # Whether turn order is recalculated after a Pokémon Mega Evolves.
   RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION = (MECHANICS_GENERATION >= 7)
   # Whether turn order is recalculated after a Pokémon's Speed stat changes.
-  RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES  = (MECHANICS_GENERATION >= 8)
+  RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES  = false#(MECHANICS_GENERATION >= 8)
   # Whether any Pokémon (originally owned by the player or foreign) can disobey
   # the player's commands if the Pokémon is too high a level compared to the
   # number of Gym Badges the player has.

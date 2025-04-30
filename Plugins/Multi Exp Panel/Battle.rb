@@ -17,7 +17,7 @@ class Battle
 		numPartic = 0
 		if $player.difficulty_mode?("chaos")
 			eachInTeam(0, 0) do |pkmn, i|
-				b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
+				b.participants.push(i) # brute forcing my way to get this thing to have all possible allies to be "participants"
 			end
 			b.participants.uniq! # removing repeats
 		end
