@@ -1152,7 +1152,9 @@ class Battle
             battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
             battler.stages[:EVASION]         = currentmon.stages[:EVASION]
         end
-        battler.stages[:SPEED] -= 1 if battler.pbOwnSide.effects[PBEffects::StickyWeb] && !battler.airborne?
+        if !battler.hasActiveAbility?(:TILEWORKER) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS) && !battler.airborne?
+            battler.stages[:SPEED] -= 1 if battler.pbOwnSide.effects[PBEffects::StickyWeb]>0
+        end
         if battler.hasActiveAbility?(:MIMICRY) && battler.types.length < 3
             terrain_hash = {
               :Electric => :ELECTRIC,
@@ -1164,14 +1166,11 @@ class Battle
             new_type_name = nil
             if new_type
               type_data = GameData::Type.try_get(new_type)
-              new_type = nil if !type_data
             else
               new_type = @field.typezone
-              if new_type
-                type_data = GameData::Type.try_get(new_type)
-                new_type = nil if !type_data
-              end
+              type_data = GameData::Type.try_get(new_type)
             end
+            new_type = nil if !type_data
             battler.effects[PBEffects::Type3] = new_type if new_type
         end
         return battler

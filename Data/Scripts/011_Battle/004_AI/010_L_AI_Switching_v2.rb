@@ -228,8 +228,6 @@ class Battle::AI
       sum  = 0
       maxdam=0
       aspeed = pbRoughStat(pokmon,:SPEED,100)
-      aspeed = (aspeed.to_f * 2 / 3).floor if pokmon.pbOwnSide.effects[PBEffects::StickyWeb]>0 && 
-              !(pokmon.hasActiveItem?(:HEAVYDUTYBOOTS) || pokmon.hasActiveAbility?(:TILEWORKER))
       if @battle.field.terrain != :None && pokmon.hasActiveAbility?(:UNBURDEN)
         case @battle.field.terrain
         when :Electric
