@@ -125,6 +125,15 @@ class CrustangRacing
 		@sprites["lapsAndPlaceOverlay"].z = 999999
 		@lapsAndPlaceOverlay = @sprites["lapsAndPlaceOverlay"].bitmap
 		pbSetSystemFont(@lapsAndPlaceOverlay)
+		@lapsAndPlaceOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
+		
+		@sprites["raceTimer"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
+		@sprites["raceTimer"].x = 0
+		@sprites["raceTimer"].y = 0
+		@sprites["raceTimer"].z = 999999
+		@raceTimerOverlay = @sprites["raceTimer"].bitmap
+		pbSetSystemFont(@raceTimerOverlay)
+		@raceTimerOverlay.font.size = MessageConfig::SMALL_FONT_SIZE
 		
 		@sprites["announcementsPane"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
 		@sprites["announcementsPane"].x = 0
@@ -142,16 +151,15 @@ class CrustangRacing
 		self.placeRockyPatches
 		
 		#create a bitmap on which to write "3 2 1 GO"
-		@sprites["321GO"] = BitmapSprite.new(Graphics.width/2, Graphics.height/4, @viewport)
-		@sprites["321GO"].x = Graphics.width - @sprites["321GO"].width
-		@sprites["321GO"].y = Graphics.height - @sprites["321GO"].height
+		@sprites["321GO"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
+		@sprites["321GO"].x = 0
+		@sprites["321GO"].y = 0
 		@sprites["321GO"].z = 999999
 		@sprites["321GO"].opacity = 255
-		@321GOOverlay = @sprites["321GO"].bitmap
-		pbSetSystemFont(@321GOOverlay)
-		@announcementsOverlay.font.size = MessageConfig::SMALL_FONT_SIZE + 3
-		#@sprites["321GO"].visible = false
-		
+		@countdownGOOverlay = @sprites["321GO"].bitmap
+		pbSetSystemFont(@countdownGOOverlay)
+		@countdownGOOverlay.font.size = 80
+		#@sprites["321GO"].visible = false		
 	end #def setup
 	
 	def self.placeRockyPatches
@@ -203,10 +211,22 @@ class CrustangRacing
 		@racerStartingX = 100 #this is where all racers will start, and the "camera" will stay here, focused on the player
 		@racingPkmnStartingY = 52
 		
+		#determine player's crustang form
+		playerCrustangForm = @enteredCrustang.form
+		#get available forms for other contestants (not including what the player uses)
+		availableCrustangForms = [0,1,2,3,4,5,6,7,8,9]
+		availableCrustangForms.delete(playerCrustangForm)
+		
 		###################################
 		#============= Racer1 =============
 		###################################
-		filename = "Followers/CRUSTANG"
+		form = availableCrustangForms.sample
+		@racer1[:RacerSpriteForm] = form
+		availableCrustangForms.delete(form)
+		formMod = "_#{form}"
+		formMod = "" if form == 0
+		
+		filename = "Followers/CRUSTANG#{formMod}"
 		@sprites["racer1Pkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racer1Pkmn"].bitmap.width
 		charheight = @sprites["racer1Pkmn"].bitmap.height
@@ -238,7 +258,13 @@ class CrustangRacing
 		###################################
 		#============= Racer2 =============
 		###################################
-		filename = "Followers/CRUSTANG"
+		form = availableCrustangForms.sample
+		@racer2[:RacerSpriteForm] = form
+		availableCrustangForms.delete(form)
+		formMod = "_#{form}"
+		formMod = "" if form == 0
+		
+		filename = "Followers/CRUSTANG#{formMod}"
 		@sprites["racer2Pkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racer2Pkmn"].bitmap.width
 		charheight = @sprites["racer2Pkmn"].bitmap.height
@@ -270,7 +296,13 @@ class CrustangRacing
 		###################################
 		#============= Racer3 =============
 		###################################
-		filename = "Followers/CRUSTANG"
+		form = availableCrustangForms.sample
+		@racer3[:RacerSpriteForm] = form
+		availableCrustangForms.delete(form)
+		formMod = "_#{form}"
+		formMod = "" if form == 0
+		
+		filename = "Followers/CRUSTANG#{formMod}"
 		@sprites["racer3Pkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racer3Pkmn"].bitmap.width
 		charheight = @sprites["racer3Pkmn"].bitmap.height
@@ -302,7 +334,15 @@ class CrustangRacing
 		###################################
 		#============= Player =============
 		###################################
-		filename = "Followers/CRUSTANG"
+		@racerPlayer[:RacerSpriteForm] = @enteredCrustang.form
+		formMod = "_#{playerCrustangForm}"
+		formMod = "" if playerCrustangForm == 0
+		if @enteredCrustang.shiny?
+			filename = "Followers/Shiny/CRUSTANG#{formMod}"
+		else
+			filename = "Followers/CRUSTANG#{formMod}"
+		end
+		
 		@sprites["racerPlayerPkmn"] = TrainerWalkingCharSprite.new(filename, @viewport)
 		charwidth  = @sprites["racerPlayerPkmn"].bitmap.width
 		charheight = @sprites["racerPlayerPkmn"].bitmap.height
@@ -552,6 +592,13 @@ class CrustangRacing
 		
 		#for rng rolls
 		@rngRollsTimer = CrustangRacingSettings::RNG_ROLLS_TIMER_IN_SECONDS
+		
+		#to count down the timer every second
+		@secondsTimer = Graphics.frame_rate
+		
+		#set initial time for race
+		@raceRemainingTime = CrustangRacingSettings::RACE_TIME_IN_SECONDS
+		
 	end #def self.setMiscVariables
 	
 	def self.setupRacerHashes
@@ -559,7 +606,7 @@ class CrustangRacing
 		@racer1 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[0],
 			#racer sprite
-			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
+			RacerSprite: nil, RacerSpriteForm: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -569,7 +616,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -578,7 +625,7 @@ class CrustangRacing
 		@racer2 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[1],
 			#racer sprite
-			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
+			RacerSprite: nil, RacerSpriteForm: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -588,7 +635,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -597,7 +644,7 @@ class CrustangRacing
 		@racer3 = {
 			EnteredCrustangContestant: CrustangRacingSettings::CONTESTANTS[2],
 			#racer sprite
-			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
+			RacerSprite: nil, RacerSpriteForm: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -607,7 +654,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc
@@ -616,7 +663,7 @@ class CrustangRacing
 		@racerPlayer = {
 			EnteredCrustangContestant: nil,
 			#racer sprite
-			RacerSprite: nil, CannotGoUp: false, CannotGoDown: false,
+			RacerSprite: nil, RacerSpriteForm: nil, CannotGoUp: false, CannotGoDown: false,
 			#boost button sprites & cooldown timer
 			BoostButtonSprite: nil, BoostCooldownTimer: CrustangRacingSettings::INITIAL_COOLDOWN_SECONDS_FOR_ALL_ACTIONS * Graphics.frame_rate, BoostButtonCooldownMaskSprite: nil, BoostCooldownMultiplier: 1, BoostingStatus: false,
 			#moves, move effects, cooldown timers, & move sprites
@@ -626,7 +673,7 @@ class CrustangRacing
 			#track overview positioning
 			PointOnTrackOverview: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, RacerTrackOverviewSprite: nil,
 			#laps and Placement
-			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0,
+			LapCount: 0, CurrentPlacement: 1, LapAndPlacement: 0, LapTotal: 0,
 			#hazards
 			RockHazard: {Sprite: nil, OriginalPositionXOnScreen: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, OverviewSprite: nil, PositionXOnTrackOverview: nil, PositionYOnTrackOverview: nil, AlarmSprite: nil}, MudHazard: {Sprite: nil, PositionXOnTrack: nil, PositionYOnTrack: nil, AlarmSprite: nil},
 			#misc

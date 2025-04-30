@@ -1,21 +1,4 @@
 Notes to self:
 Move summary is handled in plugin for Gen 3 Contests, in Summary.rb
 
-
-Alright, organizing my thoughts for AI:
-
-
-To do:
-
-
-
-
-Bugs:
-
-
-After events (polish):
 Add animation to overloading a racer
-Make shiny crustang opponents/rentables possible and make the overworld reflect shininess
-Make the game end after a certain number of laps or minutes
-Make summary in the crustang selection screen possible
-Make animation for overload

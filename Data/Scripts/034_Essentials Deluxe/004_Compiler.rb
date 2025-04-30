@@ -118,7 +118,7 @@ module Compiler
     process_pbs_file_message_end
   end
   
-  def write_trainers(path = "PBS/trainers.txt")
+  def write_trainers(path = "PBS/trainers.txt") # edited #by low
     write_pbs_file_message_start(path)
     File.open(path, "wb") { |f|
       idx = 0
@@ -137,6 +137,7 @@ module Compiler
         if trainer.real_lose_text && !trainer.real_lose_text.empty?
           f.write(sprintf("LoseText = %s\r\n", trainer.real_lose_text))
         end
+        f.write(sprintf("Gimmick = %s\r\n", trainer.gimmick)) if trainer.gimmick != "None"
         trainer.pokemon.each do |pkmn|
           f.write(sprintf("Pokemon = %s,%d\r\n", pkmn[:species], pkmn[:level]))
           f.write(sprintf("    Name = %s\r\n", pkmn[:name])) if pkmn[:name] && !pkmn[:name].empty?
@@ -150,6 +151,8 @@ module Compiler
           f.write(sprintf("    AbilityIndex = %d\r\n", pkmn[:ability_index])) if pkmn[:ability_index]
           f.write(sprintf("    Item = %s\r\n", pkmn[:item])) if pkmn[:item]
           f.write(sprintf("    Nature = %s\r\n", pkmn[:nature])) if pkmn[:nature]
+          f.write(sprintf("    Status = %s\r\n", pkmn[:nature])) if pkmn[:status]
+          f.write(sprintf("    HiddenPowerType = %s\r\n", pkmn[:hp_type])) if pkmn[:hp_type]
           ivs_array = []
           evs_array = []
           GameData::Stat.each_main do |s|
@@ -162,6 +165,9 @@ module Compiler
           f.write(sprintf("    Happiness = %d\r\n", pkmn[:happiness])) if pkmn[:happiness]
           f.write(sprintf("    Ball = %s\r\n", pkmn[:poke_ball])) if pkmn[:poke_ball]
           f.write("    Ace = yes\r\n") if pkmn[:trainer_ace]
+          f.write("    AAM = true\r\n") if pkmn[:abilityMutation]
+          f.write("    MEM = true\r\n") if pkmn[:megaevoMutation]
+          f.write("    BOSS = true\r\n") if pkmn[:bossmonMutation]
           f.write(sprintf("    Focus = %s\r\n", pkmn[:focus])) if PluginManager.installed?("Focus Meter System") && pkmn[:focus]
           f.write(sprintf("    Birthsign = %s\r\n", pkmn[:birthsign])) if PluginManager.installed?("Pokémon Birthsigns") && pkmn[:birthsign]
           f.write(sprintf("    DynamaxLvl = %d\r\n", pkmn[:dynamax_lvl])) if PluginManager.installed?("ZUD Mechanics") && pkmn[:dynamax_lvl]

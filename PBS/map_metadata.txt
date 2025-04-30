@@ -227,7 +227,7 @@ ShowArea = true
 MapPosition = 0,22,1
 BattleBack = cave
 MapSize = 1,1
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [035]   # Monarca Cave 2
 Name = Monarca Cave
@@ -236,7 +236,7 @@ ShowArea = true
 MapPosition = 0,22,1
 BattleBack = cave
 MapSize = 1,1
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [036]   # Calojarro Plaza
 Name = Calojarro Plaza
@@ -310,7 +310,7 @@ Name = Route 3 Cave
 Outdoor = false
 MapPosition = 0,24,5
 BattleBack = cave
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [047]   # Route 4 - Top East
 Name = Route 4
@@ -342,7 +342,7 @@ ShowArea = true
 Dungeon = false
 BattleBack = cave1
 Environment = Cave
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [051]   # Calojarro
 Name = Calojarro
@@ -358,41 +358,41 @@ Name = Dorado Mine F2
 Outdoor = false
 ShowArea = true
 BattleBack = cave1
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [053]   # Dorado Mine Floor 3 Main
 Name = Dorado Mine F3
 Outdoor = false
 ShowArea = true
 BattleBack = cave4
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [054]   # Dorado Mine Floor 2 Right Side Strength Room
 Name = Dorado Mine F2
 Outdoor = false
 ShowArea = true
 BattleBack = cave
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [055]   # Dorado Mine Floor 2 South Section
 Name = Dorado Mine F2
 Outdoor = false
 ShowArea = true
 BattleBack = cave
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [056]   # Dorado Mine Floor 4
 Name = Dorado Mine F4
 Outdoor = false
 ShowArea = true
 BattleBack = cave4
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [057]   # Canyon Temple Main
 Name = Canyon Temple Main
 Outdoor = false
 BattleBack = cave_deep
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [058]   # Route 6
 Name = Route 6
@@ -405,7 +405,7 @@ Flags = campMapDesert
 Name = Canyon Temple Left
 Outdoor = false
 BattleBack = cave_deep
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [061]   # Connection to Hacienda
 Name = Connection to Hacienda
@@ -513,7 +513,7 @@ MapPosition = 0,25,2
 Name = Canyon Temple Mural
 Outdoor = false
 BattleBack = cave_deep
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [087]   # Soleca Desert North
 Name = Soleca Desert North
@@ -559,7 +559,7 @@ Flags = campMapBeach
 Name = Dorado Mine Level 2 Right Side
 Outdoor = false
 BattleBack = cave
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [105]   # Ferrera Gym
 Name = Ferrera Gym
@@ -593,7 +593,7 @@ Outdoor = false
 Name = Dorado Mine Floor 3 Right Side
 Outdoor = false
 BattleBack = cave4
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [117]   # Route 3-4 Transfer Map
 Name = Route 3-4 Transfer Map
@@ -605,10 +605,10 @@ Flags = campMapCanyon
 Name = Dorado Mine Floor 3 Item Room left
 Outdoor = false
 BattleBack = cave4
-Flags = campMapCave
+Flags = campMapCave,CanCamp
 #-------------------------------
 [120]   # Canyon Temple Right
 Name = Canyon Temple Right
 Outdoor = false
 BattleBack = cave_deep
-Flags = campMapCave
+Flags = campMapCave,CanCamp

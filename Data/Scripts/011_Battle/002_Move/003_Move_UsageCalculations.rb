@@ -360,6 +360,9 @@ class Battle::Move
     if user.effects[PBEffects::HelpingHand] && !self.is_a?(Battle::Move::Confusion)
       multipliers[:base_damage_multiplier] *= 1.5
     end
+    if target.effects[PBEffects::HoldingHand]
+      multipliers[:base_damage_multiplier] *= 2 / 3.0
+    end
     if user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
       multipliers[:base_damage_multiplier] *= 2
     end

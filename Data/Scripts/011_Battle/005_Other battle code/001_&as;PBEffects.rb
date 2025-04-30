@@ -130,6 +130,7 @@ module PBEffects
   PrioEchoChamber     = 124
   BoomInstalled       = 125
   LeechSeedCount      = 126
+  HoldingHand         = 127
 
   #=============================================================================
   # These effects apply to a battler position

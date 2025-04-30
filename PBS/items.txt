@@ -2971,9 +2971,9 @@ BattleUse = OnPokemon
 Flags = Fling_30
 Description = A very sweet and refreshing drink. It can be used to restore 70 HP to a single Pokémon.
 #-------------------------------
-[MOOMOOMILK]
-Name = Moomoo Milk
-NamePlural = Moomoo Milks
+[GOGOATMILK]
+Name = Gogoat Milk
+NamePlural = Gogoat Milks
 Pocket = 2
 Price = 600
 FieldUse = OnPokemon
@@ -3093,7 +3093,7 @@ Description = It maximally raises the top PP of a selected move that has been le
 Name = HP Up
 NamePlural = HP Ups
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into a neutral one.
@@ -3102,7 +3102,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Protein
 NamePlural = Proteins
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Attack-boosting one.
@@ -3111,7 +3111,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Iron
 NamePlural = Irons
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Defense-boosting one.
@@ -3120,7 +3120,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Calcium
 NamePlural = Calciums
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Attack-boosting one.
@@ -3129,7 +3129,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Zinc
 NamePlural = Zincs
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Defense-boosting one.
@@ -3138,7 +3138,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Carbos
 NamePlural = Carbos
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Speed-boosting one.
@@ -6323,15 +6323,15 @@ Price = 0
 Flags = KeyItem
 Description = It's a special Pokéball that belongs to Professor Ceiba.
 #-------------------------------
-[CERIGOLDCONE]
-Name = Cerigoldcone
-NamePlural = Cerigoldcones
+[MELOLADOCONE]
+Name = Melolado Cone
+NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
@@ -6738,42 +6738,42 @@ Description = An item for checking a Pokémon's contest stats.
 Name = Candy Base
 NamePlural = Candy Bases
 Pocket = 1
-Price = 100
+Price = 50
 Description = A mixture to make candy.
 #-------------------------------
 [REDCANDYBASE]
 Name = Red Candy Base
 NamePlural = Red Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy red!
 #-------------------------------
 [BLUECANDYBASE]
 Name = Blue Candy Base
 NamePlural = Blue Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy blue!
 #-------------------------------
 [PINKCANDYBASE]
 Name = Pink Candy Base
 NamePlural = Pink Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy pink!
 #-------------------------------
 [GREENCANDYBASE]
 Name = Green Candy Base
 NamePlural = Green Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy green!
 #-------------------------------
 [YELLOWCANDYBASE]
 Name = Yellow Candy Base
 NamePlural = Yellow Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy yellow!
 #-------------------------------
 [ADVENTUREGUIDE]
