@@ -49,7 +49,7 @@ FullDesc = User is immune to Water-type moves, when hit by a Water-type move the
 #-------------------------------
 [OBLIVIOUS]
 Name = Oblivious
-Description = Prevents it from becoming infatuated.
+Description = Prevents it from becoming infatuated or taunted.
 #-------------------------------
 [CLOUDNINE]
 Name = Cloud Nine
@@ -66,6 +66,7 @@ Description = Prevents the Pokémon from falling asleep.
 [COLORCHANGE]
 Name = Color Change
 Description = Changes the Pokémon's type to the foe's move.
+FullDesc = User's type changes to the type of a move it's hit by, unless it already has that type.
 #-------------------------------
 [IMMUNITY]
 Name = Immunity
@@ -106,6 +107,7 @@ FullDesc = When user is hit by a contact move, attacker takes damage equal to 1/
 [WONDERGUARD]
 Name = Wonder Guard
 Description = Only super-effective moves will hit.
+FullDesc = User can only be damaged by super-effective moves and indirect damage.
 #-------------------------------
 [LEVITATE]
 Name = Levitate
@@ -133,6 +135,7 @@ Description = All status problems heal when it switches out.
 [LIGHTNINGROD]
 Name = Lightning Rod
 Description = Draws in all Electric-type moves to up Sp. Attack.
+FullDesc = User redirects all single target Electric-type moves towards itself and is immune to Electric-type moves, when hit by a Electric-type move their Special Attack is increased by one stage.
 #-------------------------------
 [SERENEGRACE]
 Name = Serene Grace
@@ -201,11 +204,12 @@ Description = The Pokémon raises the foe's PP usage.
 #-------------------------------
 [THICKFAT]
 Name = Thick Fat
-Description = Ups resistance to Fire- and Ice-type moves.
+Description = Halves damage from Fire- and Ice-type moves.
 #-------------------------------
 [EARLYBIRD]
 Name = Early Bird
 Description = Halves the duration of timed status effects.
+FullDesc = Status effects with a set duration (Sleep, Dizziness, Chaos mode Paralysis) have their duration halved.
 #-------------------------------
 [FLAMEBODY]
 Name = Flame Body
@@ -216,6 +220,7 @@ FullDesc = When user is hit by a contact move, there's a 30% chance to burn the 
 [RUNAWAY]
 Name = Run Away
 Description = Enables a sure getaway from opposing Pokémon.
+FullDesc = User can switch out or run away of battle regardless of trapping effects or abilities.
 #-------------------------------
 [KEENEYE]
 Name = Keen Eye
@@ -233,6 +238,7 @@ Description = The Pokémon may pick up items.
 [TRUANT]
 Name = Truant
 Description = Can only use healing moves every other turn.
+FullDesc = User's skips every other turn instead of using a move. Healing moves are unnaffected by this ability.
 #-------------------------------
 [HUSTLE]
 Name = Hustle
@@ -260,6 +266,7 @@ FullDesc = If holding a Weather Rock, the user summons the corresponding weather
 [STICKYHOLD]
 Name = Sticky Hold
 Description = Protects the Pokémon from item theft.
+FullDesc = User cannot lose its held item due to foes' abilities or attacks.
 #-------------------------------
 [SHEDSKIN]
 Name = Shed Skin
@@ -324,7 +331,7 @@ Description = Prevents other Pokémon from lowering its stats.
 #-------------------------------
 [PUREPOWER]
 Name = Pure Power
-Description = Raises the Pokémon's Attack stat.
+Description = Doubles the Pokémon's Attack stat.
 #-------------------------------
 [SHELLARMOR]
 Name = Shell Armor
@@ -337,7 +344,7 @@ Description = Eliminates the effects of weather.
 [TANGLEDFEET]
 Name = Tangled Feet
 Description = Raises Speed if the Pokémon is confused.
-FullDesc = When user is confused/dizzy, the user's speed is doubled.
+FullDesc = When user is confused/dizzy, its speed is doubled.
 #-------------------------------
 [MOTORDRIVE]
 Name = Motor Drive
@@ -347,6 +354,7 @@ FullDesc = User is immune to Electric-type moves, when hit by an Electric-type m
 [RIVALRY]
 Name = Rivalry
 Description = Deals more damage to a foe of the same gender.
+FullDesc = User attacks deal 1.25x damage on same gender targets; If not on chaos mode, the user also deals 0.75x damage on opposite gender targets.
 #-------------------------------
 [STEADFAST]
 Name = Steadfast
@@ -372,7 +380,7 @@ FullDesc = When user uses or loses a held item, their Speed stat is doubled unti
 #-------------------------------
 [HEATPROOF]
 Name = Heatproof
-Description = Weakens the power of Fire-type moves.
+Description = Halves damage from Fire-type moves.
 #-------------------------------
 [SIMPLE]
 Name = Simple
@@ -382,6 +390,7 @@ FullDesc = The user doubles any stat drops and boosts it receives.
 [DRYSKIN]
 Name = Dry Skin
 Description = Reduces HP if it is hot. Water restores HP.
+FullDesc = User heals 1/8 HP each turn during Rain and takes no damage from Water-type moves, when hit by a Water-type move they get healed for 1/4 of their max HP. User loses 1/8 HP each turn during Harsh Sunlight and takes 1.25x damage from Fire-type moves.
 #-------------------------------
 [DOWNLOAD]
 Name = Download
@@ -425,7 +434,7 @@ FullDesc = User gets 1.5x Speed when under any status condition. The user also d
 [NORMALIZE]
 Name = Normalize
 Description = All the Pokémon's moves become the Normal type.
-FullDesc = User's moves become Normal-type and deal 1.2x damage.
+FullDesc = User's moves become Normal-type and all moves deal 1.2x damage. User's Normal and Fighting-type moves are normally effective against Ghost types.
 #-------------------------------
 [SNIPER]
 Name = Sniper
@@ -440,7 +449,7 @@ FullDesc = User is immune to passive damage such as entry hazards, damage from s
 [NOGUARD]
 Name = No Guard
 Description = Ensures attacks by or against the Pokémon land.
-FullDesc = Attacks used by or against the user will ignore accuracy checks to always hit. User is able to hit a semi-invulnerable foes.
+FullDesc = Attacks used by or against the user will ignore accuracy checks to always hit. User is able to hit semi-invulnerable foes.
 #-------------------------------
 [STALL]
 Name = Stall
@@ -468,6 +477,7 @@ Description = Moves can be used regardless of Abilities.
 [SUPERLUCK]
 Name = Super Luck
 Description = Heightens the critical-hit ratios of moves.
+FullDesc = User has +1 critical-hit ratios on all moves.
 #-------------------------------
 [AFTERMATH]
 Name = Aftermath
@@ -546,6 +556,7 @@ Description = Changes type to match the held Plate.
 [FLOWERGIFT]
 Name = Flower Gift
 Description = Powers up party Pokémon when it is sunny.
+FullDesc = When user is on the field, all allies including user get 1.5x Attack and Special Defense during sunlight.
 #-------------------------------
 [BADDREAMS]
 Name = Bad Dreams
@@ -569,6 +580,7 @@ Description = Makes stat changes have an opposite effect.
 [UNNERVE]
 Name = Unnerve
 Description = Makes the foe nervous and unable to eat Berries.
+FullDesc = While the user is active, it prevents foes from using their Berries.
 #-------------------------------
 [DEFIANT]
 Name = Defiant
@@ -729,7 +741,7 @@ Description = Changes the Pokémon's shape when HP is halved.
 [VICTORYSTAR]
 Name = Victory Star
 Description = Boosts the accuracy of its allies and itself.
-FullDesc = Moves from the user's side of the field have their accuracy boosted by 1.1x when the user is active.
+FullDesc = When user is on the field, all allies including the user have their moves' accuracy boosted by 1.1x.
 #-------------------------------
 [TURBOBLAZE]
 Name = Turboblaze
@@ -1073,7 +1085,7 @@ Description = Retrieves the first thrown Poké Ball if it failed.
 [COTTONDOWN]
 Name = Cotton Down
 Description = Scatters Speed-lowering cotton fluff when hit.
-FullDesc = When user is hit, all other battlers have their Speed is lowered by 1 stage.
+FullDesc = When user is hit, all other battlers have their Speed lowered by 1 stage.
 #-------------------------------
 [PROPELLERTAIL]
 Name = Propeller Tail
