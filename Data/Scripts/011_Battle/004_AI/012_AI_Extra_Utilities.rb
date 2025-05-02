@@ -873,7 +873,8 @@ class Battle::AI
                 end
                 if currentWeather == :Sandstorm
                     sum += 20 if pkmn.ability == :SANDRUSH
-                    sum += 10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
+                    sum += 15 if pkmn.ability == :SANDFORCE
+                    sum += 10 if pkmn.ability == :SANDVEIL || pkmn.ability == :PARTICURE
                     sum += 10 if pkmn.hasType?(:ROCK)
                     sum += 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm")
                     sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") && issunny
@@ -1007,19 +1008,24 @@ class Battle::AI
                 healing += subscore
             end
             healing += 0.0625 if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
-            healing += 0.0625 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
+            healing += 0.1250 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
             if user.hasActiveAbility?(:RAINDISH)
-                healing += 0.0625 if [:Rain, :HeavyRain].include?(user.effectiveWeather)
-                healing += 0.0625 if user.effectiveWeather == :HeavyRain
+                healing += 0.1250 if [:Rain, :HeavyRain].include?(user.effectiveWeather)
+                healing += 0.0415 if user.effectiveWeather == :HeavyRain
             end
             if user.hasActiveAbility?(:HEALINGSUN)
-                healing += 0.0625 if [:Sun, :HarshSun].include?(user.effectiveWeather)
-                healing += 0.0625 if user.effectiveWeather == :HarshSun
+                healing += 0.1250 if [:Sun, :HarshSun].include?(user.effectiveWeather)
+                healing += 0.0415 if user.effectiveWeather == :HarshSun
             end
-            healing += 0.0625 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
+            healing += 0.1250 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
+            healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
             healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)
             healing += 0.125 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
-            healing *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+            if @battle.pbCheckGlobalAbility(:STALL)
+                healing -= 1
+                healing *= 2
+                healing += 1
+            end
         end
         return healing if heal
         if user.takesIndirectDamage?
@@ -1032,7 +1038,7 @@ class Battle::AI
             if user.effects[PBEffects::Trapping]>0
                 multiturnchip = 0.125 
                 multiturnchip *= (4.0 / 3.0) if @battle.battlers[user.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
-                chip+=multiturnchip
+                chip += multiturnchip
             end
             chip += 0.0625 if user.effects[PBEffects::Curse]
             chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
@@ -1063,7 +1069,7 @@ class Battle::AI
                         statuschip += (0.0625*user.effects[PBEffects::Toxic])
                     end
                 end
-                chip+=statuschip
+                chip += statuschip
             end
             if rest
                 user.allOpposing.each do |b|
@@ -1072,8 +1078,8 @@ class Battle::AI
                     break
                 end
             end
-            chip*=2 if @battle.pbCheckGlobalAbility(:STALL)
-            chip*=(5.0/4.0) if user.effects[PBEffects::BoomInstalled]
+            chip *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+            chip *= (5.0/4.0) if user.effects[PBEffects::BoomInstalled]
         end
         return chip if chips
         diff=(healing-chip)

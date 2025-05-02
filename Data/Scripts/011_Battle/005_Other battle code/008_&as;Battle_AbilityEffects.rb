@@ -2509,6 +2509,19 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
 # EndOfRoundWeather handlers
 #===============================================================================
 
+Battle::AbilityEffects::EndOfRoundWeather.add(:ICEFACE,
+  proc { |ability, weather, battler, battle|
+    next if weather != :Hail
+    next if !battler.canRestoreIceFace || battler.form != 1
+    battle.pbShowAbilitySplash(battler)
+    if !Battle::Scene::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s {2} activated!", battler.pbThis, battler.abilityName))
+    end
+    battler.pbChangeForm(0, _INTL("{1} transformed!", battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 Battle::AbilityEffects::EndOfRoundWeather.add(:DRYSKIN,
   proc { |ability, weather, battler, battle|
     case weather
@@ -2533,50 +2546,6 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:DRYSKIN,
   }
 )
 
-Battle::AbilityEffects::EndOfRoundWeather.add(:ICEBODY,
-  proc { |ability, weather, battler, battle|
-    next unless weather == :Hail
-    next if !battler.canHeal?
-    battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(battler.totalhp / 16)
-    if Battle::Scene::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
-    else
-      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-Battle::AbilityEffects::EndOfRoundWeather.add(:ICEFACE,
-  proc { |ability, weather, battler, battle|
-    next if weather != :Hail
-    next if !battler.canRestoreIceFace || battler.form != 1
-    battle.pbShowAbilitySplash(battler)
-    if !Battle::Scene::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1}'s {2} activated!", battler.pbThis, battler.abilityName))
-    end
-    battler.pbChangeForm(0, _INTL("{1} transformed!", battler.pbThis))
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
-Battle::AbilityEffects::EndOfRoundWeather.add(:RAINDISH,
-  proc { |ability, weather, battler, battle|
-    next unless [:Rain, :HeavyRain].include?(weather)
-    next if !battler.canHeal?
-    battle.pbShowAbilitySplash(battler)
-    hpRecovered = (weather == :HeavyRain) ? (battler.totalhp / 8).round : (battler.totalhp / 16).round
-    battler.pbRecoverHP(hpRecovered)
-    if Battle::Scene::USE_ABILITY_SPLASH
-      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
-    else
-      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
-    end
-    battle.pbHideAbilitySplash(battler)
-  }
-)
-
 Battle::AbilityEffects::EndOfRoundWeather.add(:SOLARPOWER,
   proc { |ability, weather, battler, battle|
     next unless [:Sun, :HarshSun].include?(weather)
@@ -2589,14 +2558,61 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:SOLARPOWER,
   }
 )
 
+
+Battle::AbilityEffects::EndOfRoundWeather.add(:RAINDISH,
+  proc { |ability, weather, battler, battle|
+    next unless [:Rain, :HeavyRain].include?(weather)
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    hpRecovered = (weather == :HeavyRain) ? (battler.totalhp / 6).round : (battler.totalhp / 8).round
+    battler.pbRecoverHP(hpRecovered)
+    if Battle::Scene::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::EndOfRoundWeather.add(:ICEBODY,
+  proc { |ability, weather, battler, battle|
+    next unless weather == :Hail
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(battler.totalhp / 8)
+    if Battle::Scene::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 #by low
 Battle::AbilityEffects::EndOfRoundWeather.add(:HEALINGSUN,
   proc { |ability, weather, battler, battle|
     next unless [:Sun, :HarshSun].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    hpRecovered = (weather == :HarshSun) ? (battler.totalhp / 8).round : (battler.totalhp / 16).round
+    hpRecovered = (weather == :HarshSun) ? (battler.totalhp / 6).round : (battler.totalhp / 8).round
     battler.pbRecoverHP(hpRecovered)
+    if Battle::Scene::USE_ABILITY_SPLASH
+      battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
+    else
+      battle.pbDisplay(_INTL("{1}'s {2} restored its HP.", battler.pbThis, battler.abilityName))
+    end
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::EndOfRoundWeather.add(:PARTICURE,
+  proc { |ability, weather, battler, battle|
+    next unless weather == :Sandstorm
+    next if !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(battler.totalhp / 8)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
     else
@@ -2685,6 +2701,7 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:BADDREAMS,
 # reworked #by low
 Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
   proc { |ability, battler, battle|
+    next if battler.turnCount == 0
     battle.pbShowAbilitySplash(battler)
     moodmemory = battler.effects[PBEffects::MoodyMemory]
     stats = [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]

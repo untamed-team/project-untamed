@@ -3826,6 +3826,14 @@ Pokemon = GLALIE,50
     Item = QUICKCLAW
     AAM = True
     MEM = True
+# for AAM, its important to know that the base ability's effect has priority over the stacked abilities
+Pokemon = TITANOTROP,50
+    Moves = SUNNYDAY,SOLARBEAM,FLAMETHROWER,MOONLIGHT
+    Ability = SOLARPOWER
+    Nature = QUIRKY
+    Item = HEATROCK
+    AAM = True
+    MEM = True
 #-------------------------------
 [WILD_PKMN,crust,0]
 LoseText = sex

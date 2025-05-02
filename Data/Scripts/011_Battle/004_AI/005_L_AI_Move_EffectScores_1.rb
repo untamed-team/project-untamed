@@ -340,7 +340,7 @@ class Battle::AI
                     score *=3
                 end
             end
-            if user.hasActiveAbility?(:SANDVEIL)
+            if user.hasActiveAbility?([:SANDVEIL, :PARTICURE])
                 score*=1.3
             end
             if user.pbHasMove?(:MOONLIGHT) || user.pbHasMove?(:SYNTHESIS) || user.pbHasMove?(:MORNINGSUN) ||
@@ -4214,6 +4214,7 @@ class Battle::AI
                       (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
                       (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
                       (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+                      (user.hasActiveAbility?(:PARTICURE) && [:Sandstorm].include?(expectedWeather)) || 
                       (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
                         score*=1.2
                     end

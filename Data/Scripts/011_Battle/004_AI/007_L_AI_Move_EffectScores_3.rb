@@ -3110,6 +3110,7 @@ class Battle::AI
               (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
               (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
               (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+              (user.hasActiveAbility?(:PARTICURE) && [:Sandstorm].include?(expectedWeather)) || 
               (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
                 score*=1.2
             end
@@ -3157,6 +3158,7 @@ class Battle::AI
               (user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
               (user.hasActiveAbility?(:RAINDISH) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) || 
               (user.hasActiveAbility?(:ICEBODY) && [:Hail].include?(expectedWeather)) || 
+              (user.hasActiveAbility?(:PARTICURE) && [:Sandstorm].include?(expectedWeather)) || 
               (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
                 score*=1.2
             end

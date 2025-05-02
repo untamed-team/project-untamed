@@ -691,7 +691,8 @@ class Battle::AI
         end
         if pokmon.ability==:SANDSTREAM || pokmon.ability==:DUSTSENTINEL
           sum+=20 if pkmn.ability == :SANDRUSH
-          sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
+          sum+=15 if pkmn.ability == :SANDFORCE
+          sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :PARTICURE
           sum+=10 if pkmn.hasType?(:ROCK)
           sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
           sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm") 

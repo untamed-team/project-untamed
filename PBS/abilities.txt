@@ -192,7 +192,7 @@ Description = Gives full immunity to all sound-based moves.
 [RAINDISH]
 Name = Rain Dish
 Description = The Pokémon gradually regains HP in rain.
-FullDesc = The user gradually regains 1/16 max HP in rain, or 1/8 in heavy rain.
+FullDesc = The user gradually regains 1/8 max HP in rain, or 1/6 in heavy rain.
 #-------------------------------
 [SANDSTREAM]
 Name = Sand Stream
@@ -525,7 +525,7 @@ FullDesc = User redirects all single target Water-type moves towards itself and 
 [ICEBODY]
 Name = Ice Body
 Description = The Pokémon gradually regains HP in a hailstorm.
-FullDesc = The user gradually regains 1/16 max HP in hailstorm.
+FullDesc = The user gradually regains 1/8 max HP in hailstorm.
 #-------------------------------
 [SOLIDROCK]
 Name = Solid Rock
@@ -1319,7 +1319,7 @@ Description = Boosts Ice-type moves in sunshine.
 [HEALINGSUN]
 Name = Healing Sun
 Description = Gradually regains HP in sunshine.
-FullDesc = The user gradually regains 1/16 max HP in sunlight, or 1/8 in harsh sunlight.
+FullDesc = The user gradually regains 1/8 max HP in sunlight, or 1/6 in harsh sunlight.
 #-------------------------------
 [PRESAGE]
 Name = Presage
@@ -1343,6 +1343,11 @@ Description = The user's first move determines the user's type.
 [DUBIOUS]
 Name = Dubious
 Description = The user transforms into a random non-fainted ally.
+#-------------------------------
+[PARTICURE]
+Name = Particure
+Description = Gradually regains HP in sandstorm.
+FullDesc = The user gradually regains 1/8 max HP in sandstorm.
 #-------------------------------
 # 
 #-------------------------------
