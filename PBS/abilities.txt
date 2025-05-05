@@ -362,7 +362,7 @@ Description = Raises Speed each time the Pokémon flinches.
 #-------------------------------
 [SNOWCLOAK]
 Name = Snow Cloak
-Description = Boosts the user's Sp.Def by 1.5x in a hailstorm.
+Description = Boosts the user's Sp. Def by 1.5x in a hailstorm.
 #-------------------------------
 [GLUTTONY]
 Name = Gluttony
@@ -811,7 +811,7 @@ Description = Changes between Blade and Shield Forme with attacks.
 [GALEWINGS]
 Name = Gale Wings
 Description = Flying-type moves gain priority when its HP is high.
-FullDesc = Flying-type moves get +1 priority if the user HP is higher than 50%.
+FullDesc = Flying-type moves get +1 priority if the user's HP is higher than 50%.
 #-------------------------------
 [MEGALAUNCHER]
 Name = Mega Launcher
@@ -885,12 +885,12 @@ Description = Boosts Defense when hit by a direct attack.
 [WIMPOUT]
 Name = Wimp Out
 Description = Switches out if its HP becomes half or less.
-FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn.
+FullDesc = When the user's HP is reduced to half or less, the user switches out immediately.
 #-------------------------------
 [EMERGENCYEXIT]
 Name = Emergency Exit
 Description = Switches out if its HP becomes half or less.
-FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn. Renamed Wimp Out.
+FullDesc = When the user's HP is reduced to half or less, the user switches out immediately. Renamed Wimp Out.
 #-------------------------------
 [WATERCOMPACTION]
 Name = Water Compaction
@@ -1121,7 +1121,7 @@ Description = Creates a sandstorm when hit by an attack.
 [ICESCALES]
 Name = Ice Scales
 Description = Halves the damage taken from special moves.
-FullDesc = The user's Sp. Def is doubled during damage calculations. Does not affect Psycrush.
+FullDesc = The user's Special Defense is doubled during damage calculations. Does not affect Psycrush.
 #-------------------------------
 [RIPEN]
 Name = Ripen
@@ -1163,7 +1163,7 @@ Description = Swaps Abilities with contact-making Pokémon.
 [GORILLATACTICS]
 Name = Gorilla Tactics
 Description = Boosts Attack, but allows only one move to be used.
-FullDesc = User has 1.5x Attack but is locked in into the first move they use.
+FullDesc = User has 1.5x Attack but is locked in into the first move it uses.
 #-------------------------------
 [NEUTRALIZINGGAS]
 Name = Neutralizing Gas
@@ -1197,7 +1197,7 @@ FullDesc = User's Electric-type moves deal 1.5x damage. Stacks multiplicatively 
 [DRAGONSMAW]
 Name = Dragon's Maw
 Description = Powers up Dragon-type moves.
-FullDesc = User's Electric-type moves deal 1.5x damage. Stacks multiplicatively with STAB.
+FullDesc = User's Dragon-type moves deal 1.5x damage. Stacks multiplicatively with STAB.
 #-------------------------------
 [CHILLINGNEIGH]
 Name = Chilling Neigh

@@ -661,10 +661,10 @@ class Battle::AI
             if psyvar
                 miniscore*=2
             end
-            if pricheck
+            if pricheck || target.hasActiveItem?(:QUICKCLAW)
                 miniscore*=0.7
             end
-            if privar || target.hasActiveItem?(:QUICKCLAW)
+            if privar || user.hasActiveItem?(:QUICKCLAW)
                 miniscore*=1.3
             end  
             if target.hasActiveItem?(:TERRAINEXTENDER)
