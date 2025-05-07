@@ -336,23 +336,15 @@ class Battle::AI
                     score *= 0.7
                 end
             end
-            # Prefer Protect-like moves
-            # IF future sight is about to hit and if best move does not KO
-            # "ProtectRate" check is done above
+            # IF future sight is about to hit, account for its damage when calcing protect moves
+            # ("ProtectRate" check is done above)
             if ["ProtectUser", "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield", 
                 "ProtectUserFromDamagingMovesKingsShield", "ProtectUserFromDamagingMovesObstruct"].include?(move.function)
                 roughFSDamage = futureSightRoughDamage(target, skill)
-                if roughFSDamage > 0
+                if roughFSDamage > 0 && score > 80
                     miniscore = 1 + (roughFSDamage / target.hp)
-                    bestmove = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-                    maxmove = bestmove[1]
-                    if targetSurvivesMove(maxmove,user,target)
-                        miniscore *= 1.2
-                    else
-                        miniscore *= 0.8
-                    end
                     echoln "score for protect+FS #{miniscore}" if $AIGENERALLOG
-                    score *= miniscore
+                    score += miniscore
                 end
             end
         end
@@ -466,7 +458,7 @@ class Battle::AI
         # Try make AI not trolled by disguise
         # priority over other calcs due to hyper beam
         if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0    
-            if move.multiHitMove?
+            if move.multiHitMove? || user.hasActiveAbility?(:PARENTALBOND)
                 realDamage*=2.2
             else
                 realDamage=(target.totalhp / 8.0)
@@ -655,11 +647,11 @@ class Battle::AI
                 reflect = reflect.to_i
                 bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
                 if targetSurvivesMove(bestmove[1],target,user)
-                    damagePercentage -= reflect
-                    damagePercentage *= 0.6 if (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && user.hp == user.totalhp
+                    realDamage -= reflect
+                    realDamage *= 0.6 if (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && user.hp == user.totalhp
                 end
                 hpreflected = reflect * user.totalhp / 100
-                damagePercentage *= 0.3 if hpreflected > user.totalhp
+                realDamage *= 0.3 if hpreflected > user.totalhp
             end
         end
 

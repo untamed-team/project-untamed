@@ -183,17 +183,7 @@ class Battle::AI
             end
             if user.hasActiveAbility?([:CHLOROPHYLL, :FLOWERGIFT])
                 score*=2
-                if user.hasActiveItem?(:FOCUSASH)
-                    score*=2
-                end
-                # ???? i dont get what this thing does
-                if user.effects[PBEffects::Protect] ||
-                    user.effects[PBEffects::Obstruct] ||
-                    user.effects[PBEffects::KingsShield] || 
-                    user.effects[PBEffects::BanefulBunker] ||
-                    user.effects[PBEffects::SpikyShield]
-                    score *=3
-                end
+                score*=2 if user.hasActiveItem?(:FOCUSASH)
             end
             if user.hasActiveAbility?([:SOLARPOWER, :LEAFGUARD, :HEALINGSUN, :COOLHEADED])
                 score*=1.3
@@ -217,11 +207,11 @@ class Battle::AI
                 score*=1.5
             end
             # check how good the current/mega ability weather is for the opponent
-            score*=(1 + (checkWeatherBenefit(target, globalArray, true)) / 100.0)
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather")) / 100.0)
             # check how good the potential weather change is for us
-            score*=(1 + (checkWeatherBenefit(user, globalArray, true, :Sun) / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Sun) / 100.0))
             # check how good the potential weather change is for the opponent
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, :Sun) / 100.0)))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Sun) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartRainWeather" # rain dance
@@ -257,17 +247,7 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SWIFTSWIM)
                 score*=2
-                if user.hasActiveItem?(:FOCUSASH)
-                    score*=2
-                end
-                # ???? i dont get what this thing does
-                if user.effects[PBEffects::Protect] ||
-                   user.effects[PBEffects::Obstruct] ||
-                   user.effects[PBEffects::KingsShield] || 
-                   user.effects[PBEffects::BanefulBunker] ||
-                   user.effects[PBEffects::SpikyShield]
-                    score *=3
-                end
+                score*=2 if user.hasActiveItem?(:FOCUSASH)
             end
             if user.hasActiveAbility?(:DRYSKIN)
                 score*=1.3
@@ -288,9 +268,9 @@ class Battle::AI
             if user.hasActiveAbility?(:HYDRATION)
                 score*=1.5
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, true)) / 100.0)
-            score*=(1 + (checkWeatherBenefit(user, globalArray, true, :Rain) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, :Rain) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather")) / 100.0)
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Rain) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Rain) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartSandstormWeather" # sandstorm
@@ -328,17 +308,7 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SANDRUSH)
                 score*=2
-                if user.hasActiveItem?(:FOCUSASH)
-                    score*=2
-                end
-                # ???? i dont get what this thing does
-                if user.effects[PBEffects::Protect] ||
-                   user.effects[PBEffects::Obstruct] ||
-                   user.effects[PBEffects::KingsShield] || 
-                   user.effects[PBEffects::BanefulBunker] ||
-                   user.effects[PBEffects::SpikyShield]
-                    score *=3
-                end
+                score*=2 if user.hasActiveItem?(:FOCUSASH)
             end
             if user.hasActiveAbility?([:SANDVEIL, :PARTICURE])
                 score*=1.3
@@ -353,9 +323,9 @@ class Battle::AI
             if user.hasActiveAbility?(:SANDFORCE)
                 score*=1.5
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, true, :Sandstorm) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, :Sandstorm) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Sandstorm) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Sandstorm) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartHailWeather" # hail
@@ -392,17 +362,7 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SLUSHRUSH)
                 score*=2
-                if user.hasActiveItem?(:FOCUSASH)
-                    score*=2
-                end
-                # ???? i dont get what this thing does
-                if user.effects[PBEffects::Protect] ||
-                   user.effects[PBEffects::Obstruct] ||
-                   user.effects[PBEffects::KingsShield] || 
-                   user.effects[PBEffects::BanefulBunker] ||
-                   user.effects[PBEffects::SpikyShield]
-                    score *=3
-                end
+                score*=2 if user.hasActiveItem?(:FOCUSASH)
             end
             if user.hasActiveAbility?([:SNOWCLOAK, :ICEBODY, :HOTHEADED])
                 score*=1.3
@@ -417,9 +377,9 @@ class Battle::AI
             if user.pbHasMove?(:BLIZZARD)
                 score*=1.3
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, true, :Hail) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, true, :Hail) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Hail) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Hail) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartElectricTerrain" # Electric Terrain
@@ -454,9 +414,9 @@ class Battle::AI
                 miniscore*=2
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Electric) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Electric) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Electric) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Electric) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartGrassyTerrain" # grassy terrain
@@ -490,9 +450,9 @@ class Battle::AI
                 miniscore*=2
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Grassy) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Grassy) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Grassy) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Grassy) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartMistyTerrain" # misty terrain
@@ -526,9 +486,9 @@ class Battle::AI
                 miniscore*=2
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Misty) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Misty) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Misty) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Misty) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "StartPsychicTerrain" # psychic terrain
@@ -563,9 +523,9 @@ class Battle::AI
                 miniscore*=2
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, false, nil, true) / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, false, nil, true, :Psychic) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, false, nil, true, :Psychic) / 100.0)))
+            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
+            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Psychic) / 100.0))
+            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Psychic) / 100.0)))
         end
     #---------------------------------------------------------------------------
     when "RemoveTerrain" # Steel Roller
@@ -1207,7 +1167,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -1478,7 +1438,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -1623,7 +1583,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -1760,7 +1720,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -2028,7 +1988,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -2162,7 +2122,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -2311,7 +2271,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -2473,7 +2433,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -2718,7 +2678,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
             miniscore+=100
@@ -2778,7 +2738,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
             miniscore+=100
@@ -2980,7 +2940,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
             miniscore+=100
@@ -4053,7 +4013,7 @@ class Battle::AI
         miniscore-=100
         if move.addlEffect.to_f != 100
             miniscore*=(move.addlEffect.to_f/100.0)
-            miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+            miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
         end
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
         miniscore+=100
@@ -4918,7 +4878,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -4982,7 +4942,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5044,7 +5004,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5136,7 +5096,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5238,7 +5198,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5289,7 +5249,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5339,7 +5299,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5437,7 +5397,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5629,7 +5589,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100
@@ -5678,7 +5638,7 @@ class Battle::AI
                 miniscore-=100
                 if move.addlEffect.to_f != 100
                     miniscore*=(move.addlEffect.to_f/100.0)
-                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                    miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
                 miniscore+=100

@@ -2085,13 +2085,13 @@ class Battle::AI
 
     # Priority Moves Scoring #####################################################
     
-    def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
+    def pbAIPrioSpeedCheck(score, move, user, target)
         skill = 100
-        globalArray = @megaGlobalArray if globalArray.nil?
+        globalArray = @megaGlobalArray
         thisprio = priorityAI(user,move,globalArray)
         return score if thisprio == 0
-        aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
-        ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
         fastermon = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
         if thisprio>0 
             if move.damagingMove?

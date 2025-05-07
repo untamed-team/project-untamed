@@ -393,7 +393,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100

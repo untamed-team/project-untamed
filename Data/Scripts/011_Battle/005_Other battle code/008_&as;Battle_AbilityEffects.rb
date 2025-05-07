@@ -1114,7 +1114,7 @@ Battle::AbilityEffects::ModifyMoveBaseType.add(:LIQUIDVOICE,
 Battle::AbilityEffects::ModifyMoveBaseType.add(:NORMALIZE,
   proc { |ability, user, move, type|
     next if !GameData::Type.exists?(:NORMAL)
-    move.powerBoost = true if Settings::MECHANICS_GENERATION >= 7
+    move.powerBoost = true
     next :NORMAL
   }
 )
@@ -2480,9 +2480,9 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
     next if battle.wasUserAbilityActivated?(target) || target.turnCount < 1
     target.effects[PBEffects::SlipperyPeel] = true
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
-    battle.ActivateUserAbility(target) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     if user.hasActiveAbility?(:SUCTIONCUPS) && !battle.moldBreaker
       battle.pbShowAbilitySplash(user)
       if Battle::Scene::USE_ABILITY_SPLASH
@@ -2557,7 +2557,6 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:SOLARPOWER,
     battler.pbItemHPHealCheck
   }
 )
-
 
 Battle::AbilityEffects::EndOfRoundWeather.add(:RAINDISH,
   proc { |ability, weather, battler, battle|

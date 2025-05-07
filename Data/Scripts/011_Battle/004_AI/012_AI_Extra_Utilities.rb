@@ -192,9 +192,8 @@ class Battle::AI
                     if user.hasActiveAbility?([:AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE]) || megaboost
                         multipliers[:base_damage_multiplier] *= 1.2
                     end
-                else
-                    multipliers[:base_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NORMALIZE)
                 end
+                multipliers[:base_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NORMALIZE)
             end
         end
         # if i didnt remove this mold breaker check, i would fake the AI out when she uses
@@ -209,7 +208,7 @@ class Battle::AI
         end
         if skill >= PBTrainerAI.bestSkill && target.abilityActive?
             # NOTE: These abilities aren't suitable for checking at the start of the
-            #       round.    #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
+            #       round.
             abilityBlacklist = [:FILTER, :SOLIDROCK, :PRISMARMOR, :GRASSPELT]
             if !moldBreaker
                 expectedTargetWeather = expectedWeather
@@ -228,7 +227,7 @@ class Battle::AI
                 target.ability = old_ability if !old_ability.nil?
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
-            # when moronuno said 'NonIgnorable', he meant "Ignorable(Forgot)"
+            # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
             Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
                 target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist
             )
@@ -251,8 +250,8 @@ class Battle::AI
         #       round.
         if skill >= PBTrainerAI.mediumSkill && user.itemActive?
             # NOTE: These items aren't suitable for checking at the start of the
-            #       round.     #DemICE:  WHAT THE FUCK DO YOU MEAN THEY AREN'T SUITABLE FFS
-            itemBlacklist = [:EXPERTBELT, :QUICKCLAW]#,:LIFEORB]
+            #       round.
+            itemBlacklist = [:EXPERTBELT, :QUICKCLAW]
             if !itemBlacklist.include?(user.item_id)
                 Battle::ItemEffects.triggerDamageCalcFromUser(
                     user.item, user, target, move, multipliers, baseDmg, type
@@ -708,6 +707,7 @@ class Battle::AI
         damage+=priodamage
         damage*=mult
         multiarray = move.multiHitMove?
+        multiarray = true if attacker.hasActiveAbility?(:PARENTALBOND)
         if opponent.hasActiveAbility?(:DISGUISE,false,mold_broken) && opponent.form==0    
             if multiarray
                 damage*=0.6
@@ -802,7 +802,7 @@ class Battle::AI
         return [maxdam,maxmove,maxprio,physorspec]
     end    
 
-    def checkWeatherBenefit(user, globalArray, weathery = false, requestedWeather = nil, terrainy = false, requestedTerrain = nil)
+    def checkWeatherBenefit(battler, globalArray, fieldcheck = nil, requestedWeather = nil, requestedTerrain = nil)
         sum = 0
         issunny = @battle.field.weather == :Sun || globalArray.include?("sun weather")
         currentWeather = requestedWeather || @battle.pbWeather
@@ -836,10 +836,10 @@ class Battle::AI
             end
         end
         
-        ownparty = @battle.pbParty(user.index)
+        ownparty = @battle.pbParty(battler.index)
         ownparty.each_with_index do |pkmn, idxParty|
             next if !pkmn || !pkmn.able?
-            if weathery
+            if fieldcheck == "weather"
                 if currentWeather == :Sun
                     sum += 20 if pkmn.ability == :CHLOROPHYLL
                     sum += 10 if pkmn.ability == :FLOWERGIFT || pkmn.ability == :SOLARPOWER
@@ -887,8 +887,7 @@ class Battle::AI
                     sum += 5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail", "HealUserDependingOnHail")
                     sum -= 5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun", "HigherDamageInSunVSNonFireTypes") && issunny
                 end
-            end
-            if terrainy
+            elsif fieldcheck == "terrain"
                 if currentTerrain == :Electric
                     sum += 20 if pkmn.ability == :SURGESURFER
                     sum += 5 if pkmn.ability == :MIMICRY
