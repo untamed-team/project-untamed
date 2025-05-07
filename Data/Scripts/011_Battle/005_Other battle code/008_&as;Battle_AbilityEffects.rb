@@ -2401,6 +2401,7 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
       targets.each_with_index do |b, index|
         ignoremsg = (index != targets.length - 1)
         hpGain = (b.damageState.hpLost / 2.0).round
+        next if hpGain < 1
         user.pbRecoverHPFromDrain(hpGain, b, 
                                   _INTL("{1} was healed due to its {2}!", user.pbThis, user.abilityName), 
                                   ignoremsg)
