@@ -2631,13 +2631,7 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:HEALER,
     # healer buff #by low
     next if battler.turnCount == 0
     next unless battler.turnCount.even?
-    hurtAlly = false
-    battler.allAllies.each do |b|
-      next if b.status == :NONE
-      hurtAlly = true
-      break
-    end
-    if hurtAlly
+    if battler.allAllies.any? { |b| b.status != :NONE }
       battler.allAllies.each do |b|
         next if b.status == :NONE
         battle.pbShowAbilitySplash(battler)
@@ -2645,12 +2639,10 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:HEALER,
         battle.pbHideAbilitySplash(battler)
         break
       end
-    else
-      if battler.status != :NONE
-        battle.pbShowAbilitySplash(battler)
-        battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
-        battle.pbHideAbilitySplash(battler)
-      end
+    elsif battler.status != :NONE
+      battle.pbShowAbilitySplash(battler)
+      battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
+      battle.pbHideAbilitySplash(battler)
     end
   }
 )

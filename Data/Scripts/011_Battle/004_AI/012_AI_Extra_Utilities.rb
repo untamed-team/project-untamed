@@ -1008,19 +1008,21 @@ class Battle::AI
                 healing += subscore
             end
             healing += 0.0625 if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
-            healing += 0.1250 if user.hasActiveAbility?(:DRYSKIN) && [:Rain, :HeavyRain].include?(user.effectiveWeather)
-            if user.hasActiveAbility?(:RAINDISH)
-                healing += 0.1250 if [:Rain, :HeavyRain].include?(user.effectiveWeather)
-                healing += 0.0415 if user.effectiveWeather == :HeavyRain
+            if [:Rain, :HeavyRain].include?(user.effectiveWeather)
+                healing += 0.1250 if user.hasActiveAbility?(:DRYSKIN)
+                if user.hasActiveAbility?(:RAINDISH)
+                    healing += 0.1250
+                    healing += 0.0415 if user.effectiveWeather == :HeavyRain
+                end
             end
-            if user.hasActiveAbility?(:HEALINGSUN)
-                healing += 0.1250 if [:Sun, :HarshSun].include?(user.effectiveWeather)
+            if user.hasActiveAbility?(:HEALINGSUN) && [:Sun, :HarshSun].include?(user.effectiveWeather)
+                healing += 0.1250
                 healing += 0.0415 if user.effectiveWeather == :HarshSun
             end
             healing += 0.1250 if user.hasActiveAbility?(:ICEBODY) && user.effectiveWeather == :Hail
             healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
-            healing += 0.125 if user.poisoned? && user.hasActiveAbility?(:POISONHEAL)
-            healing += 0.125 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
+            healing += 0.1250 if user.hasActiveAbility?(:POISONHEAL) && user.poisoned?
+            healing += 0.1250 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
             if @battle.pbCheckGlobalAbility(:STALL)
                 healing -= 1
                 healing *= 2

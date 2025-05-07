@@ -1374,7 +1374,7 @@ FullDesc = Transforms if the user KOs an opponent or is targeted by the move Spo
 [DUSTSENTINEL]
 Name = Dust Sentinel
 Description = Creates Sandstorm, user has the effects of Sand Force.
-FullDesc = Sand Stream + Sand Force; Immunity to sandstorm chip damage.
+FullDesc = Upon switch in, the user summons a sandstorm. User's Rock, Ground and Steel-type moves deal 1.3x damage during a Sandstorm. Immunity to sandstorm chip damage.
 #-------------------------------
 [ECHOCHAMBER]
 Name = Echo Chamber
