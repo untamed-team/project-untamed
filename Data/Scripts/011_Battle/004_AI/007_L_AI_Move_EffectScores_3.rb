@@ -5198,7 +5198,6 @@ class Battle::AI
             move_data = GameData::Move.get(move_id)
             next if moveBlacklist.include?(move_data.function_code)
             #next if move_data.has_flag?("CannotMetronome")
-            next unless move_data.has_flag?("CannotMetronome")
             next if move_data.type == :SHADOW
             next if user.SetupMovesUsed.include?(move_data.id) || userMoves.include?(move_data.id)
             metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
