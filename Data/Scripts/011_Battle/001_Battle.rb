@@ -649,6 +649,7 @@ class Battle
                      PBEffects::BideTarget,
                      PBEffects::CounterTarget,
                      PBEffects::JawLock,
+                     PBEffects::NeedleArm,
                      PBEffects::LockOnPos,
                      PBEffects::MeanLook,
                      PBEffects::MirrorCoatTarget,

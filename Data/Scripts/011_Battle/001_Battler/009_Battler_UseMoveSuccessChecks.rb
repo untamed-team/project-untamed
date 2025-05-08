@@ -228,10 +228,10 @@ class Battle::Battler
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!", pbThis))
         @battle.pbHideAbilitySplash(self)
-				unless move.usableWhenTruanting? # Truant buff #by low
-					@lastMoveFailed = true
-					return false
-				end
+        unless move.usableWhenTruanting? # Truant buff #by low
+          @lastMoveFailed = true
+          return false
+        end
       end
     end
     # Flinching
@@ -253,8 +253,9 @@ class Battle::Battler
         @battle.pbCommonAnimation("Confusion", self)
         @battle.pbDisplay(_INTL("{1} is confused!", pbThis))
         threshold = (Settings::MECHANICS_GENERATION >= 7) ? 30 : 50   # % chance
-        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 #by low
+        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
           pbConfusionDamage(_INTL("It hurt itself in its confusion!"))
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
           @lastMoveFailed = true
           return false
         end
@@ -262,15 +263,16 @@ class Battle::Battler
     end
     # Paralysis
     if @status == :PARALYSIS 
-			if $player.difficulty_mode?("chaos") #by low
-				#nothing
-			else
-				if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 #by low
-					pbContinueStatus
-					@lastMoveFailed = true
-					return false
-				end
-			end
+      if $player.difficulty_mode?("chaos") #by low
+        #nothing
+      else
+        if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
+          pbContinueStatus
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
+          @lastMoveFailed = true
+          return false
+        end
+      end
     end
     return true
   end

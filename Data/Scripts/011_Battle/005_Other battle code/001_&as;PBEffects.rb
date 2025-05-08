@@ -130,6 +130,7 @@ module PBEffects
   BoomInstalled       = 125
   LeechSeedCount      = 126
   HoldingHand         = 127
+  NeedleArm           = 128
 
   #=============================================================================
   # These effects apply to a battler position
