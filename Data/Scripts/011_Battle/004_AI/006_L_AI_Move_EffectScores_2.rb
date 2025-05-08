@@ -973,8 +973,8 @@ class Battle::AI
                     end
                 end
             end
-            userTypes = typesAI(user, target, skill)
             if userFasterThanTarget
+                userTypes = typesAI(user, target, skill)
                 if user.hasActiveAbility?(:WONDERGUARD) && userTypes.all? { |typo| typo == :FIRE }
                     score*=8
                 end

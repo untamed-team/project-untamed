@@ -322,11 +322,13 @@ class Battle::AI
         end
         # DemICE adding resist berries ### i made it a hash cuz i was bored
         if Effectiveness.super_effective?(typeMod)
-            multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveAbility?(:NEUROFORCE)
-            multipliers[:final_damage_multiplier] *= 1.2 if user.hasActiveItem?(:EXPERTBELT)
-            multipliers[:final_damage_multiplier] *= 1.5 if user.hasActiveAbility?(:WARRIORSPIRIT)
+            multipliers[:final_damage_multiplier] *= 1.25 if user.hasActiveAbility?(:NEUROFORCE)
+            multipliers[:final_damage_multiplier] *= 1.20 if user.hasActiveItem?(:EXPERTBELT)
             multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?([:SOLIDROCK, :FILTER],false,moldBreaker)
             multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
+
+            met = ($player.difficulty_mode?("chaos")) ? 1.25 : 1.5
+            multipliers[:final_damage_multiplier] *= met if user.hasActiveAbility?(:WARRIORSPIRIT)
             
             # klutz buff #by low
             klut = user.hasActiveAbility?(:KLUTZ)
@@ -509,12 +511,10 @@ class Battle::AI
           damage *= 6   # Hits do x1, x2, x3 baseDmg in turn, for x6 in total
         when "HitTwoToFiveTimes", "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1", "HitTwoToFiveTimesOrThreeForAshGreninja"
           # Fury Attack, Scale Shot, Water Shuriken
-          if user.hasActiveAbility?(:SKILLLINK)
+          if user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
+            damage *= 4 # 3 hits at 20 power = 4 hits at 15 power
+          elsif user.hasActiveAbility?(:SKILLLINK)
             damage *= 5
-          # might be wrong since grenig should have prio over skill link but lmao who cares
-          elsif user.isSpecies?(:GRENINJA) && user.form == 2 && move.function == "HitTwoToFiveTimesOrThreeForAshGreninja"
-            # 3 hits at 20 power = 4 hits at 15 power
-            damage *= 4
           else
             damage = (damage * 3.47).floor   # Average damage dealt
           end

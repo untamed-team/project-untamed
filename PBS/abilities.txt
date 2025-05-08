@@ -1281,7 +1281,7 @@ FullDesc = When the user faints, the replacement is healed by half of its max HP
 [WARRIORSPIRIT]
 Name = Warrior Spirit
 Description = Powers up super-effective attacks.
-FullDesc = User's super-effective moves deal 1.5x damage.
+FullDesc = User's super-effective moves deal 1.5x damage. The boost is lowered to 1.25x damage on chaos mode.
 #-------------------------------
 [SLIPPERYPEEL]
 Name = Slippery Peel
