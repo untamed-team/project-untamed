@@ -1195,17 +1195,28 @@ class PokemonSummary_Scene
     return false
   end
 
-  def pbOptions
+  def pbOptions # rename/move options #by low (check 014_Summary.rb on plugins for 'def pbScene')
     dorefresh = false
     commands = []
     cmdGiveItem = -1
     cmdTakeItem = -1
     cmdPokedex  = -1
     cmdMark     = -1
+    cmdRename   = -1
+    cmdCheckMoves = -1
+    cmdLearnMoves = -1
+    cmdForgetMove = -1
     if !@pokemon.egg?
-      commands[cmdGiveItem = commands.length] = _INTL("Give item")
-      commands[cmdTakeItem = commands.length] = _INTL("Take item") if @pokemon.hasItem?
-      commands[cmdPokedex = commands.length]  = _INTL("View Pokédex") if $player.has_pokedex
+      if @page == 4
+        commands[cmdCheckMoves = commands.length] = _INTL("Check Moves") if !@pokemon.moves.empty?
+        commands[cmdLearnMoves = commands.length] = _INTL("Relearn Moves") if @pokemon.can_relearn_move? && $game_switches[RELEARNERSWITCH]
+        commands[cmdForgetMove = commands.length] = _INTL("Forget Move") if @pokemon.moves.length > 1
+      else
+        commands[cmdGiveItem = commands.length] = _INTL("Give item")
+        commands[cmdTakeItem = commands.length] = _INTL("Take item") if @pokemon.hasItem?
+        commands[cmdPokedex = commands.length]  = _INTL("View Pokédex") if $player.has_pokedex
+        commands[cmdRename = commands.length]   = _INTL("Rename")
+      end
     end
     commands[cmdMark = commands.length]       = _INTL("Mark")
     commands[commands.length]                 = _INTL("Cancel")
@@ -1232,6 +1243,36 @@ class PokemonSummary_Scene
       dorefresh = true
     elsif cmdMark >= 0 && command == cmdMark
       dorefresh = pbMarking(@pokemon)
+    elsif cmdRename >= 0 && command == cmdRename
+      @pokemon.name = pbEnterPokemonName(_INTL("{1}'s nickname?", @pokemon.speciesName),
+                                         0, Pokemon::MAX_NAME_SIZE, initialText = @pokemon.name, @pokemon)
+      pbMessage(_INTL("{1} was renamed to {2}.",@pokemon.speciesName,@pokemon.name))
+      dorefresh = true
+    elsif cmdCheckMoves >= 0 && command == cmdCheckMoves
+      pbPlayDecisionSE
+      pbMoveSelection
+      dorefresh = true
+    elsif cmdLearnMoves >= 0 && command == cmdLearnMoves
+      if $game_map.metadata&.has_flag?("LockRelearnMoves")
+        pbSEPlay("Anim/buzzer")
+        pbMessage(_INTL("You can't do that here."))
+      else
+        pbRelearnMoveScreen(@pokemon)
+        dorefresh = true
+      end
+    elsif cmdForgetMove >= 0 && command == cmdForgetMove
+      if $game_map.metadata&.has_flag?("LockRelearnMoves")
+        pbSEPlay("Anim/buzzer")
+        pbMessage(_INTL("You can't do that here."))
+      else
+        move_index = pbForgetMove(@pokemon, nil)
+        if move_index >= 0
+          old_move_name = @pokemon.moves[move_index].name
+          pbMessage(_INTL("{1} forgot how to use {2}.", @pokemon.name, old_move_name))
+          @pokemon.forget_move_at_index(move_index)
+          dorefresh = true
+        end
+      end
     end
     return dorefresh
   end
@@ -1288,11 +1329,7 @@ class PokemonSummary_Scene
         pbPlayCloseMenuSE
         break
       elsif Input.trigger?(Input::USE)
-        if @page == 4
-          pbPlayDecisionSE
-          pbMoveSelection
-          dorefresh = true
-        elsif @page == 5
+        if @page == 5
           pbPlayDecisionSE
           pbRibbonSelection
           dorefresh = true

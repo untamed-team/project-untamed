@@ -529,110 +529,136 @@ class PokemonSummary_Scene
 		drawTextEx(overlay, 4, 224, 230, 5, description, base, shadow)
 	end
 	
-	def pbScene
-		@pokemon.play_cry
-		loop do
-		  Graphics.update
-		  Input.update
-		  pbUpdate
-		  dorefresh = false
-		  if Input.trigger?(Input::ACTION)
-			pbSEStop
-			@pokemon.play_cry
-		  elsif Input.trigger?(Input::BACK)
-			pbPlayCloseMenuSE
-			break
-		  elsif Input.trigger?(Input::USE)
-			if @page == 4
-			  pbPlayDecisionSE
-			  pbMoveSelection
-			  dorefresh = true
-			elsif @page == 5
-			  pbPlayDecisionSE
-			  pbRibbonSelection
-			  dorefresh = true
-			elsif !@inbattle
-			  pbPlayDecisionSE
-			  dorefresh = pbOptions
-			end
-		  elsif Input.trigger?(Input::SPECIAL) 
-			if @page == 3# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  @contestpage = !@contestpage
-			  pbPlayDecisionSE
-			  dorefresh = true
-			end
-			if @page == 4# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
-			  #if we switch to a different pokemon while looking at the CR page, turn off CR page
-			  @crustangRacingPage = false if @pokemon.species != :CRUSTANG
-			  
-			  #added by Gardenette
-			  if @contestpage
-				@crustangRacingPage = true if @pokemon.species == :CRUSTANG
-				@contestpage = false
-			  elsif @crustangRacingPage
-				@crustangRacingPage = false
-				@contestpage = false
-			  else #on normal page
-				@contestpage = true
-				@crustangRacingPage = false
-			  end
-			  
-			  pbPlayDecisionSE
-			  dorefresh = true
-			end
-		  elsif Input.trigger?(Input::UP) && @partyindex > 0
-			oldindex = @partyindex
-			pbGoToPrevious
-			if @partyindex != oldindex
-			  pbChangePokemon
-			  @ribbonOffset = 0
-			  
-				#if we switch to a different pokemon while looking at the CR page, turn off CR page
-				@crustangRacingPage = false if @pokemon.species != :CRUSTANG
-				
-			  dorefresh = true
-			end
-		  elsif Input.trigger?(Input::DOWN) && @partyindex < @party.length - 1
-			oldindex = @partyindex
-			pbGoToNext
-			if @partyindex != oldindex
-			  pbChangePokemon
-			  @ribbonOffset = 0
-			  
-				#if we switch to a different pokemon while looking at the CR page, turn off CR page
-				@crustangRacingPage = false if @pokemon.species != :CRUSTANG
-			  
-			  dorefresh = true
-			end
-		  elsif Input.trigger?(Input::LEFT) && !@pokemon.egg?
-			oldpage = @page
-			@page -= 1
-			@page = 1 if @page < 1
-			@page = 5 if @page > 5
-			if @page != oldpage   # Move to next page
-			  pbSEPlay("GUI summary change page")
-			  @ribbonOffset = 0
-			  dorefresh = true
-			end
-		  elsif Input.trigger?(Input::RIGHT) && !@pokemon.egg?
-			oldpage = @page
-			@page += 1
-			@page = 1 if @page < 1
-			@page = 5 if @page > 5
-			if @page != oldpage   # Move to next page
-			  pbSEPlay("GUI summary change page")
-			  @ribbonOffset = 0
-			  dorefresh = true
-			end
-		  end
-		  if dorefresh
-			disposeContestStats
-			drawPage(@page)
-		  end
-		end
-		return @partyindex
-	end
-	
+  def pbScene
+    @pokemon.play_cry
+    loop do
+      Graphics.update
+      Input.update
+      pbUpdate
+      dorefresh = false
+      if Input.trigger?(Input::ACTION)
+        if @page == 3
+          pbFullAbilityDescWindow(_INTL("{1}: {2}",@pokemon.ability.name,@pokemon.ability.full_description))
+        else
+          pbSEStop
+          @pokemon.play_cry
+        end
+      elsif Input.trigger?(Input::BACK)
+        pbPlayCloseMenuSE
+        break
+      elsif Input.trigger?(Input::USE)
+        # this is the script that is editing actually editing pbScene
+        if (@page == 3 && !$donteditEVs) && $bag.has?(:EVSALLOCATIONTOOL)
+          pbPlayDecisionSE
+          pbEVAllocation
+          dorefresh = true
+        elsif @page == 5
+          pbPlayDecisionSE
+          pbRibbonSelection
+          dorefresh = true
+        elsif @page == 4 && @inbattle
+          pbPlayDecisionSE
+          pbMoveSelection
+          dorefresh = true
+        elsif !@inbattle
+          pbPlayDecisionSE
+          dorefresh = pbOptions
+        end
+      elsif Input.trigger?(Input::SPECIAL) 
+        if @page == 3# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+          @contestpage = !@contestpage
+          pbPlayDecisionSE
+          dorefresh = true
+        end
+        if @page == 4# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]
+          #if we switch to a different pokemon while looking at the CR page, turn off CR page
+          @crustangRacingPage = false if @pokemon.species != :CRUSTANG
+          
+          #added by Gardenette
+          if @contestpage
+            @crustangRacingPage = true if @pokemon.species == :CRUSTANG
+            @contestpage = false
+          elsif @crustangRacingPage
+            @crustangRacingPage = false
+            @contestpage = false
+          else #on normal page
+            @contestpage = true
+            @crustangRacingPage = false
+          end
+          
+          pbPlayDecisionSE
+          dorefresh = true
+        end
+      elsif Input.trigger?(Input::UP) && @partyindex > 0
+        oldindex = @partyindex
+        pbGoToPrevious
+        if @partyindex != oldindex
+          pbChangePokemon
+          @ribbonOffset = 0
+          
+          #if we switch to a different pokemon while looking at the CR page, turn off CR page
+          @crustangRacingPage = false if @pokemon.species != :CRUSTANG
+          
+          dorefresh = true
+        end
+        elsif Input.trigger?(Input::DOWN) && @partyindex < @party.length - 1
+        oldindex = @partyindex
+        pbGoToNext
+        if @partyindex != oldindex
+          pbChangePokemon
+          @ribbonOffset = 0
+          
+          #if we switch to a different pokemon while looking at the CR page, turn off CR page
+          @crustangRacingPage = false if @pokemon.species != :CRUSTANG
+          
+          dorefresh = true
+        end
+      elsif Input.trigger?(Input::LEFT) && !@pokemon.egg?
+        oldpage = @page
+        @page -= 1
+        @page = 1 if @page < 1
+        @page = 5 if @page > 5
+        if @page != oldpage   # Move to next page
+          pbSEPlay("GUI summary change page")
+          @ribbonOffset = 0
+          dorefresh = true
+        end
+      elsif Input.trigger?(Input::RIGHT) && !@pokemon.egg?
+        oldpage = @page
+        @page += 1
+        @page = 1 if @page < 1
+        @page = 5 if @page > 5
+        if @page != oldpage   # Move to next page
+          pbSEPlay("GUI summary change page")
+          @ribbonOffset = 0
+          dorefresh = true
+        end
+      end
+      if dorefresh
+        disposeContestStats
+        drawPage(@page)
+      end
+    end
+    return @partyindex
+  end
+
+  def pbFullAbilityDescWindow(text, scene = nil)
+    window = Window_AdvancedTextPokemon.new(text)
+    window.width = Graphics.width
+    window.x     = 0
+    window.y     = (Graphics.height - window.height) / 2
+    window.z     = 99999
+    pbPlayDecisionSE
+    loop do
+      Graphics.update
+      Input.update
+      window.update
+      scene&.pbUpdate
+      break if Input.trigger?(Input::USE)
+    end
+    window.dispose
+  end
+  
 	alias tdw_contests_summary_move_select drawSelectedMove
 	def drawSelectedMove(move_to_learn, selected_move)
 		#if !@contestpage

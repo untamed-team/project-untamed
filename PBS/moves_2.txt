@@ -3723,14 +3723,13 @@ Description = The user scatters curious leaves that chase the target. This attac
 Name = Needle Arm
 Type = GRASS
 Category = Physical
-Power = 70
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = FlinchTarget
+FunctionCode = TrapUserAndTargetInBattle
 Flags = Contact,CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
-EffectChance = 30
-Description = The user attacks by wildly swinging its thorny arms. It may also make the target flinch.
+Description = Swinging its thorny arms, the user traps both itself and the target until either faint.
 #-------------------------------
 [RAZORLEAF]
 Name = Razor Leaf
@@ -6366,7 +6365,7 @@ TotalPP = 20
 Target = User
 FunctionCode = CureUserBurnPoisonParalysis
 Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
-Description = The user rests to cure itself of a poisoning, burn, or paralysis.
+Description = The user rests to cure itself of a poisoning, burn, paralysis or frostbite.
 #-------------------------------
 [ROAR]
 Name = Roar
@@ -6575,7 +6574,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetAttack2ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user enrages and dizzies the target. However, it also sharply raises the target's Attack stat.
 #-------------------------------
 [SWALLOW]
@@ -7850,7 +7849,7 @@ Description = Gathers space power and boosts its Sp. Atk stat on the first turn,
 [DIAMONDSTORM]
 Name = Diamond Storm
 Type = ROCK
-Category = Special
+Category = Physical
 Power = 95
 Accuracy = 100
 TotalPP = 5
@@ -8104,7 +8103,7 @@ Name = Iron Tail
 Type = STEEL
 Category = Physical
 Power = 100
-Accuracy = 90
+Accuracy = 85
 TotalPP = 15
 Target = NearOther
 FunctionCode = LowerTargetDefense1
@@ -8966,13 +8965,13 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 90
-Accuracy = 90
+Power = 100
+Accuracy = 100
 TotalPP = 10
-Target = NearOther
+Target = AllNearOthers
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-Description = The user attacks by scattering a cloud of coarse debris. Critical hits land more easily.
+Flags = CanProtect,CanMirrorMove
+Description = The user attacks everything around it by scattering a cloud of coarse debris.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth
@@ -9216,6 +9215,18 @@ Target = NearOther
 FunctionCode = HitThreeToFiveTimes
 Flags = CanProtect,CanMirrorMove,CannotMetronome
 Description = Tacos filled with molten cheese fly at the target 3 to 5 times.
+#-------------------------------
+[GOLDENSPLASH]
+Name = Golden Splash
+Type = WATER
+Category = Special
+Power = 80
+Accuracy = 100
+TotalPP = 10
+Target = AllNearFoes
+FunctionCode = AlwaysCriticalHit
+Flags = CanProtect,CanMirrorMove,CannotMetronome,CannotSketch
+Description = The user splashes around, creating a dazzling display of golden water. Foes always take critical damage.
 #-------------------------------
 #-------------------------------
 #-------------------------------

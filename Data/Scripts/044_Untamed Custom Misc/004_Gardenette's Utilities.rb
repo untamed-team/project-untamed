@@ -653,8 +653,16 @@ def pbTroll
 end
 
 #===============================================================================
-# Differentiate between pumpkaboo sizes
+# Differentiate between pumpkaboo sizes and "wild pkmn" (trainer class) edits
 #===============================================================================
+def isWildBoss?(opp) #by low
+  if opp.is_a?(Array)
+    return opp.any? { |opponent| opponent.trainer_type == :WILD_PKMN }
+  else
+    return opp.trainer_type == :WILD_PKMN
+  end
+end
+
 class Battle
 def pbStartBattleSendOut(sendOuts)
     # "Want to battle" messages
@@ -662,29 +670,19 @@ def pbStartBattleSendOut(sendOuts)
       foeParty = pbParty(1)
       case foeParty.length
       when 1
-        #added by Gardenette to help differentiate between pumpkaboo sizes in
-        #the wild
-        if foeParty[0].isSpecies?(:PUMPKABOO)
+        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        #added by Gardenette to help differentiate between pumpkaboo sizes in the wild
         #give messages depending on form (size)
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
-          if foeParty[0].form == 0
-            #small
-            pbDisplayPaused(_INTL("It looks pretty small!"))
-          end
-          if foeParty[0].form == 1
-            #average
-            pbDisplayPaused(_INTL("It looks to be average size!"))
-          end
-          if foeParty[0].form == 2
-            #large
-            pbDisplayPaused(_INTL("It looks pretty large!"))
-          end
-          if foeParty[0].form == 3
-            #super size
-            pbDisplayPaused(_INTL("Woah, it's so big!"))
-          end
-        else
-        pbDisplayPaused(_INTL("Oh! A wild {1} appeared!", foeParty[0].name))
+        if foeParty[0].isSpecies?(:PUMPKABOO) || foeParty[0].isSpecies?(:GOURGEIST) 
+          countrybumpkin = {
+            0 => "It looks pretty small!", #small
+            1 => "It looks to be average size!", #average
+            2 => "It looks pretty large!", #large
+            3 => "Woah! It's so big!" #super size
+          }
+          bumpkinmsg = countrybumpkin[foeParty[0].form]
+          pbDisplayPaused(_INTL(bumpkinmsg))
+          pbDisplayPaused(_INTL("thats what she said")) if foeParty[0].form == 3 && rand(10) == 0
         end
       when 2
         pbDisplayPaused(_INTL("Oh! A wild {1} and {2} appeared!", foeParty[0].name,
@@ -694,15 +692,19 @@ def pbStartBattleSendOut(sendOuts)
                               foeParty[1].name, foeParty[2].name))
       end
     else   # Trainer battle
-      case @opponent.length
-      when 1
-        pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
-      when 2
-        pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
-                              @opponent[1].full_name))
-      when 3
-        pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
-                              @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+      if isWildBoss?(@opponent)
+        pbDisplayPaused(_INTL("...Something is approaching!"))
+      else
+        case @opponent.length
+        when 1
+          pbDisplayPaused(_INTL("You are challenged by {1}!", @opponent[0].full_name))
+        when 2
+          pbDisplayPaused(_INTL("You are challenged by {1} and {2}!", @opponent[0].full_name,
+                                @opponent[1].full_name))
+        when 3
+          pbDisplayPaused(_INTL("You are challenged by {1}, {2} and {3}!",
+                                @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+        end
       end
     end
     # Send out Pokémon (opposing trainers first)
@@ -716,15 +718,28 @@ def pbStartBattleSendOut(sendOuts)
         next if side == 0 && i == 0   # The player's message is shown last
         msg += "\r\n" if msg.length > 0
         sent = sendOuts[side][i]
-        case sent.length
-        when 1
-          msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
-        when 2
-          msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name)
-        when 3
-          msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
-                       @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+        if isWildBoss?(t)
+          case sent.length
+          when 1
+            msg += _INTL("A {1} is on a rampage!", @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("Both {1} and {2} are on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1}, {2} and {3} are all on a rampage!",
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
+        else
+          case sent.length
+          when 1
+            msg += _INTL("{1} sent out {2}!", t.full_name, @battlers[sent[0]].name)
+          when 2
+            msg += _INTL("{1} sent out {2} and {3}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name)
+          when 3
+            msg += _INTL("{1} sent out {2}, {3} and {4}!", t.full_name,
+                        @battlers[sent[0]].name, @battlers[sent[1]].name, @battlers[sent[2]].name)
+          end
         end
         toSendOut.concat(sent)
       end
@@ -2097,3 +2112,288 @@ def pbPlayerReceiveMoney(amount, multiplier=1)
   pbMessage("\\PN received $#{amount}!")
   $player.money += amount
 end #def pbPlayerReceiveMoney
+
+#==================================================================================
+# Blacking out animation - edited to deregister partner trainer upon blacking out
+#==================================================================================
+def pbStartOver(gameover = false)
+  if pbInBugContest?
+    pbBugContestStartOver
+    return
+  end
+  $stats.blacked_out_count += 1
+  $player.heal_party
+  if $PokemonGlobal.pokecenterMapId && $PokemonGlobal.pokecenterMapId >= 0
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back to a Pokémon Center."))
+    else
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
+    end
+    pbCancelVehicles
+    Followers.clear
+    pbDeregisterPartner #added by Gardenette
+    $game_switches[Settings::STARTING_OVER_SWITCH] = true
+    $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
+    $game_temp.player_new_x         = $PokemonGlobal.pokecenterX
+    $game_temp.player_new_y         = $PokemonGlobal.pokecenterY
+    $game_temp.player_new_direction = $PokemonGlobal.pokecenterDirection
+    $scene.transfer_player if $scene.is_a?(Scene_Map)
+    $game_map.refresh
+  else
+    homedata = GameData::PlayerMetadata.get($player.character_ID)&.home
+    homedata = GameData::Metadata.get.home if !homedata
+    if homedata && !pbRgssExists?(sprintf("Data/Map%03d.rxdata", homedata[0]))
+      if $DEBUG
+        pbMessage(_ISPRINTF("Can't find the map 'Map{1:03d}' in the Data folder. The game will resume at the player's position.", homedata[0]))
+      end
+      $player.heal_party
+      return
+    end
+    if gameover
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back home."))
+    else
+      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back home, protecting your exhausted Pokémon from any further harm..."))
+    end
+    if homedata
+      pbCancelVehicles
+      Followers.clear
+      pbDeregisterPartner #added by Gardenette
+      $game_switches[Settings::STARTING_OVER_SWITCH] = true
+      $game_temp.player_new_map_id    = homedata[0]
+      $game_temp.player_new_x         = homedata[1]
+      $game_temp.player_new_y         = homedata[2]
+      $game_temp.player_new_direction = homedata[3]
+      $scene.transfer_player if $scene.is_a?(Scene_Map)
+      $game_map.refresh
+    else
+      $player.heal_party
+      pbDeregisterPartner #added by Gardenette
+    end
+  end
+  pbEraseEscapePoint
+end
+
+class GardenUtil
+#==================================================================================
+# Show move animation on screen
+#==================================================================================
+#example of usage:
+#self.showMoveAnimationOnScreen(:BLIZZARD, 5, 2)
+def self.showMoveAnimationOnScreen(moveSymbol, userEventID, targetEventID)
+  atself = false
+  hitNum=0
+  
+  #get event object from eventID
+  userEvent = $game_map.events[userEventID]
+  targetEvent = $game_map.events[targetEventID]
+
+  if userEventID == $game_player
+    userXOnScreen = ScreenPosHelper.pbScreenX($game_player)
+    userYOnScreen = ScreenPosHelper.pbScreenY($game_player)
+  else
+    userXOnScreen = ScreenPosHelper.pbScreenX(userEvent)
+    userYOnScreen = ScreenPosHelper.pbScreenY(userEvent)
+  end
+
+  if targetEvent == $game_player
+    targetXOnScreen = ScreenPosHelper.pbScreenX($game_player)
+    targetYOnScreen = ScreenPosHelper.pbScreenY($game_player)
+  else
+    targetXOnScreen = ScreenPosHelper.pbScreenX(targetEvent)
+    targetYOnScreen = ScreenPosHelper.pbScreenY(targetEvent)
+  end
+
+  move = GameData::Move.get(moveSymbol)
+  $game_variables[2] = move
+  $game_variables[4] = move.name
+  moveID = GameData::Move.get(move)
+  atself = move.target == GameData::Target.get(:User)
+
+  @@moveAnimViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+  @@moveAnimViewport.z = 999999
+  @@moveAnimSprites = {}
+  #create user and opponent sprites
+  @@moveAnimSprites["pkmn"] = IconSprite.new(0, 0, @@moveAnimViewport)
+  #@@moveAnimSprites["pkmn"].setBitmap("Graphics/Pictures/testfront")
+  @@moveAnimSprites["pkmn"].x = userXOnScreen
+  @@moveAnimSprites["pkmn"].y = userYOnScreen
+  @@moveAnimSprites["opponent"] = IconSprite.new(0, 0, @@moveAnimViewport)
+  #@@moveAnimSprites["opponent"].setBitmap("Graphics/Pictures/uparrow")
+  @@moveAnimSprites["opponent"].x = targetXOnScreen
+  @@moveAnimSprites["opponent"].y = targetYOnScreen
+
+  #play animation
+  self.pbPlayAnimation(moveID, atself = false, hitNum=0)
+end #def self.showMoveAnimationOnScreen(moveID, atself = false, hitNum=0)
+
+#=============================================================================
+	# Plays a move/common animation
+	#=============================================================================	
+	def self.pbPlayAnimation(moveID, atself = false, hitNum=0)
+		# animID = find_animation(moveID, 0, hitNum)
+		animID = pbFindMoveAnimation(moveID, 0, hitNum)
+		return if !animID
+		anim = animID[0]
+		animations = pbLoadBattleAnimations
+		return if !animations
+		pbAnimationCore(animations[anim], atself)
+	end
+
+	def self.pbAnimationCore(animation, atself)
+		return if !animation
+		@briefMessage = false
+		#userSprite   = @sprites["pokemonsprite#{@currentPosition}"]
+    userSprite   = @@moveAnimSprites["pkmn"]
+		targetSprite = atself ? userSprite : @@moveAnimSprites["opponent"]
+		# Remember the original positions of Pokémon sprites
+				oldUserX = userSprite.x
+				oldUserY = userSprite.y
+				oldTargetX = atself ? oldUserX : targetSprite.x
+				oldTargetY = atself ? oldUserY : targetSprite.y
+				oldUserOx = userSprite.ox
+				oldUserOy = userSprite.oy
+				oldTargetOx = atself ? oldUserOx : targetSprite.ox
+				oldTargetOy = atself ? oldUserOy : targetSprite.oy
+		# Create the animation player
+		#animPlayer = AnimationPlayerXContest.new(animation, userSprite, targetSprite, @viewport, self)
+    animPlayer = AnimationPlayerXContest.new(animation, userSprite, targetSprite, @moveAnimViewport, self)
+		#animPlayer = PBAnimationPlayerX.new(animation, user, target, self, oppMove)
+		# Apply a transformation to the animation based on where the user and target
+		# actually are. Get the centres of each sprite.
+		userHeight = (userSprite&.bitmap && !userSprite.bitmap.disposed?) ? userSprite.bitmap.height : 128
+		if targetSprite
+		  targetHeight = (targetSprite.bitmap && !targetSprite.bitmap.disposed?) ? targetSprite.bitmap.height : 128
+		else
+		  targetHeight = userHeight
+		end
+		animPlayer.setLineTransform(
+		  Battle::Scene::FOCUSUSER_X, Battle::Scene::FOCUSUSER_Y, Battle::Scene::FOCUSTARGET_X, Battle::Scene::FOCUSTARGET_Y,
+			# ContestSettings::FOCUSUSER_X, ContestSettings::FOCUSUSER_Y, ContestSettings::FOCUSTARGET_X, ContestSettings::FOCUSTARGET_Y,
+		  oldUserX, oldUserY - (userHeight / 2) + 80, oldTargetX, oldTargetY - (targetHeight / 2) + 80
+		)
+		# Play the animation
+		animPlayer.start
+		loop do
+		  animPlayer.update
+		  Graphics.update
+      pbUpdateSpriteHash(@@moveAnimSprites)
+		  Input.update
+		  break if animPlayer.animDone?
+		end
+		animPlayer.dispose
+		# Return Pokémon sprites to their original positions
+		if userSprite
+		  userSprite.x = oldUserX
+		  userSprite.y = oldUserY
+		  userSprite.ox = oldUserOx
+		  userSprite.oy = oldUserOy
+		end
+		if targetSprite
+		  targetSprite.x = oldTargetX
+		  targetSprite.y = oldTargetY
+		  targetSprite.ox = oldTargetOx
+		  targetSprite.oy = oldTargetOy
+		end
+	end
+		
+	#copied directly from Scene_PlayAnimaitons
+	# Returns the animation ID to use for a given move/user. Returns nil if that
+	# move has no animations defined for it.
+	def self.pbFindMoveAnimDetails(move2anim, moveID, idxUser, hitNum = 0)
+		real_move_id = GameData::Move.get(moveID).id
+		noFlip = false
+		if (idxUser & 1) == 0   # On player's side
+		  anim = move2anim[0][real_move_id]
+		else                # On opposing side
+		  anim = move2anim[1][real_move_id]
+		  noFlip = true if anim
+		  anim = move2anim[0][real_move_id] if !anim
+		end
+		return [anim + hitNum, noFlip] if anim
+		return nil
+	end
+
+	# Returns the animation ID to use for a given move. If the move has no
+	# animations, tries to use a default move animation depending on the move's
+	# type. If that default move animation doesn't exist, trues to use Tackle's
+	# move animation. Returns nil if it can't find any of these animations to use.
+	def self.pbFindMoveAnimation(moveID, idxUser, hitNum)
+		begin
+		  move2anim = pbLoadMoveToAnim
+		  # Find actual animation requested (an opponent using the animation first
+		  # looks for an OppMove version then a Move version)
+		  anim = pbFindMoveAnimDetails(move2anim, moveID, idxUser, hitNum)
+		  return anim if anim
+		  # Actual animation not found, get the default animation for the move's type
+		  moveData = GameData::Move.get(moveID)
+		  target_data = GameData::Target.get(moveData.target)
+		  moveType = moveData.type
+		  moveKind = moveData.category
+		  moveKind += 3 if target_data.num_targets > 1 || target_data.affects_foe_side
+		  moveKind += 3 if moveKind == 2 && target_data.num_targets > 0
+		  # [one target physical, one target special, user status,
+		  #  multiple targets physical, multiple targets special, non-user status]
+		  typeDefaultAnim = {
+			:NORMAL   => [:TACKLE,       :SONICBOOM,    :DEFENSECURL, :EXPLOSION,  :SWIFT,        :TAILWHIP],
+			:FIGHTING => [:MACHPUNCH,    :AURASPHERE,   :DETECT,      nil,         nil,           nil],
+			:FLYING   => [:WINGATTACK,   :GUST,         :ROOST,       nil,         :AIRCUTTER,    :FEATHERDANCE],
+			:POISON   => [:POISONSTING,  :SLUDGE,       :ACIDARMOR,   nil,         :ACID,         :POISONPOWDER],
+			:GROUND   => [:SANDTOMB,     :MUDSLAP,      nil,          :EARTHQUAKE, :EARTHPOWER,   :MUDSPORT],
+			:ROCK     => [:ROCKTHROW,    :POWERGEM,     :ROCKPOLISH,  :ROCKSLIDE,  nil,           :SANDSTORM],
+			:BUG      => [:TWINEEDLE,    :BUGBUZZ,      :QUIVERDANCE, nil,         :STRUGGLEBUG,  :STRINGSHOT],
+			:GHOST    => [:LICK,         :SHADOWBALL,   :GRUDGE,      nil,         nil,           :CONFUSERAY],
+			:STEEL    => [:IRONHEAD,     :MIRRORSHOT,   :IRONDEFENSE, nil,         nil,           :METALSOUND],
+			:FIRE     => [:FIREPUNCH,    :EMBER,        :SUNNYDAY,    nil,         :INCINERATE,   :WILLOWISP],
+			:WATER    => [:CRABHAMMER,   :WATERGUN,     :AQUARING,    nil,         :SURF,         :WATERSPORT],
+			:GRASS    => [:VINEWHIP,     :MEGADRAIN,    :COTTONGUARD, :RAZORLEAF,  nil,           :SPORE],
+			:ELECTRIC => [:THUNDERPUNCH, :THUNDERSHOCK, :CHARGE,      nil,         :DISCHARGE,    :THUNDERWAVE],
+			:PSYCHIC  => [:ZENHEADBUTT,  :CONFUSION,    :CALMMIND,    nil,         :SYNCHRONOISE, :MIRACLEEYE],
+			:ICE      => [:ICEPUNCH,     :ICEBEAM,      :MIST,        nil,         :POWDERSNOW,   :HAIL],
+			:DRAGON   => [:DRAGONCLAW,   :DRAGONRAGE,   :DRAGONDANCE, nil,         :TWISTER,      nil],
+			:DARK     => [:PURSUIT,      :DARKPULSE,    :HONECLAWS,   nil,         :SNARL,        :EMBARGO],
+			:FAIRY    => [:TACKLE,       :FAIRYWIND,    :MOONLIGHT,   nil,         :SWIFT,        :SWEETKISS]
+		  }
+		  if typeDefaultAnim[moveType]
+			anims = typeDefaultAnim[moveType]
+			if GameData::Move.exists?(anims[moveKind])
+			  anim = pbFindMoveAnimDetails(move2anim, anims[moveKind], idxUser)
+			end
+			if !anim && moveKind >= 3 && GameData::Move.exists?(anims[moveKind - 3])
+			  anim = pbFindMoveAnimDetails(move2anim, anims[moveKind - 3], idxUser)
+			end
+			if !anim && GameData::Move.exists?(anims[2])
+			  anim = pbFindMoveAnimDetails(move2anim, anims[2], idxUser)
+			end
+		  end
+		  return anim if anim
+		  # Default animation for the move's type not found, use Tackle's animation
+		  if GameData::Move.exists?(:TACKLE)
+			return pbFindMoveAnimDetails(move2anim, :TACKLE, idxUser)
+		  end
+		rescue
+		end
+		return nil
+	end
+
+#=============================================================================
+# Check for CR demo
+#=============================================================================	
+def self.pbCheckCRRewards
+  if $game_variables[140] != true
+    #if the player met requirements in their save file of the CR demo
+    print "cr demo switch 60: #{pbSingleSaveTest("Crustang Racing Demo","Switch",60)}"
+    print "cr demo switch 61: #{pbSingleSaveTest("Crustang Racing Demo","Switch",61)}"
+    if pbSingleSaveTest("Crustang Racing Demo","Switch",60) && pbSingleSaveTest("Crustang Racing Demo","Switch",61)
+      print "player has played 5+ races and exported settings"
+      $game_variables[140] = true
+    elsif pbSingleSaveTest("Crustang Racing Demo","Exist") #save file exists
+      print "save file exists"
+      $game_variables[140] = true
+    else
+      #no rewards to give
+      print "no rewards to give"
+    end
+  end
+end #def pbCheckCRRewards
+
+end #class GardenUtil

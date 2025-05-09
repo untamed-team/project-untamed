@@ -1,4 +1,4 @@
-#Script de lootboxes creado por Nyaruko
+#Script de lootboxes creado por Nyaruko #(Nyaruko Yasaka is real?)
 #Si metes micropagos no me hago responsable
 #edited, heavily, maybe even a little bit too much #by low
 POSSIBLE_TICKETS = ["Ticket A", "Ticket B", "Ticket C", "Gold Milage Ticket"]
@@ -25,7 +25,7 @@ GACHA_USED = 97
 GACHA_TIME = 96
 
 # to call this scene, use gachaPullsNPC on a npc
-# the first time the player interacts with the npc; the NPC needs to force the player to pull only 3 times
+# the first time the player interacts with the npc the NPC will force the player to pull only 3 times
 
 class PokemonGlobalMetadata
   attr_accessor :ticketStorage
@@ -44,11 +44,16 @@ end
 def gachaPullsNPC
   commands = []
   pulloptions = []
-  [1, 3, 5, 10].each do |i|
-    totalpullcost = i * GACHA_COST
-    next if totalpullcost > $player.coins
-    commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
-    pulloptions.push([i, totalpullcost])
+  if $game_variables[GACHA_USED] == 0
+    commands.push(_INTL("Pull 3 time(s) at the cost of 0 coins?"))
+    pulloptions.push([3, 0])
+  else
+    [1, 3, 5, 10].each do |i|
+      totalpullcost = i * GACHA_COST
+      next if totalpullcost > $player.coins
+      commands.push(_INTL("Pull #{i} time(s) at the cost of #{totalpullcost} coins?"))
+      pulloptions.push([i, totalpullcost])
+    end
   end
   commands.push(_INTL("Cancel"))
 

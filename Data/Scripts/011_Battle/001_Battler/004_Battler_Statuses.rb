@@ -340,15 +340,13 @@ class Battle::Battler
   end
 
   def pbSleepDuration(duration = -1, status = :None)
-		#############################################
-		# edits to be more consitent #by low
-		# 2 turns of sleep, no matter who moved first
-		#############################################
-		if duration == -1
-			duration = 3
-			duration -= 1 if @battle.choices[self.index][0] == :None && !self.movedThisRound?
-		end
-		#############################################
+    #############################################
+    # edits to be more consitent #by low
+    # 2 turns of sleep, no matter who moved first
+    #############################################
+    duration = 3 if duration == -1
+    duration -= 1 if @battle.choices[self.index][0] == :None && !self.movedThisRound?
+    #############################################
     duration = (duration / 2).floor if hasActiveAbility?(:EARLYBIRD)
     duration = (duration / 2).floor if hasAbilityMutation? && status == :DIZZY
     return duration

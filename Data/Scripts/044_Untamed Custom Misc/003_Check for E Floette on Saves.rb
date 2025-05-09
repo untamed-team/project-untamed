@@ -7,29 +7,14 @@ def pbCheckSave
     #Pokemon to the player in the current save file
   
     #change the save file letter - 'A' and start searching there
-    $game_variables[49] = "A"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "B"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "C"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "D"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "E"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "F"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "G"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
-  
-    $game_variables[49] = "H"
-    pbCheckEternalFloette if $player.save_slot != "File " + $game_variables[49]
+    pbCheckEternalFloette if $player.save_slot != "File A" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File B" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File C" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File D" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File E" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File F" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File G" && $game_switches[82] != true
+    pbCheckEternalFloette if $player.save_slot != "File H" && $game_switches[82] != true
   end
 end
 

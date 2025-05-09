@@ -124,25 +124,26 @@ or dont
       pbStartWeather(nil, @field.defaultWeather) if @field.defaultWeather != :None
     end
   end
-	
+  
   def pbStartWeatherAbility(new_weather, battler, ignore_primal = false, presage = false)
     #~ return if !ignore_primal && [:HarshSun, :HeavyRain, :StrongWinds].include?(@field.weather)
-		return if @field.weather == :HarshSun  && new_weather == :Sun
-		return if @field.weather == :HeavyRain && new_weather == :Rain
+    return if @field.weather == :HarshSun  && new_weather == :Sun
+    return if @field.weather == :HeavyRain && new_weather == :Rain
     return if @field.weather == new_weather
     pbShowAbilitySplash(battler)
     if !Scene::USE_ABILITY_SPLASH
       pbDisplay(_INTL("{1}'s {2} activated!", battler.pbThis, battler.abilityName))
     end
-		@field.presageBackup = [@field.weather, (@field.weatherDuration - 1), @field.abilityWeather] if presage && (@field.weatherDuration - 1) > 0
-		@field.abilityWeather = true
+    @field.presageBackup = [@field.weather, (@field.weatherDuration - 1), @field.abilityWeather] if presage && (@field.weatherDuration - 1) > 0
+    @field.abilityWeather = true
     fixed_duration = false
     fixed_duration = true if (Settings::FIXED_DURATION_WEATHER_FROM_ABILITY && !$game_switches[OLDSCHOOLBATTLE]) &&
                              ![:HarshSun, :HeavyRain, :StrongWinds].include?(new_weather)
+    fixed_duration = false if presage
     pbStartWeather(battler, new_weather, fixed_duration, true, presage)
     # NOTE: The ability splash is hidden again in def pbStartWeather.
   end
-	
+  
   def pbStartWeather(user, newWeather, fixedDuration = false, showAnim = true, presage = false, presagenum = 0)
     return if @field.weather == newWeather
     @field.weather = newWeather
@@ -150,18 +151,18 @@ or dont
     if duration > 0 && user && user.itemActive?
       duration = Battle::ItemEffects.triggerWeatherExtender(user.item, @field.weather,duration, user, self) if !user.hasActiveAbility?([:FREEZEOVER, :FORECAST]) #by low
     end
-		if duration > 0 && @field.defaultWeather != :None #by low
-			duration = (duration / 3).floor
-			duration = 2 if duration >= 1 # at least a turn
-			duration = 1 if [:HarshSun, :HeavyRain, :StrongWinds, :ShadowSky].include?(@field.defaultWeather)
-		end
-		duration = presagenum if presagenum > 0 && user.nil?
-		duration = 1 if presage
+    if duration > 0 && @field.defaultWeather != :None #by low
+      duration = (duration / 3).floor
+      duration = 2 if duration >= 1 # at least a turn
+      duration = 1 if [:HarshSun, :HeavyRain, :StrongWinds, :ShadowSky].include?(@field.defaultWeather)
+    end
+    duration = presagenum if presagenum > 0 && user.nil?
+    duration = 1 if presage
     @field.weatherDuration = duration
     weather_data = GameData::BattleWeather.try_get(@field.weather)
     pbCommonAnimation(weather_data.animation) if showAnim && weather_data
     pbHideAbilitySplash(user) if user
-		#~ echo ("\nWas this "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
+    #~ echo ("\nWas this "+@field.weather.to_s+" set by an ability?        "+@field.abilityWeather.to_s+"\n")
     case @field.weather
     when :Sun         then pbDisplay(_INTL("The sunlight turned harsh!"))
     when :Rain        then pbDisplay(_INTL("It started to rain!"))
@@ -169,9 +170,9 @@ or dont
     when :Hail        then pbDisplay(_INTL("It started to hail!"))
     when :HarshSun    then pbDisplay(_INTL("The sunlight turned extremely harsh!"))
     when :HeavyRain   then pbDisplay(_INTL("A heavy rain began to fall!"))
-    when :StrongWinds then pbDisplay(_INTL("Mysterious strong winds are protecting Flying-type Pokémon!"))
+    when :StrongWinds then pbDisplay(_INTL("Strong winds are protecting Flying-type Pokémon!"))
     when :ShadowSky   then pbDisplay(_INTL("A shadow sky appeared!"))
-    when :None				then pbDisplay(_INTL("The sky was cleared!"))
+    when :None        then pbDisplay(_INTL("The sky was cleared!"))
     end
     # Check for end of primordial weather, and weather-triggered form changes
     allBattlers.each { |b| b.pbCheckFormOnWeatherChange }
@@ -181,15 +182,15 @@ or dont
   def pbStartTerrain(user, newTerrain, fixedDuration = true, setByAbility = false)
     return if @field.terrain == newTerrain
     @field.terrain = newTerrain
-		@field.abilityTerrain = (setByAbility) ? true : false
+    @field.abilityTerrain = (setByAbility) ? true : false
     duration = (fixedDuration) ? 5 : -1
     if duration > 0 && user && user.itemActive?
       duration = Battle::ItemEffects.triggerTerrainExtender(user.item, newTerrain,duration, user, self)
     end
-		if duration > 0 && @field.defaultTerrain != :None #by low
-			duration = (duration / 3).floor
-			duration = 2 if duration >= 1 # at least a turn
-		end
+    if duration > 0 && @field.defaultTerrain != :None #by low
+      duration = (duration / 3).floor
+      duration = 2 if duration >= 1 # at least a turn
+    end
     @field.terrainDuration = duration
     terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
     pbCommonAnimation(terrain_data.animation) if terrain_data
@@ -208,7 +209,7 @@ or dont
     allBattlers.each { |b| b.pbAbilityOnTerrainChange }
     allBattlers.each { |b| b.pbItemTerrainStatBoostCheck }
   end
-	
+  
   def pbStartBattleCore
     # Set up the battlers on each side
     sendOuts = pbSetUpSides
@@ -216,11 +217,11 @@ or dont
     @scene.pbStartBattle(self)
     # Show trainers on both sides sending out Pokémon
     pbStartBattleSendOut(sendOuts)
-		# the great TGT list
-		if trainerBattle?
-			@opponent.each_with_index do |trainer, i|
+    # the great TGT list
+    if trainerBattle?
+      @opponent.each_with_index do |trainer, i|
         funstuff = trainer.gimmick.to_s
-        polishedarray = funstuff.split('_')
+        polishedarray = funstuff.split(',').map(&:strip)
 
         weatherHash = {
           "sun"  => :Sun,  "harshsun"  => :HarshSun,
@@ -240,17 +241,20 @@ or dont
           "dragonzone" => :DRAGON, "darkzone"     => :DARK,     "steelzone"  => :STEEL, 
           "fairyzone"  => :FAIRY,  "qmarkszone"   => :QMARKS
         }
-        effectHash = {
+        fieldHash = {
           "trickroom" => :TrickRoom, "wonderroom" => :WonderRoom, "magicroom" => :MagicRoom,
-          "gravity" => :Gravity, "tailwind" => :Tailwind, 
+          "gravity" => :Gravity, "watersport" => :WaterSportField, "mudsport" => :MudSportField
+        }
+        effectHash = {
+          "statdropimmunity" => :StatDropImmunity, "tailwind" => :Tailwind, 
           "lightscreen" => :LightScreen, "reflect" => :Reflect, "auroraveil" => :AuroraVeil,
           "mist" => :Mist, "safeguard" => :Safeguard, "luckychant" => :LuckyChant,
-          "statdropimmunity" => :StatDropImmunity, 
-          "watersport" => :WaterSportField, "mudsport" => :MudSportField
+          "rainbow" => :Rainbow
         }
         hazardsHash = {
           "spikes"    => :Spikes,    "toxicspikes" => :ToxicSpikes, 
-          "stickyweb" => :StickyWeb, "stealthrock" => :StealthRock
+          "stickyweb" => :StickyWeb, "stealthrock" => :StealthRock,
+          "seaoffire" => :SeaOfFire, "swamp" => :Swamp
         }
         polishedarray.each do |gimmick|
           gimmick_downcase = gimmick.downcase
@@ -260,11 +264,10 @@ or dont
             @field.terrain = terrainHash[gimmick_downcase]
           elsif zoneHash[gimmick_downcase]
             @field.typezone = zoneHash[gimmick_downcase]
+          elsif fieldHash[gimmick_downcase]
+            @field.effects[PBEffects.const_get(fieldHash[gimmick_downcase])] = 999
           elsif effectHash[gimmick_downcase]
-            if ["trickroom", "wonderroom", "magicroom", "gravity", 
-                "watersport", "mudsport"].include?(gimmick_downcase)
-              @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
-            elsif ["statdropimmunity"].include?(gimmick_downcase)
+            if ["statdropimmunity"].include?(gimmick_downcase)
               @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true
             else
               @field.weather = :Hail if gimmick_downcase == "auroraveil"
@@ -276,7 +279,7 @@ or dont
             else
               # for every item in the array that mentions these hazards, one more "layer" is added
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 1
-              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if gimmick_downcase == "stickyweb"
+              @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if ["stickyweb", "seaoffire", "swamp"].include?(gimmick_downcase)
             end
           end
         end
@@ -285,10 +288,10 @@ or dont
     # Weather announcement
     weather_data = GameData::BattleWeather.try_get(@field.weather)
     pbCommonAnimation(weather_data.animation) if weather_data
-		if @field.weather != :None
-			@field.defaultWeather = @field.weather
-			@field.weatherDuration = -1
-		end
+    if @field.weather != :None
+      @field.defaultWeather = @field.weather
+      @field.weatherDuration = -1
+    end
     case @field.weather
     when :Sun         then pbDisplay(_INTL("The sunlight is strong."))
     when :Rain        then pbDisplay(_INTL("It is raining."))
@@ -303,10 +306,10 @@ or dont
     # Terrain announcement
     terrain_data = GameData::BattleTerrain.try_get(@field.terrain)
     pbCommonAnimation(terrain_data.animation) if terrain_data
-		if @field.terrain != :None
-			@field.defaultTerrain = @field.terrain
-			@field.terrainDuration = -1
-		end
+    if @field.terrain != :None
+      @field.defaultTerrain = @field.terrain
+      @field.terrainDuration = -1
+    end
     case @field.terrain
     when :Electric then pbDisplay(_INTL("An electric current runs across the battlefield!"))
     when :Grassy   then pbDisplay(_INTL("Grass is covering the battlefield!"))
@@ -316,15 +319,15 @@ or dont
 
     # Zones announcement
     if @field.typezone != :None && GameData::Type.exists?(@field.typezone)
-			typeofzone = GameData::Type.get(@field.typezone).name
-			pbDisplay(_INTL("A {1} Zone was summoned, it will power up {1}-type attacks!",typeofzone))
-		end
+      typeofzone = GameData::Type.get(@field.typezone).name
+      pbDisplay(_INTL("A {1} Zone was summoned, it will power up {1}-type attacks!",typeofzone))
+    end
 
     # mms
-		@sides[1].effects[PBEffects::Reflect] 		= 999 if $game_variables[MASTERMODEVARS][1]==true
-		@sides[1].effects[PBEffects::LightScreen] = 999 if $game_variables[MASTERMODEVARS][2]==true
-		@sides[1].effects[PBEffects::StatDropImmunity] = true if $game_variables[MASTERMODEVARS][11]==true
-		
+    @sides[1].effects[PBEffects::Reflect]     = 999 if $game_variables[MASTERMODEVARS][1]==true
+    @sides[1].effects[PBEffects::LightScreen] = 999 if $game_variables[MASTERMODEVARS][2]==true
+    @sides[1].effects[PBEffects::StatDropImmunity] = true if $game_variables[MASTERMODEVARS][11]==true
+    
     # Misc announcements
     effectHashMsgs_field = {
       PBEffects::TrickRoom  => "The battlefield twists and contorts!",
@@ -346,18 +349,21 @@ or dont
       PBEffects::AuroraVeil  => "A beautiful aurora protects the enemy's team!",
       PBEffects::Mist        => "The enemy's team is shrouded in mist!",
       PBEffects::Safeguard   => "The enemy's team is cloaked in a mystical veil!",
-      PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!"
+      PBEffects::LuckyChant  => "The opponent chants an incantation towards the sky!",
+      PBEffects::Rainbow     => "A rainbow appeared in the sky on the opponent's side!" 
     }
     effectHashMsgs_side.each do |effect, msg|
       next if @sides[1].effects[effect] == 0
       pbDisplay(_INTL(msg))
     end
-		pbDisplay(_INTL("The opponent is immune to all stat drops!")) if @sides[1].effects[PBEffects::StatDropImmunity]
-		if @sides[0].effects[PBEffects::Spikes] > 0    || @sides[0].effects[PBEffects::ToxicSpikes] > 0 ||
-			 @sides[0].effects[PBEffects::StickyWeb] > 0 || @sides[0].effects[PBEffects::StealthRock]
-			pbDisplay(_INTL("Hazards are scattered all around your side of the field!"))
-		end
-		# Abilities upon entering battle
+    pbDisplay(_INTL("The opponent is immune to all stat drops!")) if @sides[1].effects[PBEffects::StatDropImmunity]
+    if @sides[0].effects[PBEffects::Spikes] > 0    || @sides[0].effects[PBEffects::ToxicSpikes] > 0 ||
+       @sides[0].effects[PBEffects::StickyWeb] > 0 || @sides[0].effects[PBEffects::StealthRock]
+      pbDisplay(_INTL("Hazards are scattered all around your side of the field!"))
+    end
+    pbDisplay(_INTL("A sea of fire enveloped your side of the field!")) if @sides[0].effects[PBEffects::SeaOfFire] > 0
+    pbDisplay(_INTL("A swamp enveloped your side of the field!")) if @sides[0].effects[PBEffects::Swamp] > 0
+    # Abilities upon entering battle
     pbOnAllBattlersEnteringBattle
     # Main battle loop
     pbBattleLoop
@@ -377,7 +383,7 @@ class Battle::Move::StartSlowerBattlersActFirst < Battle::Move
     end
     return false
   end
-	
+  
   def pbEffectGeneral(user)
     if @battle.field.effects[PBEffects::TrickRoom] > 0
       @battle.field.effects[PBEffects::TrickRoom] = 0
@@ -404,7 +410,7 @@ class Battle::Move::StartSwapAllBattlersBaseDefensiveStats < Battle::Move
     end
     return false
   end
-	
+  
   def pbEffectGeneral(user)
     if @battle.field.effects[PBEffects::WonderRoom] > 0
       @battle.field.effects[PBEffects::WonderRoom] = 0
@@ -431,7 +437,7 @@ class Battle::Move::StartNegateHeldItems < Battle::Move
     end
     return false
   end
-	
+  
   def pbEffectGeneral(user)
     if @battle.field.effects[PBEffects::MagicRoom] > 0
       @battle.field.effects[PBEffects::MagicRoom] = 0
@@ -459,8 +465,8 @@ class Battle::Move::WeatherMove < Battle::Move
 
   def pbMoveFailed?(user, targets)
     if @battle.field.weather == @weatherType ||
-			(@battle.field.weather == :HarshSun  && @weatherType == :Sun) ||
-			(@battle.field.weather == :HeavyRain && @weatherType == :Rain)
+      (@battle.field.weather == :HarshSun  && @weatherType == :Sun) ||
+      (@battle.field.weather == :HeavyRain && @weatherType == :Rain)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -468,7 +474,7 @@ class Battle::Move::WeatherMove < Battle::Move
   end
 
   def pbEffectGeneral(user)
-		@battle.field.abilityWeather = false #by low
+    @battle.field.abilityWeather = false #by low
     @battle.pbStartWeather(user, @weatherType, true, false)
   end
 end

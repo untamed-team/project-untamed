@@ -889,6 +889,7 @@ Battle::AbilityEffects::PriorityChange.add(:ECHOCHAMBER,
 
 Battle::AbilityEffects::PriorityBracketChange.add(:QUICKDRAW,
   proc { |ability, battler, battle|
+    next 0 if $player.difficulty_mode?("hard")
     next 1 if battle.pbRandom(100) < 30
   }
 )
@@ -907,6 +908,7 @@ Battle::AbilityEffects::PriorityBracketChange.add(:STALL,
 
 Battle::AbilityEffects::PriorityBracketUse.add(:QUICKDRAW,
   proc { |ability, battler, battle|
+    next if $player.difficulty_mode?("hard")
     battle.pbShowAbilitySplash(battler)
     battle.pbDisplay(_INTL("{1} made {2} move faster!", battler.abilityName, battler.pbThis(true)))
     battle.pbHideAbilitySplash(battler)
@@ -1439,7 +1441,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:STEELWORKER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:STEELYSPIRIT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:final_damage_multiplier] *= 1.5 if type == :STEEL
+    mults[:final_damage_multiplier] *= 1.3 if type == :STEEL
   }
 )
 
@@ -1594,7 +1596,7 @@ Battle::AbilityEffects::DamageCalcFromAlly.add(:POWERSPOT,
 
 Battle::AbilityEffects::DamageCalcFromAlly.add(:STEELYSPIRIT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:final_damage_multiplier] *= 1.5 if type == :STEEL
+    mults[:final_damage_multiplier] *= 1.3 if type == :STEEL
   }
 )
 
@@ -1859,6 +1861,7 @@ Battle::AbilityEffects::OnBeingHit.add(:COTTONDOWN,
     next if battle.allBattlers.none? { |b| b.pbCanLowerStatStage?(:SPEED, target) }
     battle.pbShowAbilitySplash(target)
     battle.allBattlers.each do |b|
+      next if b == target
       b.pbLowerStatStageByAbility(:SPEED, 1, target, false)
     end
     battle.pbHideAbilitySplash(target)
@@ -2475,10 +2478,10 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:SLIPPERYPEEL,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !switched_battlers.empty? || user.fainted? || target.effects[PBEffects::SlipperyPeel]
     next if user.effects[PBEffects::Substitute] > 0 || !move.pbContactMove?(user)
-    next if battle.wasUserAbilityActivated?(target)
+    next if battle.wasUserAbilityActivated?(target) || target.turnCount < 1
+    target.effects[PBEffects::SlipperyPeel] = true
     newPkmn = battle.pbGetReplacementPokemonIndex(user.index, true)   # Random
     next if newPkmn < 0
-    target.effects[PBEffects::SlipperyPeel] = true
     battle.ActivateUserAbility(target) if $player.difficulty_mode?("hard") # Hard / "Low" mode
     if user.hasActiveAbility?(:SUCTIONCUPS) && !battle.moldBreaker
       battle.pbShowAbilitySplash(user)
@@ -3452,13 +3455,15 @@ Battle::AbilityEffects::OnSwitchIn.add(:OVERWRITE,
 )
 
 #by low
+# in theory, you could use skill swap and such on doubles with these abilities to dupe the effect of any
+# ability that uses the "activated?" commands. Sounds funny though so ill keep it for now
 Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
   proc { |ability, battler, battle, switch_in|
     next if !battle.wasUserAbilityActivated?(battler)
     battle.DeActivateUserAbility(battler)
-    # not in OnSwitchOut to prevent ability changes interfering
   }
 )
+Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR)
 
 Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   proc { |ability, battler, battle, switch_in|
@@ -3474,7 +3479,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
       next if pkmn.fainted?
       next if choices_blacklist.include?(pkmn.species)
       iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler)
-      next if iFake.ungainableAbility? || iFake.unstoppableAbility? || iFake.mega?
+      next if iFake.ungainableAbility? || iFake.mega?
       iBaseStats = iFake.pokemon.baseStats
       bstTotal = iBaseStats[:HP] + iBaseStats[:ATTACK] + iBaseStats[:DEFENSE] + iBaseStats[:SPECIAL_ATTACK] + iBaseStats[:SPECIAL_DEFENSE] + iBaseStats[:SPEED]
       next if bstTotal <= 0 || bstTotal >= 580
@@ -3490,7 +3495,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
     battle.pbAnimation(:TRANSFORM, battler, choice)
     battle.scene.pbChangePokemon(battler, choice.pokemon)
     battler.pbTransform(choice)
-    battler.effects[PBEffects::Type3] = :DARK
+    battler.effects[PBEffects::Type3] = :DARK if battler.types.length < 3
   }
 )
 
@@ -3630,6 +3635,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
 
 Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
   proc { |ability, battler, battle, ability_changed|
+    # small edits #by low
+    next if battler.types.length >= 3
     if battle.field.terrain == :None && battle.field.typezone == :None
       # Revert to original typing
       battle.pbShowAbilitySplash(battler)
@@ -3651,7 +3658,6 @@ Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
         new_type = nil if !type_data
         new_type_name = type_data.name if type_data
       else
-        # small edits #by low
         new_type = battle.field.typezone
         if new_type
           type_data = GameData::Type.try_get(new_type)

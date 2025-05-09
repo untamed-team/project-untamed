@@ -414,7 +414,7 @@ class Battle
     end
   end
 
-  def pbEndOfBattle
+  def pbEndOfBattle #edited #by low
     oldDecision = @decision
     @decision = 4 if @decision == 1 && wildBattle? && @caughtPokemon.length > 0
     case oldDecision
@@ -424,27 +424,33 @@ class Battle
       PBDebug.log("***Player won***")
       if trainerBattle?
         @scene.pbTrainerBattleSuccess
-        case @opponent.length
-        when 1
-          pbDisplayPaused(_INTL("You defeated {1}!", @opponent[0].full_name))
-        when 2
-          pbDisplayPaused(_INTL("You defeated {1} and {2}!", @opponent[0].full_name,
-                                @opponent[1].full_name))
-        when 3
-          pbDisplayPaused(_INTL("You defeated {1}, {2} and {3}!", @opponent[0].full_name,
-                                @opponent[1].full_name, @opponent[2].full_name))
-        end
-        @opponent.each_with_index do |trainer, i|
-          @scene.pbShowOpponent(i)
-          msg = trainer.lose_text
-          msg = "..." if !msg || msg.empty?
-          pbDisplayPaused(msg.gsub(/\\[Pp][Nn]/, pbPlayer.name))
+        wildcheck = false
+        if isWildBoss?(@opponent)
+          pbDisplayPaused(_INTL("..."))
+        else
+          case @opponent.length
+          when 1
+            pbDisplayPaused(_INTL("You defeated {1}!", @opponent[0].full_name))
+          when 2
+            pbDisplayPaused(_INTL("You defeated {1} and {2}!", @opponent[0].full_name,
+                                  @opponent[1].full_name))
+          when 3
+            pbDisplayPaused(_INTL("You defeated {1}, {2} and {3}!", @opponent[0].full_name,
+                                  @opponent[1].full_name, @opponent[2].full_name))
+          end
+          @opponent.each_with_index do |trainer, i|
+            @scene.pbShowOpponent(i)
+            msg = trainer.lose_text
+            msg = "..." if !msg || msg.empty?
+            pbDisplayPaused(msg.gsub(/\\[Pp][Nn]/, pbPlayer.name))
+            wildcheck = true
+          end
         end
       end
       # Gain money from winning a trainer battle, and from Pay Day
       pbGainMoney if @decision != 4
       # Hide remaining trainer
-      @scene.pbShowOpponent(@opponent.length) if trainerBattle? && @caughtPokemon.length > 0
+      @scene.pbShowOpponent(@opponent.length) if trainerBattle? && @caughtPokemon.length > 0 && wildcheck
     ##### LOSE, DRAW #####
     when 2, 5
       PBDebug.log("")
@@ -453,15 +459,19 @@ class Battle
       if @internalBattle
         pbDisplayPaused(_INTL("You have no more Pokémon that can fight!"))
         if trainerBattle?
-          case @opponent.length
-          when 1
-            pbDisplayPaused(_INTL("You lost against {1}!", @opponent[0].full_name))
-          when 2
-            pbDisplayPaused(_INTL("You lost against {1} and {2}!",
-                                  @opponent[0].full_name, @opponent[1].full_name))
-          when 3
-            pbDisplayPaused(_INTL("You lost against {1}, {2} and {3}!",
-                                  @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+          if isWildBoss?(@opponent)
+            pbDisplayPaused(_INTL("..."))
+          else
+            case @opponent.length
+            when 1
+              pbDisplayPaused(_INTL("You lost against {1}!", @opponent[0].full_name))
+            when 2
+              pbDisplayPaused(_INTL("You lost against {1} and {2}!",
+                                    @opponent[0].full_name, @opponent[1].full_name))
+            when 3
+              pbDisplayPaused(_INTL("You lost against {1}, {2} and {3}!",
+                                    @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+            end
           end
         end
         # Lose money from losing a battle
@@ -484,15 +494,19 @@ class Battle
 		when 69
       if @internalBattle
         if trainerBattle?
-          case @opponent.length
-          when 1
-            pbDisplayPaused(_INTL("You gave up against {1}!", @opponent[0].full_name))
-          when 2
-            pbDisplayPaused(_INTL("You gave up against {1} and {2}!",
-                                  @opponent[0].full_name, @opponent[1].full_name))
-          when 3
-            pbDisplayPaused(_INTL("You gave up against {1}, {2} and {3}!",
-                                  @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+          if isWildBoss?(@opponent)
+            pbDisplayPaused(_INTL("..."))
+          else
+            case @opponent.length
+            when 1
+              pbDisplayPaused(_INTL("You gave up against {1}!", @opponent[0].full_name))
+            when 2
+              pbDisplayPaused(_INTL("You gave up against {1} and {2}!",
+                                    @opponent[0].full_name, @opponent[1].full_name))
+            when 3
+              pbDisplayPaused(_INTL("You gave up against {1}, {2} and {3}!",
+                                    @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
+            end
           end
         end
         pbDisplayPaused(_INTL("You blacked out!")) if !@canLose

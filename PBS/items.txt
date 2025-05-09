@@ -1227,7 +1227,7 @@ Pocket = 1
 Price = 3000
 SellPrice = 2000
 Flags = Fling_80
-Description = An item to be held by a Pokémon. A light, sharp claw that lets the bearer move first occasionally.
+Description = An item to be held by a Pokémon. A light, sharp claw that affects the bearer's priority.
 #-------------------------------
 [FOCUSBAND]
 Name = Focus Band
@@ -5329,7 +5329,7 @@ NamePlural = Roseli Berries
 Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_80
-Description = If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fairy-type attack.
+Description = Weakens a supereffective Fairy-type attack against the holding Pokémon.
 #-------------------------------
 [CHILANBERRY]
 Name = Chilan Berry

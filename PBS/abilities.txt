@@ -35,18 +35,21 @@ Description = Boosts the user's Defense by 1.5x in a sandstorm.
 [STATIC]
 Name = Static
 Description = Contact with the Pokémon may cause paralysis.
+FullDesc = When user is hit by a contact move, there's a 30% chance to paralyze the attacker.
 #-------------------------------
 [VOLTABSORB]
 Name = Volt Absorb
 Description = Restores HP if hit by an Electric-type move.
+FullDesc = User is immune to Electric-type moves, when hit by an Electric-type move they get healed for 1/4 of their max HP.
 #-------------------------------
 [WATERABSORB]
 Name = Water Absorb
 Description = Restores HP if hit by a Water-type move.
+FullDesc = User is immune to Water-type moves, when hit by a Water-type move they get healed for 1/4 of their max HP.
 #-------------------------------
 [OBLIVIOUS]
 Name = Oblivious
-Description = Prevents it from becoming infatuated.
+Description = Prevents it from becoming infatuated or taunted.
 #-------------------------------
 [CLOUDNINE]
 Name = Cloud Nine
@@ -54,7 +57,7 @@ Description = Eliminates the effects of weather.
 #-------------------------------
 [COMPOUNDEYES]
 Name = Compound Eyes
-Description = The Pokémon's accuracy is boosted.
+Description = The Pokémon's accuracy is boosted by 1.3x.
 #-------------------------------
 [INSOMNIA]
 Name = Insomnia
@@ -63,6 +66,7 @@ Description = Prevents the Pokémon from falling asleep.
 [COLORCHANGE]
 Name = Color Change
 Description = Changes the Pokémon's type to the foe's move.
+FullDesc = User's type changes to the type of a move it's hit by, unless it already has that type.
 #-------------------------------
 [IMMUNITY]
 Name = Immunity
@@ -71,6 +75,7 @@ Description = Prevents the Pokémon from getting poisoned.
 [FLASHFIRE]
 Name = Flash Fire
 Description = It powers up Fire-type moves if it's hit by one.
+FullDesc = User is immune to Fire-type moves. The first time they're hit by a Fire-type move, their own Fire-type moves will deal 1.5x damage until they switch out.
 #-------------------------------
 [SHIELDDUST]
 Name = Shield Dust
@@ -83,10 +88,12 @@ Description = Prevents the Pokémon from becoming confused.
 [SUCTIONCUPS]
 Name = Suction Cups
 Description = Negates all moves that force switching out.
+FullDesc = User cannot forcibly be switched out by enemy moves, abilities or items.
 #-------------------------------
 [INTIMIDATE]
 Name = Intimidate
 Description = Lowers the foe's Attack stat.
+FullDesc = Lowers all adjacent foes' Attack stat by one stage when user enters the field. Foes with the abilities Oblivious, Own Tempo, Inner Focus and Scrappy are immune to this ability.
 #-------------------------------
 [SHADOWTAG]
 Name = Shadow Tag
@@ -95,22 +102,27 @@ Description = Prevents the foe from escaping.
 [ROUGHSKIN]
 Name = Rough Skin
 Description = Inflicts damage to the foe on contact.
+FullDesc = When user is hit by a contact move, attacker takes damage equal to 1/8 of their max HP.
 #-------------------------------
 [WONDERGUARD]
 Name = Wonder Guard
 Description = Only super-effective moves will hit.
+FullDesc = User can only be damaged by super-effective moves and indirect damage.
 #-------------------------------
 [LEVITATE]
 Name = Levitate
 Description = Gives full immunity to all Ground-type moves.
+FullDesc = User is immune to Ground-type moves. User is considered airborne and thus unaffected by some entry hazards and terrain.
 #-------------------------------
 [EFFECTSPORE]
 Name = Effect Spore
 Description = Contact may poison or cause paralysis or sleep.
+FullDesc = When user is hit by a contact move, there's a 20% chance for this ability to trigger. It then can try (and sometimes fail) to poison, paralyze, or sleep the attacker.
 #-------------------------------
 [SYNCHRONIZE]
 Name = Synchronize
 Description = Passes status problems to the foe.
+FullDesc = When user is poisoned, burned, frostbitten or paralyzed by another pokémon, that pokémon will also become afflicted with the same status if possible.
 #-------------------------------
 [CLEARBODY]
 Name = Clear Body
@@ -123,10 +135,11 @@ Description = All status problems heal when it switches out.
 [LIGHTNINGROD]
 Name = Lightning Rod
 Description = Draws in all Electric-type moves to up Sp. Attack.
+FullDesc = User redirects all single target Electric-type moves towards itself and is immune to Electric-type moves, when hit by a Electric-type move their Special Attack is increased by one stage.
 #-------------------------------
 [SERENEGRACE]
 Name = Serene Grace
-Description = Boosts the likelihood of added effects appearing.
+Description = Doubles the chance of added effects happening.
 #-------------------------------
 [SWIFTSWIM]
 Name = Swift Swim
@@ -146,15 +159,17 @@ Description = The Pokémon copies a foe's Ability.
 #-------------------------------
 [HUGEPOWER]
 Name = Huge Power
-Description = Raises the Pokémon's Attack stat.
+Description = Doubles the Pokémon's Attack stat.
 #-------------------------------
 [POISONPOINT]
 Name = Poison Point
 Description = Contact with the Pokémon may poison the attacker.
+FullDesc = When user is hit by a contact move, there's a 30% chance to poison the attacker.
 #-------------------------------
 [INNERFOCUS]
 Name = Inner Focus
 Description = Prevents the Pokémon from flinching.
+FullDesc = In Chaos mode, Inner Focus also prevents the user's allies from flinching.
 #-------------------------------
 [MAGMAARMOR]
 Name = Magma Armor
@@ -168,6 +183,7 @@ Description = Prevents the Pokémon from getting a burn.
 [MAGNETPULL]
 Name = Magnet Pull
 Description = Prevents Steel-type Pokémon from escaping.
+FullDesc = When user is on the field, enemy Steel types cannot switch out or escape.
 #-------------------------------
 [SOUNDPROOF]
 Name = Soundproof
@@ -176,6 +192,7 @@ Description = Gives full immunity to all sound-based moves.
 [RAINDISH]
 Name = Rain Dish
 Description = The Pokémon gradually regains HP in rain.
+FullDesc = The user gradually regains 1/16 max HP in rain, or 1/8 in heavy rain.
 #-------------------------------
 [SANDSTREAM]
 Name = Sand Stream
@@ -187,24 +204,28 @@ Description = The Pokémon raises the foe's PP usage.
 #-------------------------------
 [THICKFAT]
 Name = Thick Fat
-Description = Ups resistance to Fire- and Ice-type moves.
+Description = Halves damage from Fire- and Ice-type moves.
 #-------------------------------
 [EARLYBIRD]
 Name = Early Bird
 Description = Halves the duration of timed status effects.
+FullDesc = Status effects with a set duration (Sleep, Dizziness, Chaos mode Paralysis) have their duration halved.
 #-------------------------------
 [FLAMEBODY]
 Name = Flame Body
 Flags = FasterEggHatching
 Description = Contact with the Pokémon may burn the attacker.
+FullDesc = When user is hit by a contact move, there's a 30% chance to burn the attacker.
 #-------------------------------
 [RUNAWAY]
 Name = Run Away
 Description = Enables a sure getaway from opposing Pokémon.
+FullDesc = User can switch out or run away of battle regardless of trapping effects or abilities.
 #-------------------------------
 [KEENEYE]
 Name = Keen Eye
 Description = Prevents other Pokémon from lowering accuracy.
+FullDesc = User's Accuracy cannot be lowered and they will ignore any Evasion stat boosts when attacking.
 #-------------------------------
 [HYPERCUTTER]
 Name = Hyper Cutter
@@ -217,14 +238,17 @@ Description = The Pokémon may pick up items.
 [TRUANT]
 Name = Truant
 Description = Can only use healing moves every other turn.
+FullDesc = User's skips every other turn instead of using a move. Healing moves are unnaffected by this ability.
 #-------------------------------
 [HUSTLE]
 Name = Hustle
 Description = Boosts the Attack stat, but lowers accuracy.
+FullDesc = User has 1.5x Attack but 0.8x Accuracy with physical moves.
 #-------------------------------
 [CUTECHARM]
 Name = Cute Charm
 Description = Contact with the Pokémon may cause infatuation.
+FullDesc = When user is hit by a contact move, there's a 30% chance to infatuate the attacker.
 #-------------------------------
 [PLUS]
 Name = Plus
@@ -237,42 +261,52 @@ Description = Ups Sp. Atk if another Pokémon has Plus or Minus.
 [FORECAST]
 Name = Forecast
 Description = Summons a weather, depending on its item.
+FullDesc = If holding a Weather Rock, the user summons the corresponding weather upon switch-in.
 #-------------------------------
 [STICKYHOLD]
 Name = Sticky Hold
 Description = Protects the Pokémon from item theft.
+FullDesc = User cannot lose its held item due to foes' abilities or attacks.
 #-------------------------------
 [SHEDSKIN]
 Name = Shed Skin
 Description = The Pokémon may heal its own status problems.
+FullDesc = User has 1/3 chance of healing from any status conditions it's suffering from at the end of each turn.
 #-------------------------------
 [GUTS]
 Name = Guts
 Description = Boosts Attack if there is a status problem.
+FullDesc = User gets 1.5x Attack when under any status condition. The user also does not lose Attack when burned.
 #-------------------------------
 [MARVELSCALE]
 Name = Marvel Scale
 Description = Ups Defense if there is a status problem.
+FullDesc = User gets 1.5x Defense when under any status condition.
 #-------------------------------
 [LIQUIDOOZE]
 Name = Liquid Ooze
 Description = Damages attackers using any draining move.
+FullDesc = When user is hit by an HP-draining move or effect, the attacker loses HP equal to the amount they would have been healed for instead.
 #-------------------------------
 [OVERGROW]
 Name = Overgrow
 Description = Powers up Grass-type moves in a pinch.
+FullDesc = User's Grass-type moves deal 1.5x damage when they have 1/3 or less HP remaining.
 #-------------------------------
 [BLAZE]
 Name = Blaze
 Description = Powers up Fire-type moves in a pinch.
+FullDesc = User's Fire-type moves deal 1.5x damage when they have 1/3 or less HP remaining.
 #-------------------------------
 [TORRENT]
 Name = Torrent
 Description = Powers up Water-type moves in a pinch.
+FullDesc = User's Water-type moves deal 1.5x damage when they have 1/3 or less HP remaining.
 #-------------------------------
 [SWARM]
 Name = Swarm
 Description = Powers up Bug-type moves in a pinch.
+FullDesc = User's Bug-type moves deal 1.5x damage when they have 1/3 or less HP remaining.
 #-------------------------------
 [ROCKHEAD]
 Name = Rock Head
@@ -285,6 +319,7 @@ Description = Turns the sunlight harsh if it is in battle.
 [ARENATRAP]
 Name = Arena Trap
 Description = Prevents the foe from fleeing.
+FullDesc = When user is on the field, grounded foes cannot escape or switch out.
 #-------------------------------
 [VITALSPIRIT]
 Name = Vital Spirit
@@ -296,7 +331,7 @@ Description = Prevents other Pokémon from lowering its stats.
 #-------------------------------
 [PUREPOWER]
 Name = Pure Power
-Description = Raises the Pokémon's Attack stat.
+Description = Doubles the Pokémon's Attack stat.
 #-------------------------------
 [SHELLARMOR]
 Name = Shell Armor
@@ -309,14 +344,17 @@ Description = Eliminates the effects of weather.
 [TANGLEDFEET]
 Name = Tangled Feet
 Description = Raises Speed if the Pokémon is confused.
+FullDesc = When user is confused/dizzy, its speed is doubled.
 #-------------------------------
 [MOTORDRIVE]
 Name = Motor Drive
 Description = Raises Speed if hit by an Electric-type move.
+FullDesc = User is immune to Electric-type moves, when hit by an Electric-type move their Speed is increased by one stage.
 #-------------------------------
 [RIVALRY]
 Name = Rivalry
 Description = Deals more damage to a foe of the same gender.
+FullDesc = User attacks deal 1.25x damage on same gender targets; If not on chaos mode, the user also deals 0.75x damage on opposite gender targets.
 #-------------------------------
 [STEADFAST]
 Name = Steadfast
@@ -329,6 +367,7 @@ Description = Boosts the user's Sp.Def by 1.5x in a hailstorm.
 [GLUTTONY]
 Name = Gluttony
 Description = Encourages the early use of a held Berry.
+FullDesc = User eats berries that are usually eaten at 25% HP at 50% HP instead.
 #-------------------------------
 [ANGERPOINT]
 Name = Anger Point
@@ -337,38 +376,46 @@ Description = Maxes Attack after taking a critical hit.
 [UNBURDEN]
 Name = Unburden
 Description = Raises Speed if a held item is used.
+FullDesc = When user uses or loses a held item, their Speed stat is doubled until they switch out.
 #-------------------------------
 [HEATPROOF]
 Name = Heatproof
-Description = Weakens the power of Fire-type moves.
+Description = Halves damage from Fire-type moves.
 #-------------------------------
 [SIMPLE]
 Name = Simple
 Description = The Pokémon is prone to wild stat changes.
+FullDesc = The user doubles any stat drops and boosts it receives.
 #-------------------------------
 [DRYSKIN]
 Name = Dry Skin
 Description = Reduces HP if it is hot. Water restores HP.
+FullDesc = User heals 1/8 HP each turn during Rain and takes no damage from Water-type moves, when hit by a Water-type move they get healed for 1/4 of their max HP. User loses 1/8 HP each turn during Harsh Sunlight and takes 1.25x damage from Fire-type moves.
 #-------------------------------
 [DOWNLOAD]
 Name = Download
 Description = Adjusts power according to a foe's defenses.
+FullDesc = Upon switch in, raises Attack by one stage if foes' Defense is lower than Special Defense, otherwise it raises Special Attack by one stage. 
 #-------------------------------
 [IRONFIST]
 Name = Iron Fist
 Description = Boosts the power of punching moves.
+FullDesc = User's moves with the punching flag deal 1.2x damage.
 #-------------------------------
 [POISONHEAL]
 Name = Poison Heal
 Description = Restores HP if the Pokémon is poisoned.
+FullDesc = User takes no damage from poison and is healed by 1/8 max HP each turn instead.
 #-------------------------------
 [ADAPTABILITY]
 Name = Adaptability
 Description = Powers up moves of the same type.
+FullDesc = Increases STAB from 1.5x damage to 2x damage.
 #-------------------------------
 [SKILLLINK]
 Name = Skill Link
 Description = Increases the frequency of multi-strike moves.
+FullDesc = User's multi-strike moves with a variable number of hits will always hit for the maximum possible number of hits. User's accuracy-dependent multi-strike moves will only have a single accuracy check.
 #-------------------------------
 [HYDRATION]
 Name = Hydration
@@ -377,34 +424,42 @@ Description = Heals status problems if it is raining.
 [SOLARPOWER]
 Name = Solar Power
 Description = In sunshine, Sp. Atk is boosted but HP decreases.
+FullDesc = During sunshine or harsh sunlight, the user's Sp. Atk is boosted by 1.5x but it loses 1/8th of their HP at the end of each turn.
 #-------------------------------
 [QUICKFEET]
 Name = Quick Feet
 Description = Boosts Speed if there is a status problem.
+FullDesc = User gets 1.5x Speed when under any status condition. The user also does not lose Speed when paralyzed.
 #-------------------------------
 [NORMALIZE]
 Name = Normalize
 Description = All the Pokémon's moves become the Normal type.
+FullDesc = User's moves become Normal-type and all moves deal 1.2x damage. User's Normal and Fighting-type moves are normally effective against Ghost types.
 #-------------------------------
 [SNIPER]
 Name = Sniper
 Description = Powers up moves if they become critical hits.
+FullDesc = Critical hits deal 1.5x extra damage.
 #-------------------------------
 [MAGICGUARD]
 Name = Magic Guard
 Description = The Pokémon only takes damage from attacks.
+FullDesc = User is immune to passive damage such as entry hazards, damage from statuses, or recoil. Very busted.
 #-------------------------------
 [NOGUARD]
 Name = No Guard
 Description = Ensures attacks by or against the Pokémon land.
+FullDesc = Attacks used by or against the user will ignore accuracy checks to always hit. User is able to hit semi-invulnerable foes.
 #-------------------------------
 [STALL]
 Name = Stall
 Description = Stalls for time, making an additional turn pass.
+FullDesc = End-of-round effects happen twice. Stacks with other Stall users. Has no effect upon entry.
 #-------------------------------
 [TECHNICIAN]
 Name = Technician
 Description = Powers up the Pokémon's weaker moves.
+FullDesc = Moves with 60 or lower BP deal 1.5x damage.
 #-------------------------------
 [LEAFGUARD]
 Name = Leaf Guard
@@ -413,6 +468,7 @@ Description = Prevents problems with status in sunny weather.
 [KLUTZ]
 Name = Klutz
 Description = This Pokémon doesn't understand held items.
+FullDesc = In Chaos mode, Klutz ignores both the user's held item as well as the foes' held item, bypassing items such as Assault Vest.
 #-------------------------------
 [MOLDBREAKER]
 Name = Mold Breaker
@@ -421,10 +477,12 @@ Description = Moves can be used regardless of Abilities.
 [SUPERLUCK]
 Name = Super Luck
 Description = Heightens the critical-hit ratios of moves.
+FullDesc = User has +1 critical-hit ratios on all moves.
 #-------------------------------
 [AFTERMATH]
 Name = Aftermath
 Description = Damages the attacker landing the finishing hit.
+FullDesc = If the user is KO'ed by a contact move, the attacker loses 1/4 of their max HP.
 #-------------------------------
 [ANTICIPATION]
 Name = Anticipation
@@ -437,34 +495,42 @@ Description = Determines what moves a foe has.
 [UNAWARE]
 Name = Unaware
 Description = Ignores any stat changes in the Pokémon.
+FullDesc = User ignores Evasion, Defense and Special Defense stat stages of the target when attacking. User ignores Accuracy, Attack and Special Attack stat stages of the attacker when being attacked.
 #-------------------------------
 [TINTEDLENS]
 Name = Tinted Lens
 Description = Powers up "not very effective" moves.
+FullDesc = User's not very effective moves deal 2x damage.
 #-------------------------------
 [FILTER]
 Name = Filter
 Description = Reduces damage from super-effective attacks.
+FullDesc = User takes 0.75x damage from super-effective attacks.
 #-------------------------------
 [SLOWSTART]
 Name = Slow Start
 Description = Temporarily weakens Attack and Speed.
+FullDesc = User's Attack and Speed stats are lowered by 0.66x. This effect ends after the user spends 5 turns active in battle. Does not reset upon switching out.
 #-------------------------------
 [SCRAPPY]
 Name = Scrappy
 Description = Enables moves to hit Ghost-type Pokémon.
+FullDesc = User's Normal and Fighting-type moves are normally effective against Ghost types.
 #-------------------------------
 [STORMDRAIN]
 Name = Storm Drain
 Description = Draws in all Water-type moves to up Sp. Attack.
+FullDesc = User redirects all single target Water-type moves towards itself and is immune to Water-type moves, when hit by a Water-type move their Special Attack is increased by one stage.
 #-------------------------------
 [ICEBODY]
 Name = Ice Body
 Description = The Pokémon gradually regains HP in a hailstorm.
+FullDesc = The user gradually regains 1/16 max HP in hailstorm.
 #-------------------------------
 [SOLIDROCK]
 Name = Solid Rock
 Description = Reduces damage from super-effective attacks.
+FullDesc = User takes 0.75x damage from super-effective attacks.
 #-------------------------------
 [SNOWWARNING]
 Name = Snow Warning
@@ -481,6 +547,7 @@ Description = The Pokémon can check a foe's held item.
 [RECKLESS]
 Name = Reckless
 Description = Powers up moves that have recoil damage.
+FullDesc = Moves with recoil or crash damage deal 1.2x damage.
 #-------------------------------
 [MULTITYPE]
 Name = Multitype
@@ -489,18 +556,22 @@ Description = Changes type to match the held Plate.
 [FLOWERGIFT]
 Name = Flower Gift
 Description = Powers up party Pokémon when it is sunny.
+FullDesc = When user is on the field, all allies including user get 1.5x Attack and Special Defense during sunlight.
 #-------------------------------
 [BADDREAMS]
 Name = Bad Dreams
 Description = Reduces a sleeping foe's HP.
+FullDesc = When user is on the field, all adjacent enemies that are asleep will lose 1/8 max HP each turn.
 #-------------------------------
 [PICKPOCKET]
 Name = Pickpocket
 Description = Steals an item when hit by another Pokémon.
+FullDesc = When user is not holding an item and is hit by a contact move, user steals the attacker's held item.
 #-------------------------------
 [SHEERFORCE]
 Name = Sheer Force
 Description = Removes added effects to increase move damage.
+FullDesc = User's moves with additional effects deal 1.3x damage but can no longer inflict those effects.
 #-------------------------------
 [CONTRARY]
 Name = Contrary
@@ -509,30 +580,37 @@ Description = Makes stat changes have an opposite effect.
 [UNNERVE]
 Name = Unnerve
 Description = Makes the foe nervous and unable to eat Berries.
+FullDesc = While the user is active, it prevents foes from using their Berries.
 #-------------------------------
 [DEFIANT]
 Name = Defiant
 Description = When its stats are lowered its Attack increases.
+FullDesc = When user's stats are lowered by an opponent, their Attack raises by two stages.
 #-------------------------------
 [DEFEATIST]
 Name = Defeatist
 Description = Lowers stats when HP becomes half or less.
+FullDesc = When user's HP is lowered to 50% or less, the user's attacking stats are halfed.
 #-------------------------------
 [CURSEDBODY]
 Name = Cursed Body
 Description = May disable a move used on the Pokémon.
+FullDesc = When user is hit by a damaging move, there's a 30% chance to disable the attacker's move.
 #-------------------------------
 [HEALER]
 Name = Healer
 Description = Heals status every other turn.
+FullDesc = The user heals itself and/or allies from status conditions every other turn. Allies are prioritized. If there are multiple allies, only one of them is healed.
 #-------------------------------
 [FRIENDGUARD]
 Name = Friend Guard
 Description = Reduces damage done to allies.
+FullDesc = When user is on the field, all other allies take 0.75x damage.
 #-------------------------------
 [WEAKARMOR]
 Name = Weak Armor
 Description = Physical attacks lower Defense and raise Speed.
+FullDesc = When user is hit by a physical attack, their Defense decreases by one stage and their Speed increases by two stages. In chaos mode, both of these effects only happen once per switch.
 #-------------------------------
 [HEAVYMETAL]
 Name = Heavy Metal
@@ -544,19 +622,22 @@ Description = Halves the Pokémon's weight.
 #-------------------------------
 [MULTISCALE]
 Name = Multiscale
-Description = Reduces damage when HP is full.
+Description = Halves incoming damage when HP is full.
 #-------------------------------
 [TOXICBOOST]
 Name = Toxic Boost
 Description = Boosts Atk & negates poison damage when poisoned.
+FullDesc = User's physical attacks deal 1.5x damage when poisoned. User takes no damage from being poisoned.
 #-------------------------------
 [FLAREBOOST]
 Name = Flare Boost
 Description = Boosts Sp. Atk and negates burn damage when burned.
+FullDesc = User's special attacks deal 1.5x damage when burned. User takes no damage from being burnt.
 #-------------------------------
 [HARVEST]
 Name = Harvest
 Description = May create another Berry after one is used.
+FullDesc = At the end of each turn, the user has a 50% chance to restore the last Berry they consumed during the battle. During Harsh Sunlight this chance becomes 100%.
 #-------------------------------
 [TELEPATHY]
 Name = Telepathy
@@ -565,18 +646,22 @@ Description = Anticipates an ally's attack and dodges it.
 [MOODY]
 Name = Moody
 Description = Sharply raises one stat, resets the previous boost.
+FullDesc = Every turn, the user gets one out of their Attack, Special Attack, Defense, Special Defense or Speed raised by two stages at random. The previous turn's boost is lost on the following turn.
 #-------------------------------
 [OVERCOAT]
 Name = Overcoat
 Description = Negates powder moves, weather, and hazard damage. 
+FullDesc = Protects the user from powder moves, weather damage and Spikes/Stealth Rock.
 #-------------------------------
 [POISONTOUCH]
 Name = Poison Touch
 Description = May poison targets when a Pokémon makes contact.
+FullDesc = When user hits an enemy with a contact move, there's a 30% chance to poison the target.
 #-------------------------------
 [REGENERATOR]
 Name = Regenerator
 Description = Restores a little HP when withdrawn from battle.
+FullDesc = User recovers 33% of their max HP when switched out.
 #-------------------------------
 [BIGPECKS]
 Name = Big Pecks
@@ -593,6 +678,7 @@ Description = Makes status-changing moves more likely to miss.
 [ANALYTIC]
 Name = Analytic
 Description = Boosts move power when the Pokémon moves last.
+FullDesc = If the user moves after all other pokémon on the field (including allies), their moves deal 1.3x damage.
 #-------------------------------
 [ILLUSION]
 Name = Illusion
@@ -605,6 +691,7 @@ Description = It transforms itself into the Pokémon it is facing.
 [INFILTRATOR]
 Name = Infiltrator
 Description = Passes through the foe's barrier and strikes.
+FullDesc = User ignores effects of opposing Reflect, Light Screen, Aurora Veil, Mist, Safeguard and Substitute when attacking.
 #-------------------------------
 [MUMMY]
 Name = Mummy
@@ -621,6 +708,7 @@ Description = Raises Attack when hit by a Dark-type move.
 [RATTLED]
 Name = Rattled
 Description = Some move types scare it and boost its Speed.
+FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is boosted by one stage.
 #-------------------------------
 [MAGICBOUNCE]
 Name = Magic Bounce
@@ -629,18 +717,22 @@ Description = Reflects status-changing moves.
 [SAPSIPPER]
 Name = Sap Sipper
 Description = Boosts Attack when hit by a Grass-type move.
+FullDesc = User is immune to Grass-type moves, when hit by a Grass-type move their Attack is increased by one stage.
 #-------------------------------
 [PRANKSTER]
 Name = Prankster
 Description = Gives priority to a status move.
+FullDesc = User's Status moves get +1 priority but become ineffective against Dark types.
 #-------------------------------
 [SANDFORCE]
 Name = Sand Force
 Description = Boosts certain moves' power in a sandstorm.
+FullDesc = User's Rock, Ground and Steel-type moves deal 1.3x damage during a Sandstorm.
 #-------------------------------
 [IRONBARBS]
 Name = Iron Barbs
 Description = Inflicts damage to the Pokémon on contact.
+FullDesc = When user is hit by a contact move, attacker takes damage equal to 1/8 of their max HP.
 #-------------------------------
 [ZENMODE]
 Name = Zen Mode
@@ -649,6 +741,7 @@ Description = Changes the Pokémon's shape when HP is halved.
 [VICTORYSTAR]
 Name = Victory Star
 Description = Boosts the accuracy of its allies and itself.
+FullDesc = When user is on the field, all allies including the user have their moves' accuracy boosted by 1.1x.
 #-------------------------------
 [TURBOBLAZE]
 Name = Turboblaze
@@ -661,14 +754,17 @@ Description = Moves can be used regardless of Abilities.
 [AROMAVEIL]
 Name = Aroma Veil
 Description = Protects against attacks that limit move choices.
+FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored or tormented.
 #-------------------------------
 [FLOWERVEIL]
 Name = Flower Veil
 Description = Protects Grass-type allies from stat/status effects.
+FullDesc = When user is on the field, all Grass-type allies become immune to stat drops and status effects.
 #-------------------------------
 [CHEEKPOUCH]
 Name = Cheek Pouch
 Description = Restores HP as well when the Pokémon eats a Berry.
+FullDesc = When the user eats a berry, they also recover 1/3 of their max HP on top of the berry's effect.
 #-------------------------------
 [PROTEAN]
 Name = Protean
@@ -677,26 +773,32 @@ Description = It changes type to that of the move it's about to use.
 [FURCOAT]
 Name = Fur Coat
 Description = Halves the damage from physical moves.
+FullDesc = The user's defense is doubled during damage calculations. Does not affect Body Press.
 #-------------------------------
 [MAGICIAN]
 Name = Magician
 Description = Steals the held item of a Pokémon it hits.
+FullDesc = When user is not holding an item and attacks a target, user steals the target's held item.
 #-------------------------------
 [BULLETPROOF]
 Name = Bulletproof
 Description = Protects the Pokémon from some ball and bomb moves.
+FullDesc = User is immune to moves with the Bomb flag.
 #-------------------------------
 [COMPETITIVE]
 Name = Competitive
 Description = Sharply boosts Sp. Atk when a stat is lowered.
+FullDesc = When user's stats are lowered by an opponent, their Special Attack raises by two stages.
 #-------------------------------
 [STRONGJAW]
 Name = Strong Jaw
 Description = Boosts the power of biting moves.
+FullDesc = User's moves with the biting flag deal 1.5x damage.
 #-------------------------------
 [REFRIGERATE]
 Name = Refrigerate
 Description = Normal-type moves become Ice-type and powered up.
+FullDesc = User's Normal-type moves become Ice-type and deal 1.2x damage.
 #-------------------------------
 [SWEETVEIL]
 Name = Sweet Veil
@@ -708,15 +810,18 @@ Description = Changes between Blade and Shield Forme with attacks.
 #-------------------------------
 [GALEWINGS]
 Name = Gale Wings
-Description = Flying-type moves gain priority when its HP is full.
+Description = Flying-type moves gain priority when its HP is high.
+FullDesc = Flying-type moves get +1 priority if the user HP is higher than 50%.
 #-------------------------------
 [MEGALAUNCHER]
 Name = Mega Launcher
-Description = Powers up aura, pulse, ball, and bomb moves.
+Description = Powers up aura and pulse moves.
+FullDesc = User's moves with the pulse and bomb flags deal 1.5x damage.
 #-------------------------------
 [GRASSPELT]
 Name = Grass Pelt
 Description = Boosts the Defense stat on Grassy Terrain.
+FullDesc = User gets 1.5x Defense when affected by Grassy Terrain.
 #-------------------------------
 [SYMBIOSIS]
 Name = Symbiosis
@@ -725,10 +830,12 @@ Description = Passes its held item to an ally that has used theirs.
 [TOUGHCLAWS]
 Name = Tough Claws
 Description = Powers up moves that make direct contact.
+FullDesc = Moves that make contact deal 1.3x damage.
 #-------------------------------
 [PIXILATE]
 Name = Pixilate
 Description = Normal-type moves become Fairy-type and powered up.
+FullDesc = User's Normal-type moves become Fairy-type and deal 1.2x damage.
 #-------------------------------
 [GOOEY]
 Name = Gooey
@@ -737,22 +844,27 @@ Description = Contact with it lowers the attacker's Speed stat.
 [AERILATE]
 Name = Aerilate
 Description = Normal-type moves become Flying-type and power up.
+FullDesc = User's Normal-type moves become Flying-type and deal 1.2x damage.
 #-------------------------------
 [PARENTALBOND]
 Name = Parental Bond
 Description = Parent and child each attacks.
+FullDesc = All moves land a second hit for 25% damage.
 #-------------------------------
 [DARKAURA]
 Name = Dark Aura
 Description = Powers up each Pokémon's Dark-type moves.
+FullDesc = When user is on the field, all pokémon on both sides deal 1.33x damage with Dark-type moves.
 #-------------------------------
 [FAIRYAURA]
 Name = Fairy Aura
 Description = Powers up each Pokémon's Fairy-type moves.
+FullDesc = When user is on the field, all pokémon on both sides deal 1.33x damage with Fairy-type moves.
 #-------------------------------
 [AURABREAK]
 Name = Aura Break
 Description = Reverses "Aura" Abilities to weaken affected moves.
+FullDesc = When user is on the field, all Aura abilities are reversed, causing affected moves to deal 0.75x damage instead.
 #-------------------------------
 [PRIMORDIALSEA]
 Name = Primordial Sea
@@ -773,10 +885,12 @@ Description = Boosts Defense when hit by a direct attack.
 [WIMPOUT]
 Name = Wimp Out
 Description = Switches out if its HP becomes half or less.
+FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn.
 #-------------------------------
 [EMERGENCYEXIT]
 Name = Emergency Exit
 Description = Switches out if its HP becomes half or less.
+FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn. Renamed Wimp Out.
 #-------------------------------
 [WATERCOMPACTION]
 Name = Water Compaction
@@ -789,18 +903,22 @@ Description = Its attacks are critical hits when it is poisoned.
 [SHIELDSDOWN]
 Name = Shields Down
 Description = Its shell breaks if its HP becomes half or less.
+FullDesc = When HP is reduced to 50% or less, the user transforms. This form has different stats and is immune to all status conditions. Cannot be ignored by Mold Breaker.
 #-------------------------------
 [STAKEOUT]
 Name = Stakeout
 Description = Deals doubles damage to a target's replacement.
+FullDesc = User deals 2x damage when attacking a target if they switched on the same turn.
 #-------------------------------
 [WATERBUBBLE]
 Name = Water Bubble
 Description = Weakens incoming Fire-type moves and prevents burns.
+FullDesc = User takes 0.5x damage from Fire-type moves and is immune to Burn.
 #-------------------------------
 [STEELWORKER]
 Name = Steelworker
 Description = Powers up Steel-type moves.
+FullDesc = User's Steel-type moves deal 1.5x damage. Stacks multiplicatively with STAB.
 #-------------------------------
 [BERSERK]
 Name = Berserk
@@ -813,18 +931,22 @@ Description = Boosts the Pokémon's Speed stat in a hailstorm.
 [LONGREACH]
 Name = Long Reach
 Description = Uses moves without making contact with the target.
+FullDesc = User is unaffected by contact effects.
 #-------------------------------
 [LIQUIDVOICE]
 Name = Liquid Voice
 Description = Its sound-based moves become Water-type.
+FullDesc = Moves with sound flag are Water-type.
 #-------------------------------
 [TRIAGE]
 Name = Triage
 Description = Gives priority to a healing move.
+FullDesc = Recovery and HP draining moves get +1 priority.
 #-------------------------------
 [GALVANIZE]
 Name = Galvanize
 Description = Normal-type moves become Electric-type and powered.
+FullDesc = User's Normal-type moves become Electric-type and deal 1.2x damage.
 #-------------------------------
 [SURGESURFER]
 Name = Surge Surfer
@@ -833,14 +955,16 @@ Description = Doubles Speed on Electric Terrain.
 [SCHOOLING]
 Name = Schooling
 Description = Forms a powerful school while it has a lot of HP.
+FullDesc = Changes form while user is above 25% HP and at Level 20+.
 #-------------------------------
 [DISGUISE]
 Name = Disguise
 Description = Its shroud protects it from an attack just once.
+FullDesc = User takes 1/8 of their max HP from the first attack it takes each battle regardless of the calculated damage.
 #-------------------------------
 [BATTLEBOND]
 Name = Battle Bond
-Description = Defeating a foe lets it become Ash-Greninja.
+Description = Defeating a foe lets it transform.
 #-------------------------------
 [POWERCONSTRUCT]
 Name = Power Construct
@@ -849,10 +973,12 @@ Description = Changes with other Cells if HP becomes half or less.
 [CORROSION]
 Name = Corrosion
 Description = Enables moves to hit Steel-type Pokémon.
+FullDesc = User's Poison-type moves are normally effective against Steel types. User can also poison Steel and Poison types.
 #-------------------------------
 [COMATOSE]
 Name = Comatose
 Description = It's always drowsing, and attacks without waking.
+FullDesc = The user is always considered to be asleep. Cannot be ignored by Mold Breaker.
 #-------------------------------
 [QUEENLYMAJESTY]
 Name = Queenly Majesty
@@ -861,6 +987,7 @@ Description = Makes foes unable to use priority attacks.
 [INNARDSOUT]
 Name = Innards Out
 Description = Damages an attacker that lands the finishing hit.
+FullDesc = When user faints, deal damage equal to the HP they had remaining before the last attack to the attacker.
 #-------------------------------
 [DANCER]
 Name = Dancer
@@ -869,10 +996,12 @@ Description = Repeats another Pokémon's dance move immediately.
 [BATTERY]
 Name = Battery
 Description = Powers up ally Pokémon's special moves.
+FullDesc = When user is on the field, all other allies deal 1.3x damage with Special moves.
 #-------------------------------
 [FLUFFY]
 Name = Fluffy
 Description = Resists contact damage but weaker to Fire-type.
+FullDesc = User takes 0.5x damage from contact moves, but takes 2x damage from Fire-type moves.
 #-------------------------------
 [DAZZLING]
 Name = Dazzling
@@ -925,14 +1054,17 @@ Description = Prevents other Pokémon from lowering its stats.
 [SHADOWSHIELD]
 Name = Shadow Shield
 Description = Resists damage while its HP is full.
+FullDesc = Halves incoming damage when HP is full. Cannot be ignored by Mold Breaker.
 #-------------------------------
 [PRISMARMOR]
 Name = Prism Armor
 Description = Reduces damage from super-effective attacks.
+FullDesc = User takes 0.75x damage from super-effective attacks. Cannot be ignored by Mold Breaker.
 #-------------------------------
 [NEUROFORCE]
 Name = Neuroforce
 Description = Powers up moves that are super-effective.
+FullDesc = User's super-effective moves deal 1.25x damage.
 #-------------------------------
 [INTREPIDSWORD]
 Name = Intrepid Sword
@@ -953,6 +1085,7 @@ Description = Retrieves the first thrown Poké Ball if it failed.
 [COTTONDOWN]
 Name = Cotton Down
 Description = Scatters Speed-lowering cotton fluff when hit.
+FullDesc = When user is hit, all other battlers have their Speed lowered by 1 stage.
 #-------------------------------
 [PROPELLERTAIL]
 Name = Propeller Tail
@@ -974,10 +1107,12 @@ Description = This Pokémon's moves cannot be redirected.
 Name = Steam Engine
 Flags = FasterEggHatching
 Description = Boosts Speed drastically if hit by a Fire or Water move.
+FullDesc = When user is hit by a Fire or Water-type move, their Speed is increased by six stages.
 #-------------------------------
 [PUNKROCK]
 Name = Punk Rock
 Description = Powers up own sound moves. Resists other sound moves.
+FullDesc = User's moves with the sound flag deal 1.3x damage. User takes 0.5x damage from moves with the sound flag.
 #-------------------------------
 [SANDSPIT]
 Name = Sand Spit
@@ -986,6 +1121,7 @@ Description = Creates a sandstorm when hit by an attack.
 [ICESCALES]
 Name = Ice Scales
 Description = Halves the damage taken from special moves.
+FullDesc = The user's Sp. Def is doubled during damage calculations. Does not affect Psycrush.
 #-------------------------------
 [RIPEN]
 Name = Ripen
@@ -994,22 +1130,27 @@ Description = Ripens Berries and doubles their effect.
 [ICEFACE]
 Name = Ice Face
 Description = Blocks a physical hit, but the ice head breaks.
+FullDesc = Protects from one physical attack. Entering Hail will restore this shield. Form and stats change when the shield is down.
 #-------------------------------
 [POWERSPOT]
 Name = Power Spot
 Description = Just being next to the Pokémon powers up moves.
+FullDesc = When user is on the field, all other allies deal 1.3x damage.
 #-------------------------------
 [MIMICRY]
 Name = Mimicry
 Description = Changes type depending on field effects.
+FullDesc = The user gains a new typing if there are active terrains or type zones. Terrains have priority for the type change.
 #-------------------------------
 [SCREENCLEANER]
 Name = Screen Cleaner
 Description = On entering battle, clears effects of Reflect, etc.
+FullDesc = Upon switch in; Reflect, Light Screen and Aurora Veil from both sides are nullified.
 #-------------------------------
 [STEELYSPIRIT]
 Name = Steely Spirit
 Description = Powers up ally Pokémon's Steel-type moves.
+FullDesc = Steel-type moves from the user's side of the field are powered up by 1.3x when the user is active. Stacks multiplicatively with STAB.
 #-------------------------------
 [PERISHBODY]
 Name = Perish Body
@@ -1022,6 +1163,7 @@ Description = Swaps Abilities with contact-making Pokémon.
 [GORILLATACTICS]
 Name = Gorilla Tactics
 Description = Boosts Attack, but allows only one move to be used.
+FullDesc = User has 1.5x Attack but is locked in into the first move they use.
 #-------------------------------
 [NEUTRALIZINGGAS]
 Name = Neutralizing Gas
@@ -1050,10 +1192,12 @@ Description = Removes all allies' stat changes on joining battle.
 [TRANSISTOR]
 Name = Transistor
 Description = Powers up Electric-type moves.
+FullDesc = User's Electric-type moves deal 1.5x damage. Stacks multiplicatively with STAB.
 #-------------------------------
 [DRAGONSMAW]
 Name = Dragon's Maw
 Description = Powers up Dragon-type moves.
+FullDesc = User's Electric-type moves deal 1.5x damage. Stacks multiplicatively with STAB.
 #-------------------------------
 [CHILLINGNEIGH]
 Name = Chilling Neigh
@@ -1074,6 +1218,7 @@ Description = Combines Unnerve and Grim Neigh Abilities.
 [AMPLIFIER]
 Name = Amplifier
 Description = Boosts power of sound moves.
+FullDesc = User's moves with the sound flag deal 1.3x damage.
 #-------------------------------
 [SEANCE]
 Name = Seance
@@ -1082,38 +1227,47 @@ Description = Copies the Ability of a defeated Pokémon.
 [GRIMTEARS]
 Name = Grim Tears
 Description = Lowers the foe's Sp. Atk. stat.
+FullDesc = Lowers all adjacent foes' Sp. Attack stat by one stage when user enters the field. Foes with the abilities Unnerve, Soundproof, Insomnia and Oblivious are immune to this ability.
 #-------------------------------
 [MICROSTRIKE]
 Name = Micro Strike
 Description = Boosts damage when lighter than the opponent.
+FullDesc = Boosts move damage by 1.3x if the user's weight is lower than the target's.
 #-------------------------------
 [BAITEDLINE]
 Name = Baited Line
-Description = Prevents water-type foes from fleeing.
+Description = Prevents Water-type foes from fleeing.
+FullDesc = When user is on the field, enemy Water types cannot switch out or escape.
 #-------------------------------
 [CARPENTER]
 Name = Carpenter
 Description = Boosts the power of Grass, Rock, and Steel-type allies.
+FullDesc = Allies with Grass, Rock, or Steel typing gain a 1.3x boost to their moves. This effect does not stack if allies share multiple of these typings.
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster
 Description = Boosts power and critical-hit ratio of blade moves.
+FullDesc = User's moves with the blade flag deal 1.3x damage and gain +1 critical hit rate.
 #-------------------------------
 [FERVOR]
 Name = Fervor
 Description = Raises Speed after making a direct hit just once.
+FullDesc = Contact moves that are not multihit raise the user's Speed stat by 1 once per switch.
 #-------------------------------
 [FREEZEOVER]
 Name = Freeze Over
 Description = Changes form in Hail. Holding an Icy Rock summons Hail.
+FullDesc = Transforms under Hail. The user has the effects of Snow Warning if it holds the item Icy Rock.
 #-------------------------------
 [CRYSTALJAW]
 Name = Crystal Jaw
-Description = Biting moves use Sp. Atk and have their power boosted.
+Description = Biting moves use Sp. Atk regardless of their category.
+FullDesc = Moves with the bite flag use the user's Sp. Atk stat regardless of the move's damage category.
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
 Description = Grassy Terrain boosts critical hit ratio.
+FullDesc = If affected by Grassy Terrain, the user gains +2 critical hit ratio.
 #-------------------------------
 [MOMENTUM]
 Name = Momentum
@@ -1122,30 +1276,37 @@ Description = Using the same move in succession raises its power.
 [PARTYPOPPER]
 Name = Party Popper
 Description = Heals the next ally after fainting just once.
+FullDesc = When the user faints, the replacement is healed by half of its max HP. The effect is used regardless of whether the healing was successful.
 #-------------------------------
 [WARRIORSPIRIT]
 Name = Warrior Spirit
 Description = Powers up super-effective attacks.
+FullDesc = User's super-effective moves deal 1.5x damage.
 #-------------------------------
 [SLIPPERYPEEL]
 Name = Slippery Peel
 Description = Contact forces the opponent to switch.
+FullDesc = Once per switch, if the foe deals contact damage to the user, the foe is forced to switch out randomly. This fails if the foe has a Substitute active, is under the effects of Ingrain, has no available replacements, or has the ability Suction Cups.
 #-------------------------------
 [TILEWORKER]
 Name = Tileworker
 Description = Removes all hazards from its side upon entry, once.
+FullDesc = Cleans up the user's side of the field of all hazards once per battle. Grants immunity to all hazards.
 #-------------------------------
 [TRICKSTER]
 Name = Trickster
 Description = When used, Room effects last 2 more turns.
+FullDesc = Wonder Room, Magic Room, and Trick Room last 2 more turns when used by the user.
 #-------------------------------
 [MASSEXTINCTION]
 Name = MassExtinction
 Description = User moves are Super Effective on Dragon-types.
+FullDesc = User moves are super effective against Dragon-types. Secondary and tertiary types are still considered in effectiveness calculation.
 #-------------------------------
 [PREMONITION]
 Name = Premonition
 Description = STAB moves hit again weaker. Boosts Future Sight.
+FullDesc = STAB moves hit the target again after a turn, but weaker. Future Sight and Doom Desire gain a power boost. Secondary effects don't trigger on the second hit. Second hit won't occur if the move hits multiple targets. Delayed attacks don't stack.
 #-------------------------------
 [THERMOHEAT]
 Name = Thermo Heat
@@ -1158,18 +1319,22 @@ Description = Boosts Ice-type moves in sunshine.
 [HEALINGSUN]
 Name = Healing Sun
 Description = Gradually regains HP in sunshine.
+FullDesc = The user gradually regains 1/16 max HP in sunlight, or 1/8 in harsh sunlight.
 #-------------------------------
 [PRESAGE]
 Name = Presage
 Description = Changes the weather for a turn before attacking.
+FullDesc = Summons specific weather based on the move used. Does not remove existing weather.
 #-------------------------------
 [VOLTAICSPIRIT]
 Name = Voltaic Spirit
 Description = Powers up Electric-type moves.
+FullDesc = User's Electric-type moves deal 1.5x damage. Renamed Transistor.
 #-------------------------------
 [ARTILLERIST]
 Name = Artillerist
 Description = Powers up ball and bomb moves.
+FullDesc = User's moves with the bomb flag deal 1.5x damage.
 #-------------------------------
 [OVERWRITE]
 Name = Overwrite
@@ -1184,32 +1349,40 @@ Description = The user transforms into a random non-fainted ally.
 [ANGELICBEAUTY]
 Name = Angelic Beauty
 Description = Indirect contact with it may confuse the attacker.
+FullDesc = When user is hit by a non-contact move, there's a 30% chance to confuse/dizzy the attacker.
 #-------------------------------
 [HONORBOUND]
 Name = Honor-bound
 Description = User cannot switch-out when below half health.
+FullDesc = When user's HP is lowered to 50% or less, the user cannot switch out or escape.
 #-------------------------------
 [SPOOPERAURA]
 Name = Spooper Aura
 Description = Powers up each Pokémon's Ghost-type moves.
+FullDesc = When user is on the field, all pokémon on both sides deal 1.33x damage with Ghost-type moves.
 #-------------------------------
 [SHOWTIME]
 Name = Showtime
 Description = Changes for the finale. Targeted during finale.
+FullDesc = Transforms if the user KOs an opponent or is targeted by the move Spotlight. During the transformation, the user has a passive Follow Me effect.
 #-------------------------------
 [DUSTSENTINEL]
 Name = Dust Sentinel
 Description = Creates Sandstorm, user has the effects of Sand Force.
+FullDesc = Sand Stream + Sand Force; Immunity to sandstorm chip damage.
 #-------------------------------
 [ECHOCHAMBER]
 Name = Echo Chamber
 Description = Heals w/ sound; next sound status move: +1 prio.
+FullDesc = The user's sound moves provide chip healing: status moves restore 1/16 of the user's HP, and damaging moves heal by half the damage dealt. When hit by a sound move or after using one, the user's next sound status move has increased priority.
 #-------------------------------
 [ACCUMULATOR]
 Name = Accumulator
 Description = Accumulates Stockpiles if the user has no held items.
+FullDesc = The user gains +1 Stockpile at the end of each turn if it has no held items.
 #-------------------------------
 [ENTOINSTINCTS]
 Name = Ento Instincts
 Description = Powers up ally Pokémon's Bug-type moves.
+FullDesc = Bug-type moves from the user's side of the field are powered up by 1.3x when the user is active. Stacks multiplicatively with STAB.
 #-------------------------------

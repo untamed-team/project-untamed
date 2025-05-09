@@ -20,9 +20,9 @@ class Player < Trainer
     when "normal"
       return true if @difficulty == 0 && @mechanics >= 1
     when "hard"
-      return true if @difficulty == 1 && @mechanics >= 2
+      return true if @difficulty >= 1 && @mechanics >= 2
     when "chaos"
-      return true if @difficulty == 1 && @mechanics >= 3
+      return true if @difficulty >= 2 && @mechanics >= 3
     else
       return false
     end
@@ -83,13 +83,15 @@ class Battle
               new_index = pbLastInTeam(idxBattler)
               idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
             end
-            if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                      opponent.full_name, enemyParty[idxPartyForName].name))
-              idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-              if idxPlayerPartyNew >= 0
-                pbMessageOnRecall(@battlers[0])
-                pbRecallAndReplace(0, idxPlayerPartyNew)
-                switched.push(0)
+            unless isWildBoss?(opponent)
+              if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
+                                        opponent.full_name, enemyParty[idxPartyForName].name))
+                idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
+                if idxPlayerPartyNew >= 0
+                  pbMessageOnRecall(@battlers[0])
+                  pbRecallAndReplace(0, idxPlayerPartyNew)
+                  switched.push(0)
+                end
               end
             end
           end
@@ -263,17 +265,8 @@ class Battle
       battler.pbFaint if battler.fainted?
       battler.droppedBelowHalfHP = false
     end
-    # dizzy #by low
-    priority.each do |battler|
-      next if battler.status != :DIZZY
-      battler.statusCount -= 1
-      if battler.statusCount <= 0
-        battler.pbCureStatus
-      else
-        battler.pbContinueStatus
-      end
-    end
-    # paralyzis rework #by low
+    # dizzy is in pbTryUseMove
+    # paralyzis rework (doesn't deal damage, but cure happens at the end of the turn)
     priority.each do |battler|
       next if battler.status != :PARALYSIS
       next if !$player.difficulty_mode?("chaos")
@@ -336,55 +329,19 @@ class DifficultySelectMenu_Scene
   def drawPage(page)
     overlay = @sprites["overlay"].bitmap
     overlay.clear
-    base   = MessageConfig::DARK_TEXT_MAIN_COLOR
-    shadow = MessageConfig::DARK_TEXT_SHADOW_COLOR
+    base   = MessageConfig::LIGHT_TEXT_MAIN_COLOR
+    shadow = MessageConfig::LIGHT_TEXT_SHADOW_COLOR
     overlay.font.size = 22
 
-    # this could be more compact but whatever im gonna pull a yandev
-    case page
-    when 1
-      #Freeze replaced with frostbite
-      #Hail buff
-      #Sleep no longer random
-      #EVs rework (post game)
-      #IVs removed
-      #Evasion boosting removed
-      #Bug SE against Fairy
-      #No level cap
-      #No item cap
-      #Set or switch style
-      #Pokemon type changes
-      #Pokemon stat changes
-      #Move Changes
-      #Ability Changes
-      #Evo Method changes
+    difficulty_desc = [
+      "The typical main series Pokémon experience.\n\nMinor Pokémon, move, ability, type, and battle feature adjustments have been made, along with other changes to the typical format.\nCheck the Project Untamed Wiki for more changes.",
+      "Casual mode with some extra limitations for added difficulty.\n\n-Experience has diminishing returns\n-Only 10 items allowed per trainer battle\n-Select limited number of Pokémon for gym battles\nCheck the Project Untamed Wiki for more changes.",
+      "For expert trainers looking for a challenge.\n\n-More difficult trainers\n-Experience caps\n-No items in battle\n-Set style enforced\nCheck the Project Untamed Wiki for more changes.",
+      "Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\n\n-Major Pokemon stats, abilities, learnset, distribution differences.\n-Certain move and battle features changed or removed.\n-New gimmicks (Type Zones, AAM, etc.)\n-Completely overhauled trainers.\nCheck Chaos Codex ingame for more Info."
+    ]
+    @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_#{page - 1}"))
+    difficultyDesc = _INTL(difficulty_desc[page - 1])
 
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_0"))
-      difficultyDesc = _INTL("Freeze replaced with Frostbite\nHail buff\nSleep no longer random\nEVs rework (post game)\nIVs reworked\nCheck the Project Untamed Wiki for more changes.")
-    when 2
-      #All of the above BUT
-      #Soft level cap (exp has diminishing returns)
-      #Soft item cap (10 items allowed)
-      #Select limited pokemon before gym battle
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_1"))
-      difficultyDesc = _INTL("All changes in Casual mode, plus:\nSoft level cap (exp has diminishing returns)\nSoft item cap (10 items allowed per battle)\nSelect limited number of Pokémon before gym battles\nCheck the Project Untamed Wiki for more changes.")
-    when 3
-      #All of the above BUT
-      #Hard level cap (no exp above certain level)
-      #Hard item cap (no items in battle)
-      #Set style enforced
-      #Sleep clause
-      #More difficult trainers
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_2"))
-      difficultyDesc = _INTL("All changes in Normal mode, plus:\nHard level cap (no exp above certain level)\nCannot use items in battle\nSet style enforced\nSleep clause\nMore difficult trainers\nCheck the Project Untamed Wiki for more changes.")
-    when 4
-      #notes to come
-
-      @sprites["bg"].setBitmap(_INTL("Graphics/Pictures/difficulty_select_3"))
-      difficultyDesc = _INTL("NOTE: Chaos Mode is a rebalanced gamemode that differs from the intended experience. We do not recommend it for a first playthrough.\nPokemon stats, abilities, learnset and distribution differences.\nCertain move and battle effects changed or removed.\n'Extremely' difficult trainers.\nStatus effects changed.\nCheck Chaos Codex ingame for more Info.")
-    end
     #difficulty name, always present
     drawFormattedTextEx(bitmap=overlay, x=52, y=52, width=overlay.width-58, text=_INTL("Casual"), baseColor=base, shadowColor=shadow, lineheight=16)
     drawFormattedTextEx(bitmap=overlay, x=122, y=52, width=overlay.width-58, text=_INTL("Normal"), baseColor=base, shadowColor=shadow, lineheight=16)
@@ -392,9 +349,9 @@ class DifficultySelectMenu_Scene
     drawFormattedTextEx(bitmap=overlay, x=260, y=52, width=overlay.width-58, text=_INTL("Chaos"), baseColor=base, shadowColor=shadow, lineheight=16)
 
     # fs = font size
-    difficultyDesc = "<fs=24>" + difficultyDesc + "</fs>"
+    difficultyDesc = "<fs=24><al>" + difficultyDesc + "</al></fs>"
     #difficulty description, changes per page
-    drawFormattedTextEx(bitmap=overlay, x=64, y=82, width=overlay.width-100, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
+    drawFormattedTextEx(bitmap=overlay, x=64, y=88, width=overlay.width-120, text=difficultyDesc, baseColor=base, shadowColor=shadow, lineheight=20)
   end
   
   def pbEndScene
@@ -441,7 +398,7 @@ class DifficultySelectMenuScreen
         when 4   # meme
           if @scene.pbConfirm(_INTL("Are you sure? This cannot be altered during gameplay."))
             $player.mechanics=3
-            $player.difficulty=1
+            $player.difficulty=2
             enditall=true
           end
         end

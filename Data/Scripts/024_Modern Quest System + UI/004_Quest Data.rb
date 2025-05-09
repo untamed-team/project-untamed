@@ -69,7 +69,6 @@ def markQuestTaskComplete(quest,task,complete=true,color=nil,story=false)
 =end
 
 module QuestModule
-  
   # You don't actually need to add any information, but the respective fields in the UI will be blank or "???"
   # I included this here mostly as an example of what not to do, but also to show it's a thing that exists
   Quest1 = {
@@ -249,6 +248,40 @@ module QuestModule
     :Location4 => "Asterado Ranch",
     :RewardString => "Something from the ranch!",
     :ReadyAtStart => false,
+  }
+  Quest13 = {
+    :ID => "13",
+    :Name => "All that Glitters",
+    :QuestDescription => "Florian saw a shiny Magikarp in Asterado Lake! Help him find it!",
+    :QuestGiver => "Florian",
+    :QuestGiverSprite => "NPC Shiny Hunter",
+    :QuestGiverDescSprite => "SHINYHUNTER_M",
+    :Stage1 => "Help Florian find the shiny Magikarp in Asterado Lake.",
+    :Location1 => "Asterado Ranch",
+    :RewardString => '"Good money"',
+    :ReadyAtStart => true,
+  }
+  Quest14 = {
+    :ID => "14",
+    :Name => "Eeveelution Beginner",
+    :QuestDescription => "Immy needs help finding out what her Eevee wants to evolve into.",
+    :QuestGiver => "Immy",
+    :QuestGiverSprite => "NPC_Lass",
+    :QuestGiverDescSprite => "LASS4",
+    :Stage1 => "Show Immy a Water or Fire-type Pokémon.",
+    :Location1 => "Calojarro",
+    :Stage2 => "Battle Immy with a Dark or Psychic-type Pokémon in your party.",
+    :Location2 => "Calojarro",
+    :Stage3 => "Show Immy a Pokémon with a powerful Ice or Grass-type move (55+ power).",
+    :Location3 => "Calojarro",
+    :Stage4 => "Battle Immy's siblings alongside her. Let Immy or her siblings know when you're ready.",
+    :Location4 => "Calojarro",
+    :Stage5 => "Find Immy and her Eevee at #{!$game_variables.nil? ? $game_variables[135] : 0}.",
+    :Location5 => "#{!$game_variables.nil? ? $game_variables[135] : 0}",
+    :Stage6 => "Claim your reward from Grace and Nicco at Immy's house.",
+    :Location6 => "Calojarro",
+    :RewardString => "Eevee",
+    :ReadyAtStart => true,
   }
   # Here's the simplest example of a single-stage quest with everything specified
 #  Quest1 = {

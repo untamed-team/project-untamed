@@ -170,6 +170,7 @@ module Compiler
         f.write("[#{ability.id}]\r\n")
         f.write("Name = #{ability.real_name}\r\n")
         f.write("Description = #{ability.real_description}\r\n")
+        f.write("FullDesc = #{ability.full_description}\r\n")
         f.write(sprintf("Flags = %s\r\n", ability.flags.join(","))) if ability.flags.length > 0
       end
     }
