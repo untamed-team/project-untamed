@@ -2152,7 +2152,7 @@ def pbStartOver(gameover = false)
     if gameover
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]After the unfortunate defeat, you scurry back home."))
     else
-      pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back home, protecting your exhausted Pokémon from any further harm..."))
+      pbMessage(_INTL("\\w[]\\wm\\l[3]You scurryi back home, protecting your exhausted Pokémon from any further harm..."))
     end
     if homedata
       pbCancelVehicles
