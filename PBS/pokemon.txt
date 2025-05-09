@@ -6771,6 +6771,7 @@ Habitat = Cave
 Category = Cave
 Pokedex = It races through narrow caves, using its sharp claws to catch prey. Then skin on its face is harder than a rock.
 #-------------------------------
+Habitat = Forest
 [AMAURA]
 Name = Failsafe_Amaura
 Types = ROCK,ICE
