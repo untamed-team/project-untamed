@@ -417,3 +417,18 @@ class Battle::Move::HealUserDependingOnHail < Battle::Move::HealingMove
     return (user.totalhp / 2.0).round
   end
 end
+
+#===============================================================================
+# Prevents the user and the target from switching out or fleeing. This effect
+# isn't applied if the user is already trapped. 
+# Chip damage is dealt at the end of the round. (Needle Arm)
+#===============================================================================
+class Battle::Move::TrapUserAndTargetInBattleNeedleArm < Battle::Move
+  def pbAdditionalEffect(user, target)
+    return if user.fainted? || target.fainted? || target.damageState.substitute
+    return if (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]) && target.pbHasType?(:GHOST)
+    return if user.trappedInBattle?
+    target.effects[PBEffects::NeedleArm] = user.index
+    @battle.pbDisplay(_INTL("{1}'s thorny arms prevent either Pokémon from running away!", user.pbThis))
+  end
+end

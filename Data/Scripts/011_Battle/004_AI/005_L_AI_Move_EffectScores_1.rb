@@ -4556,6 +4556,7 @@ class Battle::AI
             if target.pbCanConfuse?(user, false)
                 if $player.difficulty_mode?("chaos")
                     miniscore = pbTargetBenefitsFromStatus?(user, target, :DIZZY, 90, move, globalArray, skill)
+                    miniscore *= 0.8
                 else
                     miniscore = 100
                 end

@@ -2404,6 +2404,7 @@ class Battle::AI
         alldam = target.moves.all? { |m| m.baseDamage > 0 }
         if alldam
             score*=1.3
+            score*=1.2 if trarget.trappedInBattle?
         else
             score*=0.8
         end
@@ -5989,9 +5990,8 @@ class Battle::AI
             score=0 if move.baseDamage == 0
         end
     #---------------------------------------------------------------------------
-    when "TrapUserAndTargetInBattle" # jaw lock
-        if (!user.trappedInBattle? && !target.trappedInBattle?) && 
-            target.effects[PBEffects::Substitute]<=0 && target.effects[PBEffects::JawLock] < 0
+    when "TrapUserAndTargetInBattle", "TrapUserAndTargetInBattleNeedleArm" # jaw lock, needle arm
+        if !user.trappedInBattle? && target.effects[PBEffects::Substitute]<=0
             miniscore=100
             if pbHasPivotMove?(target)
                 miniscore*=0.1
@@ -6042,7 +6042,19 @@ class Battle::AI
             ministat/=100.0
             miniscore*=ministat
             miniscore/=100.0
-            if target.pbHasType?(:GHOST, true) && (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE])
+            if move.function == "TrapUserAndTargetInBattleNeedleArm"
+                miniscore *= 1.2
+                if target.totalhp == target.hp
+                    miniscore *= 1.2
+                elsif target.hp*2 < target.totalhp
+                    miniscore *= 0.8
+                end
+                miniscore *= 1.1 if pbHasSingleTargetProtectMove?(user, false)
+                miniscore = 1 if target.effects[PBEffects::NeedleArm] >= 0
+            else
+                miniscore = 1 if target.effects[PBEffects::JawLock] >= 0 || target.trappedInBattle?
+            end
+            if miniscore > 1 && target.pbHasType?(:GHOST, true) && (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE])
                 miniscore = 1
                 miniscore = 0 if move.baseDamage == 0
             end

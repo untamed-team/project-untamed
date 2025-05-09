@@ -1029,6 +1029,7 @@ class Battle::Move::UseRandomMove < Battle::Move
       @metronomeMove = move_data.id
       break
     end
+    Console.echo_warn @metronomeMove
     if !@metronomeMove
       @battle.pbDisplay(_INTL("But it failed!"))
       return true

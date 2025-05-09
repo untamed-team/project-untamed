@@ -167,9 +167,9 @@ class Battle::AI
             thatprio = priorityAI(b, targetMove, globalArray)
             aspeed = pbRoughStat(user,:SPEED,skill)
             ospeed = pbRoughStat(b,:SPEED,skill)
-            if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-              ret = :ELECTRIC
-            end
+            outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+            outsped = true if thatprio > thisprio
+            ret = :ELECTRIC if outsped
           end
         end
       end

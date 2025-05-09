@@ -632,7 +632,10 @@ class Battle::Battler
     return true if @effects[PBEffects::Octolock] >= 0
     return true if @effects[PBEffects::Ingrain]
     return true if @effects[PBEffects::NoRetreat]
-    return true if @effects[PBEffects::HonorBound] #by low
+    #by low
+    return true if @effects[PBEffects::HonorBound]
+    return true if @effects[PBEffects::NeedleArm] >= 0
+    return true if @battle.allBattlers.any? { |b| b.effects[PBEffects::NeedleArm] == @index }
     return true if @battle.field.effects[PBEffects::FairyLock] > 0
     return false
   end

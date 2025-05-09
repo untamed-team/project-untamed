@@ -3727,9 +3727,9 @@ Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = TrapUserAndTargetInBattle
+FunctionCode = TrapUserAndTargetInBattleNeedleArm
 Flags = Contact,CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
-Description = Swinging its thorny arms, the user traps both itself and the target until either faint.
+Description = Swinging its thorny arms, the user traps itself and the target. Also deals a little bit of damage each turn.
 #-------------------------------
 [RAZORLEAF]
 Name = Razor Leaf

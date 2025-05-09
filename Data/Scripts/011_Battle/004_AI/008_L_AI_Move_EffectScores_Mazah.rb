@@ -699,7 +699,7 @@ class Battle::AI
             if target.takesIndirectDamage?
                 score *= 2.0 if @battle.pbCheckGlobalAbility(:STALL)
                 score *= 1.3 if target.burned? || target.frozen? || target.poisoned?
-                score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater") ||
+                score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater", "TrapUserAndTargetInBattleNeedleArm") ||
                                 target.effects[PBEffects::Trapping] > 0
                 score *= 1.3 if target.hasActiveItem?(:LIFEORB)
                 score *= 1.3 if target.moves.any? { |j| j&.recoilMove? } && !target.hasActiveAbility?(:ROCKHEAD)

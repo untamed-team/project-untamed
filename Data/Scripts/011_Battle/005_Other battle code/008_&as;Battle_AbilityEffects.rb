@@ -1521,7 +1521,8 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:BLADEMASTER,
 Battle::AbilityEffects::DamageCalcFromUser.add(:WARRIORSPIRIT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     if Effectiveness.super_effective?(target.damageState.typeMod)
-      mults[:final_damage_multiplier] *= 1.5
+      met = ($player.difficulty_mode?("chaos")) ? 1.25 : 1.5
+      mults[:final_damage_multiplier] *= met
     end
   }
 )
