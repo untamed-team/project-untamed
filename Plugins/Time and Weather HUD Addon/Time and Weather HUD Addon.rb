@@ -19,7 +19,7 @@ class VPM_DateAndTimeHud < Component
 
   def update
     super
-    refresh if @last_time != pbGetTimeNow.strftime("%I:%M %p")
+    refresh if @last_time != pbGetTimeNow.strftime("%I:%M %p") && @sprites["overlay"]
   end
 
   def refresh
