@@ -23,6 +23,7 @@ MEGA_EVO_STATS = {
 
   CAMERUPT: { item: :CAMERUPTITE, atkmul: 1.200, defmul: 1.429, spemul: 0.500, spamul: 1.381, spdmul: 1.400 },
   ABOMASNOW: { item: :ABOMASITE, atkmul: 1.435, defmul: 1.400, spemul: 0.500, spamul: 1.435, spdmul: 1.235 },
+  ALTARIA: { item: :ALTARIANITE, atkmul: 1.571, defmul: 1.222, spemul: 1.000, spamul: 1.571, spdmul: 1.000 },
 
   ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.185, spdmul: 1.147 },
   BEAKRAFT: { item: :BEAKRAFTITE, 
@@ -60,7 +61,9 @@ MEGA_EVO_TYPES = {
   LAGUNA: { item: :LAGUNITE, typeadd: :ICE, typeremove: :NORMAL },
   LUPACABRA: { item: :LUPACABRITE, typeadd: :FIGHTING },
   ROADRAPTOR: { item: :ROADRAPTORITE, typeadd: :GROUND, typeremove: :FLYING },
-  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK }
+  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK },
+
+  ALTARIA: { item: :ALTARIANITE, typeadd: :FAIRY, typeremove: :NORMAL }
 }
 
 MEGA_EVO_MOVESET = {

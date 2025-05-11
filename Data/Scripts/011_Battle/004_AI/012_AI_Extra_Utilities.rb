@@ -185,7 +185,7 @@ class Battle::AI
                     if user.pokemon.willmega
                         if (user.isSpecies?(:HAWLUCHA) && $player.difficulty_mode?("chaos") && !user.pokemon.hasHiddenAbility?) ||
                            (user.isSpecies?(:GOLURK) && !$player.difficulty_mode?("chaos")) ||
-                           user.isSpecies?(:GLALIE)
+                           user.isSpecies?(:GLALIE) || user.isSpecies?(:ALTARIA)
                             megaboost = true
                         end
                     end

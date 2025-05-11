@@ -139,6 +139,8 @@ class Battle::AI
           ret = :FLYING
         elsif user.isSpecies?(:GLALIE)
           ret = :ICE
+        elsif user.isSpecies?(:ALTARIA)
+          ret = :FAIRY
         end
       end
     end

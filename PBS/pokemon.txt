@@ -6800,7 +6800,7 @@ Generation = 3
 #-------------------------------
 [ALTARIA]
 Name = Altaria
-Types = DRAGON,FLYING.
+Types = DRAGON,FLYING
 BaseStats = 75,70,90,80,70,105
 GenderRatio = Female50Percent
 GrowthRate = Erratic
