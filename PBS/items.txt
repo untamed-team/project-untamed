@@ -178,6 +178,86 @@ FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_80
 Description = A peculiar stone that makes certain species of Pokémon evolve. It shines with a dazzling light.
 #-------------------------------
+[FIRESHARD]
+Name = Fire Shard
+NamePlural = Fire Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is colored orange.
+#-------------------------------
+[THUNDERSHARD]
+Name = Thunder Shard
+NamePlural = Thunder Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It has small bolt patterns.
+#-------------------------------
+[WATERSHARD]
+Name = Water Shard
+NamePlural = Water Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is a clear, light blue.
+#-------------------------------
+[LEAFSHARD]
+Name = Leaf Shard
+NamePlural = Leaf Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It has a earthy smell.
+#-------------------------------
+[ICESHARD]
+Name = Ice Shard
+NamePlural = Ice Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. Its cold to the touch.
+#-------------------------------
+[MOONSHARD]
+Name = Moon Shard
+NamePlural = Moon Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as black as the night sky.
+#-------------------------------
+[SUNSHARD]
+Name = Sun Shard
+NamePlural = Sun Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as red as the sun.
+#-------------------------------
+[DUSKSHARD]
+Name = Dusk Shard
+NamePlural = Dusk Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as dark as dark can be.
+#-------------------------------
+[DAWNSHARD]
+Name = Dawn Shard
+NamePlural = Dawn Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It sparkles like eyes.
+#-------------------------------
+[SHINYSHARD]
+Name = Shiny Shard
+NamePlural = Shiny Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It shines with a dazzling light.
+#-------------------------------
 [SWEETAPPLE]
 Name = Sweet Apple
 NamePlural = Sweet Apples
