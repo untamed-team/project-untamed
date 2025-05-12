@@ -4070,7 +4070,8 @@ class Battle::AI
                 GameData::Stat.each_main_battle { |s| score *= 1.05 if user.stages[s.id] <= 0 }
                 score *= 2 if user.hasActiveAbility?(:SIMPLE)
                 if user.effects[PBEffects::HealBlock]==0
-                    healvar = healdam = false
+                    healvar = false
+                    healdam = false
                     user.moves.each do |m|
                         next if m.nil?
                         if m.healingMove?
