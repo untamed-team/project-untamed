@@ -1566,16 +1566,18 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOINSTINCTS,
 Battle::AbilityEffects::DamageCalcFromUser.add(:MOXIE,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     next unless $player.difficulty_mode?("chaos")
-    ded = pbParty(user.idxOpposingSide).count { |pkmn| pkmn.fainted? }
-    mults[:attack_multiplier] *= (1 + 0.05 * ded) if move.physicalMove?
+    ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
+    met = [(1 + 0.1 * ded), 1.3].min
+    mults[:attack_multiplier] *= met if move.physicalMove?
   }
 )
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:SOULHEART,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     next unless $player.difficulty_mode?("chaos")
-    ded = pbParty(user.idxOpposingSide).count { |pkmn| pkmn.fainted? }
-    mults[:attack_multiplier] *= (1 + 0.05 * ded) if move.specialMove?
+    ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
+    met = [(1 + 0.1 * ded), 1.3].min
+    mults[:attack_multiplier] *= met if move.specialMove?
   }
 )
 
@@ -2684,13 +2686,15 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SHEDSKIN,
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromUser.add(:SOULHEART,
+Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
   proc { |ability, battler, battle|
     next unless $player.difficulty_mode?("chaos")
-    ded = pbParty(battler.idxOwnSide).count { |pkmn| pkmn.fainted? }
-    next if ded == 0
-    heal = battler.totalhp / 64 * (2 ** ded)
-    battler.pbRecoverHP(heal)
+    ded = battler.pbOwnSide.effects[PBEffects::FaintedMons]
+    next if ded == 0 || battler.hp == battler.totalhp
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP([(battler.totalhp / 64 * (2 ** ded)).round, (battler.totalhp * 0.5).round].min)
+    battle.pbDisplay(_INTL("{1}'s fallen allies healed {2} a little!", battler.pbTeam, battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
   }
 )
 

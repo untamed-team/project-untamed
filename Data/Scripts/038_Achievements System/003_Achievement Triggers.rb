@@ -64,6 +64,7 @@ class Battle::Battler
     # Do other things
     @battle.pbClearChoice(@index)   # Reset choice
     pbOwnSide.effects[PBEffects::LastRoundFainted] = @battle.turnCount
+    pbOwnSide.effects[PBEffects::FaintedMons] += 1 if pbOwnSide.effects[PBEffects::FaintedMons] < 6
     if $game_temp.party_direct_damage_taken &&
        $game_temp.party_direct_damage_taken[@pokemonIndex] &&
        pbOwnedByPlayer?
