@@ -496,7 +496,7 @@ NamePlural = Opal Fossils
 Pocket = 1
 Price = 7000
 Flags = Fossil,Fling_100
-Description = Someone else fill in this text
+Description = A fossil from a prehistoric Pokémon that once lived in the sea. It has a beautiful shine to it.
 #-------------------------------
 [TARFOSSIL]
 Name = Tar Fossil
@@ -504,7 +504,7 @@ NamePlural = Tar Fossils
 Pocket = 1
 Price = 7000
 Flags = Fossil,Fling_100
-Description = Someone else fill in this text
+Description = A fossil from a prehistoric Pokémon that once lived on the land. It appears to be part of a large tusk.
 #-------------------------------
 [PRETTYFEATHER]
 Name = Pretty Feather

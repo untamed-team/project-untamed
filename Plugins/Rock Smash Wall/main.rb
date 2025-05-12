@@ -4,38 +4,32 @@
 #keep the fossil as the first item in the loot table
 
 def pbRockSmashWall(chance, lootTable)
-  if pbRockSmashWallQuestion
-    #player used rock smash successfully
-    outcome = rand(100)
-    if outcome <= chance
-      #success, get loot
-	  fossilID = lootTable[0]
-	  fossilData = GameData::Item.get(fossilID)
-	  
-	  if !$item_log.found_items.contains?(fossilData) #check if player already has the fossil
-		#player does not have the fossil yet
-		fossilRoll = rand(100)
-		if fossilRoll <= INITIAL_FOSSIL_CHANCE
-			pbItemBall(fossilID)
-		else
-			item = lootTable.sample
-			pbItemBall(item)
-		end
-		
-	  else
-		#player already has the fossil
-		item = lootTable.sample
-		pbItemBall(item)
-	  end
-	  return 1
+  return if !pbRockSmashWallQuestion #player used rock smash successfully
+  outcome = rand(100)
+  return 2 if outcome > chance #player failed to get loot even though they used Rock Smash successfully
+  #success, get loot
+  fossilID = lootTable[0][:item]
+  fossilData = GameData::Item.get(fossilID)
+  
+  if $item_log.found_items.contains?(fossilData) #check if player already has the fossil
+    #player already has the fossil
+    item = selectItemFromLootTable(lootTable)
+    pbItemBall(item)
+  else
+    #player does not have the fossil yet
+    fossilRoll = rand(100)
+    if fossilRoll <= INITIAL_FOSSIL_CHANCE
+      pbItemBall(fossilID)
     else
-		#player failed to get loot even though they used Rock Smash successfully
-		return 2
-	end #if outcome <= chance
-  end #if pbRockSmashWallQuestion
+      item = selectItemFromLootTable(lootTable)
+      pbItemBall(item)
+    end
+  end
+  return 1
 end #def pbRockSmashWall(chance)
 
 def pbRockSmashWallQuestion
+  return true if $DEBUG && Input.press?(Input::CTRL)
   move = :ROCKSMASH
   movefinder = $player.get_pokemon_with_move(move)
   if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_ROCKSMASH, false) || (!$DEBUG && !movefinder)
@@ -54,211 +48,40 @@ end #def pbRockSmashWallQuestion
 
 INITIAL_FOSSIL_CHANCE = 80
 
+def selectItemFromLootTable(lootTable)
+  total_chance = 0
+  lootTable.each do |entry|
+    total_chance += entry[:chance]
+  end
+  echoln "warning: total cumulative is not equal to 100" if total_chance != 100 && $DEBUG
+  roll = rand(total_chance)
+  cumulative_chance = 0
+  lootTable.shuffle.each do |entry|
+    cumulative_chance += entry[:chance]
+    return entry[:item] if roll < cumulative_chance
+  end
+end
+
 #create the loot table as if chances will not be modified
 #if the player does not have the fossil yet, the plugin will add extra entries for the fossil until the amount of entries for the fossil is equal to INITIAL_FOSSIL_CHANCE
-#keep the fossil as the first element in the array
+#keep the fossil as the first element
+
 ROCK_SMASH_WALL_LOOT_TABLE_OPAL = [
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:OPALFOSSIL,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
+ { item: :OPALFOSSIL, chance: 5 }, 
+ { item: :OVALSTONE, chance: 25 },
+ { item: :REVIVE, chance: 25 },
+ { item: :PEARL, chance: 15 },
+ { item: :MAXREVIVE, chance: 15 },
+ { item: :RAREBONE, chance: 10 },
+ { item: :STARPIECE, chance: 5 }
 ]
 
 ROCK_SMASH_WALL_LOOT_TABLE_TAR = [
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:TARFOSSIL,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:POTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:SUPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:HYPERPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:MAXPOTION,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:POKEBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:GREATBALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:ULTRABALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:MASTERBALL,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
-:TINYMUSHROOM,
+ { item: :TARFOSSIL, chance: 5 }, 
+ { item: :EVERSTONE, chance: 25 },
+ { item: :REVIVE, chance: 25 },
+ { item: :STARDUST, chance: 15 },
+ { item: :MAXREVIVE, chance: 15 },
+ { item: :RAREBONE, chance: 10 },
+ { item: :STARPIECE, chance: 5 }
 ]
