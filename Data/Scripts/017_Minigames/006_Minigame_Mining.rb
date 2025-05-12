@@ -1,8 +1,7 @@
 ################################################################################
-# "Mining" mini-game
-# By Maruno
+# Mining mini-game By Maruno
 #-------------------------------------------------------------------------------
-# Run with:      pbMiningGame
+# Run with:      pbMiningGame(@event_id, true/false)
 ################################################################################
 class MiningGameCounter < BitmapSprite
   attr_accessor :hits
@@ -143,32 +142,8 @@ end
 class MiningGameScene
   BOARD_WIDTH  = 13
   BOARD_HEIGHT = 10
-  ITEMS = [   # Item, probability, graphic x, graphic y, width, height, pattern
-    [:DOMEFOSSIL, 20, 0, 3, 5, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
-    [:HELIXFOSSIL, 5, 5, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
-    [:HELIXFOSSIL, 5, 9, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
-    [:HELIXFOSSIL, 5, 13, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
-    [:HELIXFOSSIL, 5, 17, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
-    [:OLDAMBER, 10, 21, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
-    [:OLDAMBER, 10, 25, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
-    [:ROOTFOSSIL, 5, 0, 7, 5, 5, [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0]],
-    [:ROOTFOSSIL, 5, 5, 7, 5, 5, [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
-    [:ROOTFOSSIL, 5, 10, 7, 5, 5, [0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1]],
-    [:ROOTFOSSIL, 5, 15, 7, 5, 5, [0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0]],
-    [:SKULLFOSSIL, 20, 20, 7, 4, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0]],
-    [:ARMORFOSSIL, 20, 24, 7, 5, 4, [0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
-    [:CLAWFOSSIL, 5, 0, 12, 4, 5, [0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0]],
-    [:CLAWFOSSIL, 5, 4, 12, 5, 4, [1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1]],
-    [:CLAWFOSSIL, 5, 9, 12, 4, 5, [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0]],
-    [:CLAWFOSSIL, 5, 13, 12, 5, 4, [1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1]],
-    [:FIRESTONE, 20, 20, 11, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]],
-    [:WATERSTONE, 20, 23, 11, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 0]],
-    [:THUNDERSTONE, 20, 26, 11, 3, 3, [0, 1, 1, 1, 1, 1, 1, 1, 0]],
-    [:LEAFSTONE, 10, 18, 14, 3, 4, [0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0]],
-    [:LEAFSTONE, 10, 21, 14, 4, 3, [0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]],
-    [:MOONSTONE, 10, 25, 14, 4, 2, [0, 1, 1, 1, 1, 1, 1, 0]],
-    [:MOONSTONE, 10, 27, 16, 2, 4, [1, 0, 1, 1, 1, 1, 0, 1]],
-    [:SUNSTONE, 20, 21, 17, 3, 3, [0, 1, 0, 1, 1, 1, 1, 1, 1]],
+  # Item, probability, graphic x, graphic y, width, height, pattern
+  BASICITEMS = [
     [:OVALSTONE, 150, 24, 17, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]],
     [:EVERSTONE, 150, 21, 20, 4, 2, [1, 1, 1, 1, 1, 1, 1, 1]],
     [:STARPIECE, 100, 0, 17, 3, 3, [0, 1, 0, 1, 1, 1, 0, 1, 0]],
@@ -176,19 +151,47 @@ class MiningGameScene
     [:MAXREVIVE, 50, 0, 23, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]],
     [:RAREBONE, 50, 3, 17, 6, 3, [1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1]],
     [:RAREBONE, 50, 3, 20, 3, 6, [1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1]],
-    [:LIGHTCLAY, 100, 6, 20, 4, 4, [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1]],
     [:HARDSTONE, 200, 6, 24, 2, 2, [1, 1, 1, 1]],
+    [:IRONBALL, 100, 9, 17, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]]
+  ]
+  EVOSTONES = [ # missing shiny, dawn, dusk and ice shards
+    [:FIRESHARD, 20, 20, 11, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]],
+    [:THUNDERSHARD, 20, 26, 11, 3, 3, [0, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:WATERSHARD, 20, 23, 11, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:LEAFSHARD, 10, 18, 14, 3, 4, [0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0]],
+    [:LEAFSHARD, 10, 21, 14, 4, 3, [0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0]],
+    [:MOONSHARD, 10, 25, 14, 4, 2, [0, 1, 1, 1, 1, 1, 1, 0]],
+    [:MOONSHARD, 10, 27, 16, 2, 4, [1, 0, 1, 1, 1, 1, 0, 1]],
+    [:SUNSHARD, 20, 21, 17, 3, 3, [0, 1, 0, 1, 1, 1, 1, 1, 1]]
+  ]
+  FOSSILS = [
+    [:DOMEFOSSIL, 2000, 0, 3, 5, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
+    [:HELIXFOSSIL, 500, 5, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:HELIXFOSSIL, 500, 9, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
+    [:HELIXFOSSIL, 500, 13, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:HELIXFOSSIL, 500, 17, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
+    [:OLDAMBER, 1000, 21, 3, 4, 4, [0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:OLDAMBER, 1000, 25, 3, 4, 4, [1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1]],
+    [:ROOTFOSSIL, 500, 0, 7, 5, 5, [1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0]],
+    [:ROOTFOSSIL, 500, 5, 7, 5, 5, [0, 0, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
+    [:ROOTFOSSIL, 500, 10, 7, 5, 5, [0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1]],
+    [:ROOTFOSSIL, 500, 15, 7, 5, 5, [0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0]],
+    [:SKULLFOSSIL, 2000, 20, 7, 4, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0]],
+    [:ARMORFOSSIL, 2000, 24, 7, 5, 4, [0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0]],
+    [:CLAWFOSSIL, 500, 0, 12, 4, 5, [0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0]],
+    [:CLAWFOSSIL, 500, 4, 12, 5, 4, [1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1]],
+    [:CLAWFOSSIL, 500, 9, 12, 4, 5, [0, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 0]],
+    [:CLAWFOSSIL, 500, 13, 12, 5, 4, [1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1]]
+  ]
+  CURRENCY = [
     [:HEARTSCALE, 200, 8, 24, 2, 2, [1, 0, 1, 1]],
-    [:IRONBALL, 100, 9, 17, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]],
-    [:ODDKEYSTONE, 100, 10, 20, 4, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
-    [:HEATROCK, 50, 12, 17, 4, 3, [1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1]],
-    [:DAMPROCK, 50, 14, 20, 3, 3, [1, 1, 1, 1, 1, 1, 1, 0, 1]],
-    [:SMOOTHROCK, 50, 17, 18, 4, 4, [0, 0, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0]],
-    [:ICYROCK, 50, 17, 22, 4, 4, [0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1]],
     [:REDSHARD, 100, 21, 22, 3, 3, [1, 1, 1, 1, 1, 0, 1, 1, 1]],
     [:GREENSHARD, 100, 25, 20, 4, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1]],
     [:YELLOWSHARD, 100, 25, 23, 4, 3, [1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1]],
-    [:BLUESHARD, 100, 26, 26, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 0]],
+    [:BLUESHARD, 100, 26, 26, 3, 3, [1, 1, 1, 1, 1, 1, 1, 1, 0]]
+  ]
+  PLATES = [
+    #[:ODDKEYSTONE, 100, 10, 20, 4, 4, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
     [:INSECTPLATE, 10, 0, 26, 4, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
     [:DREADPLATE, 10, 4, 26, 4, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
     [:DRACOPLATE, 10, 8, 26, 4, 3, [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]],
@@ -222,11 +225,21 @@ class MiningGameScene
     [8, 6, 2, 3, [0, 1, 1, 1, 0, 1]]
   ]
 
+  def getItemArray
+    itemarray = BASICITEMS.dup
+    if $player.difficulty_mode?("normal")
+      itemarray.concat(CURRENCY)
+      itemarray.concat(FOSSILS) if @virginity
+    end
+    itemarray.concat(EVOSTONES) if $player.difficulty_mode?("easy")
+    return itemarray
+  end
+
   def update
     pbUpdateSpriteHash(@sprites)
   end
 
-  def pbStartScene
+  def pbStartScene(virgin)
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
@@ -237,6 +250,8 @@ class MiningGameScene
     @items = []
     @itemswon = []
     @iron = []
+    @virginity = virgin
+    @itemarray = getItemArray
     pbDistributeItems
     pbDistributeIron
     BOARD_HEIGHT.times do |i|
@@ -254,9 +269,10 @@ class MiningGameScene
   end
 
   def pbDistributeItems
+    itemms = @itemarray
     # Set items to be buried (index in ITEMS, x coord, y coord)
     ptotal = 0
-    ITEMS.each do |i|
+    itemms.each do |i|
       ptotal += i[1]
     end
     numitems = rand(2..4)
@@ -264,14 +280,14 @@ class MiningGameScene
     while numitems > 0
       rnd = rand(ptotal)
       added = false
-      ITEMS.length.times do |i|
-        rnd -= ITEMS[i][1]
+      itemms.length.times do |i|
+        rnd -= itemms[i][1]
         if rnd < 0
-          if pbNoDuplicateItems(ITEMS[i][0])
+          if pbNoDuplicateItems(itemms[i][0])
             until added
-              provx = rand(BOARD_WIDTH - ITEMS[i][4] + 1)
-              provy = rand(BOARD_HEIGHT - ITEMS[i][5] + 1)
-              if pbCheckOverlaps(false, provx, provy, ITEMS[i][4], ITEMS[i][5], ITEMS[i][6])
+              provx = rand(BOARD_WIDTH - itemms[i][4] + 1)
+              provy = rand(BOARD_HEIGHT - itemms[i][5] + 1)
+              if pbCheckOverlaps(false, provx, provy, itemms[i][4], itemms[i][5], itemms[i][6])
                 @items.push([i, provx, provy])
                 numitems -= 1
                 added = true
@@ -289,10 +305,10 @@ class MiningGameScene
     # Draw items on item layer
     layer = @sprites["itemlayer"].bitmap
     @items.each do |i|
-      ox = ITEMS[i[0]][2]
-      oy = ITEMS[i[0]][3]
-      rectx = ITEMS[i[0]][4]
-      recty = ITEMS[i[0]][5]
+      ox = itemms[i[0]][2]
+      oy = itemms[i[0]][3]
+      rectx = itemms[i[0]][4]
+      recty = itemms[i[0]][5]
       layer.blt(32 * i[1], 64 + (32 * i[2]), @itembitmap.bitmap, Rect.new(32 * ox, 32 * oy, 32 * rectx, 32 * recty))
     end
   end
@@ -330,8 +346,9 @@ class MiningGameScene
     plates = [:INSECTPLATE, :DREADPLATE, :DRACOPLATE, :ZAPPLATE, :FISTPLATE,
               :FLAMEPLATE, :MEADOWPLATE, :EARTHPLATE, :ICICLEPLATE, :TOXICPLATE,
               :MINDPLATE, :STONEPLATE, :SKYPLATE, :SPOOKYPLATE, :IRONPLATE, :SPLASHPLATE]
+    itemms = @itemarray
     @items.each do |i|
-      preitem = ITEMS[i[0]][0]
+      preitem = itemms[i[0]][0]
       return false if preitem == newitem   # No duplicate items
       return false if fossils.include?(preitem) && fossils.include?(newitem)
       return false if plates.include?(preitem) && plates.include?(newitem)
@@ -340,12 +357,13 @@ class MiningGameScene
   end
 
   def pbCheckOverlaps(checkiron, provx, provy, provwidth, provheight, provpattern)
+    itemms = @itemarray
     @items.each do |i|
       prex = i[1]
       prey = i[2]
-      prewidth = ITEMS[i[0]][4]
-      preheight = ITEMS[i[0]][5]
-      prepattern = ITEMS[i[0]][6]
+      prewidth = itemms[i[0]][4]
+      preheight = itemms[i[0]][5]
+      prepattern = itemms[i[0]][6]
       next if provx + provwidth <= prex || provx >= prex + prewidth ||
               provy + provheight <= prey || provy >= prey + preheight
       prepattern.length.times do |j|
@@ -430,11 +448,12 @@ class MiningGameScene
   def pbIsItemThere?(position)
     posx = position % BOARD_WIDTH
     posy = position / BOARD_WIDTH
+    itemms = @itemarray
     @items.each do |i|
       index = i[0]
-      width = ITEMS[index][4]
-      height = ITEMS[index][5]
-      pattern = ITEMS[index][6]
+      width = itemms[index][4]
+      height = itemms[index][5]
+      pattern = itemms[index][6]
       next if posx < i[1] || posx >= (i[1] + width)
       next if posy < i[2] || posy >= (i[2] + height)
       dx = posx - i[1]
@@ -463,13 +482,14 @@ class MiningGameScene
 
   def pbCheckRevealed
     ret = []
+    itemms = @itemarray
     @items.length.times do |i|
       next if @items[i][3]
       revealed = true
       index = @items[i][0]
-      width = ITEMS[index][4]
-      height = ITEMS[index][5]
-      pattern = ITEMS[index][6]
+      width = itemms[index][4]
+      height = itemms[index][5]
+      pattern = itemms[index][6]
       height.times do |j|
         width.times do |k|
           layer = @sprites["tile#{@items[i][1] + k + ((@items[i][2] + j) * BOARD_WIDTH)}"].layer
@@ -485,6 +505,7 @@ class MiningGameScene
 
   def pbFlashItems(revealed)
     return if revealed.length <= 0
+    itemms = @itemarray
     revealeditems = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
     halfFlashTime = Graphics.frame_rate / 8
     alphaDiff = (255.0 / halfFlashTime).ceil
@@ -493,8 +514,8 @@ class MiningGameScene
         burieditem = @items[index]
         revealeditems.bitmap.blt(32 * burieditem[1], 64 + (32 * burieditem[2]),
                                  @itembitmap.bitmap,
-                                 Rect.new(32 * ITEMS[burieditem[0]][2], 32 * ITEMS[burieditem[0]][3],
-                                          32 * ITEMS[burieditem[0]][4], 32 * ITEMS[burieditem[0]][5]))
+                                 Rect.new(32 * itemms[burieditem[0]][2], 32 * itemms[burieditem[0]][3],
+                                          32 * itemms[burieditem[0]][4], 32 * itemms[burieditem[0]][5]))
         if i > halfFlashTime
           revealeditems.color = Color.new(255, 255, 255, ((halfFlashTime * 2) - i) * alphaDiff)
         else
@@ -507,7 +528,7 @@ class MiningGameScene
     revealeditems.dispose
     revealed.each do |index|
       @items[index][3] = true
-      item = ITEMS[@items[index][0]][0]
+      item = itemms[@items[index][0]][0]
       @itemswon.push(item)
     end
   end
@@ -613,19 +634,63 @@ class MiningGame
     @scene = scene
   end
 
-  def pbStartScreen
-    @scene.pbStartScene
+  def pbStartScreen(virgin)
+    @scene.pbStartScene(virgin)
     @scene.pbMain
     @scene.pbEndScene
   end
 end
 
-
-
-def pbMiningGame
+def pbMiningGame(eventID, virgin = true)
   pbFadeOutIn {
     scene = MiningGameScene.new
     screen = MiningGame.new(scene)
-    screen.pbStartScreen
+    screen.pbStartScreen(virgin)
   }
+  pbSetSelfSwitch(eventID, "A", true)
+end
+
+# Run with:      evoShardsNPC
+def evoShardsNPC
+  commands = []
+  shardExchange = {
+    FIRESHARD: { stone: :FIRESTONE, qty: 10 },
+    THUNDERSHARD: { stone: :THUNDERSTONE, qty: 10 },
+    WATERSHARD: { stone: :WATERSTONE, qty: 10 },
+    LEAFSHARD: { stone: :LEAFSTONE, qty: 10 },
+    ICESHARD: { stone: :ICESTONE, qty: 10 },
+    MOONSHARD: { stone: :MOONSTONE, qty: 10 },
+    SUNSHARD: { stone: :SUNSTONE, qty: 10 },
+    DUSKSHARD: { stone: :DUSKSTONE, qty: 10 },
+    DAWNSHARD: { stone: :DAWNSTONE, qty: 10 },
+    SHINYSHARD: { stone: :SHINYSTONE, qty: 10 }
+  }
+  shardExchange.each do |shard, data|
+    next if !$bag.has?(shard) || $bag.quantity(shard) < data[:qty]
+    commands.push(_INTL("Exchange #{data[:qty]} #{GameData::Item.get(shard).name} for one #{GameData::Item.get(data[:stone]).name}?"))
+  end
+  commands.push(_INTL("Cancel"))
+  if commands.length == 1
+    text = "You have do not have enough shards to trade."
+  else
+    text = ""
+  end
+  helpwindow = Window_UnformattedTextPokemon.new(text)
+  helpwindow.visible = false
+  cmd = UIHelper.pbShowCommands(helpwindow,text,commands) {}
+  Input.update
+  selectedCommander = commands[cmd]
+
+  if selectedCommander == "Cancel"
+    return false
+  else
+    shardExchange.each do |shard, data|
+      if selectedCommander == "Exchange #{data[:qty]} #{GameData::Item.get(shard).name} for one #{GameData::Item.get(data[:stone]).name}?"
+        $bag.remove(shard, data[:qty])
+        pbMessage(_INTL("You exchanged #{data[:qty]} #{GameData::Item.get(shard).name} for..."))
+        pbReceiveItem(data[:stone])
+        break
+      end
+    end
+  end
 end
