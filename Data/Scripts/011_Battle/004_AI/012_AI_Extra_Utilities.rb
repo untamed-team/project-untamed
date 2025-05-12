@@ -658,8 +658,7 @@ class Battle::AI
         return true if move.soundMove? && target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
         return true if move.bombMove? && (target.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
                                          (target.isSpecies?(:MAGCARGO) && target.pokemon.willmega && !mold_broken))
-        return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
-                        :SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && 
+        return true if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function) && 
                         expectedTerrain == :Electric && target.affectedByTerrain?
         if move.powderMove?
             return true if target.pbHasType?(:GRASS, true)
