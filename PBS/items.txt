@@ -490,6 +490,22 @@ Price = 5000
 Flags = Fling_100
 Description = The fossil of an ancient Pokémon that once lived in the sea. What it looked like is a mystery.
 #-------------------------------
+[OPALFOSSIL]
+Name = Opal Fossil
+NamePlural = Opal Fossils
+Pocket = 1
+Price = 7000
+Flags = Fossil,Fling_100
+Description = Someone else fill in this text
+#-------------------------------
+[TARFOSSIL]
+Name = Tar Fossil
+NamePlural = Tar Fossils
+Pocket = 1
+Price = 7000
+Flags = Fossil,Fling_100
+Description = Someone else fill in this text
+#-------------------------------
 [PRETTYFEATHER]
 Name = Pretty Feather
 NamePlural = Pretty Feathers
