@@ -1019,7 +1019,7 @@ class Battle::AI
             score*=1.3 if target.moves.any? { |j| [:SNORE, :SLEEPTALK].include?(j&.id) }
             score*=2.0 if target.moves.any? { |j| j&.id == :REST }
             if user.pbHasMoveFunction?("SleepTarget","SleepTargetIfUserDarkrai", 
-                                       "SleepTargetChangeUserMeloettaForm"
+                                       "SleepTargetChangeUserMeloettaForm",
                                        "HealUserByHalfOfDamageDoneIfTargetAsleep",
                                        "StartDamageTargetEachTurnIfTargetAsleep") ||
                user.hasActiveAbility?(:BADDREAMS)
