@@ -45,7 +45,8 @@ class Battle::AI
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Corrosion #by low
-      if user.hasActiveAbility?(:CORROSION) && defType == :STEEL
+      if (user.hasActiveAbility?(:CORROSION) ||
+         (user.isSpecies?(:SUCHOBILE) && user.pokemon.willmega && $player.difficulty_mode?("chaos"))) && defType == :STEEL
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Miracle Eye
@@ -59,7 +60,9 @@ class Battle::AI
       end
     elsif !Effectiveness.super_effective_type?(moveType, defType)
       # Mass Extinction #by low
-      if user.hasActiveAbility?(:MASSEXTINCTION) && defType == :DRAGON
+      if (user.hasActiveAbility?(:MASSEXTINCTION) || 
+         (user.isSpecies?(:CHIXULOB) && user.pokemon.willmega && user.pokemon.hasHiddenAbility? && $player.difficulty_mode?("chaos"))) && 
+         defType == :DRAGON
         ret = Effectiveness::SUPER_EFFECTIVE_ONE
       end
     end

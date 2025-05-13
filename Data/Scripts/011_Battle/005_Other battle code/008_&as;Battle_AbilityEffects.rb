@@ -1563,6 +1563,24 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOINSTINCTS,
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:MOXIE,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    next unless $player.difficulty_mode?("chaos")
+    ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
+    met = [(1 + 0.05 * ded), 1.3].min
+    mults[:attack_multiplier] *= met if move.physicalMove?
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromUser.add(:SOULHEART,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    next unless $player.difficulty_mode?("chaos")
+    ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
+    met = [(1 + 0.05 * ded), 1.3].min
+    mults[:attack_multiplier] *= met if move.specialMove?
+  }
+)
+
 #by chespin
 Battle::AbilityEffects::DamageCalcFromUser.add(:ARTILLERIST,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
@@ -2377,7 +2395,7 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:MAGICIAN,
 
 Battle::AbilityEffects::OnEndOfUsingMove.add(:MOXIE,
   proc { |ability, user, targets, move, battle|
-    next if battle.pbAllFainted?(user.idxOpposingSide)
+    next if battle.pbAllFainted?(user.idxOpposingSide) || $player.difficulty_mode?("chaos")
     numFainted = 0
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
     next if numFainted == 0 || !user.pbCanRaiseStatStage?(:ATTACK, user)
@@ -2664,6 +2682,18 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SHEDSKIN,
     next unless battle.pbRandom(100) < 30
     battle.pbShowAbilitySplash(battler)
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
+  proc { |ability, battler, battle|
+    next unless $player.difficulty_mode?("chaos")
+    ded = [battler.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
+    next if ded == 0 || !battler.canHeal?
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP(((battler.totalhp / 32) * ded).round)
+    battle.pbDisplay(_INTL("{1}'s fallen allies healed {2} a little!", battler.pbTeam, battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )
@@ -3635,6 +3665,7 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 
 Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
   proc { |ability, battler, fainted, battle|
+    next if $player.difficulty_mode?("chaos")
     battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
   }
 )

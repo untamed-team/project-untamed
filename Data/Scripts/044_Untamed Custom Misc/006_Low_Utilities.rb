@@ -1198,7 +1198,7 @@ def eggMoveTutor
   if doegg
     commands = []
     @eggmovesarray.each do |move|
-      commands.push(_INTL("#{move.name}"))
+      commands.push(_INTL("#{GameData::Move.get(move).name}"))
     end
     commands.push(_INTL("Cancel"))
     helpwindow = Window_UnformattedTextPokemon.new("")
@@ -1211,7 +1211,7 @@ def eggMoveTutor
       return false
     else
       @eggmovesarray.each do |move|
-        if selectedCommander == "#{move.name}"
+        if selectedCommander == "#{GameData::Move.get(move).name}"
           if pbLearnMove(@mother, move, false, false)
             $stats.moves_taught_by_tutor += 1
             return true

@@ -148,21 +148,36 @@ class Battle::AI
         # Ability effects that alter damage
         if skill >= PBTrainerAI.mediumSkill && user.abilityActive?
             # NOTE: These abilities aren't suitable for checking at the start of the
-            #       round.    # DemICE: some of them.
+            #       round.
             abilityBlacklist = [:ANALYTIC, :SNIPER, :TINTEDLENS, :NEUROFORCE, :WARRIORSPIRIT, :AERILATE, :PIXILATE, :REFRIGERATE, :GALVANIZE, :NORMALIZE]
             expectedUserWeather = expectedWeather
             if [:Sun, :HarshSun, :Rain, :HeavyRain].include?(expectedUserWeather) && 
                  user.hasActiveItem?(:UTILITYUMBRELLA)
                 expectedUserWeather = :None
             end
+            old_ability = nil
+            if user.pokemon.willmega # good luck making a hash out of this
+                old_ability = user.ability
+                if user.isSpecies?(:MAWILE)
+                    user.ability = :HUGEPOWER
+                elsif $player.difficulty_mode?("chaos")
+                    if user.isSpecies?(:BANETTE)
+                        user.ability = :TOUGHCLAWS
+                    elsif user.isSpecies?(:M_ROSERADE)
+                        user.ability = :SOULHEART
+                    elsif user.isSpecies?(:CACTURNE)
+                        user.ability = :DUSTSENTINEL
+                    elsif user.isSpecies?(:CHIXULOB) && !user.pokemon.hasHiddenAbility?
+                        user.ability = :RECKLESS
+                    elsif user.isSpecies?(:XATU) && !user.pokemon.hasHiddenAbility?
+                        user.ability = :SOLARPOWER
+                    end
+                end
+            end
             Battle::AbilityEffects.triggerDamageCalcFromUser(
                 user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
             )
-
-            if user.pokemon.willmega
-                multipliers[:attack_multiplier] *= 2.0 if user.isSpecies?(:MAWILE) && move.physicalMove?(type)
-                multipliers[:base_damage_multiplier] *= 4 / 3.0 if user.isSpecies?(:BANETTE) && move.contactMove? && $player.difficulty_mode?("chaos")
-            end
+            user.ability = old_ability if old_ability
 
             # this doesnt take in foes' negative priority, but lets be real very few would use that anyway
             # also yes, this is taking in account allies, because for some reason thats a real check
@@ -217,14 +232,16 @@ class Battle::AI
                     expectedTargetWeather = :None
                 end
                 old_ability = nil
-                if target.isSpecies?(:LAGUNA) && target.pokemon.willmega
+                if target.pokemon.willmega
                     old_ability = target.ability
-                    target.ability = :FURCOAT
+                    if target.isSpecies?(:LAGUNA)
+                        target.ability = :FURCOAT
+                    end
                 end
                 Battle::AbilityEffects.triggerDamageCalcFromTarget(
                     target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
                 )
-                target.ability = old_ability if !old_ability.nil?
+                target.ability = old_ability if old_ability
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
             # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
@@ -328,8 +345,12 @@ class Battle::AI
             multipliers[:final_damage_multiplier] *= 0.75 if target.hasActiveAbility?(:PRISMARMOR)
 
             met = ($player.difficulty_mode?("chaos")) ? 1.25 : 1.5
-            multipliers[:final_damage_multiplier] *= met if user.hasActiveAbility?(:WARRIORSPIRIT)
-            
+            if user.hasActiveAbility?(:WARRIORSPIRIT) || 
+              (user.pokemon.willmega && user.isSpecies?(:HAWLUCHA) && 
+               $player.difficulty_mode?("chaos") && user.pokemon.hasHiddenAbility?)
+                multipliers[:final_damage_multiplier] *= met
+            end
+
             # klutz buff #by low
             klut = user.hasActiveAbility?(:KLUTZ)
             klut = false if !$player.difficulty_mode?("chaos")
@@ -658,8 +679,7 @@ class Battle::AI
         return true if move.soundMove? && target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
         return true if move.bombMove? && (target.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
                                          (target.isSpecies?(:MAGCARGO) && target.pokemon.willmega && !mold_broken))
-        return true if [:HYPNOSIS, :GRASSWHISTLE, :LOVELYKISS, 
-                        :SING, :DARKVOID, :SLEEPPOWDER, :SPORE, :YAWN].include?(move.id) && 
+        return true if ["SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn"].include?(move.function) && 
                         expectedTerrain == :Electric && target.affectedByTerrain?
         if move.powderMove?
             return true if target.pbHasType?(:GRASS, true)
@@ -1022,6 +1042,10 @@ class Battle::AI
             healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
             healing += 0.1250 if user.hasActiveAbility?(:POISONHEAL) && user.poisoned?
             healing += 0.1250 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
+            if user.hasActiveAbility?(:SOULHEART) || (user.isSpecies?(:M_ROSERADE) && user.pokemon.willmega)
+                ded = [user.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
+                healing += (0.03125 * ded) if ded > 0
+            end
             if @battle.pbCheckGlobalAbility(:STALL)
                 healing -= 1
                 healing *= 2
