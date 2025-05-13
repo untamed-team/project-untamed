@@ -2690,7 +2690,7 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
   proc { |ability, battler, battle|
     next unless $player.difficulty_mode?("chaos")
     ded = battler.pbOwnSide.effects[PBEffects::FaintedMons]
-    next if ded == 0 || battler.hp == battler.totalhp
+    next if ded == 0 || !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
     battler.pbRecoverHP([(battler.totalhp / 64 * (2 ** ded)).round, (battler.totalhp * 0.5).round].min)
     battle.pbDisplay(_INTL("{1}'s fallen allies healed {2} a little!", battler.pbTeam, battler.pbThis))
