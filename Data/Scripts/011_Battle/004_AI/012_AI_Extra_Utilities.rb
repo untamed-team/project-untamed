@@ -158,13 +158,13 @@ class Battle::AI
             old_ability = nil
             if user.pokemon.willmega # good luck making a hash out of this
                 old_ability = user.ability
-                if user.isSpecies?(:M_ROSERADE)
-                    user.ability = :SOULHEART
-                elsif user.isSpecies?(:MAWILE)
+                if user.isSpecies?(:MAWILE)
                     user.ability = :HUGEPOWER
                 elsif $player.difficulty_mode?("chaos")
                     if user.isSpecies?(:BANETTE)
                         user.ability = :TOUGHCLAWS
+                    elsif user.isSpecies?(:M_ROSERADE)
+                        user.ability = :SOULHEART
                     elsif user.isSpecies?(:CACTURNE)
                         user.ability = :DUSTSENTINEL
                     elsif user.isSpecies?(:CHIXULOB) && !user.pokemon.hasHiddenAbility?
