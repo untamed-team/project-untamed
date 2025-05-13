@@ -155,14 +155,21 @@ class Battle::AI
                  user.hasActiveItem?(:UTILITYUMBRELLA)
                 expectedUserWeather = :None
             end
+            old_ability = nil
+            if user.pokemon.willmega
+                old_ability = user.ability
+                if user.isSpecies?(:M_ROSERADE)
+                    user.ability = :SOULHEART
+                elsif user.isSpecies?(:MAWILE)
+                    user.ability = :HUGEPOWER
+                elsif user.isSpecies?(:BANETTE) && $player.difficulty_mode?("chaos")
+                    user.ability = :TOUGHCLAWS
+                end
+            end
             Battle::AbilityEffects.triggerDamageCalcFromUser(
                 user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
             )
-
-            if user.pokemon.willmega
-                multipliers[:attack_multiplier] *= 2.0 if user.isSpecies?(:MAWILE) && move.physicalMove?(type)
-                multipliers[:base_damage_multiplier] *= 4 / 3.0 if user.isSpecies?(:BANETTE) && move.contactMove? && $player.difficulty_mode?("chaos")
-            end
+            user.ability = old_ability if old_ability
 
             # this doesnt take in foes' negative priority, but lets be real very few would use that anyway
             # also yes, this is taking in account allies, because for some reason thats a real check
@@ -224,7 +231,7 @@ class Battle::AI
                 Battle::AbilityEffects.triggerDamageCalcFromTarget(
                     target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
                 )
-                target.ability = old_ability if !old_ability.nil?
+                target.ability = old_ability if old_ability
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
             # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
@@ -1021,6 +1028,10 @@ class Battle::AI
             healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
             healing += 0.1250 if user.hasActiveAbility?(:POISONHEAL) && user.poisoned?
             healing += 0.1250 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
+            if user.hasActiveAbility?(:SOULHEART)
+                ded = [user.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
+                healing += (0.03125 * ded) if ded > 0
+            end
             if @battle.pbCheckGlobalAbility(:STALL)
                 healing -= 1
                 healing *= 2

@@ -700,7 +700,7 @@ Description = Contact with this Pokémon spreads this Ability.
 [MOXIE]
 Name = Moxie
 Description = Boosts Attack after knocking out any Pokémon.
-FullDesc = +1 Atk after the user knocks out a Pokémon. In chaos mode, the user instead gains a +10% damage boost for physical moves for each fainted foe.
+FullDesc = +1 Atk after the user knocks out a Pokémon. In chaos mode, the user instead gains a +5% damage boost for physical moves for each fainted foe.
 #-------------------------------
 [JUSTIFIED]
 Name = Justified
@@ -1011,7 +1011,7 @@ Description = Makes foes unable to use priority attacks.
 [SOULHEART]
 Name = Soul-Heart
 Description = Boosts Sp. Atk each time a Pokémon faints.
-FullDesc = +1 Sp. Atk after any knock out. In chaos mode, the user instead gains a +10% damage boost for special moves for each fainted foe and small chip healing for each fainted ally.
+FullDesc = +1 Sp. Atk after any knock out. In chaos mode, the user instead gains a +5% damage boost for special moves for each fainted foe and small chip healing for each fainted ally.
 #-------------------------------
 [TANGLINGHAIR]
 Name = Tangling Hair
