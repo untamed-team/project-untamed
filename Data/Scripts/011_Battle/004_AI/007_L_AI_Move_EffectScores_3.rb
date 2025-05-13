@@ -4683,6 +4683,84 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "EffectDependsOnEnvironment" # Secret Power
+        secretpowa = 0 # paralysis
+        addEffect = 30
+        addEffect *= 2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
+        case @battle.field.terrain
+        when :Electric # paralysis
+            secretpowa = 0
+        when :Grassy # sleep
+            secretpowa = 1
+        when :Misty # lower Sp. Atk by 1
+            secretpowa = 4
+        when :Psychic # lower Speed by 1
+            secretpowa = 6
+        else
+            case @battle.environment
+            when :Grass, :TallGrass, :Forest, :ForestGrass # sleep
+                secretpowa = 1
+            when :MovingWater, :StillWater, :Underwater # lower Attack by 1
+                secretpowa = 5
+            when :Puddle, :Sky # lower Speed by 1
+                secretpowa = 6
+            when :Cave, :Space, :Graveyard # flinch
+                secretpowa = 8
+            when :Rock, :Sand # lower Acc by 1
+                secretpowa = 999
+            when :Snow, :Ice # freeze
+                secretpowa = 2
+            when :Volcano # burn
+                secretpowa = 3
+            when :UltraSpace # lower Defense by 1
+                secretpowa = 7
+            end
+        end
+        miniscore = 100
+        case secretpowa
+        when 0 # paralysis
+            miniscore = pbTargetBenefitsFromStatus?(user, target, :PARALYSIS, miniscore, move, globalArray, skill)
+        when 1 # sleep
+            miniscore = pbTargetBenefitsFromStatus?(user, target, :SLEEP, miniscore, move, globalArray, skill)
+        when 2 # freeze
+            miniscore = pbTargetBenefitsFromStatus?(user, target, :FREEZE, miniscore, move, globalArray, skill)
+        when 3 # burn
+            miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, miniscore, move, globalArray, skill)
+        when 4 # lower Sp. Atk by 1
+            miniscore*=0.1 if !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+            miniscore*=1.2 if target.poisoned? || target.burned?
+            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+            miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+        when 5 # lower Attack by 1
+            miniscore*=0.1 if !target.pbCanLowerStatStage?(:ATTACK)
+            miniscore*=1.2 if target.poisoned? || target.frozen?
+            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+            miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+        when 6 # lower Speed by 1
+            miniscore*=0.1 if !target.pbCanLowerStatStage?(:SPEED)
+            miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
+            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+            miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+        when 7 # lower Defense by 1
+            miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
+            miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
+            miniscore*=0.7 if user.burned?
+            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+            miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+        when 8 # flinch
+            if canFlinchTarget(user,target,mold_broken) && userFasterThanTarget
+                miniscore*=1.3
+                miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen? || 
+                                  target.effects[PBEffects::LeechSeed]>-1 || 
+                                  target.effects[PBEffects::Curse]
+                miniscore*=0.3 if target.hasActiveAbility?(:STEADFAST)
+            end
+        end
+        miniscore-=100
+        miniscore*=(addEffect/100.0)
+        miniscore+=100
+        miniscore/=100.0
+        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
+        score*=miniscore
     #---------------------------------------------------------------------------
     when "HitsAllFoesAndPowersUpInPsychicTerrain" # Expanding Force
         score *= 1.4 if expectedTerrain == :Psychic && user.affectedByTerrain?
