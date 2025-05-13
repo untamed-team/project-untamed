@@ -1028,7 +1028,7 @@ class Battle::AI
             healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
             healing += 0.1250 if user.hasActiveAbility?(:POISONHEAL) && user.poisoned?
             healing += 0.1250 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
-            if user.hasActiveAbility?(:SOULHEART)
+            if user.hasActiveAbility?(:SOULHEART) || (user.isSpecies?(:M_ROSERADE) && user.pokemon.willmega)
                 ded = [user.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
                 healing += (0.03125 * ded) if ded > 0
             end
