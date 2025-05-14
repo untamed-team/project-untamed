@@ -157,27 +157,28 @@ class Battle::AI
             end
             old_ability = nil
             if user.pokemon.willmega # good luck making a hash out of this
-                old_ability = user.ability
+                old_ability = user.abilityMutationList
                 if user.isSpecies?(:MAWILE)
-                    user.ability = :HUGEPOWER
+                    user.abilityMutationList.push(:HUGEPOWER)
                 elsif $player.difficulty_mode?("chaos")
                     if user.isSpecies?(:BANETTE)
-                        user.ability = :TOUGHCLAWS
+                        user.abilityMutationList.push(:TOUGHCLAWS)
                     elsif user.isSpecies?(:M_ROSERADE)
-                        user.ability = :SOULHEART
+                        user.abilityMutationList.push(:SOULHEART)
                     elsif user.isSpecies?(:CACTURNE)
-                        user.ability = :DUSTSENTINEL
+                        user.abilityMutationList.push(:DUSTSENTINEL)
                     elsif user.isSpecies?(:CHIXULOB) && !user.pokemon.hasHiddenAbility?
-                        user.ability = :RECKLESS
+                        user.abilityMutationList.push(:RECKLESS)
                     elsif user.isSpecies?(:XATU) && !user.pokemon.hasHiddenAbility?
-                        user.ability = :SOLARPOWER
+                        user.abilityMutationList.push(:SOLARPOWER)
                     end
                 end
+                user.abilityMutationList |= []
             end
             Battle::AbilityEffects.triggerDamageCalcFromUser(
                 user.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedUserWeather
             )
-            user.ability = old_ability if old_ability
+            user.abilityMutationList = old_ability if old_ability
 
             # this doesnt take in foes' negative priority, but lets be real very few would use that anyway
             # also yes, this is taking in account allies, because for some reason thats a real check
@@ -233,15 +234,16 @@ class Battle::AI
                 end
                 old_ability = nil
                 if target.pokemon.willmega
-                    old_ability = target.ability
+                    old_ability = target.abilityMutationList
                     if target.isSpecies?(:LAGUNA)
-                        target.ability = :FURCOAT
+                        target.abilityMutationList.push(:FURCOAT)
                     end
+                    target.abilityMutationList |= []
                 end
                 Battle::AbilityEffects.triggerDamageCalcFromTarget(
                     target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist, expectedTargetWeather
                 )
-                target.ability = old_ability if old_ability
+                target.abilityMutationList = old_ability if old_ability
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
             # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
@@ -688,8 +690,8 @@ class Battle::AI
         end
         if priorityAI(user,move,globalArray) > 0
             @battle.allSameSideBattlers(target.index).each do |b|
-                return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken)  &&
-                             !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+                return true if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,mold_broken) &&
+                            !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
                 # laguna/diancie can have priority immunity in pre-mega form
             end
             return true if expectedTerrain == :Psychic && target.affectedByTerrain? && target.opposes?(user)
@@ -1042,7 +1044,8 @@ class Battle::AI
             healing += 0.1250 if user.hasActiveAbility?(:PARTICURE) && user.effectiveWeather == :Sandstorm
             healing += 0.1250 if user.hasActiveAbility?(:POISONHEAL) && user.poisoned?
             healing += 0.1250 if target.effects[PBEffects::LeechSeed]>-1 && !target.hasActiveAbility?(:LIQUIDOOZE)
-            if user.hasActiveAbility?(:SOULHEART) || (user.isSpecies?(:M_ROSERADE) && user.pokemon.willmega)
+            if (user.hasActiveAbility?(:SOULHEART) || (user.isSpecies?(:M_ROSERADE) && user.pokemon.willmega)) &&
+               $player.difficulty_mode?("chaos")
                 ded = [user.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
                 healing += (0.03125 * ded) if ded > 0
             end

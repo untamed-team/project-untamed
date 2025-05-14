@@ -1567,7 +1567,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:MOXIE,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     next unless $player.difficulty_mode?("chaos")
     ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
-    met = [(1 + 0.05 * ded), 1.3].min
+    met = [(1 + (0.05 * ded)), 1.3].min
     mults[:attack_multiplier] *= met if move.physicalMove?
   }
 )
@@ -1576,7 +1576,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SOULHEART,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     next unless $player.difficulty_mode?("chaos")
     ded = user.pbOpposingSide.effects[PBEffects::FaintedMons]
-    met = [(1 + 0.05 * ded), 1.3].min
+    met = [(1 + (0.05 * ded)), 1.3].min
     mults[:attack_multiplier] *= met if move.specialMove?
   }
 )
