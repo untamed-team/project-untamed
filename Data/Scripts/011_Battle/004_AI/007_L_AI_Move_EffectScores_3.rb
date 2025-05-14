@@ -5877,7 +5877,7 @@ class Battle::AI
         if target.hasActiveAbility?(:SLOWSTART)
             score*=1.3
         end
-        if target.item==0 && target.hasActiveAbility?(:UNBURDEN)
+        if target.effects[PBEffects::Unburden] && target.hasActiveAbility?(:UNBURDEN)
             score*=1.5
         end
         if target.hasActiveAbility?([:INTIMIDATE, :GRIMTEARS])
@@ -5932,7 +5932,7 @@ class Battle::AI
             if target.hasActiveAbility?(:SLOWSTART)
                 miniscore*=1.3
             end
-            if target.item==0 && target.hasActiveAbility?(:UNBURDEN)
+            if target.effects[PBEffects::Unburden] && target.hasActiveAbility?(:UNBURDEN)
                 miniscore*=1.5
             end
             if target.hasActiveAbility?([:INTIMIDATE, :GRIMTEARS])
