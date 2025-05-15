@@ -300,7 +300,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
@@ -308,7 +308,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
