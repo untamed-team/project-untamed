@@ -1679,9 +1679,7 @@ Battle::AbilityEffects::DamageCalcFromTarget.add(:FURCOAT,
 
 Battle::AbilityEffects::DamageCalcFromTarget.add(:GRASSPELT,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    if user.battle.field.terrain == :Grassy
-      mults[:defense_multiplier] *= 1.5
-    end
+    mults[:defense_multiplier] *= 1.5 if target.battle.field.terrain == :Grassy
   }
 )
 
