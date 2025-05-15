@@ -158,6 +158,7 @@ class Battle::AI
             old_ability = nil
             if user.pokemon.willmega # good luck making a hash out of this
                 old_ability = user.abilityMutationList
+                user.abilityMutationList = [] if !user.hasAbilityMutation?
                 if user.isSpecies?(:MAWILE)
                     user.abilityMutationList.push(:HUGEPOWER)
                 elsif $player.difficulty_mode?("chaos")
@@ -235,6 +236,7 @@ class Battle::AI
                 old_ability = nil
                 if target.pokemon.willmega
                     old_ability = target.abilityMutationList
+                    target.abilityMutationList = [] if !target.hasAbilityMutation?
                     if target.isSpecies?(:LAGUNA)
                         target.abilityMutationList.push(:FURCOAT)
                     end
