@@ -86,6 +86,7 @@ class Results
     pbDisposeSpriteHash(@fadeSprite)
     @whiteFadeViewport.dispose
     pbWaitUpdateGraphics(1 * Graphics.frame_rate)
+	self.pbEndScene
     ContestStage.pbMainAfterResults(@chosenContestants[@winningEntryNumber-1], @winningEntryNumber)
   end #def self.pbMain(chosenContestants)
   

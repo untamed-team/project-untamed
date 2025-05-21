@@ -213,42 +213,46 @@ class Battle::Battler
         pbChangeForm(0, _INTL("{1} changed to Shield Forme!", pbThis))
       end
     end
-		# Presage #by low (placed here so it triggers before doing damage)
-		if self.hasActiveAbility?(:PRESAGE)
-			weather_hash = {
-				"RaiseUserAtkSpAtk1Or2InSun"	=> :Sun, # growth
-				"HealUserDependingOnWeather"	=> :Sun, # morning sun
-				"TwoTurnAttackOneTurnInSun"		=> :Sun, # solar beam / solar blade
-				"FreezeTargetAlwaysHitsInHail"	=> :Hail, # blizzard
-				"HealUserDependingOnSandstorm"	=> :Sandstorm, # shore up
-				"StartUserSideDoubleSpeed"			=> :StrongWinds,  # tailwind
-				"ConfuseTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # hurricane
-				"ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"	=> :Rain, # thunder
-				"HigherDamageInRain"														=> :Rain, # stream burst
-				"HigherDamageInSunVSNonFireTypes"	              => :Sun,  # scald
-				"PeperSpray"	                                  => :Sun   # pepper spray
-			}
-			if move.function != "TypeAndPowerDependOnWeather"
-				new_weather = weather_hash[move.function]
-				if !new_weather && move.damagingMove?
-					case move.type
-						when :FIRE
-							new_weather = :Sun
-						when :WATER
-							new_weather = :Rain
-						when :ICE
-							new_weather = :Hail
-						when :GROUND, :ROCK
-							new_weather = :Sandstorm
-						when :NORMAL
-							new_weather = :None
-						when :QMARKS
-							new_weather = :ShadowSky
-					end
-				end
-			end
-			battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
-		end
+    # Presage #by low (placed here so it triggers before doing damage)
+    if self.hasActiveAbility?(:PRESAGE)
+      if move.function == "TypeAndPowerDependOnWeather"
+        possible_weathers = [:Sun, :Rain, :Sandstorm, :Hail, :StrongWinds, :ShadowSky]
+        new_weather = possible_weathers[@battle.pbRandom(possible_weathers.length)] if $player.difficulty_mode?("easy")
+      else
+        weather_hash = {
+          "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+          "HealUserDependingOnWeather" => :Sun, # morning sun
+          "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+          "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+          "HealUserDependingOnHail"      => :Hail, # glacial gulf
+          "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+          "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+          "HigherDamageInRain"                            => :Rain, # stream burst
+          "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+          "PeperSpray"                                    => :Sun   # pepper spray
+        }
+        new_weather = weather_hash[move.function]
+        if !new_weather && move.damagingMove?
+          case move.type
+            when :FIRE
+              new_weather = :Sun
+            when :WATER
+              new_weather = :Rain
+            when :ICE
+              new_weather = :Hail
+            when :GROUND, :ROCK
+              new_weather = :Sandstorm
+            when :NORMAL
+              new_weather = :None
+            when :QMARKS
+              new_weather = :ShadowSky
+          end
+        end
+      end
+      battle.pbStartWeatherAbility(new_weather, self, false, true) if new_weather
+    end
     # Calculate the move's type during this usage
     move.calcType = move.pbCalcType(self)
     # Start effect of Mold Breaker
@@ -286,6 +290,7 @@ class Battle::Battler
       @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
       @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
       @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
+      @battle.addMoveRevealed(self, move.id) if !@battle.moveRevealed?(self, move.id) # for Kiriya #by low
     end
     @battle.lastMoveUsed = move.id   # For Copycat
     @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
@@ -352,13 +357,13 @@ class Battle::Battler
     move.pbOnStartUse(user, targets)
     # Self-thawing due to the move
     # Powder
-    if user.effects[PBEffects::Powder] && move.calcType == :FIRE
+    if user.effects[PBEffects::Powder] && move.calcType == :FIRE && move.damagingMove?
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
-      if ![:Rain, :HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
+      if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
-          @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
+          @battle.pbDisplay(_INTL("{1} was hurt!", user.pbThis))
         }
         @battle.pbGainExp   # In case user is KO'd by this
       end
@@ -849,16 +854,16 @@ class Battle::Battler
        targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
-		# damage message #by low
-		if $player.difficulty_mode?("hard")
-			targets.each do |b|
-				if b.damageState.calcDamage > 0
-					damagetotal = b.damageState.calcDamage
-					damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
-					@battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
-				end
-			end
-		end
+    # damage message #by low
+    if $player.difficulty_mode?("hard")
+      targets.each do |b|
+        if b.damageState.calcDamage > 0
+          damagetotal = b.damageState.calcDamage
+          #damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
+          @battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
+        end
+      end
+    end
     return true
   end
 end

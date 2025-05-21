@@ -1504,13 +1504,3 @@ ItemHandlers::UseInField.add(:DDTSPRAY,proc { |item|
 		next false
 	end
 })
-
-ItemHandlers::UseInField.add(:GOLDCAMERA,proc { |item|
-  $PokemonGlobal.goldencamera = !$PokemonGlobal.goldencamera
-  if $PokemonGlobal.goldencamera
-    pbMessage(_INTL("The camera was turned on. It will make your Pokemon weaker but it will give you coins passively."))
-  else
-    pbMessage(_INTL("The camera was turned off."))
-  end
-  next true
-})

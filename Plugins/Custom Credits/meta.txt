@@ -1,0 +1,4 @@
+﻿Name       = Custom Credits
+Version    = 1.0.1
+Essentials = 20.1
+Credits    = Gardenette, Maruno

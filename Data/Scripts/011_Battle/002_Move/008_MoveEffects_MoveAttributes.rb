@@ -229,7 +229,7 @@ class Battle::Move::PowerHigherWithUserPositiveStatStages < Battle::Move
     mult = 1
     GameData::Stat.each_battle { |s| mult += user.stages[s.id] }
     mult = [1, mult].max
-    return 20 * mult
+    return [20 * mult, 200].min
   end  
 end
 
@@ -239,9 +239,10 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithTargetPositiveStatStages < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    mult = 3
+    mult = 1
     GameData::Stat.each_battle { |s| mult += target.stages[s.id] if target.stages[s.id] > 0 }
-    return [20 * mult, 200].min
+    mult = [1, mult].max
+    return 20 * mult
   end
 end
 
@@ -430,8 +431,7 @@ class Battle::Move::RandomPowerDoublePowerIfTargetUnderground < Battle::Move
     magni = magnitudes[@battle.pbRandom(magnitudes.length)]
     if !user.pbOwnedByPlayer?
       magni += 1
-      maxMagnitude = magnitudes.max
-      magni = maxMagnitude if magni > maxMagnitude
+      magni = [magni, magnitudes.max].min
     end
     @magnitudeDmg = baseDmg[magni - 4]
     @battle.pbDisplay(_INTL("Magnitude {1}!", magni))
@@ -1208,11 +1208,7 @@ class Battle::Move::CategoryDependsOnHigherDamagePoisonTarget < Battle::Move::Po
     physical_damage = real_attack.to_f / real_defense
     special_damage = real_special_attack.to_f / real_special_defense
     # Determine move's category
-    if physical_damage == special_damage
-      @calcCategry = @battle.pbRandom(2)
-    else
-      @calcCategory = (physical_damage > special_damage) ? 0 : 1
-    end
+    @calcCategory = (physical_damage > special_damage) ? 0 : 1
   end
 
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
@@ -1587,6 +1583,10 @@ class Battle::Move::TypeAndPowerDependOnWeather < Battle::Move
       ret = :ROCK if GameData::Type.exists?(:ROCK)
     when :Hail
       ret = :ICE if GameData::Type.exists?(:ICE)
+    when :StrongWinds
+      ret = :FLYING if GameData::Type.exists?(:FLYING)
+    when :ShadowSky
+      ret = :QMARKS if GameData::Type.exists?(:QMARKS)
     end
     return ret
   end
@@ -1623,6 +1623,7 @@ class Battle::Move::TypeAndPowerDependOnTerrain < Battle::Move
     when :Psychic
       ret = :PSYCHIC if GameData::Type.exists?(:PSYCHIC)
     end
+    ret = :NORMAL if !user.affectedByTerrain?
     return ret
   end
 

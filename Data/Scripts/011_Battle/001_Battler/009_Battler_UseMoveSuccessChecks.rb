@@ -215,6 +215,9 @@ class Battle::Battler
           return false
         end
       end
+    when :DIZZY #by low
+      self.statusCount -= 1
+      pbCureStatus if @statusCount <= 0
     end
     # Obedience check
     return false if !pbObedienceCheck?(choice)
@@ -225,10 +228,10 @@ class Battle::Battler
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!", pbThis))
         @battle.pbHideAbilitySplash(self)
-				unless move.usableWhenTruanting? # Truant buff #by low
-					@lastMoveFailed = true
-					return false
-				end
+        unless move.usableWhenTruanting? # Truant buff #by low
+          @lastMoveFailed = true
+          return false
+        end
       end
     end
     # Flinching
@@ -250,8 +253,9 @@ class Battle::Battler
         @battle.pbCommonAnimation("Confusion", self)
         @battle.pbDisplay(_INTL("{1} is confused!", pbThis))
         threshold = (Settings::MECHANICS_GENERATION >= 7) ? 30 : 50   # % chance
-        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 #by low
+        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
           pbConfusionDamage(_INTL("It hurt itself in its confusion!"))
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
           @lastMoveFailed = true
           return false
         end
@@ -259,15 +263,16 @@ class Battle::Battler
     end
     # Paralysis
     if @status == :PARALYSIS 
-			if $player.difficulty_mode?("chaos") #by low
-				#nothing
-			else
-				if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 #by low
-					pbContinueStatus
-					@lastMoveFailed = true
-					return false
-				end
-			end
+      if $player.difficulty_mode?("chaos") #by low
+        #nothing
+      else
+        if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
+          pbContinueStatus
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
+          @lastMoveFailed = true
+          return false
+        end
+      end
     end
     return true
   end
@@ -336,20 +341,6 @@ class Battle::Battler
           @battle.successStates[user.index].protected = true
           return false
         end
-        # King's Shield
-        if target.effects[PBEffects::KingsShield] && move.damagingMove?
-          if show_message
-            @battle.pbCommonAnimation("KingsShield", target)
-            @battle.pbDisplay(_INTL("{1} protected itself!", target.pbThis))
-          end
-          target.damageState.protected = true
-          @battle.successStates[user.index].protected = true
-          if move.pbContactMove?(user) && user.affectedByContactEffect? &&
-             user.pbCanLowerStatStage?(:ATTACK, target)
-            user.pbLowerStatStage(:ATTACK, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, target)
-          end
-          return false
-        end
         # Spiky Shield
         if target.effects[PBEffects::SpikyShield]
           if show_message
@@ -380,27 +371,43 @@ class Battle::Battler
           end
           return false
         end
-        # Obstruct
-        if target.effects[PBEffects::Obstruct] && move.damagingMove?
-          if show_message
-            @battle.pbCommonAnimation("Obstruct", target)
-            @battle.pbDisplay(_INTL("{1} protected itself!", target.pbThis))
+        if move.damagingMove?
+          # King's Shield
+          if target.effects[PBEffects::KingsShield]
+            if show_message
+              @battle.pbCommonAnimation("KingsShield", target)
+              @battle.pbDisplay(_INTL("{1} protected itself!", target.pbThis))
+            end
+            target.damageState.protected = true
+            @battle.successStates[user.index].protected = true
+            if move.pbContactMove?(user) && user.affectedByContactEffect? &&
+               user.pbCanLowerStatStage?(:ATTACK, target)
+              user.pbLowerStatStage(:ATTACK, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, target)
+            end
+            return false
           end
-          target.damageState.protected = true
-          @battle.successStates[user.index].protected = true
-          if move.pbContactMove?(user) && user.affectedByContactEffect? &&
-             user.pbCanLowerStatStage?(:DEFENSE, target)
-            user.pbLowerStatStage(:DEFENSE, 2, target)
+          # Obstruct
+          if target.effects[PBEffects::Obstruct]
+            if show_message
+              @battle.pbCommonAnimation("Obstruct", target)
+              @battle.pbDisplay(_INTL("{1} protected itself!", target.pbThis))
+            end
+            target.damageState.protected = true
+            @battle.successStates[user.index].protected = true
+            if move.pbContactMove?(user) && user.affectedByContactEffect? &&
+               user.pbCanLowerStatStage?(:DEFENSE, target)
+              user.pbLowerStatStage(:DEFENSE, (Settings::MECHANICS_GENERATION >= 8) ? 1 : 2, target)
+            end
+            return false
           end
-          return false
-        end
-        # Mat Block
-        if target.pbOwnSide.effects[PBEffects::MatBlock] && move.damagingMove?
-          # NOTE: Confirmed no common animation for this effect.
-          @battle.pbDisplay(_INTL("{1} was blocked by the kicked-up mat!", move.name)) if show_message
-          target.damageState.protected = true
-          @battle.successStates[user.index].protected = true
-          return false
+          # Mat Block
+          if target.pbOwnSide.effects[PBEffects::MatBlock]
+            # NOTE: Confirmed no common animation for this effect.
+            @battle.pbDisplay(_INTL("{1} was blocked by the kicked-up mat!", move.name)) if show_message
+            target.damageState.protected = true
+            @battle.successStates[user.index].protected = true
+            return false
+          end
         end
       end
     end

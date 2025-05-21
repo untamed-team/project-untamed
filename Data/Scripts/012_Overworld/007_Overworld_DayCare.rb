@@ -229,6 +229,9 @@ class DayCare
       end
       balls.delete(:MASTERBALL)    # Can't inherit this Ball
       balls.delete(:CHERISHBALL)   # Can't inherit this Ball
+      balls.delete(:STARTERBALLGRASS)   # Can't inherit this Ball
+      balls.delete(:STARTERBALLFIRE)    # Can't inherit this Ball
+      balls.delete(:STARTERBALLWATER)   # Can't inherit this Ball
       egg.poke_ball = balls.sample if !balls.empty?
     end
 
@@ -548,7 +551,9 @@ class DayCare
                 (egg_groups1 & egg_groups2).length == 0
     # Pokémon with incompatible genders cannot breed
     return 0 if !compatible_gender?(pkmn1, pkmn2)
+    # "fateful encounter" breeding blacklist #by low
     return 0 if pbIsBadPokemon?(pkmn1) || pbIsBadPokemon?(pkmn2)
+    return 0 if pkmn1.obtain_method == 4 || pkmn2.obtain_method == 4
     # Pokémon can breed; calculate a compatibility factor
     ret = 1
     ret += 1 if pkmn1.species == pkmn2.species

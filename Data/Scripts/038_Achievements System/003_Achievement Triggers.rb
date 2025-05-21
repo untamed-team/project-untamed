@@ -64,6 +64,7 @@ class Battle::Battler
     # Do other things
     @battle.pbClearChoice(@index)   # Reset choice
     pbOwnSide.effects[PBEffects::LastRoundFainted] = @battle.turnCount
+    pbOwnSide.effects[PBEffects::FaintedMons] += 1 if pbOwnSide.effects[PBEffects::FaintedMons] < 6
     if $game_temp.party_direct_damage_taken &&
        $game_temp.party_direct_damage_taken[@pokemonIndex] &&
        pbOwnedByPlayer?
@@ -114,7 +115,6 @@ class Battle
       ItemHandlers.triggerBattleUseOnPokemon(item, pkmn, battler, ch, @scene)
       ch[1] = nil   # Delete item from choice
       Achievements.incrementProgress("ITEMS_USED",1)
-      Achievements.incrementProgress("ITEMS_USED_IN_BATTLE",1)
       return
     end
     pbDisplay(_INTL("But it had no effect!"))
@@ -142,7 +142,6 @@ def pbUseItemOnBattler(item, idxParty, userBattler)
       ch[1] = nil   # Delete item from choice
       battler.pbItemOnStatDropped
       Achievements.incrementProgress("ITEMS_USED",1)
-      Achievements.incrementProgress("ITEMS_USED_IN_BATTLE",1)
       return
     else
       pbDisplay(_INTL("But it had no effect!"))

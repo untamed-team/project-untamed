@@ -166,8 +166,6 @@ class Battle::Battler
     @lastRoundMoveFailed   = false
     @movesUsed             = []
     @turnCount             = 0
-		#by low
-    @remaningHPBars = (self.isBossPokemon?) ? 3 : 0 
     @effects[PBEffects::Attract]             = -1
     @battle.allBattlers.each do |b|   # Other battlers no longer attracted to self
       b.effects[PBEffects::Attract] = -1 if b.effects[PBEffects::Attract] == @index
@@ -305,8 +303,13 @@ class Battle::Battler
     @effects[PBEffects::SlipperyPeel]        = false
     @effects[PBEffects::MoodyMemory]     		 = -1
     @effects[PBEffects::PrioEchoChamber]     = -1
-    @SetupMovesUsed             						 = []
-    @prepickedMove             						   = nil
+    @effects[PBEffects::HoldingHand]         = false
+    @effects[PBEffects::NeedleArm]           = -1
+    @battle.allBattlers.each do |b|   # Other battlers no longer blocked by self
+      b.effects[PBEffects::NeedleArm] = -1 if b.effects[PBEffects::NeedleArm] == @index
+    end
+    @SetupMovesUsed                          = []
+    @prepickedMove                           = nil
   end
 
   #=============================================================================

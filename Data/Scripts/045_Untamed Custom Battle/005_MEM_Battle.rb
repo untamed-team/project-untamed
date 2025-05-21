@@ -18,12 +18,14 @@ MEGA_EVO_STATS = {
   GOLURK: { item: :GOLURKITE, atkmul: 1.161, defmul: 1.313, spemul: 1.818, spamul: 1.182, spdmul: 1.000 },
   HAWLUCHA: { item: :HAWLUCHITE, atkmul: 1.435, defmul: 1.267, spemul: 1.000, spamul: 1.270, spdmul: 1.317 },
   TREVENANT: { item: :TREVENANTITE, atkmul: 1.167, defmul: 1.305, spemul: 0.821, spamul: 1.385, spdmul: 1.488 },
+  DIANCIE: { item: :DIANCITE, atkmul: 1.222, defmul: 1.154, spemul: 1.364, spamul: 1.222, spdmul: 1.154 },
   FROSMOTH: { item: :FROSMOTHITE, atkmul: 1.000, defmul: 1.333, spemul: 1.308, spamul: 1.080, spdmul: 1.556 },
 
   CAMERUPT: { item: :CAMERUPTITE, atkmul: 1.200, defmul: 1.429, spemul: 0.500, spamul: 1.381, spdmul: 1.400 },
   ABOMASNOW: { item: :ABOMASITE, atkmul: 1.435, defmul: 1.400, spemul: 0.500, spamul: 1.435, spdmul: 1.235 },
+  ALTARIA: { item: :ALTARIANITE, atkmul: 1.571, defmul: 1.222, spemul: 1.000, spamul: 1.571, spdmul: 1.000 },
 
-  ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.062, spdmul: 1.120 },
+  ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.185, spdmul: 1.147 },
   BEAKRAFT: { item: :BEAKRAFTITE, 
               male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 
               female: { atkmul: 1.167, defmul: 1.105, spemul: 1.051, spamul: 2.000, spdmul: 1.267 } },
@@ -59,44 +61,46 @@ MEGA_EVO_TYPES = {
   LAGUNA: { item: :LAGUNITE, typeadd: :ICE, typeremove: :NORMAL },
   LUPACABRA: { item: :LUPACABRITE, typeadd: :FIGHTING },
   ROADRAPTOR: { item: :ROADRAPTORITE, typeadd: :GROUND, typeremove: :FLYING },
-  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK }
+  ZOLUPINE: { item: :ZOLUPINEITE, typeadd: :GHOST, typeremove: :DARK },
+
+  ALTARIA: { item: :ALTARIANITE, typeadd: :FAIRY, typeremove: :NORMAL }
 }
 
 MEGA_EVO_MOVESET = {
-  :PORYGONZ => [:TRIATTACK, :HARDDRIVECRASH],
+  :PORYGONZ => [:CONVERSION, :HARDDRIVECRASH],
   :CACTURNE => [:BULLETSEED, :SPLINTERSHOT],
   :GOLURK   => [:SHADOWBALL, :AEROBLAST]
 }
 
 class Pokemon
   attr_accessor :megaevoMutation
-	################################################################################
-	# Mega Evolution Mutation
-	################################################################################ 
-	# Enables Mega Evolution Mutation.
-	@megaevoMutation = false
-	def enableMegaEvoMutation
-		@megaevoMutation = true
-	end  
-	# Disables Mega Evolution Mutation.
-	def disableMegaEvoMutation
-		@megaevoMutation = false
-	end    
+  ################################################################################
+  # Mega Evolution Mutation
+  ################################################################################ 
+  # Enables Mega Evolution Mutation.
+  @megaevoMutation = false
+  def enableMegaEvoMutation
+    @megaevoMutation = true
+  end  
+  # Disables Mega Evolution Mutation.
+  def disableMegaEvoMutation
+    @megaevoMutation = false
+  end    
 
-	# Toggles Mega Evolution Mutation.
-	def toggleMegaEvoMutation
-		if !@megaevoMutation
-			@megaevoMutation = true
-		else	
-			@megaevoMutation = false
-		end	
-	end 		
-	
-	def hasMegaEvoMutation?
-		if @megaevoMutation==true || Settings::GLOBAL_MUTATION==true
-			return true 
-		end	
-	end
+  # Toggles Mega Evolution Mutation.
+  def toggleMegaEvoMutation
+    if !@megaevoMutation
+      @megaevoMutation = true
+    else  
+      @megaevoMutation = false
+    end  
+  end     
+  
+  def hasMegaEvoMutation?
+    if @megaevoMutation==true || Settings::GLOBAL_MUTATION==true
+      return true 
+    end  
+  end
 end
 
 class Battle::Battler
@@ -141,20 +145,20 @@ class Battle
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop] >= 0
     #~ return false if !pbHasMegaRing?(idxBattler)
-		# MEM stuff #by low
-		if !@battlers[idxBattler].hasMegaEvoMutation?
-			return false if !@battlers[idxBattler].hasMega?
-			return false if @battlers[idxBattler].mega?
-			return false if @battlers[idxBattler].wild?
-			side  = @battlers[idxBattler].idxOwnSide
-			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-			return @megaEvolution[side][owner] == -1
-		end
-		######################
+    # MEM stuff #by low
+    if !@battlers[idxBattler].hasMegaEvoMutation?
+      return false if !@battlers[idxBattler].hasMega?
+      return false if @battlers[idxBattler].mega?
+      return false if @battlers[idxBattler].wild?
+      side  = @battlers[idxBattler].idxOwnSide
+      owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+      return @megaEvolution[side][owner] == -1
+    end
+    ######################
     return true
   end
 
-	def pbMegaEvolve(idxBattler)
+  def pbMegaEvolve(idxBattler)
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon
     return if !battler.hasMega? || battler.mega?
@@ -166,15 +170,24 @@ class Battle
     if battler.hasActiveAbility?(:ILLUSION)
       Battle::AbilityEffects.triggerOnBeingHit(battler.ability, nil, battler, nil, self)
     end
-		# MEM stuff #by low
+    # MEM stuff #by low
     if battler.wild? || battler.hasMegaEvoMutation?
-		###################
-      pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
+    ###################
+      case battler.pokemon.megaMessage
+      when 1
+        pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
+      else
+        pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
+      end
     else
       trainerName = pbGetOwnerName(idxBattler)
       case battler.pokemon.megaMessage
       when 1
         pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
+      when 2 # pory-z
+        pbDisplay(_INTL("{1}'s corrupted code is modifying {2}!", trainerName, battler.pbThis))
+      when 3 # KISAMAAAAAAAAAAAAAAA
+        pbDisplay(_INTL("{1}'s bell has resonated with {2}!", trainerName, battler.pbThis))
       else
         pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
                         battler.pbThis, battler.itemName, trainerName, pbGetMegaRingName(idxBattler)))
@@ -206,17 +219,11 @@ class Battle
     megaName = battler.pokemon.megaName
     megaName = _INTL("Mega {1}", battler.pokemon.speciesName) if nil_or_empty?(megaName)
     pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
-		if battler.hasMegaEvoMutation?
-			#nothing
-      #battler.pokemon.ability = nil
-      battler.pokemon.ability_index = nil
-      @scene.pbRefreshOne(idxBattler)
-      battler.pbUpdate(true)
-		else
-			side  = battler.idxOwnSide
-			owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-			@megaEvolution[side][owner] = -2
-		end
+    unless battler.hasMegaEvoMutation?
+      side  = battler.idxOwnSide
+      owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+      @megaEvolution[side][owner] = -2
+    end
     if battler.isSpecies?(:GENGAR) && battler.mega?
       battler.effects[PBEffects::Telekinesis] = 0
     end
@@ -237,16 +244,16 @@ class Pokemon
     ret = 0
     GameData::Species.each do |data|
       next if data.species != @species || data.unmega_form != form_simple
-			# MEM stuff #by low
+      # MEM stuff #by low
       if data.mega_stone && (hasItem?(data.mega_stone) || hasMegaEvoMutation?)
         ret = data.form
-				ret = (self.form + 2) if self.species == :BEAKRAFT
+        ret = (self.form + 2) if self.species == :BEAKRAFT
         break
       elsif data.mega_move && (hasMove?(data.mega_move) || hasMegaEvoMutation?)
         ret = data.form
         break
       end
-			###################
+      ###################
     end
     return ret   # form number, or 0 if no accessible Mega form
   end

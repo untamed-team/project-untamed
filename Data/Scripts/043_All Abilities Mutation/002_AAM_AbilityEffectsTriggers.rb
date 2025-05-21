@@ -300,7 +300,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
@@ -308,7 +308,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
@@ -620,7 +620,7 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
   proc { |ability,battler,fainted,battle|
     next if (fainted.ungainableAbility? && fainted.ability_id != :NEUTRALIZINGGAS) || 
-            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD].include?(fainted.ability_id)
+            [:SEANCE, :POWEROFALCHEMY, :RECEIVER, :TRACE, :WONDERGUARD, :PROTEAN, :COLORCHANGE].include?(fainted.ability_id)
     battle.pbShowAbilitySplash(battler, true)
     index=0
     for i in 0..battler.abilityMutationList.length
@@ -660,8 +660,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
 Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
   proc { |ability, battler|
     next if battler.status != :POISON
-	next if battler.abilityMutationList.include?(:TOXICBOOST)
-	next if battler.abilityMutationList.include?(:POISONHEAL)
+    next if battler.abilityMutationList.include?(:TOXICBOOST)
+    next if battler.abilityMutationList.include?(:POISONHEAL)
     battler.battle.pbShowAbilitySplash(battler)
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH

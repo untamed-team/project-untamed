@@ -12,7 +12,7 @@ class Acting
     #create a pokemon from the defined species of the contestant pokemon so we
     #can search its possible moves
     for h in 0...@chosenContestants.length-1
-      pkmn = Pokemon.new(@chosenContestants[h][:PkmnSpecies], 1)
+      pkmn = Pokemon.new(@chosenContestants[h][:PkmnSpecies], 100)
       tutorMoves = pkmn.species_data.tutor_moves
       levelMoves = pkmn.species_data.moves
     
@@ -103,7 +103,7 @@ class Acting
       end #case @chosenRank
       
       #convert all chosenMoves into actual moves instead of just IDs
-      temp = []      
+      temp = []
       for i in 0...chosenMoves.length
         temp.push(Pokemon::Move.new(chosenMoves[i]))
       end

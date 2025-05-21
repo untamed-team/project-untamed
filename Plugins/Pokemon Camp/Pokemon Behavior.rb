@@ -10,7 +10,7 @@ class Camping
 		pkmn.campEvent.move_type = 0
 		#turn off step animation
 		pbMoveRoute(pkmn.campEvent, [PBMoveRoute::StepAnimeOff])
-		self.showEventAnimation(pkmn.campEvent.id, animation_id=20)
+		self.showEventAnimation(pkmn.campEvent.id, animation_id=21)
 		pbSEPlay("FollowEmote",100,80)
 	end #def self.pkmnStartNap
 	
@@ -92,7 +92,7 @@ class Camping
 			next if pkmn.amie_fullness.nil?
 			next if pkmn.campHungerEmoteTimer.nil?
 			if pkmn.amie_fullness <= 0 && pkmn.campHungerEmoteTimer <= 0
-				self.showEventAnimation(pkmn.campEvent.id, animation_id=19)
+				self.showEventAnimation(pkmn.campEvent.id, animation_id=22)
 				next #don't show sleep timer if hungry. We don't want to show both hunger and sleep emotes within the emoteTimer window
 			end #if pkmn.amie_fullness <= 0
 		
@@ -128,7 +128,7 @@ class Camping
 			pkmn = $PokemonGlobal.campers[i]
 			next if !pkmn.campNapping
 			next if pkmn.campNappingEmoteTimer.nil?
-			self.showEventAnimation(pkmn.campEvent.id, animation_id=20) if pkmn.campNappingEmoteTimer <= 0			
+			self.showEventAnimation(pkmn.campEvent.id, animation_id=21) if pkmn.campNappingEmoteTimer <= 0			
 		end #for i in 0...$PokemonGlobal.campers.length
 	})
 	

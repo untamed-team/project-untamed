@@ -54,16 +54,64 @@ end
 #===============================================================================
 class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
   def pbOnStartUse(user, targets)
-    @presentDmg = 0   # 0 = heal, >0 = damage
-    r = @battle.pbRandom(100)
-    if r < 40
-      @presentDmg = 40
-    elsif r < 70
-      @presentDmg = 80
-    elsif r < 80
-      @presentDmg = 120
+    baseDmg = [0, 20, 40, 60, 80, 100, 120]
+    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "enormous"]
+    r = case user.level
+      when 0..16
+        [
+          0,
+          0,0,
+          0,1,1,1,
+          1,1,1,1,1,2,
+          2,2,2,2,
+          2,2,
+          2
+        ]
+      when 17..24
+        [
+          0,
+          0,1,
+          2,2,2,2,
+          2,2,2,2,2,2,
+          2,2,2,2,
+          3,3,
+          3
+        ]
+      when 25..33
+        [
+          0,
+          1,2,
+          3,3,3,3,
+          3,3,3,3,3,3,
+          3,3,3,3,
+          3,3,
+          4
+        ]
+      when 34..44
+        [
+          0,
+          2,3,
+          3,3,3,3,
+          3,3,3,3,3,3,
+          4,4,4,4,
+          4,4,
+          5
+        ]
+      else
+        [
+          0,
+          2,3,
+          4,4,4,4,
+          4,4,4,4,4,4,
+          4,4,4,4,
+          5,5,
+          6
+        ]
     end
-    @presentDmg = 120 if !user.pbOwnedByPlayer?
+    rando = r[@battle.pbRandom(r.length)]
+    rando = r.max if !user.pbOwnedByPlayer?
+    @presentDmg = baseDmg[rando]
+    @battle.pbDisplay(_INTL("{1} threw a #{prTrait[rando]} present!", user.pbThis))
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
@@ -302,7 +350,7 @@ class Battle::Move::EffectDependsOnEnvironment < Battle::Move
     when 1  then id = :THUNDERSHOCK if GameData::Move.exists?(:THUNDERSHOCK)
     when 2  then id = :VINEWHIP if GameData::Move.exists?(:VINEWHIP)
     when 3  then id = :FAIRYWIND if GameData::Move.exists?(:FAIRYWIND)
-    when 4  then id = :CONFUSIO if GameData::Move.exists?(:CONFUSION)
+    when 4  then id = :CONFUSION if GameData::Move.exists?(:CONFUSION)
     when 5  then id = :WATERPULSE if GameData::Move.exists?(:WATERPULSE)
     when 6  then id = :MUDSHOT if GameData::Move.exists?(:MUDSHOT)
     when 7  then id = :ROCKTHROW if GameData::Move.exists?(:ROCKTHROW)
@@ -754,7 +802,7 @@ class Battle::Move::UseLastMoveUsed < Battle::Move
   end
 
   def pbMoveFailed?(user, targets)
-    if !@copied_move ||
+    if !@copied_move || GameData::Move.get(@copied_move).has_flag?("CannotSketch") ||
        @moveBlacklist.include?(GameData::Move.get(@copied_move).function_code)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
@@ -821,7 +869,7 @@ class Battle::Move::UseMoveTargetIsAboutToUse < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     return true if pbMoveFailedTargetAlreadyMoved?(target, show_message)
     oppMove = @battle.choices[target.index][2]
-    if !oppMove || oppMove.statusMove? || @moveBlacklist.include?(oppMove.function)
+    if !oppMove || oppMove.statusMove? || @moveBlacklist.include?(oppMove.function) || oppMove.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -981,6 +1029,7 @@ class Battle::Move::UseRandomMove < Battle::Move
       @metronomeMove = move_data.id
       break
     end
+    @metronomeMove = :HARDDRIVECRASH if !@metronomeMove && !user.pbOwnedByPlayer?
     if !@metronomeMove
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
@@ -1094,6 +1143,7 @@ class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
       next if Settings::MECHANICS_GENERATION >= 6 && pkmn.egg?
       pkmn.moves.each do |move|
         next if @moveBlacklist.include?(move.function_code)
+        next if move.has_flag?("CannotSketch")
         next if move.type == :SHADOW
         @assistMoves.push(move.id)
       end
@@ -1245,7 +1295,8 @@ class Battle::Move::ReplaceMoveThisBattleWithTargetLastMoveUsed < Battle::Move
     if !lastMoveData ||
        user.pbHasMove?(target.lastRegularMoveUsed) ||
        @moveBlacklist.include?(lastMoveData.function_code) ||
-       lastMoveData.type == :SHADOW
+       lastMoveData.type == :SHADOW ||
+       lastMoveData.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -1292,7 +1343,8 @@ class Battle::Move::ReplaceMoveWithTargetLastMoveUsed < Battle::Move
     if !lastMoveData ||
        user.pbHasMove?(target.lastRegularMoveUsed) ||
        @moveBlacklist.include?(lastMoveData.function_code) ||
-       lastMoveData.type == :SHADOW
+       lastMoveData.type == :SHADOW ||
+       lastMoveData.has_flag?("CannotSketch")
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end

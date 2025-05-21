@@ -67,10 +67,10 @@ module Settings
   # Whether Pokémon in the Day Care gain Exp for each step the player takes.
   # This is true for the Day Care and false for the Pokémon Nursery, both of
   # which use the same code in Essentials.
-  DAY_CARE_POKEMON_GAIN_EXP_FROM_WALKING     = (MECHANICS_GENERATION <= 6)
+  DAY_CARE_POKEMON_GAIN_EXP_FROM_WALKING     = true#(MECHANICS_GENERATION <= 6)
   # Whether two Pokémon in the Day Care can learn egg moves from each other if
   # they are the same species.
-  DAY_CARE_POKEMON_CAN_SHARE_EGG_MOVES       = (MECHANICS_GENERATION >= 8)
+  DAY_CARE_POKEMON_CAN_SHARE_EGG_MOVES       = true#(MECHANICS_GENERATION >= 8)
   # Whether a bred baby Pokémon can inherit any TM/TR/HM moves from its father.
   # It can never inherit TM/TR/HM moves from its mother.
   BREEDING_CAN_INHERIT_MACHINE_MOVES         = (MECHANICS_GENERATION <= 5)

@@ -178,6 +178,86 @@ FieldUse = OnPokemon
 Flags = EvolutionStone,Fling_80
 Description = A peculiar stone that makes certain species of Pokémon evolve. It shines with a dazzling light.
 #-------------------------------
+[FIRESHARD]
+Name = Fire Shard
+NamePlural = Fire Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is colored orange.
+#-------------------------------
+[THUNDERSHARD]
+Name = Thunder Shard
+NamePlural = Thunder Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It has small bolt patterns.
+#-------------------------------
+[WATERSHARD]
+Name = Water Shard
+NamePlural = Water Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is a clear, light blue.
+#-------------------------------
+[LEAFSHARD]
+Name = Leaf Shard
+NamePlural = Leaf Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It has a earthy smell.
+#-------------------------------
+[ICESHARD]
+Name = Ice Shard
+NamePlural = Ice Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. Its cold to the touch.
+#-------------------------------
+[MOONSHARD]
+Name = Moon Shard
+NamePlural = Moon Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as black as the night sky.
+#-------------------------------
+[SUNSHARD]
+Name = Sun Shard
+NamePlural = Sun Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as red as the sun.
+#-------------------------------
+[DUSKSHARD]
+Name = Dusk Shard
+NamePlural = Dusk Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It is as dark as dark can be.
+#-------------------------------
+[DAWNSHARD]
+Name = Dawn Shard
+NamePlural = Dawn Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It sparkles like eyes.
+#-------------------------------
+[SHINYSHARD]
+Name = Shiny Shard
+NamePlural = Shiny Shards
+Pocket = 1
+Price = 300
+Flags = Fling_30
+Description = A shard of a peculiar stone that can evolve certain species. It shines with a dazzling light.
+#-------------------------------
 [SWEETAPPLE]
 Name = Sweet Apple
 NamePlural = Sweet Apples
@@ -409,6 +489,22 @@ Pocket = 1
 Price = 5000
 Flags = Fling_100
 Description = The fossil of an ancient Pokémon that once lived in the sea. What it looked like is a mystery.
+#-------------------------------
+[OPALFOSSIL]
+Name = Opal Fossil
+NamePlural = Opal Fossils
+Pocket = 1
+Price = 7000
+Flags = Fossil,Fling_100
+Description = A fossil from a prehistoric Pokémon that once lived in the sea. It has a beautiful shine to it.
+#-------------------------------
+[TARFOSSIL]
+Name = Tar Fossil
+NamePlural = Tar Fossils
+Pocket = 1
+Price = 7000
+Flags = Fossil,Fling_100
+Description = A fossil from a prehistoric Pokémon that once lived on the land. It appears to be part of a large tusk.
 #-------------------------------
 [PRETTYFEATHER]
 Name = Pretty Feather
@@ -1227,7 +1323,7 @@ Pocket = 1
 Price = 3000
 SellPrice = 2000
 Flags = Fling_80
-Description = An item to be held by a Pokémon. A light, sharp claw that lets the bearer move first occasionally.
+Description = An item to be held by a Pokémon. A light, sharp claw that affects the bearer's priority.
 #-------------------------------
 [FOCUSBAND]
 Name = Focus Band
@@ -2971,9 +3067,9 @@ BattleUse = OnPokemon
 Flags = Fling_30
 Description = A very sweet and refreshing drink. It can be used to restore 70 HP to a single Pokémon.
 #-------------------------------
-[MOOMOOMILK]
-Name = Moomoo Milk
-NamePlural = Moomoo Milks
+[GOGOATMILK]
+Name = Gogoat Milk
+NamePlural = Gogoat Milks
 Pocket = 2
 Price = 600
 FieldUse = OnPokemon
@@ -3093,7 +3189,7 @@ Description = It maximally raises the top PP of a selected move that has been le
 Name = HP Up
 NamePlural = HP Ups
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into a neutral one.
@@ -3102,7 +3198,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Protein
 NamePlural = Proteins
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Attack-boosting one.
@@ -3111,7 +3207,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Iron
 NamePlural = Irons
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Defense-boosting one.
@@ -3120,7 +3216,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Calcium
 NamePlural = Calciums
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Attack-boosting one.
@@ -3129,7 +3225,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Zinc
 NamePlural = Zincs
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Special Defense-boosting one.
@@ -3138,7 +3234,7 @@ Description = A nutritious drink for Pokémon. Can change a Pokémon's nature in
 Name = Carbos
 NamePlural = Carbos
 Pocket = 2
-Price = 10000
+Price = 500
 FieldUse = OnPokemon
 Flags = Fling_30
 Description = A nutritious drink for Pokémon. Can change a Pokémon's nature into an Speed-boosting one.
@@ -5329,7 +5425,7 @@ NamePlural = Roseli Berries
 Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_80
-Description = If held by a Pokémon, this Berry will lessen the damage taken from one supereffective Fairy-type attack.
+Description = Weakens a supereffective Fairy-type attack against the holding Pokémon.
 #-------------------------------
 [CHILANBERRY]
 Name = Chilan Berry
@@ -6323,15 +6419,15 @@ Price = 0
 Flags = KeyItem
 Description = It's a special Pokéball that belongs to Professor Ceiba.
 #-------------------------------
-[CERIGOLDCONE]
-Name = Cerigoldcone
-NamePlural = Cerigoldcones
+[MELOLADOCONE]
+Name = Melolado Cone
+NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Fling_30
-Description = San Cerigold Town's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
@@ -6381,7 +6477,7 @@ Name = Noctavispite
 NamePlural = Noctavispites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Noctavispa hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [XATUNITE]
@@ -6389,7 +6485,7 @@ Name = Xatunite
 NamePlural = Xatunites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Xatu hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [FLYGONITE]
@@ -6397,7 +6493,7 @@ Name = Flygonite
 NamePlural = Flygonites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Flygon hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [GOHILITE]
@@ -6405,7 +6501,7 @@ Name = Gohilite
 NamePlural = Gohilites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Gohila hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ATELANGLITE]
@@ -6413,7 +6509,7 @@ Name = Atelanglite
 NamePlural = Atelanglites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Atelangler hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [CHIXULITE]
@@ -6421,7 +6517,7 @@ Name = Chixulite
 NamePlural = Chixulites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Chixulob hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [MILOTITE]
@@ -6429,7 +6525,7 @@ Name = Milotite
 NamePlural = Milotites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Milotic hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [SUCHOBITE]
@@ -6437,7 +6533,7 @@ Name = Suchobite
 NamePlural = Suchobites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Suchobile hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [SKARMORITE]
@@ -6445,7 +6541,7 @@ Name = Skarmorite
 NamePlural = Skarmorites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Skarmory hold it, and it will be able to Mega Evolve.
 #-------------------------------
 #- Do NOT change internal names.
@@ -6455,7 +6551,7 @@ Name = Beheeyemite
 NamePlural = Beheeyemites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Beheeyem hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [GOLURKITE]
@@ -6463,7 +6559,7 @@ Name = Golurkite
 NamePlural = Golurkites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Golurk hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [HAWLUCHITE]
@@ -6471,7 +6567,7 @@ Name = Hawluchite
 NamePlural = Hawluchites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Hawlucha hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [CACTURNITE]
@@ -6479,7 +6575,7 @@ Name = Cacturnite
 NamePlural = Cacturnites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Cacturne hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [FROSMOTHITE]
@@ -6487,7 +6583,7 @@ Name = Frosmothite
 NamePlural = Frosmothites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Frosmoth hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [CHIMECHITE]
@@ -6495,7 +6591,7 @@ Name = Copper Bell
 NamePlural = Copper Bells
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = A beautiful bell with a mysterious Mega Stone inside. Have Chimecho hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [PORYGONZITE] # dont change this
@@ -6503,7 +6599,7 @@ Name = Corrupted Cartridge
 NamePlural = Corrupted Cartridges
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = A strange cartridge with a mysterious Mega Stone inside. Have Porygon-Z hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [MAGCARGOITE]
@@ -6511,7 +6607,7 @@ Name = Magcargite
 NamePlural = Magcargites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Magcargo hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [SPECTERZITE]
@@ -6519,7 +6615,7 @@ Name = Specterzite
 NamePlural = Specterzites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Specterzal hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [TREVENANTITE]
@@ -6527,7 +6623,7 @@ Name = Trevenantite
 NamePlural = Trevenantites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Trevenant hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [M_ROSERADITE]
@@ -6535,7 +6631,7 @@ Name = Roseradite
 NamePlural = Roseradites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Roserade hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LUPACABRITE]
@@ -6543,7 +6639,7 @@ Name = Lupacabrite
 NamePlural = Lupacabrites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Lupacabra hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ZOLUPINEITE]
@@ -6551,7 +6647,7 @@ Name = Zolupinite
 NamePlural = Zolupinites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Zolupine hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ROADRAPTORITE]
@@ -6559,7 +6655,7 @@ Name = Roadraptorite
 NamePlural = Roadraptorites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Roadraptor hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [FRIZZARDITE]
@@ -6567,7 +6663,7 @@ Name = Frizzardite
 NamePlural = Frizzardites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Frizzard hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [ZARCOILITE]
@@ -6575,7 +6671,7 @@ Name = Zarcoilite
 NamePlural = Zarcoilites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Zarcoil hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BEAKRAFTITE]
@@ -6583,7 +6679,7 @@ Name = Beakraftite
 NamePlural = Beakraftites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Beakraft hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LAGUNITE]
@@ -6591,7 +6687,7 @@ Name = Lagunite
 NamePlural = Lagunites
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Laguna hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [LEDINITE]
@@ -6599,7 +6695,7 @@ Name = Ledianite
 NamePlural = Ledianite
 Pocket = 1
 Price = 0
-Flags = Fling_30
+Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
 #-------------------------------
 [BERRYPOTS]
@@ -6738,42 +6834,42 @@ Description = An item for checking a Pokémon's contest stats.
 Name = Candy Base
 NamePlural = Candy Bases
 Pocket = 1
-Price = 100
+Price = 50
 Description = A mixture to make candy.
 #-------------------------------
 [REDCANDYBASE]
 Name = Red Candy Base
 NamePlural = Red Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy red!
 #-------------------------------
 [BLUECANDYBASE]
 Name = Blue Candy Base
 NamePlural = Blue Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy blue!
 #-------------------------------
 [PINKCANDYBASE]
 Name = Pink Candy Base
 NamePlural = Pink Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy pink!
 #-------------------------------
 [GREENCANDYBASE]
 Name = Green Candy Base
 NamePlural = Green Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy green!
 #-------------------------------
 [YELLOWCANDYBASE]
 Name = Yellow Candy Base
 NamePlural = Yellow Candy Bases
 Pocket = 1
-Price = 500
+Price = 200
 Description = A mixture to make candy. This one turns the candy yellow!
 #-------------------------------
 [ADVENTUREGUIDE]
@@ -6802,6 +6898,15 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = Dummy Ticket.
+#-------------------------------
+[ROSEDIAMOND]
+Name = Rose Diamond
+NamePlural = Rose Diamonds
+Pocket = 1
+Price = 38000
+FieldUse = OnPokemon
+Flags = EvolutionStone,Fling_30
+Description = A vibrant pink diamond sculpted into a beautiful flower shape. It is loved by a certain Pokémon.
 #-------------------------------
 [RUSTYHANDLEBARS]
 Name = Rusty Handlebars

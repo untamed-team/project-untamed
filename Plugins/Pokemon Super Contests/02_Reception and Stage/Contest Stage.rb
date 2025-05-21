@@ -249,8 +249,8 @@ class ContestStage
     
     pbWait(1 * Graphics.frame_rate) #wait one second
     
-    pbMessage(_INTL("MC: We are about to get under way with this #{@chosenRank} rank Pokémon #{@chosenType} contest!"))
-    pbMessage(_INTL("I'm Dexter, and I'll be serving as the MC and as one of the Judges!"))
+    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: We are about to get under way with this #{@chosenRank} rank Pokémon #{@chosenType} contest!"))
+    pbMessage(_INTL("I'm #{ContestSettings::JUDGES[1][:Name]}, and I'll be serving as the MC and as one of the Judges!"))
     pbMessage(_INTL("The results will be announced at the end, so please bear with me!"))
     
     pbWait(1 * Graphics.frame_rate)

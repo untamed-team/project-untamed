@@ -124,7 +124,7 @@ class Battle::Move
     modifiers = {}
     modifiers[:base_accuracy]  = baseAcc
     modifiers[:accuracy_stage] = user.stages[:ACCURACY]
-    modifiers[:evasion_stage]  = target.stages[:EVASION]
+    modifiers[:evasion_stage]  = [target.stages[:EVASION], 0].min
     # acc and evasion murder / sleep moves acc buff #by low
     if modifiers[:accuracy_stage] < 0
       if $player.difficulty_mode?("hard")
@@ -146,8 +146,6 @@ class Battle::Move
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    accStage = 6 if accStage < 6
-    evaStage = 6 if evaStage > 6
     stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
     stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]
@@ -185,7 +183,10 @@ class Battle::Move
         user.item, modifiers, user, target, self, @calcType
       )
     end
-    if target.itemActive?
+    # klutz buff #by low
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if target.itemActive? && !klut
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, self, @calcType
       )
@@ -344,7 +345,10 @@ class Battle::Move
         user.item, user, target, self, multipliers, baseDmg, type
       )
     end
-    if target.itemActive?
+    # klutz buff #by low
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if target.itemActive? && !klut
       Battle::ItemEffects.triggerDamageCalcFromTarget(
         target.item, user, target, self, multipliers, baseDmg, type
       )
@@ -359,6 +363,9 @@ class Battle::Move
     end
     if user.effects[PBEffects::HelpingHand] && !self.is_a?(Battle::Move::Confusion)
       multipliers[:base_damage_multiplier] *= 1.5
+    end
+    if target.effects[PBEffects::HoldingHand]
+      multipliers[:base_damage_multiplier] *= 2 / 3.0
     end
     if user.effects[PBEffects::Charge] > 0 && type == :ELECTRIC
       multipliers[:base_damage_multiplier] *= 2
@@ -426,7 +433,9 @@ class Battle::Move
       when :FIRE
         multipliers[:final_damage_multiplier] *= w_damage_multiplier
       when :WATER
-        multipliers[:final_damage_multiplier] /= w_damage_divider
+        if !(@function == "HigherDamageInSunVSNonFireTypes" && !target.pbHasType?(:FIRE))
+          multipliers[:final_damage_multiplier] /= w_damage_divider
+        end
       end
     when :Rain, :HeavyRain
       case type

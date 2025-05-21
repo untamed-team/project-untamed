@@ -1,7 +1,0 @@
-contests notes:
-pkmn moves do not have set type like cool or smart
-Instead, a pkmn who has used X move many times, has proficiency in the move
-The higher the proficiency, the better the move scores
-
-Elin thinks that stuffing a pkmn with candy to raise coolness, cuteness, etc., isn't fun
-We could repurpose the candy making or scrap it altogether and do something else to raise coolness, cuteness, etc. stats on a specific pkmn

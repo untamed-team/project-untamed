@@ -1,0 +1,4 @@
+Name       = Full Odds Tracker
+Version    = 0.1
+Essentials = 20.1
+Credits    = Delphilly

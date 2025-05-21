@@ -67,24 +67,6 @@ class Battle::Move
 end # of Battle::Move
 =end
 class Battle::Battler
-  def pbRecoverHPFromDrain(amt, target, msg = nil, ignoremsg = false)
-    if target.hasActiveAbility?(:LIQUIDOOZE, true)
-      @battle.pbShowAbilitySplash(target)
-      pbReduceHP(amt)
-      @battle.pbDisplay(_INTL("{1} sucked up the liquid ooze!", pbThis))
-      @battle.pbHideAbilitySplash(target)
-      pbItemHPHealCheck
-    else
-      if !ignoremsg
-        msg = _INTL("{1} had its energy drained!", target.pbThis) if nil_or_empty?(msg)
-        @battle.pbDisplay(msg)
-	  end
-      if canHeal?
-        amt = (amt * 1.3).floor if hasActiveItem?(:BIGROOT)
-        pbRecoverHP(amt)
-      end
-    end
-  end
 end
 =begin
   alias old_pbCanInflictStatus? pbCanInflictStatus?
@@ -111,22 +93,6 @@ end
 		old_trappedInBattle?
 	end # of trappedInBattle?
 	
-  def pbRecoverHP(amt, anim = true, anyAnim = true, damagemove = false)
-    amt = amt.round
-    amt = @totalhp - @hp if amt > @totalhp - @hp
-    amt = 1 if amt < 1 && @hp < @totalhp
-    oldHP = @hp
-		amt = (amt * 1.5).floor if hasActiveItem?(:COLOGNECASE) #by low
-		amt /= 2 if !pbOwnedByPlayer? && $game_variables[MASTERMODEVARS][12]==true
-		amt = @totalhp - @hp if amt > @totalhp - @hp
-    self.hp += amt
-    PBDebug.log("[HP change] #{pbThis} gained #{amt} HP (#{oldHP}=>#{@hp})") if amt > 0
-    raise _INTL("HP less than 0") if @hp < 0
-    raise _INTL("HP greater than total HP") if @hp > @totalhp
-    @battle.scene.pbHPChanged(self, oldHP, anim) if anyAnim && amt > 0
-    @droppedBelowHalfHP = false if @hp >= @totalhp / 2
-    return amt
-  end
 end # of Battle::Battler
 
 class Battle

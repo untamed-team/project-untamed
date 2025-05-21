@@ -4,7 +4,7 @@ class SpeciesTypeMatch_Scene
   WINDOWSKIN = "base_species.png"
   
   # Choose whether you want the background to animate
-  MOVINGBACKGROUND = true
+  MOVINGBACKGROUND = false
   
   def initialize
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
@@ -104,7 +104,7 @@ class SpeciesTypeMatch_Scene
       @sprites["icon_#{i}"].pbSetParams(s.id,0,s.form,false)
     end
     # Types of selected Pokémon
-	s.types.each_with_index do |type, i|
+	  s.types.each_with_index do |type, i|
       type_number = GameData::Type.get(type).icon_position
       type_rect = Rect.new(0, type_number * 28, 64, 28)
       type_x = (s.types.length == 1) ? Graphics.width/2-32 : Graphics.width/2 - (64 * ((i + 1)%2))
@@ -122,7 +122,7 @@ class SpeciesTypeMatch_Scene
       immune.push(currType) if Effectiveness.ineffective?(z)
     end
     # Weaknesses
-    xPos1 = (weak.length >6) ? [@w+40, @w+104] : @w+72
+    xPos1 = (weak.length > 6) ? [@w+20, @w+84] : @w+42
     weaktype_rect = []
     weak.each_with_index do |s, i|
       t = GameData::Type.get(s).icon_position
@@ -132,7 +132,7 @@ class SpeciesTypeMatch_Scene
     end
     # Resistances
     # Because Steel typing has an annoying number of resistances
-    xPos2 = (resist.length >6) ? [Graphics.width/2-64,Graphics.width/2] : Graphics.width/2-32
+    xPos2 = (resist.length > 6) ? [Graphics.width/2-64,Graphics.width/2] : Graphics.width/2-32
     resisttype_rect = []
     resist.each_with_index do |s, i|
       t = GameData::Type.get(s).icon_position
@@ -146,23 +146,21 @@ class SpeciesTypeMatch_Scene
     immune.each_with_index do |s, i|
       t = GameData::Type.get(s).icon_position
       immunetype_rect.push(Rect.new(0, t * 28, 64, 28))
-      @overlay_type.blt(@w+312,@h+108+28*i,@typebitmap.bitmap,immunetype_rect[i])
+      @overlay_type.blt(@w+282,@h+108+28*i,@typebitmap.bitmap,immunetype_rect[i])
     end
     base   = Color.new(80,80,88)
     shadow = Color.new(160,160,168)
     textpos = [
-    ["Weak",@w+104,@h+80,2,base,shadow],
-    ["Resist",Graphics.width/2,@h+80,2,base,shadow],
-    ["Immune",@w+344,@h+80,2,base,shadow],
-    ["USE: Jump",4,Graphics.height-26,0,Color.new(248,248,248),Color.new(72,80,88)],
-    ["ARROWS: Navigate",Graphics.width/2,Graphics.height-26,2,Color.new(248,248,248),Color.new(72,80,88)],
-    ["BACK: Exit",Graphics.width-4,Graphics.height-26,1,Color.new(248,248,248),Color.new(72,80,88)]
+      ["Weak",@w+74,@h+80,2,base,shadow],
+      ["Resist",Graphics.width/2,@h+80,2,base,shadow],
+      ["Immune",@w+314,@h+80,2,base,shadow],
+      ["USE: Jump",4,Graphics.height-26,0,Color.new(248,248,248),Color.new(72,80,88)],
+      ["ARROWS: Navigate",Graphics.width/2,Graphics.height-26,2,Color.new(248,248,248),Color.new(72,80,88)],
+      ["BACK: Exit",Graphics.width-4,Graphics.height-26,1,Color.new(248,248,248),Color.new(72,80,88)]
     ]
     pbDrawTextPositions(@overlay_text,textpos) if @init
     # Draw species name
-    pbDrawTextPositions(@overlay_type,[
-           [s.real_name,Graphics.width/2,@h+10,2,base,shadow]
-        ])
+    pbDrawTextPositions(@overlay_type,[[s.real_name,Graphics.width/2,@h+10,2,base,shadow]])
     @init = false
   end
   
@@ -192,7 +190,6 @@ class SpeciesTypeMatch_Scene
     end
     return pbChooseList(commands, default, currSpecies, 0)
   end
-
 end
 
 class SpeciesTypeMatch_Screen

@@ -195,12 +195,12 @@ class Battle::Move::ParalyzeFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanParalyze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbParalyze(user)
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end
@@ -245,12 +245,12 @@ class Battle::Move::BurnFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanBurn?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbBurn(user)
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end
@@ -305,12 +305,12 @@ class Battle::Move::FreezeFlinchTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    return if @battle.turnCount >= 1 #by low
     chance = pbAdditionalEffectChance(user, target, 10)
     return if chance == 0
     if target.pbCanFreeze?(user, false, self) && @battle.pbRandom(100) < chance
       target.pbFreeze
     end
+    return if @battle.turnCount >= 1 #by low
     target.pbFlinch(user)
   end
 end
@@ -385,7 +385,7 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
   def canSnatch?; return true; end
 
   def pbMoveFailed?(user, targets)
-    if ![:BURN, :POISON, :PARALYSIS].include?(user.status)
+    if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
@@ -402,6 +402,8 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
       @battle.pbDisplay(_INTL("{1} cured its poisoning!", user.pbThis))
     when :PARALYSIS
       @battle.pbDisplay(_INTL("{1} cured its paralysis!", user.pbThis))
+    when :FREEZE
+      @battle.pbDisplay(_INTL("{1} healed its frostbite!", user.pbThis))
     end
   end
 end
@@ -903,7 +905,8 @@ class Battle::Move::AddGhostTypeToTarget < Battle::Move
   def canMagicCoat?; return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if !GameData::Type.exists?(:GHOST) || target.pbHasType?(:GHOST) || !target.canChangeType?
+    if !GameData::Type.exists?(:GHOST) || target.pbHasType?(:GHOST) || 
+       !target.canChangeType? || target.types.length >= 3
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -924,7 +927,8 @@ class Battle::Move::AddGrassTypeToTarget < Battle::Move
   def canMagicCoat?; return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if !GameData::Type.exists?(:GRASS) || target.pbHasType?(:GRASS) || !target.canChangeType?
+    if !GameData::Type.exists?(:GRASS) || target.pbHasType?(:GRASS) || 
+       !target.canChangeType? || target.types.length >= 3
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end

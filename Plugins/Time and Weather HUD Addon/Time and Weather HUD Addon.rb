@@ -1,13 +1,13 @@
 #-------------------------------------------------------------------------------
 # Date and Time Hud component
 #-------------------------------------------------------------------------------
-class DateAndTimeHud < Component
+class VPM_DateAndTimeHud < Component
   def initialize
     @last_time = pbGetTimeNow.strftime("%I:%M %p")
   end
 
-  def startComponent(viewport)
-    super(viewport)
+  def start_component(viewport, menu)
+    super(viewport, menu)
     @sprites["overlay"] = BitmapSprite.new(Graphics.width/2,96,viewport)
     @sprites["overlay"].ox = @sprites["overlay"].bitmap.width
     @sprites["overlay"].x = Graphics.width
@@ -19,7 +19,7 @@ class DateAndTimeHud < Component
 
   def update
     super
-    refresh if @last_time != pbGetTimeNow.strftime("%I:%M %p")
+    refresh if @last_time != pbGetTimeNow.strftime("%I:%M %p") && @sprites["overlay"]
   end
 
   def refresh

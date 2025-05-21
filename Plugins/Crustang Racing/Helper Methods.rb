@@ -333,6 +333,45 @@ class CrustangRacing
 		#Console.echo_warn "#{@racerPlayer[:LapAndPlacement]}"
 	end #def self.updateRacerPlacement
 
+	def self.updateRacerTotalLaps
+		###################################
+		#============= Racer1 =============
+		###################################
+		laps = @racer1[:LapCount]
+		percentOfLap = @racer1[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer1[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Racer2 =============
+		###################################
+		laps = @racer2[:LapCount]
+		percentOfLap = @racer2[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer2[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Racer3 =============
+		###################################
+		laps = @racer3[:LapCount]
+		percentOfLap = @racer3[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racer3[:LapTotal] = laps + behindDecimal
+		
+		###################################
+		#============= Player =============
+		###################################
+		laps = @racerPlayer[:LapCount]
+		percentOfLap = @racerPlayer[:PositionOnTrack].percent_of(@sprites["track1"].width).truncate
+		behindDecimal = percentOfLap/100.to_f
+		@racerPlayer[:LapTotal] = laps + behindDecimal
+		
+		
+		#Console.echo_warn "laps is #{laps}"
+		#Console.echo_warn "behindDecimal is #{behindDecimal}"
+		#Console.echo_warn "LapTotal is #{@racerPlayer[:LapTotal]}"
+	end
+
 	def self.checkForCollisions(racer)
 		#make crashing into someone in front of you change your current speed and desired speed to the racer you crashed into
 		#collide with racers
@@ -468,6 +507,7 @@ class CrustangRacing
 	end #def self.endInvincibility
 	
 	def self.cancellingMove?
+		@cancellingMove = false
 		@cancellingMove = true if @pressingMove1 && @pressingMove2
 		@cancellingMove = true if @pressingMove1 && @pressingMove3
 		@cancellingMove = true if @pressingMove1 && @pressingMove4
@@ -475,7 +515,6 @@ class CrustangRacing
 		@cancellingMove = true if @pressingMove2 && @pressingMove4
 		@cancellingMove = true if @pressingMove3 && @pressingMove4
 		@cancellingMove = false if !@pressingMove1 && !@pressingMove2 && !@pressingMove3 && !@pressingMove4
-		
 		return @cancellingMove
 	end #def self.cancellingMove?
 	
@@ -802,6 +841,46 @@ class CrustangRacing
 		return false
 	end #def self.invincibilityMoveIsReady?(racer)
 	
+	def self.givePrize
+		return if $game_variables[36] == -1
+		if @racerPlayer[:CurrentPlacement] == 1
+			if $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL2
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[2].sample
+				pbReceiveItem(prize)
+			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL1
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[1].sample
+				pbReceiveItem(prize)
+			elsif $crustang_racing.previous_race_distance >= CrustangRacingSettings::REQ_DISTANCE_FOR_POOL0
+				pbMessage(_INTL("Well done! Here's your prize!"))
+				prize = CrustangRacingSettings::PRIZE_POOL[0].sample
+				pbReceiveItem(prize)
+			else
+				pbMessage(_INTL("Aw, looks like you didn't travel enough distance to get a prize..."))
+			end
+		else
+			#did not make 1st place
+			pbMessage(_INTL("Aw, looks like you didn't make 1st place..."))
+		end
+		
+		#only recognize a PB if the player has raced before. No freebies on the first race
+		if $crustang_racing.distance_personal_best.nil? || $crustang_racing.distance_personal_best <= 0
+			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
+		else
+			self.recognizePersonalBest
+		end #if @distance_personal_best.nil?
+	end #def self.givePrize
+		
+	def self.recognizePersonalBest
+		if @racerPlayer[:LapTotal] > $crustang_racing.distance_personal_best
+			$crustang_racing.distance_personal_best = @racerPlayer[:LapTotal]
+			#exclamation mark above this event
+			pbOverworldAnimation(event=getThisEvent, id=3, tinting = false)
+			pbMessage(_INTL("WOAH! #{@racerPlayer[:LapTotal]} is a new personal best for you! Here, take one of these as a congratulations!"))
+			pbReceiveItem(CrustangRacingSettings::REWARD_FOR_PERSONAL_BEST)
+		end #if @racerPlayer[:LapTotal] > @distance_personal_best
+	end #def self.recognizePersonalBest
 end #class CrustangRacing
 
 #from http://stackoverflow.com/questions/3668345/calculate-percentage-in-ruby

@@ -348,3 +348,44 @@ MenuHandlers.add(:pause_menu, :save, {
     next false
   }
 })
+
+MenuHandlers.add(:pause_menu, :options1, {
+  "name"      => _INTL("Options"),
+  "order"     => 70,
+  "effect"    => proc { |menu|
+    pbPlayDecisionSE
+    pbFadeOutIn {
+      scene = PokemonOption_Scene.new
+      screen = PokemonOptionScreen.new(scene)
+      screen.pbStartScreen
+      pbUpdateSceneMap
+      menu.pbRefresh
+    }
+    next false
+  }
+})
+
+#added and edited by Gardenette to ensure you get an option to close without saving AND cancel quitting the game
+MenuHandlers.add(:pause_menu, :quit_game, {
+  "name"      => _INTL("Quit Game"),
+  "order"     => 90,
+  "effect"    => proc { |menu|
+    menu.pbHideMenu
+    if pbConfirmMessage(_INTL("Are you sure you want to quit the game?"))
+		scene = PokemonSave_Scene.new
+		screen = PokemonSaveScreen.new(scene)
+		result = screen.pbSaveScreen(quitting = true)
+		if result == "exitWithoutSaving"
+			menu.pbEndScene
+			$scene = nil
+			next true
+		end
+		menu.pbRefresh
+		menu.pbShowMenu
+		next false
+	end
+	menu.pbRefresh
+	menu.pbShowMenu
+	next false
+  }
+})

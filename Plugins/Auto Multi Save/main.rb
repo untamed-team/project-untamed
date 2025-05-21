@@ -216,30 +216,33 @@ class PokemonLoad_Scene
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
-    addBackgroundOrColoredPlane(@sprites, "background", "loadbg", Color.new(248, 248, 248), @viewport)
+    addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
     y = 32
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,
         frame_count, stats, map_id, @viewport
       )
-      @sprites["panel#{i}"].x = 48
+      x = (show_continue && i == 0) ? 126 : 352
+      @sprites["panel#{i}"].x = x
       @sprites["panel#{i}"].y = y
       @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 224 : 48
+      y += (show_continue && i == 0) ? 54 : 54
     end
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].viewport = @viewport
     @sprites["cmdwindow"].visible  = false
     
     #added by Gardenette
+    arrowsX = 40
+    arrowsY = 56
     @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
-    @sprites["leftarrow"].x = 40
-    @sprites["leftarrow"].y = Graphics.height/2 - 40 - @sprites["leftarrow"].bitmap.height/16
+    @sprites["leftarrow"].x = arrowsX
+    @sprites["leftarrow"].y = arrowsY - @sprites["leftarrow"].bitmap.height/16
     @sprites["leftarrow"].visible = false
     @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
-    @sprites["rightarrow"].x = Graphics.width - 40 - @sprites["rightarrow"].bitmap.width
-    @sprites["rightarrow"].y = Graphics.height/2 - 40 - @sprites["rightarrow"].bitmap.height/16 
+    @sprites["rightarrow"].x = arrowsX + 10 + @sprites["rightarrow"].bitmap.width*6
+    @sprites["rightarrow"].y = arrowsY - @sprites["rightarrow"].bitmap.height/16 
     @sprites["rightarrow"].visible = false
     getNumberSavesTaken
     if @savesTaken > 1
@@ -531,8 +534,7 @@ class PokemonSaveScreen
   end
 
   # Return true if pause menu should close after this is done (if the game was saved successfully)
-  def pbSaveScreen
-    
+  def pbSaveScreen(quitting = nil)
     #added by Gardenette
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
@@ -541,39 +543,62 @@ class PokemonSaveScreen
     
     ret = false
     loop do
-      @scene.pbStartScreenMultiSave
-      if !$player.save_slot
-        # New Game - must select slot
-        ret = slotSelect
-      else
-        choices = [
-          _INTL("Save to #{$player.save_slot}"),
-          _INTL("Save to another file"),
-          _INTL("Cancel")
-        ]
-        opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
-        if opt == 0
-          pbSEPlay('GUI save choice')
-          ret = doSave($player.save_slot)
-        elsif opt == 1
-          pbPlayDecisionSE
-          saved = slotSelect
-        else
-          pbPlayCancelSE
-          canceled = true
-        end
-      end
-      @scene.pbEndScreen
-      if ret
-        return ret
-      end
-      if saved
-        return saved
-      end
-      if canceled
-        return canceled
-      end
-    end #loop do
+		@scene.pbStartScreenMultiSave
+		if !$player.save_slot
+			# New Game - must select slot
+			ret = slotSelect
+		#if triggered from "quit game" option
+		elsif quitting == true
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Quit without saving"),
+			_INTL("Don't quit")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,4)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			elsif opt == 2
+				pbPlayCancelSE
+				canceled = "exitWithoutSaving"
+			else
+				pbPlayCancelSE
+				canceled = "doNotQuit"
+			end
+		#if not triggered from "quit game" option
+		else
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Don't save")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			else
+				pbPlayCancelSE
+				canceled = true
+			end
+		end #if !$player.save_slot
+		@scene.pbEndScreen
+		if ret
+			return ret
+		end
+		if saved
+			return saved
+		end
+		if canceled
+			return canceled
+		end
+	end #loop do
   end
 
   # Call this to open the slot select screen

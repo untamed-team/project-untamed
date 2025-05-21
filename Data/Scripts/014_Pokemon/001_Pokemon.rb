@@ -87,7 +87,9 @@ class Pokemon
   # @return [Integer] the progress of this Pokémon evolution method #by low
   attr_accessor :evolution_steps
   attr_accessor :willmega
-	attr_accessor :sketchMove # necturna clause #by low
+  attr_accessor :sketchMove # necturna clause #by low
+  attr_accessor :remaningHPBars
+  attr_accessor :hpbarsstorage
 
   # Max total IVs
   IV_STAT_LIMIT = 1000#31 #by low
@@ -710,10 +712,6 @@ class Pokemon
   # @param move_id [Symbol, String, GameData::Move] ID of the move to check
   # @return [Boolean] whether the Pokémon is compatible with the given move
   def compatible_with_move?(move_id)
-		# i dont know if this works still
-		# the edited version is in low_extrastuff
-    move_data = GameData::Move.try_get(move_id)
-    return move_data && species_data.tutor_moves.include?(move_data.id)
   end
 
   def can_relearn_move?
@@ -1231,9 +1229,12 @@ class Pokemon
     @personalID       = rand(2**16) | (rand(2**16) << 16)
     @hp               = 1
     @totalhp          = 1
-    @evolution_steps  = 0 #by low
-		@willmega					= false
-		@sketchMove				= nil
+    #by low
+    @evolution_steps  = 0
+    @remaningHPBars   = [0, 0] # current, max hp bar
+    @hpbarsstorage    = [0, 0] # break, restore hp bar
+    @willmega         = false
+    @sketchMove       = nil
     calc_stats
     if @form == 0 && recheck_form
       f = MultipleForms.call("getFormOnCreation", self)

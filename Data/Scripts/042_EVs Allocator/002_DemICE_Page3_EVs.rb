@@ -504,6 +504,7 @@ class PokemonSummary_Scene
 	end
 
   def pbScene
+    # check 014_Summary.rb for the one that actually edits this code
     @pokemon.play_cry
     loop do
       Graphics.update
@@ -520,10 +521,6 @@ class PokemonSummary_Scene
         if (@page == 3 && !$donteditEVs) && $bag.has?(:EVSALLOCATIONTOOL)
           pbPlayDecisionSE
 		  pbEVAllocation
-          dorefresh = true
-        elsif @page == 4
-          pbPlayDecisionSE
-          pbMoveSelection
           dorefresh = true
         elsif @page == 5
           pbPlayDecisionSE

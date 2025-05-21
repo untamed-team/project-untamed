@@ -119,17 +119,18 @@ module PBEffects
   WaterSport          = 114
   WeightChange        = 115
   Yawn                = 116
-	# new effects #by low
+  # new effects #by low
   NoFlinch            = 117
   ZealousDance        = 118
-  Momentum		        = 119
+  Momentum            = 119
   SlipperyPeel        = 120
-  MoodyMemory	        = 121
-  RemaningHPBars     	= 122
+  MoodyMemory         = 121
   HonorBound          = 123
   PrioEchoChamber     = 124
   BoomInstalled       = 125
   LeechSeedCount      = 126
+  HoldingHand         = 127
+  NeedleArm           = 128
 
   #=============================================================================
   # These effects apply to a battler position
@@ -169,11 +170,12 @@ module PBEffects
   Tailwind           = 19
   ToxicSpikes        = 20
   WideGuard          = 21
-	#by low
-	PartyPopper        = 22
-	StatDropImmunity   = 23
-	LastRoundFaintedPokemon = 24 # AI stuff
-  SwitchAbuse         		= 25
+  #by low
+  PartyPopper        = 22
+  StatDropImmunity   = 23
+  LastRoundFaintedPokemon = 24 # AI stuff
+  SwitchAbuse             = 25
+  FaintedMons        = 26
 
   #=============================================================================
   # These effects apply to the battle (i.e. both sides)

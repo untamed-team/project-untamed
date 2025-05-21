@@ -191,6 +191,8 @@ MegaStone = TREVENANTITE
 BaseStats = 85,135,107,66,90,107
 Abilities = GRASSYSURGE
 HiddenAbilities = GRASSYSURGE
+Height = 3.0
+Weight = 89.5
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
@@ -258,6 +260,15 @@ Abilities = FURCOAT
 HiddenAbilities = FURCOAT
 Height = 0.8
 Weight = 14.0
+#-------------------------------
+[SABLEYE,1]
+FormName = Mega Sableye
+MegaStone = SABLENITE
+BaseStats = 75,75,135,20,75,125
+Abilities = MAGICBOUNCE
+HiddenAbilities = MAGICBOUNCE
+Weight = 161.0
+Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
 #-------------------------------
 [LEDIAN,1]
 FormName = Mega Ledian
@@ -328,7 +339,7 @@ Generation = 6
 [GLALIE,1]
 FormName = Mega Glalie
 MegaStone = GLALITITE
-BaseStats = 80,120,80,100,120,80
+BaseStats = 85,125,85,105,125,85
 BaseExp = 203
 Abilities = REFRIGERATE
 HiddenAbilities = REFRIGERATE
@@ -336,6 +347,30 @@ Height = 2.1
 Weight = 350.2
 Pokedex = It envelops prey in its mouth, freezing them instantly. But its jaw is dislocated, so it's unable to eat them.
 Generation = 6
+#-------------------------------
+[AUDINO,1]
+FormName = Mega Audino
+MegaStone = AUDINITE
+Types = NORMAL,FAIRY
+BaseStats = 103,60,126,50,80,126
+BaseExp = 425
+Abilities = HEALER
+HiddenAbilities = HEALER
+Height = 1.5
+Weight = 32.0
+Color = White
+Generation = 6
+#---------------------------------------------------------------------------------------------
+[ALTARIA,1]
+FormName = Mega Altaria
+MegaStone = ALTARIANITE
+Types = DRAGON,FAIRY
+BaseStats = 75,110,110,80,110,105
+Abilities = PIXILATE
+HiddenAbilities = PIXILATE
+Height = 1.5
+Weight = 45.8
+#------------------------------- 
 #---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
@@ -505,7 +540,7 @@ Pokedex = This is the form Castform takes when covered in snow. Its body becomes
 FormName = Sandy Form
 Types = GROUND
 Color = Brown
-Pokedex = catsform so cute i want to pat it
+Pokedex = This is the form Castform takes when covered in sand. Its body becomes a rough dust-like material, which is excellent replacement for steel wool.
 #-------------------------------
 [MAGIKARP,2]
 FormName = Mazian Magikarp
@@ -651,9 +686,3 @@ FormName = Blue Flower
 #-------------------------------
 [FLORGES,4]
 FormName = White Flower
-#-------------------------------
-[SABLEYE,1]
-FormName = Mega Sableye
-MegaStone = SABLENITE
-BaseStats = 75,75,125,20,65,115
-Abilities = MAGICBOUNCE
