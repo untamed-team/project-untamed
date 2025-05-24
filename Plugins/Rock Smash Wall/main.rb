@@ -6,7 +6,10 @@
 def pbRockSmashWall(chance, lootTable)
   return if !pbRockSmashWallQuestion #player used rock smash successfully
   outcome = rand(100)
-  return 2 if outcome > chance #player failed to get loot even though they used Rock Smash successfully
+  if outcome > chance #player failed to get loot even though they used Rock Smash successfully
+    pbMessage(_INTL("Nothing of note was found..."))
+    return 2 
+  end
   #success, get loot
   fossilID = lootTable[0][:item]
   fossilData = GameData::Item.get(fossilID)
