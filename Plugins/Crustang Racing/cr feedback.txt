@@ -1,0 +1,27 @@
+CR feedback:
+Nerf second boost
+Spinout and overload are a bit funky to use and inferior to the much better second boost and hazard traps
+Second boost is by far the best ability because you always get value out of it
+Reduced cooldown and second boost may be exceptionally powerful together
+I didn’t realize that the second boost had worked at first. Might need a better visual or audio indicator like the regular boost does
+using a second boost on adjusted (higher base) speed settings actually reduces your speed
+on some higher speeds, using the boost temporarily reduces your speed. Not by too much, but it happens. I don’t know if that’s intentional
+race music continued into overworld, this is likely caused by using invincibility at the end of the race (music resets when you walk into a building)
+music in overworld won’t play, I’m not sure what caused this (music resets when you walk into a building)
+maybe add something that tells you what each thing does? (Mainly because I wasn’t sure if reducing cooldown was for the boost button or the other options)
+i dont think it was telegraphed or noted anywhere (unless i accidentally skipped it) that you can move up and down with arrow keys so i just sat in my bottom row for a long time until i saw an opponent in my lane, would be good to note somewhere such as a tutorial of any sort or on screen reminder during the race
+using the second boost restarts the timer on the primary boost which is lame
+maybe its by design, or maybe not, but offensive moves feel pointless, at least to me, since how others perform is irrelevant as youre just chasing a high score and just always want to go faster and further, so hindrance moves just dont feel beneficial (but still good for variety and would likely be more prominent in a pvp type setting)
+rapid spin text cut off in move summary
+the red (and blue) squares are confusing, i cant quite tell whats happening with them. after testing, theyre really not intuitive. when i see an opponenet they have a large square and i think im gonna collide with it or something but you dont (directly). and when using one of the range abilties yourself, if you press the button (like you do with every single other move), it ends up doing nothing because you have to hold it down to grow it, then release it when something is in range. this NEEDS to be clarified somewhere. also the cooldowns dont reset until you release so youre sabotaging yourself if you dont use it quickly as you cant use other moves at that time. also hazards pause the expansion of the range, then resume when back to normal
+using rest to reduce cooldowns doesnt feel impactful, and using any other move besides rest locks me out from using rest again until i use 3 moves, but i can keep using rest on its own which is confusing, dont know whats intended there
+the boost and moves are full before the race starts but reset when it starts which makes me think i can spam off rip until it starts and makes me wait. should appear empty before starting, not full
+the collision log feels kinda unnecessary and covers part of the screen, even if transparent. imo should be a toggle option or in a less intrusive spot,
+second boost op. single best move there is,
+the rock icon looks more like up and down arrows than any sort of rock or hazard,
+do you get a rare candy every single time you pb? can this be abused to get a low score, then a slightly higher score, then slightly higher, and so on to farm rare candies (assuming this is how its gonna be in the main game)? imo should be one time only pb or milestones in case you start strong and cant pb again,
+overall this is pretty fun tho, big pokeathlon vibes (and not just cuz the track)
+
+left off here: https://discord.com/channels/969006224039370794/1355698937746559007/1356857460706775061
+
+Ideas for balance and better gameplay:
