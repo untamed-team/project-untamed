@@ -241,11 +241,12 @@ class DifficultySelectMenu_Scene
     @sprites["msgwindow"] = Window_AdvancedTextPokemon.new("")
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
+    @sprites["msgwindow"].z = 99999
     pbSetSystemFont(@sprites["overlay"].bitmap)
 
     @sprites["overlay"].x = @sprites["bg"].x
     @sprites["overlay"].y = @sprites["bg"].y
-    @sprites["overlay"].z = 99999
+    @sprites["overlay"].z = 99
 
     page = 1
     drawPage(page)
