@@ -1,17 +1,17 @@
 #=============================================================================
-# Rototona Puzzle
+# Rotatona Puzzle
 #=============================================================================
 class Game_Temp
   attr_accessor :puzzleEvents
 end
 
-class RototonaPuzzle
+class RotatonaPuzzle
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
 		print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
-			:Rototona1      => nil,
-			:Rototona2      => nil,
+			:Rotatona1      => nil,
+			:Rotatona2      => nil,
 			:Launcher1      => nil,
 			:Launcher2      => nil,
 			:Catcher1       => nil,
@@ -22,23 +22,23 @@ class RototonaPuzzle
 			:CornerTracks   => []
 		}
 		$game_map.events.each_value do |event|
-			$game_temp.puzzleEvents[:Rototona1] = event if event.name.match(/RotoPuzzle_Rototona1/i)
-			$game_temp.puzzleEvents[:Rototona2] = event if event.name.match(/RotoPuzzle_Rototona2/i)
-			$game_temp.puzzleEvents[:Launcher1] = event if event.name.match(/RotoPuzzle_Launcher1/i)
-			$game_temp.puzzleEvents[:Launcher2] = event if event.name.match(/RotoPuzzle_Launcher2/i)
-			$game_temp.puzzleEvents[:Catcher1] = event if event.name.match(/RotoPuzzle_Catcher1/i)
-			$game_temp.puzzleEvents[:Catcher2] = event if event.name.match(/RotoPuzzle_Catcher2/i)
-			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotoPuzzle_Barrier/i)
-			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotoPuzzle_Ramp/i)
-			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotoPuzzle_StraightTrack/i)
-			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotoPuzzle_CornerTrack/i)
+			$game_temp.puzzleEvents[:Rotatona1] = event if event.name.match(/RotaPuzzle_Rotatona1/i)
+			$game_temp.puzzleEvents[:Rotatona2] = event if event.name.match(/RotaPuzzle_Rotatona2/i)
+			$game_temp.puzzleEvents[:Launcher1] = event if event.name.match(/RotaPuzzle_Launcher1/i)
+			$game_temp.puzzleEvents[:Launcher2] = event if event.name.match(/RotaPuzzle_Launcher2/i)
+			$game_temp.puzzleEvents[:Catcher1] = event if event.name.match(/RotaPuzzle_Catcher1/i)
+			$game_temp.puzzleEvents[:Catcher2] = event if event.name.match(/RotaPuzzle_Catcher2/i)
+			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotaPuzzle_Barrier/i)
+			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
+			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
+			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
 	end #def self.getPuzzleEvents
 
 	def self.interact
 		#print "interacting"
-		print "Rototona1 events are #{$game_temp.puzzleEvents[:Rototona1]}"
-		print "Rototona2 events are #{$game_temp.puzzleEvents[:Rototona2]}"
+		print "Rotatona1 events are #{$game_temp.puzzleEvents[:Rotatona1]}"
+		print "Rotatona2 events are #{$game_temp.puzzleEvents[:Rotatona2]}"
 		print "Launcher1 events are #{$game_temp.puzzleEvents[:Launcher1]}"
 		print "Launcher2 events are #{$game_temp.puzzleEvents[:Launcher2]}"
 		print "Catcher1 events are #{$game_temp.puzzleEvents[:Catcher1]}"
@@ -49,25 +49,65 @@ class RototonaPuzzle
 		print "CornerTracks events are #{$game_temp.puzzleEvents[:CornerTracks]}"
 	end #def self.interact
 
-	def self.resetRototonas
+	def self.resetRotatonas
 		
-	end #def self.resetRototonas
+	end #def self.resetRotatonas
 	
-	def self.checkForRototonaCollisions
+	def self.checkForRotatonaCollisions
 		#Console.echo_warn "this is a parallel process - #{rand(100)}"
-	end #self.checkForRototonaCollisions
-end #class RototonaPuzzle
+	end #self.checkForRotatonaCollisions
+end #class RotatonaPuzzle
 
 #on_player_interact with puzzle event
-EventHandlers.add(:on_player_interact, :interact_with_puzzle_event, proc {
+EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_event, proc {
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	facingEvent = $game_player.pbFacingEvent
-	RototonaPuzzle.interact if facingEvent && facingEvent.name.match(/RotoPuzzle/i)
+	RotatonaPuzzle.interact if facingEvent && facingEvent.name.match(/RotaPuzzle/i)
 })
 
-EventHandlers.add(:on_frame_update, :rototona_puzzle_logic_listener, proc {
+EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
-	RototonaPuzzle.checkForRototonaCollisions
+	RotatonaPuzzle.checkForRotatonaCollisions
 })
+
+#logic to do:
+#if the Rotatona is rolling
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#

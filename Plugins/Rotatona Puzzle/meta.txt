@@ -1,4 +1,4 @@
-﻿Name       = Rototona Puzzle
+﻿Name       = Rotatona Puzzle
 Version    = 1.0
 Essentials = 20.1
 Credits    = Gardenette
