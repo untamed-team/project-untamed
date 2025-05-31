@@ -12,14 +12,14 @@ def self.getPuzzleEvents
 	puzzleEvents = {
 		:Rototona1      => nil,
 		:Rototona2      => nil,
-		:Launcher1,     => nil,
-		:Launcher2,     => nil,
+		:Launcher1      => nil,
+		:Launcher2      => nil,
 		:Catcher1       => nil,
 		:Catcher2       => nil,
 		:Barriers       => [],
 		:Ramps          => [],
 		:StraightTracks => [],
-		:CornerTracks  => []
+		:CornerTracks   => []
 	}
 	$game_map.events.each_value do |event|
       puzzleEvents[:Rototona1] = event if event.name == "Rototona1"
