@@ -1,6 +1,10 @@
 #=============================================================================
 # Rototona Puzzle
 #=============================================================================
+class Game_Temp
+  attr_writer :puzzleEvents
+end
+
 class RototonaPuzzle
 	def initialize
 		#when entering the map with the puzzle
@@ -11,7 +15,7 @@ class RototonaPuzzle
 	def getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
 		print "identifying puzzle pieces on the map"
-		puzzleEvents = {
+		$game_temp.puzzleEvents = {
 			:Rototona1      => nil,
 			:Rototona2      => nil,
 			:Launcher1      => nil,
@@ -24,22 +28,22 @@ class RototonaPuzzle
 			:CornerTracks   => []
 		}
 		$game_map.events.each_value do |event|
-			puzzleEvents[:Rototona1] = event if event.name == "RotoPuzzle_Rototona1.shadowless"
-			puzzleEvents[:Rototona2] = event if event.name == "RotoPuzzle_Rototona2.shadowless"
-			puzzleEvents[:Launcher1] = event if event.name == "RotoPuzzle_Launcher1.shadowless"
-			puzzleEvents[:Launcher2] = event if event.name == "RotoPuzzle_Launcher2.shadowless"
-			puzzleEvents[:Catcher1] = event if event.name == "RotoPuzzle_Catcher1.shadowless"
-			puzzleEvents[:Catcher2] = event if event.name == "RotoPuzzle_Catcher2.shadowless"
-			puzzleEvents[:Barriers].push(event) if event.name == "RotoPuzzle_Barrier.shadowless"
-			puzzleEvents[:Ramps].push(event) if event.name == "RotoPuzzle_Ramp.shadowless"
-			puzzleEvents[:StraightTracks].push(event) if event.name == "RotoPuzzle_StraightTrack.shadowless"
-			puzzleEvents[:CornerTracks].push(event) if event.name == "RotoPuzzle_CornerTrack.shadowless"
+			$game_temp.puzzleEvents[:Rototona1] = event if event.name == "RotoPuzzle_Rototona1.shadowless"
+			$game_temp.puzzleEvents[:Rototona2] = event if event.name == "RotoPuzzle_Rototona2.shadowless"
+			$game_temp.puzzleEvents[:Launcher1] = event if event.name == "RotoPuzzle_Launcher1.shadowless"
+			$game_temp.puzzleEvents[:Launcher2] = event if event.name == "RotoPuzzle_Launcher2.shadowless"
+			$game_temp.puzzleEvents[:Catcher1] = event if event.name == "RotoPuzzle_Catcher1.shadowless"
+			$game_temp.puzzleEvents[:Catcher2] = event if event.name == "RotoPuzzle_Catcher2.shadowless"
+			$game_temp.puzzleEvents[:Barriers].push(event) if event.name == "RotoPuzzle_Barrier.shadowless"
+			$game_temp.puzzleEvents[:Ramps].push(event) if event.name == "RotoPuzzle_Ramp.shadowless"
+			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name == "RotoPuzzle_StraightTrack.shadowless"
+			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name == "RotoPuzzle_CornerTrack.shadowless"
 		end
 	end #def self.getPuzzleEvents
 
 	def interact
 		print "interacting"
-		print "Barrier events are #{puzzleEvents[:Barriers]}"
+		print "Barrier events are #{$game_temp.puzzleEvents[:Barriers]}"
 	end #def self.interact
 
 	def resetRototonas
