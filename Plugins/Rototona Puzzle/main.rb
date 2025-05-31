@@ -2,17 +2,11 @@
 # Rototona Puzzle
 #=============================================================================
 class Game_Temp
-  attr_writer :puzzleEvents
+  attr_accessor :puzzleEvents
 end
 
 class RototonaPuzzle
-	def initialize
-		#when entering the map with the puzzle
-		getPuzzleEvents
-		#self.resetRototonas #might only be necessary for debug purposes
-	end #self.initialize
-
-	def getPuzzleEvents
+	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
 		print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
@@ -41,12 +35,12 @@ class RototonaPuzzle
 		end
 	end #def self.getPuzzleEvents
 
-	def interact
+	def self.interact
 		print "interacting"
 		print "Barrier events are #{$game_temp.puzzleEvents[:Barriers]}"
 	end #def self.interact
 
-	def resetRototonas
+	def self.resetRototonas
 		
 	end #def self.resetRototonas
 end #class RototonaPuzzle
