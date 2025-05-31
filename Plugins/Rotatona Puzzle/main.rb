@@ -56,6 +56,10 @@ class RotatonaPuzzle
 	def self.checkForRotatonaCollisions
 		#Console.echo_warn "this is a parallel process - #{rand(100)}"
 	end #self.checkForRotatonaCollisions
+	
+	def self.crashRotatona(rotatonaNumber)
+		#check common event Temple_Right_Crash_Rotatona1
+	end #def self.crashRotatona(rotatonaNumber)
 end #class RotatonaPuzzle
 
 #on_player_interact with puzzle event
@@ -73,41 +77,22 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 })
 
 #logic to do:
-#if the Rotatona is rolling
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
-#
+#if the launcher has rotatona in it, set rotatona direction to same direction as launcher
+#if rota touches ramp & rota is facing same direction as ramp, jump
+#if rota touches ramp & rota is not facing same direction as ramp, crash
+#if rota touches straight & rota facing up or down & straight facing left or right, crash
+#if rota touches straight & rota facing left or right & straight facing up or down, crash
+#if rota touches corner & rota is facing right & corner is facing up, rota turn up from right
+#if rota touches corner & rota is facing right & corner is facing left, rota turn down from right
+#if rota touches corner & rota is facing right & corner is facing down or right, crash
+#if rota touches corner & rota is facing down & corner is facing up, rota turn left from down
+#if rota touches corner & rota is facing down & corner is facing right, rota turn right from down
+#if rota touches corner & rota is facing down & corner is facing left or down, crash
+#if rota touches corner & rota is facing left & corner is facing down, rota turn down from left
+#if rota touches corner & rota is facing left & corner is facing right, rota turn up from left
+#if rota touches corner & rota is facing left & corner is facing up or left, crash
+#if rota touches corner & rota is facing up & corner is facing down, rota turn right from up
+#if rota touches corner & rota is facing up & corner is facing left, rota turn left from up
+#if rota touches corner & rota is facing up & corner is facing up or right, crash
+#if rota touches catcher, success sound
+#if rota touches barrier, crash
