@@ -35,19 +35,96 @@ class RotatonaPuzzle
 		end
 	end #def self.getPuzzleEvents
 
-	def self.interact
-		#print "interacting"
-		print "Rotatona1 events are #{$game_temp.puzzleEvents[:Rotatona1]}"
-		print "Rotatona2 events are #{$game_temp.puzzleEvents[:Rotatona2]}"
-		print "Launcher1 events are #{$game_temp.puzzleEvents[:Launcher1]}"
-		print "Launcher2 events are #{$game_temp.puzzleEvents[:Launcher2]}"
-		print "Catcher1 events are #{$game_temp.puzzleEvents[:Catcher1]}"
-		print "Catcher2 events are #{$game_temp.puzzleEvents[:Catcher2]}"
-		print "Barrier events are #{$game_temp.puzzleEvents[:Barriers]}"
-		print "Ramps events are #{$game_temp.puzzleEvents[:Ramps]}"
-		print "StraightTracks events are #{$game_temp.puzzleEvents[:StraightTracks]}"
-		print "CornerTracks events are #{$game_temp.puzzleEvents[:CornerTracks]}"
-	end #def self.interact
+	def self.playerInteract(event)
+		#events are passed in as GameData
+		if event == $game_temp.puzzleEvents[:Rotatona1]
+			#print "this is rota1"
+			#option to launch if docked
+			rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
+			print "launching disc from launcher 1" if rota1LaunchChoice
+			
+		elsif event == $game_temp.puzzleEvents[:Rotatona2]
+			#print "this is rota2"
+			#option to launch if docked
+			rota2LaunchChoice = pbConfirmMessage("Launch the disc?")
+			print "launching disc from launcher 2" if rota2LaunchChoice
+			
+		elsif event == $game_temp.puzzleEvents[:Launcher1]
+			#print "this is launcher1"
+			#option to turn launcher 90 degrees
+			choices = [
+				_INTL("Turn Left"), #0
+				_INTL("Turn Right"), #1
+				_INTL("Nevermind") #2 or -1
+			]
+			launcher1Choice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
+			case launcher1Choice
+			when 0
+				print "turning launcher1 left"
+			when 1
+				print "turning launcher1 right"
+			end
+			
+		elsif event == $game_temp.puzzleEvents[:Launcher2]
+			#print "this is launcher2"
+			#option to turn launcher 90 degrees
+			choices = [
+				_INTL("Turn Left"), #0
+				_INTL("Turn Right"), #1
+				_INTL("Nevermind") #2 or -1
+			]
+			launcher2Choice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
+			case launcher2Choice
+			when 0
+				print "turning launcher2 left"
+			when 1
+				print "turning launcher2 right"
+			end
+			
+		elsif event == $game_temp.puzzleEvents[:Catcher1]
+			#print "this is catcher1"
+			#maybe some text about how the rota would seem to fit perfectly in here
+			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
+			
+		elsif event == $game_temp.puzzleEvents[:Catcher2]
+			#print "this is catcher2"
+			#maybe some text about how the rota would seem to fit perfectly in here
+			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
+			
+		elsif $game_temp.puzzleEvents[:Barriers].include?(event)
+			#print "this is a barrier"
+			#nothing, this probably doesn't need to be an elsif statement
+			
+		elsif $game_temp.puzzleEvents[:Ramps].include?(event)
+			#print "this is a ramp"
+			#option to switch 180 degrees
+			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
+			print "switching ramp 180 degrees" if rampChoice
+			
+		elsif $game_temp.puzzleEvents[:StraightTracks].include?(event)
+			#print "this is a straight track"
+			#option to turn track 90 degrees
+			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
+			print "turning straight track 90 degrees" if straightTrackChoice
+			
+		elsif $game_temp.puzzleEvents[:CornerTracks].include?(event)
+			#print "this is a corner track"
+			#option to turn track 90 degrees
+			choices = [
+				_INTL("Turn Left"), #0
+				_INTL("Turn Right"), #1
+				_INTL("Nevermind") #2 or -1
+			]
+			cornerTrackChoice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
+			case cornerTrackChoice
+			when 0
+				print "turning corner track left"
+			when 1
+				print "turning corner track right"
+			end
+		end #if event == $game_temp.puzzleEvents[:Rotatona1]
+		
+	end #def self.playerInteract
 
 	def self.resetRotatonas
 		
@@ -67,7 +144,7 @@ EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_eve
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	facingEvent = $game_player.pbFacingEvent
-	RotatonaPuzzle.interact if facingEvent && facingEvent.name.match(/RotaPuzzle/i)
+	RotatonaPuzzle.playerInteract(facingEvent) if facingEvent && facingEvent.name.match(/RotaPuzzle/i)
 })
 
 EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
