@@ -1,11 +1,16 @@
 #=============================================================================
 # Rotatona Puzzle
 #=============================================================================
+#TO DO LIST
+#when the map loads (use event handler for changing map), run the command to getPuzzlePieces rather than using an event that erases itself
+
 class Game_Temp
   attr_accessor :puzzleEvents
 end
 
 class RotatonaPuzzle
+	SE_ROTATE_STRAIGHT_TRACK = "Cut"
+
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
 		print "identifying puzzle pieces on the map"
@@ -105,7 +110,7 @@ class RotatonaPuzzle
 			#print "this is a straight track"
 			#option to turn track 90 degrees
 			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
-			print "turning straight track 90 degrees" if straightTrackChoice
+			self.rotateStraightTrack(event) if straightTrackChoice
 			
 		elsif $game_temp.puzzleEvents[:CornerTracks].include?(event)
 			#print "this is a corner track"
@@ -137,6 +142,38 @@ class RotatonaPuzzle
 	def self.crashRotatona(rotatonaNumber)
 		#check common event Temple_Right_Crash_Rotatona1
 	end #def self.crashRotatona(rotatonaNumber)
+	
+	def self.rotateStraightTrack(event)
+		#get event's current graphic
+		#event.character_name
+		#event.character_hue
+		#event.direction
+		#event.pattern
+		#PBMoveRoute::Graphic, character_name, hue#, direction#, pattern#,
+		case event.direction
+		when 2 #down
+			newDirection = 4 #left
+			#print "currently looking down, turning left"
+		when 4 #left
+			newDirection = 8 #up
+			#print "currently looking left, turning up"
+		when 6 #right
+			newDirection = 2 #down
+			#print "currently looking right, turning down"
+		when 8 #up
+			newDirection = 6 #right
+			#print "currently looking up, turning right"
+		end
+		pbSEPlay(SE_ROTATE_STRAIGHT_TRACK)
+		pbMoveRoute(event, [
+			PBMoveRoute::DirectionFixOff,
+			PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 1,
+			PBMoveRoute::Wait, 2,
+			PBMoveRoute::DirectionFixOn,
+			PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
+		])
+	end #def self.rotateStraightTrack
+
 end #class RotatonaPuzzle
 
 #on_player_interact with puzzle event
