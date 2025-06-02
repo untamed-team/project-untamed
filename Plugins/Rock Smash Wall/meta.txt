@@ -1,4 +1,4 @@
 ﻿Name       = Rock Smash Wall
 Version    = 1.0
 Essentials = 20.1
-Credits    = Gardenette
+Credits    = Gardenette, Low
