@@ -5,11 +5,13 @@
 # Cancels phenomenon on battle start to stop animation during battle intro
 EventHandlers.add(:on_start_battle, :boon_phenomenon_start_battle,
                   proc {
+  Phenomenon.expBoost = true if PhenomenonConfig::Pokemon[:expBoost] && Phenomenon.playerOn?
   Phenomenon.cancel
 })
 
 EventHandlers.add(:on_end_battle, :boon_phenomenon_end_battle,
                   proc {
+  Phenomenon.expBoost = false
   Phenomenon.activated = false
 })
 
@@ -46,6 +48,23 @@ EventHandlers.add(:on_wild_pokemon_created, :boon_phenomenon_wild_created,
   if Phenomenon.activated
     if PhenomenonConfig::Pokemon[:shiny] # 4x the normal shiny chance
       pkmn.makeShiny if rand(65536) <= Settings::SHINY_POKEMON_CHANCE * 4
+    end
+    if PhenomenonConfig::Pokemon[:ivs] > -1 && rand(PhenomenonConfig::Pokemon[:ivs]) == 0
+      ivs = [:HP, :ATTACK, :SPECIAL_ATTACK, :DEFENSE, :SPECIAL_DEFENSE, :SPEED]
+      ivs.shuffle!
+      ivs[0..1].each do |i|
+        pkmn.iv[i] = 31
+      end
+    end
+    if PhenomenonConfig::Pokemon[:eggMoves] > -1 && rand(PhenomenonConfig::Pokemon[:eggMoves]) == 0
+      moves = GameData::Species.get_species_form(pkmn.species, pkmn.form).egg_moves
+      pkmn.learn_move(moves.random) if moves.length > 0
+    end
+    if PhenomenonConfig::Pokemon[:hiddenAbility] > -1 && rand(PhenomenonConfig::Pokemon[:hiddenAbility]) == 0
+      a = GameData::Species.get(pkmn.species).hidden_abilities
+      if !a.nil? && a.kind_of?(Array)
+        pkmn.ability = a.random
+      end
     end
   end
 })
