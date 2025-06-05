@@ -3595,6 +3595,57 @@ Shape = Finned
 Category = False Beacon
 Pokedex =
 #-------------------------------
+[G_CORSOLA]
+Name = Corsola
+Types = GHOST,ROCK
+BaseStats = 50,70,95,30,75,95
+GenderRatio = Female75Percent
+GrowthRate = Fast
+BaseExp = 144
+EVs = DEFENSE,1,SPECIAL_DEFENSE,1
+CatchRate = 60
+Happiness = 50
+Abilities = WEAKARMOR,CLEARBODY
+HiddenAbilities = CURSEDBODY
+Moves = 1,TACKLE,1,HARDEN,5,ASTONISH,10,DISABLE,15,SPITE,20,ANCIENTPOWER,25,NIGHTSHADE,30,CURSE,35,GIGADRAIN,40,OMINOUSWIND,45,POWERGEM,50,MIRRORCOAT,55,GEODEBURST
+TutorMoves = BLIZZARD,BODYSLAM,CALMMIND,DIG,EARTHPOWER,EARTHQUAKE,HAIL,ICEBEAM,ICYWIND,LIGHTSCREEN,LIQUIDATION,PSYCHIC,RAINDANCE,REFLECT,ROCKBLAST,ROCKSLIDE,ROCKTOMB,ROUND,SAFEGUARD,SANDSTORM,SCALD,SCREECH,STEALTHROCK,STONEEDGE,SUNNYDAY,SURF,WILLOWISP
+EggMoves = CONFUSERAY,HAZE,NATUREPOWER,WATERPULSE
+EggGroups = Water1,Water3
+HatchSteps = 5120
+Height = 0.6
+Weight = 0.5
+Color = White
+Shape = Insectoid
+Habitat = Sea
+Category = Coral
+Pokedex = Sudden climate change wiped out this ancient kind of Corsola. This Pokémon absorbs others' life-force through its branches.
+Generation = 8
+Evolutions = CURSOLA,Level,38
+#-------------------------------
+[CURSOLA]
+Name = Cursola
+Types = GHOST,ROCK
+BaseStats = 69,96,62,43,124,106
+GenderRatio = Female75Percent
+GrowthRate = Fast
+BaseExp = 179
+EVs = SPECIAL_ATTACK,2
+CatchRate = 30
+Happiness = 50
+Abilities = WEAKARMOR,CLEARBODY
+HiddenAbilities = EERIEPRESENCE
+Moves = 0,ROCKBLAST,1,TACKLE,1,HARDEN,5,ASTONISH,10,DISABLE,15,SPITE,20,ANCIENTPOWER,25,NIGHTSHADE,30,CURSE,35,GIGADRAIN,40,OMINOUSWIND,45,POWERGEM,50,MIRRORCOAT,55,GEODEBURST,60,STRENGTHSAP
+TutorMoves = BLIZZARD,BODYSLAM,CALMMIND,DIG,EARTHPOWER,EARTHQUAKE,HAIL,ICEBEAM,ICYWIND,LIGHTSCREEN,LIQUIDATION,POLTERGEIST,PSYCHIC,RAINDANCE,REFLECT,ROCKBLAST,ROCKSLIDE,ROCKTOMB,ROUND,SAFEGUARD,SANDSTORM,SCALD,SCREECH,STEALTHROCK,STONEEDGE,SUNNYDAY,SURF,WILLOWISP
+EggGroups = Water1,Water3
+HatchSteps = 5120
+Height = 1.0
+Weight = 0.4
+Color = White
+Shape = HeadArms
+Category = Coral
+Pokedex = Its shell is overflowing with its heightened otherworldly energy. The ectoplasm serves as protection for this Pokémon's core spirit.
+Generation = 8
+#-------------------------------
 [MAGIKARP]
 Name = Magikarp
 Types = WATER
