@@ -385,6 +385,7 @@ class Battle::Move
     target.damageState.fainted = true if target.fainted?
     target.lastHPLost = damage                        # For Focus Punch
     target.tookDamageThisRound = true if damage > 0   # For Assurance
+    target.tookDirectDmgThisRound = true if damage > 0 # For Eerie Presence 
     target.lastAttacker.push(user.index)              # For Revenge
     if target.opposes?(user)
       target.lastHPLostFromFoe = damage               # For Metal Burst

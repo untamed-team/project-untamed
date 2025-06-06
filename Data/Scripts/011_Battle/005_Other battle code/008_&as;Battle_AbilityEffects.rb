@@ -2696,6 +2696,16 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
   }
 )
 
+Battle::AbilityEffects::EndOfRoundHealing.add(:EERIEPRESENCE,
+  proc { |ability, battler, battle|
+    next if !battler.canHeal? || battler.tookDirectDmgThisRound
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP((battler.totalhp / 6).round)
+    battle.pbDisplay(_INTL("{1}'s branches absorbed surrounding lifeforce!", battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
 #===============================================================================
 # EndOfRoundEffect handlers
 #===============================================================================

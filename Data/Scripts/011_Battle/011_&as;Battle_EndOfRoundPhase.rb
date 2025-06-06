@@ -758,6 +758,7 @@ class Battle
       battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
       battler.effects[PBEffects::HoldingHand]      = false
       battler.pokemon.willmega                     = false
+      battler.tookDirectDmgThisRound               = false
       battler.lastHPLost                           = 0
       battler.lastHPLostFromFoe                    = 0
       battler.droppedBelowHalfHP                   = false

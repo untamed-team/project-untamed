@@ -26,6 +26,9 @@ class Battle::AI
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
             end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
+            end
             if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
                user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
                expectedTerrain == :Grassy
@@ -90,6 +93,9 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
+            end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
             end
             if user.hasActiveItem?(:LEFTOVERS) || 
                (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
@@ -173,6 +179,9 @@ class Battle::AI
             end        
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
+            end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
             end
             if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
                user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
@@ -346,10 +355,18 @@ class Battle::AI
             if user.hp==user.totalhp
                 score *= 1.5
             end
+            if user.allAllies.any?
+                user.allAllies.each do |b|
+                    next unless b.hasActiveAbility?(:EERIEPRESENCE)
+                    if targetWillMove?(target, "dmg") && b.hp <= (b.totalhp/2.0)
+                        score*=1.5
+                    end
+                end
+            end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if priorityAI(target,targetMove,globalArray) > 0
-                    score *= 2.0 
+                    score *= 3.0 
                     if targetMove.statusMove?
                         score *= 0.9
                         score *= 0.3 if pbHasSetupMove?(target, false)
@@ -381,10 +398,18 @@ class Battle::AI
             if user.hp==user.totalhp
                 score *= 1.5
             end
+            if user.allAllies.any?
+                user.allAllies.each do |b|
+                    next unless b.hasActiveAbility?(:EERIEPRESENCE)
+                    if targetWillMove?(target, "dmg") && b.hp <= (b.totalhp/2.0)
+                        score*=1.5
+                    end
+                end
+            end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if pbTargetsMultiple?(targetMove, target)
-                    score *= 2.0 
+                    score *= 3.0 
                     if targetMove.statusMove?
                         score *= 0.5
                         score *= 0.3 if pbHasSetupMove?(target, false)
