@@ -83,9 +83,11 @@ class RotatonaPuzzle
 			launcher2Choice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
 			case launcher2Choice
 			when 0
-				print "turning launcher2 left"
+				#print "turning launcer left"
+				self.rotateLauncher(event,"left90")
 			when 1
-				print "turning launcher2 right"
+				#print "turning launcher right"
+				self.rotateLauncher(event,"right90")
 			end
 			
 		elsif event == $game_temp.puzzleEvents[:Catcher1]
