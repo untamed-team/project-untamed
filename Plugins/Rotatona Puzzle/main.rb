@@ -16,24 +16,22 @@ class RotatonaPuzzle
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
-			:Rotatona1      => nil,
-			:Rotatona2      => nil,
-			:Launcher1      => nil,
-			:Launcher2      => nil,
-			:Catcher1       => nil,
-			:Catcher2       => nil,
-			:Barriers       => [],
-			:Ramps          => [],
-			:StraightTracks => [],
-			:CornerTracks   => []
+			:Rotatona1     		  => nil,
+			:Rotatona2 			  => nil,
+			:Launchers_Rotatable  => [],
+			:Launchers_Stationary => [],
+			:Catchers             => [],
+			:Barriers       	  => [],
+			:Ramps           	  => [],
+			:StraightTracks       => [],
+			:CornerTracks  		  => []
 		}
 		$game_map.events.each_value do |event|
 			$game_temp.puzzleEvents[:Rotatona1] = event if event.name.match(/RotaPuzzle_Rotatona1/i)
 			$game_temp.puzzleEvents[:Rotatona2] = event if event.name.match(/RotaPuzzle_Rotatona2/i)
-			$game_temp.puzzleEvents[:Launcher1] = event if event.name.match(/RotaPuzzle_Launcher1/i)
-			$game_temp.puzzleEvents[:Launcher2] = event if event.name.match(/RotaPuzzle_Launcher2/i)
-			$game_temp.puzzleEvents[:Catcher1] = event if event.name.match(/RotaPuzzle_Catcher1/i)
-			$game_temp.puzzleEvents[:Catcher2] = event if event.name.match(/RotaPuzzle_Catcher2/i)
+			$game_temp.puzzleEvents[:Launchers_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
+			$game_temp.puzzleEvents[:Launchers_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
+			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
 			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotaPuzzle_Barrier/i)
 			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
 			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
@@ -55,9 +53,7 @@ class RotatonaPuzzle
 			rota2LaunchChoice = pbConfirmMessage("Launch the disc?")
 			print "launching disc from launcher 2" if rota2LaunchChoice
 			
-		elsif event == $game_temp.puzzleEvents[:Launcher1]
-			#print "this is launcher2"
-			#option to turn launcher 90 degrees
+		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
 			choices = [
 				_INTL("Turn Left"), #0
 				_INTL("Turn Right"), #1
@@ -73,31 +69,11 @@ class RotatonaPuzzle
 				self.rotateLauncher(event,"right90")
 			end
 			
-		elsif event == $game_temp.puzzleEvents[:Launcher2]
-			print "current direction is #{event.direction}"
-			#print "this is launcher2"
-			#option to turn launcher 90 degrees
-			choices = [
-				_INTL("Turn Left"), #0
-				_INTL("Turn Right"), #1
-				_INTL("Nevermind") #2 or -1
-			]
-			launcher2Choice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
-			case launcher2Choice
-			when 0
-				#print "turning launcer left"
-				self.rotateLauncher(event,"left90")
-			when 1
-				#print "turning launcher right"
-				self.rotateLauncher(event,"right90")
-			end
+		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
+			choice = pbConfirmMessage(_INTL("Launch the disc?"))
+			print "launching rota" if choice
 			
-		elsif event == $game_temp.puzzleEvents[:Catcher1]
-			#print "this is catcher1"
-			#maybe some text about how the rota would seem to fit perfectly in here
-			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
-			
-		elsif event == $game_temp.puzzleEvents[:Catcher2]
+		elsif event == $game_temp.puzzleEvents[:Catchers]
 			#print "this is catcher2"
 			#maybe some text about how the rota would seem to fit perfectly in here
 			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
