@@ -1,8 +1,6 @@
 #=============================================================================
 # Rotatona Puzzle
 #=============================================================================
-#TO DO LIST
-#when the map loads (use event handler for changing map), run the command to getPuzzlePieces rather than using an event that erases itself
 
 class Game_Temp
   attr_accessor :puzzleEvents
@@ -16,7 +14,7 @@ class RotatonaPuzzle
 
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
-		print "identifying puzzle pieces on the map"
+		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
 			:Rotatona1      => nil,
 			:Rotatona2      => nil,
@@ -76,6 +74,7 @@ class RotatonaPuzzle
 			end
 			
 		elsif event == $game_temp.puzzleEvents[:Launcher2]
+			print "current direction is #{event.direction}"
 			#print "this is launcher2"
 			#option to turn launcher 90 degrees
 			choices = [
@@ -291,12 +290,16 @@ class RotatonaPuzzle
 				newDirection = 6 #right
 				#print "currently looking up, turning to face right"
 			end
+			
+			#this event has issues depending on which direction you interact with it from
+			#how is there a direction fix issue?
+			
 			pbSEPlay(SE_ROTATE_LAUNCHER)
 			pbMoveRoute(event, [
-				PBMoveRoute::DirectionFixOff,
+				#PBMoveRoute::DirectionFixOff,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 1,
 				PBMoveRoute::Wait, 2,
-				PBMoveRoute::DirectionFixOn,
+				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
 			])
 		else #directionString is "left90"
@@ -316,10 +319,10 @@ class RotatonaPuzzle
 			end
 			pbSEPlay(SE_ROTATE_LAUNCHER)
 			pbMoveRoute(event, [
-				PBMoveRoute::DirectionFixOff,
+				#PBMoveRoute::DirectionFixOff,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 2,
 				PBMoveRoute::Wait, 2,
-				PBMoveRoute::DirectionFixOn,
+				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
 			])
 		end #if directionString == "right90"
@@ -340,6 +343,14 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	RotatonaPuzzle.checkForRotatonaCollisions
 })
+
+EventHandlers.add(:on_enter_map, :spawn_dig_spots,
+  proc { |_old_map_id|
+	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
+	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	RotatonaPuzzle.getPuzzleEvents
+  }
+)
 
 #logic to do:
 #if the launcher has rotatona in it, set rotatona direction to same direction as launcher
