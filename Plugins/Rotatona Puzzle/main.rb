@@ -16,8 +16,7 @@ class RotatonaPuzzle
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
-			:Rotatona1     		  => nil,
-			:Rotatona2 			  => nil,
+			:Discs	 			  => [],
 			:Launchers_Rotatable  => [],
 			:Launchers_Stationary => [],
 			:Catchers             => [],
@@ -27,8 +26,7 @@ class RotatonaPuzzle
 			:CornerTracks  		  => []
 		}
 		$game_map.events.each_value do |event|
-			$game_temp.puzzleEvents[:Rotatona1] = event if event.name.match(/RotaPuzzle_Rotatona1/i)
-			$game_temp.puzzleEvents[:Rotatona2] = event if event.name.match(/RotaPuzzle_Rotatona2/i)
+			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			$game_temp.puzzleEvents[:Launchers_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
 			$game_temp.puzzleEvents[:Launchers_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
 			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
@@ -41,25 +39,20 @@ class RotatonaPuzzle
 
 	def self.playerInteract(event)
 		#events are passed in as GameData
-		if event == $game_temp.puzzleEvents[:Rotatona1]
+		if $game_temp.puzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
 			rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
 			print "launching disc from launcher 1" if rota1LaunchChoice
 			
-		elsif event == $game_temp.puzzleEvents[:Rotatona2]
-			#print "this is rota2"
-			#option to launch if docked
-			rota2LaunchChoice = pbConfirmMessage("Launch the disc?")
-			print "launching disc from launcher 2" if rota2LaunchChoice
-			
 		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
 			choices = [
-				_INTL("Turn Left"), #0
-				_INTL("Turn Right"), #1
-				_INTL("Nevermind") #2 or -1
+				_INTL("Left Arrow Button"), #0
+				_INTL("Right Arrow Button"), #1
+				_INTL("Square Button"), #2
+				_INTL("Nevermind") #3 or -1
 			]
-			launcher2Choice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
+			launcher2Choice = pbMessage(_INTL("There are arrow buttons and a square button here."), choices, choices.length) #if disc not docked
 			case launcher2Choice
 			when 0
 				#print "turning launcer left"
@@ -67,12 +60,28 @@ class RotatonaPuzzle
 			when 1
 				#print "turning launcher right"
 				self.rotateLauncher(event,"right90")
+			when 2
+				if false #discDocked
+					#click SE ####################################################################
+					pbMessage(_INTL("launching disc.")) if choice
+				else
+					#click SE ####################################################################
+					choice = pbMessage(_INTL("Nothing happened."))
+				end
 			end
 			
 		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
-			choice = pbConfirmMessage(_INTL("Launch the disc?"))
-			print "launching rota" if choice
-			
+			if false #discDocked
+				#if disc is docked
+				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
+				#click SE ####################################################################
+				pbMessage(_INTL("launching disc.")) if choice
+			else
+				#if disc not docked
+				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
+				#click SE ####################################################################
+				pbMessage(_INTL("Nothing happened.")) if choice
+			end
 		elsif event == $game_temp.puzzleEvents[:Catchers]
 			#print "this is catcher2"
 			#maybe some text about how the rota would seem to fit perfectly in here
