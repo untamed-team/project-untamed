@@ -10,6 +10,8 @@ end
 
 class RotatonaPuzzle
 	SE_ROTATE_STRAIGHT_TRACK = "Cut"
+	SE_SWITCH_RAMP = "Cut"
+	SE_ROTATE_CORNER_TRACK = "Cut"
 
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
@@ -104,7 +106,7 @@ class RotatonaPuzzle
 			#print "this is a ramp"
 			#option to switch 180 degrees
 			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
-			print "switching ramp 180 degrees" if rampChoice
+			self.switchRamp(event) if rampChoice
 			
 		elsif $game_temp.puzzleEvents[:StraightTracks].include?(event)
 			#print "this is a straight track"
@@ -123,12 +125,13 @@ class RotatonaPuzzle
 			cornerTrackChoice = pbMessage(_INTL("There are arrow buttons here."), choices, choices.length)
 			case cornerTrackChoice
 			when 0
-				print "turning corner track left"
+				#print "turning corner track left"
+				self.rotateCornerTrack(event,"left90")
 			when 1
-				print "turning corner track right"
+				#print "turning corner track right"
+				self.rotateCornerTrack(event,"right90")
 			end
 		end #if event == $game_temp.puzzleEvents[:Rotatona1]
-		
 	end #def self.playerInteract
 
 	def self.resetRotatonas
@@ -173,6 +176,93 @@ class RotatonaPuzzle
 			PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
 		])
 	end #def self.rotateStraightTrack
+
+	def self.switchRamp(event)
+		#get event's current graphic
+		#event.character_name
+		#event.character_hue
+		#event.direction
+		#event.pattern
+		#PBMoveRoute::Graphic, character_name, hue#, direction#, pattern#,
+		case event.direction
+		when 2 #down
+			newDirection = 8 #up
+			#print "currently looking down, turning up"
+		when 4 #left
+			newDirection = 6 #right
+			#print "currently looking left, turning right"
+		when 6 #right
+			newDirection = 4 #left
+			#print "currently looking right, turning left"
+		when 8 #up
+			newDirection = 2 #down
+			#print "currently looking up, turning down"
+		end
+		pbSEPlay(SE_SWITCH_RAMP)
+		pbMoveRoute(event, [
+			PBMoveRoute::DirectionFixOff,
+			PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 1,
+			PBMoveRoute::Wait, 2,
+			PBMoveRoute::DirectionFixOn,
+			PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
+		])
+	end #def self.switchRamp(event)
+
+	def self.rotateCornerTrack(event,directionString)
+		#get event's current graphic
+		#event.character_name
+		#event.character_hue
+		#event.direction
+		#event.pattern
+		#PBMoveRoute::Graphic, character_name, hue#, direction#, pattern#,
+		if directionString == "right90"
+			case event.direction
+			when 2 #down
+				newDirection = 4 #left
+				#print "currently looking down, turning to face left"
+			when 4 #left
+				newDirection = 8 #up
+				#print "currently looking left, turning to face up"
+			when 6 #right
+				newDirection = 2 #down
+				#print "currently looking right, turning to face down"
+			when 8 #up
+				newDirection = 6 #right
+				#print "currently looking up, turning to face right"
+			end
+			pbSEPlay(SE_ROTATE_CORNER_TRACK)
+			pbMoveRoute(event, [
+				PBMoveRoute::DirectionFixOff,
+				PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 1,
+				PBMoveRoute::Wait, 2,
+				PBMoveRoute::DirectionFixOn,
+				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
+			])
+		else #directionString is "left90"
+			case event.direction
+			when 2 #down
+				newDirection = 6 #right
+				#print "currently looking down, turning to face right"
+			when 4 #left
+				newDirection = 2 #down
+				#print "currently looking left, turning to face down"
+			when 6 #right
+				newDirection = 8 #up
+				#print "currently looking right, turning to face up"
+			when 8 #up
+				newDirection = 4 #left
+				#print "currently looking up, turning to face left"
+			end
+			pbSEPlay(SE_ROTATE_CORNER_TRACK)
+			pbMoveRoute(event, [
+				PBMoveRoute::DirectionFixOff,
+				PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 2,
+				PBMoveRoute::Wait, 2,
+				PBMoveRoute::DirectionFixOn,
+				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
+			])
+		end #if directionString == "right90"
+	end #def self.rotateCornerTrack(event,dirString)
 
 end #class RotatonaPuzzle
 
