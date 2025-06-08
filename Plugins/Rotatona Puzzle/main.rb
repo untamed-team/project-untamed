@@ -38,6 +38,7 @@ class RotatonaPuzzle
 	end #def self.getPuzzleEvents
 
 	def self.playerInteract(event)
+		#print event.screen_z
 		#events are passed in as GameData
 		if $game_temp.puzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
@@ -45,7 +46,7 @@ class RotatonaPuzzle
 			rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
 			print "launching disc from launcher 1" if rota1LaunchChoice
 			
-		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
+		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)		
 			choices = [
 				_INTL("Left Arrow Button"), #0
 				_INTL("Right Arrow Button"), #1
