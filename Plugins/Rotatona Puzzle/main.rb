@@ -1,9 +1,35 @@
 #=============================================================================
 # Rotatona Puzzle
 #=============================================================================
+#rules for making a puzzle:
+#1. all events must have one of these names
+#	RotaPuzzle_Disc
+#	RotaPuzzle_Launcher_Rotatable
+#	RotaPuzzle_Launcher_Overlay_Rotatable
+#	RotaPuzzle_Launcher_Stationary
+#	RotaPuzzle_Launcher_Overlay_Stationary
+#	RotaPuzzle_Catcher
+#	RotaPuzzle_Barrier
+#	RotaPuzzle_Ramp
+#	RotaPuzzle_StraightTrack
+#	RotaPuzzle_CornerTrack
+#2. All launchers' associated overlays must be on the same Y as the associated launcher, and the overlay must be 1 to the right of the launcher (e.g. launcher x is 10 and y is 20, associated overlay x is 11 and y is 20)
+#3. Launcher overlays must have "Always on Top" checked
+#4. Launcher overlays must have an event number higher than all Rotatona discs
+#5. Rotatona discs must have "Always on Top" checked
+#6. Launcher events must be 3x3 ( e.g. NAME,size(3,3) )
+#7. Launcher overlay events must be 1x3 ( e.g. NAME,size(1,3) )
+#8. Only launchers which rotate or are stationary but NOT facing upward need an associated launcher overlay
+
 
 class Game_Temp
   attr_accessor :puzzleEvents
+end
+
+class Game_Event
+  attr_accessor :associatedLauncher
+  attr_accessor :associatedOverlay
+  attr_accessor :discEventDockedAtThisLauncher
 end
 
 class RotatonaPuzzle
@@ -16,37 +42,54 @@ class RotatonaPuzzle
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
-			:Discs	 			  => [],
-			:Launchers_Rotatable  => [],
-			:Launchers_Stationary => [],
-			:Catchers             => [],
-			:Barriers       	  => [],
-			:Ramps           	  => [],
-			:StraightTracks       => [],
-			:CornerTracks  		  => []
+			:Discs	 			  		  => [],
+			:Launchers_Rotatable  		  => [],
+			:Launchers_Overlay_Rotatable  => [],
+			:Launchers_Stationary 		  => [],
+			:Launchers_Overlay_Stationary => [],
+			:Catchers             		  => [],
+			:Barriers       	  		  => [],
+			:Ramps           	  		  => [],
+			:StraightTracks       	 	  => [],
+			:CornerTracks  		  	  	  => []
 		}
 		$game_map.events.each_value do |event|
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
-			$game_temp.puzzleEvents[:Launchers_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
+			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
+				#identify launchers and their associated overlay events
+				$game_temp.puzzleEvents[:Launchers_Rotatable].push(event)
+				#check coordinate to the right of the event, as this should be the associated overlay
+				$game_map.events.each_value do |overlayEvent|
+					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
+						event.associatedOverlay = overlayEvent
+						overlayEvent.associatedLauncher = event
+						break
+					end
+				end #$game_map.events.each_value do |overlayEvent|
+			end
+			$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
 			$game_temp.puzzleEvents[:Launchers_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
+			$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
 			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
 			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotaPuzzle_Barrier/i)
 			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
 			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
 			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
+		
+		#self.findAssociatedOverlayForLauncher(launcherEvent)
 	end #def self.getPuzzleEvents
 
 	def self.playerInteract(event)
-		#print event.screen_z
 		#events are passed in as GameData
 		if $game_temp.puzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
 			rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
 			print "launching disc from launcher 1" if rota1LaunchChoice
-			
-		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)		
+		###################################################################	
+		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
+			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
 				_INTL("Right Arrow Button"), #1
@@ -70,7 +113,33 @@ class RotatonaPuzzle
 					choice = pbMessage(_INTL("Nothing happened."))
 				end
 			end
-			
+		###################################################################
+		elsif $game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
+			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
+			choices = [
+				_INTL("Left Arrow Button"), #0
+				_INTL("Right Arrow Button"), #1
+				_INTL("Square Button"), #2
+				_INTL("Nevermind") #3 or -1
+			]
+			launcherChoice = pbMessage(_INTL("There are arrow buttons and a square button here."), choices, choices.length) #if disc not docked
+			case launcherChoice
+			when 0
+				#print "turning launcer left"
+				self.rotateLauncher(event.associatedLauncher,"left90")
+			when 1
+				#print "turning launcher right"
+				self.rotateLauncher(event.associatedLauncher,"right90")
+			when 2
+				if false #discDocked
+					#click SE ####################################################################
+					pbMessage(_INTL("launching disc.")) if choice
+				else
+					#click SE ####################################################################
+					choice = pbMessage(_INTL("Nothing happened."))
+				end
+			end
+		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
 			if false #discDocked
 				#if disc is docked
@@ -83,27 +152,43 @@ class RotatonaPuzzle
 				#click SE ####################################################################
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
+			
+		###################################################################	
+		elsif $game_temp.puzzleEvents[:Launchers_Overlay_Stationary].include?(event)
+			if false #discDocked at associated launcher
+				#if disc is docked
+				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
+				#click SE ####################################################################
+				pbMessage(_INTL("launching disc.")) if choice
+			else
+				#if disc not docked
+				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
+				#click SE ####################################################################
+				pbMessage(_INTL("Nothing happened.")) if choice
+			end
+			
+		###################################################################
 		elsif event == $game_temp.puzzleEvents[:Catchers]
 			#print "this is catcher2"
 			#maybe some text about how the rota would seem to fit perfectly in here
 			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
-			
+		###################################################################
 		elsif $game_temp.puzzleEvents[:Barriers].include?(event)
 			#print "this is a barrier"
 			#nothing, this probably doesn't need to be an elsif statement
-			
+		###################################################################
 		elsif $game_temp.puzzleEvents[:Ramps].include?(event)
 			#print "this is a ramp"
 			#option to switch 180 degrees
 			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.switchRamp(event) if rampChoice
-			
+		###################################################################
 		elsif $game_temp.puzzleEvents[:StraightTracks].include?(event)
 			#print "this is a straight track"
 			#option to turn track 90 degrees
 			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.rotateStraightTrack(event) if straightTrackChoice
-			
+		###################################################################
 		elsif $game_temp.puzzleEvents[:CornerTracks].include?(event)
 			#print "this is a corner track"
 			#option to turn track 90 degrees
@@ -121,7 +206,7 @@ class RotatonaPuzzle
 				#print "turning corner track right"
 				self.rotateCornerTrack(event,"right90")
 			end
-		end #if event == $game_temp.puzzleEvents[:Rotatona1]
+		end #if $game_temp.puzzleEvents[:Discs].include?(event)
 	end #def self.playerInteract
 
 	def self.resetRotatonas
@@ -281,12 +366,20 @@ class RotatonaPuzzle
 			#how is there a direction fix issue?
 			
 			pbSEPlay(SE_ROTATE_LAUNCHER)
+			#rotate launcher
 			pbMoveRoute(event, [
 				#PBMoveRoute::DirectionFixOff,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, event.direction, 1,
 				PBMoveRoute::Wait, 2,
 				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
+			])
+			#rotate launcher's overlay
+			overlay = event.associatedOverlay
+			pbMoveRoute(overlay, [
+				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, overlay.direction, 1,
+				PBMoveRoute::Wait, 2,
+				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
 			])
 		else #directionString is "left90"
 			case event.direction
@@ -311,6 +404,13 @@ class RotatonaPuzzle
 				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
 			])
+			#rotate launcher's overlay
+			overlay = event.associatedOverlay
+			pbMoveRoute(overlay, [
+				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, overlay.direction, 2,
+				PBMoveRoute::Wait, 2,
+				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
+			])
 		end #if directionString == "right90"
 	end #def self.rotateLauncher(event,directionString)
 
@@ -330,7 +430,7 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	RotatonaPuzzle.checkForRotatonaCollisions
 })
 
-EventHandlers.add(:on_enter_map, :spawn_dig_spots,
+EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
   proc { |_old_map_id|
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
