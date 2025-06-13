@@ -100,6 +100,8 @@ class RotatonaPuzzle
 				if event.x == centerX && event.y == centerY
 					event.launcherThisDiscIsDockedIn = launcherEvent
 					launcherEvent.discThisLauncherHasDocked = event
+					#turn rotatona disc event to match direction of launcher it's docked in
+					event.direction = event.launcherThisDiscIsDockedIn.direction
 				end
 			end
 		end
