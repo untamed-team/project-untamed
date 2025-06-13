@@ -415,6 +415,8 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
 			])
+			
+			self.rotateDockedDisc(event.discThisLauncherHasDocked, newDirection) if !event.discThisLauncherHasDocked.nil?
 		else #directionString is "left90"
 			case event.direction
 			when 2 #down
@@ -445,8 +447,14 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
 			])
+			
+			self.rotateDockedDisc(event.discThisLauncherHasDocked, newDirection) if !event.discThisLauncherHasDocked.nil?
 		end #if directionString == "right90"
 	end #def self.rotateLauncher(event,directionString)
+
+	def self.rotateDockedDisc(discEvent, newDirection)
+		print "rotating docked rotatona disc"
+	end #def self.rotateDockedDisc(discEvent, newDirection)
 
 end #class RotatonaPuzzle
 
