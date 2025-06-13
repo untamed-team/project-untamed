@@ -20,6 +20,7 @@
 #6. Launcher events must be 3x3 ( e.g. NAME,size(3,3) )
 #7. Launcher overlay events must be 1x3 ( e.g. NAME,size(1,3) )
 #8. Only launchers which rotate or are stationary but NOT facing upward need an associated launcher overlay
+#9. Rotatona disc events must be placed 1 to the right and 1 up from the launcher you want it to start in
 
 
 class Game_Temp
@@ -29,7 +30,8 @@ end
 class Game_Event
   attr_accessor :associatedLauncher
   attr_accessor :associatedOverlay
-  attr_accessor :discEventDockedAtThisLauncher
+  attr_accessor :launcherThisDiscIsDockedIn
+  attr_accessor :discThisLauncherHasDocked
 end
 
 class RotatonaPuzzle
@@ -54,6 +56,12 @@ class RotatonaPuzzle
 			:CornerTracks  		  	  	  => []
 		}
 		$game_map.events.each_value do |event|
+			#set all variables to nil
+			event.associatedLauncher = nil
+			event.associatedOverlay = nil
+			event.launcherThisDiscIsDockedIn = nil
+			event.discThisLauncherHasDocked = nil
+		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
 				#identify launchers and their associated overlay events
@@ -77,6 +85,25 @@ class RotatonaPuzzle
 			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
 		
+		#dock rotatona disc at start
+		#if rotatona disc is touching launcher event, dock it to that launcher
+		$game_map.events.each_value do |event|
+			#skip event if it's not a disc
+			next if !$game_temp.puzzleEvents[:Discs].include?(event)
+			$game_map.events.each_value do |launcherEvent|
+				next if !$game_temp.puzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !$game_temp.puzzleEvents[:Launchers_Stationary].include?(launcherEvent)
+				#get the center X and center Y of the launcher
+				centerX = launcherEvent.x+1
+				centerY = launcherEvent.y-1
+				#check if disc is touching center of launcher
+				#print "disc event #{event.id} is docked at launcher event #{launcherEvent.id}" if event.x == centerX && event.y == centerY
+				if event.x == centerX && event.y == centerY
+					event.launcherThisDiscIsDockedIn = launcherEvent
+					launcherEvent.discThisLauncherHasDocked = event
+				end
+			end
+		end
+		
 		#self.findAssociatedOverlayForLauncher(launcherEvent)
 	end #def self.getPuzzleEvents
 
@@ -85,8 +112,8 @@ class RotatonaPuzzle
 		if $game_temp.puzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
-			rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
-			print "launching disc from launcher 1" if rota1LaunchChoice
+			#rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
+			#print "launching disc from launcher 1" if rota1LaunchChoice
 		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
@@ -105,9 +132,9 @@ class RotatonaPuzzle
 				#print "turning launcher right"
 				self.rotateLauncher(event,"right90")
 			when 2
-				if false #discDocked
+				if !event.discThisLauncherHasDocked.nil?
 					#click SE ####################################################################
-					pbMessage(_INTL("launching disc.")) if choice
+					self.launchRotatonaDisc(event, event.discThisLauncherHasDocked)
 				else
 					#click SE ####################################################################
 					choice = pbMessage(_INTL("Nothing happened."))
@@ -131,9 +158,9 @@ class RotatonaPuzzle
 				#print "turning launcher right"
 				self.rotateLauncher(event.associatedLauncher,"right90")
 			when 2
-				if false #discDocked
+				if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 					#click SE ####################################################################
-					pbMessage(_INTL("launching disc.")) if choice
+					self.launchRotatonaDisc(event.associatedLauncher, event.associatedLauncher.discThisLauncherHasDocked)
 				else
 					#click SE ####################################################################
 					choice = pbMessage(_INTL("Nothing happened."))
@@ -141,11 +168,11 @@ class RotatonaPuzzle
 			end
 		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
-			if false #discDocked
+			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
 				#click SE ####################################################################
-				pbMessage(_INTL("launching disc.")) if choice
+				self.launchRotatonaDisc(event, event.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -155,11 +182,11 @@ class RotatonaPuzzle
 			
 		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Overlay_Stationary].include?(event)
-			if false #discDocked at associated launcher
+			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
 				#click SE ####################################################################
-				pbMessage(_INTL("launching disc.")) if choice
+				self.launchRotatonaDisc(event.associatedLauncher, event.associatedLauncher.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -209,6 +236,10 @@ class RotatonaPuzzle
 		end #if $game_temp.puzzleEvents[:Discs].include?(event)
 	end #def self.playerInteract
 
+	def self.launchRotatonaDisc(launcherEvent, discEvent)
+		pbMessage(_INTL("launching disc event #{discEvent.id} from launcher event #{launcherEvent.id}"))
+	end #def self.launchRotatonaDisc
+
 	def self.resetRotatonas
 		
 	end #def self.resetRotatonas
@@ -219,6 +250,7 @@ class RotatonaPuzzle
 	
 	def self.crashRotatona(rotatonaNumber)
 		#check common event Temple_Right_Crash_Rotatona1
+		print "crash"
 	end #def self.crashRotatona(rotatonaNumber)
 	
 	def self.rotateStraightTrack(event)
