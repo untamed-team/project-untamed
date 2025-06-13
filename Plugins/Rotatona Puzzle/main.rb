@@ -453,7 +453,29 @@ class RotatonaPuzzle
 	end #def self.rotateLauncher(event,directionString)
 
 	def self.rotateDockedDisc(discEvent, newDirection)
-		print "rotating docked rotatona disc"
+		transitionPattern = nil
+		
+		case discEvent.direction
+		when 2 #facing down
+			transitionPattern = 3 if newDirection == 4 #turning left
+			transitionPattern = 0 if newDirection == 6 #turning right
+		when 4 #facing left
+			transitionPattern = 3 if newDirection == 2 #turning down
+			transitionPattern = 0 if newDirection == 8 #turning up
+		when 6 #facing right
+			transitionPattern = 0 if newDirection == 2 #turning down
+			transitionPattern = 3 if newDirection == 8 #turning up
+		when 8 #facing up
+			transitionPattern = 0 if newDirection == 4 #turning left
+			transitionPattern = 3 if newDirection == 6 #turning right
+		end
+		
+		pbMoveRoute(discEvent, [
+			PBMoveRoute::Graphic, discEvent.character_name, discEvent.character_hue, 8, transitionPattern,
+			PBMoveRoute::Wait, 2,
+			PBMoveRoute::Graphic, discEvent.character_name, discEvent.character_hue, newDirection, 1
+		])
+
 	end #def self.rotateDockedDisc(discEvent, newDirection)
 
 end #class RotatonaPuzzle
