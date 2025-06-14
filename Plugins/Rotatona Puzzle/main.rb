@@ -32,6 +32,7 @@ class Game_Event
   attr_accessor :associatedOverlay
   attr_accessor :launcherThisDiscIsDockedIn
   attr_accessor :discThisLauncherHasDocked
+  attr_accessor :discRolling
 end
 
 class RotatonaPuzzle
@@ -39,6 +40,7 @@ class RotatonaPuzzle
 	SE_SWITCH_RAMP = "Cut"
 	SE_ROTATE_CORNER_TRACK = "Cut"
 	SE_ROTATE_LAUNCHER = "Cut"
+	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
@@ -61,6 +63,9 @@ class RotatonaPuzzle
 			event.associatedOverlay = nil
 			event.launcherThisDiscIsDockedIn = nil
 			event.discThisLauncherHasDocked = nil
+			################################event.discRolling = nil
+			event.discRolling = true
+			@frameWaitCounter = 0
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
@@ -248,6 +253,32 @@ class RotatonaPuzzle
 	
 	def self.checkForRotatonaCollisions
 		#Console.echo_warn "this is a parallel process - #{rand(100)}"
+	end #self.checkForRotatonaCollisions
+	
+	def self.updateRollingAnimation
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			next if !event.discRolling
+			next if @frameWaitCounter < FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
+			next if event.direction == 2 || event.direction == 8 #if facing up or down, no animation needed
+			if event.pattern == 0
+				event.pattern = 1
+			elsif event.pattern == 1
+				event.pattern = 2
+			elsif event.pattern == 2
+				event.pattern = 3
+			elsif event.pattern == 3
+				#change animation sheet
+				if event.character_name == "Rotatona_Disc_Anim1"
+					event.character_name = "Rotatona_Disc_Anim2"
+				else
+					event.character_name = "Rotatona_Disc_Anim1"
+				end
+				event.pattern = 0
+			end #if event.pattern == 0
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		
+		@frameWaitCounter = 0 if @frameWaitCounter >= FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
+		@frameWaitCounter += 1
 	end #self.checkForRotatonaCollisions
 	
 	def self.crashRotatona(rotatonaNumber)
@@ -492,6 +523,7 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	RotatonaPuzzle.checkForRotatonaCollisions
+	RotatonaPuzzle.updateRollingAnimation
 })
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
