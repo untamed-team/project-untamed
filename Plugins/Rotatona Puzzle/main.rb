@@ -21,7 +21,7 @@
 #7. Launcher overlay events must be 1x3 ( e.g. NAME,size(1,3) )
 #8. Only launchers which rotate or are stationary but NOT facing upward need an associated launcher overlay
 #9. Rotatona disc events must be placed 1 to the right and 1 up from the launcher you want it to start in
-
+#10. Do not use terrain tags 19 through 29 for anything. Do not change the terrain tags on any of the tiles in the temple tileset
 
 class Game_Temp
   attr_accessor :puzzleEvents
@@ -267,25 +267,121 @@ class RotatonaPuzzle
 			when 8 #up
 				pbMoveRoute(event, [PBMoveRoute::Up])
 			end
+			Console.echo_warn $game_map.terrain_tag(event.x, event.y).id
 			
-			Console.echo_warn "disc rolling and touching CORNER TRACK" if self.touchingCornerTrack?(event)
-		end
+			if $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner1
+				#corner going left and down / up and right
+				case event.direction
+				when 2 #down
+					self.crashRotatona(event)
+				when 4 #left
+				when 6 #right
+					self.crashRotatona(event)
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner2
+				#corner going right and down / up and left
+				case event.direction
+				when 2 #down
+					self.crashRotatona(event)
+				when 4 #left
+					self.crashRotatona(event)
+				when 6 #right
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner3
+				#corner going down and right / left and up
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+					self.crashRotatona(event)
+				when 8 #up
+					self.crashRotatona(event)
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner4
+				#corner going down and left / right and up
+				case event.direction
+				when 2 #down
+				when 4 #left
+					self.crashRotatona(event)
+				when 6 #right
+				when 8 #up
+					self.crashRotatona(event)
+				end
+				
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Horizontal
+				case event.direction
+				when 2 #down
+					self.crashRotatona(event)
+				when 4 #left
+				when 6 #right
+				when 8 #up
+					self.crashRotatona(event)
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Vertical
+				case event.direction
+				when 2 #down
+				when 4 #left
+					self.crashRotatona(event)
+				when 6 #right
+					self.crashRotatona(event)
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
+				#do nothing I guess?
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndDown
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndLeft
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+				when 8 #up
+				end
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndRight
+				case event.direction
+				when 2 #down
+				when 4 #left
+				when 6 #right
+				when 8 #up
+				end				
+			end #if $game_map.terrain_tag(event.x, event.y).id == "RotatonaPuzzle_Track_Corner1"
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
 	
-	def self.touchingCornerTrack?(discEvent)
-	end #def self.touchingCornerTrack?(discEvent)
+	def self.touchingCornerTrackEvent?(discEvent)
+	end #def self.touchingCornerTrackEvent?(discEvent)
 	
-	def self.touchingCatcher?(discEvent)
-	end #def self.touchingCatcher?(discEvent)
+	def self.touchingCatcherEvent?(discEvent)
+	end #def self.touchingCatcherEvent?(discEvent)
 	
-	def self.touchingStraightTrack?(discEvent)
-	end #def self.touchingStraightTrack?(discEvent)
+	def self.touchingStraightTrackEvent?(discEvent)
+	end #def self.touchingStraightTrackEvent?(discEvent)
 	
-	def self.touchingRamp?(discEvent)
-	end #def self.touchingRamp?(discEvent)
+	def self.touchingRampEvent?(discEvent)
+	end #def self.touchingRampEvent?(discEvent)
 	
-	def self.touchingLauncher?(discEvent)
-	end #def self.touchingLauncher?(discEvent)
+	def self.touchingLauncherEvent?(discEvent)
+	end #def self.touchingLauncherEvent?(discEvent)
 	
 	def self.updateRollingAnimation
 		$game_temp.puzzleEvents[:Discs].each do |event|
@@ -311,12 +407,13 @@ class RotatonaPuzzle
 		
 		@frameWaitCounter = 0 if @frameWaitCounter >= FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
 		@frameWaitCounter += 1
-	end #self.checkForRotatonaCollisions
+	end #self.updateRollingAnimation
 	
-	def self.crashRotatona(rotatonaNumber)
+	def self.crashRotatona(discEvent)
 		#check common event Temple_Right_Crash_Rotatona1
 		print "crash"
-	end #def self.crashRotatona(rotatonaNumber)
+		discEvent.discRolling = false
+	end #def self.crashRotatona(discEvent)
 	
 	def self.rotateStraightTrack(event)
 		#get event's current graphic
@@ -565,6 +662,74 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
 	RotatonaPuzzle.getPuzzleEvents
   }
 )
+
+#terrain tags used for rotatona disc logic
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Corner1, #corner going left and down / up and right
+  :id_number              => 19,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Corner2, #corner going right and down / up and left
+  :id_number              => 20,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Corner3, #corner going down and right / left and up
+  :id_number              => 21,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Corner4, #corner going down and left / right and up
+  :id_number              => 22,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Horizontal,
+  :id_number              => 23,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Vertical,
+  :id_number              => 24,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_Crossroad,
+  :id_number              => 25,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_DeadEndUp,
+  :id_number              => 26,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_DeadEndDown,
+  :id_number              => 27,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_DeadEndLeft,
+  :id_number              => 28,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
+GameData::TerrainTag.register({
+  :id                     => :RotatonaPuzzle_Track_DeadEndRight,
+  :id_number              => 29,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => false,
+})
 
 #logic to do:
 #if the launcher has rotatona in it, set rotatona direction to same direction as launcher
