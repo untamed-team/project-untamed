@@ -252,8 +252,40 @@ class RotatonaPuzzle
 	end #def self.resetRotatonas
 	
 	def self.checkForRotatonaCollisions
-		#Console.echo_warn "this is a parallel process - #{rand(100)}"
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			next if !event.discRolling
+			#set speed
+			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 1])
+			#roll forward
+			case event.direction
+			when 2 #down
+				pbMoveRoute(event, [PBMoveRoute::Down])
+			when 4 #left
+				pbMoveRoute(event, [PBMoveRoute::Left])
+			when 6 #right
+				pbMoveRoute(event, [PBMoveRoute::Right])
+			when 8 #up
+				pbMoveRoute(event, [PBMoveRoute::Up])
+			end
+			
+			Console.echo_warn "disc rolling and touching CORNER TRACK" if self.touchingCornerTrack?(event)
+		end
 	end #self.checkForRotatonaCollisions
+	
+	def self.touchingCornerTrack?(discEvent)
+	end #def self.touchingCornerTrack?(discEvent)
+	
+	def self.touchingCatcher?(discEvent)
+	end #def self.touchingCatcher?(discEvent)
+	
+	def self.touchingStraightTrack?(discEvent)
+	end #def self.touchingStraightTrack?(discEvent)
+	
+	def self.touchingRamp?(discEvent)
+	end #def self.touchingRamp?(discEvent)
+	
+	def self.touchingLauncher?(discEvent)
+	end #def self.touchingLauncher?(discEvent)
 	
 	def self.updateRollingAnimation
 		$game_temp.puzzleEvents[:Discs].each do |event|
