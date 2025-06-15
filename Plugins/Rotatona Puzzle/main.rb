@@ -276,7 +276,6 @@ class RotatonaPuzzle
 					self.crashRotatona(event)
 				when 4 #left
 					newDirection = 2
-					event.discTurning = true
 					
 					#give disc a moveroute
 					if (event.direction == 4 && newDirection == 8) || (event.direction == 6 && newDirection == 2) #going left and turning up OR going right and turning down
@@ -284,14 +283,16 @@ class RotatonaPuzzle
 					elsif (event.direction == 6 && newDirection == 8) || (event.direction == 4 && newDirection == 2) #going right and turning up OR going left and turning down
 						turnSpritePattern = 3
 					end
-
+					
+					#start move route, then turn on discTurning
+					
 					pbMoveRoute(event, [
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, 8, turnSpritePattern,
 						PBMoveRoute::Wait, 2,
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
 					], waitComplete = true)
-		
 					
+					event.discTurning = true
 					#event.direction = newDirection
 					
 					
@@ -413,10 +414,13 @@ class RotatonaPuzzle
 			next if !event.discRolling
 			next if !event.discTurning
 			
-			Console.echo_warn event.move_route.list
-			
-			#stop disc from turning if it's done
-			#################event.discTurning = false if event.move_route.list.empty?
+			#stop disc from turning if it's not on a turning sprite
+			if (event.direction == 2 && event.pattern == 0) || (event.direction == 2 && event.pattern == 3) || (event.direction == 8 && event.pattern == 0) || (event.direction == 8 && event.pattern == 3)
+				Console.echo_warn "turning"
+			else
+				Console.echo_warn "done turning"
+				event.discTurning = false
+			end
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #def self.turnDisc(event, oldDirection, newDirection)
 	
