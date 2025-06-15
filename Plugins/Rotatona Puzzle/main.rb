@@ -34,6 +34,8 @@ class Game_Event
   attr_accessor :discThisLauncherHasDocked
   attr_accessor :discRolling
   attr_accessor :discTouchingTile
+  attr_accessor :discTurning
+  attr_accessor :move_route
 end
 
 class RotatonaPuzzle
@@ -67,6 +69,7 @@ class RotatonaPuzzle
 			################################event.discRolling = nil
 			event.discRolling = true
 			event.discTouchingTile = []
+			event.discTurning = false
 			@frameWaitCounter = 0
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
@@ -263,14 +266,38 @@ class RotatonaPuzzle
 			event.discTouchingTile = [event.x, event.y] if event.discTouchingTile != [event.x, event.y]
 			Console.echo_warn event.discTouchingTile
 			
+			#we don't want to check for collisions if the disc is currently turning (like when it hits a corner track)
+			next if event.discTurning
+			
 			if $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner1
 				#corner going left and down / up and right
 				case event.direction
 				when 2 #down
 					self.crashRotatona(event)
 				when 4 #left
-					Console.echo_warn "turning down"
-					event.direction = 2
+					newDirection = 2
+					event.discTurning = true
+					
+					#give disc a moveroute
+					if (event.direction == 4 && newDirection == 8) || (event.direction == 6 && newDirection == 2) #going left and turning up OR going right and turning down
+						turnSpritePattern = 0
+					elsif (event.direction == 6 && newDirection == 8) || (event.direction == 4 && newDirection == 2) #going right and turning up OR going left and turning down
+						turnSpritePattern = 3
+					end
+
+					pbMoveRoute(event, [
+						PBMoveRoute::Graphic, event.character_name, event.character_hue, 8, turnSpritePattern,
+						PBMoveRoute::Wait, 2,
+						PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+					], waitComplete = true)
+		
+					
+					#event.direction = newDirection
+					
+					
+					
+					
+					
 				when 6 #right
 					self.crashRotatona(event)
 				when 8 #up
@@ -364,6 +391,7 @@ class RotatonaPuzzle
 			end #if $game_map.terrain_tag(event.x, event.y).id == "RotatonaPuzzle_Track_Corner1"
 			
 			next if !event.discRolling
+			next if event.discTurning
 			#set speed
 			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 1])
 			#roll forward
@@ -379,6 +407,18 @@ class RotatonaPuzzle
 			end #case event.direction
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
+	
+	def self.checkIfDiscTurning
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			next if !event.discRolling
+			next if !event.discTurning
+			
+			Console.echo_warn event.move_route.list
+			
+			#stop disc from turning if it's done
+			#################event.discTurning = false if event.move_route.list.empty?
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
+	end #def self.turnDisc(event, oldDirection, newDirection)
 	
 	def self.touchingCornerTrackEvent?(discEvent)
 	end #def self.touchingCornerTrackEvent?(discEvent)
@@ -398,6 +438,7 @@ class RotatonaPuzzle
 	def self.updateRollingAnimation
 		$game_temp.puzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
+			
 			next if @frameWaitCounter < FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
 			next if event.direction == 2 || event.direction == 8 #if facing up or down, no animation needed
 			if event.pattern == 0
@@ -664,6 +705,7 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	RotatonaPuzzle.checkForRotatonaCollisions
 	RotatonaPuzzle.updateRollingAnimation
+	RotatonaPuzzle.checkIfDiscTurning
 })
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
