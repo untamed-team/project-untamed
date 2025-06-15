@@ -33,6 +33,7 @@ class Game_Event
   attr_accessor :launcherThisDiscIsDockedIn
   attr_accessor :discThisLauncherHasDocked
   attr_accessor :discRolling
+  attr_accessor :discTouchingTile
 end
 
 class RotatonaPuzzle
@@ -65,6 +66,7 @@ class RotatonaPuzzle
 			event.discThisLauncherHasDocked = nil
 			################################event.discRolling = nil
 			event.discRolling = true
+			event.discTouchingTile = []
 			@frameWaitCounter = 0
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
@@ -254,20 +256,12 @@ class RotatonaPuzzle
 	def self.checkForRotatonaCollisions
 		$game_temp.puzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
-			#set speed
-			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 1])
-			#roll forward
-			case event.direction
-			when 2 #down
-				pbMoveRoute(event, [PBMoveRoute::Down])
-			when 4 #left
-				pbMoveRoute(event, [PBMoveRoute::Left])
-			when 6 #right
-				pbMoveRoute(event, [PBMoveRoute::Right])
-			when 8 #up
-				pbMoveRoute(event, [PBMoveRoute::Up])
-			end
-			Console.echo_warn $game_map.terrain_tag(event.x, event.y).id
+			
+			#set the tile the disc is touching if it's different than before (so we can't double dip on the same tile when checking for collisions)
+			#this way, a collision check is only done once when the disc touches the tile
+			next if event.discTouchingTile == [event.x, event.y]
+			event.discTouchingTile = [event.x, event.y] if event.discTouchingTile != [event.x, event.y]
+			Console.echo_warn event.discTouchingTile
 			
 			if $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner1
 				#corner going left and down / up and right
@@ -365,6 +359,21 @@ class RotatonaPuzzle
 				when 8 #up
 				end				
 			end #if $game_map.terrain_tag(event.x, event.y).id == "RotatonaPuzzle_Track_Corner1"
+			
+			next if !event.discRolling
+			#set speed
+			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 4])
+			#roll forward
+			case event.direction
+			when 2 #down
+				pbMoveRoute(event, [PBMoveRoute::Down])
+			when 4 #left
+				pbMoveRoute(event, [PBMoveRoute::Left])
+			when 6 #right
+				pbMoveRoute(event, [PBMoveRoute::Right])
+			when 8 #up
+				pbMoveRoute(event, [PBMoveRoute::Up])
+			end #case event.direction
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
 	
@@ -410,9 +419,8 @@ class RotatonaPuzzle
 	end #self.updateRollingAnimation
 	
 	def self.crashRotatona(discEvent)
-		#check common event Temple_Right_Crash_Rotatona1
-		print "crash"
 		discEvent.discRolling = false
+		Console.echo_warn "disc crashed"
 	end #def self.crashRotatona(discEvent)
 	
 	def self.rotateStraightTrack(event)
