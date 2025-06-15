@@ -269,9 +269,12 @@ class RotatonaPuzzle
 				when 2 #down
 					self.crashRotatona(event)
 				when 4 #left
+					Console.echo_warn "turning down"
+					event.direction = 2
 				when 6 #right
 					self.crashRotatona(event)
 				when 8 #up
+					event.direction = 6 #turn right
 				end
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner2
 				#corner going right and down / up and left
@@ -362,7 +365,7 @@ class RotatonaPuzzle
 			
 			next if !event.discRolling
 			#set speed
-			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 4])
+			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 1])
 			#roll forward
 			case event.direction
 			when 2 #down
