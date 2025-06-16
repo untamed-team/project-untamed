@@ -44,6 +44,7 @@ class RotatonaPuzzle
 	SE_ROTATE_LAUNCHER = "Cut"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
+	DISC_SPEED = 4 #default 4
 
 	def self.getPuzzleEvents
 		#identify all the events on the map which correspond with the puzzle
@@ -275,6 +276,9 @@ class RotatonaPuzzle
 		elsif event.direction == 6 && newDirection == 8 #going right and turning up
 			turnSpritePattern = 3
 		end
+		
+		print "event direction is #{event.direction} and it's turning #{newDirection}" if turnSpritePattern.nil?
+		
 		return turnSpritePattern
 	end #def self.determinePatterForTurning
 	
@@ -290,6 +294,7 @@ class RotatonaPuzzle
 			
 			#we don't want to check for collisions if the disc is currently turning (like when it hits a corner track)
 			next if !event.discTurningDirection.nil?
+			turnSpriteDirectionForPattern = 8 #use the turn sprites on the UP direction
 			
 			if $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner1
 				#corner going left and down / up and right
@@ -299,10 +304,10 @@ class RotatonaPuzzle
 				when 4 #left
 					newDirection = 2 #down
 					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
-					
+					turnSpriteDirectionForPattern = 
 					#start move route, then turn on discTurningDirection
 					pbMoveRoute(event, [
-						PBMoveRoute::Graphic, event.character_name, event.character_hue, 8, turnSpritePattern,
+						PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
 						PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
 					], waitComplete = true)
@@ -315,100 +320,200 @@ class RotatonaPuzzle
 					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
 					#start move route, then turn on discTurningDirection
 					pbMoveRoute(event, [
-						PBMoveRoute::Graphic, event.character_name, event.character_hue, 2, turnSpritePattern,
+						PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
 						PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
 					], waitComplete = true)
 					
 					event.discTurningDirection = newDirection
-				end
+				end #case event.direction
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner2
-				#corner going right and down / up and left
+				#corner going right and down / up and left				
 				case event.direction
 				when 2 #down
 					self.crashRotatona(event)
 				when 4 #left
 					self.crashRotatona(event)
 				when 6 #right
+					newDirection = 2 #down
 				when 8 #up
-				end
+					newDirection = 4 #left
+				end #case event.direction
+				
+				#next if disc crashed
+				
+				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				#start move route, then turn on discTurningDirection
+				pbMoveRoute(event, [
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
+					PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+				], waitComplete = true)
+				event.discTurningDirection = newDirection
+
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner3
 				#corner going down and right / left and up
 				case event.direction
 				when 2 #down
+					newDirection = 6 #right
 				when 4 #left
+					newDirection = 8 #up
 				when 6 #right
 					self.crashRotatona(event)
 				when 8 #up
 					self.crashRotatona(event)
-				end
+				end #case event.direction
+				
+				#next if disc crashed
+				
+				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				#start move route, then turn on discTurningDirection
+				pbMoveRoute(event, [
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
+					PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+				], waitComplete = true)
+				event.discTurningDirection = newDirection
+				
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Corner4
 				#corner going down and left / right and up
 				case event.direction
 				when 2 #down
+					newDirection = 4 #left
 				when 4 #left
 					self.crashRotatona(event)
 				when 6 #right
+					newDirection = 8 #up
 				when 8 #up
 					self.crashRotatona(event)
-				end
+				end #case event.direction
+				
+				#next if disc crashed
+				
+				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				#start move route, then turn on discTurningDirection
+				pbMoveRoute(event, [
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
+					PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+				], waitComplete = true)
+				event.discTurningDirection = newDirection
 				
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Horizontal
+				#no special behavior except crashing when hitting wall of track
 				case event.direction
 				when 2 #down
 					self.crashRotatona(event)
-				when 4 #left
-				when 6 #right
 				when 8 #up
 					self.crashRotatona(event)
-				end
+				end #case event.direction
+				
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Vertical
+				#no special behavior except crashing when hitting wall of track
 				case event.direction
-				when 2 #down
 				when 4 #left
 					self.crashRotatona(event)
 				when 6 #right
 					self.crashRotatona(event)
-				when 8 #up
-				end
+				end #case event.direction
+				
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
-				case event.direction
-				when 2 #down
-				when 4 #left
-				when 6 #right
-				when 8 #up
-				end
-			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
 				#do nothing I guess?
-				case event.direction
-				when 2 #down
-				when 4 #left
-				when 6 #right
-				when 8 #up
-				end
+
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
+				self.crashRotatona(event)
+
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndDown
-				case event.direction
-				when 2 #down
-				when 4 #left
-				when 6 #right
-				when 8 #up
-				end
+				self.crashRotatona(event)
+
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndLeft
-				case event.direction
-				when 2 #down
-				when 4 #left
-				when 6 #right
-				when 8 #up
-				end
+				self.crashRotatona(event)
+
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndRight
-				case event.direction
-				when 2 #down
-				when 4 #left
-				when 6 #right
-				when 8 #up
-				end				
-			end #if $game_map.terrain_tag(event.x, event.y).id == "RotatonaPuzzle_Track_Corner1"
+				self.crashRotatona(event)
+			
+			elsif !self.touchingCornerTrackEvent?(event).nil?
+				print "touching corner track"
+				cornerTrackEvent = self.touchingCornerTrackEvent?(event)
+				case cornerTrackEvent.direction
+				when 2 #going up, turning right OR going left, turning down
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 4 #left
+						newDirection = 2 #down
+					when 6 #right
+						self.crashRotatona(event)
+					when 8 #up
+						newDirection = 6 #right
+					end #case event.direction
+
+				when 4 #going right, turning down OR going up, turning left
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+						newDirection = 2 #down
+					when 8 #up
+						newDirection = 4 #left
+					end #case event.direction
+					
+				when 6 #going down, turning right OR going left, turning up
+					case event.direction
+					when 2 #down
+						newDirection = 6 #right
+					when 4 #left
+						newDirection = 8 #up
+					when 6 #right
+						self.crashRotatona(event)
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+					
+				when 8 #going right, turning up OR going down, turning left
+					case event.direction
+					when 2 #down
+						newDirection = 4 #left
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+						newDirection = 8 #up
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+				end #case cornerTrackEvent.direction
+				
+				#next if disc crashed
+				
+				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				#start move route, then turn on discTurningDirection
+				pbMoveRoute(event, [
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
+					PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+				], waitComplete = true)
+				event.discTurningDirection = newDirection
+			
+			elsif self.touchingCatcherEvent?(event)
+			
+			elsif self.touchingStraightTrackEvent?(event)
+			
+			elsif self.touchingRampEvent?(event)
+			
+			elsif self.touchingLauncherEvent?(event)
+			
+				
+				
+				
+				
+				
+				
+				
+
+			end #if colliding with something
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
 	
@@ -416,12 +521,12 @@ class RotatonaPuzzle
 		$game_temp.puzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			next if event.discTurningDirection.nil?
-			
+
 			#stop disc from turning if it's not on a turning sprite
 			if event.direction != event.discTurningDirection
-				Console.echo_warn "turning"
+				#Console.echo_warn "turning"
 			else
-				Console.echo_warn "done turning"
+				#Console.echo_warn "done turning"
 				event.direction = event.discTurningDirection
 				event.discTurningDirection = nil
 			end
@@ -436,7 +541,7 @@ class RotatonaPuzzle
 			next if !event.discTurningDirection.nil?
 
 			#set speed
-			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, 4])
+			pbMoveRoute(event, [PBMoveRoute::ChangeSpeed, DISC_SPEED])
 			#roll forward
 			case event.direction
 			when 2 #down
@@ -452,18 +557,44 @@ class RotatonaPuzzle
 	end #def self.discMoveForward
 	
 	def self.touchingCornerTrackEvent?(discEvent)
+		#iterate through rotatable corner track events
+		$game_temp.puzzleEvents[:CornerTracks].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				return event #need to know the event the disc is touching to know the direction
+			else
+				return nil
+			end
+		end #$game_temp.puzzleEvents
 	end #def self.touchingCornerTrackEvent?(discEvent)
 	
 	def self.touchingCatcherEvent?(discEvent)
+		#iterate through catcher events
+		$game_temp.puzzleEvents[:Catchers].each do |event|
+		end #$game_temp.puzzleEvents
 	end #def self.touchingCatcherEvent?(discEvent)
 	
 	def self.touchingStraightTrackEvent?(discEvent)
+		#iterate through rotatable straight track events
+		$game_temp.puzzleEvents[:StraightTracks].each do |event|
+		end #$game_temp.puzzleEvents
 	end #def self.touchingStraightTrackEvent?(discEvent)
 	
 	def self.touchingRampEvent?(discEvent)
+		#iterate through togglable ramp events
+		$game_temp.puzzleEvents[:Ramps].each do |event|
+		end #$game_temp.puzzleEvents
 	end #def self.touchingRampEvent?(discEvent)
 	
 	def self.touchingLauncherEvent?(discEvent)
+		#iterate through rotatable corner track events
+		$game_temp.puzzleEvents[:Launchers_Rotatable].each do |event|
+		end #$game_temp.puzzleEvents
+		$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].each do |event|
+		end #$game_temp.puzzleEvents
+		$game_temp.puzzleEvents[:Launchers_Stationary].each do |event|
+		end #$game_temp.puzzleEvents
+		$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].each do |event|
+		end #$game_temp.puzzleEvents
 	end #def self.touchingLauncherEvent?(discEvent)
 	
 	def self.updateRollingAnimation
@@ -820,19 +951,5 @@ GameData::TerrainTag.register({
 #if the launcher has rotatona in it, set rotatona direction to same direction as launcher
 #if rota touches ramp & rota is facing same direction as ramp, jump
 #if rota touches ramp & rota is not facing same direction as ramp, crash
-#if rota touches straight & rota facing up or down & straight facing left or right, crash
-#if rota touches straight & rota facing left or right & straight facing up or down, crash
-#if rota touches corner & rota is facing right & corner is facing up, rota turn up from right
-#if rota touches corner & rota is facing right & corner is facing left, rota turn down from right
-#if rota touches corner & rota is facing right & corner is facing down or right, crash
-#if rota touches corner & rota is facing down & corner is facing up, rota turn left from down
-#if rota touches corner & rota is facing down & corner is facing right, rota turn right from down
-#if rota touches corner & rota is facing down & corner is facing left or down, crash
-#if rota touches corner & rota is facing left & corner is facing down, rota turn down from left
-#if rota touches corner & rota is facing left & corner is facing right, rota turn up from left
-#if rota touches corner & rota is facing left & corner is facing up or left, crash
-#if rota touches corner & rota is facing up & corner is facing down, rota turn right from up
-#if rota touches corner & rota is facing up & corner is facing left, rota turn left from up
-#if rota touches corner & rota is facing up & corner is facing up or right, crash
 #if rota touches catcher, success sound
 #if rota touches barrier, crash
