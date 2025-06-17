@@ -2210,20 +2210,7 @@ Battle::AbilityEffects::OnBeingHit.add(:WATERCOMPACTION,
   }
 )
 
-Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
-  proc { |ability, user, target, move, battle|
-    next if !move.physicalMove?
-    next if !target.pbCanLowerStatStage?(:DEFENSE, target) &&
-            !target.pbCanRaiseStatStage?(:SPEED, target)
-    next if battle.wasUserAbilityActivated?(target)
-    battle.pbShowAbilitySplash(target)
-    target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false)
-    target.pbRaiseStatStageByAbility(:SPEED,
-       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
-    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
-    battle.pbHideAbilitySplash(target)
-  }
-)
+# onbeinghit weak armor was moved to aam_abilityeffectstriggers
 
 #by low
 Battle::AbilityEffects::OnBeingHit.add(:PARTYPOPPER,
