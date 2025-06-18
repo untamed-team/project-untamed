@@ -1336,8 +1336,10 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:MEGALAUNCHER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:MINUS,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    next if !move.specialMove?
-    if user.allAllies.any? { |b| b.hasActiveAbility?([:MINUS, :PLUS]) }
+    next unless move.specialMove?
+    if user.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) } ||
+      (user.ability == :MINUS && user.abilityMutationList.include?(:PLUS)) ||
+      (user.ability == :PLUS && user.abilityMutationList.include?(:MINUS))
       mults[:attack_multiplier] *= 1.5
     end
   }
