@@ -36,6 +36,8 @@ class Game_Event
   attr_accessor :discRolling
   attr_accessor :discTouchingTile
   attr_accessor :discTurningDirection
+  attr_accessor :discJumping
+  attr_accessor :discLandingSpot
 end
 
 class RotatonaPuzzle
@@ -44,6 +46,7 @@ class RotatonaPuzzle
 	SE_ROTATE_CORNER_TRACK = "Cut"
 	SE_ROTATE_LAUNCHER = "Cut"
 	SE_LAUNCHER_BUTTON = "Cut"
+	SE_DISC_JUMP = "Cut"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 1 #default 4
@@ -69,10 +72,12 @@ class RotatonaPuzzle
 			event.associatedOverlay = nil
 			event.launcherThisDiscIsDockedIn = nil
 			event.discThisLauncherHasDocked = nil
-			################################event.discRolling = nil
+			################################event.discRolling = false
 			event.discRolling = true
 			event.discTouchingTile = []
 			event.discTurningDirection = nil
+			event.discJumping = false
+			event.discLandingSpot = []
 			@frameWaitCounter = 0
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
@@ -294,6 +299,9 @@ class RotatonaPuzzle
 			event.discTouchingTile = [event.x, event.y] if event.discTouchingTile != [event.x, event.y]
 			Console.echo_warn event.discTouchingTile
 			
+			#don't check for collisions if currently airborn from ramp
+			next if event.discJumping
+			
 			#we don't want to check for collisions if the disc is currently turning (like when it hits a corner track)
 			next if !event.discTurningDirection.nil?
 			turnSpriteDirectionForPattern = 8 #use the turn sprites on the UP direction
@@ -420,7 +428,7 @@ class RotatonaPuzzle
 					self.crashRotatona(event)
 				end #case event.direction
 				
-			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
+			#elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
 				#do nothing I guess?
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
@@ -500,22 +508,20 @@ class RotatonaPuzzle
 					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
 				], waitComplete = true)
 				event.discTurningDirection = newDirection
-			
-			
-			
-			
-			
-			
-			
+
 			elsif !self.touchingCatcherEvent?(event).nil?
-			
-			
-			
-			
-			
-			
-			
-			
+				print "touched a catcher event"
+				#make sound
+				#dock the disc in the catcher
+				#save the disc's position on the map to be in that catcher
+				
+				############## TO DO ##############
+				
+				
+				
+				
+				
+
 			elsif !self.touchingStraightTrackEvent?(event).nil?
 				straightTrackEvent = self.touchingStraightTrackEvent?(event)
 				case straightTrackEvent.direction
@@ -556,18 +562,76 @@ class RotatonaPuzzle
 				next if !event.discRolling
 			
 			elsif !self.touchingRampEvent?(event).nil?
-			
+				rampEvent = self.touchingRampEvent?(event)
+				case rampEvent.direction
+				when 2 #ramp is facing down
+					case event.direction
+					when 2 #down
+						#jump
+						event.discJumping = true
+						event.discLandingSpot = [event.x, event.y]
+						#pbSEPlay(SE_DISC_JUMP)
+						#PBMoveRoute::Jump, X+, Y+
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+						self.crashRotatona(event)
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+
+				when 4 #ramp is facing left
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 4 #left
+					when 6 #right
+						self.crashRotatona(event)
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+					
+				when 6 #ramp is facing right
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+					
+				when 8 #ramp is facing up
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+						self.crashRotatona(event)
+					when 8 #up
+					end #case event.direction
+				end #case cornerTrackEvent.direction
+				
+				#next if disc crashed
+				next if !event.discRolling
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
-			
+				#get docked if no disc is docked and launcher is facing correct direction
+				
+				############## TO DO ##############
 				
 				
 				
 				
 				
 				
-				
-
+			else
+				#not on the track, not touching a track event, not jumping from ramp
+				#crash
+				self.crashRotatona(event)
 			end #if colliding with something
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
@@ -647,20 +711,41 @@ class RotatonaPuzzle
 	
 	def self.touchingRampEvent?(discEvent)
 		#iterate through togglable ramp events
+		touchingRamp = nil
+		#iterate through rotatable straight track events
 		$game_temp.puzzleEvents[:Ramps].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingRamp = event #need to know the event the disc is touching to know the direction
+			end
 		end #$game_temp.puzzleEvents
+		return touchingRamp
 	end #def self.touchingRampEvent?(discEvent)
 	
 	def self.touchingLauncherEvent?(discEvent)
 		#iterate through rotatable corner track events
+		touchingLauncher = nil
 		$game_temp.puzzleEvents[:Launchers_Rotatable].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingLauncher = event #need to know the event the disc is touching to know the direction
+			end
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingLauncher = event #need to know the event the disc is touching to know the direction
+			end
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Stationary].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingLauncher = event #need to know the event the disc is touching to know the direction
+			end
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingLauncher = event #need to know the event the disc is touching to know the direction
+			end
 		end #$game_temp.puzzleEvents
+		
+		return touchingLauncher
 	end #def self.touchingLauncherEvent?(discEvent)
 	
 	def self.updateRollingAnimation
