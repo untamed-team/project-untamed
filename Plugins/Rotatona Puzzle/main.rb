@@ -22,6 +22,7 @@
 #8. Only launchers which rotate or are stationary but NOT facing upward need an associated launcher overlay
 #9. Rotatona disc events must be placed 1 to the right and 1 up from the launcher you want it to start in
 #10. Do not use terrain tags 19 through 29 for anything. Do not change the terrain tags on any of the tiles in the temple tileset
+#11. Do not put events on top of track tiles fro the tileset and expect them to work. The script checks for collisions with the track tiles FIRST, then processes any track events if not touching any track tiles
 
 class Game_Temp
   attr_accessor :puzzleEvents
@@ -434,7 +435,7 @@ class RotatonaPuzzle
 				self.crashRotatona(event)
 			
 			elsif !self.touchingCornerTrackEvent?(event).nil?
-				print "touching corner track"
+				#print "this will print once per track it touches" #it didn't print for track 29
 				cornerTrackEvent = self.touchingCornerTrackEvent?(event)
 				case cornerTrackEvent.direction
 				when 2 #going up, turning right OR going left, turning down
@@ -479,9 +480,73 @@ class RotatonaPuzzle
 						newDirection = 4 #left
 					when 4 #left
 						self.crashRotatona(event)
+						crashed = true
 					when 6 #right
 						newDirection = 8 #up
 					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+				end #case cornerTrackEvent.direction
+				
+				#next if disc crashed
+				next if !event.discRolling
+				
+				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				#start move route, then turn on discTurningDirection
+				pbMoveRoute(event, [
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
+					PBMoveRoute::Wait, FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION,
+					PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 1
+				], waitComplete = true)
+				event.discTurningDirection = newDirection
+			
+			
+			
+			
+			
+			
+			
+			elsif !self.touchingCatcherEvent?(event).nil?
+			
+			
+			
+			
+			
+			
+			
+			
+			elsif !self.touchingStraightTrackEvent?(event).nil?
+				straightTrackEvent = self.touchingStraightTrackEvent?(event)
+				case straightTrackEvent.direction
+				when 2 #straight track is facing up and down
+					case event.direction
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
+						self.crashRotatona(event)
+					end #case event.direction
+
+				when 4 #straight track is facing left and right
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+					
+				when 6 #straight track is facing left and right
+					case event.direction
+					when 2 #down
+						self.crashRotatona(event)
+					when 8 #up
+						self.crashRotatona(event)
+					end #case event.direction
+					
+				when 8 #straight track is facing up and down
+					case event.direction
+					when 4 #left
+						self.crashRotatona(event)
+					when 6 #right
 						self.crashRotatona(event)
 					end #case event.direction
 				end #case cornerTrackEvent.direction
@@ -497,13 +562,10 @@ class RotatonaPuzzle
 				], waitComplete = true)
 				event.discTurningDirection = newDirection
 			
-			elsif self.touchingCatcherEvent?(event)
+			elsif !self.touchingRampEvent?(event).nil?
 			
-			elsif self.touchingStraightTrackEvent?(event)
 			
-			elsif self.touchingRampEvent?(event)
-			
-			elsif self.touchingLauncherEvent?(event)
+			elsif !self.touchingLauncherEvent?(event).nil?
 			
 				
 				
@@ -557,14 +619,18 @@ class RotatonaPuzzle
 	end #def self.discMoveForward
 	
 	def self.touchingCornerTrackEvent?(discEvent)
+		#print "checking for corner track. this should print twice when touching one" #it didn't work on event 29
 		#iterate through rotatable corner track events
-		$game_temp.puzzleEvents[:CornerTracks].each do |event|
+		#$game_temp.puzzleEvents[:CornerTracks].each do |event|
+		touchingTrack = nil
+		for event in $game_temp.puzzleEvents[:CornerTracks]
 			if discEvent.x == event.x && discEvent.y == event.y
-				return event #need to know the event the disc is touching to know the direction
-			else
-				return nil
+				touchingTrack = event #need to know the event the disc is touching to know the direction
+				#print "this should print twice: #{touchingTrack.id}"     it didn't
+				#Console.echo_warn "touching corner track event"
 			end
 		end #$game_temp.puzzleEvents
+		return touchingTrack
 	end #def self.touchingCornerTrackEvent?(discEvent)
 	
 	def self.touchingCatcherEvent?(discEvent)
@@ -574,9 +640,16 @@ class RotatonaPuzzle
 	end #def self.touchingCatcherEvent?(discEvent)
 	
 	def self.touchingStraightTrackEvent?(discEvent)
+		touchingTrack = nil
 		#iterate through rotatable straight track events
 		$game_temp.puzzleEvents[:StraightTracks].each do |event|
+			if discEvent.x == event.x && discEvent.y == event.y
+				touchingTrack = event #need to know the event the disc is touching to know the direction
+			else
+				touchingTrack = nil
+			end
 		end #$game_temp.puzzleEvents
+		return touchingTrack
 	end #def self.touchingStraightTrackEvent?(discEvent)
 	
 	def self.touchingRampEvent?(discEvent)
