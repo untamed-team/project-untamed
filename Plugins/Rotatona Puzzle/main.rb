@@ -43,6 +43,7 @@ class RotatonaPuzzle
 	SE_SWITCH_RAMP = "Cut"
 	SE_ROTATE_CORNER_TRACK = "Cut"
 	SE_ROTATE_LAUNCHER = "Cut"
+	SE_LAUNCHER_BUTTON = "Cut"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 4 #default 4
@@ -147,10 +148,10 @@ class RotatonaPuzzle
 				self.rotateLauncher(event,"right90")
 			when 2
 				if !event.discThisLauncherHasDocked.nil?
-					#click SE ####################################################################
+					pbSEPlay(SE_LAUNCHER_BUTTON)
 					self.launchRotatonaDisc(event, event.discThisLauncherHasDocked)
 				else
-					#click SE ####################################################################
+					pbSEPlay(SE_LAUNCHER_BUTTON)
 					choice = pbMessage(_INTL("Nothing happened."))
 				end
 			end
@@ -173,10 +174,10 @@ class RotatonaPuzzle
 				self.rotateLauncher(event.associatedLauncher,"right90")
 			when 2
 				if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
-					#click SE ####################################################################
+					pbSEPlay(SE_LAUNCHER_BUTTON)
 					self.launchRotatonaDisc(event.associatedLauncher, event.associatedLauncher.discThisLauncherHasDocked)
 				else
-					#click SE ####################################################################
+					pbSEPlay(SE_LAUNCHER_BUTTON)
 					choice = pbMessage(_INTL("Nothing happened."))
 				end
 			end
@@ -185,12 +186,12 @@ class RotatonaPuzzle
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				#click SE ####################################################################
+				pbSEPlay(SE_LAUNCHER_BUTTON)
 				self.launchRotatonaDisc(event, event.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				#click SE ####################################################################
+				pbSEPlay(SE_LAUNCHER_BUTTON)
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
 			
@@ -199,12 +200,12 @@ class RotatonaPuzzle
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				#click SE ####################################################################
+				pbSEPlay(SE_LAUNCHER_BUTTON)
 				self.launchRotatonaDisc(event.associatedLauncher, event.associatedLauncher.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				#click SE ####################################################################
+				pbSEPlay(SE_LAUNCHER_BUTTON)
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
 			
