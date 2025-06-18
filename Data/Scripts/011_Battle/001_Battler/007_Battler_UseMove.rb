@@ -399,7 +399,7 @@ class Battle::Battler
       end
     end
     # Protean
-    if user.hasActiveAbility?([:LIBERO, :PROTEAN]) &&
+    if user.hasActiveAbility?([:PROTEAN, :LIBERO]) &&
        !move.callsAnotherMove? && !move.snatched &&
        user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
       @battle.pbShowAbilitySplash(user)
@@ -433,6 +433,35 @@ class Battle::Battler
       end
       targets.each do |b|
         b.damageState.reset
+        # Special interaction for color change + protean ability combo
+        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && !b.pbOwnedByPlayer? &&
+           b.hasAbilityMutation? && b.abilityMutationList.include?(:COLORCHANGE)
+          offenseType = move.calcType
+          if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
+            @battle.pbShowAbilitySplash(b)
+            resistTypesArr = []
+            GameData::Type.each do |t|
+              next if t.pseudo_type || user.pbHasType?(t.id)
+              resistTypesArr.push(t.id) if Effectiveness.resistant_type?(offenseType, t.id) && 
+                                          !Effectiveness.ineffective_type?(offenseType, t.id)
+            end
+            if resistTypesArr.empty?
+              GameData::Type.each do |t|
+                next if t.pseudo_type || user.pbHasType?(t.id)
+                if Effectiveness.ineffective_type?(offenseType, t.id)
+                  resistTypesArr.push(t.id)
+                  break
+                end
+              end
+            end
+            resistTypesArr.push(offenseType.id) if resistTypesArr.empty?
+            resistType = resistTypesArr.sample
+            b.pbChangeTypes(resistType)
+            typeName = GameData::Type.get(resistType).name
+            @battle.pbDisplay(_INTL("{1}'s type changed to {2}!", b.pbThis, typeName))
+            @battle.pbHideAbilitySplash(b)
+          end
+        end
         next if pbSuccessCheckAgainstTarget(move, user, b, targets)
         b.damageState.unaffected = true
       end

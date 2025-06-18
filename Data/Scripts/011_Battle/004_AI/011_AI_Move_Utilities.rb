@@ -28,12 +28,6 @@ class Battle::AI
   #=============================================================================
   def pbCalcTypeModSingle(moveType, defType, user, target, move=nil)
     ret = Effectiveness.calculate_one(moveType, defType)
-    if move
-      if (move.function == "FreezeTargetSuperEffectiveAgainstWater" && defType == :WATER) ||
-         (move.function == "SuperEffectiveAgainstSteel" && defType == :STEEL)
-        ret = Effectiveness::SUPER_EFFECTIVE_ONE
-      end
-    end
     if Effectiveness.ineffective_type?(moveType, defType)
       # Ring Target
       if target.hasActiveItem?(:RINGTARGET)
@@ -69,6 +63,20 @@ class Battle::AI
     # Grounded Flying-type Pokémon become susceptible to Ground moves
     if !target.airborne? && defType == :FLYING && moveType == :GROUND
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE
+    end
+    # Freeze-Dry / Kinetic Rend
+    if move
+      if (move.function == "FreezeTargetSuperEffectiveAgainstWater" && defType == :WATER) ||
+         (move.function == "SuperEffectiveAgainstSteel" && defType == :STEEL)
+        ret = Effectiveness::SUPER_EFFECTIVE_ONE
+      end
+    end
+    # Special interaction for color change + protean ability combo
+    if target.hasActiveAbility?([:PROTEAN, :LIBERO]) && !target.pbOwnedByPlayer? &&
+       target.hasAbilityMutation? && target.abilityMutationList.include?(:COLORCHANGE)
+      ret = Effectiveness::NOT_VERY_EFFECTIVE_ONE
+      ret = Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :QMARKS
+      ret = Effectiveness::INEFFECTIVE if moveType == :NORMAL
     end
     return ret
   end
