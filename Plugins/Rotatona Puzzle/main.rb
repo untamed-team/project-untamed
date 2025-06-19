@@ -46,7 +46,7 @@ class RotatonaPuzzle
 	SE_ROTATE_CORNER_TRACK = "Cut"
 	SE_ROTATE_LAUNCHER = "Cut"
 	SE_LAUNCHER_BUTTON = "Cut"
-	SE_DISC_JUMP = "Cut"
+	SE_DISC_JUMP = "Player jump"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 1 #default 4
@@ -300,7 +300,14 @@ class RotatonaPuzzle
 			Console.echo_warn event.discTouchingTile
 			
 			#don't check for collisions if currently airborn from ramp
-			next if event.discJumping
+			if event.discJumping #&& event.x != event.discLandingSpot[0] && event.y != event.discLandingSpot[1]
+				#Console.echo_warn "jumping to #{event.discLandingSpot}"
+				if event.x != event.discLandingSpot[0] && event.y != event.discLandingSpot[1]
+					Console.echo_warn "jumping but not on landing spot yet"
+				else
+					Console.echo_warn "landed on #{event.discLandingSpot[0]},#{event.discLandingSpot[1]} - disc location is #{event.x},#{event.y}"
+				end
+			end
 			
 			#we don't want to check for collisions if the disc is currently turning (like when it hits a corner track)
 			next if !event.discTurningDirection.nil?
@@ -569,8 +576,8 @@ class RotatonaPuzzle
 					when 2 #down
 						#jump
 						event.discJumping = true
-						event.discLandingSpot = [event.x, event.y]
-						#pbSEPlay(SE_DISC_JUMP)
+						event.discLandingSpot = [event.x, event.y+2]
+						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
 						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
 					when 4 #left
