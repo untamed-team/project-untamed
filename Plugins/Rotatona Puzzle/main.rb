@@ -49,9 +49,9 @@ class RotatonaPuzzle
 	SE_DISC_JUMP = "Player jump"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
-	DISC_SPEED = 1 #default 4
+	DISC_SPEED = 4 #default 4
 
-	def self.getPuzzleEvents
+	def self.getPuzzleEvents	
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
@@ -72,8 +72,7 @@ class RotatonaPuzzle
 			event.associatedOverlay = nil
 			event.launcherThisDiscIsDockedIn = nil
 			event.discThisLauncherHasDocked = nil
-			################################event.discRolling = false
-			event.discRolling = true
+			event.discRolling = false
 			event.discTouchingTile = []
 			event.discTurningDirection = nil
 			event.discJumping = false
@@ -123,12 +122,17 @@ class RotatonaPuzzle
 				end
 			end
 		end
-		
-		#self.findAssociatedOverlayForLauncher(launcherEvent)
 	end #def self.getPuzzleEvents
 
+	def self.discRolling?
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			return true if event.discRolling
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		return false
+	end #def self.discRolling?
+
 	def self.playerInteract(event)
-		#events are passed in as GameData
+		#events are passed in as GameData		
 		if $game_temp.puzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
@@ -300,14 +304,56 @@ class RotatonaPuzzle
 			Console.echo_warn event.discTouchingTile
 			
 			#don't check for collisions if currently airborn from ramp
-			if event.discJumping #&& event.x != event.discLandingSpot[0] && event.y != event.discLandingSpot[1]
+			if event.discJumping
 				#Console.echo_warn "jumping to #{event.discLandingSpot}"
-				if event.x != event.discLandingSpot[0] && event.y != event.discLandingSpot[1]
-					Console.echo_warn "jumping but not on landing spot yet"
-				else
+				if event.x == event.discLandingSpot[0] && event.y == event.discLandingSpot[1]
+					#test for ramp direction on the tile we landed on
+					#if ramp isn't facing correct way, crash
+					if !self.touchingRampEvent?(event).nil?
+						rampEvent = self.touchingRampEvent?(event)
+						#since the disc is in mid air, we need to check for a receiving ramp facing the correct direction, not facing the same direction as the previous ramp
+						case rampEvent.direction
+						when 2 #ramp is facing down
+							if event.direction == 8
+								Console.echo_warn "disc received successfully onto 2nd ramp"
+							else
+								self.crashRotatona(event)
+							end
+
+						when 4 #ramp is facing left
+							if event.direction == 6
+								Console.echo_warn "disc received successfully onto 2nd ramp"
+							else
+								self.crashRotatona(event)
+							end
+					
+						when 6 #ramp is facing right
+							if event.direction == 4
+								Console.echo_warn "disc received successfully onto 2nd ramp"
+							else
+								self.crashRotatona(event)
+							end
+
+						when 8 #ramp is facing up
+							if event.direction == 2
+								Console.echo_warn "disc received successfully onto 2nd ramp"
+							else
+								self.crashRotatona(event)
+							end
+						end #case rampEvent.direction
+					end #if !self.touchingRampEvent?(event).nil?
+					next if !event.discRolling					
+					
+					#if landing is successful
 					Console.echo_warn "landed on #{event.discLandingSpot[0]},#{event.discLandingSpot[1]} - disc location is #{event.x},#{event.y}"
-				end
-			end
+					event.discJumping = false
+					event.discLandingSpot = []
+					next #disc landed on receiving ramp; skip checking collisions on this tile
+				else
+					Console.echo_warn "jumping but not on landing spot yet"
+					next					
+				end #if event.x == event.discLandingSpot[0] && event.y == event.discLandingSpot[1]
+			end #if event.discJumping
 			
 			#we don't want to check for collisions if the disc is currently turning (like when it hits a corner track)
 			next if !event.discTurningDirection.nil?
@@ -321,7 +367,6 @@ class RotatonaPuzzle
 				when 4 #left
 					newDirection = 2 #down
 					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
-					turnSpriteDirectionForPattern = 
 					#start move route, then turn on discTurningDirection
 					pbMoveRoute(event, [
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -784,6 +829,8 @@ class RotatonaPuzzle
 	
 	def self.crashRotatona(discEvent)
 		discEvent.discRolling = false
+		discEvent.discJumping = false
+		discEvent.discLandingSpot = []
 		Console.echo_warn "disc crashed"
 	end #def self.crashRotatona(discEvent)
 	
@@ -1017,7 +1064,7 @@ EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_eve
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	facingEvent = $game_player.pbFacingEvent
-	RotatonaPuzzle.playerInteract(facingEvent) if facingEvent && facingEvent.name.match(/RotaPuzzle/i)
+	RotatonaPuzzle.playerInteract(facingEvent) if facingEvent && facingEvent.name.match(/RotaPuzzle/i) && !RotatonaPuzzle.discRolling?
 })
 
 EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
@@ -1027,6 +1074,8 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	RotatonaPuzzle.updateRollingAnimation
 	RotatonaPuzzle.discMoveForward
 	RotatonaPuzzle.checkIfDiscTurning
+	################################################################$game_player.lock if RotatonaPuzzle.discRolling?
+	$game_player.unlock if !RotatonaPuzzle.discRolling?
 })
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
@@ -1106,8 +1155,6 @@ GameData::TerrainTag.register({
 })
 
 #logic to do:
-#if the launcher has rotatona in it, set rotatona direction to same direction as launcher
-#if rota touches ramp & rota is facing same direction as ramp, jump
-#if rota touches ramp & rota is not facing same direction as ramp, crash
+#start rota rolling when launched
 #if rota touches catcher, success sound
 #if rota touches barrier, crash
