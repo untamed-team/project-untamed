@@ -261,7 +261,11 @@ class RotatonaPuzzle
 	end #def self.playerInteract
 
 	def self.launchRotatonaDisc(launcherEvent, discEvent)
-		pbMessage(_INTL("launching disc event #{discEvent.id} from launcher event #{launcherEvent.id}"))
+		#start disc rolling
+		discEvent.discRolling = true
+		#set discDocked variables for associated launcher and overlay to undock disc
+		#set dockedLauncher variables for discEvent to undock disc
+		
 	end #def self.launchRotatonaDisc
 
 	def self.resetRotatonas
@@ -317,28 +321,28 @@ class RotatonaPuzzle
 							if event.direction == 8
 								Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
-								self.crashRotatona(event)
+								self.crashRotatona(event, "ramp facing down, disc not facing up")
 							end
 
 						when 4 #ramp is facing left
 							if event.direction == 6
 								Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
-								self.crashRotatona(event)
+								self.crashRotatona(event, "ramp facing left, disc not facing right")
 							end
 					
 						when 6 #ramp is facing right
 							if event.direction == 4
 								Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
-								self.crashRotatona(event)
+								self.crashRotatona(event, "ramp facing right, disc not facing left")
 							end
 
 						when 8 #ramp is facing up
 							if event.direction == 2
 								Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
-								self.crashRotatona(event)
+								self.crashRotatona(event, "ramp facing up, disc not facing down")
 							end
 						end #case rampEvent.direction
 					end #if !self.touchingRampEvent?(event).nil?
@@ -363,7 +367,7 @@ class RotatonaPuzzle
 				#corner going left and down / up and right
 				case event.direction
 				when 2 #down
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner1, disc facing down")
 				when 4 #left
 					newDirection = 2 #down
 					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
@@ -376,7 +380,7 @@ class RotatonaPuzzle
 					
 					event.discTurningDirection = newDirection
 				when 6 #right
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner1, disc facing right")
 				when 8 #up
 					newDirection = 6 #right
 					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
@@ -394,9 +398,9 @@ class RotatonaPuzzle
 				#corner going right and down / up and left				
 				case event.direction
 				when 2 #down
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner2, disc facing down")
 				when 4 #left
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner2, disc facing left")
 				when 6 #right
 					newDirection = 2 #down
 				when 8 #up
@@ -422,9 +426,9 @@ class RotatonaPuzzle
 				when 4 #left
 					newDirection = 8 #up
 				when 6 #right
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner3, disc facing right")
 				when 8 #up
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner3, disc facing up")
 				end #case event.direction
 				
 				#next if disc crashed
@@ -444,11 +448,11 @@ class RotatonaPuzzle
 				when 2 #down
 					newDirection = 4 #left
 				when 4 #left
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner4, disc facing left")
 				when 6 #right
 					newDirection = 8 #up
 				when 8 #up
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched track corner4, disc facing up")
 				end #case event.direction
 				
 				#next if disc crashed
@@ -466,34 +470,34 @@ class RotatonaPuzzle
 				#no special behavior except crashing when hitting wall of track
 				case event.direction
 				when 2 #down
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched horizontal track, disc facing down")
 				when 8 #up
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched horizontal track, disc facing up")
 				end #case event.direction
 				
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Vertical
 				#no special behavior except crashing when hitting wall of track
 				case event.direction
 				when 4 #left
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched vertical track, disc facing left")
 				when 6 #right
-					self.crashRotatona(event)
+					self.crashRotatona(event, "touched vertical track, disc facing right")
 				end #case event.direction
 				
 			#elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
 				#do nothing I guess?
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
-				self.crashRotatona(event)
+				self.crashRotatona(event, "touched dead end up")
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndDown
-				self.crashRotatona(event)
+				self.crashRotatona(event, "touched dead end down")
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndLeft
-				self.crashRotatona(event)
+				self.crashRotatona(event, "touched dead end left")
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndRight
-				self.crashRotatona(event)
+				self.crashRotatona(event, "touched dead end right")
 			
 			elsif !self.touchingCornerTrackEvent?(event).nil?
 				#print "this will print once per track it touches" #it didn't print for track 29
@@ -502,11 +506,11 @@ class RotatonaPuzzle
 				when 2 #going up, turning right OR going left, turning down
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing down, disc facing down")
 					when 4 #left
 						newDirection = 2 #down
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing down, disc facing right")
 					when 8 #up
 						newDirection = 6 #right
 					end #case event.direction
@@ -514,9 +518,9 @@ class RotatonaPuzzle
 				when 4 #going right, turning down OR going up, turning left
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing left, disc facing down")
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing left, disc facing left")
 					when 6 #right
 						newDirection = 2 #down
 					when 8 #up
@@ -530,9 +534,9 @@ class RotatonaPuzzle
 					when 4 #left
 						newDirection = 8 #up
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing right, disc facing right")
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing right, disc facing up")
 					end #case event.direction
 					
 				when 8 #going right, turning up OR going down, turning left
@@ -540,12 +544,12 @@ class RotatonaPuzzle
 					when 2 #down
 						newDirection = 4 #left
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing up, disc facing left")
 						crashed = true
 					when 6 #right
 						newDirection = 8 #up
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched corner track event, track facing up, disc facing up")
 					end #case event.direction
 				end #case cornerTrackEvent.direction
 				
@@ -580,33 +584,33 @@ class RotatonaPuzzle
 				when 2 #straight track is facing up and down
 					case event.direction
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing down, disc facing left")
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing down, disc facing right")
 					end #case event.direction
 
 				when 4 #straight track is facing left and right
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing left, disc facing down")
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing left, disc facing up")
 					end #case event.direction
 					
 				when 6 #straight track is facing left and right
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing right, disc facing down")
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing right, disc facing up")
 					end #case event.direction
 					
 				when 8 #straight track is facing up and down
 					case event.direction
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing up, disc facing left")
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched straight track event, track facing up, disc facing right")
 					end #case event.direction
 				end #case cornerTrackEvent.direction
 				
@@ -626,43 +630,43 @@ class RotatonaPuzzle
 						#PBMoveRoute::Jump, X+, Y+
 						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing down, disc facing left")
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing down, disc facing right")
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing down, disc facing up")
 					end #case event.direction
 
 				when 4 #ramp is facing left
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing down")
 					when 4 #left
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing right")
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing up")
 					end #case event.direction
 					
 				when 6 #ramp is facing right
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing down")
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing left")
 					when 6 #right
 					when 8 #up
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing up")
 					end #case event.direction
 					
 				when 8 #ramp is facing up
 					case event.direction
 					when 2 #down
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing up, disc facing down")
 					when 4 #left
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing up, disc facing left")
 					when 6 #right
-						self.crashRotatona(event)
+						self.crashRotatona(event, "touched ramp track event, ramp facing up, disc facing right")
 					when 8 #up
 					end #case event.direction
 				end #case cornerTrackEvent.direction
@@ -672,8 +676,39 @@ class RotatonaPuzzle
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
 				#get docked if no disc is docked and launcher is facing correct direction
+				launcherEvent = self.touchingLauncherEvent?(event)
+				case launcherEvent.direction
+				when 2 #launcher is facing down
+					if event.direction == 8 #disc going up
+						Console.echo_warn "docked successfully"
+					else
+						self.crashRotatona(event, "touched launcher event, launcher facing down, disc not facing up")
+					end #if event.direction ==
+
+				when 4 #launcher is facing left
+					if event.direction == 6 #disc going right
+						Console.echo_warn "docked successfully"
+					else
+						self.crashRotatona(event, "touched launcher event, launcher facing left, disc not facing right")
+					end #if event.direction ==
+					
+				when 6 #launcher is facing right
+					if event.direction == 4 #disc going left
+						Console.echo_warn "docked successfully"
+					else
+						self.crashRotatona(event, "touched launcher event, launcher facing right, disc not facing left")
+					end #if event.direction ==
+					
+				when 8 #launcher is facing up
+					if event.direction == 2 #disc going down
+						Console.echo_warn "docked successfully"
+					else
+						self.crashRotatona(event, "touched launcher event, launcher facing up, disc not facing down")
+					end #if event.direction ==
+				end #case launcherEvent.direction
 				
-				############## TO DO ##############
+				#next if disc crashed
+				next if !event.discRolling
 				
 				
 				
@@ -683,7 +718,7 @@ class RotatonaPuzzle
 			else
 				#not on the track, not touching a track event, not jumping from ramp
 				#crash
-				self.crashRotatona(event)
+				self.crashRotatona(event, "disc not touching track, not touching track event, not jumping from ramp")
 			end #if colliding with something
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
@@ -783,7 +818,7 @@ class RotatonaPuzzle
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event #need to know the event the disc is touching to know the direction
+				touchingLauncher = event.associatedLauncher #need to know the event the disc is touching to know the direction
 			end
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Stationary].each do |event|
@@ -793,7 +828,7 @@ class RotatonaPuzzle
 		end #$game_temp.puzzleEvents
 		$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event #need to know the event the disc is touching to know the direction
+				touchingLauncher = event.associatedLauncher #need to know the event the disc is touching to know the direction
 			end
 		end #$game_temp.puzzleEvents
 		
@@ -827,11 +862,11 @@ class RotatonaPuzzle
 		@frameWaitCounter += 1
 	end #self.updateRollingAnimation
 	
-	def self.crashRotatona(discEvent)
+	def self.crashRotatona(discEvent, reason="no reason specified")
 		discEvent.discRolling = false
 		discEvent.discJumping = false
 		discEvent.discLandingSpot = []
-		Console.echo_warn "disc crashed"
+		Console.echo_warn "disc crashed - #{reason}"
 	end #def self.crashRotatona(discEvent)
 	
 	def self.rotateStraightTrack(event)
