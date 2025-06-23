@@ -76,7 +76,6 @@ class Battle::AI
        target.hasAbilityMutation? && target.abilityMutationList.include?(:COLORCHANGE)
       ret = Effectiveness::NOT_VERY_EFFECTIVE_ONE
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :QMARKS
-      ret = Effectiveness::INEFFECTIVE if moveType == :NORMAL
     end
     return ret
   end
