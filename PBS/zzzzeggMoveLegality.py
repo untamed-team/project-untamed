@@ -45,30 +45,34 @@ def get_species_with_move(pokemon_data, move):
 
     return level_tutor_learners, egg_learners
 
-def find_breeding_path(pokemon_data, target, move, level_tutor_learners, egg_learners):
-    visited = set()
+def find_all_breeding_paths(pokemon_data, target, move, level_tutor_learners, egg_learners, max_depth=6):
+    all_paths = set()
     queue = deque([(target, [])])
 
     while queue:
         current, path = queue.popleft()
+        if len(path) >= max_depth:
+            continue
+
         current_egg_groups = pokemon_data[current]['egg_groups']
 
         for species in pokemon_data:
-            if species in visited or species == current:
+            if species == target or species in path or species == current:
                 continue
 
             if not any(group in pokemon_data[species]['egg_groups'] for group in current_egg_groups):
                 continue
 
+            gender = pokemon_data[species]['gender_ratio']
             if species in level_tutor_learners:
-                return path + [species], False  # Direct inheritance
+                if gender not in ('Genderless', 'AlwaysFemale'):
+                    all_paths.add(tuple(path + [species]))
             elif species in egg_learners:
                 queue.append((species, path + [species]))
-                visited.add(species)
 
-    return None, None  # No path found
+    return sorted(all_paths)
 
-def trace_egg_move_inheritance(pokemon_data, show_all=False):
+def trace_egg_move_inheritance(pokemon_data, show_all=False, show_all_fathers=False):
     found_illegal = False
 
     for species, data in pokemon_data.items():
@@ -78,26 +82,34 @@ def trace_egg_move_inheritance(pokemon_data, show_all=False):
         for egg_move in data['egg_moves']:
             level_tutor_learners, egg_learners = get_species_with_move(pokemon_data, egg_move)
 
-            direct_parents = [
+            valid_fathers = [
                 s for s in level_tutor_learners
-                if s != species and any(g in pokemon_data[s]['egg_groups'] for g in data['egg_groups'])
+                if s != species
+                and any(g in pokemon_data[s]['egg_groups'] for g in data['egg_groups'])
             ]
 
-            if direct_parents:
+            if valid_fathers:
                 if show_all:
-                    parent = direct_parents[0]
-                    gender_note = " (genderless, requires egg move tutor)" if pokemon_data[parent]['gender_ratio'] == 'Genderless' else ""
-                    print(f"{species} can inherit '{egg_move}' directly from: {parent}{gender_note}")
+                    gender_note = " (genderless, requires egg move tutor)" if pokemon_data[valid_fathers[0]]['gender_ratio'] == 'Genderless' else ""
+                    if show_all_fathers:
+                        print(f"{species} can inherit '{egg_move}' directly from: {', '.join(valid_fathers)}{gender_note}")
+                    else:
+                        print(f"{species} can inherit '{egg_move}' directly from: {valid_fathers[0]}{gender_note}")
                 continue
 
-            path, _ = find_breeding_path(pokemon_data, species, egg_move, level_tutor_learners, egg_learners)
-            if path:
+            paths = find_all_breeding_paths(pokemon_data, species, egg_move, level_tutor_learners, egg_learners)
+            if paths:
                 if show_all:
-                    full_path = [species] + path
-                    final_parent = path[-1]
-                    gender_note = " (genderless, requires egg move tutor)" if pokemon_data[final_parent]['gender_ratio'] == 'Genderless' else ""
-                    print(f"{species} can inherit '{egg_move}' via chain breeding: {' ← '.join(full_path)}{gender_note}")
+                    for path in paths:
+                        full_path = [species] + list(path)
+                        final_parent = path[-1]
+                        gender_note = " (genderless, requires egg move tutor)" if pokemon_data[final_parent]['gender_ratio'] == 'Genderless' else ""
+                        chain_str = " ← ".join(full_path)
+                        print(f"{species} can inherit '{egg_move}' via chain breeding: {chain_str}{gender_note}")
+                        if show_all_fathers == False:
+                            break
                 continue
+
 
             # If we reach here, the move is illegal
             found_illegal = True
@@ -109,6 +121,7 @@ def trace_egg_move_inheritance(pokemon_data, show_all=False):
 # Persistent settings
 show_all = None
 input_file = None
+show_all_fathers = None
 
 while True:
     try:
@@ -120,11 +133,15 @@ while True:
             user_input = input("pokemon.txt or pokemon_2.txt? (0 or 1) ")
             input_file = 'pokemon.txt' if user_input.strip() == '0' else 'pokemon_2.txt'
 
+        if show_all_fathers is None:
+            father_input = input("show all valid fathers or just one sample? (0 = one sample, 1 = all) ")
+            show_all_fathers = father_input.strip() == '1'
+
         with open(input_file, 'r') as file:
             file_content = file.read()
 
         pokemon_data = parse_pokemon_file(file_content)
-        trace_egg_move_inheritance(pokemon_data, show_all=show_all)
+        trace_egg_move_inheritance(pokemon_data, show_all=show_all, show_all_fathers=show_all_fathers)
 
     except Exception as e:
         print(f"An error occurred: {e}")
@@ -135,5 +152,6 @@ while True:
     elif refresh == 'c':
         show_all = None
         input_file = None
+        show_all_fathers = None
     else:
         break
