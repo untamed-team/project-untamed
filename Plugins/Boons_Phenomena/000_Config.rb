@@ -22,11 +22,6 @@ module PhenomenonConfig
   Pokemon = {
     :shiny => true, # 4x chance of shininess
     :expBoost => false, # 1.5x Exp Boost (read above)
-    # Below are '1 in n' chance of Pokémon being generated with these settings
-    # Set to -1 to disable
-    :ivs => 8, # 2 perfect IVs (default 1 in 8)
-    :eggMoves => -1, # A random egg move
-    :hiddenAbility => -1, # Generated with hidden ability
   }
   Types = {
     # Animation ID, sound, animation height (1: above player/ 0: below)
@@ -47,13 +42,9 @@ module PhenomenonConfig
   # Items that appear occasionally in dust clouds and flying birds
   Items = {
     # 80% chance of appearing in dust
-    :commonCave => [:FIREGEM, :WATERGEM, :ICEGEM, :ELECTRICGEM, :GRASSGEM, :FIGHTINGGEM,
-                    :POISONGEM, :GROUNDGEM, :FLYINGGEM, :PSYCHICGEM, :BUGGEM, :ROCKGEM,
-                    :GHOSTGEM, :DRAGONGEM, :DARKGEM, :STEELGEM, :NORMALGEM, :REDSHARD,
-                    :BLUESHARD, :YELLOWSHARD, :GREENSHARD],
+    :commonCave => [:EVERSTONE, :OVALSTONE],
     # 10% chance
-    :rareCave => [:THUNDERSTONE, :WATERSTONE, :LEAFSTONE, :MOONSTONE, :FIRESTONE,
-                  :SUNSTONE, :SHINYSTONE, :DUSKSTONE, :DAWNSTONE, :EVERSTONE, :OVALSTONE],
+    :rareCave => [:RAREBONE, :FLOATSTONE, :PEARL],
     :bird => [:HEALTHWING, :RESISTWING, :CLEVERWING, :PRETTYWING, :MUSCLEWING, :GENIUSWING, :SWIFTWING],
   }
 end
