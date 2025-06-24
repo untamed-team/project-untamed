@@ -5811,8 +5811,8 @@ class Battle::AI
             score*=0.5 if user.effects[PBEffects::HonorBound]   
             score*=0.5 if user.effects[PBEffects::Yawn]>0
             score*=0.0 if user.effects[PBEffects::PerishSong]>0
-            score*=0.6 if user.turnCount<1
             score*=1.4 if user.moves.none? { |m| next m&.damagingMove? }
+
             if user.pbOwnSide.effects[PBEffects::StealthRock]
                 score*=0.8
             end
@@ -5834,18 +5834,41 @@ class Battle::AI
                 score*=1.2 if ["Cleric", "Pivot"].any? { |r| roles.include?(r) } && currentHPPercent >= 60
                 score*=1.3 if currentHPPercent >= 70
             end
-            bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-            maxdam = bestmove[0]
-            if maxdam*3<target.totalhp
-                besttargetmove=bestMoveVsTarget(target,user,skill)
-                maxtargetmove = bestmove[1]
-                if targetSurvivesMove(maxtargetmove,target,user)
+
+            sack = userFasterThanTarget; willSwitch = false
+            if @battle.choices[target.index][0] == :SwitchOut
+                sack = false; willSwitch = true
+                score *= 2
+            end
+            #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+            #maxdamUser=bestmoveUser[0]
+            #maxmoveUser=bestmoveUser[1]
+            bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxmoveTarget = bestmoveTarget[1]
+
+            party = @battle.pbParty(user.index)
+            swapper = user.pokemonIndex
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+            if switchin
+                if switchin.is_a?(Array) # it (should) always be a array
+                    swapper = switchin[0]
+                    swapperScore = [[(switchin[1]/100.0), 0.3].max, 1.5].min
+                    score *= swapperScore
+                else
+                    swapper = switchin
+                end
+            end
+            if swapper != user.pokemonIndex
+                if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
                     score*=1.2
                 else
                     score*=0.7
                 end
+                score*=0.7 if user.turnCount<1
+                score*=0.8 if @battle.pbSideSize(1)>1
+            else
+                score = 0
             end
-            score*=2 if @battle.choices[target.index][0] == :SwitchOut
         else
             score = 0
         end
