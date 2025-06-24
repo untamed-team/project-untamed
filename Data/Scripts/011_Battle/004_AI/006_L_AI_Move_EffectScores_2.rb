@@ -494,7 +494,7 @@ class Battle::AI
                 if i.status==:POISON && i.ability == :POISONHEAL
                     score*=0.5
                 end
-                if i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE)
+                if i.status!=:NONE && (i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE))
                     score*=0.8
                 end
                 if i.status==:SLEEP

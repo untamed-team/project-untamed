@@ -433,7 +433,7 @@ class Battle::Battler
       end
       targets.each do |b|
         b.damageState.reset
-        # Special interaction for color change + protean ability combo
+        # Special interaction for color change + protean ability combo #by low
         if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && !b.pbOwnedByPlayer? &&
            b.hasAbilityMutation? && b.abilityMutationList.include?(:COLORCHANGE)
           offenseType = move.calcType

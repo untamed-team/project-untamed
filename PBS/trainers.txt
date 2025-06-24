@@ -2628,7 +2628,7 @@ LoseText = Well, how did it taste?
 Gimmick = Rainbow
 Pokemon = DUNSPARCE,23
     Moves = ANCIENTPOWER,TRIATTACK,ROOST,HEX
-    Ability = SERENEGRACE
+    Ability = RATTLED
     Item = EVIOLITE
 #Area=Route4_M
 #-------------------------------

@@ -791,7 +791,7 @@ class Battle::AI
                 end
             end
             if user.hasActiveAbility?(:MOTORDRIVE)
-                if !user.statStageAtMax?[:SPEED]
+                if !user.statStageAtMax?(:SPEED)
                     score*=1.2
                 else
                     score*=0.1
@@ -820,7 +820,7 @@ class Battle::AI
                             score*=0.7
                         end
                     end
-                    if b.hasActiveAbility?(:MOTORDRIVE) && !b.statStageAtMax?[:SPEED]
+                    if b.hasActiveAbility?(:MOTORDRIVE) && !b.statStageAtMax?(:SPEED)
                         score*=1.3
                     end
                     if b.hasActiveAbility?(:VOLTABSORB) && ((b.hp.to_f)/b.totalhp)<0.6
@@ -3943,6 +3943,13 @@ class Battle::AI
                 targetroles = pbGetPokemonRole(target)
                 if targetroles.include?("Physical Wall") || targetroles.include?("Special Wall") 
                     score*=1.5
+                end
+                if user.recycleItem == :NYLOBERRY 
+                    if user.hasActiveAbility?(:EARLYBIRD)
+                        score*=1.2
+                    else
+                        score*=0.7
+                    end
                 end
             end
             if user.recycleItem.is_berry?

@@ -415,6 +415,12 @@ class Battle::AI
       baseDmg *= 2 if user.lastRoundMoveFailed
     when "PursueSwitchingFoe" # Pursuit
       baseDmg *= 2 if @battle.choices[target.index][0] == :SwitchOut
+    when "RemoveTargetItem" # knock off
+      if !$player.difficulty_mode?("chaos")
+        if target.item && !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
+          baseDmg *= 1.5
+        end
+      end
     when "DoublePowerIfTargetNotActed" # Fishious Rend / Bolt Beak
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
