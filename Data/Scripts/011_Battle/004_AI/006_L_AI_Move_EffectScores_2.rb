@@ -138,7 +138,7 @@ class Battle::AI
             end
             miniscore/=100.0
             score*=miniscore
-         end
+        end
         allOutspeed = userFasterThanTarget
         if user.allAllies.any?
             user.allAllies.each do |b|

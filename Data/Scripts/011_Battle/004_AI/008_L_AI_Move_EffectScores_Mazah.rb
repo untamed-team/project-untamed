@@ -2225,8 +2225,8 @@ class Battle::AI
                         quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0
                     end          
                     if quickcheck
-                        echo("Expecting quick guard. Score  (for" + move.name + ") -200. \n")
-                        score-=200
+                        echo("Quick guard is a possiblity. Score  (for" + move.name + ") -80. \n")
+                        score-=80
                     end  
                 end
             else
@@ -2262,7 +2262,7 @@ class Battle::AI
                                           "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(targetMove.function)
                         end
                         if willSwitch || @battle.choices[target.index][0] == :SwitchOut
-                            echo("Negative priority move, AI pokemon is faster and target will switch out. Score x1.3\n")
+                            echo("Negative priority teleport, AI pokemon is faster and target will switch out. Score x1.3\n")
                             score*=1.3
                         end
                     end

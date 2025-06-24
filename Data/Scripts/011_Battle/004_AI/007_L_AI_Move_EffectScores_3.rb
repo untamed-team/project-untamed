@@ -6288,7 +6288,7 @@ class Battle::AI
         score*=1.2 if target.effects[PBEffects::Yawn]>0
         score*=0.8 if target.effects[PBEffects::Substitute]>0
 
-        # i wonder if will tripfags will complain about this
+        # i wonder if tripfags will complain about this
         if @battle.choices[target.index][0] == :SwitchOut
             score*=3
             if !targetSurvivesMove(move,user,target)
