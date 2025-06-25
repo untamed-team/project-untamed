@@ -93,7 +93,18 @@ class RotatonaPuzzle
 				end #$game_map.events.each_value do |overlayEvent|
 			end
 			$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
-			$game_temp.puzzleEvents[:Launchers_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
+			if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
+				#identify launchers and their associated overlay events
+				$game_temp.puzzleEvents[:Launchers_Stationary].push(event)
+				#check coordinate to the right of the event, as this should be the associated overlay
+				$game_map.events.each_value do |overlayEvent|
+					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
+						event.associatedOverlay = overlayEvent
+						overlayEvent.associatedLauncher = event
+						break
+					end
+				end #$game_map.events.each_value do |overlayEvent|
+			end
 			$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
 			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
 			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotaPuzzle_Barrier/i)
@@ -195,12 +206,12 @@ class RotatonaPuzzle
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				pbSEPlay(SE_LAUNCHER_BUTTON)
+				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				self.launchRotatonaDisc(event, event.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				pbSEPlay(SE_LAUNCHER_BUTTON)
+				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
 			
@@ -209,12 +220,12 @@ class RotatonaPuzzle
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				pbSEPlay(SE_LAUNCHER_BUTTON)
+				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				self.launchRotatonaDisc(event.associatedLauncher, event.associatedLauncher.discThisLauncherHasDocked) if choice
 			else
 				#if disc not docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
-				pbSEPlay(SE_LAUNCHER_BUTTON)
+				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
 			
