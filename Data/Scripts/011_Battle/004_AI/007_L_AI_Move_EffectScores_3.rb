@@ -5575,7 +5575,7 @@ class Battle::AI
 
             party = @battle.pbParty(user.index)
             swapper = user.pokemonIndex
-            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
             if switchin
                 if switchin.is_a?(Array) # it (should) always be a array
                     swapper = switchin[0]
@@ -5690,7 +5690,7 @@ class Battle::AI
 
             party = @battle.pbParty(user.index)
             swapper = user.pokemonIndex
-            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
             if switchin
                 if switchin.is_a?(Array) # it (should) always be a array
                     swapper = switchin[0]
@@ -5807,12 +5807,10 @@ class Battle::AI
                 #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
                 #maxdamUser=bestmoveUser[0]
                 #maxmoveUser=bestmoveUser[1]
-                bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-                maxmoveTarget = bestmoveTarget[1]
 
                 party = @battle.pbParty(user.index)
                 swapper = user.pokemonIndex
-                switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+                switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
                 if switchin
                     if switchin.is_a?(Array) # it (should) always be a array
                         swapper = switchin[0]
@@ -5823,19 +5821,26 @@ class Battle::AI
                     end
                 end
                 if swapper != user.pokemonIndex
-                    oldAttack = target.stages[:ATTACK]
-                    oldSpAtk = target.stages[:SPECIAL_ATTACK]
+                    olderStats = [target.stages[:ATTACK], target.stages[:SPECIAL_ATTACK]]
                     if userFasterThanTarget
-                        target.stages[:ATTACK] -= 1 if target.pbCanLowerStatStage?(:ATTACK)
-                        target.stages[:SPECIAL_ATTACK] -= 1 if target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+                        increment = 1
+                        increment *= 2 if target.hasActiveAbility?(:SIMPLE)
+                        increment *= -1 if target.hasActiveAbility?(:CONTRARY)
+                        [:ATTACK, :SPECIAL_ATTACK].each do |partingStat|
+                            next unless target.pbCanLowerStatStage?(partingStat)
+                            target.stages[partingStat] -= increment
+                            target.stages[partingStat] = [[target.stages[partingStat], -6].max, 6].min
+                        end
                     end
+                    bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxmoveTarget = bestmoveTarget[1]
                     if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
                         score*=1.2
                     else
                         score*=0.7
                     end
-                    target.stages[:ATTACK] = oldAttack
-                    target.stages[:SPECIAL_ATTACK] = oldSpAtk
+                    target.stages[:ATTACK] = olderStats[0]
+                    target.stages[:SPECIAL_ATTACK] = olderStats[1]
                     score*=0.7 if user.turnCount<1
                     score*=0.8 if @battle.pbSideSize(1)>1
                 else
