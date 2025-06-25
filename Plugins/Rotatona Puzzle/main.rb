@@ -32,6 +32,7 @@ class Game_Event
   attr_accessor :associatedLauncher
   attr_accessor :associatedOverlay
   attr_accessor :launcherThisDiscIsDockedIn
+  attr_accessor :launcherThisDiscWasLaunchedFrom
   attr_accessor :discThisLauncherHasDocked
   attr_accessor :discRolling
   attr_accessor :discTouchingTile
@@ -71,6 +72,7 @@ class RotatonaPuzzle
 			event.associatedLauncher = nil
 			event.associatedOverlay = nil
 			event.launcherThisDiscIsDockedIn = nil
+			event.launcherThisDiscWasLaunchedFrom = nil
 			event.discThisLauncherHasDocked = nil
 			event.discRolling = false
 			event.discTouchingTile = []
@@ -274,8 +276,10 @@ class RotatonaPuzzle
 	def self.launchRotatonaDisc(launcherEvent, discEvent)
 		#start disc rolling
 		discEvent.discRolling = true
-		#set discDocked variables for associated launcher and overlay to undock disc
-		#set dockedLauncher variables for discEvent to undock disc
+		discEvent.launcherThisDiscWasLaunchedFrom = launcherEvent
+		launcherEvent = discEvent.launcherThisDiscIsDockedIn
+		launcherEvent.discThisLauncherHasDocked = nil
+		discEvent.launcherThisDiscIsDockedIn = nil
 		
 	end #def self.launchRotatonaDisc
 
@@ -686,12 +690,18 @@ class RotatonaPuzzle
 				next if !event.discRolling
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
-				#get docked if no disc is docked and launcher is facing correct direction
 				launcherEvent = self.touchingLauncherEvent?(event)
+				Console.echo_warn "touching launcher event"
+				#skip if touching the same launcher we came from
+				next if launcherEvent == event.launcherThisDiscWasLaunchedFrom
+				
+				#disc is not docked, so look for a launcher to dock in
+				Console.echo_warn "disc is touching a launcher event; going to stop disc from rolling"
 				case launcherEvent.direction
 				when 2 #launcher is facing down
 					if event.direction == 8 #disc going up
 						Console.echo_warn "docked successfully"
+						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing down, disc not facing up")
 					end #if event.direction ==
@@ -699,6 +709,7 @@ class RotatonaPuzzle
 				when 4 #launcher is facing left
 					if event.direction == 6 #disc going right
 						Console.echo_warn "docked successfully"
+						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing left, disc not facing right")
 					end #if event.direction ==
@@ -706,6 +717,7 @@ class RotatonaPuzzle
 				when 6 #launcher is facing right
 					if event.direction == 4 #disc going left
 						Console.echo_warn "docked successfully"
+						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing right, disc not facing left")
 					end #if event.direction ==
@@ -713,10 +725,11 @@ class RotatonaPuzzle
 				when 8 #launcher is facing up
 					if event.direction == 2 #disc going down
 						Console.echo_warn "docked successfully"
+						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing up, disc not facing down")
 					end #if event.direction ==
-				end #case launcherEvent.direction
+				end #case launcherEvent.direction				
 				
 				#next if disc crashed
 				next if !event.discRolling
@@ -733,6 +746,12 @@ class RotatonaPuzzle
 			end #if colliding with something
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
+	
+	def self.dockDisc(discEvent, launcherEvent)
+		discEvent.launcherThisDiscIsDockedIn = launcherEvent
+		launcherEvent.discThisLauncherHasDocked = discEvent
+		discEvent.discRolling = false
+	end #def self.dockDisc
 	
 	def self.checkIfDiscTurning
 		$game_temp.puzzleEvents[:Discs].each do |event|
@@ -822,27 +841,39 @@ class RotatonaPuzzle
 	def self.touchingLauncherEvent?(discEvent)
 		#iterate through rotatable corner track events
 		touchingLauncher = nil
-		$game_temp.puzzleEvents[:Launchers_Rotatable].each do |event|
-			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event #need to know the event the disc is touching to know the direction
-			end
+		$game_temp.puzzleEvents[:Launchers_Rotatable].each do |launcherEvent|
+			#get the center X and center Y of the launcher
+			launcherCenterX = launcherEvent.x+1
+			launcherCenterY = launcherEvent.y-1
+				#check if disc is touching center of launcher
+				#print "disc event #{discEvent.id} is docked at launcher event #{launcherEvent.id}" if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
+				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
+					discEvent.launcherThisDiscIsDockedIn = launcherEvent
+					launcherEvent.discThisLauncherHasDocked = discEvent
+					#turn rotatona disc event to match direction of launcher it's docked in
+					discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
+					
+					touchingLauncher = launcherEvent
+					return touchingLauncher
+				end
 		end #$game_temp.puzzleEvents
-		$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].each do |event|
-			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event.associatedLauncher #need to know the event the disc is touching to know the direction
-			end
+		$game_temp.puzzleEvents[:Launchers_Stationary].each do |launcherEvent|
+			#get the center X and center Y of the launcher
+			launcherCenterX = launcherEvent.x+1
+			launcherCenterY = launcherEvent.y-1
+				#check if disc is touching center of launcher
+				#print "disc event #{discEvent.id} is docked at launcher event #{launcherEvent.id}" if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
+				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
+					discEvent.launcherThisDiscIsDockedIn = launcherEvent
+					launcherEvent.discThisLauncherHasDocked = discEvent
+					#turn rotatona disc event to match direction of launcher it's docked in
+					discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
+					
+					touchingLauncher = launcherEvent
+					return touchingLauncher
+				end
 		end #$game_temp.puzzleEvents
-		$game_temp.puzzleEvents[:Launchers_Stationary].each do |event|
-			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event #need to know the event the disc is touching to know the direction
-			end
-		end #$game_temp.puzzleEvents
-		$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].each do |event|
-			if discEvent.x == event.x && discEvent.y == event.y
-				touchingLauncher = event.associatedLauncher #need to know the event the disc is touching to know the direction
-			end
-		end #$game_temp.puzzleEvents
-		
+
 		return touchingLauncher
 	end #def self.touchingLauncherEvent?(discEvent)
 	
