@@ -1559,7 +1559,7 @@ proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOINSTINCTS,
+Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOMOAURA,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     mults[:base_damage_multiplier] *= 1.3 if type == :BUG
   }
@@ -1630,7 +1630,7 @@ Battle::AbilityEffects::DamageCalcFromAlly.add(:CARPENTER,
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromAlly.add(:ENTOINSTINCTS,
+Battle::AbilityEffects::DamageCalcFromAlly.add(:ENTOMOAURA,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     mults[:base_damage_multiplier] *= 1.3 if type == :BUG
   }
