@@ -827,7 +827,7 @@ class Battle::AI
               end
             end
           end
-          threatHash[target.index] = increment.to_i
+          threatHash[target.index] = increment
         end
       end
       return threatHash
