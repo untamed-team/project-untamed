@@ -95,6 +95,7 @@ class Battle::AI
             #else
             #  score *= 1 + (doublesThreat/10.0) if score < 180
             #end
+            score = score.to_i
           end
           scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
