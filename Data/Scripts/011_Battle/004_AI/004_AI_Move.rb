@@ -27,6 +27,7 @@ class Battle::AI
   def pbRegisterMoveTrainer(user, idxMove, choices, skill)
     move = user.moves[idxMove]
     target_data = move.pbTarget(user)
+    doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
        # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
@@ -65,6 +66,7 @@ class Battle::AI
       # If move affects one battler and you have to choose which one
       scoresAndTargets = []
       @battle.allBattlers.each do |b|
+        doublesThreat = doublesThreats[b.index]
         next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
         next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
         if !user.opposes?(b) # is ally
@@ -84,9 +86,21 @@ class Battle::AI
             realTarget = b
           end
           score = pbGetMoveScore(move, user, realTarget, 100)
+          if @battle.pbSideBattlerCount(b) > 1 # is doubles?
+            score *= 1 + (doublesThreat/10.0)
+            #if score >= 190 # 40%~ away from KO
+            #  doublesThreat += 1 * b.stages[:DEFENSE]
+            #  doublesThreat += 1 * b.stages[:SPECIAL_DEFENSE]
+            #  score *= 1 + (doublesThreat/10.0)
+            #else
+            #  score *= 1 + (doublesThreat/10.0) if score < 180
+            #end
+          end
           scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
       end
+      $aisuckercheck = [false, 0]
+      $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
       if scoresAndTargets.length > 0
         # Get the one best target for the move
         scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }

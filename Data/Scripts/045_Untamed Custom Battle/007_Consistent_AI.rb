@@ -1,4 +1,6 @@
 class Battle::AI
+    # todo: check up on damage calculations, it is overshooting the real damage
+
     # global array initialization
     attr_accessor :megaGlobalArray
     alias kiriya_initialize initialize
@@ -46,7 +48,7 @@ class Battle::AI
         # end
         # Gather information regarding opposing Sucker Punch and AoE Protect moves
         user.eachOpposing do |b|
-            if targetWillMove?(b, "dmg")
+            if targetWillMove?(b)
                 targetMove = @battle.choices[b.index][2]
                 if targetMove.function == "FailsIfTargetActed" && 
                   (user.moves.any? { |i| i.statusMove? } || user.moves.any? { |i| priorityAI(user,i)>0 })
@@ -57,7 +59,7 @@ class Battle::AI
                         $aisuckercheck = [true, b]
                     end
                 end
-                if b.effects[PBEffects::ProtectRate] <= 0 
+                if b.effects[PBEffects::ProtectRate] <= 1
                     if ["ProtectUserSideFromStatusMoves", "ProtectUserSideFromMultiTargetDamagingMoves", 
                        "ProtectUserSideFromPriorityMoves", "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function) &&
                        @battle.moveRevealed?(b, targetMove.id)
@@ -299,8 +301,13 @@ class Battle::AI
         if @battle.choices[idxBattler][2]
             PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use #{@battle.choices[idxBattler][2].name}")
         end
-        $aisuckercheck = [false, 0]
-        $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
+        if $AIGENERALLOG
+            echoln("")
+            echo("\n---------------------------------------------")
+            echo("\n          !!! ENDING THE TURN !!!")
+            echo("\n---------------------------------------------")
+            echoln("")
+        end
     end
   
     #=============================================================================
@@ -672,6 +679,7 @@ class Battle::AI
 
         # Convert damage to percentage of target's remaining HP
         damagePercentage = realDamage * 100.0 / target.hp
+        #echoln "#{move.name}'s realdamage = #{realDamage}, dmgpercent = #{damagePercentage}" if user.species == :GLALIE && target.species == :GASTRONAUT && (move.type == :ICE || move.id == :RETURN)
         # Don't prefer weak attacks
         damagePercentage *= 0.5 if damagePercentage < 30
         # Prefer status moves if level difference is significantly high
@@ -715,10 +723,13 @@ class Battle::AI
         score += damagePercentage
         if $AIGENERALLOG
             echo("\n-----------------------------")
+            echo("\nfor #{target.name}, from #{user.name}")
+            echo("\n-----------------------------")
             echo("\n#{move.name} score before dmg = #{initialscore}")
             echo("\n#{move.name} real dmg = #{realDamage}")
             echo("\n#{move.name} dmg percent = #{damagePercentage}%%")
             echo("\n#{move.name} score = #{score}")
+            echo("\n-----------------------------")
         end
         if $AIMASTERLOG
             File.open("AI_master_log.txt", "a") do |line|
@@ -726,6 +737,100 @@ class Battle::AI
             end
         end
         return score
+    end
+
+    def pbCalcDoublesThreatsBoost(user,skill=100)
+      threatHash = {}
+      @battle.allBattlers.each do |target|
+        next if !user.opposes?(target)
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
+        increment = 0
+        #threatHash[target.index] = increment
+        if @battle.pbSideBattlerCount(target) > 1
+          # increase threat level depending on stat boosts
+          actualMaxDmg=0
+          actualMaxDmg_PhysOrSpec = ""
+          @battle.allSameSideBattlers(user.index).each do |b| 
+            # calculate how much dmg the foes' can do
+            maxFoeDmg=0
+            bestTargetMove=bestMoveVsTarget(target,b,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxFoeDmg=bestTargetMove[0] 
+            maxFoeMove=bestTargetMove[1]
+            if maxFoeDmg >= actualMaxDmg
+              actualMaxDmg=maxFoeDmg 
+              actualMaxDmg_PhysOrSpec=bestTargetMove[3]
+            end
+            weSurvive = targetSurvivesMove(maxFoeMove,target,b)
+            damagePercentage = maxFoeDmg * 100.0 / b.hp
+            damagePercentage = 110 if damagePercentage > 100
+            damagePercentage = 99 if damagePercentage >= 100 && weSurvive
+            increment += damagePercentage/100.0
+          end
+          #echo("\nDoubles Threat Level boost for "+target.name+": "+increment.to_s+"\n")
+          if actualMaxDmg_PhysOrSpec=="physical"
+            increment += 1 * target.stages[:ATTACK]  
+          else
+            increment += 0.5 * target.stages[:ATTACK]  
+          end
+          if actualMaxDmg_PhysOrSpec=="special"
+            increment += 1 * target.stages[:SPECIAL_ATTACK]
+          else
+            increment += 0.5 * target.stages[:SPECIAL_ATTACK]
+          end
+          increment += 0.75 * target.stages[:DEFENSE]
+          increment += 0.75 * target.stages[:SPECIAL_DEFENSE]
+          increment += 1.10 * target.stages[:SPEED]
+
+          targetRoles = pbGetPokemonRole(target, user)
+          increment += 0.6 if targetRoles.include?("Sweeper")
+          increment += 0.8 if targetRoles.include?("Screener")
+          increment += 1.0 if targetRoles.include?("Field Setter")
+          increment += 1.0 if targetRoles.include?("Weather Setter")
+          increment += 1.3 if targetRoles.include?("Tailwind Setter")
+          increment += 1.3 if targetRoles.include?("Trick Room Setter")
+
+          # simulating bits of pbHardSwitchChooseNewEnemy
+          enemies = []
+          ownparty = @battle.pbParty(user.index)
+          ownparty.each_with_index do |ptmon,i|
+            enemies.push(i) if ptmon.hp>0
+          end
+          #echo("\nDoubles Threat Level boost for "+target.name+": "+increment.to_s+"\n")
+          speedsarray = pbChooseBestNewEnemy(user.index,ownparty,enemies,false,-1,false,true)
+          speedsarray.each do |switchSpeed|
+            increment += 1 if ((ospeed>switchSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+          end
+          #increment = 0 if increment < 0
+          ###############################################
+          echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
+          
+          if targetWillMove?(target)
+            targetMove = @battle.choices[target.index][2]
+            if target.effects[PBEffects::ProtectRate] <= 1
+              if ["ProtectUserSideFromStatusMoves",
+                  "ProtectUserSideFromMultiTargetDamagingMoves",
+                  "ProtectUserSideFromPriorityMoves",
+                  "ProtectUserSideFromDamagingMovesIfUserFirstTurn",
+                  "ProtectUser", "ProtectUserBanefulBunker",
+                  "ProtectUserFromTargetingMovesSpikyShield",
+                  "ProtectUserFromDamagingMovesKingsShield",
+                  "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
+                 @battle.moveRevealed?(target, targetMove.id)
+                if rand(100) < 66 || $aiguardcheck[0]
+                    increment = -10
+                    $aiguardcheck = [true, targetMove.function]
+                else
+                    increment *= 0.5
+                end
+                echo("\nDoubles Threat Level nullified for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
+              end
+            end
+          end
+          threatHash[target.index] = increment
+        end
+      end
+      return threatHash
     end
 end
 # i have a parasocial relationship with this code. it would be funny if it wasnt so pathetic
