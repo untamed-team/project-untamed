@@ -274,13 +274,12 @@ class RotatonaPuzzle
 	end #def self.playerInteract
 
 	def self.launchRotatonaDisc(launcherEvent, discEvent)
-		#start disc rolling
-		discEvent.discRolling = true
 		discEvent.launcherThisDiscWasLaunchedFrom = launcherEvent
 		launcherEvent = discEvent.launcherThisDiscIsDockedIn
 		launcherEvent.discThisLauncherHasDocked = nil
 		discEvent.launcherThisDiscIsDockedIn = nil
-		
+		#start disc rolling
+		discEvent.discRolling = true		
 	end #def self.launchRotatonaDisc
 
 	def self.resetRotatonas
@@ -499,8 +498,8 @@ class RotatonaPuzzle
 					self.crashRotatona(event, "touched vertical track, disc facing right")
 				end #case event.direction
 				
-			#elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
-				#do nothing I guess?
+			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_Crossroad
+				#do nothing, but this keeps the disc from crashing during the 'else' block
 
 			elsif $game_map.terrain_tag(event.x, event.y).id == :RotatonaPuzzle_Track_DeadEndUp
 				self.crashRotatona(event, "touched dead end up")
@@ -657,6 +656,12 @@ class RotatonaPuzzle
 					when 2 #down
 						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing down")
 					when 4 #left
+						#jump
+						event.discJumping = true
+						event.discLandingSpot = [event.x-2, event.y]
+						pbSEPlay(SE_DISC_JUMP)
+						#PBMoveRoute::Jump, X+, Y+
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
 					when 6 #right
 						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing right")
 					when 8 #up
@@ -670,6 +675,12 @@ class RotatonaPuzzle
 					when 4 #left
 						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing left")
 					when 6 #right
+						#jump
+						event.discJumping = true
+						event.discLandingSpot = [event.x+2, event.y]
+						pbSEPlay(SE_DISC_JUMP)
+						#PBMoveRoute::Jump, X+, Y+
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
 					when 8 #up
 						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing up")
 					end #case event.direction
@@ -683,6 +694,12 @@ class RotatonaPuzzle
 					when 6 #right
 						self.crashRotatona(event, "touched ramp track event, ramp facing up, disc facing right")
 					when 8 #up
+						#jump
+						event.discJumping = true
+						event.discLandingSpot = [event.x, event.y-2]
+						pbSEPlay(SE_DISC_JUMP)
+						#PBMoveRoute::Jump, X+, Y+
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
 					end #case event.direction
 				end #case cornerTrackEvent.direction
 				
@@ -691,8 +708,6 @@ class RotatonaPuzzle
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
 				launcherEvent = self.touchingLauncherEvent?(event)
-				
-				print event.direction
 				
 				Console.echo_warn "touching launcher event"
 				#skip if touching the same launcher we came from
@@ -753,7 +768,15 @@ class RotatonaPuzzle
 	def self.dockDisc(discEvent, launcherEvent)
 		discEvent.launcherThisDiscIsDockedIn = launcherEvent
 		launcherEvent.discThisLauncherHasDocked = discEvent
+		
+		#reset variables for launcher the disc came from
+		discEvent.launcherThisDiscWasLaunchedFrom.discThisLauncherHasDocked = nil
+		
 		discEvent.discRolling = false
+		#turn rotatona disc event to match direction of launcher it's docked in
+		discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
+		discEvent.character_name = "Rotatona_Disc_Anim1"
+		discEvent.pattern = 1
 	end #def self.dockDisc
 	
 	def self.checkIfDiscTurning
@@ -853,8 +876,6 @@ class RotatonaPuzzle
 				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
 					discEvent.launcherThisDiscIsDockedIn = launcherEvent
 					launcherEvent.discThisLauncherHasDocked = discEvent
-					#turn rotatona disc event to match direction of launcher it's docked in
-					discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
 					
 					touchingLauncher = launcherEvent
 					return touchingLauncher
@@ -869,8 +890,6 @@ class RotatonaPuzzle
 				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
 					discEvent.launcherThisDiscIsDockedIn = launcherEvent
 					launcherEvent.discThisLauncherHasDocked = discEvent
-					#turn rotatona disc event to match direction of launcher it's docked in
-					discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
 					
 					touchingLauncher = launcherEvent
 					return touchingLauncher
@@ -1235,6 +1254,8 @@ GameData::TerrainTag.register({
 })
 
 #logic to do:
-#start rota rolling when launched
-#if rota touches catcher, success sound
 #if rota touches barrier, crash
+#if rota touches catcher, success sound
+#disc should stop rolling after it touches the catcher
+#disc should crash if it touches a catcher that has a disc docked
+#set self switches for rotatona discs after touching catchers
