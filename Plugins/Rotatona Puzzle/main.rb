@@ -691,6 +691,9 @@ class RotatonaPuzzle
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
 				launcherEvent = self.touchingLauncherEvent?(event)
+				
+				print event.direction
+				
 				Console.echo_warn "touching launcher event"
 				#skip if touching the same launcher we came from
 				next if launcherEvent == event.launcherThisDiscWasLaunchedFrom
