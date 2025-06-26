@@ -215,13 +215,14 @@ class Battle::AI
   #=============================================================================
   # Choose a replacement Pokémon
   #=============================================================================
-  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false)
+  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false, retvrnspeed=false)
     return -1 if !enemies || enemies.length == 0
     best    = -1
     bestSum = 0
+    speedsarray = []
     enemies.each do |i|
       pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
-      if $AIGENERALLOG
+      if !retvrnspeed && $AIGENERALLOG
         echo("\nSwitch score for: "+pokmon.name)
         echo("\n----------------------------------------\n")
       end  
@@ -239,6 +240,10 @@ class Battle::AI
         when :Psychic
           aspeed *= 2 if pokmon.hasActiveItem?(:PSYCHICSEED)
         end
+      end
+      if retvrnspeed
+        speedsarray.push(aspeed)
+        next
       end
       if @battle.field.effects[PBEffects::TrickRoom]>0
         maxspeed = 6900
@@ -828,6 +833,7 @@ class Battle::AI
         bestSum = sum
       end
     end
+    return speedsarray if retvrnspeed
     return [best,bestSum] if batonpasscheck
     return best
   end

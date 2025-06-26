@@ -3940,7 +3940,7 @@ class Battle::AI
                 score*=2 if user.pbHasAnyStatus?
             when :SITRUSBERRY, :NYLOBERRY
                 score*=1.6 if user.hp*(1.0/user.totalhp)<0.66
-                targetroles = pbGetPokemonRole(target)
+                targetroles = pbGetPokemonRole(target, user)
                 if targetroles.include?("Physical Wall") || targetroles.include?("Special Wall") 
                     score*=1.5
                 end
@@ -5283,7 +5283,7 @@ class Battle::AI
             move_data = GameData::Move.get(move_id)
             next if move_data.nil? || move_id.nil?
             next if moveBlacklist.include?(move_data.function_code)
-            next if move_data.has_flag?("CannotMetronome")
+            #next if move_data.has_flag?("CannotMetronome")
             next if move_data.type == :SHADOW
             next if user.SetupMovesUsed.include?(move_data.id) || userMoves.include?(move_data.id)
             metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
@@ -6601,7 +6601,10 @@ class Battle::AI
                 score*=1.1
             else
                 score*=0.9
-            end  
+            end
+            targetRoles = pbGetPokemonRole(target, user)
+            score *= 1.3 if targetRoles.include?("Tailwind Setter")
+            score *= 1.3 if targetRoles.include?("Trick Room Setter")
             score*=1.3 if pbHasSingleTargetProtectMove?(target, false)
             score*=1.3 if target.moves.any? { |m| m&.healingMove? }
             if target.moves.any? { |m| next m&.statusMove? }
@@ -6668,7 +6671,7 @@ class Battle::AI
                     miniscore+=1
                     sharedmoves.push(m.id)
                     score*=1.5 if m.healingMove?
-                    score*=1.6 if m.id == :TRICKROOM
+                    score*=1.6 if m.id == :TRICKROOM || m.id == :TAILWIND
                 end
             end
             score*=miniscore
