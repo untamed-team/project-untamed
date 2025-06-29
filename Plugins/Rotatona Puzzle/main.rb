@@ -1259,3 +1259,4 @@ GameData::TerrainTag.register({
 #disc should stop rolling after it touches the catcher
 #disc should crash if it touches a catcher that has a disc docked
 #set self switches for rotatona discs after touching catchers
+#camera follow disc when it's rolling then pan back to player when it crashes
