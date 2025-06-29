@@ -19,10 +19,12 @@
 #5. Rotatona discs must have "Always on Top" checked
 #6. Launcher events must be 3x3 ( e.g. NAME,size(3,3) )
 #7. Launcher overlay events must be 1x3 ( e.g. NAME,size(1,3) )
-#8. Only launchers which rotate or are stationary but NOT facing upward need an associated launcher overlay
+#8. All rotatble launchers and launchers which are stationary and not facing down need an associated launcher overlay
 #9. Rotatona disc events must be placed 1 to the right and 1 up from the launcher you want it to start in
 #10. Do not use terrain tags 19 through 29 for anything. Do not change the terrain tags on any of the tiles in the temple tileset
-#11. Do not put events on top of track tiles fro the tileset and expect them to work. The script checks for collisions with the track tiles FIRST, then processes any track events if not touching any track tiles
+#11. Do not put events on top of track tiles from the tileset and expect them to work. The script checks for collisions with the track tiles FIRST, then processes any track events if not touching any track tiles
+#12. Disc catcher events' ID numbers must be higher than disc events' IDs
+#13. Disc catcher must have "Always on Top" checked
 
 class Game_Temp
   attr_accessor :puzzleEvents
@@ -39,6 +41,7 @@ class Game_Event
   attr_accessor :discTurningDirection
   attr_accessor :discJumping
   attr_accessor :discLandingSpot
+  attr_accessor :catcherHasDisc
 end
 
 class RotatonaPuzzle
@@ -47,6 +50,8 @@ class RotatonaPuzzle
 	SE_ROTATE_CORNER_TRACK = "Cut"
 	SE_ROTATE_LAUNCHER = "Cut"
 	SE_LAUNCHER_BUTTON = "Cut"
+	SE_DOCKING = "Cut"
+	SE_CATCHING = "Cut"
 	SE_DISC_JUMP = "Player jump"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
@@ -79,6 +84,7 @@ class RotatonaPuzzle
 			event.discTurningDirection = nil
 			event.discJumping = false
 			event.discLandingSpot = []
+			event.catcherHasDisc = false
 			@frameWaitCounter = 0
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
@@ -282,10 +288,6 @@ class RotatonaPuzzle
 		discEvent.discRolling = true		
 	end #def self.launchRotatonaDisc
 
-	def self.resetRotatonas
-		
-	end #def self.resetRotatonas
-	
 	def self.determinePatterForTurning(event, newDirection)
 		#determine pattern for turning
 		if event.direction == 2 && newDirection == 6 #going down, turning right
@@ -580,17 +582,14 @@ class RotatonaPuzzle
 				event.discTurningDirection = newDirection
 
 			elsif !self.touchingCatcherEvent?(event).nil?
-				print "touched a catcher event"
-				#make sound
-				#dock the disc in the catcher
-				#save the disc's position on the map to be in that catcher
-				
-				############## TO DO ##############
-				
-				
-				
-				
-				
+				catcherEvent = self.touchingCatcherEvent?(event)
+				if catcherEvent.catcherHasDisc
+					#catcher already has a disc docked
+					self.crashRotatona(event, "disc touched catcher that already had a disc docked in it")
+				else
+					self.catchDisc(event, catcherEvent)
+				end
+
 
 			elsif !self.touchingStraightTrackEvent?(event).nil?
 				straightTrackEvent = self.touchingStraightTrackEvent?(event)
@@ -752,11 +751,6 @@ class RotatonaPuzzle
 				#next if disc crashed
 				next if !event.discRolling
 				
-				
-				
-				
-				
-				
 			else
 				#not on the track, not touching a track event, not jumping from ramp
 				#crash
@@ -778,6 +772,14 @@ class RotatonaPuzzle
 		discEvent.character_name = "Rotatona_Disc_Anim1"
 		discEvent.pattern = 1
 	end #def self.dockDisc
+	
+	def self.catchDisc(discEvent, catcherEvent)
+		#turn off "always on"
+		pbMoveRoute(discEvent, [PBMoveRoute::AlwaysOnTopOff])
+		discEvent.discRolling = false
+		catcherEvent.catcherHasDisc = true
+		pbSEPlay(SE_CATCHING)
+	end #def self.catchDisc
 	
 	def self.checkIfDiscTurning
 		$game_temp.puzzleEvents[:Discs].each do |event|
@@ -1260,3 +1262,8 @@ GameData::TerrainTag.register({
 #disc should crash if it touches a catcher that has a disc docked
 #set self switches for rotatona discs after touching catchers
 #camera follow disc when it's rolling then pan back to player when it crashes
+#all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher
+#for some reason, I can move when the disc is rolling
+#when starting disc rolling, move player off the track (if stepping on terrain tag)
+#disc is always on top of player when launched; might need to move player farther away from track
+#make launcher overlays always face the same direction as the associated launcher when identifying puzzle pieces
