@@ -9,7 +9,6 @@
 #	RotaPuzzle_Launcher_Stationary
 #	RotaPuzzle_Launcher_Overlay_Stationary
 #	RotaPuzzle_Catcher
-#	RotaPuzzle_Barrier
 #	RotaPuzzle_Ramp
 #	RotaPuzzle_StraightTrack
 #	RotaPuzzle_CornerTrack
@@ -51,13 +50,15 @@ class RotatonaPuzzle
 	SE_ROTATE_LAUNCHER = "Cut"
 	SE_LAUNCHER_BUTTON = "Cut"
 	SE_DOCKING = "Cut"
-	SE_CATCHING = "Cut"
+	SE_CATCHING = "Mining reveal"
 	SE_DISC_JUMP = "Player jump"
+	SE_DISC_CRASH = "Rock Smash"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 4 #default 4
 
 	def self.getPuzzleEvents	
+		Console.echo_warn "identifying puzzle pieces from scratch"
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
 		$game_temp.puzzleEvents = {
@@ -67,7 +68,6 @@ class RotatonaPuzzle
 			:Launchers_Stationary 		  => [],
 			:Launchers_Overlay_Stationary => [],
 			:Catchers             		  => [],
-			:Barriers       	  		  => [],
 			:Ramps           	  		  => [],
 			:StraightTracks       	 	  => [],
 			:CornerTracks  		  	  	  => []
@@ -115,7 +115,6 @@ class RotatonaPuzzle
 			end
 			$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
 			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
-			$game_temp.puzzleEvents[:Barriers].push(event) if event.name.match(/RotaPuzzle_Barrier/i)
 			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
 			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
 			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
@@ -243,10 +242,6 @@ class RotatonaPuzzle
 			#maybe some text about how the rota would seem to fit perfectly in here
 			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
 		###################################################################
-		elsif $game_temp.puzzleEvents[:Barriers].include?(event)
-			#print "this is a barrier"
-			#nothing, this probably doesn't need to be an elsif statement
-		###################################################################
 		elsif $game_temp.puzzleEvents[:Ramps].include?(event)
 			#print "this is a ramp"
 			#option to switch 180 degrees
@@ -281,7 +276,7 @@ class RotatonaPuzzle
 
 	def self.launchRotatonaDisc(launcherEvent, discEvent)
 		discEvent.launcherThisDiscWasLaunchedFrom = launcherEvent
-		launcherEvent = discEvent.launcherThisDiscIsDockedIn
+		#launcherEvent = discEvent.launcherThisDiscIsDockedIn #unnecessary since we have the launcherEvent parameter?
 		launcherEvent.discThisLauncherHasDocked = nil
 		discEvent.launcherThisDiscIsDockedIn = nil
 		#start disc rolling
@@ -308,7 +303,7 @@ class RotatonaPuzzle
 			turnSpritePattern = 3
 		end
 		
-		print "Due to an unforeseen edge case, you're about to crash :) event direction is #{event.direction} and it's turning #{newDirection}" if turnSpritePattern.nil?
+		print "Due to an unforeseen edge case, you're about to crash :) Please report this as a bug. Event direction is #{event.direction} and it's turning #{newDirection}" if turnSpritePattern.nil?
 		
 		return turnSpritePattern
 	end #def self.determinePatterForTurning
@@ -321,7 +316,7 @@ class RotatonaPuzzle
 			#this way, a collision check is only done once when the disc touches the tile
 			next if event.discTouchingTile == [event.x, event.y]
 			event.discTouchingTile = [event.x, event.y] if event.discTouchingTile != [event.x, event.y]
-			Console.echo_warn event.discTouchingTile
+			#Console.echo_warn event.discTouchingTile
 			
 			#don't check for collisions if currently airborn from ramp
 			if event.discJumping
@@ -335,14 +330,14 @@ class RotatonaPuzzle
 						case rampEvent.direction
 						when 2 #ramp is facing down
 							if event.direction == 8
-								Console.echo_warn "disc received successfully onto 2nd ramp"
+								#Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
 								self.crashRotatona(event, "ramp facing down, disc not facing up")
 							end
 
 						when 4 #ramp is facing left
 							if event.direction == 6
-								Console.echo_warn "disc received successfully onto 2nd ramp"
+								#Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
 								self.crashRotatona(event, "ramp facing left, disc not facing right")
 							end
@@ -356,7 +351,7 @@ class RotatonaPuzzle
 
 						when 8 #ramp is facing up
 							if event.direction == 2
-								Console.echo_warn "disc received successfully onto 2nd ramp"
+								#Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
 								self.crashRotatona(event, "ramp facing up, disc not facing down")
 							end
@@ -365,12 +360,12 @@ class RotatonaPuzzle
 					next if !event.discRolling					
 					
 					#if landing is successful
-					Console.echo_warn "landed on #{event.discLandingSpot[0]},#{event.discLandingSpot[1]} - disc location is #{event.x},#{event.y}"
+					#Console.echo_warn "landed on #{event.discLandingSpot[0]},#{event.discLandingSpot[1]} - disc location is #{event.x},#{event.y}"
 					event.discJumping = false
 					event.discLandingSpot = []
 					next #disc landed on receiving ramp; skip checking collisions on this tile
 				else
-					Console.echo_warn "jumping but not on landing spot yet"
+					#Console.echo_warn "jumping but not on landing spot yet"
 					next					
 				end #if event.x == event.discLandingSpot[0] && event.y == event.discLandingSpot[1]
 			end #if event.discJumping
@@ -707,17 +702,16 @@ class RotatonaPuzzle
 			
 			elsif !self.touchingLauncherEvent?(event).nil?
 				launcherEvent = self.touchingLauncherEvent?(event)
-				
-				Console.echo_warn "touching launcher event"
+				#Console.echo_warn "touching launcher event"
 				#skip if touching the same launcher we came from
 				next if launcherEvent == event.launcherThisDiscWasLaunchedFrom
 				
 				#disc is not docked, so look for a launcher to dock in
-				Console.echo_warn "disc is touching a launcher event; going to stop disc from rolling"
+				#Console.echo_warn "disc is touching a launcher event; going to stop disc from rolling"
 				case launcherEvent.direction
 				when 2 #launcher is facing down
 					if event.direction == 8 #disc going up
-						Console.echo_warn "docked successfully"
+						#Console.echo_warn "docked successfully"
 						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing down, disc not facing up")
@@ -725,7 +719,7 @@ class RotatonaPuzzle
 
 				when 4 #launcher is facing left
 					if event.direction == 6 #disc going right
-						Console.echo_warn "docked successfully"
+						#Console.echo_warn "docked successfully"
 						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing left, disc not facing right")
@@ -733,7 +727,7 @@ class RotatonaPuzzle
 					
 				when 6 #launcher is facing right
 					if event.direction == 4 #disc going left
-						Console.echo_warn "docked successfully"
+						#Console.echo_warn "docked successfully"
 						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing right, disc not facing left")
@@ -741,7 +735,7 @@ class RotatonaPuzzle
 					
 				when 8 #launcher is facing up
 					if event.direction == 2 #disc going down
-						Console.echo_warn "docked successfully"
+						#Console.echo_warn "docked successfully"
 						self.dockDisc(event, launcherEvent)
 					else
 						self.crashRotatona(event, "touched launcher event, launcher facing up, disc not facing down")
@@ -760,6 +754,7 @@ class RotatonaPuzzle
 	end #self.checkForRotatonaCollisions
 	
 	def self.dockDisc(discEvent, launcherEvent)
+		#Console.echo_warn "docking disc"
 		discEvent.launcherThisDiscIsDockedIn = launcherEvent
 		launcherEvent.discThisLauncherHasDocked = discEvent
 		
@@ -876,8 +871,9 @@ class RotatonaPuzzle
 				#check if disc is touching center of launcher
 				#print "disc event #{discEvent.id} is docked at launcher event #{launcherEvent.id}" if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
 				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
-					discEvent.launcherThisDiscIsDockedIn = launcherEvent
-					launcherEvent.discThisLauncherHasDocked = discEvent
+					#Console.echo_warn "touching launcher event"
+					#discEvent.launcherThisDiscIsDockedIn = launcherEvent #shoudn't be needed since this is done when docking disc
+					#launcherEvent.discThisLauncherHasDocked = discEvent #shoudn't be needed since this is done when docking disc
 					
 					touchingLauncher = launcherEvent
 					return touchingLauncher
@@ -890,8 +886,9 @@ class RotatonaPuzzle
 				#check if disc is touching center of launcher
 				#print "disc event #{discEvent.id} is docked at launcher event #{launcherEvent.id}" if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
 				if discEvent.x == launcherCenterX && discEvent.y == launcherCenterY
-					discEvent.launcherThisDiscIsDockedIn = launcherEvent
-					launcherEvent.discThisLauncherHasDocked = discEvent
+					#Console.echo_warn "touching launcher event"
+					#discEvent.launcherThisDiscIsDockedIn = launcherEvent #shoudn't be needed since this is done when docking disc
+					#launcherEvent.discThisLauncherHasDocked = discEvent #shoudn't be needed since this is done when docking disc
 					
 					touchingLauncher = launcherEvent
 					return touchingLauncher
@@ -1127,7 +1124,6 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
 			])
-			
 			self.rotateDockedDisc(event.discThisLauncherHasDocked, newDirection) if !event.discThisLauncherHasDocked.nil?
 		end #if directionString == "right90"
 	end #def self.rotateLauncher(event,directionString)
@@ -1158,6 +1154,10 @@ class RotatonaPuzzle
 
 	end #def self.rotateDockedDisc(discEvent, newDirection)
 
+	def self.cameraFollowDisc
+		#for all discs rolling, camera autoscroll
+	end
+
 end #class RotatonaPuzzle
 
 #on_player_interact with puzzle event
@@ -1175,14 +1175,17 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	RotatonaPuzzle.updateRollingAnimation
 	RotatonaPuzzle.discMoveForward
 	RotatonaPuzzle.checkIfDiscTurning
-	################################################################$game_player.lock if RotatonaPuzzle.discRolling?
-	$game_player.unlock if !RotatonaPuzzle.discRolling?
+	RotatonaPuzzle.cameraFollowDisc
+	################################################################$game_player.lock if camera is not on player
+	$game_player.unlock if !RotatonaPuzzle.discRolling? #&& camera is on player
 })
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
   proc { |_old_map_id|
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	#skip this check if old map is the same as new map
+	###########next if $game_map.map_id == _old_map_id
 	RotatonaPuzzle.getPuzzleEvents
   }
 )
@@ -1256,14 +1259,12 @@ GameData::TerrainTag.register({
 })
 
 #logic to do:
-#if rota touches barrier, crash
-#if rota touches catcher, success sound
-#disc should stop rolling after it touches the catcher
-#disc should crash if it touches a catcher that has a disc docked
-#set self switches for rotatona discs after touching catchers
 #camera follow disc when it's rolling then pan back to player when it crashes
-#all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher
-#for some reason, I can move when the disc is rolling
+#uncomment `$game_player.lock if...` and fix `$game_player.unlock if !RotatonaPuzzle.discRolling? #&& camera is on player` after implementing camera following disc
 #when starting disc rolling, move player off the track (if stepping on terrain tag)
 #disc is always on top of player when launched; might need to move player farther away from track
 #make launcher overlays always face the same direction as the associated launcher when identifying puzzle pieces
+#When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player
+#Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all; all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file
+
+#bugs
