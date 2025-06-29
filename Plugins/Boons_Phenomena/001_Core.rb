@@ -81,9 +81,9 @@ class Phenomenon
           phenomenon_tiles.push([x, y, :PhenomenonGrass])
         elsif hasWater && (terrain_tag.id == :Water || terrain_tag.id == :StillWater)
           phenomenon_tiles.push([x, y, :PhenomenonWater])
-        elsif hasCave && !terrain_tag.can_surf && $MapFactory.isPassableStrict?($game_map.map_id, x, y, $game_player)
+        elsif hasCave && !terrain_tag.can_surf && $map_factory.isPassableStrict?($game_map.map_id, x, y, $game_player)
           phenomenon_tiles.push([x, y, :PhenomenonCave])
-        elsif hasBird && terrain_tag.id == :BirdBridge && $MapFactory.isPassableStrict?($game_map.map_id, x, y, $game_player)
+        elsif hasBird && terrain_tag.id == :BirdBridge && $map_factory.isPassableStrict?($game_map.map_id, x, y, $game_player)
           phenomenon_tiles.push([x, y, :PhenomenonBird])
         end
       end
@@ -105,8 +105,18 @@ class Phenomenon
     ph = self.instance
     Kernel.echoln("Activating phenomenon for #{ph.type}")
     encounter = nil
+    item = nil
+    chance = rand(10) # Different types have chance different effects, e.g. items in caves
     encounter = $PokemonEncounters.choose_wild_pokemon(ph.type)
-    if encounter != nil
+    if ph.type == :PhenomenonCave && chance < 5
+      item = chance > 0 ? PhenomenonConfig::Items[:commonCave].random : PhenomenonConfig::Items[:rareCave].random
+    elsif ph.type == :PhenomenonBird && chance < 8
+      item = chance > 0 ? PhenomenonConfig::Items[:bird].random : :PRETTYWING
+    end
+    if item != nil
+      self.cancel
+      pbReceiveItem(item)
+    elsif encounter != nil
       if PhenomenonConfig::BattleMusic != "" && FileTest.audio_exist?("Audio/BGM/#{PhenomenonConfig::BattleMusic}")
         $PokemonGlobal.nextBattleBGM = PhenomenonConfig::BattleMusic
       end

@@ -6977,3 +6977,47 @@ Shape = Winged
 Category = ...
 Pokedex = ...
 #-------------------------------
+[G_CORSOLA]
+Name = Failsafe_G_Corsola
+Types = QMARKS
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 137
+EVs = ATTACK,2,SPECIAL_DEFENSE,2
+CatchRate = 90
+Happiness = 70
+Abilities = STURDY
+Moves = 1,SPLASH
+TutorMoves = SPLASH
+EggGroups = Bug
+HatchSteps = 3840
+Height = 1.7
+Weight = 45.7
+Color = Red
+Shape = Winged
+Category = ...
+Pokedex = ...
+#-------------------------------
+[CURSOLA]
+Name = Failsafe_Cursola
+Types = QMARKS
+BaseStats = 2,1,1,1,1,1
+GenderRatio = Female50Percent
+GrowthRate = Erratic
+BaseExp = 137
+EVs = ATTACK,2,SPECIAL_DEFENSE,2
+CatchRate = 90
+Happiness = 70
+Abilities = STURDY
+Moves = 1,SPLASH
+TutorMoves = SPLASH
+EggGroups = Bug
+HatchSteps = 3840
+Height = 1.7
+Weight = 45.7
+Color = Red
+Shape = Winged
+Category = ...
+Pokedex = ...
+#-------------------------------

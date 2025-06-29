@@ -1388,8 +1388,13 @@ Name = Accumulator
 Description = Accumulates Stockpiles if the user has no held items.
 FullDesc = The user gains +1 Stockpile at the end of each turn if it has no held items.
 #-------------------------------
-[ENTOINSTINCTS]
-Name = Ento Instincts
+[ENTOMOAURA]
+Name = Entomoaura
 Description = Powers up ally Pokémon's Bug-type moves.
 FullDesc = Bug-type moves from the user's side of the field are powered up by 1.3x when the user is active. Stacks multiplicatively with STAB.
+#-------------------------------
+[EERIEPRESENCE]
+Name = Eerie Presence
+Description = Absorbs lifeforce if not directly damaged.
+FullDesc = Heals 1/6th of the user's max HP at the end of each turn if the user was not hit by a (direct) attack.
 #-------------------------------

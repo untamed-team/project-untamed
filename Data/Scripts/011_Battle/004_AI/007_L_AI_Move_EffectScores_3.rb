@@ -791,7 +791,7 @@ class Battle::AI
                 end
             end
             if user.hasActiveAbility?(:MOTORDRIVE)
-                if !user.statStageAtMax?[:SPEED]
+                if !user.statStageAtMax?(:SPEED)
                     score*=1.2
                 else
                     score*=0.1
@@ -820,7 +820,7 @@ class Battle::AI
                             score*=0.7
                         end
                     end
-                    if b.hasActiveAbility?(:MOTORDRIVE) && !b.statStageAtMax?[:SPEED]
+                    if b.hasActiveAbility?(:MOTORDRIVE) && !b.statStageAtMax?(:SPEED)
                         score*=1.3
                     end
                     if b.hasActiveAbility?(:VOLTABSORB) && ((b.hp.to_f)/b.totalhp)<0.6
@@ -3940,9 +3940,16 @@ class Battle::AI
                 score*=2 if user.pbHasAnyStatus?
             when :SITRUSBERRY, :NYLOBERRY
                 score*=1.6 if user.hp*(1.0/user.totalhp)<0.66
-                targetroles = pbGetPokemonRole(target)
+                targetroles = pbGetPokemonRole(target, user)
                 if targetroles.include?("Physical Wall") || targetroles.include?("Special Wall") 
                     score*=1.5
+                end
+                if user.recycleItem == :NYLOBERRY 
+                    if user.hasActiveAbility?(:EARLYBIRD)
+                        score*=1.2
+                    else
+                        score*=0.7
+                    end
                 end
             end
             if user.recycleItem.is_berry?
@@ -5276,7 +5283,7 @@ class Battle::AI
             move_data = GameData::Move.get(move_id)
             next if move_data.nil? || move_id.nil?
             next if moveBlacklist.include?(move_data.function_code)
-            next if move_data.has_flag?("CannotMetronome")
+            #next if move_data.has_flag?("CannotMetronome")
             next if move_data.type == :SHADOW
             next if user.SetupMovesUsed.include?(move_data.id) || userMoves.include?(move_data.id)
             metroMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(move_data.id))
@@ -5554,22 +5561,41 @@ class Battle::AI
                 score*=1.2 if ["Cleric", "Pivot"].any? { |r| roles.include?(r) } && currentHPPercent >= 60
                 score*=1.3 if currentHPPercent >= 70
             end
-            bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-            maxdam = bestmove[0]
-            if maxdam*4<target.totalhp
-                if userFasterThanTarget
-                    besttargetmove=bestMoveVsTarget(target,user,skill)
-                    maxtargetmove = bestmove[1]
-                    if targetSurvivesMove(maxtargetmove,target,user)
-                        score*=1.2
-                    else
-                        score*=0.7
-                    end
+
+            sack = userFasterThanTarget; willSwitch = false
+            if @battle.choices[target.index][0] == :SwitchOut
+                sack = false; willSwitch = true
+                score *= 2
+            end
+            #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+            #maxdamUser=bestmoveUser[0]
+            #maxmoveUser=bestmoveUser[1]
+            bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxmoveTarget = bestmoveTarget[1]
+
+            party = @battle.pbParty(user.index)
+            swapper = user.pokemonIndex
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
+            if switchin
+                if switchin.is_a?(Array) # it (should) always be a array
+                    swapper = switchin[0]
+                    swapperScore = [[(switchin[1]/100.0), 0.3].max, 1.5].min
+                    score *= swapperScore
                 else
-                    score*=2
+                    swapper = switchin
                 end
             end
-            score*=2 if @battle.choices[target.index][0] == :SwitchOut
+            if swapper != user.pokemonIndex
+                if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
+                    score*=1.2
+                else
+                    score*=0.7
+                end
+                score*=0.7 if user.turnCount<1
+                score*=0.8 if @battle.pbSideSize(1)>1
+            else
+                score = 0
+            end
         end
         score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
@@ -5650,22 +5676,41 @@ class Battle::AI
                 score*=1.2 if ["Cleric", "Pivot"].any? { |r| roles.include?(r) } && currentHPPercent >= 60
                 score*=1.3 if currentHPPercent >= 70
             end
-            bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-            maxdam = bestmove[0]
-            if maxdam*3<target.totalhp
-                if userFasterThanTarget
-                    score*=2
+
+            sack = userFasterThanTarget; willSwitch = false
+            if @battle.choices[target.index][0] == :SwitchOut
+                sack = false; willSwitch = true
+                score *= 2
+            end
+            #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+            #maxdamUser=bestmoveUser[0]
+            #maxmoveUser=bestmoveUser[1]
+            bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxmoveTarget = bestmoveTarget[1]
+
+            party = @battle.pbParty(user.index)
+            swapper = user.pokemonIndex
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
+            if switchin
+                if switchin.is_a?(Array) # it (should) always be a array
+                    swapper = switchin[0]
+                    swapperScore = [[(switchin[1]/100.0), 0.3].max, 1.5].min
+                    score *= swapperScore
                 else
-                    besttargetmove=bestMoveVsTarget(target,user,skill)
-                    maxtargetmove = bestmove[1]
-                    if targetSurvivesMove(maxtargetmove,target,user)
-                        score*=1.2
-                    else
-                        score*=0.7
-                    end
+                    swapper = switchin
                 end
             end
-            score*=2 if @battle.choices[target.index][0] == :SwitchOut
+            if swapper != user.pokemonIndex
+                if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
+                    score*=1.2
+                else
+                    score*=0.7
+                end
+                score*=0.7 if user.turnCount<1
+                score*=0.8 if @battle.pbSideSize(1)>1
+            else
+                score = 0
+            end
         end
     #---------------------------------------------------------------------------
     when "LowerTargetAtkSpAtk1SwitchOutUser" # Parting Shot
@@ -5753,22 +5798,55 @@ class Battle::AI
                     score*=1.2 if ["Cleric", "Pivot"].any? { |r| roles.include?(r) } && currentHPPercent >= 60
                     miniscore*=1.3 if currentHPPercent >= 70
                 end
-                bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-                maxdam = bestmove[0]
-                if maxdam*3<target.totalhp
-                    if userFasterThanTarget
-                        miniscore*=2
+
+                sack = userFasterThanTarget; willSwitch = false
+                if @battle.choices[target.index][0] == :SwitchOut
+                    sack = false; willSwitch = true
+                    score *= 2
+                end
+                #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+                #maxdamUser=bestmoveUser[0]
+                #maxmoveUser=bestmoveUser[1]
+
+                party = @battle.pbParty(user.index)
+                swapper = user.pokemonIndex
+                switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
+                if switchin
+                    if switchin.is_a?(Array) # it (should) always be a array
+                        swapper = switchin[0]
+                        swapperScore = [[(switchin[1]/100.0), 0.3].max, 1.5].min
+                        score *= swapperScore
                     else
-                        besttargetmove=bestMoveVsTarget(target,user,skill)
-                        maxtargetmove = bestmove[1]
-                        if targetSurvivesMove(maxtargetmove,target,user)
-                            miniscore*=1.2
-                        else
-                            miniscore*=0.7
-                        end
+                        swapper = switchin
                     end
                 end
-                score*=2 if @battle.choices[target.index][0] == :SwitchOut
+                if swapper != user.pokemonIndex
+                    olderStats = [target.stages[:ATTACK], target.stages[:SPECIAL_ATTACK]]
+                    if userFasterThanTarget
+                        increment = 1
+                        increment *= 2 if target.hasActiveAbility?(:SIMPLE)
+                        increment *= -1 if target.hasActiveAbility?(:CONTRARY)
+                        [:ATTACK, :SPECIAL_ATTACK].each do |partingStat|
+                            next unless target.pbCanLowerStatStage?(partingStat)
+                            target.stages[partingStat] -= increment
+                            target.stages[partingStat] = [[target.stages[partingStat], -6].max, 6].min
+                        end
+                    end
+                    bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxmoveTarget = bestmoveTarget[1]
+                    if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
+                        score*=1.2
+                    else
+                        score*=0.7
+                    end
+                    target.stages[:ATTACK] = olderStats[0]
+                    target.stages[:SPECIAL_ATTACK] = olderStats[1]
+                    score*=0.7 if user.turnCount<1
+                    score*=0.8 if @battle.pbSideSize(1)>1
+                else
+                    score = 0
+                end
+                
                 ministat=0          
                 ministat+=target.stages[:ATTACK] if target.stages[:ATTACK]<0
                 ministat+=target.stages[:DEFENSE] if target.stages[:DEFENSE]<0
@@ -5804,8 +5882,8 @@ class Battle::AI
             score*=0.5 if user.effects[PBEffects::HonorBound]   
             score*=0.5 if user.effects[PBEffects::Yawn]>0
             score*=0.0 if user.effects[PBEffects::PerishSong]>0
-            score*=0.6 if user.turnCount<1
             score*=1.4 if user.moves.none? { |m| next m&.damagingMove? }
+
             if user.pbOwnSide.effects[PBEffects::StealthRock]
                 score*=0.8
             end
@@ -5827,18 +5905,41 @@ class Battle::AI
                 score*=1.2 if ["Cleric", "Pivot"].any? { |r| roles.include?(r) } && currentHPPercent >= 60
                 score*=1.3 if currentHPPercent >= 70
             end
-            bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-            maxdam = bestmove[0]
-            if maxdam*3<target.totalhp
-                besttargetmove=bestMoveVsTarget(target,user,skill)
-                maxtargetmove = bestmove[1]
-                if targetSurvivesMove(maxtargetmove,target,user)
+
+            sack = userFasterThanTarget; willSwitch = false
+            if @battle.choices[target.index][0] == :SwitchOut
+                sack = false; willSwitch = true
+                score *= 2
+            end
+            #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
+            #maxdamUser=bestmoveUser[0]
+            #maxmoveUser=bestmoveUser[1]
+            bestmoveTarget = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxmoveTarget = bestmoveTarget[1]
+
+            party = @battle.pbParty(user.index)
+            swapper = user.pokemonIndex
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+            if switchin
+                if switchin.is_a?(Array) # it (should) always be a array
+                    swapper = switchin[0]
+                    swapperScore = [[(switchin[1]/100.0), 0.3].max, 1.5].min
+                    score *= swapperScore
+                else
+                    swapper = switchin
+                end
+            end
+            if swapper != user.pokemonIndex
+                if targetSurvivesMove(maxmoveTarget,target,user) || willSwitch
                     score*=1.2
                 else
                     score*=0.7
                 end
+                score*=0.7 if user.turnCount<1
+                score*=0.8 if @battle.pbSideSize(1)>1
+            else
+                score = 0
             end
-            score*=2 if @battle.choices[target.index][0] == :SwitchOut
         else
             score = 0
         end
@@ -6192,7 +6293,7 @@ class Battle::AI
         score*=1.2 if target.effects[PBEffects::Yawn]>0
         score*=0.8 if target.effects[PBEffects::Substitute]>0
 
-        # i wonder if will tripfags will complain about this
+        # i wonder if tripfags will complain about this
         if @battle.choices[target.index][0] == :SwitchOut
             score*=3
             if !targetSurvivesMove(move,user,target)
@@ -6500,7 +6601,10 @@ class Battle::AI
                 score*=1.1
             else
                 score*=0.9
-            end  
+            end
+            targetRoles = pbGetPokemonRole(target, user)
+            score *= 1.3 if targetRoles.include?("Tailwind Setter")
+            score *= 1.3 if targetRoles.include?("Trick Room Setter")
             score*=1.3 if pbHasSingleTargetProtectMove?(target, false)
             score*=1.3 if target.moves.any? { |m| m&.healingMove? }
             if target.moves.any? { |m| next m&.statusMove? }
@@ -6567,7 +6671,7 @@ class Battle::AI
                     miniscore+=1
                     sharedmoves.push(m.id)
                     score*=1.5 if m.healingMove?
-                    score*=1.6 if m.id == :TRICKROOM
+                    score*=1.6 if m.id == :TRICKROOM || m.id == :TAILWIND
                 end
             end
             score*=miniscore

@@ -1336,8 +1336,10 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:MEGALAUNCHER,
 
 Battle::AbilityEffects::DamageCalcFromUser.add(:MINUS,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    next if !move.specialMove?
-    if user.allAllies.any? { |b| b.hasActiveAbility?([:MINUS, :PLUS]) }
+    next unless move.specialMove?
+    if user.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) } ||
+      (user.ability == :MINUS && user.abilityMutationList.include?(:PLUS)) ||
+      (user.ability == :PLUS && user.abilityMutationList.include?(:MINUS))
       mults[:attack_multiplier] *= 1.5
     end
   }
@@ -1557,7 +1559,7 @@ proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOINSTINCTS,
+Battle::AbilityEffects::DamageCalcFromUser.add(:ENTOMOAURA,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     mults[:base_damage_multiplier] *= 1.3 if type == :BUG
   }
@@ -1628,7 +1630,7 @@ Battle::AbilityEffects::DamageCalcFromAlly.add(:CARPENTER,
   }
 )
 
-Battle::AbilityEffects::DamageCalcFromAlly.add(:ENTOINSTINCTS,
+Battle::AbilityEffects::DamageCalcFromAlly.add(:ENTOMOAURA,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     mults[:base_damage_multiplier] *= 1.3 if type == :BUG
   }
@@ -2210,20 +2212,7 @@ Battle::AbilityEffects::OnBeingHit.add(:WATERCOMPACTION,
   }
 )
 
-Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
-  proc { |ability, user, target, move, battle|
-    next if !move.physicalMove?
-    next if !target.pbCanLowerStatStage?(:DEFENSE, target) &&
-            !target.pbCanRaiseStatStage?(:SPEED, target)
-    next if battle.wasUserAbilityActivated?(target)
-    battle.pbShowAbilitySplash(target)
-    target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false)
-    target.pbRaiseStatStageByAbility(:SPEED,
-       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
-    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
-    battle.pbHideAbilitySplash(target)
-  }
-)
+# onbeinghit weak armor was moved to aam_abilityeffectstriggers
 
 #by low
 Battle::AbilityEffects::OnBeingHit.add(:PARTYPOPPER,
@@ -2447,6 +2436,7 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:COLORCHANGE,
     next if target.damageState.calcDamage == 0 || target.damageState.substitute
     next if !move.calcType || GameData::Type.get(move.calcType).pseudo_type
     next if target.pbHasType?(move.calcType) && !target.pbHasOtherType?(move.calcType)
+    next if target.hasActiveAbility?([:PROTEAN, :LIBERO])
     typeName = GameData::Type.get(move.calcType).name
     battle.pbShowAbilitySplash(target)
     target.pbChangeTypes(move.calcType)
@@ -2692,6 +2682,16 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
     battle.pbShowAbilitySplash(battler)
     battler.pbRecoverHP(((battler.totalhp / 32) * ded).round)
     battle.pbDisplay(_INTL("{1}'s fallen allies healed {2} a little!", battler.pbTeam, battler.pbThis))
+    battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::EndOfRoundHealing.add(:EERIEPRESENCE,
+  proc { |ability, battler, battle|
+    next if !battler.canHeal? || battler.tookDirectDmgThisRound
+    battle.pbShowAbilitySplash(battler)
+    battler.pbRecoverHP((battler.totalhp / 6).round)
+    battle.pbDisplay(_INTL("{1}'s branches absorbed surrounding lifeforce!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
 )

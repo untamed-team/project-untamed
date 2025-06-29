@@ -46,6 +46,7 @@ class Battle::Battler
   attr_accessor :premonitionMove # Premonition #by low
   attr_accessor :SetupMovesUsed  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
+  attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
 
   #=============================================================================
   # Complex accessors

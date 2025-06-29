@@ -20,23 +20,32 @@ module PhenomenonConfig
   Switch = 56 # Switch that when ON enables phenomena
   BattleMusic = "" # Custom music to play during Phenomenon
   Pokemon = {
-    :shiny => true # 4x chance of shininess
+    :shiny => true, # 4x chance of shininess
+    :expBoost => false, # 1.5x Exp Boost (read above)
   }
   Types = {
     # Animation ID, sound, animation height (1: above player/ 0: below)
-    :PhenomenonGrass => [57, "plugin_phenomenon_grass", 1],
-    :PhenomenonWater => [58, "plugin_phenomenon_water", 0],
-    :PhenomenonCave => [59, "plugin_phenomenon_cave", 1],
-    :PhenomenonBird => [60, "plugin_phenomenon_bird", 0],
+    :PhenomenonGrass => [57, "phenomenon_grass", 1],
+    :PhenomenonWater => [58, "phenomenon_water", 0],
+    :PhenomenonCave => [25, "phenomenon_cave", 1],
+    :PhenomenonBird => [60, "phenomenon_bird", 0],
   }
   # Tiles that will not show Phenomena, on a per-map basis. Blocks whole x columns or y rows, or individual tiles
   # Array(A..B) will create an array including both numbers and everything inbetween
   BlockedTiles = {
-    # 69 => {
+ # 69 => {
        #   :x => Array(0..8) + Array(28..45),
        #   :y => [29, 30, 31, 32, 33, 34, 35],
        #   :tiles => [[27, 27]],
        # },
+    }
+  # Items that appear occasionally in dust clouds and flying birds
+  Items = {
+    # 80% chance of appearing in dust
+    :commonCave => [:EVERSTONE, :OVALSTONE],
+    # 10% chance
+    :rareCave => [:RAREBONE, :FLOATSTONE, :PEARL],
+    :bird => [:HEALTHWING, :RESISTWING, :CLEVERWING, :PRETTYWING, :MUSCLEWING, :GENIUSWING, :SWIFTWING],
   }
 end
 

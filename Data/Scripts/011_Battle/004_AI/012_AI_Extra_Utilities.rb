@@ -1051,6 +1051,18 @@ class Battle::AI
                 ded = [user.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
                 healing += (0.03125 * ded) if ded > 0
             end
+            if user.hasActiveAbility?(:EERIEPRESENCE)
+                if target.pbOwnedByPlayer?
+                    willmove = targetWillMove?(target, "dmg")
+                    willmove = false if @battle.choices[target.index][0] == :SwitchOut
+                else
+                    willmove = true
+                end
+                if !willmove
+                    healing += 0.1665 # 1/6
+                    #healing += 0.1250 # 1/8
+                end
+            end
             if @battle.pbCheckGlobalAbility(:STALL)
                 healing -= 1
                 healing *= 2

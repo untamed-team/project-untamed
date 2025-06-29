@@ -33,7 +33,7 @@ def bootTimeMachine
 	end
 	
 	commands.push(_INTL("Cancel"))
-	choice = pbMessage(_INTL("Choose the Save File to access."), commands, -1, nil, 0)
+	choice = pbMessage(_INTL("Choose the Save File to access. Only files from previous demo versions are eligible."), commands, -1, nil, 0)
 	
 	#get out of here if the user cancels
 	return if choice == -1 || choice == (commands.length-1)
@@ -1277,7 +1277,7 @@ class TimeMachinePokemonStorageScreen
     if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
       pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Time Machine to deposit your last Pokémon!"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Mysterious Program to deposit your last Pokémon!"))
       return
     end
     @scene.pbHold(selected)
@@ -1370,9 +1370,12 @@ class TimeMachinePokemonStorageScreen
 	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
       #return
     end
-    command = pbShowCommands(_INTL("Transfer this Pokémon?"), [_INTL("No"), _INTL("Yes")])
+    command = pbShowCommands(_INTL("Transfer this Pokémon? Any held item will be lost in the process."), [_INTL("No"), _INTL("Yes")])
     if command == 1
       pkmnname = pokemon.name
+	  
+	  #delete the held item from the pkmn
+	  pokemon.item = nil
 	  
 		#add the pokemon to a global variable to receive on the current save when done
 		$PokemonGlobal.timeMachineTransferredPkmn.push(pokemon)

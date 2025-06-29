@@ -71,7 +71,7 @@ MenuHandlers.add(:debug_menu, :set_time, {
 })
 
 ItemHandlers::UseOnPokemon.add(:HYPERABILITYCAPSULE,proc{ |item, qty, pkmn, scene|
-  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL].include?(pkmn.species)
+  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL, :MURKROW].include?(pkmn.species)
     scene.pbDisplay(_INTL("{1} refuses to ingest this item. What a picky eater.", pkmn.name))
     next false
   end
@@ -812,6 +812,7 @@ class Battle::Battler
   end
 end
 
+$DEBUG = true
 #===============================================================================
 # Dex Completion Rewards
 #===============================================================================

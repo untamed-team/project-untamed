@@ -5,11 +5,13 @@
 # Cancels phenomenon on battle start to stop animation during battle intro
 EventHandlers.add(:on_start_battle, :boon_phenomenon_start_battle,
                   proc {
+  Phenomenon.expBoost = true if PhenomenonConfig::Pokemon[:expBoost] && Phenomenon.playerOn?
   Phenomenon.cancel
 })
 
 EventHandlers.add(:on_end_battle, :boon_phenomenon_end_battle,
                   proc {
+  Phenomenon.expBoost = false
   Phenomenon.activated = false
 })
 
@@ -45,7 +47,7 @@ EventHandlers.add(:on_wild_pokemon_created, :boon_phenomenon_wild_created,
                   proc { |pkmn|
   if Phenomenon.activated
     if PhenomenonConfig::Pokemon[:shiny] # 4x the normal shiny chance
-      pkmn.makeShiny if rand(65536) <= Settings::SHINY_POKEMON_CHANCE * 4
+      pkmn.shiny = true if rand(65536) <= Settings::SHINY_POKEMON_CHANCE * 4
     end
   end
 })

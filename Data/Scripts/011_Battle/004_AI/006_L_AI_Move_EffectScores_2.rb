@@ -138,7 +138,7 @@ class Battle::AI
             end
             miniscore/=100.0
             score*=miniscore
-         end
+        end
         allOutspeed = userFasterThanTarget
         if user.allAllies.any?
             user.allAllies.each do |b|
@@ -494,7 +494,7 @@ class Battle::AI
                 if i.status==:POISON && i.ability == :POISONHEAL
                     score*=0.5
                 end
-                if i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE)
+                if i.status!=:NONE && (i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE))
                     score*=0.8
                 end
                 if i.status==:SLEEP

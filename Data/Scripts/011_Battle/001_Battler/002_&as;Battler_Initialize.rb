@@ -310,6 +310,7 @@ class Battle::Battler
     end
     @SetupMovesUsed                          = []
     @prepickedMove                           = nil
+    @tookDirectDmgThisRound                  = false
   end
 
   #=============================================================================

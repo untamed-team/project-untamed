@@ -215,13 +215,14 @@ class Battle::AI
   #=============================================================================
   # Choose a replacement Pokémon
   #=============================================================================
-  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false)
+  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false, retvrnspeed=false)
     return -1 if !enemies || enemies.length == 0
     best    = -1
     bestSum = 0
+    speedsarray = []
     enemies.each do |i|
       pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
-      if $AIGENERALLOG
+      if !retvrnspeed && $AIGENERALLOG
         echo("\nSwitch score for: "+pokmon.name)
         echo("\n----------------------------------------\n")
       end  
@@ -239,6 +240,10 @@ class Battle::AI
         when :Psychic
           aspeed *= 2 if pokmon.hasActiveItem?(:PSYCHICSEED)
         end
+      end
+      if retvrnspeed
+        speedsarray.push(aspeed)
+        next
       end
       if @battle.field.effects[PBEffects::TrickRoom]>0
         maxspeed = 6900
@@ -430,6 +435,14 @@ class Battle::AI
       maxprio=0
       fakedmg=0
       damagedealtPercent=0
+      if pokmon.hasActiveAbility?(:DOWNLOAD)
+        oDef = oSpDef = 0
+        @battle.allOtherSideBattlers(pokmon.index).each do |data|
+          oDef   += data.defense
+          oSpDef += data.spdef
+        end
+        downloadStat = (oDef < oSpDef) ? :ATTACK : :SPECIAL_ATTACK
+      end
       pokmon.moves.each do |m|
         pokmon.eachOpposing do |b|
           mold_broken=moldbroken(pokmon,b,m)
@@ -529,7 +542,19 @@ class Battle::AI
               sum+=60 if m.total_pp <= 16 && (m.pp / m.total_pp) <= 0.625
             end
           end
+          if pokmon.hasActiveAbility?(:DOWNLOAD)
+            oldStat = pokmon.stages[downloadStat]
+            # why would you combo download and contrary?
+            increment = 1
+            increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
+            increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
+            pokmon.stages[downloadStat] += increment if pokmon.pbCanRaiseStatStage?(downloadStat, pokmon)
+            pokmon.stages[downloadStat] = [[pokmon.stages[downloadStat], -6].max, 6].min
+          end
           tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
+          if pokmon.hasActiveAbility?(:DOWNLOAD)
+            pokmon.stages[downloadStat] = oldStat
+          end
           thispriority=priorityAI(pokmon,m,[],true)
           tempdam = 0 if thispriority>0 && pokmon.hasActiveAbility?(:PSYCHICSURGE) && b.affectedByTerrain?
           maxprio=thispriority if tempdam>=b.hp && thispriority>0
@@ -594,7 +619,9 @@ class Battle::AI
           ownmaxdmg=tempdam if tempdam>ownmaxdmg
           ownmaxmove=m
           damagedealtPercent = ownmaxdmg *100.0 / b.hp
-          if m.function=="SwitchOutUserPassOnEffects"
+          # teleport, u-turn / volt switch, Parting Shot, baton pass
+          if ["SwitchOutUserStatusMove", "SwitchOutUserDamagingMove",
+              "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(m.function)
             score=120
           elsif ["UseRandomMove", "UseRandomMoveFromUserParty"].include?(m.function) #by low
             score=95
@@ -806,6 +833,7 @@ class Battle::AI
         bestSum = sum
       end
     end
+    return speedsarray if retvrnspeed
     return [best,bestSum] if batonpasscheck
     return best
   end

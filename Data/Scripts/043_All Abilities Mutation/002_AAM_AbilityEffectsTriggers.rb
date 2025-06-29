@@ -681,3 +681,23 @@ Battle::AbilityEffects::OnSwitchOut.add(:IMMUNITY,
     battler.status = :NONE
   }
 )
+
+Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
+  proc { |ability, user, target, move, battle|
+    next if !move.physicalMove?
+    next if !target.pbCanRaiseStatStage?(:SPEED, target)
+    clearly = false
+    if target.abilityMutationList.include?(:CLEARBODY)
+      clearly = true
+    else
+      next if !target.pbCanLowerStatStage?(:DEFENSE, target)
+    end
+    next if battle.wasUserAbilityActivated?(target)
+    battle.pbShowAbilitySplash(target)
+    target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false) if !clearly
+    target.pbRaiseStatStageByAbility(:SPEED,
+       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
+    battle.pbHideAbilitySplash(target)
+  }
+)
