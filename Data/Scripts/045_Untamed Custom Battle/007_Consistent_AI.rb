@@ -808,11 +808,7 @@ class Battle::AI
           if targetWillMove?(target)
             targetMove = @battle.choices[target.index][2]
             if target.effects[PBEffects::ProtectRate] <= 1
-              if ["ProtectUserSideFromStatusMoves",
-                  "ProtectUserSideFromMultiTargetDamagingMoves",
-                  "ProtectUserSideFromPriorityMoves",
-                  "ProtectUserSideFromDamagingMovesIfUserFirstTurn",
-                  "ProtectUser", "ProtectUserBanefulBunker",
+              if ["ProtectUser", "ProtectUserBanefulBunker",
                   "ProtectUserFromTargetingMovesSpikyShield",
                   "ProtectUserFromDamagingMovesKingsShield",
                   "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
@@ -823,7 +819,7 @@ class Battle::AI
                 else
                     increment *= 0.5
                 end
-                echo("\nDoubles Threat Level nullified for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
+                echo("\nDoubles Threat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
               end
             end
           end

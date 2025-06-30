@@ -32,22 +32,13 @@ class Battle::AI
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
       # a average of every enemy currently active
-      oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
-      if oppcounter == 1
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          choices.push([idxMove, score, -1, move.name]) if score > 0
-        end
-      else
-        totalScore = 0
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          totalScore += (score * (1 / oppcounter))
-        end
-        choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
+      totalScore = 0
+      @battle.allBattlers.each do |b|
+        next if !user.opposes?(b)
+        score = pbGetMoveScore(move, user, b, skill)
+        totalScore += (score / oppcounter)
       end
+      choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
     elsif target_data.num_targets == 0
       # If move affects multiple Pokémon and the AI calculates an overall
       # score at once instead of per target
