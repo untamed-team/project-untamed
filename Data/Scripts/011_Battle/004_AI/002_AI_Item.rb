@@ -6,6 +6,7 @@ class Battle::AI
     return false
   end
 
+  # edit this shitcode to account for party members, but first test if AI can use items on inactive mons
   # NOTE: The AI will only consider using an item on the Pokémon it's currently
   #       choosing an action for.
   def pbEnemyItemToUse(idxBattler)

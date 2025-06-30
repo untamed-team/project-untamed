@@ -253,7 +253,7 @@ EventHandlers.add(:on_player_step_taken, :hatch_eggs,
       $player.pokemon_party.each do |pkmn|
         next if !pkmn.ability&.has_flag?("FasterEggHatching")
         egg.steps_to_hatch -= 1
-        break
+        #break
       end
       if egg.steps_to_hatch <= 0
         egg.steps_to_hatch = 0

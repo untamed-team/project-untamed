@@ -1183,7 +1183,7 @@ class Battle::Battler
 end    
 
 class Battle
-    def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,effectnegate=true)
+    def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,switching=true)
         if @index.nil? || !currentmon.nil?
             @index=currentmon.index
         end
@@ -1191,35 +1191,37 @@ class Battle
         battler = Battler.new(self,@index)
         battler.pbInitPokemon(pokemon,@index)
         battler.pbInitEffects(batonpass)#,false,effectnegate)
-        if batonpass
-            battler.stages[:ATTACK]          = currentmon.stages[:ATTACK]
-            battler.stages[:DEFENSE]         = currentmon.stages[:DEFENSE]
-            battler.stages[:SPEED]           = currentmon.stages[:SPEED]
-            battler.stages[:SPECIAL_ATTACK]  = currentmon.stages[:SPECIAL_ATTACK]
-            battler.stages[:SPECIAL_DEFENSE] = currentmon.stages[:SPECIAL_DEFENSE]
-            battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
-            battler.stages[:EVASION]         = currentmon.stages[:EVASION]
-        end
-        if !battler.hasActiveAbility?(:TILEWORKER) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS) && !battler.airborne?
-            battler.stages[:SPEED] -= 1 if battler.pbOwnSide.effects[PBEffects::StickyWeb]>0
-        end
-        if battler.hasActiveAbility?(:MIMICRY) && battler.types.length < 3
-            terrain_hash = {
-              :Electric => :ELECTRIC,
-              :Grassy   => :GRASS,
-              :Misty    => :FAIRY,
-              :Psychic  => :PSYCHIC
-            }
-            new_type = terrain_hash[@field.terrain]
-            new_type_name = nil
-            if new_type
-              type_data = GameData::Type.try_get(new_type)
-            else
-              new_type = @field.typezone
-              type_data = GameData::Type.try_get(new_type)
+        if switching
+            if batonpass
+                battler.stages[:ATTACK]          = currentmon.stages[:ATTACK]
+                battler.stages[:DEFENSE]         = currentmon.stages[:DEFENSE]
+                battler.stages[:SPEED]           = currentmon.stages[:SPEED]
+                battler.stages[:SPECIAL_ATTACK]  = currentmon.stages[:SPECIAL_ATTACK]
+                battler.stages[:SPECIAL_DEFENSE] = currentmon.stages[:SPECIAL_DEFENSE]
+                battler.stages[:ACCURACY]        = currentmon.stages[:ACCURACY]
+                battler.stages[:EVASION]         = currentmon.stages[:EVASION]
             end
-            new_type = nil if !type_data
-            battler.effects[PBEffects::Type3] = new_type if new_type
+            if !battler.hasActiveAbility?(:TILEWORKER) && !battler.hasActiveItem?(:HEAVYDUTYBOOTS) && !battler.airborne?
+                battler.stages[:SPEED] -= 1 if battler.pbOwnSide.effects[PBEffects::StickyWeb]>0
+            end
+            if battler.hasActiveAbility?(:MIMICRY) && battler.types.length < 3
+                terrain_hash = {
+                    :Electric => :ELECTRIC,
+                    :Grassy   => :GRASS,
+                    :Misty    => :FAIRY,
+                    :Psychic  => :PSYCHIC
+                }
+                new_type = terrain_hash[@field.terrain]
+                new_type_name = nil
+                if new_type
+                    type_data = GameData::Type.try_get(new_type)
+                else
+                    new_type = @field.typezone
+                    type_data = GameData::Type.try_get(new_type)
+                end
+                new_type = nil if !type_data
+                battler.effects[PBEffects::Type3] = new_type if new_type
+            end
         end
         return battler
     end    
