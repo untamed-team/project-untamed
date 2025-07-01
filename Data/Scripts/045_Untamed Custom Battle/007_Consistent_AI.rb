@@ -59,7 +59,7 @@ class Battle::AI
                 end
                 if b.effects[PBEffects::ProtectRate] <= 1
                     if ["ProtectUserSideFromStatusMoves", "ProtectUserSideFromMultiTargetDamagingMoves", 
-                       "ProtectUserSideFromPriorityMoves", "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function) &&
+                        "ProtectUserSideFromPriorityMoves", "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function) &&
                        @battle.moveRevealed?(b, targetMove.id)
                         $aiguardcheck = [true, targetMove.function]
                     end
@@ -719,6 +719,7 @@ class Battle::AI
                 damagePercentage += missinghp*0.4
             end
         end
+        damagePercentage *= 1.3 if move.soundMove? && user.hasActiveItem?(:THROATSPRAY)
         damagePercentage = damagePercentage.to_i
         score += damagePercentage
         if $AIGENERALLOG
@@ -804,27 +805,27 @@ class Battle::AI
           #increment = 0 if increment < 0
           ###############################################
           echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
-          
-          if targetWillMove?(target)
-            targetMove = @battle.choices[target.index][2]
-            if target.effects[PBEffects::ProtectRate] <= 1
-              if ["ProtectUser", "ProtectUserBanefulBunker",
-                  "ProtectUserFromTargetingMovesSpikyShield",
-                  "ProtectUserFromDamagingMovesKingsShield",
-                  "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
-                 @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST)
-                if rand(100) < 66 || $aiguardcheck[0]
-                    increment = -10
-                    $aiguardcheck = [true, targetMove.function]
-                else
-                    increment *= 0.5
-                end
-                echo("\nDoubles Threat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
+        end
+        if targetWillMove?(target)
+          targetMove = @battle.choices[target.index][2]
+          if target.effects[PBEffects::ProtectRate] <= 1
+            if ["ProtectUser", "ProtectUserBanefulBunker",
+                "ProtectUserFromTargetingMovesSpikyShield",
+                "ProtectUserFromDamagingMovesKingsShield",
+                "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
+                @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST)
+              if rand(100) < 66 || $aiguardcheck[0]
+                increment = -10
+                $aiguardcheck = [true, targetMove.function]
+              else
+                increment *= 0.5
+                increment = -2 if increment == 0
               end
+              echo("\nThreat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
             end
           end
-          threatHash[target.index] = increment
         end
+        threatHash[target.index] = increment
       end
       return threatHash
     end

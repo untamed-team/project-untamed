@@ -2184,8 +2184,7 @@ class Battle::AI
                         echo(user.name+" does not survive foe's maxmove. Score +150. \n") if $AIGENERALLOG
                         score+=150
                         for j in target.moves
-                            if target.effects[PBEffects::ChoiceBand] &&
-                                target.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+                            if moveLocked(target)
                                 if target.lastMoveUsed && target.pbHasMove?(target.lastMoveUsed)
                                     next if j.id!=target.lastMoveUsed
                                 end

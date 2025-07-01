@@ -115,8 +115,7 @@ class Battle::AI
         end
       end
     end
-    if battler.effects[PBEffects::ChoiceBand] &&
-      battler.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+    if moveLocked(battler)
       if battler.lastMoveUsed && battler.pbHasMove?(battler.lastMoveUsed)
         choicedmove=nil
         for choice in battler.moves
@@ -303,8 +302,7 @@ class Battle::AI
         ###############
         for j in newenemy.moves
           mold_broken=moldbroken(newenemy,pokmon,j)
-          if newenemy.effects[PBEffects::ChoiceBand] &&
-            newenemy.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+          if moveLocked(newenemy)
             if newenemy.lastMoveUsed && newenemy.pbHasMove?(newenemy.lastMoveUsed)
               next if j.id!=newenemy.lastMoveUsed
             end

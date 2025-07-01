@@ -1103,10 +1103,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -1255,10 +1253,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -1378,10 +1374,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -1521,10 +1515,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.hasActiveAbility?(:SIMPLE)
             miniscore*=2
@@ -1656,10 +1648,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -1803,10 +1793,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -1922,10 +1910,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -2062,10 +2048,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -2197,10 +2181,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -2352,10 +2334,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -2528,10 +2508,8 @@ class Battle::AI
             if target.asleep?
                 miniscore*=1.3
             end
-            if target.effects[PBEffects::Encore]>0
-                if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                    miniscore*=1.5
-                end          
+            if encoredIntoStatus(target)
+                miniscore*=1.5
             end
             if user.effects[PBEffects::Confusion]>0
                 miniscore*=0.2
@@ -2613,10 +2591,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -2806,10 +2782,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3009,10 +2983,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3141,10 +3113,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.5
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0      
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target) 
+            miniscore*=1.5
         end  
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.1
@@ -3263,10 +3233,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3434,10 +3402,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3584,10 +3550,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3703,10 +3667,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -3857,10 +3819,8 @@ class Battle::AI
         if target.asleep?
             miniscore*=1.3
         end
-        if target.effects[PBEffects::Encore]>0
-            if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(target)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -4042,10 +4002,8 @@ class Battle::AI
                 if target.asleep?
                     score*=1.3
                 end
-                if target.effects[PBEffects::Encore]>0
-                    if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0       
-                        score*=1.5
-                    end          
+                if encoredIntoStatus(target)
+                    score*=1.5
                 end  
                 if user.effects[PBEffects::Confusion]>0
                     score*=0.5
@@ -4124,10 +4082,8 @@ class Battle::AI
                 if target.asleep?
                     score*=1.3
                 end
-                if target.effects[PBEffects::Encore]>0
-                    if GameData::Move.get(target.effects[PBEffects::EncoreMove]).base_damage==0       
-                        score*=1.5
-                    end          
+                if encoredIntoStatus(target)  
+                    score*=1.5
                 end  
                 if user.effects[PBEffects::Confusion]>0
                     score*=0.5
@@ -4745,10 +4701,8 @@ class Battle::AI
         if enemy1.asleep?
             miniscore*=1.3
         end
-        if enemy1.effects[PBEffects::Encore]>0
-            if GameData::Move.get(enemy1.effects[PBEffects::EncoreMove]).base_damage==0
-                miniscore*=1.5
-            end          
+        if encoredIntoStatus(enemy1)
+            miniscore*=1.5
         end
         if user.effects[PBEffects::Confusion]>0
             miniscore*=0.2
@@ -5856,10 +5810,8 @@ class Battle::AI
                     miniscore*=1.2 if b.turnCount<2
                     miniscore*=1.2 if barget.pbHasAnyStatus?
                     miniscore*=1.3 if barget.asleep?
-                    if barget.effects[PBEffects::Encore]>0
-                        if GameData::Move.get(barget.effects[PBEffects::EncoreMove]).base_damage==0
-                            miniscore*=1.5
-                        end          
+                    if encoredIntoStatus(barget)
+                        miniscore*=1.5
                     end
                     if b.effects[PBEffects::Confusion]>0
                         miniscore*=0.2
@@ -5960,10 +5912,8 @@ class Battle::AI
                     if barget.asleep?
                         miniscore*=1.3
                     end
-                    if barget.effects[PBEffects::Encore]>0
-                        if GameData::Move.get(barget.effects[PBEffects::EncoreMove]).base_damage==0        
-                            miniscore*=1.3
-                        end          
+                    if encoredIntoStatus(barget)
+                        miniscore*=1.3
                     end  
                     if b.effects[PBEffects::Confusion]>0
                         miniscore*=0.5

@@ -805,8 +805,7 @@ class Battle::AI
         maxprio=0
         physorspec= "none"
         for j in user.moves
-            if user.effects[PBEffects::ChoiceBand] &&
-               user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+            if moveLocked(user)
                 if user.lastMoveUsed && user.pbHasMove?(user.lastMoveUsed)
                     next if j.id!=user.lastMoveUsed
                 end
@@ -1131,6 +1130,21 @@ class Battle::AI
     def wasUserAbilityActivated?(user) 
         return @battle.activedAbility[user.index & 1][user.pokemonIndex]
     end
+
+    def moveLocked(user)
+        return true if user.hasActiveAbility?(:GORILLATACTICS)
+        return true if user.effects[PBEffects::ChoiceBand] && user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+        return true if user.effects[PBEffects::Encore] > 0
+        return true if user.usingMultiTurnAttack?
+        return false
+    end
+
+    def encoredIntoStatus(user)
+        if user.effects[PBEffects::Encore] > 0
+            return true if GameData::Move.get(user.effects[PBEffects::EncoreMove]).statusMove?
+        end
+        return false
+    end
 end
 
 
@@ -1157,13 +1171,12 @@ class Battle::Battler
         return airborne?
     end
 
-=begin # moved to AAM
-    alias stupidity_hasActiveAbility? hasActiveAbility?
-    def hasActiveAbility?(check_ability, ignore_fainted = false, mold_broken=false)
-        return false if mold_broken
-        return stupidity_hasActiveAbility?(check_ability, ignore_fainted) 
-    end
-=end
+    # moved to AAM
+    #alias stupidity_hasActiveAbility? hasActiveAbility?
+    #def hasActiveAbility?(check_ability, ignore_fainted = false, mold_broken=false)
+    #    return false if mold_broken
+    #    return stupidity_hasActiveAbility?(check_ability, ignore_fainted) 
+    #end
 
     def pbCanLowerAttackStatStageIntimidateAI(user)
         return false if fainted?

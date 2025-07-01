@@ -78,7 +78,7 @@ class Battle::AI
             realTarget = b
           end
           score = pbGetMoveScore(move, user, realTarget, 100)
-          if @battle.pbSideBattlerCount(b) > 1 # is doubles?
+          #if @battle.pbSideBattlerCount(b) > 1 # is doubles?
             score *= 1 + (doublesThreat/10.0)
             #if score >= 190 # 40%~ away from KO
             #  doublesThreat += 1 * b.stages[:DEFENSE]
@@ -88,7 +88,7 @@ class Battle::AI
             #  score *= 1 + (doublesThreat/10.0) if score < 180
             #end
             score = score.to_i
-          end
+          #end
           scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
       end
