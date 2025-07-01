@@ -106,13 +106,15 @@ class Battle::AI
         item, idxTarget = pbEnemyItemToUse(idxBattler)
         if item
             if item[0]
+                party = @battle.pbParty(idxBattler)
                 # Determine target of item (always the Pokémon choosing the action)
                 useType = GameData::Item.get(item[0]).battle_use
-                if [1, 2, 3].include?(useType)   # Use on Pokémon
-                    idxTarget = @battle.battlers[idxTarget].pokemonIndex   # Party Pokémon
+                if [1, 2].include?(useType) # Use on Pokémon
+                    idxTarget = idxTarget # Party Pokémon
+                elsif user.index == idxTarget && useType == 3 # Use on Battler
+                    idxTarget = @battle.battlers[idxTarget].pokemonIndex
                 end
-                party = @battle.pbParty(idxBattler)
-                if user.pokemonIndex == 0 && party.length>1
+                if user.pokemonIndex == idxTarget && user.pokemonIndex == 0 && party.length>1
                     item[1] *= 0.1 
                     echo(item[0].name+": "+item[1].to_s+" discourage item usage on lead.\n")
                 end

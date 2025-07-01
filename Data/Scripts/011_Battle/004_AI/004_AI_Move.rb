@@ -32,6 +32,7 @@ class Battle::AI
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
       # a average of every enemy currently active
+      oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
       totalScore = 0
       @battle.allBattlers.each do |b|
         next if !user.opposes?(b)
