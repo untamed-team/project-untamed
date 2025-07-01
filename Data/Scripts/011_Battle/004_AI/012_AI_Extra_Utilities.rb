@@ -575,7 +575,7 @@ class Battle::AI
                 c += user.effects[PBEffects::FocusEnergy]
                 c += 1 if user.inHyperMode? && move.type == :SHADOW
                 c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function) ||
-                          user.effects[PBEffects::LaserFocus]
+                          user.effects[PBEffects::LaserFocus] > 0
                 # DemICE: taking into account 100% crit rate.
                 stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
                 stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
@@ -727,7 +727,7 @@ class Battle::AI
     def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
         return true if !move
         mold_broken=moldbroken(attacker,opponent,move)
-        damage = pbRoughDamage(move,attacker,opponent,100, move.baseDamage)
+        damage = pbRoughDamage(move,attacker,opponent,100,0)
         damage+=priodamage
         damage*=mult
         multiarray = move.multiHitMove?

@@ -454,9 +454,9 @@ class Battle::Move
       end
     end
     # Master Mode stuff #by low
-    if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
-      multipliers[:final_damage_multiplier] *= 0.75
-    end
+    #if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+    #  multipliers[:final_damage_multiplier] *= 0.75
+    #end
     # Gravity Boost #by low 
     # float stone changes
     if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)

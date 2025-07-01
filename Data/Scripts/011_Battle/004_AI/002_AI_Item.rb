@@ -909,7 +909,7 @@ class Battle::AI
         end
       else
         if usableReviveItems.length > 0
-          echoln "trying for revive"
+          #echoln "trying for revive"
           usableReviveItems.sort! { |a, b| (a[1] == b[1]) ? a[2] <=> b[2] : a[1] <=> b[1] }
           roles = pbGetPokemonRole(user, target)
           usableReviveItems.each do |i|

@@ -1,6 +1,4 @@
 class Battle::AI
-    # todo: check up on damage calculations, it is overshooting the real damage
-
     # global array initialization
     attr_accessor :megaGlobalArray
     alias kiriya_initialize initialize
@@ -814,7 +812,7 @@ class Battle::AI
                   "ProtectUserFromTargetingMovesSpikyShield",
                   "ProtectUserFromDamagingMovesKingsShield",
                   "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
-                 @battle.moveRevealed?(target, targetMove.id)
+                 @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST)
                 if rand(100) < 66 || $aiguardcheck[0]
                     increment = -10
                     $aiguardcheck = [true, targetMove.function]
