@@ -971,7 +971,7 @@ class Battle::AI
         end
       end
     end
-    echoln partyScores
+    #echoln partyScores
     sortedPartyScores = partyScores.sort_by { |e| -e[0] }
     #echoln sortedPartyScores[0]
     return [sortedPartyScores[0][1], sortedPartyScores[0][0]], sortedPartyScores[0][2]
