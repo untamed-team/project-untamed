@@ -12,7 +12,7 @@ class Battle::AI
   def pbEnemyItemToUse(idxBattler)
     return nil if !@battle.internalBattle
     items = @battle.pbGetOwnerItems(idxBattler)
-    items.push(:POTION, :FULLRESTORE, :AWAKENING, :ANTIDOTE, :BURNHEAL, :PARALYZEHEAL, :ICEHEAL, :FULLHEAL, :MAXREVIVE)
+    #items.push(:POTION, :FULLRESTORE, :AWAKENING, :ANTIDOTE, :BURNHEAL, :PARALYZEHEAL, :ICEHEAL, :FULLHEAL, :MAXREVIVE)
     #items.push(:XATTACK, :XDEFENSE, :XSPATK, :XSPDEF, :XSPEED, :XACCURACY, :DIREHIT)
     return nil if !items || items.length == 0
     # Item categories
