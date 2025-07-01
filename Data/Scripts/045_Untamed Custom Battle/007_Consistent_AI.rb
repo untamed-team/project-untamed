@@ -816,7 +816,7 @@ class Battle::AI
                 @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST)
               if rand(100) < 66 || $aiguardcheck[0]
                 increment = -10
-                $aiguardcheck = [true, targetMove.function]
+                $aiguardcheck[0] = true
               else
                 increment *= 0.5
                 increment = -2 if increment == 0
