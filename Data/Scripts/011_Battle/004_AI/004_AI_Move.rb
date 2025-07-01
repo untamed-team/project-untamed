@@ -15,8 +15,7 @@ class Battle::AI
     move = _user.moves[idxMove]
     if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
         "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
-      score = pbGetMoveScore(move, _user, _user, 100)
-      choices.push([idxMove, score, -1]) if score > 0
+      choices.push([idxMove, 999, -1])
     else
       choices.push([idxMove, 100, -1])   # Move index, score, target
     end
@@ -27,8 +26,9 @@ class Battle::AI
   def pbRegisterMoveTrainer(user, idxMove, choices, skill)
     move = user.moves[idxMove]
     target_data = move.pbTarget(user)
+    dart = @battle.pbOpposingBattlerCount(user.index) > 1 && move.function == "HitTwoTimesTargetThenTargetAlly"
     doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
-       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
+      # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
       # a average of every enemy currently active
@@ -45,7 +45,7 @@ class Battle::AI
       # score at once instead of per target
       score = pbGetMoveScore(move, user, user, skill)
       choices.push([idxMove, score, -1, move.name]) if score > 0
-    elsif target_data.num_targets > 1
+    elsif target_data.num_targets > 1 || dart
       # If move affects multiple battlers and you don't choose a particular one
       totalScore = 0
       @battle.allBattlers.each do |b|
