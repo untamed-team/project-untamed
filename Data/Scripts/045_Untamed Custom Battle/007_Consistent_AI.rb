@@ -108,7 +108,7 @@ class Battle::AI
                 # Determine target of item (always the Pokémon choosing the action)
                 useType = GameData::Item.get(item[0]).battle_use
                 if [1, 2].include?(useType) # Use on Pokémon
-                    idxTarget = idxTarget # Party Pokémon
+                    #idxTarget = idxTarget # Party Pokémon
                 elsif user.index == idxTarget && useType == 3 # Use on Battler
                     idxTarget = @battle.battlers[idxTarget].pokemonIndex
                 end

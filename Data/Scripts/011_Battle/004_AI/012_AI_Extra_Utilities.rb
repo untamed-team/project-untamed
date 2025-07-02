@@ -526,10 +526,11 @@ class Battle::AI
         # AI-specific calculations below
         # Multi-hit moves were calculated wrong
         case move.function
-        when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", 
-             "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesFlinchTarget"
-          # Double Kick, Twineedle, Splinter Shot, Dragon Darts, Double Iron Bash
+        when "HitTwoTimes", "HitTwoTimesPoisonTarget", "HitTwoTimesReload", "HitTwoTimesFlinchTarget"
+          # Double Kick, Twineedle, Splinter Shot, Double Iron Bash
           damage *= 2
+        when "HitTwoTimesTargetThenTargetAlly" # Dragon Darts
+          damage *= 2 if @battle.pbSideBattlerCount(target) <= 1
         when "HitThreeTimesAlwaysCriticalHit" # always crit moves crit's are calculated later
           damage *= 3
         when "HitThreeTimesPowersUpWithEachHit" # Triple Kick
