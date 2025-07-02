@@ -27,7 +27,6 @@ class Battle::AI
     move = user.moves[idxMove]
     target_data = move.pbTarget(user)
     dart = @battle.pbOpposingBattlerCount(user.index) > 1 && move.function == "HitTwoTimesTargetThenTargetAlly"
-    doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
@@ -56,6 +55,7 @@ class Battle::AI
       choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
     else
       # If move affects one battler and you have to choose which one
+      doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
       scoresAndTargets = []
       @battle.allBattlers.each do |b|
         doublesThreat = doublesThreats[b.index]

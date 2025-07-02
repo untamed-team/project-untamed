@@ -568,6 +568,7 @@ class Battle::AI
                     if protectarray.include?(@battle.choices[target.index][2].function) ||
                         (@battle.choices[target.index][2].function == "ProtectUserSideFromDamagingMovesIfUserFirstTurn" && target.turnCount == 0)
                         score *= 3.0
+                        score *= 6.0 if @battle.pbSideBattlerCount(user) > 1
                     end
                 end
             else
@@ -5244,7 +5245,7 @@ class Battle::AI
         end
         userMoves = []
         user.eachMove do |m|
-            userMoves.push(m.id)
+            userMoves.push(m.id) if m.pp > 0
         end
         moveBlacklist = [
             "FlinchTargetFailsIfUserNotAsleep","TargetActsNext","TargetActsLast",
@@ -5289,6 +5290,7 @@ class Battle::AI
                     line.puts "~~~~Metronome Move will be " + user.prepickedMove.name.to_s
                 end
             end
+            move.pp = [(move.pp + 1), move.total_pp].min
             score = metronomeMove[0][1]
         else
             user.prepickedMove = :HARDDRIVECRASH
@@ -5341,6 +5343,7 @@ class Battle::AI
                 end
             end
             if assistMoves.length > 0
+                move.pp = [(move.pp + 1), move.total_pp].min
                 if true
                     assistMoves.sort! { |a, b| b[1] <=> a[1] }
                     user.prepickedMove = assistMoves[0][0]
@@ -5404,6 +5407,7 @@ class Battle::AI
                     sleepTalkMoves.push([m.id, slepSco])
                 end
                 if sleepTalkMoves.length > 0
+                    move.pp = [(move.pp + 1), move.total_pp].min
                     if true
                         sleepTalkMoves.sort! { |a, b| b[1] <=> a[1] }
                         user.prepickedMove = sleepTalkMoves[0][0]
@@ -5460,6 +5464,8 @@ class Battle::AI
                 else
                     score*=1.2 if user.spatk>user.attack
                 end
+                score = 0 if ["UserFaintsHealAndCureReplacement", 
+                              "UserFaintsHealAndCureReplacementRestorePP"].include?(@battle.choices[target.index][2].function)
             else
                 score *= 0.2
             end

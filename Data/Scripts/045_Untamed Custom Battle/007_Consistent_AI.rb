@@ -462,6 +462,8 @@ class Battle::AI
         realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
         mold_broken=moldbroken(user,target,move)
         globalArray = @megaGlobalArray
+        procGlobalArray = processGlobalArray(globalArray)
+        expectedWeather = procGlobalArray[0]
 
         # Try make AI not trolled by disguise
         # priority over other calcs due to hyper beam
@@ -478,7 +480,8 @@ class Battle::AI
         if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", 
               "TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttackChargeRaiseUserSpAtk1", 
               "AttackTwoTurnsLater", "TwoTurnAttack"].include?(move.function) ||
-              (move.function == "TwoTurnAttackOneTurnInSun" && ![:Sun, :HarshSun].include?(user.effectiveWeather))) && 
+              (move.function == "TwoTurnAttackOneTurnInSun" && 
+               !([:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)))) && 
               !user.hasActiveItem?(:POWERHERB))
             realDamage *= (2 / 3.0)
             realDamage = 0 if pbHasSingleTargetProtectMove?(target,false)
@@ -707,6 +710,28 @@ class Battle::AI
                     end
                 end
             end
+            # if these moves KO, there is no need to account for their score
+            statusKOarray = ["SleepTarget", "SleepTargetChangeUserMeloettaForm",
+                             "PoisonTarget", "BadPoisonTarget",
+                             "ParalyzeTarget", "ParalyzeFlinchTarget",
+                             "BurnTarget", "BurnFlinchTarget", 
+                             "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetAlwaysHitsInHail",
+                             "FreezeTargetSuperEffectiveAgainstWater", "ParalyzeBurnOrFreezeTarget",
+                             "FlinchTarget", "FlinchTargetDoublePowerIfTargetInSky",
+                             "ConfuseTarget", "NegateTargetAbilityIfTargetActed", 
+                             "LowerTargetAttack1", "LowerTargetDefense1", 
+                             "LowerTargetSpeed1", "LowerTargetSpAtk1", "LowerTargetSpDef1",
+                             "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3",
+                             "OverrideTargetStatusWithPoison", "BOOMInstall"]
+            rainKOarray = ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", 
+                           "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"]
+            powerhKOarr = ["TwoTurnAttackParalyzeTarget", "TwoTurnAttackInvulnerableInSkyParalyzeTarget", 
+                           "TwoTurnAttackBurnTarget", "TwoTurnAttackFlinchTarget"]
+            if statusKOarray.include?(move.function) ||
+              (rainKOarray.include?(move.function) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) ||
+              (powerhKOarr.include?(move.function) && user.hasActiveItem?(:POWERHERB))
+                score = 80
+            end
         end
         if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
            (move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?) ||
@@ -813,7 +838,9 @@ class Battle::AI
                 "ProtectUserFromTargetingMovesSpikyShield",
                 "ProtectUserFromDamagingMovesKingsShield",
                 "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
-                @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST)
+                @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST) &&
+                !user.pbHasMoveFunction?("RemoveProtections", "RemoveProtectionsBypassSubstitute", 
+                                         "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1")
               if rand(100) < 66 || $aiguardcheck[0]
                 increment = -10
                 $aiguardcheck[0] = true

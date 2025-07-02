@@ -3800,6 +3800,13 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,200]
 LoseText = sex
 #Gimmick = stealthrock
+Pokemon = GLALIE,50
+    Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
+    Ability = MOODY
+    Nature = QUIRKY
+    Item = QUICKCLAW
+    AAM = True
+    MEM = True
 Pokemon = M_ROSERADE,50
     Moves = SHADOWSNEAK,METRONOME,WILLOWISP,BATONPASS
     Ability = SEANCE
@@ -3819,13 +3826,6 @@ Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
-Pokemon = GLALIE,50
-    Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
-    Ability = MOODY
-    Nature = QUIRKY
-    Item = QUICKCLAW
-    AAM = True
-    MEM = True
 # for AAM, its important to know that the base ability's effect has priority over the stacked abilities
 Pokemon = TITANOTROP,50
     Moves = SUNNYDAY,SOLARBEAM,FLAMETHROWER,MOONLIGHT
