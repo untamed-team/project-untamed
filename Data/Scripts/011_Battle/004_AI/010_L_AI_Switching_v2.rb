@@ -688,6 +688,7 @@ class Battle::AI
         if pokmon.ability==:DROUGHT
           sum+=20 if pkmn.ability == :CHLOROPHYLL
           sum+=10 if pkmn.ability == :FLOWERGIFT || pkmn.ability == :SOLARPOWER
+          sum+=5 if pkmn.ability == :HEALINGSUN
           pkmn.eachMove do |m|
             next if m.base_damage==0 || m.type != :FIRE
             sum += 10
@@ -717,15 +718,17 @@ class Battle::AI
         if pokmon.ability==:SANDSTREAM || pokmon.ability==:DUSTSENTINEL
           sum+=20 if pkmn.ability == :SANDRUSH
           sum+=15 if pkmn.ability == :SANDFORCE
-          sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :PARTICURE
+          sum+=10 if pkmn.ability == :SANDVEIL
           sum+=10 if pkmn.hasType?(:ROCK)
+          sum+=5 if pkmn.ability == :PARTICURE
           sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
           sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm") 
         end
         if pokmon.ability==:SNOWWARNING
           sum+=20 if pkmn.ability == :SLUSHRUSH
-          sum+=10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
+          sum+=10 if pkmn.ability == :SNOWCLOAK
           sum+=10 if pkmn.hasType?(:ICE)
+          sum+=5 if pkmn.ability == :ICEBODY
           sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
           sum+=5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail") 
           sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail", "HealUserDependingOnHail") 
@@ -777,7 +780,7 @@ class Battle::AI
         sum-=30 if pokmon.hasActiveAbility?(:WONDERGUARD)
       end  
       pokmon.eachOpposing do |enemy|
-        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?(:TRUANT)
+        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]))
         sum*=0.2 if pokmon.hasActiveAbility?(:IMPOSTER) && enemy.hp == 0
       end
       if i==party.length-1
