@@ -1156,6 +1156,10 @@ class RotatonaPuzzle
 
 	def self.cameraFollowDisc
 		#for all discs rolling, camera autoscroll
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			next if !event.discRolling
+			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED)
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
 	end
 
 end #class RotatonaPuzzle
