@@ -581,12 +581,12 @@ class Battle::AI
             tempdam*=0.67 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
           end
           if pokmon.hasActiveAbility?(:ELECTRICSURGE) && @battle.field.terrain != :Electric
-            tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC
+            tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC && m.function!="DoublePowerInElectricTerrain"
             tempdam*=1.6 if m.function=="DoublePowerInElectricTerrain" && pokmon.affectedByTerrain?
             tempdam*=0.67 if b.hasActiveItem?(:ELECTRICSEED) && m.physicalMove?
           end
           if pokmon.hasActiveAbility?(:GRASSYSURGE) && @battle.field.terrain != :Grassy
-            tempdam*=t_damage_multiplier if m.type == :GRASS && pokmon.affectedByTerrain?
+            tempdam*=t_damage_multiplier if m.type == :GRASS && pokmon.affectedByTerrain? && m.function != "HigherPriorityInGrassyTerrain"
             tempdam*=0.67 if b.hasActiveItem?(:GRASSYSEED) && m.physicalMove?
             tempdam*=0.67 if b.hasActiveAbility?(:GRASSPELT) && m.physicalMove?
             if ["DoublePowerIfTargetUnderground", "LowerTargetSpeed1WeakerInGrassyTerrain",
@@ -595,7 +595,7 @@ class Battle::AI
             end
           end
           if pokmon.hasActiveAbility?(:PSYCHICSURGE) && @battle.field.terrain != :Psychic
-            tempdam*=t_damage_multiplier if m.type == :PSYCHIC && pokmon.affectedByTerrain?
+            tempdam*=t_damage_multiplier if m.type == :PSYCHIC && pokmon.affectedByTerrain? && m.function!="HitsAllFoesAndPowersUpInPsychicTerrain"
             tempdam*=1.3 if m.function=="HitsAllFoesAndPowersUpInPsychicTerrain" && pokmon.affectedByTerrain?
             tempdam*=0.67 if b.hasActiveItem?(:PSYCHICSEED) && m.specialMove?
           end
