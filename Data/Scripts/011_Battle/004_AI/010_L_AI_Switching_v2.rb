@@ -780,7 +780,7 @@ class Battle::AI
         sum-=30 if pokmon.hasActiveAbility?(:WONDERGUARD)
       end  
       pokmon.eachOpposing do |enemy|
-        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]))
+        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST])
         sum*=0.2 if pokmon.hasActiveAbility?(:IMPOSTER) && enemy.hp == 0
       end
       if i==party.length-1
