@@ -6386,7 +6386,7 @@ class Battle::AI
         if user.hasActiveItem?(:FOCUSSASH)
             score*=1.5
         end
-        if aspeed < ospeed || user.hasActiveItem?(:IRONBALL)
+        if aspeed < ospeed || user.hasActiveItem?([:IRONBALL, :ROOMSERVICE])
             if @battle.field.effects[PBEffects::TrickRoom] > 0         
                 score=0
             else

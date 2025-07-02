@@ -413,6 +413,12 @@ class Battle::AI
             if user.hasActiveItem?(:TERRAINEXTENDER)
                 miniscore*=2
             end
+            if user.hasActiveItem?(:ELECTRICSEED)
+                miniscore*=1.2
+                if user.hasActiveAbility?(:UNBURDEN)
+                    miniscore*=2
+                end
+            end
             score*=miniscore
             score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
             score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Electric) / 100.0))
@@ -448,6 +454,12 @@ class Battle::AI
             end
             if user.hasActiveItem?(:TERRAINEXTENDER)
                 miniscore*=2
+            end
+            if user.hasActiveItem?(:GRASSYSEED)
+                miniscore*=1.2
+                if user.hasActiveAbility?(:UNBURDEN)
+                    miniscore*=2
+                end
             end
             score*=miniscore
             score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
@@ -485,6 +497,12 @@ class Battle::AI
             if user.hasActiveItem?(:TERRAINEXTENDER)
                 miniscore*=2
             end
+            if user.hasActiveItem?(:MISTYSEED)
+                miniscore*=1.2
+                if user.hasActiveAbility?(:UNBURDEN)
+                    miniscore*=2
+                end
+            end
             score*=miniscore
             score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
             score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Misty) / 100.0))
@@ -521,6 +539,12 @@ class Battle::AI
             end  
             if user.hasActiveItem?(:TERRAINEXTENDER)
                 miniscore*=2
+            end
+            if user.hasActiveItem?(:PSYCHICSEED)
+                miniscore*=1.2
+                if user.hasActiveAbility?(:UNBURDEN)
+                    miniscore*=2
+                end
             end
             score*=miniscore
             score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))

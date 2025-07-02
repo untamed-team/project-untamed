@@ -24,7 +24,7 @@ class Battle::AI
                             "UserTargetSwapAbilities", #"NegateTargetAbility", # gastro acid can sometimes make kiriya skip turns?
                             "RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
                             "HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
-                            "HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing"] 
+                            "HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing", "RaiseTargetSpDef1"] 
 
     #@battle.choices[index][0] = :UseMove   # Action
     #@battle.choices[index][1] = idxMove    # Index of move to be used
@@ -710,7 +710,7 @@ class Battle::AI
                     end
                 end
             end
-            # if these moves KO, there is no need to account for their score
+            # if these moves KO, there is no need to account for their addeffect score
             statusKOarray = ["SleepTarget", "SleepTargetChangeUserMeloettaForm",
                              "PoisonTarget", "BadPoisonTarget",
                              "ParalyzeTarget", "ParalyzeFlinchTarget",

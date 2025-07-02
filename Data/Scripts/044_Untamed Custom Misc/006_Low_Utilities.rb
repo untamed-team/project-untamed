@@ -97,7 +97,7 @@ ItemHandlers::UseOnPokemon.add(:SHINYBERRY,proc{ |item, qty, pkmn, scene|
   command = scene.pbShowCommands(_INTL("{1} this Pokémon?", command2), [_INTL("Yes"), _INTL("No")])
   if command == 0
     pkmn.shiny = (pkmn.shiny?) ? false : true
-    pkmn.happiness += 75
+    pkmn.happiness = [(pkmn.happiness - 75), 0].max
     pbMessage(_INTL("This Pokémon color palette was swapped."))
     next true
   else

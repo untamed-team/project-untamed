@@ -8909,9 +8909,9 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
-Description = The user conjures a shining blade and then attacks by piercing its target. Critical hits land more easily.
+FunctionCode = IgnoreTargetDefSpDefEvaStatStages
+Flags = CanProtect,CanMirrorMove,Blade
+Description = The user conjures a shining blade and pierces the target. The target's stat changes do not affect the damage dealt.
 #-------------------------------
 [FORCEWAVE]
 Name = Force Wave

@@ -6425,9 +6425,8 @@ NamePlural = Melolado Cones
 Pocket = 2
 Price = 350
 FieldUse = OnPokemon
-BattleUse = OnPokemon
 Flags = Fling_30
-Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon and cures confusion.
+Description = Mazah's specialty, icey treat. It restores 20 HP to a single Pokémon.
 #-------------------------------
 [DDTSPRAY]
 Name = DDT Spray
@@ -6471,7 +6470,9 @@ Pocket = 8
 Price = 0
 Flags = KeyItem
 Description = The extra Pokéballs meant for Emilio.
-#-------------------------------
+#---------------------------------------------------
+#- Do NOT change internal names.
+#---------------------------------------------------
 [NOCTAVISPITE]
 Name = Noctavispite
 NamePlural = Noctavispites
@@ -6544,8 +6545,6 @@ Price = 0
 Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Skarmory hold it, and it will be able to Mega Evolve.
 #-------------------------------
-#- Do NOT change internal names.
-#-------------------------------
 [BEHEEYEMITE]
 Name = Beheeyemite
 NamePlural = Beheeyemites
@@ -6594,7 +6593,7 @@ Price = 0
 Flags = MegaStone,Fling_80
 Description = A beautiful bell with a mysterious Mega Stone inside. Have Chimecho hold it, and it will be able to Mega Evolve.
 #-------------------------------
-[PORYGONZITE] # dont change this
+[PORYGONZITE]
 Name = Corrupted Cartridge
 NamePlural = Corrupted Cartridges
 Pocket = 1
@@ -6697,7 +6696,9 @@ Pocket = 1
 Price = 0
 Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
-#-------------------------------
+#---------------------------------------------------
+#- Do NOT change internal names.
+#---------------------------------------------------
 [BERRYPOTS]
 Name = Berry Pot
 NamePlural = Berry Pots

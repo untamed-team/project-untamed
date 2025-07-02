@@ -2391,43 +2391,6 @@ Move Skill Swap ( Category: Status ) has final score 69
 Move Speed Swap has initial score 83.03432720084973
 Move Speed Swap ( Category: Status ) has final score 0
 Move Telekinesis ( Category: Status ) has final score 0
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Teleport has initial score 104.89837324807418
 Move Teleport ( Category: Status ) has final score 70
 Move Trick has initial score 100.0
