@@ -397,10 +397,10 @@ class Battle::AI
                 t_damage_multiplier = 1.3
                 t_damage_divider    = 2
             end
-            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && expectedTerrain == :Electric && user.affectedByTerrain?
+            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && expectedTerrain == :Electric && user.affectedByTerrain? && move.function != "DoublePowerInElectricTerrain"
             multipliers[:base_damage_multiplier] /= t_damage_divider    if type == :DRAGON   && expectedTerrain == :Misty && target.affectedByTerrain?
-            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS    && expectedTerrain == :Grassy && user.affectedByTerrain?
-            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC  && expectedTerrain == :Psychic && user.affectedByTerrain?
+            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS    && expectedTerrain == :Grassy && user.affectedByTerrain? && move.function != "HigherPriorityInGrassyTerrain"
+            multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC  && expectedTerrain == :Psychic && user.affectedByTerrain? && move.function != "HitsAllFoesAndPowersUpInPsychicTerrain"
         end
         #mastersex type zones #by low
         multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone

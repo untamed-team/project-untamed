@@ -403,11 +403,11 @@ class Battle::Move
     # Terrain
     case @battle.field.terrain
     when :Electric
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain? && @function != "DoublePowerInElectricTerrain"
     when :Grassy
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain? && @function != "HigherPriorityInGrassyTerrain"
     when :Psychic
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain? && @function != "HitsAllFoesAndPowersUpInPsychicTerrain"
     when :Misty
       multipliers[:base_damage_multiplier] /= t_damage_divider if type == :DRAGON && target.affectedByTerrain?
     end
