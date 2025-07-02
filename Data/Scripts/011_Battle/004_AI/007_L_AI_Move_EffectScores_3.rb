@@ -2397,7 +2397,7 @@ class Battle::AI
         alldam = target.moves.all? { |m| m.baseDamage > 0 }
         if alldam
             score*=1.3
-            score*=1.2 if trarget.trappedInBattle?
+            score*=1.2 if target.trappedInBattle?
         else
             score*=0.8
         end
