@@ -3997,7 +3997,7 @@ Description = The user protects itself from all attacks. Its chance of failing r
 Name = TM18
 NamePlural = TM18s
 Pocket = 4
-Price = 2000
+Price = 5000
 FieldUse = TM
 Flags = Fling_10
 Move = SANDSTORM
@@ -4007,7 +4007,7 @@ Description = A five-turn sandstorm is summoned to hurt all combatants except Ro
 Name = TM19
 NamePlural = TM19s
 Pocket = 4
-Price = 2000
+Price = 5000
 FieldUse = TM
 Flags = Fling_10
 Move = RAINDANCE
@@ -4017,7 +4017,7 @@ Description = The user summons a heavy rain for five turns, powering up Water-ty
 Name = TM20
 NamePlural = TM20s
 Pocket = 4
-Price = 2000
+Price = 5000
 FieldUse = TM
 Flags = Fling_10
 Move = SUNNYDAY
@@ -4027,7 +4027,7 @@ Description = The user intensifies the sun for five turns, powering up Fire-type
 Name = TM21
 NamePlural = TM21s
 Pocket = 4
-Price = 3000
+Price = 5000
 FieldUse = TM
 Flags = Fling_10
 Move = HAIL
@@ -4829,9 +4829,9 @@ NamePlural = TM101s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_50
-Move = CUT
-Description = The target is cut with a scythe or claw.
+Flags = Fling_60
+Move = SWIFT
+Description = Star-shaped rays are shot at the opposing team. This attack never misses.
 #-------------------------------
 [TM102]
 Name = TM102
@@ -4839,19 +4839,19 @@ NamePlural = TM102s
 Pocket = 4
 Price = 2000
 FieldUse = TM
-Flags = Fling_40
-Move = ROCKSMASH
-Description = The user attacks with a punch that can shatter a rock. It may also lower the foe's Defense stat.
+Flags = Fling_60
+Move = MAGICALLEAF
+Description = The user scatters curious leaves that chase the target. This attack will not miss.
 #-------------------------------
 [TM103]
 Name = TM103
 NamePlural = TM103s
 Pocket = 4
-Price = 2500
+Price = 2000
 FieldUse = TM
-Flags = Fling_80
-Move = STRENGTH
-Description = The target is slugged with a punch thrown at maximum power.
+Flags = Fling_60
+Move = SHOCKWAVE
+Description = The user strikes the target with a quick jolt of electricity. This attack cannot be evaded.
 #-------------------------------
 [TM104]
 Name = TM104
@@ -4859,59 +4859,79 @@ NamePlural = TM104s
 Pocket = 4
 Price = 2500
 FieldUse = TM
-Flags = Fling_90
-Move = ROCKCLIMB
-Description = The user attacks the target by smashing into it with incredible force. It may also confuse the target.
+Flags = Fling_70
+Move = RETALIATE
+Description = Gets revenge for a fainted ally. If an ally fainted in the last turn, this attack's damage doubles.
 #-------------------------------
 [TM105]
 Name = TM105
 NamePlural = TM105s
 Pocket = 4
-Price = 2500
+Price = 5000
 FieldUse = TM
-Flags = Fling_90
-Move = SURF
-Description = The user attacks everything around it by swamping its surroundings with a giant wave.
+Flags = Fling_10
+Move = ELECTRICTERRAIN
+Description = The user electrifies the ground for five turns. Pokémon on the ground no longer fall asleep.
 #-------------------------------
 [TM106]
 Name = TM106
 NamePlural = TM106s
 Pocket = 4
-Price = 2500
+Price = 5000
 FieldUse = TM
-Flags = Fling_80
-Move = WATERFALL
-Description = The user charges at the target and may make it flinch.
+Flags = Fling_10
+Move = GRASSYTERRAIN
+Description = The user turns the ground to grass for five turns. Grounded Pokémon restore a little HP every turn.
 #-------------------------------
 [TM107]
 Name = TM107
 NamePlural = TM107s
 Pocket = 4
-Price = 2500
+Price = 4500
 FieldUse = TM
-Flags = Fling_80
-Move = DIVE
-Description = Diving on the first turn, the user floats up and attacks on the second. It can be used to dive underwater.
+Flags = Fling_10
+Move = MISTYTERRAIN
+Description = The user covers the ground with mist for five turns. Grounded Pokémon can't gain status conditions.
 #-------------------------------
 [TM108]
 Name = TM108
 NamePlural = TM108s
 Pocket = 4
-Price = 2500
+Price = 5000
 FieldUse = TM
-Flags = Fling_65
-Move = HIDDENPOWER
-Description = A unique attack that varies in type depending on the Pokémon using it.
+Flags = Fling_10
+Move = PSYCHICTERRAIN
+Description = Protects grounded Pokémon from priority moves and powers up Psychic-type moves for five turns.
 #-------------------------------
 [TM109]
 Name = TM109
 NamePlural = TM109s
+Pocket = 4
+Price = 2500
+FieldUse = TM
+Flags = Fling_60
+Move = HIDDENPOWER
+Description = A unique attack that varies in type depending on the Pokémon using it.
+#-------------------------------
+[TM110]
+Name = TM110
+NamePlural = TM110s
 Pocket = 4
 Price = 3000
 FieldUse = TM
 Flags = Fling_70
 Move = SECRETPOWER
 Description = An attack move with effects that vary depending on the user's environment.
+#-------------------------------
+[TM111]
+Name = TM111
+NamePlural = TM111s
+Pocket = 4
+Price = 2250
+FieldUse = TM
+Flags = Fling_10
+Move = EERIEIMPULSE
+Description = The user's body generates an eerie impulse. Harshly lowers the target's Sp. Atk stat.
 #-------------------------------
 [HM01]
 Name = HM01
