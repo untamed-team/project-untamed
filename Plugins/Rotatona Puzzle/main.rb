@@ -55,7 +55,15 @@ class RotatonaPuzzle
 	SE_DISC_CRASH = "Rock Smash"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
-	DISC_SPEED = 3 #default 4
+	DISC_SPEED = 4 #default 4
+
+	def self.cameraFollowDisc
+		#for all discs rolling, camera autoscroll
+		$game_temp.puzzleEvents[:Discs].each do |event|
+			next if !event.discRolling
+			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED+1)
+		end #$game_temp.puzzleEvents[:Discs].each do |event|
+	end
 
 	def self.getPuzzleEvents	
 		Console.echo_warn "identifying puzzle pieces from scratch"
@@ -1157,14 +1165,6 @@ class RotatonaPuzzle
 		])
 
 	end #def self.rotateDockedDisc(discEvent, newDirection)
-
-	def self.cameraFollowDisc
-		#for all discs rolling, camera autoscroll
-		$game_temp.puzzleEvents[:Discs].each do |event|
-			next if !event.discRolling
-			pbMapInterpreter.autoscroll(event.x, event.y, 6)
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
-	end
 
 end #class RotatonaPuzzle
 
