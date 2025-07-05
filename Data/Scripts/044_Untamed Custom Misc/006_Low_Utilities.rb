@@ -699,7 +699,7 @@ class PokemonPokedexInfo_Scene
         else
           requiredLevel = 1
         end
-        _INTL("{1} at level {2} with a {3} move",evoName,requiredLevel,requiredType)
+        _INTL("{1} at level {2} with a {3} move",evoName,requiredType,requiredLevel)
       else
         evoName
     end
