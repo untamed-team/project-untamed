@@ -1171,7 +1171,6 @@ Battle::AbilityEffects::AccuracyCalcFromUser.add(:UNAWARE,
 
 Battle::AbilityEffects::AccuracyCalcFromUser.add(:ILLUMINATE,
   proc { |ability, mods, user, target, move, type|
-    next unless $player.difficulty_mode?("chaos")
     mods[:accuracy_multiplier] *= 1.15 if move.damagingMove?
   }
 )
@@ -1194,7 +1193,6 @@ Battle::AbilityEffects::AccuracyCalcFromAlly.add(:VICTORYSTAR,
 
 Battle::AbilityEffects::AccuracyCalcFromAlly.add(:ILLUMINATE,
   proc { |ability, mods, user, target, move, type|
-    next unless $player.difficulty_mode?("chaos")
     mods[:accuracy_multiplier] *= 1.15 if move.damagingMove?
   }
 )

@@ -151,8 +151,8 @@ Description = Boosts the Pokémon's Speed in sunshine.
 #-------------------------------
 [ILLUMINATE]
 Name = Illuminate
-Description = Raises the likelihood of meeting wild Pokémon.
-FullDesc = In Chaos mode, Illuminate also increases the accuracy of damaging moves on the user's side of the field by 15%.
+Description = Boosts the accuracy of damaging moves.
+FullDesc = Increases the accuracy of damaging moves on the user's side of the field by 15%. Raises the likelihood of meeting wild Pokémon if the user is leading the party.
 #-------------------------------
 [TRACE]
 Name = Trace
