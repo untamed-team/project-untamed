@@ -57,12 +57,34 @@ class RotatonaPuzzle
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 4 #default 4
 
-	def self.cameraFollowDisc
-		#for all discs rolling, camera autoscroll
+	def self.cameraLogic
+		######return if a disc isn't rolling and a timer is not going
+		#start with locking the player in place
+		$game_player.lock
+		
+		#for all discs rolling, camera autoscroll to the disc
 		$game_temp.puzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED+1)
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		
+		#camera go back to player
+		if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
+		else
+			#wait a second after disc is caught
+			loop do
+				break if @timer <= 0
+				@timer -= 1
+			end
+		end
+		
+		#pan camera back to player
+		pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
+		Console.echo_warn "done scrolling to player; setting @needPanCameraToPlayer to false"
+		
+		#either we are done controlling the camera, so unlock player, or we did not need to control the camera this frame, so end with keeping the player unlocked
+		@needPanCameraToPlayer = false
+		$game_player.unlock
 	end
 
 	def self.getPuzzleEvents	
@@ -94,6 +116,8 @@ class RotatonaPuzzle
 			event.discLandingSpot = []
 			event.catcherHasDisc = false
 			@frameWaitCounter = 0
+			@timer = 0
+			@needPanCameraToPlayer = false
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
@@ -783,9 +807,11 @@ class RotatonaPuzzle
 	def self.catchDisc(discEvent, catcherEvent)
 		#turn off "always on"
 		pbMoveRoute(discEvent, [PBMoveRoute::AlwaysOnTopOff])
-		discEvent.discRolling = false
 		catcherEvent.catcherHasDisc = true
 		pbSEPlay(SE_CATCHING)
+		discEvent.discRolling = false
+		@needPanCameraToPlayer = true
+		@timer = Graphics.frame_rate * 1
 	end #def self.catchDisc
 	
 	def self.checkIfDiscTurning
@@ -1183,9 +1209,7 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	RotatonaPuzzle.updateRollingAnimation
 	RotatonaPuzzle.discMoveForward
 	RotatonaPuzzle.checkIfDiscTurning
-	RotatonaPuzzle.cameraFollowDisc
-	################################################################$game_player.lock if camera is not on player
-	$game_player.unlock if !RotatonaPuzzle.discRolling? #&& camera is on player
+	RotatonaPuzzle.cameraLogic
 })
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
@@ -1193,7 +1217,9 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	#skip this check if old map is the same as new map
-	###########next if $game_map.map_id == _old_map_id
+	
+	#do not uncomment this until you move to another map and save there first
+	####################next if $game_map.map_id == _old_map_id
 	RotatonaPuzzle.getPuzzleEvents
   }
 )
@@ -1274,5 +1300,9 @@ GameData::TerrainTag.register({
 #make launcher overlays always face the same direction as the associated launcher when identifying puzzle pieces
 #When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all; all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file
+#resetting rota when it crashes:
+#A Rota only resets itself, not other Rotas or puzzle pieces. The entire puzzle should reset itself when exiting the room unless it has already been fully solved
+
 
 #bugs
+#if launching rota at the bottom launcher, the top launcher looks upward
