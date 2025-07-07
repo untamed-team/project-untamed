@@ -440,7 +440,7 @@ Color = Blue
 Shape = MultiWinged
 Habitat = Grassland
 Category = Hawk Wasp
-Pokedex = Acting as the leaders of the colony, Noctavispa support their nests by bringing in live prey. The colony survives through a cycle involving all members.
+Pokedex = Acting as the leaders of the colony, Noctavispa support their nests by bringing in live prey. It sacrifices Minimelo if necessary in Roadraptor attacks.
 Generation = 9
 #-------------------------------
 [FLABEBE]
