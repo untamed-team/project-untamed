@@ -6083,7 +6083,7 @@ Accuracy = 0
 TotalPP = 40
 Target = NearAlly
 FunctionCode = HoldingHandsShamefully
-Description = The user and an ally hold hands. This makes them very happy.
+Description = The user and an ally hold hands. This makes them very happy, and boosts the power of its attack.
 #-------------------------------
 [HOWL]
 Name = Howl
