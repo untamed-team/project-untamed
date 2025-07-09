@@ -491,7 +491,8 @@ Description = Senses a foe's dangerous moves.
 #-------------------------------
 [FOREWARN]
 Name = Forewarn
-Description = Determines what moves a foe has.
+Description = Determines how threatening a foe is.
+FullDesc = Normally: On switch-in, this Pokemon is alerted to the move with the highest power of a foe. In chaos mode: Upon switch in, raises Defense by one stage if foes' effective Attack is higher than Special Attack, otherwise it raises Special Defense by one stage.
 #-------------------------------
 [UNAWARE]
 Name = Unaware

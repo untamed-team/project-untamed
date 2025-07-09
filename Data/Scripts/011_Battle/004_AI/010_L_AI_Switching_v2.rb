@@ -441,6 +441,23 @@ class Battle::AI
         end
         downloadStat = (oDef < oSpDef) ? :ATTACK : :SPECIAL_ATTACK
       end
+      if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+        # added f_ to everything to ensure nothing blows up
+        f_stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+        f_stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+        oAtk = oSpAtk = 0
+        battle.allOtherSideBattlers(pokmon.index).each do |data|
+          f_atk        = data.attack
+          f_atkStage   = data.stages[:ATTACK] + 6
+          f_realAtk    = (f_atk.to_f * f_stageMul[f_atkStage] / f_stageDiv[f_atkStage]).floor
+          oAtk   += f_realAtk
+          f_spAtk      = data.spatk
+          f_spAtkStage = data.stages[:SPECIAL_ATTACK] + 6
+          f_realSpAtk  = (f_spAtk.to_f * f_stageMul[f_spAtkStage] / f_stageDiv[f_spAtkStage]).floor
+          oSpAtk += f_realSpAtk
+        end
+        forewarnStat = (oAtk > oSpAtk) ? :DEFENSE : :SPECIAL_DEFENSE
+      end
       pokmon.moves.each do |m|
         pokmon.eachOpposing do |b|
           mold_broken=moldbroken(pokmon,b,m)
@@ -541,7 +558,7 @@ class Battle::AI
             end
           end
           if pokmon.hasActiveAbility?(:DOWNLOAD)
-            oldStat = pokmon.stages[downloadStat]
+            oldStatD = pokmon.stages[downloadStat]
             # why would you combo download and contrary?
             increment = 1
             increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
@@ -549,9 +566,21 @@ class Battle::AI
             pokmon.stages[downloadStat] += increment if pokmon.pbCanRaiseStatStage?(downloadStat, pokmon)
             pokmon.stages[downloadStat] = [[pokmon.stages[downloadStat], -6].max, 6].min
           end
+          if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+            oldStatF = pokmon.stages[forewarnStat]
+            # why would you combo forewarn and contrary?
+            increment = 1
+            increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
+            increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
+            pokmon.stages[forewarnStat] += increment if pokmon.pbCanRaiseStatStage?(forewarnStat, pokmon)
+            pokmon.stages[forewarnStat] = [[pokmon.stages[forewarnStat], -6].max, 6].min
+          end
           tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
           if pokmon.hasActiveAbility?(:DOWNLOAD)
-            pokmon.stages[downloadStat] = oldStat
+            pokmon.stages[downloadStat] = oldStatD
+          end
+          if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+            pokmon.stages[forewarnStat] = oldStatF
           end
           thispriority=priorityAI(pokmon,m,[],true)
           tempdam = 0 if thispriority>0 && pokmon.hasActiveAbility?(:PSYCHICSURGE) && b.affectedByTerrain?

@@ -24,7 +24,9 @@ class Battle::Move::TitanWrath < Battle::Move
   
   def pbGetAttackStats(user, target)
     userStats = user.plainStats
-    highestStatValue = 0;higheststat = 0;statbranch = [0,0]
+    highestStatValue = 0
+    higheststat = :SPECIAL_ATTACK
+    statvalue = user.spatk
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if userStats[s.id] < highestStatValue
@@ -34,21 +36,21 @@ class Battle::Move::TitanWrath < Battle::Move
     case higheststat
     when :ATTACK
       @calcCategory = 0
-      statbranch = [user.attack, user.stages[higheststat] + 6]
+      statvalue = user.attack
     when :DEFENSE
       @calcCategory = 0
-      statbranch = [user.defense, user.stages[higheststat] + 6]
+      statvalue = user.defense
     when :SPECIAL_ATTACK
       @calcCategory = 1
-      statbranch = [user.spatk, user.stages[higheststat] + 6]
+      statvalue = user.spatk
     when :SPECIAL_DEFENSE
       @calcCategory = 1
-      statbranch = [user.spdef, user.stages[higheststat] + 6]
+      statvalue = user.spdef
     when :SPEED
       @calcCategory = 1
-      statbranch = [user.speed, user.stages[higheststat] + 6]
+      statvalue = user.speed
     end
-    return statbranch
+    return [statvalue, user.stages[higheststat] + 6]
   end
   
   def pbBaseType(user)

@@ -1108,7 +1108,7 @@ class Battle::AI
                         statuschip += 0.125
                         statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
                     else
-                        statuschip += (0.0625*user.effects[PBEffects::Toxic])
+                        statuschip += (0.0625*(user.effects[PBEffects::Toxic]+1))
                     end
                 end
                 chip += statuschip

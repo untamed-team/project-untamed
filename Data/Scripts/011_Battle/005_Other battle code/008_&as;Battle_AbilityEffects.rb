@@ -3071,52 +3071,70 @@ Battle::AbilityEffects::OnSwitchIn.add(:FAIRYAURA,
 
 Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
   proc { |ability, battler, battle, switch_in|
-    next if !battler.pbOwnedByPlayer?
-    highestPower = 0
-    forewarnMoves = []
-    battle.allOtherSideBattlers(battler.index).each do |b|
-      b.eachMove do |m|
-        power = m.baseDamage
-        power = 160 if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function)
-        power = 150 if ["PowerHigherWithUserHP"].include?(m.function)    # Eruption
-        # Counter, Mirror Coat, Metal Burst
-        power = 120 if ["CounterPhysicalDamage",
-                        "CounterSpecialDamage",
-                        "CounterDamagePlusHalf"].include?(m.function)
-        # Sonic Boom, Dragon Rage, Night Shade, Endeavor, Psywave,
-        # Return, Frustration, Crush Grip, Gyro Ball, Hidden Power,
-        # Natural Gift, Trump Card, Flail, Grass Knot
-        power = 80 if ["FixedDamage20",
-                       "FixedDamage40",
-                       "FixedDamageUserLevel",
-                       "LowerTargetHPToUserHP",
-                       "FixedDamageUserLevelRandom",
-                       "PowerHigherWithUserHappiness",
-                       "PowerLowerWithUserHappiness",
-                       "PowerHigherWithUserHP",
-                       "PowerHigherWithTargetFasterThanUser",
-                       "TypeAndPowerDependOnUserBerry",
-                       "PowerHigherWithLessPP",
-                       "PowerLowerWithUserHP",
-                       "PowerHigherWithTargetWeight"].include?(m.function)
-        power = 80 if Settings::MECHANICS_GENERATION <= 5 && m.function == "TypeDependsOnUserIVs"
-        next if power < highestPower
-        forewarnMoves = [] if power > highestPower
-        forewarnMoves.push(m.name)
-        highestPower = power
+    if $player.difficulty_mode?("chaos")
+      stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+      stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+      oAtk = oSpAtk = 0
+      battle.allOtherSideBattlers(battler.index).each do |b|
+        atk        = b.attack
+        atkStage   = b.stages[:ATTACK] + 6
+        realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
+        oAtk   += realAtk
+        spAtk      = b.spatk
+        spAtkStage = b.stages[:SPECIAL_ATTACK] + 6
+        realSpAtk  = (spAtk.to_f * stageMul[spAtkStage] / stageDiv[spAtkStage]).floor
+        oSpAtk += realSpAtk
       end
-    end
-    if forewarnMoves.length > 0
-      battle.pbShowAbilitySplash(battler)
-      forewarnMoveName = forewarnMoves[battle.pbRandom(forewarnMoves.length)]
-      if Battle::Scene::USE_ABILITY_SPLASH
-        battle.pbDisplay(_INTL("{1} was alerted to {2}!",
-          battler.pbThis, forewarnMoveName))
-      else
-        battle.pbDisplay(_INTL("{1}'s Forewarn alerted it to {2}!",
-          battler.pbThis, forewarnMoveName))
+      stat = (oAtk > oSpAtk) ? :DEFENSE : :SPECIAL_DEFENSE
+      battler.pbRaiseStatStageByAbility(stat, 1, battler)
+    else
+      next if !battler.pbOwnedByPlayer?
+      highestPower = 0
+      forewarnMoves = []
+      battle.allOtherSideBattlers(battler.index).each do |b|
+        b.eachMove do |m|
+          power = m.baseDamage
+          power = 160 if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function)
+          power = 150 if ["PowerHigherWithUserHP"].include?(m.function)    # Eruption
+          # Counter, Mirror Coat, Metal Burst
+          power = 120 if ["CounterPhysicalDamage",
+                          "CounterSpecialDamage",
+                          "CounterDamagePlusHalf"].include?(m.function)
+          # Sonic Boom, Dragon Rage, Night Shade, Endeavor, Psywave,
+          # Return, Frustration, Crush Grip, Gyro Ball, Hidden Power,
+          # Natural Gift, Trump Card, Flail, Grass Knot
+          power = 80 if ["FixedDamage20",
+                        "FixedDamage40",
+                        "FixedDamageUserLevel",
+                        "LowerTargetHPToUserHP",
+                        "FixedDamageUserLevelRandom",
+                        "PowerHigherWithUserHappiness",
+                        "PowerLowerWithUserHappiness",
+                        "PowerHigherWithUserHP",
+                        "PowerHigherWithTargetFasterThanUser",
+                        "TypeAndPowerDependOnUserBerry",
+                        "PowerHigherWithLessPP",
+                        "PowerLowerWithUserHP",
+                        "PowerHigherWithTargetWeight"].include?(m.function)
+          power = 80 if Settings::MECHANICS_GENERATION <= 5 && m.function == "TypeDependsOnUserIVs"
+          next if power < highestPower
+          forewarnMoves = [] if power > highestPower
+          forewarnMoves.push(m.name)
+          highestPower = power
+        end
       end
-      battle.pbHideAbilitySplash(battler)
+      if forewarnMoves.length > 0
+        battle.pbShowAbilitySplash(battler)
+        forewarnMoveName = forewarnMoves[battle.pbRandom(forewarnMoves.length)]
+        if Battle::Scene::USE_ABILITY_SPLASH
+          battle.pbDisplay(_INTL("{1} was alerted to {2}!",
+            battler.pbThis, forewarnMoveName))
+        else
+          battle.pbDisplay(_INTL("{1}'s Forewarn alerted it to {2}!",
+            battler.pbThis, forewarnMoveName))
+        end
+        battle.pbHideAbilitySplash(battler)
+      end
     end
   }
 )
