@@ -58,34 +58,43 @@ class RotatonaPuzzle
 	DISC_SPEED = 4 #default 4
 
 	def self.cameraLogic
-		######return if a disc isn't rolling and a timer is not going
-		#start with locking the player in place
-		$game_player.lock
-		
 		#for all discs rolling, camera autoscroll to the disc
 		$game_temp.puzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
+			#start with locking the player in place
+			$game_player.lock
+			#scroll camera to moving disc
 			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED+1)
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
 		
-		#camera go back to player
-		if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
-		else
-			#wait a second after disc is caught
-			loop do
-				break if @timer <= 0
-				@timer -= 1
-			end
+		#when disc is caught, @needPanCameraToPlayer will be set to true
+		#if disc has not been caught, return so we don't pan camera to player
+		if @needPanCameraToPlayer.nil? || !@needPanCameraToPlayer
+			return
 		end
 		
-		#pan camera back to player
-		pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
-		Console.echo_warn "done scrolling to player; setting @needPanCameraToPlayer to false"
+		Console.echo_warn "test"
+		#when disc is caught, wait 1 second
+		if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
+			@timer = Graphics.frame_rate * 1
+			loop do
+				Graphics.update
+				break if @timer <= 0
+				Console.echo_warn @timer
+				@timer -= 1
+			end
 		
-		#either we are done controlling the camera, so unlock player, or we did not need to control the camera this frame, so end with keeping the player unlocked
-		@needPanCameraToPlayer = false
-		$game_player.unlock
-	end
+			Console.echo_warn @needPanCameraToPlayer
+			
+			#pan camera back to player
+			pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
+			print "if this popped up while the camera was panning, need to make this wait until scrolling is done"
+			
+			@needPanCameraToPlayer = false
+			#release player
+			$game_player.unlock
+		end
+	end #def self.cameraLogic
 
 	def self.getPuzzleEvents	
 		Console.echo_warn "identifying puzzle pieces from scratch"
@@ -811,7 +820,6 @@ class RotatonaPuzzle
 		pbSEPlay(SE_CATCHING)
 		discEvent.discRolling = false
 		@needPanCameraToPlayer = true
-		@timer = Graphics.frame_rate * 1
 	end #def self.catchDisc
 	
 	def self.checkIfDiscTurning
@@ -1302,7 +1310,7 @@ GameData::TerrainTag.register({
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all; all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file
 #resetting rota when it crashes:
 #A Rota only resets itself, not other Rotas or puzzle pieces. The entire puzzle should reset itself when exiting the room unless it has already been fully solved
-
+#if collide with disc, crash any rolling disc, so if one is in a catcher and the other crashes into it, the caught one or docked one (launcher) does not break
 
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward
