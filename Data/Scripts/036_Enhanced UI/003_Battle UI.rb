@@ -738,13 +738,16 @@ class Battle::Scene
       textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
     end
     if battler.hasAbilityMutation?
+      cord = 0
       for i in 0..battler.abilityMutationList.length
         next if battler.abilityMutationList[i].nil?
-        imagePos.push([@path + "battle_info_panel", panelX, (65 + (i * 24)), 0, 0, 218, 24])
+        next if battler.abilityMutationList[i] == :TRACE && !battler.effects[PBEffects::Trace]
+        imagePos.push([@path + "battle_info_panel", panelX, (65 + (cord * 24)), 0, 0, 218, 24])
         textPos.push(
-          [_INTL("Abil."), xpos + 272, ypos + (44 + (i * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
-          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (i * 24)), 2, BASE_DARK, SHADOW_DARK]
+          [_INTL("Abil."), xpos + 272, ypos + (44 + (cord * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
+          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (cord * 24)), 2, BASE_DARK, SHADOW_DARK]
         )
+        cord += 1
       end
     else
       imagePos.push([@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24])
