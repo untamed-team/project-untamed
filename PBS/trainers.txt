@@ -892,7 +892,7 @@ Pokemon = KNOGGIN,12
     Item = SCOPELENS
 Pokemon = BALTOY,13
     Moves = RAPIDSPIN,POWERTRICK,CONFUSION,CALMMIND
-    Ability = CLEARBODY
+    Ability = FOREWARN
 #Area=MonarcaCave_M
 #-------------------------------
 [TOURIST_F,Lucette]
@@ -2980,7 +2980,7 @@ Pokemon = HELIOPTILE,24
     Ability = DRYSKIN
 Pokemon = BALTOY,24
     Moves = COSMICPOWER,ANCIENTPOWER,PSYBEAM,MUDSHOT
-    Ability = LEVITATE
+    Ability = FOREWARN
 Pokemon = M_CRABRAWLER,25
     Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
     Ability = TECHNICIAN
@@ -3156,7 +3156,7 @@ Pokemon = BURBRAWL,25
 LoseText = I've discovered... Defeat?
 Pokemon = BALTOY,23
     Moves = PSYBEAM,EXPLOSION,TRICKROOM,ANCIENTPOWER
-    Ability = LEVITATE
+    Ability = FOREWARN
     Item = IRONBALL
 Pokemon = M_NOSEPASS,23
     Moves = CURSE,ROCKTOMB,KARATECHOP,BLOCK
