@@ -931,6 +931,7 @@ class Battle::Scene
     when :SPEED           then value = battler.speed
     end
     value += @battle.pbRandom(-12..12) if !battler.pbOwnedByPlayer?
+    value = [[value, 999].min, 1].max
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
   
