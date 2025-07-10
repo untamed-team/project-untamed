@@ -3369,9 +3369,7 @@ class Battle::AI
                 end            
             end          
         end
-        if user.pokemonIndex == 0 # on the lead slot
-            score*=1.2
-        end
+        score*=1.2 if user.pokemonIndex == 0 # on the lead slot
         if user.hasActiveAbility?(:PARTYPOPPER)
             score*=1.2
         end
@@ -3422,9 +3420,8 @@ class Battle::AI
                 end            
             end          
         end
-        if user.pokemonIndex == 0 # on the lead slot
-            score*=1.2
-        end
+        score*=1.2 if user.pokemonIndex == 0 # on the lead slot
+        score*=1.2 if expectedTerrain == :Misty
         if (user.hasActiveAbility?(:DISGUISE) && user.form == 0) || user.effects[PBEffects::Substitute]>0
             score*=0.3
         end
