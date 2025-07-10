@@ -782,7 +782,29 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "AddStickyWebToFoeSide" # Sticky Web
-        if user.pbOpposingSide.effects[PBEffects::StickyWeb] > 1
+        stickycount = user.pbOpposingSide.effects[PBEffects::StickyWeb]
+        if stickycount > 1
+            user.eachOpposing do |m|
+                if @battle.choices[m.index][0] == :SwitchOut
+                    stickycount -= 1
+                elsif targetWillMove?(m)
+                    #aspeed = pbRoughStat(user,:SPEED,skill) # already calc'd, no need to recalc
+                    ospeedb = pbRoughStat(m,:SPEED,skill)
+                    fasterAtk = ((aspeed>=ospeedb) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                    pivotatk = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 
+                                "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
+                    targetMove = @battle.choices[m.index][2]
+                    thisprio = priorityAI(user, move, globalArray)
+                    thatprio = priorityAI(m, targetMove, globalArray)
+                    fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
+                    if pivotatk.include?(targetMove.function) && !fasterAtk
+                        stickycount -= 1
+                    end
+                end
+            end
+            stickycount = [stickycount, 0].max
+        end
+        if stickycount > 1
             score = 0
         else
             roles = pbGetPokemonRole(user, target)

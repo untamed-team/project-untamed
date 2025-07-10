@@ -13,7 +13,7 @@ class Battle::AI
 
     # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-    $AIMASTERLOG = (true && $DEBUG)
+    $AIMASTERLOG = (false && $DEBUG)
     $AIGENERALLOG = (false && $DEBUG)
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 

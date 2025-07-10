@@ -60,7 +60,7 @@ MenuHandlers.add(:battle_guide, :status_page_dizzy, {
   "name"        => _INTL(" - Dizzy"),
   "parent"      => :status_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]When <b>dizzied</b>, a Pokémon will have its ability nullified for 2 turns. \\nPsychic-types cannot be dizzied. \\n<b>Confuse Ray</b> is the most common way of causing dizziness."))
+		pbMessage(_INTL("\\l[5]When <b>dizzied</b>, a Pokémon will have its ability nullified for 2 turns. \\nPsychic-types cannot be dizzied. \\n<b>Confuse Ray</b> is the most common way of causing dizziness. The confused effect was replaced by the dizzy status, but the names are used interchangebly."))
 	}
 })
 

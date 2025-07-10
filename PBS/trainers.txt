@@ -3800,6 +3800,10 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,200]
 LoseText = sex
 #Gimmick = stealthrock
+Pokemon = STRELAVISON,50
+    Moves = STICKYWEB,DISCHARGE,LUNARDANCE
+    Ability = SHOWTIME
+    Nature = QUIRKY
 Pokemon = GLALIE,50
     Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
     Ability = MOODY
