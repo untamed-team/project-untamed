@@ -788,17 +788,17 @@ class Battle::AI
                 if @battle.choices[m.index][0] == :SwitchOut
                     stickycount -= 1
                 elsif targetWillMove?(m)
-                    #aspeed = pbRoughStat(user,:SPEED,skill) # already calc'd, no need to recalc
-                    ospeedb = pbRoughStat(m,:SPEED,skill)
-                    fasterAtk = ((aspeed>=ospeedb) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
                     pivotatk = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 
                                 "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
                     targetMove = @battle.choices[m.index][2]
-                    thisprio = priorityAI(user, move, globalArray)
-                    thatprio = priorityAI(m, targetMove, globalArray)
-                    fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
-                    if pivotatk.include?(targetMove.function) && !fasterAtk
-                        stickycount -= 1
+                    if pivotatk.include?(targetMove.function)
+                        #aspeed = pbRoughStat(user,:SPEED,skill) # already calc'd, no need to recalc
+                        ospeedb = pbRoughStat(m,:SPEED,skill)
+                        fasterAtk = ((aspeed>=ospeedb) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                        thisprio = priorityAI(user, move, globalArray)
+                        thatprio = priorityAI(m, targetMove, globalArray)
+                        fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
+                        stickycount -= 1 if !fasterAtk
                     end
                 end
             end
