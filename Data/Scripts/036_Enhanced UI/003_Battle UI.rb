@@ -880,16 +880,55 @@ class Battle::Scene
             end
           end
         end
-        addText.push([stat[1], xpos + 17, ypos + 139 + (i * 24), 0, BASE_LIGHT, color])
-        stage = battler.stages[stat[0]]
+        addText.push([stat[1], xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
+        stat = pbRoughDisplayStat(battler, stat[0])
+        addText.push([stat.to_s, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
       else
-        addText.push([stat, xpos + 17, ypos + 139 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+        addText.push([stat, xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
         stage = [battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost], 4].min
+        arrow = (stage > 0) ? 0 : 1
+        stage.abs.times { |t| images.push([@path + "Battle Info/battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
       end
-      arrow = (stage > 0) ? 0 : 1
-      stage.abs.times { |t| images.push([@path + "battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
+    end
+    cord = 0
+    battler.eachMove do |m|
+      next if !@battle.moveRevealed?(battler, m.id) && !battler.pbOwnedByPlayer?
+      addText.push([m.name, xpos + 103, ypos + 140 + (cord * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+      cord += 1
     end
     return images, addText
+  end
+
+  def pbRoughDisplayStat(battler, stat)
+    if [:ACCURACY, :EVASION].include?(stat)
+      stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+      stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+      stage = battler.stages[stat]
+      if stat == :ACCURACY && stage < 0
+        if $player.difficulty_mode?("hard")
+          stage = 0
+        else
+          stage += 1 if !battler.pbOwnedByPlayer?
+        end
+      end
+      stage = [stage, 0].min if stat == :EVASION
+      stage += 6
+      return (100.0 * stageMul[stage] / stageDiv[stage]).floor
+    else
+      stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+      stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    end
+    stage = battler.stages[stat] + 6
+    value = 0
+    case stat
+    when :ATTACK          then value = battler.attack
+    when :DEFENSE         then value = battler.defense
+    when :SPECIAL_ATTACK  then value = battler.spatk
+    when :SPECIAL_DEFENSE then value = battler.spdef
+    when :SPEED           then value = battler.speed
+    end
+    value += @battle.pbRandom(-12..12) if !battler.pbOwnedByPlayer?
+    return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
   
   
@@ -921,7 +960,10 @@ class Battle::Scene
       PBEffects::Tailwind        => [_INTL("Tailwind"),     4],
       PBEffects::Rainbow         => [_INTL("Rainbow"),      4],
       PBEffects::SeaOfFire       => [_INTL("Sea of Fire"),  4],
-      PBEffects::Swamp           => [_INTL("Swamp"),        4]
+      PBEffects::Swamp           => [_INTL("Swamp"),        4],
+      PBEffects::Spikes          => [_INTL("Spikes"),       3],
+      PBEffects::ToxicSpikes     => [_INTL("Toxic Spikes"), 2],
+      PBEffects::StickyWeb       => [_INTL("Sticky Web"),   3]
     }
     # Effects that apply to an individual battler.
     battler_effects = {
@@ -938,21 +980,6 @@ class Battle::Scene
     if battler.effects[PBEffects::Trapping] > 0
       moveName = GameData::Move.get(battler.effects[PBEffects::TrappingMove]).name
       battler_effects[PBEffects::Trapping]  = [_INTL("{1}", moveName),   5]
-    end
-    # Adds plugin-specific effects.
-    if PluginManager.installed?("ZUD Mechanics")
-      team_effects[PBEffects::VineLash]     = [_INTL("G-Max Vine Lash"), 4]
-      team_effects[PBEffects::Wildfire]     = [_INTL("G-Max Wildfire"),  4]
-      team_effects[PBEffects::Cannonade]    = [_INTL("G-Max Cannonade"), 4]
-      team_effects[PBEffects::Volcalith]    = [_INTL("G-Max Volcalith"), 4]
-      if battler.effects[PBEffects::Dynamax] > 0
-        count = (battler.effects[PBEffects::MaxRaidBoss]) ? "---" : "#{battler.effects[PBEffects::Dynamax]}/#{Settings::DYNAMAX_TURNS}"
-        effects.push([_INTL("Dynamax"), count])
-      end
-    end
-    if PluginManager.installed?("Focus Meter System")
-      team_effects[PBEffects::FocusedGuard] = [_INTL("Focused Guard"),   4]
-      battler_effects[PBEffects::FocusLock] = [_INTL("Focus Lock"),      4]
     end
     # Weather
     if @battle.field.weather != :None
@@ -983,6 +1010,8 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
+    effects.push(["Stealth Rock", "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
+    effects.push(["Stat Drop Immunity", "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
     battler_effects.each do |key, value|
       next if battler.effects[key] == 0
       count = battler.effects[key]
