@@ -1765,7 +1765,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?(:GALEWINGS)
             echo("\nGale Wings Disrupt") if $AIGENERALLOG
-            abilityscore*=2 if target.moves.any? { |m| [:FLYING].include?(m&.type) } && target.hp >= (target.totalhp/2)
+            abilityscore*=2 if target.moves.any? { |m| [:FLYING].include?(m&.type) } && target.hp > (target.totalhp/2)
         end     
         if target.hasActiveAbility?(:UNBURDEN)
             if target.effects[PBEffects::Unburden]

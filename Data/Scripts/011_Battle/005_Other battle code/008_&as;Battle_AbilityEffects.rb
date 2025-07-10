@@ -857,7 +857,7 @@ Battle::AbilityEffects::OnStatLoss.add(:DEFIANT,
 
 Battle::AbilityEffects::PriorityChange.add(:GALEWINGS,
   proc { |ability, battler, move, pri|
-    next pri + 1 if battler.hp >= (battler.totalhp/2) && move.type == :FLYING #by low
+    next pri + 1 if battler.hp > (battler.totalhp/2) && move.type == :FLYING #by low
   }
 )
 

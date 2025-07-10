@@ -976,7 +976,7 @@ class Battle::AI
             expectedTerrain = procGlobalArray[1]
         end
         pri = move.priority
-        pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp >= (user.totalhp/2.0) && move.type==:FLYING
+        pri +=1 if user.hasActiveAbility?(:GALEWINGS) && user.hp > (user.totalhp/2.0) && move.type==:FLYING
         pri +=1 if move.statusMove? && user.hasActiveAbility?(:PRANKSTER)
         pri +=1 if move.function == "HigherPriorityInGrassyTerrain" && expectedTerrain == :Grassy && user.affectedByTerrain?
         pri +=1 if move.healingMove? && user.hasActiveAbility?(:TRIAGE)
