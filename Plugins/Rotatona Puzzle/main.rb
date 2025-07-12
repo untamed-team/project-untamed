@@ -73,9 +73,10 @@ class RotatonaPuzzle
 			return
 		end
 		
-		Console.echo_warn "test"
+		
+		
 		#when disc is caught, wait 1 second
-		if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
+		if @needPanCameraToPlayer
 			@timer = Graphics.frame_rate * 1
 			loop do
 				Graphics.update
@@ -83,17 +84,12 @@ class RotatonaPuzzle
 				Console.echo_warn @timer
 				@timer -= 1
 			end
-		
-			Console.echo_warn @needPanCameraToPlayer
-			
 			#pan camera back to player
-			pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
-			print "if this popped up while the camera was panning, need to make this wait until scrolling is done"
-			
 			@needPanCameraToPlayer = false
+			pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
 			#release player
 			$game_player.unlock
-		end
+		end #if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
 	end #def self.cameraLogic
 
 	def self.getPuzzleEvents	
