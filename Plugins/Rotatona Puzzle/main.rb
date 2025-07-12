@@ -167,6 +167,8 @@ class RotatonaPuzzle
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
 						event.associatedOverlay = overlayEvent
 						overlayEvent.associatedLauncher = event
+						#turn overlay to be same direction as associated launcher
+						overlayEvent.direction = event.direction
 						break
 					end
 				end #$game_map.events.each_value do |overlayEvent|
@@ -1316,9 +1318,7 @@ GameData::TerrainTag.register({
 })
 
 #logic to do:
-#pan camera back to player if disc is docked into new launcher
 #disc is always on top of player when launched; might need to move player farther away from track
-#make launcher overlays always face the same direction as the associated launcher when identifying puzzle pieces
 #When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all; all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file
 #resetting rota when it crashes:
