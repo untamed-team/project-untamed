@@ -824,6 +824,7 @@ class RotatonaPuzzle
 		discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
 		discEvent.character_name = "Rotatona_Disc_Anim1"
 		discEvent.pattern = 1
+		@needPanCameraToPlayer = true
 	end #def self.dockDisc
 	
 	def self.catchDisc(discEvent, catcherEvent)
@@ -1315,7 +1316,7 @@ GameData::TerrainTag.register({
 })
 
 #logic to do:
-#when starting disc rolling, move player off the track (if stepping on terrain tag)
+#pan camera back to player if disc is docked into new launcher
 #disc is always on top of player when launched; might need to move player farther away from track
 #make launcher overlays always face the same direction as the associated launcher when identifying puzzle pieces
 #When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player
