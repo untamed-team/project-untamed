@@ -992,6 +992,17 @@ class RotatonaPuzzle
 		discEvent.discJumping = false
 		discEvent.discLandingSpot = []
 		Console.echo_warn "disc crashed - #{reason}"
+		
+		#fade screen to black
+		pbToneChangeAll(Tone.new(-255, -255, -255), 10)
+		pbWait(Graphics.frame_rate)
+		print "did this print while fading or after fading finished?"
+		
+		#disc goes back to launcher and initial sprite and direction
+		#camera goes to disc in previous launcher
+		#fade back in, with camera on reset rota disc
+		
+		#camera pans back to player and player can move again
 		@needPanCameraToPlayer = true
 	end #def self.crashRotatona(discEvent)
 	
@@ -1320,7 +1331,12 @@ GameData::TerrainTag.register({
 #logic to do:
 #disc is always on top of player when launched; might need to move player farther away from track
 #When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player
-#Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all; all events should keep their current position and states when reloading the game; only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file
+#make followers go into ball when launching disc and come out when camera pans back to player and player unlocks
+
+#Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
+#DONE All events should keep their current position and states when reloading the game;
+#only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file. I might need to do this because currently it's working
+
 #resetting rota when it crashes:
 #A Rota only resets itself, not other Rotas or puzzle pieces. The entire puzzle should reset itself when exiting the room unless it has already been fully solved
 #if collide with disc, crash any rolling disc, so if one is in a catcher and the other crashes into it, the caught one or docked one (launcher) does not break
