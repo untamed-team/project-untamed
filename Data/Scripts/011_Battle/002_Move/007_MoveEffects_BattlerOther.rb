@@ -1090,7 +1090,7 @@ class Battle::Move::SetTargetAbilityToUserAbility < Battle::Move
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.unstoppableAbility? || target.ability == :TRUANT
+    if target.unstoppableAbility? #|| target.ability == :TRUANT
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
