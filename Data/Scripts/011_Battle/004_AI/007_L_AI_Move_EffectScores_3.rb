@@ -1222,9 +1222,8 @@ class Battle::AI
                         damage = pbRoughDamage(move,user,target,skill,baseDmg)
                         if target.hasActiveAbility?(:STAMINA)
                             score *= 2.0 if target.pbHasMoveFunction?("UseUserBaseDefenseInsteadOfUserBaseAttack")
-                            stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-                            stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
-                            defStage = user.stages[:DEFENSE] + 6
+                            stageMul, stageDiv = @battle.pbGetStatMath
+                            defStage = target.stages[:DEFENSE] + 6
                             defStage = [(defStage + livecountuser), 12].min
                             damage /= stageMul[defStage] / stageDiv[defStage]
                         else

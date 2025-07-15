@@ -443,9 +443,9 @@ class Battle::AI
       end
       if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
         # added f_ to everything to ensure nothing blows up
-        f_stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-        f_stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
-        oAtk = oSpAtk = 0
+        f_stageMul, f_stageDiv = @battle.pbGetStatMath
+        oAtk = 0
+        oSpAtk = 0
         battle.allOtherSideBattlers(pokmon.index).each do |data|
           f_atk        = data.attack
           f_atkStage   = data.stages[:ATTACK] + 6

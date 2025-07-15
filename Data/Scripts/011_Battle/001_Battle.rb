@@ -890,4 +890,20 @@ class Battle
     return if !Scene::USE_ABILITY_SPLASH
     @scene.pbReplaceAbilitySplash(battler)
   end
+
+  def pbGetStatMath(stat = :ATTACK) #by low
+    if $player.difficulty_mode?("chaos") && $GLOBALSETUPNERF
+      stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+      stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    else
+      if [:ACCURACY, :EVASION].include?(stat)
+        stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+        stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+      else
+        stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+        stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+      end
+    end
+    return stageMul, stageDiv
+  end
 end

@@ -146,8 +146,7 @@ class Battle::Move
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
-    stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    stageMul, stageDiv = @battle.pbGetStatMath(:ACCURACY)
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
@@ -250,8 +249,7 @@ class Battle::Move
       target.damageState.calcDamage = 1
       return
     end
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     # Get the move's type
     type = @calcType   # nil is treated as physical
     # Calculate whether this hit deals critical damage

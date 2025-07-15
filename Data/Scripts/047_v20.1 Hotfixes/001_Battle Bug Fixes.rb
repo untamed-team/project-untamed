@@ -478,8 +478,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
       target.pbLowerStatStage(:ATTACK, 1, user)
     end
     # Calculate target's effective attack value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     atk      = target.attack
     atkStage = target.stages[:ATTACK] + 6
     healAmt = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor

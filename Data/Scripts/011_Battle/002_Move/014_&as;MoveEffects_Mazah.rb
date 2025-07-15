@@ -354,8 +354,7 @@ class Battle::Move::HitTwoTimesReload < Battle::Move
   def specialMove?(thisType = nil);  return (@calcCategory == 1); end
   def pbOnStartUse(user, targets)
     # Calculate user's effective attacking value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     atk        = user.attack
     atkStage   = user.stages[:ATTACK] + 6
     realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor

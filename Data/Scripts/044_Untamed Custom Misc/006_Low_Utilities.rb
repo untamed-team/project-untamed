@@ -10,6 +10,8 @@ MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
 
+$GLOBALSETUPNERF = true
+
 def pbNatureChanger(pkmn)
   commands = []
   ids = []

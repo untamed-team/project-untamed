@@ -578,8 +578,7 @@ class Battle::AI
                 c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function) ||
                           user.effects[PBEffects::LaserFocus] > 0
                 # DemICE: taking into account 100% crit rate.
-                stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-                stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+                stageMul, stageDiv = @battle.pbGetStatMath
                 vatk, atkStage = move.pbGetAttackStats(user,target)
                 vdef, defStage = move.pbGetDefenseStats(user,target)
                 atkmult = 1.0*stageMul[atkStage]/stageDiv[atkStage]

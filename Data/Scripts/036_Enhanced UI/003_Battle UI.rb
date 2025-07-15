@@ -903,9 +903,8 @@ class Battle::Scene
   end
 
   def pbRoughDisplayStat(battler, stat)
+    stageMul, stageDiv = @battle.pbGetStatMath(stat)
     if [:ACCURACY, :EVASION].include?(stat)
-      stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
-      stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
       stage = battler.stages[stat]
       if stat == :ACCURACY && stage < 0
         if $player.difficulty_mode?("hard")
@@ -917,9 +916,6 @@ class Battle::Scene
       stage = [stage, 0].min if stat == :EVASION
       stage += 6
       return (100.0 * stageMul[stage] / stageDiv[stage]).floor
-    else
-      stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-      stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
     end
     stage = battler.stages[stat] + 6
     value = 0
