@@ -500,9 +500,7 @@ class Battle::AI
                         fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
                         thisprio = priorityAI(user, move, globalArray)
                         thatprio = priorityAI(target, targetMove, globalArray)
-                        if thatprio > 0
-                            fasterAtk = (thisprio >= thatprio) ? true : false
-                        end
+                        fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
                         if fasterAtk
                             realDamage *= 1.5
                         else
@@ -535,9 +533,7 @@ class Battle::AI
                                 fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
                                 thisprio = priorityAI(user, move, globalArray)
                                 thatprio = priorityAI(m, targetMove, globalArray)
-                                if thatprio > 0
-                                    fasterAtk = (thisprio >= thatprio) ? true : false
-                                end
+                                fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
                                 if fasterAtk
                                     realDamage *= 1.5
                                 else

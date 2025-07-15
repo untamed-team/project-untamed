@@ -291,9 +291,7 @@ class Battle::AI
                 targetMove = @battle.choices[target.index][2]
                 thisprio = priorityAI(user, move, globalArray)
                 thatprio = priorityAI(target, targetMove, globalArray)
-                if thatprio > 0
-                    fasterAtk = (thisprio >= thatprio) ? true : false
-                end
+                fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
                 if fasterAtk
                     score*=1.2
                     score*=1.25 if move.baseDamage > 80

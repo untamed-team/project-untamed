@@ -180,7 +180,7 @@ class Battle::AI
             aspeed = pbRoughStat(user,:SPEED,skill)
             ospeed = pbRoughStat(b,:SPEED,skill)
             outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-            outsped = true if thatprio > thisprio
+            outsped = true if thatprio > thisprio if thatprio != 0
             ret = :ELECTRIC if outsped
           end
         end
@@ -428,9 +428,7 @@ class Battle::AI
         targetMove = @battle.choices[target.index][2]
         thisprio = priorityAI(user, move, globalArray)
         thatprio = priorityAI(target, targetMove, globalArray)
-        if thatprio > 0
-          fasterAtk = (thisprio >= thatprio) ? true : false
-        end
+        fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
       end
       if @battle.choices[target.index][0] == :SwitchOut || fasterAtk
         baseDmg *= 2
