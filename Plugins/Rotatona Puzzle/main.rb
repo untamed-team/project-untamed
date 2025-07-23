@@ -281,6 +281,7 @@ class RotatonaPuzzle
 			end
 		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
+			print "event.discThisLauncherHasDocked is #{event.discThisLauncherHasDocked}"
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -818,8 +819,11 @@ class RotatonaPuzzle
 		discEvent.launcherThisDiscIsDockedIn = launcherEvent
 		launcherEvent.discThisLauncherHasDocked = discEvent
 		
-		#reset variables for launcher the disc came from
-		discEvent.launcherThisDiscWasLaunchedFrom.discThisLauncherHasDocked = nil
+		#reset variables for launcher the disc came from unless the disc is docked back into the same launcher
+		oldLauncher = discEvent.launcherThisDiscWasLaunchedFrom
+		oldLauncher.discThisLauncherHasDocked = nil if launcherEvent != oldLauncher
+		
+		#does commenting out the above make launchers keep their discs? Yes
 		
 		discEvent.discRolling = false
 		#turn rotatona disc event to match direction of launcher it's docked in
@@ -995,12 +999,19 @@ class RotatonaPuzzle
 		
 		#fade screen to black
 		pbToneChangeAll(Tone.new(-255, -255, -255), 10)
-		pbWait(Graphics.frame_rate)
-		print "did this print while fading or after fading finished?"
+		pbWait(Graphics.frame_rate) {Graphics.update}
 		
 		#disc goes back to launcher and initial sprite and direction
+		self.dockDisc(discEvent, discEvent.launcherThisDiscWasLaunchedFrom)
+		
 		#camera goes to disc in previous launcher
+		pbMapInterpreter.autoscroll(discEvent.x, discEvent.y, 4)
+		#move discEvent back to launcher it's docked in
+		discEvent.moveto(discEvent.launcherThisDiscIsDockedIn.x+1, discEvent.launcherThisDiscIsDockedIn.y-1)
+		
 		#fade back in, with camera on reset rota disc
+		pbToneChangeAll(Tone.new(0, 0, 0), 10)
+		pbWait(Graphics.frame_rate) {pbMapInterpreter.update}
 		
 		#camera pans back to player and player can move again
 		@needPanCameraToPlayer = true
@@ -1343,3 +1354,4 @@ GameData::TerrainTag.register({
 
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward
+#when the game waits a second after docking a disc, the disc is not done moving (graphics-wise)
