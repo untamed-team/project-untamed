@@ -109,6 +109,9 @@ class Battle
             pbCancelChoice(idxBattler + 1)   # Clear the previous battler's choice
             actioned.pop   # Forget the previous battler was done
             break
+          when -3   # Hotkey for sending ballz
+            commandsEnd = true
+            break
           end
           pbCancelChoice(idxBattler)
         end

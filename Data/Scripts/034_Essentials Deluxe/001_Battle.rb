@@ -355,6 +355,28 @@ class Battle::Scene
         break
       #elsif has_info && Input.triggerex?(Settings::BATTLE_INFO_KEY)
       #modified by Gardenette
+      elsif Input.trigger?(Input::F8)
+        #catchFoe = @battlers[idxBattler].pbDirectOpposing(true)
+        #if @battle.pbSideBattlerCount(catchFoe) == 1
+          ballz = nil
+          GameData::Item.each { |i| 
+            if GameData::Item.get(i.id).is_poke_ball? && $bag.quantity(i.id)>0
+              ballz = i
+              $bag.remove(i.id)
+              break
+            end
+          }
+          if ballz.nil?
+            #pbDisplay(_INTL("You have no balls!"))
+          else
+            @battle.pbThrowPokeBall(idxBattler, ballz)
+            ret = -3 # skipping
+            @lastCmd[idxBattler] = ret
+            break
+          end
+        #else
+        #  pbDisplay(_INTL("You can't aim right!"))
+        #end
       elsif has_info && Input.trigger?(Settings::BATTLE_INFO_KEY)
         pbHideFocusPanel
         pbToggleBattleInfo
