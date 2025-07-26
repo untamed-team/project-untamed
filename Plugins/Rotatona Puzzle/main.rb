@@ -93,6 +93,10 @@ class RotatonaPuzzle
 		discEvent.discRolling = true
 	end #def self.launchRotatonaDisc
 
+	def self.cameraPanningToPlayer?
+		return @cameraPanning
+	end
+	
 	def self.cameraLogic
 		#for all discs rolling, camera autoscroll to the disc
 		$game_temp.puzzleEvents[:Discs].each do |event|
@@ -112,12 +116,15 @@ class RotatonaPuzzle
 		#when disc is caught or crashes, wait 1 second
 		if @needPanCameraToPlayer
 			@timer = Graphics.frame_rate * 1
+			@cameraPanning = true
 			loop do
 				Graphics.update
+				pbMapInterpreter.pbUpdateSceneMap
 				break if @timer <= 0
 				Console.echo_warn @timer
 				@timer -= 1
 			end
+			@cameraPanning = false
 			#pan camera back to player
 			@needPanCameraToPlayer = false
 			pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
@@ -281,7 +288,6 @@ class RotatonaPuzzle
 			end
 		###################################################################	
 		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
-			print "event.discThisLauncherHasDocked is #{event.discThisLauncherHasDocked}"
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -999,7 +1005,7 @@ class RotatonaPuzzle
 		
 		#fade screen to black
 		pbToneChangeAll(Tone.new(-255, -255, -255), 10)
-		pbWait(Graphics.frame_rate) {Graphics.update}
+		pbWait(Graphics.frame_rate)
 		
 		#disc goes back to launcher and initial sprite and direction
 		self.dockDisc(discEvent, discEvent.launcherThisDiscWasLaunchedFrom)
@@ -1011,7 +1017,7 @@ class RotatonaPuzzle
 		
 		#fade back in, with camera on reset rota disc
 		pbToneChangeAll(Tone.new(0, 0, 0), 10)
-		pbWait(Graphics.frame_rate) {pbMapInterpreter.update}
+		pbWait(Graphics.frame_rate)
 		
 		#camera pans back to player and player can move again
 		@needPanCameraToPlayer = true
@@ -1252,7 +1258,7 @@ EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_eve
 EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 	#skip this check if not on Canyon Temple Left, Canyon Temple Right, or Canyon Temple Entrance maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120 && $game_map.map_id != 128
-	RotatonaPuzzle.cameraLogic
+	RotatonaPuzzle.cameraLogic if ! RotatonaPuzzle.cameraPanningToPlayer?
 	RotatonaPuzzle.checkForRotatonaCollisions
 	RotatonaPuzzle.updateRollingAnimation
 	RotatonaPuzzle.discMoveForward
@@ -1346,7 +1352,7 @@ GameData::TerrainTag.register({
 
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
 #DONE All events should keep their current position and states when reloading the game;
-#only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file. I might need to do this because currently it's working
+#only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file. I might need to do this because currently it's working. Might be what's causing the bug with events changing direction after loading the game. Or I could use self switches for directions
 
 #resetting rota when it crashes:
 #A Rota only resets itself, not other Rotas or puzzle pieces. The entire puzzle should reset itself when exiting the room unless it has already been fully solved
@@ -1355,3 +1361,4 @@ GameData::TerrainTag.register({
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward
 #when the game waits a second after docking a disc, the disc is not done moving (graphics-wise)
+#if I dock the disc into the first launcher, the launcher turns left when it was facing down before. In fact, even the rotatable straight track between the launchers reset
