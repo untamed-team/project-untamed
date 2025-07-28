@@ -29,6 +29,12 @@ class Game_Temp
   attr_accessor :puzzleEvents
 end
 
+SaveData.register(:rotatona_puzzle) do
+  save_value { $rotatona_puzzle }
+  load_value { |value|  $rotatona_puzzle = value }
+  new_game_value { RotatonaPuzzle.new }
+end
+
 class Game_Event
   attr_accessor :associatedLauncher
   attr_accessor :associatedOverlay
@@ -63,45 +69,28 @@ class RotatonaPuzzle
 	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT = [16,21]
 	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT = [16,21]
 	
-	def self.launchRotatonaDisc(launcherEvent, discEvent)
-		#start cutscene
-		pbCommonEvent(5)
-		
-		#move player off the track if standing on a track tile
-		if self.playerStandingOnTrackTileOrEvent?
-			#transfer player to designated tile with a fade to black then fade in
-			#requires Advanced Map Transfers by Luka S.J.
-			case $game_map.map_id
-			when 59 #left
-				pbTransferWithTransition(59, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT[1], transition = nil, dir = 8)
-			when 120 #right
-				pbTransferWithTransition(120, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT[1], transition = nil, dir = 8)
-			when 128 #entrance
-				pbTransferWithTransition(128, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE[1], transition = nil, dir = 8)
-			end #case $game_map.map_id
-		end #if self.playerStandingOnTrackTileOrEvent?
-	
-		discEvent.launcherThisDiscWasLaunchedFrom = launcherEvent
-		#launcherEvent = discEvent.launcherThisDiscIsDockedIn #unnecessary since we have the launcherEvent parameter?
-		launcherEvent.discThisLauncherHasDocked = nil
-		discEvent.launcherThisDiscIsDockedIn = nil
-		
-		#pan camera to disc
-		pbMapInterpreter.autoscroll(discEvent.x, discEvent.y, 4)
-		
-		#start disc rolling
-		pbSEPlay(SE_LAUNCHER_BUTTON)
-		discEvent.discRolling = true
-	end #def self.launchRotatonaDisc
-	
 	#######################################
 	#============== Set up ================
 	#######################################
+	def self.initialize
+		@currentRoomPuzzleEvents = {
+			:Discs	 			  		  => [],
+			:Launchers_Rotatable  		  => [],
+			:Launchers_Overlay_Rotatable  => [],
+			:Launchers_Stationary 		  => [],
+			:Launchers_Overlay_Stationary => [],
+			:Catchers             		  => [],
+			:Ramps           	  		  => [],
+			:StraightTracks       	 	  => [],
+			:CornerTracks  		  	  	  => []
+		}
+	end #def self.initialize
+	
 	def self.getPuzzleEvents	
 		Console.echo_warn "identifying puzzle pieces from scratch"
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
-		$game_temp.puzzleEvents = {
+		@currentRoomPuzzleEvents = {
 			:Discs	 			  		  => [],
 			:Launchers_Rotatable  		  => [],
 			:Launchers_Overlay_Rotatable  => [],
@@ -128,10 +117,10 @@ class RotatonaPuzzle
 			@frameWaitCounter = 0
 			@timer = 0
 		
-			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
+			@currentRoomPuzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
 				#identify launchers and their associated overlay events
-				$game_temp.puzzleEvents[:Launchers_Rotatable].push(event)
+				@currentRoomPuzzleEvents[:Launchers_Rotatable].push(event)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -143,10 +132,10 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			$game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
+			@currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
 			if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
 				#identify launchers and their associated overlay events
-				$game_temp.puzzleEvents[:Launchers_Stationary].push(event)
+				@currentRoomPuzzleEvents[:Launchers_Stationary].push(event)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -156,20 +145,20 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			$game_temp.puzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
-			$game_temp.puzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
-			$game_temp.puzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
-			$game_temp.puzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
-			$game_temp.puzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
+			@currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
+			@currentRoomPuzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
+			@currentRoomPuzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
+			@currentRoomPuzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
+			@currentRoomPuzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
 		
 		#dock rotatona disc at start
 		#if rotatona disc is touching launcher event, dock it to that launcher
 		$game_map.events.each_value do |event|
 			#skip event if it's not a disc
-			next if !$game_temp.puzzleEvents[:Discs].include?(event)
+			next if !@currentRoomPuzzleEvents[:Discs].include?(event)
 			$game_map.events.each_value do |launcherEvent|
-				next if !$game_temp.puzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !$game_temp.puzzleEvents[:Launchers_Stationary].include?(launcherEvent)
+				next if !@currentRoomPuzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !@currentRoomPuzzleEvents[:Launchers_Stationary].include?(launcherEvent)
 				#get the center X and center Y of the launcher
 				centerX = launcherEvent.x+1
 				centerY = launcherEvent.y-1
@@ -190,13 +179,13 @@ class RotatonaPuzzle
 	#######################################
 	def self.cameraLogic
 		#for all discs rolling, camera autoscroll to the disc
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			#start with locking the player in place
 			$game_player.lock
 			#scroll camera to moving disc
 			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED+1)
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 	end #def self.cameraLogic
 	
 	def self.cameraPanToPlayer(comment=nil)
@@ -216,13 +205,13 @@ class RotatonaPuzzle
 	#######################################
 	def self.playerInteract(event)
 		#events are passed in as GameData		
-		if $game_temp.puzzleEvents[:Discs].include?(event)
+		if @currentRoomPuzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
 			#rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
 			#print "launching disc from launcher 1" if rota1LaunchChoice
 		###################################################################	
-		elsif $game_temp.puzzleEvents[:Launchers_Rotatable].include?(event)
+		elsif @currentRoomPuzzleEvents[:Launchers_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -247,7 +236,7 @@ class RotatonaPuzzle
 				end
 			end
 		###################################################################
-		elsif $game_temp.puzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
+		elsif @currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -272,7 +261,7 @@ class RotatonaPuzzle
 				end
 			end
 		###################################################################	
-		elsif $game_temp.puzzleEvents[:Launchers_Stationary].include?(event)
+		elsif @currentRoomPuzzleEvents[:Launchers_Stationary].include?(event)
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -285,7 +274,7 @@ class RotatonaPuzzle
 			end
 			
 		###################################################################	
-		elsif $game_temp.puzzleEvents[:Launchers_Overlay_Stationary].include?(event)
+		elsif @currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event)
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -298,24 +287,24 @@ class RotatonaPuzzle
 			end
 			
 		###################################################################
-		elsif event == $game_temp.puzzleEvents[:Catchers]
+		elsif event == @currentRoomPuzzleEvents[:Catchers]
 			#print "this is catcher2"
 			#maybe some text about how the rota would seem to fit perfectly in here
 			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
 		###################################################################
-		elsif $game_temp.puzzleEvents[:Ramps].include?(event)
+		elsif @currentRoomPuzzleEvents[:Ramps].include?(event)
 			#print "this is a ramp"
 			#option to switch 180 degrees
 			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.switchRamp(event) if rampChoice
 		###################################################################
-		elsif $game_temp.puzzleEvents[:StraightTracks].include?(event)
+		elsif @currentRoomPuzzleEvents[:StraightTracks].include?(event)
 			#print "this is a straight track"
 			#option to turn track 90 degrees
 			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.rotateStraightTrack(event) if straightTrackChoice
 		###################################################################
-		elsif $game_temp.puzzleEvents[:CornerTracks].include?(event)
+		elsif @currentRoomPuzzleEvents[:CornerTracks].include?(event)
 			#print "this is a corner track"
 			#option to turn track 90 degrees
 			choices = [
@@ -332,11 +321,11 @@ class RotatonaPuzzle
 				#print "turning corner track right"
 				self.rotateCornerTrack(event,"right90")
 			end
-		end #if $game_temp.puzzleEvents[:Discs].include?(event)
+		end #if @currentRoomPuzzleEvents[:Discs].include?(event)
 	end #def self.playerInteract
 	
 	def self.checkForRotatonaCollisions
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			
 			#set the tile the disc is touching if it's different than before (so we can't double dip on the same tile when checking for collisions)
@@ -777,7 +766,7 @@ class RotatonaPuzzle
 				#crash
 				self.crashRotatona(event, "disc not touching track, not touching track event, not jumping from ramp")
 			end #if colliding with something
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 	end #self.checkForRotatonaCollisions
 	
 	def self.rotateStraightTrack(event)
@@ -979,6 +968,37 @@ class RotatonaPuzzle
 	#######################################
 	#=========== Disc Methods =============
 	#######################################
+	def self.launchRotatonaDisc(launcherEvent, discEvent)
+		#start cutscene
+		pbCommonEvent(5)
+		
+		#move player off the track if standing on a track tile
+		if self.playerStandingOnTrackTileOrEvent?
+			#transfer player to designated tile with a fade to black then fade in
+			#requires Advanced Map Transfers by Luka S.J.
+			case $game_map.map_id
+			when 59 #left
+				pbTransferWithTransition(59, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT[1], transition = nil, dir = 8)
+			when 120 #right
+				pbTransferWithTransition(120, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT[1], transition = nil, dir = 8)
+			when 128 #entrance
+				pbTransferWithTransition(128, TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE[0], TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE[1], transition = nil, dir = 8)
+			end #case $game_map.map_id
+		end #if self.playerStandingOnTrackTileOrEvent?
+	
+		discEvent.launcherThisDiscWasLaunchedFrom = launcherEvent
+		#launcherEvent = discEvent.launcherThisDiscIsDockedIn #unnecessary since we have the launcherEvent parameter?
+		launcherEvent.discThisLauncherHasDocked = nil
+		discEvent.launcherThisDiscIsDockedIn = nil
+		
+		#pan camera to disc
+		pbMapInterpreter.autoscroll(discEvent.x, discEvent.y, 4)
+		
+		#start disc rolling
+		pbSEPlay(SE_LAUNCHER_BUTTON)
+		discEvent.discRolling = true
+	end #def self.launchRotatonaDisc
+	
 	def self.dockDisc(discEvent, launcherEvent, success=true)
 		#Console.echo_warn "docking disc"
 		discEvent.launcherThisDiscIsDockedIn = launcherEvent
@@ -1008,7 +1028,7 @@ class RotatonaPuzzle
 	end #def self.catchDisc
 	
 	def self.discMoveForward
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			#don't move if not rolling
 			next if !event.discRolling
 			#we don't want to move forward if the disc is currently turning
@@ -1027,11 +1047,11 @@ class RotatonaPuzzle
 			when 8 #up
 				pbMoveRoute(event, [PBMoveRoute::Up])
 			end #case event.direction
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 	end #def self.discMoveForward
 	
 	def self.updateRollingAnimation
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			
 			next if @frameWaitCounter < FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
@@ -1051,7 +1071,7 @@ class RotatonaPuzzle
 				end
 				event.pattern = 0
 			end #if event.pattern == 0
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 		
 		@frameWaitCounter = 0 if @frameWaitCounter >= FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
 		@frameWaitCounter += 1

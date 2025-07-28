@@ -19,14 +19,14 @@ class RotatonaPuzzle
 	#=========== Disc Events =============
 	#######################################
 	def self.discRolling?
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			return true if event.discRolling
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 		return false
 	end #def self.discRolling?
 	
 	def self.checkIfDiscTurning
-		$game_temp.puzzleEvents[:Discs].each do |event|
+		@currentRoomPuzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			next if event.discTurningDirection.nil?
 
@@ -38,7 +38,7 @@ class RotatonaPuzzle
 				event.direction = event.discTurningDirection
 				event.discTurningDirection = nil
 			end
-		end #$game_temp.puzzleEvents[:Discs].each do |event|
+		end #@currentRoomPuzzleEvents[:Discs].each do |event|
 	end #def self.turnDisc(event, oldDirection, newDirection)
 	
 	def self.determinePatterForTurning(event, newDirection)
@@ -70,33 +70,33 @@ class RotatonaPuzzle
 		#print "checking for corner track. this should print twice when touching one" #it didn't work on event 29
 		#iterate through rotatable corner track events
 		touchingTrack = nil
-		$game_temp.puzzleEvents[:CornerTracks].each do |event|
+		@currentRoomPuzzleEvents[:CornerTracks].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingTrack = event #need to know the event the disc is touching to know the direction
 			end
-		end #$game_temp.puzzleEvents
+		end #@currentRoomPuzzleEvents
 		return touchingTrack
 	end #def self.touchingCornerTrackEvent?(discEvent)
 	
 	def self.touchingCatcherEvent?(discEvent)
 		#iterate through catcher events
 		touchingCatcher = nil
-		$game_temp.puzzleEvents[:Catchers].each do |event|
+		@currentRoomPuzzleEvents[:Catchers].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingCatcher = event #need to know the event the disc is touching to know the direction
 			end
-		end #$game_temp.puzzleEvents
+		end #@currentRoomPuzzleEvents
 		return touchingCatcher
 	end #def self.touchingCatcherEvent?(discEvent)
 	
 	def self.touchingStraightTrackEvent?(discEvent)
 		touchingTrack = nil
 		#iterate through rotatable straight track events
-		$game_temp.puzzleEvents[:StraightTracks].each do |event|
+		@currentRoomPuzzleEvents[:StraightTracks].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingTrack = event #need to know the event the disc is touching to know the direction
 			end
-		end #$game_temp.puzzleEvents
+		end #@currentRoomPuzzleEvents
 		return touchingTrack
 	end #def self.touchingStraightTrackEvent?(discEvent)
 	
@@ -104,18 +104,18 @@ class RotatonaPuzzle
 		#iterate through togglable ramp events
 		touchingRamp = nil
 		#iterate through rotatable straight track events
-		$game_temp.puzzleEvents[:Ramps].each do |event|
+		@currentRoomPuzzleEvents[:Ramps].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingRamp = event #need to know the event the disc is touching to know the direction
 			end
-		end #$game_temp.puzzleEvents
+		end #@currentRoomPuzzleEvents
 		return touchingRamp
 	end #def self.touchingRampEvent?(discEvent)
 	
 	def self.touchingLauncherEvent?(discEvent)
 		#iterate through rotatable corner track events
 		touchingLauncher = nil
-		$game_temp.puzzleEvents[:Launchers_Rotatable].each do |launcherEvent|
+		@currentRoomPuzzleEvents[:Launchers_Rotatable].each do |launcherEvent|
 			#get the center X and center Y of the launcher
 			launcherCenterX = launcherEvent.x+1
 			launcherCenterY = launcherEvent.y-1
@@ -129,8 +129,8 @@ class RotatonaPuzzle
 					touchingLauncher = launcherEvent
 					return touchingLauncher
 				end
-		end #$game_temp.puzzleEvents
-		$game_temp.puzzleEvents[:Launchers_Stationary].each do |launcherEvent|
+		end #@currentRoomPuzzleEvents
+		@currentRoomPuzzleEvents[:Launchers_Stationary].each do |launcherEvent|
 			#get the center X and center Y of the launcher
 			launcherCenterX = launcherEvent.x+1
 			launcherCenterY = launcherEvent.y-1
@@ -144,7 +144,7 @@ class RotatonaPuzzle
 					touchingLauncher = launcherEvent
 					return touchingLauncher
 				end
-		end #$game_temp.puzzleEvents
+		end #@currentRoomPuzzleEvents
 
 		return touchingLauncher
 	end #def self.touchingLauncherEvent?(discEvent)
@@ -178,7 +178,7 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
 	#skip this check if old map is the same as new map
 	
 	#do not uncomment this until you move to another map and save there first
-	####################next if $game_map.map_id == _old_map_id
+	next if $game_map.map_id == _old_map_id
 	RotatonaPuzzle.getPuzzleEvents
   }
 )
