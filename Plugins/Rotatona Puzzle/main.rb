@@ -41,6 +41,9 @@ class Game_Event
   attr_accessor :discJumping
   attr_accessor :discLandingSpot
   attr_accessor :catcherHasDisc
+  attr_accessor :storedX
+  attr_accessor :storedY
+  attr_accessor :storedDirection
 end
 
 class RotatonaPuzzle
@@ -61,6 +64,9 @@ class RotatonaPuzzle
 	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT = [16,21]
 	
 	def self.launchRotatonaDisc(launcherEvent, discEvent)
+		#start cutscene
+		pbCommonEvent(5)
+		
 		#move player off the track if standing on a track tile
 		if self.playerStandingOnTrackTileOrEvent?
 			#transfer player to designated tile with a fade to black then fade in
@@ -201,6 +207,8 @@ class RotatonaPuzzle
 		#release player
 		$game_player.unlock
 		@cameraPanning = false
+		#end cutscene
+		pbCommonEvent(6)
 	end #def self.cameraPanToPlayer
 
 	#######################################
@@ -1104,20 +1112,16 @@ class RotatonaPuzzle
 end #class RotatonaPuzzle
 
 #logic to do:
-#disc is always on top of player when launched; might need to move player farther away from track
+#Upon re-entry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
 
-#make followers go into ball when launching disc and come out when camera pans back to player and player unlocks
-
-#Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
-
-#All events should keep their current position and states when reloading the game;
+#WIP All events should keep their current position and states when reloading the game;
 #only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file. I might need to do this because currently it's working. Might be what's causing the bug with events changing direction after loading the game. I could have each puzzle event save its position and direction inside itself and that only resets when identifying puzzle pieces, so when leaving the map and re-entering it
 
-#resetting rota when it crashes:
-#A Rota only resets itself, not other Rotas or puzzle pieces. The entire puzzle should reset itself when exiting the room unless it has already been fully solved
-#if collide with disc, crash any rolling disc, so if one is in a catcher and the other crashes into it, the caught one or docked one (launcher) does not break
+#WIP utilize attr_accessor :storedX, attr_accessor :storedY, attr_accessor :storedDirection
 
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward
 #when the game waits a second after docking a disc, the disc is not done moving (graphics-wise)
 #if I dock the disc into the first launcher, the launcher turns left when it was facing down before. In fact, even the rotatable straight track between the launchers reset
+
+#disc is always on top of player when launched; might need to move player farther away from track
