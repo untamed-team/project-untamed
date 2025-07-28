@@ -1106,8 +1106,6 @@ end #class RotatonaPuzzle
 #logic to do:
 #disc is always on top of player when launched; might need to move player farther away from track
 
-# WIP   When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player - currently the camera does not pan back to the player when launched from top left launcher
-
 #make followers go into ball when launching disc and come out when camera pans back to player and player unlocks
 
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
