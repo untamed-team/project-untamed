@@ -180,7 +180,7 @@ class Battle::AI
             aspeed = pbRoughStat(user,:SPEED,skill)
             ospeed = pbRoughStat(b,:SPEED,skill)
             outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-            outsped = true if thatprio > thisprio if thatprio != 0
+            outsped = true if thatprio > thisprio && thatprio != 0
             ret = :ELECTRIC if outsped
           end
         end
