@@ -121,7 +121,6 @@ class RotatonaPuzzle
 			event.catcherHasDisc = false
 			@frameWaitCounter = 0
 			@timer = 0
-			@needPanCameraToPlayer = false
 		
 			$game_temp.puzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
@@ -192,32 +191,17 @@ class RotatonaPuzzle
 			#scroll camera to moving disc
 			pbMapInterpreter.autoscroll(event.x, event.y, DISC_SPEED+1)
 		end #$game_temp.puzzleEvents[:Discs].each do |event|
-		
-		#when disc is caught, @needPanCameraToPlayer will be set to true
-		#if disc has not been caught, return so we don't pan camera to player
-		if @needPanCameraToPlayer.nil? || !@needPanCameraToPlayer
-			return
-		end
-		
-		#when disc is caught or crashes, wait 1 second
-		if @needPanCameraToPlayer
-			@timer = Graphics.frame_rate * 1
-			@cameraPanning = true
-			loop do
-				Graphics.update
-				pbMapInterpreter.pbUpdateSceneMap
-				break if @timer <= 0
-				Console.echo_warn @timer
-				@timer -= 1
-			end
-			@cameraPanning = false
-			#pan camera back to player
-			@needPanCameraToPlayer = false
-			pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
-			#release player
-			$game_player.unlock
-		end #if !@needPanCameraToPlayer.nil? && @needPanCameraToPlayer
 	end #def self.cameraLogic
+	
+	def self.cameraPanToPlayer(comment=nil)
+		@cameraPanning = true
+		pbWait(Graphics.frame_rate)
+		pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
+		pbWait(Graphics.frame_rate)
+		#release player
+		$game_player.unlock
+		@cameraPanning = false
+	end #def self.cameraPanToPlayer
 
 	#######################################
 	#=== Interactions and Collisions =====
@@ -987,7 +971,7 @@ class RotatonaPuzzle
 	#######################################
 	#=========== Disc Methods =============
 	#######################################
-	def self.dockDisc(discEvent, launcherEvent)
+	def self.dockDisc(discEvent, launcherEvent, success=true)
 		#Console.echo_warn "docking disc"
 		discEvent.launcherThisDiscIsDockedIn = launcherEvent
 		launcherEvent.discThisLauncherHasDocked = discEvent
@@ -1003,7 +987,7 @@ class RotatonaPuzzle
 		discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
 		discEvent.character_name = "Rotatona_Disc_Anim1"
 		discEvent.pattern = 1
-		@needPanCameraToPlayer = true
+		self.cameraPanToPlayer("panning camera to player - docking disc") if success
 	end #def self.dockDisc
 	
 	def self.catchDisc(discEvent, catcherEvent)
@@ -1012,7 +996,7 @@ class RotatonaPuzzle
 		catcherEvent.catcherHasDisc = true
 		pbSEPlay(SE_CATCHING)
 		discEvent.discRolling = false
-		@needPanCameraToPlayer = true
+		self.cameraPanToPlayer("catching disc")
 	end #def self.catchDisc
 	
 	def self.discMoveForward
@@ -1076,20 +1060,21 @@ class RotatonaPuzzle
 		pbWait(Graphics.frame_rate)
 		
 		#disc goes back to launcher and initial sprite and direction
-		self.dockDisc(discEvent, discEvent.launcherThisDiscWasLaunchedFrom)
+		self.dockDisc(discEvent, discEvent.launcherThisDiscWasLaunchedFrom, success=false)
 		
 		#move discEvent back to launcher it's docked in
 		discEvent.moveto(discEvent.launcherThisDiscIsDockedIn.x+1, discEvent.launcherThisDiscIsDockedIn.y-1)
 		
+		@cameraPanning = true
 		#camera goes to disc in previous launcher
-		pbMapInterpreter.autoscroll(discEvent.x, discEvent.y, 4)
+		pbMapInterpreter.autoscroll(discEvent.x, discEvent.y, 6)
 		
 		#fade back in, with camera on reset rota disc
 		pbToneChangeAll(Tone.new(0, 0, 0), 10)
 		pbWait(Graphics.frame_rate)
 		
 		#camera pans back to player and player can move again
-		@needPanCameraToPlayer = true
+		self.cameraPanToPlayer("crashing disc")
 	end #def self.crashRotatona(discEvent)
 	
 	def self.rotateDockedDisc(discEvent, newDirection)
@@ -1120,7 +1105,9 @@ end #class RotatonaPuzzle
 
 #logic to do:
 #disc is always on top of player when launched; might need to move player farther away from track
-# WIP   When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player - currently the camera does not center onto the disc when it's back in the dock before panning back to the player
+
+# WIP   When a Rota crashes, The screen should go black and the rota should reset back to its last launcher as the camera shifts back to the player - currently the camera does not pan back to the player when launched from top left launcher
+
 #make followers go into ball when launching disc and come out when camera pans back to player and player unlocks
 
 #Upon reentry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
