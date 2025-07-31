@@ -742,6 +742,42 @@ class Battle::AI
             end
         end
     #---------------------------------------------------------------------------
+    when "NextMoveIs2xSuperEffective" # reworked miracle eye
+        score = 0 if target.effects[PBEffects::SuperEffEye] > 0
+        score *= 1.2 if target.effects[PBEffects::Transform]
+        score *= 0.2 if target.hasActiveItem?(:WEAKNESSPOLICY)
+        @battle.allSameSideBattlers(user.index).each do |b|
+            roles = pbGetPokemonRole(b, target)
+            score *= 1.1 if roles.include?("Sweeper") || roles.include?("Stallbreaker")
+            score *= 1.1 if b.hasActiveAbility?([:NEUROFORCE, :WARRIORSPIRIT])
+            score *= 1.1 if b.hasActiveAbility?(:WARRIORSPIRIT) && !$player.difficulty_mode?("chaos")
+            score *= 0.9 if b.hasActiveAbility?(:TINTEDLENS)
+            score *= 1.1 if b.hasActiveItem?(:EXPERTBELT)
+            supervar = 0
+            nvestabvar = 0
+            for i in b.moves
+                typeMod = pbCalcTypeMod(i.type, b, target, i)
+                if i.baseDamage > 0
+                    if Effectiveness.super_effective?(typeMod)
+                        supervar += 1
+                    else
+                        nvestabvar += 1 if b.pbHasType?(i.type, true)
+                    end
+                end
+                score *= 1.2 if Effectiveness.ineffective?(typeMod)
+            end
+            score *= 1.3 if nvestabvar > 1 && supervar < 1
+            score *= 2.0 if supervar == 0 && target.hasActiveAbility?(:WONDERGUARD) && 
+                            @battle.choices[target.index][0] != :SwitchOut
+        end
+        if targetWillMove?(target, "status")
+            score = 0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
+        end
+        if @battle.choices[target.index][0] == :SwitchOut
+            realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
+            score = 0 if realTarget.hasActiveAbility?(:MAGICBOUNCE)
+        end
+    #---------------------------------------------------------------------------
     else
         return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
     end
