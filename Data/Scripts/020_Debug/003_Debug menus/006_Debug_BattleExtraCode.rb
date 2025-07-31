@@ -105,6 +105,7 @@ module Battle::DebugVariables
     PBEffects::Taunt          => { name: "Taunt number of rounds remaining",                default: 0 },
     PBEffects::Telekinesis    => { name: "Telekinesis number of rounds remaining",          default: 0 },
     PBEffects::ThroatChop     => { name: "Throat Chop number of rounds remaining",          default: 0 },
+    PBEffects::SuperEffEye    => { name: "Miracle Eye (Rework) number of rounds remaining", default: 0 },
     PBEffects::Torment        => { name: "Torment preventing repeating moves",              default: false },
 #    PBEffects::Toxic - set elsewhere
 #    PBEffects::Transform - too complex to be worth bothering with

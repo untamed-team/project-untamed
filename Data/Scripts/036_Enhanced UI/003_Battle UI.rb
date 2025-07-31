@@ -975,7 +975,8 @@ class Battle::Scene
       PBEffects::Taunt           => [_INTL("Taunt"),        4],
       PBEffects::PerishSong      => [_INTL("Perish Song"),  3],
       PBEffects::Telekinesis     => [_INTL("Telekinesis"),  3],
-      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2]
+      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2],
+      PBEffects::SuperEffEye     => [_INTL("Miracle Eye"),  2]
     }
     if battler.effects[PBEffects::Trapping] > 0
       moveName = GameData::Move.get(battler.effects[PBEffects::TrappingMove]).name
