@@ -131,6 +131,7 @@ module PBEffects
   LeechSeedCount      = 126
   HoldingHand         = 127
   NeedleArm           = 128
+  SuperEffEye         = 129
 
   #=============================================================================
   # These effects apply to a battler position

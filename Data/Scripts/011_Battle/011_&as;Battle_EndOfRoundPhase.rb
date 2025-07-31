@@ -757,6 +757,7 @@ class Battle
       battler.effects[PBEffects::ZealousDance]     -= 1 if battler.effects[PBEffects::ZealousDance] > 0
       battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
       battler.effects[PBEffects::HoldingHand]      = false
+      battler.effects[PBEffects::SuperEffEye]      -= 1 if battler.effects[PBEffects::SuperEffEye] > 0
       battler.pokemon.willmega                     = false
       battler.tookDirectDmgThisRound               = false
       battler.lastHPLost                           = 0

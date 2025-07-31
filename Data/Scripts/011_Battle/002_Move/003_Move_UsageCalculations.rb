@@ -91,9 +91,9 @@ class Battle::Move
     ret = 1
     typeMods.each { |m| ret *= m }
     ret *= 2 if target.effects[PBEffects::TarShot] && moveType == :FIRE
+    ret = 16 if target.effects[PBEffects::SuperEffEye] > 0
     # Inverse Battle Switch #by low
-    # 8x = ret 64
-    # 4x = ret 32
+    # 8x = ret 64; 4x = ret 32
     if $game_switches[INVERSEBATTLESWITCH]
       if ret == 0
         ret = 16
