@@ -303,21 +303,26 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
     @transformbreak = true if targets[0].effects[PBEffects::Transform]
   end
   def canMagicCoat?; return true; end
+  def pbFailsAgainstTarget?(user, target, show_message)
+    if target.fainted? || target.effects[PBEffects::SuperEffEye] > 0
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+    return false
+  end
 
   def pbEffectAgainstTarget(user, target)
-    if user.effects[PBEffects::SuperEffEye] <= 0
-      target.effects[PBEffects::SuperEffEye] = 2
-      if target.hasActiveAbility?(:ILLUSION)
-        Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
-      elsif target.effects[PBEffects::Transform]
-        blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
-        target.pbTransform(blankBattler, false) # holy mother of all jank
-        target.effects[PBEffects::Transform] = false
-        target.effects[PBEffects::TransformSpecies] = nil
-        @battle.pbDisplay(_INTL("{1}'s transform wore off!", target.pbThis))
-      else
-        @battle.pbDisplay(_INTL("{1} was identified!", target.pbThis))
-      end
+    target.effects[PBEffects::SuperEffEye] = 2
+    if target.hasActiveAbility?(:ILLUSION)
+      Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
+    elsif target.effects[PBEffects::Transform]
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
+      target.pbTransform(blankBattler, false) # holy mother of all jank
+      target.effects[PBEffects::Transform] = false
+      target.effects[PBEffects::TransformSpecies] = nil
+      @battle.pbDisplay(_INTL("{1}'s transform wore off!", target.pbThis))
+    else
+      @battle.pbDisplay(_INTL("{1} was identified!", target.pbThis))
     end
   end
 
