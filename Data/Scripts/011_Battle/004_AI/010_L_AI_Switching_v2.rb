@@ -511,7 +511,7 @@ class Battle::AI
               sum+=80
             end
             healsStatus = battlePos.effects[PBEffects::HealingWish] || battlePos.effects[PBEffects::LunarDance]
-            if healsStatus && pokmon.status == :NONE
+            if healsStatus && pokmon.status != :NONE
               case pokmon.status
               when :POISON
                 if pokmon.hasActiveAbility?([:GUTS, :MARVELSCALE, :QUICKFEET, :TOXICBOOST, :POISONHEAL]) && 

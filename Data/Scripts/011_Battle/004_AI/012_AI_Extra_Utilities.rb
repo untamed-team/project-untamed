@@ -1132,8 +1132,8 @@ class Battle::AI
     end
 
     def moveLocked(user)
-        return true if user.hasActiveAbility?(:GORILLATACTICS)
-        return true if user.effects[PBEffects::ChoiceBand] && user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+        return true if (user.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF]) || 
+                        user.hasActiveAbility?(:GORILLATACTICS)) && user.effects[PBEffects::ChoiceBand]
         return true if user.effects[PBEffects::Encore] > 0
         return true if user.usingMultiTurnAttack?
         return false

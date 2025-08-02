@@ -6,7 +6,6 @@ class Battle::AI
     return false
   end
 
-  # edit this shitcode to account for party members, but first test if AI can use items on inactive mons
   # NOTE: The AI will only consider using an item on the Pokémon it's currently
   #       choosing an action for.
   def pbEnemyItemToUse(idxBattler)
@@ -93,6 +92,7 @@ class Battle::AI
       :MAXHONEY => 999
     }
 
+    # edited for whole party #by low
     partyScores = Array.new(@battle.pbParty(idxBattler).length, [])
     @battle.pbParty(idxBattler).each_with_index do |m, index|
       # Determine target of item
@@ -107,7 +107,7 @@ class Battle::AI
       revHP = [battler.totalhp / 2, 1].max
       reviveItems[:REVIVE] = revHP
       reviveItems[:REVIVALHERB] = revHP
-      hpItems[:SITRUSBERRY] = battler.totalhp / 4
+      hpItems[:SITRUSBERRY] = battler.totalhp / 4 # pushed to later so the hp recovery variance is accounted
       losthp = battler.totalhp - battler.hp
       preferFullRestore = (battler.hp <= battler.totalhp * 2 / 3 &&
         (battler.status != :NONE || battler.effects[PBEffects::Confusion] > 0))

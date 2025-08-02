@@ -293,6 +293,50 @@ class Battle::Move::HoldingHandsShamefully < Battle::Move
 end
 
 #===============================================================================
+# Until the end of the next round or when hit with a move, the target will 
+# always take super effective damage. "Reverts" transform and breaks illusion 
+# (we dont even have zoroark in the game) (Reworked Miracle Eye)
+#===============================================================================
+class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
+  def pbOnStartUse(user,targets)
+    @transformbreak = false
+    @transformbreak = true if targets[0].effects[PBEffects::Transform]
+  end
+  def canMagicCoat?; return true; end
+  def pbFailsAgainstTarget?(user, target, show_message)
+    if target.fainted? || target.effects[PBEffects::SuperEffEye] > 0
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+    return false
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    target.effects[PBEffects::SuperEffEye] = 2
+    if target.hasActiveAbility?(:ILLUSION)
+      Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
+    elsif target.effects[PBEffects::Transform]
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
+      target.pbTransform(blankBattler, false) # holy mother of all jank
+      target.effects[PBEffects::Transform] = false
+      target.effects[PBEffects::TransformSpecies] = nil
+      @battle.pbDisplay(_INTL("{1}'s transform wore off!", target.pbThis))
+    else
+      @battle.pbDisplay(_INTL("{1} was identified!", target.pbThis))
+    end
+  end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    return if !showAnimation
+    @battle.pbAnimation(id, user, targets, hitNum)
+    if @transformbreak
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false)
+      @battle.scene.pbChangePokemon(targets[0], blankBattler.pokemon)
+    end
+  end
+end
+
+#===============================================================================
 # Deals double damage if the opponent initial item belongs to the "choice" brand
 # "Knocks Off" the opponent item if its a choice item (not used)
 #===============================================================================

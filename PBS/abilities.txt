@@ -1276,6 +1276,7 @@ FullDesc = If affected by Grassy Terrain, the user gains +2 critical hit ratio.
 [MOMENTUM]
 Name = Momentum
 Description = Using the same move in succession raises its power.
+FullDesc = Using the same move repeatedly boosts its power by 20% for each use, stacking up to 100%. The boost resets if the move fails, a different move is used, or if the user switches out.
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper

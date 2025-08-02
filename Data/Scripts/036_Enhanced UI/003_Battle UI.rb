@@ -885,12 +885,15 @@ class Battle::Scene
         end
         addText.push([stat[1], xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
         stat = pbRoughDisplayStat(battler, stat[0])
-        addText.push([stat.to_s, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+        addText.push([stat.to_s, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
       else
         addText.push([stat, xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
-        stage = [battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost], 4].min
+        stage = battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost]
+        stage += 1 if battler.hasActiveAbility?(:SUPERLUCK)
+        stage += 1 if battler.hasActiveItem?(:SCOPELENS)
+        stage = [stage, 4].min
         arrow = (stage > 0) ? 0 : 1
-        stage.abs.times { |t| images.push([@path + "Battle Info/battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
+        stage.abs.times { |t| images.push([@path + "battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
       end
     end
     cord = 0
@@ -975,7 +978,8 @@ class Battle::Scene
       PBEffects::Taunt           => [_INTL("Taunt"),        4],
       PBEffects::PerishSong      => [_INTL("Perish Song"),  3],
       PBEffects::Telekinesis     => [_INTL("Telekinesis"),  3],
-      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2]
+      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2],
+      PBEffects::SuperEffEye     => [_INTL("Miracle Eye"),  2]
     }
     if battler.effects[PBEffects::Trapping] > 0
       moveName = GameData::Move.get(battler.effects[PBEffects::TrappingMove]).name
