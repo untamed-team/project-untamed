@@ -1,5 +1,7 @@
 #Helper Methods
 class RotatonaPuzzle
+	attr_accessor :currentRoomPuzzleEvents
+
 	#######################################
 	#============== Player ================
 	#######################################
@@ -148,6 +150,119 @@ class RotatonaPuzzle
 
 		return touchingLauncher
 	end #def self.touchingLauncherEvent?(discEvent)
+	
+	#######################################
+	#=============== Misc =================
+	#######################################
+	def self.givePuzzleEvents
+		print @currentRoomPuzzleEvents[:Discs]
+	end
+	
+	def self.getPuzzleEvents	
+		Console.echo_warn "identifying puzzle pieces from scratch"
+		#identify all the events on the map which correspond with the puzzle
+		#print "identifying puzzle pieces on the map"
+		@currentRoomPuzzleEvents = {
+			:Discs	 			  		  => [],
+			:Launchers_Rotatable  		  => [],
+			:Launchers_Overlay_Rotatable  => [],
+			:Launchers_Stationary 		  => [],
+			:Launchers_Overlay_Stationary => [],
+			:Catchers             		  => [],
+			:Ramps           	  		  => [],
+			:StraightTracks       	 	  => [],
+			:CornerTracks  		  	  	  => []
+		}
+		$game_map.events.each_value do |event|
+			#set all variables to nil
+			event.associatedLauncher = nil
+			event.associatedOverlay = nil
+			event.launcherThisDiscIsDockedIn = nil
+			event.launcherThisDiscWasLaunchedFrom = nil
+			event.discThisLauncherHasDocked = nil
+			event.discRolling = false
+			event.discTouchingTile = []
+			event.discTurningDirection = nil
+			event.discJumping = false
+			event.discLandingSpot = []
+			event.catcherHasDisc = false
+			@frameWaitCounter = 0
+			@timer = 0
+		
+			@currentRoomPuzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
+			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
+				#identify launchers and their associated overlay events
+				@currentRoomPuzzleEvents[:Launchers_Rotatable].push(event)
+				#check coordinate to the right of the event, as this should be the associated overlay
+				$game_map.events.each_value do |overlayEvent|
+					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
+						event.associatedOverlay = overlayEvent
+						overlayEvent.associatedLauncher = event
+						#turn overlay to be same direction as associated launcher
+						overlayEvent.direction = event.direction
+						break
+					end
+				end #$game_map.events.each_value do |overlayEvent|
+			end
+			@currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
+			if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
+				#identify launchers and their associated overlay events
+				@currentRoomPuzzleEvents[:Launchers_Stationary].push(event)
+				#check coordinate to the right of the event, as this should be the associated overlay
+				$game_map.events.each_value do |overlayEvent|
+					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
+						event.associatedOverlay = overlayEvent
+						overlayEvent.associatedLauncher = event
+						break
+					end
+				end #$game_map.events.each_value do |overlayEvent|
+			end
+			@currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
+			@currentRoomPuzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
+			@currentRoomPuzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
+			@currentRoomPuzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
+			@currentRoomPuzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
+		end
+		
+		#dock rotatona disc at start
+		#if rotatona disc is touching launcher event, dock it to that launcher
+		$game_map.events.each_value do |event|
+			#skip event if it's not a disc
+			next if !@currentRoomPuzzleEvents[:Discs].include?(event)
+			$game_map.events.each_value do |launcherEvent|
+				next if !@currentRoomPuzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !@currentRoomPuzzleEvents[:Launchers_Stationary].include?(launcherEvent)
+				#get the center X and center Y of the launcher
+				centerX = launcherEvent.x+1
+				centerY = launcherEvent.y-1
+				#check if disc is touching center of launcher
+				#print "disc event #{event.id} is docked at launcher event #{launcherEvent.id}" if event.x == centerX && event.y == centerY
+				if event.x == centerX && event.y == centerY
+					event.launcherThisDiscIsDockedIn = launcherEvent
+					launcherEvent.discThisLauncherHasDocked = event
+					#turn rotatona disc event to match direction of launcher it's docked in
+					event.direction = event.launcherThisDiscIsDockedIn.direction
+				end
+			end
+		end
+	end #def self.getPuzzleEvents
+	
+	#save all events' current X, Y, and direction
+	def self.saveEventPositions
+		#I might need to save event IDs somewhere because restoring values to an event object might vary in result. Event objects could be different values when the game reloads
+		#if I start a new game, then identify puzzle pieces, will the puzzle pieces variable exist if I enter the room again without identifying pieces? If so, I don't need to store event IDs and assign stored values based on event ID
+		$game_map.events.each_value do |event|
+			event.storedX = event.x
+			event.storedY = event.y
+			event.storedDirection = event.direction
+		end
+	end #def self.saveEventPositions
+	
+	def self.loadEventPositions
+		$game_map.events.each_value do |event|
+			event.moveto(event.storedX, event.storedY)
+			event.direction = event.storedDirection
+		end
+	end #self.loadEventPositions
 end #class RotatonaPuzzle
 
 #######################################
@@ -175,11 +290,16 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
   proc { |_old_map_id|
 	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
-	#skip this check if old map is the same as new map
-	
-	#do not uncomment this until you move to another map and save there first
-	next if $game_map.map_id == _old_map_id
-	RotatonaPuzzle.getPuzzleEvents
+	#if old map is the same as new map, only identify puzzle pieces and load old values
+	if $game_map.map_id == _old_map_id
+		RotatonaPuzzle.getPuzzleEvents
+		#restore stored values for events
+		#############RotatonaPuzzle.loadEventPositions
+	else
+		#if old map ID is null or just a different map, reset the pieces variables
+		RotatonaPuzzle.new
+		RotatonaPuzzle.getPuzzleEvents
+	end
   }
 )
 
