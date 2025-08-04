@@ -6,7 +6,6 @@ LOWEREXPGAINSWITCH = 99
 RELEARNERSWITCH = 98
 NOINITIALVALUES = 97
 
-MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
 
@@ -997,7 +996,7 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("It's a Charizard Doll.\\nWell, can't say it doesn't deserve to be there."))
   when "Code"
     pbMessage(_INTL("You found some ...\\c[1]Crash logs\\c[0]?"))
-    print "What do mean Quash is 'too complicated' for me to learn!? Just TEACH ME you dumb granny!!!"
+    fakeCrashLog
     pbMessage(_INTL("Seems like Kiriya is having a fit. I hope she calms down soon enough."))
   when "Walmart"
     pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
@@ -1046,6 +1045,45 @@ def pbTrashBin(eventID, specialBin = false)
   $player.bin_array.delete_at(bin_rng2)
   Achievements.incrementProgress("EBIN_BINS",1)
 end
+
+def fakeCrashLog
+  pbSetWindowText("Kiriya's Playground")
+  message = "[Pokémon Essentials version #{Essentials::VERSION}]\r\n"
+  message += "Exception: Kiriya's Tantrum\r\n"
+  message += "Message: What do mean Quash is 'too complicated' for me to learn!?\r\n"
+  message += "\n\r\nBacktrace:\r\n"
+  message += "Game crashed due to a unexpected complaint from Kiriya.\r\n"
+  message += "Location: /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1347\r\n"
+  message += "          /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1344\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:330\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:316\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:169\r\n"
+  message += "Kiriya's Suggestion: Just teach me you dumb granny! (๑`^´๑)\r\n"
+
+  errorlog = "errorlog.txt"
+  errorlog = RTP.getSaveFileName("errorlog.txt") if (Object.const_defined?(:RTP) rescue false)
+  File.open(errorlog, "ab") do |f|
+    f.write("\r\n=================\r\n\r\n[#{Time.now}]\r\n")
+    f.write(message)
+  end
+
+  errorlogline = errorlog.gsub("/", "\\")
+  errorlogline.sub!(Dir.pwd + "\\", "")
+  errorlogline.sub!(pbGetUserName, "USERNAME")
+  errorlogline = "\r\n" + errorlogline if errorlogline.length > 20
+
+  print("#{message}\r\nThis exception was logged in #{errorlogline}.\r\nHold Ctrl when closing this message to copy it to the clipboard.")
+
+  t = System.delta
+  until (System.delta - t) >= 500_000
+    Input.update
+    if Input.press?(Input::CTRL)
+      Input.clipboard = message
+      break
+    end
+  end
+end
+
 
 #===============================================================================
 # RNG seeds
