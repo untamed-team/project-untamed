@@ -216,6 +216,7 @@ class Battle::AI
   #=============================================================================
   def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false, retvrnspeed=false)
     return -1 if !enemies || enemies.length == 0
+    currentBattler = @battle.battlers[idxBattler]
     best    = -1
     bestSum = 0
     speedsarray = []
@@ -486,6 +487,12 @@ class Battle::AI
             else  
               sum+=80 if damagetakenPercent<33
             end  
+          end
+          if currentBattler.hasActiveAbility?(:REGENERATOR)
+            if currentBattler.hp < (currentBattler.totalhp * 2.0/3.0)
+              sum+=30
+              sum+=20 if sack && i!=activemon
+            end
           end
           if pokmon.effects[PBEffects::Wish]>0
             wishhealPercent = (pokmon.effects[PBEffects::WishAmount] * 100.0 / pokmon.hp)
