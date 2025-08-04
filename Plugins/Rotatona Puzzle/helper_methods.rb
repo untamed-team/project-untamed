@@ -21,14 +21,14 @@ class RotatonaPuzzle
 	#=========== Disc Events =============
 	#######################################
 	def self.discRolling?
-		@currentRoomPuzzleEvents[:Discs].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 			return true if event.discRolling
-		end #@currentRoomPuzzleEvents[:Discs].each do |event|
+		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 		return false
 	end #def self.discRolling?
 	
 	def self.checkIfDiscTurning
-		@currentRoomPuzzleEvents[:Discs].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 			next if !event.discRolling
 			next if event.discTurningDirection.nil?
 
@@ -40,7 +40,7 @@ class RotatonaPuzzle
 				event.direction = event.discTurningDirection
 				event.discTurningDirection = nil
 			end
-		end #@currentRoomPuzzleEvents[:Discs].each do |event|
+		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 	end #def self.turnDisc(event, oldDirection, newDirection)
 	
 	def self.determinePatterForTurning(event, newDirection)
@@ -72,33 +72,33 @@ class RotatonaPuzzle
 		#print "checking for corner track. this should print twice when touching one" #it didn't work on event 29
 		#iterate through rotatable corner track events
 		touchingTrack = nil
-		@currentRoomPuzzleEvents[:CornerTracks].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingTrack = event #need to know the event the disc is touching to know the direction
 			end
-		end #@currentRoomPuzzleEvents
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
 		return touchingTrack
 	end #def self.touchingCornerTrackEvent?(discEvent)
 	
 	def self.touchingCatcherEvent?(discEvent)
 		#iterate through catcher events
 		touchingCatcher = nil
-		@currentRoomPuzzleEvents[:Catchers].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Catchers].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingCatcher = event #need to know the event the disc is touching to know the direction
 			end
-		end #@currentRoomPuzzleEvents
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
 		return touchingCatcher
 	end #def self.touchingCatcherEvent?(discEvent)
 	
 	def self.touchingStraightTrackEvent?(discEvent)
 		touchingTrack = nil
 		#iterate through rotatable straight track events
-		@currentRoomPuzzleEvents[:StraightTracks].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingTrack = event #need to know the event the disc is touching to know the direction
 			end
-		end #@currentRoomPuzzleEvents
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
 		return touchingTrack
 	end #def self.touchingStraightTrackEvent?(discEvent)
 	
@@ -106,18 +106,18 @@ class RotatonaPuzzle
 		#iterate through togglable ramp events
 		touchingRamp = nil
 		#iterate through rotatable straight track events
-		@currentRoomPuzzleEvents[:Ramps].each do |event|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].each do |event|
 			if discEvent.x == event.x && discEvent.y == event.y
 				touchingRamp = event #need to know the event the disc is touching to know the direction
 			end
-		end #@currentRoomPuzzleEvents
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
 		return touchingRamp
 	end #def self.touchingRampEvent?(discEvent)
 	
 	def self.touchingLauncherEvent?(discEvent)
 		#iterate through rotatable corner track events
 		touchingLauncher = nil
-		@currentRoomPuzzleEvents[:Launchers_Rotatable].each do |launcherEvent|
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].each do |launcherEvent|
 			#get the center X and center Y of the launcher
 			launcherCenterX = launcherEvent.x+1
 			launcherCenterY = launcherEvent.y-1
@@ -131,8 +131,8 @@ class RotatonaPuzzle
 					touchingLauncher = launcherEvent
 					return touchingLauncher
 				end
-		end #@currentRoomPuzzleEvents
-		@currentRoomPuzzleEvents[:Launchers_Stationary].each do |launcherEvent|
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].each do |launcherEvent|
 			#get the center X and center Y of the launcher
 			launcherCenterX = launcherEvent.x+1
 			launcherCenterY = launcherEvent.y-1
@@ -146,7 +146,7 @@ class RotatonaPuzzle
 					touchingLauncher = launcherEvent
 					return touchingLauncher
 				end
-		end #@currentRoomPuzzleEvents
+		end #$rotatona_puzzle.currentRoomPuzzleEvents
 
 		return touchingLauncher
 	end #def self.touchingLauncherEvent?(discEvent)
@@ -155,14 +155,14 @@ class RotatonaPuzzle
 	#=============== Misc =================
 	#######################################
 	def self.givePuzzleEvents
-		print @currentRoomPuzzleEvents[:Discs]
+		print $rotatona_puzzle.currentRoomPuzzleEvents[:Discs]
 	end
 	
 	def self.getPuzzleEvents	
 		Console.echo_warn "identifying puzzle pieces from scratch"
 		#identify all the events on the map which correspond with the puzzle
 		#print "identifying puzzle pieces on the map"
-		@currentRoomPuzzleEvents = {
+		$rotatona_puzzle.currentRoomPuzzleEvents = {
 			:Discs	 			  		  => [],
 			:Launchers_Rotatable  		  => [],
 			:Launchers_Overlay_Rotatable  => [],
@@ -189,10 +189,10 @@ class RotatonaPuzzle
 			@frameWaitCounter = 0
 			@timer = 0
 		
-			@currentRoomPuzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
 				#identify launchers and their associated overlay events
-				@currentRoomPuzzleEvents[:Launchers_Rotatable].push(event)
+				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].push(event)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -204,10 +204,10 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			@currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
 			if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
 				#identify launchers and their associated overlay events
-				@currentRoomPuzzleEvents[:Launchers_Stationary].push(event)
+				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].push(event)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -217,20 +217,20 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			@currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
-			@currentRoomPuzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
-			@currentRoomPuzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
-			@currentRoomPuzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
-			@currentRoomPuzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
 		
 		#dock rotatona disc at start
 		#if rotatona disc is touching launcher event, dock it to that launcher
 		$game_map.events.each_value do |event|
 			#skip event if it's not a disc
-			next if !@currentRoomPuzzleEvents[:Discs].include?(event)
+			next if !$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event)
 			$game_map.events.each_value do |launcherEvent|
-				next if !@currentRoomPuzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !@currentRoomPuzzleEvents[:Launchers_Stationary].include?(launcherEvent)
+				next if !$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].include?(launcherEvent) && !$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(launcherEvent)
 				#get the center X and center Y of the launcher
 				centerX = launcherEvent.x+1
 				centerY = launcherEvent.y-1
@@ -251,6 +251,7 @@ class RotatonaPuzzle
 		#I might need to save event IDs somewhere because restoring values to an event object might vary in result. Event objects could be different values when the game reloads
 		#if I start a new game, then identify puzzle pieces, will the puzzle pieces variable exist if I enter the room again without identifying pieces? If so, I don't need to store event IDs and assign stored values based on event ID
 		$game_map.events.each_value do |event|
+			event.storedPuzzleID = event.id
 			event.storedX = event.x
 			event.storedY = event.y
 			event.storedDirection = event.direction
@@ -258,10 +259,22 @@ class RotatonaPuzzle
 	end #def self.saveEventPositions
 	
 	def self.loadEventPositions
+		#go through each of the map's current events
 		$game_map.events.each_value do |event|
-			event.moveto(event.storedX, event.storedY)
-			event.direction = event.storedDirection
-		end
+			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
+			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
+				for oldEvent in storedEventsArray
+					Console.echo_warn "comparing event #{event.id} with events stored in $rotatona_puzzle.currentRoomPuzzleEvents[storedEventsArray]"
+						if 	event.id == oldEvent.storedPuzzleID
+							Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
+							Console.echo_warn "moving event to stored location and setting event's direction to stored direction"
+							event.moveto(oldEvent.storedX, oldEvent.storedY)
+							event.direction = oldEvent.storedDirection
+							next
+						end #if event.id == oldEvent.storedPuzzleID
+				end #for oldEvent in storedEventsArray
+			end #$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |oldEvent|
+		end #$game_map.events.each_value do |event|
 	end #self.loadEventPositions
 end #class RotatonaPuzzle
 
@@ -292,12 +305,10 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
 	next if $game_map.map_id != 59 && $game_map.map_id != 120
 	#if old map is the same as new map, only identify puzzle pieces and load old values
 	if $game_map.map_id == _old_map_id
-		RotatonaPuzzle.getPuzzleEvents
 		#restore stored values for events
-		#############RotatonaPuzzle.loadEventPositions
+		RotatonaPuzzle.loadEventPositions
 	else
-		#if old map ID is null or just a different map, reset the pieces variables
-		RotatonaPuzzle.new
+		#if old map ID is a different map, reset the pieces variables
 		RotatonaPuzzle.getPuzzleEvents
 	end
   }
