@@ -109,10 +109,15 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # Draws images.
     typenumber = GameData::Type.get(type).icon_position
+    categ = move.category
+    if $game_switches[OLDSCHOOLBATTLE] && move.damagingMove?
+      categ = 0 if GameData::Type.get(move.type).physical?
+      categ = 1 if GameData::Type.get(move.type).special?
+    end
     imagePos = [
       [@path + "move_info_bg",       xpos, ypos],
       ["Graphics/Pictures/types",    xpos + 272, ypos + 4, 0, typenumber * 28, 64, 28],
-      ["Graphics/Pictures/category", xpos + 336, ypos + 4, 0, move.category * 28, 64, 28]
+      ["Graphics/Pictures/category", xpos + 336, ypos + 4, 0, categ * 28, 64, 28]
     ]
     imagePos += pbDrawMoveFlagIcons(xpos, ypos, move)
     imagePos += pbDrawTypeEffectiveness(xpos, ypos, move, type)
