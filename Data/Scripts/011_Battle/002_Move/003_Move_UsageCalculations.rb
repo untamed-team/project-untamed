@@ -94,7 +94,7 @@ class Battle::Move
     ret = 16 if target.effects[PBEffects::SuperEffEye] > 0
     # Inverse Battle Switch #by low
     # 8x = ret 64; 4x = ret 32
-    if $game_switches[INVERSEBATTLESWITCH]
+    if @battle.inverseBattle
       if ret == 0
         ret = 16
       elsif ret >= 64

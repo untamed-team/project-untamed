@@ -87,6 +87,7 @@ class Battle
   attr_reader   :endOfRound       # True during the end of round
   attr_accessor :moldBreaker      # True if Mold Breaker applies
   attr_reader   :struggle         # The Struggle move
+  attr_accessor :inverseBattle    # Whether the type chart is inverted
 
   def pbRandom(x)
     if trainerBattle?
@@ -201,6 +202,8 @@ class Battle
     end
     @mega_rings = []
     GameData::Item.each { |item| @mega_rings.push(item.id) if item.has_flag?("MegaRing") }
+    # extra battle rules #by low
+    @inverseBattle     = false
   end
 
   #=============================================================================

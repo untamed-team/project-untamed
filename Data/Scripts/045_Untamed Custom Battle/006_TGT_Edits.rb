@@ -281,6 +281,13 @@ or dont
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 1
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if ["stickyweb", "seaoffire", "swamp"].include?(gimmick_downcase)
             end
+          elsif ["inverse", "inversebattle"].include?(gimmick_downcase)
+            @inverseBattle = true
+            pbDisplay(_INTL("The battlefield is inverted!"))
+          elsif ["retro", "retro battle"].include?(gimmick_downcase)
+            # if it wasnt due to move categories i could have made this a @battle trait, but alas.
+            $game_switches[OLDSCHOOLBATTLE] = true
+            pbDisplay(_INTL("The battlefield glitches!"))
           end
         end
       end

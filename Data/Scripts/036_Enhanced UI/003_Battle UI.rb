@@ -260,11 +260,20 @@ class Battle::Scene
         unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES
         unknown_species = true if b.celestial?
         value = Effectiveness.calculate(type, poke.types[0], poke.types[1])
-        if unknown_species                             then effct = 0
-        elsif Effectiveness.ineffective?(value)        then effct = 1
-        elsif Effectiveness.not_very_effective?(value) then effct = 2
-        elsif Effectiveness.super_effective?(value)    then effct = 3
-        else effct = 4
+        if @battle.inverseBattle #by low
+          if unknown_species                             then effct = 0
+          elsif Effectiveness.ineffective?(value)        then effct = 3
+          elsif Effectiveness.not_very_effective?(value) then effct = 3
+          elsif Effectiveness.super_effective?(value)    then effct = 2
+          else effct = 4
+          end
+        else
+          if unknown_species                             then effct = 0
+          elsif Effectiveness.ineffective?(value)        then effct = 1
+          elsif Effectiveness.not_very_effective?(value) then effct = 2
+          elsif Effectiveness.super_effective?(value)    then effct = 3
+          else effct = 4
+          end
         end
         images.push([@path + "move_effectiveness", Graphics.width - 64 - (idx * 64), ypos - 76, effct * 64, 0, 64, 76])
         @sprites["battler_icon#{b.index}"].visible = true

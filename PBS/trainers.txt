@@ -1490,7 +1490,8 @@ Pokemon = LICKITUNG,16
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max,200]
-LoseText = No, defeat, my only weakness!
+LoseText = No, winning, my only weakness!
+Gimmick = Inverse
 Pokemon = PACUNA,16
     Moves = BITE,SWEETTOOTH,COVET,CUT
     Ability = DAZZLING
@@ -1550,6 +1551,7 @@ Pokemon = LAGUNA,18
 #-------------------------------
 [LEADER_Thalia,Thalia,200]
 LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Gimmick = Inverse
 Pokemon = AMAURA,16
     Moves = ANCIENTPOWER,ICYWIND,THUNDERWAVE,STEALTHROCK
     Ability = THICKFAT

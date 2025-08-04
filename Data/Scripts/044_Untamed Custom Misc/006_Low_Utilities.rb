@@ -1,7 +1,6 @@
 # not actually a utilities page, just a "too lazy to create a new page for this"
 
-OLDSCHOOLBATTLE = 101
-INVERSEBATTLESWITCH = 100
+OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
 LOWEREXPGAINSWITCH = 99
 RELEARNERSWITCH = 98
 NOINITIALVALUES = 97
