@@ -283,11 +283,9 @@ or dont
             end
           elsif ["inverse", "inversebattle"].include?(gimmick_downcase)
             @inverseBattle = true
-            pbDisplay(_INTL("The battlefield is inverted!"))
           elsif ["retro", "retro battle"].include?(gimmick_downcase)
             # if it wasnt due to move categories i could have made this a @battle trait, but alas.
             $game_switches[OLDSCHOOLBATTLE] = true
-            pbDisplay(_INTL("The battlefield glitches!"))
           end
         end
       end
@@ -370,6 +368,10 @@ or dont
     end
     pbDisplay(_INTL("A sea of fire enveloped your side of the field!")) if @sides[0].effects[PBEffects::SeaOfFire] > 0
     pbDisplay(_INTL("A swamp enveloped your side of the field!")) if @sides[0].effects[PBEffects::Swamp] > 0
+    
+    # Battle rules announcements
+    pbDisplay(_INTL("Type matchups have been flipped! It's an inverse battle!")) if @inverseBattle
+    pbDisplay(_INTL("The battlefield glitches! Battle mechanics roughly follow Gen III standards!")) if $game_switches[OLDSCHOOLBATTLE]
     # Abilities upon entering battle
     pbOnAllBattlersEnteringBattle
     # Main battle loop
