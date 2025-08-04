@@ -513,6 +513,10 @@ class Battle::AI
         if skill >= PBTrainerAI.highSkill && target.effects[PBEffects::Minimize] && move.tramplesMinimize?
             multipliers[:final_damage_multiplier] *= 2
         end
+        # Kiriya targeting allies
+        if user.index != target.index && !target.opposes?(user) && !user.pbOwnedByPlayer?
+            multipliers[:final_damage_multiplier] *= 0.75
+        end
         # Move-specific base damage modifiers
         # TODO
         # Move-specific final damage modifiers

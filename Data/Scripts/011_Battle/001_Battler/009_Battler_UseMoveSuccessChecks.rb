@@ -230,6 +230,7 @@ class Battle::Battler
         @battle.pbHideAbilitySplash(self)
         unless move.usableWhenTruanting? # Truant buff #by low
           @lastMoveFailed = true
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
           return false
         end
       end

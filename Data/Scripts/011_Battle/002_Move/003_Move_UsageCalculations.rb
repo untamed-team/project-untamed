@@ -514,6 +514,10 @@ class Battle::Move
     if target.effects[PBEffects::Minimize] && tramplesMinimize?
       multipliers[:final_damage_multiplier] *= 2
     end
+    # Kiriya targeting allies #by low
+    if user.index != target.index && !target.opposes?(user) && !user.pbOwnedByPlayer?
+      multipliers[:final_damage_multiplier] *= 0.75
+    end
     # Move-specific base damage modifiers
     multipliers[:base_damage_multiplier] = pbBaseDamageMultiplier(multipliers[:base_damage_multiplier], user, target)
     # Move-specific final damage modifiers
