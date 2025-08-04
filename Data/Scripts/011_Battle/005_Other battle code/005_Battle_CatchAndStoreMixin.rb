@@ -227,7 +227,7 @@ module Battle::CatchAndStoreMixin
     else
       catch_rate /= 10
     end
-		catch_rate *= 4 #by low
+    catch_rate *= 3 #by low
     # First half of the shakes calculation
     a = battler.totalhp
     b = battler.hp

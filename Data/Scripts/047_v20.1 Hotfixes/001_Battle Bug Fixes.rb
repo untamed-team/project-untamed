@@ -7,34 +7,6 @@
 #===============================================================================
 
 #===============================================================================
-# Fixed Heavy Ball's catch rate calculation being inaccurate.
-#===============================================================================
-Battle::PokeBallEffects::ModifyCatchRate.add(:HEAVYBALL, proc { |ball, catchRate, battle, battler|
-  next 0 if catchRate == 0
-  weight = battler.pbWeight
-  if Settings::NEW_POKE_BALL_CATCH_RATES
-    if weight >= 3000
-      catchRate += 30
-    elsif weight >= 2000
-      catchRate += 20
-    elsif weight < 1000
-      catchRate -= 20
-    end
-  else
-    if weight >= 4096
-      catchRate += 40
-    elsif weight >= 3072
-      catchRate += 30
-    elsif weight >= 2048
-      catchRate += 20
-    else
-      catchRate -= 20
-    end
-  end
-  next catchRate.clamp(1, 255)
-})
-
-#===============================================================================
 # Added Obstruct to the blacklists of Assist and Copycat.
 #===============================================================================
 class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
