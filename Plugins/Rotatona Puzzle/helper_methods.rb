@@ -255,6 +255,17 @@ class RotatonaPuzzle
 			event.storedX = event.x
 			event.storedY = event.y
 			event.storedDirection = event.direction
+			event.storedAssociatedLauncher = event.associatedLauncher
+			event.storedAssociatedOverlay = event.associatedOverlay
+			event.storedLauncherThisDiscIsDockedIn = event.launcherThisDiscIsDockedIn
+			event.storedLauncherThisDiscWasLaunchedFrom = event.launcherThisDiscWasLaunchedFrom
+			event.storedDiscThisLauncherHasDocked = event.discThisLauncherHasDocked
+			event.storedDiscRolling = event.discRolling
+			event.storedTouchingTile = event.discTouchingTile
+			event.storedDiscTurningDirection = event.discTurningDirection
+			event.storedDiscJumping = event.discJumping
+			event.storedDiscLandingSpot = event.discLandingSpot
+			event.storedCatcherHasDisc = event.catcherHasDisc
 		end
 	end #def self.saveEventPositions
 	
@@ -264,12 +275,22 @@ class RotatonaPuzzle
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
 			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
 				for oldEvent in storedEventsArray
-					Console.echo_warn "comparing event #{event.id} with events stored in $rotatona_puzzle.currentRoomPuzzleEvents[storedEventsArray]"
 						if 	event.id == oldEvent.storedPuzzleID
 							Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
-							Console.echo_warn "moving event to stored location and setting event's direction to stored direction"
 							event.moveto(oldEvent.storedX, oldEvent.storedY)
 							event.direction = oldEvent.storedDirection
+							
+							event.associatedLauncher = event.storedAssociatedLauncher
+							event.associatedOverlay = event.storedAssociatedOverlay
+							event.launcherThisDiscIsDockedIn = event.storedLauncherThisDiscIsDockedIn
+							event.launcherThisDiscWasLaunchedFrom = event.storedLauncherThisDiscWasLaunchedFrom
+							event.discThisLauncherHasDocked = event.storedDiscThisLauncherHasDocked
+							event.discRolling = event.storedDiscRolling
+							event.discTouchingTile = event.storedTouchingTile
+							event.discTurningDirection = event.storedDiscTurningDirection
+							event.discJumping = event.storedDiscJumping
+							event.discLandingSpot = event.storedDiscLandingSpot
+							event.catcherHasDisc = event.storedCatcherHasDisc
 							next
 						end #if event.id == oldEvent.storedPuzzleID
 				end #for oldEvent in storedEventsArray

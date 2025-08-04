@@ -43,10 +43,23 @@ class Game_Event
   attr_accessor :discJumping
   attr_accessor :discLandingSpot
   attr_accessor :catcherHasDisc
+  
+  #stored values
   attr_accessor :storedX
   attr_accessor :storedY
   attr_accessor :storedDirection
   attr_accessor :storedPuzzleID
+  attr_accessor :storedAssociatedLauncher
+  attr_accessor :storedAssociatedOverlay
+  attr_accessor :storedLauncherThisDiscIsDockedIn
+  attr_accessor :storedLauncherThisDiscWasLaunchedFrom
+  attr_accessor :storedDiscThisLauncherHasDocked
+  attr_accessor :storedDiscRolling
+  attr_accessor :storedTouchingTile
+  attr_accessor :storedDiscTurningDirection
+  attr_accessor :storedDiscJumping
+  attr_accessor :storedDiscLandingSpot
+  attr_accessor :storedCatcherHasDisc
 end
 
 class RotatonaPuzzle
