@@ -245,17 +245,23 @@ module Battle::CatchAndStoreMixin
     return 4 if x >= 255 || Battle::PokeBallEffects.isUnconditional?(ball, self, battler)
     # Second half of the shakes calculation
     y = (65_536 / ((255.0 / x)**0.1875)).floor
-    # Critical capture check
+    # Critical capture edits #by low
     if Settings::ENABLE_CRITICAL_CAPTURES
       dex_modifier = 0
       numOwned = $player.pokedex.owned_count
-      if numOwned > 600
-        dex_modifier = 5
-      elsif numOwned > 450
-        dex_modifier = 4
-      elsif numOwned > 300
-        dex_modifier = 3
+      if numOwned > 200
+        dex_modifier = 8
+      elsif numOwned > 175
+        dex_modifier = 7
       elsif numOwned > 150
+        dex_modifier = 6
+      elsif numOwned > 125
+        dex_modifier = 5
+      elsif numOwned > 100
+        dex_modifier = 4
+      elsif numOwned > 75
+        dex_modifier = 3
+      elsif numOwned > 50
         dex_modifier = 2
       elsif numOwned > 30
         dex_modifier = 1
