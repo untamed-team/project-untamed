@@ -513,14 +513,26 @@ class Battle::AI
         if skill >= PBTrainerAI.highSkill && target.effects[PBEffects::Minimize] && move.tramplesMinimize?
             multipliers[:final_damage_multiplier] *= 2
         end
-        # Kiriya targeting allies
-        if user.index != target.index && !target.opposes?(user) && !user.pbOwnedByPlayer?
-            multipliers[:final_damage_multiplier] *= 0.75
-        end
         # Move-specific base damage modifiers
         # TODO
         # Move-specific final damage modifiers
         # TODO
+        # AI-specific modifiers
+        if !user.pbOwnedByPlayer?
+            if user.index != target.index && !target.opposes?(user) # Kiriya targeting own allies
+                multipliers[:final_damage_multiplier] *= 0.75
+            end
+            if (move.physicalMove?(type) && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_ATTACK) ||
+               (move.specialMove?(type) && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPATK)
+                multipliers[:attack_multiplier] *= 1.1
+            end
+        end
+        if !target.pbOwnedByPlayer?
+            if (move.physicalMove?(type) && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_DEFENSE) ||
+               (move.specialMove?(type) && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPDEF)
+                multipliers[:defense_multiplier] *= 1.1
+            end
+        end
         ##### Main damage calculation #####
         baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
         atk     = [(atk     * multipliers[:attack_multiplier]).round, 1].max

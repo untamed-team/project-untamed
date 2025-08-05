@@ -262,7 +262,7 @@ class Battle::Scene
       if b && !b.fainted? && move.category < 2
         poke = b.displayPokemon
         unknown_species = ($player.pokedex.battled_count(poke.species) == 0 && !$player.pokedex.owned?(poke.species))
-        unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES
+        unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES || $player.difficulty_mode?("hard")
         unknown_species = true if b.celestial?
         value = Effectiveness.calculate(type, poke.types[0], poke.types[1])
         if @battle.inverseBattle #by low
@@ -846,7 +846,7 @@ class Battle::Scene
       $player.pokedex.owned?(poke.species) ||
       $player.pokedex.battled_count(poke.species) > 0
     )
-    unknown_species = false
+    unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES || $player.difficulty_mode?("hard")
     # Displays the "???" type on newly encountered species, or battlers with no typing.
     displayTypes = [:QMARKS] if unknown_species || displayTypes.empty?
 		case displayTypes.length #triple type UI #by low

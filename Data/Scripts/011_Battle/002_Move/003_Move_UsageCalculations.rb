@@ -514,9 +514,21 @@ class Battle::Move
     if target.effects[PBEffects::Minimize] && tramplesMinimize?
       multipliers[:final_damage_multiplier] *= 2
     end
-    # Kiriya targeting allies #by low
-    if user.index != target.index && !target.opposes?(user) && !user.pbOwnedByPlayer?
-      multipliers[:final_damage_multiplier] *= 0.75
+    # AI-specific modifiers #by low
+    if !user.pbOwnedByPlayer?
+      if user.index != target.index && !target.opposes?(user) # Kiriya targeting own allies
+        multipliers[:final_damage_multiplier] *= 0.75
+      end
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_ATTACK) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPATK)
+          multipliers[:attack_multiplier] *= 1.1
+      end
+    end
+    if !target.pbOwnedByPlayer?
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_DEFENSE) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPDEF)
+        multipliers[:defense_multiplier] *= 1.1
+      end
     end
     # Move-specific base damage modifiers
     multipliers[:base_damage_multiplier] = pbBaseDamageMultiplier(multipliers[:base_damage_multiplier], user, target)
