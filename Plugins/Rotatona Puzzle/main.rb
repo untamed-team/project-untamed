@@ -18,7 +18,7 @@
 #5. Rotatona discs must have "Always on Top" checked
 #6. Launcher events must be 3x3 ( e.g. NAME,size(3,3) )
 #7. Launcher overlay events must be 1x3 ( e.g. NAME,size(1,3) )
-#8. All rotatble launchers and launchers which are stationary and not facing down need an associated launcher overlay
+#8. All rotatble launchers and launchers which are stationary and not facing down need an associated launcher overlay. If the launcher is stationary and facing down, no overlay needed for it
 #9. Rotatona disc events must be placed 1 to the right and 1 up from the launcher you want it to start in
 #10. Do not use terrain tags 19 through 29 for anything. Do not change the terrain tags on any of the tiles in the temple tileset
 #11. Do not put events on top of track tiles from the tileset and expect them to work. The script checks for collisions with the track tiles FIRST, then processes any track events if not touching any track tiles
@@ -961,7 +961,7 @@ class RotatonaPuzzle
 		discEvent.discRolling = false
 		
 		if self.checkIfPuzzleSolved
-			print "puzzle solved" 
+			Console.echo_warn "puzzle solved" 
 			case $game_map.map_id
 			when 59 #canyon temple left
 				$game_switches[142] = true
@@ -1080,10 +1080,6 @@ class RotatonaPuzzle
 end #class RotatonaPuzzle
 
 #logic to do:
-
-#make sure you can't save or access the menu when rotatona disc is rolling
-#I was able to quick save
-#I was able to access the menu
 
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward

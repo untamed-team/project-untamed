@@ -158,7 +158,7 @@ class RotatonaPuzzle
 		#run this when disc goes into launcher successfully
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 			#return false if a disc is not in a catcher
-			print "puzzle not yet completed"
+			Console.echo_warn "puzzle not yet completed"
 			return false if !event.discInCatcher
 		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 
