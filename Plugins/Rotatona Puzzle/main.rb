@@ -24,6 +24,7 @@
 #11. Do not put events on top of track tiles from the tileset and expect them to work. The script checks for collisions with the track tiles FIRST, then processes any track events if not touching any track tiles
 #12. Disc catcher events' ID numbers must be higher than disc events' IDs
 #13. Disc catcher must have "Always on Top" checked
+#14. Catcher events must be facing up or down if disc is going into it from up or down. Catcher events must be facing left or right if disc is going into it from left or right
 
 SaveData.register(:rotatona_puzzle) do
   save_value { $rotatona_puzzle }
@@ -115,11 +116,15 @@ class RotatonaPuzzle
 		pbWait(Graphics.frame_rate)
 		pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
 		pbWait(Graphics.frame_rate)
-		#release player
-		$game_player.unlock
+		
 		@cameraPanning = false
 		#end cutscene
 		pbCommonEvent(6)
+
+		self.saveEventVariables
+		
+		#release player
+		$game_player.unlock
 	end #def self.cameraPanToPlayer
 
 	#######################################
@@ -157,6 +162,7 @@ class RotatonaPuzzle
 					choice = pbMessage(_INTL("Nothing happened."))
 				end
 			end
+			self.saveEventVariables
 		###################################################################
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
@@ -182,6 +188,7 @@ class RotatonaPuzzle
 					choice = pbMessage(_INTL("Nothing happened."))
 				end
 			end
+			self.saveEventVariables
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(event)
 			if !event.discThisLauncherHasDocked.nil?
@@ -194,7 +201,7 @@ class RotatonaPuzzle
 				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
-			
+			self.saveEventVariables
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event)
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
@@ -207,7 +214,7 @@ class RotatonaPuzzle
 				pbSEPlay(SE_LAUNCHER_BUTTON) if choice
 				pbMessage(_INTL("Nothing happened.")) if choice
 			end
-			
+			self.saveEventVariables
 		###################################################################
 		elsif event == $rotatona_puzzle.currentRoomPuzzleEvents[:Catchers]
 			#print "this is catcher2"
@@ -219,12 +226,14 @@ class RotatonaPuzzle
 			#option to switch 180 degrees
 			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.switchRamp(event) if rampChoice
+			self.saveEventVariables
 		###################################################################
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].include?(event)
 			#print "this is a straight track"
 			#option to turn track 90 degrees
 			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.rotateStraightTrack(event) if straightTrackChoice
+			self.saveEventVariables
 		###################################################################
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].include?(event)
 			#print "this is a corner track"
@@ -244,6 +253,7 @@ class RotatonaPuzzle
 				self.rotateCornerTrack(event,"right90")
 			end
 		end #if $rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event)
+		self.saveEventVariables
 	end #def self.playerInteract
 	
 	def self.checkForRotatonaCollisions

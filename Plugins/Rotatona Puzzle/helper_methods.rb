@@ -154,9 +154,31 @@ class RotatonaPuzzle
 	#######################################
 	#=============== Misc =================
 	#######################################
-	def self.givePuzzleEvents
-		print $rotatona_puzzle.currentRoomPuzzleEvents[:Discs]
-	end
+	def self.moveDiscsPuzzleSolved
+		#run this if on specific map and certain switch is turned on
+		#do this before self.getPuzzleEvents
+		#find all rotatona disc events
+		discEvents = []
+		catcherEvents = []
+		
+		$game_map.events.each_value do |event|
+			discEvents.push(event) if event.name.match(/RotaPuzzle_Disc/i)
+			catcherEvents.push(event) if event.name.match(/RotaPuzzle_Catcher/i)
+		end #$game_map.events.each_value do |event|
+		
+		#move the discs to catchers because the puzzle is solved
+		for discEvent in discEvents
+			if catcherEvents.empty?
+				print "not enough catcher events"
+			end
+			discEvent.moveto(catcherEvents[0].x, catcherEvents[0].y)
+			#change direction if disc so it matches direction of catcher event
+			discEvent.direction = catcherEvents[0].direction
+			#remove catcher as possibility
+			catcherEvents.delete_at(0)
+		end
+		
+	end #def self.moveDiscsPuzzleSolved
 	
 	def self.getPuzzleEvents	
 		Console.echo_warn "identifying puzzle pieces from scratch"
@@ -247,7 +269,7 @@ class RotatonaPuzzle
 	end #def self.getPuzzleEvents
 	
 	#save all events' current X, Y, and direction
-	def self.saveEventPositions
+	def self.saveEventVariables
 		#I might need to save event IDs somewhere because restoring values to an event object might vary in result. Event objects could be different values when the game reloads
 		#if I start a new game, then identify puzzle pieces, will the puzzle pieces variable exist if I enter the room again without identifying pieces? If so, I don't need to store event IDs and assign stored values based on event ID
 		$game_map.events.each_value do |event|
@@ -267,7 +289,7 @@ class RotatonaPuzzle
 			event.storedDiscLandingSpot = event.discLandingSpot
 			event.storedCatcherHasDisc = event.catcherHasDisc
 		end
-	end #def self.saveEventPositions
+	end #def self.saveEventVariables
 	
 	def self.loadEventPositions
 		#go through each of the map's current events
@@ -330,6 +352,14 @@ EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_m
 		RotatonaPuzzle.loadEventPositions
 	else
 		#if old map ID is a different map, reset the pieces variables
+		case $game_map.map_id
+		when 59 #canyon temple left
+			RotatonaPuzzle.moveDiscsPuzzleSolved if $game_switches[142]
+		when 120 #canyon temple right
+			RotatonaPuzzle.moveDiscsPuzzleSolved if $game_switches[143]
+		when 128 #canyon temple entrance
+			RotatonaPuzzle.moveDiscsPuzzleSolved if $game_switches[141]
+		end
 		RotatonaPuzzle.getPuzzleEvents
 	end
   }
