@@ -44,6 +44,7 @@ class Game_Event
   attr_accessor :discJumping
   attr_accessor :discLandingSpot
   attr_accessor :catcherHasDisc
+  attr_accessor :discInCatcher
   
   #stored values
   attr_accessor :storedX
@@ -61,6 +62,7 @@ class Game_Event
   attr_accessor :storedDiscJumping
   attr_accessor :storedDiscLandingSpot
   attr_accessor :storedCatcherHasDisc
+  attr_accessor :storedDiscInCatcher
 end
 
 class RotatonaPuzzle
@@ -954,8 +956,22 @@ class RotatonaPuzzle
 		#turn off "always on"
 		pbMoveRoute(discEvent, [PBMoveRoute::AlwaysOnTopOff])
 		catcherEvent.catcherHasDisc = true
+		discEvent.discInCatcher = true
 		pbSEPlay(SE_CATCHING)
 		discEvent.discRolling = false
+		
+		if self.checkIfPuzzleSolved
+			print "puzzle solved" 
+			case $game_map.map_id
+			when 59 #canyon temple left
+				$game_switches[142] = true
+			when 120 #canyon temple right
+				$game_switches[143] = true
+			when 128 #canyon temple entrance
+				$game_switches[141] = true
+			end #case $game_map.map_id
+		end #if self.checkIfPuzzleSolved
+		
 		self.cameraPanToPlayer("catching disc")
 	end #def self.catchDisc
 	
@@ -1064,14 +1080,10 @@ class RotatonaPuzzle
 end #class RotatonaPuzzle
 
 #logic to do:
-#Upon re-entry to the room, the puzzle should reset entirely unless the puzzle has already been fully completed. At which point it shouldn’t reset at all;
-
-#WIP All events should keep their current position and states when reloading the game;
-#only reset getPuzzleEvents and reset positions when leaving and re-entering the map, including discs "pbMoveRoute(event, [PBMoveRoute::AlwaysOnTopOff])" if docked in a catcher. I need to move puzzle pieces from $game_temp to something that saves with the save file. I might need to do this because currently it's working. Might be what's causing the bug with events changing direction after loading the game. I could have each puzzle event save its position and direction inside itself and that only resets when identifying puzzle pieces, so when leaving the map and re-entering it
-
-#WIP utilize attr_accessor :storedX, attr_accessor :storedY, attr_accessor :storedDirection
 
 #make sure you can't save or access the menu when rotatona disc is rolling
+#I was able to quick save
+#I was able to access the menu
 
 #bugs
 #if launching rota at the bottom launcher, the top launcher looks upward
@@ -1079,3 +1091,4 @@ end #class RotatonaPuzzle
 #if I dock the disc into the first launcher, the launcher turns left when it was facing down before. In fact, even the rotatable straight track between the launchers reset
 
 #disc is always on top of player when launched; might need to move player farther away from track
+#when putting bottom disc in top left launcher, it doesn't move when the launcher is rotated - could not replicate

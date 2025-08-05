@@ -154,6 +154,17 @@ class RotatonaPuzzle
 	#######################################
 	#=============== Misc =================
 	#######################################
+	def self.checkIfPuzzleSolved
+		#run this when disc goes into launcher successfully
+		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
+			#return false if a disc is not in a catcher
+			print "puzzle not yet completed"
+			return false if !event.discInCatcher
+		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
+
+		return true
+	end #def self.checkIfPuzzleSolved
+	
 	def self.moveDiscsPuzzleSolved
 		#run this if on specific map and certain switch is turned on
 		#do this before self.getPuzzleEvents
@@ -268,7 +279,42 @@ class RotatonaPuzzle
 		end
 	end #def self.getPuzzleEvents
 	
-	#save all events' current X, Y, and direction
+	def self.giveAllEventsPuzzleProperties
+		$game_map.events.each_value do |event|
+			Console.echo_warn "==============================================================="
+			Console.echo_warn "Name: #{event.name}"
+			Console.echo_warn "ID: #{event.id}"
+			Console.echo_warn "associatedLauncher: #{event.associatedLauncher}"
+			Console.echo_warn "associatedOverlay: #{event.associatedOverlay}"
+			Console.echo_warn "launcherThisDiscIsDockedIn: #{event.launcherThisDiscIsDockedIn}"
+			Console.echo_warn "launcherThisDiscWasLaunchedFrom: #{event.launcherThisDiscWasLaunchedFrom}"
+			Console.echo_warn "discThisLauncherHasDocked: #{event.discThisLauncherHasDocked}"
+			Console.echo_warn "discRolling: #{event.discRolling}"
+			Console.echo_warn "discTouchingTile: #{event.discTouchingTile}"
+			Console.echo_warn "discTurningDirection: #{event.discTurningDirection}"
+			Console.echo_warn "discJumping: #{event.discJumping}"
+			Console.echo_warn "discLandingSpot: #{event.discLandingSpot}"
+			Console.echo_warn "catcherHasDisc: #{event.catcherHasDisc}"
+			Console.echo_warn "discInCatcher: #{event.discInCatcher}"
+			Console.echo_warn "storedX: #{event.storedX}"
+			Console.echo_warn "storedY: #{event.storedY}"
+			Console.echo_warn "storedDirection: #{event.storedDirection}"
+			Console.echo_warn "storedPuzzleID: #{event.storedPuzzleID}"
+			Console.echo_warn "storedAssociatedLauncher: #{event.storedAssociatedLauncher}"
+			Console.echo_warn "storedAssociatedOverlay: #{event.storedAssociatedOverlay}"
+			Console.echo_warn "storedLauncherThisDiscIsDockedIn: #{event.storedLauncherThisDiscIsDockedIn}"
+			Console.echo_warn "storedLauncherThisDiscWasLaunchedFrom: #{event.storedLauncherThisDiscWasLaunchedFrom}"
+			Console.echo_warn "storedDiscThisLauncherHasDocked: #{event.storedDiscThisLauncherHasDocked}"
+			Console.echo_warn "storedDiscRolling: #{event.storedDiscRolling}"
+			Console.echo_warn "storedTouchingTile: #{event.storedTouchingTile}"
+			Console.echo_warn "storedDiscTurningDirection: #{event.storedDiscTurningDirection}"
+			Console.echo_warn "storedDiscJumping: #{event.storedDiscJumping}"
+			Console.echo_warn "storedDiscLandingSpot: #{event.storedDiscLandingSpot}"
+			Console.echo_warn "storedCatcherHasDisc: #{event.storedCatcherHasDisc}"
+			Console.echo_warn "storedDiscInCatcher: #{event.storedDiscInCatcher}"
+		end
+	end #self.giveAllEventsPuzzleProperties
+	
 	def self.saveEventVariables
 		#I might need to save event IDs somewhere because restoring values to an event object might vary in result. Event objects could be different values when the game reloads
 		#if I start a new game, then identify puzzle pieces, will the puzzle pieces variable exist if I enter the room again without identifying pieces? If so, I don't need to store event IDs and assign stored values based on event ID
@@ -288,6 +334,7 @@ class RotatonaPuzzle
 			event.storedDiscJumping = event.discJumping
 			event.storedDiscLandingSpot = event.discLandingSpot
 			event.storedCatcherHasDisc = event.catcherHasDisc
+			event.storedDiscInCatcher = event.discInCatcher
 		end
 	end #def self.saveEventVariables
 	
@@ -313,6 +360,7 @@ class RotatonaPuzzle
 							event.discJumping = event.storedDiscJumping
 							event.discLandingSpot = event.storedDiscLandingSpot
 							event.catcherHasDisc = event.storedCatcherHasDisc
+							event.discInCatcher = event.storedDiscInCatcher
 							next
 						end #if event.id == oldEvent.storedPuzzleID
 				end #for oldEvent in storedEventsArray
