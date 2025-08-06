@@ -317,10 +317,31 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
       Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
     elsif target.effects[PBEffects::Transform]
       blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
-      target.pbTransform(blankBattler, false) # holy mother of all jank
+      #target.pbTransform(blankBattler, false) # holy mother of all jank
+      oldAbil = target.ability_id
       target.effects[PBEffects::Transform] = false
       target.effects[PBEffects::TransformSpecies] = nil
+      target.pbResetTypes
+      target.ability = target.pokemon.ability
+      target.attack  = target.pokemon.attack
+      target.defense = target.pokemon.defense
+      target.spatk   = target.pokemon.spatk
+      target.spdef   = target.pokemon.spdef
+      target.speed   = target.pokemon.speed
+      target.pbResetStatStages
+      target.effects[PBEffects::FocusEnergy] = 0
+      target.effects[PBEffects::LaserFocus]  = 0
+      target.moves.clear
+      target.pokemon.moves.each_with_index do |m, i|
+        target.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(m.id))
+        target.moves[i].pp       = target.pokemon.moves[i].pp
+        target.moves[i].total_pp = target.pokemon.moves[i].total_pp
+      end
+      target.effects[PBEffects::Disable]      = 0
+      target.effects[PBEffects::DisableMove]  = nil
+      target.effects[PBEffects::WeightChange] = 0
       @battle.pbDisplay(_INTL("{1}'s transform wore off!", target.pbThis))
+      target.pbOnLosingAbility(oldAbil)
     else
       @battle.pbDisplay(_INTL("{1} was identified!", target.pbThis))
     end

@@ -323,7 +323,9 @@ class Battle::Battler
         ret.push(typeadd)
         ret.delete(typeremove)
         if self.species == :PORYGONZ && !self.moves.empty?
-          # cant cheese the AI here by swapping moves as mega-evolving only happens once
+          # cant cheese the AI here by swapping moves as overwrite only writes a type once
+          # therefore, using ReadOverwriteType here is not needed. 
+          # (not like it would work anyway since overwrite did not yet take effect)
           ret.push(self.moves[0].type)
         end
         ret = ret.uniq
