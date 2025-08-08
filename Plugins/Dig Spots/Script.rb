@@ -57,9 +57,37 @@ class DigSpots
 		return false
 	end
 	
-	def self.interact
-		print "interacting with dig spot"
+	def self.interact(lootTable, eventID)
+		#does the player have a washing pan? Is it full or empty?
+		if $bag.has?(:WASHINGPANEMPTY)
+			self.digUpTreasure(lootTable) if pbConfirmMessage(_INTL("There's something here. Dig it up?"))
+			#set event's self switch A to off
+			pbMapInterpreter.pbSetSelfSwitch(eventID, "A", false)
+		elsif $bag.has?(:WASHINGPANFULL)
+			pbMessage(_INTL("There's something here. You could dig it up, but your \\c[1]Washing Pan\\c[0] is already full..."))
+		else #no washing pan in the bag at all
+			pbMessage(_INTL("There's something here. You could dig it up if you had a \\c[1]Washing Pan\\c[0]..."))
+		end
 	end #def self.interact
+	
+	def self.digUpTreasure(lootTable)
+		item = self.selectItemFromLootTable(lootTable)
+		Console.echo_warn "washing pan contains #{item}"
+	end #def self.digUpTreasure
+	
+	def self.selectItemFromLootTable(lootTable)
+		total_chance = 0
+		lootTable.each do |entry|
+			total_chance += entry[:chance]
+		end
+		echoln "warning: total cumulative is not equal to 100" if total_chance != 100 && $DEBUG
+		roll = rand(total_chance)
+		cumulative_chance = 0
+		lootTable.shuffle.each do |entry|
+			cumulative_chance += entry[:chance]
+			return entry[:item] if roll < cumulative_chance
+		end
+	end #def selectItemFromLootTable(lootTable)
 end #class DigSpots
 
 EventHandlers.add(:on_enter_map, :spawn_dig_spots,
@@ -70,3 +98,31 @@ EventHandlers.add(:on_enter_map, :spawn_dig_spots,
 	DigSpots.findDigSpotsOnMap
   }
 )
+EventHandlers.add(:on_player_interact, :digSpot, proc {
+	facingEvent = $game_player.pbFacingEvent
+	next if facingEvent.name != "DigSpot"
+	commands = facingEvent.list
+	
+	comment = ""
+	commands.each do |command|
+		# Command code for a comment is 108
+		if command.code == 108
+			# The text is in the first element of the parameters array
+			comment = command.parameters[0]
+			break # Stop searching after finding the first comment
+		end #if command.code == 108
+	end #commands.each do |command|
+	lootTable = DigSpots.const_get(comment)
+	#lootTable = DigSpots.const_get("DIGSPOT_LOOTTABLE1")
+	DigSpots.interact(lootTable, facingEvent.id) if facingEvent
+})
+
+DIGSPOT_LOOTTABLE1 = [
+ { item: :OPALFOSSIL, chance: 5 }, 
+ { item: :OVALSTONE, chance: 25 },
+ { item: :REVIVE, chance: 25 },
+ { item: :PEARL, chance: 15 },
+ { item: :MAXREVIVE, chance: 15 },
+ { item: :RAREBONE, chance: 10 },
+ { item: :STARPIECE, chance: 5 }
+]
