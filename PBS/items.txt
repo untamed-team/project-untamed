@@ -6955,3 +6955,21 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = An old, rusted top tube that might have belonged to a bicycle.
+#-------------------------------
+[WASHINGPANEMPTY]
+Name = Washing Pan
+NamePlural = Washing Pans
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An old washing pan. It's seen its fair share of gold.
+#-------------------------------
+[WASHINGPANFULL]
+Name = Washing Pan
+NamePlural = Washing Pans
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = An old washing pan. There's treasure inside!
