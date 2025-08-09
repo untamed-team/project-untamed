@@ -159,6 +159,10 @@ class Battle::Move::LowerPPOfTargetLastMoveBy3 < Battle::Move
     @battle.pbDisplay(_INTL("It reduced the PP of {1}'s {2} by {3}!",
                             target.pbThis(true), last_move.name, reduction))
   end
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    @battle.pbCommonAnimation("HardDriveCrash", user, targets) if id == :HARDDRIVECRASH
+    super
+  end
 end
 
 #===============================================================================
