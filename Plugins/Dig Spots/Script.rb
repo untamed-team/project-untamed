@@ -60,9 +60,11 @@ class DigSpots
 	def self.interact(lootTable, eventID)
 		#does the player have a washing pan? Is it full or empty?
 		if $bag.has?(:WASHINGPANEMPTY)
-			self.digUpTreasure(lootTable) if pbConfirmMessage(_INTL("There's something here. Dig it up?"))
-			#set event's self switch A to off
-			pbMapInterpreter.pbSetSelfSwitch(eventID, "A", false)
+			if pbConfirmMessage(_INTL("There's something here. Dig it up?"))
+				self.digUpTreasure(lootTable) 
+				#set event's self switch A to off
+				pbMapInterpreter.pbSetSelfSwitch(eventID, "A", false)
+			end
 		elsif $bag.has?(:WASHINGPANFULL)
 			pbMessage(_INTL("There's something here. You could dig it up, but your \\c[1]Washing Pan\\c[0] is already full..."))
 		else #no washing pan in the bag at all
@@ -73,6 +75,9 @@ class DigSpots
 	def self.digUpTreasure(lootTable)
 		item = self.selectItemFromLootTable(lootTable)
 		Console.echo_warn "washing pan contains #{item}"
+		$digSpotPanLoot = item
+		$bag.remove(:WASHINGPANEMPTY)
+		$bag.add(:WASHINGPANFULL)
 	end #def self.digUpTreasure
 	
 	def self.selectItemFromLootTable(lootTable)
@@ -88,6 +93,15 @@ class DigSpots
 			return entry[:item] if roll < cumulative_chance
 		end
 	end #def selectItemFromLootTable(lootTable)
+	
+	def self.getLootFromWashingPan
+		if pbConfirmMessage(_INTL("Do you want to rise off the contents of your washing pan?"))
+			$bag.remove(:WASHINGPANFULL)
+			$bag.add(:WASHINGPANEMPTY)
+			pbItemBall($digSpotPanLoot)
+			$digSpotPanLoot = nil
+		end
+	end #def self.getLootFromWashingPan
 end #class DigSpots
 
 EventHandlers.add(:on_enter_map, :spawn_dig_spots,
@@ -100,21 +114,25 @@ EventHandlers.add(:on_enter_map, :spawn_dig_spots,
 )
 EventHandlers.add(:on_player_interact, :digSpot, proc {
 	facingEvent = $game_player.pbFacingEvent
-	next if facingEvent.name != "DigSpot"
-	commands = facingEvent.list
+	#if player is facing an event, check if it's a dig spot
+	if !facingEvent.nil?
+		next if facingEvent.name != "DigSpot"
+		commands = facingEvent.list
 	
-	comment = ""
-	commands.each do |command|
-		# Command code for a comment is 108
-		if command.code == 108
-			# The text is in the first element of the parameters array
-			comment = command.parameters[0]
-			break # Stop searching after finding the first comment
-		end #if command.code == 108
-	end #commands.each do |command|
-	lootTable = DigSpots.const_get(comment)
-	#lootTable = DigSpots.const_get("DIGSPOT_LOOTTABLE1")
-	DigSpots.interact(lootTable, facingEvent.id) if facingEvent
+		comment = ""
+		commands.each do |command|
+			# Command code for a comment is 108
+			if command.code == 108
+				# The text is in the first element of the parameters array
+				comment = command.parameters[0]
+				break # Stop searching after finding the first comment
+			end #if command.code == 108
+		end #commands.each do |command|
+		lootTable = DigSpots.const_get(comment)
+		DigSpots.interact(lootTable, facingEvent.id) if facingEvent
+	else #not facing an event; check if facing water and have washing pan full
+		DigSpots.getLootFromWashingPan if $bag.has?(:WASHINGPANFULL) && ($game_player.pbFacingTerrainTag == 5 || $game_player.pbFacingTerrainTag == 6 || $game_player.pbFacingTerrainTag == 7 || $game_player.pbFacingTerrainTag == 8 || $game_player.pbFacingTerrainTag == 9 || $game_map.metadata&.dive_map)
+	end
 })
 
 DIGSPOT_LOOTTABLE1 = [
