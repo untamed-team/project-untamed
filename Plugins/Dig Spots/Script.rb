@@ -95,7 +95,7 @@ class DigSpots
 	end #def selectItemFromLootTable(lootTable)
 	
 	def self.getLootFromWashingPan
-		if pbConfirmMessage(_INTL("Do you want to rise off the contents of your washing pan?"))
+		if pbConfirmMessage(_INTL("Do you want to wash the contents of your washing pan?"))
 			$bag.remove(:WASHINGPANFULL)
 			$bag.add(:WASHINGPANEMPTY)
 			pbItemBall($digSpotPanLoot)
