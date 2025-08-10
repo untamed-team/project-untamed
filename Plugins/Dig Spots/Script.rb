@@ -27,8 +27,6 @@ SaveData.register(:dig_spots) do
 end
 
 class DigSpots
-	CHANCE_TO_ACTIVATE_DIG_SPOT = 100
-
 	def initialize
 		$digSpotPanLoot = nil
 	end #def generateDigSpotsOnMap
@@ -135,12 +133,14 @@ EventHandlers.add(:on_player_interact, :digSpot, proc {
 	end
 })
 
-DIGSPOT_LOOTTABLE1 = [
- { item: :OPALFOSSIL, chance: 5 }, 
- { item: :OVALSTONE, chance: 25 },
- { item: :REVIVE, chance: 25 },
- { item: :PEARL, chance: 15 },
- { item: :MAXREVIVE, chance: 15 },
- { item: :RAREBONE, chance: 10 },
- { item: :STARPIECE, chance: 5 }
-]
+ItemHandlers::UseFromBag.add(:ESCAPEROPE, proc { |item|
+  if !$game_player.can_map_transfer_with_follower?
+    pbMessage(_INTL("It can't be used when you have someone with you."))
+    next 0
+  end
+  if ($PokemonGlobal.escapePoint rescue false) && $PokemonGlobal.escapePoint.length > 0
+    next 2
+  end
+  pbMessage(_INTL("Can't use that here."))
+  next 0
+})
