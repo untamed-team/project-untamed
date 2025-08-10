@@ -133,14 +133,42 @@ EventHandlers.add(:on_player_interact, :digSpot, proc {
 	end
 })
 
-ItemHandlers::UseFromBag.add(:ESCAPEROPE, proc { |item|
-  if !$game_player.can_map_transfer_with_follower?
-    pbMessage(_INTL("It can't be used when you have someone with you."))
-    next 0
-  end
-  if ($PokemonGlobal.escapePoint rescue false) && $PokemonGlobal.escapePoint.length > 0
-    next 2
-  end
-  pbMessage(_INTL("Can't use that here."))
-  next 0
+ItemHandlers::UseFromBag.add(:WASHINGPANEMPTY, proc { |item|
+	#next 0: Item use fails, item is not consumed.
+	#next 1: Item use succeeds, item is consumed.
+	#next 2: Item use succeeds, item is not consumed.
+
+	#looking for a dig spot event to fill the washing pan at
+	facingEvent = $game_player.pbFacingEvent
+	#if player is facing an event, check if it's a dig spot
+	if facingEvent.nil?
+		pbMessage(_INTL("Can't use that here."))
+		next 0
+	end
+	
+	if facingEvent.name != "DigSpot"
+		pbMessage(_INTL("Can't use that here."))
+		next 0
+	else
+		#facing a dig spot
+		next 2 #successful use, do not consume, go to useinfield handler for the item to do the actual effect
+	end #if facingEvent.name != "DigSpot"
+})
+
+ItemHandlers::UseInField.add(:WASHINGPANEMPTY, proc { |item|
+	facingEvent = $game_player.pbFacingEvent
+	commands = facingEvent.list
+	
+	comment = ""
+	commands.each do |command|
+		# Command code for a comment is 108
+		if command.code == 108
+			# The text is in the first element of the parameters array
+			comment = command.parameters[0]
+			break # Stop searching after finding the first comment
+		end #if command.code == 108
+	end #commands.each do |command|
+	lootTable = DigSpots.const_get(comment)
+	DigSpots.interact(lootTable, facingEvent.id) if facingEvent
+	next 
 })

@@ -6963,7 +6963,7 @@ Pocket = 8
 Price = 0
 FieldUse = Direct
 Flags = KeyItem
-Description = An old washing pan. It's seen its fair share of gold.
+Description = An old washing pan. It's seen its fair share of gold, but it's empty right now.
 #-------------------------------
 [WASHINGPANFULL]
 Name = Washing Pan
