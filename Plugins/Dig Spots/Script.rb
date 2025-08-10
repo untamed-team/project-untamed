@@ -131,7 +131,7 @@ EventHandlers.add(:on_player_interact, :digSpot, proc {
 		lootTable = DigSpots.const_get(comment)
 		DigSpots.interact(lootTable, facingEvent.id) if facingEvent
 	else #not facing an event; check if facing water and have washing pan full
-		DigSpots.getLootFromWashingPan if $bag.has?(:WASHINGPANFULL) && ($game_player.pbFacingTerrainTag == 5 || $game_player.pbFacingTerrainTag == 6 || $game_player.pbFacingTerrainTag == 7 || $game_player.pbFacingTerrainTag == 8 || $game_player.pbFacingTerrainTag == 9 || $game_map.metadata&.dive_map)
+		DigSpots.getLootFromWashingPan if $bag.has?(:WASHINGPANFULL) && ($game_player.pbFacingTerrainTag == 5 || $game_player.pbFacingTerrainTag == 6 || $game_player.pbFacingTerrainTag == 7 || $game_player.pbFacingTerrainTag == 8 || $game_player.pbFacingTerrainTag == 9)
 	end
 })
 
