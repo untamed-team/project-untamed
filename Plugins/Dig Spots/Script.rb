@@ -170,5 +170,26 @@ ItemHandlers::UseInField.add(:WASHINGPANEMPTY, proc { |item|
 	end #commands.each do |command|
 	lootTable = DigSpots.const_get(comment)
 	DigSpots.interact(lootTable, facingEvent.id) if facingEvent
-	next 
+	next 2
+})
+
+ItemHandlers::UseFromBag.add(:WASHINGPANFULL, proc { |item|
+	#next 0: Item use fails, item is not consumed.
+	#next 1: Item use succeeds, item is consumed.
+	#next 2: Item use succeeds, item is not consumed.
+
+	if ($game_player.pbFacingTerrainTag == 5 || $game_player.pbFacingTerrainTag == 6 || $game_player.pbFacingTerrainTag == 7 || $game_player.pbFacingTerrainTag == 8 || $game_player.pbFacingTerrainTag == 9)
+		#if facing water
+		next 2
+	else
+		#if not facing water
+		pbMessage(_INTL("Take this to a body of water to wash it off."))
+		next 0
+	end
+	
+})
+
+ItemHandlers::UseInField.add(:WASHINGPANFULL, proc { |item|
+	DigSpots.getLootFromWashingPan
+	next 2 
 })
