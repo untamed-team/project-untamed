@@ -7,18 +7,7 @@
 
 #I think it just creates a easy reset opportunity which is what we are trying to avoid. While the event itself gets re-rolled when you open the map on whether it spawns, The areas the event could spawn would still be limited. So you can just continually reset on a beach or something, check all the dirt piles in the body of water next to it, and then save and reload until you get more dirt piles. Having to leave the map at least requires more work to reload depending on event placement
 
-#To do
-#When you enter the map, there's a chance for dig spots to spawn. For testing purposes, make 100% chance for now and have a setting you can tweak
-#Need a pan item in key items: emptypan and fullpan
-#Loot for each dig spot is decided upon it spawning when you enter the map. If you save the game, the loot for that dig spot stays the same when you reload the game in that map
-
-#The plugin then rolls a chance for the dig spot to be active
-#If a dig spot is activated, the plugin then changes the event's self switch A to be ON
-
-#In the event, there's a command that will trigger filling the emptypan item and rolling for an item in the loot table. You then have a full pan, and the looted item ID is saved to $digSpotPanLoot
-#You can then use the pan on the water to get the loot
-#You can also use the pan at the panner's camp to get the loot, setting $digSpotPanLoot = nil
-
+#need to register empty pan when the full pan is registered and washed, then vice versa
 
 SaveData.register(:dig_spots) do
   save_value { $digSpotPanLoot }
@@ -76,6 +65,12 @@ class DigSpots
 		$digSpotPanLoot = item
 		$bag.remove(:WASHINGPANEMPTY)
 		$bag.add(:WASHINGPANFULL)
+		
+		#replace registered item if washing pan was registered
+		if $bag.pbIsRegistered?(:WASHINGPANEMPTY)
+			$bag.pbUnregisterItem(:WASHINGPANEMPTY)
+			$bag.pbRegisterItem(:WASHINGPANFULL)
+		end
 	end #def self.digUpTreasure
 	
 	def self.selectItemFromLootTable(lootTable)
@@ -95,7 +90,7 @@ class DigSpots
 	def self.getLootFromWashingPan
 		if pbConfirmMessage(_INTL("Do you want to wash the contents of your washing pan?"))
 			$bag.remove(:WASHINGPANFULL)
-			$bag.add(:WASHINGPANEMPTY)
+			$bag.add(:WASHINGPANEMPTY)			
 			pbItemBall($digSpotPanLoot)
 			$digSpotPanLoot = nil
 		end
@@ -111,6 +106,7 @@ EventHandlers.add(:on_enter_map, :spawn_dig_spots,
   }
 )
 EventHandlers.add(:on_player_interact, :digSpot, proc {
+	print "clicked on dig spot"
 	facingEvent = $game_player.pbFacingEvent
 	#if player is facing an event, check if it's a dig spot
 	if !facingEvent.nil?
