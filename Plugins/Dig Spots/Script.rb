@@ -113,7 +113,6 @@ EventHandlers.add(:on_enter_map, :spawn_dig_spots,
   }
 )
 EventHandlers.add(:on_player_interact, :digSpot, proc {
-	print "clicked on dig spot"
 	facingEvent = $game_player.pbFacingEvent
 	#if player is facing an event, check if it's a dig spot
 	if !facingEvent.nil?
