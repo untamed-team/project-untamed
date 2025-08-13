@@ -79,6 +79,7 @@ class DigSpots
 			total_chance += entry[:chance]
 		end
 		echoln "warning: total cumulative is not equal to 100" if total_chance != 100 && $DEBUG
+		echoln "warning: total cumulative is not equal to 100" if total_chance != 100 && $DEBUG
 		roll = rand(total_chance)
 		cumulative_chance = 0
 		lootTable.shuffle.each do |entry|
@@ -93,6 +94,12 @@ class DigSpots
 			$bag.add(:WASHINGPANEMPTY)			
 			pbItemBall($digSpotPanLoot)
 			$digSpotPanLoot = nil
+			
+			#replace registered item if washing pan was registered
+			if $bag.pbIsRegistered?(:WASHINGPANFULL)
+				$bag.pbUnregisterItem(:WASHINGPANFULL)
+				$bag.pbRegisterItem(:WASHINGPANEMPTY)
+			end
 		end
 	end #def self.getLootFromWashingPan
 end #class DigSpots
@@ -153,6 +160,11 @@ ItemHandlers::UseFromBag.add(:WASHINGPANEMPTY, proc { |item|
 
 ItemHandlers::UseInField.add(:WASHINGPANEMPTY, proc { |item|
 	facingEvent = $game_player.pbFacingEvent
+	if facingEvent.nil?
+		pbMessage(_INTL("Can't use that here."))
+		next 0
+	end
+	
 	commands = facingEvent.list
 	
 	comment = ""
@@ -186,6 +198,13 @@ ItemHandlers::UseFromBag.add(:WASHINGPANFULL, proc { |item|
 })
 
 ItemHandlers::UseInField.add(:WASHINGPANFULL, proc { |item|
-	DigSpots.getLootFromWashingPan
-	next 2 
+	if ($game_player.pbFacingTerrainTag == 5 || $game_player.pbFacingTerrainTag == 6 || $game_player.pbFacingTerrainTag == 7 || $game_player.pbFacingTerrainTag == 8 || $game_player.pbFacingTerrainTag == 9)
+		#if facing water
+		DigSpots.getLootFromWashingPan
+		next 2
+	else
+		#if not facing water
+		pbMessage(_INTL("Take this to a body of water to wash it off."))
+		next 0
+	end
 })
