@@ -98,7 +98,7 @@ class Dance
     
     #player pokemon
     @sprites["contestant4"] = IconSprite.new(0, 0, @viewport)
-    @sprites["contestant4"].setBitmap("Graphics/Pictures/Contest/dressup/contestants/playerPkmn")
+    @sprites["contestant4"].setBitmap("Graphics/Pictures/Contest/dressup/contestants/#{$player.id}.png")
     @sprites["contestant4"].x = Graphics.width - (@sprites["contestant4"].width * 0.8)
     @sprites["contestant4"].y = 0
     @sprites["contestant4"].z = 99998
