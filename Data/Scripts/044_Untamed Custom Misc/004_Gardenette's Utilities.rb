@@ -2396,4 +2396,34 @@ def self.pbCheckCRRewards
   end
 end #def pbCheckCRRewards
 
+#=============================================================================
+# Following Pkmn EX Changes
+#=============================================================================
+#from github issue 1495
+#https://github.com/untamed-team/project-untamed/issues/1495
+#do a prompt so when you're toggling through the follower mons, if you end up on a big boi, you get the "time and place" error like if you try to bike inside, or SKy's suggestion
+#"This area doesn't provide enough space for your Titanotrop.
+#Your Titanotrop returned to its Pokéball."
+
+EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
+  metadata = $game_map.metadata
+  if metadata && metadata.outdoor_map != true
+    # Don't follow if the Pokemon's height is greater than 3 meters and there are no encounters ie a building or something
+    height =  GameData::Species.get_species_form(pkmn.species, pkmn.form).height
+    if (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here?
+      case pkmn.gender
+      when 0
+        genderText = "He"
+      when 1
+        genderText = "She"
+      when 2
+        genderText = "It"
+      end
+      pbMessage(_INTL("There's not enough space here for #{pkmn.name}...\n#{genderText} returned to the ball."))
+      next false
+    end
+    next false if $PokemonEncounters.nil? #added by Gardenette to prevent a crash
+  end
+})
+
 end #class GardenUtil
