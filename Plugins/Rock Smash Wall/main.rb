@@ -25,8 +25,8 @@ class RockSmashWall
 		return false
 	end
 	
-	def self.interact(lootTable, eventID)
-		if self.pbRockSmashWallQuestion
+	def self.interact(lootTable, eventID, fieldMove=nil)
+		if fieldMove || self.pbRockSmashWallQuestion
 			#roll for successful loot drop
 			
 			@foundComment = false
@@ -141,6 +141,7 @@ class RockSmashWall
 		if !facingEvent.nil?
 			next if facingEvent.name != "RockSmashWall"
 			commands = facingEvent.list
+			next if  commands.nil?
 	
 			comment = ""
 			commands.each do |command|
@@ -154,5 +155,45 @@ class RockSmashWall
 			lootTable = RockSmashWall.const_get(comment)
 			RockSmashWall.interact(lootTable, facingEvent.id) if facingEvent
 		end
+	})
+
+	HiddenMoveHandlers::CanUseMove.add(:ROCKSMASH, proc { |move, pkmn, showmsg|
+		next false if !pbCheckHiddenMoveBadge(Settings::BADGE_FOR_ROCKSMASH, showmsg)
+		facingEvent = $game_player.pbFacingEvent
+		if !facingEvent || (!facingEvent.name[/smashrock/i] && !facingEvent.name[/RockSmashWall/i])
+			pbMessage(_INTL("You can't use that here.")) if showmsg
+			next false
+		end
+		next true
+	})
+
+	HiddenMoveHandlers::UseMove.add(:ROCKSMASH, proc { |move, pokemon|
+		if !pbHiddenMoveAnimation(pokemon)
+			pbMessage(_INTL("{1} used {2}!", pokemon.name, GameData::Move.get(move).name))
+		end
+		$stats.rock_smash_count += 1
+		facingEvent = $game_player.pbFacingEvent
+		
+		next if !facingEvent
+		if facingEvent.name == "RockSmashWall"
+			commands = facingEvent.list
+			next if  commands.nil?
+	
+			comment = ""
+			commands.each do |command|
+				# Command code for a comment is 108
+				if command.code == 108
+					# The text is in the first element of the parameters array
+					comment = command.parameters[0]
+					break # Stop searching after finding the first comment
+				end #if command.code == 108
+			end #commands.each do |command|
+			lootTable = RockSmashWall.const_get(comment)
+			RockSmashWall.interact(lootTable, facingEvent.id, true) if facingEvent
+		else
+			pbSmashEvent(facingEvent)
+			pbRockSmashRandomEncounter
+		end
+		next true
 	})
 end #class RockSmashWall
