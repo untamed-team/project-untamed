@@ -2405,12 +2405,16 @@ end #def pbCheckCRRewards
 #"This area doesn't provide enough space for your Titanotrop.
 #Your Titanotrop returned to its Pokéball."
 
+FOLLOWING_PKMN_INDOOR_HEIGHT_EXCEPTIONS =  [
+#:MUDSMACHE this is an example
+]
+
 EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   metadata = $game_map.metadata
   if metadata && metadata.outdoor_map != true
     # Don't follow if the Pokemon's height is greater than 3 meters and there are no encounters ie a building or something
     height =  GameData::Species.get_species_form(pkmn.species, pkmn.form).height
-    if (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here?
+    if (height / 10.0) > 3.0 && !$PokemonEncounters.encounter_possible_here? && !FOLLOWING_PKMN_INDOOR_HEIGHT_EXCEPTIONS.include?(pkmn.species)
       case pkmn.gender
       when 0
         genderText = "He"
