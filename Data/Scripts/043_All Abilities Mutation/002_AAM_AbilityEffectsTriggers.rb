@@ -300,7 +300,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
@@ -308,7 +308,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
@@ -679,5 +679,25 @@ Battle::AbilityEffects::OnSwitchOut.add(:IMMUNITY,
     next if battler.abilityMutationList.include?(:POISONHEAL)
     PBDebug.log("[Ability triggered] #{battler.pbThis}'s #{battler.abilityName}")
     battler.status = :NONE
+  }
+)
+
+Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
+  proc { |ability, user, target, move, battle|
+    next if !move.physicalMove?
+    next if !target.pbCanRaiseStatStage?(:SPEED, target)
+    clearly = false
+    if target.abilityMutationList.include?(:CLEARBODY)
+      clearly = true
+    else
+      next if !target.pbCanLowerStatStage?(:DEFENSE, target)
+    end
+    next if battle.wasUserAbilityActivated?(target)
+    battle.pbShowAbilitySplash(target)
+    target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false) if !clearly
+    target.pbRaiseStatStageByAbility(:SPEED,
+       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
+    battle.pbHideAbilitySplash(target)
   }
 )

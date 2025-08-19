@@ -189,6 +189,7 @@ module Compiler
     schema = GameData::Ability::SCHEMA
     ability_names        = []
     ability_descriptions = []
+    ability_full_descriptions = []
     PLUGIN_FILES.each do |plugin|
       path = "PBS/Plugins/#{plugin}/abilities.txt"
       next if !safeExists?(path)
@@ -227,6 +228,12 @@ module Compiler
               if ability.real_description != contents[key]
                 ability.real_description = contents[key]
                 ability_descriptions.push(contents[key])
+                compiled = true
+              end
+            when "FullDesc"
+              if ability.full_description != contents[key]
+                ability.full_description = contents[key]
+                ability_full_descriptions.push(contents[key])
                 compiled = true
               end
             when "Flags"
@@ -277,6 +284,8 @@ module Compiler
             ability_names.push(ability_hash[:name])
           when "Description"
             ability_descriptions.push(ability_hash[:description])
+          when "FullDesc"
+            ability_full_descriptions.push(ability_hash[:full_description])
           end
         end
       }
@@ -295,6 +304,7 @@ module Compiler
       Compiler.write_abilities
       MessageTypes.setMessagesAsHash(MessageTypes::Abilities, ability_names)
       MessageTypes.setMessagesAsHash(MessageTypes::AbilityDescs, ability_descriptions)
+      MessageTypes.setMessagesAsHash(MessageTypes::AbilityDescs, ability_full_descriptions)
     end
   end
   

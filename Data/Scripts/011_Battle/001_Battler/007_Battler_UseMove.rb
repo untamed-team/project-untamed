@@ -215,21 +215,24 @@ class Battle::Battler
     end
     # Presage #by low (placed here so it triggers before doing damage)
     if self.hasActiveAbility?(:PRESAGE)
-      weather_hash = {
-        "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
-        "HealUserDependingOnWeather" => :Sun, # morning sun
-        "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
-        "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
-        "HealUserDependingOnHail"      => :Hail, # glacial gulf
-        "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
-        "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
-        "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
-        "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
-        "HigherDamageInRain"                            => :Rain, # stream burst
-        "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
-        "PeperSpray"                                    => :Sun   # pepper spray
-      }
-      if move.function != "TypeAndPowerDependOnWeather"
+      if move.function == "TypeAndPowerDependOnWeather"
+        possible_weathers = [:Sun, :Rain, :Sandstorm, :Hail, :StrongWinds, :ShadowSky]
+        new_weather = possible_weathers[@battle.pbRandom(possible_weathers.length)] if $player.difficulty_mode?("easy")
+      else
+        weather_hash = {
+          "RaiseUserAtkSpAtk1Or2InSun" => :Sun, # growth
+          "HealUserDependingOnWeather" => :Sun, # morning sun
+          "TwoTurnAttackOneTurnInSun"  => :Sun, # solar beam / solar blade
+          "FreezeTargetAlwaysHitsInHail" => :Hail, # blizzard
+          "HealUserDependingOnHail"      => :Hail, # glacial gulf
+          "HealUserDependingOnSandstorm" => :Sandstorm, # shore up
+          "StartUserSideDoubleSpeed"     => :StrongWinds,  # tailwind
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"  => :Rain, # hurricane
+          "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky" => :Rain, # thunder
+          "HigherDamageInRain"                            => :Rain, # stream burst
+          "HigherDamageInSunVSNonFireTypes"               => :Sun,  # scald
+          "PeperSpray"                                    => :Sun   # pepper spray
+        }
         new_weather = weather_hash[move.function]
         if !new_weather && move.damagingMove?
           case move.type
@@ -287,6 +290,7 @@ class Battle::Battler
       @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
       @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
       @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
+      @battle.addMoveRevealed(self, move.id) if !@battle.moveRevealed?(self, move.id) # for Kiriya #by low
     end
     @battle.lastMoveUsed = move.id   # For Copycat
     @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
@@ -353,13 +357,13 @@ class Battle::Battler
     move.pbOnStartUse(user, targets)
     # Self-thawing due to the move
     # Powder
-    if user.effects[PBEffects::Powder] && move.calcType == :FIRE
+    if user.effects[PBEffects::Powder] && move.calcType == :FIRE && move.damagingMove?
       @battle.pbCommonAnimation("Powder", user)
       @battle.pbDisplay(_INTL("When the flame touched the powder on the Pokémon, it exploded!"))
       user.lastMoveFailed = true
       if ![:HeavyRain].include?(user.effectiveWeather) && user.takesIndirectDamage?
         user.pbTakeEffectDamage((user.totalhp / 4.0).round, false) { |hp_lost|
-          @battle.pbDisplay(_INTL("{1} is hurt by its {2}!", battler.pbThis, battler.itemName))
+          @battle.pbDisplay(_INTL("{1} was hurt!", user.pbThis))
         }
         @battle.pbGainExp   # In case user is KO'd by this
       end
@@ -395,7 +399,7 @@ class Battle::Battler
       end
     end
     # Protean
-    if user.hasActiveAbility?([:LIBERO, :PROTEAN]) &&
+    if user.hasActiveAbility?([:PROTEAN, :LIBERO]) &&
        !move.callsAnotherMove? && !move.snatched &&
        user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
       @battle.pbShowAbilitySplash(user)
@@ -429,6 +433,35 @@ class Battle::Battler
       end
       targets.each do |b|
         b.damageState.reset
+        # Special interaction for color change + protean ability combo #by low
+        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && !b.pbOwnedByPlayer? &&
+           b.hasAbilityMutation? && b.abilityMutationList.include?(:COLORCHANGE)
+          offenseType = move.calcType
+          if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
+            @battle.pbShowAbilitySplash(b)
+            resistTypesArr = []
+            GameData::Type.each do |t|
+              next if t.pseudo_type || user.pbHasType?(t.id)
+              resistTypesArr.push(t.id) if Effectiveness.resistant_type?(offenseType, t.id) && 
+                                          !Effectiveness.ineffective_type?(offenseType, t.id)
+            end
+            if resistTypesArr.empty?
+              GameData::Type.each do |t|
+                next if t.pseudo_type || user.pbHasType?(t.id)
+                if Effectiveness.ineffective_type?(offenseType, t.id)
+                  resistTypesArr.push(t.id)
+                  break
+                end
+              end
+            end
+            resistTypesArr.push(offenseType.id) if resistTypesArr.empty?
+            resistType = resistTypesArr.sample
+            b.pbChangeTypes(resistType)
+            typeName = GameData::Type.get(resistType).name
+            @battle.pbDisplay(_INTL("{1}'s type changed to {2}!", b.pbThis, typeName))
+            @battle.pbHideAbilitySplash(b)
+          end
+        end
         next if pbSuccessCheckAgainstTarget(move, user, b, targets)
         b.damageState.unaffected = true
       end
@@ -850,16 +883,16 @@ class Battle::Battler
        targets.any? { |b| !b.fainted? && !b.damageState.unaffected }
       pbProcessMoveHit(move, user, all_targets, 1, skipAccuracyCheck)
     end
-		# damage message #by low
-		if $player.difficulty_mode?("hard")
-			targets.each do |b|
-				if b.damageState.calcDamage > 0
-					damagetotal = b.damageState.calcDamage
-					damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
-					@battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
-				end
-			end
-		end
+    # damage message #by low
+    if $player.difficulty_mode?("hard")
+      targets.each do |b|
+        if b.damageState.calcDamage > 0
+          damagetotal = b.damageState.calcDamage
+          #damagetotal = b.totalhp.to_f if b.totalhp.to_f < damagetotal
+          @battle.pbDisplay(_INTL("{1} damage on {2}! ({3}%)",damagetotal, b.pbThis(true),((damagetotal/b.totalhp.to_f)*100).floor)) if !$game_switches[101]
+        end
+      end
+    end
     return true
   end
 end

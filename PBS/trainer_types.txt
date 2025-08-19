@@ -246,6 +246,11 @@ Name = Lass
 Gender = Female
 BaseMoney = 16
 #-------------------------------
+[LASS4]
+Name = Lass
+Gender = Female
+BaseMoney = 16
+#-------------------------------
 [POKEMONRANGER_M]
 Name = Pokémon Ranger
 Gender = Male

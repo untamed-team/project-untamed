@@ -112,6 +112,8 @@ end
 # The store of found items
 #-------------------------------------------------------------------------------
 class ItemLog
+  attr_reader :found_items
+
   def initialize()
     @found_items = []
   end

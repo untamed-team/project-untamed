@@ -139,6 +139,7 @@ or dont
     fixed_duration = false
     fixed_duration = true if (Settings::FIXED_DURATION_WEATHER_FROM_ABILITY && !$game_switches[OLDSCHOOLBATTLE]) &&
                              ![:HarshSun, :HeavyRain, :StrongWinds].include?(new_weather)
+    fixed_duration = false if presage
     pbStartWeather(battler, new_weather, fixed_duration, true, presage)
     # NOTE: The ability splash is hidden again in def pbStartWeather.
   end
@@ -169,7 +170,7 @@ or dont
     when :Hail        then pbDisplay(_INTL("It started to hail!"))
     when :HarshSun    then pbDisplay(_INTL("The sunlight turned extremely harsh!"))
     when :HeavyRain   then pbDisplay(_INTL("A heavy rain began to fall!"))
-    when :StrongWinds then pbDisplay(_INTL("Mysterious strong winds are protecting Flying-type Pokémon!"))
+    when :StrongWinds then pbDisplay(_INTL("Strong winds are protecting Flying-type Pokémon!"))
     when :ShadowSky   then pbDisplay(_INTL("A shadow sky appeared!"))
     when :None        then pbDisplay(_INTL("The sky was cleared!"))
     end
@@ -264,7 +265,7 @@ or dont
           elsif zoneHash[gimmick_downcase]
             @field.typezone = zoneHash[gimmick_downcase]
           elsif fieldHash[gimmick_downcase]
-            @field.effects[PBEffects.const_get(effectHash[gimmick_downcase])] = 999
+            @field.effects[PBEffects.const_get(fieldHash[gimmick_downcase])] = 999
           elsif effectHash[gimmick_downcase]
             if ["statdropimmunity"].include?(gimmick_downcase)
               @sides[1].effects[PBEffects.const_get(effectHash[gimmick_downcase])] = true
@@ -280,6 +281,11 @@ or dont
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 1
               @sides[0].effects[PBEffects.const_get(hazardsHash[gimmick_downcase])] += 2 if ["stickyweb", "seaoffire", "swamp"].include?(gimmick_downcase)
             end
+          elsif ["inverse", "inversebattle"].include?(gimmick_downcase)
+            @inverseBattle = true
+          elsif ["retro", "retro battle"].include?(gimmick_downcase)
+            # if it wasnt due to move categories i could have made this a @battle trait, but alas.
+            $game_switches[OLDSCHOOLBATTLE] = true
           end
         end
       end
@@ -362,6 +368,10 @@ or dont
     end
     pbDisplay(_INTL("A sea of fire enveloped your side of the field!")) if @sides[0].effects[PBEffects::SeaOfFire] > 0
     pbDisplay(_INTL("A swamp enveloped your side of the field!")) if @sides[0].effects[PBEffects::Swamp] > 0
+    
+    # Battle rules announcements
+    pbDisplay(_INTL("Type matchups have been flipped! It's an inverse battle!")) if @inverseBattle
+    pbDisplay(_INTL("The battlefield glitches! Battle mechanics roughly follow Gen III standards!")) if $game_switches[OLDSCHOOLBATTLE]
     # Abilities upon entering battle
     pbOnAllBattlersEnteringBattle
     # Main battle loop

@@ -110,8 +110,6 @@ class PokemonPokedexInfo_Scene
         @subPage-=1
         @subPage=@totalSubPages if @subPage<1
         displaySubPage
-			elsif @page == 2 #area #by low
-				pbSpeciesTypeMatchUI
       end
     elsif Input.trigger?(Input::USE)
       if @page == ADVANCED_PAGE
@@ -483,79 +481,6 @@ class PokemonPokedexInfo_Scene
     return ret
   end
     
-  # Gets the evolution array and return evolution message
-  def getEvolutionMessage(evolution, method, parameter)
-    evoName = GameData::Species.get(evolution).name
-    ret = case method
-      when :Level
-        _INTL("{1} at level {2}", evoName,parameter)
-      when :LevelMale
-        _INTL("{1} at level {2} and it's male", evoName,parameter)
-      when :LevelFemale
-        _INTL("{1} at level {2} and it's female", evoName,parameter)
-      when :LevelRain
-        _INTL("{1} at level {2} when raining", evoName,parameter)
-      when :DefenseGreater
-        _INTL("{1} at level {2} and ATK > DEF",evoName,parameter)
-      when :AtkDefEqual
-        _INTL("{1} at level {2} and ATK = DEF",evoName,parameter) 
-      when :AttackGreater
-        _INTL("{1} at level {2} and DEF < ATK",evoName,parameter)
-      when :Silcoon,:Cascoon
-        _INTL("{1} at level {2} with personalID", evoName,parameter)
-      when :Ninjask
-        _INTL("{1} at level {2}",evoName,parameter)
-      when :Shedinja
-        _INTL("{1} at level {2} with empty space",evoName,parameter)
-      when :Happiness
-        _INTL("{1} when happy",evoName)
-      when :HappinessDay
-        _INTL("{1} when happy at day",evoName)
-      when :HappinessNight
-        _INTL("{1} when happy at night",evoName)
-      when :Beauty
-        _INTL("{1} when beauty is greater than {2}",evoName,parameter) 
-      when :DayHoldItem
-        _INTL("{1} holding {2} at day",evoName,GameData::Item.get(parameter).name)
-      when :NightHoldItem
-        _INTL("{1} holding {2} at night",evoName,GameData::Item.get(parameter).name)
-      when :HasMove
-        _INTL("{1} when has move {2}",evoName,GameData::Move.get(parameter).name)
-      when :HappinessMoveType
-        _INTL("{1} when is happy with {2} move",evoName,GameData::Type.get(parameter).name)
-      when :HasInParty
-        _INTL("{1} when has {2} at party",evoName,GameData::Species.get(parameter).name)
-      when :Location
-        _INTL("{1} at {2}",evoName, pbGetMapNameFromId(parameter))
-      when :Item
-        _INTL("{1} using {2}",evoName,GameData::Item.get(parameter).name)
-      when :ItemMale
-        _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
-      when :ItemFemale
-        _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade
-        _INTL("{1} trading",evoName)
-      when :TradeItem
-        _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
-      when :TradeSpecies
-        _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
-			# edits #by low
-			when :None
-				_INTL("None")
-      when :LevelDay
-        _INTL("{1} at level {2} at day", evoName,parameter)
-      when :LevelNight
-        _INTL("{1} at level {2} at night", evoName,parameter)
-      when :HappinessLevel
-        _INTL("{1} at level {2} and when happy", evoName,parameter)
-      when :Level30HasTypeMove
-        _INTL("{1} at level 30 with {2} move",evoName,GameData::Type.get(parameter).name)
-      else
-        evoName
-    end
-    return ret
-  end 
-  
   def getLevelMoves
     return @data.moves.map{|moveData|
       _ISPRINTF(

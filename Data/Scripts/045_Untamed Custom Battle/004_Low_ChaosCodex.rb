@@ -60,7 +60,7 @@ MenuHandlers.add(:battle_guide, :status_page_dizzy, {
   "name"        => _INTL(" - Dizzy"),
   "parent"      => :status_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]When <b>dizzied</b>, a Pokémon will have its ability nullified for 2 turns. \\nPsychic-types cannot be dizzied. \\n<b>Confuse Ray</b> is the most common way of causing dizziness."))
+		pbMessage(_INTL("\\l[5]When <b>dizzied</b>, a Pokémon will have its ability nullified for 2 turns. \\nPsychic-types cannot be dizzied. \\n<b>Confuse Ray</b> is the most common way of causing dizziness. The confused effect was replaced by the dizzy status, but the names are used interchangebly."))
 	}
 })
 
@@ -220,7 +220,7 @@ MenuHandlers.add(:battle_guide, :moves_page_setup, {
   "name"        => _INTL("Setup Moves"),
   "parent"      => :moves_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]Setup moves can only be used once per switch, but there is no limit on how many setup moves you can use. \\nMoves with a guaranteed chance of raising stats only raise stats once."))
+		pbMessage(_INTL("\\l[5]Setup moves can only be used once per switch, but there is no limit on how many setup moves you can use. \\nMoves with a chance of raising stats only raise stats once."))
 	}
 })
 
@@ -228,7 +228,7 @@ MenuHandlers.add(:battle_guide, :moves_page_misc, {
   "name"        => _INTL("Specific Moves"),
   "parent"      => :moves_page,
 	"effect"      => proc {
-		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> has a maximum damage of 100 HP and heals only 75% of the damage dealt."))
+		pbMessage(_INTL("\\l[5]<b>Knock Off</b> no longer deals increased damage to foes holding an item.\\n<b>Leech Seed</b> has a maximum damage of 100 HP and heals only 75% of the damage dealt, it is also considered a bomb move and has a set duration."))
 	}
 })
 
@@ -273,6 +273,7 @@ MenuHandlers.add(:battle_guide, :clovercatchchain, {
 		pbMessage(_INTL("\\l[5]Catch Chains increase the chance of encountering a shiny Pokémon of a particular species. \\nChaining begins by catching a Pokémon, and increases by catching more of that particular Pokémon. \\nThe larger the chain, the more likely it is that you will encounter the shiny version of the chained Pokémon.\\nThe chain will break if you catch another species of Pokémon or close the game."))
 	}
 })
+
 # ==============================================================================================================================
 
 class CommandMenuList

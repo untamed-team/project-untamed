@@ -12,6 +12,7 @@ class CrustangRacing
 		#create variables
 		@distance_personal_best = 0
 		@previous_race_distance = 0
+		@number_of_races = 0
 	end
 
 	def self.updateOverlayText
@@ -646,6 +647,8 @@ class CrustangRacing
 		@playingBGM = $game_system.getPlayingBGM
 		$game_system.bgm_pause		
 		pbBGMFade(0.8)
+		
+		@number_of_races += 1
 	
 		@enteredCrustang = enteredCrustang
 		self.setup

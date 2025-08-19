@@ -1,20 +1,30 @@
 class Battle::AI
-    # kiriya ai log settings
+    # global array initialization
+    attr_accessor :megaGlobalArray
+    alias kiriya_initialize initialize
+    def initialize(battle)
+        kiriya_initialize(battle)
+        @megaGlobalArray = []
+    end
+
+    # kiriya flags
+    $aisuckercheck = [false, 0]
+    $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
+
+    # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
     $AIMASTERLOG = (false && $DEBUG)
     $AIGENERALLOG = (false && $DEBUG)
-    # game dies when instruct is used
-    # gastro acid can sometimes make kiriya skip turns?
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
                             "RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
-                            #"TargetUsesItsLastUsedMoveAgain",
+                            #"TargetUsesItsLastUsedMoveAgain", # game dies when instruct is used
                             "SetTargetAbilityToSimple", "SetTargetAbilityToUserAbility",
                             "SetUserAbilityToTargetAbility", "SetTargetAbilityToInsomnia",
-                            "UserTargetSwapAbilities", #"NegateTargetAbility", 
+                            "UserTargetSwapAbilities", #"NegateTargetAbility", # gastro acid can sometimes make kiriya skip turns?
                             "RedirectAllMovesToTarget", "HitOncePerUserTeamMember", 
                             "HealTargetDependingOnGrassyTerrain", "CureTargetStatusHealUserHalfOfTotalHP",
-                            "HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing"] 
+                            "HealTargetHalfOfTotalHP", "HealAllyOrDamageFoe", "Rebalancing", "RaiseTargetSpDef1"] 
 
     #@battle.choices[index][0] = :UseMove   # Action
     #@battle.choices[index][1] = idxMove    # Index of move to be used
@@ -30,9 +40,32 @@ class Battle::AI
         user        = @battle.battlers[idxBattler]
         wildBattler = user.wild? && !user.isBossPokemon?
         skill       = 100
+        @megaGlobalArray = pbGetMidTurnGlobalChanges
         # if !wildBattler
         #     skill     = @battle.pbGetOwnerFromBattlerIndex(user.index).skill_level || 0
         # end
+        # Gather information regarding opposing Sucker Punch and AoE Protect moves
+        user.eachOpposing do |b|
+            if targetWillMove?(b)
+                targetMove = @battle.choices[b.index][2]
+                if targetMove.function == "FailsIfTargetActed" && 
+                  (user.moves.any? { |i| i.statusMove? } || user.moves.any? { |i| priorityAI(user,i)>0 })
+                    suckerp = 80
+                    suckerp = 66 if b.moves.any? { |i| i.statusMove? }
+                    if rand(100) < suckerp
+                        echoln("\n'prediction(2)'")
+                        $aisuckercheck = [true, b]
+                    end
+                end
+                if b.effects[PBEffects::ProtectRate] <= 1
+                    if ["ProtectUserSideFromStatusMoves", "ProtectUserSideFromMultiTargetDamagingMoves", 
+                        "ProtectUserSideFromPriorityMoves", "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(targetMove.function) &&
+                       @battle.moveRevealed?(b, targetMove.id)
+                        $aiguardcheck = [true, targetMove.function]
+                    end
+                end
+            end
+        end
         # Get scores and targets for each move
         # NOTE: A move is only added to the choices array if it has a non-zero
         #       score.
@@ -66,6 +99,30 @@ class Battle::AI
             totalScore += c[1]
             echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler && $AIGENERALLOG
             maxScore = c[1] if maxScore < c[1]
+        end
+        # DemICE: Item usage AI has been moved here.
+        item, idxTarget = pbEnemyItemToUse(idxBattler)
+        if item
+            if item[0]
+                party = @battle.pbParty(idxBattler)
+                # Determine target of item (always the Pokémon choosing the action)
+                useType = GameData::Item.get(item[0]).battle_use
+                if [1, 2].include?(useType) # Use on Pokémon
+                    #idxTarget = idxTarget # Party Pokémon
+                elsif user.index == idxTarget && useType == 3 # Use on Battler
+                    idxTarget = @battle.battlers[idxTarget].pokemonIndex
+                end
+                if user.pokemonIndex == idxTarget && user.pokemonIndex == 0 && party.length>1
+                    item[1] *= 0.1 
+                    echo(item[0].name+": "+item[1].to_s+" discourage item usage on lead.\n")
+                end
+                if item[1]>maxScore
+                    # Register use of item
+                    @battle.pbRegisterItem(idxBattler,item[0],idxTarget)
+                    PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use item #{GameData::Item.get(item[0]).name}")
+                    return
+                end
+            end    
         end
         # Log the available choices
         if $INTERNAL
@@ -129,28 +186,6 @@ class Battle::AI
                 end
             end
         end
-        # Find any preferred moves and just choose from them
-        #if !wildBattler && maxScore > 100
-        #    #stDev = pbStdDev(choices)
-        #    #if stDev >= 40 && pbAIRandom(100) < 90
-        #    # DemICE removing randomness of AI
-        #    preferredMoves = []
-        #    choices.each do |c|
-        #        next if c[1] < 200 && c[1] < maxScore * 0.8
-        #        #preferredMoves.push(c)
-        #        # DemICE prefer ONLY the best move
-        #        preferredMoves.push(c) if c[1] == maxScore   # Doubly prefer the best move
-        #        echoln(preferredMoves) if $AIGENERALLOG
-        #    end
-        #    if preferredMoves.length > 0
-        #        m = preferredMoves[pbAIRandom(preferredMoves.length)]
-        #        PBDebug.log("[AI] #{user.pbThis} (#{user.index}) prefers #{user.moves[m[0]].name}")
-        #        @battle.pbRegisterMove(idxBattler, m[0], false)
-        #        @battle.pbRegisterTarget(idxBattler, m[2]) if m[2] >= 0
-        #        return
-        #    end
-        #    #end
-        #end
         choices.shuffle! if user.wild?
         # Checking if switching is preferred
         if !user.wild? #!wildBattler
@@ -266,6 +301,13 @@ class Battle::AI
         if @battle.choices[idxBattler][2]
             PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use #{@battle.choices[idxBattler][2].name}")
         end
+        if $AIGENERALLOG
+            echoln("")
+            echo("\n---------------------------------------------")
+            echo("\n          !!! ENDING THE TURN !!!")
+            echo("\n---------------------------------------------")
+            echoln("")
+        end
     end
   
     #=============================================================================
@@ -273,7 +315,7 @@ class Battle::AI
     #=============================================================================
     def pbGetMoveScore(move, user, target, skill = 100)
         # Set up initial values
-        # for 80 initScore, dmg move = OHKO if score = 230 
+        # for 80 initScore, dmg move = KO if score == 230 
         skill = 100
         initScore = 80
         # Main score calcuations
@@ -301,23 +343,15 @@ class Battle::AI
                     score *= 0.7
                 end
             end
-            # Prefer Protect-like moves
-            # IF future sight is about to hit and if best move does not KO
-            # "ProtectRate" check is done above
+            # IF future sight is about to hit, account for its damage when calcing protect moves
+            # ("ProtectRate" check is done above)
             if ["ProtectUser", "ProtectUserBanefulBunker", "ProtectUserFromTargetingMovesSpikyShield", 
                 "ProtectUserFromDamagingMovesKingsShield", "ProtectUserFromDamagingMovesObstruct"].include?(move.function)
                 roughFSDamage = futureSightRoughDamage(target, skill)
-                if roughFSDamage > 0
+                if roughFSDamage > 0 && score > 80
                     miniscore = 1 + (roughFSDamage / target.hp)
-                    bestmove = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
-                    maxmove = bestmove[1]
-                    if targetSurvivesMove(maxmove,user,target)
-                        miniscore *= 1.2
-                    else
-                        miniscore *= 0.8
-                    end
                     echoln "score for protect+FS #{miniscore}" if $AIGENERALLOG
-                    score *= miniscore
+                    score += miniscore
                 end
             end
         end
@@ -390,9 +424,25 @@ class Battle::AI
             end
         end
         # account for chip healing from echo chamber
-        if user.hasActiveAbility?(:ECHOCHAMBER) && (move.soundMove? && move.statusMove?)
+        if (user.hasActiveAbility?(:ECHOCHAMBER) || (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && 
+           (move.soundMove? && move.statusMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
             score += missinghp * (1.0 / 8)
+        end
+        # account for foe's multitarget protect moves
+        if $aiguardcheck[0]
+            checked = false
+            case $aiguardcheck[1]
+            when "ProtectUserSideFromMultiTargetDamagingMoves"
+                checked = true if user.index != target.index && move.pbTarget(user).num_targets > 1 && move.damagingMove?
+            when "ProtectUserSideFromStatusMoves"
+                checked = true if user.index != target.index && !move.pbTarget(user).targets_all && move.statusMove?
+            when "ProtectUserSideFromPriorityMoves"
+                checked = true if move.canProtectAgainst? && priorityAI(user,move) > 0
+            when "ProtectUserSideFromDamagingMovesIfUserFirstTurn"
+                checked = true if move.canProtectAgainst? && target.turnCount == 0 && move.damagingMove?
+            end
+            score *= (1 / 4.0) if checked
         end
         # Don't prefer moves that are ineffective because of abilities or effects
         return 0 if pbCheckMoveImmunity(score, move, user, target, skill)
@@ -411,11 +461,14 @@ class Battle::AI
         baseDmg = pbMoveBaseDamage(move, user, target, skill)
         realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
         mold_broken=moldbroken(user,target,move)
+        globalArray = @megaGlobalArray
+        procGlobalArray = processGlobalArray(globalArray)
+        expectedWeather = procGlobalArray[0]
 
         # Try make AI not trolled by disguise
         # priority over other calcs due to hyper beam
         if target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0    
-            if move.multiHitMove?
+            if move.multiHitMove? || user.hasActiveAbility?(:PARENTALBOND)
                 realDamage*=2.2
             else
                 realDamage=(target.totalhp / 8.0)
@@ -427,15 +480,34 @@ class Battle::AI
         if ((["TwoTurnAttackFlinchTarget", "TwoTurnAttackParalyzeTarget", "TwoTurnAttackBurnTarget", 
               "TwoTurnAttackChargeRaiseUserDefense1", "TwoTurnAttackChargeRaiseUserSpAtk1", 
               "AttackTwoTurnsLater", "TwoTurnAttack"].include?(move.function) ||
-              (move.function == "TwoTurnAttackOneTurnInSun" && ![:Sun, :HarshSun].include?(user.effectiveWeather))) && 
+              (move.function == "TwoTurnAttackOneTurnInSun" && 
+               !([:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)))) && 
               !user.hasActiveItem?(:POWERHERB))
             realDamage *= (2 / 3.0)
+            realDamage = 0 if pbHasSingleTargetProtectMove?(target,false)
         end
         # Special interaction for beeg guns hyper beam clones
         if move.function == "AttackAndSkipNextTurn"
             if [:PRISMATICLASER, :ETERNABEAM, :ROAROFTIME].include?(move.id) && !targetSurvivesMove(move,user,target)
             else
-                realDamage *= (2 / 3.0)
+                if targetWillMove?(target)
+                    targetMove = @battle.choices[target.index][2]
+                    if targetSurvivesMove(targetMove,target,user)
+                        realDamage *= 0.2
+                    else
+                        aspeed = pbRoughStat(user,:SPEED,skill)
+                        ospeed = pbRoughStat(target,:SPEED,skill)
+                        fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                        thisprio = priorityAI(user, move, globalArray)
+                        thatprio = priorityAI(target, targetMove, globalArray)
+                        fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
+                        if fasterAtk
+                            realDamage *= 1.5
+                        else
+                            realDamage *= 0.2
+                        end
+                    end
+                end
             end
         end
         # Self-KO moves should avoided (under normal circumstances) if possible
@@ -445,11 +517,34 @@ class Battle::AI
             if user.hasActiveAbility?(:PARTYPOPPER)
                 innatemove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:HEALINGWISH))
                 innatescore = (pbGetMoveScore(innatemove, user, target, skill) / 2)
-                innatescore >= 35 ? (score += innatescore) : (realDamage *= (2 / 3.0))
+                innatescore >= 25 ? (score += innatescore) : (realDamage *= (2 / 3.0))
                 echoln "#{move.name}'s score (#{score}) was boosted due to party popper. #{innatescore}" if $AIGENERALLOG
             else
                 if user.allAllies.none? { |b| b.hasActiveAbility?(:SEANCE) }
-                    realDamage *= (2 / 3.0)
+                    wontMove = 0
+                    user.allOpposing.each do |m|
+                        if targetWillMove?(m)
+                            targetMove = @battle.choices[m.index][2]
+                            if targetSurvivesMove(targetMove,m,user)
+                                realDamage *= 0.2
+                            else
+                                aspeed = pbRoughStat(user,:SPEED,skill)
+                                ospeed = pbRoughStat(m,:SPEED,skill)
+                                fasterAtk = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                                thisprio = priorityAI(user, move, globalArray)
+                                thatprio = priorityAI(m, targetMove, globalArray)
+                                fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
+                                if fasterAtk
+                                    realDamage *= 1.5
+                                else
+                                    realDamage *= 0.2
+                                end
+                            end
+                        else
+                            wontMove += 1
+                        end
+                    end
+                    realDamage *= 0.2 if wontMove >= user.allOpposing.length
                 end
             end
         end
@@ -471,7 +566,7 @@ class Battle::AI
                 end
             else
                 if @battle.choices[target.index][1]
-                    if !@battle.choices[target.index][2].damagingMove? && rand(100) < 66    
+                    if @battle.choices[target.index][2].statusMove? && rand(100) < 66    
                         echo("\n'Predicting' that opponent will not attack and sucker will fail")
                         score=1
                         realDamage=0 
@@ -479,11 +574,33 @@ class Battle::AI
                 end
             end
         end
+        if $aisuckercheck[0]
+            user.eachOpposing do |b|
+                next unless $aisuckercheck[1] == b
+                suckermove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SUCKERPUNCH))
+                break if pbCheckMoveImmunity(1, suckermove, b, user, 100)
+                thisprio = priorityAI(user,move)
+                thatprio = priorityAI(b,suckermove)
+                if thisprio > thatprio
+                    prioCreep = true
+                elsif thisprio == thatprio
+                    aspeed = pbRoughStat(user,:SPEED,skill)
+                    ospeed = pbRoughStat(b,:SPEED,skill)
+                    prioCreep = ((aspeed>ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                else
+                    prioCreep = false
+                end
+                if !prioCreep
+                    echo("\n'Predicting' that a opponent will use sucker punch and user is 'outspeed', thus removing #{move.name}")
+                    score=1
+                    realDamage=0
+                end
+            end
+        end
 
         # try hitting mons that dont have available protect moves if it is a double battle
-        if target.allAllies.any? && pbHasSingleTargetProtectMove?(target) && 
-         !(user.hasActiveAbility?(:UNSEENFIST) && move.pbContactMove?(user))
-            realDamage *= (2 / 3.0)
+        if !(user.hasActiveAbility?(:UNSEENFIST) && move.contactMove?)
+            realDamage *= (2 / 3.0) if pbHasSingleTargetProtectMove?(target) && target.allAllies.any?
         end
 
         # Prefer flinching external effects (note that move effects which cause
@@ -495,7 +612,53 @@ class Battle::AI
             if targetSurvivesMove(maxmove,user,target)
                 realDamage *= 1.2 if (realDamage * 100.0 / maxdam) > 75
                 realDamage *= 1.2 if move.multiHitMove?
+                realDamage *= 1.3 if move.multiHitMove? && user.hasActiveAbility?(:SKILLLINK)
                 realDamage *= 2.0 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow] > 0
+                realDamage = target.hp * 0.99 if realDamage >= target.hp
+            end
+        end
+
+        # account for contact punishing traits
+        if move.pbContactMove?(user) && user.affectedByContactEffect? && user.takesIndirectDamage?
+            if target.hasActiveAbility?([:IRONBARBS,:ROUGHSKIN]) || target.hasActiveItem?(:ROCKYHELMET)
+                reflect = 0
+                reflect += 12.5 if target.hasActiveAbility?([:IRONBARBS,:ROUGHSKIN])
+                reflect += 16.7 if target.hasActiveItem?(:ROCKYHELMET)
+                case move.function
+                when "HitThreeTimesAlwaysCriticalHit", "HitThreeTimesPowersUpWithEachHit"
+                    reflect *= 3
+                when "HitTwoTimes", "HitTwoTimesTargetThenTargetAlly", "HitTwoTimesReload", 
+                     "HitTwoTimesPoisonTarget", "HitTwoTimesFlinchTarget"
+                    reflect *= 2
+                when "HitTwoToFiveTimes", "HitTwoToFiveTimesOrThreeForAshGreninja", 
+                     "HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1"
+                    if user.hasActiveAbility?(:SKILLLINK)
+                        reflect *= 5
+                    else
+                        reflect *= 3.47
+                    end
+                when "HitOncePerUserTeamMember"
+                    livecountuser = 0
+                    @battle.eachInTeamFromBattlerIndex(user.index) do |pkmn,i|
+                        next if !pkmn.able? || pkmn.status != :NONE
+                        livecountuser += 1
+                    end
+                    reflect *= livecountuser
+                when "HitThreeToFiveTimes"
+                    if user.hasActiveAbility?(:SKILLLINK)
+                        reflect *= 5
+                    else
+                        reflect *= 4.33
+                    end
+                end
+                reflect = reflect.to_i
+                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                if targetSurvivesMove(bestmove[1],target,user)
+                    realDamage -= reflect
+                    realDamage *= 0.6 if (user.hasActiveItem?(:FOCUSSASH) || user.hasActiveAbility?(:STURDY)) && user.hp == user.totalhp
+                end
+                hpreflected = reflect * user.totalhp / 100
+                realDamage *= 0.3 if hpreflected > user.totalhp
             end
         end
 
@@ -515,6 +678,7 @@ class Battle::AI
 
         # Convert damage to percentage of target's remaining HP
         damagePercentage = realDamage * 100.0 / target.hp
+        #echoln "#{move.name}'s realdamage = #{realDamage}, dmgpercent = #{damagePercentage}" if user.species == :GLALIE && target.species == :GASTRONAUT && (move.type == :ICE || move.id == :RETURN)
         # Don't prefer weak attacks
         damagePercentage *= 0.5 if damagePercentage < 30
         # Prefer status moves if level difference is significantly high
@@ -542,10 +706,33 @@ class Battle::AI
                     end
                 end
             end
+            # if these moves KO, there is no need to account for their addeffect score
+            statusKOarray = ["SleepTarget", "SleepTargetChangeUserMeloettaForm",
+                             "PoisonTarget", "BadPoisonTarget",
+                             "ParalyzeTarget", "ParalyzeFlinchTarget",
+                             "BurnTarget", "BurnFlinchTarget", 
+                             "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetAlwaysHitsInHail",
+                             "FreezeTargetSuperEffectiveAgainstWater", "ParalyzeBurnOrFreezeTarget",
+                             "FlinchTarget", "FlinchTargetDoublePowerIfTargetInSky",
+                             "ConfuseTarget", "NegateTargetAbilityIfTargetActed", 
+                             "LowerTargetAttack1", "LowerTargetDefense1", 
+                             "LowerTargetSpeed1", "LowerTargetSpAtk1", "LowerTargetSpDef1",
+                             "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3",
+                             "OverrideTargetStatusWithPoison", "BOOMInstall"]
+            rainKOarray = ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", 
+                           "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"]
+            powerhKOarr = ["TwoTurnAttackParalyzeTarget", "TwoTurnAttackInvulnerableInSkyParalyzeTarget", 
+                           "TwoTurnAttackBurnTarget", "TwoTurnAttackFlinchTarget"]
+            if statusKOarray.include?(move.function) ||
+              (rainKOarray.include?(move.function) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) ||
+              (powerhKOarr.include?(move.function) && user.hasActiveItem?(:POWERHERB))
+                score = 80
+            end
         end
         if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
            (move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?) ||
-           (user.hasActiveAbility?(:ECHOCHAMBER) && move.soundMove?)
+           ((user.hasActiveAbility?(:ECHOCHAMBER) || 
+            (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && move.soundMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
             if target.hasActiveAbility?(:LIQUIDOOZE)
                 damagePercentage -= missinghp*0.5
@@ -553,14 +740,18 @@ class Battle::AI
                 damagePercentage += missinghp*0.4
             end
         end
+        damagePercentage *= 1.3 if move.soundMove? && user.hasActiveItem?(:THROATSPRAY)
         damagePercentage = damagePercentage.to_i
         score += damagePercentage
         if $AIGENERALLOG
+            echo("\n-----------------------------")
+            echo("\nfor #{target.name}, from #{user.name}")
             echo("\n-----------------------------")
             echo("\n#{move.name} score before dmg = #{initialscore}")
             echo("\n#{move.name} real dmg = #{realDamage}")
             echo("\n#{move.name} dmg percent = #{damagePercentage}%%")
             echo("\n#{move.name} score = #{score}")
+            echo("\n-----------------------------")
         end
         if $AIMASTERLOG
             File.open("AI_master_log.txt", "a") do |line|
@@ -569,4 +760,97 @@ class Battle::AI
         end
         return score
     end
+
+    def pbCalcDoublesThreatsBoost(user,skill=100)
+      threatHash = {}
+      @battle.allBattlers.each do |target|
+        next if !user.opposes?(target)
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
+        increment = 0
+        #threatHash[target.index] = increment
+        if @battle.pbSideBattlerCount(target) > 1
+          # increase threat level depending on stat boosts
+          actualMaxDmg=0
+          actualMaxDmg_PhysOrSpec = ""
+          @battle.allSameSideBattlers(user.index).each do |b| 
+            # calculate how much dmg the foes' can do
+            maxFoeDmg=0
+            bestTargetMove=bestMoveVsTarget(target,b,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxFoeDmg=bestTargetMove[0] 
+            maxFoeMove=bestTargetMove[1]
+            if maxFoeDmg >= actualMaxDmg
+              actualMaxDmg=maxFoeDmg 
+              actualMaxDmg_PhysOrSpec=bestTargetMove[3]
+            end
+            weSurvive = targetSurvivesMove(maxFoeMove,target,b)
+            damagePercentage = maxFoeDmg * 100.0 / b.hp
+            damagePercentage = 110 if damagePercentage > 100
+            damagePercentage = 99 if damagePercentage >= 100 && weSurvive
+            increment += damagePercentage/100.0
+          end
+          #echo("\nDoubles Threat Level boost for "+target.name+": "+increment.to_s+"\n")
+          if actualMaxDmg_PhysOrSpec=="physical"
+            increment += 1 * target.stages[:ATTACK]  
+          else
+            increment += 0.5 * target.stages[:ATTACK]  
+          end
+          if actualMaxDmg_PhysOrSpec=="special"
+            increment += 1 * target.stages[:SPECIAL_ATTACK]
+          else
+            increment += 0.5 * target.stages[:SPECIAL_ATTACK]
+          end
+          increment += 0.75 * target.stages[:DEFENSE]
+          increment += 0.75 * target.stages[:SPECIAL_DEFENSE]
+          increment += 1.10 * target.stages[:SPEED]
+
+          targetRoles = pbGetPokemonRole(target, user)
+          increment += 0.6 if targetRoles.include?("Sweeper")
+          increment += 0.8 if targetRoles.include?("Screener")
+          increment += 1.0 if targetRoles.include?("Field Setter")
+          increment += 1.0 if targetRoles.include?("Weather Setter")
+          increment += 1.3 if targetRoles.include?("Tailwind Setter")
+          increment += 1.3 if targetRoles.include?("Trick Room Setter")
+
+          # simulating bits of pbHardSwitchChooseNewEnemy
+          enemies = []
+          ownparty = @battle.pbParty(user.index)
+          ownparty.each_with_index do |ptmon,i|
+            enemies.push(i) if ptmon.hp>0
+          end
+          #echo("\nDoubles Threat Level boost for "+target.name+": "+increment.to_s+"\n")
+          speedsarray = pbChooseBestNewEnemy(user.index,ownparty,enemies,false,-1,false,true)
+          speedsarray.each do |switchSpeed|
+            increment += 1 if ((ospeed>switchSpeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+          end
+          #increment = 0 if increment < 0
+          ###############################################
+          echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
+        end
+        if targetWillMove?(target)
+          targetMove = @battle.choices[target.index][2]
+          if target.effects[PBEffects::ProtectRate] <= 1
+            if ["ProtectUser", "ProtectUserBanefulBunker",
+                "ProtectUserFromTargetingMovesSpikyShield",
+                "ProtectUserFromDamagingMovesKingsShield",
+                "ProtectUserFromDamagingMovesObstruct"].include?(targetMove.function) &&
+                @battle.moveRevealed?(target, targetMove.id) && !user.hasActiveAbility?(:UNSEENFIST) &&
+                !user.pbHasMoveFunction?("RemoveProtections", "RemoveProtectionsBypassSubstitute", 
+                                         "HoopaRemoveProtectionsBypassSubstituteLowerUserDef1")
+              if rand(100) < 66 || $aiguardcheck[0]
+                increment = -10
+                $aiguardcheck[0] = true
+              else
+                increment *= 0.5
+                increment = -2 if increment == 0
+              end
+              echo("\nThreat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
+            end
+          end
+        end
+        threatHash[target.index] = increment
+      end
+      return threatHash
+    end
 end
+# i have a parasocial relationship with this code. it would be funny if it wasnt so pathetic

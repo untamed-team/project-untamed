@@ -361,6 +361,17 @@ Weight = 32.0
 Color = White
 Generation = 6
 #---------------------------------------------------------------------------------------------
+[ALTARIA,1]
+FormName = Mega Altaria
+MegaStone = ALTARIANITE
+Types = DRAGON,FAIRY
+BaseStats = 75,110,110,80,110,105
+Abilities = PIXILATE
+HiddenAbilities = PIXILATE
+Height = 1.5
+Weight = 45.8
+#------------------------------- 
+#---------------------------------------------------------------------------------------------
 # FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
 #---------------------------------------------------------------------------------------------
 [FURFROU,1]

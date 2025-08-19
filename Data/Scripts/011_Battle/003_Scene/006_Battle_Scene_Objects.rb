@@ -92,10 +92,12 @@ class Battle::Scene::PokemonDataBox < Sprite
     @hpBar.src_rect.height = @hpBarBitmap.height / 3
     @sprites["hpBar"] = @hpBar
     if @battler.isBossPokemon?
+      @hpBarBitmap2 = AnimatedBitmap.new("Graphics/Pictures/Battle/overlay_hp2")
       @hpBar2 = Sprite.new(viewport)
-      @hpBar2.bitmap = @hpBarBitmap.bitmap
-      @hpBar2.src_rect.height = @hpBarBitmap.height / 3
+      @hpBar2.bitmap = @hpBarBitmap2.bitmap
+      @hpBar2.src_rect.height = @hpBarBitmap2.height / 3
       @sprites["hpBar2"] = @hpBar2
+      @hpBar2.visible = false
     end
     # Create sprite wrapper that displays Exp bar
     @expBar = Sprite.new(viewport)
@@ -270,14 +272,17 @@ class Battle::Scene::PokemonDataBox < Sprite
   def draw_shiny_icon
     return if !@battler.shiny?
     #shiny_x = (@battler.opposes?(0)) ? 206 : -6   # Foe's/player's
-    shiny_x = (@battler.opposes?(0)) ? 220 : 24   # Foe's/player's
-    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, 36]])
+    shiny_x = (@battler.opposes?(0)) ? 220 : 8   # Foe's/player's
+    shiny_y = (@battler.opposes?(0)) ? 36 : 48  # Foe's/player's
+    pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/shiny", @spriteBaseX + shiny_x, shiny_y]])
   end
 
   def draw_special_form_icon
     # Mega Evolution/Primal Reversion icon
     if @battler.mega?
-      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + 8, 34]])
+      mega_x = (@battler.opposes?(0)) ? 222 : 6   # Foe's/player's
+      mega_y = (@battler.opposes?(0)) ? 36 : 49  # Foe's/player's
+      pbDrawImagePositions(self.bitmap, [["Graphics/Pictures/Battle/icon_mega", @spriteBaseX + mega_x, mega_y]])
     elsif @battler.primal?
       filename = nil
       if @battler.isSpecies?(:GROUDON)

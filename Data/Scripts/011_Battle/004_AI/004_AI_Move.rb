@@ -15,8 +15,7 @@ class Battle::AI
     move = _user.moves[idxMove]
     if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
         "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
-      score = pbGetMoveScore(move, _user, _user, 100)
-      choices.push([idxMove, score, -1]) if score > 0
+      choices.push([idxMove, 999, -1])
     else
       choices.push([idxMove, 100, -1])   # Move index, score, target
     end
@@ -27,32 +26,25 @@ class Battle::AI
   def pbRegisterMoveTrainer(user, idxMove, choices, skill)
     move = user.moves[idxMove]
     target_data = move.pbTarget(user)
-       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
+    dart = @battle.pbOpposingBattlerCount(user.index) > 1 && move.function == "HitTwoTimesTargetThenTargetAlly"
+      # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
       # a average of every enemy currently active
       oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
-      if oppcounter == 1
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          choices.push([idxMove, score, -1, move.name]) if score > 0
-        end
-      else
-        totalScore = 0
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          totalScore += (score * (1 / oppcounter))
-        end
-        choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
+      totalScore = 0
+      @battle.allBattlers.each do |b|
+        next if !user.opposes?(b)
+        score = pbGetMoveScore(move, user, b, skill)
+        totalScore += (score / oppcounter)
       end
+      choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
     elsif target_data.num_targets == 0
       # If move affects multiple Pokémon and the AI calculates an overall
       # score at once instead of per target
       score = pbGetMoveScore(move, user, user, skill)
       choices.push([idxMove, score, -1, move.name]) if score > 0
-    elsif target_data.num_targets > 1
+    elsif target_data.num_targets > 1 || dart
       # If move affects multiple battlers and you don't choose a particular one
       totalScore = 0
       @battle.allBattlers.each do |b|
@@ -63,8 +55,10 @@ class Battle::AI
       choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
     else
       # If move affects one battler and you have to choose which one
+      doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
       scoresAndTargets = []
       @battle.allBattlers.each do |b|
+        doublesThreat = doublesThreats[b.index]
         next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
         next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
         if !user.opposes?(b) # is ally
@@ -84,9 +78,22 @@ class Battle::AI
             realTarget = b
           end
           score = pbGetMoveScore(move, user, realTarget, 100)
+          #if @battle.pbSideBattlerCount(b) > 1 # is doubles?
+            score *= 1 + (doublesThreat/10.0)
+            #if score >= 190 # 40%~ away from KO
+            #  doublesThreat += 1 * b.stages[:DEFENSE]
+            #  doublesThreat += 1 * b.stages[:SPECIAL_DEFENSE]
+            #  score *= 1 + (doublesThreat/10.0)
+            #else
+            #  score *= 1 + (doublesThreat/10.0) if score < 180
+            #end
+            score = score.to_i
+          #end
           scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
       end
+      $aisuckercheck = [false, 0]
+      $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
       if scoresAndTargets.length > 0
         # Get the one best target for the move
         scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }

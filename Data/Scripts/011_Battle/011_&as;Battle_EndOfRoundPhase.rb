@@ -9,6 +9,11 @@ class Battle
     @field.weatherDuration -= 1 if @field.weatherDuration > 0
     # Weather wears off
     if @field.weatherDuration == 0
+      if @field.weather == :ShadowSky # for presage funnies
+        priority.each do |battler|
+          pbEORWeatherDamage(battler)
+        end
+      end
       case @field.weather
       when :Sun       then pbDisplay(_INTL("The sunlight faded."))
       when :Rain      then pbDisplay(_INTL("The rain stopped."))
@@ -632,13 +637,23 @@ class Battle
     pbEOREffectDamage(priority)
     # Trapping attacks (Bind/Clamp/Fire Spin/Magma Storm/Sand Tomb/Whirlpool/Wrap)
     priority.each { |battler| pbEORTrappingDamage(battler) }
-    # Octolock
+    # Trapping side effects #edited #by low
     priority.each do |battler|
-      next if battler.fainted? || battler.effects[PBEffects::Octolock] < 0
-      pbCommonAnimation("Octolock", battler)
-      battler.pbLowerStatStage(:DEFENSE, 1, nil) if battler.pbCanLowerStatStage?(:DEFENSE)
-      battler.pbLowerStatStage(:SPECIAL_DEFENSE, 1, nil) if battler.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
-      battler.pbItemOnStatDropped
+      next if battler.fainted? 
+      if battler.effects[PBEffects::Octolock] >= 0 # Octolock
+        pbCommonAnimation("Octolock", battler)
+        battler.pbLowerStatStage(:DEFENSE, 1, nil) if battler.pbCanLowerStatStage?(:DEFENSE)
+        battler.pbLowerStatStage(:SPECIAL_DEFENSE, 1, nil) if battler.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
+        battler.pbItemOnStatDropped
+      end
+      if battler.effects[PBEffects::NeedleArm] >= 0 # NeedleArm
+        pbCommonAnimation("Bind", battler)
+        hpLoss = battler.totalhp / 10
+        @scene.pbDamageAnimation(battler)
+        battler.pbReduceHP(hpLoss, false)
+        pbDisplay(_INTL("Thorny arms hurts {1}!", battler.pbThis(true)))
+        battler.pbFaint if battler.fainted?
+      end
     end
     # Effects that apply to a battler that wear off after a number of rounds
     pbEOREndBattlerEffects(priority)
@@ -742,7 +757,9 @@ class Battle
       battler.effects[PBEffects::ZealousDance]     -= 1 if battler.effects[PBEffects::ZealousDance] > 0
       battler.effects[PBEffects::PrioEchoChamber]  -= 1 if battler.effects[PBEffects::PrioEchoChamber] > 0
       battler.effects[PBEffects::HoldingHand]      = false
+      battler.effects[PBEffects::SuperEffEye]      -= 1 if battler.effects[PBEffects::SuperEffEye] > 0
       battler.pokemon.willmega                     = false
+      battler.tookDirectDmgThisRound               = false
       battler.lastHPLost                           = 0
       battler.lastHPLostFromFoe                    = 0
       battler.droppedBelowHalfHP                   = false

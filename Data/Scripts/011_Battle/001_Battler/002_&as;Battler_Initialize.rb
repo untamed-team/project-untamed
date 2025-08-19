@@ -304,8 +304,14 @@ class Battle::Battler
     @effects[PBEffects::MoodyMemory]     		 = -1
     @effects[PBEffects::PrioEchoChamber]     = -1
     @effects[PBEffects::HoldingHand]         = false
-    @SetupMovesUsed             						 = []
-    @prepickedMove             						   = nil
+    @effects[PBEffects::NeedleArm]           = -1
+    @effects[PBEffects::SuperEffEye]         = 0
+    @battle.allBattlers.each do |b|   # Other battlers no longer blocked by self
+      b.effects[PBEffects::NeedleArm] = -1 if b.effects[PBEffects::NeedleArm] == @index
+    end
+    @SetupMovesUsed                          = []
+    @prepickedMove                           = nil
+    @tookDirectDmgThisRound                  = false
   end
 
   #=============================================================================

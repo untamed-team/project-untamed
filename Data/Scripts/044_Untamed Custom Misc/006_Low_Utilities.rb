@@ -1,14 +1,14 @@
 # not actually a utilities page, just a "too lazy to create a new page for this"
 
-OLDSCHOOLBATTLE = 101
-INVERSEBATTLESWITCH = 100
+OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
 LOWEREXPGAINSWITCH = 99
 RELEARNERSWITCH = 98
 NOINITIALVALUES = 97
 
-MAXITEMSVAR = 99
 MASTERMODEVARS = 98
 DEXREWARDSVAR = 102
+
+$GLOBALSETUPNERF = true
 
 def pbNatureChanger(pkmn)
   commands = []
@@ -71,7 +71,7 @@ MenuHandlers.add(:debug_menu, :set_time, {
 })
 
 ItemHandlers::UseOnPokemon.add(:HYPERABILITYCAPSULE,proc{ |item, qty, pkmn, scene|
-  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL].include?(pkmn.species)
+  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL, :MURKROW].include?(pkmn.species)
     scene.pbDisplay(_INTL("{1} refuses to ingest this item. What a picky eater.", pkmn.name))
     next false
   end
@@ -97,7 +97,7 @@ ItemHandlers::UseOnPokemon.add(:SHINYBERRY,proc{ |item, qty, pkmn, scene|
   command = scene.pbShowCommands(_INTL("{1} this Pokémon?", command2), [_INTL("Yes"), _INTL("No")])
   if command == 0
     pkmn.shiny = (pkmn.shiny?) ? false : true
-    pkmn.happiness += 75
+    pkmn.happiness = [(pkmn.happiness - 75), 0].max
     pbMessage(_INTL("This Pokémon color palette was swapped."))
     next true
   else
@@ -367,10 +367,11 @@ GameData::Evolution.register({
 })
 
 #===============================================================================
-# powertrip
+# powertrip + Noseponch
 #===============================================================================
 def pbFieldEvolutionCheck(hm_used)
   return if hm_used.nil?
+  partycount = $player.party.count
   $player.party.each_with_index do |pkmn, index|
     next if !pkmn || pkmn.egg?
     next if pkmn.fainted?
@@ -389,6 +390,9 @@ def pbFieldEvolutionCheck(hm_used)
           new_species = evo2.to_sym
         end
       end
+    end
+    if pkmn.isSpecies?(:M_NOSEPASS) && pkmn.level >= 30 && hm_used == "king of the ring" && partycount == 1
+      new_species = :NOSEPONCH
     end
     next if new_species.nil?
     pbWait(60)
@@ -695,7 +699,7 @@ class PokemonPokedexInfo_Scene
         else
           requiredLevel = 1
         end
-        _INTL("{1} at level {2} with a {3} move",evoName,requiredLevel,requiredType)
+        _INTL("{1} at level {2} with a {3} move",evoName,requiredType,requiredLevel)
       else
         evoName
     end
@@ -755,6 +759,7 @@ class Battle
   attr_reader :activedAbility
   attr_reader :slowstartCount
   attr_reader :overwriteType
+  attr_reader :movesRevealed
   
   alias abilactivated_initialize initialize
   def initialize(scene, p1, p2, player, opponent)
@@ -762,6 +767,7 @@ class Battle
     @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
     @slowstartCount  = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @overwriteType   = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
+    @movesRevealed   = [Array.new(@party1.length, []), Array.new(@party2.length, [])] #kiriya
     @numberOfUsedItems = [0,0]
   end
   def wasUserAbilityActivated?(user) 
@@ -784,6 +790,16 @@ class Battle
   def WriteOverwriteType(user, move)
     @overwriteType[user.index & 1][user.pokemonIndex] = move.type
   end
+
+  def addMoveRevealed(user, move_id)
+    @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+  end
+  def moveRevealed?(user, move_id)
+    return @movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
+  end
+  def getMovesRevealed(user)
+    return @movesRevealed[user.index & 1][user.pokemonIndex]
+  end
 end
 
 class Battle::Battler
@@ -796,6 +812,7 @@ class Battle::Battler
   end
 end
 
+#$DEBUG = true
 #===============================================================================
 # Dex Completion Rewards
 #===============================================================================
@@ -978,7 +995,7 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("It's a Charizard Doll.\\nWell, can't say it doesn't deserve to be there."))
   when "Code"
     pbMessage(_INTL("You found some ...\\c[1]Crash logs\\c[0]?"))
-    print "What do mean Quash is 'too complicated' for me to learn!? Just TEACH ME you dumb granny!!!"
+    fakeCrashLog
     pbMessage(_INTL("Seems like Kiriya is having a fit. I hope she calms down soon enough."))
   when "Walmart"
     pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
@@ -1027,6 +1044,45 @@ def pbTrashBin(eventID, specialBin = false)
   $player.bin_array.delete_at(bin_rng2)
   Achievements.incrementProgress("EBIN_BINS",1)
 end
+
+def fakeCrashLog
+  pbSetWindowText("Kiriya's Playground")
+  message = "[Pokémon Essentials version #{Essentials::VERSION}]\r\n"
+  message += "Exception: Kiriya's Tantrum\r\n"
+  message += "Message: What do mean Quash is 'too complicated' for me to learn!?\r\n"
+  message += "\n\r\nBacktrace:\r\n"
+  message += "Game crashed due to a unexpected complaint from Kiriya.\r\n"
+  message += "Location: /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1347\r\n"
+  message += "          /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1344\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:330\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:316\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:169\r\n"
+  message += "Kiriya's Suggestion: Just teach me you dumb granny! (๑`^´๑)\r\n"
+
+  errorlog = "errorlog.txt"
+  errorlog = RTP.getSaveFileName("errorlog.txt") if (Object.const_defined?(:RTP) rescue false)
+  File.open(errorlog, "ab") do |f|
+    f.write("\r\n=================\r\n\r\n[#{Time.now}]\r\n")
+    f.write(message)
+  end
+
+  errorlogline = errorlog.gsub("/", "\\")
+  errorlogline.sub!(Dir.pwd + "\\", "")
+  errorlogline.sub!(pbGetUserName, "USERNAME")
+  errorlogline = "\r\n" + errorlogline if errorlogline.length > 20
+
+  print("#{message}\r\nThis exception was logged in #{errorlogline}.\r\nHold Ctrl when closing this message to copy it to the clipboard.")
+
+  t = System.delta
+  until (System.delta - t) >= 500_000
+    Input.update
+    if Input.press?(Input::CTRL)
+      Input.clipboard = message
+      break
+    end
+  end
+end
+
 
 #===============================================================================
 # RNG seeds
@@ -1182,7 +1238,7 @@ def eggMoveTutor
   if doegg
     commands = []
     @eggmovesarray.each do |move|
-      commands.push(_INTL("#{move.name}"))
+      commands.push(_INTL("#{GameData::Move.get(move).name}"))
     end
     commands.push(_INTL("Cancel"))
     helpwindow = Window_UnformattedTextPokemon.new("")
@@ -1195,7 +1251,7 @@ def eggMoveTutor
       return false
     else
       @eggmovesarray.each do |move|
-        if selectedCommander == "#{move.name}"
+        if selectedCommander == "#{GameData::Move.get(move).name}"
           if pbLearnMove(@mother, move, false, false)
             $stats.moves_taught_by_tutor += 1
             return true

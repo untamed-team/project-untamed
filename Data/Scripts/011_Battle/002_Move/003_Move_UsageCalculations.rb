@@ -91,10 +91,10 @@ class Battle::Move
     ret = 1
     typeMods.each { |m| ret *= m }
     ret *= 2 if target.effects[PBEffects::TarShot] && moveType == :FIRE
+    ret = 16 if target.effects[PBEffects::SuperEffEye] > 0
     # Inverse Battle Switch #by low
-    # 8x = ret 64
-    # 4x = ret 32
-    if $game_switches[INVERSEBATTLESWITCH]
+    # 8x = ret 64; 4x = ret 32
+    if @battle.inverseBattle
       if ret == 0
         ret = 16
       elsif ret >= 64
@@ -146,8 +146,7 @@ class Battle::Move
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
-    stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    stageMul, stageDiv = @battle.pbGetStatMath(:ACCURACY)
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
@@ -184,7 +183,9 @@ class Battle::Move
       )
     end
     # klutz buff #by low
-    if target.itemActive? && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if target.itemActive? && !klut
       Battle::ItemEffects.triggerAccuracyCalcFromTarget(
         target.item, modifiers, user, target, self, @calcType
       )
@@ -248,8 +249,7 @@ class Battle::Move
       target.damageState.calcDamage = 1
       return
     end
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     # Get the move's type
     type = @calcType   # nil is treated as physical
     # Calculate whether this hit deals critical damage
@@ -344,7 +344,9 @@ class Battle::Move
       )
     end
     # klutz buff #by low
-    if target.itemActive? && (!user.hasActiveAbility?(:KLUTZ) && $player.difficulty_mode?("chaos"))
+    klut = user.hasActiveAbility?(:KLUTZ)
+    klut = false if !$player.difficulty_mode?("chaos")
+    if target.itemActive? && !klut
       Battle::ItemEffects.triggerDamageCalcFromTarget(
         target.item, user, target, self, multipliers, baseDmg, type
       )
@@ -399,11 +401,11 @@ class Battle::Move
     # Terrain
     case @battle.field.terrain
     when :Electric
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain? && @function != "DoublePowerInElectricTerrain"
     when :Grassy
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain? && @function != "HigherPriorityInGrassyTerrain"
     when :Psychic
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain? && @function != "HitsAllFoesAndPowersUpInPsychicTerrain"
     when :Misty
       multipliers[:base_damage_multiplier] /= t_damage_divider if type == :DRAGON && target.affectedByTerrain?
     end
@@ -450,9 +452,9 @@ class Battle::Move
       end
     end
     # Master Mode stuff #by low
-    if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
-      multipliers[:final_damage_multiplier] *= 0.75
-    end
+    #if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+    #  multipliers[:final_damage_multiplier] *= 0.75
+    #end
     # Gravity Boost #by low 
     # float stone changes
     if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
@@ -511,6 +513,22 @@ class Battle::Move
     # Minimize
     if target.effects[PBEffects::Minimize] && tramplesMinimize?
       multipliers[:final_damage_multiplier] *= 2
+    end
+    # AI-specific modifiers #by low
+    if !user.pbOwnedByPlayer?
+      if user.index != target.index && !target.opposes?(user) # Kiriya targeting own allies
+        multipliers[:final_damage_multiplier] *= 0.75
+      end
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_ATTACK) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPATK)
+          multipliers[:attack_multiplier] *= 1.1
+      end
+    end
+    if !target.pbOwnedByPlayer?
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_DEFENSE) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPDEF)
+        multipliers[:defense_multiplier] *= 1.1
+      end
     end
     # Move-specific base damage modifiers
     multipliers[:base_damage_multiplier] = pbBaseDamageMultiplier(multipliers[:base_damage_multiplier], user, target)

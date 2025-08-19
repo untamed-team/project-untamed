@@ -6,7 +6,7 @@ class Battle::AI
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     aspeed = pbRoughStat(user,:SPEED,skill)
     ospeed = pbRoughStat(target,:SPEED,skill)
     userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
@@ -138,7 +138,7 @@ class Battle::AI
             end
             miniscore/=100.0
             score*=miniscore
-         end
+        end
         allOutspeed = userFasterThanTarget
         if user.allAllies.any?
             user.allAllies.each do |b|
@@ -237,14 +237,16 @@ class Battle::AI
                 end
             end
             if move.baseDamage>0
-                if move.addlEffect.to_f == 100
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "ParalyzeFlinchTarget"
+                if addEffect == 100
                     if !user.hasActiveAbility?(:SHEERFORCE) && move.id == :NUZZLE
                         score*=1.37 # twave's usual score boost
                         score*=1.1 if target.moves.any? { |j| j&.id == :TAUNT }
                     end
                 else
                     miniscore-=100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                     miniscore+=100
                 end
@@ -284,8 +286,8 @@ class Battle::AI
         if target.pbCanBurn?(user, false)
             miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, 110, move, globalArray, 100)
             ministat=0
-            ministat+=target.stages[:SPECIAL_ATTACK]
-            ministat+=target.stages[:SPECIAL_DEFENSE]
+            ministat+=target.stages[:ATTACK]
+            ministat+=target.stages[:DEFENSE]
             ministat+=target.stages[:SPEED]
             if ministat>0
                 minimini=5*ministat
@@ -295,8 +297,10 @@ class Battle::AI
             end
             if move.baseDamage>0
                 miniscore-=100
-                if move.addlEffect.to_f != 100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "BurnFlinchTarget"
+                if addEffect != 100
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
@@ -312,7 +316,7 @@ class Battle::AI
             end
         else
             score = 0 if move.statusMove?
-         end
+        end
         if move.function == "BurnFlinchTarget"
             if canFlinchTarget(user,target,mold_broken)
                 if userFasterThanTarget
@@ -341,8 +345,10 @@ class Battle::AI
             end
             if move.baseDamage>0
                 miniscore-=100
-                if move.addlEffect.to_f != 100
-                    miniscore*=(move.addlEffect.to_f/100.0)
+                addEffect = move.addlEffect.to_f
+                addEffect = 10 if move.function == "FreezeFlinchTarget"
+                if addEffect != 100
+                    miniscore*=(addEffect/100.0)
                     miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
                 end
                 miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
@@ -352,7 +358,7 @@ class Battle::AI
             score*=miniscore
         else
             score = 0 if move.statusMove?
-          end
+        end
         if move.function == "FreezeFlinchTarget"
             if canFlinchTarget(user,target,mold_broken)
                 if userFasterThanTarget
@@ -387,7 +393,7 @@ class Battle::AI
             miniscore-=100
             if move.addlEffect.to_f != 100
                 miniscore*=(move.addlEffect.to_f/100.0)
-                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE)
+                miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
             end
             miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
             miniscore+=100
@@ -488,7 +494,7 @@ class Battle::AI
                 if i.status==:POISON && i.ability == :POISONHEAL
                     score*=0.5
                 end
-                if i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE)
+                if i.status!=:NONE && (i.ability == :GUTS || i.ability == :QUICKFEET || i.hasMove?(:FACADE))
                     score*=0.8
                 end
                 if i.status==:SLEEP
@@ -875,8 +881,9 @@ class Battle::AI
         else
             score*=1.1
         end
+        tTypes = typesAI(target, user, skill)
         if target.pbHasType?(:GHOST, true) || !target.canChangeType? || 
-                target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
+           target.hasActiveAbility?([:PROTEAN, :COLORCHANGE]) || tTypes.length >= 3
             score*=0
         end
     #---------------------------------------------------------------------------
@@ -898,8 +905,9 @@ class Battle::AI
         else
             score*=1.1
         end
+        tTypes = typesAI(target, user, skill)
         if target.pbHasType?(:GRASS, true) || !target.canChangeType? || 
-                target.hasActiveAbility?([:PROTEAN, :COLORCHANGE])
+           target.hasActiveAbility?([:PROTEAN, :COLORCHANGE]) || tTypes.length >= 3
             score*=0
         end
     #---------------------------------------------------------------------------
@@ -912,7 +920,7 @@ class Battle::AI
             score = 0
         else
             miniscore=100
-            userlivecount     = @battle.pbAbleNonActiveCount(user.idxOwnSide)
+            userlivecount   = @battle.pbAbleNonActiveCount(user.idxOwnSide)
             targetlivecount = @battle.pbAbleCount(user.idxOpposingSide)
             if targetSurvivesMove(move,user,target)
                 score*=0.9
@@ -965,8 +973,8 @@ class Battle::AI
                     end
                 end
             end
-            userTypes = typesAI(user, target, skill)
             if userFasterThanTarget
+                userTypes = typesAI(user, target, skill)
                 if user.hasActiveAbility?(:WONDERGUARD) && userTypes.all? { |typo| typo == :FIRE }
                     score*=8
                 end
@@ -1010,10 +1018,11 @@ class Battle::AI
             score*=(miniscore/100.0)
             score*=1.3 if target.moves.any? { |j| [:SNORE, :SLEEPTALK].include?(j&.id) }
             score*=2.0 if target.moves.any? { |j| j&.id == :REST }
-            if user.pbHasMove?(:SPORE) || user.pbHasMove?(:SLEEPPOWDER) ||
-                    user.pbHasMove?(:HYPNOSIS) || user.pbHasMove?(:SING) || 
-                    user.pbHasMove?(:GRASSWHISTLE) || user.pbHasMove?(:DREAMEATER) || 
-                    user.pbHasMove?(:NIGHTMARE) || user.hasActiveAbility?(:BADDREAMS)
+            if user.pbHasMoveFunction?("SleepTarget","SleepTargetIfUserDarkrai", 
+                                       "SleepTargetChangeUserMeloettaForm",
+                                       "HealUserByHalfOfDamageDoneIfTargetAsleep",
+                                       "StartDamageTargetEachTurnIfTargetAsleep") ||
+               user.hasActiveAbility?(:BADDREAMS)
                 score*=0.7
             end
         end
@@ -1024,7 +1033,7 @@ class Battle::AI
         elsif !target.ability || user.ability == target.ability ||
             ![:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) ||
             ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-                :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
+              :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if minimini > miniscore
@@ -1042,7 +1051,7 @@ class Battle::AI
         elsif !user.ability || user.ability == target.ability ||
                 ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
                 ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-                :TRACE, :ZENMODE].include?(user.ability_id)
+                  :TRACE, :ZENMODE].include?(user.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy
@@ -1081,7 +1090,7 @@ class Battle::AI
         elsif !user.ability || user.ability == target.ability ||
                 ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
                 ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-                :TRACE, :ZENMODE].include?(user.ability_id)
+                  :TRACE, :ZENMODE].include?(user.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy
@@ -1219,7 +1228,7 @@ class Battle::AI
             if target.pbHasType?(:GROUND, true)
                 score*=3
             end
-            if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target)
+            if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target, "dmg")
                 if @battle.choices[target.index][2].type == :GROUND
                     score*=3
                 end
@@ -1233,9 +1242,7 @@ class Battle::AI
             score=0
         else
             score*=2 if user.moves.any? { |m| m&.accuracy <= 70 }
-            if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
-                score*=3
-            end
+            score*=3 if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
         end
     #---------------------------------------------------------------------------
     when "HitsTargetInSky", "HitsTargetInSkyGroundsTarget" # sky uppercut, smack down

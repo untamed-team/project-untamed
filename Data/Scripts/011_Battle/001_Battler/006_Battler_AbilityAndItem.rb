@@ -200,7 +200,7 @@ class Battle::Battler
 
   def pbConsumeItem(recoverable = true, symbiosis = true, belch = true)
     PBDebug.log("[Item consumed] #{pbThis} consumed its held #{itemName}")
-    if recoverable
+    if recoverable && @item_id != :LEPPABERRY
       setRecycleItem(@item_id)
       @effects[PBEffects::PickupItem] = @item_id
       @effects[PBEffects::PickupUse]  = @battle.nextPickupUse

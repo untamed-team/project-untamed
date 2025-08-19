@@ -6,7 +6,7 @@ class Battle::AI
 
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
-    globalArray = pbGetMidTurnGlobalChanges
+    globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)
     expectedWeather = procGlobalArray[0]
     expectedTerrain = procGlobalArray[1]
@@ -25,6 +25,9 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
+            end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
             end
             if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
                user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
@@ -64,7 +67,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.7
+                    score *= 0.5
                     score *= 0.3 if pbHasSetupMove?(target, false)
                     score *= 0.2 if !targetMove.canMagicCoat?
                 else
@@ -90,6 +93,9 @@ class Battle::AI
             end
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
+            end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
             end
             if user.hasActiveItem?(:LEFTOVERS) || 
                (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
@@ -135,7 +141,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.7
+                    score *= 0.5
                     score *= 0.3 if pbHasSetupMove?(target, false)
                     score *= 0.2 if !targetMove.canMagicCoat?
                 else
@@ -173,6 +179,9 @@ class Battle::AI
             end        
             if user.hasActiveAbility?(:SPEEDBOOST) && !userFasterThanTarget
                 score*=4
+            end
+            if user.hasActiveAbility?(:EERIEPRESENCE) && user.hp <= (user.totalhp/2.0) && targetWillMove?(target, "dmg")
+                score*=1.5
             end
             if user.hasActiveItem?(:LEFTOVERS) || (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true)) || 
                user.effects[PBEffects::Ingrain] || user.effects[PBEffects::AquaRing] || 
@@ -239,7 +248,7 @@ class Battle::AI
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if targetMove.statusMove?
-                    score *= 0.2
+                    score *= 0.1
                 else
                     if !targetSurvivesMove(targetMove,target,user)
                         score *= 5.0
@@ -254,7 +263,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
-         if user.turnCount == 0
+        if user.turnCount == 0
             hasAlly = !user.allAllies.empty?
             if hasAlly
                 healcheck = target.moves.any? { |m| m&.healingMove? }
@@ -346,10 +355,18 @@ class Battle::AI
             if user.hp==user.totalhp
                 score *= 1.5
             end
+            if user.allAllies.any?
+                user.allAllies.each do |b|
+                    next unless b.hasActiveAbility?(:EERIEPRESENCE)
+                    if targetWillMove?(target, "dmg") && b.hp <= (b.totalhp/2.0)
+                        score*=1.5
+                    end
+                end
+            end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if priorityAI(target,targetMove,globalArray) > 0
-                    score *= 2.0 
+                    score *= 3.0 
                     if targetMove.statusMove?
                         score *= 0.9
                         score *= 0.3 if pbHasSetupMove?(target, false)
@@ -381,10 +398,18 @@ class Battle::AI
             if user.hp==user.totalhp
                 score *= 1.5
             end
+            if user.allAllies.any?
+                user.allAllies.each do |b|
+                    next unless b.hasActiveAbility?(:EERIEPRESENCE)
+                    if targetWillMove?(target, "dmg") && b.hp <= (b.totalhp/2.0)
+                        score*=1.5
+                    end
+                end
+            end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
                 if pbTargetsMultiple?(targetMove, target)
-                    score *= 2.0 
+                    score *= 3.0 
                     if targetMove.statusMove?
                         score *= 0.5
                         score *= 0.3 if pbHasSetupMove?(target, false)
@@ -699,7 +724,7 @@ class Battle::AI
             if target.takesIndirectDamage?
                 score *= 2.0 if @battle.pbCheckGlobalAbility(:STALL)
                 score *= 1.3 if target.burned? || target.frozen? || target.poisoned?
-                score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater") ||
+                score *= 1.3 if user.pbHasMoveFunction?("BindTarget", "BindTargetDoublePowerIfTargetUnderwater", "TrapUserAndTargetInBattleNeedleArm") ||
                                 target.effects[PBEffects::Trapping] > 0
                 score *= 1.3 if target.hasActiveItem?(:LIFEORB)
                 score *= 1.3 if target.moves.any? { |j| j&.recoilMove? } && !target.hasActiveAbility?(:ROCKHEAD)
@@ -717,6 +742,42 @@ class Battle::AI
             end
         end
     #---------------------------------------------------------------------------
+    when "NextMoveIs2xSuperEffective" # reworked miracle eye
+        score = 0 if target.effects[PBEffects::SuperEffEye] > 0
+        score *= 1.2 if target.effects[PBEffects::Transform]
+        score *= 0.2 if target.hasActiveItem?(:WEAKNESSPOLICY)
+        @battle.allSameSideBattlers(user.index).each do |b|
+            roles = pbGetPokemonRole(b, target)
+            score *= 1.1 if roles.include?("Sweeper") || roles.include?("Stallbreaker")
+            score *= 1.1 if b.hasActiveAbility?([:NEUROFORCE, :WARRIORSPIRIT])
+            score *= 1.1 if b.hasActiveAbility?(:WARRIORSPIRIT) && !$player.difficulty_mode?("chaos")
+            score *= 0.9 if b.hasActiveAbility?(:TINTEDLENS)
+            score *= 1.1 if b.hasActiveItem?(:EXPERTBELT)
+            supervar = 0
+            nvestabvar = 0
+            for i in b.moves
+                typeMod = pbCalcTypeMod(i.type, b, target, i)
+                if i.baseDamage > 0
+                    if Effectiveness.super_effective?(typeMod)
+                        supervar += 1
+                    else
+                        nvestabvar += 1 if b.pbHasType?(i.type, true)
+                    end
+                end
+                score *= 1.2 if Effectiveness.ineffective?(typeMod)
+            end
+            score *= 1.3 if nvestabvar > 1 && supervar < 1
+            score *= 2.0 if supervar == 0 && target.hasActiveAbility?(:WONDERGUARD) && 
+                            @battle.choices[target.index][0] != :SwitchOut
+        end
+        if targetWillMove?(target, "status")
+            score = 0 if @battle.choices[target.index][2].function == "BounceBackProblemCausingStatusMoves"
+        end
+        if @battle.choices[target.index][0] == :SwitchOut
+            realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[@battle.choices[target.index][1]],false,target)
+            score = 0 if realTarget.hasActiveAbility?(:MAGICBOUNCE)
+        end
+    #---------------------------------------------------------------------------
     else
         return aiEffectScorePart3_pbGetMoveScoreFunctionCode(score, move, user, target, skill)
     end
@@ -724,7 +785,7 @@ class Battle::AI
   end
     
     # Utilities Check ############################################################
-      # ill let you know that this is longer than the actual effect score part of this page
+    # ill let you know that this is longer than the actual effect score part of this page
     # it started so normal, how could i forsee me making this much coding?
     
     def pbHasSetupMove?(pokemon, countother = true)
@@ -770,7 +831,7 @@ class Battle::AI
     
     def pbHasPivotMove?(pokemon, countother = true)
         pivotarray = ["SwitchOutUserDamagingMove", "SwitchOutUserStatusMove", 
-                        "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
+                      "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"]
         return true if movesetCheck(pokemon, pivotarray, countother)
         return true if pokemon.ability == :REGENERATOR && countother
         return false
@@ -870,7 +931,7 @@ class Battle::AI
     end
 
     def pbTargetBenefitsFromStatus?(user, target, status, miniscore, move, globalArray = [], skill = 100)
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
@@ -1019,7 +1080,7 @@ class Battle::AI
         roles = []
         if pokemon.is_a?(Battle::Battler) # used for a single (active) pokemon
             if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
-                 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
                 roles.push("Sweeper")
             end
             healingmove = pokemon.moves.any? { |m| m&.healingMove? }
@@ -1068,37 +1129,42 @@ class Battle::AI
                 roles.push("Baton Passer")
             end
             if pokemon.pbHasMoveFunction?("DisableTargetStatusMoves") || 
-                 [:CHOICEBAND, :CHOICESPECS].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS].include?(pokemon.item_id)
                 roles.push("Stallbreaker")
             end
             if pokemon.pbHasMoveFunction?("HealUserFullyAndFallAsleep") || 
-                 [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
-                 [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
-                    :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
-                 (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
+               [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
+               [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
+                :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
+               (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
                 roles.push("Status Absorber")
             end
             if [:SHADOWTAG, :ARENATRAP, :MAGNETPULL, :BAITEDLINE].include?(pokemon.ability)
                 roles.push("Trapper")
             end
             if pokemon.pbHasMoveFunction?("StartSunWeather", "StartRainWeather", "StartSandstormWeather", "StartHailWeather") || 
-                 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-                  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-                  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
-                 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-                 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
+               [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+                :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+               (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
+               (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Weather Setter")
             end
             if pokemon.pbHasMoveFunction?("StartElectricTerrain", "StartGrassyTerrain", "StartMistyTerrain", "StartPsychicTerrain") || 
-                 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-                 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
+               [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
+               (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Field Setter")
+            end
+            if pokemon.pbHasMoveFunction?("StartSlowerBattlersActFirst") || pokemon.ability == :TRICKSTER
+                roles.push("Trick Room Setter")
+            end
+            if pokemon.pbHasMoveFunction?("StartUserSideDoubleSpeed")
+                roles.push("Tailwind Setter")
             end
             pokemonPartyEnd = @battle.pbTeamIndexRangeFromBattlerIndex(pokemon.index).length
             if pokemon.pokemonIndex == pokemonPartyEnd
@@ -1115,7 +1181,7 @@ class Battle::AI
                 movelist.push(movedummy)
             end
             if [:MODEST, :JOLLY, :TIMID, :ADAMANT].include?(pokemon.nature) || 
-                 [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
+               [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pokemon.item_id)
                 roles.push("Sweeper")
             end
             healingmove = movelist.any? { |m| m&.healingMove? }
@@ -1211,9 +1277,9 @@ class Battle::AI
                 end
             end
             if restmove || [:TOXICORB, :FLAMEORB].include?(pokemon.item_id) ||
-                 [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
-                    :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
-                 (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
+               [:COMATOSE, :GUTS, :QUICKFEET, :FLAREBOOST, :TOXICBOOST, 
+                :NATURALCURE, :MAGICGUARD, :MAGICBOUNCE].include?(pokemon.ability) ||
+               (pokemon.ability == :HYDRATION && [:HeavyRain, :Rain].include?(@battle.field.weather))
                 roles.push("Status Absorber")
             end
             if [:SHADOWTAG, :ARENATRAP, :MAGNETPULL, :BAITEDLINE].include?(pokemon.ability)
@@ -1226,14 +1292,14 @@ class Battle::AI
                 end
             end
             if weathermove || 
-                 [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
-                  :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
-                  :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
-                 (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
-                 (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
+               [:DROUGHT, :DRIZZLE, :SANDSTREAM, :SNOWWARNING, 
+                :PRIMORDIALSEA, :DESOLATELAND, :DELTASTREAM, 
+                :FORECAST, :PRESAGE, :DUSTSENTINEL].include?(pokemon.ability) ||
+               (pokemon.ability == :FREEZEOVER && pokemon.item_id == :ICYROCK) ||
+               (pokemon.species == :ZARCOIL  && (pokemon.item_id == :ZARCOILITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :ZOLUPINE && (pokemon.item_id == :ZOLUPINEITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :CACTURNE && (pokemon.item_id == :CACTURNITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :FRIZZARD && (pokemon.item_id == :FRIZZARDITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Weather Setter")
             end
             terrainmove=false
@@ -1243,12 +1309,24 @@ class Battle::AI
                 end
             end
             if terrainmove || 
-                 [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
-                 (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
-                 (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
+               [:ELECTRICSURGE, :PSYCHICSURGE, :MISTYSURGE, :GRASSYSURGE].include?(pokemon.ability) ||
+               (pokemon.species == :BEHEEYEM  && (pokemon.item_id == :BEHEEYEMITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :MILOTIC   && (pokemon.item_id == :MILOTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :TREVENANT && (pokemon.item_id == :TREVENANTITE || pokemon.hasMegaEvoMutation?)) ||
+               (pokemon.species == :BEAKRAFT  && (pokemon.item_id == :BEAKRAFTITE || pokemon.hasMegaEvoMutation?))
                 roles.push("Field Setter")
+            end
+            tailwindmove=false
+            trickroommove=false
+            for mmm in movelist
+                tailwindmove=true if [:TAILWIND].include?(mmm.id)
+                trickroommove=true if [:TRICKROOM].include?(mmm.id)
+            end
+            if trickroommove || pokemon.ability == :TRICKSTER
+                roles.push("Trick Room Setter")
+            end
+            if tailwindmove
+                roles.push("Tailwind Setter")
             end
             if position == (party.length - 1)
                 roles.push("Ace")
@@ -1266,7 +1344,7 @@ class Battle::AI
     def pbStatusDamage(move)
         moveScoores = {
           0 => [:AFTERYOU, :ATTRACT, :BESTOW, :CELEBRATE, :HAPPYHOUR, :HOLDHANDS,
-                 :QUASH, :SPLASH, :SWEETSCENT, :TELEKINESIS],
+                 :QUASH, :SPLASH, :SWEETSCENT, :TELEKINESIS], # quash is too complicated
           5 => [:ALLYSWITCH, :AROMATICMIST, :COACHING, :CONVERSION, :CRAFTYSHIELD, :ENDURE, :ENTRAINMENT, 
                  :FAIRYLOCK, :FORESIGHT, :FORESTSCURSE, :GRUDGE, :GUARDSPLIT, :GUARDSWAP, :HEALBLOCK, 
                  :HELPINGHAND, :IMPRISON, :LOCKON, :LUCKYCHANT, :MAGICROOM, :MAGNETRISE, :MINDREADER, 
@@ -1321,7 +1399,7 @@ class Battle::AI
     
     def getFieldDisruptScore(user, target, globalArray = [], skill = 100) 
         # probably redundant with the check WeatherBenefit script but eh
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.empty?
+        globalArray = @megaGlobalArray if globalArray.empty?
         procGlobalArray = processGlobalArray(globalArray)
         expectedTerrain = procGlobalArray[1]
         # modified by JZ
@@ -1458,7 +1536,7 @@ class Battle::AI
         end
         fieldscore*=0.01
         return fieldscore
-      end
+    end
 
     def getAbilityDisruptScore(move,user,target,skill)
         abilityscore=100.0
@@ -1613,7 +1691,7 @@ class Battle::AI
             echo("\nWonder Guard Disrupt") if $AIGENERALLOG
             wondervar=false
             for i in user.moves
-                typeMod = pbCalcTypeMod(i.type, user, target)
+                typeMod = pbCalcTypeMod(i.type, user, target, i)
                 wondervar=true if Effectiveness.super_effective?(typeMod)
             end
             if !wondervar
@@ -1723,7 +1801,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?(:GALEWINGS)
             echo("\nGale Wings Disrupt") if $AIGENERALLOG
-            abilityscore*=2 if target.moves.any? { |m| [:FLYING].include?(m&.type) } && target.hp >= (target.totalhp/2)
+            abilityscore*=2 if target.moves.any? { |m| [:FLYING].include?(m&.type) } && target.hp > (target.totalhp/2)
         end     
         if target.hasActiveAbility?(:UNBURDEN)
             if target.effects[PBEffects::Unburden]
@@ -1752,7 +1830,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?([:PUNKROCK, :AMPLIFIER])
             echo("\nPunk / Amp Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.soundMove? }
         end 
         if target.hasActiveAbility?(:CONTRARY)
             echo("\nContrary Disrupt") if $AIGENERALLOG
@@ -1832,7 +1910,7 @@ class Battle::AI
         end 
         if target.hasActiveAbility?(:TOUGHCLAWS)
             echo("\nTough Claws Disrupt") if $AIGENERALLOG
-            abilityscore*=1.2
+            abilityscore*=1.2 if target.moves.any? { |i| i.contactMove? }
         end
         if target.hasActiveAbility?(:UNSEENFIST)
             echo("\nUnseen Fist Disrupt") if $AIGENERALLOG
@@ -1881,11 +1959,11 @@ class Battle::AI
         if target.hasActiveAbility?(:KLUTZ)
             if $player.difficulty_mode?("chaos")
                 itemsAffected = [:ASSAULTVEST, :MELEEVEST, :EVIOLITE, :BRIGHTPOWDER, :LAXINCENSE, 
-                                    :REDCARD, :EJECTBUTTON]
+                                 :REDCARD, :EJECTBUTTON]
                 itemsAffected.push(:OCCABERRY, :PASSHOBERRY, :WACANBERRY, :RINDOBERRY, :YACHEBERRY, 
-                                    :CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, 
-                                    :TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, 
-                                    :ROSELIBERRY, :BABIRIBERRY)
+                                   :CHOPLEBERRY, :KEBIABERRY, :SHUCABERRY, :COBABERRY, :PAYAPABERRY, 
+                                   :TANGABERRY, :CHARTIBERRY, :KASIBBERRY, :HABANBERRY, :COLBURBERRY, 
+                                   :ROSELIBERRY, :BABIRIBERRY)
                 abilityscore*=1.5 if itemsAffected.include?(user.item_id)
             end
             abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
@@ -1916,7 +1994,7 @@ class Battle::AI
             supervar=false
             for i in target.moves
                 break if supervar
-                typeMod = pbCalcTypeMod(i.type, target, user)
+                typeMod = pbCalcTypeMod(i.type, target, user, i)
                 supervar=true if Effectiveness.super_effective?(typeMod)
             end
             abilityscore*=2.0 if supervar
@@ -2001,8 +2079,7 @@ class Battle::AI
     end
 
     # Megas' Mid Turn A.T.W. changes #############################################
-    # its a mess
-
+    # its a (slightly better) mess
     def pbGetMidTurnGlobalChanges
         globalArray = []
         megaChecks = {
@@ -2029,9 +2106,9 @@ class Battle::AI
             megaSpecies = j.pokemon.species
             if megaChecks.key?(megaSpecies) && j.pokemon.willmega && 
               (j.item == megaChecks[megaSpecies][0] || j.hasMegaEvoMutation?)
-                  effectne = megaChecks[megaSpecies][1]
-                  jspeed = pbRoughStat(j,:SPEED,100,false)
-                 if effectne.include?("weather")
+                effectne = megaChecks[megaSpecies][1]
+                jspeed = pbRoughStat(j,:SPEED,100,nil,nil,false,false)
+                if effectne.include?("weather")
                     if jspeed < slowestWeatherSpeed
                         slowestWeather = effectne
                         slowestWeatherSpeed = jspeed
@@ -2047,7 +2124,7 @@ class Battle::AI
             end
         end
         globalArray.push(slowestWeather) if slowestWeather
-          globalArray.push(slowestTerrain) if slowestTerrain
+        globalArray.push(slowestTerrain) if slowestTerrain
 
         # airlock/cloud9 interaction
         weatherNeg = false
@@ -2063,7 +2140,6 @@ class Battle::AI
         end
         globalArray.reject! { |w| w.include?("weather") } if weatherNeg
         globalArray.uniq!
-        #echoln globalArray
         return globalArray
     end
 
@@ -2088,28 +2164,28 @@ class Battle::AI
 
     # Priority Moves Scoring #####################################################
     
-    def pbAIPrioSpeedCheck(score, move, user, target, globalArray = nil, aspeed = 0, ospeed = 0)
+    def pbAIPrioSpeedCheck(score, move, user, target)
         skill = 100
-        globalArray = pbGetMidTurnGlobalChanges if globalArray.nil?
+        globalArray = @megaGlobalArray
         thisprio = priorityAI(user,move,globalArray)
         return score if thisprio == 0
-        aspeed = pbRoughStat(user,:SPEED,skill) if aspeed == 0
-        ospeed = pbRoughStat(target,:SPEED,skill) if ospeed == 0
+        aspeed = pbRoughStat(user,:SPEED,skill)
+        ospeed = pbRoughStat(target,:SPEED,skill)
         fastermon = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
         if thisprio>0 
             if move.damagingMove?
                 if fastermon
-                    echo("\n"+user.name+" is faster than "+target.name+".\n")
+                    echo("\n"+user.name+" is faster than "+target.name+".\n") if $AIGENERALLOG
                 else
-                    echo("\n"+target.name+" is faster than "+user.name+".\n")
+                    echo("\n"+target.name+" is faster than "+user.name+".\n") if $AIGENERALLOG
                 end
                 if !targetSurvivesMove(move,user,target)
-                    echo("\n"+target.name+" will not survive.")
+                    echo("\n"+target.name+" will not survive.") if $AIGENERALLOG
                     if fastermon
-                        echo("Score (for" + move.name + ") x1.3\n")
+                        echo("Score (for" + move.name + ") x1.3\n") if $AIGENERALLOG
                         score*=1.3
                     else
-                        echo("Score (for" + move.name + ") x2\n")
+                        echo("Score (for" + move.name + ") x2\n") if $AIGENERALLOG
                         score*=2
                     end
                 end   
@@ -2134,18 +2210,17 @@ class Battle::AI
                     end 
                 end 
                 if opppri
-                    echo("Expected priority damage taken by "+target.name+": "+pridam.to_s+"\n") 
+                    echo("Expected priority damage taken by "+target.name+": "+pridam.to_s+"\n")  if $AIGENERALLOG
                 end
                 if !fastermon
-                    echo("Expected damage taken by "+target.name+": "+movedamage.to_s+"\n") 
+                    echo("Expected damage taken by "+target.name+": "+movedamage.to_s+"\n")  if $AIGENERALLOG
                     maxdam=0
                     maxmove2=nil
                     if !targetSurvivesMove(maxmove,target,user)
-                        echo(user.name+" does not survive foe's maxmove. Score +150. \n")
+                        echo(user.name+" does not survive foe's maxmove. Score +150. \n") if $AIGENERALLOG
                         score+=150
                         for j in target.moves
-                            if target.effects[PBEffects::ChoiceBand] &&
-                                target.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+                            if moveLocked(target)
                                 if target.lastMoveUsed && target.pbHasMove?(target.lastMoveUsed)
                                     next if j.id!=target.lastMoveUsed
                                 end
@@ -2164,36 +2239,36 @@ class Battle::AI
                     score*=1.1
                     if !targetSurvivesMove(maxpriomove,target,user)
                         if fastermon
-                            echo(user.name+" does not survive piority move. Score (for" + move.name + ") x3. \n")
+                            echo(user.name+" does not survive piority move. Score (for" + move.name + ") x3. \n") if $AIGENERALLOG
                             score*=3
                         else
-                            echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") -100 \n")
+                            echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") -100 \n") if $AIGENERALLOG
                             score-=100
                         end
                     end
                 end
                 if !fastermon && 
-                        target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-                                                    "TwoTurnAttackInvulnerableUnderground",
-                                                    "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-                                                    "TwoTurnAttackInvulnerableUnderwater",
-                                                    "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-                    echo("Player Pokemon is invulnerable. Score (for" + move.name + ") -300. \n")
+                    target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
+                                            "TwoTurnAttackInvulnerableUnderground",
+                                            "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+                                            "TwoTurnAttackInvulnerableUnderwater",
+                                            "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+                    echo("Player Pokemon is invulnerable. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
                     score-=300
                 end
                 procGlobalArray = processGlobalArray(globalArray)
                 expectedTerrain = procGlobalArray[1]
                 if expectedTerrain == :Psychic && target.affectedByTerrain?
-                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") -300. \n")
+                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
                     score-=300
                 end
                 @battle.allSameSideBattlers(target.index).each do |b|
                     priobroken=moldbroken(user,b,move)
                     if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
-                         !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
+                       !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
                         # laguna/diancie can have priority immunity in pre-mega form
                         score-=300 
-                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n")
+                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
                         break
                     end
                 end 
@@ -2203,8 +2278,8 @@ class Battle::AI
                         quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0
                     end          
                     if quickcheck
-                        echo("Expecting quick guard. Score  (for" + move.name + ") -200. \n")
-                        score-=200
+                        echo("Quick guard is a possiblity. Score  (for" + move.name + ") -80. \n") if $AIGENERALLOG
+                        score-=80
                     end  
                 end
             else
@@ -2224,11 +2299,11 @@ class Battle::AI
                 if move.damagingMove?
                     score*=0.9
                     if target.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSky",
-                                                "TwoTurnAttackInvulnerableUnderground",
-                                                "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
-                                                "TwoTurnAttackInvulnerableUnderwater",
-                                                "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-                        echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n")
+                                               "TwoTurnAttackInvulnerableUnderground",
+                                               "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
+                                               "TwoTurnAttackInvulnerableUnderwater",
+                                               "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
+                        echo("Negative priority move and AI pokemon is faster. Score x2 because Player Pokemon is invulnerable. \n") if $AIGENERALLOG
                         score*=2
                     end
                 else
@@ -2240,7 +2315,7 @@ class Battle::AI
                                           "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(targetMove.function)
                         end
                         if willSwitch || @battle.choices[target.index][0] == :SwitchOut
-                            echo("Negative priority move, AI pokemon is faster and target will switch out. Score x1.3\n")
+                            echo("Negative priority teleport, AI pokemon is faster and target will switch out. Score x1.3\n") if $AIGENERALLOG
                             score*=1.3
                         end
                     end

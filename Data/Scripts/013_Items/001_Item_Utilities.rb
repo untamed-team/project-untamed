@@ -319,6 +319,7 @@ def pbGainExpFromExpCandy(pkmn, base_amt, qty, scene)
   if qty > 1
     (qty - 1).times { pkmn.changeHappiness("vitamin") }
   end
+  base_amt = 1
   pbChangeExp(pkmn, pkmn.exp + (base_amt * qty), scene)
   scene.pbHardRefresh
   return true

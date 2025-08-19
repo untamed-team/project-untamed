@@ -87,6 +87,7 @@ class Battle
   attr_reader   :endOfRound       # True during the end of round
   attr_accessor :moldBreaker      # True if Mold Breaker applies
   attr_reader   :struggle         # The Struggle move
+  attr_accessor :inverseBattle    # Whether the type chart is inverted
 
   def pbRandom(x)
     if trainerBattle?
@@ -201,6 +202,8 @@ class Battle
     end
     @mega_rings = []
     GameData::Item.each { |item| @mega_rings.push(item.id) if item.has_flag?("MegaRing") }
+    # extra battle rules #by low
+    @inverseBattle     = false
   end
 
   #=============================================================================
@@ -649,6 +652,7 @@ class Battle
                      PBEffects::BideTarget,
                      PBEffects::CounterTarget,
                      PBEffects::JawLock,
+                     PBEffects::NeedleArm,
                      PBEffects::LockOnPos,
                      PBEffects::MeanLook,
                      PBEffects::MirrorCoatTarget,
@@ -888,5 +892,21 @@ class Battle
   def pbReplaceAbilitySplash(battler)
     return if !Scene::USE_ABILITY_SPLASH
     @scene.pbReplaceAbilitySplash(battler)
+  end
+
+  def pbGetStatMath(stat = :ATTACK) #by low
+    if $player.difficulty_mode?("chaos") && $GLOBALSETUPNERF
+      stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+      stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    else
+      if [:ACCURACY, :EVASION].include?(stat)
+        stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
+        stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+      else
+        stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
+        stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+      end
+    end
+    return stageMul, stageDiv
   end
 end

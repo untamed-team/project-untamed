@@ -3673,7 +3673,7 @@ Description = The user drains the foe's energy with its horns. The user's HP is 
 Name = Grassy Glide
 Type = GRASS
 Category = Physical
-Power = 55
+Power = 60
 Accuracy = 100
 TotalPP = 20
 Target = NearOther
@@ -3723,14 +3723,13 @@ Description = The user scatters curious leaves that chase the target. This attac
 Name = Needle Arm
 Type = GRASS
 Category = Physical
-Power = 70
+Power = 60
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = FlinchTarget
+FunctionCode = TrapUserAndTargetInBattleNeedleArm
 Flags = Contact,CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_3,Contest_Effect_Basic
-EffectChance = 30
-Description = The user attacks by wildly swinging its thorny arms. It may also make the target flinch.
+Description = Swinging its thorny arms, the user traps itself and the target. Also deals a little bit of damage each turn.
 #-------------------------------
 [RAZORLEAF]
 Name = Razor Leaf
@@ -6366,7 +6365,7 @@ TotalPP = 20
 Target = User
 FunctionCode = CureUserBurnPoisonParalysis
 Flags = Contest_Cute,Contest_Appeal_0,Contest_Effect_IncreasedVoltageAddedToScore
-Description = The user rests to cure itself of a poisoning, burn, or paralysis.
+Description = The user rests to cure itself of a poisoning, burn, paralysis or frostbite.
 #-------------------------------
 [ROAR]
 Name = Roar
@@ -6575,7 +6574,7 @@ Accuracy = 90
 TotalPP = 15
 Target = NearOther
 FunctionCode = RaiseTargetAttack2ConfuseTarget
-Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
+Flags = CanProtect,CanMirrorMove,Sound,Contest_Cute,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
 Description = The user enrages and dizzies the target. However, it also sharply raises the target's Attack stat.
 #-------------------------------
 [SWALLOW]
@@ -7850,7 +7849,7 @@ Description = Gathers space power and boosts its Sp. Atk stat on the first turn,
 [DIAMONDSTORM]
 Name = Diamond Storm
 Type = ROCK
-Category = Special
+Category = Physical
 Power = 95
 Accuracy = 100
 TotalPP = 5
@@ -8910,9 +8909,9 @@ Power = 80
 Accuracy = 100
 TotalPP = 10
 Target = NearOther
-FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Blade
-Description = The user conjures a shining blade and then attacks by piercing its target. Critical hits land more easily.
+FunctionCode = IgnoreTargetDefSpDefEvaStatStages
+Flags = CanProtect,CanMirrorMove,Blade
+Description = The user conjures a shining blade and pierces the target. The target's stat changes do not affect the damage dealt.
 #-------------------------------
 [FORCEWAVE]
 Name = Force Wave
@@ -8966,13 +8965,13 @@ Description = The user pumps themselves up, raising its Sp. Atk stat.
 Name = Scatterdust
 Type = BUG
 Category = Special
-Power = 90
-Accuracy = 90
+Power = 100
+Accuracy = 100
 TotalPP = 10
-Target = NearOther
+Target = AllNearOthers
 FunctionCode = None
-Flags = CanProtect,CanMirrorMove,HighCriticalHitRate
-Description = The user attacks by scattering a cloud of coarse debris. Critical hits land more easily.
+Flags = CanProtect,CanMirrorMove
+Description = The user attacks everything around it by scattering a cloud of coarse debris.
 #-------------------------------
 [SWEETTOOTH]
 Name = Sweet Tooth

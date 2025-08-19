@@ -159,11 +159,17 @@ class MoveRelearnerScreen
     @scene = scene
   end
 
-  def pbGetRelearnableMoves(pkmn,eggmoverelearn=false)
+  def pbGetRelearnableMoves(pkmn)
     return [] if !pkmn || pkmn.egg? || pkmn.shadowPokemon?
     moves = []
+    # necturna clause #by low
+    necclause = false
+    if !pkmn.sketchMove.nil?
+      necclause = true if pkmn.hasMove?(pkmn.sketchMove)
+    end
     pkmn.getMoveList.each do |m|
       next if m[0] > pkmn.level || pkmn.hasMove?(m[1])
+      next if m[1] == :SKETCH && necclause
       moves.push(m[1]) if !moves.include?(m[1])
     end
     if Settings::MOVE_RELEARNER_CAN_TEACH_MORE_MOVES && pkmn.first_moves
@@ -176,8 +182,8 @@ class MoveRelearnerScreen
     return moves | []   # remove duplicates
   end
 
-  def pbStartScreen(pkmn,eggmoverelearn=false)
-    moves = pbGetRelearnableMoves(pkmn,eggmoverelearn)
+  def pbStartScreen(pkmn)
+    moves = pbGetRelearnableMoves(pkmn)
     @scene.pbStartScene(pkmn, moves)
     loop do
       move = @scene.pbChooseMove
@@ -200,12 +206,12 @@ end
 #===============================================================================
 #
 #===============================================================================
-def pbRelearnMoveScreen(pkmn,eggmoverelearn=false)
+def pbRelearnMoveScreen(pkmn)
   retval = true
   pbFadeOutIn {
     scene = MoveRelearner_Scene.new
     screen = MoveRelearnerScreen.new(scene)
-    retval = screen.pbStartScreen(pkmn,eggmoverelearn)
+    retval = screen.pbStartScreen(pkmn)
   }
   return retval
 end

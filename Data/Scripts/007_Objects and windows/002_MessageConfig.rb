@@ -372,7 +372,7 @@ end
 def getDefaultTextColors(windowskin)
   if !windowskin || windowskin.disposed? ||
      windowskin.width != 128 || windowskin.height != 128
-    if isDarkWindowskin(windowskin)
+    if isDarkWindowskin(windowskin) || (!$game_switches.nil? && $game_switches[1]) #"starting over" switch
       return [MessageConfig::LIGHT_TEXT_MAIN_COLOR, MessageConfig::LIGHT_TEXT_SHADOW_COLOR]   # White
     else
       return [MessageConfig::DARK_TEXT_MAIN_COLOR, MessageConfig::DARK_TEXT_SHADOW_COLOR]   # Dark gray

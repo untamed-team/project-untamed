@@ -299,7 +299,7 @@ class Battle::Battler
     end
   end
 
-  def pbTransform(target)
+  def pbTransform(target, msg = true)
     oldAbil = @ability_id
     @effects[PBEffects::Transform]        = true
     @effects[PBEffects::TransformSpecies] = target.species
@@ -325,7 +325,7 @@ class Battle::Battler
     @effects[PBEffects::DisableMove]  = nil
     @effects[PBEffects::WeightChange] = target.effects[PBEffects::WeightChange]
     @battle.scene.pbRefreshOne(@index)
-    @battle.pbDisplay(_INTL("{1} transformed into {2}!", pbThis, target.pbThis(true)))
+    @battle.pbDisplay(_INTL("{1} transformed into {2}!", pbThis, target.pbThis(true))) if msg
     pbOnLosingAbility(oldAbil)
   end
 

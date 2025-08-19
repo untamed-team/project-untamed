@@ -7,34 +7,6 @@
 #===============================================================================
 
 #===============================================================================
-# Fixed Heavy Ball's catch rate calculation being inaccurate.
-#===============================================================================
-Battle::PokeBallEffects::ModifyCatchRate.add(:HEAVYBALL, proc { |ball, catchRate, battle, battler|
-  next 0 if catchRate == 0
-  weight = battler.pbWeight
-  if Settings::NEW_POKE_BALL_CATCH_RATES
-    if weight >= 3000
-      catchRate += 30
-    elsif weight >= 2000
-      catchRate += 20
-    elsif weight < 1000
-      catchRate -= 20
-    end
-  else
-    if weight >= 4096
-      catchRate += 40
-    elsif weight >= 3072
-      catchRate += 30
-    elsif weight >= 2048
-      catchRate += 20
-    else
-      catchRate -= 20
-    end
-  end
-  next catchRate.clamp(1, 255)
-})
-
-#===============================================================================
 # Added Obstruct to the blacklists of Assist and Copycat.
 #===============================================================================
 class Battle::Move::UseRandomMoveFromUserParty < Battle::Move
@@ -186,6 +158,10 @@ class Battle::Move::LowerPPOfTargetLastMoveBy3 < Battle::Move
     target.pbSetPP(last_move, last_move.pp - reduction)
     @battle.pbDisplay(_INTL("It reduced the PP of {1}'s {2} by {3}!",
                             target.pbThis(true), last_move.name, reduction))
+  end
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    @battle.pbCommonAnimation("HardDriveCrash", user, targets) if id == :HARDDRIVECRASH
+    super
   end
 end
 
@@ -478,8 +454,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
       target.pbLowerStatStage(:ATTACK, 1, user)
     end
     # Calculate target's effective attack value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     atk      = target.attack
     atkStage = target.stages[:ATTACK] + 6
     healAmt = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor

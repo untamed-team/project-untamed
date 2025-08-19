@@ -1,4 +1,4 @@
-# See the documentation on the wiki to learn how to edit this file.
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
@@ -892,7 +892,7 @@ Pokemon = KNOGGIN,12
     Item = SCOPELENS
 Pokemon = BALTOY,13
     Moves = RAPIDSPIN,POWERTRICK,CONFUSION,CALMMIND
-    Ability = CLEARBODY
+    Ability = FOREWARN
 #Area=MonarcaCave_M
 #-------------------------------
 [TOURIST_F,Lucette]
@@ -944,12 +944,12 @@ Pokemon = CHICATTA,13
 [TRAINER_Reine,Reine,200]
 LoseText = ...
 Pokemon = M_BURMY,10
-    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+    Moves = STRUGGLEBUG,PROTECT,CELEBRATE,TACKLE
 Pokemon = LEDYBA,11
-    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Moves = ENDURE,AERIALACE,BUGBITE
     Ability = SWARM
-Pokemon = CHICATTA,13
-    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+Pokemon = CHICATTA,12
+    Moves = SECRETPOWER,RAZORLEAF,STRINGSHOT,DEFENSECURL
     Ability = HYPERCUTTER
 #-------------------------------
 [NEOGRUNT_F,Priscilla]
@@ -977,7 +977,7 @@ LoseText = Let's get out of here!
 Pokemon = ELGYEM,13
     Moves = PSYCHICTERRAIN,CONFUSION,SAFEGUARD,WONDERROOM
     Item = ENIGMABERRY
-    Ability = ANALYTIC
+    Ability = FOREWARN
     Nature = QUIET
 Pokemon = CHICATTA,13
     Moves = SECRETPOWER,BITE,BUGBITE,RAZORLEAF
@@ -1128,26 +1128,27 @@ Pokemon = BANAGNAW,14
     Item = IAPAPABERRY
 #Area=MeloladoExterior_M
 #-------------------------------
-[LASS,Immy]
+[LASS4,Immy]
 LoseText = Oh no, I lost...
 Pokemon = EEVEE,14
     Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
     Ability = ANTICIPATION
     Nature = CAREFUL
 #-------------------------------
-[LASS,Immy,100]
+[LASS4,Immy,100]
 LoseText = Oh no, I lost...
 Pokemon = EEVEE,14
     Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
     Ability = ANTICIPATION
     Nature = CAREFUL
 #-------------------------------
-[LASS,Immy,200]
+[LASS4,Immy,200]
 LoseText = Oh no, I lost...
-Pokemon = EEVEE,14
-    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
-    Ability = ANTICIPATION
-    Nature = CAREFUL
+Pokemon = PACUNA,14
+    Moves = STUFFCHEEKS,WORKUP,METRONOME,FAIRYWIND
+    Ability = CHEEKPOUCH
+    Nature = MODEST
+    Item = PETAYABERRY
 #-------------------------------
 [RISINGSTAR_F,Grace]
 LoseText = Great battling, you won fair and square!
@@ -1164,7 +1165,8 @@ Pokemon = JOLTEON,16
 [RISINGSTAR_F,Grace,200]
 LoseText = Great battling, you won fair and square!
 Pokemon = JOLTEON,16
-    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,YAWN
+    Ability = VOLTABSORB
     Nature = HARDY
 #-------------------------------
 [RISINGSTAR_M,Nicco]
@@ -1182,7 +1184,8 @@ Pokemon = SYLVEON,16
 [RISINGSTAR_M,Nicco,200]
 LoseText = Yeah, you got us good!
 Pokemon = SYLVEON,16
-    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Moves = DISARMINGVOICE,QUICKATTACK,BABYDOLLEYES,COVET
+    Ability = PIXILATE
     Nature = RELAXED
 #-------------------------------
 [TOURIST_M,Floyd]
@@ -1336,18 +1339,18 @@ Pokemon = BUNNELBY,16
 [RISINGSTAR_F,Ivette,200]
 LoseText = I-I lost? But… This isn’t fair!
 Gimmick = Gravity
+Pokemon = SNORUNT,15
+    Moves = AVALANCHE,ICESHARD,SPIKES,SWITCHEROO
+    Ability = INNERFOCUS
+    Nature = IMPISH
 Pokemon = EEVEE,15
-    Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
+    Moves = TACKLE,TICKLE,SNARL,QUICKATTACK
     Ability = RUNAWAY
-    Nature = DOCILE
-Pokemon = HOOTHOOT,15
-    Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
-    Ability = INSOMNIA
-    Nature = HARDY
-Pokemon = BUNNELBY,16
-    Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
-    Ability = PICKUP
-    Nature = SERIOUS
+    Nature = JOLLY
+Pokemon = DUNSPARCE,16
+    Moves = TACKLE,ROCKTOMB,CURSE,ASTONISH
+    Ability = RATTLED
+    Nature = ADAMANT
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel]
@@ -1387,18 +1390,19 @@ Pokemon = DUNSPARCE,16
 [BEAUTY,Anabel,200]
 LoseText = You just had to rain on my parade, didn't you?
 Gimmick = Rain
-Pokemon = WRENNER,15
-    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
-    Ability = RUNAWAY
-    Nature = DOCILE
 Pokemon = HELIOPTILE,15
-    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Moves = THUNDERSHOCK,GLARE,MUDSLAP,ROUND
     Ability = DRYSKIN
-    Nature = HARDY
-Pokemon = DUNSPARCE,16
-    Moves = HEADBUTT,HEX,BITE,ICYWIND
-    Ability = RUNAWAY
-    Nature = RELAXED
+    Nature = MODEST
+Pokemon = CASTFORM,15
+    Moves = WATERGUN,COSMICPOWER,POWDERSNOW,HEADBUTT
+    Ability = FORECAST
+    Nature = BOLD
+Pokemon = XOLSMOL,16
+    Moves = SCALD,WORKUP,LICK,SCORCHINGSANDS
+    Ability = DRYSKIN
+    Item = SOFTSAND
+    Nature = QUIET
 #Area=Gym2_M
 #-------------------------------
 [BEAUTY,Anabel,1]
@@ -1438,18 +1442,19 @@ Pokemon = DUNSPARCE,16
 [BEAUTY,Anabel,201]
 LoseText = I've been hung out to dry...
 Gimmick = Sun
-Pokemon = WRENNER,15
-    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
-    Ability = RUNAWAY
-    Nature = DOCILE
 Pokemon = HELIOPTILE,15
-    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Moves = THUNDERSHOCK,GLARE,MUDSLAP,ROUND
     Ability = SOLARPOWER
-    Nature = HARDY
-Pokemon = DUNSPARCE,16
-    Moves = HEADBUTT,HEX,BITE,ICYWIND
-    Ability = RUNAWAY
-    Nature = RELAXED
+    Nature = MODEST
+Pokemon = CASTFORM,15
+    Moves = EMBER,COSMICPOWER,ROCKTHROW,HEADBUTT
+    Ability = FORECAST
+    Nature = IMPISH
+Pokemon = XOLSMOL,16
+    Moves = SCALD,WORKUP,LICK,SCORCHINGSANDS
+    Ability = FLAMEBODY
+    Item = LEFTOVERS
+    Nature = QUIET
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max]
@@ -1485,19 +1490,21 @@ Pokemon = LICKITUNG,16
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max,200]
-LoseText = No, defeat, my only weakness!
-Pokemon = SKITTY,15
-    Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
-    Ability = NORMALIZE
-    Nature = TIMID
+LoseText = No, winning, my only weakness!
+Gimmick = Inverse
 Pokemon = PACUNA,16
     Moves = BITE,SWEETTOOTH,COVET,CUT
     Ability = DAZZLING
     Nature = JOLLY
-Pokemon = LICKITUNG,16
-    Moves = WORKUP,LICK,FACADE,ROCKTOMB
-    Ability = OWNTEMPO
-    Nature = ADAMANT
+Pokemon = GOHILA,15
+    Moves = POISONGAS,FAKETEARS,ACID,SNARL
+    Ability = POISONPOINT
+    Nature = TIMID
+Pokemon = FURFROU,16
+    Moves = HEADBUTT,BABYDOLLEYES,MIMIC,DRAININGKISS
+    Ability = HEALER
+    Nature = SERIOUS
+    Form = 1
 #Area=Gym2_M
 #-------------------------------
 [LEADER_Thalia,Thalia]
@@ -1544,6 +1551,7 @@ Pokemon = LAGUNA,18
 #-------------------------------
 [LEADER_Thalia,Thalia,200]
 LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Gimmick = Inverse
 Pokemon = AMAURA,16
     Moves = ANCIENTPOWER,ICYWIND,THUNDERWAVE,STEALTHROCK
     Ability = THICKFAT
@@ -1743,8 +1751,15 @@ Pokemon = DRILBUR,19
 [MINER_F,Mirabel,200]
 LoseText = Good thing I'm better at mining than battling!
 Pokemon = DRILBUR,19
-    Moves = METALCLAW,DIG,MUDSLAP,RAPIDSPIN
+    Moves = METALCLAW,FURYSWIPES,SANDSTORM,RAPIDSPIN
+    Ability = MOLDBREAKER
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,MUDSLAP,ROCKSMASH,RAPIDSPIN
     Ability = SANDFORCE
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,CUT,RAPIDSPIN
+    Ability = SANDRUSH
+    Item = POWERHERB
 #Area=GoldMine_M
 #-------------------------------
 [MINER_F,Luna]
@@ -1775,15 +1790,15 @@ Pokemon = WOOBAT,21
 #-------------------------------
 [MINER_F,Luna,200]
 LoseText = I've dug too deep!
-Pokemon = BUNNELBY,19
-    Moves = QUICKATTACK,LEER,MUDSHOT,DOUBLEKICK
-    Ability = PICKUP
-Pokemon = MINGOT,20
-    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,DIG
+Pokemon = DRILBUR,19
+    Moves = AERIALACE,FURYSWIPES,MUDSLAP,RAPIDSPIN
+    Ability = MOLDBREAKER
+Pokemon = BEAKPEEP,20
+    Moves = ROCKBLAST,METALCLAW,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = MINGOT,21
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,HONECLAWS
     Ability = LONGREACH
-Pokemon = WOOBAT,21
-    Moves = AIRCUTTER,SWEETTOOTH,WORKUP,ENDEAVOR
-    Ability = UNAWARE
 #Area=GoldMine_M
 #-------------------------------
 [MECHANIC_M,Adam]
@@ -1801,7 +1816,11 @@ Pokemon = CAFECARACHA,19
 [MECHANIC_M,Adam,200]
 LoseText = I promise I won't break down...
 Pokemon = CAFECARACHA,19
-    Moves = ROLLOUT,STRUGGLEBUG,CHARGE,THUNDERSHOCK
+    Moves = LEECHLIFE,STRUGGLEBUG,SPARK,QUICKATTACK
+    Ability = MOTORDRIVE
+Pokemon = TYNAMO,19
+    Moves = SPARK,ACID,THUNDERWAVE,BITE
+    Ability = LEVITATE
 #Area=GoldMine_M
 #-------------------------------
 [MINER_M,Henry]
@@ -1820,9 +1839,10 @@ Pokemon = DIGGERSBY,20
 #-------------------------------
 [MINER_M,Henry,200]
 LoseText = Gah! I'll work harder next time.
-Pokemon = DIGGERSBY,20
-    Moves = MUDSHOT,QUICKATTACK,DOUBLEKICK,LEER
-    Ability = CHEEKPOUCH
+Pokemon = TRAPINCH,20
+    Moves = BITE,MAGNITUDE,TOXIC,ROAR
+    Ability = HYPERCUTTER
+    Item = EVIOLITE
 #Area=GoldMine_M
 #-------------------------------
 [SCIENTIST_F,Erica]
@@ -1847,12 +1867,12 @@ Pokemon = TRUBBISH,20
 #-------------------------------
 [SCIENTIST_F,Erica,200]
 LoseText = Results confirm defeat, refinement of strategy is needed.
-Pokemon = MAGNEMITE,19
-    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
-    Ability = STURDY
+Pokemon = PORYGON,19
+    Moves = THUNDERWAVE,CONVERSION,PSYBEAM,THUNDERSHOCK
+    Ability = TRACE
 Pokemon = TRUBBISH,20
-    Moves = SLUDGE,CLEARSMOG,POISONGAS,POUND
-    Ability = STENCH
+    Moves = SLUDGE,LICK,POISONGAS,SECRETPOWER
+    Ability = POISONPOINT
 #Area=GoldMine_M
 #-------------------------------
 [MINER_M,Kevin]
@@ -1872,8 +1892,8 @@ Pokemon = MINGOT,21
 [MINER_M,Kevin,200]
 LoseText = But I even looked at all the motivational posters today!
 Pokemon = MINGOT,21
-    Moves = METALCLAW,HONECLAWS,QUICKATTACK,DIG
-    Ability = PICKUP
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,THIEF
+    Ability = TOUGHCLAWS
 #Area=GoldMine_M
 #-------------------------------
 [DOCTOR_M,Miguel]
@@ -1904,14 +1924,14 @@ Pokemon = M_VANILLITE,20
 #-------------------------------
 [DOCTOR_M,Miguel,200]
 LoseText = Good thing I can heal my own Pokémon too... 
-Pokemon = AUDINO,19
-    Moves = POUND,PLAYNICE,DISARMINGVOICE,CALMMIND
-    Ability = HEALER
+Pokemon = CHIMECHO,19
+    Moves = YAWN,ENTRAINMENT,CONFUSION,LASTRESORT
+    Ability = AMPLIFIER
 Pokemon = VIVILLON,19
-    Moves = LIGHTSCREEN,PSYBEAM,GUST,SCATTERDUST
-    Ability = FRIENDGUARD
+    Moves = LIGHTSCREEN,PSYBEAM,WORKUP,SCATTERDUST
+    Ability = SHIELDDUST
 Pokemon = M_VANILLITE,20
-    Moves = ICYWIND,AROMATHERAPY,CONFUSION,MIST
+    Moves = ICYWIND,THINKFAST,CONFUSION,MIST
     Ability = HEALER
 #Area=GoldMine_O
 #-------------------------------
@@ -1930,7 +1950,8 @@ Pokemon = BOWLLO,20
 [MINER_F,Leonora,200]
 LoseText = I didn't lose, I just haven't won yet!
 Pokemon = BOWLLO,20
-    Moves = DEFENSECURL,ROLLOUT,METALCLAW,MUDSLAP
+    Moves = COUNTER,METALCLAW,HEADBUTT,GYROBALL
+    Ability = STURDY
 #Area=GoldMine_M
 #-------------------------------
 [SCIENTIST_M,Carlos]
@@ -1955,12 +1976,12 @@ Pokemon = LUMIPOP,21
 #-------------------------------
 [SCIENTIST_M,Carlos,200]
 LoseText = Perhaps my methodology wasn't scientific enough?
-Pokemon = M_DITTO,20
+Pokemon = LUMIPOP,20
+    Moves = ACID,PSYBEAM,TAUNT,WORKUP
+    Ability = ILLUMINATE
+Pokemon = M_DITTO,21
     Moves = TRANSFORM
     Ability = PRANKSTER
-Pokemon = LUMIPOP,21
-    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,CALMMIND
-    Ability = ILLUMINATE
 #Area=GoldMine_M
 #-------------------------------
 [MINER_M,Justin]
@@ -1979,9 +2000,9 @@ Pokemon = SWOOBAT,23
 #-------------------------------
 [MINER_M,Justin,200]
 LoseText = You're a tough rock to crack!
-Pokemon = SWOOBAT,23
-    Moves = SWEETTOOTH,AIRCUTTER,CALMMIND,TAUNT
-    Ability = KLUTZ
+Pokemon = KNOGGIN,23
+    Moves = ASSURANCE,ROCKTOMB,STRENGTH,PROTECT
+    Ability = STURDY
 #Area=GoldMine_O
 #-------------------------------
 [MINER_F,Desirée]
@@ -2010,14 +2031,16 @@ Pokemon = MINGOT,24
 #-------------------------------
 [MINER_F,Desirée,200]
 LoseText = I'm really stuck in a rut...
-Pokemon = DIGGERSBY,22
-    Moves = QUICKATTACK,BULLDOZE,FLAIL,DOUBLEKICK
-    Ability = PICKUP
+Pokemon = BEAKPEEP,22
+    Moves = SAFEGUARD,HEADBUTT,SCREECH,LOWKICK
+    Ability = OVERCOAT
 Pokemon = BOWLLO,23
     Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+    Ability = FILTER
 Pokemon = MINGOT,24
     Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
     Ability = LONGREACH
+    Item = POWERHERB
 #Area=GoldMine_O
 #-------------------------------
 [MECHANIC_F,Marcia]
@@ -2042,11 +2065,11 @@ Pokemon = M_CRABRAWLER,20
 #-------------------------------
 [MECHANIC_F,Marcia,200]
 LoseText = Together we are strong...
-Pokemon = MAGNEMITE,19
-    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
-    Ability = MAGNETPULL
+Pokemon = BEAKPEEP,19
+    Moves = REFLECT,SAFEGUARD,METRONOME,PLUCK
+    Ability = OVERCOAT
 Pokemon = M_CRABRAWLER,20
-    Moves = METALCLAW,PURSUIT,MUDSLAP,VISEGRIP
+    Moves = METALCLAW,PURSUIT,CUT,VISEGRIP
     Ability = TECHNICIAN
 #Area=GoldMine_M
 #-------------------------------
@@ -2072,9 +2095,9 @@ Pokemon = KNOGGIN,20
 #-------------------------------
 [MINER_F,Melissa,200]
 LoseText = But not strong enough?
-Pokemon = WOOBAT,19
-    Moves = AIRCUTTER,ENDEAVOR,SWEETTOOTH,DRAININGKISS
-    Ability = UNAWARE
+Pokemon = AVEOR,19
+    Moves = SANDSTORM,SANDTOMB,STEELWING,PECK
+    Ability = SANDFORCE
 Pokemon = KNOGGIN,20
     Moves = ROCKTOMB,BITE,BODYSLAM,CUT
     Ability = SOLIDROCK
@@ -2096,9 +2119,9 @@ Pokemon = BARBOACH,21
 #-------------------------------
 [GOLDPANNER_F,Domênica,200]
 LoseText = The gold's good but the victory isn't there yet!
-Pokemon = BARBOACH,21
-    Moves = WATERPULSE,MAGNITUDE,ICYWIND,WHIRLPOOL
-    Ability = ANTICIPATION
+Pokemon = DRILBUR,21
+    Moves = FURYSWIPES,CUT,DIG,ROCKSMASH
+    Ability = MOLDBREAKER
 #Area=GoldMine_M
 #-------------------------------
 [GOLDPANNER_M,Salvador]
@@ -2152,10 +2175,12 @@ Pokemon = KNOGGIN,22
 [RUINMANIAC_M,Diego,200]
 LoseText = At least the temple is nice to look at...
 Pokemon = BALTOY,21
-    Moves = PSYBEAM,ANCIENTPOWER,MUDSLAP,SANDSTORM
+    Moves = PSYBEAM,ANCIENTPOWER,POWERTRICK,SANDSTORM
+    Ability = LEVITATE
 Pokemon = KNOGGIN,22
-    Moves = BRUTALSWING,ROCKTOMB,SNARL,HARDEN
-    Ability = SUPERLUCK
+    Moves = SUBMISSION,ROCKTOMB,BITE,HARDEN
+    Ability = SOLIDROCK
+    Item = SCOPELENS
 #Area=GoldMine_M
 #-------------------------------
 [RANCHERO_M,Bosco]
@@ -2174,7 +2199,7 @@ Pokemon = FLAAFFY,22
 LoseText = A shocking defeat!
 Gimmick = PoisonZone
 Pokemon = EELEKTRIK,19
-    Moves = ZINGZAP,POISONTAIL,GIGADRAIN,HIDDENPOWER
+    Moves = SPARK,POISONTAIL,GIGADRAIN,HIDDENPOWER
     Ability = LEVITATE
     Nature = SASSY
     Item = EXPERTBELT
@@ -2210,7 +2235,7 @@ Pokemon = FEEBAS,20
     Ability = OBLIVIOUS
     Item = FOCUSSASH
 Pokemon = ATELANGLER,20
-    Moves = FAKEOUT,DOUBLEHIT,BRUTALSWING,SLEEPTALK
+    Moves = SWEETTOOTH,DOUBLEHIT,BRUTALSWING,SLEEPTALK
     Ability = COMATOSE
 #Area=Asterado_O
 #-------------------------------
@@ -2579,10 +2604,11 @@ Pokemon = BOWLLO,23
 [HIKER_M,Michael,200]
 LoseText = That won't do!
 Pokemon = WRRAZAL,22
-    Moves = ROCKTOMB,SCREECH,SMACKDOWN,ASTONISH
-    Ability = INTIMIDATE
+    Moves = ROCKTOMB,SCREECH,SNATCH,ASTONISH
+    Ability = CURSEDBODY
 Pokemon = BOWLLO,23
     Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+    Ability = MOMENTUM
 #Area=Route4_M
 #-------------------------------
 [TOURIST_F,Karmen]
@@ -2604,7 +2630,7 @@ LoseText = Well, how did it taste?
 Gimmick = Rainbow
 Pokemon = DUNSPARCE,23
     Moves = ANCIENTPOWER,TRIATTACK,ROOST,HEX
-    Ability = SERENEGRACE
+    Ability = RATTLED
     Item = EVIOLITE
 #Area=Route4_M
 #-------------------------------
@@ -2719,7 +2745,7 @@ LoseText = I must have miscalculated...
 Gimmick = Tailwind
 Pokemon = ELGYEM,24
     Moves = PSYBEAM,TOXIC,REFLECT,SAFEGUARD
-    Ability = SYNCHRONIZE
+    Ability = FOREWARN
     Item = TANGABERRY
     Nature = TIMID
 Pokemon = EELEKTRIK,25
@@ -2886,7 +2912,7 @@ Pokemon = CAFECARACHA,22
     Ability = MOTORDRIVE
 Pokemon = GOHILA,22
     Moves = SNARL,SLUDGE,THUNDERWAVE,HIDDENPOWER
-    Ability = POISONTOUCH
+    Ability = POISONPOINT
     HiddenPowerType = ICE
 Pokemon = AVEOR,23
     Moves = DOUBLEKICK,SANDTOMB,ELECTROBALL,PECK
@@ -2956,7 +2982,7 @@ Pokemon = HELIOPTILE,24
     Ability = DRYSKIN
 Pokemon = BALTOY,24
     Moves = COSMICPOWER,ANCIENTPOWER,PSYBEAM,MUDSHOT
-    Ability = LEVITATE
+    Ability = FOREWARN
 Pokemon = M_CRABRAWLER,25
     Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
     Ability = TECHNICIAN
@@ -3071,7 +3097,7 @@ Pokemon = TRAPINCH,23
 LoseText = Our defenses weren't enough...
 Pokemon = CACNEA,23
     Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
-    Ability = IRONBARBS
+    Ability = SANDVEIL
 Pokemon = M_MUDBRAY,24
     Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
 Pokemon = M_MARACTUS,24
@@ -3083,7 +3109,7 @@ Pokemon = M_MARACTUS,24
 LoseText = Our defenses weren't enough...
 Pokemon = CACNEA,23
     Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
-    Ability = IRONBARBS
+    Ability = SANDVEIL
 Pokemon = M_MUDBRAY,24
     Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
 Pokemon = M_MARACTUS,24
@@ -3132,7 +3158,7 @@ Pokemon = BURBRAWL,25
 LoseText = I've discovered... Defeat?
 Pokemon = BALTOY,23
     Moves = PSYBEAM,EXPLOSION,TRICKROOM,ANCIENTPOWER
-    Ability = LEVITATE
+    Ability = FOREWARN
     Item = IRONBALL
 Pokemon = M_NOSEPASS,23
     Moves = CURSE,ROCKTOMB,KARATECHOP,BLOCK
@@ -3776,8 +3802,19 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,200]
 LoseText = sex
 #Gimmick = stealthrock
+Pokemon = STRELAVISON,50
+    Moves = STICKYWEB,DISCHARGE,LUNARDANCE
+    Ability = SHOWTIME
+    Nature = QUIRKY
+Pokemon = GLALIE,50
+    Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
+    Ability = MOODY
+    Nature = QUIRKY
+    Item = QUICKCLAW
+    AAM = True
+    MEM = True
 Pokemon = M_ROSERADE,50
-    Moves = SHADOWSNEAK,SHADOWBALL,WILLOWISP,METRONOME
+    Moves = SHADOWSNEAK,METRONOME,WILLOWISP,BATONPASS
     Ability = SEANCE
     AAM = True
     Nature = QUIRKY
@@ -3788,13 +3825,21 @@ Pokemon = SABLEYE,50
     AAM = True
     MEM = True
 Pokemon = DUPEDILLO,50
-    Moves = POUND,BEATUP
-    Ability = ANGERPOINT
+    Moves = POUND,BEATUP,PARTINGSHOT
+    Ability = DOWNLOAD
     Nature = ADAMANT
 Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
+# for AAM, its important to know that the base ability's effect has priority over the stacked abilities
+Pokemon = TITANOTROP,50
+    Moves = SUNNYDAY,SOLARBEAM,FLAMETHROWER,MOONLIGHT
+    Ability = SOLARPOWER
+    Nature = QUIRKY
+    Item = HEATROCK
+    AAM = True
+    MEM = True
 #-------------------------------
 [WILD_PKMN,crust,0]
 LoseText = sex

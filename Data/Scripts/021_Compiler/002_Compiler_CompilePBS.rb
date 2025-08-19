@@ -221,6 +221,7 @@ module Compiler
     schema = GameData::Ability::SCHEMA
     ability_names        = []
     ability_descriptions = []
+    ability_full_descriptions = []
     ability_hash         = nil
     pbCompilerEachPreppedLine(path) { |line, line_no|
       if line[/^\s*\[\s*(.+)\s*\]\s*$/]   # New section [ability_id]
@@ -251,6 +252,8 @@ module Compiler
           ability_names.push(ability_hash[:name])
         when "Description"
           ability_descriptions.push(ability_hash[:description])
+        when "FullDesc"
+          ability_full_descriptions.push(ability_hash[:full_description])
         end
       else   # Old format
         # Add previous ability's data to records
@@ -265,12 +268,14 @@ module Compiler
         ability_hash = {
           :id          => ability_id,
           :name        => line[2],
-          :description => line[3]
+          :description => line[3],
+          :full_description => line[4]
         }
         # Add ability's data to records
         GameData::Ability.register(ability_hash)
         ability_names.push(ability_hash[:name])
         ability_descriptions.push(ability_hash[:description])
+        ability_full_descriptions.push(ability_hash[:full_description])
         ability_hash = nil
       end
     }
@@ -280,6 +285,7 @@ module Compiler
     GameData::Ability.save
     MessageTypes.setMessagesAsHash(MessageTypes::Abilities, ability_names)
     MessageTypes.setMessagesAsHash(MessageTypes::AbilityDescs, ability_descriptions)
+    MessageTypes.setMessagesAsHash(MessageTypes::AbilityDescs, ability_full_descriptions)
     process_pbs_file_message_end
   end
 

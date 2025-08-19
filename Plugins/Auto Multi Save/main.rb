@@ -217,7 +217,13 @@ class PokemonLoad_Scene
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
     addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
-    y = 32
+    if show_continue
+		#if Continue option is available, start y for buttons at this height
+		y = 34
+	else
+		#if Continue option is not available (no save files found), start y for buttons at this height
+		y = 88
+	end
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,
@@ -534,8 +540,7 @@ class PokemonSaveScreen
   end
 
   # Return true if pause menu should close after this is done (if the game was saved successfully)
-  def pbSaveScreen
-    
+  def pbSaveScreen(quitting = nil)
     #added by Gardenette
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
@@ -544,39 +549,62 @@ class PokemonSaveScreen
     
     ret = false
     loop do
-      @scene.pbStartScreenMultiSave
-      if !$player.save_slot
-        # New Game - must select slot
-        ret = slotSelect
-      else
-        choices = [
-          _INTL("Save to #{$player.save_slot}"),
-          _INTL("Save to another file"),
-          _INTL("Cancel")
-        ]
-        opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
-        if opt == 0
-          pbSEPlay('GUI save choice')
-          ret = doSave($player.save_slot)
-        elsif opt == 1
-          pbPlayDecisionSE
-          saved = slotSelect
-        else
-          pbPlayCancelSE
-          canceled = true
-        end
-      end
-      @scene.pbEndScreen
-      if ret
-        return ret
-      end
-      if saved
-        return saved
-      end
-      if canceled
-        return canceled
-      end
-    end #loop do
+		@scene.pbStartScreenMultiSave
+		if !$player.save_slot
+			# New Game - must select slot
+			ret = slotSelect
+		#if triggered from "quit game" option
+		elsif quitting == true
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Quit without saving"),
+			_INTL("Don't quit")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,4)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			elsif opt == 2
+				pbPlayCancelSE
+				canceled = "exitWithoutSaving"
+			else
+				pbPlayCancelSE
+				canceled = "doNotQuit"
+			end
+		#if not triggered from "quit game" option
+		else
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Don't save")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			else
+				pbPlayCancelSE
+				canceled = true
+			end
+		end #if !$player.save_slot
+		@scene.pbEndScreen
+		if ret
+			return ret
+		end
+		if saved
+			return saved
+		end
+		if canceled
+			return canceled
+		end
+	end #loop do
   end
 
   # Call this to open the slot select screen

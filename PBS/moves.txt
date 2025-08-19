@@ -6083,7 +6083,7 @@ Accuracy = 0
 TotalPP = 40
 Target = NearAlly
 FunctionCode = HoldingHandsShamefully
-Description = The user and an ally hold hands. This makes them very happy.
+Description = The user and an ally hold hands. This makes them very happy, and reduces damage taken by its ally.
 #-------------------------------
 [HOWL]
 Name = Howl
@@ -7630,9 +7630,9 @@ Category = Status
 Accuracy = 0
 TotalPP = 40
 Target = NearOther
-FunctionCode = StartNegateTargetEvasionStatStageAndDarkImmunity
+FunctionCode = NextMoveIs2xSuperEffective
 Flags = CanProtect,CanMirrorMove,Contest_Cute,Contest_Appeal_1,Contest_Effect_Plus3If2VoltageInARow
-Description = Enables the user to hit a Dark type with any type of move. It also enables the user to hit an evasive foe.
+Description = Any damaging attack on the next turn on the affected foe will be super effective.
 #-------------------------------
 [POWERSPLIT]
 Name = Power Split

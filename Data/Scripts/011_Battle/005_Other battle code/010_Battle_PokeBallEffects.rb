@@ -71,7 +71,7 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:NESTBALL, proc { |ball, catchRate,
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:REPEATBALL, proc { |ball, catchRate, battle, battler|
-  multiplier = (Settings::NEW_POKE_BALL_CATCH_RATES) ? 3.5 : 3
+  multiplier = (Settings::NEW_POKE_BALL_CATCH_RATES) ? 4 : 3
   catchRate *= multiplier if battle.pbPlayer.owned?(battler.species)
   next catchRate
 })
@@ -96,7 +96,10 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:QUICKBALL, proc { |ball, catchRate
 Battle::PokeBallEffects::ModifyCatchRate.add(:FASTBALL, proc { |ball, catchRate, battle, battler|
   baseStats = battler.pokemon.baseStats
   baseSpeed = baseStats[:SPEED]
-  catchRate *= 4 if baseSpeed >= 100
+  if baseSpeed >= 80
+    multiplier = [1.1 + (0.03 * baseSpeed), 8].min
+    catchRate *= multiplier
+  end
   next [catchRate, 255].min
 })
 
@@ -121,28 +124,17 @@ Battle::PokeBallEffects::ModifyCatchRate.add(:LUREBALL, proc { |ball, catchRate,
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:HEAVYBALL, proc { |ball, catchRate, battle, battler|
   next 0 if catchRate == 0
-  weight = battler.pokemon.species_data.base_stats[:SPEED]
-  if Settings::NEW_POKE_BALL_CATCH_RATES
-    if weight >= 3000
-      catchRate += 30
-    elsif weight >= 2000
-      catchRate += 20
-    elsif weight < 1000
-      catchRate -= 20
-    end
-  else
-    if weight >= 4096
-      catchRate += 40
-    elsif weight >= 3072
-      catchRate += 30
-    elsif weight >= 2048
-      catchRate += 20
-    else
-      catchRate -= 20
-    end
+  weight = battler.pbWeight
+  if weight >= 3000
+    catchRate *= 5.0
+  elsif weight >= 2000
+    catchRate *= 3.0
+  elsif weight >= 1000
+    catchRate *= 2.5
+  elsif weight < 1000
+    catchRate *= 0.8
   end
-  catchRate = [catchRate, 1].max
-  next [catchRate, 255].min
+  next catchRate.clamp(1, 255)
 })
 
 Battle::PokeBallEffects::ModifyCatchRate.add(:LOVEBALL, proc { |ball, catchRate, battle, battler|
@@ -193,4 +185,12 @@ Battle::PokeBallEffects::OnCatch.add(:HEALBALL, proc { |ball, battle, pkmn|
 
 Battle::PokeBallEffects::OnCatch.add(:FRIENDBALL, proc { |ball, battle, pkmn|
   pkmn.happiness = 200
+})
+
+#===============================================================================
+# OnFailCatch
+#===============================================================================
+Battle::PokeBallEffects::OnFailCatch.add(:SAFARIBALL, proc { |ball, battle, battler|
+  battler.pbReduceHP(battler.totalhp / 8, false)
+  battle.pbDisplay(_INTL("{1}'s escape hurt it a little!", battler.pbThis))
 })

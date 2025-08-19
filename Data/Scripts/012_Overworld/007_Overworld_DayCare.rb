@@ -229,6 +229,9 @@ class DayCare
       end
       balls.delete(:MASTERBALL)    # Can't inherit this Ball
       balls.delete(:CHERISHBALL)   # Can't inherit this Ball
+      balls.delete(:STARTERBALLGRASS)   # Can't inherit this Ball
+      balls.delete(:STARTERBALLFIRE)    # Can't inherit this Ball
+      balls.delete(:STARTERBALLWATER)   # Can't inherit this Ball
       egg.poke_ball = balls.sample if !balls.empty?
     end
 

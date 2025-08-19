@@ -35,10 +35,10 @@ class Battle::ActiveField
     @defaultTerrain  = :None
     @terrain         = :None
     @terrainDuration = 0
-    @typezone				 = :None #mastersex type zones #by low
-    @presageBackup	 = [:None, 0, false] # presage stuff  #by low
-		@abilityWeather  = false
-		@abilityTerrain  = false
+    @typezone        = :None #mastersex type zones #by low
+    @presageBackup   = [:None, 0, false] # presage stuff  #by low
+    @abilityWeather  = false
+    @abilityTerrain  = false
   end
 end
 
@@ -75,7 +75,8 @@ class Battle::ActiveSide
     @effects[PBEffects::WideGuard]          = false
     @effects[PBEffects::PartyPopper]        = false #by low
     @effects[PBEffects::StatDropImmunity]   = false #by low
-    @effects[PBEffects::SwitchAbuse]   			= 0 #by low
+    @effects[PBEffects::SwitchAbuse]        = 0 #by low
+    @effects[PBEffects::FaintedMons]        = 0 #by low
   end
 end
 

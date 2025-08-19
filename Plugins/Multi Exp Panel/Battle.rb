@@ -17,7 +17,7 @@ class Battle
 		numPartic = 0
 		if $player.difficulty_mode?("chaos")
 			eachInTeam(0, 0) do |pkmn, i|
-				b.participants.push(i) # brute forcing my way to get this thing to have all possible allys to be "participants"
+				b.participants.push(i) # brute forcing my way to get this thing to have all possible allies to be "participants"
 			end
 			b.participants.uniq! # removing repeats
 		end
@@ -35,7 +35,7 @@ class Battle
 			expleechtargets.push(i)
 		end
 		vanillaStuff = false
-		vanillaStuff = true if $bag.has?(:EXPALLOFF)
+		vanillaStuff = true if $PokemonSystem.expallSetting == 1 && !$player.difficulty_mode?("chaos")
 		expAll = false if haveexpleech>0
 		expAll = false if vanillaStuff
      	# Calculate EV and Exp gains for the participants
