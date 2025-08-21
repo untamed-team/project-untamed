@@ -2406,8 +2406,17 @@ end #def pbCheckCRRewards
 #Your Titanotrop returned to its Pokéball."
 
 FOLLOWING_PKMN_INDOOR_HEIGHT_EXCEPTIONS =  [
-#:MUDSMACHE this is an example
+ #:MUDSMACHE this is an example
+  :TARTUSK,
+  :PEROXOTAL,
+  :ELLTAR,
+  :MALHARO,
+  :SPECTERZAL,
+  :DUNSENDED,
+  :GYARADOS,
+  :BATHYGIGAS
 ]
+$didmsgonce = false
 
 EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   metadata = $game_map.metadata
@@ -2423,7 +2432,10 @@ EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
       when 2
         genderText = "It"
       end
-      pbMessage(_INTL("There's not enough space here for #{pkmn.name}...\n#{genderText} returned to the ball."))
+      unless $didmsgonce
+        $didmsgonce=true
+        pbMessage(_INTL("There's not enough space here for #{pkmn.name}...\n#{genderText} returned to the ball."))
+      end
       next false
     end
     next false if $PokemonEncounters.nil? #added by Gardenette to prevent a crash
