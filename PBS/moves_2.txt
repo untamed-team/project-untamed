@@ -2711,7 +2711,7 @@ Target = NearOther
 FunctionCode = LowerTargetSpAtk1
 Flags = CanProtect,CanMirrorMove
 EffectChance = 100
-Description = The user attacks by breathing a special, hot fire. This also lowers the target's Sp. Atk stat.
+Description = The user attacks by creating a special, hot fire. This also lowers the target's Sp. Atk stat.
 #-------------------------------
 [BURNINGJEALOUSY]
 Name = Burning Jealousy
@@ -9139,7 +9139,7 @@ Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Bomb
 Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
 #-------------------------------
 [TITANSWRATH]
