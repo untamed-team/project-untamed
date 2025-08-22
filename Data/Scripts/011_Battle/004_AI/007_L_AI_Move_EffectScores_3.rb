@@ -5550,9 +5550,10 @@ class Battle::AI
                 score*=1.3 if currentHPPercent >= 70
             end
 
-            sack = userFasterThanTarget; willSwitch = false
+            # sack is ignored due to negative priority
+            willSwitch = false
             if @battle.choices[target.index][0] == :SwitchOut
-                sack = false; willSwitch = true
+                willSwitch = true
                 score *= 2
             end
             #bestmoveUser = bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -5563,7 +5564,7 @@ class Battle::AI
 
             party = @battle.pbParty(user.index)
             swapper = user.pokemonIndex
-            switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,false)
+            switchin = pbHardSwitchChooseNewEnemy(user.index,party,false,false)
             if switchin
                 if switchin.is_a?(Array) # it (should) always be a array
                     swapper = switchin[0]
@@ -6591,8 +6592,8 @@ class Battle::AI
                 score*=0.9
             end
             targetRoles = pbGetPokemonRole(target, user)
-            score *= 1.3 if targetRoles.include?("Tailwind Setter")
-            score *= 1.3 if targetRoles.include?("Trick Room Setter")
+            score*=1.3 if targetRoles.include?("Tailwind Setter")
+            score*=1.3 if targetRoles.include?("Trick Room Setter")
             score*=1.3 if pbHasSingleTargetProtectMove?(target, false)
             score*=1.3 if target.moves.any? { |m| m&.healingMove? }
             if target.moves.any? { |m| next m&.statusMove? }
@@ -6614,7 +6615,7 @@ class Battle::AI
             if target.moves.any? { |m| m&.healingMove? }
                 score*=1.5
                 if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
-                    score*=1.5
+                    score*=1.1
                     if targetWillMove?(target)
                         if @battle.choices[target.index][2].healingMove?
                             score*=2.5
