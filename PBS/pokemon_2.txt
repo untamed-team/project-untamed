@@ -3917,7 +3917,7 @@ Color = Blue
 Shape = HeadArms
 Category = Visitor
 Pokedex = Their frozen bubble protects them from the outside elements. Despite being able to fly in space, Cryoger prefer to explore the Mazah region.
-#-------------------------------
+#------------------------------- # note: +nature 30 spdef ice scales = 62 spdef
 [SNOM]
 Name = Snom
 Types = ICE,BUG
@@ -3943,7 +3943,7 @@ Category = Worm
 Pokedex = It spits out thread imbued with a frigid sort of energy and uses it to tie its body to branches, disguising itself as an icicle while it sleeps.
 Generation = 8
 Evolutions = FROSMOTH,HappinessLevel,35
-#-------------------------------
+#------------------------------- # note: +nature 90 spdef ice scales = 182 spdef
 [FROSMOTH]
 Name = Frosmoth
 Types = ICE,BUG

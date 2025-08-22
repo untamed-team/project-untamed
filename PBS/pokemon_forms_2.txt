@@ -129,7 +129,7 @@ Abilities = DUSTSENTINEL
 HiddenAbilities = DUSTSENTINEL
 Height = 1.6
 Weight = 92.1
-#------------------------------- 
+#------------------------------- # note: +nature 140 spdef fur coat = ~282 spdef (with AAM)
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
@@ -247,7 +247,7 @@ Abilities = DROUGHT
 HiddenAbilities = DROUGHT
 Height = 1.3
 Weight = 78.2
-#------------------------------- # ~112 def
+#------------------------------- # note: +nature 55 def fur coat = ~112 def
 [LAGUNA,1]
 FormName = Mega Laguna
 MegaStone = LAGUNITE

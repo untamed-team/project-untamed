@@ -5504,8 +5504,8 @@ class Battle::AI
                 score = 0 if moveBlacklist.include?(copymove.function)
                 if score > 0
                     score = pbGetMoveScore(copymove, user, target, skill)
-                    if score > 110
-                        score *= 0.8 + ((score - 80) / 100.0)
+                    if score >= 110
+                        score *= 0.9 + ((score - 70) / 100.0)
                     else
                         score *= score / 100.0
                     end

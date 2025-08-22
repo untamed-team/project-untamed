@@ -1399,7 +1399,7 @@ Pokemon = CASTFORM,15
     Ability = FORECAST
     Nature = BOLD
 Pokemon = XOLSMOL,16
-    Moves = SCALD,WORKUP,LICK,SCORCHINGSANDS
+    Moves = WATERPULSE,WORKUP,LICK,SCORCHINGSANDS
     Ability = DRYSKIN
     Item = SOFTSAND
     Nature = QUIET
@@ -1490,7 +1490,7 @@ Pokemon = LICKITUNG,16
 #Area=Gym2_M
 #-------------------------------
 [RISINGSTAR_M,Max,200]
-LoseText = No, winning, my only weakness!
+LoseText = No, winning, my only strength!
 Gimmick = Inverse
 Pokemon = PACUNA,16
     Moves = BITE,SWEETTOOTH,COVET,CUT
@@ -1548,7 +1548,7 @@ Pokemon = LAGUNA,18
     Nature = SERIOUS
     Ace = yes
 #Area=Gym2_M
-#-------------------------------
+#------------------------------- # shaddap
 [LEADER_Thalia,Thalia,200]
 LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
 Gimmick = Inverse
@@ -1568,15 +1568,17 @@ Pokemon = MINGOT,17
     Item = FOCUSSASH
     Nature = JOLLY
 Pokemon = LAGUNA,17
-    Moves = METRONOME,DRAININGKISS,REFLECT,HYPERVOICE
+    Moves = METRONOME,DRAININGKISS,REFLECT,HIDDENPOWER
     Ability = DAZZLING
     Item = METRONOME
     Nature = QUIET
+    HiddenPowerType = NORMAL
 Pokemon = GLACEON,17
-    Moves = ICYWIND,HYPERVOICE,BITINGCOLD,LIGHTSCREEN
+    Moves = ICYWIND,HIDDENPOWER,BITINGCOLD,LIGHTSCREEN
     Ability = SLUSHRUSH
     Item = NORMALGEM
     Nature = MODEST
+    HiddenPowerType = NORMAL
 Pokemon = FURFROU,18
     Moves = TRIMTACKLE,RETURN,METRONOME,MIMIC
     Ability = FURCOAT
