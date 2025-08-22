@@ -616,7 +616,7 @@ def pbFishing(hasEncounter, rodType = 1)
       }
       break
     end
-    if hasEncounter && rand(100) < biteChance
+    if hasEncounter #&& rand(100) < biteChance
       $scene.spriteset.addUserAnimation(Settings::EXCLAMATION_ANIMATION_ID, $game_player.x, $game_player.y, true, 3)
       frames = Graphics.frame_rate - rand(Graphics.frame_rate / 2)   # 0.5-1 second
       if !pbWaitForInput(msgWindow, message + _INTL("\r\nOh! A bite!"), frames)
@@ -625,13 +625,13 @@ def pbFishing(hasEncounter, rodType = 1)
         }
         break
       end
-      if Settings::FISHING_AUTO_HOOK || rand(100) < hookChance
+      #if Settings::FISHING_AUTO_HOOK || rand(100) < hookChance
         pbFishingEnd {
           pbMessageDisplay(msgWindow, _INTL("Landed a Pokémon!")) if !Settings::FISHING_AUTO_HOOK
         }
         ret = true
         break
-      end
+      #end
 #      biteChance += 15
 #      hookChance += 15
     else

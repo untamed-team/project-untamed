@@ -162,22 +162,20 @@ class Battle
           if @internalBattle && (@switchStyle && $player.difficulty_mode?("normal")) && #edits #by low
              trainerBattle? && pbSideSize(0) == 1 && opposes?(idxBattler) && 
              !@battlers[0].fainted? && !switched.include?(0) &&
-             pbCanChooseNonActive?(0) && @battlers[0].effects[PBEffects::Outrage] == 0 &&
+             pbCanChooseNonActive?(0) && @battlers[0].effects[PBEffects::Outrage] == 0 && !isWildBoss?(opponent)
             idxPartyForName = idxPartyNew
             enemyParty = pbParty(idxBattler)
             if enemyParty[idxPartyNew].ability == :ILLUSION && !pbCheckGlobalAbility(:NEUTRALIZINGGAS)
               new_index = pbLastInTeam(idxBattler)
               idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
             end
-            unless isWildBoss?(opponent)
-              if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                        opponent.full_name, enemyParty[idxPartyForName].name))
-                idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-                if idxPlayerPartyNew >= 0
-                  pbMessageOnRecall(@battlers[0])
-                  pbRecallAndReplace(0, idxPlayerPartyNew)
-                  switched.push(0)
-                end
+            if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
+                                       opponent.full_name, enemyParty[idxPartyForName].name))
+              idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
+              if idxPlayerPartyNew >= 0
+                pbMessageOnRecall(@battlers[0])
+                pbRecallAndReplace(0, idxPlayerPartyNew)
+                switched.push(0)
               end
             end
           end
