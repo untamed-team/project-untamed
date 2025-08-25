@@ -1,6 +1,7 @@
 # not actually a utilities page, just a "too lazy to create a new page for this"
 
 OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
+MIRRORCONTAINER = 100 # Whether the trainer's team is mirrored to a modified player's team in battle
 LOWEREXPGAINSWITCH = 99
 RELEARNERSWITCH = 98
 NOINITIALVALUES = 97
@@ -1166,6 +1167,10 @@ class PersonalNumberGenerator
   end
 end
 
+#===============================================================================
+# egg moves tutor
+#===============================================================================
+
 def eggMoveTutor
   @eggmovesarray = []
   @mother = nil
@@ -1265,7 +1270,9 @@ def eggMoveTutor
   return false
 end
 
-# radioactive code, needs testing
+#===============================================================================
+# Trash encounters
+#===============================================================================
 TRASHENCOUNTERVAR = 125
 def trashEncounter(trash = 0)
   numTrash = 4
@@ -1361,7 +1368,11 @@ def trashEncounter(trash = 0)
   end
 end
 
+#===============================================================================
 # Mirror boss fight (a random idea i had for Kiriya)
+# this is *not* a self insert, as I fucking hate myself.
+#===============================================================================
+
 MEGA_ITEM_REPLACEMENTS = {
   CHOICEBAND: [:LEDIAN],
   CHOICESPECS: [:FRIZZARD, :ZARCOIL],
@@ -1439,6 +1450,9 @@ def mirrorBossFight(trainer)
         end
       end
     end
+    if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pkmn.item)
+      pkmn.learn_move(:TRICK) unless pkmn.hasMove?(:TRICK)
+    end
 
     # AAM
     aamSpeciesBlacklist = [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL]
@@ -1463,7 +1477,7 @@ def mirrorBossFight(trainer)
       pkmn.status = :DIZZY
       pkmn.statusCount = 4
     end
-    if pkmn.status != :NONE
+    if pkmn.status != :NONE # i am assuming pkmn cant get status'd before the battle
       status_berry_map = {
         :FREEZE => :ASPEARBERRY,
         :SLEEP => :CHESTOBERRY,
@@ -1483,11 +1497,11 @@ def mirrorBossFight(trainer)
     uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS]
     uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
     pkmn.moves.each_with_index do |move, i|
+      new_move = nil
       if (move.category == 2 && [:ASSAULTVEST, :MELEEVEST].include?(pkmn.item)) ||
          uselessarray.include?(move.id)
         pkmn.forget_move_at_index(i)
         desiredCateg = (pkmn.attack > pkmn.spatk) ? :physical : :special
-        new_move = nil
         pkmn.types.each do |type|
           candidate = DECENT_STAB_MOVES[desiredCateg][type]
           unless pkmn.hasMove?(candidate)
@@ -1496,14 +1510,26 @@ def mirrorBossFight(trainer)
           end
         end
         new_move ||= :METRONOME
+      end
+      if move.id == :FACADE
+        if (pkmn.hasType?(:NORMAL) && pkmn.attack > pkmn.spatk) || 
+           abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
+          pkmn.status = :BURN
+        else
+          pkmn.status = :NONE
+          pkmn.forget_move_at_index(i)
+          new_move = :METRONOME
+        end
+      end
+      if new_move
         pkmn.learn_move(new_move)
       end
     end
 
     # final touches
     pkmn.moves.each_with_index do |m, i| # max out their PP
-      pkmn.moves[i].ppup = 3
-      pkmn.moves[i].pp = (pkmn.moves[i].pp * 1.6).floor
+      m.ppup = 3
+      m.pp = (m.pp * 1.6).floor
     end
     if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
       pkmn.ability = :LEVITATE
@@ -1514,7 +1540,8 @@ end
 EventHandlers.add(:on_trainer_load, :mirror_boss,
   proc { |trainer|
     if trainer
-      mirrorBossFight(trainer) if false
+      trainerfullname = "#{trainer.trainer_type}" + " " + "#{trainer.name}"
+      mirrorBossFight(trainer) if $game_switches[MIRRORCONTAINER] || trainerfullname == "Princess Kiriya"
     end
   }
 )
