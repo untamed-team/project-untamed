@@ -852,36 +852,39 @@ def pbGiveDexReward
     dexseen  = $player.pokedex.seen_count
     dexcount = $player.pokedex.owned_count
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]So, you've seen <b>{1}</b> Pokémon\\nand caught <b>{2}</b> of them...", dexseen, dexcount))
-    if DEX_COMPLETION_REWARDS[progress][0] > dexcount
+    rewards_given = false
+    while progress < DEX_COMPLETION_REWARDS.length &&
+          DEX_COMPLETION_REWARDS[progress][1] &&
+          DEX_COMPLETION_REWARDS[progress][0] <= dexcount
+      msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
+      pbMessage(_INTL(msg))
+      reward = DEX_COMPLETION_REWARDS[progress][1]
+      if reward.is_a?(Symbol) && GameData::Species.exists?(reward)
+        egg = Pokemon.new(reward, 1)
+        egg.name           = _INTL("Egg")
+        egg.steps_to_hatch = 252
+        egg.calc_stats
+        pbAddPokemon(egg)
+      elsif reward.is_a?(Array)
+        reward.each { |item| pbReceiveItem(item) }
+      else
+        pbReceiveItem(reward)
+      end
+      progress += 1
+      $game_variables[DEXREWARDSVAR] += 1
+      rewards_given = true
+    end
+    if rewards_given && progress < DEX_COMPLETION_REWARDS.length
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
+    elsif !rewards_given
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Well, when you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
       return false
     end
-    return false if DEX_COMPLETION_REWARDS[progress][1].nil?
-    msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
-    pbMessage(_INTL(msg))
-    if [4].include?(progress)
-      egg = Pokemon.new(DEX_COMPLETION_REWARDS[progress][1], 1)
-      egg.name           = _INTL("Egg")
-      egg.steps_to_hatch = 252
-      egg.calc_stats
-      pbAddPokemon(egg)
-    else
-      if DEX_COMPLETION_REWARDS[progress][1].is_a?(Array)
-        reward_array = DEX_COMPLETION_REWARDS[progress][1]
-        for i in 0...reward_array.length
-          pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1][i])
-        end
-      else
-        pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1])
-      end
-    end
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
-    $game_variables[DEXREWARDSVAR] += 1
   else
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
     return false
   end
   return true
