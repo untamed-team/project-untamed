@@ -1,23 +1,23 @@
 class Pokemon
   attr_accessor :bossmonMutation
-	bossmonMutation = false
+	@bossmonMutation = false
 	def enableBossPokemonMutation
-		bossmonMutation = true
+		@bossmonMutation = true
 	end  
 	def disableBossPokemonMutation
-		bossmonMutation = false
+		@bossmonMutation = false
 	end    
 
 	def toggleBossPokemonMutation
 		if !bossmonMutation
-			bossmonMutation = true
+			@bossmonMutation = true
 		else	
-			bossmonMutation = false
+			@bossmonMutation = false
 		end	
 	end 		
 	
 	def isBossPokemon?
-		return true if bossmonMutation==true
+		return true if @bossmonMutation
 	end
 end
 

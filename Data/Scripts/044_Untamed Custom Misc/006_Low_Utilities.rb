@@ -1360,3 +1360,161 @@ def trashEncounter(trash = 0)
     return
   end
 end
+
+# Mirror boss fight (a random idea i had for Kiriya)
+MEGA_ITEM_REPLACEMENTS = {
+  CHOICEBAND: [:LEDIAN],
+  CHOICESPECS: [:FRIZZARD, :ZARCOIL],
+  LIFEORB: [:FLYGON, :CACTURNE, :CHIXULOB, :LUPACABRA],
+  FIREGEM: [:XATU],
+  ICEGEM: [:GLALIE],
+  ELECTRICGEM: [:BEHEEYEM, :HAWLUCHA, :BEAKRAFT],
+  FLYINGGEM: [:GOLURK, :ROADRAPTOR],
+  WATERGEM: [:ZOLUPINE],
+  LEFTOVERS: [:MAGCARGO, :SABLEYE, :MILOTIC, :CHIMECHO],
+  BLACKSLUDGE: [:GOHILA, :SUCHOBILE],
+  ROCKYHELMET: [:SKARMORY],
+  ASSAULTVEST: [:MAWILE, :ATELANGLER, :LAGUNA],
+  MELEEVEST: [:M_ROSERADE],
+  COLBURBERRY: [:BANETTE], # dark resist
+  CHARTIBERRY: [:FROSMOTH], # rock resist
+  LUMBERRY: [:GYARADOS, :M_ROSERADE],
+  SITRUSBERRY: [:DIANCIE, :SPECTERZAL],
+  TERRAINEXTENDER: [:TREVENANT]
+}
+
+DECENT_STAB_MOVES = {
+  special: {
+    :NORMAL => :HYPERVOICE, 
+    :ROCK => :POWERGEM, :ICE => :ICEBEAM, :STEEL => :FLASHCANNON,
+    :ELECTRIC => :THUNDERBOLT, :DRAGON => :DRACOMETEOR, 
+    :GRASS => :ENERGYBALL, :FIGHTING => :AURASPHERE, :FAIRY => :MOONBLAST
+  },
+  physical: {
+    :NORMAL => :RETURN, 
+    :ROCK => :ROCKSLIDE, :ICE => :ICICLECRASH, :STEEL => :IRONHEAD,
+    :ELECTRIC => :ZINGZAP, :DRAGON => :DRAGONRUSH, 
+    :GRASS => :LEAFBLADE, :FIGHTING => :DRAINPUNCH, :FAIRY => :PLAYROUGH
+  }
+}
+
+def mirrorBossFight(trainer)
+  trainer.party = Marshal.load(Marshal.dump($player.party))
+  balancedlevel = pbBalancedLevel($player.party)
+
+  while trainer.party.count < 6 # 1v1? not here, baybee!
+    species = GameData::Species.get(:MARIPOME).species
+    pkmn = Pokemon.new(species, 50, trainer, false)
+    pkmn.bossmonMutation = true
+    pkmn.remaningHPBars = [1, 1] # [current hp bars, max hp bars]
+    pkmn.learn_move(:BUGBUZZ)
+    pkmn.learn_move(:HIGHJUMPKICK)
+    pkmn.learn_move(:POISONJAB)
+    pkmn.learn_move(:DAZZLINGGLEAM)
+    pkmn.learn_move(:SPECTRALTHIEF)
+    pkmn.learn_move(:PRISMATICLASER)
+    pkmn.ability = :PARENTALBOND
+    pkmn.item = :EXPERTBELT
+    pkmn.nature = :NAIVE
+    pkmn.calc_stats
+    pkmn.name = "?QMARKS?"
+    trainer.party.push(pkmn)
+  end
+
+  trainer.party.each_with_index do |pkmn, i|
+    # levels
+    pkmn.level = [pkmn.level, balancedlevel, 50].max
+    pkmn.level += 3
+
+    # mega stones / MEM
+    mega_data = MEGA_EVO_STATS[pkmn.species]
+    if mega_data
+      pkmn.megaevoMutation = true
+      if pkmn.item == mega_data[:item]
+        MEGA_ITEM_REPLACEMENTS.each do |replacementItem, speciesList|
+          if speciesList.include?(pkmn.species)
+            pkmn.item = replacementItem
+            break
+          end
+        end
+      end
+    end
+
+    # AAM
+    aamSpeciesBlacklist = [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL]
+    pkmn.abilityMutation = true unless aamSpeciesBlacklist.include?(pkmn.species)
+    abilitylist = [pkmn.ability_id]
+    if pkmn.abilityMutation
+      abilist = [pkmn.ability_id]
+      for i in pkmn.getAbilityList
+        abilist.push(i[0])
+      end
+      abilitylist = abilist|[]
+    end
+
+    # prestatus
+    if abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
+      pkmn.status = :BURN
+    elsif abilitylist.include?(:TOXICBOOST) || abilitylist.include?(:POISONHEAL)
+      pkmn.status = :POISON
+    elsif abilitylist.include?(:QUICKFEET)
+      pkmn.status = :PARALYSIS
+    elsif abilitylist.include?(:TANGLEDFEET)
+      pkmn.status = :DIZZY
+      pkmn.statusCount = 4
+    end
+    if pkmn.status != :NONE
+      status_berry_map = {
+        :FREEZE => :ASPEARBERRY,
+        :SLEEP => :CHESTOBERRY,
+        :PARALYSIS => :CHERIBERRY,
+        :POISON => :PECHABERRY,
+        :DIZZY => :PERSIMBERRY,
+        :BURN => :RAWSTBERRY
+      }
+      heldberry = status_berry_map[pkmn.status]
+      if pkmn.item == :LUMBERRY || pkmn.item == heldberry
+        pkmn.item = :SITRUSBERRY
+      end
+      pkmn.calc_stats
+    end
+
+    # move edits
+    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS]
+    uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
+    pkmn.moves.each_with_index do |move, i|
+      if (move.category == 2 && [:ASSAULTVEST, :MELEEVEST].include?(pkmn.item)) ||
+         uselessarray.include?(move.id)
+        pkmn.forget_move_at_index(i)
+        desiredCateg = (pkmn.attack > pkmn.spatk) ? :physical : :special
+        new_move = nil
+        pkmn.types.each do |type|
+          candidate = DECENT_STAB_MOVES[desiredCateg][type]
+          unless pkmn.hasMove?(candidate)
+            new_move = candidate
+            break
+          end
+        end
+        new_move ||= :METRONOME
+        pkmn.learn_move(new_move)
+      end
+    end
+
+    # final touches
+    pkmn.moves.each_with_index do |m, i| # max out their PP
+      pkmn.moves[i].ppup = 3
+      pkmn.moves[i].pp = (pkmn.moves[i].pp * 1.6).floor
+    end
+    if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
+      pkmn.ability = :LEVITATE
+    end
+  end
+end
+
+EventHandlers.add(:on_trainer_load, :mirror_boss,
+  proc { |trainer|
+    if trainer
+      mirrorBossFight(trainer) if false
+    end
+  }
+)
