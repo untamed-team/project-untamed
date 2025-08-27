@@ -1539,6 +1539,7 @@ def mirrorBossFight(trainer)
     if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
       pkmn.ability = :LEVITATE
     end
+    pkmn.calc_stats
   end
 end
 
