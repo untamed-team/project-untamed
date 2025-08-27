@@ -1439,6 +1439,8 @@ def mirrorBossFight(trainer)
     # levels
     pkmn.level = [pkmn.level, balancedlevel, 50].max
     pkmn.level += 3
+    pkmn.enableNatureBoostAI
+    pkmn.calc_stats
 
     # mega stones / MEM
     mega_data = MEGA_EVO_STATS[pkmn.species]
