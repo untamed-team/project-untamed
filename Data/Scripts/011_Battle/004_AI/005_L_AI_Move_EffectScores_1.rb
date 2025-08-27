@@ -19,7 +19,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "DoesNothingCongratulations", "DoesNothingFailsIfNoAlly", # Hold Hands, Celebrate
          "DoesNothingUnusableInGravity", "DoubleMoneyGainedFromBattle" # Splash, Happy Hour
-      score = 0
+        score = 0 if move.statusMove?
     #---------------------------------------------------------------------------
     when "FailsIfNotUserFirstTurn" # first impression
         if user.turnCount > 0
