@@ -103,6 +103,16 @@ class Pokemon
       return true 
     end  
   end
+
+  # Nature Boost (AI) # workaround for "pbOwnedByPlayer?" not being able to be called in Pokemon class
+  attr_accessor :natureBoostAI
+  @natureBoostAI = false
+  def enableNatureBoostAI
+    @natureBoostAI = true
+  end
+  def disableNatureBoostAI
+    @natureBoostAI = false
+  end
 end
 
 class Battle::Battler
@@ -112,6 +122,10 @@ class Battle::Battler
   def willmega
     return @pokemon.willmega
   end
+
+  def natureBoostAI
+    return (@pokemon) ? @pokemon.natureBoostAI : false
+  end
 end
 class Battle::FakeBattler
   def hasMegaEvoMutation?
@@ -119,6 +133,10 @@ class Battle::FakeBattler
   end
   def willmega
     return @pokemon.willmega
+  end
+
+  def natureBoostAI
+    return (@pokemon) ? @pokemon.natureBoostAI : false
   end
 end
 

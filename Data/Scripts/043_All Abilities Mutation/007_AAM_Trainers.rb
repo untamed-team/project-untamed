@@ -83,6 +83,7 @@ module GameData
 			end
 			pkmn.abilityMutation = true if pkmn_data[:abilityMutation]
 			pkmn.megaevoMutation = true if pkmn_data[:megaevoMutation]
+			pkmn.enableNatureBoostAI if pkmn.level >= 40
 			if pkmn_data[:bossmonMutation]
 				pkmn.bossmonMutation = true
 				hpbars = pkmn_data[:bossmonMutation] + 1
@@ -96,12 +97,6 @@ module GameData
 				if preStatus
 					pkmn.status = preStatus[0]
 					pkmn.statusCount = preStatus[1] if preStatus[1]
-				end
-			end
-			if pkmn.level >= 40 && !pkmn.abilityMutation && pkmn_data[:nature].empty?
-				pkmn.nature = :SERIOUS
-				GameData::Stat.each_main do |s|
-					pkmn.iv[s.id] += 10
 				end
 			end
 			pkmn.calc_stats

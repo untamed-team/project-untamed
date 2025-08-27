@@ -2217,8 +2217,8 @@ class Battle::AI
                     maxdam=0
                     maxmove2=nil
                     if !targetSurvivesMove(maxmove,target,user)
-                        echo(user.name+" does not survive foe's maxmove. Score +150. \n") if $AIGENERALLOG
-                        score+=150
+                        echo(user.name+" does not survive foe's maxmove. Score x1.5 \n") if $AIGENERALLOG
+                        score*=1.5
                         for j in target.moves
                             if moveLocked(target)
                                 if target.lastMoveUsed && target.pbHasMove?(target.lastMoveUsed)
@@ -2231,7 +2231,7 @@ class Battle::AI
                             maxmove2=j
                         end
                         if !targetSurvivesMove(maxmove2,target,user)
-                            score+=30
+                            score*=1.2
                         end
                     end
                 end     
@@ -2242,8 +2242,8 @@ class Battle::AI
                             echo(user.name+" does not survive piority move. Score (for" + move.name + ") x3. \n") if $AIGENERALLOG
                             score*=3
                         else
-                            echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") -100 \n") if $AIGENERALLOG
-                            score-=100
+                            echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") x0.7 \n") if $AIGENERALLOG
+                            score*=0.7
                         end
                     end
                 end
@@ -2253,22 +2253,22 @@ class Battle::AI
                                             "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
                                             "TwoTurnAttackInvulnerableUnderwater",
                                             "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-                    echo("Player Pokemon is invulnerable. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
-                    score-=300
+                    echo("Player Pokemon is invulnerable. Score (for" + move.name + ") x0.3 \n") if $AIGENERALLOG
+                    score*=0.3
                 end
                 procGlobalArray = processGlobalArray(globalArray)
                 expectedTerrain = procGlobalArray[1]
                 if expectedTerrain == :Psychic && target.affectedByTerrain?
-                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
-                    score-=300
+                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") x0.3. \n") if $AIGENERALLOG
+                    score*=0.3
                 end
                 @battle.allSameSideBattlers(target.index).each do |b|
                     priobroken=moldbroken(user,b,move)
                     if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
                        !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
                         # laguna/diancie can have priority immunity in pre-mega form
-                        score-=300 
-                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") -300. \n") if $AIGENERALLOG
+                        score*=0.3
+                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") x0.3. \n") if $AIGENERALLOG
                         break
                     end
                 end 
@@ -2278,8 +2278,8 @@ class Battle::AI
                         quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0
                     end          
                     if quickcheck
-                        echo("Quick guard is a possiblity. Score  (for" + move.name + ") -80. \n") if $AIGENERALLOG
-                        score-=80
+                        echo("Quick guard is a possiblity. Score  (for" + move.name + ") x0.8 \n") if $AIGENERALLOG
+                        score*=0.8
                     end  
                 end
             else

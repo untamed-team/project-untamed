@@ -1439,6 +1439,8 @@ def mirrorBossFight(trainer)
     # levels
     pkmn.level = [pkmn.level, balancedlevel, 50].max
     pkmn.level += 3
+    pkmn.enableNatureBoostAI
+    pkmn.calc_stats
 
     # mega stones / MEM
     mega_data = MEGA_EVO_STATS[pkmn.species]
@@ -1497,7 +1499,7 @@ def mirrorBossFight(trainer)
     end
 
     # move edits
-    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS]
+    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS, :HAPPYHOUR]
     uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
     pkmn.moves.each_with_index do |move, i|
       new_move = nil
@@ -1537,6 +1539,7 @@ def mirrorBossFight(trainer)
     if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
       pkmn.ability = :LEVITATE
     end
+    pkmn.calc_stats
   end
 end
 
