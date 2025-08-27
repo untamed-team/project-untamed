@@ -55,11 +55,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "FailsUnlessTargetSharesTypeWithUser" # synchronoise
-      if !(user.types[0] && target.pbHasType?(user.types[0], true)) &&
-         !(user.types[1] && target.pbHasType?(user.types[1], true)) &&
-         !(user.types[2] && target.pbHasType?(user.types[2], true))
-        score = 0
-      end
+        score = 0 if user.types.none? { |type| target.pbHasType?(type, true) }
     #---------------------------------------------------------------------------
     when "FailsIfUserDamagedThisTurn" # focus punch
         soundcheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) } # includes infiltrator
