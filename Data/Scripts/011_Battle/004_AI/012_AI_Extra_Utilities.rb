@@ -1093,12 +1093,12 @@ class Battle::AI
             weatherchip += 0.0625 if user.effectiveWeather == :ShadowSky && user.takesShadowSkyDamage?
             chip += weatherchip
             if user.effects[PBEffects::Trapping]>0
-                multiturnchip = 0.125 
+                multiturnchip = 0.1250
                 multiturnchip *= (4.0 / 3.0) if @battle.battlers[user.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
                 chip += multiturnchip
             end
             chip += 0.0625 if user.effects[PBEffects::Curse]
-            chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
+            chip += 0.1250 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
             if user.pbHasAnyStatus? && !rest
                 statuschip = 0
                 if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)
@@ -1114,14 +1114,14 @@ class Battle::AI
                 if user.asleep?
                     user.allOpposing.each do |b|
                         next if !b.hasActiveAbility?(:BADDREAMS)
-                        statuschip += 0.125 
+                        statuschip += 0.1250
                         break
                     end
                 end
                 if user.poisoned? && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST])
                     if $player.difficulty_mode?("chaos") || user.effects[PBEffects::Toxic]==0 
-                        statuschip += 0.125
-                        statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
+                        statuschip += 0.1250
+                        statuschip += 0.1250 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
                     else
                         statuschip += (0.0625*(user.effects[PBEffects::Toxic]+1))
                     end
@@ -1131,7 +1131,7 @@ class Battle::AI
             if rest
                 user.allOpposing.each do |b|
                     next if !b.hasActiveAbility?(:BADDREAMS)
-                    chip += 0.125
+                    chip += 0.1250
                     break
                 end
             end
