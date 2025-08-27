@@ -1499,7 +1499,7 @@ def mirrorBossFight(trainer)
     end
 
     # move edits
-    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS]
+    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS, :HAPPYHOUR]
     uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
     pkmn.moves.each_with_index do |move, i|
       new_move = nil
