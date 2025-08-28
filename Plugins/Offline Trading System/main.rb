@@ -82,11 +82,17 @@ class OfflineTradingSystem
 	end #def self.setTradingID
 	
 	def self.selectPkmnToTrade
-		#copy and paste storage system method, but edit so you can only select the mon to trade and view its summary or exit
+		$PokemonGlobalMetadata.currentlyTrading = true
 		
+		pbFadeOutIn {
+			scene = PokemonStorageSceneForTrading.new
+			screen = PokemonStorageScreenForTrading.new(scene, $PokemonStorage)
+			screen.pbStartScreen(command)
+		}
 		
 		#set the pkmn gamedata to game variable 1
 		#game variable 65 is the 1st code the player will give to someone else - it's the pkmn they offer to trade. Needs to be stored so this can be copied over and over as needed
 		#game variable 66 is the 2nd code the player will give to someone else - it's the agreed upon trade code. Needs to be stored so this can be copied over and over as needed
 	end #def self.selectPkmnToTrade
+
 end #class OfflineTradingSystem
