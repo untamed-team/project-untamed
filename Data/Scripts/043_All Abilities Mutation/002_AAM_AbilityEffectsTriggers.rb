@@ -687,7 +687,7 @@ Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
     next if !move.physicalMove?
     next if !target.pbCanRaiseStatStage?(:SPEED, target)
     clearly = false
-    if target.abilityMutationList.include?(:CLEARBODY)
+    if [:CLEARBODY, :WHITESMOKE, :FULLMETALBODY].any? { |a| target.abilityMutationList.include?(a) }
       clearly = true
     else
       next if !target.pbCanLowerStatStage?(:DEFENSE, target)

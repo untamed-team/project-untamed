@@ -248,7 +248,7 @@ class Battle::AI
                 target.abilityMutationList = old_ability if old_ability
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
-            # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
+            # for documentation purposes, whatever moron coded this script straight up forgot prism armor and shadow shield
             Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
                 target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist
             )
@@ -619,8 +619,8 @@ class Battle::AI
     end
     
     def moldbroken(user, target, move)
+        # this causes line issues with AAM, but should work fine otherwise. I added logic for these elsewhere
         #return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY, :PRISMARMOR])
-        return false if target.hasActiveAbility?([:SHADOWSHIELD, :PRISMARMOR])
         if (user.hasMoldBreaker? || 
             ["IgnoreTargetAbility",
              "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))

@@ -3506,7 +3506,7 @@ class Battle::AI
                 score*=0.1
             end
         end
-        if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE],false,mold_broken)
+        if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_broken)
             score=0
         end
         if user.allAllies.any?
