@@ -1530,6 +1530,9 @@ def mirrorBossFight(trainer)
         pkmn.learn_move(new_move)
       end
     end
+    if pkmn.moves.length == pkmn.moves.count { |move| move.category == 2 }
+      pkmn.learn_move(:METRONOME) unless pkmn.hasMove?(:METRONOME)
+    end
 
     # final touches
     pkmn.moves.each_with_index do |m, i| # max out their PP
