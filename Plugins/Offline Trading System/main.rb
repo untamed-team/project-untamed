@@ -94,6 +94,113 @@ class OfflineTradingSystem
 		#game variable 65 is the 1st code the player will give to someone else - it's the pkmn they offer to trade. Needs to be stored so this can be copied over and over as needed
 		#game variable 66 is the 2nd code the player will give to someone else - it's the agreed upon trade code. Needs to be stored so this can be copied over and over as needed
 	end #def self.selectPkmnToTrade
+	
+	def self.tradeMenu(pkmn)
+		#this is where the codes will be input, you'll be able to copy the code, etc.
+		createOfferCode(pkmn)
+	end #def self.tradeMenu
+	
+	def self.createOfferCode(pkmn)
+		#name
+		#nature
+		#ability
+		#item
+		#level
+		#gender
+		#species
+		#forced_form
+		#time_form_set
+		#exp
+		#steps_to_hatch
+		#hp
+		#status
+		#statusCount
+		#shiny
+		#moves
+		#first_moves
+		#ribbons
+		#cool
+		#beauty
+		#cute
+		#smart
+		#tough
+		#sheen
+		#pokerus
+		#happiness
+		#poke_ball - maybe only bring this one over if the pokeball has not been modified. will revisit this logic once pokeball painter has been created
+		#markings
+		#iv
+		#ivMaxed
+		#ev
+		#totalhp
+		#attack
+		#defense
+		#spatk
+		#spdef
+		#speed
+		#owner
+		#obtain_method
+		#obtain_map
+		#obtain_text
+		#obtain_level
+		#hatched_map
+		#fused
+		#personalID
+		#ready_to_evolve
+		#cannot_store
+		#cannot_release
+		#cannot_trade
+		#evolution_steps
+		#willmega
+		#sketchMove
+		#remaningHPBars
+		#hpbarsstorage
+		#triedEvolving
+		#trainerevs
+		#abilityMutation
+		#pv
+		#megaevoMutation
+		#bossmonMutation
+		pokemon_to_save = pkmn
+		serialized_data = Marshal.dump(pokemon_to_save)
+		#Console.echo_warn serialized_data
+		
+		#convert marshaldata to hex
+		hex_data = serialized_data.unpack("H*")[0]
+		#self.createQR(hex_string)
+		
+		#encode the hex from the marshaldata
+		encodedHex = self.encode(hex_data)
+		Console.echo_warn encodedHex
+		#print encodedHex
+		#print encodedHex.length
+		
+		# Recreate the Pokemon object from the data
+		#exact_pokemon = Marshal.load(serialized_data)
+		# Add the recreated Pokémon to the player's party
+		#pbAddPokemon(exact_pokemon)
+		
+	end #def self.createOfferCode
+
+	def self.encode(data)
+		Console.echo_warn data.to_s
+		print data.length
+		@encodedString = ""
+		data.to_s.each_char do |char|
+			#@encodedString
+			#if key exists named after the character, add the key's value to @encodedString and move on
+			#else (key does not exist named after the character), so add the character to @encodedString and move on
+			if ENCODER_MAPPING.include?(char)
+				keyValue = ENCODER_MAPPING[char]
+				Console.echo_warn "#{char} will be encoded to #{keyValue}"
+				@encodedString += keyValue
+			else
+				print "#{char} not included in encoder. Report this issue to the development team"
+				return nil
+			end
+		end
+		return @encodedString
+	end #def self.encode
 
 end #class OfflineTradingSystem
 

@@ -1256,8 +1256,9 @@ class TradingPokemonStorageScreen
 	  #pokemon.item = nil
 	  
 		#add the pokemon to a global variable to receive on the current save when done
-		print "Offering #{pokemon} as trade"
+		#print "Offering #{pokemon} as trade"
 		#this is where we create a new screen for trading and generate an offer code
+		OfflineTradingSystem.tradeMenu(pokemon)
     end
     return
   end
