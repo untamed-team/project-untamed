@@ -3487,8 +3487,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserFaintsLowerTargetAtkSpAtk2" # memento
         if user.hp==user.totalhp
-            seancecheck = user.allAllies.any? { |b| b&.hasActiveAbility?(:SEANCE) }
-            score*=0.2 if !seancecheck
+            score*=0.2 if user.allAllies.none? { |b| b&.hasActiveAbility?(:SEANCE) }
         else
             miniscore = user.hp*(1.0/user.totalhp)
             miniscore = 1-miniscore
@@ -3506,8 +3505,9 @@ class Battle::AI
                 score*=0.1
             end
         end
-        if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_broken)
-            score=0
+        if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken) && 
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
+            score*=0.1
         end
         if user.allAllies.any?
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
