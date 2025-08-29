@@ -82,12 +82,12 @@ class OfflineTradingSystem
 	end #def self.setTradingID
 	
 	def self.selectPkmnToTrade
-		$PokemonGlobalMetadata.currentlyTrading = true
+		$PokemonGlobal.inTradingMenu = true
 		
 		pbFadeOutIn {
-			scene = PokemonStorageSceneForTrading.new
-			screen = PokemonStorageScreenForTrading.new(scene, $PokemonStorage)
-			screen.pbStartScreen(command)
+			scene = TradingPokemonStorageScene.new
+			screen = TradingPokemonStorageScreen.new(scene, $PokemonStorage)
+			screen.pbStartScreen(0)
 		}
 		
 		#set the pkmn gamedata to game variable 1
@@ -96,3 +96,12 @@ class OfflineTradingSystem
 	end #def self.selectPkmnToTrade
 
 end #class OfflineTradingSystem
+
+#adds "Trade" to list of options at PC
+MenuHandlers.add(:pc_menu, :offline_trade, {
+  "name"      => _INTL("Trade Pokémon"),
+  "order"     => 50,
+  "effect"    => proc { |menu|
+    OfflineTradingSystem.selectPkmnToTrade
+  }
+})

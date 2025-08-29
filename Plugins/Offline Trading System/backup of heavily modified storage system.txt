@@ -14,98 +14,75 @@ class PokemonStorageScreenForTrading
     @pbHeldPokemon = nil
   end
 
-  def pbStartScreen(command)
+  def pbStartScreen
     $game_temp.in_storage = true
     @heldpkmn = nil
-    case command
-    when 0   # Organise
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectBox(@storage.party)
-        if selected.nil?
-          if pbHeldPokemon
-            pbDisplay(_INTL("You're holding a Pokémon!"))
-            next
-          end
-          next if pbConfirm(_INTL("Continue choosing a Pokemon to trade?"))
-          break
-        elsif selected[0] == -3   # Close box
-          if pbHeldPokemon
-            pbDisplay(_INTL("You're holding a Pokémon!"))
-            next
-          end
-          if pbConfirm(_INTL("Exit from the Box?"))
-            pbSEPlay("PC close")
-            break
-          end
+	command = 0
+    @scene.pbStartBox(self, command)
+    loop do
+      selected = @scene.pbSelectBox(@storage.party)
+      if selected.nil?
+        if pbHeldPokemon
+          pbDisplay(_INTL("You're holding a Pokémon!"))
           next
-        elsif selected[0] == -4   # Box name
-          pbBoxCommands
-        else
-          pokemon = @storage[selected[0], selected[1]]
-          heldpoke = pbHeldPokemon
-          next if !pokemon && !heldpoke
-          if @scene.quickswap
-            if @heldpkmn
-              (pokemon) ? pbSwap(selected) : pbPlace(selected)
-            else
-              pbHold(selected)
-            end
-          else
-            commands = []
-            cmdMove     = -1
-            cmdSummary  = -1
-            cmdWithdraw = -1
-            cmdItem     = -1
-            cmdMark     = -1
-            cmdRelease  = -1
-            cmdDebug    = -1
-            if heldpoke
-              helptext = _INTL("{1} is selected.", heldpoke.name)
-              commands[cmdMove = commands.length] = (pokemon) ? _INTL("Shift") : _INTL("Place")
-            elsif pokemon
-              helptext = _INTL("{1} is selected.", pokemon.name)
-              commands[cmdMove = commands.length] = _INTL("Move")
-            end
-            commands[cmdSummary = commands.length]  = _INTL("Summary")
-            commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Store") : _INTL("Withdraw")
-            commands[cmdItem = commands.length]     = _INTL("Item")
-            commands[cmdMark = commands.length]     = _INTL("Mark")
-            commands[cmdRelease = commands.length]  = _INTL("Release")
-            commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
-            commands[commands.length]               = _INTL("Cancel")
-            command = pbShowCommands(helptext, commands)
-            if cmdMove >= 0 && command == cmdMove   # Move/Shift/Place
-              if @heldpkmn
-                (pokemon) ? pbSwap(selected) : pbPlace(selected)
-              else
-                pbHold(selected)
-              end
-            elsif cmdSummary >= 0 && command == cmdSummary   # Summary
-              pbSummary(selected, @heldpkmn)
-            elsif cmdWithdraw >= 0 && command == cmdWithdraw   # Store/Withdraw
-              (selected[0] == -1) ? pbStore(selected, @heldpkmn) : pbWithdraw(selected, @heldpkmn)
-            elsif cmdItem >= 0 && command == cmdItem   # Item
-              pbItem(selected, @heldpkmn)
-            elsif cmdMark >= 0 && command == cmdMark   # Mark
-              pbMark(selected, @heldpkmn)
-            elsif cmdRelease >= 0 && command == cmdRelease   # Release
-              pbRelease(selected, @heldpkmn)
-            elsif cmdDebug >= 0 && command == cmdDebug   # Debug
-              pbPokemonDebug((@heldpkmn) ? @heldpkmn : pokemon, selected, heldpoke)
-            end
-          end
         end
-      end
-      @scene.pbCloseBox
-    when 1   # Withdraw
-      
-    when 2   # Deposit
-      
-    when 3
-      @scene.pbStartBox(self, command)
-      @scene.pbCloseBox
-    end
+        next if pbConfirm(_INTL("Continue choosing a Pokemon to trade?"))
+        break
+      elsif selected[0] == -3   # Close box
+        if pbHeldPokemon
+          pbDisplay(_INTL("You're holding a Pokémon!"))
+          next
+        end
+        if pbConfirm(_INTL("Exit from the Box?"))
+          #pbSEPlay("PC close")
+          break
+        end
+        next
+      elsif selected[0] == -4   # Box name
+        pbBoxCommands
+      else
+        pokemon = @storage[selected[0], selected[1]]
+        heldpoke = pbHeldPokemon
+        next if !pokemon && !heldpoke
+        if @scene.quickswap
+          if @heldpkmn
+            (pokemon) ? pbSwap(selected) : pbPlace(selected)
+          else
+            pbHold(selected)
+          end
+        else
+		#commands = []
+          #cmdMove     = -1
+          #cmdSummary  = -1
+          #cmdWithdraw = -1
+          #cmdItem     = -1
+          #cmdMark     = -1
+          #cmdRelease  = -1
+          #cmdDebug    = -1
+		
+          commands = []
+          cmdSummary  = -1
+          cmdTrade  = -1
+          cmdDebug    = -1
+          
+          commands[cmdSummary = commands.length]  = _INTL("Summary")
+          commands[cmdTrade = commands.length]  = _INTL("Trade")
+          commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
+          commands[commands.length]               = _INTL("Cancel")
+          helptext = _INTL("{1} is selected.", pokemon.name)
+		  command = pbShowCommands(helptext, commands)
+		  if cmdSummary >= 0 && command == cmdSummary   # Summary
+            pbSummary(selected, @heldpkmn)
+          elsif cmdTrade >= 0 && command == cmdTrade   # Trade
+            #pbRelease(selected, @heldpkmn)
+			print "Selected #{selected} to trade"
+          elsif cmdDebug >= 0 && command == cmdDebug   # Debug
+            pbPokemonDebug((@heldpkmn) ? @heldpkmn : pokemon, selected, heldpoke)
+          end #if cmdSummary >= 0 && command == cmdSummary
+        end #if @scene.quickswap
+      end #if selected.nil?
+    end #loop do
+    @scene.pbCloseBox
     $game_temp.in_storage = false
   end
 
