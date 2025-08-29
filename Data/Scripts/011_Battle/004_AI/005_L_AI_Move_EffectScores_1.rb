@@ -4839,7 +4839,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetAttack1", "LowerTargetAttack1BypassSubstitute" # growl
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)>pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:ATTACK)
+           !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -4903,7 +4903,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetAttack2", "LowerTargetAttack3" # feather dance
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)>pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:ATTACK)
+           !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -4967,7 +4967,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetDefense1", "LowerTargetDefense1PowersUpInGravity" # Tail Whip
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-        if !physmove || !target.pbCanLowerStatStage?(:DEFENSE)
+        if !physmove || !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5020,7 +5020,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetDefense2", "LowerTargetDefense3" # screech
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-        if !physmove || !target.pbCanLowerStatStage?(:DEFENSE)
+        if !physmove || !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5060,7 +5060,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetSpAtk1" # snarl
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5109,7 +5109,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetSpAtk2", "LowerTargetSpAtk3" # eerie impulse
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5162,7 +5162,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetSpAtk2IfCanAttract" # Captivate
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)<pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5215,7 +5215,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetSpDef1" # psychic
         specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-        if !specmove || !target.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
+        if !specmove || !canLowerStatTarget(:SPECIAL_DEFENSE,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5265,7 +5265,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetSpDef2", "LowerTargetSpDef3" # acid spray
         specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-        if !specmove || !target.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
+        if !specmove || !canLowerStatTarget(:SPECIAL_DEFENSE,move,user,target,mold_broken)
             if move.baseDamage==0
                 score=0
             end
@@ -5327,7 +5327,7 @@ class Battle::AI
                 break if !allOutspeed
             end
         end
-        if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
+        if allOutspeed || !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
             if move.baseDamage==0
                 if move.function == "LowerTargetSpeed1MakeTargetWeakerToFire" && !target.effects[PBEffects::TarShot]
                     score *= 1.2 if user.moves.any? { |m| m.damagingMove? && m.pbCalcType(user) == :FIRE }
@@ -5423,7 +5423,7 @@ class Battle::AI
                 break if !allOutspeed
             end
         end
-        if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
+        if allOutspeed || !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
             score=0 if move.baseDamage==0
         else
             miniscore=125
@@ -5480,7 +5480,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion1"
         if move.statusMove?
-            if target.pbCanLowerStatStage?(:EVASION, user)
+            if canLowerStatTarget(:EVASION,move,user,target,mold_broken)
                 score += target.stages[:EVASION] * 10
             else
                 score -= 90
@@ -5538,7 +5538,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerTargetEvasion2", "LowerTargetEvasion3" # Sweet Scent
         if move.statusMove?
-            if target.pbCanLowerStatStage?(:EVASION, user)
+            if canLowerStatTarget(:EVASION,move,user,target,mold_broken)
                 score += target.stages[:EVASION] * 10
             else
                 score -= 90
@@ -5551,7 +5551,7 @@ class Battle::AI
         livecountuser    = @battle.pbAbleNonActiveCount(user.idxOwnSide)
         livecounttarget  = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
         if (pbRoughStat(target,:SPECIAL_ATTACK,skill)>pbRoughStat(target,:ATTACK,skill)) || 
-            !target.pbCanLowerStatStage?(:ATTACK)
+           !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
             if move.baseDamage==0
                 score*=0.5
             end
@@ -5601,7 +5601,7 @@ class Battle::AI
         end
         miniscore=100
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-        if !physmove || !target.pbCanLowerStatStage?(:DEFENSE)
+        if !physmove || !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
             if move.baseDamage==0
                 score*=0.5
             end
@@ -5646,7 +5646,8 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerTargetAtkSpAtk1" # noble roar
-        if !target.pbCanLowerStatStage?(:ATTACK) && !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+        if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken) && 
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             score*=0
         else
             miniscore=100
@@ -5698,7 +5699,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "LowerPoisonedTargetAtkSpAtkSpd1" # Venom Drench
         if target.poisoned?
-            if !target.pbCanLowerStatStage?(:ATTACK) && !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+            if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken) && 
+               !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
                 score=0
             else
                 miniscore=100
@@ -5759,7 +5761,7 @@ class Battle::AI
                     break if !allOutspeed
                 end
             end
-            if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
+            if allOutspeed || !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
                 miniscore=1
             else
                 miniscore=100            
@@ -5798,8 +5800,8 @@ class Battle::AI
     when "RaiseUserAndAlliesAtkDef1" # Coaching
       has_ally = false
       user.allAllies.each do |b|
-        next if !b.pbCanLowerStatStage?(:ATTACK, user) &&
-                !b.pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
+        next if !b.pbCanRaiseStatStage?(:ATTACK, user) &&
+                !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user)
         next if  $player.difficulty_mode?("chaos") && b.SetupMovesUsed.include?(move.id)
         has_ally = true
         if skill >= PBTrainerAI.mediumSkill && b.hasActiveAbility?(:CONTRARY)

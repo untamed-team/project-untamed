@@ -814,6 +814,26 @@ class Battle::AI
         return true if $AIMASTERLOG
         return false
     end
+
+    def canLowerStatTarget(stat,move,user,target,mold_bonkers=false)
+        return false if target.pbOwnSide.effects[PBEffects::StatDropImmunity] && !target.pbOwnedByPlayer?
+        return false if target.hasActiveAbility?(:CONTRARY,false,mold_bonkers)
+        return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
+        if target.index != user.index # Not self-inflicted
+            return false if target.effects[PBEffects::Substitute] > 0 && !move.ignoresSubstitute?(user)
+            return false if target.pbOwnSide.effects[PBEffects::Mist] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
+        end
+        return false if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_bonkers)
+        return false if target.hasActiveAbility?(:BIGPECKS,false,mold_bonkers) && stat == :DEFENSE
+        return false if target.hasActiveAbility?(:HYPERCUTTER,false,mold_bonkers) && stat == :ATTACK
+        return false if target.hasActiveAbility?(:KEENEYE,false,mold_bonkers) && stat == :ACCURACY
+        if target.pbHasType?(:GRASS)
+            return false if target.hasActiveAbility?(:FLOWERVEIL,false,mold_bonkers)
+            return false if target.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERVEIL,false,mold_bonkers) }
+        end
+        return false if target.statStageAtMin?(stat)
+        return true
+    end
     
     def bestMoveVsTarget(user,target,skill)
         maxdam=0

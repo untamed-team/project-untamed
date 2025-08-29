@@ -4718,21 +4718,22 @@ class Battle::AI
         when 3 # burn
             miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, miniscore, move, globalArray, skill)
         when 4 # lower Sp. Atk by 1
-            miniscore*=0.1 if !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+            miniscore*=0.1 if !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             miniscore*=1.2 if target.poisoned? || target.burned?
             miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
             miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
         when 5 # lower Attack by 1
-            miniscore*=0.1 if !target.pbCanLowerStatStage?(:ATTACK)
+            miniscore*=0.1 if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
             miniscore*=1.2 if target.poisoned? || target.frozen?
             miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
             miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
         when 6 # lower Speed by 1
-            miniscore*=0.1 if !target.pbCanLowerStatStage?(:SPEED)
+            miniscore*=0.1 if !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
             miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
             miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
             miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
         when 7 # lower Defense by 1
+            miniscore*=0.1 if !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
             miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
             miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
             miniscore*=0.7 if user.burned?
@@ -5703,7 +5704,8 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "LowerTargetAtkSpAtk1SwitchOutUser" # Parting Shot
-        if !target.pbCanLowerStatStage?(:ATTACK) && !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+        if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken) && 
+           !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
             score=0
         else
             if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
@@ -5816,7 +5818,7 @@ class Battle::AI
                         increment *= 2 if target.hasActiveAbility?(:SIMPLE)
                         increment *= -1 if target.hasActiveAbility?(:CONTRARY)
                         [:ATTACK, :SPECIAL_ATTACK].each do |partingStat|
-                            next unless target.pbCanLowerStatStage?(partingStat)
+                            next unless !canLowerStatTarget(partingStat,move,user,target,mold_broken)
                             target.stages[partingStat] -= increment
                             target.stages[partingStat] = [[target.stages[partingStat], -6].max, 6].min
                         end
