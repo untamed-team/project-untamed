@@ -123,7 +123,6 @@ class Battle::Battler
   def pbCanLowerStatStage?(stat, user = nil, move = nil, showFailMsg = false,
                            ignoreContrary = false, ignoreMirrorArmor = false)
     return false if fainted?
-		return false if !@battle.pbOwnedByPlayer?(self.index) && pbOwnSide.effects[PBEffects::StatDropImmunity] #by low
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
@@ -135,6 +134,7 @@ class Battle::Battler
         return true
       end
     end
+    return false if !@battle.pbOwnedByPlayer?(self.index) && pbOwnSide.effects[PBEffects::StatDropImmunity] #by low
     if !user || user.index != @index   # Not self-inflicted
       if @effects[PBEffects::Substitute] > 0 &&
          (ignoreMirrorArmor || !(move && move.ignoresSubstitute?(user)))
