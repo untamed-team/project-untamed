@@ -1993,6 +1993,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2030,6 +2033,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2067,6 +2073,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2136,6 +2145,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2179,6 +2191,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2219,6 +2234,9 @@ class Battle::AI
         end
         if user.hasActiveItem?(:POWERHERB)
             score*=1.5
+            score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
+        else
+            score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
