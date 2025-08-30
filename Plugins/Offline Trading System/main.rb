@@ -107,7 +107,19 @@ class OfflineTradingSystem
 		
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
-		#self.createQR(hex_string)
+
+		#find box file icon of pokemon
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
+		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
+		#copy the box sprite of the pkmn to the Trading folder
+		if !File.exist?(boxFileIconPath)
+			print "This pokemon has no box icon"
+			return nil
+		end
+		
+		#save the pokemon's box icon to the Trading folder
+		self.saveTradeOfferBitmap(boxFileIconPath)
+		print "check the trading folder"
 		
 		#hide hex data in image metadata
 		# Make sure to define your hex data and file path first
@@ -133,12 +145,6 @@ class OfflineTradingSystem
 		end
 		
 		
-		
-		#encode the hex from the marshaldata
-		#encodedHex = self.encode(hex_data)
-		#Console.echo_warn encodedHex
-		#print encodedHex
-		#print encodedHex.length
 		
 		# Recreate the Pokemon object from the data
 		#exact_pokemon = Marshal.load(serialized_data)
@@ -166,6 +172,24 @@ class OfflineTradingSystem
 		end
 		return @encodedString
 	end #def self.encode
+	
+	def self.saveTradeOfferBitmap(imageFilePath)
+		@viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+		imageFile = Sprite.new(@viewport)
+		imageFile.bitmap = Bitmap.new(imageFilePath)
+		bitmap = Bitmap.new(imageFile.width/2, imageFile.height) #cut off the 2nd half of the image, as we only need the first frame from the file
+    
+		#move the pokemon to the bitmap that will be saved to a file
+		bitmap.blt(0, 0, imageFile.bitmap, Rect.new(0, 0, imageFile.width, imageFile.height))
+    
+		#export the bitmap to a file
+		#if the filename already exists, overwrite it
+		bitmap.to_file("Trading/Trade.png")
+	end #def self.saveTradeOfferBitmap
+
+	def self.readOfferImage
+		
+	end #def self.readOfferImage
 
 end #class OfflineTradingSystem
 
