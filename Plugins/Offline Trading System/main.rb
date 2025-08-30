@@ -111,7 +111,7 @@ class OfflineTradingSystem
 		
 		#hide hex data in image metadata
 		# Make sure to define your hex data and file path first
-		file_path = "C:/Users/Chevy/OneDrive - North Greenville University/Documents/GitHub/project-untamed/Trading/EXCADRILL.png" # Assuming this is the correct path to your image
+		file_path = "Trading/Trade.png" # Assuming this is the correct path to your image
 
 		# 1. Encode the data
 		success = encode_hex_to_png(file_path, hex_data)
