@@ -101,66 +101,6 @@ class OfflineTradingSystem
 	end #def self.tradeMenu
 	
 	def self.createOfferCode(pkmn)
-		#name
-		#nature
-		#ability
-		#item
-		#level
-		#gender
-		#species
-		#forced_form
-		#time_form_set
-		#exp
-		#steps_to_hatch
-		#hp
-		#status
-		#statusCount
-		#shiny
-		#moves
-		#first_moves
-		#ribbons
-		#cool
-		#beauty
-		#cute
-		#smart
-		#tough
-		#sheen
-		#pokerus
-		#happiness
-		#poke_ball - maybe only bring this one over if the pokeball has not been modified. will revisit this logic once pokeball painter has been created
-		#markings
-		#iv
-		#ivMaxed
-		#ev
-		#totalhp
-		#attack
-		#defense
-		#spatk
-		#spdef
-		#speed
-		#owner
-		#obtain_method
-		#obtain_map
-		#obtain_text
-		#obtain_level
-		#hatched_map
-		#fused
-		#personalID
-		#ready_to_evolve
-		#cannot_store
-		#cannot_release
-		#cannot_trade
-		#evolution_steps
-		#willmega
-		#sketchMove
-		#remaningHPBars
-		#hpbarsstorage
-		#triedEvolving
-		#trainerevs
-		#abilityMutation
-		#pv
-		#megaevoMutation
-		#bossmonMutation
 		pokemon_to_save = pkmn
 		serialized_data = Marshal.dump(pokemon_to_save)
 		#Console.echo_warn serialized_data
@@ -169,9 +109,34 @@ class OfflineTradingSystem
 		hex_data = serialized_data.unpack("H*")[0]
 		#self.createQR(hex_string)
 		
+		#hide hex data in image metadata
+		# Make sure to define your hex data and file path first
+		file_path = "C:/Users/Chevy/OneDrive - North Greenville University/Documents/GitHub/project-untamed/Trading/EXCADRILL.png" # Assuming this is the correct path to your image
+
+		# 1. Encode the data
+		success = encode_hex_to_png(file_path, hex_data)
+
+		if success
+			puts "Encoding successful! The image should now contain the hex data."
+  
+			# 2. Decode the data and capture the return value
+			decoded_string = decode_hex_from_png(file_path)
+
+			if decoded_string
+				puts "Decoding successful!"
+				puts "Decoded hex data: #{decoded_string}"
+			else
+				puts "Decoding failed."
+			end
+		else
+			puts "Encoding failed."
+		end
+		
+		
+		
 		#encode the hex from the marshaldata
-		encodedHex = self.encode(hex_data)
-		Console.echo_warn encodedHex
+		#encodedHex = self.encode(hex_data)
+		#Console.echo_warn encodedHex
 		#print encodedHex
 		#print encodedHex.length
 		
