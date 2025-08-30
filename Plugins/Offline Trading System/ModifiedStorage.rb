@@ -1,87 +1,8 @@
 class PokemonGlobalMetadata
-	attr_accessor   :timeMachineParty
-	attr_accessor   :inTimeMachineSave
-	attr_accessor   :timeMachineTransferredPkmn
+	attr_accessor   :inTradingMenu
 end
 
-class PokemonStorage
-	def party
-		if $PokemonGlobal.inTimeMachineSave == true
-			$PokemonGlobal.timeMachineParty
-		else
-			$player.party
-		end
-	end
-end
-
-MenuHandlers.add(:pc_menu, :time_machine, {
-  "name"      => _INTL("Mysterious Program"),
-  "order"     => 50,
-  "effect"    => proc { |menu|
-    bootTimeMachine
-  }
-})
-
-def bootTimeMachine
-	#def pbMessage(message, commands = nil, cmdIfCancel = 0, skin = nil, defaultCmd = 0, &block)
-	commands = []
-	#determine all saves that are eligible and push them into the variable "commands"
-	eligibleSaves = timeMachineCheckSaves
-	
-	for i in 0...eligibleSaves.length
-		commands.push(_INTL("#{eligibleSaves[i][0]}"))
-	end
-	
-	commands.push(_INTL("Cancel"))
-	choice = pbMessage(_INTL("Choose the Save File to access. Only files from previous demo versions are eligible."), commands, -1, nil, 0)
-	
-	#get out of here if the user cancels
-	return if choice == -1 || choice == (commands.length-1)
-	
-	file_path = eligibleSaves[choice][2]
-	saveData = eligibleSaves[choice]
-	saveFileStorage = eligibleSaves[choice][1][:storage_system]
-	saveParty = eligibleSaves[choice][1][:player].party
-	$PokemonGlobal.timeMachineParty = saveParty
-	$PokemonGlobal.inTimeMachineSave = true
-	$PokemonGlobal.timeMachineTransferredPkmn = []
-	pbFadeOutIn {
-		scene = TimeMachinePokemonStorageScene.new
-		screen = TimeMachinePokemonStorageScreen.new(scene, saveFileStorage, saveParty)
-        screen.pbStartScreen(0)
-		exitTimeMachineSave(file_path, saveData, saveFileStorage)
-    }
-end #def bootTimeMachine
-
-def exitTimeMachineSave(file_path, saveData, saveFileStorage)
-	commands = [_INTL("Save"),_INTL("Do not Save")]
-	choice = pbMessage(_INTL("Would you like to save your changes to the save file?"), commands, -1, nil, 0)
-	
-	#get out of here if the user says no
-	if choice == -1 || choice == (commands.length-1)
-		$PokemonGlobal.inTimeMachineSave = false
-		$PokemonGlobal.timeMachineParty = nil
-		$PokemonGlobal.timeMachineTransferredPkmn = []
-		return
-	else
-		#add those pokemon to the player
-		for i in 0...$PokemonGlobal.timeMachineTransferredPkmn.length
-			pkmn = $PokemonGlobal.timeMachineTransferredPkmn[i]
-			pbAddPokemonSilent(pkmn)
-		end
-		
-		$PokemonGlobal.inTimeMachineSave = false
-		$PokemonGlobal.timeMachineParty = nil
-		$PokemonGlobal.timeMachineTransferredPkmn = []
-		
-		TimeMachineSaveData.save_to_file(file_path, saveData)
-		Game.save
-	end
-	
-	
-end #def exitTimeMachineSave
-
-class TimeMachinePokemonStorageScene
+class TradingPokemonStorageScene
   attr_reader :quickswap
 
   MARK_WIDTH  = 16
@@ -743,8 +664,8 @@ class TimeMachinePokemonStorageScene
 
   def pbSummary(selected, heldpoke)
     oldsprites = pbFadeOutAndHide(@sprites)
-    scene = TimeMachinePokemonSummary_Scene.new
-    screen = TimeMachinePokemonSummaryScreen.new(scene)
+    scene = PokemonSummary_Scene.new
+    screen = PokemonSummaryScreen.new(scene)
     if heldpoke
       screen.pbStartScreen([heldpoke], 0)
     elsif selected[0] == -1
@@ -985,7 +906,7 @@ end
 #===============================================================================
 # Pokémon storage mechanics
 #===============================================================================
-class TimeMachinePokemonStorageScreen
+class TradingPokemonStorageScreen
   attr_reader :scene
   attr_reader :storage
   attr_accessor :heldpkmn
@@ -1018,11 +939,10 @@ class TimeMachinePokemonStorageScreen
     end
   end
 
-  def initialize(scene, storage, saveParty)
+  def initialize(scene, storage)
     @scene = scene
     @storage = storage
     @pbHeldPokemon = nil
-	@saveParty = saveParty
   end
 
   def pbStartScreen(command)
@@ -1069,7 +989,7 @@ class TimeMachinePokemonStorageScreen
             cmdWithdraw = -1
             cmdItem     = -1
             cmdMark     = -1
-            cmdRelease  = -1
+            cmdOfferAsTrade  = -1
             cmdDebug    = -1
             if heldpoke
               helptext = _INTL("{1} is selected.", heldpoke.name)
@@ -1082,7 +1002,7 @@ class TimeMachinePokemonStorageScreen
             #commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Store") : _INTL("Withdraw")
             #commands[cmdItem = commands.length]     = _INTL("Item")
             #commands[cmdMark = commands.length]     = _INTL("Mark")
-            commands[cmdRelease = commands.length]  = _INTL("Transfer")
+            commands[cmdOfferAsTrade = commands.length]  = _INTL("Offer as Trade")
             commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
             commands[commands.length]               = _INTL("Cancel")
             command = pbShowCommands(helptext, commands)
@@ -1100,7 +1020,7 @@ class TimeMachinePokemonStorageScreen
               pbItem(selected, @heldpkmn)
             elsif cmdMark >= 0 && command == cmdMark   # Mark
               pbMark(selected, @heldpkmn)
-            elsif cmdRelease >= 0 && command == cmdRelease   # Transfer
+            elsif cmdOfferAsTrade >= 0 && command == cmdOfferAsTrade   # Offer as Trade
               pbRelease(selected, @heldpkmn)
             elsif cmdDebug >= 0 && command == cmdDebug   # Debug
               pbPokemonDebug((@heldpkmn) ? @heldpkmn : pokemon, selected, heldpoke)
@@ -1110,77 +1030,7 @@ class TimeMachinePokemonStorageScreen
       end
       @scene.pbCloseBox
     when 1   # Withdraw
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectBox(@storage.party)
-        if selected.nil?
-          next if pbConfirm(_INTL("Continue Box operations?"))
-          break
-        else
-          case selected[0]
-          when -2   # Party Pokémon
-            pbDisplay(_INTL("Which one will you take?"))
-            next
-          when -3   # Close box
-            if pbConfirm(_INTL("Exit from the Box?"))
-              pbSEPlay("PC close")
-              break
-            end
-            next
-          when -4   # Box name
-            pbBoxCommands
-            next
-          end
-          pokemon = @storage[selected[0], selected[1]]
-          next if !pokemon
-          command = pbShowCommands(_INTL("{1} is selected.", pokemon.name),
-                                   [
-								   #_INTL("Withdraw"),
-                                    _INTL("Summary"),
-                                    #_INTL("Mark"),
-                                    _INTL("Transfer"),
-                                    _INTL("Cancel")])
-          case command
-          when 0 then pbWithdraw(selected, nil)
-          when 1 then pbSummary(selected, nil)
-          when 2 then pbMark(selected, nil)
-          when 3 then pbRelease(selected, nil)
-          end
-        end
-      end
-      @scene.pbCloseBox
     when 2   # Deposit
-      @scene.pbStartBox(self, command)
-      loop do
-        selected = @scene.pbSelectParty(@storage.party)
-        if selected == -3   # Close box
-          if pbConfirm(_INTL("Exit from the Box?"))
-            pbSEPlay("PC close")
-            break
-          end
-          next
-        elsif selected < 0
-          next if pbConfirm(_INTL("Continue Box operations?"))
-          break
-        else
-          pokemon = @storage[-1, selected]
-          next if !pokemon
-          command = pbShowCommands(_INTL("{1} is selected.", pokemon.name),
-                                   [
-								   #_INTL("Store"),
-                                    _INTL("Summary"),
-                                    #_INTL("Mark"),
-                                    _INTL("Transfer"),
-                                    _INTL("Cancel")])
-          case command
-          when 0 then pbStore([-1, selected], nil)
-          when 1 then pbSummary([-1, selected], nil)
-          when 2 then pbMark([-1, selected], nil)
-          when 3 then pbRelease([-1, selected], nil)
-          end
-        end
-      end
-      @scene.pbCloseBox
     when 3
       @scene.pbStartBox(self, command)
       @scene.pbCloseBox
@@ -1398,27 +1248,17 @@ class TimeMachinePokemonStorageScreen
 	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
       #return
     end
-    command = pbShowCommands(_INTL("Transfer this Pokémon? Any held item will be lost in the process."), [_INTL("No"), _INTL("Yes")])
-    if command == 1
+    command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
+    if command == 0
       pkmnname = pokemon.name
 	  
 	  #delete the held item from the pkmn
-	  pokemon.item = nil
+	  #pokemon.item = nil
 	  
 		#add the pokemon to a global variable to receive on the current save when done
-		$PokemonGlobal.timeMachineTransferredPkmn.push(pokemon)
-	  
-	  #the other pbRelease is called
-      @scene.pbRelease(selected, heldpoke)
-      if heldpoke		
-	  	@heldpkmn = nil
-      else
-        @storage.pbDelete(box, index)
-      end
-      @scene.pbRefresh
-      pbDisplay(_INTL("{1} was transferred.", pkmnname))
-      pbDisplay(_INTL("See you soon, {1}!", pkmnname))
-      @scene.pbRefresh
+		#print "Offering #{pokemon} as trade"
+		#this is where we create a new screen for trading and generate an offer code
+		OfflineTradingSystem.tradeMenu(pokemon)
     end
     return
   end
@@ -1835,132 +1675,4 @@ class TimeMachinePokemonStorage
   def clear
     self.maxBoxes.times { |i| @boxes[i].clear }
   end
-end
-
-
-
-#===============================================================================
-# Regional Storage scripts
-#===============================================================================
-class TimeMachineRegionalStorage
-  def initialize
-    @storages = []
-    @lastmap = -1
-    @rgnmap = -1
-  end
-
-  def getCurrentStorage
-    if !$game_map
-      raise _INTL("The player is not on a map, so the region could not be determined.")
-    end
-    if @lastmap != $game_map.map_id
-      @rgnmap = pbGetCurrentRegion   # may access file IO, so caching result
-      @lastmap = $game_map.map_id
-    end
-    if @rgnmap < 0
-      raise _INTL("The current map has no region set. Please set the MapPosition metadata setting for this map.")
-    end
-    if !@storages[@rgnmap]
-      @storages[@rgnmap] = TimeMachinePokemonStorage.new
-    end
-    return @storages[@rgnmap]
-  end
-
-  def allWallpapers
-    return getCurrentStorage.allWallpapers
-  end
-
-  def availableWallpapers
-    return getCurrentStorage.availableWallpapers
-  end
-
-  def unlockWallpaper(index)
-    getCurrentStorage.unlockWallpaper(index)
-  end
-
-  def boxes
-    return getCurrentStorage.boxes
-  end
-
-  def party
-    return getCurrentStorage.party
-  end
-
-  def party_full?
-    return getCurrentStorage.party_full?
-  end
-
-  def maxBoxes
-    return getCurrentStorage.maxBoxes
-  end
-
-  def maxPokemon(box)
-    return getCurrentStorage.maxPokemon(box)
-  end
-
-  def full?
-    getCurrentStorage.full?
-  end
-
-  def currentBox
-    return getCurrentStorage.currentBox
-  end
-
-  def currentBox=(value)
-    getCurrentStorage.currentBox = value
-  end
-
-  def [](x, y = nil)
-    getCurrentStorage[x, y]
-  end
-
-  def []=(x, y, value)
-    getCurrentStorage[x, y] = value
-  end
-
-  def pbFirstFreePos(box)
-    getCurrentStorage.pbFirstFreePos(box)
-  end
-
-  def pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-    getCurrentStorage.pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-  end
-
-  def pbMove(boxDst, indexDst, boxSrc, indexSrc)
-    getCurrentStorage.pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-  end
-
-  def pbMoveCaughtToParty(pkmn)
-    getCurrentStorage.pbMoveCaughtToParty(pkmn)
-  end
-
-  def pbMoveCaughtToBox(pkmn, box)
-    getCurrentStorage.pbMoveCaughtToBox(pkmn, box)
-  end
-
-  def pbStoreCaught(pkmn)
-    getCurrentStorage.pbStoreCaught(pkmn)
-  end
-
-  def pbDelete(box, index)
-    getCurrentStorage.pbDelete(pkmn)
-  end
-end
-
-#===============================================================================
-# Look through Pokémon in storage
-#===============================================================================
-# Yields every Pokémon/egg in storage in turn.
-def timeMachineEachPokemon
-  (-1...$PokemonStorage.maxBoxes).each do |i|
-    $PokemonStorage.maxPokemon(i).times do |j|
-      pkmn = $PokemonStorage[i][j]
-      yield(pkmn, i) if pkmn
-    end
-  end
-end
-
-# Yields every Pokémon in storage in turn.
-def timeMachineEachNonEggPokemon
-  timeMachineEachPokemon { |pkmn, box| yield(pkmn, box) if !pkmn.egg? }
 end

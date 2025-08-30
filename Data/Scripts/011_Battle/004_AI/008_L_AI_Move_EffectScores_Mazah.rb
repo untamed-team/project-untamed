@@ -493,7 +493,7 @@ class Battle::AI
                     if livecountuser==1
                         miniscore*=0.5
                     end
-                    miniscore=0 if !target.pbCanLowerStatStage?(:ATTACK)
+                    miniscore=0 if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
                 when :DEFENSE
                     miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
                     if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
@@ -518,7 +518,7 @@ class Battle::AI
                     if user.pbHasAnyStatus?
                         miniscore*=0.7
                     end
-                    miniscore=0 if !target.pbCanLowerStatStage?(:DEFENSE)
+                    miniscore=0 if !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
                 when :SPEED
                     if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                         miniscore*=1.3
@@ -549,7 +549,7 @@ class Battle::AI
                     end
                     miniscore*=1.3 if target.moves.any? { |j| j&.id == :ELECTROBALL }
                     miniscore*=0.5 if target.moves.any? { |j| j&.id == :GYROBALL }
-                    miniscore=0 if !target.pbCanLowerStatStage?(:SPEED)
+                    miniscore=0 if !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
                 when :SPECIAL_ATTACK
                     roles = pbGetPokemonRole(user, target)
                     if roles.include?("Physical Wall") || roles.include?("Special Wall")
@@ -584,7 +584,7 @@ class Battle::AI
                     if livecountuser==1
                         miniscore*=0.5
                     end
-                    miniscore=0 if !target.pbCanLowerStatStage?(:SPECIAL_ATTACK)
+                    miniscore=0 if !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
                 when :SPECIAL_DEFENSE
                     miniscore*=1.3 if target.moves.any? { |m| m&.healingMove? }
                     if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
@@ -609,7 +609,7 @@ class Battle::AI
                     if user.pbHasAnyStatus?
                         miniscore*=0.9
                     end
-                    miniscore=0 if !target.pbCanLowerStatStage?(:SPECIAL_DEFENSE)
+                    miniscore=0 if !canLowerStatTarget(:SPECIAL_DEFENSE,move,user,target,mold_broken)
                 end
                 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
                     miniscore*=0.1

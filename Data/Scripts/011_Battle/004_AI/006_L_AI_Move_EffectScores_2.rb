@@ -151,7 +151,7 @@ class Battle::AI
                 break if !allOutspeed
             end
         end
-        if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
+        if allOutspeed || !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
             score*=0.5
         else          
             miniscore=110
