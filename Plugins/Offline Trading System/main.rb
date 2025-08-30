@@ -8,6 +8,7 @@ class OfflineTradingSystem
 	ELIGIBLE_CHARACTERS = ["A","a","B","b","C","c","D","d","E","e","F","f","G","g","H","h","I","i","J","j","K","k","L","l","M","m","N","n","O","o","P","p","Q","q","R","r","S","s","T","t","U","u","V","v","W","w","X","x","Y","y","Z","z","1","2","3","4","5","6","7","8","9","0"]
 	
 	ENCODER_MAPPING = {
+	"_" => "_",
 	"A" => "t4m",
 	"a" => "c5K",
 	"B" => "3zG",
@@ -96,66 +97,71 @@ class OfflineTradingSystem
 	end #def self.selectPkmnToTrade
 	
 	def self.tradeMenu(pkmn)
-		#this is where the codes will be input, you'll be able to copy the code, etc.
-		createOfferCode(pkmn)
-	end #def self.tradeMenu
-	
-	def self.createOfferCode(pkmn)
-		pokemon_to_save = pkmn
-		serialized_data = Marshal.dump(pokemon_to_save)
-		#Console.echo_warn serialized_data
-		
-		#convert marshaldata to hex
-		hex_data = serialized_data.unpack("H*")[0]
-
-		#find box file icon of pokemon
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
-		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
-		#copy the box sprite of the pkmn to the Trading folder
-		if !File.exist?(boxFileIconPath)
-			print "This pokemon has no box icon"
-			return nil
-		end
-		
-		#save the pokemon's box icon to the Trading folder
-		self.saveTradeOfferBitmap(boxFileIconPath)
-		print "check the trading folder"
-		
-		#hide hex data in image metadata
-		# Make sure to define your hex data and file path first
-		file_path = "Trading/Trade.png" # Assuming this is the correct path to your image
-
-		# 1. Encode the data
-		success = encode_hex_to_png(file_path, hex_data)
-
-		if success
-			puts "Encoding successful! The image should now contain the hex data."
-  
-			# 2. Decode the data and capture the return value
-			decoded_string = decode_hex_from_png(file_path)
-
-			if decoded_string
-				puts "Decoding successful!"
-				puts "Decoded hex data: #{decoded_string}"
-			else
-				puts "Decoding failed."
-			end
-		else
-			puts "Encoding failed."
-		end
+		#create new screen for trading
 		
 		
+		#save pokemon symbol as it will be used to delete the exact pokemon later
+		$game_variables[1] = pkmn
+		createOfferImage(pkmn)
+		#the player then gives the offer to another player, who gives the original player THEIR offer image
+		#the player replaces Trade.png in the "Trading" folder with the offer image from the other player, and then the original player proceeds in game
+		##########################self.promptAcceptTrade
+		
+		#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
+		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive (maybe with a handshake icon in the center?)
+		#if they decline, the game asks them to replace the file and check again or cancel the trade
 		
 		# Recreate the Pokemon object from the data
 		#exact_pokemon = Marshal.load(serialized_data)
 		# Add the recreated Pokémon to the player's party
 		#pbAddPokemon(exact_pokemon)
 		
-	end #def self.createOfferCode
+	end #def self.tradeMenu
+	
+	def self.createOfferImage(pkmn)
+		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
+		#a string is created (encoded_hex_data), which is "playerTradeID_pkmnInHex" but encoded (3x as long)
+		#that string is then added to an image of the pkmn, which is created in the "Trading" folder. The image is named "Trade.png"
+		msgwindow = pbMessageNoClear(_INTL("\\wtnp[1]Generating offer..."))
+		playerTradeID = $game_player.tradeID
+		pokemon_to_save = pkmn
+		serialized_data = Marshal.dump(pokemon_to_save)
+		#Console.echo_warn serialized_data
+		
+		#convert marshaldata to hex
+		hex_data = serialized_data.unpack("H*")[0]
+		Console.echo_warn "hex data before encoding: #{hex_data}"
+		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
+		#find box file icon of pokemon
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
+		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
+		#copy the box sprite of the pkmn to the Trading folder
+		if !File.exist?(boxFileIconPath)
+			print "This pokemon has no box icon. Report this to developers"
+			return nil
+		end
+		
+		#save the pokemon's box icon to the Trading folder
+		self.saveTradeOfferBitmap(boxFileIconPath)
+		
+		#hide hex data in image metadata
+		# Make sure to define your hex data and file path first
+		file_path = "Trading/Trade.png" # Assuming this is the correct path to your image
+		# 1. Encode the data
+		success = add_text_to_png(file_path, encoded_hex_data)
+
+		if success
+			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			self.readOfferImage(file_path)
+		else
+			puts "Adding text to png failed."
+			print "do something to try again"
+		end
+		msgwindow.clear
+	end #def self.createOfferImage
 
 	def self.encode(data)
 		Console.echo_warn data.to_s
-		print data.length
 		@encodedString = ""
 		data.to_s.each_char do |char|
 			#@encodedString
@@ -187,7 +193,23 @@ class OfflineTradingSystem
 		bitmap.to_file("Trading/Trade.png")
 	end #def self.saveTradeOfferBitmap
 
-	def self.readOfferImage
+	def self.readOfferImage(file_path)
+		# 2. Decode the data and capture the return value
+		text_from_png = get_text_from_png(file_path)
+		if !text_from_png
+			puts "Getting text from png failed."
+			print "do something to try again"
+		end
+		
+		puts "Getting text from png successful!"
+		puts "Encoded hex from png: #{text_from_png}"
+		
+		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
+		#the tradeID is extracted into its own variable - @otherPlayerTradeID
+		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn
+		
+			
+		
 		
 	end #def self.readOfferImage
 

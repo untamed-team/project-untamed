@@ -1,3 +1,5 @@
+#Full transparancy, this was written by AI :)
+
 # This script provides functions to embed and retrieve a hexadecimal string
 # directly from the metadata chunks of a PNG file. This is a self-contained
 # solution that does not require any external gems or command-line tools,
@@ -15,7 +17,7 @@
 # To encode a string:
 #   file_path = "path/to/your/image.png"
 #   hex_string = "454445584859" # The hex string you want to encode
-#   success = encode_hex_to_png(file_path, hex_string)
+#   success = add_text_to_png(file_path, hex_string)
 #   if success
 #     p "Encoding successful!"
 #   else
@@ -24,7 +26,7 @@
 #
 # To decode a string:
 #   file_path = "path/to/your/image.png"
-#   decoded_string = decode_hex_from_png(file_path)
+#   decoded_string = get_text_from_png(file_path)
 #   if decoded_string
 #     p "Decoded string: #{decoded_string}"
 #   else
@@ -39,7 +41,7 @@ require 'zlib'
 # --- Functions ---
 
 # Function to embed a hexadecimal string into a PNG file.
-def encode_hex_to_png(file_path, hex_string)
+def add_text_to_png(file_path, hex_string)
   # Read the PNG file into memory.
   begin
     file_data = File.binread(file_path)
@@ -122,7 +124,7 @@ end
 
 
 # Function to retrieve a hexadecimal string from a PNG file.
-def decode_hex_from_png(file_path)
+def get_text_from_png(file_path)
   # Read the PNG file into memory.
   begin
     file_data = File.binread(file_path)
