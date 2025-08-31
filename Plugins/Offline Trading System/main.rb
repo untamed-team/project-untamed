@@ -4,6 +4,7 @@
 #does this savefile have a pokemon with the exact same pkmnID? If so, the alien pokemon is deleted
 #if the pokemon received is above the badge level, the pokemon will always disobey. No ifs or buts
 #everytime a pokemon is deleted/added, the game automatically saves. The player does not confirm to save, the game forces the player to do so
+#don't allow user to even select the only pkmn in their party as a trade
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -82,6 +83,7 @@ class OfflineTradingSystem
 }
 
 	def self.setTradingID
+		Console.echo_warn "setting trade ID"
 		$game_player.tradeID = ""
 		#7 characters makes Trader IDs matching 1 in 1 million. Good enough for me
 		7.times do
@@ -91,12 +93,11 @@ class OfflineTradingSystem
 	end #def self.setTradingID
 	
 	def self.selectPkmnToTrade
-		$PokemonGlobal.inTradingMenu = true
-		
+		self.setTradingID if $game_player.tradeID == ""
 		pbFadeOutIn {
-			scene = TradingPokemonStorageScene.new
-			screen = TradingPokemonStorageScreen.new(scene, $PokemonStorage)
-			screen.pbStartScreen(0)
+			@boxScene = TradingPokemonStorageScene.new
+			@boxScreen = TradingPokemonStorageScreen.new(@boxScene, $PokemonStorage)
+			@boxScreen.pbStartScreen(0)
 		}
 		
 		#set the pkmn gamedata to game variable 1
@@ -282,12 +283,19 @@ class OfflineTradingSystem
 		end
 		
 		###########when finalizedTrade is true, we'll get here
-		print "successful trade, begin deleting pkmn player gave away and replace with pkmn player is receiving"
-		# Recreate the Pokemon object from the data
-		#exact_pokemon = Marshal.load(serialized_data)
-		# Add the recreated Pokémon to the player's party
-		#pbAddPokemon(exact_pokemon)
-		
+		if @pkmnToReplace[0] == "party"
+			$player.party[@pkmnToReplace[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+		elsif @pkmnToReplace[0] == "box"
+			$PokemonStorage[@pkmnToReplace[1], @pkmnToReplace[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+		end
+	
+		pbFadeOutIn {
+			@sprites.dispose
+			@tradingViewport.dispose
+			@boxScene.pbCloseBox
+			$game_temp.in_storage = false
+		}
+	
 	end #def self.tradeMenu
 	
 	def self.getPkmnToTrade
@@ -510,6 +518,7 @@ class OfflineTradingSystem
 	end #def self.readOfferImage
 
 	def self.readAgreementImage
+		@pkmnToReplace = []
 		success = false
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(TRADE_FILE_PATH)
@@ -529,15 +538,15 @@ class OfflineTradingSystem
 		Console.echo_warn "========================"
 		Console.echo_warn decodedElement0
 		Console.echo_warn "========================"
-		Console.echo_warn decodedElement1
+		Console.echo_warn [decodedElement1].pack('H*')
 		Console.echo_warn "========================"
 		Console.echo_warn decodedElement2
 		Console.echo_warn "========================"
-		Console.echo_warn decodedElement3
+		Console.echo_warn [decodedElement3].pack('H*')
 		Console.echo_warn "========================"
 		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
 		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
+		Console.echo_warn "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}"
 		Console.echo_warn "========================"
 		
 		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
@@ -545,13 +554,35 @@ class OfflineTradingSystem
 		tradeIDOfPlayer = decodedElement2
 		pkmnPlayerIsGivingToOtherPlayer = decodedElement3
 		
+		foundInParty = false
+		foundInBox = false
+		if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+			foundInParty = true
+			@pkmnToReplace = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
+		else
+			for i in 0...$PokemonStorage.maxBoxes
+				for j in 0...$PokemonStorage.maxPokemon(i)
+					pkmn = $PokemonStorage[i, j]
+					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
+						foundInBox = true
+						@pkmnToReplace = ["box", i, j]
+						break
+					end
+				end
+				break if foundInBox
+			end #for i in 0...$PokemonStorage.maxBoxes
+		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+		
 		if tradeIDOfPersonPlayerIsTradingWith == $game_player.tradeID
 			pbMessage(_INTL("Trade.png in your Trading folder is the agreement you generated."))
 		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
+			pbMessage(_INTL("Trade ID of other player has changed. Trade is invalid."))
 		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
 		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
+		elsif !foundInParty && !foundInBox
+			pbMessage(_INTL("You no longer have the Pokémon to finalize this trade."))
 		else
 			#valid trade
 			success = true
