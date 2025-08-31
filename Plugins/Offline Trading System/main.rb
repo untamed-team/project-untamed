@@ -1,4 +1,10 @@
 #Offline trading system
+#TO DO:
+#as a backup, i would do some checks at the end of the trade:
+#does this savefile have a pokemon with the exact same pkmnID? If so, the alien pokemon is deleted
+#if the pokemon received is above the badge level, the pokemon will always disobey. No ifs or buts
+#everytime a pokemon is deleted/added, the game automatically saves. The player does not confirm to save, the game forces the player to do so
+
 class Game_Player < Game_Character
 	attr_accessor :tradeID
 	@tradeID = ""
@@ -98,20 +104,84 @@ class OfflineTradingSystem
 		#game variable 66 is the 2nd code the player will give to someone else - it's the agreed upon trade code. Needs to be stored so this can be copied over and over as needed
 	end #def self.selectPkmnToTrade
 	
+	def self.setupTradingScreen(pkmnPlayerIsOffering)
+		@tradingViewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+		@tradingViewport.z = 99999
+		@sprites = {}
+		#def addBackgroundPlane(sprites, planename, background, viewport = nil)
+		addBackgroundPlane(@sprites, "background", "TradingImages/bg", @tradingViewport)
+		@sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @tradingViewport)
+		pbSetSystemFont(@sprites["overlay"].bitmap)		
+		#what player is offering
+		@sprites["pkmnPlayerIsOffering"] = PokemonSprite.new(@tradingViewport)
+		@sprites["pkmnPlayerIsOffering"].setSpeciesBitmap(pkmnPlayerIsOffering.species, pkmnPlayerIsOffering.gender, pkmnPlayerIsOffering.form, pkmnPlayerIsOffering.shiny?)
+		@sprites["pkmnPlayerIsOffering"].setOffset(PictureOrigin::CENTER)
+		@sprites["pkmnPlayerIsOffering"].x = 90
+		@sprites["pkmnPlayerIsOffering"].y = 134
+		@sprites["pkmnPlayerIsOffering"].mirror = true
+		#what player is receiving
+		@sprites["pkmnPlayerIsReceiving"] = PokemonSprite.new(@tradingViewport)
+		@sprites["pkmnPlayerIsReceiving"].setOffset(PictureOrigin::CENTER)
+		@sprites["pkmnPlayerIsReceiving"].x = Graphics.width - 90 #- @sprites["pkmnPlayerIsOffering"].width
+		@sprites["pkmnPlayerIsReceiving"].y = Graphics.height - 134 #- @sprites["pkmnPlayerIsOffering"].height
+		@sprites["pkmnPlayerIsReceiving"].visible = false
+	end #def self.setupTradingScreen
+	
 	def self.tradeMenu(pkmn)
 		#create new screen for trading
-		
+		pbFadeOutIn {
+			self.setupTradingScreen(pkmn)
+		}
 		
 		#save pokemon symbol as it will be used to delete the exact pokemon later
 		$game_variables[1] = pkmn
 		createOfferImage(pkmn)
 		
-		#the player then gives the offer to another player, who gives the original player THEIR offer image
-		#the player replaces Trade.png in the "Trading" folder with the offer image from the other player, and then the original player proceeds in game
-		self.readOfferImage(TRADE_FILE_PATH)
-		##########################self.promptAcceptTrade
+		#here is where the user will have input
+		command_list = [_INTL("Open Trade Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
+		# Main loop
+		command = 0
+		ready = false
+		validTrade = false
+		cancel = false
+		
+		while !validTrade && !cancel
+			loop do
+				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
+				case choice
+				when -1
+					cancel = true
+					break
+				when 0
+					root_folder = RTP.getPath('.', "Game.ini")
+					system("start explorer \"#{root_folder}\\Trading\"")
+				when 1
+					break
+				when 2
+					cancel = true
+					break
+				end #case choice
+			end #loop do
+			if !cancel
+				self.readOfferImage(TRADE_FILE_PATH)
+				if $game_player.tradeID == @otherPlayerTradeID
+					pbMessage(_INTL("Trade.png in your Trading folder is the offer you generated."))
+				else
+					print "players' tradeIDs do not match each other, so we can move on"
+					validTrade = true
+				end #if $game_player.tradeID == @otherPlayerTradeID
+			end #if !cancel
+		end #while !validTrade
+		
+		if cancel
+			pbFadeOutIn {
+				@tradingViewport.dispose
+				return
+			}
+		end
 		
 		#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
+		self.promptAcceptTrade
 		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive (maybe with a handshake icon in the center?)
 		#if they decline, the game asks them to replace the file and check again or cancel the trade
 		
@@ -121,6 +191,19 @@ class OfflineTradingSystem
 		#pbAddPokemon(exact_pokemon)
 		
 	end #def self.tradeMenu
+	
+	def self.promptAcceptTrade
+		@pkmnPlayerWillReceive = nil
+		@marshalDataOfPkmnOtherPlayerIsOffering = nil
+		#show the pkmn they will receive
+		#this variable needs to be fully decoded
+		@marshalDataOfPkmnOtherPlayerIsOffering = [@pkmnOtherPlayerIsOfferingDecoded].pack('H*')
+		@pkmnPlayerWillReceive = Marshal.load(@marshalDataOfPkmnOtherPlayerIsOffering)
+		Console.echo_warn "player will receive this pokemon in return: #{@marshalDataOfPkmnOtherPlayerIsOffering}"
+		#set bitmap of sprite for what player is receiving and reveal it
+		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceive.species, @pkmnPlayerWillReceive.gender, @pkmnPlayerWillReceive.form, @pkmnPlayerWillReceive.shiny?)
+		@sprites["pkmnPlayerIsReceiving"].visible = true
+	end #def self.promptAcceptTrade
 	
 	def self.createOfferImage(pkmn)
 		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
@@ -159,28 +242,6 @@ class OfflineTradingSystem
 			puts "Adding text to png failed."
 			print "do something to try again"
 		end
-		
-		command_list = [_INTL("Open Trade Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
-		# Main loop
-		command = 0
-		ready = false
-		loop do
-			choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
-			case choice
-			when 0
-				root_folder = RTP.getPath('.', "Game.ini")
-				system("start explorer \"#{root_folder}\\Trading\"")
-			when 1
-				ready = true
-			when 2
-				break
-			end #case choice
-		end #loop do
-		if ready
-			print "player chose to move on, so now we read the code again and combine 1st code and second code to create agreement"
-		else
-			#do nothing so we go back to PC box
-		end
 	end #def self.createOfferImage
 
 	def self.encode(data)
@@ -192,7 +253,7 @@ class OfflineTradingSystem
 			#else (key does not exist named after the character), so add the character to @encodedString and move on
 			if ENCODER_MAPPING.include?(char)
 				keyValue = ENCODER_MAPPING[char]
-				Console.echo_warn "#{char} will be encoded to #{keyValue}"
+				#Console.echo_warn "#{char} will be encoded to #{keyValue}"
 				@encodedString += keyValue
 			else
 				print "#{char} not included in encoder. Report this issue to the development team"
@@ -202,6 +263,20 @@ class OfflineTradingSystem
 		return @encodedString
 	end #def self.encode
 	
+	def self.decode(data)
+		Console.echo_warn data.to_s
+		@decodedString = ""
+		index = 0
+		while index < data.length
+			#puts data.slice(index, 3)
+			setOfCharactersToDecode = data.slice(index, 3)
+			@decodedString += ENCODER_MAPPING.key("#{setOfCharactersToDecode}")
+			index += 3
+		end
+		#puts "decoded string is #{@decodedString}"
+		return @decodedString
+	end #def self.encode
+
 	def self.saveTradeOfferBitmap(imageFilePath)
 		@viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
 		imageFile = Sprite.new(@viewport)
@@ -226,19 +301,19 @@ class OfflineTradingSystem
 		
 		puts "Getting text from png successful!"
 		puts "Encoded hex from png: #{text_from_png}"
-		###############check the quests plugin (in IDE) to see how I split using a delimiter
 		arrayOfText = text_from_png.split("_")
-		@otherPlayerTradeID = arrayOfText[0]
-		@pkmnOtherPlayerIsOfferingEncoded = arrayOfText[1]
-		print "other player's tradeID is #{@otherPlayerTradeID}"
-		Console.echo_warn "@pkmnOtherPlayerIsOfferingEncoded is #{@pkmnOtherPlayerIsOfferingEncoded}"
+		@otherPlayerTradeID = self.decode(arrayOfText[0])
+		@pkmnOtherPlayerIsOfferingDecoded = self.decode(arrayOfText[1])
+		#Console.echo_warn "other player's tradeID is #{@otherPlayerTradeID}"
+		#Console.echo_warn "@pkmnOtherPlayerIsOfferingEncoded is #{@pkmnOtherPlayerIsOfferingEncoded}"
+		
+		Console.echo_warn "player's trade ID is '#{$game_player.tradeID}'"
+		Console.echo_warn "================================================"
+		Console.echo_warn "player tradeID from Trade.png is #{@otherPlayerTradeID}"
+		
 		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
 		#the tradeID is extracted into its own variable - @otherPlayerTradeID
-		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn
-		
-			
-		
-		
+		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn		
 	end #def self.readOfferImage
 
 end #class OfflineTradingSystem
