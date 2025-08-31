@@ -313,6 +313,7 @@ class OfflineTradingSystem
 		
 		#convert marshaldata to hex
 		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
+		@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
 		encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
 		
 		hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
@@ -368,7 +369,7 @@ class OfflineTradingSystem
 		
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
-		@pkmnPlayerIsReceivingDecoded = hex_data
+		@pkmnPlayerWillReceiveInHexFormat = hex_data
 		Console.echo_warn "hex data before encoding: #{hex_data}"
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
 		#find box file icon of pokemon
@@ -498,7 +499,6 @@ class OfflineTradingSystem
 		@otherPlayerTradeID = self.decode(arrayOfText[0])
 		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
 		#Console.echo_warn "other player's tradeID is #{@otherPlayerTradeID}"
-		#Console.echo_warn "@pkmnOtherPlayerIsOfferingEncoded is #{@pkmnOtherPlayerIsOfferingEncoded}"
 		
 		Console.echo_warn "player's trade ID is '#{$game_player.tradeID}'"
 		Console.echo_warn "================================================"
@@ -537,7 +537,7 @@ class OfflineTradingSystem
 		Console.echo_warn "========================"
 		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
 		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerIsReceivingDecoded is #{@pkmnPlayerIsReceivingDecoded}"
+		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
 		Console.echo_warn "========================"
 		
 		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
@@ -550,7 +550,7 @@ class OfflineTradingSystem
 		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
 		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
-		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsReceivingDecoded
+		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
 		else
 			#valid trade
