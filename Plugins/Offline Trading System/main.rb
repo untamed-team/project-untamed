@@ -114,7 +114,7 @@ class OfflineTradingSystem
 		pbSetSystemFont(@sprites["overlay"].bitmap)		
 		#what player is offering
 		@sprites["pkmnPlayerIsOffering"] = PokemonSprite.new(@tradingViewport)
-		@sprites["pkmnPlayerIsOffering"].setSpeciesBitmap(@pkmnPlayerIsOffering.species, @pkmnPlayerIsOffering.gender, @pkmnPlayerIsOffering.form, @pkmnPlayerIsOffering.shiny?)
+		@sprites["pkmnPlayerIsOffering"].setSpeciesBitmap(@pkmnPlayerIsOfferingInSymbolFormat.species, @pkmnPlayerIsOfferingInSymbolFormat.gender, @pkmnPlayerIsOfferingInSymbolFormat.form, @pkmnPlayerIsOfferingInSymbolFormat.shiny?)
 		@sprites["pkmnPlayerIsOffering"].setOffset(PictureOrigin::BOTTOM)
 		@sprites["pkmnPlayerIsOffering"].x = 90
 		@sprites["pkmnPlayerIsOffering"].y = 230
@@ -128,15 +128,15 @@ class OfflineTradingSystem
 	end #def self.setupTradingScreen
 	
 	def self.tradeMenu(pkmn)
-		@pkmnPlayerIsOffering = nil
-		@pkmnPlayerIsOffering = pkmn
+		@pkmnPlayerIsOfferingInSymbolFormat = nil
+		@pkmnPlayerIsOfferingInSymbolFormat = pkmn
 		#create new screen for trading
 		pbFadeOutIn {
 			self.setupTradingScreen
 		}
 		
 		#save pokemon symbol as it will be used to delete the exact pokemon later
-		createOfferImage(@pkmnPlayerIsOffering)
+		createOfferImage(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		#here is where the user will have input
 		command_list = [_INTL("Open Trade Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
@@ -184,7 +184,7 @@ class OfflineTradingSystem
 		self.getPkmnToTrade
 		
 		#here is where the user will have input
-		command_list = [_INTL("<<< #{@pkmnPlayerIsOffering.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceive.name}'s Summary >>>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+		command_list = [_INTL("<<< #{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary >>>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
 		# Main loop
 		command = 0
 		agreed = false
@@ -192,24 +192,24 @@ class OfflineTradingSystem
 		
 		while !agreed && !cancel
 			loop do
-				choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOffering.name} for #{@pkmnPlayerWillReceive.name}?"), command_list, -1, nil, command)
+				choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOfferingInSymbolFormat.name} for #{@pkmnPlayerWillReceiveInSymbolFormat.name}?"), command_list, -1, nil, command)
 				case choice
 				when -1
 					cancel = true
 					break
 				when 0
-					#summary of @pkmnPlayerIsOffering
+					#summary of @pkmnPlayerIsOfferingInSymbolFormat
 					pbFadeOutIn {
 						scene = PokemonSummary_Scene.new
 						screen = PokemonSummaryScreen.new(scene)
-						screen.pbStartScreen([@pkmnPlayerIsOffering,@pkmnPlayerWillReceive], 0)
+						screen.pbStartScreen([@pkmnPlayerIsOfferingInSymbolFormat,@pkmnPlayerWillReceiveInSymbolFormat], 0)
 					}
 				when 1
-					#summary of @pkmnPlayerWillReceive
+					#summary of @pkmnPlayerWillReceiveInSymbolFormat
 					pbFadeOutIn {
 						scene = PokemonSummary_Scene.new
 						screen = PokemonSummaryScreen.new(scene)
-						screen.pbStartScreen([@pkmnPlayerWillReceive,@pkmnPlayerIsOffering], 0)
+						screen.pbStartScreen([@pkmnPlayerWillReceiveInSymbolFormat,@pkmnPlayerIsOfferingInSymbolFormat], 0)
 					}
 				when 2
 					break
@@ -291,25 +291,25 @@ class OfflineTradingSystem
 	end #def self.tradeMenu
 	
 	def self.getPkmnToTrade
-		@pkmnPlayerWillReceive = nil
-		@marshalDataOfPkmnOtherPlayerIsOffering = nil
+		@pkmnPlayerWillReceiveInSymbolFormat = nil
+		@pkmnPlayerWillReceiveInMarshaldataFormat = nil
 		#show the pkmn they will receive
 		#this variable needs to be fully decoded
-		@marshalDataOfPkmnOtherPlayerIsOffering = [@pkmnOtherPlayerIsOfferingDecoded].pack('H*')
-		@pkmnPlayerWillReceive = Marshal.load(@marshalDataOfPkmnOtherPlayerIsOffering)
-		Console.echo_warn "player will receive this pokemon in return: #{@marshalDataOfPkmnOtherPlayerIsOffering}"
+		@pkmnPlayerWillReceiveInMarshaldataFormat = [@pkmnPlayerWillReceiveInHexFormat].pack('H*')
+		@pkmnPlayerWillReceiveInSymbolFormat = Marshal.load(@pkmnPlayerWillReceiveInMarshaldataFormat)
+		Console.echo_warn "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}"
 		#set bitmap of sprite for what player is receiving and reveal it
-		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceive.species, @pkmnPlayerWillReceive.gender, @pkmnPlayerWillReceive.form, @pkmnPlayerWillReceive.shiny?)
+		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceiveInSymbolFormat.species, @pkmnPlayerWillReceiveInSymbolFormat.gender, @pkmnPlayerWillReceiveInSymbolFormat.form, @pkmnPlayerWillReceiveInSymbolFormat.shiny?)
 		@sprites["pkmnPlayerIsReceiving"].visible = true
 	end #def self.getPkmnToTrade
 	
 	def self.createAgreementImage
 		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
 		playerTradeID = $game_player.tradeID
-		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOffering)
+		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
 		#Console.echo_warn serialized_data
 		otherPlayerTradeID = @otherPlayerTradeID
-		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceive)
+		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
 		
 		#convert marshaldata to hex
 		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
@@ -321,20 +321,20 @@ class OfflineTradingSystem
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
 		#find box file icon of pokemon player is offering
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOffering)}"
-		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOffering)
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}"
+		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_offering)
-			print "#{@pkmnPlayerIsOffering.species} has no box icon. Report this to developers"
+			print "#{@pkmnPlayerIsOfferingInSymbolFormat.species} has no box icon. Report this to developers"
 			return nil
 		end
 		
 		#find box file icon of pokemon player is receiving
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceive)}"
-		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceive)
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}"
+		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)
 
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_receiving)
-			print "#{@pkmnPlayerWillReceive} has no box icon. Report this to developers"
+			print "#{@pkmnPlayerWillReceiveInSymbolFormat} has no box icon. Report this to developers"
 			return nil
 		end
 		
@@ -445,7 +445,7 @@ class OfflineTradingSystem
 	end #def self.saveTradeOfferBitmap
 
 	def self.saveTradeAgreementBitmap(imageFilePath_pkmn_player_is_offering, imageFilePath_pkmn_player_is_receiving)
-		Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOffering.species} and #{@pkmnPlayerWillReceive.species}"
+		Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}"
 		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
 		@bitmapViewport.z = 99999
 		
@@ -496,7 +496,7 @@ class OfflineTradingSystem
 		puts "Encoded hex from png: #{text_from_png}"
 		arrayOfText = text_from_png.split("_")
 		@otherPlayerTradeID = self.decode(arrayOfText[0])
-		@pkmnOtherPlayerIsOfferingDecoded = self.decode(arrayOfText[1])
+		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
 		#Console.echo_warn "other player's tradeID is #{@otherPlayerTradeID}"
 		#Console.echo_warn "@pkmnOtherPlayerIsOfferingEncoded is #{@pkmnOtherPlayerIsOfferingEncoded}"
 		
@@ -535,7 +535,7 @@ class OfflineTradingSystem
 		Console.echo_warn "========================"
 		Console.echo_warn decodedElement3
 		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnOtherPlayerIsOfferingDecoded is #{@pkmnOtherPlayerIsOfferingDecoded}"
+		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
 		Console.echo_warn "========================"
 		Console.echo_warn "@pkmnPlayerIsReceivingDecoded is #{@pkmnPlayerIsReceivingDecoded}"
 		Console.echo_warn "========================"
@@ -548,7 +548,7 @@ class OfflineTradingSystem
 		if tradeIDOfPersonPlayerIsTradingWith == $game_player.tradeID
 			pbMessage(_INTL("Trade.png in your Trading folder is the agreement you generated."))
 		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
-		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnOtherPlayerIsOfferingDecoded
+		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
 		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsReceivingDecoded
 			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
