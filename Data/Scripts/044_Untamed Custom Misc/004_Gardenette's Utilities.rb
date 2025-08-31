@@ -2443,3 +2443,21 @@ EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
 })
 
 end #class GardenUtil
+
+#############################################
+# Adding a "mirror" method for Bitmap class #
+#############################################
+class Bitmap
+  def mirror
+    new_bitmap = Bitmap.new(self.width, self.height)
+    for y in 0...self.height
+      for x in 0...self.width
+        # Get the pixel from the original bitmap
+        pixel = self.get_pixel(x, y)
+        # Put the pixel in the mirrored position on the new bitmap
+        new_bitmap.set_pixel(self.width - 1 - x, y, pixel)
+      end
+    end
+    return new_bitmap
+  end
+end

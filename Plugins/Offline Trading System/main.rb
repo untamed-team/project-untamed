@@ -104,7 +104,7 @@ class OfflineTradingSystem
 		#game variable 66 is the 2nd code the player will give to someone else - it's the agreed upon trade code. Needs to be stored so this can be copied over and over as needed
 	end #def self.selectPkmnToTrade
 	
-	def self.setupTradingScreen(pkmnPlayerIsOffering)
+	def self.setupTradingScreen
 		@tradingViewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
 		@tradingViewport.z = 99999
 		@sprites = {}
@@ -114,28 +114,29 @@ class OfflineTradingSystem
 		pbSetSystemFont(@sprites["overlay"].bitmap)		
 		#what player is offering
 		@sprites["pkmnPlayerIsOffering"] = PokemonSprite.new(@tradingViewport)
-		@sprites["pkmnPlayerIsOffering"].setSpeciesBitmap(pkmnPlayerIsOffering.species, pkmnPlayerIsOffering.gender, pkmnPlayerIsOffering.form, pkmnPlayerIsOffering.shiny?)
-		@sprites["pkmnPlayerIsOffering"].setOffset(PictureOrigin::CENTER)
+		@sprites["pkmnPlayerIsOffering"].setSpeciesBitmap(@pkmnPlayerIsOffering.species, @pkmnPlayerIsOffering.gender, @pkmnPlayerIsOffering.form, @pkmnPlayerIsOffering.shiny?)
+		@sprites["pkmnPlayerIsOffering"].setOffset(PictureOrigin::BOTTOM)
 		@sprites["pkmnPlayerIsOffering"].x = 90
-		@sprites["pkmnPlayerIsOffering"].y = 134
+		@sprites["pkmnPlayerIsOffering"].y = 230
 		@sprites["pkmnPlayerIsOffering"].mirror = true
 		#what player is receiving
 		@sprites["pkmnPlayerIsReceiving"] = PokemonSprite.new(@tradingViewport)
-		@sprites["pkmnPlayerIsReceiving"].setOffset(PictureOrigin::CENTER)
-		@sprites["pkmnPlayerIsReceiving"].x = Graphics.width - 90 #- @sprites["pkmnPlayerIsOffering"].width
-		@sprites["pkmnPlayerIsReceiving"].y = Graphics.height - 134 #- @sprites["pkmnPlayerIsOffering"].height
+		@sprites["pkmnPlayerIsReceiving"].setOffset(PictureOrigin::BOTTOM)
+		@sprites["pkmnPlayerIsReceiving"].x = Graphics.width - 90
+		@sprites["pkmnPlayerIsReceiving"].y = 230
 		@sprites["pkmnPlayerIsReceiving"].visible = false
 	end #def self.setupTradingScreen
 	
 	def self.tradeMenu(pkmn)
+		@pkmnPlayerIsOffering = nil
+		@pkmnPlayerIsOffering = pkmn
 		#create new screen for trading
 		pbFadeOutIn {
-			self.setupTradingScreen(pkmn)
+			self.setupTradingScreen
 		}
 		
 		#save pokemon symbol as it will be used to delete the exact pokemon later
-		$game_variables[1] = pkmn
-		createOfferImage(pkmn)
+		createOfferImage(@pkmnPlayerIsOffering)
 		
 		#here is where the user will have input
 		command_list = [_INTL("Open Trade Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
@@ -167,7 +168,6 @@ class OfflineTradingSystem
 				if $game_player.tradeID == @otherPlayerTradeID
 					pbMessage(_INTL("Trade.png in your Trading folder is the offer you generated."))
 				else
-					print "players' tradeIDs do not match each other, so we can move on"
 					validTrade = true
 				end #if $game_player.tradeID == @otherPlayerTradeID
 			end #if !cancel
@@ -181,9 +181,105 @@ class OfflineTradingSystem
 		end
 		
 		#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
-		self.promptAcceptTrade
-		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive (maybe with a handshake icon in the center?)
-		#if they decline, the game asks them to replace the file and check again or cancel the trade
+		self.getPkmnToTrade
+		
+		#here is where the user will have input
+		command_list = [_INTL("<<< #{@pkmnPlayerIsOffering.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceive.name}'s Summary >>>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+		# Main loop
+		command = 0
+		agreed = false
+		cancel = false
+		
+		while !agreed && !cancel
+			loop do
+				choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOffering.name} for #{@pkmnPlayerWillReceive.name}?"), command_list, -1, nil, command)
+				case choice
+				when -1
+					cancel = true
+					break
+				when 0
+					#summary of @pkmnPlayerIsOffering
+					pbFadeOutIn {
+						scene = PokemonSummary_Scene.new
+						screen = PokemonSummaryScreen.new(scene)
+						screen.pbStartScreen([@pkmnPlayerIsOffering,@pkmnPlayerWillReceive], 0)
+					}
+				when 1
+					#summary of @pkmnPlayerWillReceive
+					pbFadeOutIn {
+						scene = PokemonSummary_Scene.new
+						screen = PokemonSummaryScreen.new(scene)
+						screen.pbStartScreen([@pkmnPlayerWillReceive,@pkmnPlayerIsOffering], 0)
+					}
+				when 2
+					break
+				when 3
+					cancel = true
+					break
+				end #case choice
+			end #loop do
+			if !cancel
+				agreed = true
+			end #if !cancel
+		end #while !agreed && !cancel
+		
+		if cancel
+			pbFadeOutIn {
+				@tradingViewport.dispose
+				return
+			}
+		end
+		
+		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
+		success = self.createAgreementImage
+		
+		if success
+			#players swap agreement images
+		else
+			#do something to try again?
+			print "Error while encoding image. Need to try again"
+		end
+		
+		#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see
+		
+		command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
+		# Main loop
+		command = 0
+		ready = false
+		validTrade = false
+		cancel = false
+		
+		while !finalizedTrade && !cancel
+			loop do
+				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
+				case choice
+				when -1
+					cancel = true
+					break
+				when 0
+					root_folder = RTP.getPath('.', "Game.ini")
+					system("start explorer \"#{root_folder}\\Trading\"")
+				when 1
+					break
+				when 2
+					cancel = true
+					break
+				end #case choice
+			end #loop do
+			if !cancel
+				#need to do several things here:
+				#decode agreement string and split into array
+				#check that the offer can be redeemed by this player
+				#check that the agreement contains the player's trade ID
+			end #if !cancel
+		end #while !finalizedTrade
+		
+		if cancel
+			pbFadeOutIn {
+				@tradingViewport.dispose
+				return
+			}
+		end
 		
 		# Recreate the Pokemon object from the data
 		#exact_pokemon = Marshal.load(serialized_data)
@@ -192,7 +288,7 @@ class OfflineTradingSystem
 		
 	end #def self.tradeMenu
 	
-	def self.promptAcceptTrade
+	def self.getPkmnToTrade
 		@pkmnPlayerWillReceive = nil
 		@marshalDataOfPkmnOtherPlayerIsOffering = nil
 		#show the pkmn they will receive
@@ -203,7 +299,60 @@ class OfflineTradingSystem
 		#set bitmap of sprite for what player is receiving and reveal it
 		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceive.species, @pkmnPlayerWillReceive.gender, @pkmnPlayerWillReceive.form, @pkmnPlayerWillReceive.shiny?)
 		@sprites["pkmnPlayerIsReceiving"].visible = true
-	end #def self.promptAcceptTrade
+	end #def self.getPkmnToTrade
+	
+	def self.createAgreementImage
+		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
+		playerTradeID = $game_player.tradeID
+		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOffering)
+		#Console.echo_warn serialized_data
+		otherPlayerTradeID = @otherPlayerTradeID
+		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceive)
+		
+		#convert marshaldata to hex
+		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
+		encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
+		
+		hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
+		encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
+		
+		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
+		
+		#find box file icon of pokemon player is offering
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOffering)}"
+		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOffering)
+		
+		if !File.exist?(boxFileIconPath_for_pkmn_player_is_offering)
+			print "#{@pkmnPlayerIsOffering.species} has no box icon. Report this to developers"
+			return nil
+		end
+		
+		#find box file icon of pokemon player is receiving
+		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceive)}"
+		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceive)
+
+		if !File.exist?(boxFileIconPath_for_pkmn_player_is_receiving)
+			print "#{@pkmnPlayerWillReceive} has no box icon. Report this to developers"
+			return nil
+		end
+		
+		#save the pokemons' box icon to the Trading folder
+		self.saveTradeAgreementBitmap(boxFileIconPath_for_pkmn_player_is_offering, boxFileIconPath_for_pkmn_player_is_receiving)
+		
+		#hide hex data in image metadata
+		# Make sure to define your hex data and file path first
+		# 1. Encode the data
+		success = add_text_to_png(TRADE_FILE_PATH, entireEncodedAgreementCode)
+
+		if success
+			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			return true
+		else
+			puts "Adding text to png failed."
+			print "do something to try again"
+			return false
+		end
+	end #def self.createAgreementImage
 	
 	def self.createOfferImage(pkmn)
 		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
@@ -278,8 +427,8 @@ class OfflineTradingSystem
 	end #def self.encode
 
 	def self.saveTradeOfferBitmap(imageFilePath)
-		@viewport = Viewport.new(0,0,Graphics.width,Graphics.height)
-		imageFile = Sprite.new(@viewport)
+		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+		imageFile = Sprite.new(@bitmapViewport)
 		imageFile.bitmap = Bitmap.new(imageFilePath)
 		bitmap = Bitmap.new(imageFile.width/2, imageFile.height) #cut off the 2nd half of the image, as we only need the first frame from the file
     
@@ -289,6 +438,48 @@ class OfflineTradingSystem
 		#export the bitmap to a file
 		#if the filename already exists, overwrite it
 		bitmap.to_file("Trading/Trade.png")
+		@bitmapViewport.dispose
+	end #def self.saveTradeOfferBitmap
+
+	def self.saveTradeAgreementBitmap(imageFilePath_pkmn_player_is_offering, imageFilePath_pkmn_player_is_receiving)
+		Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOffering.species} and #{@pkmnPlayerWillReceive.species}"
+		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
+		@bitmapViewport.z = 99999
+		
+		#########################
+		#FIRST THIRD OF IMAGE
+		#########################
+		#pkmn1 = Sprite.new(@bitmapViewport)
+		pkmn1Bitmap = Bitmap.new(imageFilePath_pkmn_player_is_offering)
+		mirroredIcon = pkmn1Bitmap.mirror
+		pkmn1 = Sprite.new(@bitmapViewport)
+		pkmn1.bitmap = mirroredIcon
+		
+		bitmap = Bitmap.new((pkmn1.width/2)*3, pkmn1.height)
+		#move the pokemon player is offering to the bitmap that will be saved to a file
+		bitmap.blt(0, 0, pkmn1.bitmap, Rect.new(0, 0, pkmn1.width/2, pkmn1.height))
+		
+		#########################
+		#SECOND THIRD OF IMAGE
+		#########################
+		agreementIcon = Sprite.new(@bitmapViewport)
+		agreementIcon.bitmap = Bitmap.new("Graphics/Pictures/TradingImages/agreementIcon.png")
+		#move the pokemon player is receiving to the bitmap that will be saved to a file
+		bitmap.blt((bitmap.width/2)-(agreementIcon.width/2), (bitmap.height/2)-(agreementIcon.height/2), agreementIcon.bitmap, Rect.new(0, 0, agreementIcon.width, agreementIcon.height))
+		
+		#########################
+		#THIRD THIRD OF IMAGE
+		#########################
+		pkmn2 = Sprite.new(@bitmapViewport)
+		pkmn2.bitmap = Bitmap.new(imageFilePath_pkmn_player_is_receiving)
+		#move the pokemon player is receiving to the bitmap that will be saved to a file
+		bitmap.blt(bitmap.width-(pkmn2.width/2), 0, pkmn2.bitmap, Rect.new(0, 0, pkmn2.width/2, pkmn2.height))
+    
+		#export the bitmap to a file
+		#if the filename already exists, overwrite it
+		bitmap.to_file("Trading/Trade.png")
+		print "check trade folder for agreement image"
+		@bitmapViewport.dispose
 	end #def self.saveTradeOfferBitmap
 
 	def self.readOfferImage(trade_file_path)
