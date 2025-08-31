@@ -245,8 +245,7 @@ class OfflineTradingSystem
 		command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
 		# Main loop
 		command = 0
-		ready = false
-		validTrade = false
+		finalizedTrade = false
 		cancel = false
 		
 		while !finalizedTrade && !cancel
@@ -269,6 +268,7 @@ class OfflineTradingSystem
 			if !cancel
 				#need to do several things here:
 				#decode agreement string and split into array
+				finalizedTrade = self.readAgreementImage
 				#check that the offer can be redeemed by this player
 				#check that the agreement contains the player's trade ID
 			end #if !cancel
@@ -281,6 +281,8 @@ class OfflineTradingSystem
 			}
 		end
 		
+		###########when finalizedTrade is true, we'll get here
+		print "successful trade, begin deleting pkmn player gave away and replace with pkmn player is receiving"
 		# Recreate the Pokemon object from the data
 		#exact_pokemon = Marshal.load(serialized_data)
 		# Add the recreated Pokémon to the player's party
@@ -366,6 +368,7 @@ class OfflineTradingSystem
 		
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
+		@pkmnPlayerIsReceivingDecoded = hex_data
 		Console.echo_warn "hex data before encoding: #{hex_data}"
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
 		#find box file icon of pokemon
@@ -478,7 +481,6 @@ class OfflineTradingSystem
 		#export the bitmap to a file
 		#if the filename already exists, overwrite it
 		bitmap.to_file("Trading/Trade.png")
-		print "check trade folder for agreement image"
 		@bitmapViewport.dispose
 	end #def self.saveTradeOfferBitmap
 
@@ -506,6 +508,57 @@ class OfflineTradingSystem
 		#the tradeID is extracted into its own variable - @otherPlayerTradeID
 		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn		
 	end #def self.readOfferImage
+
+	def self.readAgreementImage
+		success = false
+		# 2. Decode the data and capture the return value
+		text_from_png = get_text_from_png(TRADE_FILE_PATH)
+		if !text_from_png
+			puts "Getting text from png failed."
+			print "do something to try again"
+		end
+		
+		puts "Getting text from png successful!"
+		puts "Encoded hex from png: #{text_from_png}"
+		arrayOfText = text_from_png.split("_")
+		decodedElement0 = self.decode(arrayOfText[0])
+		decodedElement1 = self.decode(arrayOfText[1])
+		decodedElement2 = self.decode(arrayOfText[2])
+		decodedElement3 = self.decode(arrayOfText[3])
+		Console.echo_warn "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}"
+		Console.echo_warn "========================"
+		Console.echo_warn decodedElement0
+		Console.echo_warn "========================"
+		Console.echo_warn decodedElement1
+		Console.echo_warn "========================"
+		Console.echo_warn decodedElement2
+		Console.echo_warn "========================"
+		Console.echo_warn decodedElement3
+		Console.echo_warn "========================"
+		Console.echo_warn "@pkmnOtherPlayerIsOfferingDecoded is #{@pkmnOtherPlayerIsOfferingDecoded}"
+		Console.echo_warn "========================"
+		Console.echo_warn "@pkmnPlayerIsReceivingDecoded is #{@pkmnPlayerIsReceivingDecoded}"
+		Console.echo_warn "========================"
+		
+		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
+		pkmnOtherTrainerIsGivingToPlayer = decodedElement1
+		tradeIDOfPlayer = decodedElement2
+		pkmnPlayerIsGivingToOtherPlayer = decodedElement3
+		
+		if tradeIDOfPersonPlayerIsTradingWith == $game_player.tradeID
+			pbMessage(_INTL("Trade.png in your Trading folder is the agreement you generated."))
+		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
+		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnOtherPlayerIsOfferingDecoded
+			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
+		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsReceivingDecoded
+			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
+		else
+			#valid trade
+			success = true
+		end
+		
+		return success
+	end #def self.readAgreementImage
 
 end #class OfflineTradingSystem
 
