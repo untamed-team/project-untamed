@@ -110,14 +110,10 @@ class Battle::Battler
     return true if !@battle.pbOwnedByPlayer?(@index)
     disobedient = false
     # Pokémon may be disobedient; calculate if it is
-    badge_level = 10 * (@battle.pbPlayer.badge_count + 1)
+    badge_level = ((@battle.pbPlayer.badge_count + 1) ** 2.2).floor + 5
     badge_level = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
-    if Settings::ANY_HIGH_LEVEL_POKEMON_CAN_DISOBEY ||
-       (Settings::FOREIGN_HIGH_LEVEL_POKEMON_CAN_DISOBEY && @pokemon.foreign?(@battle.pbPlayer))
-      if @level > badge_level
-        a = ((@level + badge_level) * @battle.pbRandom(256) / 256).floor
-        disobedient |= (a >= badge_level)
-      end
+    if @pokemon.foreign?(@battle.pbPlayer) && @pokemon.obtain_method == 4 && @pokemon.owner.name != "Mustang"
+      disobedient = true if @level > badge_level
     end
     disobedient |= !pbHyperModeObedience(choice[2])
     return true if !disobedient
@@ -133,23 +129,6 @@ class Battle::Battler
     if @status == :SLEEP && move.usableWhenAsleep?
       @battle.pbDisplay(_INTL("{1} ignored orders and kept sleeping!", pbThis))
       return false
-    end
-    b = ((@level + badge_level) * @battle.pbRandom(256) / 256).floor
-    # Use another move
-    if b < badge_level
-      @battle.pbDisplay(_INTL("{1} ignored orders!", pbThis))
-      return false if !@battle.pbCanShowFightMenu?(@index)
-      otherMoves = []
-      eachMoveWithIndex do |_m, i|
-        next if i == choice[1]
-        otherMoves.push(i) if @battle.pbCanChooseMove?(@index, i, false)
-      end
-      return false if otherMoves.length == 0   # No other move to use; do nothing
-      newChoice = otherMoves[@battle.pbRandom(otherMoves.length)]
-      choice[1] = newChoice
-      choice[2] = @moves[newChoice]
-      choice[3] = -1
-      return true
     end
     c = @level - badge_level
     r = @battle.pbRandom(256)

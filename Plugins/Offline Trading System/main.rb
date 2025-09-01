@@ -18,70 +18,70 @@ class OfflineTradingSystem
 	ELIGIBLE_CHARACTERS = ["A","a","B","b","C","c","D","d","E","e","F","f","G","g","H","h","I","i","J","j","K","k","L","l","M","m","N","n","O","o","P","p","Q","q","R","r","S","s","T","t","U","u","V","v","W","w","X","x","Y","y","Z","z","1","2","3","4","5","6","7","8","9","0"]
 	
 	ENCODER_MAPPING = {
-	"_" => "_",
-	"A" => "t4m",
-	"a" => "c5K",
-	"B" => "3zG",
-	"b" => "eY2",
-	"C" => "jR0",
-	"c" => "6L9",
-	"D" => "8pW",
-	"d" => "2iF",
-	"E" => "uHk",
-	"e" => "V5Q",
-	"F" => "7Xo",
-	"f" => "w9s",
-	"G" => "M4b",
-	"g" => "0Cg",
-	"H" => "J7l",
-	"h" => "P8f",
-	"I" => "x1Z",
-	"i" => "qW6",
-	"J" => "1dN",
-	"j" => "eX2",
-	"K" => "V7r",
-	"k" => "g4I",
-	"L" => "L0u",
-	"l" => "R6T",
-	"M" => "B2M",
-	"m" => "4cW",
-	"N" => "d9S",
-	"n" => "Yh8",
-	"O" => "aF5",
-	"o" => "oN3",
-	"P" => "kQ0",
-	"p" => "eD9",
-	"Q" => "2yV",
-	"q" => "f1t",
-	"R" => "O5s",
-	"r" => "H6u",
-	"S" => "qK4",
-	"s" => "P8z",
-	"T" => "m7B",
-	"t" => "j9W",
-	"U" => "r0D",
-	"u" => "Lp2",
-	"V" => "Z7J",
-	"v" => "c3n",
-	"W" => "G4x",
-	"w" => "F1i",
-	"X" => "tS8",
-	"x" => "uY5",
-	"Y" => "B6q",
-	"y" => "xJ9",
-	"Z" => "D5e",
-	"z" => "K4v",
-	"1" => "I3g",
-	"2" => "p8G",
-	"3" => "X7s",
-	"4" => "yN0",
-	"5" => "Z1u",
-	"6" => "m2a",
-	"7" => "Q9j",
-	"8" => "w7L",
-	"9" => "o0c",
-	"0" => "h6B",
-}
+		"_" => "_",
+		"A" => "t4m",
+		"a" => "c5K",
+		"B" => "3zG",
+		"b" => "eY2",
+		"C" => "jR0",
+		"c" => "6L9",
+		"D" => "8pW",
+		"d" => "2iF",
+		"E" => "uHk",
+		"e" => "V5Q",
+		"F" => "7Xo",
+		"f" => "w9s",
+		"G" => "M4b",
+		"g" => "0Cg",
+		"H" => "J7l",
+		"h" => "P8f",
+		"I" => "x1Z",
+		"i" => "qW6",
+		"J" => "1dN",
+		"j" => "eX2",
+		"K" => "V7r",
+		"k" => "g4I",
+		"L" => "L0u",
+		"l" => "R6T",
+		"M" => "B2M",
+		"m" => "4cW",
+		"N" => "d9S",
+		"n" => "Yh8",
+		"O" => "aF5",
+		"o" => "oN3",
+		"P" => "kQ0",
+		"p" => "eD9",
+		"Q" => "2yV",
+		"q" => "f1t",
+		"R" => "O5s",
+		"r" => "H6u",
+		"S" => "qK4",
+		"s" => "P8z",
+		"T" => "m7B",
+		"t" => "j9W",
+		"U" => "r0D",
+		"u" => "Lp2",
+		"V" => "Z7J",
+		"v" => "c3n",
+		"W" => "G4x",
+		"w" => "F1i",
+		"X" => "tS8",
+		"x" => "uY5",
+		"Y" => "B6q",
+		"y" => "xJ9",
+		"Z" => "D5e",
+		"z" => "K4v",
+		"1" => "I3g",
+		"2" => "p8G",
+		"3" => "X7s",
+		"4" => "yN0",
+		"5" => "Z1u",
+		"6" => "m2a",
+		"7" => "Q9j",
+		"8" => "w7L",
+		"9" => "o0c",
+		"0" => "h6B",
+	}
 
 	def self.setTradingID
 		Console.echo_warn "setting trade ID"
@@ -194,6 +194,9 @@ class OfflineTradingSystem
 		
 		#here is where the user will have input
 		command_list = [_INTL("<<< #{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary >>>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+		if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
+			pbDisplay(_INTL("Warning! The Pkmn being offered cannot exist in this savefile!\\nYou may accept the trade, but the Pkmn will be deleted."))
+		end
 		# Main loop
 		command = 0
 		agreed = false
@@ -297,7 +300,9 @@ class OfflineTradingSystem
 				return
 			}
 		end
-		
+
+		@pkmnPlayerWillReceiveInSymbolFormat = legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
+
 		#when finalizedTrade is true, we'll get here
 		if @pkmnToReplace[0] == "party"
 			$player.party[@pkmnToReplace[1]] = @pkmnPlayerWillReceiveInSymbolFormat
@@ -618,6 +623,25 @@ class OfflineTradingSystem
 		return success
 	end #def self.readAgreementImage
 
+	def legalitychecks(pkmn)
+		pkmn.clear_first_moves
+		if pkmn.speciesName.include?("Failsafe")
+			pkmn.species = :DELETED_PKMN
+			pkmn.ability_index = nil
+			pkmn.ability = nil
+			pkmn.reset_moves
+			pkmn.calc_stats
+		end
+		egglist = pkmn.species_data.get_egg_moves
+		pkmn.moves.each_with_index do |move, i|
+			if !pkmn.compatible_with_move?(move.id) && !pkmn.can_relearn_move?(move.id) && !egglist.include?(move.id)
+				pkmn.forget_move_at_index(i)
+				pkmn.learn_move(:REST) unless pkmn.hasMove?(:REST)
+			end
+		end
+		pkmn.obtain_method = 4
+		return pkmn
+	end
 end #class OfflineTradingSystem
 
 #adds "Trade" to list of options at PC

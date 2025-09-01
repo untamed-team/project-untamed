@@ -1245,20 +1245,23 @@ class TradingPokemonStorageScreen
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can trade your last party Pokémon away, but this could cause unstable gameplay on this save file. Are you okay with this?"))
+	    pbDisplay(_INTL("You can trade your last party Pokémon away, but this could cause unstable gameplay on this save file. Are you okay with this?"))
       #return
     end
     command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
     if command == 0
       pkmnname = pokemon.name
-	  
-	  #delete the held item from the pkmn
-	  #pokemon.item = nil
-	  
-		#add the pokemon to a global variable to receive on the current save when done
-		#print "Offering #{pokemon} as trade"
-		#this is where we create a new screen for trading and generate an offer code
-		OfflineTradingSystem.tradeMenu(pokemon)
+      #throw the held item (if there is any) into the bag
+      if pokemon.item
+        pbDisplay(_INTL("{1} was stored safely into your bag.", pokemon.item))
+        $bag.add(pokemon.item)
+        pokemon.item = nil
+      end
+      
+      #add the pokemon to a global variable to receive on the current save when done
+      #print "Offering #{pokemon} as trade"
+      #this is where we create a new screen for trading and generate an offer code
+      OfflineTradingSystem.tradeMenu(pokemon)
     end
     return
   end
