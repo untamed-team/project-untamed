@@ -597,9 +597,11 @@ class OfflineTradingSystem
 		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
 			pbMessage(_INTL("Trade ID of other player has changed. Trade is invalid."))
 		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
-			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
+			pbMessage(_INTL("The Pokémon you are receiving is not what you agreed upon."))
+			pbMessage(_INTL("Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat"))
 		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat
-			pbMessage(_INTL("One or more Pokémon in this trade was not agreed upon."))
+			pbMessage(_INTL("The Pokémon you are giving to the other player is not what they agreed upon."))
+			pbMessage(_INTL("Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat"))
 		elsif !foundInParty && !foundInBox
 			pbMessage(_INTL("You no longer have the Pokémon to finalize this trade."))
 		else
