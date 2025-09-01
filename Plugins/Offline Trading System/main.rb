@@ -83,7 +83,7 @@ class OfflineTradingSystem
 }
 
 	def self.setTradingID
-		Console.echo_warn "setting trade ID"
+		#Console.echo_warn "setting trade ID"
 		$game_player.tradeID = ""
 		#7 characters makes Trader IDs matching 1 in 1 million. Good enough for me
 		7.times do
@@ -152,16 +152,20 @@ class OfflineTradingSystem
 				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
 				case choice
 				when -1
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				when 0
 					root_folder = RTP.getPath('.', "Game.ini")
 					system("start explorer \"#{root_folder}\\Trading\"")
 				when 1
 					break
 				when 2
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				end #case choice
 			end #loop do
 			if !cancel
@@ -196,8 +200,10 @@ class OfflineTradingSystem
 				choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOfferingInSymbolFormat.name} for #{@pkmnPlayerWillReceiveInSymbolFormat.name}?"), command_list, -1, nil, command)
 				case choice
 				when -1
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				when 0
 					#summary of @pkmnPlayerIsOfferingInSymbolFormat
 					pbFadeOutIn {
@@ -215,8 +221,10 @@ class OfflineTradingSystem
 				when 2
 					break
 				when 3
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				end #case choice
 			end #loop do
 			if !cancel
@@ -254,16 +262,20 @@ class OfflineTradingSystem
 				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
 				case choice
 				when -1
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				when 0
 					root_folder = RTP.getPath('.', "Game.ini")
 					system("start explorer \"#{root_folder}\\Trading\"")
 				when 1
 					break
 				when 2
-					cancel = true
-					break
+					if pbConfirmMessage(_INTL("Cancel trading?"))
+						cancel = true
+						break
+					end
 				end #case choice
 			end #loop do
 			if !cancel
@@ -282,18 +294,25 @@ class OfflineTradingSystem
 			}
 		end
 		
-		###########when finalizedTrade is true, we'll get here
+		#when finalizedTrade is true, we'll get here
 		if @pkmnToReplace[0] == "party"
 			$player.party[@pkmnToReplace[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 		elsif @pkmnToReplace[0] == "box"
 			$PokemonStorage[@pkmnToReplace[1], @pkmnToReplace[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 		end
+		
+		Game.save
 	
 		pbFadeOutIn {
 			@sprites.dispose
 			@tradingViewport.dispose
-			@boxScene.pbCloseBox
-			$game_temp.in_storage = false
+			@boxScene.update
+			if @pkmnToReplace[0] == "party"
+				@boxScreen.pbRefreshSingle(@pkmnToReplace[1]) 
+			elsif @pkmnToReplace[0] == "box"
+				print "refreshing box"
+				@boxScreen.pbRefreshSingle(@pkmnToReplace[2]) 
+			end
 		}
 	
 	end #def self.tradeMenu
@@ -305,7 +324,7 @@ class OfflineTradingSystem
 		#this variable needs to be fully decoded
 		@pkmnPlayerWillReceiveInMarshaldataFormat = [@pkmnPlayerWillReceiveInHexFormat].pack('H*')
 		@pkmnPlayerWillReceiveInSymbolFormat = Marshal.load(@pkmnPlayerWillReceiveInMarshaldataFormat)
-		Console.echo_warn "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}"
+		#Console.echo_warn "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}"
 		#set bitmap of sprite for what player is receiving and reveal it
 		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceiveInSymbolFormat.species, @pkmnPlayerWillReceiveInSymbolFormat.gender, @pkmnPlayerWillReceiveInSymbolFormat.form, @pkmnPlayerWillReceiveInSymbolFormat.shiny?)
 		@sprites["pkmnPlayerIsReceiving"].visible = true
@@ -330,7 +349,7 @@ class OfflineTradingSystem
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
 		#find box file icon of pokemon player is offering
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}"
+		#Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}"
 		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_offering)
@@ -339,7 +358,7 @@ class OfflineTradingSystem
 		end
 		
 		#find box file icon of pokemon player is receiving
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}"
+		#Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}"
 		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)
 
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_receiving)
@@ -356,10 +375,10 @@ class OfflineTradingSystem
 		success = add_text_to_png(TRADE_FILE_PATH, entireEncodedAgreementCode)
 
 		if success
-			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			#puts "Adding text to png successful! The image should now contain the encoded hex data."
 			return true
 		else
-			puts "Adding text to png failed."
+			#puts "Adding text to png failed."
 			print "do something to try again"
 			return false
 		end
@@ -378,10 +397,10 @@ class OfflineTradingSystem
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
 		@pkmnPlayerWillReceiveInHexFormat = hex_data
-		Console.echo_warn "hex data before encoding: #{hex_data}"
+		#Console.echo_warn "hex data before encoding: #{hex_data}"
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
 		#find box file icon of pokemon
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
+		#Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
 		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
 		#copy the box sprite of the pkmn to the Trading folder
 		if !File.exist?(boxFileIconPath)
@@ -398,15 +417,15 @@ class OfflineTradingSystem
 		success = add_text_to_png(TRADE_FILE_PATH, encoded_hex_data)
 
 		if success
-			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			#puts "Adding text to png successful! The image should now contain the encoded hex data."
 		else
-			puts "Adding text to png failed."
+			#puts "Adding text to png failed."
 			print "do something to try again"
 		end
 	end #def self.createOfferImage
 
 	def self.encode(data)
-		Console.echo_warn data.to_s
+		#Console.echo_warn data.to_s
 		@encodedString = ""
 		data.to_s.each_char do |char|
 			#@encodedString
@@ -425,7 +444,7 @@ class OfflineTradingSystem
 	end #def self.encode
 	
 	def self.decode(data)
-		Console.echo_warn data.to_s
+		#Console.echo_warn data.to_s
 		@decodedString = ""
 		index = 0
 		while index < data.length
@@ -454,7 +473,7 @@ class OfflineTradingSystem
 	end #def self.saveTradeOfferBitmap
 
 	def self.saveTradeAgreementBitmap(imageFilePath_pkmn_player_is_offering, imageFilePath_pkmn_player_is_receiving)
-		Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}"
+		#Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}"
 		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
 		@bitmapViewport.z = 99999
 		
@@ -497,20 +516,20 @@ class OfflineTradingSystem
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(trade_file_path)
 		if !text_from_png
-			puts "Getting text from png failed."
+			#puts "Getting text from png failed."
 			print "do something to try again"
 		end
 		
-		puts "Getting text from png successful!"
-		puts "Encoded hex from png: #{text_from_png}"
+		#puts "Getting text from png successful!"
+		#puts "Encoded hex from png: #{text_from_png}"
 		arrayOfText = text_from_png.split("_")
 		@otherPlayerTradeID = self.decode(arrayOfText[0])
 		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
 		#Console.echo_warn "other player's tradeID is #{@otherPlayerTradeID}"
 		
-		Console.echo_warn "player's trade ID is '#{$game_player.tradeID}'"
-		Console.echo_warn "================================================"
-		Console.echo_warn "player tradeID from Trade.png is #{@otherPlayerTradeID}"
+		#Console.echo_warn "player's trade ID is '#{$game_player.tradeID}'"
+		#Console.echo_warn "================================================"
+		#Console.echo_warn "player tradeID from Trade.png is #{@otherPlayerTradeID}"
 		
 		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
 		#the tradeID is extracted into its own variable - @otherPlayerTradeID
@@ -523,31 +542,31 @@ class OfflineTradingSystem
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(TRADE_FILE_PATH)
 		if !text_from_png
-			puts "Getting text from png failed."
+			#puts "Getting text from png failed."
 			print "do something to try again"
 		end
 		
-		puts "Getting text from png successful!"
-		puts "Encoded hex from png: #{text_from_png}"
+		#puts "Getting text from png successful!"
+		#puts "Encoded hex from png: #{text_from_png}"
 		arrayOfText = text_from_png.split("_")
 		decodedElement0 = self.decode(arrayOfText[0])
 		decodedElement1 = self.decode(arrayOfText[1])
 		decodedElement2 = self.decode(arrayOfText[2])
 		decodedElement3 = self.decode(arrayOfText[3])
-		Console.echo_warn "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}"
-		Console.echo_warn "========================"
-		Console.echo_warn decodedElement0
-		Console.echo_warn "========================"
-		Console.echo_warn [decodedElement1].pack('H*')
-		Console.echo_warn "========================"
-		Console.echo_warn decodedElement2
-		Console.echo_warn "========================"
-		Console.echo_warn [decodedElement3].pack('H*')
-		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
-		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}"
-		Console.echo_warn "========================"
+		#Console.echo_warn "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}"
+		#Console.echo_warn "========================"
+		#Console.echo_warn decodedElement0
+		#Console.echo_warn "========================"
+		#Console.echo_warn [decodedElement1].pack('H*')
+		#Console.echo_warn "========================"
+		#Console.echo_warn decodedElement2
+		#Console.echo_warn "========================"
+		#Console.echo_warn [decodedElement3].pack('H*')
+		#Console.echo_warn "========================"
+		#Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
+		#Console.echo_warn "========================"
+		#Console.echo_warn "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}"
+		#Console.echo_warn "========================"
 		
 		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
 		pkmnOtherTrainerIsGivingToPlayer = decodedElement1

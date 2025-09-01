@@ -1395,7 +1395,7 @@ class TimeMachinePokemonStorageScreen
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause unstable gameplay on the save file you are editing. Are you okay with this?"))
       #return
     end
     command = pbShowCommands(_INTL("Transfer this Pokémon? Any held item will be lost in the process."), [_INTL("No"), _INTL("Yes")])

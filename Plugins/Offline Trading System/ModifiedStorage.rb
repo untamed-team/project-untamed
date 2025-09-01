@@ -1245,7 +1245,7 @@ class TradingPokemonStorageScreen
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+	  pbDisplay(_INTL("You can trade your last party Pokémon away, but this could cause unstable gameplay on this save file. Are you okay with this?"))
       #return
     end
     command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
