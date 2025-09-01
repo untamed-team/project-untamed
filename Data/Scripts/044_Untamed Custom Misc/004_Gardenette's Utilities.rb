@@ -2442,6 +2442,23 @@ EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   end
 })
 
+#############################################
+# Create a text file #
+#############################################
+# Example function to create a text file from a string
+def self.pbCreateTextFile(filename, content, writeType="w")
+  begin
+    File.open(filename, writeType, encoding: "UTF-8") do |file|
+      file.write(content)
+    end
+    # The file has been successfully created.
+    return true
+  rescue
+    # An error occurred.
+    return false
+  end
+end
+
 end #class GardenUtil
 
 #############################################

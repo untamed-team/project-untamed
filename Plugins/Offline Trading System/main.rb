@@ -13,6 +13,7 @@ end
 
 class OfflineTradingSystem
 	TRADE_FILE_PATH = "Trading/Trade.png"
+	TRADING_ERROR_LOG_FILE_PATH = "Trading/ErrorLog.txt"
 	
 	ELIGIBLE_CHARACTERS = ["A","a","B","b","C","c","D","d","E","e","F","f","G","g","H","h","I","i","J","j","K","k","L","l","M","m","N","n","O","o","P","p","Q","q","R","r","S","s","T","t","U","u","V","v","W","w","X","x","Y","y","Z","z","1","2","3","4","5","6","7","8","9","0"]
 	
@@ -131,6 +132,9 @@ class OfflineTradingSystem
 	def self.tradeMenu(pkmn)
 		@pkmnPlayerIsOfferingInSymbolFormat = nil
 		@pkmnPlayerIsOfferingInSymbolFormat = pkmn
+		@errorLog = ""
+		Console.echo_warn "Creating blank error log in Trading folder"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "", "w")
 		#create new screen for trading
 		pbFadeOutIn {
 			self.setupTradingScreen
@@ -324,7 +328,7 @@ class OfflineTradingSystem
 		#this variable needs to be fully decoded
 		@pkmnPlayerWillReceiveInMarshaldataFormat = [@pkmnPlayerWillReceiveInHexFormat].pack('H*')
 		@pkmnPlayerWillReceiveInSymbolFormat = Marshal.load(@pkmnPlayerWillReceiveInMarshaldataFormat)
-		Console.echo_warn "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}\n\n", "a")
 		#set bitmap of sprite for what player is receiving and reveal it
 		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceiveInSymbolFormat.species, @pkmnPlayerWillReceiveInSymbolFormat.gender, @pkmnPlayerWillReceiveInSymbolFormat.form, @pkmnPlayerWillReceiveInSymbolFormat.shiny?)
 		@sprites["pkmnPlayerIsReceiving"].visible = true
@@ -334,7 +338,7 @@ class OfflineTradingSystem
 		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
 		playerTradeID = $game_player.tradeID
 		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
-		Console.echo_warn serialized_data_for_pkmn_player_is_offering
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data_for_pkmn_player_is_offering is #{serialized_data_for_pkmn_player_is_offering}\n\n", "a")
 		otherPlayerTradeID = @otherPlayerTradeID
 		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
 		
@@ -349,7 +353,7 @@ class OfflineTradingSystem
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
 		#find box file icon of pokemon player is offering
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}\n\n", "a")
 		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_offering)
@@ -358,7 +362,7 @@ class OfflineTradingSystem
 		end
 		
 		#find box file icon of pokemon player is receiving
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}\n\n", "a")
 		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)
 
 		if !File.exist?(boxFileIconPath_for_pkmn_player_is_receiving)
@@ -375,10 +379,10 @@ class OfflineTradingSystem
 		success = add_text_to_png(TRADE_FILE_PATH, entireEncodedAgreementCode)
 
 		if success
-			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png successful! The image should now contain the encoded hex data.\n\n", "a")
 			return true
 		else
-			puts "Adding text to png failed."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png failed.\n\n", "a")
 			print "do something to try again"
 			return false
 		end
@@ -392,15 +396,15 @@ class OfflineTradingSystem
 		playerTradeID = $game_player.tradeID
 		pokemon_to_save = pkmn
 		serialized_data = Marshal.dump(pokemon_to_save)
-		Console.echo_warn serialized_data
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data is #{serialized_data}\n\n", "a")
 		
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
 		@pkmnPlayerWillReceiveInHexFormat = hex_data
-		Console.echo_warn "hex data before encoding: #{hex_data}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data before encoding: #{hex_data}\n\n", "a")
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
 		#find box file icon of pokemon
-		Console.echo_warn "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}\n\n", "a")
 		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
 		#copy the box sprite of the pkmn to the Trading folder
 		if !File.exist?(boxFileIconPath)
@@ -417,15 +421,15 @@ class OfflineTradingSystem
 		success = add_text_to_png(TRADE_FILE_PATH, encoded_hex_data)
 
 		if success
-			puts "Adding text to png successful! The image should now contain the encoded hex data."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png successful! The image should now contain the encoded hex data.\n\n", "a")
 		else
-			puts "Adding text to png failed."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png failed.\n\n", "a")
 			print "do something to try again"
 		end
 	end #def self.createOfferImage
 
 	def self.encode(data)
-		Console.echo_warn data.to_s
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "data.to_s is #{data.to_s}\n\n", "a")
 		@encodedString = ""
 		data.to_s.each_char do |char|
 			#@encodedString
@@ -433,7 +437,7 @@ class OfflineTradingSystem
 			#else (key does not exist named after the character), so add the character to @encodedString and move on
 			if ENCODER_MAPPING.include?(char)
 				keyValue = ENCODER_MAPPING[char]
-				Console.echo_warn "#{char} will be encoded to #{keyValue}"
+				#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{char} will be encoded to #{keyValue}\n\n", "a")
 				@encodedString += keyValue
 			else
 				print "#{char} not included in encoder. Report this issue to the development team"
@@ -444,16 +448,16 @@ class OfflineTradingSystem
 	end #def self.encode
 	
 	def self.decode(data)
-		Console.echo_warn data.to_s
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "data.to_s is #{data.to_s}\n\n", "a")
 		@decodedString = ""
 		index = 0
 		while index < data.length
-			puts data.slice(index, 3)
+			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "data.slice(index, 3) is #{data.slice(index, 3)}\n\n", "a")
 			setOfCharactersToDecode = data.slice(index, 3)
 			@decodedString += ENCODER_MAPPING.key("#{setOfCharactersToDecode}")
 			index += 3
 		end
-		puts "decoded string is #{@decodedString}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "decoded string is #{@decodedString}\n\n", "a")
 		return @decodedString
 	end #def self.encode
 
@@ -473,7 +477,7 @@ class OfflineTradingSystem
 	end #def self.saveTradeOfferBitmap
 
 	def self.saveTradeAgreementBitmap(imageFilePath_pkmn_player_is_offering, imageFilePath_pkmn_player_is_receiving)
-		Console.echo_warn "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}\n\n", "a")
 		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
 		@bitmapViewport.z = 99999
 		
@@ -516,20 +520,20 @@ class OfflineTradingSystem
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(trade_file_path)
 		if !text_from_png
-			puts "Getting text from png failed."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
 			print "do something to try again"
 		end
 		
-		puts "Getting text from png successful!"
-		puts "Encoded hex from png: #{text_from_png}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
 		arrayOfText = text_from_png.split("_")
 		@otherPlayerTradeID = self.decode(arrayOfText[0])
 		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
-		Console.echo_warn "other player's tradeID is #{@otherPlayerTradeID}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
 		
-		Console.echo_warn "player's trade ID is '#{$game_player.tradeID}'"
-		Console.echo_warn "================================================"
-		Console.echo_warn "player tradeID from Trade.png is #{@otherPlayerTradeID}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's trade ID is '#{$game_player.tradeID}'\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "================================================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player tradeID from Trade.png is #{@otherPlayerTradeID}\n\n", "a")
 		
 		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
 		#the tradeID is extracted into its own variable - @otherPlayerTradeID
@@ -542,31 +546,31 @@ class OfflineTradingSystem
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(TRADE_FILE_PATH)
 		if !text_from_png
-			puts "Getting text from png failed."
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
 			print "do something to try again"
 		end
 		
-		puts "Getting text from png successful!"
-		puts "Encoded hex from png: #{text_from_png}"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
 		arrayOfText = text_from_png.split("_")
 		decodedElement0 = self.decode(arrayOfText[0])
 		decodedElement1 = self.decode(arrayOfText[1])
 		decodedElement2 = self.decode(arrayOfText[2])
 		decodedElement3 = self.decode(arrayOfText[3])
-		Console.echo_warn "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}"
-		Console.echo_warn "========================"
-		Console.echo_warn decodedElement0
-		Console.echo_warn "========================"
-		Console.echo_warn [decodedElement1].pack('H*')
-		Console.echo_warn "========================"
-		Console.echo_warn decodedElement2
-		Console.echo_warn "========================"
-		Console.echo_warn [decodedElement3].pack('H*')
-		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}"
-		Console.echo_warn "========================"
-		Console.echo_warn "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}"
-		Console.echo_warn "========================"
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{decodedElement0}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{[decodedElement1].pack('H*')}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{decodedElement2}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{[decodedElement3].pack('H*')}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
 		
 		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
 		pkmnOtherTrainerIsGivingToPlayer = decodedElement1
@@ -594,21 +598,23 @@ class OfflineTradingSystem
 		
 		if tradeIDOfPersonPlayerIsTradingWith == $game_player.tradeID
 			pbMessage(_INTL("Trade.png in your Trading folder is the agreement you generated."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Trade.png in your Trading folder is the agreement you generated.\n\n", "a")
 		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
 			pbMessage(_INTL("Trade ID of other player has changed. Trade is invalid."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Trade ID of other player has changed. Trade is invalid.\n\n", "a")
 		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
 			pbMessage(_INTL("The Pokémon you are receiving is not what you agreed upon."))
-			pbMessage(_INTL("Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat"))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
 		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat
 			pbMessage(_INTL("The Pokémon you are giving to the other player is not what they agreed upon."))
-			pbMessage(_INTL("Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat"))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
 		elsif !foundInParty && !foundInBox
 			pbMessage(_INTL("You no longer have the Pokémon to finalize this trade."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
 		else
 			#valid trade
 			success = true
-		end
-		
+		end		
 		return success
 	end #def self.readAgreementImage
 
