@@ -109,7 +109,7 @@ class Battle::Battler
     return true if !@battle.internalBattle
     return true if !@battle.pbOwnedByPlayer?(@index)
     disobedient = false
-    # Pokémon may be disobedient; calculate if it is
+    # Pokémon may be disobedient; calculate if it is #edits #by low
     badge_level = ((@battle.pbPlayer.badge_count + 1) ** 2.2).floor + 5
     badge_level = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
     if @pokemon.foreign?(@battle.pbPlayer) && @pokemon.obtain_method == 4 && @pokemon.owner.name != "Mustang"

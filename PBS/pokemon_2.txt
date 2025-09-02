@@ -1049,7 +1049,7 @@ Shape = HeadArms
 Category = Stump
 Pokedex = Phantump like to play pranks on young children in towns. If a Phantump has become friends with a child, it will try to lure them into the forest.
 Generation = 6
-Evolutions = TREVENANT,Trade,
+Evolutions = TREVENANT,Trade,,TREVENANT,Link,
 #-------------------------------
 [TREVENANT]
 Name = Trevenant
@@ -1582,7 +1582,7 @@ Habitat = Urban
 Category = Virtual
 Pokedex = It is capable of reverting itself entirely back to program data in order to enter cyberspace. A Porygon is copy-protected so it cannot be duplicated.
 Generation = 1
-Evolutions = PORYGON2,TradeItem,UPGRADE
+Evolutions = PORYGON2,TradeItem,UPGRADE,PORYGON2,LinkItem,UPGRADE
 #-------------------------------
 [PORYGON2]
 Name = Porygon2
@@ -1608,7 +1608,7 @@ Habitat = Urban
 Category = Virtual
 Pokedex = It was created by humans using the power of science. It has been given artificial intelligence that enables it to learn new gestures and emotions on its own.
 Generation = 2
-Evolutions = PORYGONZ,TradeItem,DUBIOUSDISC
+Evolutions = PORYGONZ,TradeItem,DUBIOUSDISC,PORYGONZ,LinkItem,DUBIOUSDISC
 #-------------------------------
 [PORYGONZ]
 Name = Porygon-Z
@@ -3168,7 +3168,7 @@ Color = Brown
 Shape = Insectoid
 Category = Boxing
 Pokedex = In the Mazah region, Crabrawler are adapted to desert life. They craft shelters out of dirt and mud and are often kept as assistants by local mechanics.
-Evolutions = CRUSTANG,TradeItem,METALCOAT
+Evolutions = CRUSTANG,TradeItem,METALCOAT,CRUSTANG,LinkItem,METALCOAT
 #------------------------------- # note: +nature 86 speed sand rush = 174 speed
 [CRUSTANG]
 Name = Crustang
@@ -3719,7 +3719,7 @@ Habitat = WatersEdge
 Category = Fish
 Pokedex = Feebas live in ponds that are heavily infested with weeds. Because of its hopelessly shabby appearance, it seems as if few trainers raise it.
 Generation = 3
-Evolutions = MILOTIC,TradeItem,PRISMSCALE
+Evolutions = MILOTIC,TradeItem,PRISMSCALE,MILOTIC,LinkItem,PRISMSCALE
 #-------------------------------
 [MILOTIC]
 Name = Milotic
@@ -4664,7 +4664,7 @@ Shape = BipedalTail
 Habitat = Cave
 Category = Axe Head
 Pokedex = The volcanic stone of a K'Hatchet's head is incredibly sharp. They compete for territory by swinging their heads at eachother, and eat lichen growing in caves.
-Evolutions = MAKWAHURT,TradeItem,PROTECTOR
+Evolutions = MAKWAHURT,TradeItem,PROTECTOR,MAKWAHURT,LinkItem,PROTECTOR
 #-------------------------------
 [MAKWAHURT]
 Name = Mak'Wahurt
@@ -5479,7 +5479,6 @@ Habitat = Forest
 Category = Beckon
 Pokedex = The body of a Dusclops are thought to contain a void. No scientific tests or humans have survived experiment to find out.
 Generation = 3
-Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
 #-------------------------------
 [DUSKNOIR]
 Name = Failsafe_Dusknoir
@@ -5851,7 +5850,6 @@ Category = Pumpkin
 Pokedex = To avoid detection, Pumpkaboo in the Mazah region usually disguise themselves as a normal pumpkin. If found, they use ghostly energies to flee.
 FormName = Small Size
 Generation = 6
-Evolutions = GOURGEIST,Trade,
 #-------------------------------
 [GOURGEIST]
 Name = Failsafe_Gourgeist

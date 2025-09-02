@@ -1201,7 +1201,7 @@ Category = Pumpkin
 Pokedex = To avoid detection, Pumpkaboo in the Mazah region usually disguise themselves as a normal pumpkin. If found, they use ghostly energies to flee.
 FormName = Small Size
 Generation = 6
-Evolutions = GOURGEIST,Trade,
+Evolutions = GOURGEIST,Trade,,GOURGEIST,Link,
 #-------------------------------
 [GOURGEIST]
 Name = Gourgeist
@@ -1352,7 +1352,7 @@ Shape = HeadArms
 Category = Stump
 Pokedex = Phantump like to play pranks on young children in towns. If a Phantump has become friends with a child, it will try to lure them into the forest.
 Generation = 6
-Evolutions = TREVENANT,Trade,
+Evolutions = TREVENANT,Trade,,TREVENANT,Link,
 #-------------------------------
 [TREVENANT]
 Name = Trevenant
@@ -1509,7 +1509,7 @@ Category = Beckon
 Pokedex = The body of a Dusclops is thought to contain the perfect environment for harbouring souls. Because of this, the people of the Mazah region deem it as sacred.
 Generation = 3
 WildItemUncommon = SPELLTAG
-Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH
+Evolutions = DUSKNOIR,TradeItem,REAPERCLOTH,DUSKNOIR,LinkItem,REAPERCLOTH
 #-------------------------------
 [DUSKNOIR]
 Name = Dusknoir
@@ -1969,7 +1969,7 @@ Habitat = WatersEdge
 Category = Fish
 Pokedex = Although unattractive and unpopular, Feebas can survive under poor conditions most Pokémon could not.
 Generation = 3
-Evolutions = MILOTIC,Beauty,170,MILOTIC,TradeItem,PRISMSCALE
+Evolutions = MILOTIC,Beauty,170,MILOTIC,TradeItem,PRISMSCALE,MILOTIC,LinkItem,PRISMSCALE
 #-------------------------------
 [MILOTIC]
 Name = Milotic
@@ -5194,7 +5194,7 @@ Habitat = Urban
 Category = Virtual
 Pokedex = They are thought to have entered the Mazah region through a data leak from Kanto. People are advised to keep their computers updated to avoid incidents.
 Generation = 1
-Evolutions = PORYGON2,TradeItem,UPGRADE
+Evolutions = PORYGON2,TradeItem,UPGRADE,PORYGON2,LinkItem,UPGRADE
 #-------------------------------
 [PORYGON2]
 Name = Porygon2
@@ -5220,7 +5220,7 @@ Habitat = Urban
 Category = Virtual
 Pokedex = It was created by humans using the power of science. It has been given artificial intelligence that enables it to learn new gestures and emotions on its own.
 Generation = 2
-Evolutions = PORYGONZ,TradeItem,DUBIOUSDISC
+Evolutions = PORYGONZ,TradeItem,DUBIOUSDISC,PORYGONZ,LinkItem,DUBIOUSDISC
 #-------------------------------
 [SLUGMA]
 Name = Slugma
@@ -6142,7 +6142,7 @@ Shape = Bipedal
 Category = Muscular
 Pokedex = They strengthen their bodies by carrying steel beams. They show off their big muscles to their friends.
 Generation = 5
-Evolutions = CONKELDURR,Trade,
+Evolutions = CONKELDURR,Trade,,CONKELDURR,Link,
 #-------------------------------
 [CONKELDURR]
 Name = Conkeldurr
@@ -6273,7 +6273,7 @@ Category = Electric
 Pokedex = When a storm approaches, it competes with others to scale heights that are likely to be stricken by lightning. Some towns use Electabuzz as lightning rods.
 Generation = 1
 WildItemUncommon = ELECTIRIZER
-Evolutions = ELECTIVIRE,TradeItem,ELECTIRIZER
+Evolutions = ELECTIVIRE,TradeItem,ELECTIRIZER,ELECTIVIRE,LinkItem,ELECTIRIZER
 #-------------------------------
 [ELECTIVIRE]
 Name = Electivire
@@ -6402,7 +6402,7 @@ Pokedex = Because its energy was too great to be contained, the energy leaked an
 Generation = 5
 WildItemCommon = EVERSTONE
 WildItemUncommon = HARDSTONE
-Evolutions = GIGALITH,Trade,
+Evolutions = GIGALITH,Trade,,GIGALITH,Link,
 #-------------------------------
 [GIGALITH]
 Name = Gigalith

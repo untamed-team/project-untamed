@@ -316,28 +316,29 @@ GameData::Evolution.register({
 })
 
 #===============================================================================  
-# Link Cable #by low  
+# Link Cable #by low 
+# (this used to be the only way for evolving trade mons)
 #===============================================================================  
 GameData::Evolution.register({  
-  :id            => :Trade,  
+  :id            => :Link,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeMale,  
+  :id            => :LinkMale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.male? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeFemale,  
+  :id            => :LinkFemale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.female? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id                   => :TradeItem,  
+  :id                   => :LinkItem,  
   :parameter            => :Item,  
   :use_item_proc        => proc { |pkmn, parameter, item|  
     next pkmn.item == parameter && item == :LINKCABLE  
@@ -346,25 +347,6 @@ GameData::Evolution.register({
     next false if evo_species != new_species || !pkmn.hasItem?(parameter)  
     pkmn.item = nil   # Item is now consumed
   }
-})
-  
-  # these 2 are the same thing, fsr it doesnt check night/day when using items and its such a niche problem  
-GameData::Evolution.register({  
-  :id            => :TradeDay,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isDay?  
-      next item == :LINKCABLE  
-    end  
-  }  
-})
-
-GameData::Evolution.register({  
-  :id            => :TradeNight,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isNight?  
-      next item == :LINKCABLE  
-    end  
-  }  
 })
 
 #===============================================================================
@@ -656,9 +638,9 @@ class PokemonPokedexInfo_Scene
         _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
       when :ItemFemale
         _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade
+      when :Trade, :Link
         _INTL("{1} trading",evoName)
-      when :TradeItem
+      when :TradeItem, :LinkItem
         _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
       when :TradeSpecies
         _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)

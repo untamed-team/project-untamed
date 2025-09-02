@@ -157,7 +157,7 @@ class Battle::AI
       end
     end
     # only need the globalarray here since pbCalcType should get the type in the normal way
-    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain", "TargetMovesBecomeElectric"].include?(move.function)
+    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain"].include?(move.function)
       globalArray = @megaGlobalArray
       if move.function == "TypeAndPowerDependOnWeather"
         if !user.hasActiveItem?(:UTILITYUMBRELLA)
@@ -172,19 +172,19 @@ class Battle::AI
         ret = :FAIRY    if globalArray.include?("misty terrain")
         ret = :PSYCHIC  if globalArray.include?("psychic terrain")
       end
-      # electrify logic
-      user.eachOpposing do |b|
-        if targetWillMove?(b)
-          targetMove = @battle.choices[b.index][2]
-          if targetMove.function == "TargetMovesBecomeElectric"
-            thisprio = priorityAI(user, move, globalArray)
-            thatprio = priorityAI(b, targetMove, globalArray)
-            aspeed = pbRoughStat(user,:SPEED,skill)
-            ospeed = pbRoughStat(b,:SPEED,skill)
-            outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-            outsped = true if thatprio > thisprio && thatprio != 0
-            ret = :ELECTRIC if outsped
-          end
+    end
+    # electrify logic
+    user.eachOpposing do |b|
+      if targetWillMove?(b)
+        targetMove = @battle.choices[b.index][2]
+        if targetMove.function == "TargetMovesBecomeElectric"
+          thisprio = priorityAI(user, move, globalArray)
+          thatprio = priorityAI(b, targetMove, globalArray)
+          aspeed = pbRoughStat(user,:SPEED,skill)
+          ospeed = pbRoughStat(b,:SPEED,skill)
+          outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+          outsped = true if thatprio > thisprio && thatprio != 0
+          ret = :ELECTRIC if outsped
         end
       end
     end

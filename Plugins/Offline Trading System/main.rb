@@ -325,6 +325,7 @@ class OfflineTradingSystem
 			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
 			evo.pbTrade
 			evo.pbEndScreen
+			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4
 			
 			@boxScene.update
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
@@ -644,7 +645,6 @@ class OfflineTradingSystem
 		end
 		egglist = pkmn.species_data.get_egg_moves
 		pkmn.moves.each_with_index do |move, i|
-			#if !pkmn.compatible_with_move?(move.id) && !pkmn.can_relearn_move?(move.id) && !egglist.include?(move.id) #can_relearn_move? method does not accept arguments
 			if !pkmn.compatible_with_move?(move.id) && !egglist.include?(move.id)
 				pkmn.forget_move_at_index(i)
 				pkmn.learn_move(:REST) unless pkmn.hasMove?(:REST)
