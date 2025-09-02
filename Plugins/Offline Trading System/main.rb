@@ -1,10 +1,7 @@
 #Offline trading system
 #TO DO:
-#as a backup, i would do some checks at the end of the trade:
-#does this savefile have a pokemon with the exact same pkmnID? If so, the alien pokemon is deleted
-#if the pokemon received is above the badge level, the pokemon will always disobey. No ifs or buts
-#everytime a pokemon is deleted/added, the game automatically saves. The player does not confirm to save, the game forces the player to do so
-#don't allow user to even select the only pkmn in their party as a trade
+#make pkmn evolve upon trading if holding specific item
+
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -300,27 +297,40 @@ class OfflineTradingSystem
 				return
 			}
 		end
-
-		@pkmnPlayerWillReceiveInSymbolFormat = legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
-
+		
 		#when finalizedTrade is true, we'll get here
-		if @pkmnToReplace[0] == "party"
-			$player.party[@pkmnToReplace[1]] = @pkmnPlayerWillReceiveInSymbolFormat
-		elsif @pkmnToReplace[0] == "box"
-			$PokemonStorage[@pkmnToReplace[1], @pkmnToReplace[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+		#legality checks for invalid pokemon and invalid moves
+		@pkmnPlayerWillReceiveInSymbolFormat = self.legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
+		#set obtain method to "Trade"
+		@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 2
+		
+		if @pkmnToReplaceLocationAndIndex[0] == "party"
+			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 		end
 		
-		Game.save
+		#add to the amount of trades player has completed
+		$stats.trade_count += 1
+		
+		######################Game.save
+		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 	
 		pbFadeOutIn {
 			@sprites.dispose
 			@tradingViewport.dispose
+			
+			#evolve pkmn if needed
+			evo = PokemonTrade_Scene.new
+			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbTrade
+			evo.pbEndScreen
+			
 			@boxScene.update
-			if @pkmnToReplace[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplace[1]) 
-			elsif @pkmnToReplace[0] == "box"
-				print "refreshing box"
-				@boxScreen.pbRefreshSingle(@pkmnToReplace[2]) 
+			if @pkmnToReplaceLocationAndIndex[0] == "party"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
 			end
 		}
 	
@@ -546,7 +556,7 @@ class OfflineTradingSystem
 	end #def self.readOfferImage
 
 	def self.readAgreementImage
-		@pkmnToReplace = []
+		@pkmnToReplaceLocationAndIndex = []
 		success = false
 		# 2. Decode the data and capture the return value
 		text_from_png = get_text_from_png(TRADE_FILE_PATH)
@@ -586,14 +596,14 @@ class OfflineTradingSystem
 		foundInBox = false
 		if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
 			foundInParty = true
-			@pkmnToReplace = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
+			@pkmnToReplaceLocationAndIndex = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
 		else
 			for i in 0...$PokemonStorage.maxBoxes
 				for j in 0...$PokemonStorage.maxPokemon(i)
 					pkmn = $PokemonStorage[i, j]
 					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
 						foundInBox = true
-						@pkmnToReplace = ["box", i, j]
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
 						break
 					end
 				end
@@ -623,7 +633,7 @@ class OfflineTradingSystem
 		return success
 	end #def self.readAgreementImage
 
-	def legalitychecks(pkmn)
+	def self.legalitychecks(pkmn)
 		pkmn.clear_first_moves
 		if pkmn.speciesName.include?("Failsafe")
 			pkmn.species = :DELETED_PKMN
@@ -634,7 +644,8 @@ class OfflineTradingSystem
 		end
 		egglist = pkmn.species_data.get_egg_moves
 		pkmn.moves.each_with_index do |move, i|
-			if !pkmn.compatible_with_move?(move.id) && !pkmn.can_relearn_move?(move.id) && !egglist.include?(move.id)
+			#if !pkmn.compatible_with_move?(move.id) && !pkmn.can_relearn_move?(move.id) && !egglist.include?(move.id) #can_relearn_move? method does not accept arguments
+			if !pkmn.compatible_with_move?(move.id) && !egglist.include?(move.id)
 				pkmn.forget_move_at_index(i)
 				pkmn.learn_move(:REST) unless pkmn.hasMove?(:REST)
 			end

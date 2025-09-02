@@ -1251,14 +1251,25 @@ class TradingPokemonStorageScreen
     command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
     if command == 0
       pkmnname = pokemon.name
-      #throw the held item (if there is any) into the bag
-      if pokemon.item
-        pbDisplay(_INTL("{1} was stored safely into your bag.", pokemon.item))
+	  
+	  #what trade items does this pkmn need to evolve?
+	  evos = GameData::Species.get(pokemon.species).get_evolutions
+	  holdingTradeItemForEvo = false
+	  for evo in evos
+		evoMethod = evo[1]
+		evoParameter = evo[2]
+		if evoMethod.to_s == "TradeItem" && evoParameter.to_s == pokemon.item.id.to_s
+			holdingTradeItemForEvo = true
+			break
+		end
+	  end
+      #throw the held item (if there is any) into the bag (and if the pkmn does not need this item to evolve in a trade)
+      if pokemon.item && !holdingTradeItemForEvo
+        pbDisplay(_INTL("{1} was stored safely into your bag.", pokemon.item.name))
         $bag.add(pokemon.item)
         pokemon.item = nil
       end
-      
-      #add the pokemon to a global variable to receive on the current save when done
+    
       #print "Offering #{pokemon} as trade"
       #this is where we create a new screen for trading and generate an offer code
       OfflineTradingSystem.tradeMenu(pokemon)
