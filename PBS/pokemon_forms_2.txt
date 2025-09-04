@@ -314,7 +314,7 @@ Weight = 27.8
 Pokedex = It can only undergo this transformation once it feeds from a thousand gems. In this form, Diancie's entire purpose is to fulfill the desires of her subjects.
 Generation = 6
 #---------------------------------------------------------------------------------------------
-# FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA)
+# FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA + bootleg skarm)
 #---------------------------------------------------------------------------------------------
 [FURFROU,1]
 FormName = Heart Trim

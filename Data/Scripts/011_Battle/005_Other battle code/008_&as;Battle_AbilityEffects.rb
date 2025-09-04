@@ -1862,7 +1862,7 @@ Battle::AbilityEffects::OnBeingHit.add(:AFTERMATH,
     if user.takesIndirectDamage?(Battle::Scene::USE_ABILITY_SPLASH) &&
        user.affectedByContactEffect?(Battle::Scene::USE_ABILITY_SPLASH)
       battle.scene.pbDamageAnimation(user)
-      user.pbReduceHP(user.totalhp / 4, false)
+      user.pbReduceHP(user.bossTotalHP / 4, false)
       battle.pbDisplay(_INTL("{1} was caught in the aftermath!", user.pbThis))
     end
     battle.pbHideAbilitySplash(target)
@@ -2057,7 +2057,7 @@ Battle::AbilityEffects::OnBeingHit.add(:IRONBARBS,
     if user.takesIndirectDamage?(Battle::Scene::USE_ABILITY_SPLASH) &&
        user.affectedByContactEffect?(Battle::Scene::USE_ABILITY_SPLASH)
       battle.scene.pbDamageAnimation(user)
-      user.pbReduceHP(user.totalhp / 8, false)
+      user.pbReduceHP(user.bossTotalHP / 8, false)
       if Battle::Scene::USE_ABILITY_SPLASH
         battle.pbDisplay(_INTL("{1} is hurt!", user.pbThis))
       else
@@ -2408,7 +2408,7 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
     next if !move.soundMove?
     hpGain = 0
     if move.statusMove?
-      hpGain = (user.totalhp / 16.0).round
+      hpGain = (user.bossTotalHP / 16.0).round
       battle.pbShowAbilitySplash(user)
       user.pbRecoverHP(hpGain)
       battle.pbHideAbilitySplash(user)
@@ -2548,14 +2548,14 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:DRYSKIN,
     when :Sun, :HarshSun
       battle.pbShowAbilitySplash(battler)
       battle.scene.pbDamageAnimation(battler)
-      battler.pbReduceHP(battler.totalhp / 8, false)
+      battler.pbReduceHP(battler.bossTotalHP / 8, false)
       battle.pbDisplay(_INTL("{1} was hurt by the sunlight!", battler.pbThis))
       battle.pbHideAbilitySplash(battler)
       battler.pbItemHPHealCheck
     when :Rain, :HeavyRain
       next if !battler.canHeal?
       battle.pbShowAbilitySplash(battler)
-      battler.pbRecoverHP(battler.totalhp / 8)
+      battler.pbRecoverHP(battler.bossTotalHP / 8)
       if Battle::Scene::USE_ABILITY_SPLASH
         battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
       else
@@ -2571,7 +2571,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:SOLARPOWER,
     next unless [:Sun, :HarshSun].include?(weather)
     battle.pbShowAbilitySplash(battler)
     battle.scene.pbDamageAnimation(battler)
-    battler.pbReduceHP((battler.totalhp / 8).round, false)
+    battler.pbReduceHP((battler.bossTotalHP / 8).round, false)
     battle.pbDisplay(_INTL("{1} was hurt by the sunlight!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
     battler.pbItemHPHealCheck
@@ -2583,7 +2583,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:RAINDISH,
     next unless [:Rain, :HeavyRain].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    hpRecovered = (weather == :HeavyRain) ? (battler.totalhp / 6).round : (battler.totalhp / 8).round
+    hpRecovered = (weather == :HeavyRain) ? (battler.bossTotalHP / 6).round : (battler.bossTotalHP / 8).round
     battler.pbRecoverHP(hpRecovered)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
@@ -2599,7 +2599,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:ICEBODY,
     next unless weather == :Hail
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(battler.totalhp / 8)
+    battler.pbRecoverHP(battler.bossTotalHP / 8)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
     else
@@ -2615,7 +2615,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:HEALINGSUN,
     next unless [:Sun, :HarshSun].include?(weather)
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    hpRecovered = (weather == :HarshSun) ? (battler.totalhp / 6).round : (battler.totalhp / 8).round
+    hpRecovered = (weather == :HarshSun) ? (battler.bossTotalHP / 6).round : (battler.bossTotalHP / 8).round
     battler.pbRecoverHP(hpRecovered)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
@@ -2631,7 +2631,7 @@ Battle::AbilityEffects::EndOfRoundWeather.add(:PARTICURE,
     next unless weather == :Sandstorm
     next if !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(battler.totalhp / 8)
+    battler.pbRecoverHP(battler.bossTotalHP / 8)
     if Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
     else
@@ -2692,7 +2692,7 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:SOULHEART,
     ded = [battler.pbOwnSide.effects[PBEffects::FaintedMons], 5].min
     next if ded == 0 || !battler.canHeal?
     battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP(((battler.totalhp / 32) * ded).round)
+    battler.pbRecoverHP(((battler.bossTotalHP / 32) * ded).round)
     battle.pbDisplay(_INTL("{1}'s fallen allies healed {2} a little!", battler.pbTeam, battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
@@ -2702,7 +2702,7 @@ Battle::AbilityEffects::EndOfRoundHealing.add(:EERIEPRESENCE,
   proc { |ability, battler, battle|
     next if !battler.canHeal? || battler.tookDirectDmgThisRound
     battle.pbShowAbilitySplash(battler)
-    battler.pbRecoverHP((battler.totalhp / 6).round)
+    battler.pbRecoverHP((battler.bossTotalHP / 6).round)
     battle.pbDisplay(_INTL("{1}'s branches absorbed surrounding lifeforce!", battler.pbThis))
     battle.pbHideAbilitySplash(battler)
   }
@@ -2718,7 +2718,7 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:BADDREAMS,
       next if !b.near?(battler) || !b.asleep?
       battle.pbShowAbilitySplash(battler)
       next if !b.takesIndirectDamage?(Battle::Scene::USE_ABILITY_SPLASH)
-      b.pbTakeEffectDamage(b.totalhp / 8) { |hp_lost|
+      b.pbTakeEffectDamage(b.bossTotalHP / 8) { |hp_lost|
         if Battle::Scene::USE_ABILITY_SPLASH
           battle.pbDisplay(_INTL("{1} is tormented!", b.pbThis))
         else
@@ -3647,7 +3647,7 @@ Battle::AbilityEffects::OnSwitchOut.add(:REGENERATOR,
   proc { |ability, battler, endOfBattle|
     next if endOfBattle
     PBDebug.log("[Ability triggered] #{battler.pbThis}'s #{battler.abilityName}")
-    battler.pbRecoverHP(battler.totalhp / 3, false, false)
+    battler.pbRecoverHP(battler.bossTotalHP / 3, false, false)
   }
 )
 

@@ -67,15 +67,15 @@ class Battle
     when :Sandstorm
       return if !battler.takesSandstormDamage?
       pbDisplay(_INTL("{1} is buffeted by the sandstorm!", battler.pbThis))
-      amt = battler.totalhp / 16
+      amt = battler.bossTotalHP / 16
     when :Hail
       return if !battler.takesHailDamage?
       pbDisplay(_INTL("{1} is buffeted by the hail!", battler.pbThis))
-      amt = battler.totalhp / 16
+      amt = battler.bossTotalHP / 16
     when :ShadowSky
       return if !battler.takesShadowSkyDamage?
       pbDisplay(_INTL("{1} is hurt by the shadow sky!", battler.pbThis))
-      amt = battler.totalhp / 16
+      amt = battler.bossTotalHP / 16
     end
     return if amt < 0
     @scene.pbDamageAnimation(battler)
@@ -153,7 +153,7 @@ class Battle
         next if battler.opposes?(side)
         next if !battler.takesIndirectDamage? || battler.pbHasType?(:FIRE)
         @scene.pbDamageAnimation(battler)
-        battler.pbTakeEffectDamage(battler.totalhp / 8, false) { |hp_lost|
+        battler.pbTakeEffectDamage(battler.bossTotalHP / 8, false) { |hp_lost|
           pbDisplay(_INTL("{1} is hurt by the sea of fire!", battler.pbThis))
         }
       end
@@ -168,7 +168,7 @@ class Battle
     # Grassy Terrain (healing)
     if @field.terrain == :Grassy && battler.affectedByTerrain? && battler.canHeal?
       PBDebug.log("[Lingering effect] Grassy Terrain heals #{battler.pbThis(true)}")
-      battler.pbRecoverHP(battler.totalhp / 16)
+      battler.pbRecoverHP(battler.bossTotalHP / 16)
       pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
     end
   end
@@ -182,7 +182,7 @@ class Battle
     priority.each do |battler|
       next if !battler.effects[PBEffects::AquaRing]
       next if !battler.canHeal?
-      hpGain = battler.totalhp / 16
+      hpGain = battler.bossTotalHP / 16
       hpGain = (hpGain * 1.3).floor if battler.hasActiveItem?([:BIGROOT, :COLOGNECASE])
       battler.pbRecoverHP(hpGain)
       pbDisplay(_INTL("Aqua Ring restored {1}'s HP!", battler.pbThis(true)))
@@ -191,7 +191,7 @@ class Battle
     priority.each do |battler|
       next if !battler.effects[PBEffects::Ingrain]
       next if !battler.canHeal?
-      hpGain = battler.totalhp / 16
+      hpGain = battler.bossTotalHP / 16
       hpGain = (hpGain * 1.3).floor if battler.hasActiveItem?([:BIGROOT, :COLOGNECASE])
       battler.pbRecoverHP(hpGain)
       pbDisplay(_INTL("{1} absorbed nutrients with its roots!", battler.pbThis))
@@ -204,7 +204,7 @@ class Battle
       next if !recipient || recipient.fainted?
       pbCommonAnimation("LeechSeed", recipient, battler)
       # leech seed nerf #by low
-      dmg = battler.totalhp / 8
+      dmg = battler.bossTotalHP / 8
       dmg = 100 if dmg > 100 && !battler.pbOwnedByPlayer?
       battler.pbTakeEffectDamage(dmg) { |hp_lost|
         true_hp_lost = hp_lost
@@ -241,14 +241,14 @@ class Battle
     priority.each do |battler|
       battler.effects[PBEffects::Nightmare] = false if !battler.asleep?
       next if !battler.effects[PBEffects::Nightmare] || !battler.takesIndirectDamage?
-      battler.pbTakeEffectDamage(battler.totalhp / 4) { |hp_lost|
+      battler.pbTakeEffectDamage(battler.bossTotalHP / 4) { |hp_lost|
         pbDisplay(_INTL("{1} is locked in a nightmare!", battler.pbThis))
       }
     end
     # Curse
     priority.each do |battler|
       next if !battler.effects[PBEffects::Curse] || !battler.takesIndirectDamage?
-      battler.pbTakeEffectDamage(battler.totalhp / 16) { |hp_lost| # 4 -> 16 #by low
+      battler.pbTakeEffectDamage(battler.bossTotalHP / 16) { |hp_lost| # 4 -> 16 #by low
         pbDisplay(_INTL("{1} is afflicted by the curse!", battler.pbThis))
       }
     end
@@ -278,9 +278,9 @@ class Battle
     anim = TRAPPING_MOVE_COMMON_ANIMATIONS[battler.effects[PBEffects::TrappingMove]] || "Wrap"
     pbCommonAnimation(anim, battler)
     return if !battler.takesIndirectDamage?
-    hpLoss = (Settings::MECHANICS_GENERATION >= 6) ? battler.totalhp / 8 : battler.totalhp / 16
+    hpLoss = (Settings::MECHANICS_GENERATION >= 6) ? battler.bossTotalHP / 8 : battler.bossTotalHP / 16
     if @battlers[battler.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
-      hpLoss = (Settings::MECHANICS_GENERATION >= 6) ? battler.totalhp / 6 : battler.totalhp / 8
+      hpLoss = (Settings::MECHANICS_GENERATION >= 6) ? battler.bossTotalHP / 6 : battler.bossTotalHP / 8
     end
     @scene.pbDamageAnimation(battler)
     battler.pbTakeEffectDamage(hpLoss, false) { |hp_lost|
@@ -625,7 +625,7 @@ class Battle
     # Damage from Hyper Mode (Shadow Pokémon)
     priority.each do |battler|
       next if !battler.inHyperMode? || @choices[battler.index][0] != :UseMove
-      hpLoss = battler.totalhp / 24
+      hpLoss = battler.bossTotalHP / 24
       @scene.pbDamageAnimation(battler)
       battler.pbReduceHP(hpLoss, false)
       pbDisplay(_INTL("The Hyper Mode attack hurts {1}!", battler.pbThis(true)))
@@ -648,7 +648,7 @@ class Battle
       end
       if battler.effects[PBEffects::NeedleArm] >= 0 # NeedleArm
         pbCommonAnimation("Bind", battler)
-        hpLoss = battler.totalhp / 10
+        hpLoss = battler.bossTotalHP / 10
         @scene.pbDamageAnimation(battler)
         battler.pbReduceHP(hpLoss, false)
         pbDisplay(_INTL("Thorny arms hurts {1}!", battler.pbThis(true)))

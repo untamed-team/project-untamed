@@ -141,7 +141,7 @@ class Battle
           anim_name = GameData::Status.get(:POISON).animation
           pbCommonAnimation(anim_name, battler) if anim_name
           pbShowAbilitySplash(battler)
-          battler.pbRecoverHP(battler.totalhp / 8)
+          battler.pbRecoverHP(battler.bossTotalHP / 8)
           if Scene::USE_ABILITY_SPLASH
             pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
           else
@@ -151,17 +151,17 @@ class Battle
         end
       elsif battler.takesIndirectDamage?
         battler.droppedBelowHalfHP = false
-        dmg = battler.totalhp / 8
+        dmg = battler.bossTotalHP / 8
         if battler.statusCount > 0
           if $player.difficulty_mode?("chaos") #by low
             if battler.effects[PBEffects::Toxic] > 2
-              dmg = battler.totalhp / 4
+              dmg = battler.bossTotalHP / 4
               battler.effects[PBEffects::Toxic] = 0
               battler.statusCount = 2 #for "pbContinueStatus" to say a different message
               #~ print "super damage"
             end
           else
-            dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
+            dmg = battler.bossTotalHP * battler.effects[PBEffects::Toxic] / 16
           end
         end
         battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
@@ -175,7 +175,7 @@ class Battle
     priority.each do |battler|
       next if battler.status != :BURN || !battler.takesIndirectDamage? || battler.hasActiveAbility?(:FLAREBOOST) #by low
       battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
+      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.bossTotalHP / 16 : battler.bossTotalHP / 8
       dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:HEATPROOF)
       battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
       battler.pbItemHPHealCheck
@@ -187,7 +187,7 @@ class Battle
     priority.each do |battler|
       next if battler.status != :FROZEN || !battler.takesIndirectDamage?
       battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
+      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.bossTotalHP / 16 : battler.bossTotalHP / 8
       dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:THICKFAT)
       battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
       battler.pbItemHPHealCheck

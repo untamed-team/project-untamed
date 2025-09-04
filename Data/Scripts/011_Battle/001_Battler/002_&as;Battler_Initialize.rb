@@ -19,7 +19,7 @@ class Battle::Battler
     @species        = 0
     @form           = 0
     @level          = 0
-    @hp = @totalhp  = 0
+    @hp = @totalhp = @bossTotalHP = 0
     @types          = []
     @ability_id     = nil
     @item_id        = nil
@@ -68,6 +68,11 @@ class Battle::Battler
       end
     end
     @abilityMutationList= abilist|[]
+    # percentage dmg for bosses
+    @bossTotalHP = @totalhp
+    if pkmn.isBossPokemon?
+      @bossTotalHP = (1.0 * @totalhp / pkmn.remaningHPBars[1])
+    end
     # moves intentionally not copied across here
     @dummy        = true
   end
@@ -102,6 +107,10 @@ class Battle::Battler
     @moves        = []
     pkmn.moves.each_with_index do |m, i|
       @moves[i] = Battle::Move.from_pokemon_move(@battle, m)
+    end
+    @bossTotalHP = @totalhp
+    if pkmn.isBossPokemon?
+      @bossTotalHP = (1.0 * @totalhp / pkmn.remaningHPBars[1])
     end
   end
 
@@ -333,6 +342,10 @@ class Battle::Battler
         @types      = @pokemon.types
         @ability_id = @pokemon.ability_id
       end
+    end
+    @bossTotalHP = @totalhp
+    if @pokemon.isBossPokemon?
+      @bossTotalHP = (1.0 * @totalhp / @pokemon.remaningHPBars[1])
     end
   end
 
