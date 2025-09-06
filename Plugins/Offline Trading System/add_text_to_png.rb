@@ -42,6 +42,16 @@ require 'zlib'
 
 # Function to embed a hexadecimal string into a PNG file.
 def add_text_to_png(file_path, hex_string)
+	#get .mazah file and change to .png
+	# The original file path
+	###################original_path = "path/to/your/file.txt"
+
+	# The new file path with the desired extension
+	###################new_path = "path/to/your/file.md"
+
+# Rename the file
+###################File.rename(original_path, new_path)
+	
   GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method add_text_to_png\n\n", "a")
   # Read the PNG file into memory.
   GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Reading png file into memory...\n\n", "a")
