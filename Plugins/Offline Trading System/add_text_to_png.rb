@@ -103,7 +103,7 @@ def add_text_to_png(file_path, hex_string)
       current_position = chunk_end
       
     rescue StandardError => e
-      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "The file is likely malformed. Error: #{e.message}", "a")
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "The file is likely malformed. Error: #{e.message}\n\n", "a")
       break
     end
   end
@@ -112,7 +112,7 @@ def add_text_to_png(file_path, hex_string)
   new_file_data = png_signature + new_chunks.join
 
   # Write the new file data, overwriting the original file.
-  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Overwriting original file...", "a")
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Overwriting original file...\n\n", "a")
   begin
     File.open(file_path, 'wb') do |f|
       f.write(new_file_data)
@@ -120,7 +120,7 @@ def add_text_to_png(file_path, hex_string)
     return true
   rescue StandardError => e
     puts "Error writing to file: #{e.message}"
-    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error writing to file: #{e.message}", "a")
+    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error writing to file: #{e.message}\n\n", "a")
     return false
   end
 end
@@ -128,13 +128,16 @@ end
 
 # Function to retrieve a hexadecimal string from a PNG file.
 def get_text_from_png(file_path)
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method get_text_from_png\n\n", "a")
+
+	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Trying new version of method 'get_text_from_png'\n\n", "a")
+	
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method get_text_from_png\n\n", "a")
   # Read the PNG file into memory.
   begin
     file_data = File.binread(file_path)
   rescue Errno::ENOENT
     puts "Error: File '#{file_path}' not found."
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: File '#{file_path}' not found.\n\n", "a")
+    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: File '#{file_path}' not found.\n\n", "a")
     return nil
   end
 
@@ -145,24 +148,26 @@ def get_text_from_png(file_path)
     begin
       # Ensure there are enough bytes to read the next chunk header.
       if (file_data.length - current_position) < 8
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "There are not enough bytes to read the next chunk header.\n\n", "a")
-	  end
+        GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "There are not enough bytes to read the next chunk header.\n\n", "a")
+        break
+      end
 
       # Read the chunk's length (4 bytes).
       length = file_data[current_position, 4].unpack('N')[0]
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "length is #{length}\n\n", "a")
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "length is #{length}\n\n", "a")
       
       # Read the chunk's type (4 bytes).
       chunk_type = file_data[current_position + 4, 4]
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is #{chunk_type}\n\n", "a")
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is #{chunk_type}\n\n", "a")
       
       # DEBUG: Print the chunk type and length.
       puts "Processing chunk: Type=#{chunk_type}, Length=#{length}"
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Processing chunk: Type=#{chunk_type}, Length=#{length}\n\n", "a")
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Processing chunk: Type=#{chunk_type}, Length=#{length}\n\n", "a")
       
       # If we find our custom 'tEXt' chunk, read the data.
       if chunk_type == 'tEXt'
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is 'tEXt'\n\n", "a")
+        GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is 'tEXt'\n\n", "a")
+        
         # The data starts 8 bytes after the length.
         chunk_data_start = current_position + 8
         
@@ -178,31 +183,32 @@ def get_text_from_png(file_path)
           
           # Check if this is our custom keyword.
           if keyword == "HexData"
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "keyword is HexData\n\n", "a")
+            GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "keyword is HexData\n\n", "a")
             # The hex string is after the null byte.
             return chunk_data[null_index+1..-1]
           end
         end
       end
-  
+
       # Move to the next chunk: length (4) + type (4) + data (length) + crc (4).
+      # The position is updated regardless of the chunk type.
       current_position += 4 + 4 + length + 4
 
       # Stop when the IEND chunk is reached.
       if chunk_type == 'IEND'
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is 'IEND'\n\n", "a")
+        GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is 'IEND'\n\n", "a")
         break
       end
     rescue StandardError => e
       # This rescues any error that occurs during chunk processing, which usually
       # means the file is corrupt or the position is wrong.
       puts "Error during decoding: #{e.message}"
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error during decoding: #{e.message}\n\n", "a")
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error during decoding: #{e.message}\n\n", "a")
       return nil
     end
   end
 
   # If we reach the end and haven't found the chunk, return nil.
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Reached the end of the method and have not found a chunk. Returning nil\n\n", "a")
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Reached the end of the method and have not found a chunk. Returning nil\n\n", "a")
   return nil
 end

@@ -14,11 +14,15 @@ Getting png header...
 
 Found the IEND chunk, inserting custom chunk before it.
 
-Overwriting original file...Adding text to your png was successful! The image should now contain the encoded hex data.
+Overwriting original file...
+
+Adding text to your png was successful! The image should now contain the encoded hex data.
 
 Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png.
 
 Method self.tradeMenu: Player chose 'Check Offer'
+
+Trying new version of method 'get_text_from_png'
 
 Method get_text_from_png
 
@@ -65,8 +69,4 @@ player's trade ID is 'C2jjZwC'
 player tradeID from Trade.png is C2jjZwC
 
 Method self.tradeMenu: Trade.png in your Trading folder is the offer you generated.
-
-Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png.
-
-Method self.tradeMenu: Player chose 'Open Trade Folder'
 
