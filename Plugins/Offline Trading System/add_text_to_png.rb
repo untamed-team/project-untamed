@@ -43,13 +43,14 @@ require 'zlib'
 # Function to embed a hexadecimal string into a PNG file.
 def add_text_to_png(file_path, hex_string)
 	#get .mazah file and change to .png
-	if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .mazah file to .png file...\n\n", "a")
-		# Rename the file
-		File.rename(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH, OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-	else
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .mazah file found to rename to .png file...\n\n", "a")
-	end
+	# The original file path
+	###################original_path = "path/to/your/file.txt"
+
+	# The new file path with the desired extension
+	###################new_path = "path/to/your/file.md"
+
+# Rename the file
+###################File.rename(original_path, new_path)
 	
   GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method add_text_to_png\n\n", "a")
   # Read the PNG file into memory.
@@ -126,16 +127,6 @@ def add_text_to_png(file_path, hex_string)
     File.open(file_path, 'wb') do |f|
       f.write(new_file_data)
     end
-	
-	#get .png file and change to .mazah
-	if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .png file to .mazah file...\n\n", "a")
-		# Rename the file
-		File.rename(OfflineTradingSystem::TRADE_FILE_PATH_PNG, OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-	else
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .png file found to rename to .mazah file...\n\n", "a")
-	end
-	
     return true
   rescue StandardError => e
     puts "Error writing to file: #{e.message}"
@@ -147,8 +138,10 @@ end
 
 # Function to retrieve a hexadecimal string from a PNG file.
 def get_text_from_png(file_path)
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method get_text_from_png\n\n", "a")
-		
+
+	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Trying new version of method 'get_text_from_png'\n\n", "a")
+	
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method get_text_from_png\n\n", "a")
   # Read the PNG file into memory.
   begin
     file_data = File.binread(file_path)

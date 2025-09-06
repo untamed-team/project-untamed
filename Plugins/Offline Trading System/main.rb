@@ -9,9 +9,7 @@ class Game_Player < Game_Character
 end
 
 class OfflineTradingSystem
-	TRADE_FILE_PATH_PNG = "Trading/Trade.png"
-	TRADE_FILE_PATH_MAZAH = "Trading/Trade.mazah"
-	
+	TRADE_FILE_PATH = "Trading/Trade.png"
 	TRADING_ERROR_LOG_FILE_PATH = "Trading/ErrorLog.txt"
 	
 	ELIGIBLE_CHARACTERS = ["A","a","B","b","C","c","D","d","E","e","F","f","G","g","H","h","I","i","J","j","K","k","L","l","M","m","N","n","O","o","P","p","Q","q","R","r","S","s","T","t","U","u","V","v","W","w","X","x","Y","y","Z","z","1","2","3","4","5","6","7","8","9","0"]
@@ -177,7 +175,7 @@ class OfflineTradingSystem
 				end #case choice
 			end #loop do
 			if !cancel
-				self.readOfferImage(TRADE_FILE_PATH_PNG)
+				self.readOfferImage(TRADE_FILE_PATH)
 				if $game_player.tradeID == @otherPlayerTradeID
 					pbMessage(_INTL("Trade.png in your Trading folder is the offer you generated."))
 					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Trade.png in your Trading folder is the offer you generated.\n\n", "a")
@@ -406,7 +404,7 @@ class OfflineTradingSystem
 		#hide hex data in image metadata
 		# Make sure to define your hex data and file path first
 		# 1. Encode the data
-		success = add_text_to_png(TRADE_FILE_PATH_PNG, entireEncodedAgreementCode)
+		success = add_text_to_png(TRADE_FILE_PATH, entireEncodedAgreementCode)
 
 		if success
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png successful! The image should now contain the encoded hex data.\n\n", "a")
@@ -449,7 +447,7 @@ class OfflineTradingSystem
 		#hide hex data in image metadata
 		# Make sure to define your hex data and file path first
 		# 1. Encode the data
-		success = add_text_to_png(TRADE_FILE_PATH_PNG, encoded_hex_data)
+		success = add_text_to_png(TRADE_FILE_PATH, encoded_hex_data)
 
 		if success
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to your png was successful! The image should now contain the encoded hex data.\n\n", "a")
@@ -547,66 +545,36 @@ class OfflineTradingSystem
 		@bitmapViewport.dispose
 	end #def self.saveTradeOfferBitmap
 
-	def self.readOfferImage(imagePath)
-		
-		#get .mazah file and change to .png
-		if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .mazah file to .png file...\n\n", "a")
-			# Rename the file
-			File.rename(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH, OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-		else
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .mazah file found to rename to .png file...\n\n", "a")
-		end
-		
+	def self.readOfferImage(trade_file_path)
 		# 2. Decode the data and capture the return value
-		text_from_png = get_text_from_png(imagePath)
+		text_from_png = get_text_from_png(trade_file_path)
 		if !text_from_png
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_png is '#{text_from_png}'\n\n", "a")
 			print "do something to try again"
-		else
+		end
 		
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
-			arrayOfText = text_from_png.split("_")
-			@otherPlayerTradeID = self.decode(arrayOfText[0])
-			@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
+		arrayOfText = text_from_png.split("_")
+		@otherPlayerTradeID = self.decode(arrayOfText[0])
+		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
 		
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's trade ID is '#{$game_player.tradeID}'\n\n", "a")
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "================================================\n\n", "a")
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player tradeID from Trade.png is #{@otherPlayerTradeID}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's trade ID is '#{$game_player.tradeID}'\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "================================================\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player tradeID from Trade.png is #{@otherPlayerTradeID}\n\n", "a")
 		
-			#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
-			#the tradeID is extracted into its own variable - @otherPlayerTradeID
-			#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn		
-		end #if !text_from_png
-		
-		#get .png file and change to .mazah
-		if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .png file to .mazah file...\n\n", "a")
-			# Rename the file
-			File.rename(OfflineTradingSystem::TRADE_FILE_PATH_PNG, OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-		else
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .png file found to rename to .mazah file...\n\n", "a")
-		end	
+		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
+		#the tradeID is extracted into its own variable - @otherPlayerTradeID
+		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn		
 	end #def self.readOfferImage
 
 	def self.readAgreementImage
 		@pkmnToReplaceLocationAndIndex = []
 		success = false
-		
-		#get .mazah file and change to .png
-		if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .mazah file to .png file...\n\n", "a")
-			# Rename the file
-			File.rename(OfflineTradingSystem::TRADE_FILE_PATH_MAZAH, OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-		else
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .mazah file found to rename to .png file...\n\n", "a")
-		end
-		
 		# 2. Decode the data and capture the return value
-		text_from_png = get_text_from_png(TRADE_FILE_PATH_PNG)
+		text_from_png = get_text_from_png(TRADE_FILE_PATH)
 		if !text_from_png
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
 			print "do something to try again"
@@ -676,17 +644,7 @@ class OfflineTradingSystem
 		else
 			#valid trade
 			success = true
-		end
-		
-		#get .png file and change to .mazah
-		if File.exist?(OfflineTradingSystem::TRADE_FILE_PATH_PNG)
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Renaming .png file to .mazah file...\n\n", "a")
-			# Rename the file
-			File.rename(OfflineTradingSystem::TRADE_FILE_PATH_PNG, OfflineTradingSystem::TRADE_FILE_PATH_MAZAH)
-		else
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "No .png file found to rename to .mazah file...\n\n", "a")
-		end
-			
+		end		
 		return success
 	end #def self.readAgreementImage
 
