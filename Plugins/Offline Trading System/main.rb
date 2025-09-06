@@ -151,19 +151,24 @@ class OfflineTradingSystem
 		while !validTrade && !cancel
 			loop do
 				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png.\n\n", "a")
 				case choice
 				when -1
 					if pbConfirmMessage(_INTL("Cancel trading?"))
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose pressed the back button.\n\n", "a")
 						cancel = true
 						break
 					end
 				when 0
 					root_folder = RTP.getPath('.', "Game.ini")
 					system("start explorer \"#{root_folder}\\Trading\"")
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trade Folder'\n\n", "a")
 				when 1
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Check Offer'\n\n", "a")
 					break
 				when 2
 					if pbConfirmMessage(_INTL("Cancel trading?"))
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
 						cancel = true
 						break
 					end
@@ -173,6 +178,7 @@ class OfflineTradingSystem
 				self.readOfferImage(TRADE_FILE_PATH)
 				if $game_player.tradeID == @otherPlayerTradeID
 					pbMessage(_INTL("Trade.png in your Trading folder is the offer you generated."))
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Trade.png in your Trading folder is the offer you generated.\n\n", "a")
 				else
 					validTrade = true
 				end #if $game_player.tradeID == @otherPlayerTradeID
@@ -267,15 +273,19 @@ class OfflineTradingSystem
 				case choice
 				when -1
 					if pbConfirmMessage(_INTL("Cancel trading?"))
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player pressed the back button\n\n", "a")
 						cancel = true
 						break
 					end
 				when 0
 					root_folder = RTP.getPath('.', "Game.ini")
 					system("start explorer \"#{root_folder}\\Trading\"")
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trade Folder'\n\n", "a")
 				when 1
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Finalize Trade'\n\n", "a")
 					break
 				when 2
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
 					if pbConfirmMessage(_INTL("Cancel trading?"))
 						cancel = true
 						break
@@ -315,6 +325,7 @@ class OfflineTradingSystem
 		
 		######################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 	
 		pbFadeOutIn {
 			@sprites.dispose
@@ -352,6 +363,7 @@ class OfflineTradingSystem
 	
 	def self.createAgreementImage
 		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement image...\n\n", "a")
 		playerTradeID = $game_player.tradeID
 		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data_for_pkmn_player_is_offering is #{serialized_data_for_pkmn_player_is_offering}\n\n", "a")
@@ -409,6 +421,7 @@ class OfflineTradingSystem
 		#a string is created (encoded_hex_data), which is "playerTradeID_pkmnInHex" but encoded (3x as long)
 		#that string is then added to an image of the pkmn, which is created in the "Trading" folder. The image is named "Trade.png"
 		pbMessage(_INTL("\\wtnp[1]Generating offer..."))
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating offer image...\n\n", "a")
 		playerTradeID = $game_player.tradeID
 		pokemon_to_save = pkmn
 		serialized_data = Marshal.dump(pokemon_to_save)
@@ -417,10 +430,10 @@ class OfflineTradingSystem
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
 		@pkmnPlayerWillReceiveInHexFormat = hex_data
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data before encoding: #{hex_data}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data of the pokemon you are offering before encoding: #{hex_data}\n\n", "a")
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
 		#find box file icon of pokemon
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(pkmn)}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for the pokemon you are offering: #{GameData::Species.icon_filename_from_pokemon(pkmn)}\n\n", "a")
 		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
 		#copy the box sprite of the pkmn to the Trading folder
 		if !File.exist?(boxFileIconPath)
@@ -437,7 +450,7 @@ class OfflineTradingSystem
 		success = add_text_to_png(TRADE_FILE_PATH, encoded_hex_data)
 
 		if success
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png successful! The image should now contain the encoded hex data.\n\n", "a")
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to your png was successful! The image should now contain the encoded hex data.\n\n", "a")
 		else
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png failed.\n\n", "a")
 			print "do something to try again"
@@ -537,6 +550,7 @@ class OfflineTradingSystem
 		text_from_png = get_text_from_png(trade_file_path)
 		if !text_from_png
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_png is '#{text_from_png}'\n\n", "a")
 			print "do something to try again"
 		end
 		
