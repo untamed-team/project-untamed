@@ -42,27 +42,26 @@ require 'zlib'
 
 # Function to embed a hexadecimal string into a PNG file.
 def add_text_to_png(file_path, hex_string)
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method add_text_to_png\n\n", "a")
-	# Read the PNG file into memory.
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Reading png file into memory...", "a")
-	begin
-		file_data = File.binread(file_path)
-	rescue Errno::ENOENT
-	puts "Error: File '#{file_path}' not found."
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: File '#{file_path}' not found.", "a")
-	return false
-end
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Method add_text_to_png\n\n", "a")
+  # Read the PNG file into memory.
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Reading png file into memory...\n\n", "a")
+  begin
+    file_data = File.binread(file_path)
+  rescue Errno::ENOENT
+    puts "Error: File '#{file_path}' not found."
+    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: File '#{file_path}' not found.\n\n", "a")
+    return false
+  end
 
   # The PNG header is always 8 bytes.
-  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Getting png header...", "a")
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Getting png header...\n\n", "a")
   png_signature = file_data[0..7]
-  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "png_signature is #{png_signature}", "a")
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "png_signature is #{png_signature}\n\n", "a")
 
-  # We will compare the byte values directly to avoid any encoding issues.
   correct_png_signature_bytes = [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]
   unless png_signature.bytes == correct_png_signature_bytes
     puts "Error: Not a valid PNG file."
-	GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: Not a valid PNG file.", "a")
+    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error: Not a valid PNG file.\n\n", "a")
     return false
   end
 
@@ -72,55 +71,39 @@ end
 
   while current_position < file_data.length
     begin
-      # Break if there's not enough data left for a chunk header.
       if (file_data.length - current_position) < 8
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "There's not enough data left for a chunk header.", "a")
-		break
-	  end
-      
-      # Read the chunk's length (4 bytes).
-      length = file_data[current_position, 4].unpack('N')[0]
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "length is #{length}", "a")
-      
-      # Read the chunk's type (4 bytes).
-      chunk_type = file_data[current_position + 4, 4]
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is #{chunk_type}", "a")
-      
-      # Read the entire chunk, including data and CRC.
-      chunk_end = current_position + 8 + length + 4
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_end is #{chunk_end}", "a")
-      chunk_data = file_data[current_position...chunk_end]
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_data is #{chunk_data}", "a")
-
-      # Add the chunk to our new array of chunks.
-      new_chunks << chunk_data
-
-      # If the last chunk was an IDAT chunk, and the next chunk is not, insert our custom chunk.
-      # This ensures the custom data is placed logically within the PNG file structure.
-      if chunk_type == "IDAT"
-		GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is IDAT", "a")
-        next_chunk_type = file_data[chunk_end + 4, 4]
-        if next_chunk_type != "IDAT"
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "chunk_type is not IDAT", "a")
-          # Create and insert the custom chunk.
-          keyword = "HexData"
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Found the chunk where we need to insert the value of hex_string", "a")
-          custom_chunk_data = keyword + "\x00" + hex_string
-			GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Adding value of variable hex_string to file: #{hex_string}\n\n", "a")
-          custom_chunk_type = 'tEXt'
-          crc_data = custom_chunk_type + custom_chunk_data
-          crc = Zlib::crc32(crc_data)
-          new_chunk_with_crc = [custom_chunk_data.bytesize].pack('N') + custom_chunk_type + custom_chunk_data + [crc].pack('N')
-          new_chunks << new_chunk_with_crc
-        end
+        GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "There's not enough data left for a chunk header.\n\n", "a")
+        break
       end
       
-      # Move to the start of the next chunk.
+      length = file_data[current_position, 4].unpack('N')[0]
+      chunk_type = file_data[current_position + 4, 4]
+      
+      chunk_end = current_position + 8 + length + 4
+      chunk_data = file_data[current_position...chunk_end]
+
+      # Check for the IEND chunk and insert the custom chunk before it.
+      if chunk_type == 'IEND'
+        GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Found the IEND chunk, inserting custom chunk before it.\n\n", "a")
+        
+        # Create and insert the custom chunk.
+        keyword = "HexData"
+        custom_chunk_data = keyword + "\x00" + hex_string
+        custom_chunk_type = 'tEXt'
+        crc_data = custom_chunk_type + custom_chunk_data
+        crc = Zlib::crc32(crc_data)
+        new_chunk_with_crc = [custom_chunk_data.bytesize].pack('N') + custom_chunk_type + custom_chunk_data + [crc].pack('N')
+        
+        new_chunks << new_chunk_with_crc
+        new_chunks << chunk_data # Add the IEND chunk after the new chunk
+        break # We're done, exit the loop
+      end
+
+      new_chunks << chunk_data
       current_position = chunk_end
       
-    rescue StandardError
-      # If any error occurs, the file is likely malformed. We'll skip the rest of the file.
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "The file is likely malformed.", "a")
+    rescue StandardError => e
+      GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "The file is likely malformed. Error: #{e.message}", "a")
       break
     end
   end
@@ -129,7 +112,7 @@ end
   new_file_data = png_signature + new_chunks.join
 
   # Write the new file data, overwriting the original file.
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Overwriting original file...", "a")
+  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Overwriting original file...", "a")
   begin
     File.open(file_path, 'wb') do |f|
       f.write(new_file_data)
@@ -137,7 +120,7 @@ end
     return true
   rescue StandardError => e
     puts "Error writing to file: #{e.message}"
-	  GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error writing to file: #{e.message}", "a")
+    GardenUtil.pbCreateTextFile(OfflineTradingSystem::TRADING_ERROR_LOG_FILE_PATH, "Error writing to file: #{e.message}", "a")
     return false
   end
 end
