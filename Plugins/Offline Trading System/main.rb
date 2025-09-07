@@ -1,7 +1,9 @@
 #Offline trading system
 #TO DO:
-#make pkmn evolve upon trading if holding specific item
-
+#make trade files .mazah with encoded text inside. Can open in text editor, but it's still encoded
+#name trade files "Offering EXCADRILL" and "EXCADRILL for PORSITE"
+#when reading offer file, the player might have more than one offer in their folder: their offer, and the other player's offer, which likely wouldn't match in name. When reading offer file, check all .mazah files in the Trading folder until one has a trade ID that doesn't match the player's trade ID. Assume that is the correct file to read
+#maybe delete all files in the Trading folder when starting a trade?
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -97,10 +99,6 @@ class OfflineTradingSystem
 			@boxScreen = TradingPokemonStorageScreen.new(@boxScene, $PokemonStorage)
 			@boxScreen.pbStartScreen(0)
 		}
-		
-		#set the pkmn gamedata to game variable 1
-		#game variable 65 is the 1st code the player will give to someone else - it's the pkmn they offer to trade. Needs to be stored so this can be copied over and over as needed
-		#game variable 66 is the 2nd code the player will give to someone else - it's the agreed upon trade code. Needs to be stored so this can be copied over and over as needed
 	end #def self.selectPkmnToTrade
 	
 	def self.setupTradingScreen
@@ -127,21 +125,30 @@ class OfflineTradingSystem
 	end #def self.setupTradingScreen
 	
 	def self.tradeMenu(pkmn)
+		#save pokemon symbol as it will be used to delete the exact pokemon later
 		@pkmnPlayerIsOfferingInSymbolFormat = nil
 		@pkmnPlayerIsOfferingInSymbolFormat = pkmn
-		@errorLog = ""
+		@pkmnPlayerIsOfferingSpeciesUppercase = pkmn.species.upcase
+		
+		Console.echo_warn "Emptying Trading folder..."
+		files = Dir.glob(File.join("Trading", '*')).select { |f| File.file?(f) }
+
+		# Iterate through the list and delete each file.
+		files.each do |file|
+		  File.delete(file)
+		end
+			
 		Console.echo_warn "Creating blank error log in Trading folder"
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "", "w")
 		#create new screen for trading
 		pbFadeOutIn {
 			self.setupTradingScreen
 		}
-		
-		#save pokemon symbol as it will be used to delete the exact pokemon later
-		createOfferImage(@pkmnPlayerIsOfferingInSymbolFormat)
+
+		createOfferFile(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		#here is where the user will have input
-		command_list = [_INTL("Open Trade Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
+		command_list = [_INTL("Open Trading Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
 		# Main loop
 		command = 0
 		ready = false
@@ -150,19 +157,19 @@ class OfflineTradingSystem
 		
 		while !validTrade && !cancel
 			loop do
-				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
-				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png.\n\n", "a")
+				choice = pbMessage(_INTL("Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah' to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'."), command_list, -1, nil, command)
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}'.mazah to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'.\n\n", "a")
 				case choice
 				when -1
 					if pbConfirmMessage(_INTL("Cancel trading?"))
-						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose pressed the back button.\n\n", "a")
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player pressed the back button.\n\n", "a")
 						cancel = true
 						break
 					end
 				when 0
 					root_folder = RTP.getPath('.', "Game.ini")
 					system("start explorer \"#{root_folder}\\Trading\"")
-						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trade Folder'\n\n", "a")
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trading Folder'\n\n", "a")
 				when 1
 					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Check Offer'\n\n", "a")
 					break
@@ -175,13 +182,7 @@ class OfflineTradingSystem
 				end #case choice
 			end #loop do
 			if !cancel
-				self.readOfferImage(TRADE_FILE_PATH)
-				if $game_player.tradeID == @otherPlayerTradeID
-					pbMessage(_INTL("Trade.png in your Trading folder is the offer you generated."))
-					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Trade.png in your Trading folder is the offer you generated.\n\n", "a")
-				else
-					validTrade = true
-				end #if $game_player.tradeID == @otherPlayerTradeID
+				validTrade = self.readOfferFile
 			end #if !cancel
 		end #while !validTrade
 		
@@ -250,17 +251,9 @@ class OfflineTradingSystem
 		end
 		
 		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
-		success = self.createAgreementImage
-		
-		if success
-			#players swap agreement images
-		else
-			#do something to try again?
-			print "Error while encoding image. Need to try again"
-		end
-		
-		#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see
-		
+		self.createAgreementFile
+
+		#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see		
 		command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
 		# Main loop
 		command = 0
@@ -311,8 +304,6 @@ class OfflineTradingSystem
 		#when finalizedTrade is true, we'll get here
 		#legality checks for invalid pokemon and invalid moves
 		@pkmnPlayerWillReceiveInSymbolFormat = self.legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
-		#set obtain method to "Trade"
-		@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 2
 		
 		if @pkmnToReplaceLocationAndIndex[0] == "party"
 			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
@@ -336,7 +327,7 @@ class OfflineTradingSystem
 			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
 			evo.pbTrade
 			evo.pbEndScreen
-			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4
+			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
 			@boxScene.update
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
@@ -345,7 +336,6 @@ class OfflineTradingSystem
 				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
 			end
 		}
-	
 	end #def self.tradeMenu
 	
 	def self.getPkmnToTrade
@@ -355,15 +345,16 @@ class OfflineTradingSystem
 		#this variable needs to be fully decoded
 		@pkmnPlayerWillReceiveInMarshaldataFormat = [@pkmnPlayerWillReceiveInHexFormat].pack('H*')
 		@pkmnPlayerWillReceiveInSymbolFormat = Marshal.load(@pkmnPlayerWillReceiveInMarshaldataFormat)
+		@pkmnPlayerWillReceiveSpeciesUppercase = @pkmnPlayerWillReceiveInSymbolFormat.species.upcase
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player will receive this pokemon in return: #{@pkmnPlayerWillReceiveInMarshaldataFormat}\n\n", "a")
 		#set bitmap of sprite for what player is receiving and reveal it
 		@sprites["pkmnPlayerIsReceiving"].setSpeciesBitmap(@pkmnPlayerWillReceiveInSymbolFormat.species, @pkmnPlayerWillReceiveInSymbolFormat.gender, @pkmnPlayerWillReceiveInSymbolFormat.form, @pkmnPlayerWillReceiveInSymbolFormat.shiny?)
 		@sprites["pkmnPlayerIsReceiving"].visible = true
 	end #def self.getPkmnToTrade
 	
-	def self.createAgreementImage
+	def self.createAgreementFile
 		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement image...\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement #{@pkmnPlayerIsOfferingSpeciesUppercase} for #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
 		playerTradeID = $game_player.tradeID
 		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data_for_pkmn_player_is_offering is #{serialized_data_for_pkmn_player_is_offering}\n\n", "a")
@@ -380,82 +371,39 @@ class OfflineTradingSystem
 		
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
-		#find box file icon of pokemon player is offering
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)}\n\n", "a")
-		boxFileIconPath_for_pkmn_player_is_offering = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerIsOfferingInSymbolFormat)
-		
-		if !File.exist?(boxFileIconPath_for_pkmn_player_is_offering)
-			print "#{@pkmnPlayerIsOfferingInSymbolFormat.species} has no box icon. Report this to developers"
-			return nil
-		end
-		
-		#find box file icon of pokemon player is receiving
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for #{GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)}\n\n", "a")
-		boxFileIconPath_for_pkmn_player_is_receiving = GameData::Species.icon_filename_from_pokemon(@pkmnPlayerWillReceiveInSymbolFormat)
-
-		if !File.exist?(boxFileIconPath_for_pkmn_player_is_receiving)
-			print "#{@pkmnPlayerWillReceiveInSymbolFormat} has no box icon. Report this to developers"
-			return nil
-		end
-		
-		#save the pokemons' box icon to the Trading folder
-		self.saveTradeAgreementBitmap(boxFileIconPath_for_pkmn_player_is_offering, boxFileIconPath_for_pkmn_player_is_receiving)
-		
-		#hide hex data in image metadata
+		#put hex data into .mazah file
 		# Make sure to define your hex data and file path first
 		# 1. Encode the data
-		success = add_text_to_png(TRADE_FILE_PATH, entireEncodedAgreementCode)
-
-		if success
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png successful! The image should now contain the encoded hex data.\n\n", "a")
-			return true
-		else
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png failed.\n\n", "a")
-			print "do something to try again"
-			return false
+		File.open("Agreement #{@pkmnPlayerIsOfferingSpeciesUppercase} for #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
+			# 'file.write' writes the string content to the file.
+			file.write(entireEncodedAgreementCode)
 		end
-	end #def self.createAgreementImage
+	end #def self.createAgreementFile
 	
-	def self.createOfferImage(pkmn)
+	def self.createOfferFile(pkmn)
 		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
 		#a string is created (encoded_hex_data), which is "playerTradeID_pkmnInHex" but encoded (3x as long)
 		#that string is then added to an image of the pkmn, which is created in the "Trading" folder. The image is named "Trade.png"
 		pbMessage(_INTL("\\wtnp[1]Generating offer..."))
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating offer image...\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah'...\n\n", "a")
 		playerTradeID = $game_player.tradeID
 		pokemon_to_save = pkmn
 		serialized_data = Marshal.dump(pokemon_to_save)
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data is #{serialized_data}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data for pkmn player is offering is #{serialized_data}\n\n", "a")
 		
 		#convert marshaldata to hex
 		hex_data = serialized_data.unpack("H*")[0]
 		@pkmnPlayerWillReceiveInHexFormat = hex_data
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data of the pokemon you are offering before encoding: #{hex_data}\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data of the pokemon player is offering before encoding: #{hex_data}\n\n", "a")
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
-		#find box file icon of pokemon
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "generating image for the pokemon you are offering: #{GameData::Species.icon_filename_from_pokemon(pkmn)}\n\n", "a")
-		boxFileIconPath = GameData::Species.icon_filename_from_pokemon(pkmn)
-		#copy the box sprite of the pkmn to the Trading folder
-		if !File.exist?(boxFileIconPath)
-			print "This pokemon has no box icon. Report this to developers"
-			return nil
-		end
 		
-		#save the pokemon's box icon to the Trading folder
-		self.saveTradeOfferBitmap(boxFileIconPath)
 		
-		#hide hex data in image metadata
-		# Make sure to define your hex data and file path first
-		# 1. Encode the data
-		success = add_text_to_png(TRADE_FILE_PATH, encoded_hex_data)
-
-		if success
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to your png was successful! The image should now contain the encoded hex data.\n\n", "a")
-		else
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Adding text to png failed.\n\n", "a")
-			print "do something to try again"
+		#put hex data into .mazah file
+		File.open("Trading/Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah", "w") do |file|
+			# 'file.write' writes the string content to the file.
+			file.write(encoded_hex_data)
 		end
-	end #def self.createOfferImage
+	end #def self.createOfferFile
 
 	def self.encode(data)
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "data.to_s is #{data.to_s}\n\n", "a")
@@ -490,99 +438,51 @@ class OfflineTradingSystem
 		return @decodedString
 	end #def self.encode
 
-	def self.saveTradeOfferBitmap(imageFilePath)
-		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
-		imageFile = Sprite.new(@bitmapViewport)
-		imageFile.bitmap = Bitmap.new(imageFilePath)
-		bitmap = Bitmap.new(imageFile.width/2, imageFile.height) #cut off the 2nd half of the image, as we only need the first frame from the file
-    
-		#move the pokemon to the bitmap that will be saved to a file
-		bitmap.blt(0, 0, imageFile.bitmap, Rect.new(0, 0, imageFile.width, imageFile.height))
-    
-		#export the bitmap to a file
-		#if the filename already exists, overwrite it
-		bitmap.to_file("Trading/Trade.png")
-		@bitmapViewport.dispose
-	end #def self.saveTradeOfferBitmap
-
-	def self.saveTradeAgreementBitmap(imageFilePath_pkmn_player_is_offering, imageFilePath_pkmn_player_is_receiving)
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "creating agreement image for trading #{@pkmnPlayerIsOfferingInSymbolFormat.species} and #{@pkmnPlayerWillReceiveInSymbolFormat.species}\n\n", "a")
-		@bitmapViewport = Viewport.new(0,0,Graphics.width,Graphics.height)
-		@bitmapViewport.z = 99999
+	def self.readOfferFile
+		found_valid_offer_file = false
+		#get all .mazah files in 'Trading' folder
+		#iterate through those files, reading the tradeIDs of each one until it differs from the tradeID of the player
+		Dir.glob("Trading/*") do |file_path|
+		  # This block will execute for each file or subdirectory
+		  # You can add a check to only process files if needed
+		  if File.file?(file_path) && File.extname(file_path) == ".mazah"
+			#do this on each file
+			text_from_mazah_file = File.read(file_path)
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_mazah_file: #{text_from_mazah_file}\n\n", "a")
+			arrayOfText = text_from_mazah_file.split("_")
+			@otherPlayerTradeID = self.decode(arrayOfText[0])
+			@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
+			
+			#only a valid offer if players' tradeIDs do not match
+			if $game_player.tradeID != @otherPlayerTradeID
+				found_valid_offer_file = true
+				break
+			end #if $game_player.tradeID != @otherPlayerTradeID
+		  end #if File.file?(file_path) && File.extname(file_path) == ".mazah"
+		end #Dir.glob("Trading/*") do |file_path|
 		
-		#########################
-		#FIRST THIRD OF IMAGE
-		#########################
-		#pkmn1 = Sprite.new(@bitmapViewport)
-		pkmn1Bitmap = Bitmap.new(imageFilePath_pkmn_player_is_offering)
-		mirroredIcon = pkmn1Bitmap.mirror
-		pkmn1 = Sprite.new(@bitmapViewport)
-		pkmn1.bitmap = mirroredIcon
+		if !found_valid_offer_file
+			pbMessage(_INTL("No offer file from another player found."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No offer file from another player found.\n\n", "a")
+		end #if !found_valid_offer_file
 		
-		bitmap = Bitmap.new((pkmn1.width/2)*3, pkmn1.height)
-		#move the pokemon player is offering to the bitmap that will be saved to a file
-		bitmap.blt(0, 0, pkmn1.bitmap, Rect.new(0, 0, pkmn1.width/2, pkmn1.height))
-		
-		#########################
-		#SECOND THIRD OF IMAGE
-		#########################
-		agreementIcon = Sprite.new(@bitmapViewport)
-		agreementIcon.bitmap = Bitmap.new("Graphics/Pictures/TradingImages/agreementIcon.png")
-		#move the pokemon player is receiving to the bitmap that will be saved to a file
-		bitmap.blt((bitmap.width/2)-(agreementIcon.width/2), (bitmap.height/2)-(agreementIcon.height/2), agreementIcon.bitmap, Rect.new(0, 0, agreementIcon.width, agreementIcon.height))
-		
-		#########################
-		#THIRD THIRD OF IMAGE
-		#########################
-		pkmn2 = Sprite.new(@bitmapViewport)
-		pkmn2.bitmap = Bitmap.new(imageFilePath_pkmn_player_is_receiving)
-		#move the pokemon player is receiving to the bitmap that will be saved to a file
-		bitmap.blt(bitmap.width-(pkmn2.width/2), 0, pkmn2.bitmap, Rect.new(0, 0, pkmn2.width/2, pkmn2.height))
-    
-		#export the bitmap to a file
-		#if the filename already exists, overwrite it
-		bitmap.to_file("Trading/Trade.png")
-		@bitmapViewport.dispose
-	end #def self.saveTradeOfferBitmap
-
-	def self.readOfferImage(trade_file_path)
-		# 2. Decode the data and capture the return value
-		text_from_png = get_text_from_png(trade_file_path)
-		if !text_from_png
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_png is '#{text_from_png}'\n\n", "a")
-			print "do something to try again"
-		end
-		
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
-		arrayOfText = text_from_png.split("_")
-		@otherPlayerTradeID = self.decode(arrayOfText[0])
-		@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
-		
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's trade ID is '#{$game_player.tradeID}'\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "================================================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player tradeID from Trade.png is #{@otherPlayerTradeID}\n\n", "a")
-		
-		#the game then extracts the text from that offer image, obtaining the encoded hex and other player's trade ID
-		#the tradeID is extracted into its own variable - @otherPlayerTradeID
-		#everything up to the _ in the encoded hex is deleted, and the _ is deleted too, so all that remains is the pkmn		
-	end #def self.readOfferImage
+		return found_valid_offer_file
+	end #def self.readOfferFile
 
 	def self.readAgreementImage
 		@pkmnToReplaceLocationAndIndex = []
 		success = false
 		# 2. Decode the data and capture the return value
-		text_from_png = get_text_from_png(TRADE_FILE_PATH)
-		if !text_from_png
+		text_from_mazah_file = get_text_from_mazah_file(TRADE_FILE_PATH)
+		if !text_from_mazah_file
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
 			print "do something to try again"
 		end
 		
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_png}\n\n", "a")
-		arrayOfText = text_from_png.split("_")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_mazah_file}\n\n", "a")
+		arrayOfText = text_from_mazah_file.split("_")
 		decodedElement0 = self.decode(arrayOfText[0])
 		decodedElement1 = self.decode(arrayOfText[1])
 		decodedElement2 = self.decode(arrayOfText[2])
@@ -664,7 +564,7 @@ class OfflineTradingSystem
 				pkmn.learn_move(:REST) unless pkmn.hasMove?(:REST)
 			end
 		end
-		pkmn.obtain_method = 4
+		pkmn.obtain_method = 4 #fateful encounter
 		return pkmn
 	end
 end #class OfflineTradingSystem
