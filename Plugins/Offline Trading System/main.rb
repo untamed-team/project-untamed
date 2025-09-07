@@ -540,7 +540,7 @@ class OfflineTradingSystem
 			elsif $game_player.tradeID != tradeIDOfPlayerThisTradeIsMeantFor
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is not meant to be redeemed by this player. Invalid trade.\n\n", "a")
 				
-			elsif self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
+			elsif self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat) != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) is #{self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
@@ -598,8 +598,19 @@ class OfflineTradingSystem
 		propertiesArray.push(pkmn.species)
 		propertiesArray.push(pkmn.name)
 		propertiesArray.push(pkmn.level)
-		propertiesArray.push(pkmn.item.id)
-		propertiesArray.push(pkmn.nature.id)
+		
+		if pkmn.item.nil?
+			propertiesArray.push(nil)
+		else
+			propertiesArray.push(pkmn.item.id)
+		end		
+		
+		if pkmn.nature.nil?
+			propertiesArray.push(nil)
+		else
+			propertiesArray.push(pkmn.nature.id)
+		end
+		
 		propertiesArray.push(pkmn.gender)
 		propertiesArray.push(pkmn.form)
 		propertiesArray.push(pkmn.forced_form)
@@ -611,10 +622,14 @@ class OfflineTradingSystem
 		propertiesArray.push(pkmn.statusCount)
 		propertiesArray.push(pkmn.shiny?)
 		
-		for i in pkmn.moves
-			propertiesArray.push(i.id)
+		if pkmn.moves.length > 0
+			for i in pkmn.moves
+				propertiesArray.push(i.id)
+			end
+		else
+			propertiesArray.push(nil)
 		end
-		
+
 		propertiesArray.push(pkmn.first_moves)
 		propertiesArray.push(pkmn.ribbons)
 		propertiesArray.push(pkmn.cool)
@@ -636,7 +651,13 @@ class OfflineTradingSystem
 		propertiesArray.push(pkmn.spatk)
 		propertiesArray.push(pkmn.spdef)
 		propertiesArray.push(pkmn.speed)
-		propertiesArray.push(pkmn.owner.id)
+		
+		if pkmn.owner.nil?
+			propertiesArray.push(nil)
+		else
+			propertiesArray.push(pkmn.owner.id)
+		end
+		
 		propertiesArray.push(pkmn.obtain_text)
 		propertiesArray.push(pkmn.obtain_level)
 		propertiesArray.push(pkmn.fused)
@@ -650,7 +671,13 @@ class OfflineTradingSystem
 		propertiesArray.push(pkmn.sketchMove)
 		propertiesArray.push(pkmn.triedEvolving)
 		propertiesArray.push(pkmn.trainerevs)
-		propertiesArray.push(pkmn.ability.id)
+		
+		if pkmn.ability.nil?
+			propertiesArray.push(pkmn.ability.id)
+		else
+			propertiesArray.push(nil)
+		end
+			
 		propertiesArray.push(pkmn.abilityMutation)
 		propertiesArray.push(pkmn.pv)
 		propertiesArray.push(pkmn.megaevoMutation)
