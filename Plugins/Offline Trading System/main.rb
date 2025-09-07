@@ -1,9 +1,6 @@
 #Offline trading system
 #TO DO:
-#make trade files .mazah with encoded text inside. Can open in text editor, but it's still encoded
-#name trade files "Offering EXCADRILL" and "EXCADRILL for PORSITE"
-#when reading offer file, the player might have more than one offer in their folder: their offer, and the other player's offer, which likely wouldn't match in name. When reading offer file, check all .mazah files in the Trading folder until one has a trade ID that doesn't match the player's trade ID. Assume that is the correct file to read
-#maybe delete all files in the Trading folder when starting a trade?
+# replace '######################' with '' to decomment stuff
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -197,7 +194,7 @@ class OfflineTradingSystem
 		self.getPkmnToTrade
 		
 		#here is where the user will have input
-		command_list = [_INTL("<<< #{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary >>>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+		command_list = [_INTL("<icon=arrow_left> #{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary <icon=arrow_right>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
 		if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
 			pbDisplay(_INTL("Warning! The Pkmn being offered cannot exist in this savefile!\\nYou may accept the trade, but the Pkmn will be deleted."))
 		end
@@ -262,7 +259,7 @@ class OfflineTradingSystem
 		
 		while !finalizedTrade && !cancel
 			loop do
-				choice = pbMessage(_INTL("Give Trade.png to the person you're trading with. Replace your Trade.png with their Trade.png."), command_list, -1, nil, command)
+				choice = pbMessage(_INTL("Give 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah' to the person you're trading with. Download their Agreement .mazah file to your Trading folder, then choose 'Finalize Trade' if you agree to the trade."), command_list, -1, nil, command)
 				case choice
 				when -1
 					if pbConfirmMessage(_INTL("Cancel trading?"))
@@ -288,7 +285,7 @@ class OfflineTradingSystem
 			if !cancel
 				#need to do several things here:
 				#decode agreement string and split into array
-				finalizedTrade = self.readAgreementImage
+				finalizedTrade = self.readAgreementFile
 				#check that the offer can be redeemed by this player
 				#check that the agreement contains the player's trade ID
 			end #if !cancel
@@ -354,27 +351,31 @@ class OfflineTradingSystem
 	
 	def self.createAgreementFile
 		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement #{@pkmnPlayerIsOfferingSpeciesUppercase} for #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
 		playerTradeID = $game_player.tradeID
 		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "serialized_data_for_pkmn_player_is_offering is #{serialized_data_for_pkmn_player_is_offering}\n\n", "a")
-		otherPlayerTradeID = @otherPlayerTradeID
+		
 		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
+		Console.echo_warn "this player will receive:\n#{serialized_data_for_pkmn_player_is_receiving}"
 		
 		#convert marshaldata to hex
 		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
+		Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
+		Console.echo_warn "=============================================="
 		@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
 		encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
 		
 		hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
-		encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
+		Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
+		encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
+		#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
 		#put hex data into .mazah file
 		# Make sure to define your hex data and file path first
 		# 1. Encode the data
-		File.open("Agreement #{@pkmnPlayerIsOfferingSpeciesUppercase} for #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
+		File.open("Trading/Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
 			# 'file.write' writes the string content to the file.
 			file.write(entireEncodedAgreementCode)
 		end
@@ -450,6 +451,11 @@ class OfflineTradingSystem
 			text_from_mazah_file = File.read(file_path)
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_mazah_file: #{text_from_mazah_file}\n\n", "a")
 			arrayOfText = text_from_mazah_file.split("_")
+			if arrayOfText.length > 2
+				#if more than 2 elements in the array, what's being read is an agreement file, not an offer file
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Found an agreement file instead of an offer file. Skipping this file...\n\n", "a")
+				next
+			end
 			@otherPlayerTradeID = self.decode(arrayOfText[0])
 			@pkmnPlayerWillReceiveInHexFormat = self.decode(arrayOfText[1])
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "other player's tradeID is #{@otherPlayerTradeID}\n\n", "a")
@@ -470,83 +476,103 @@ class OfflineTradingSystem
 		return found_valid_offer_file
 	end #def self.readOfferFile
 
-	def self.readAgreementImage
+	def self.readAgreementFile
 		@pkmnToReplaceLocationAndIndex = []
-		success = false
-		# 2. Decode the data and capture the return value
-		text_from_mazah_file = get_text_from_mazah_file(TRADE_FILE_PATH)
-		if !text_from_mazah_file
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png failed.\n\n", "a")
-			print "do something to try again"
-		end
-		
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Getting text from png successful!\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Encoded hex from png: #{text_from_mazah_file}\n\n", "a")
-		arrayOfText = text_from_mazah_file.split("_")
-		decodedElement0 = self.decode(arrayOfText[0])
-		decodedElement1 = self.decode(arrayOfText[1])
-		decodedElement2 = self.decode(arrayOfText[2])
-		decodedElement3 = self.decode(arrayOfText[3])
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "player's tradeID is #{$game_player.tradeID}, other player's ID is #{@otherPlayerTradeID}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{decodedElement0}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{[decodedElement1].pack('H*')}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{decodedElement2}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "#{[decodedElement3].pack('H*')}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@pkmnPlayerWillReceiveInHexFormat is #{@pkmnPlayerWillReceiveInHexFormat}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@pkmnPlayerIsOfferingInHexFormat is #{@pkmnPlayerIsOfferingInHexFormat}\n\n", "a")
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "========================\n\n", "a")
-		
-		tradeIDOfPersonPlayerIsTradingWith = decodedElement0
-		pkmnOtherTrainerIsGivingToPlayer = decodedElement1
-		tradeIDOfPlayer = decodedElement2
-		pkmnPlayerIsGivingToOtherPlayer = decodedElement3
-		
-		foundInParty = false
-		foundInBox = false
-		if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
-			foundInParty = true
-			@pkmnToReplaceLocationAndIndex = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
-		else
-			for i in 0...$PokemonStorage.maxBoxes
-				for j in 0...$PokemonStorage.maxPokemon(i)
-					pkmn = $PokemonStorage[i, j]
-					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
-						foundInBox = true
-						@pkmnToReplaceLocationAndIndex = ["box", i, j]
-						break
+		found_valid_agreement_file = false
+		#get all .mazah files in 'Trading' folder
+		#iterate through those files, reading the tradeIDs of each one until it differs from the tradeID of the player
+		Dir.glob("Trading/*") do |file_path|
+		  # This block will execute for each file or subdirectory
+		  # You can add a check to only process files if needed
+		  if File.file?(file_path) && File.extname(file_path) == ".mazah"
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Checking file named '#{file_path}'...\n\n", "a")
+			#do this on each file
+			text_from_mazah_file = File.read(file_path)
+			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "text_from_mazah_file, which is encoded: #{text_from_mazah_file}\n\n", "a")
+			arrayOfText = text_from_mazah_file.split("_")
+			
+			#is the file an agreement file at all?
+			if arrayOfText.length <= 2
+				#if less than or equal to 2 elements in the array, what's being read is an offer file, not an agreement file
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Found an offer file instead of an agreement file. Skipping this file...\n\n", "a")
+				next
+			end			
+
+			tradeIDOfPlayerWhoGeneratedThisFile = self.decode(arrayOfText[0])
+			pkmnOtherTrainerIsGivingToPlayer = self.decode(arrayOfText[1])
+			tradeIDOfPlayerThisTradeIsMeantFor = self.decode(arrayOfText[2])
+			pkmnPlayerIsGivingToOtherPlayer = self.decode(arrayOfText[3])
+			
+			#these variables come from the agreement file the player is processing, and we need to check them against the offer files from each player
+			agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat = Marshal.load([pkmnOtherTrainerIsGivingToPlayer].pack('H*'))
+			agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat = Marshal.load([pkmnPlayerIsGivingToOtherPlayer].pack('H*'))
+			
+			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
+			#@pkmnPlayerIsOfferingInSymbolFormat
+			#@pkmnPlayerWillReceiveInSymbolFormat
+			
+			#check the player still has the pkmn they are sending to someone else
+			foundInParty = false
+			foundInBox = false
+			if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+				foundInParty = true
+				@pkmnToReplaceLocationAndIndex = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
+			else
+				for i in 0...$PokemonStorage.maxBoxes
+					for j in 0...$PokemonStorage.maxPokemon(i)
+						pkmn = $PokemonStorage[i, j]
+						if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
+							foundInBox = true
+							@pkmnToReplaceLocationAndIndex = ["box", i, j]
+							break
+						end
 					end
-				end
-				break if foundInBox
-			end #for i in 0...$PokemonStorage.maxBoxes
-		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+					break if foundInBox
+				end #for i in 0...$PokemonStorage.maxBoxes
+			end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+			
+			#checking for trickery
+			if $game_player.tradeID == @otherPlayerTradeID
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Player's TradeID and @otherPlayerTradeID match for some reason. Invalid trade.\n\n", "a")
+			elsif @otherPlayerTradeID != tradeIDOfPlayerWhoGeneratedThisFile
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@otherPlayerTradeID (trade ID of other player from offer file) is not the same as the trade ID of the player who generated this agreement file. Invalid trade.\n\n", "a")
+			elsif $game_player.tradeID == tradeIDOfPlayerWhoGeneratedThisFile
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is the one generated by the player. Invalid trade.\n\n", "a")
+			elsif $game_player.tradeID != tradeIDOfPlayerThisTradeIsMeantFor
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is not meant to be redeemed by this player. Invalid trade.\n\n", "a")
+				
+			elsif self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) != self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) is #{self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer)}\n\n", "a")
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)}\n\n", "a")
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
+				
+			elsif self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat) != self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat) is #{self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)}\n\n", "a")
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat) is #{self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)}\n\n", "a")
+				
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The Pokémon you are giving to the other player is not what the other player agreed upon. Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
+				
+			elsif !foundInParty && !foundInBox
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
+			else
+			
+				Console.echo_warn getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)
+				Console.echo_warn getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
+				
+				#no trickery detected, assuming valid trade
+				found_valid_agreement_file = true
+				break
+			end #checking for trickery
+		  end #if File.file?(file_path) && File.extname(file_path) == ".mazah"
+		end #Dir.glob("Trading/*") do |file_path|
 		
-		if tradeIDOfPersonPlayerIsTradingWith == $game_player.tradeID
-			pbMessage(_INTL("Trade.png in your Trading folder is the agreement you generated."))
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Trade.png in your Trading folder is the agreement you generated.\n\n", "a")
-		elsif tradeIDOfPlayer != $game_player.tradeID #player tries to redeem a trade where tradeIDOfPlayer is not equal to their trade ID
-			pbMessage(_INTL("Trade ID of other player has changed. Trade is invalid."))
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Trade ID of other player has changed. Trade is invalid.\n\n", "a")
-		elsif pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat
-			pbMessage(_INTL("The Pokémon you are receiving is not what you agreed upon."))
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
-		elsif pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat
-			pbMessage(_INTL("The Pokémon you are giving to the other player is not what they agreed upon."))
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
-		elsif !foundInParty && !foundInBox
-			pbMessage(_INTL("You no longer have the Pokémon to finalize this trade."))
-			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
-		else
-			#valid trade
-			success = true
-		end		
-		return success
-	end #def self.readAgreementImage
+		if !found_valid_agreement_file
+			pbMessage(_INTL("No valid agreement file from another player found."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No valid agreement file from another player found. Either there is no agreement file in the Trading folder, or trickery was detected, as outlined above in this log.\n\n", "a")
+		end #if !found_valid_agreement_file
+		
+		return found_valid_agreement_file	
+	end #def self.readAgreementFile
 
 	def self.legalitychecks(pkmn)
 		pkmn.clear_first_moves
@@ -567,6 +593,75 @@ class OfflineTradingSystem
 		pkmn.obtain_method = 4 #fateful encounter
 		return pkmn
 	end
+	
+	def self.getPkmnProperties(pkmn)
+		propertiesArray = []
+		propertiesArray.push(pkmn.species)
+		propertiesArray.push(pkmn.name)
+		propertiesArray.push(pkmn.level)
+		propertiesArray.push(pkmn.item.id)
+		propertiesArray.push(pkmn.nature.id)
+		propertiesArray.push(pkmn.gender)
+		propertiesArray.push(pkmn.form)
+		propertiesArray.push(pkmn.forced_form)
+		propertiesArray.push(pkmn.time_form_set)
+		propertiesArray.push(pkmn.exp)
+		propertiesArray.push(pkmn.steps_to_hatch)
+		propertiesArray.push(pkmn.hp)
+		propertiesArray.push(pkmn.status)
+		propertiesArray.push(pkmn.statusCount)
+		propertiesArray.push(pkmn.shiny?)
+		
+		for i in pkmn.moves
+			propertiesArray.push(i.id)
+		end
+		
+		propertiesArray.push(pkmn.first_moves)
+		propertiesArray.push(pkmn.ribbons)
+		propertiesArray.push(pkmn.cool)
+		propertiesArray.push(pkmn.beauty)
+		propertiesArray.push(pkmn.cute)
+		propertiesArray.push(pkmn.smart)
+		propertiesArray.push(pkmn.tough)
+		propertiesArray.push(pkmn.sheen)
+		propertiesArray.push(pkmn.pokerus)
+		propertiesArray.push(pkmn.happiness)
+		propertiesArray.push(pkmn.poke_ball)
+		propertiesArray.push(pkmn.markings)
+		propertiesArray.push(pkmn.iv)
+		propertiesArray.push(pkmn.ivMaxed)
+		propertiesArray.push(pkmn.ev)
+		propertiesArray.push(pkmn.totalhp)
+		propertiesArray.push(pkmn.attack)
+		propertiesArray.push(pkmn.defense)
+		propertiesArray.push(pkmn.spatk)
+		propertiesArray.push(pkmn.spdef)
+		propertiesArray.push(pkmn.speed)
+		propertiesArray.push(pkmn.owner.id)
+		propertiesArray.push(pkmn.obtain_text)
+		propertiesArray.push(pkmn.obtain_level)
+		propertiesArray.push(pkmn.fused)
+		propertiesArray.push(pkmn.personalID)
+		propertiesArray.push(pkmn.ready_to_evolve)
+		propertiesArray.push(pkmn.cannot_store)
+		propertiesArray.push(pkmn.cannot_release)
+		propertiesArray.push(pkmn.cannot_trade)
+		propertiesArray.push(pkmn.evolution_steps)
+		propertiesArray.push(pkmn.willmega)
+		propertiesArray.push(pkmn.sketchMove)
+		propertiesArray.push(pkmn.triedEvolving)
+		propertiesArray.push(pkmn.trainerevs)
+		propertiesArray.push(pkmn.ability.id)
+		propertiesArray.push(pkmn.abilityMutation)
+		propertiesArray.push(pkmn.pv)
+		propertiesArray.push(pkmn.megaevoMutation)
+		propertiesArray.push(pkmn.natureBoostAI)
+		propertiesArray.push(pkmn.bossmonMutation)
+		propertiesArray.push(pkmn.shiny_roll_count)
+		propertiesArray.push(pkmn.amie_fullness)
+		propertiesArray.push(pkmn.amie_enjoyment)
+		return propertiesArray
+	end #def getPkmnProperties(pkmn)	
 end #class OfflineTradingSystem
 
 #adds "Trade" to list of options at PC
