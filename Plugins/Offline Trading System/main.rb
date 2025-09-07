@@ -356,7 +356,6 @@ class OfflineTradingSystem
 		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
-		Console.echo_warn "this player will receive:\n#{serialized_data_for_pkmn_player_is_receiving}"
 		
 		#convert marshaldata to hex
 		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
@@ -541,7 +540,7 @@ class OfflineTradingSystem
 			elsif $game_player.tradeID != tradeIDOfPlayerThisTradeIsMeantFor
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is not meant to be redeemed by this player. Invalid trade.\n\n", "a")
 				
-			elsif self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) != self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)
+			elsif self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) is #{self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
