@@ -194,7 +194,7 @@ class OfflineTradingSystem
 		self.getPkmnToTrade
 		
 		#here is where the user will have input
-		command_list = [_INTL("<icon=arrow_left> #{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary <icon=arrow_right>"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+		command_list = [_INTL("#{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
 		if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
 			pbDisplay(_INTL("Warning! The Pkmn being offered cannot exist in this savefile!\\nYou may accept the trade, but the Pkmn will be deleted."))
 		end
