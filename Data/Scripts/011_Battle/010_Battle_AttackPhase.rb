@@ -76,7 +76,9 @@ class Battle
       @numberOfUsedItems[b.index % 2] += 1
       if b.pbOwnedByPlayer?
         foe = b.pbDirectOpposing(true)
-        @opponent[pbGetOwnerIndexFromBattlerIndex(foe.index)].items.push(item)
+        if !foe.wild?
+          @opponent[pbGetOwnerIndexFromBattlerIndex(foe.index)].items.push(item)
+        end
       end
       case GameData::Item.get(item).battle_use
       when 1, 2   # Use on Pokémon/Pokémon's move
