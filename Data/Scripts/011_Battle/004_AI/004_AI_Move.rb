@@ -26,7 +26,15 @@ class Battle::AI
   def pbRegisterMoveTrainer(user, idxMove, choices, skill)
     move = user.moves[idxMove]
     target_data = move.pbTarget(user)
-    dart = @battle.pbOpposingBattlerCount(user.index) > 1 && move.function == "HitTwoTimesTargetThenTargetAlly"
+    dart = false
+    case move.function
+    when "HitTwoTimesTargetThenTargetAlly"
+      dart = true if @battle.pbOpposingBattlerCount(user.index) > 1
+    when "HitsAllFoesAndPowersUpInPsychicTerrain"
+      dart = true if @battle.field.terrain == :Psychic && user.affectedByTerrain?
+    when "PeperSpray"
+      dart = true if [:Sun, :HarshSun].include?(user.effectiveWeather) && move.id == :PEPPERSPRAY
+    end
       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
     if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
       # If move does not have a defined target the AI will calculate
