@@ -523,20 +523,18 @@ end
 # Use Rare Candy - Level Cap #by low  
 #===============================================================================  
 ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
-  # level cap #by low
-  proceed=false
-  for i in $Trainer.party
-    if i.level>pkmn.level
-      proceed=true
-      break
-    end  
+  highestlvl = 0
+  $player.party.each do |mon|
+    highestlvl = mon.level if mon.level > highestlvl
+  end
+  proceed = false
+  proceed = true if pkmn.level < highestlvl
+  unless proceed
+    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment (lvl. {1}).", highestlvl))
+    next false
   end
   if pkmn.shadowPokemon?
     scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  if proceed==false
-    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment."))
     next false
   end
   if pkmn.level >= GameData::GrowthRate.max_level
@@ -545,16 +543,7 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
       scene.pbDisplay(_INTL("It won't have any effect."))
       next false
     end
-    #edited by Gardenette to work with No Auto Evolve script
-    # Check for evolution
-    #pbFadeOutInWithMusic {
-      #  evo = PokemonEvolutionScene.new
-      #  evo.pbStartScreen(pkmn, new_species)
-      #  evo.pbEvolution
-      #  evo.pbEndScreen
-      #  scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
-      #}
-      pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
+    pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
     next true
   end
   # Level up
