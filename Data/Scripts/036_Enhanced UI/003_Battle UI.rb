@@ -932,18 +932,100 @@ class Battle::Scene
       end
       stage = [stage, 0].min if stat == :EVASION
       stage += 6
-      return (100.0 * stageMul[stage] / stageDiv[stage]).floor
+      value = (100.0 * stageMul[stage] / stageDiv[stage]).floor
+      if stat == :ACCURACY
+        value *= 1.3 if battler.hasActiveAbility?(:COMPOUNDEYES)
+        value *= 1.1 if battler.hasActiveItem?(:WIDELENS)
+        value *= 0.8 if battler.hasActiveAbility?(:HUSTLE)
+      end
+      return value
     end
     stage = battler.stages[stat] + 6
     value = 0
     case stat
-    when :ATTACK          then value = battler.attack
-    when :DEFENSE         then value = battler.defense
-    when :SPECIAL_ATTACK  then value = battler.spatk
-    when :SPECIAL_DEFENSE then value = battler.spdef
-    when :SPEED           then value = battler.speed
+    when :ATTACK
+      value = battler.attack
+      value *= 1.5 if battler.hasActiveAbility?(:HUSTLE)
+      value *= 1.5 if battler.hasActiveAbility?(:TOXICBOOST) && battler.poisoned?
+      value *= 1.5 if battler.hasActiveAbility?(:GUTS) && battler.pbHasAnyStatus?
+      value *= 2.0 if battler.hasActiveAbility?([:HUGEPOWER, :PUREPOWER])
+      if battler.effects[PBEffects::ChoiceBand]
+        value *= 1.5 if battler.hasActiveItem?(:CHOICEBAND)
+        value *= 1.5 if battler.hasActiveAbility?(:GORILLATACTICS)
+      end
+      value *= 0.5 if battler.hasActiveAbility?(:DEFEATIST) && battler.hp <= battler.totalhp / 2
+      value *= (2 / 3.0) if battler.hasActiveAbility?(:SLOWSTART) && battler.slowstart_count > 0
+      if [:Sun, :HarshSun].include?(battler.effectiveWeather)
+        if battler.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERGIFT) } ||
+           battler.hasActiveAbility?(:FLOWERGIFT)
+          value *= 1.5
+        end
+      end
+      if $player.difficulty_mode?("chaos")
+        if battler.hasActiveAbility?(:MOXIE)
+          ded = battler.pbOpposingSide.effects[PBEffects::FaintedMons]
+          met = [(1 + (0.05 * ded)), 1.3].min
+          value *= met
+        end
+      end
+      if battler.allAllies.any? { |b| b.hasActiveAbility?(:CARPENTER) } &&
+        (battler.pbHasType?(:GRASS) || battler.pbHasType?(:ROCK) || battler.pbHasType?(:STEEL))
+        value *= 1.3
+      end
+    when :DEFENSE
+      value = battler.defense
+      value *= 2.0 if battler.hasActiveAbility?(:FURCOAT)
+      value *= 1.5 if battler.hasActiveAbility?(:GRASSPELT) && battler.battle.field.terrain == :Grassy
+      value *= 1.5 if battler.hasActiveAbility?(:MARVELSCALE) && battler.pbHasAnyStatus?
+      value *= 1.5 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
+      value *= 1.5 if battler.hasActiveItem?(:MELEEVEST)
+      if battler.pokemon.species_data.get_evolutions(true).length > 0
+        value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
+      end
+    when :SPECIAL_ATTACK
+      value = battler.spatk
+      if battler.hasActiveAbility?([:MINUS, :PLUS])
+        if battler.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) }
+          value *= 1.5
+        elsif battler.hasAbilityMutation?
+          if (battler.hasActiveAbility?(:MINUS) && battler.abilityMutationList.include?(:PLUS)) ||
+             (battler.hasActiveAbility?(:PLUS) && battler.abilityMutationList.include?(:MINUS))
+            value *= 1.5
+          end
+        end
+      end
+      value *= 1.5 if battler.hasActiveItem?(:CHOICESPECS) && battler.effects[PBEffects::ChoiceBand]
+      value *= 1.5 if battler.hasActiveAbility?(:SOLARPOWER) && [:Sun, :HarshSun].include?(battler.effectiveWeather)
+      if $player.difficulty_mode?("chaos")
+        if battler.hasActiveAbility?(:SOULHEART)
+          ded = battler.pbOpposingSide.effects[PBEffects::FaintedMons]
+          met = [(1 + (0.05 * ded)), 1.3].min
+          value *= met
+        end
+      end
+      if battler.allAllies.any? { |b| b.hasActiveAbility?(:CARPENTER) } &&
+        (battler.pbHasType?(:GRASS) || battler.pbHasType?(:ROCK) || battler.pbHasType?(:STEEL))
+        value *= 1.3
+      end
+    when :SPECIAL_DEFENSE
+      value = battler.spdef
+      value *= 2.0 if battler.hasActiveAbility?(:ICESCALES)
+      value *= 1.5 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
+      value *= 1.5 if battler.pbHasType?(:ROCK) && battler.effectiveWeather == :Sandstorm
+      value *= 1.5 if battler.hasActiveItem?(:ASSAULTVEST)
+      if battler.pokemon.species_data.get_evolutions(true).length > 0
+        value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
+      end
+      if [:Sun, :HarshSun].include?(battler.effectiveWeather)
+        if battler.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERGIFT) } ||
+           battler.hasActiveAbility?(:FLOWERGIFT)
+          value *= 1.5
+        end
+      end
+    when :SPEED
+      value = battler.pbSpeed
     end
-    value += @battle.pbRandom(-12..12) if !battler.pbOwnedByPlayer?
+    value = value.round
     value = [[value, 999].min, 1].max
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
