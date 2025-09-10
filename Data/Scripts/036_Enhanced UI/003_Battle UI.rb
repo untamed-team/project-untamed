@@ -938,6 +938,7 @@ class Battle::Scene
         value *= 1.1 if battler.hasActiveItem?(:WIDELENS)
         value *= 0.8 if battler.hasActiveAbility?(:HUSTLE)
       end
+      value = value.round
       return value
     end
     stage = battler.stages[stat] + 6
