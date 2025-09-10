@@ -6331,22 +6331,20 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "UserTargetSwapBaseSpeed" # speed swap
         if !userFasterThanTarget
-            miniscore= (10)*target.stages[:SPEED]
-            minimini= (-10)*user.stages[:SPEED]
-            if miniscore==0 && minimini==0
-                score*=0
-            else
-                miniscore+=minimini
-                miniscore+=100
-                miniscore/=100.0
-                score*=miniscore
-                hasAlly = !target.allAllies.empty?
-                if hasAlly
-                    score*=0.8
-                end
+            miniscore = (10)*target.pbSpeed
+            minimini = (-10)*user.pbSpeed
+            if @battle.field.effects[PBEffects::TrickRoom]>0
+                miniscore *= -1
+                minimini *= -1
             end
+            miniscore+=minimini
+            miniscore+=100
+            miniscore/=100.0
+            score*=miniscore
+            score*=0.8 if target.allAllies.any?
+            score*=1.2 if priorityAI(user, move, globalArray) > 0
         else
-            score*=0
+            score=0
         end
     #---------------------------------------------------------------------------
     when "UserTargetAverageBaseAtkSpAtk" # Power Split
