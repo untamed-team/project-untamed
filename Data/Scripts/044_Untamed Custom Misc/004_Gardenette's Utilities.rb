@@ -2157,6 +2157,11 @@ def pbStartOver(gameover = false)
     if homedata
       pbCancelVehicles
       #Followers.clear
+      #remove all followers except your following pkmn
+      for follower in $PokemonGlobal.followers
+        next if follower.name == "FollowingPkmn"
+        $game_temp.followers.remove_follower_by_name(follower.name)
+      end
       pbDeregisterPartner #added by Gardenette
       $game_switches[Settings::STARTING_OVER_SWITCH] = true
       $game_temp.player_new_map_id    = homedata[0]
