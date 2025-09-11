@@ -1705,7 +1705,7 @@ Battle::AbilityEffects::DamageCalcFromTarget.add(:HEATPROOF,
 
 Battle::AbilityEffects::DamageCalcFromTarget.add(:ICESCALES,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
-    mults[:final_damage_multiplier] /= 2 if move.specialMove?
+    mults[:defense_multiplier] *= 2 if move.specialMove?
   }
 )
 
