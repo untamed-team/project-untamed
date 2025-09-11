@@ -810,8 +810,7 @@ class Battle::AI
         scorebackup = score
         if (userFasterThanTarget || priorityAI(user, move, globalArray) > 0) && targetWillMove?(target, "dmg")
             if @battle.choices[target.index][2].type == :NORMAL
-                @battle.allBattlers.each do |b|
-                    next if user.opposes?(b)
+                @battle.allSameSideBattlers(user.index).each do |b|
                     if b.hasActiveAbility?(:LIGHTNINGROD)
                         if b.spatk > b.attack
                             score*=1.6
@@ -3151,7 +3150,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "StartHealUserEachTurnTrapUserInBattle" # ingrain
-          if !user.effects[PBEffects::Ingrain]
+        if !user.effects[PBEffects::Ingrain]
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]
             if user.hp*(1.0/user.totalhp)>0.75
@@ -3371,8 +3370,7 @@ class Battle::AI
     when "UserFaintsExplosive" # explosion
         score*=0.7
         if user.hp==user.totalhp
-            seancecheck = user.allAllies.any? { |b| b&.hasActiveAbility?(:SEANCE) }
-            score*=0.2 if !seancecheck
+            score*=0.2 if user.allAllies.none? { |b| b&.hasActiveAbility?(:SEANCE) }
         else
             miniscore = user.hp*(1.0/user.totalhp)
             miniscore = 1-miniscore
@@ -3422,8 +3420,7 @@ class Battle::AI
     when "UserFaintsPowersUpInMistyTerrainExplosive" # misty explosion
         score*=0.7
         if user.hp==user.totalhp
-            seancecheck = user.allAllies.any? { |b| b&.hasActiveAbility?(:SEANCE) }
-            score*=0.2 if !seancecheck
+            score*=0.2 if user.allAllies.none? { |b| b&.hasActiveAbility?(:SEANCE) }
         else
             miniscore = user.hp*(1.0/user.totalhp)
             miniscore = 1-miniscore
@@ -4736,27 +4733,31 @@ class Battle::AI
         when 3 # burn
             miniscore = pbTargetBenefitsFromStatus?(user, target, :BURN, miniscore, move, globalArray, skill)
         when 4 # lower Sp. Atk by 1
-            miniscore*=0.1 if !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
-            miniscore*=1.2 if target.poisoned? || target.burned?
-            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-            miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+            if canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
+                miniscore*=1.2 if target.poisoned? || target.burned?
+                miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+                miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+            end
         when 5 # lower Attack by 1
-            miniscore*=0.1 if !canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
-            miniscore*=1.2 if target.poisoned? || target.frozen?
-            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-            miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+            if canLowerStatTarget(:ATTACK,move,user,target,mold_broken)
+                miniscore*=1.2 if target.poisoned? || target.frozen?
+                miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+                miniscore*=0.1 if target.hasActiveAbility?([:UNAWARE, :COMPETITIVE, :DEFIANT, :CONTRARY])
+            end
         when 6 # lower Speed by 1
-            miniscore*=0.1 if !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
-            miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
-            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-            miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+            if canLowerStatTarget(:SPEED,move,user,target,mold_broken)
+                miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
+                miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+                miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+            end
         when 7 # lower Defense by 1
-            miniscore*=0.1 if !canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
-            miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
-            miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
-            miniscore*=0.7 if user.burned?
-            miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
-            miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+            if canLowerStatTarget(:DEFENSE,move,user,target,mold_broken)
+                miniscore*=1.5 if target.moves.any? { |m| m&.healingMove? }
+                miniscore*=1.2 if target.poisoned? || target.burned? || target.frozen?
+                miniscore*=0.7 if user.burned?
+                miniscore*=1.3 if user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
+                miniscore*=0.1 if target.hasActiveAbility?([:COMPETITIVE, :DEFIANT, :CONTRARY])
+            end
         when 8 # flinch
             if canFlinchTarget(user,target,mold_broken) && userFasterThanTarget
                 miniscore*=1.3
@@ -5836,7 +5837,7 @@ class Battle::AI
                         increment *= 2 if target.hasActiveAbility?(:SIMPLE)
                         increment *= -1 if target.hasActiveAbility?(:CONTRARY)
                         [:ATTACK, :SPECIAL_ATTACK].each do |partingStat|
-                            next unless !canLowerStatTarget(partingStat,move,user,target,mold_broken)
+                            next if !canLowerStatTarget(partingStat,move,user,target,mold_broken)
                             target.stages[partingStat] -= increment
                             target.stages[partingStat] = [[target.stages[partingStat], -6].max, 6].min
                         end

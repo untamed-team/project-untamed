@@ -1966,7 +1966,10 @@ class Battle::AI
                                    :ROSELIBERRY, :BABIRIBERRY)
                 abilityscore*=1.5 if itemsAffected.include?(user.item_id)
             end
-            abilityscore*=0.6 unless [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id)
+            if [:TOXICORB, :FLAMEORB, :LAGGINGTAIL, :IRONBALL, :STICKYBARB].include?(target.item_id) || target.hasAbilityMutation?
+            else
+                abilityscore*=0.6
+            end
         end
         if target.hasActiveAbility?(:SIMPLE)
             abilityscore*=1.4 if pbHasSetupMove?(target)
@@ -1997,7 +2000,10 @@ class Battle::AI
                 typeMod = pbCalcTypeMod(i.type, target, user, i)
                 supervar=true if Effectiveness.super_effective?(typeMod)
             end
-            abilityscore*=2.0 if supervar
+            if supervar
+                abilityscore*=1.2
+                abilityscore*=1.2 if !$player.difficulty_mode?("chaos")
+            end
         end
         if target.hasActiveAbility?(:SLIPPERYPEEL)
             echo("\nSlippery Peel Disrupt") if $AIGENERALLOG

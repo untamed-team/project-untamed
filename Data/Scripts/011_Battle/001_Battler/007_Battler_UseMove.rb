@@ -455,6 +455,8 @@ class Battle::Battler
               end
             end
             resistTypesArr.push(offenseType.id) if resistTypesArr.empty?
+            resistTypesArr.delete(:WATER) if move.function == "FreezeTargetSuperEffectiveAgainstWater"
+            resistTypesArr.delete(:STEEL) if move.function == "SuperEffectiveAgainstSteel"
             resistType = resistTypesArr.sample
             b.pbChangeTypes(resistType)
             typeName = GameData::Type.get(resistType).name
