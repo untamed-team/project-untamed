@@ -2162,6 +2162,11 @@ def pbStartOver(gameover = false)
         next if follower.name == "FollowingPkmn"
         $game_temp.followers.remove_follower_by_name(follower.name)
       end
+      #check if Reine needs to follow
+      if $game_switches[125] #Reine needs to follow
+        $game_switches[126] = false
+        $game_switches[127] = true
+      end
       pbDeregisterPartner #added by Gardenette
       $game_switches[Settings::STARTING_OVER_SWITCH] = true
       $game_temp.player_new_map_id    = homedata[0]
