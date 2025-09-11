@@ -225,6 +225,97 @@ module Settings
                 :Image => _INTL("cooking4"),
                 :ImageAdvGuide => _INTL("cooking4 - guide"),
             },
+            :TRADING1 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("When you enter the 'Trade Pokémon' menu, choose a Pokémon, then select 'Offer as Trade'."),
+                :Image => "trading1",
+                :ImageAdvGuide => "trading1",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING2 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("An 'Offer' file will be created. Choose 'Open Trading Folder' to open the folder it's located in."),
+                :Image => "trading2",
+                :ImageAdvGuide => "trading2",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING3 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("Send the other player your offer file. They should do the same."),
+                :Image => "trading3",
+                :ImageAdvGuide => "trading3",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING4 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("Download the 'Offer' file the other player sends you..."),
+                :Image => "trading4",
+                :ImageAdvGuide => "trading4",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING5 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("and put that offer file into your Trading folder."),
+                :Image => "trading5",
+                :ImageAdvGuide => "trading5",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING6 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("In the game, select the option 'Check Offer'."),
+                :Image => "trading6",
+                :ImageAdvGuide => "trading6",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING7 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("You can check either Pokémon's summary here. Select 'Accept Trade' if you agree to it."),
+                :Image => "trading7",
+                :ImageAdvGuide => "trading7",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING8 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("If you accept the trade, an 'Agreement' file will be created in your Trading folder."),
+                :Image => "trading8",
+                :ImageAdvGuide => "trading8",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING9 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("Send the other player your agreement file. They should do the same."),
+                :Image => "trading9",
+                :ImageAdvGuide => "trading9",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING10 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("Download the 'Agreement' file the other player sends you..."),
+                :Image => "trading10",
+                :ImageAdvGuide => "trading10",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING11 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("and put that agreement file into your Trading folder."),
+                :Image => "trading11",
+                :ImageAdvGuide => "trading11",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING12 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("In the game, select the option 'Finalize Trade'."),
+                :Image => "trading12",
+                :ImageAdvGuide => "trading12",
+                :YAdjustmentAdvGuide => -36,
+            },
+            :TRADING13 => {
+                :Title => _INTL("Trading"),
+                :Text => _INTL("The trade will commence for you. Happy trading!"),
+                :Image => "trading13",
+                :ImageAdvGuide => "trading13",
+                :YAdjustmentAdvGuide => -36,
+            },
         }
 
         TIP_CARDS_GROUPS = {
@@ -251,6 +342,10 @@ module Settings
             :COOKING => {
                 :Title => _INTL("Cooking Candy"),
                 :Tips => [:COOKING1, :COOKING2, :COOKING3]
+            },
+            :TRADING => {
+                :Title => _INTL("Trading"),
+                :Tips => [:TRADING1, :TRADING2, :TRADING3, :TRADING4, :TRADING5, :TRADING6, :TRADING7, :TRADING8, :TRADING9, :TRADING10, :TRADING11, :TRADING12, :TRADING13]
             },
         }
 end
