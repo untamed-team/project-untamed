@@ -975,7 +975,21 @@ class Battle::AI
     #=============================================================================
     def pbEnemyShouldMegaEvolve?(idxBattler)
         battler = @battle.battlers[idxBattler]
-        # i am not sure if we have a mega that doesnt want to mega asap. check up on this later in any case
+        # unsure if this is worth it or not. Check up on this if it causes issues
+        if battler.hasAbilityMutation?
+            if battler.isSpecies?(:GYARADOS) || battler.isSpecies?(:LUPACABRA) #|| battler.isSpecies?(:MAWILE)
+                battler.allOpposing.each do |b|
+                    realb = b
+                    if @battle.choices[b.index][0] == :SwitchOut
+                        realb = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[@battle.choices[b.index][1]],false,b)
+                    end
+                    if realb.hasActiveAbility?([:CONTRARY, :DEFIANT, :COMPETITIVE])
+                        PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will not Mega Evolve due to #{realb}'s ability")
+                        return false
+                    end
+                end
+            end
+        end
         if @battle.pbCanMegaEvolve?(idxBattler) # Simple "always should if possible"
             PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
             return true

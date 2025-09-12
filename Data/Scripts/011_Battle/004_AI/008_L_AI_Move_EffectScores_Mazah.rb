@@ -2136,8 +2136,10 @@ class Battle::AI
         weatherNeg = false
         @battle.allBattlers.each do |n|
             realn = n
-            if @battle.choices[n.index][0] == :SwitchOut
-                realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+            if realn.pbOwnedByPlayer?
+                if @battle.choices[n.index][0] == :SwitchOut
+                    realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+                end
             end
             if realn.hasActiveAbility?([:AIRLOCK, :CLOUDNINE])
                 weatherNeg = true
