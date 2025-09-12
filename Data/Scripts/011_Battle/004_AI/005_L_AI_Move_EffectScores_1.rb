@@ -4853,7 +4853,7 @@ class Battle::AI
             if target.poisoned?
                 miniscore*=1.2
             end
-            if target.stages[:ATTACK]!=0
+            if target.stages[:ATTACK]<0
                 minimini = 10*target.stages[:ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -4917,7 +4917,7 @@ class Battle::AI
             if target.poisoned?
                 miniscore*=1.2
             end
-            if target.stages[:ATTACK]!=0
+            if target.stages[:ATTACK]<0
                 minimini = 10*target.stages[:ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -4982,7 +4982,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:DEFENSE]!=0
+            if target.stages[:DEFENSE]<0
                 minimini = 5*target.stages[:DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5035,7 +5035,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:DEFENSE]!=0
+            if target.stages[:DEFENSE]<0
                 minimini = 5*target.stages[:DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5074,7 +5074,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:SPECIAL_ATTACK]!=0
+            if target.stages[:SPECIAL_ATTACK]<0
                 minimini = 10*target.stages[:SPECIAL_ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5140,7 +5140,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:SPECIAL_ATTACK]!=0
+            if target.stages[:SPECIAL_ATTACK]<0
                 minimini = 10*target.stages[:SPECIAL_ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5176,7 +5176,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:SPECIAL_ATTACK]!=0
+            if target.stages[:SPECIAL_ATTACK]<0
                 minimini = 10*target.stages[:SPECIAL_ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5230,7 +5230,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:SPECIAL_DEFENSE]!=0
+            if target.stages[:SPECIAL_DEFENSE]<0
                 minimini = 5*target.stages[:SPECIAL_DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5280,7 +5280,7 @@ class Battle::AI
             if target.poisoned? || target.burned? || target.frozen?
                 miniscore*=1.2
             end
-            if target.stages[:SPECIAL_DEFENSE]!=0
+            if target.stages[:SPECIAL_DEFENSE]<0
                 minimini = 5*target.stages[:SPECIAL_DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5355,7 +5355,7 @@ class Battle::AI
             if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                 miniscore*=1.4
             end
-            if target.stages[:SPEED]!=0
+            if target.stages[:SPEED]<0
                 minimini = 5*target.stages[:SPEED]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5442,7 +5442,7 @@ class Battle::AI
             if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                 miniscore*=1.3
             end
-            if target.stages[:SPEED]!=0
+            if target.stages[:SPEED]<0
                 minimini = 5*target.stages[:SPEED]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5563,7 +5563,7 @@ class Battle::AI
             if target.poisoned?
                 miniscore*=1.2
             end
-            if target.stages[:ATTACK]+target.stages[:DEFENSE]!=0
+            if (target.stages[:ATTACK]+target.stages[:DEFENSE]) < 0
                 minimini = 5*target.stages[:ATTACK]
                 minimini+= 5*target.stages[:DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
@@ -5616,7 +5616,7 @@ class Battle::AI
             if target.poisoned?
                 miniscore*=1.2
             end
-            if target.stages[:DEFENSE]!=0
+            if target.stages[:DEFENSE]<0
                 minimini = 5*target.stages[:DEFENSE]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100

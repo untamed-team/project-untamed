@@ -163,7 +163,7 @@ class Battle::AI
             if targetlivecount==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                 miniscore*=1.4
             end
-            if target.stages[:SPEED]!=0
+            if target.stages[:SPEED]<0
                 minimini = 5*target.stages[:SPEED]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
