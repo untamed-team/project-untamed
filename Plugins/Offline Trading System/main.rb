@@ -695,6 +695,6 @@ MenuHandlers.add(:pc_menu, :offline_trade, {
   "name"      => _INTL("Trade Pokémon"),
   "order"     => 50,
   "effect"    => proc { |menu|
-    OfflineTradingSystem.selectPkmnToTrade
+	OfflineTradingSystem.selectPkmnToTrade
   }
 })

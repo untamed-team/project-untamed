@@ -951,6 +951,8 @@ class TradingPokemonStorageScreen
     case command
     when 0   # Organise
       @scene.pbStartBox(self, command)
+	  #show tip card for trading if not seen it yet
+	  pbShowTipCardsGrouped(:TRADING) if !pbSeenTipCard?(:TRADING1)
       loop do
         selected = @scene.pbSelectBox(@storage.party)
         if selected.nil?

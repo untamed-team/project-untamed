@@ -227,14 +227,14 @@ module Settings
             },
             :TRADING1 => {
                 :Title => _INTL("Trading"),
-                :Text => _INTL("When you enter the 'Trade Pokémon' menu, choose a Pokémon, then select 'Offer as Trade'."),
+                :Text => _INTL("Choose a Pokémon, then select 'Offer as Trade'."),
                 :Image => "trading1",
                 :ImageAdvGuide => "trading1",
                 :YAdjustmentAdvGuide => -36,
             },
             :TRADING2 => {
                 :Title => _INTL("Trading"),
-                :Text => _INTL("An 'Offer' file will be created. Choose 'Open Trading Folder' to open the folder it's located in."),
+                :Text => _INTL("An 'Offer' file will be created. Choose 'Open Trading Folder' to find it."),
                 :Image => "trading2",
                 :ImageAdvGuide => "trading2",
                 :YAdjustmentAdvGuide => -36,
@@ -269,14 +269,14 @@ module Settings
             },
             :TRADING7 => {
                 :Title => _INTL("Trading"),
-                :Text => _INTL("You can check either Pokémon's summary here. Select 'Accept Trade' if you agree to it."),
+                :Text => _INTL("Check the Pokémons' summaries here or select 'Accept Trade' if you agree."),
                 :Image => "trading7",
                 :ImageAdvGuide => "trading7",
                 :YAdjustmentAdvGuide => -36,
             },
             :TRADING8 => {
                 :Title => _INTL("Trading"),
-                :Text => _INTL("If you accept the trade, an 'Agreement' file will be created in your Trading folder."),
+                :Text => _INTL("If you accept, an 'Agreement' file will be created in your Trading folder."),
                 :Image => "trading8",
                 :ImageAdvGuide => "trading8",
                 :YAdjustmentAdvGuide => -36,
