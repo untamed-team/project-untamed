@@ -1026,6 +1026,7 @@ class Battle::Scene
     when :SPEED
       value = battler.pbSpeed
     end
+    value *= 0.9 if battler.pokemon.natureBoostAI
     value = value.round
     value = [[value, 999].min, 1].max
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor

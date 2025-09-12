@@ -376,42 +376,42 @@ class Battle::AI
                         echoln "target will switch to #{foeparty[b.battle.choices[b.index][1]].name}" if $AIGENERALLOG
                         realTarget = @battle.pbMakeFakeBattler(foeparty[b.battle.choices[b.index][1]],false,b)
                     else
-                        # switch worriedness
                         realTarget = b
-                        inBattleIndex = @battle.allSameSideBattlers(b.index).map { |b| b.pokemonIndex }
-                        foeparty.each_with_index do |pkmn, idxParty|
-                            next if !pkmn || !pkmn.able?
-                            next if inBattleIndex.include?(idxParty)
-                            dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
-                            if pbCheckMoveImmunity(score, move, user, dummy, skill)
-                                score -= 2
-                            else
-                                type = pbRoughType(move, user, skill)
-                                typeMod = pbCalcTypeMod(type, user, dummy)
-                                score -= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
-                            end
+                    end
+                    score = pbGetMoveScore(move, user, realTarget, 100)
+                    # switch worriedness
+                    inBattleIndex = @battle.allSameSideBattlers(b.index).map { |b| b.pokemonIndex }
+                    foeparty.each_with_index do |pkmn, idxParty|
+                        next if !pkmn || !pkmn.able?
+                        next if inBattleIndex.include?(idxParty)
+                        dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
+                        if pbCheckMoveImmunity(score, move, user, dummy, skill)
+                            score -= 2
+                        else
+                            type = pbRoughType(move, user, skill)
+                            typeMod = pbCalcTypeMod(type, user, dummy)
+                            score -= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
                         end
-                        # ally switch cheez prevention
-                        if @battle.pbSideBattlerCount(b) > 1
-                            moovprio = priorityAI(user, move, [], true)
-                            user.allOpposing.each do |a|
-                                break if moovprio > 2
-                                next if !a.pbHasMoveFunction?("UserSwapsPositionsWithAlly")
-                                next if !targetWillMove?(a, "status")
-                                if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
-                                    ayylly = a.allAllies.first
-                                    if pbCheckMoveImmunity(score, move, user, ayylly, skill)
-                                        score *= 0.2
-                                    else
-                                        type = pbRoughType(move, user, skill)
-                                        typeMod = pbCalcTypeMod(type, user, ayylly)
-                                        score *= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
-                                    end
+                    end
+                    # ally switch cheez prevention
+                    if @battle.pbSideBattlerCount(b) > 1
+                        moovprio = priorityAI(user, move, [], true)
+                        user.allOpposing.each do |a|
+                            break if moovprio > 2
+                            next if !a.pbHasMoveFunction?("UserSwapsPositionsWithAlly")
+                            next if !targetWillMove?(a, "status")
+                            if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
+                                ayylly = a.allAllies.first
+                                if pbCheckMoveImmunity(score, move, user, ayylly, skill)
+                                    score *= 0.2
+                                else
+                                    type = pbRoughType(move, user, skill)
+                                    typeMod = pbCalcTypeMod(type, user, ayylly)
+                                    score *= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
                                 end
                             end
                         end
                     end
-                    score = pbGetMoveScore(move, user, realTarget, 100)
                     score *= 1 + (doublesThreat/10.0)
                     score = score.to_i
                     scoresAndTargets.push([score, realTarget.index]) if score > 0
