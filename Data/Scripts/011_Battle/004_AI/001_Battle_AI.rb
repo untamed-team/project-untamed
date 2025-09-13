@@ -43,16 +43,4 @@ class Battle::AI
     # [(n-1) makes it a sample std dev, would be 0 with only 1 sample]
     return Math.sqrt(varianceTimesN / n)
   end
-
-  #=============================================================================
-  # Decide whether the opponent should Mega Evolve their Pokémon
-  #=============================================================================
-  def pbEnemyShouldMegaEvolve?(idxBattler)
-    battler = @battle.battlers[idxBattler]
-    if @battle.pbCanMegaEvolve?(idxBattler)   # Simple "always should if possible"
-      PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-      return true
-    end
-    return false
-  end
 end

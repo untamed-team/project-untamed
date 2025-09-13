@@ -605,7 +605,7 @@ class Battle::AI
           end
           if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
             tempdam*=0.67 if b.pbHasType?(:ROCK,true) && m.specialMove?
-            tempdam*=0.67 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
+            tempdam*=0.77 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
             tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
           end
           if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
@@ -614,7 +614,7 @@ class Battle::AI
               typeMod = pbCalcTypeMod(moveType, b, pokmon)
               tempdam*=0.75 if Effectiveness.super_effective?(typeMod)
             end
-            tempdam*=0.67 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
+            tempdam*=0.77 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
           end
           if pokmon.hasActiveAbility?(:ELECTRICSURGE) && @battle.field.terrain != :Electric
             tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC && m.function!="DoublePowerInElectricTerrain"

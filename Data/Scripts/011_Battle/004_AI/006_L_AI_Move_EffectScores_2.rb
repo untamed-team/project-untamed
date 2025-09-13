@@ -151,7 +151,7 @@ class Battle::AI
                 break if !allOutspeed
             end
         end
-        if allOutspeed || !target.pbCanLowerStatStage?(:SPEED)
+        if allOutspeed || !canLowerStatTarget(:SPEED,move,user,target,mold_broken)
             score*=0.5
         else          
             miniscore=110
@@ -163,7 +163,7 @@ class Battle::AI
             if targetlivecount==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                 miniscore*=1.4
             end
-            if target.stages[:SPEED]!=0
+            if target.stages[:SPEED]<0
                 minimini = 5*target.stages[:SPEED]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -1028,12 +1028,13 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "SetUserAbilityToTargetAbility" # role play
-        if target.effects[PBEffects::Substitute] > 0 || target.ungainableAbility?
+        if target.effects[PBEffects::Substitute] > 0 || 
+           target.ungainableAbility? || user.unstoppableAbility? || 
+           !target.ability || user.ability == target.ability
             score = 0
-        elsif !target.ability || user.ability == target.ability ||
-            ![:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) ||
-            ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-              :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
+        elsif ![:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) &&
+              ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
+                :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if minimini > miniscore
@@ -1046,12 +1047,13 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "SetTargetAbilityToUserAbility" # EEEEEEEEE-ntertainment !!
-        if target.effects[PBEffects::Substitute] > 0 || target.unstoppableAbility?
+        if target.effects[PBEffects::Substitute] > 0 || 
+           target.unstoppableAbility? || user.ungainableAbility? || 
+           !user.ability || user.ability == target.ability
             score = 0
-        elsif !user.ability || user.ability == target.ability ||
-                ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
-                ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-                  :TRACE, :ZENMODE].include?(user.ability_id)
+        elsif ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) &&
+              ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM, :TRACE, 
+                :ZENMODE].include?(user.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy
@@ -1085,12 +1087,13 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "UserTargetSwapAbilities" # Skill Swap
-        if target.effects[PBEffects::Substitute] > 0 || target.unstoppableAbility? || user.ungainableAbility?
+        if target.effects[PBEffects::Substitute] > 0 || 
+           target.unstoppableAbility? || user.ungainableAbility? || 
+           !user.ability || user.ability == target.ability
             score = 0
-        elsif !user.ability || user.ability == target.ability ||
-                ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) ||
-                ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
-                  :TRACE, :ZENMODE].include?(user.ability_id)
+        elsif ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) &&
+              ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM, :TRACE, 
+                :ZENMODE].include?(user.ability_id)
             miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy

@@ -9311,7 +9311,7 @@ Accuracy = 100
 TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
-Flags = Contact,CanProtect,CanMirrorMove
+Flags = Contact,CanProtect,CanMirrorMove,Bomb
 Description = The user unleashes a powerful blast of thorns in a wide spread, hitting foes with splintered fragments.
 #-------------------------------
 [BOOMINSTALL]

@@ -1,23 +1,23 @@
 class Pokemon
   attr_accessor :bossmonMutation
-	bossmonMutation = false
+	@bossmonMutation = false
 	def enableBossPokemonMutation
-		bossmonMutation = true
+		@bossmonMutation = true
 	end  
 	def disableBossPokemonMutation
-		bossmonMutation = false
+		@bossmonMutation = false
 	end    
 
 	def toggleBossPokemonMutation
 		if !bossmonMutation
-			bossmonMutation = true
+			@bossmonMutation = true
 		else	
-			bossmonMutation = false
+			@bossmonMutation = false
 		end	
 	end 		
 	
 	def isBossPokemon?
-		return true if bossmonMutation==true
+		return true if @bossmonMutation
 	end
 end
 
@@ -300,6 +300,12 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
+      @hpBar2.y = @hpBar.y
+      @hpBar2.x = @hpBar.x
+      @hpBar2.z = @hpBar.z - 1
+      @hpBar2.src_rect.x = 0
+      @hpBar2.src_rect.width = @hpBar.bitmap.width
+      @hpBar2.visible = false
     end
   end
 

@@ -1114,7 +1114,7 @@ class Pokemon
     nature_mod = {}
     GameData::Stat.each_main { |s| nature_mod[s.id] = 100 }
     this_nature = self.nature_for_stats
-    if self.hasAbilityMutation? #"!pbOwnedByPlayer" would not work here #by low
+    if self.natureBoostAI #"!pbOwnedByPlayer" would not work here #by low
       GameData::Stat.each_main { |s| nature_mod[s.id] += 10 }
     else
       if this_nature

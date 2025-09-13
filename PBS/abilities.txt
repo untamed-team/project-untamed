@@ -30,7 +30,7 @@ Description = The Pokémon is protected from paralysis.
 #-------------------------------
 [SANDVEIL]
 Name = Sand Veil
-Description = Boosts the user's Defense by 1.5x in a sandstorm.
+Description = Boosts the user's Defense by 1.3x in a sandstorm.
 #-------------------------------
 [STATIC]
 Name = Static
@@ -363,7 +363,7 @@ Description = Raises Speed each time the Pokémon flinches.
 #-------------------------------
 [SNOWCLOAK]
 Name = Snow Cloak
-Description = Boosts the user's Sp. Def by 1.5x in a hailstorm.
+Description = Boosts the user's Sp. Def by 1.3x in a hailstorm.
 #-------------------------------
 [GLUTTONY]
 Name = Gluttony

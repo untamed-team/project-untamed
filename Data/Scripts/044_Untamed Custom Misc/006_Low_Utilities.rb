@@ -1,6 +1,7 @@
 # not actually a utilities page, just a "too lazy to create a new page for this"
 
 OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
+MIRRORCONTAINER = 100 # Whether the trainer's team is mirrored to a modified player's team in battle
 LOWEREXPGAINSWITCH = 99
 RELEARNERSWITCH = 98
 NOINITIALVALUES = 97
@@ -315,28 +316,29 @@ GameData::Evolution.register({
 })
 
 #===============================================================================  
-# Link Cable #by low  
+# Link Cable #by low 
+# (this used to be the only way for evolving trade mons)
 #===============================================================================  
 GameData::Evolution.register({  
-  :id            => :Trade,  
+  :id            => :Link,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeMale,  
+  :id            => :LinkMale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.male? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeFemale,  
+  :id            => :LinkFemale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.female? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id                   => :TradeItem,  
+  :id                   => :LinkItem,  
   :parameter            => :Item,  
   :use_item_proc        => proc { |pkmn, parameter, item|  
     next pkmn.item == parameter && item == :LINKCABLE  
@@ -345,25 +347,6 @@ GameData::Evolution.register({
     next false if evo_species != new_species || !pkmn.hasItem?(parameter)  
     pkmn.item = nil   # Item is now consumed
   }
-})
-  
-  # these 2 are the same thing, fsr it doesnt check night/day when using items and its such a niche problem  
-GameData::Evolution.register({  
-  :id            => :TradeDay,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isDay?  
-      next item == :LINKCABLE  
-    end  
-  }  
-})
-
-GameData::Evolution.register({  
-  :id            => :TradeNight,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isNight?  
-      next item == :LINKCABLE  
-    end  
-  }  
 })
 
 #===============================================================================
@@ -540,20 +523,18 @@ end
 # Use Rare Candy - Level Cap #by low  
 #===============================================================================  
 ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
-  # level cap #by low
-  proceed=false
-  for i in $Trainer.party
-    if i.level>pkmn.level
-      proceed=true
-      break
-    end  
+  highestlvl = 0
+  $player.party.each do |mon|
+    highestlvl = mon.level if mon.level > highestlvl
+  end
+  proceed = false
+  proceed = true if pkmn.level < highestlvl
+  unless proceed
+    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment (lvl. {1}).", highestlvl))
+    next false
   end
   if pkmn.shadowPokemon?
     scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  if proceed==false
-    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment."))
     next false
   end
   if pkmn.level >= GameData::GrowthRate.max_level
@@ -562,16 +543,7 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
       scene.pbDisplay(_INTL("It won't have any effect."))
       next false
     end
-    #edited by Gardenette to work with No Auto Evolve script
-    # Check for evolution
-    #pbFadeOutInWithMusic {
-      #  evo = PokemonEvolutionScene.new
-      #  evo.pbStartScreen(pkmn, new_species)
-      #  evo.pbEvolution
-      #  evo.pbEndScreen
-      #  scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
-      #}
-      pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
+    pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
     next true
   end
   # Level up
@@ -655,9 +627,9 @@ class PokemonPokedexInfo_Scene
         _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
       when :ItemFemale
         _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade
+      when :Trade, :Link
         _INTL("{1} trading",evoName)
-      when :TradeItem
+      when :TradeItem, :LinkItem
         _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
       when :TradeSpecies
         _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
@@ -851,36 +823,39 @@ def pbGiveDexReward
     dexseen  = $player.pokedex.seen_count
     dexcount = $player.pokedex.owned_count
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]So, you've seen <b>{1}</b> Pokémon\\nand caught <b>{2}</b> of them...", dexseen, dexcount))
-    if DEX_COMPLETION_REWARDS[progress][0] > dexcount
+    rewards_given = false
+    while progress < DEX_COMPLETION_REWARDS.length &&
+          DEX_COMPLETION_REWARDS[progress][1] &&
+          DEX_COMPLETION_REWARDS[progress][0] <= dexcount
+      msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
+      pbMessage(_INTL(msg))
+      reward = DEX_COMPLETION_REWARDS[progress][1]
+      if reward.is_a?(Symbol) && GameData::Species.exists?(reward)
+        egg = Pokemon.new(reward, 1)
+        egg.name           = _INTL("Egg")
+        egg.steps_to_hatch = 252
+        egg.calc_stats
+        pbAddPokemon(egg)
+      elsif reward.is_a?(Array)
+        reward.each { |item| pbReceiveItem(item) }
+      else
+        pbReceiveItem(reward)
+      end
+      progress += 1
+      $game_variables[DEXREWARDSVAR] += 1
+      rewards_given = true
+    end
+    if rewards_given && progress < DEX_COMPLETION_REWARDS.length
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
+    elsif !rewards_given
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Well, when you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
       return false
     end
-    return false if DEX_COMPLETION_REWARDS[progress][1].nil?
-    msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
-    pbMessage(_INTL(msg))
-    if [4].include?(progress)
-      egg = Pokemon.new(DEX_COMPLETION_REWARDS[progress][1], 1)
-      egg.name           = _INTL("Egg")
-      egg.steps_to_hatch = 252
-      egg.calc_stats
-      pbAddPokemon(egg)
-    else
-      if DEX_COMPLETION_REWARDS[progress][1].is_a?(Array)
-        reward_array = DEX_COMPLETION_REWARDS[progress][1]
-        for i in 0...reward_array.length
-          pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1][i])
-        end
-      else
-        pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1])
-      end
-    end
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
-    $game_variables[DEXREWARDSVAR] += 1
   else
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
     return false
   end
   return true
@@ -1166,6 +1141,10 @@ class PersonalNumberGenerator
   end
 end
 
+#===============================================================================
+# egg moves tutor
+#===============================================================================
+
 def eggMoveTutor
   @eggmovesarray = []
   @mother = nil
@@ -1265,7 +1244,9 @@ def eggMoveTutor
   return false
 end
 
-# radioactive code, needs testing
+#===============================================================================
+# Trash encounters
+#===============================================================================
 TRASHENCOUNTERVAR = 125
 def trashEncounter(trash = 0)
   numTrash = 4
@@ -1360,3 +1341,193 @@ def trashEncounter(trash = 0)
     return
   end
 end
+
+#===============================================================================
+# Mirror boss fight (a random idea i had for Kiriya)
+# this is *not* a self insert, as I fucking hate myself.
+#===============================================================================
+
+MEGA_ITEM_REPLACEMENTS = {
+  CHOICEBAND: [:LEDIAN],
+  CHOICESPECS: [:FRIZZARD, :ZARCOIL],
+  LIFEORB: [:FLYGON, :CACTURNE, :CHIXULOB, :LUPACABRA],
+  FIREGEM: [:XATU],
+  ICEGEM: [:GLALIE],
+  ELECTRICGEM: [:BEHEEYEM, :HAWLUCHA, :BEAKRAFT],
+  FLYINGGEM: [:GOLURK, :ROADRAPTOR],
+  WATERGEM: [:ZOLUPINE],
+  LEFTOVERS: [:MAGCARGO, :SABLEYE, :MILOTIC, :CHIMECHO],
+  BLACKSLUDGE: [:GOHILA, :SUCHOBILE],
+  ROCKYHELMET: [:SKARMORY],
+  ASSAULTVEST: [:MAWILE, :ATELANGLER, :LAGUNA],
+  MELEEVEST: [:M_ROSERADE],
+  COLBURBERRY: [:BANETTE], # dark resist
+  CHARTIBERRY: [:FROSMOTH], # rock resist
+  LUMBERRY: [:GYARADOS, :M_ROSERADE],
+  SITRUSBERRY: [:DIANCIE, :SPECTERZAL],
+  TERRAINEXTENDER: [:TREVENANT]
+}
+
+DECENT_STAB_MOVES = {
+  special: {
+    :NORMAL => :HYPERVOICE, 
+    :ROCK => :POWERGEM, :ICE => :ICEBEAM, :STEEL => :FLASHCANNON,
+    :ELECTRIC => :THUNDERBOLT, :DRAGON => :DRACOMETEOR, 
+    :GRASS => :ENERGYBALL, :FIGHTING => :AURASPHERE, :FAIRY => :MOONBLAST,
+    :WATER => :SURF, :FIRE => :FLAMETHROWER, :FLYING => :OBLIVIONWING, 
+    :GROUND => :EARTHPOWER, :POISON => :SLUDGEBOMB, :PSYCHIC => :PSYCHIC, 
+    :BUG => :BUGBUZZ, :GHOST => :SHADOWBALL, :DARK => :FIERYWRATH
+  },
+  physical: {
+    :NORMAL => :RETURN, 
+    :ROCK => :ROCKSLIDE, :ICE => :ICICLECRASH, :STEEL => :IRONHEAD,
+    :ELECTRIC => :ZINGZAP, :DRAGON => :DRAGONRUSH, 
+    :GRASS => :LEAFBLADE, :FIGHTING => :DRAINPUNCH, :FAIRY => :PLAYROUGH,
+    :WATER => :CRABHAMMER, :FIRE => :BLAZEKICK, :FLYING => :AEROBLAST, 
+    :GROUND => :EARTHQUAKE, :POISON => :SHELLSIDEARM, :PSYCHIC => :PSYCHICFANGS, 
+    :BUG => :ATTACKORDER, :GHOST => :SHADOWBONE, :DARK => :CRUNCH
+  }
+}
+
+def mirrorBossFight(trainer)
+  trainer.party = Marshal.load(Marshal.dump($player.party))
+  balancedlevel = pbBalancedLevel($player.party)
+
+  while trainer.party.count < 6 # 1v1? not here, baybee!
+    species = GameData::Species.get(:MARIPOME).species
+    pkmn = Pokemon.new(species, 50, trainer, false)
+    pkmn.bossmonMutation = true
+    pkmn.remaningHPBars = [1, 1] # [current hp bars, max hp bars]
+    pkmn.learn_move(:BUGBUZZ)
+    pkmn.learn_move(:HIGHJUMPKICK)
+    pkmn.learn_move(:POISONJAB)
+    pkmn.learn_move(:DAZZLINGGLEAM)
+    pkmn.learn_move(:SPECTRALTHIEF)
+    pkmn.learn_move(:PRISMATICLASER)
+    pkmn.ability = :PARENTALBOND
+    pkmn.item = :EXPERTBELT
+    pkmn.nature = :NAIVE
+    pkmn.calc_stats
+    pkmn.name = "?QMARKS?"
+    trainer.party.push(pkmn)
+  end
+
+  trainer.party.each_with_index do |pkmn, i|
+    # levels
+    pkmn.level = [pkmn.level, balancedlevel, 50].max
+    pkmn.level += 3
+    pkmn.enableNatureBoostAI
+    pkmn.calc_stats
+
+    # mega stones / MEM
+    mega_data = MEGA_EVO_STATS[pkmn.species]
+    if mega_data
+      pkmn.megaevoMutation = true
+      if pkmn.item == mega_data[:item]
+        MEGA_ITEM_REPLACEMENTS.each do |replacementItem, speciesList|
+          if speciesList.include?(pkmn.species)
+            pkmn.item = replacementItem
+            break
+          end
+        end
+      end
+    end
+    if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pkmn.item)
+      pkmn.learn_move(:TRICK) unless pkmn.hasMove?(:TRICK)
+    end
+
+    # AAM
+    aamSpeciesBlacklist = [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL]
+    pkmn.abilityMutation = true unless aamSpeciesBlacklist.include?(pkmn.species)
+    abilitylist = [pkmn.ability_id]
+    if pkmn.abilityMutation
+      abilist = [pkmn.ability_id]
+      for i in pkmn.getAbilityList
+        abilist.push(i[0])
+      end
+      abilitylist = abilist|[]
+    end
+
+    # prestatus
+    if abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
+      pkmn.status = :BURN
+    elsif abilitylist.include?(:TOXICBOOST) || abilitylist.include?(:POISONHEAL)
+      pkmn.status = :POISON
+    elsif abilitylist.include?(:QUICKFEET)
+      pkmn.status = :PARALYSIS
+    elsif abilitylist.include?(:TANGLEDFEET)
+      pkmn.status = :DIZZY
+      pkmn.statusCount = 4
+    end
+    if pkmn.status != :NONE # i am assuming pkmn cant get status'd before the battle
+      status_berry_map = {
+        :FREEZE => :ASPEARBERRY,
+        :SLEEP => :CHESTOBERRY,
+        :PARALYSIS => :CHERIBERRY,
+        :POISON => :PECHABERRY,
+        :DIZZY => :PERSIMBERRY,
+        :BURN => :RAWSTBERRY
+      }
+      heldberry = status_berry_map[pkmn.status]
+      if pkmn.item == :LUMBERRY || pkmn.item == heldberry
+        pkmn.item = :SITRUSBERRY
+      end
+      pkmn.calc_stats
+    end
+
+    # move edits
+    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS, :HAPPYHOUR]
+    uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
+    pkmn.moves.each_with_index do |move, i|
+      new_move = nil
+      if (move.category == 2 && [:ASSAULTVEST, :MELEEVEST].include?(pkmn.item)) ||
+         uselessarray.include?(move.id)
+        pkmn.forget_move_at_index(i)
+        desiredCateg = (pkmn.attack > pkmn.spatk) ? :physical : :special
+        pkmn.types.each do |type|
+          candidate = DECENT_STAB_MOVES[desiredCateg][type]
+          unless pkmn.hasMove?(candidate)
+            new_move = candidate
+            break
+          end
+        end
+        new_move ||= :METRONOME
+      end
+      if move.id == :FACADE
+        if (pkmn.hasType?(:NORMAL) && pkmn.attack > pkmn.spatk) || 
+           abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
+          pkmn.status = :BURN
+        else
+          pkmn.status = :NONE
+          pkmn.forget_move_at_index(i)
+          new_move = :METRONOME
+        end
+      end
+      if new_move
+        pkmn.learn_move(new_move)
+      end
+    end
+    if pkmn.moves.length == pkmn.moves.count { |move| move.category == 2 }
+      pkmn.learn_move(:METRONOME) unless pkmn.hasMove?(:METRONOME)
+    end
+
+    # final touches
+    pkmn.moves.each_with_index do |m, i| # max out their PP
+      m.ppup = 3
+      m.pp = (m.pp * 1.6).floor
+    end
+    if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
+      pkmn.ability = :LEVITATE
+    end
+    pkmn.calc_stats
+  end
+end
+
+EventHandlers.add(:on_trainer_load, :mirror_boss,
+  proc { |trainer|
+    if trainer
+      trainerfullname = "#{trainer.trainer_type}" + " " + "#{trainer.name}"
+      mirrorBossFight(trainer) if $game_switches[MIRRORCONTAINER] || trainerfullname == "Princess Kiriya"
+    end
+  }
+)

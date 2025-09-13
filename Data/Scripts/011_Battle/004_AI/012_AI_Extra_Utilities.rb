@@ -248,7 +248,7 @@ class Battle::AI
                 target.abilityMutationList = old_ability if old_ability
                 multipliers[:defense_multiplier] *= 1.5 if target.hasActiveAbility?(:GRASSPELT) && expectedTerrain == :Grassy
             end
-            # just for documentation purposes, whatever moron coded this script just straight up forgot prism armor and shadow shield
+            # for documentation purposes, whatever moron coded this script straight up forgot prism armor and shadow shield
             Battle::AbilityEffects.triggerDamageCalcFromTargetNonIgnorable(
                 target.ability, user, target, move, multipliers, baseDmg, type, abilityBlacklist
             )
@@ -619,8 +619,8 @@ class Battle::AI
     end
     
     def moldbroken(user, target, move)
+        # this causes line issues with AAM, but should work fine otherwise. I added logic for these elsewhere
         #return false if target.hasActiveAbility?([:SHADOWSHIELD, :FULLMETALBODY, :PRISMARMOR])
-        return false if target.hasActiveAbility?([:SHADOWSHIELD, :PRISMARMOR])
         if (user.hasMoldBreaker? || 
             ["IgnoreTargetAbility",
              "CategoryDependsOnHigherDamageIgnoreTargetAbility"].include?(move.function))
@@ -813,6 +813,26 @@ class Battle::AI
         return true if (user.hasActiveItem?([:KINGSROCK,:RAZORFANG]) || user.hasActiveAbility?(:STENCH)) && @battle.turnCount > 0
         return true if $AIMASTERLOG
         return false
+    end
+
+    def canLowerStatTarget(stat,move,user,target,mold_bonkers=false)
+        return false if target.pbOwnSide.effects[PBEffects::StatDropImmunity] && !target.pbOwnedByPlayer?
+        return false if target.hasActiveAbility?(:CONTRARY,false,mold_bonkers)
+        return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
+        if target.index != user.index # Not self-inflicted
+            return false if target.effects[PBEffects::Substitute] > 0 && !move.ignoresSubstitute?(user)
+            return false if target.pbOwnSide.effects[PBEffects::Mist] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
+            return false if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_bonkers)
+            return false if target.hasActiveAbility?(:BIGPECKS,false,mold_bonkers) && stat == :DEFENSE
+            return false if target.hasActiveAbility?(:HYPERCUTTER,false,mold_bonkers) && stat == :ATTACK
+            return false if target.hasActiveAbility?(:KEENEYE,false,mold_bonkers) && stat == :ACCURACY
+            if target.pbHasType?(:GRASS)
+                return false if target.hasActiveAbility?(:FLOWERVEIL,false,mold_bonkers)
+                return false if target.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERVEIL,false,mold_bonkers) }
+            end
+        end
+        return false if target.statStageAtMin?(stat)
+        return true
     end
     
     def bestMoveVsTarget(user,target,skill)
@@ -1030,10 +1050,9 @@ class Battle::AI
         # sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
         # the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
         # thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
-        healing = 1  
+        healing = 0
         chip = 0
         if user.effects[PBEffects::HealBlock] > 0
-            healing = 0
         else
             if user.effects[PBEffects::AquaRing]
                 subscore = 0.0625
@@ -1078,11 +1097,8 @@ class Battle::AI
                     #healing += 0.1250 # 1/8
                 end
             end
-            if @battle.pbCheckGlobalAbility(:STALL)
-                healing -= 1
-                healing *= 2
-                healing += 1
-            end
+            healing *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+            healing += 1
         end
         return healing if heal
         if user.takesIndirectDamage?
@@ -1093,12 +1109,12 @@ class Battle::AI
             weatherchip += 0.0625 if user.effectiveWeather == :ShadowSky && user.takesShadowSkyDamage?
             chip += weatherchip
             if user.effects[PBEffects::Trapping]>0
-                multiturnchip = 0.125 
+                multiturnchip = 0.1250
                 multiturnchip *= (4.0 / 3.0) if @battle.battlers[user.effects[PBEffects::TrappingUser]].hasActiveItem?(:BINDINGBAND)
                 chip += multiturnchip
             end
             chip += 0.0625 if user.effects[PBEffects::Curse]
-            chip += 0.125 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
+            chip += 0.1250 if user.effects[PBEffects::LeechSeed]>=0 || (target.effects[PBEffects::LeechSeed]>=0 && target.hasActiveAbility?(:LIQUIDOOZE))
             if user.pbHasAnyStatus? && !rest
                 statuschip = 0
                 if user.burned? && !user.hasActiveAbility?(:FLAREBOOST)
@@ -1114,14 +1130,14 @@ class Battle::AI
                 if user.asleep?
                     user.allOpposing.each do |b|
                         next if !b.hasActiveAbility?(:BADDREAMS)
-                        statuschip += 0.125 
+                        statuschip += 0.1250
                         break
                     end
                 end
                 if user.poisoned? && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST])
                     if $player.difficulty_mode?("chaos") || user.effects[PBEffects::Toxic]==0 
-                        statuschip += 0.125
-                        statuschip += 0.125 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
+                        statuschip += 0.1250
+                        statuschip += 0.1250 if (user.effects[PBEffects::Toxic]+1) > 2 && $player.difficulty_mode?("chaos")
                     else
                         statuschip += (0.0625*(user.effects[PBEffects::Toxic]+1))
                     end
@@ -1131,7 +1147,7 @@ class Battle::AI
             if rest
                 user.allOpposing.each do |b|
                     next if !b.hasActiveAbility?(:BADDREAMS)
-                    chip += 0.125
+                    chip += 0.1250
                     break
                 end
             end

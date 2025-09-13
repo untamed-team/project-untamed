@@ -1,74 +1,112 @@
-# See the documentation on the wiki to learn how to edit this file.
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [RIVAL1,Emilio]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
 Pokemon = MOLLUCOTTA,5
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,1]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
 Pokemon = QUETZALIL,5
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,2]
 LoseText = Aw man, I lost? Well, I'm sure I'll have plenty of chances to beat you in the future!
 Pokemon = PORSITE,5
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,100]
 LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
 Pokemon = MOLLUCOTTA,5
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,101]
 LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
 Pokemon = QUETZALIL,5
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL1,Emilio,102]
 LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
 Pokemon = PORSITE,5
     Gender = male
-    IV = 0,0,0,0,0,0
+#-------------------------------
+[RIVAL1,Emilio,200]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = MOLLUCOTTA,5
+    Gender = male
+#-------------------------------
+[RIVAL1,Emilio,201]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = QUETZALIL,5
+    Gender = male
+#-------------------------------
+[RIVAL1,Emilio,202]
+LoseText = I lost? Just you wait, I'll train up a team you'll never beat!
+Pokemon = PORSITE,5
+    Gender = male
 #-------------------------------
 [YOUNGSTER_F,Emma]
 LoseText = I guess it's also double the chance to lose...
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_F,Emma,100]
 LoseText = I guess it's also double the chance to lose...
 Pokemon = PACUNA,4
 Pokemon = FLABEBE,4
+#Area=Route1_M
+#-------------------------------
+[YOUNGSTER_F,Emma,200]
+LoseText = I guess it's also double the chance to lose...
+Pokemon = PACUNA,4
+Pokemon = FLABEBE,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_M,Julián]
 LoseText = B-but, how did I lose?
 Pokemon = WRENNER,4
+#Area=Route1_M
 #-------------------------------
 [YOUNGSTER_M,Julián,100]
 LoseText = B-but, how did I lose?
 Pokemon = WRENNER,4
+#Area=Route1_M
+#-------------------------------
+[YOUNGSTER_M,Julián,200]
+LoseText = B-but, how did I lose?
+Pokemon = WRENNER,4
+#Area=Route1_M
 #-------------------------------
 [BUGCATCHER_M,Marco]
 LoseText = Man, your Pokémon are really strong too!
-Pokemon = MINIMELO,4
+Pokemon = MINIMELO,3
 Pokemon = LEDYBA,4
+#Area=Route1_M
 #-------------------------------
 [BUGCATCHER_M,Marco,100]
 LoseText = Man, your Pokémon are really strong too!
+Pokemon = MINIMELO,3
+Pokemon = LEDYBA,4
+#Area=Route1_M
+#-------------------------------
+[BUGCATCHER_M,Marco,200]
+LoseText = Man, your Pokémon are really strong too!
 Pokemon = MINIMELO,4
 Pokemon = LEDYBA,4
+#Area=Route1_M
 #-------------------------------
 [EONGRUNT_M,Jamie]
 LoseText = Yikes, what's up with kids these days?
 Pokemon = MURKROW,5
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_M,Jamie,100]
+LoseText = Yikes, what's up with kids these days?
+Pokemon = MURKROW,5
+#Area=Hacienda1_M
+#-------------------------------
+[EONGRUNT_M,Jamie,200]
 LoseText = Yikes, what's up with kids these days?
 Pokemon = M_EKANS,4
     Moves = POISONFANG,BITE,LEER,WRAP
@@ -76,12 +114,19 @@ Pokemon = M_EKANS,4
 Pokemon = MURKROW,5
     Moves = THIEF,GUST,HYPNOSIS
     AbilityIndex = 1
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_F,Jess]
 LoseText = Right? This used to be so much easier.
 Pokemon = TECHUPPI,5
+#Area=Hacienda1_M
 #-------------------------------
 [EONGRUNT_F,Jess,100]
+LoseText = Right? This used to be so much easier.
+Pokemon = TECHUPPI,5
+#Area=Hacienda1_M
+#-------------------------------
+[EONGRUNT_F,Jess,200]
 LoseText = Right? This used to be so much easier.
 Pokemon = CACNEA,4
     Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
@@ -89,62 +134,116 @@ Pokemon = CACNEA,4
 Pokemon = TECHUPPI,5
     Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
     AbilityIndex = 1
+#Area=Hacienda1_M
 #-------------------------------
 [FARMER,Abraham]
 LoseText = Zea-zaya's my best bud.
-Pokemon = ZEAZAYA,6
+Pokemon = ZEAZAYA,5
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Abraham,100]
 LoseText = Zea-zaya's my best bud.
+Pokemon = ZEAZAYA,5
+#Area=Hacienda2_M
+#-------------------------------
+[FARMER,Abraham,200]
+LoseText = Zea-zaya's my best bud.
 Pokemon = ZEAZAYA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Feliciano]
 LoseText = Corn is surprisingly shady!
 Pokemon = CAFECARACHA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Feliciano,100]
 LoseText = Corn is surprisingly shady!
 Pokemon = CAFECARACHA,6
+#Area=Hacienda2_M
+#-------------------------------
+[FARMER,Feliciano,200]
+LoseText = Corn is surprisingly shady!
+Pokemon = CAFECARACHA,6
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Rafa]
 LoseText = I need some water...
 Pokemon = SUNKERN,6
 Pokemon = DRILBUR,7
+#Area=Hacienda2_M
 #-------------------------------
 [FARMER,Rafa,100]
 LoseText = I need some water...
+Pokemon = SUNKERN,6
+Pokemon = DRILBUR,7
+#Area=Hacienda2_M
+#-------------------------------
+[FARMER,Rafa,200]
+LoseText = I need some water...
 Pokemon = ZEAZAYA,6
 Pokemon = DRILBUR,6
+#Area=Hacienda2_M
 #-------------------------------
 [PSYCHIC_M2,Xavier]
 LoseText = Wow, you’re pretty good!
 Pokemon = PUMPKABOO,6
 Pokemon = PHANTUMP,7
+#Area=Cemetery_M
 #-------------------------------
 [PSYCHIC_M2,Xavier,100]
+LoseText = Wow, you’re pretty good!
+Pokemon = PUMPKABOO,6
+Pokemon = PHANTUMP,7
+#Area=Cemetery_M
+#-------------------------------
+[PSYCHIC_M2,Xavier,200]
 LoseText = Wow, you’re pretty good!
 Pokemon = LILORINA,6
     Moves = HYPNOSIS,WATERGUN,DISARMINGVOICE
     AbilityIndex = 0
 Pokemon = PHANTUMP,7
     Moves = POWERUPPUNCH,ASTONISH,BRANCHPOKE
+#Area=Cemetery_M
 #-------------------------------
 [HEXMANIAC,Helena]
 LoseText = ..Is that a no?
 Pokemon = DUSKULL,6
 Pokemon = LITWICK,6
     AbilityIndex = 0
+#Area=Cemetery_M
 #-------------------------------
 [HEXMANIAC,Helena,100]
 LoseText = ..Is that a no?
+Pokemon = DUSKULL,6
+Pokemon = LITWICK,6
+    AbilityIndex = 0
+#Area=Cemetery_M
+#-------------------------------
+[HEXMANIAC,Helena,200]
+LoseText = ..Is that a no?
 Pokemon = FLABEBE,6
     Moves = FAIRYWIND,HIDDENPOWER,GRASSKNOT
-	HiddenPowerType = FIRE
+    HiddenPowerType = FIRE
 Pokemon = LITWICK,7
     Moves = WILLOWISP,EMBER,NIGHTSHADE
     AbilityIndex = 1
+#Area=Cemetery_M
 #-------------------------------
 [LEADER_Valentina,Valentina]
+LoseText = Ugh, whatever…
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,BITINGCOLD,HEX,BUBBLE
+    AbilityIndex = 0
+    Ace = yes
+Pokemon = LITWICK,8
+    Moves = EMBER,HEX,WILLOWISP,FIRESPIN
+    AbilityIndex = 0
+Pokemon = M_ROSELIA,8
+    Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
+    AbilityIndex = 2
+#Area=Gym1_M
+#-------------------------------
+[LEADER_Valentina,Valentina,100]
 LoseText = Ugh, whatever…
 Pokemon = LILORINA,8
     Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
@@ -156,8 +255,9 @@ Pokemon = LITWICK,8
 Pokemon = M_ROSELIA,8
     Moves = DAZZLINGGLEAM,HEX,MEGADRAIN,GRASSKNOT
     AbilityIndex = 2
+#Area=Gym1_M
 #-------------------------------
-[LEADER_Valentina,Valentina,100]
+[LEADER_Valentina,Valentina,200]
 LoseText = Ugh, whatever…
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
@@ -173,7 +273,7 @@ Pokemon = FLABEBE,8
     Moves = FAIRYWIND,HIDDENPOWER,GRASSWHISTLE,LUCKYCHANT
     AbilityIndex = 2
     Item = WATERGEM
-	HiddenPowerType = WATER
+    HiddenPowerType = WATER
 Pokemon = MURKROW,8
     Moves = PECK,ROOST,NIGHTSHADE,TOXIC
     AbilityIndex = 2
@@ -184,164 +284,3415 @@ Pokemon = LITWICK,9
     AbilityIndex = 1
     Item = PASSHOBERRY
     Nature = TIMID
-	HiddenPowerType = ELECTRIC
+    HiddenPowerType = ELECTRIC
 Pokemon = M_ROSELIA,9
     Moves = GROWTH,HEX,MEGADRAIN,GRASSWHISTLE
     AbilityIndex = 2
     Item = ORANBERRY
     Nature = MODEST
+#Area=Gym1_M
 #-------------------------------
 [LASS,Juju]
 LoseText = Aren't my Pokémon so cute?
-Pokemon = SKIDDO,9
+Pokemon = SKIDDO,8
 Pokemon = FLABEBE,9
+#Area=Route2_M
 #-------------------------------
 [LASS,Juju,100]
 LoseText = Aren't my Pokémon so cute?
+Pokemon = SKIDDO,8
+Pokemon = FLABEBE,9
+#Area=Route2_M
+#-------------------------------
+[LASS,Juju,200]
+LoseText = Aren't my Pokémon so cute?
 Pokemon = SKIDDO,9
-	Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
+    Moves = GRASSYTERRAIN,VINEWHIP,TAILWHIP,GROWTH
     Ability = GRASSPELT
 Pokemon = M_EKANS,9
-	Moves = POISONFANG,COIL,BITE
+    Moves = POISONFANG,COIL,BITE
     Ability = INTIMIDATE
     Nature = IMPISH
+#Area=Route2_M
 #-------------------------------
 [YOUNGSTER_M,Gabriel]
 LoseText = That was not so cool!
 Pokemon = M_EKANS,9
 Pokemon = BUNNELBY,9
+#Area=Route2_M
 #-------------------------------
 [YOUNGSTER_M,Gabriel,100]
 LoseText = That was not so cool!
+Pokemon = M_EKANS,9
+Pokemon = BUNNELBY,9
+#Area=Route2_M
+#-------------------------------
+[YOUNGSTER_M,Gabriel,200]
+LoseText = That was not so cool!
 Pokemon = M_MEOWTH,9
-	Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
+    Moves = KARATECHOP,UTURN,SCREECH,FAKEOUT
     Ability = UNNERVE
     Nature = ADAMANT
 Pokemon = WRENNER,9
-	Moves = AERIALACE,SANDTOMB,DETECT
-	Item = BINDINGBAND
+    Moves = AERIALACE,SANDTOMB,DETECT
+    Item = BINDINGBAND
     Ability = RUNAWAY
     Nature = IMPISH
+#Area=Route2_M
 #-------------------------------
 [TOURIST_M,William]
 LoseText = She will come back. She always does.
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
+Pokemon = TECHUPPI,7
+Pokemon = BUNNELBY,8
 Pokemon = WRENNER,9
+#Area=Route2_M
 #-------------------------------
 [TOURIST_M,William,100]
 LoseText = She will come back. She always does.
+Pokemon = TECHUPPI,7
+Pokemon = BUNNELBY,8
+Pokemon = WRENNER,9
+#Area=Route2_M
+#-------------------------------
+[TOURIST_M,William,200]
+LoseText = She will come back. She always does.
 Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+    Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
     Ability = INTIMIDATE
     Nature = TIMID
 Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
+    Moves = POISONGAS,SNARL,ACID
     Nature = BOLD
     Ability = POISONTOUCH
+#Area=Route2_M
 #-------------------------------
 [LAD,Rainer]
 LoseText = Wait, I lost?
-Pokemon = LEDYBA,10
+Pokemon = LEDYBA,9
 Pokemon = BUDEW,10
-	Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
+    Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
+#Area=Route2_M
 #-------------------------------
 [LAD,Rainer,100]
 LoseText = Wait, I lost?
+Pokemon = LEDYBA,9
 Pokemon = BUDEW,10
-	Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
+    Moves = SPIKES,SLEEPPOWDER,SYNTHESIS,SWORDSDANCE
+#Area=Route2_M
+#-------------------------------
+[LAD,Rainer,200]
+LoseText = Wait, I lost?
+Pokemon = BUDEW,10
+    Moves = SPIKES,SLEEPPOWDER,MEGADRAIN,POISONSTING
     Nature = CALM
-	Ability = POISONPOINT
+    Ability = POISONPOINT
 Pokemon = WORMOTE,9
-	Moves = STRUGGLEBUG,CONFUSION,SING
+    Moves = STRUGGLEBUG,CONFUSION,COUNTER
     Ability = TRACE
-	Item = OCCABERRY
+    Item = OCCABERRY
     Nature = TIMID
+#Area=Route2_M
 #-------------------------------
 [FISHER_M,Ted]
 LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = MAGIKARP,1
+    Form = 2
 Pokemon = MAGIKARP,3
+    Form = 2
 Pokemon = MAGIKARP,5
+    Form = 2
 Pokemon = MAGIKARP,7
+    Form = 2
 Pokemon = MAGIKARP,9
+    Form = 2
 Pokemon = FEEBAS,10
+#Area=Route2_M
 #-------------------------------
 [FISHER_M,Ted,100]
 LoseText = Hold on, I don't think that was the catchphrase.
+Pokemon = MAGIKARP,1
+    Form = 2
+Pokemon = MAGIKARP,3
+    Form = 2
+Pokemon = MAGIKARP,5
+    Form = 2
+Pokemon = MAGIKARP,7
+    Form = 2
+Pokemon = MAGIKARP,9
+    Form = 2
+Pokemon = FEEBAS,10
+#Area=Route2_M
+#-------------------------------
+[FISHER_M,Ted,200]
+LoseText = Hold on, I don't think that was the catchphrase.
 Pokemon = LOTAD,10
-	Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
+    Moves = BUBBLE,NATURALGIFT,RAINDANCE,FAKEOUT
     Ability = RAINDISH
-	Item = ASPEARBERRY
+    Item = ASPEARBERRY
     Nature = MODEST
 Pokemon = GULPI,10
-	Moves = ASTONISH,BITE,SPARK,CHARGE
+    Moves = ASTONISH,BITE,SPARK,CHARGE
     Ability = SWIFTSWIM
     Nature = CALM
+#Area=Route2_M
 #-------------------------------
-[WAREHOUSEWORKER,Donna]
-LoseText = Okay, the way out is easy, but don't tell my boss.
-Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
+[TOURIST_F,Kaitlyn]
+LoseText = The sun was in my eyes!
+Pokemon = PACUNA,9
+Pokemon = M_VANILLITE,9
+#Area=Route2_M
 #-------------------------------
-[WAREHOUSEWORKER,Donna,100]
-LoseText = Okay, the way out is easy, but don't tell my boss.
+[TOURIST_F,Kaitlyn,100]
+LoseText = The sun was in my eyes!
+Pokemon = PACUNA,9
+Pokemon = M_VANILLITE,9
+#Area=Route2_M
+#-------------------------------
+[TOURIST_F,Kaitlyn,200]
+LoseText = The sun was in my eyes!
+Pokemon = PACUNA,9
+    Moves = METRONOME,METRONOME,METRONOME,METRONOME
+    Ability = FURCOAT
+Pokemon = M_VANILLITE,9
+    Moves = LIGHTSCREEN,REST,POWDERSNOW,CONFUSION
+    Ability = HEALER
+    Item = TWISTEDSPOON
+#Area=Route2_M
+#-------------------------------
+[TOURIST_M,Samuel]
+LoseText = Cowabummer!
+Pokemon = LITWICK,8
+Pokemon = ZEAZAYA,9
+Pokemon = M_EKANS,9
+#Area=Route2_M
+#-------------------------------
+[TOURIST_M,Samuel,100]
+LoseText = Cowabummer!
+Pokemon = LITWICK,8
+Pokemon = ZEAZAYA,9
+Pokemon = M_EKANS,9
+#Area=Route2_M
+#-------------------------------
+[TOURIST_M,Samuel,200]
+LoseText = I should have brought my Beartic!
+Pokemon = M_EKANS,9
+    Moves = BEATUP,POISONSTING,WRAP
+Pokemon = ZEAZAYA,9
+    Moves = SUNNYDAY,COTTONSPORE,MEGADRAIN
+    Ability = HARVEST
+    Item = ORANBERRY
+Pokemon = LITWICK,9
+    Moves = EMBER,NIGHTSHADE,HIDDENPOWER
+    Ability = FLAMEBODY
+    HiddenPowerType = GRASS
+#Area=Route2_M
+#-------------------------------
+[CAMPER_F,Lola]
+LoseText = If only my battling skills were are sharp as my survival skills...
+Pokemon = HOOTHOOT,8
+Pokemon = SKIDDO,9
+Pokemon = WRENNER,10
+#Area=Route2_M
+#-------------------------------
+[CAMPER_F,Lola,100]
+LoseText = If only my battling skills were are sharp as my survival skills...
+Pokemon = HOOTHOOT,8
+Pokemon = SKIDDO,9
+Pokemon = WRENNER,10
+#Area=Route2_M
+#-------------------------------
+[CAMPER_F,Lola,200]
+LoseText = If only my battling skills were are sharp as my survival skills...
+Pokemon = WRENNER,9
+    Moves = FURYATTACK,PECK,GROWL
+    Item = NORMALGEM
+Pokemon = PHANTUMP,9
+    Moves = BRANCHPOKE,ASTONISH,INGRAIN
+    Ability = HARVEST
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_F,Alisa]
+LoseText = Bug types are still the best!
+Pokemon = MINIMELO,9
+Pokemon = LEDYBA,10
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_F,Alisa,100]
+LoseText = Bug types are still the best!
+Pokemon = MINIMELO,9
+Pokemon = LEDYBA,10
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_F,Alisa,200]
+LoseText = Bug types are still the best!
+Pokemon = LEDYBA,9
+    Moves = FAKEOUT,ENDURE,TACKLE
+    Ability = RATTLED
+Pokemon = MINIMELO,10
+    Moves = FURYCUTTER,FLAIL,STRUGGLEBUG,STRINGSHOT
+    Ability = SWARM
+    Item = SILVERPOWDER
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_M,Mannie]
+LoseText = Maybe I should have studied type matchups?
+Pokemon = SCATTERBUG,10
+Pokemon = CHICATTA,10
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_M,Mannie,100]
+LoseText = Maybe I should have studied type matchups?
+Pokemon = SCATTERBUG,10
+Pokemon = CHICATTA,10
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_M,Mannie,200]
+LoseText = Maybe I should have studied type matchups?
+Pokemon = SCATTERBUG,10
+    Moves = STRINGSHOT,STRUGGLEBUG,HIDDENPOWER
+    Ability = SHIELDDUST
+    HiddenPowerType = WATER
+Pokemon = CHICATTA,10
+    Moves = BUGBITE,RAZORLEAF,BITE,HIDDENPOWER
+    Ability = SWARM
+    Item = EXPERTBELT
+    HiddenPowerType = ROCK
+#Area=Route2_M
+#-------------------------------
+[YOUNGSTER_F,Milly]
+LoseText = No way, let me try again!
+Pokemon = PURRLOIN,9
+Pokemon = SUNKERN,10
+Pokemon = TECHUPPI,10
+#Area=Route2_M
+#-------------------------------
+[YOUNGSTER_F,Milly,100]
+LoseText = No way, let me try again!
+Pokemon = PURRLOIN,9
+Pokemon = SUNKERN,10
+Pokemon = TECHUPPI,10
+#Area=Route2_M
+#-------------------------------
+[YOUNGSTER_F,Milly,200]
+LoseText = No way, let me try again!
+Pokemon = TECHUPPI,10
+    Moves = TACKLE,BITE,LEER
+    Ability = INTIMIDATE
+Pokemon = TECHUPPI,10
+    Moves = TACKLE,BITE,SCARYFACE
+    Ability = GUTS
+Pokemon = TECHUPPI,10
+    Moves = TACKLE,BITE,FOCUSENERGY
+    Ability = DEFIANT
+#Area=Route2_M
+#-------------------------------
+[BUGCATCHER_F,Dany]
+LoseText = My bug types and I still have to evolve and get stronger!
+Pokemon = SPEWPA,10
+Pokemon = CHICATTA,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_F,Dany,100]
+LoseText = My bug types and I still have to evolve and get stronger!
+Pokemon = SPEWPA,10
+Pokemon = CHICATTA,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_F,Dany,200]
+LoseText = My bug types and I still have to evolve and get stronger!
+Pokemon = SPEWPA,10
+    Moves = PROTECT,STUNSPORE,HARDEN,STRUGGLEBUG
+    Ability = SHIELDDUST
+Pokemon = WORMOTE,11
+    Moves = STRUGGLEBUG,SING,HIDDENPOWER,SECRETPOWER
+    Ability = TRACE
+    HiddenPowerType = PSYCHIC
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Connor]
+LoseText = You really ruffle my feathers!
+Pokemon = HOOTHOOT,11
+Pokemon = WRENNER,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Connor,100]
+LoseText = You really ruffle my feathers!
+Pokemon = HOOTHOOT,11
+Pokemon = WRENNER,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Connor,200]
+LoseText = You really ruffle my feathers!
+Pokemon = CROMEN,11
+    Moves = EXCITE,CONFUSION,GUST,SPITE
+    Ability = UNNERVE
+Pokemon = MURKROW,11
+    Moves = SCREECH,PECK,ASTONISH
+    Ability = INSOMNIA
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_M,Jimbly]
+LoseText = Looks like I'm the one who's sinking...
+Pokemon = BANAGNAW,11
+Pokemon = FINNEON,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_M,Jimbly,100]
+LoseText = Looks like I'm the one who's sinking...
+Pokemon = BANAGNAW,11
+Pokemon = FINNEON,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_M,Jimbly,200]
+LoseText = Looks like I'm the one who's sinking...
+Pokemon = TYNAMO,11
+    Moves = ACID,SPARK,BIND
+    Item = AIRBALLOON
+Pokemon = BANAGNAW,11
+    Moves = AQUAJET,LEAFAGE
+    Ability = GLUTTONY
+    Item = LANSATBERRY
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_F,Violet]
+LoseText = I've been schooled!
+Pokemon = FEEBAS,10
+Pokemon = LOTAD,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_F,Violet,100]
+LoseText = I've been schooled!
+Pokemon = FEEBAS,10
+Pokemon = LOTAD,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[FISHER_F,Violet,200]
+LoseText = I've been schooled!
+Pokemon = FEEBAS,10
+    Moves = DRAGONBREATH
+    Ability = OBLIVIOUS
+    Item = DRAGONGEM
+Pokemon = LOTAD,11
+    Moves = WATERSPORT,BUBBLE,LEECHSEED,HIDDENPOWER
+    HiddenPowerType = ICE
+#Area=MonarcaWoods_M
+#-------------------------------
+[POKEMONRANGER_F,Fernanda]
+LoseText = What a great battle! I wish I could have won...
+Pokemon = PHANTUMP,10
+Pokemon = PACUNA,11
+Pokemon = M_EKANS,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[POKEMONRANGER_F,Fernanda,100]
+LoseText = What a great battle! I wish I could have won...
+Pokemon = PHANTUMP,10
+Pokemon = PACUNA,11
+Pokemon = M_EKANS,11
+#Area=MonarcaWoods_M
+#-------------------------------
+[POKEMONRANGER_F,Fernanda,200]
+LoseText = What a great battle! I wish I could have won...
 Pokemon = EEVEE,11
-Pokemon = M_VANILLITE,12
+    Moves = EXPLOSION,SELFDESTRUCT,MISTYEXPLOSION,MEMENTO
+    Ability = ADAPTABILITY
+    Item = FOCUSSASH
+Pokemon = PHANTUMP,11
+    Moves = CUT,WILLOWISP,THIEF,BRANCHPOKE
+    Ability = NATURALCURE
+Pokemon = MAKUHITA,11
+    Moves = FAKEOUT,DETECT,ROCKSMASH,BULLETPUNCH
+    Ability = THICKFAT
+#Area=MonarcaWoods_M
+#-------------------------------
+[AROMALADY,Gloria]
+LoseText = Not my beautiful flowers!
+Pokemon = FLABEBE,11
+Pokemon = BUDEW,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[AROMALADY,Gloria,100]
+LoseText = Not my beautiful flowers!
+Pokemon = FLABEBE,11
+Pokemon = BUDEW,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[AROMALADY,Gloria,200]
+LoseText = Not my beautiful flowers!
+Pokemon = FLABEBE,11
+    Moves = COPYCAT,FAIRYWIND,TEARFULLOOK,SAFEGUARD
+Pokemon = BUDEW,12
+    Moves = SYNTHESIS,SUNNYDAY,MAGICALLEAF,HIDDENPOWER
+    Item = OCCABERRY
+    HiddenPowerType = FIRE
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_M,Roberto]
+LoseText = No fair, did you use bug repellent? Harumph!
+Pokemon = MINIMELO,10
+Pokemon = LEDYBA,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_M,Roberto,100]
+LoseText = No fair, did you use bug repellent? Harumph!
+Pokemon = MINIMELO,10
+Pokemon = LEDYBA,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_M,Roberto,200]
+LoseText = No fair, did you use bug repellent? Harumph!
+Pokemon = LEDYBA,12
+    Moves = COMETPUNCH,FAKEOUT,REFLECT,ENCORE
+    Ability = SWARM
+Pokemon = MINIMELO,11
+    Moves = DEFENSECURL,STRUGGLEBUG,GASTROACID,SECRETPOWER
+    Ability = SWEETVEIL
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Francis]
+LoseText = And down I go...
+Pokemon = HOOTHOOT,11
+Pokemon = CROMEN,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Francis,100]
+LoseText = And down I go...
+Pokemon = HOOTHOOT,11
+Pokemon = CROMEN,12
+#Area=MonarcaWoods_M
+#-------------------------------
+[BIRDKEEPER_M,Francis,200]
+LoseText = And down I go...
+Pokemon = CROMEN,12
+    Moves = SPITE,CONFUSION,METRONOME,WONDERROOM
+    Ability = UNNERVE
+Pokemon = CROMEN,12
+    Moves = TAUNT,CONFUSION,METRONOME,DRAININGKISS
+    Ability = QUEENLYMAJESTY
+#Area=MonarcaWoods_M
+#-------------------------------
+[BUGCATCHER_M,Curtis]
+LoseText = You're really starting to bug me!
+Pokemon = CHICATTA,12
+    Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
+Pokemon = VIVILLON,13
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+#Area=MonarcaWoods_O
+#-------------------------------
+[BUGCATCHER_M,Curtis,100]
+LoseText = You're really starting to bug me!
+Pokemon = CHICATTA,12
+    Moves = FURYCUTTER,STRINGSHOT,STOCKPILE,SPITUP
+Pokemon = VIVILLON,13
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,POISONPOWDER
+#Area=MonarcaWoods_O
+#-------------------------------
+[BUGCATCHER_M,Curtis,200]
+LoseText = You're really starting to bug me!
+Pokemon = CHICATTA,12
+    Moves = FURYCUTTER,STRINGSHOT,HONECLAWS,BUGBITE
+    Ability = HYPERCUTTER
+Pokemon = VIVILLON,13
+    Moves = GUST,STRUGGLEBUG,LIGHTSCREEN,STUNSPORE
+    Ability = COMPOUNDEYES
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_M,Benjamin]
+LoseText = We did our best!
+Pokemon = BURBRAWL,14
+    Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_M,Benjamin,100]
+LoseText = We did our best!
+Pokemon = BURBRAWL,14
+    Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_M,Benjamin,200]
+LoseText = We did our best!
+Pokemon = BURBRAWL,14
+    Moves = WINGATTACK,KARATECHOP,FOCUSENERGY,WORKUP
+    Ability = LEVITATE
+Pokemon = BALTOY,14
+    Moves = MUDSHOT,RAPIDSPIN,CONFUSION,HARDEN
+    Ability = LEVITATE
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_F,Penelope]
+LoseText = I went easy on you!
+Pokemon = PHANTUMP,14
+    Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_F,Penelope,100]
+LoseText = I went easy on you!
+Pokemon = PHANTUMP,14
+    Moves = INGRAIN,ASTONISH,GRASSKNOT,GROWTH
+#Area=MonarcaWoods_O
+#-------------------------------
+[POKEMONRANGER_F,Penelope,200]
+LoseText = I went easy on you!
+Gimmick = WaterSport
+Pokemon = PHANTUMP,14
+    Moves = INGRAIN,ASTONISH,LEECHSEED,POWERUPPUNCH
+    Ability = HARVEST
+    Nature = ADAMANT
+    Item = STARFBERRY
+    IV = 7,3,3,3,3,3
+    Shiny = yes
+#Area=MonarcaWoods_O
+#-------------------------------
+[HIKER_F,Xavia]
+LoseText = I haven't found my victory yet...
+Pokemon = M_ROSELIA,10
+Pokemon = KNOGGIN,12
+#Area=MonarcaCave_M
+#-------------------------------
+[HIKER_F,Xavia,100]
+LoseText = I haven't found my victory yet...
+Pokemon = M_ROSELIA,10
+Pokemon = KNOGGIN,12
+#Area=MonarcaCave_M
+#-------------------------------
+[HIKER_F,Xavia,200]
+LoseText = I haven't found my victory yet...
+Pokemon = KNOGGIN,12
+    Moves = DIG,BITE,ROCKTHROW,SPIKES
+    Ability = STURDY
+Pokemon = M_ROSELIA,10
+    Moves = MEGADRAIN,NIGHTSHADE,EXTRASENSORY,STUNSPORE
+    Ability = CURSEDBODY
+    Item = MIRACLESEED
+#Area=MonarcaCave_M
+#-------------------------------
+[POKEMONRANGER_M,Noah]
+LoseText = Looks like I'm the one who needs to train harder!
+Pokemon = KNOGGIN,12
+Pokemon = WOOBAT,11
+Pokemon = BUDEW,13
+#Area=MonarcaCave_M
+#-------------------------------
+[POKEMONRANGER_M,Noah,100]
+LoseText = Looks like I'm the one who needs to train harder!
+Pokemon = KNOGGIN,12
+Pokemon = WOOBAT,11
+Pokemon = BUDEW,13
+#Area=MonarcaCave_M
+#-------------------------------
+[POKEMONRANGER_M,Noah,200]
+LoseText = Looks like I'm the one who needs to train harder!
+Pokemon = M_EKANS,11
+    Moves = POISONSTING,BEATUP,SNARL,TOXIC
+    Ability = RATTLED
+    Item = BLACKGLASSES
+Pokemon = KNOGGIN,12
+    Moves = DIG,CUT,ROCKTHROW
+    Ability = SOLIDROCK
+    Item = SCOPELENS
+Pokemon = BALTOY,13
+    Moves = RAPIDSPIN,POWERTRICK,CONFUSION,CALMMIND
+    Ability = FOREWARN
+#Area=MonarcaCave_M
+#-------------------------------
+[TOURIST_F,Lucette]
+LoseText = You're ruining the view!
+Pokemon = BUNNELBY,11
+Pokemon = WOOBAT,12
+#Area=MonarcaCave_M
+#-------------------------------
+[TOURIST_F,Lucette,100]
+LoseText = You're ruining the view!
+Pokemon = BUNNELBY,11
+Pokemon = WOOBAT,12
+#Area=MonarcaCave_M
+#-------------------------------
+[TOURIST_F,Lucette,200]
+LoseText = You're ruining the view!
+Pokemon = BALTOY,12
+    Moves = MUDSLAP,CONFUSION,SANDSTORM,STEALTHROCK
+    Ability = LEVITATE
+    Item = ORANBERRY
+Pokemon = CACNEA,11
+    Moves = FLING,POISONSTING,GRASSKNOT,DISABLE
+    Ability = SANDVEIL
+    Item = STICKYBARB
+#Area=MonarcaCave_M
 #-------------------------------
 [TRAINER_Reine,Reine]
 LoseText = ...
-Pokemon = EEVEE,11
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
 #-------------------------------
 [TRAINER_Reine,Reine,100]
 LoseText = ...
-Pokemon = EEVEE,11
+Pokemon = M_BURMY,10
+    Moves = BULLETSEED,PROTECT,DECORATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = SWIFT,AERIALACE,LIGHTSCREEN,REFLECT
+    Ability = SWARM
+Pokemon = CHICATTA,13
+    Moves = FURYCUTTER,RAZORLEAF,AROMATHERAPY,STRINGSHOT
+    Ability = HYPERCUTTER
 #-------------------------------
-[WAREHOUSEWORKER,Reine,100]
+[TRAINER_Reine,Reine,200]
 LoseText = ...
-Pokemon = EEVEE,11
+Pokemon = M_BURMY,10
+    Moves = STRUGGLEBUG,PROTECT,CELEBRATE,TACKLE
+Pokemon = LEDYBA,11
+    Moves = ENDURE,AERIALACE,BUGBITE
+    Ability = SWARM
+Pokemon = CHICATTA,12
+    Moves = SECRETPOWER,RAZORLEAF,STRINGSHOT,DEFENSECURL
+    Ability = HYPERCUTTER
 #-------------------------------
-[NEOGRUNT_M,William]
-LoseText = A mere setback, in the name of progress!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
+[NEOGRUNT_F,Priscilla]
+LoseText = L-let's get out of here!
+Pokemon = PACUNA,13
+    Moves = BITE,BABYDOLLEYES,DISARMINGVOICE,TACKLE
+Pokemon = MAGNEMITE,14
+    Moves = THUNDERWAVE,THUNDERSHOCK,TACKLE,ELECTROBALL
+Pokemon = CHICATTA,13
+    Moves = STRUGGLEBUG,FURYCUTTER,STRINGSHOT,RAZORLEAF
+#Area=MonarcaSanctuary1_M
 #-------------------------------
-[NEOGRUNT_M,William,100]
-LoseText = A mere setback, in the name of progress!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+[NEOGRUNT_F,Priscilla,100]
+LoseText = L-let's get out of here!
+Pokemon = PACUNA,13
+    Moves = BITE,BABYDOLLEYES,DISARMINGVOICE,TACKLE
+Pokemon = MAGNEMITE,14
+    Moves = THUNDERWAVE,THUNDERSHOCK,TACKLE,ELECTROBALL
+Pokemon = CHICATTA,13
+    Moves = STRUGGLEBUG,FURYCUTTER,STRINGSHOT,RAZORLEAF
+#Area=MonarcaSanctuary1_M
+#-------------------------------
+[NEOGRUNT_F,Priscilla,200]
+LoseText = Let's get out of here!
+Pokemon = ELGYEM,13
+    Moves = PSYCHICTERRAIN,CONFUSION,SAFEGUARD,WONDERROOM
+    Item = ENIGMABERRY
+    Ability = FOREWARN
+    Nature = QUIET
+Pokemon = CHICATTA,13
+    Moves = SECRETPOWER,BITE,BUGBITE,RAZORLEAF
+    Item = SHELLBELL
+    Ability = STRONGJAW
+    Nature = JOLLY
+Pokemon = PORYGON,14
+    Moves = HIDDENPOWER,ZENHEADBUTT,TACKLE,RECYCLE
+    Item = SITRUSBERRY
+    Ability = ANALYTIC
+    Nature = BRAVE
+    IV = 0,5,0,0,0,0
+    HiddenPowerType = ELECTRIC
+#Area=MonarcaSanctuary1_M
+#-------------------------------
+[NEOGRUNT_M,Lucas]
+LoseText = Nothing but a minor setback!
+Pokemon = WIMPOD,13
+    Moves = MUDSHOT,AQUAJET,TAUNT,STRUGGLEBUG
+Pokemon = SUNFLORA,12
+    Moves = GRASSYTERRAIN,MEGADRAIN,GROWTH,FIREPUNCH
+    Ability = EARLYBIRD
+    Nature = IMPISH
+#Area=MonarcaSanctuary1_M
+#-------------------------------
+[NEOGRUNT_M,Lucas,100]
+LoseText = Nothing but a minor setback!
+Pokemon = WIMPOD,13
+    Moves = MUDSHOT,AQUAJET,TAUNT,STRUGGLEBUG
+Pokemon = SUNFLORA,12
+    Moves = GRASSYTERRAIN,MEGADRAIN,GROWTH,FIREPUNCH
+    Ability = EARLYBIRD
+    Nature = IMPISH
+#Area=MonarcaSanctuary1_M
+#-------------------------------
+[NEOGRUNT_M,Lucas,200]
+LoseText = Nothing but a minor setback!
+Pokemon = M_BURMY,13
+    Moves = DECORATE,HIDDENPOWER,STRUGGLEBUG,PROTECT
+    Item = PSYCHICSEED
+    Ability = MIMICRY
+    Nature = MODEST
+    HiddenPowerType = PSYCHIC
+Pokemon = WORMOTE,12
+    Moves = STRUGGLEBUG,CONFUSION,SECRETPOWER,VOLTSWITCH
+    Item = BUGGEM
+    Ability = TRACE
+    Nature = NAIVE
+Pokemon = LUMIPOP,13
+    Moves = ACID,PSYWAVE,HIDDENPOWER,CALMMIND
+    Item = POISONBARB
     Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
+    Nature = MODEST
+    HiddenPowerType = FIGHTING
+#Area=MonarcaSanctuary1_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Bernard]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
+Pokemon = LICKITUNG,12
+    Moves = LICK,DEFENSECURL,ROLLOUT,SEISMICTOSS
+    Ability = OWNTEMPO
+Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Bernard,100]
+LoseText = Now that's cold!
+Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,HAIL
+Pokemon = LICKITUNG,12
+    Moves = LICK,DEFENSECURL,ROLLOUT,SEISMICTOSS
+    Ability = OWNTEMPO
+Pokemon = MAGNEMITE,13
+    Moves = THUNDERSHOCK,TACKLE,THUNDERWAVE,SUPERSONIC
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Bernard,200]
+LoseText = Now that's cold!
+Pokemon = MAKUHITA,12
+    Moves = FAKEOUT,REVENGE,ROCKSMASH,KNOCKOFF
+    Ability = KLUTZ
+Pokemon = M_VANILLITE,12
+    Moves = ICYWIND,SWEETTOOTH,EXPLOSION,HAIL
+    Ability = ICEBODY
+    Item = ICYROCK
+Pokemon = SNORUNT,13
+    Moves = PROTECT,SUBSTITUTE,ICESHARD,ICYWIND
+    Item = LEFTOVERS
+    Ability = MOODY
+    Nature = RASH
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
+Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna,100]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,NATURALGIFT
+    Item = SITRUSBERRY
+Pokemon = EEVEE,14
+    Moves = QUICKATTACK,COVET,SANDATTACK,GROWL
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_F,Donna,200]
+LoseText = I wanted just dessert, not my just desserts!
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,NATURALGIFT,LIGHTSCREEN,TAUNT
+    Ability = HEALER
+    Item = SITRUSBERRY
+Pokemon = AMAURA,14
+    Moves = CALMMIND,ANCIENTPOWER,ICYWIND,DISCHARGE
+    Ability = MULTISCALE
+    Item = REDCARD
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Santos]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = FINNEON,14
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Santos,100]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = FINNEON,14
+#Area=MeloladoExterior_M
+#-------------------------------
+[WAREHOUSEWORKER_M,Santos,200]
+LoseText = I guess I should get back to work...
+Pokemon = M_VANILLITE,13
+    Moves = ICYWIND,SWEETTOOTH,REFLECT,MIST
+    Ability = HEALER
+Pokemon = BANAGNAW,14
+    Moves = AQUAJET,GROWTH,ICEFANG,DIVE
+    Ability = GLUTTONY
+    Nature = ADAMANT
+    Item = IAPAPABERRY
+#Area=MeloladoExterior_M
+#-------------------------------
+[LASS4,Immy]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS4,Immy,100]
+LoseText = Oh no, I lost...
+Pokemon = EEVEE,14
+    Moves = SANDATTACK,QUICKATTACK,TACKLE,TAILWHIP
+    Ability = ANTICIPATION
+    Nature = CAREFUL
+#-------------------------------
+[LASS4,Immy,200]
+LoseText = Oh no, I lost...
+Pokemon = PACUNA,14
+    Moves = STUFFCHEEKS,WORKUP,METRONOME,FAIRYWIND
+    Ability = CHEEKPOUCH
+    Nature = MODEST
+    Item = PETAYABERRY
+#-------------------------------
+[RISINGSTAR_F,Grace]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,100]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,BITE
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_F,Grace,200]
+LoseText = Great battling, you won fair and square!
+Pokemon = JOLTEON,16
+    Moves = THUNDERSHOCK,QUICKATTACK,GROWL,YAWN
+    Ability = VOLTABSORB
+    Nature = HARDY
+#-------------------------------
+[RISINGSTAR_M,Nicco]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,100]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,BABYDOLLEYES,QUICKATTACK,SANDATTACK
+    Nature = RELAXED
+#-------------------------------
+[RISINGSTAR_M,Nicco,200]
+LoseText = Yeah, you got us good!
+Pokemon = SYLVEON,16
+    Moves = DISARMINGVOICE,QUICKATTACK,BABYDOLLEYES,COVET
+    Ability = PIXILATE
+    Nature = RELAXED
+#-------------------------------
+[TOURIST_M,Floyd]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
+#Area=CalojarroBeach_M
+#-------------------------------
+[TOURIST_M,Floyd,100]
+LoseText = Woah dude, chill out!
+Pokemon = M_VANILLITE,14
+    Moves = ICYWIND,SWEETTOOTH,POWDERSNOW,MIST
+Pokemon = LOMBRE,15
+    Moves = BUBBLE,ABSORB,FURYSWIPES,ASTONISH
+#Area=CalojarroBeach_M
+#-------------------------------
+[TOURIST_M,Floyd,200]
+LoseText = Such intense battle fervor makes it hard to breathe!
+Pokemon = BERGMITE,14
+    Moves = RAPIDSPIN,CURSE,AVALANCHE,PROTECT
+    Ability = OWNTEMPO
+Pokemon = BURBRAWL,15
+    Moves = WINGATTACK,KARATECHOP,QUICKATTACK,METRONOME
+    Ability = FERVOR
+    Nature = ADAMANT
+#Area=CalojarroBeach_M
+#-------------------------------
+[TOURIST_F,Jennifer]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
+#Area=CalojarroBeach_M
+#-------------------------------
+[TOURIST_F,Jennifer,100]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = VIVILLON,15
+    Moves = STRUGGLEBUG,GUST,STUNSPORE,POWDER
+Pokemon = SKITTY,16
+    Moves = FAKEOUT,TAILWHIP,FURYSWIPES,DISARMINGVOICE
+#Area=CalojarroBeach_M
+#-------------------------------
+[TOURIST_F,Jennifer,200]
+LoseText = Where'd you get a Pokémon like that?
+Pokemon = CARBINK,15
+    Moves = LIGHTSCREEN,ANCIENTPOWER,COSMICPOWER,DISARMINGVOICE
+    Ability = CLEARBODY
+    Item = EVIOLITE
+Pokemon = VIVILLON,16
+    Moves = STRUGGLEBUG,HIDDENPOWER,STUNSPORE,REFLECT
+    Ability = SHIELDDUST
+    HiddenPowerType = FLYING
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_M,Edson]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
+Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_M,Edson,100]
+LoseText = No way, our synergy was perfect!
+Pokemon = FINNEON,14
+    Moves = RAINDANCE,WATERGUN,POUND,DRAININGKISS
+    Ability = SWIFTSWIM
+Pokemon = CLOBBOPUS,15
+    Moves = BULKUP,ROCKSMASH,BIND,LEER
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_M,Edson,200]
+LoseText = No way, our synergy was perfect!
+Pokemon = LILORINA,14
+    Moves = RAINDANCE,WATERPULSE,DISARMINGVOICE,HIDDENPOWER
+    Ability = RAINDISH
+    HiddenPowerType = GHOST
+Pokemon = GULPI,15
+    Moves = SPARK,BITE,ASTONISH,SHADOWSNEAK
+    Ability = SWIFTSWIM
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_F,Claudia]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
+Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_F,Claudia,100]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = PINCURCHIN,13
+    Moves = PECK,THUNDERSHOCK,WATERGUN,CHARGE
+Pokemon = BANAGNAW,14
+    Moves = AQUAJET,LEAFAGE,TACKLE,GROWTH
+    Ability = SWIFTSWIM
+#Area=CalojarroBeach_M
+#-------------------------------
+[SWIMMER_F,Claudia,200]
+LoseText = Impossible, we've been training together since yesterday!
+Pokemon = LOMBRE,13
+    Moves = BUBBLE,FAKEOUT,GIGADRAIN,THIEF
+    Ability = SWIFTSWIM
+Pokemon = FEEBAS,14
+    Moves = DIVE,SCREECH,FLAIL,MIST
+    Ability = SWIFTSWIM
+    Item = POWERHERB
+    IV = 6,6,6,0,6,6
+#Area=CalojarroBeach_M
+#-------------------------------
+[RISINGSTAR_F,Ivette]
+LoseText = I-I lost? But… This isn’t fair!
+Gimmick = Gravity
+Pokemon = EEVEE,15
+    Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HOOTHOOT,15
+    Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
+    Ability = INSOMNIA
+    Nature = HARDY
+Pokemon = BUNNELBY,16
+    Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
+    Ability = PICKUP
+    Nature = SERIOUS
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_F,Ivette,100]
+LoseText = I-I lost? But… This isn’t fair!
+Gimmick = Gravity
+Pokemon = EEVEE,15
+    Moves = TACKLE,TAILWHIP,SNARL,QUICKATTACK
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HOOTHOOT,15
+    Moves = ECHOEDVOICE,CONFUSION,PECK,SUPERSONIC
+    Ability = INSOMNIA
+    Nature = HARDY
+Pokemon = BUNNELBY,16
+    Moves = ROCKTOMB,TACKLE,QUICKATTACK,MUDSHOT
+    Ability = PICKUP
+    Nature = SERIOUS
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_F,Ivette,200]
+LoseText = I-I lost? But… This isn’t fair!
+Gimmick = Gravity
+Pokemon = SNORUNT,15
+    Moves = AVALANCHE,ICESHARD,SPIKES,SWITCHEROO
+    Ability = INNERFOCUS
+    Nature = IMPISH
+Pokemon = EEVEE,15
+    Moves = TACKLE,TICKLE,SNARL,QUICKATTACK
+    Ability = RUNAWAY
+    Nature = JOLLY
+Pokemon = DUNSPARCE,16
+    Moves = TACKLE,ROCKTOMB,CURSE,ASTONISH
+    Ability = RATTLED
+    Nature = ADAMANT
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel]
+LoseText = You just had to rain on my parade, didn't you?
+Gimmick = Rain
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = DRYSKIN
+    Nature = HARDY
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+    Nature = RELAXED
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,100]
+LoseText = You just had to rain on my parade, didn't you?
+Gimmick = Rain
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = DRYSKIN
+    Nature = HARDY
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+    Nature = RELAXED
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,200]
+LoseText = You just had to rain on my parade, didn't you?
+Gimmick = Rain
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,MUDSLAP,ROUND
+    Ability = DRYSKIN
+    Nature = MODEST
+Pokemon = CASTFORM,15
+    Moves = WATERGUN,COSMICPOWER,POWDERSNOW,HEADBUTT
+    Ability = FORECAST
     Nature = BOLD
-    Ability = POISONTOUCH
+Pokemon = XOLSMOL,16
+    Moves = WATERPULSE,WORKUP,LICK,SCORCHINGSANDS
+    Ability = DRYSKIN
+    Item = SOFTSAND
+    Nature = QUIET
+#Area=Gym2_M
 #-------------------------------
-[NEOGRUNT_F,William]
-LoseText = Retreat, in the name of progress!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
+[BEAUTY,Anabel,1]
+LoseText = I've been hung out to dry...
+Gimmick = Sun
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = SOLARPOWER
+    Nature = HARDY
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+    Nature = RELAXED
+#Area=Gym2_M
 #-------------------------------
-[NEOGRUNT_F,William,100]
-LoseText = Retreat, in the name of progress!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
+[BEAUTY,Anabel,101]
+LoseText = I've been hung out to dry...
+Gimmick = Sun
+Pokemon = WRENNER,15
+    Moves = AERIALACE,QUICKATTACK,SCORCHINGSANDS,METALCLAW
+    Ability = RUNAWAY
+    Nature = DOCILE
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,TAILWHIP,QUICKATTACK
+    Ability = SOLARPOWER
+    Nature = HARDY
+Pokemon = DUNSPARCE,16
+    Moves = HEADBUTT,HEX,BITE,ICYWIND
+    Ability = RUNAWAY
+    Nature = RELAXED
+#Area=Gym2_M
+#-------------------------------
+[BEAUTY,Anabel,201]
+LoseText = I've been hung out to dry...
+Gimmick = Sun
+Pokemon = HELIOPTILE,15
+    Moves = THUNDERSHOCK,GLARE,MUDSLAP,ROUND
+    Ability = SOLARPOWER
+    Nature = MODEST
+Pokemon = CASTFORM,15
+    Moves = EMBER,COSMICPOWER,ROCKTHROW,HEADBUTT
+    Ability = FORECAST
+    Nature = IMPISH
+Pokemon = XOLSMOL,16
+    Moves = SCALD,WORKUP,LICK,SCORCHINGSANDS
+    Ability = FLAMEBODY
+    Item = LEFTOVERS
+    Nature = QUIET
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_M,Max]
+LoseText = No, defeat, my only weakness!
+Pokemon = SKITTY,15
+    Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
+    Ability = NORMALIZE
+    Nature = TIMID
+Pokemon = PACUNA,16
+    Moves = BITE,SWEETTOOTH,COVET,CUT
+    Ability = DAZZLING
+    Nature = JOLLY
+Pokemon = LICKITUNG,16
+    Moves = WORKUP,LICK,FACADE,ROCKTOMB
+    Ability = OWNTEMPO
+    Nature = ADAMANT
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_M,Max,100]
+LoseText = No, defeat, my only weakness!
+Pokemon = SKITTY,15
+    Moves = FAKEOUT,TAILWHIP,DISARMINGVOICE,LASTRESORT
+    Ability = NORMALIZE
+    Nature = TIMID
+Pokemon = PACUNA,16
+    Moves = BITE,SWEETTOOTH,COVET,CUT
+    Ability = DAZZLING
+    Nature = JOLLY
+Pokemon = LICKITUNG,16
+    Moves = WORKUP,LICK,FACADE,ROCKTOMB
+    Ability = OWNTEMPO
+    Nature = ADAMANT
+#Area=Gym2_M
+#-------------------------------
+[RISINGSTAR_M,Max,200]
+LoseText = No, winning, my only strength!
+Gimmick = Inverse
+Pokemon = PACUNA,16
+    Moves = BITE,SWEETTOOTH,COVET,CUT
+    Ability = DAZZLING
+    Nature = JOLLY
+Pokemon = GOHILA,15
+    Moves = POISONGAS,FAKETEARS,ACID,SNARL
+    Ability = POISONPOINT
+    Nature = TIMID
+Pokemon = FURFROU,16
+    Moves = HEADBUTT,BABYDOLLEYES,MIMIC,DRAININGKISS
+    Ability = HEALER
+    Nature = SERIOUS
+    Form = 1
+#Area=Gym2_M
+#-------------------------------
+[LEADER_Thalia,Thalia]
+LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Pokemon = FURFROU,16
+    Form = 5
+    Moves = HEADBUTT,ROUND,TAILWHIP,ZENHEADBUTT
+    Nature = HARDY
+Pokemon = EEVEE,17
+    Moves = EXCITE,SNARL,GROWL,ROUND
+    Ability = RUNAWAY
+    Nature = MODEST
+Pokemon = DELCATTY,17
+    Moves = FAKEOUT,ROUND,TAUNT,FURYSWIPES
+    Ability = NORMALIZE
+    Nature = ADAMANT
+Pokemon = LAGUNA,18
+    Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
+    Ability = DAZZLING
+    Nature = SERIOUS
+    Ace = yes
+#Area=Gym2_M
+#-------------------------------
+[LEADER_Thalia,Thalia,100]
+LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Pokemon = FURFROU,16
+    Form = 5
+    Moves = HEADBUTT,ROUND,TAILWHIP,ZENHEADBUTT
+    Nature = HARDY
+Pokemon = EEVEE,17
+    Moves = EXCITE,SNARL,GROWL,ROUND
+    Ability = RUNAWAY
+    Nature = MODEST
+Pokemon = DELCATTY,17
+    Moves = FAKEOUT,ROUND,TAUNT,FURYSWIPES
+    Ability = NORMALIZE
+    Nature = ADAMANT
+Pokemon = LAGUNA,18
+    Moves = DAZZLINGGLEAM,DOUBLEKICK,ICYWIND,ROUND
+    Ability = DAZZLING
+    Nature = SERIOUS
+    Ace = yes
+#Area=Gym2_M
+#------------------------------- # shaddap
+[LEADER_Thalia,Thalia,200]
+LoseText = Failure… is… a catalyst for its rectification… I… fear no loss… for justices… no, justice… is…
+Gimmick = Inverse
+Pokemon = AMAURA,16
+    Moves = ANCIENTPOWER,ICYWIND,THUNDERWAVE,STEALTHROCK
+    Ability = THICKFAT
+    Item = REDCARD
+    Nature = MODEST
+Pokemon = SHUPPET,17
+    Moves = WILLOWISP,SHADOWSNEAK,RETURN,KNOCKOFF
+    Ability = INSOMNIA
+    Item = EVIOLITE
+    Nature = IMPISH
+Pokemon = MINGOT,17
+    Moves = RETURN,BULLETPUNCH,HONECLAWS,ENDEAVOR
+    Ability = TOUGHCLAWS
+    Item = FOCUSSASH
+    Nature = JOLLY
+Pokemon = LAGUNA,17
+    Moves = METRONOME,DRAININGKISS,REFLECT,HIDDENPOWER
+    Ability = DAZZLING
+    Item = METRONOME
+    Nature = QUIET
+    HiddenPowerType = NORMAL
+Pokemon = GLACEON,17
+    Moves = ICYWIND,HIDDENPOWER,BITINGCOLD,LIGHTSCREEN
+    Ability = SLUSHRUSH
+    Item = NORMALGEM
+    Nature = MODEST
+    HiddenPowerType = NORMAL
+Pokemon = FURFROU,18
+    Moves = TRIMTACKLE,RETURN,METRONOME,MIMIC
+    Ability = FURCOAT
+    Item = EXPERTBELT
+    Nature = ADAMANT
+    Form = 2
+    Ace = yes
+#Area=Gym2_M
+#-------------------------------
+[GOLDPANNER_F,Martina]
+LoseText = Love shall not always prevail...
+Pokemon = MAGIKARP,17
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,18
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Martina,100]
+LoseText = Love shall not always prevail...
+Pokemon = MAGIKARP,17
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,18
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Martina,200]
+LoseText = Love shall not always prevail...
+Pokemon = MAGIKARP,17
+    Moves = SURF,SMACKDOWN,BODYSLAM,FLAIL
+    Form = 2
+Pokemon = MINGOT,17
+    Moves = METALCLAW,QUICKATTACK,DIG,FURYSWIPES
+    Ability = LONGREACH
+    Item = POWERHERB
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_M,Leo]
+LoseText = I just didn't have enough grit!
+Pokemon = BARBOACH,18
+    Moves = WATERPULSE,MUDBOMB,WATERSPORT,AMNESIA
+Pokemon = MINGOT,19
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_M,Leo,100]
+LoseText = I just didn't have enough grit!
+Pokemon = BARBOACH,18
+    Moves = WATERPULSE,MUDBOMB,WATERSPORT,AMNESIA
+Pokemon = MINGOT,19
+    Moves = METALCLAW,QUICKATTACK,DIG,LICK
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_M,Leo,200]
+LoseText = I just didn't have enough grit!
+Pokemon = BEAKPEEP,18
+    Moves = HEADBUTT,PLUCK,BABYDOLLEYES,IRONDEFENSE
+Pokemon = MINGOT,18
+    Moves = METALCLAW,QUICKATTACK,NIGHTSLASH,DOUBLEHIT
+    Ability = LONGREACH
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Amalia]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,19
+    Moves = RAGE,BITE,LICK,HOWL
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Amalia,100]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,19
+    Moves = RAGE,BITE,LICK,HOWL
+#Area=Route3_M
+#-------------------------------
+[GOLDPANNER_F,Amalia,200]
+LoseText = I was supposed to strike gold, not strike out!
+Pokemon = TECHUPPI,18
+    Moves = STOMP,BITE,FIREFANG,WORKUP
     Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
+Pokemon = BOWLLO,18
+    Moves = DEFENSECURL,HEADBUTT,METALCLAW,COUNTER
+    Ability = STURDY
+#Area=Route3_M
 #-------------------------------
-[TRAINER_Reine,Reine,1] #battle in sanctuary after Neo grunts
+[HIKER_M,Brian]
+LoseText = Man, I really walked into that one!
+Pokemon = KNOGGIN,18
+    Moves = BRUTALSWING,HARDEN,ROCKTHROW,ROAR
+Pokemon = PHANTUMP,19
+    Moves = FEINTATTACK,ASTONISH,INGRAIN,GRASSYGLIDE
+#Area=Route3_M
+#-------------------------------
+[HIKER_M,Brian,100]
+LoseText = Man, I really walked into that one!
+Pokemon = KNOGGIN,18
+    Moves = BRUTALSWING,HARDEN,ROCKTHROW,ROAR
+Pokemon = PHANTUMP,19
+    Moves = FEINTATTACK,ASTONISH,INGRAIN,GRASSYGLIDE
+#Area=Route3_M
+#-------------------------------
+[HIKER_M,Brian,200]
+LoseText = Man, I really walked into that one!
+Pokemon = KNOGGIN,18
+    Moves = BITE,HARDEN,ROCKTHROW,TAKEDOWN
+    Ability = SOLIDROCK
+Pokemon = SKIDDO,19
+    Moves = RAZORLEAF,GROWTH,BRICKBREAK,ROCKTOMB
+    Ability = SAPSIPPER
+#Area=Route3_M
+#-------------------------------
+[PSYCHIC_M,Simon]
+LoseText = How could I have not foreseen this outcome?
+Pokemon = SPOINK,18
+    Moves = CONFUSERAY,PSYBEAM,GROWL,PSYCHUP
+Pokemon = CROMEN,18
+    Moves = CONFUSION,GUST,EXCITE,COVET
+#Area=Route3_M
+#-------------------------------
+[PSYCHIC_M,Simon,100]
+LoseText = How could I have not foreseen this outcome?
+Pokemon = SPOINK,18
+    Moves = CONFUSERAY,PSYBEAM,GROWL,PSYCHUP
+Pokemon = CROMEN,18
+    Moves = CONFUSION,GUST,EXCITE,COVET
+#Area=Route3_M
+#-------------------------------
+[PSYCHIC_M,Simon,200]
+LoseText = How could I have not foreseen this outcome?
+Pokemon = CHIMECHO,18
+    Moves = EXTRASENSORY,ENTRAINMENT,ROUND,TORMENT
+    Ability = AMPLIFIER
+Pokemon = CROMEN,18
+    Moves = CONFUSION,SPITE,DUALWINGBEAT,DRAININGKISS
+    Ability = UNNERVE
+#Area=Route3_M
+#-------------------------------
+[HIKER_F,Cassie]
+LoseText = Looks like you're the one who's on a roll...
+Pokemon = BOWLLO,19
+    Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+#Area=Route3Cave_M
+#-------------------------------
+[HIKER_F,Cassie,100]
+LoseText = Looks like you're the one who's on a roll...
+Pokemon = BOWLLO,19
+    Moves = ROLLOUT,METALCLAW,DEFENSECURL,LEER
+#Area=Route3Cave_M
+#-------------------------------
+[HIKER_F,Cassie,200]
+LoseText = Looks like you're the one who's on a roll...
+Pokemon = BOWLLO,19
+    Moves = ROLLOUT,CUT,DEFENSECURL,PROTECT
+    Ability = MOMENTUM
+    Item = METRONOME
+#Area=Route3Cave_M
+#-------------------------------
+[MINER_F,Mirabel]
+LoseText = Good thing I'm better at mining than battling!
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,MUDSLAP,RAPIDSPIN
+    Ability = SANDFORCE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Mirabel,100]
+LoseText = Good thing I'm better at mining than battling!
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,MUDSLAP,RAPIDSPIN
+    Ability = SANDFORCE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Mirabel,200]
+LoseText = Good thing I'm better at mining than battling!
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,FURYSWIPES,SANDSTORM,RAPIDSPIN
+    Ability = MOLDBREAKER
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,MUDSLAP,ROCKSMASH,RAPIDSPIN
+    Ability = SANDFORCE
+Pokemon = DRILBUR,19
+    Moves = METALCLAW,DIG,CUT,RAPIDSPIN
+    Ability = SANDRUSH
+    Item = POWERHERB
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Luna]
+LoseText = I've dug too deep!
+Pokemon = BUNNELBY,19
+    Moves = QUICKATTACK,LEER,MUDSHOT,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = MINGOT,20
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,DIG
+    Ability = LONGREACH
+Pokemon = WOOBAT,21
+    Moves = AIRCUTTER,SWEETTOOTH,WORKUP,ENDEAVOR
+    Ability = UNAWARE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Luna,100]
+LoseText = I've dug too deep!
+Pokemon = BUNNELBY,19
+    Moves = QUICKATTACK,LEER,MUDSHOT,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = MINGOT,20
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,DIG
+    Ability = LONGREACH
+Pokemon = WOOBAT,21
+    Moves = AIRCUTTER,SWEETTOOTH,WORKUP,ENDEAVOR
+    Ability = UNAWARE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Luna,200]
+LoseText = I've dug too deep!
+Pokemon = DRILBUR,19
+    Moves = AERIALACE,FURYSWIPES,MUDSLAP,RAPIDSPIN
+    Ability = MOLDBREAKER
+Pokemon = BEAKPEEP,20
+    Moves = ROCKBLAST,METALCLAW,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = MINGOT,21
+    Moves = METALCLAW,FURYSWIPES,QUICKATTACK,HONECLAWS
+    Ability = LONGREACH
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_M,Adam]
+LoseText = I promise I won't break down...
+Pokemon = CAFECARACHA,19
+    Moves = ROLLOUT,STRUGGLEBUG,CHARGE,THUNDERSHOCK
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_M,Adam,100]
+LoseText = I promise I won't break down...
+Pokemon = CAFECARACHA,19
+    Moves = ROLLOUT,STRUGGLEBUG,CHARGE,THUNDERSHOCK
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_M,Adam,200]
+LoseText = I promise I won't break down...
+Pokemon = CAFECARACHA,19
+    Moves = LEECHLIFE,STRUGGLEBUG,SPARK,QUICKATTACK
+    Ability = MOTORDRIVE
+Pokemon = TYNAMO,19
+    Moves = SPARK,ACID,THUNDERWAVE,BITE
+    Ability = LEVITATE
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Henry]
+LoseText = Gah! I'll work harder next time.
+Pokemon = DIGGERSBY,20
+    Moves = MUDSHOT,QUICKATTACK,DOUBLEKICK,LEER
+    Ability = CHEEKPOUCH
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Henry,100]
+LoseText = Gah! I'll work harder next time.
+Pokemon = DIGGERSBY,20
+    Moves = MUDSHOT,QUICKATTACK,DOUBLEKICK,LEER
+    Ability = CHEEKPOUCH
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Henry,200]
+LoseText = Gah! I'll work harder next time.
+Pokemon = TRAPINCH,20
+    Moves = BITE,MAGNITUDE,TOXIC,ROAR
+    Ability = HYPERCUTTER
+    Item = EVIOLITE
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_F,Erica]
+LoseText = Results confirm defeat, refinement of strategy is needed.
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = STURDY
+Pokemon = TRUBBISH,20
+    Moves = SLUDGE,CLEARSMOG,POISONGAS,POUND
+    Ability = STENCH
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_F,Erica,100]
+LoseText = Results confirm defeat, refinement of strategy is needed.
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = STURDY
+Pokemon = TRUBBISH,20
+    Moves = SLUDGE,CLEARSMOG,POISONGAS,POUND
+    Ability = STENCH
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_F,Erica,200]
+LoseText = Results confirm defeat, refinement of strategy is needed.
+Pokemon = PORYGON,19
+    Moves = THUNDERWAVE,CONVERSION,PSYBEAM,THUNDERSHOCK
+    Ability = TRACE
+Pokemon = TRUBBISH,20
+    Moves = SLUDGE,LICK,POISONGAS,SECRETPOWER
+    Ability = POISONPOINT
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Kevin]
+LoseText = But I even looked at all the motivational posters today!
+Pokemon = MINGOT,21
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,DIG
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Kevin,100]
+LoseText = But I even looked at all the motivational posters today!
+Pokemon = MINGOT,21
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,DIG
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Kevin,200]
+LoseText = But I even looked at all the motivational posters today!
+Pokemon = MINGOT,21
+    Moves = METALCLAW,HONECLAWS,QUICKATTACK,THIEF
+    Ability = TOUGHCLAWS
+#Area=GoldMine_M
+#-------------------------------
+[DOCTOR_M,Miguel]
+LoseText = Good thing I can heal my own Pokémon too... 
+Pokemon = AUDINO,19
+    Moves = POUND,PLAYNICE,DISARMINGVOICE,CALMMIND
+    Ability = HEALER
+Pokemon = VIVILLON,19
+    Moves = LIGHTSCREEN,PSYBEAM,GUST,SCATTERDUST
+    Ability = FRIENDGUARD
+Pokemon = M_VANILLITE,20
+    Moves = ICYWIND,AROMATHERAPY,CONFUSION,MIST
+    Ability = HEALER
+#Area=GoldMine_O
+#-------------------------------
+[DOCTOR_M,Miguel,100]
+LoseText = Good thing I can heal my own Pokémon too... 
+Pokemon = AUDINO,19
+    Moves = POUND,PLAYNICE,DISARMINGVOICE,CALMMIND
+    Ability = HEALER
+Pokemon = VIVILLON,19
+    Moves = LIGHTSCREEN,PSYBEAM,GUST,SCATTERDUST
+    Ability = FRIENDGUARD
+Pokemon = M_VANILLITE,20
+    Moves = ICYWIND,AROMATHERAPY,CONFUSION,MIST
+    Ability = HEALER
+#Area=GoldMine_O
+#-------------------------------
+[DOCTOR_M,Miguel,200]
+LoseText = Good thing I can heal my own Pokémon too... 
+Pokemon = CHIMECHO,19
+    Moves = YAWN,ENTRAINMENT,CONFUSION,LASTRESORT
+    Ability = AMPLIFIER
+Pokemon = VIVILLON,19
+    Moves = LIGHTSCREEN,PSYBEAM,WORKUP,SCATTERDUST
+    Ability = SHIELDDUST
+Pokemon = M_VANILLITE,20
+    Moves = ICYWIND,THINKFAST,CONFUSION,MIST
+    Ability = HEALER
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Leonora]
+LoseText = I didn't lose, I just haven't won yet!
+Pokemon = BOWLLO,20
+    Moves = DEFENSECURL,ROLLOUT,METALCLAW,MUDSLAP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Leonora,100]
+LoseText = I didn't lose, I just haven't won yet!
+Pokemon = BOWLLO,20
+    Moves = DEFENSECURL,ROLLOUT,METALCLAW,MUDSLAP
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Leonora,200]
+LoseText = I didn't lose, I just haven't won yet!
+Pokemon = BOWLLO,20
+    Moves = COUNTER,METALCLAW,HEADBUTT,GYROBALL
+    Ability = STURDY
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_M,Carlos]
+LoseText = Perhaps my methodology wasn't scientific enough?
+Pokemon = M_DITTO,20
+    Moves = TRANSFORM
+    Ability = PRANKSTER
+Pokemon = LUMIPOP,21
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,CALMMIND
+    Ability = ILLUMINATE
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_M,Carlos,100]
+LoseText = Perhaps my methodology wasn't scientific enough?
+Pokemon = M_DITTO,20
+    Moves = TRANSFORM
+    Ability = PRANKSTER
+Pokemon = LUMIPOP,21
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,CALMMIND
+    Ability = ILLUMINATE
+#Area=GoldMine_M
+#-------------------------------
+[SCIENTIST_M,Carlos,200]
+LoseText = Perhaps my methodology wasn't scientific enough?
+Pokemon = LUMIPOP,20
+    Moves = ACID,PSYBEAM,TAUNT,WORKUP
+    Ability = ILLUMINATE
+Pokemon = M_DITTO,21
+    Moves = TRANSFORM
+    Ability = PRANKSTER
+#Area=GoldMine_M
+#-------------------------------
+[MINER_M,Justin]
+LoseText = You're a tough rock to crack!
+Pokemon = SWOOBAT,23
+    Moves = SWEETTOOTH,AIRCUTTER,CALMMIND,TAUNT
+    Ability = KLUTZ
+#Area=GoldMine_O
+#-------------------------------
+[MINER_M,Justin,100]
+LoseText = You're a tough rock to crack!
+Pokemon = SWOOBAT,23
+    Moves = SWEETTOOTH,AIRCUTTER,CALMMIND,TAUNT
+    Ability = KLUTZ
+#Area=GoldMine_O
+#-------------------------------
+[MINER_M,Justin,200]
+LoseText = You're a tough rock to crack!
+Pokemon = KNOGGIN,23
+    Moves = ASSURANCE,ROCKTOMB,STRENGTH,PROTECT
+    Ability = STURDY
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Desirée]
+LoseText = I'm really stuck in a rut...
+Pokemon = DIGGERSBY,22
+    Moves = QUICKATTACK,BULLDOZE,FLAIL,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = BOWLLO,23
+    Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+Pokemon = MINGOT,24
+    Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
+    Ability = LONGREACH
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Desirée,100]
+LoseText = I'm really stuck in a rut...
+Pokemon = DIGGERSBY,22
+    Moves = QUICKATTACK,BULLDOZE,FLAIL,DOUBLEKICK
+    Ability = PICKUP
+Pokemon = BOWLLO,23
+    Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+Pokemon = MINGOT,24
+    Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
+    Ability = LONGREACH
+#Area=GoldMine_O
+#-------------------------------
+[MINER_F,Desirée,200]
+LoseText = I'm really stuck in a rut...
+Pokemon = BEAKPEEP,22
+    Moves = SAFEGUARD,HEADBUTT,SCREECH,LOWKICK
+    Ability = OVERCOAT
+Pokemon = BOWLLO,23
+    Moves = METALCLAW,ROLLOUT,HEADBUTT,DEFENSECURL
+    Ability = FILTER
+Pokemon = MINGOT,24
+    Moves = QUICKATTACK,BULLETPUNCH,HONECLAWS,DIG
+    Ability = LONGREACH
+    Item = POWERHERB
+#Area=GoldMine_O
+#-------------------------------
+[MECHANIC_F,Marcia]
+LoseText = Together we are strong...
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = MAGNETPULL
+Pokemon = M_CRABRAWLER,20
+    Moves = METALCLAW,PURSUIT,MUDSLAP,VISEGRIP
+    Ability = TECHNICIAN
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_F,Marcia,100]
+LoseText = Together we are strong...
+Pokemon = MAGNEMITE,19
+    Moves = THUNDERWAVE,ELECTROBALL,GYROBALL,THUNDERSHOCK
+    Ability = MAGNETPULL
+Pokemon = M_CRABRAWLER,20
+    Moves = METALCLAW,PURSUIT,MUDSLAP,VISEGRIP
+    Ability = TECHNICIAN
+#Area=GoldMine_M
+#-------------------------------
+[MECHANIC_F,Marcia,200]
+LoseText = Together we are strong...
+Pokemon = BEAKPEEP,19
+    Moves = REFLECT,SAFEGUARD,METRONOME,PLUCK
+    Ability = OVERCOAT
+Pokemon = M_CRABRAWLER,20
+    Moves = METALCLAW,PURSUIT,CUT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Melissa]
+LoseText = But not strong enough?
+Pokemon = WOOBAT,19
+    Moves = AIRCUTTER,ENDEAVOR,SWEETTOOTH,DRAININGKISS
+    Ability = UNAWARE
+Pokemon = KNOGGIN,20
+    Moves = ROCKTOMB,BITE,BODYSLAM,CUT
+    Ability = SOLIDROCK
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Melissa,100]
+LoseText = But not strong enough?
+Pokemon = WOOBAT,19
+    Moves = AIRCUTTER,ENDEAVOR,SWEETTOOTH,DRAININGKISS
+    Ability = UNAWARE
+Pokemon = KNOGGIN,20
+    Moves = ROCKTOMB,BITE,BODYSLAM,CUT
+    Ability = SOLIDROCK
+#Area=GoldMine_M
+#-------------------------------
+[MINER_F,Melissa,200]
+LoseText = But not strong enough?
+Pokemon = AVEOR,19
+    Moves = SANDSTORM,SANDTOMB,STEELWING,PECK
+    Ability = SANDFORCE
+Pokemon = KNOGGIN,20
+    Moves = ROCKTOMB,BITE,BODYSLAM,CUT
+    Ability = SOLIDROCK
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_F,Domênica]
+LoseText = The gold's good but the victory isn't there yet!
+Pokemon = BARBOACH,21
+    Moves = WATERPULSE,MAGNITUDE,ICYWIND,WHIRLPOOL
+    Ability = ANTICIPATION
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_F,Domênica,100]
+LoseText = The gold's good but the victory isn't there yet!
+Pokemon = BARBOACH,21
+    Moves = WATERPULSE,MAGNITUDE,ICYWIND,WHIRLPOOL
+    Ability = ANTICIPATION
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_F,Domênica,200]
+LoseText = The gold's good but the victory isn't there yet!
+Pokemon = DRILBUR,21
+    Moves = FURYSWIPES,CUT,DIG,ROCKSMASH
+    Ability = MOLDBREAKER
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_M,Salvador]
+LoseText = Shucks, nothing but pyrite!
+Pokemon = MAGIKARP,19
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,21
+    Moves = HONECLAWS,LICK,METALCLAW,QUICKATTACK
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_M,Salvador,100]
+LoseText = Shucks, nothing but pyrite!
+Pokemon = MAGIKARP,19
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,21
+    Moves = HONECLAWS,LICK,METALCLAW,QUICKATTACK
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[GOLDPANNER_M,Salvador,200]
+LoseText = Shucks, nothing but pyrite!
+Pokemon = MAGIKARP,19
+    Form = 2
+    Moves = SPLASH,SMACKDOWN,BODYSLAM
+Pokemon = MINGOT,21
+    Moves = HONECLAWS,LICK,METALCLAW,QUICKATTACK
+    Ability = PICKUP
+#Area=GoldMine_M
+#-------------------------------
+[RUINMANIAC_M,Diego]
+LoseText = At least the temple is nice to look at...
+Pokemon = BALTOY,21
+    Moves = PSYBEAM,ANCIENTPOWER,MUDSLAP,SANDSTORM
+Pokemon = KNOGGIN,22
+    Moves = BRUTALSWING,ROCKTOMB,SNARL,HARDEN
+    Ability = SUPERLUCK
+#Area=GoldMine_M
+#-------------------------------
+[RUINMANIAC_M,Diego,100]
+LoseText = At least the temple is nice to look at...
+Pokemon = BALTOY,21
+    Moves = PSYBEAM,ANCIENTPOWER,MUDSLAP,SANDSTORM
+Pokemon = KNOGGIN,22
+    Moves = BRUTALSWING,ROCKTOMB,SNARL,HARDEN
+    Ability = SUPERLUCK
+#Area=GoldMine_M
+#-------------------------------
+[RUINMANIAC_M,Diego,200]
+LoseText = At least the temple is nice to look at...
+Pokemon = BALTOY,21
+    Moves = PSYBEAM,ANCIENTPOWER,POWERTRICK,SANDSTORM
+    Ability = LEVITATE
+Pokemon = KNOGGIN,22
+    Moves = SUBMISSION,ROCKTOMB,BITE,HARDEN
+    Ability = SOLIDROCK
+    Item = SCOPELENS
+#Area=GoldMine_M
+#-------------------------------
+[RANCHERO_M,Bosco]
+LoseText = A shocking defeat!
+Pokemon = FLAAFFY,22
+    Moves = COTTONSPORE,THUNDERSHOCK,TAKEDOWN,THUNDERWAVE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_M,Bosco,100]
+LoseText = A shocking defeat!
+Pokemon = FLAAFFY,22
+    Moves = COTTONSPORE,THUNDERSHOCK,TAKEDOWN,THUNDERWAVE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_M,Bosco,200]
+LoseText = A shocking defeat!
+Gimmick = PoisonZone
+Pokemon = EELEKTRIK,19
+    Moves = SPARK,POISONTAIL,GIGADRAIN,HIDDENPOWER
+    Ability = LEVITATE
+    Nature = SASSY
+    Item = EXPERTBELT
+    IV = 10,5,5,5,5,5
+    Shiny = yes
+    HiddenPowerType = ICE
+#Area=Asterado_O
+#-------------------------------
+[FISHER_F,Zoey]
+LoseText = I feel like a fish out of water!
+Pokemon = FEEBAS,20
+    Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
+    Ability = OBLIVIOUS
+Pokemon = ATELANGLER,22
+    Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
+    Ability = BAITEDLINE
+#Area=Asterado_O
+#-------------------------------
+[FISHER_F,Zoey,100]
+LoseText = I feel like a fish out of water!
+Pokemon = FEEBAS,20
+    Moves = SPLASH,TACKLE,FLAIL,MIRRORCOAT
+    Ability = OBLIVIOUS
+Pokemon = ATELANGLER,22
+    Moves = FAKEOUT,SWEETTOOTH,BRUTALSWING,CUT
+    Ability = BAITEDLINE
+#Area=Asterado_O
+#-------------------------------
+[FISHER_F,Zoey,200]
+LoseText = I feel like a fish out of water!
+Pokemon = FEEBAS,20
+    Moves = MIRRORCOAT,FLAIL,CONFUSERAY,TACKLE
+    Ability = OBLIVIOUS
+    Item = FOCUSSASH
+Pokemon = ATELANGLER,20
+    Moves = SWEETTOOTH,DOUBLEHIT,BRUTALSWING,SLEEPTALK
+    Ability = COMATOSE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_F,Nicole]
+LoseText = Are these boots not made for winning?
+Pokemon = HERDIER,21
+    Moves = RETALIATE,BITE,BABYDOLLEYES,WORKUP
+    Ability = INTIMIDATE
+Pokemon = SKIDDO,22
+    Moves = MEGAKICK,RAZORLEAF,GROWTH,WORRYSEED
+Pokemon = M_MUDBRAY,23
+    Moves = DOUBLEKICK,MUDBOMB,FAIRYWIND,EXCITE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_F,Nicole,100]
+LoseText = Are these boots not made for winning?
+Pokemon = HERDIER,21
+    Moves = RETALIATE,BITE,BABYDOLLEYES,WORKUP
+    Ability = INTIMIDATE
+Pokemon = SKIDDO,22
+    Moves = MEGAKICK,RAZORLEAF,GROWTH,WORRYSEED
+Pokemon = M_MUDBRAY,23
+    Moves = DOUBLEKICK,MUDBOMB,FAIRYWIND,EXCITE
+#Area=Asterado_O
+#-------------------------------
+[RANCHERO_F,Nicole,200]
+LoseText = You just increased my debt...
+Pokemon = FURFROU,21
+    Moves = MIMIC,METRONOME,BABYDOLLEYES,HEADBUTT
+    Ability = FURCOAT
+Pokemon = SKIDDO,21
+    Moves = ROCKTOMB,BULLETSEED,GROWTH,SYNTHESIS
+    Ability = TILEWORKER
+Pokemon = M_MUDBRAY,21
+    Moves = MUDBOMB,FAIRYWIND,METRONOME,EXCITE
+    Ability = SWEETVEIL
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian]
+LoseText = Nothing lustrous about that...
+Pokemon = BANAGNAW,21
+    Name = Slippy
+    Shiny = yes
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = yes
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = yes
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,100]
+LoseText = Nothing lustrous about that...
+Pokemon = BANAGNAW,21
+    Name = Slippy
+    Shiny = yes
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = yes
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = yes
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,200]
+LoseText = Nothing lustrous about that...
+Pokemon = BANAGNAW,21
+    Moves = BRICKBREAK,ICEFANG,AQUAJET,GROWTH
+    Ability = RIPEN
+    Item = LANSATBERRY
+    Nature = CAREFUL
+    Shiny = yes
+Pokemon = LUMIPOP,21
+    Moves = ACID,HIDDENPOWER,MIRACLEEYE,TOXIC
+    Ability = SHEDSKIN
+    Item = SHUCABERRY
+    Nature = MODEST
+    HiddenPowerType = PSYCHIC
+    Shiny = yes
+Pokemon = M_MARACTUS,21
+    Moves = WILLOWISP,MEGADRAIN,LEECHSEED,REST
+    Ability = FLAMEBODY
+    Item = CHESTOBERRY
+    Nature = BOLD
+    Shiny = yes
+Pokemon = GOLETT,21
+    Moves = DIG,SHADOWPUNCH,FIREPUNCH,THUNDERPUNCH
+    Ability = IRONFIST
+    Item = POWERHERB
+    Nature = ADAMANT
+    Shiny = yes
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,1]
+LoseText = Nothing lustrous about that...
+Pokemon = MAGIKARP,18
+    Form = 2
+    Shiny = yes
+    Moves = SPLASH,SMACKDOWN
+Pokemon = BANAGNAW,21
+    Name = Slippy
+    Shiny = yes
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = yes
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = yes
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,101]
+LoseText = Nothing lustrous about that...
+Pokemon = MAGIKARP,18
+    Form = 2
+    Shiny = yes
+    Moves = SPLASH,SMACKDOWN
+Pokemon = BANAGNAW,21
+    Name = Slippy
+    Shiny = yes
+    Moves = DIVE,BITE,LEAFAGE,AQUAJET
+    Ability = GLUTTONY
+Pokemon = LUMIPOP,21
+    Shiny = yes
+    Moves = ACIDSPRAY,PSYBEAM,MIRACLEEYE,CONFUSERAY
+    Ability = INTIMIDATE
+Pokemon = M_MARACTUS,23
+    Shiny = yes
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Asterado_O
+#-------------------------------
+[SHINYHUNTER_M,Florian,201]
+LoseText = Nothing lustrous about that...
+Pokemon = MAGIKARP,22
+    Moves = GOLDENSPLASH,HIDDENPOWER
+    Ability = SOLIDROCK
+    Item = FOCUSSASH
+    Nature = MODEST
+    HiddenPowerType = DRAGON
+    Form = 2
+    Shiny = yes
+    IV = 10,0,10,10,10,10
+Pokemon = BANAGNAW,21
+    Moves = BRICKBREAK,ICEFANG,AQUAJET,GROWTH
+    Ability = RIPEN
+    Item = LANSATBERRY
+    Nature = CAREFUL
+    Shiny = yes
+Pokemon = LUMIPOP,21
+    Moves = ACID,HIDDENPOWER,MIRACLEEYE,TOXIC
+    Ability = SHEDSKIN
+    Item = SHUCABERRY
+    Nature = MODEST
+    HiddenPowerType = PSYCHIC
+    Shiny = yes
+Pokemon = M_MARACTUS,21
+    Moves = WILLOWISP,MEGADRAIN,LEECHSEED,REST
+    Ability = FLAMEBODY
+    Item = CHESTOBERRY
+    Nature = BOLD
+    Shiny = yes
+Pokemon = GOLETT,21
+    Moves = DIG,SHADOWPUNCH,FIREPUNCH,THUNDERPUNCH
+    Ability = IRONFIST
+    Item = POWERHERB
+    Nature = ADAMANT
+    Shiny = yes
+#Area=Asterado_O
+#-------------------------------
+[HIKER_M,Leron]
+LoseText = Not solid enough, I guess?
+Pokemon = KNOGGIN,21
+    Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
+    Ability = SOLIDROCK
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Leron,100]
+LoseText = Not solid enough, I guess?
+Pokemon = KNOGGIN,21
+    Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
+    Ability = SOLIDROCK
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Leron,200]
+LoseText = Not solid enough, I guess?
+Pokemon = BOWLLO,21
+    Moves = RAPIDSPIN,ROCKTOMB,DEFENSECURL,CUT
+    Ability = FILTER
+Pokemon = KNOGGIN,21
+    Moves = BRUTALSWING,ROCKTOMB,HARDEN,CUT
+    Ability = SOLIDROCK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_F,Nereida]
+LoseText = I'll never take off at this rate...
+Pokemon = NATU,21
+    Moves = PSYWAVE,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = EARLYBIRD
+Pokemon = MURKROW,22
+    Moves = PURSUIT,WINGATTACK,ASTONISH,NIGHTSHADE
+    Ability = SUPERLUCK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_F,Nereida,100]
+LoseText = I'll never take off at this rate...
+Pokemon = NATU,21
+    Moves = PSYWAVE,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = EARLYBIRD
+Pokemon = MURKROW,22
+    Moves = PURSUIT,WINGATTACK,ASTONISH,NIGHTSHADE
+    Ability = SUPERLUCK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_F,Nereida,200]
+LoseText = I'll never take off at this rate...
+Pokemon = NATU,21
+    Moves = FUTURESIGHT,CONFUSERAY,NIGHTSHADE,PECK
+    Ability = SYNCHRONIZE
+Pokemon = MURKROW,21
+    Moves = PURSUIT,AERIALACE,FEINTATTACK,MIRRORMOVE
+    Ability = SUPERLUCK
+    Item = SCOPELENS
+#Area=Route4_M
+#-------------------------------
+[CAMPER_M,Adrian]
+LoseText = How'd you let this happen?
+Pokemon = LUMIPOP,22
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,MIRACLEEYE
+    Ability = INTIMIDATE
+#Area=Route4_M
+#-------------------------------
+[CAMPER_M,Adrian,100]
+LoseText = How'd you let this happen?
+Pokemon = LUMIPOP,22
+    Moves = ACIDSPRAY,PSYBEAM,CONFUSERAY,MIRACLEEYE
+    Ability = INTIMIDATE
+#Area=Route4_M
+#-------------------------------
+[CAMPER_M,Adrian,200]
+LoseText = How'd you let this happen?
+Pokemon = TERREON,22
+    Moves = SANDSTORM,MUDSHOT,SPIKES,ROCKBLAST
+    Ability = GOOEY
+    Item = SMOOTHROCK
+Pokemon = JAWSTER,21
+    Moves = PROTECT,ROAR,FLY,TOXIC
+    Ability = SANDVEIL
+    Item = LEFTOVERS
+#Area=Route4_M
+#-------------------------------
+[CAMPER_F,Alexis]
+LoseText = I told you we should've caught more Pokémon!
+Pokemon = HELIOPTILE,22
+    Moves = THUNDERSHOCK,TAILWHIP,CHARGE,QUICKATTACK
+    Ability = DRYSKIN
+#Area=Route4_M
+#-------------------------------
+[CAMPER_F,Alexis,100]
+LoseText = I told you we should've caught more Pokémon!
+Pokemon = HELIOPTILE,22
+    Moves = THUNDERSHOCK,TAILWHIP,CHARGE,QUICKATTACK
+    Ability = DRYSKIN
+#Area=Route4_M
+#-------------------------------
+[CAMPER_F,Alexis,200]
+LoseText = I told you we should've caught more Pokémon!
+Pokemon = HELIOPTILE,21
+    Moves = PARABOLICCHARGE,THUNDERWAVE,CHARGE,HIDDENPOWER
+    Ability = SANDVEIL
+    HiddenPowerType = NORMAL
+Pokemon = TRAPINCH,21
+    Moves = SANDTOMB,PROTECT,QUICKATTACK,SANDSTORM
+    Ability = SHEERFORCE
+    Item = EVIOLITE
+    IV = 0,0,7,0,0,7
+#Area=Route4_M
+#-------------------------------
+[HIKER_F,Eleanora]
+LoseText = Where did I go astray...
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,HONECLAWS,BITE,ASTONISH
+    Ability = PRESSURE
+#Area=Route4_M
+#-------------------------------
+[HIKER_F,Eleanora,100]
+LoseText = Where did I go astray...
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,HONECLAWS,BITE,ASTONISH
+    Ability = PRESSURE
+#Area=Route4_M
+#-------------------------------
+[HIKER_F,Eleanora,200]
+LoseText = Where did I go astray...
+Pokemon = CARBINK,22
+    Moves = SMACKDOWN,PSYWAVE,REFLECT,IRONHEAD
+    Ability = CLEARBODY
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_M,Sydney]
+LoseText = I call fowl!
+Pokemon = BURBRAWL,21
+    Moves = WORKUP,AIRCUTTER,KARATECHOP,REVENGE
+Pokemon = AVEOR,22
+    Moves = QUICKATTACK,SPARK,CHARGE,PECK
+    Ability = STATIC
+Pokemon = CROMEN,23
+    Moves = GUST,COVET,EXTRASENSORY,EXCITE
+    Ability = FRISK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_M,Sydney,100]
+LoseText = I call fowl!
+Pokemon = BURBRAWL,21
+    Moves = WORKUP,AIRCUTTER,KARATECHOP,REVENGE
+Pokemon = AVEOR,22
+    Moves = QUICKATTACK,SPARK,CHARGE,PECK
+    Ability = STATIC
+Pokemon = CROMEN,23
+    Moves = GUST,COVET,EXTRASENSORY,EXCITE
+    Ability = FRISK
+#Area=Route4_M
+#-------------------------------
+[BIRDKEEPER_M,Sydney,200]
+LoseText = I call fowl!
+Pokemon = BURBRAWL,21
+    Moves = WORKUP,WINGATTACK,KARATECHOP,ENDURE
+    Item = LIECHIBERRY
+Pokemon = AVEOR,21
+    Moves = QUICKATTACK,SPARK,DOUBLEKICK,PECK
+    Ability = RUNAWAY
+Pokemon = CROMEN,22
+    Moves = DRAININGKISS,COVET,EXTRASENSORY,EXCITE
+    Ability = UNNERVE
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Michael]
+LoseText = That won't do!
+Pokemon = WRRAZAL,22
+    Moves = ROCKTOMB,SCREECH,SMACKDOWN,ASTONISH
+    Ability = INTIMIDATE
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Michael,100]
+LoseText = That won't do!
+Pokemon = WRRAZAL,22
+    Moves = ROCKTOMB,SCREECH,SMACKDOWN,ASTONISH
+    Ability = INTIMIDATE
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+#Area=Route4_M
+#-------------------------------
+[HIKER_M,Michael,200]
+LoseText = That won't do!
+Pokemon = WRRAZAL,22
+    Moves = ROCKTOMB,SCREECH,SNATCH,ASTONISH
+    Ability = CURSEDBODY
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,MUDSLAP,METALCLAW,HEADBUTT
+    Ability = MOMENTUM
+#Area=Route4_M
+#-------------------------------
+[TOURIST_F,Karmen]
+LoseText = That certainly gets old though...
+Pokemon = DUNSPARCE,23
+    Moves = ANCIENTPOWER,FLAIL,GLARE,MUDSLAP
+    Ability = SERENEGRACE
+#Area=Route4_M
+#-------------------------------
+[TOURIST_F,Karmen,100]
+LoseText = That certainly gets old though...
+Pokemon = DUNSPARCE,23
+    Moves = ANCIENTPOWER,FLAIL,GLARE,MUDSLAP
+    Ability = SERENEGRACE
+#Area=Route4_M
+#-------------------------------
+[TOURIST_F,Karmen,200]
+LoseText = Well, how did it taste?
+Gimmick = Rainbow
+Pokemon = DUNSPARCE,23
+    Moves = ANCIENTPOWER,TRIATTACK,ROOST,HEX
+    Ability = RATTLED
+    Item = EVIOLITE
+#Area=Route4_M
+#-------------------------------
+[FISHER_M,Esteban]
+LoseText = This was the win that got away!
+Pokemon = BARBOACH,22
+    Moves = MAGNITUDE,WATERPULSE,SPARK,AMNESIA
+    Ability = ANTICIPATION
+Pokemon = FINNEON,23
+    Moves = WATERPULSE,GUST,AURORABEAM,AGILITY
+    Ability = STORMDRAIN
+Pokemon = WIMPOD,24
+    Moves = STRUGGLEBUG,AQUAJET,METALCLAW,SANDATTACK
+#Area=Route4_M
+#-------------------------------
+[FISHER_M,Esteban,100]
+LoseText = This was the win that got away!
+Pokemon = BARBOACH,22
+    Moves = MAGNITUDE,WATERPULSE,SPARK,AMNESIA
+    Ability = ANTICIPATION
+Pokemon = FINNEON,23
+    Moves = WATERPULSE,GUST,AURORABEAM,AGILITY
+    Ability = STORMDRAIN
+Pokemon = WIMPOD,24
+    Moves = STRUGGLEBUG,AQUAJET,METALCLAW,SANDATTACK
+#Area=Route4_M
+#-------------------------------
+[FISHER_M,Esteban,200]
+LoseText = This was the win that got away!
+Pokemon = PHYTIDE,22
+    Moves = AQUARING,SUNNYDAY,MEGADRAIN,TOXIC
+    Ability = HEALINGSUN
+    Nature = BOLD
+    Item = HEATROCK
+Pokemon = GULPI,23
+    Moves = CRUNCH,SPARK,ROCKTHROW,CHARGE
+Pokemon = BANAGNAW,24
+    Moves = SCALD,GROWTH,MAGICALLEAF,ICYWIND
+    Ability = SOLARPOWER
+#Area=Route4_M
+#-------------------------------
+[RUINMANIAC_F,Page]
+LoseText = I'm still searching for the secret to victory...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BITE,HARDEN,TACKLE
+    Ability = SUPERLUCK
+Pokemon = BALTOY,23
+    Moves = CALMMIND,MUDSLAP,ANCIENTPOWER,PSYBEAM
+#Area=Route4_M
+#-------------------------------
+[RUINMANIAC_F,Page,100]
+LoseText = I'm still searching for the secret to victory...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BITE,HARDEN,TACKLE
+    Ability = SUPERLUCK
+Pokemon = BALTOY,23
+    Moves = CALMMIND,MUDSLAP,ANCIENTPOWER,PSYBEAM
+#Area=Route4_M
+#-------------------------------
+[RUINMANIAC_F,Page,200]
+LoseText = I'm still searching for the secret to victory...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BITE,ROAR,DRAGONRUSH
+    Ability = STURDY
+    Item = DRAGONGEM
+Pokemon = BALTOY,23
+    Moves = CALMMIND,MUDSLAP,ANCIENTPOWER,PSYBEAM
+#Area=Route4_M
+#-------------------------------
+[ADMIN_Xandra,Xandra]
+LoseText = I must have miscalculated...
+Gimmick = Tailwind
+Pokemon = WIMPOD,24
+    EV = 24,0,24,0,0,24
+    Moves = AQUAJET,STRUGGLEBUG,ASSURANCE,ROLLOUT
+Pokemon = FLITJITTER,25
+    EV = 24,0,24,24,0,0
+    Moves = STRUGGLEBUG,ENERGYBALL,TAILWIND,THUNDERBOLT
+Pokemon = CHARCOPAL,24
+    EV = 0,0,0,24,24,24
+    Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
+    Ability = CRYSTALJAW
+    Ace = yes
+Pokemon = MAGNEMITE,25
+    EV = 0,24,24,0,24,0
+    Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
+    Ability = STURDY
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Xandra,Xandra,100]
+LoseText = I must have miscalculated...
+Gimmick = Tailwind
+Pokemon = WIMPOD,24
+    EV = 24,0,24,0,0,24
+    Moves = AQUAJET,STRUGGLEBUG,ASSURANCE,ROLLOUT
+Pokemon = FLITJITTER,25
+    EV = 24,0,24,24,0,0
+    Moves = STRUGGLEBUG,ENERGYBALL,TAILWIND,THUNDERBOLT
+Pokemon = CHARCOPAL,24
+    EV = 0,0,0,24,24,24
+    Moves = DAZZLINGGLEAM,SWEETTOOTH,ANCIENTPOWER,CRUNCH
+    Ability = CRYSTALJAW
+    Ace = yes
+Pokemon = MAGNEMITE,25
+    EV = 0,24,24,0,24,0
+    Moves = ELECTROBALL,SCREECH,IRONHEAD,THUNDERWAVE
+    Ability = STURDY
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Xandra,Xandra,200]
+LoseText = I must have miscalculated...
+Gimmick = Tailwind
+Pokemon = ELGYEM,24
+    Moves = PSYBEAM,TOXIC,REFLECT,SAFEGUARD
+    Ability = FOREWARN
+    Item = TANGABERRY
+    Nature = TIMID
+Pokemon = EELEKTRIK,25
+    Moves = VENOSHOCK,CRUNCH,HIDDENPOWER,VOLTSWITCH
+    Ability = LEVITATE
+    Item = MAGNET
+    Nature = RASH
+    HiddenPowerType = ELECTRIC
+Pokemon = CHARCOPAL,22
+    Moves = BABYDOLLEYES,HIDDENPOWER,ANCIENTPOWER,MISTYEXPLOSION
+    Ability = ROUGHSKIN
+    Item = CUSTAPBERRY
+    Nature = MILD
+    HiddenPowerType = FIGHTING
+Pokemon = CASTFORM,24
+    Moves = FRUSTRATION,ROCKTOMB,SUBSTITUTE,PROTECT
+    Ability = FORECAST
+    Item = SITRUSBERRY
+    Nature = ADAMANT
+Pokemon = STRELAVISON,25
+    Moves = STRUGGLEBUG,CALMMIND,HIDDENPOWER,SPIDERWEB
+    Ability = VOLTABSORB
+    Item = TWISTEDSPOON
+    Nature = MODEST
+    IV = 5,0,10,0,0,0
+    HiddenPowerType = PSYCHIC
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Idelfonso,Idelfonso]
+LoseText = Dag nabbit!
+Gimmick = Spikes, Spikes
+Pokemon = MINGOT,24
+    EV = 0,24,0,48,0,0
+    Moves = DIG,QUICKATTACK,METALCLAW,HONECLAWS
+    Ability = LONGREACH
+Pokemon = DIGGERSBY,25
+    EV = 24,0,24,24,0,0
+    Moves = QUICKATTACK,SPIKES,DOUBLEKICK,BULLDOZE
+    Ability = HUGEPOWER
+Pokemon = ELEGOOP,24
+    EV = 24,24,24,0,0,0
+    Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
+    Ability = GOOEY
+    Ace = yes
+Pokemon = BURBRAWL,25
+    EV = 24,0,24,0,0,24
+    Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Idelfonso,Idelfonso,100]
+LoseText = Dag nabbit!
+Gimmick = Spikes, Spikes
+Pokemon = MINGOT,24
+    EV = 0,24,0,48,0,0
+    Moves = DIG,QUICKATTACK,METALCLAW,HONECLAWS
+    Ability = LONGREACH
+Pokemon = DIGGERSBY,25
+    EV = 24,0,24,24,0,0
+    Moves = QUICKATTACK,SPIKES,DOUBLEKICK,BULLDOZE
+    Ability = HUGEPOWER
+Pokemon = ELEGOOP,24
+    EV = 24,24,24,0,0,0
+    Moves = STOMP,POISONFANG,ROCKTHROW,GYROBALL
+    Ability = GOOEY
+    Ace = yes
+Pokemon = BURBRAWL,25
+    EV = 24,0,24,0,0,24
+    Moves = BULKUP,REVENGE,WINGATTACK,STEELWING
+#Area=CanyonTemple_M
+#-------------------------------
+[ADMIN_Idelfonso,Idelfonso,200]
+LoseText = Dag nabbit!
+Gimmick = Spikes, Spikes
+Pokemon = TYRUNT,24
+    Moves = DRAGONTAIL,STOMP,ROCKTOMB,STEALTHROCK
+    Ability = STURDY
+    Item = DRAGONGEM
+    Nature = CAREFUL
+Pokemon = DRILBUR,24
+    Moves = DIG,METALCLAW,FURYSWIPES,RAPIDSPIN
+    Ability = MOLDBREAKER
+    Item = POWERHERB
+    Nature = ADAMANT
+Pokemon = ELEGOOP,24
+    Moves = ROCKTHROW,POISONFANG,CURSE,GYROBALL
+    Ability = STICKYHOLD
+    Item = LEFTOVERS
+    Nature = BRAVE
+Pokemon = KECLEON,25
+    Moves = FAKEOUT,POWERUPPUNCH,AERIALACE,THIEF
+    Ability = COLORCHANGE
+    Item = EXPERTBELT
+    Nature = MODEST
+Pokemon = BURBRAWL,25
+    Moves = BULKUP,FOCUSENERGY,WINGATTACK,KARATECHOP
+    Ability = LEVITATE
+    Item = EVIOLITE
+    Nature = ADAMANT
+    IV = 5,0,10,0,10,0
+#Area=CanyonTemple_M
+#-------------------------------
+[BIKER,Jacob]
+LoseText = You stopped me in my tracks!
+Pokemon = M_EKANS,23
+    Moves = POISONFANG,GLARE,BITE,PURSUIT
+    Ability = SHEDSKIN
+Pokemon = GOHILA,24
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = MERCILESS
+#Area=Route5_M
+#-------------------------------
+[BIKER,Jacob,100]
+LoseText = You stopped me in my tracks!
+Pokemon = M_EKANS,23
+    Moves = POISONFANG,GLARE,BITE,PURSUIT
+    Ability = SHEDSKIN
+Pokemon = GOHILA,24
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = MERCILESS
+#Area=Route5_M
+#-------------------------------
+[BIKER,Jacob,200]
+LoseText = You stopped me in my tracks!
+Pokemon = TRUBBISH,23
+    Moves = POISONFANG,TOXICSPIKES,HEX,TAUNT
+    Ability = POISONPOINT
+    Item = MENTALHERB
+Pokemon = GOHILA,24
+    Moves = SNARL,VENOSHOCK,POISONGAS,CORROSIVEGAS
+    Ability = CORROSION
+    Item = SHUCABERRY
+#Area=Route5_M
+#-------------------------------
+[BIKER,Wilbur]
+LoseText = I've crashed and burned!
+Pokemon = VULPIX,22
+    Moves = FIRESPIN,WILLOWISP,QUICKATTACK,CONFUSERAY
+    Ability = FLASHFIRE
+Pokemon = GOHILA,22
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = POISONTOUCH
+Pokemon = AVEOR,23
+    Moves = DOUBLEKICK,SANDTOMB,SPARK,PECK
+    Ability = STATIC
+#Area=Route5_M
+#-------------------------------
+[BIKER,Wilbur,100]
+LoseText = I've crashed and burned!
+Pokemon = VULPIX,22
+    Moves = FIRESPIN,WILLOWISP,QUICKATTACK,CONFUSERAY
+    Ability = FLASHFIRE
+Pokemon = GOHILA,22
+    Moves = SNARL,SLUDGE,POISONGAS,PARABOLICCHARGE
+    Ability = POISONTOUCH
+Pokemon = AVEOR,23
+    Moves = DOUBLEKICK,SANDTOMB,SPARK,PECK
+    Ability = STATIC
+#Area=Route5_M
+#-------------------------------
+[BIKER,Wilbur,200]
+LoseText = I've crashed and burned!
+Pokemon = CAFECARACHA,22
+    Moves = DISCHARGE,CHARGEBEAM,QUICKATTACK,METRONOME
+    Ability = MOTORDRIVE
+Pokemon = GOHILA,22
+    Moves = SNARL,SLUDGE,THUNDERWAVE,HIDDENPOWER
+    Ability = POISONPOINT
+    HiddenPowerType = ICE
+Pokemon = AVEOR,23
+    Moves = DOUBLEKICK,SANDTOMB,ELECTROBALL,PECK
+    Ability = RUNAWAY
+#Area=Route5_M
+#-------------------------------
+[BIKER,Matthias]
+LoseText = I think I got sand in my eye...
+Pokemon = M_CRABRAWLER,24
+    Moves = METALCLAW,PURSUIT,MUDBOMB,ROCKTOMB
+    Ability = SANDSTREAM
+Pokemon = AVEOR,25
+    Moves = AERIALACE,SPARK,THUNDERWAVE,SCORCHINGSANDS
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[BIKER,Matthias,100]
+LoseText = I think I got sand in my eye...
+Pokemon = M_CRABRAWLER,24
+    Moves = METALCLAW,PURSUIT,MUDBOMB,ROCKTOMB
+    Ability = SANDSTREAM
+Pokemon = AVEOR,25
+    Moves = AERIALACE,SPARK,THUNDERWAVE,SCORCHINGSANDS
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[BIKER,Matthias,200]
+LoseText = I think I got sand in my eye...
+Pokemon = M_CRABRAWLER,24
+    Moves = METALCLAW,PURSUIT,SANDSTORM,WORKUP
+    Ability = SANDRUSH
+Pokemon = AVEOR,24
+    Moves = AERIALACE,SPARK,STEELWING,SCORCHINGSANDS
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[BIKER,Charles]
+LoseText = No way, I'm the best around!
+Pokemon = GOHILA,24
+    Moves = TOXICSPIKES,SLUDGE,PARABOLICCHARGE,MUDBOMB
+    Ability = MERCILESS
+Pokemon = HELIOPTILE,24
+    Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
+    Ability = DRYSKIN
+Pokemon = M_CRABRAWLER,25
+    Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
+    Ability = TECHNICIAN
+#Area=Route5_M
+#-------------------------------
+[BIKER,Charles,100]
+LoseText = No way, I'm the best around!
+Pokemon = GOHILA,24
+    Moves = TOXICSPIKES,SLUDGE,PARABOLICCHARGE,MUDBOMB
+    Ability = MERCILESS
+Pokemon = HELIOPTILE,24
+    Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
+    Ability = DRYSKIN
+Pokemon = M_CRABRAWLER,25
+    Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
+    Ability = TECHNICIAN
+#Area=Route5_M
+#-------------------------------
+[BIKER,Charles,200]
+LoseText = No way, I'm the best around!
+Pokemon = HELIOPTILE,24
+    Moves = VOLTSWITCH,QUICKATTACK,CHARGE,BULLDOZE
+    Ability = DRYSKIN
+Pokemon = BALTOY,24
+    Moves = COSMICPOWER,ANCIENTPOWER,PSYBEAM,MUDSHOT
+    Ability = FOREWARN
+Pokemon = M_CRABRAWLER,25
+    Moves = METALCLAW,PURSUIT,BULLDOZE,ROCKTOMB
+    Ability = TECHNICIAN
+#Area=Route5_M
+#-------------------------------
+[BIKER,Ian]
+LoseText = You're a force to be reckoned with!
+Pokemon = ELTTAR,24
+    Moves = POISONFANG,BITE,GLARE,TAUNT
+    Ability = STRONGJAW
+    Nature = ADAMANT
+#Area=Route5_M
+#-------------------------------
+[BIKER,Ian,100]
+LoseText = You're a force to be reckoned with!
+Pokemon = ELTTAR,24
+    Moves = POISONFANG,BITE,GLARE,TAUNT
+    Ability = STRONGJAW
+    Nature = ADAMANT
+#Area=Route5_M
+#-------------------------------
+[BIKER,Ian,200]
+LoseText = You're a force to be reckoned with!
+Gimmick = ToxicSpikes
+Pokemon = ELTTAR,24
+    Moves = POISONFANG,ROCKTOMB,VENOSHOCK,AQUATAIL
+    Ability = UNNERVE
+    Nature = SERIOUS
+    Item = MELEEVEST
+    IV = 15,0,10,0,10,10
+    Shiny = yes
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Katia]
+LoseText = Maybe I should rethink my strategy...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BRUTALSWING,CUT,ROAR
+    Ability = SOLIDROCK
+Pokemon = M_MUDBRAY,22
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,DOUBLEKICK
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,ASTONISH,HONECLAWS,SNATCH
+    Ability = INTIMIDATE
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Katia,100]
+LoseText = Maybe I should rethink my strategy...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTOMB,BRUTALSWING,CUT,ROAR
+    Ability = SOLIDROCK
+Pokemon = M_MUDBRAY,22
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,DOUBLEKICK
+Pokemon = WRRAZAL,23
+    Moves = SMACKDOWN,ASTONISH,HONECLAWS,SNATCH
+    Ability = INTIMIDATE
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Katia,200]
+LoseText = Maybe I should rethink my strategy...
+Pokemon = KNOGGIN,22
+    Moves = ROCKTHROW,BRUTALSWING,SUBMISSION,TAKEDOWN
+    Ability = ROCKHEAD
+Pokemon = M_MUDBRAY,22
+    Moves = FAIRYWIND,HIDDENPOWER,EXCITE,DOUBLEKICK
+    Ability = SWEETVEIL
+    HiddenPowerType = FIRE
+Pokemon = WRRAZAL,23
+    Moves = ROCKTOMB,ASTONISH,STEELWING,SNATCH
+    Ability = PRESSURE
+#Area=Route5_M
+#-------------------------------
+[HIKER_M,Pablo]
+LoseText = But I was prepared for anything!
+Pokemon = BARBOACH,22
+    Moves = WATERPULSE,AMNESIA,ROCKTOMB,MAGNITUDE
+    Ability = OBLIVIOUS
+Pokemon = KNOGGIN,24
+    Moves = LASHOUT,ROCKTOMB,HARDEN,SANDSTORM
+    Ability = SUPERLUCK
+Pokemon = TRAPINCH,24
+    Moves = DIG,BITE,SANDATTACK,BUGBITE
+    Ability = ARENATRAP
+#Area=Route5_M
+#-------------------------------
+[HIKER_M,Pablo,100]
+LoseText = But I was prepared for anything!
+Pokemon = BARBOACH,22
+    Moves = WATERPULSE,AMNESIA,ROCKTOMB,MAGNITUDE
+    Ability = OBLIVIOUS
+Pokemon = KNOGGIN,24
+    Moves = LASHOUT,ROCKTOMB,HARDEN,SANDSTORM
+    Ability = SUPERLUCK
+Pokemon = TRAPINCH,24
+    Moves = DIG,BITE,SANDATTACK,BUGBITE
+    Ability = ARENATRAP
+#Area=Route5_M
+#-------------------------------
+[HIKER_M,Pablo,200]
+LoseText = But I was prepared for anything!
+Pokemon = KNOGGIN,24
+    Moves = ASSURANCE,ROCKTOMB,SPIKES,SANDSTORM
+    Ability = STURDY
+Pokemon = TERREON,22
+    Moves = ROCKBLAST,MUDSHOT,BODYSLAM,TOXIC
+    Ability = NOGUARD
+Pokemon = TRAPINCH,23
+    Moves = LASERFOCUS,BITE,SANDTOMB,BUGBITE
+    Ability = SANDFORCE
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Maja]
+LoseText = Our defenses weren't enough...
+Pokemon = CACNEA,23
+    Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
+    Ability = SANDVEIL
+Pokemon = M_MUDBRAY,24
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
+Pokemon = M_MARACTUS,24
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Maja,100]
+LoseText = Our defenses weren't enough...
+Pokemon = CACNEA,23
+    Moves = ASSURANCE,INGRAIN,MAGICALLEAF,POISONJAB
+    Ability = SANDVEIL
+Pokemon = M_MUDBRAY,24
+    Moves = FAIRYWIND,MUDBOMB,EXCITE,LUCKYCHANT
+Pokemon = M_MARACTUS,24
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,SWEETSCENT
+    Ability = FLAMEBODY
+#Area=Route5_M
+#-------------------------------
+[HIKER_F,Maja,200]
+LoseText = Our defenses weren't enough...
+Pokemon = CACNEA,23
+    Moves = SWITCHEROO,SPIKYSHIELD,SPIKES,NEEDLEARM
+    Ability = ROUGHSKIN
+    Item = STICKYBARB
+Pokemon = M_MUDBRAY,24
+    Moves = FAIRYWIND,MUDBOMB,BULLDOZE,METRONOME
+    Ability = CLEARBODY
+Pokemon = M_MARACTUS,24
+    Moves = INCINERATE,MEGADRAIN,LEECHSEED,INGRAIN
+    Ability = FLAMEBODY
+    Item = BIGROOT
+#Area=Route5_M
+#-------------------------------
+[RUINMANIAC_M,Ike]
+LoseText = I've discovered... Defeat?
+Pokemon = BALTOY,23
+    Moves = PSYBEAM,RAPIDSPIN,TRICKROOM,ANCIENTPOWER
+Pokemon = TRAPINCH,24
+    Moves = SANDTOMB,DIG,BITE,LASERFOCUS
+    Ability = HYPERCUTTER
+Pokemon = BURBRAWL,25
+    Moves = BULKUP,WINGATTACK,KARATECHOP,DETECT
+#Area=Route5_M
+#-------------------------------
+[RUINMANIAC_M,Ike,100]
+LoseText = I've discovered... Defeat?
+Pokemon = BALTOY,23
+    Moves = PSYBEAM,RAPIDSPIN,TRICKROOM,ANCIENTPOWER
+Pokemon = TRAPINCH,24
+    Moves = SANDTOMB,DIG,BITE,LASERFOCUS
+    Ability = HYPERCUTTER
+Pokemon = BURBRAWL,25
+    Moves = BULKUP,WINGATTACK,KARATECHOP,DETECT
+#Area=Route5_M
+#-------------------------------
+[RUINMANIAC_M,Ike,200]
+LoseText = I've discovered... Defeat?
+Pokemon = BALTOY,23
+    Moves = PSYBEAM,EXPLOSION,TRICKROOM,ANCIENTPOWER
+    Ability = FOREWARN
+    Item = IRONBALL
+Pokemon = M_NOSEPASS,23
+    Moves = CURSE,ROCKTOMB,KARATECHOP,BLOCK
+    Ability = STEADFAST
+Pokemon = TRAPINCH,24
+    Moves = MAGNITUDE,BITE,SCREECH,BUGBITE
+    Ability = HYPERCUTTER
+#Area=Route5_M
+#-------------------------------
+[SCRAPPER_F,Vanessa]
+LoseText = Aw scrap!
+Pokemon = BEAKPEEP,22
+    Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = M_CRABRAWLER,23
+    Moves = MUDBOMB,METALCLAW,WIDEGUARD,BRICKBREAK
+    Ability = HYPERCUTTER
+Pokemon = TRUBBISH,22
+    Moves = STOCKPILE,SWALLOW,POISONGAS,SLUDGE
+    Ability = STENCH
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,METALCLAW,ROCKTOMB,DEFENSECURL
+    Ability = MOMENTUM
+#Area=Route5_M
+#-------------------------------
+[SCRAPPER_F,Vanessa,100]
+LoseText = Aw scrap!
+Pokemon = BEAKPEEP,22
+    Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = M_CRABRAWLER,23
+    Moves = MUDBOMB,METALCLAW,WIDEGUARD,BRICKBREAK
+    Ability = HYPERCUTTER
+Pokemon = TRUBBISH,22
+    Moves = STOCKPILE,SWALLOW,POISONGAS,SLUDGE
+    Ability = STENCH
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,METALCLAW,ROCKTOMB,DEFENSECURL
+    Ability = MOMENTUM
+#Area=Route5_M
+#-------------------------------
+[SCRAPPER_F,Vanessa,200]
+LoseText = Aw scrap!
+Pokemon = BEAKPEEP,22
+    Moves = METALCLAW,ROCKSMASH,IRONDEFENSE,PLUCK
+    Ability = BIGPECKS
+Pokemon = M_CRABRAWLER,23
+    Moves = MAGNITUDE,METALCLAW,PROTECT,BRICKBREAK
+    Ability = HYPERCUTTER
+Pokemon = TRUBBISH,22
+    Moves = SECRETPOWER,BRUTALSWING,POISONGAS,SLUDGE
+    Ability = AFTERMATH
+Pokemon = BOWLLO,23
+    Moves = ROLLOUT,METALCLAW,HONECLAWS,DEFENSECURL
+    Ability = MOMENTUM
+    Item = METRONOME
+#Area=Route5_M
+#-------------------------------
+[RISINGSTAR_F,Nancy]
+LoseText = Impressive...
+Pokemon = AVEOR,26
+    Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
+    Ability = STATIC
+Pokemon = POTASSOPOD,26
+    Moves = ACIDSPRAY,MEGADRAIN,RECOVER,GROWTH
+    Ability = SHEDSKIN
+Pokemon = FRIZZARD,27
+    Moves = BITINGCOLD,ICYWIND,DRAGONBREATH,CALMMIND
+Pokemon = ZARCOIL,27
+    Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
+#Area=SolecaDesert_O
+#-------------------------------
+[RISINGSTAR_F,Nancy,100]
+LoseText = Impressive...
+Pokemon = AVEOR,26
+    Moves = TAILWIND,DOUBLEKICK,SPARK,AERIALACE
+    Ability = STATIC
+Pokemon = POTASSOPOD,26
+    Moves = ACIDSPRAY,MEGADRAIN,RECOVER,GROWTH
+    Ability = SHEDSKIN
+Pokemon = FRIZZARD,27
+    Moves = BITINGCOLD,ICYWIND,DRAGONBREATH,CALMMIND
+Pokemon = ZARCOIL,27
+    Moves = FLAMECHARGE,WILLOWISP,BREAKINGSWIPE,TAUNT
+#Area=SolecaDesert_O
+#-------------------------------
+[RISINGSTAR_F,Nancy,200]
+LoseText = Impressive...
+Pokemon = GUSTEON,26
+    Moves = TAILWIND,QUICKATTACK,TAKEDOWN,AERIALACE
+    Ability = CLEARBODY
+Pokemon = BEAKPEEP,26
+    Moves = ROCKSMASH,IRONDEFENSE,METALCLAW,METRONOME
+    Ability = EARLYBIRD
+Pokemon = FRIZZARD,27
+    Moves = BITINGCOLD,AURORABEAM,DRAGONBREATH,CALMMIND
+Pokemon = ZARCOIL,27
+    Moves = WILLOWISP,FLAMEWHEEL,DRAGONTAIL,HONECLAWS
+#Area=SolecaDesert_O
+#-------------------------------
+[RUINMANIAC_F,Rebeca]
+LoseText = I just couldn't find a weakness!
+Pokemon = BALTOY,25
+    Moves = ANCIENTPOWER,COSMICPOWER,PSYBEAM,TRIATTACK
+Pokemon = CACNEA,26
+    Moves = PAYBACK,GRASSKNOT,POISONJAB,GROWTH
+Pokemon = XATU,27
+    Moves = AIRSLASH,CONFUSERAY,PSYSHOCK,NIGHTSHADE
+    Ability = SYNCHRONIZE
+#Area=SolecaDesert_O
+#-------------------------------
+[RUINMANIAC_F,Rebeca,100]
+LoseText = I just couldn't find a weakness!
+Pokemon = BALTOY,25
+    Moves = ANCIENTPOWER,COSMICPOWER,PSYBEAM,TRIATTACK
+Pokemon = CACNEA,26
+    Moves = PAYBACK,GRASSKNOT,POISONJAB,GROWTH
+Pokemon = XATU,27
+    Moves = AIRSLASH,CONFUSERAY,PSYSHOCK,NIGHTSHADE
+    Ability = SYNCHRONIZE
+#Area=SolecaDesert_O
+#-------------------------------
+[RUINMANIAC_F,Rebeca,200]
+LoseText = I just couldn't find a weakness!
+Pokemon = BALTOY,25
+    Moves = MUDSHOT,EXPLOSION,PSYBEAM,SUNNYDAY
+    Ability = LEVITATE
+Pokemon = FRIZZARD,26
+    Moves = DRAGONBREATH,TRIATTACK,HAZE,TAUNT
+    Ability = HEALINGSUN
+    Item = LEFTOVERS
+Pokemon = XATU,26
+    Moves = AIRSLASH,METRONOME,HIDDENPOWER,NIGHTSHADE
+    Ability = SYNCHRONIZE
+    HiddenPowerType = FIRE
+#Area=SolecaDesert_O
+#-------------------------------
+[TOURIST_M,Austin]
+LoseText = Can you at least tell me how to get out of here?
+Pokemon = FURFROU,26
+    Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
+Pokemon = LIEPARD,26
+    Moves = HONECLAWS,PURSUIT,FAKEOUT,FURYSWIPES
+    Ability = LIMBER
+#Area=SolecaDesert_O
+#-------------------------------
+[TOURIST_M,Austin,100]
+LoseText = Can you at least tell me how to get out of here?
+Pokemon = FURFROU,26
+    Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
+Pokemon = LIEPARD,26
+    Moves = HONECLAWS,PURSUIT,FAKEOUT,FURYSWIPES
+    Ability = LIMBER
+#Area=SolecaDesert_O
+#-------------------------------
+[TOURIST_M,Austin,200]
+LoseText = Can you at least tell me how to get out of here?
+Pokemon = FURFROU,26
+    Moves = BITE,HEADBUTT,BABYDOLLEYES,ROCKSMASH
+Pokemon = M_MEOWTH,26
+    Moves = SNATCH,DOUBLEKICK,FAKEOUT,FURYSWIPES
+    Ability = SCRAPPY
+#Area=SolecaDesert_O
+#-------------------------------
+[HIKER_F,Evelyn]
+LoseText = You left me in the dust...
+Pokemon = KNOGGIN,26
+    Moves = LASHOUT,STRENGTH,ROAR,HARDEN
+    Ability = SOLIDROCK
+Pokemon = TERREON,27
+    Moves = MUDBOMB,DOUBLEEDGE,BITE,QUICKATTACK
+#Area=SolecaDesert_O
+#-------------------------------
+[HIKER_F,Evelyn,100]
+LoseText = You left me in the dust...
+Pokemon = KNOGGIN,26
+    Moves = LASHOUT,STRENGTH,ROAR,HARDEN
+    Ability = SOLIDROCK
+Pokemon = TERREON,27
+    Moves = MUDBOMB,DOUBLEEDGE,BITE,QUICKATTACK
+#Area=SolecaDesert_O
+#-------------------------------
+[HIKER_F,Evelyn,200]
+LoseText = You left me in the dust...
+Pokemon = GUSTEON,26
+    Moves = QUICKATTACK,HIDDENPOWER,MIRRORMOVE,AERIALACE
+    HiddenPowerType = GROUND
+Pokemon = TERREON,26
+    Moves = QUICKATTACK,HIDDENPOWER,BITE,MUDBOMB
+    HiddenPowerType = FLYING
+#Area=SolecaDesert_O
+#-------------------------------
+[SCIENTIST_M,Paul]
+LoseText = Wow, you rock!
+Pokemon = ELEGOOP,28
+    Moves = BULLDOZE,ROCKTOMB,STEALTHROCK,POISONFANG
+    Ability = GOOEY
+Pokemon = CHARCOPAL,28
+    Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
+    Ability = CRYSTALJAW
+#Area=SolecaDesert_O
+#-------------------------------
+[SCIENTIST_M,Paul,100]
+LoseText = Wow, you rock!
+Pokemon = ELEGOOP,28
+    Moves = BULLDOZE,ROCKTOMB,STEALTHROCK,POISONFANG
+    Ability = GOOEY
+Pokemon = CHARCOPAL,28
+    Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
+    Ability = CRYSTALJAW
+#Area=SolecaDesert_O
+#-------------------------------
+[SCIENTIST_M,Paul,200]
+LoseText = Wow, you rock!
+Pokemon = ELEGOOP,28
+    Moves = POISONGAS,ROCKTOMB,STEALTHROCK,POISONFANG
+    Ability = GOOEY
+Pokemon = CHARCOPAL,28
+    Moves = SWEETTOOTH,PSYCHICFANGS,ANCIENTPOWER,ROCKPOLISH
+    Ability = CRYSTALJAW
+#Area=SolecaDesert_O
+#-------------------------------
+[SCRAPPER_M,Hugo]
+LoseText = Taken out!
+Pokemon = TRUBBISH,24
+    Moves = SLUDGE,CLEARSMOG,STOCKPILE,SWALLOW
+    Ability = STENCH
+Pokemon = M_CRABRAWLER,25
+    Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Hugo,100]
+LoseText = Taken out!
+Pokemon = TRUBBISH,24
+    Moves = SLUDGE,CLEARSMOG,STOCKPILE,SWALLOW
+    Ability = STENCH
+Pokemon = M_CRABRAWLER,25
+    Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Hugo,200]
+LoseText = Taken out!
+Pokemon = TRUBBISH,24
+    Moves = EXPLOSION,SPIKES,TOXICSPIKES,FLAMETHROWER
+    Ability = AFTERMATH
+Pokemon = M_CRABRAWLER,25
+    Moves = BULLDOZE,METALCLAW,PURSUIT,VISEGRIP
+    Ability = TECHNICIAN
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Shirley]
+LoseText = Gah! Foiled again...
+Pokemon = BEAKPEEP,24
+    Moves = STEELWING,ROCKSMASH,METALCLAW,HEADBUTT
+    Ability = BIGPECKS
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Shirley,100]
+LoseText = Gah! Foiled again...
+Pokemon = BEAKPEEP,24
+    Moves = STEELWING,ROCKSMASH,METALCLAW,HEADBUTT
+    Ability = BIGPECKS
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Shirley,200]
+LoseText = Gah! Foiled again...
+Pokemon = BEAKPEEP,24
+    Moves = BULKUP,WORKUP,SWORDSDANCE,METRONOME
+    Ability = BIGPECKS
+    Item = SITRUSBERRY
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Jaxon]
+LoseText = Wow, you're strong! You should battle my sister too!
+Pokemon = FRIZZARD,25
+    Moves = DRAGONBREATH,AURORABEAM,ICYWIND,BITINGCOLD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Jaxon,100]
+LoseText = Wow, you're strong! You should battle my sister too!
+Pokemon = FRIZZARD,25
+    Moves = DRAGONBREATH,AURORABEAM,ICYWIND,BITINGCOLD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Jaxon,200]
+LoseText = Wow, you're strong! You should battle my sister too!
+Pokemon = FRIZZARD,25
+    Moves = DRAGONBREATH,FROSTBREATH,HAIL,BITINGCOLD
+    Ability = ICEBODY
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Tasha]
+LoseText = Man, you're tough! You should battle my brother too!
+Pokemon = ZARCOIL,25
+    Moves = BREAKINGSWIPE,FLAMECHARGE,SMOKESCREEN,WILLOWISP
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Tasha,100]
+LoseText = Man, you're tough! You should battle my brother too!
+Pokemon = ZARCOIL,25
+    Moves = BREAKINGSWIPE,FLAMECHARGE,SMOKESCREEN,WILLOWISP
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Tasha,200]
+LoseText = Man, you're tough! You should battle my brother too!
+Pokemon = ZARCOIL,25
+    Moves = HIDDENPOWER,SCORCHINGSANDS,SUNNYDAY,FLAMEWHEEL
+    Ability = HEALINGSUN
+    HiddenPowerType = DRAGON
+#Area=Route6_M
+#-------------------------------
+[MECHANIC_F,Maya]
+LoseText = Looks like I can't fix that...
+Pokemon = MAGNEMITE,25
+    Moves = SCREECH,SPARK,THUNDERWAVE,EXPLOSION
+    Ability = MAGNETPULL
+Pokemon = HELIOLISK,26
+    Moves = BULLDOZE,THUNDERBOLT,QUICKATTACK,FIREPUNCH
+    Ability = DRYSKIN
+#Area=Route6_M
+#-------------------------------
+[MECHANIC_F,Maya,100]
+LoseText = Looks like I can't fix that...
+Pokemon = MAGNEMITE,25
+    Moves = SCREECH,SPARK,THUNDERWAVE,EXPLOSION
+    Ability = MAGNETPULL
+Pokemon = HELIOLISK,26
+    Moves = BULLDOZE,THUNDERBOLT,QUICKATTACK,FIREPUNCH
+    Ability = DRYSKIN
+#Area=Route6_M
+#-------------------------------
+[MECHANIC_F,Maya,200]
+LoseText = Looks like I can't fix that...
+Pokemon = CHISPEKA,25
+    Moves = FAKEOUT,SPARK,CUT,HIDDENPOWER
+    Ability = CHEEKPOUCH
+    Item = LIECHIBERRY
+    HiddenPowerType = FIGHTING
+Pokemon = HELIOLISK,26
+    Moves = DRAGONPULSE,PARABOLICCHARGE,QUICKATTACK,SCALESHOT
+    Ability = DRYSKIN
+    Item = WHITEHERB
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Pedro]
+LoseText = Maybe I should have... been more resourceful?
+Pokemon = BOWLLO,24
+    Moves = ROLLOUT,METALCLAW,HEADBUTT,DIG
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Pedro,100]
+LoseText = Maybe I should have... been more resourceful?
+Pokemon = BOWLLO,24
+    Moves = ROLLOUT,METALCLAW,HEADBUTT,DIG
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Pedro,200]
+LoseText = Maybe I should have... been more resourceful?
+Gimmick = Sandstorm, RockZone
+Pokemon = BOWLLO,24
+    Moves = ROLLOUT,DEFENSECURL,CUT
+    Ability = MOMENTUM
+    Item = METRONOME
+    Nature = JOLLY
+    IV = 20,0,10,0,0,10
+    Shiny = yes
+#Area=Route6_O
+#-------------------------------
+[SCRAPPER_F,Elaine]
+LoseText = I'll just have to try twice as hard next time...
+Pokemon = TRUBBISH,25
+    Moves = ACIDSPRAY,AMNESIA,TAKEDOWN,POISONGAS
+    Ability = AFTERMATH
+Pokemon = BEAKPEEP,26
+    Moves = STEELWING,PLUCK,ROCKSMASH,IRONDEFENSE
+    Ability = EARLYBIRD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Elaine,100]
+LoseText = I'll just have to try twice as hard next time...
+Pokemon = TRUBBISH,25
+    Moves = ACIDSPRAY,AMNESIA,TAKEDOWN,POISONGAS
+    Ability = AFTERMATH
+Pokemon = BEAKPEEP,26
+    Moves = STEELWING,PLUCK,ROCKSMASH,IRONDEFENSE
+    Ability = EARLYBIRD
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_F,Elaine,200]
+LoseText = I'll just have to try twice as hard next time...
+Pokemon = RUSTACHE,26
+    Moves = RETURN,BULLETPUNCH,BRUTALSWING,ROCKTOMB
+    Ability = TOUGHCLAWS
+    Item = LUMBERRY
+Pokemon = SABLEYE,25
+    Moves = FAKEOUT,DETECT,KNOCKOFF,NIGHTSHADE
+    Ability = KEENEYE
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Héctor]
+LoseText = So will I! Which means we'll be four times as strong!
+Pokemon = M_CRABRAWLER,25
+    Moves = MUDBOMB,STRENGTH,TAUNT,METALCLAW
+    Ability = HYPERCUTTER
+Pokemon = MAGNEMITE,26
+    Moves = THUNDERWAVE,ELECTROBALL,SPARK,SCREECH
+    Ability = STURDY
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Héctor,100]
+LoseText = So will I! Which means we'll be four times as strong!
+Pokemon = M_CRABRAWLER,25
+    Moves = MUDBOMB,STRENGTH,TAUNT,METALCLAW
+    Ability = HYPERCUTTER
+Pokemon = MAGNEMITE,26
+    Moves = THUNDERWAVE,ELECTROBALL,SPARK,SCREECH
+    Ability = STURDY
+#Area=Route6_M
+#-------------------------------
+[SCRAPPER_M,Héctor,200]
+LoseText = So will I! Which means we'll be four times as strong!
+Pokemon = M_CRABRAWLER,25
+    Moves = SWAGGER,SNARL,SEISMICTOSS,WIDEGUARD
+    Ability = HYPERCUTTER
+Pokemon = MAWILE,26
+    Moves = SWEETTOOTH,ROCKSMASH,SLAM,IRONDEFENSE
+    Ability = INTIMIDATE
+    Item = FIGHTINGGEM
+#Area=Route6_M
+#------------------------------- #battle in sanctuary after Neo grunts
+[TRAINER_Reine,Reine,1]
 LoseText = Well done.
-Pokemon = EEVEE,12
-#-------------------------------
+Pokemon = VIVILLON,31
+    Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
+    Ability = FRIENDGUARD
+    Item = FOCUSSASH
+    Nature = TIMID
+Pokemon = LEDIAN,32
+    Moves = POWERUPPUNCH,MACHPUNCH,SKITTERSMACK,ICEPUNCH
+    Ability = IRONFIST
+    Item = EXPERTBELT
+    Nature = ADAMANT
+Pokemon = FLITJITTER,33
+    Moves = ELECTROBALL,NUZZLE,STRUGGLEBUG,DOUBLETEAM
+    Ability = ELECTRICSURGE
+    Item = MAGNET
+    Nature = NAIVE
+Pokemon = NOCTAVISPA,34
+    Moves = TAUNT,XSCISSOR,THIEF,DUALWINGBEAT
+    Ability = UNNERVE
+    Item = SITRUSBERRY
+    Nature = JOLLY
+Pokemon = VIBRAVA,35
+    Moves = DIG,STEELWING,DRAGONBREATH,ROAR
+    Item = LIFEORB
+    Nature = SERIOUS
+Pokemon = PAPELLAUDE,36
+    Moves = SCATTERDUST,HYPERVOICE,DAZZLINGGLEAM,ENERGYBALL
+    Ability = COMPETITIVE
+    Item = THROATSPRAY
+    Nature = MODEST
+    Ace = yes
+#Area=Demo2Boss_O
+#------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,101]
 LoseText = Well done.
-Pokemon = EEVEE,12
+Pokemon = VIVILLON,31
+    Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
+    Ability = FRIENDGUARD
+    Item = FOCUSSASH
+    Nature = TIMID
+Pokemon = LEDIAN,32
+    Moves = POWERUPPUNCH,MACHPUNCH,SKITTERSMACK,ICEPUNCH
+    Ability = IRONFIST
+    Item = EXPERTBELT
+    Nature = ADAMANT
+Pokemon = FLITJITTER,33
+    Moves = ELECTROBALL,NUZZLE,STRUGGLEBUG,DOUBLETEAM
+    Ability = ELECTRICSURGE
+    Item = MAGNET
+    Nature = NAIVE
+Pokemon = NOCTAVISPA,34
+    Moves = TAUNT,XSCISSOR,THIEF,DUALWINGBEAT
+    Ability = UNNERVE
+    Item = SITRUSBERRY
+    Nature = JOLLY
+Pokemon = VIBRAVA,35
+    Moves = DIG,STEELWING,DRAGONBREATH,ROAR
+    Item = LIFEORB
+    Nature = SERIOUS
+Pokemon = PAPELLAUDE,36
+    Moves = SCATTERDUST,HYPERVOICE,DAZZLINGGLEAM,ENERGYBALL
+    Ability = COMPETITIVE
+    Item = THROATSPRAY
+    Nature = MODEST
+    Ace = yes
+#Area=Demo2Boss_O
+#------------------------------- #battle in sanctuary after Neo grunts
+[TRAINER_Reine,Reine,201]
+LoseText = Well done.
+Pokemon = VIVILLON,31
+    Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
+    Ability = FRIENDGUARD
+    Item = FOCUSSASH
+    Nature = TIMID
+Pokemon = LEDIAN,32
+    Moves = POWERUPPUNCH,MACHPUNCH,SKITTERSMACK,ICEPUNCH
+    Ability = IRONFIST
+    Item = EXPERTBELT
+    Nature = ADAMANT
+Pokemon = FLITJITTER,33
+    Moves = ELECTROBALL,NUZZLE,STRUGGLEBUG,DOUBLETEAM
+    Ability = ELECTRICSURGE
+    Item = MAGNET
+    Nature = NAIVE
+Pokemon = NOCTAVISPA,34
+    Moves = TAUNT,XSCISSOR,THIEF,DUALWINGBEAT
+    Ability = UNNERVE
+    Item = SITRUSBERRY
+    Nature = JOLLY
+Pokemon = VIBRAVA,35
+    Moves = DIG,STEELWING,DRAGONBREATH,ROAR
+    Item = LIFEORB
+    Nature = SERIOUS
+Pokemon = PAPELLAUDE,36
+    Moves = SCATTERDUST,HYPERVOICE,DAZZLINGGLEAM,ENERGYBALL
+    Ability = COMPETITIVE
+    Item = THROATSPRAY
+    Nature = MODEST
+#Area=Demo2Boss_O
 #-------------------------------
 [LEADER_Mateo, Mateo]
 LoseText = ...
@@ -351,6 +3702,13 @@ Pokemon = LILORINA,8
     Ace = yes
 #-------------------------------
 [LEADER_Mateo, Mateo,100]
+LoseText = ...
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
+    AbilityIndex = 2
+    Ace = yes
+#-------------------------------
+[LEADER_Mateo, Mateo,200]
 LoseText = ...
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
@@ -367,6 +3725,13 @@ Pokemon = LILORINA,8
 #-------------------------------
 [LEADER_Mercedes, Mercedes,100]
 LoseText = Hot dang, you really are a menace, hahahaha!
+Pokemon = LILORINA,8
+    Moves = DISARMINGVOICE,WILLOWISP,HEX,BUBBLE
+    AbilityIndex = 2
+    Ace = yes
+#-------------------------------
+[LEADER_Mercedes, Mercedes,200]
+LoseText = Hot dang, you really are a menace, hahahaha!
 Pokemon = PACUNA,8
     Moves = UTURN,REFLECT,SAFEGUARD,LIGHTSCREEN
     AbilityIndex = 1
@@ -377,162 +3742,46 @@ Pokemon = PACUNA,8
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = QUEXCELL,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL2,Val,1]
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = CETTOEKKO,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL2,Val,2]
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = EXPURSUM,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL2,Val,100]
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = QUEXCELL,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL2,Val,101]
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = CETTOEKKO,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
 [RIVAL2,Val,102]
 LoseText = Pant, pant-. Wait, I lost?
 Pokemon = EXPURSUM,25
     Gender = male
-    IV = 0,0,0,0,0,0
 #-------------------------------
-[GOLDPANNER,Leo]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
+[RIVAL2,Val,200]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = QUEXCELL,25
+    Gender = male
 #-------------------------------
-[GOLDPANNER,Leo,100]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
+[RIVAL2,Val,201]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = CETTOEKKO,25
+    Gender = male
 #-------------------------------
-[GOLDPANNER,Martina]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
-#-------------------------------
-[GOLDPANNER,Martina,100]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
-#-------------------------------
-[GOLDPANNER,Amalia]
-LoseText = Woowee!
-Pokemon = TECHUPPI,9
-Pokemon = BUNNELBY,9
-Pokemon = WRENNER,9
-#-------------------------------
-[GOLDPANNER,Amalia,100]
-LoseText = I was supposed to strike gold, not strike out!
-Pokemon = TECHUPPI,9
-	Moves = BITE,ROLLINGKICK,THUNDERFANG,SCARYFACE
-    Ability = INTIMIDATE
-    Nature = TIMID
-Pokemon = GOHILA,10
-	Moves = POISONGAS,SNARL,ACID
-    Nature = BOLD
-    Ability = POISONTOUCH
-#-------------------------------
-[TOURIST_F, Kaitlyn]
-LoseText = The sun was in my eyes!
-Pokemon = PACUNA,9
-Pokemon = M_VANILLITE,9
-#-------------------------------
-[TOURIST_M, Samuel]
-LoseText = Cowabummer!
-Pokemon = LITWICK,9
-Pokemon = ZEAZAYA,9
-Pokemon = M_EKANS,9
-#-------------------------------
-[CAMPER_F, Lola]
-LoseText = If only my battling skills were are sharp as my survival skills...
-Pokemon = HOOTHOOT,10
-Pokemon = SKIDDO,10
-Pokemon = WRENNER,10
-#-------------------------------
-[BUGCATCHER_F, Alisa]
-LoseText = Bug types are still the best!
-Pokemon = MINIMELO,9
-Pokemon = LEDYBA,10
-#-------------------------------
-[BUGCATCHER_M, Mannie]
-LoseText = Maybe I should have studied type matchups?
-Pokemon = SCATTERBUG,10
-Pokemon = CHICATTA,10
-#-------------------------------
-[YOUNGSTER_F, Milly]
-LoseText = No way, let me try again!
-Pokemon = PURRLOIN,10
-Pokemon = SUNKERN,10
-Pokemon = TECHUPPI,10
-#-------------------------------
-[BUGCATCHER_F, Dany]
-LoseText = My bug types and I still have to evolve and get stronger!
-Pokemon = SPEWPA,10
-Pokemon = CHICATTA,11
-#-------------------------------
-[BIRDKEEPER_M, Connor]
-LoseText = You really ruffle my feathers!
-Pokemon = HOOTHOOT,11
-Pokemon = WRENNER,11
-#-------------------------------
-[FISHER_M, Jimbly]
-LoseText = Looks like I'm the one who's sinking...
-Pokemon = BANAGNAW,11
-Pokemon = FINNEON,11
-#-------------------------------
-[FISHER_F, Violet]
-LoseText = I've been schooled!
-Pokemon = FEEBAS,10
-Pokemon = LOTAD,11
-#-------------------------------
-[POKEMONRANGER_F, Fabian]
-LoseText = What a great battle! I wish I could have won...
-Pokemon = PHANTUMP,11
-Pokemon = PACUNA,11
-Pokemon = M_EKANS,11
-#-------------------------------
-[AROMALADY, Gloria]
-LoseText = Not my beautiful flowers!
-Pokemon = FLABEBE,11
-Pokemon = BUDEW,12
-#-------------------------------
-[BUGCATCHER_M, Roberto]
-LoseText = No fair, did you use bug repellent? Harumph!
-Pokemon = MINIMELO,11
-Pokemon = LEDYBA,12
-#-------------------------------
-[BIRDKEEPER_M, Francis]
-LoseText = And down I go...
-Pokemon = HOOTHOOT,12
-Pokemon = CROMEN,12
+[RIVAL2,Val,202]
+LoseText = Pant, pant-. Wait, I lost?
+Pokemon = EXPURSUM,25
+    Gender = male
 #-------------------------------
 
 #-------------------------------
@@ -540,7 +3789,7 @@ Pokemon = CROMEN,12
 #-------- TEST BATTLES ---------
 #-------------------------------
 #-------------------------------
-[HEXMANIAC,zinnia,1]
+[HEXMANIAC,zinnia,0]
 LoseText = sex
 Pokemon = NOCTAVISPA,10
     IV = 10,10,10,10,10,10
@@ -548,23 +3797,67 @@ Pokemon = NOCTAVISPA,10
 #-------------------------------
 [HEXMANIAC,zinnia,100]
 LoseText = sex
+Pokemon = NOCTAVISPA,10
+    IV = 10,10,10,10,10,10
+    EV = 0,0,0,0,0,0
+#-------------------------------
+[HEXMANIAC,zinnia,200]
+LoseText = sex
 #Gimmick = stealthrock
+Pokemon = STRELAVISON,50
+    Moves = STICKYWEB,DISCHARGE,LUNARDANCE
+    Ability = SHOWTIME
+    Nature = QUIRKY
+    BOSS = 4
+Pokemon = GLALIE,50
+    Moves = FREEZEDRY,KINETICREND,RETURN,ICESHARD
+    Ability = MOODY
+    Nature = QUIRKY
+    Item = QUICKCLAW
+    AAM = True
+    MEM = True
 Pokemon = M_ROSERADE,50
-    Moves = SHADOWSNEAK,SHADOWBALL,WILLOWISP,LUNGE
+    Moves = SHADOWSNEAK,METRONOME,WILLOWISP,BATONPASS
     Ability = SEANCE
-	AAM = True
+    AAM = True
     Nature = QUIRKY
 Pokemon = SABLEYE,50
     Moves = SPLASH,MEMENTO,NIGHTSHADE
     Ability = PRANKSTER
     Nature = QUIRKY
-	AAM = True
-	MEM = True
+    AAM = True
+    MEM = True
 Pokemon = DUPEDILLO,50
-    Moves = POUND,BEATUP
-    Ability = ANGERPOINT
+    Moves = POUND,BEATUP,PARTINGSHOT
+    Ability = DOWNLOAD
     Nature = ADAMANT
 Pokemon = HUMMIPUMMEL,50
     Moves = FOCUSENERGY,WORKUP,GROWL
     Ability = LEVITATE
     Nature = QUIRKY
+# for AAM, its important to know that the base ability's effect has priority over the stacked abilities
+Pokemon = TITANOTROP,50
+    Moves = SUNNYDAY,SOLARBEAM,FLAMETHROWER,MOONLIGHT
+    Ability = SOLARPOWER
+    Nature = QUIRKY
+    Item = HEATROCK
+    AAM = True
+    MEM = True
+#-------------------------------
+[WILD_PKMN,crust,0]
+LoseText = sex
+Pokemon = CRUSTANG,50
+    IV = 10,10,10,10,10,10
+	BOSS = 1
+#-------------------------------
+[WILD_PKMN,crust,100]
+LoseText = sex
+Pokemon = CRUSTANG,50
+    IV = 10,10,10,10,10,10
+	BOSS = 2
+#-------------------------------
+[WILD_PKMN,crust,200]
+LoseText = sex
+Pokemon = CRUSTANG,50
+    IV = 10,10,10,10,10,10
+	BOSS = 1
