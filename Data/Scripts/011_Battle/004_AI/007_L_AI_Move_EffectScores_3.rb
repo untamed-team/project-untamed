@@ -581,7 +581,7 @@ class Battle::AI
             end
         end
     #---------------------------------------------------------------------------
-    when "RecoilQuarterOfDamageDealt" # take down / wild charge
+    when "RecoilQuarterOfDamageDealt" # take down / head charge
         if !user.hasActiveAbility?(:ROCKHEAD) && user.takesIndirectDamage?
             score *= 0.9
             if user.hp==user.totalhp && (user.hasActiveAbility?(:STURDY) || user.hasActiveItem?(:FOCUSSASH))
@@ -2851,7 +2851,7 @@ class Battle::AI
             if target.poisoned?
                 miniscore*=1.2
             end
-            if target.stages[:ATTACK]!=0
+            if target.stages[:ATTACK]<0
                 minimini = 5*target.stages[:ATTACK]
                 minimini *= 1.1 if move.baseDamage==0
                 minimini+=100
@@ -5544,6 +5544,11 @@ class Battle::AI
         #target=user.pbDirectOpposing(true)
         userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
         if userlivecount>1
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) Start--------"
+                end
+            end
             score *= 0.8 if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
             score *= 0.7 if user.pbOwnSide.effects[PBEffects::StealthRock]
             score *= (0.9**user.pbOwnSide.effects[PBEffects::ToxicSpikes])
@@ -5605,12 +5610,22 @@ class Battle::AI
             else
                 score = 0
             end
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) End--------"
+                end
+            end
         end
         score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
-    when "SwitchOutUserDamagingMove" # u-turn
+    when "SwitchOutUserDamagingMove" # uturn / volt switch
         userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
-         if userlivecount>1
+        if userlivecount>1
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) Start--------"
+                end
+            end
             if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
                 score *= 0.8
                 # DemICE: Switching AI is dumb so if you're faster, don't sack a healthy mon. Better use another move.
@@ -5720,6 +5735,11 @@ class Battle::AI
             else
                 score = 0
             end
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) End--------"
+                end
+            end
         end
     #---------------------------------------------------------------------------
     when "LowerTargetAtkSpAtk1SwitchOutUser" # Parting Shot
@@ -5728,6 +5748,11 @@ class Battle::AI
             score=0
         else
             if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
+                if $AIMASTERLOG
+                    File.open("AI_master_log.txt", "a") do |line|
+                        line.puts "-------(Switch Move) Start--------"
+                    end
+                end
                 if user.pbOwnSide.effects[PBEffects::StealthRock]
                     score*=0.7
                 end
@@ -5873,6 +5898,11 @@ class Battle::AI
                 end
                 miniscore/=100.0
                 score*=miniscore
+                if $AIMASTERLOG
+                    File.open("AI_master_log.txt", "a") do |line|
+                        line.puts "-------(Switch Move) End--------"
+                    end
+                end
             else
                 score = 0
             end    
@@ -5880,6 +5910,11 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SwitchOutUserPassOnEffects" # baton pass
         if @battle.pbCanChooseNonActive?(user.index)
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) Start--------"
+                end
+            end
             score*=1.1 if user.effects[PBEffects::FocusEnergy]
             score*=1.2 if user.effects[PBEffects::Ingrain]
             score*=1.2 if user.effects[PBEffects::AquaRing]
@@ -5949,6 +5984,11 @@ class Battle::AI
                 score*=0.8 if @battle.pbSideSize(1)>1
             else
                 score = 0
+            end
+            if $AIMASTERLOG
+                File.open("AI_master_log.txt", "a") do |line|
+                    line.puts "-------(Switch Move) End--------"
+                end
             end
         else
             score = 0

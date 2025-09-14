@@ -978,7 +978,7 @@ class Battle::Scene
       value *= 2.0 if battler.hasActiveAbility?(:FURCOAT)
       value *= 1.5 if battler.hasActiveAbility?(:GRASSPELT) && battler.battle.field.terrain == :Grassy
       value *= 1.5 if battler.hasActiveAbility?(:MARVELSCALE) && battler.pbHasAnyStatus?
-      value *= 1.5 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
+      value *= 1.3 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:MELEEVEST)
       if battler.pokemon.species_data.get_evolutions(true).length > 0
         value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
@@ -1011,7 +1011,7 @@ class Battle::Scene
     when :SPECIAL_DEFENSE
       value = battler.spdef
       value *= 2.0 if battler.hasActiveAbility?(:ICESCALES)
-      value *= 1.5 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
+      value *= 1.3 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
       value *= 1.5 if battler.pbHasType?(:ROCK) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:ASSAULTVEST)
       if battler.pokemon.species_data.get_evolutions(true).length > 0
@@ -1026,6 +1026,7 @@ class Battle::Scene
     when :SPEED
       value = battler.pbSpeed
     end
+    value *= 0.9 if battler.pokemon.natureBoostAI
     value = value.round
     value = [[value, 999].min, 1].max
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor

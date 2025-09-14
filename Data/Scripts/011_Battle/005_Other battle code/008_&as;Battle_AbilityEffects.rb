@@ -1744,14 +1744,14 @@ Battle::AbilityEffects::DamageCalcFromTarget.add(:WATERBUBBLE,
 Battle::AbilityEffects::DamageCalcFromTarget.add(:SANDVEIL,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = target.effectiveWeather if aiweather.nil?
-    mults[:defense_multiplier] *= 1.5 if aiweather == :Sandstorm && move.physicalMove?
+    mults[:defense_multiplier] *= 1.3 if aiweather == :Sandstorm && move.physicalMove?
   }
 )
 
 Battle::AbilityEffects::DamageCalcFromTarget.add(:SNOWCLOAK,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = target.effectiveWeather if aiweather.nil?
-    mults[:defense_multiplier] *= 1.5 if aiweather == :Hail && move.specialMove?
+    mults[:defense_multiplier] *= 1.3 if aiweather == :Hail && move.specialMove?
   }
 )
 

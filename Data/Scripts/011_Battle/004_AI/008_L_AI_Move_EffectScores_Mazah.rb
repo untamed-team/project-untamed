@@ -76,7 +76,7 @@ class Battle::AI
                     else
                         expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
                         expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.05)
+                        score *= (expectedPrcnt * 0.02)
                     end
                 end
             end
@@ -150,7 +150,7 @@ class Battle::AI
                     else
                         expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
                         expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.05)
+                        score *= (expectedPrcnt * 0.02)
                     end
                     score*=1.3 if targetMove.pbContactMove?(user)
                     if move.function == "ProtectUserBanefulBunker" && targetMove.pbContactMove?(user)
@@ -255,7 +255,7 @@ class Battle::AI
                     else
                         expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
                         expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.05)
+                        score *= (expectedPrcnt * 0.02)
                     end
                     score *= 1.5 if targetMove.pbContactMove?(user)
                 end
@@ -377,7 +377,7 @@ class Battle::AI
                         else
                             expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
                             expectedPrcnt = expectedDmg * 100.0 / user.hp
-                            score *= (expectedPrcnt * 0.05)
+                            score *= (expectedPrcnt * 0.02)
                         end
                     end
                 else
@@ -420,7 +420,7 @@ class Battle::AI
                         else
                             expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
                             expectedPrcnt = expectedDmg * 100.0 / user.hp
-                            score *= (expectedPrcnt * 0.05)
+                            score *= (expectedPrcnt * 0.02)
                         end
                     end
                 else
@@ -477,7 +477,7 @@ class Battle::AI
                     if target.poisoned? || target.frozen?
                         miniscore*=1.2
                     end
-                    if target.stages[:ATTACK]!=0
+                    if target.stages[:ATTACK]<0
                         minimini = 5*target.stages[:ATTACK]
                         minimini *= 1.1 if move.baseDamage==0
                         minimini+=100
@@ -502,7 +502,7 @@ class Battle::AI
                     if target.poisoned? || target.burned? || target.frozen?
                         miniscore*=1.2
                     end
-                    if target.stages[:DEFENSE]!=0
+                    if target.stages[:DEFENSE]<0
                         minimini = 5*target.stages[:DEFENSE]
                         minimini *= 1.1 if move.baseDamage==0
                         minimini+=100
@@ -523,7 +523,7 @@ class Battle::AI
                     if livecounttarget==0 || user.hasActiveAbility?([:SHADOWTAG, :ARENATRAP]) || target.effects[PBEffects::MeanLook]>0
                         miniscore*=1.3
                     end
-                    if target.stages[:SPEED]!=0
+                    if target.stages[:SPEED]<0
                         minimini = 5*target.stages[:SPEED]
                         minimini *= 1.1 if move.baseDamage==0
                         minimini+=100
@@ -574,7 +574,7 @@ class Battle::AI
                     if target.poisoned? || target.burned? || target.frozen?
                         miniscore*=1.2
                     end
-                    if target.stages[:SPECIAL_ATTACK]!=0
+                    if target.stages[:SPECIAL_ATTACK]<0
                         minimini = 5*target.stages[:SPECIAL_ATTACK]
                         minimini *= 1.1 if move.baseDamage==0
                         minimini+=100
@@ -593,7 +593,7 @@ class Battle::AI
                     if target.poisoned? || target.burned? || target.frozen?
                         miniscore*=1.2
                     end
-                    if target.stages[:SPECIAL_DEFENSE]!=0
+                    if target.stages[:SPECIAL_DEFENSE]<0
                         minimini = 5*target.stages[:SPECIAL_DEFENSE]
                         minimini *= 1.1 if move.baseDamage==0
                         minimini+=100
@@ -2136,8 +2136,10 @@ class Battle::AI
         weatherNeg = false
         @battle.allBattlers.each do |n|
             realn = n
-            if @battle.choices[n.index][0] == :SwitchOut
-                realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+            if realn.pbOwnedByPlayer?
+                if @battle.choices[n.index][0] == :SwitchOut
+                    realn = @battle.pbMakeFakeBattler(@battle.pbParty(n.index)[@battle.choices[n.index][1]],false,n)
+                end
             end
             if realn.hasActiveAbility?([:AIRLOCK, :CLOUDNINE])
                 weatherNeg = true
