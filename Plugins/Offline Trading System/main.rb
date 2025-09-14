@@ -1,6 +1,9 @@
 #Offline trading system
 #TO DO:
 # replace '######################' with '' to decomment stuff
+#create a withholding feature where pokemon get added to an array when they are traded away and when reading an agreement file from another player, the pkmn is taken from that instead of the party or box. This is so the pkmn can disappear from where the player can access it, disallowing players to dupe pkmn if one player redeems an agreement offer but the other does not
+#if I do the above, I'll need to make a way for the player to choose to finalize a trade by reading an agreement file rather than just reading the agreement file from the temporary screen where the pkmn is offered
+#need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -311,7 +314,7 @@ class OfflineTradingSystem
 		#add to the amount of trades player has completed
 		$stats.trade_count += 1
 		
-		######################Game.save
+		Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 	
