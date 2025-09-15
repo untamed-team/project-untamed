@@ -1,7 +1,3 @@
-class PokemonGlobalMetadata
-	attr_accessor   :inTradingMenu
-end
-
 class TradingPokemonStorageScene
   attr_reader :quickswap
 

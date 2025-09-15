@@ -7,7 +7,9 @@
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
+	attr_accessor :withheldTradingStorage
 	@tradeID = ""
+	@withheldTradingStorage = []
 end
 
 class OfflineTradingSystem
@@ -305,6 +307,8 @@ class OfflineTradingSystem
 		#legality checks for invalid pokemon and invalid moves
 		@pkmnPlayerWillReceiveInSymbolFormat = self.legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
 		
+		#for replacing the pkmn on the spot (if never left the trade menu
+		#REVISIT THIS when done storing pkmn in cloud
 		if @pkmnToReplaceLocationAndIndex[0] == "party"
 			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
@@ -312,7 +316,7 @@ class OfflineTradingSystem
 		end
 		
 		#add to the amount of trades player has completed
-		$stats.trade_count += 1
+		#$stats.trade_count += 1 #this is already handled in the Trade screen
 		
 		Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
@@ -323,9 +327,9 @@ class OfflineTradingSystem
 			@tradingViewport.dispose
 			
 			#evolve pkmn if needed
-			evo = PokemonTrade_Scene.new
+			evo = ModifiedPokemonTrade_Scene.new
 			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
-			evo.pbTrade
+			evo.pbTradeSendPkmn
 			evo.pbEndScreen
 			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
@@ -374,6 +378,9 @@ class OfflineTradingSystem
 		
 		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
+		#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+		self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
+		
 		#put hex data into .mazah file
 		# Make sure to define your hex data and file path first
 		# 1. Encode the data
@@ -382,6 +389,69 @@ class OfflineTradingSystem
 			file.write(entireEncodedAgreementCode)
 		end
 	end #def self.createAgreementFile
+	
+	def self.sendPkmnToCloud(pkmn)
+		$game_player.withheldTradingStorage = [] if $game_player.withheldTradingStorage.nil?
+		
+		@pkmnToReplaceLocationAndIndex = []
+		#locate the pkmn player is sending
+		foundInParty = false
+		foundInBox = false
+		if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+			foundInParty = true
+			@pkmnToReplaceLocationAndIndex = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
+		else
+			for i in 0...$PokemonStorage.maxBoxes
+				for j in 0...$PokemonStorage.maxPokemon(i)
+					pkmn = $PokemonStorage[i, j]
+					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
+						foundInBox = true
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						break
+					end
+				end
+				break if foundInBox
+			end #for i in 0...$PokemonStorage.maxBoxes
+		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
+		
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pushing pkmn to $game_player.withheldTradingStorage if not already in there...\n\n", "a")
+		$game_player.withheldTradingStorage.push(pkmn) if !$game_player.withheldTradingStorage.include?(pkmn)
+		
+		#remove pkmn from player's storage/party
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Removing pkmn from player's party or storage...\n\n", "a")
+		if @pkmnToReplaceLocationAndIndex[0] == "party"
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pkmn was in player's party. Deleting pkmn at index #{@pkmnToReplaceLocationAndIndex[1]}...\n\n", "a")
+			$player.party.delete_at(@pkmnToReplaceLocationAndIndex[1])
+		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pkmn was in player's PC storage. Turning pkmn into 'nil' in box index #{@pkmnToReplaceLocationAndIndex[1]}, position index #{@pkmnToReplaceLocationAndIndex[2]}...\n\n", "a")
+			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
+		end
+		
+		Game.save
+		pbMessage(_INTL("\\wtnp[1]Saving game..."))
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
+		
+		#show animation for sending pkmn off
+		#pbFadeOutIn {
+		#	@sprites.dispose
+		#	@tradingViewport.dispose
+			
+			#evolve pkmn if needed
+		#	evo = ModifiedPokemonTrade_Scene.new
+		#	evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+		#	evo.pbTradeSendPkmn
+		#	evo.pbEndScreen
+		#	@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
+			
+		#	@boxScene.update
+		#	if @pkmnToReplaceLocationAndIndex[0] == "party"
+		#		@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+		#	elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+		#		@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+		#	end
+		#}
+		
+	end #def self.sendPkmnToCloud(pkmn)
 	
 	def self.createOfferFile(pkmn)
 		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
@@ -478,8 +548,7 @@ class OfflineTradingSystem
 		return found_valid_offer_file
 	end #def self.readOfferFile
 
-	def self.readAgreementFile
-		@pkmnToReplaceLocationAndIndex = []
+	def self.readAgreementFile	
 		found_valid_agreement_file = false
 		#get all .mazah files in 'Trading' folder
 		#iterate through those files, reading the tradeIDs of each one until it differs from the tradeID of the player
@@ -512,26 +581,6 @@ class OfflineTradingSystem
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
 			#@pkmnPlayerWillReceiveInSymbolFormat
-			
-			#check the player still has the pkmn they are sending to someone else
-			foundInParty = false
-			foundInBox = false
-			if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
-				foundInParty = true
-				@pkmnToReplaceLocationAndIndex = ["party", $player.party.index(@pkmnPlayerIsOfferingInSymbolFormat)]
-			else
-				for i in 0...$PokemonStorage.maxBoxes
-					for j in 0...$PokemonStorage.maxPokemon(i)
-						pkmn = $PokemonStorage[i, j]
-						if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
-							foundInBox = true
-							@pkmnToReplaceLocationAndIndex = ["box", i, j]
-							break
-						end
-					end
-					break if foundInBox
-				end #for i in 0...$PokemonStorage.maxBoxes
-			end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
 			
 			#checking for trickery
 			if $game_player.tradeID == @otherPlayerTradeID
