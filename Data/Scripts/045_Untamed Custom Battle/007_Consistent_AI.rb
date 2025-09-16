@@ -544,7 +544,7 @@ class Battle::AI
         if (user.hasActiveAbility?(:ECHOCHAMBER) || (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && 
            (move.soundMove? && move.statusMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
-            score += missinghp * (1.0 / 8)
+            score += missinghp * (1.0 / 5)
         end
         # account for foe's multitarget protect moves
         if $aiguardcheck[0]
@@ -577,7 +577,7 @@ class Battle::AI
         # Calculate how much damage the move will do (roughly)
         baseDmg = pbMoveBaseDamage(move, user, target, skill)
         realDamage = pbRoughDamage(move, user, target, skill, baseDmg)
-        mold_broken=moldbroken(user,target,move)
+        mold_broken = moldbroken(user, target, move)
         globalArray = @megaGlobalArray
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]

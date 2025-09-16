@@ -170,7 +170,7 @@ FullDesc = When user is hit by a contact move, there's a 30% chance to poison th
 [INNERFOCUS]
 Name = Inner Focus
 Description = Prevents the Pokémon from flinching.
-FullDesc = In Chaos mode, Inner Focus also prevents the user's allies from flinching.
+FullDesc = Prevents the user from flinching. In Chaos mode, Inner Focus also prevents the user's allies from flinching.
 #-------------------------------
 [MAGMAARMOR]
 Name = Magma Armor
@@ -488,6 +488,7 @@ FullDesc = If the user is KO'ed by a contact move, the attacker loses 1/4 of the
 [ANTICIPATION]
 Name = Anticipation
 Description = Senses a foe's dangerous moves.
+FullDesc = On switch-in, this Pokemon is alerted if any opposing Pokemon has an attack that is super effective against this Pokemon.
 #-------------------------------
 [FOREWARN]
 Name = Forewarn

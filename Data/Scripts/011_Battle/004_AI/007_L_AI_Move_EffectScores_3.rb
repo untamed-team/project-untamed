@@ -1309,10 +1309,10 @@ class Battle::AI
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]     
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
@@ -1322,13 +1322,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1355,13 +1351,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if (user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")) && 
@@ -1375,10 +1367,10 @@ class Battle::AI
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
@@ -1388,13 +1380,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1436,10 +1424,10 @@ class Battle::AI
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
@@ -1449,13 +1437,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1496,10 +1480,10 @@ class Battle::AI
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack] || target.effects[PBEffects::HyperBeam]>0
@@ -1509,13 +1493,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1528,7 +1508,7 @@ class Battle::AI
                 miniscore=100
                 miniscore*=1.3
                 if target.poisoned? || target.burned? || target.frozen? || (user.takesHailDamage? && !user.takesSandstormDamage?) || 
-                        target.effects[PBEffects::LeechSeed]>-1 || target.effects[PBEffects::Curse]
+                   target.effects[PBEffects::LeechSeed]>-1 || target.effects[PBEffects::Curse]
                     miniscore*=1.1
                     if target.effects[PBEffects::Toxic]>0
                         miniscore*=1.2
@@ -1569,11 +1549,9 @@ class Battle::AI
                 score*=2
             else
                 score*=0.7
-            end      
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
             end
+            score*=0.7 if target.allAllies.any?
+            score*=0.9
         else
             score*=2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1729,10 +1707,10 @@ class Battle::AI
         maxdam = bestmove[0]
         if !user.hasActiveItem?(:POWERHERB)
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack]
@@ -1742,101 +1720,98 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9      
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
                 score*=1.5
             end
         end
-        miniscore=100
-        if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
-            miniscore*=1.3
-        end
-        if (user.hp.to_f)/user.totalhp>0.75
-            miniscore*=1.1
-        end    
-        if target.effects[PBEffects::HyperBeam]>0
-            miniscore*=1.2
-        end
-        if target.effects[PBEffects::Yawn]>0
-            miniscore*=1.3
-        end
-        if maxdam<(user.hp/3.0)
-            miniscore*=1.1
-        end  
-        if user.turnCount<2
-            miniscore*=1.1
-        end
-        if target.pbHasAnyStatus?
-            miniscore*=1.1
-        end
-        if target.asleep?
-            miniscore*=1.3
-        end
-        if encoredIntoStatus(target)
-            miniscore*=1.3
-        end  
-        if user.effects[PBEffects::Confusion]>0
-            miniscore*=0.3
-        end
-        if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
-            miniscore*=0.3
-        end
-        if user.effects[PBEffects::Toxic]>0
-            miniscore*=0.2
-        end
-        miniscore*=0.2 if pbHasPhazingMove?(target) 
-        if user.hasActiveAbility?(:SIMPLE)
-            miniscore*=2
-        end
-        if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
-            miniscore*=0.5
-        end
-        if user.stages[:DEFENSE]>0
-            ministat=user.stages[:DEFENSE]
-            minimini=-15*ministat
-            minimini+=100          
-            minimini/=100.0          
-            miniscore*=minimini
-        end
-        if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
-            miniscore*=1.3
-        end
-        if (maxdam.to_f/user.hp)<0.12
-            miniscore*=0.3
-        end
-        if user.hasActiveItem?(:LEFTOVERS) || 
-            (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
-            miniscore*=1.2
-        end
-        miniscore*=1.3 if user.moves.any? { |m| m&.healingMove? }
-        if user.pbHasMove?(:LEECHSEED)
-            miniscore*=1.3
-        end
-        if user.pbHasMove?(:PAINSPLIT)
-            miniscore*=1.2
-        end
-        if user.hasActiveAbility?(:CONTRARY)
-            miniscore*=0.5
-        end
-        if targetWillMove?(target, "phys")
-            if move.statusMove? && userFasterThanTarget && 
-                priorityAI(target,@battle.choices[target.index][2],globalArray)<1
+        if $player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id)
+            miniscore = 1
+        else
+            miniscore=100
+            if user.effects[PBEffects::Substitute]>0 || (user.hasActiveAbility?(:DISGUISE) && user.form == 0)
+                miniscore*=1.3
+            end
+            if (user.hp.to_f)/user.totalhp>0.75
+                miniscore*=1.1
+            end    
+            if target.effects[PBEffects::HyperBeam]>0
                 miniscore*=1.2
             end
+            if target.effects[PBEffects::Yawn]>0
+                miniscore*=1.3
+            end
+            if maxdam<(user.hp/3.0)
+                miniscore*=1.1
+            end  
+            if user.turnCount<2
+                miniscore*=1.1
+            end
+            if target.pbHasAnyStatus?
+                miniscore*=1.1
+            end
+            if target.asleep?
+                miniscore*=1.3
+            end
+            if encoredIntoStatus(target)
+                miniscore*=1.3
+            end  
+            if user.effects[PBEffects::Confusion]>0
+                miniscore*=0.3
+            end
+            if user.effects[PBEffects::LeechSeed]>=0 || user.effects[PBEffects::Attract]>=0
+                miniscore*=0.3
+            end
+            if user.effects[PBEffects::Toxic]>0
+                miniscore*=0.2
+            end
+            miniscore*=0.2 if pbHasPhazingMove?(target) 
+            if user.hasActiveAbility?(:SIMPLE)
+                miniscore*=2
+            end
+            if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
+                miniscore*=0.5
+            end
+            if user.stages[:DEFENSE]>0
+                ministat=user.stages[:DEFENSE]
+                minimini=-15*ministat
+                minimini+=100          
+                minimini/=100.0          
+                miniscore*=minimini
+            end
+            if pbRoughStat(target,:ATTACK,skill)>pbRoughStat(target,:SPECIAL_ATTACK,skill)
+                miniscore*=1.3
+            end
+            if (maxdam.to_f/user.hp)<0.12
+                miniscore*=0.3
+            end
+            if user.hasActiveItem?(:LEFTOVERS) || 
+              (user.hasActiveItem?(:BLACKSLUDGE) && user.pbHasType?(:POISON, true))
+                miniscore*=1.2
+            end
+            miniscore*=1.3 if user.moves.any? { |m| m&.healingMove? }
+            if user.pbHasMove?(:LEECHSEED)
+                miniscore*=1.3
+            end
+            if user.pbHasMove?(:PAINSPLIT)
+                miniscore*=1.2
+            end
+            if user.hasActiveAbility?(:CONTRARY)
+                miniscore*=0.5
+            end
+            if targetWillMove?(target, "phys")
+                if move.statusMove? && userFasterThanTarget && 
+                   priorityAI(target,@battle.choices[target.index][2],globalArray)<1
+                    miniscore*=1.2
+                end
+            end
+            miniscore/=100.0
+            miniscore=1 if user.statStageAtMax?(:DEFENSE)
         end
-        miniscore/=100.0
-        if user.statStageAtMax?(:DEFENSE) 
-            miniscore=1
-        end                
-        miniscore = 1 if $player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id)
         score*=miniscore
     #---------------------------------------------------------------------------
     when "TwoTurnAttackChargeRaiseUserSpAtk1" # Meteor Beam
@@ -1845,10 +1820,10 @@ class Battle::AI
         maxdam = bestmove[0]
         if !user.hasActiveItem?(:POWERHERB)
             if maxdam>user.hp
-                score*=0.4
+                score*=0.3
             else
                 if user.hp*(1.0/user.totalhp)<0.5
-                    score*=0.6
+                    score*=0.5
                 end
             end
             if target.effects[PBEffects::TwoTurnAttack]
@@ -1858,13 +1833,9 @@ class Battle::AI
                     score*=0.5
                 end
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.7
-            end
-            if pbHasSingleTargetProtectMove?(target, false)
-                score*=0.1
-            end          
+            score*=0.7 if target.allAllies.any?
+            score*=0.1 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.9
         else
             score*=1.2
             if user.hasActiveAbility?(:UNBURDEN) && !$player.difficulty_mode?("chaos")
@@ -1995,6 +1966,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2035,6 +2007,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2075,6 +2048,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2147,6 +2121,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2193,6 +2168,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1
@@ -2236,6 +2212,7 @@ class Battle::AI
             score*=0.5 if pbHasSingleTargetProtectMove?(target) && !user.hasActiveAbility?(:UNBURDEN)
         else
             score*=0.5 if pbHasSingleTargetProtectMove?(target, false)
+            score*=0.5 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP,:DIVE,:DIG,:PHANTOMFORCE,:SHADOWFORCE].include?(j&.id) }
         end
         if user.hasActiveAbility?(:NOGUARD) || target.hasActiveAbility?(:NOGUARD)
             score*=0.1

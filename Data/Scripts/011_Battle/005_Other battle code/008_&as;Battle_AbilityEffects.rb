@@ -2912,33 +2912,32 @@ Battle::AbilityEffects::OnSwitchIn.copy(:AIRLOCK, :CLOUDNINE)
 
 Battle::AbilityEffects::OnSwitchIn.add(:ANTICIPATION,
   proc { |ability, battler, battle, switch_in|
-    next if !battler.pbOwnedByPlayer?
     battlerTypes = battler.pbTypes(true)
     types = battlerTypes
-    found = false
+    found = [false, 0, battler]
     battle.allOtherSideBattlers(battler.index).each do |b|
       b.eachMove do |m|
         next if m.statusMove?
         if types.length > 0
           moveType = m.type
-          if Settings::MECHANICS_GENERATION >= 6 && m.function == "TypeDependsOnUserIVs"   # Hidden Power
-            moveType = pbHiddenPower(b.pokemon)[0]
-          end
+          moveType = pbHiddenPower(b.pokemon)[0] if m.function == "TypeDependsOnUserIVs" # Hidden Power
           eff = Effectiveness.calculate(moveType, types[0], types[1], types[2])
           next if Effectiveness.ineffective?(eff)
-          next if !Effectiveness.super_effective?(eff) &&
-                  !["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function)
-        elsif !["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function)
-          next
+          next if !Effectiveness.super_effective?(eff)
         end
-        found = true
+        found = [true, m, b]
         break
       end
-      break if found
+      break if found[0]
     end
-    if found
+    if found[0]
       battle.pbShowAbilitySplash(battler)
-      battle.pbDisplay(_INTL("{1} shuddered with anticipation!", battler.pbThis))
+      if battler.pbOwnedByPlayer?
+        battle.pbDisplay(_INTL("{1} shuddered with anticipation due to {2}'s {3}!", battler.pbThis, 
+                                                                                    found[2].name, 
+                                                                                    found[1].name))
+      end
+      battle.addMoveRevealed(found[2], found[1].id) if !battle.moveRevealed?(found[2], found[1].id)
       battle.pbHideAbilitySplash(battler)
     end
   }
@@ -3088,50 +3087,62 @@ Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
       stat = (oAtk > oSpAtk) ? :DEFENSE : :SPECIAL_DEFENSE
       battler.pbRaiseStatStageByAbility(stat, 1, battler)
     else
-      next if !battler.pbOwnedByPlayer?
       highestPower = 0
       forewarnMoves = []
+      oppcount = battle.pbOpposingBattlerCount(battler.index)
       battle.allOtherSideBattlers(battler.index).each do |b|
         b.eachMove do |m|
           power = m.baseDamage
-          power = 160 if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function)
-          power = 150 if ["PowerHigherWithUserHP"].include?(m.function)    # Eruption
+          # Wide Guard, Quick Guard, Crafty Shield, Mat Block
+          if ["ProtectUserSideFromMultiTargetDamagingMoves",
+              "ProtectUserSideFromPriorityMoves",
+              "ProtectUserSideFromStatusMoves", 
+              "ProtectUserSideFromDamagingMovesIfUserFirstTurn"].include?(m.function)
+            power = (oppcount > 1) ? 165 : 140
+          end
+          # Protect / Detect, Baneful Bunker, Spiky Shield
+          power = 160 if ["ProtectUser", "ProtectUserBanefulBunker",
+                          "ProtectUserFromTargetingMovesSpikyShield"].include?(m.function)
+          # King's Shield, Obstruct
+          power = 155 if ["ProtectUserFromDamagingMovesKingsShield",
+                          "ProtectUserFromDamagingMovesObstruct"].include?(m.function)
+          power = 155 if m.function == "RedirectAllMovesToUser" && oppcount > 1 # Rage Powder, Follow Me
+          power = 150 if ["PowerHigherWithUserHP"].include?(m.function) # Eruption
+          power = 130 if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function) # OHKO
           # Counter, Mirror Coat, Metal Burst
-          power = 120 if ["CounterPhysicalDamage",
+          power = 110 if ["CounterPhysicalDamage",
                           "CounterSpecialDamage",
                           "CounterDamagePlusHalf"].include?(m.function)
           # Sonic Boom, Dragon Rage, Night Shade, Endeavor, Psywave,
           # Return, Frustration, Crush Grip, Gyro Ball, Hidden Power,
           # Natural Gift, Trump Card, Flail, Grass Knot
           power = 80 if ["FixedDamage20",
-                        "FixedDamage40",
-                        "FixedDamageUserLevel",
-                        "LowerTargetHPToUserHP",
-                        "FixedDamageUserLevelRandom",
-                        "PowerHigherWithUserHappiness",
-                        "PowerLowerWithUserHappiness",
-                        "PowerHigherWithUserHP",
-                        "PowerHigherWithTargetFasterThanUser",
-                        "TypeAndPowerDependOnUserBerry",
-                        "PowerHigherWithLessPP",
-                        "PowerLowerWithUserHP",
-                        "PowerHigherWithTargetWeight"].include?(m.function)
-          power = 80 if Settings::MECHANICS_GENERATION <= 5 && m.function == "TypeDependsOnUserIVs"
+                         "FixedDamage40",
+                         "FixedDamageUserLevel",
+                         "LowerTargetHPToUserHP",
+                         "FixedDamageUserLevelRandom",
+                         "PowerHigherWithUserHappiness",
+                         "PowerLowerWithUserHappiness",
+                         "PowerHigherWithUserHP",
+                         "PowerHigherWithTargetFasterThanUser",
+                         "TypeAndPowerDependOnUserBerry",
+                         "PowerHigherWithLessPP",
+                         "PowerLowerWithUserHP",
+                         "PowerHigherWithTargetWeight"].include?(m.function)
           next if power < highestPower
           forewarnMoves = [] if power > highestPower
-          forewarnMoves.push(m.name)
+          forewarnMoves.push([m, b])
           highestPower = power
         end
       end
       if forewarnMoves.length > 0
         battle.pbShowAbilitySplash(battler)
-        forewarnMoveName = forewarnMoves[battle.pbRandom(forewarnMoves.length)]
-        if Battle::Scene::USE_ABILITY_SPLASH
-          battle.pbDisplay(_INTL("{1} was alerted to {2}!",
-            battler.pbThis, forewarnMoveName))
-        else
-          battle.pbDisplay(_INTL("{1}'s Forewarn alerted it to {2}!",
-            battler.pbThis, forewarnMoveName))
+        chosenForewarnMove = forewarnMoves[battle.pbRandom(forewarnMoves.length)]
+        if battler.pbOwnedByPlayer?
+          battle.pbDisplay(_INTL("{1} was alerted to {2}!", battler.pbThis, chosenForewarnMove[0].name))
+        end
+        if !battle.moveRevealed?(chosenForewarnMove[1], chosenForewarnMove[0].id)
+          battle.addMoveRevealed(chosenForewarnMove[1], chosenForewarnMove[0].id)
         end
         battle.pbHideAbilitySplash(battler)
       end

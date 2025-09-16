@@ -132,7 +132,6 @@ class Battle
       @battlers.each do |b|
         next if !b
         next if b.hp <= 0
-        #~ next if !b.hasActiveAbility?(:STALL)
         if b.hasActiveAbility?(:STALL) && b.turnCount > 0
           pbShowAbilitySplash(b)
           pbDisplay(_INTL("{1} stalls for time.",b.name))
