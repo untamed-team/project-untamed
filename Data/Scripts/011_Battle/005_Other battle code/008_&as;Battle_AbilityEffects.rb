@@ -2917,6 +2917,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:ANTICIPATION,
     found = [false, 0, battler]
     battle.allOtherSideBattlers(battler.index).each do |b|
       b.eachMove do |m|
+        next if battle.moveRevealed?(b, m.id) && battler.pbOwnedByPlayer?
         next if m.statusMove?
         if types.length > 0
           moveType = m.type
@@ -3092,6 +3093,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
       oppcount = battle.pbOpposingBattlerCount(battler.index)
       battle.allOtherSideBattlers(battler.index).each do |b|
         b.eachMove do |m|
+          next if battle.moveRevealed?(b, m.id) && battler.pbOwnedByPlayer?
           power = m.baseDamage
           # Wide Guard, Quick Guard, Crafty Shield, Mat Block
           if ["ProtectUserSideFromMultiTargetDamagingMoves",
