@@ -41,43 +41,6 @@ Move Skitter Smack real damage on Gastronaut: 33
 Move Skitter Smack damage % on Gastronaut: 10%
 Move Skitter Smack has initial score 96.0
 Move Skitter Smack ( Category: Physical ) has final score 106
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move U-turn real damage on Gastronaut: 33
 Move U-turn damage % on Gastronaut: 10%
 Move U-turn has initial score 64.512
@@ -256,43 +219,6 @@ Move Nasty Plot has initial score 115.23188311911528
 Move Nasty Plot ( Category: Status ) has final score 258
 Move Obstruct has initial score 119.7322859630286
 Move Obstruct ( Category: Status ) has final score 307
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Parting Shot has initial score 109.2423431452002
 Move Parting Shot ( Category: Status ) has final score 144
 Move Quash ( Category: Status ) has final score 0
@@ -456,43 +382,6 @@ Move Rising Voltage real damage on Gastronaut: 35
 Move Rising Voltage damage % on Gastronaut: 10%
 Move Rising Voltage has initial score 80
 Move Rising Voltage ( Category: Special ) has final score 90
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Volt Switch real damage on Gastronaut: 49
 Move Volt Switch damage % on Gastronaut: 30%
 Move Volt Switch has initial score 64.512
@@ -1790,147 +1679,9 @@ Move Wring Out ( Category: Special ) has final score 141
 Move Acupressure has initial score 84.76811688088469
 Move Acupressure ( Category: Status ) has final score 97
 Move After You ( Category: Status ) has final score 0
--------Assist Start--------
-Move Shadow Sneak real damage on Gastronaut: 23
-Move Shadow Sneak damage % on Gastronaut: 7%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
-Move Baton Pass has initial score 104.89837324807418
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 23
-Move Pound damage % on Gastronaut: 7%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 38
-Move Beat Up damage % on Gastronaut: 11%
-Move Beat Up has initial score 80
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
-Move Parting Shot has initial score 109.2423431452002
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Flamethrower real damage on Gastronaut: 63
-Move Flamethrower damage % on Gastronaut: 39%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
-~~~~Assist Move will be SUNNYDAY
--------Assist End----------
 Move Assist has initial score 90.7576568547998
 Move Assist ( Category: Status ) has final score 163
 Move Attract ( Category: Status ) has final score 0
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Baton Pass has initial score 104.89837324807418
 Move Baton Pass ( Category: Status ) has final score 118
 Move Belly Drum has initial score 100.0
@@ -2645,43 +2396,6 @@ Move Octazooka real damage on Gastronaut: 42
 Move Octazooka damage % on Gastronaut: 13%
 Move Octazooka has initial score 80
 Move Octazooka ( Category: Special ) has final score 93
-Move Freeze-Dry real damage on Gastronaut: 74
-Move Freeze-Dry damage % on Gastronaut: 46%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 86
-Move Return damage % on Gastronaut: 53%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 28
-Move Beat Up damage % on Gastronaut: 8%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Flip Turn real damage on Gastronaut: 29
 Move Flip Turn damage % on Gastronaut: 9%
 Move Flip Turn has initial score 64.512
@@ -2897,43 +2611,6 @@ Move Skitter Smack real damage on Gastronaut: 33
 Move Skitter Smack damage % on Gastronaut: 10%
 Move Skitter Smack has initial score 96.0
 Move Skitter Smack ( Category: Physical ) has final score 106
-Move Freeze-Dry real damage on Gastronaut: 72
-Move Freeze-Dry damage % on Gastronaut: 45%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 71
-Move Return damage % on Gastronaut: 44%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 29
-Move Beat Up damage % on Gastronaut: 9%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move U-turn real damage on Gastronaut: 33
 Move U-turn damage % on Gastronaut: 10%
 Move U-turn has initial score 46.08
@@ -3112,43 +2789,6 @@ Move Nasty Plot has initial score 115.23188311911528
 Move Nasty Plot ( Category: Status ) has final score 258
 Move Obstruct has initial score 119.7322859630286
 Move Obstruct ( Category: Status ) has final score 205
-Move Freeze-Dry real damage on Gastronaut: 72
-Move Freeze-Dry damage % on Gastronaut: 45%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 71
-Move Return damage % on Gastronaut: 44%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 29
-Move Beat Up damage % on Gastronaut: 9%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Parting Shot has initial score 109.2423431452002
 Move Parting Shot ( Category: Status ) has final score 185
 Move Quash ( Category: Status ) has final score 0
@@ -3312,43 +2952,6 @@ Move Rising Voltage real damage on Gastronaut: 35
 Move Rising Voltage damage % on Gastronaut: 10%
 Move Rising Voltage has initial score 80
 Move Rising Voltage ( Category: Special ) has final score 90
-Move Freeze-Dry real damage on Gastronaut: 72
-Move Freeze-Dry damage % on Gastronaut: 45%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 71
-Move Return damage % on Gastronaut: 44%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 29
-Move Beat Up damage % on Gastronaut: 9%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Volt Switch real damage on Gastronaut: 48
 Move Volt Switch damage % on Gastronaut: 30%
 Move Volt Switch has initial score 46.08
@@ -4690,52 +4293,6 @@ Move Flamethrower damage % on Gastronaut: 14%
 Move Flamethrower has initial score 79.03999999999999
 Move Moonlight has initial score 119.28055160151632
 Move Baton Pass has initial score 104.89837324807418
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 29
-Move Pound damage % on Gastronaut: 9%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 39
-Move Beat Up damage % on Gastronaut: 12%
-Move Beat Up has initial score 80
-Move Freeze-Dry real damage on Gastronaut: 72
-Move Freeze-Dry damage % on Gastronaut: 45%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 71
-Move Return damage % on Gastronaut: 44%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 29
-Move Beat Up damage % on Gastronaut: 9%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
 Move Moonlight has initial score 119.28055160151632
 Move Parting Shot has initial score 109.2423431452002
 Move Focus Energy has initial score 84.76811688088469
@@ -5550,43 +5107,6 @@ Move Octazooka real damage on Gastronaut: 42
 Move Octazooka damage % on Gastronaut: 13%
 Move Octazooka has initial score 80
 Move Octazooka ( Category: Special ) has final score 93
-Move Freeze-Dry real damage on Gastronaut: 72
-Move Freeze-Dry damage % on Gastronaut: 45%
-Move Freeze-Dry has initial score 86.96
-Move Kinetic Rend real damage on Gastronaut: 42
-Move Kinetic Rend damage % on Gastronaut: 13%
-Move Kinetic Rend has initial score 80
-Move Return real damage on Gastronaut: 71
-Move Return damage % on Gastronaut: 44%
-Move Return has initial score 80
-Move Ice Shard real damage on Gastronaut: 35
-Move Ice Shard damage % on Gastronaut: 10%
-Move Ice Shard has initial score 80
-Move Shadow Sneak real damage on Gastronaut: 18
-Move Shadow Sneak damage % on Gastronaut: 5%
-Move Shadow Sneak has initial score 80
-Move Will-O-Wisp has initial score 109.2423431452002
-Move Memento has initial score 84.76811688088469
-Move Night Shade real damage on Gastronaut: 50
-Move Night Shade damage % on Gastronaut: 31%
-Move Night Shade has initial score 80
-Move Pound real damage on Gastronaut: 14
-Move Pound damage % on Gastronaut: 4%
-Move Pound has initial score 80
-Move Beat Up real damage on Gastronaut: 29
-Move Beat Up damage % on Gastronaut: 9%
-Move Beat Up has initial score 80
-Move Focus Energy has initial score 84.76811688088469
-Move Work Up has initial score 84.76811688088469
-Move Growl has initial score 84.76811688088469
-Move Sunny Day has initial score 104.89837324807418
-Move Solar Beam real damage on Gastronaut: 61
-Move Solar Beam damage % on Gastronaut: 38%
-Move Solar Beam has initial score 80
-Move Flamethrower real damage on Gastronaut: 46
-Move Flamethrower damage % on Gastronaut: 14%
-Move Flamethrower has initial score 79.03999999999999
-Move Moonlight has initial score 119.28055160151632
 Move Flip Turn real damage on Gastronaut: 28
 Move Flip Turn damage % on Gastronaut: 8%
 Move Flip Turn has initial score 46.08

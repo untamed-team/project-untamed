@@ -2130,7 +2130,7 @@ def pbStartOver(gameover = false)
       pbMessage(_INTL("\\w[]\\wm\\c[8]\\l[3]You scurry back to a Pokémon Center, protecting your exhausted Pokémon from any further harm..."))
     end
     pbCancelVehicles
-    Followers.clear
+    #Followers.clear
     pbDeregisterPartner #added by Gardenette
     $game_switches[Settings::STARTING_OVER_SWITCH] = true
     $game_temp.player_new_map_id    = $PokemonGlobal.pokecenterMapId
@@ -2156,7 +2156,17 @@ def pbStartOver(gameover = false)
     end
     if homedata
       pbCancelVehicles
-      Followers.clear
+      #Followers.clear
+      #remove all followers except your following pkmn
+      for follower in $PokemonGlobal.followers
+        next if follower.name == "FollowingPkmn"
+        $game_temp.followers.remove_follower_by_name(follower.name)
+      end
+      #check if Reine needs to follow
+      if $game_switches[125] #Reine needs to follow
+        $game_switches[126] = false
+        $game_switches[127] = true
+      end
       pbDeregisterPartner #added by Gardenette
       $game_switches[Settings::STARTING_OVER_SWITCH] = true
       $game_temp.player_new_map_id    = homedata[0]
@@ -2442,4 +2452,39 @@ EventHandlers.add(:following_pkmn_appear, :height, proc { |pkmn|
   end
 })
 
+#############################################
+# Create a text file #
+#############################################
+# Example function to create a text file from a string
+def self.pbCreateTextFile(filename, content, writeType="w")
+  begin
+    File.open(filename, writeType, encoding: "UTF-8") do |file|
+      file.write(content)
+    end
+    # The file has been successfully created.
+    return true
+  rescue
+    # An error occurred.
+    return false
+  end
+end
+
 end #class GardenUtil
+
+#############################################
+# Adding a "mirror" method for Bitmap class #
+#############################################
+class Bitmap
+  def mirror
+    new_bitmap = Bitmap.new(self.width, self.height)
+    for y in 0...self.height
+      for x in 0...self.width
+        # Get the pixel from the original bitmap
+        pixel = self.get_pixel(x, y)
+        # Put the pixel in the mirrored position on the new bitmap
+        new_bitmap.set_pixel(self.width - 1 - x, y, pixel)
+      end
+    end
+    return new_bitmap
+  end
+end

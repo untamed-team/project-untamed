@@ -1050,10 +1050,9 @@ class Battle::AI
         # sums up all the changes to hp that will occur after the battle round. Healing from various effects/items/statuses or damage from the same. 
         # the arguments above show which ones in specific we're looking for, both being the typical default for most but sometimes we're only looking to see how much damage will occur at the end or how much healing.
         # thus it will return at 3 different points; end of healing if heal is desired, end of chip if chip is desired or at the very end if both.
-        healing = 1  
+        healing = 0
         chip = 0
         if user.effects[PBEffects::HealBlock] > 0
-            healing = 0
         else
             if user.effects[PBEffects::AquaRing]
                 subscore = 0.0625
@@ -1098,11 +1097,8 @@ class Battle::AI
                     #healing += 0.1250 # 1/8
                 end
             end
-            if @battle.pbCheckGlobalAbility(:STALL)
-                healing -= 1
-                healing *= 2
-                healing += 1
-            end
+            healing *= 2 if @battle.pbCheckGlobalAbility(:STALL)
+            healing += 1
         end
         return healing if heal
         if user.takesIndirectDamage?

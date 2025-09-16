@@ -47,6 +47,7 @@ class Battle::Battler
   attr_accessor :SetupMovesUsed  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
   attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
+  attr_accessor :bossTotalHP # percentage hp fix for bosses #by low
 
   #=============================================================================
   # Complex accessors
@@ -438,7 +439,7 @@ class Battle::Battler
     return false if @effects[PBEffects::Embargo] > 0
     return false if @battle.field.effects[PBEffects::MagicRoom] > 0
     return false if @battle.corrosiveGas[@index % 2][@pokemonIndex]
-    return false if hasActiveAbility?(:KLUTZ, ignoreFainted)
+    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !hasAbilityMutation?
     return true
   end
 

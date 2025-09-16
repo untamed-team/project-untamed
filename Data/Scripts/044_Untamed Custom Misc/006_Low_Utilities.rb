@@ -132,7 +132,6 @@ class Battle
       @battlers.each do |b|
         next if !b
         next if b.hp <= 0
-        #~ next if !b.hasActiveAbility?(:STALL)
         if b.hasActiveAbility?(:STALL) && b.turnCount > 0
           pbShowAbilitySplash(b)
           pbDisplay(_INTL("{1} stalls for time.",b.name))
@@ -316,28 +315,29 @@ GameData::Evolution.register({
 })
 
 #===============================================================================  
-# Link Cable #by low  
+# Link Cable #by low 
+# (this used to be the only way for evolving trade mons)
 #===============================================================================  
 GameData::Evolution.register({  
-  :id            => :Trade,  
+  :id            => :Link,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeMale,  
+  :id            => :LinkMale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.male? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeFemale,  
+  :id            => :LinkFemale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.female? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id                   => :TradeItem,  
+  :id                   => :LinkItem,  
   :parameter            => :Item,  
   :use_item_proc        => proc { |pkmn, parameter, item|  
     next pkmn.item == parameter && item == :LINKCABLE  
@@ -346,25 +346,6 @@ GameData::Evolution.register({
     next false if evo_species != new_species || !pkmn.hasItem?(parameter)  
     pkmn.item = nil   # Item is now consumed
   }
-})
-  
-  # these 2 are the same thing, fsr it doesnt check night/day when using items and its such a niche problem  
-GameData::Evolution.register({  
-  :id            => :TradeDay,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isDay?  
-      next item == :LINKCABLE  
-    end  
-  }  
-})
-
-GameData::Evolution.register({  
-  :id            => :TradeNight,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isNight?  
-      next item == :LINKCABLE  
-    end  
-  }  
 })
 
 #===============================================================================
@@ -541,20 +522,18 @@ end
 # Use Rare Candy - Level Cap #by low  
 #===============================================================================  
 ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
-  # level cap #by low
-  proceed=false
-  for i in $Trainer.party
-    if i.level>pkmn.level
-      proceed=true
-      break
-    end  
+  highestlvl = 0
+  $player.party.each do |mon|
+    highestlvl = mon.level if mon.level > highestlvl
+  end
+  proceed = false
+  proceed = true if pkmn.level < highestlvl
+  unless proceed
+    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment (lvl. {1}).", highestlvl))
+    next false
   end
   if pkmn.shadowPokemon?
     scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  if proceed==false
-    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment."))
     next false
   end
   if pkmn.level >= GameData::GrowthRate.max_level
@@ -563,16 +542,7 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
       scene.pbDisplay(_INTL("It won't have any effect."))
       next false
     end
-    #edited by Gardenette to work with No Auto Evolve script
-    # Check for evolution
-    #pbFadeOutInWithMusic {
-      #  evo = PokemonEvolutionScene.new
-      #  evo.pbStartScreen(pkmn, new_species)
-      #  evo.pbEvolution
-      #  evo.pbEndScreen
-      #  scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
-      #}
-      pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
+    pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
     next true
   end
   # Level up
@@ -656,9 +626,9 @@ class PokemonPokedexInfo_Scene
         _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
       when :ItemFemale
         _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade
+      when :Trade, :Link
         _INTL("{1} trading",evoName)
-      when :TradeItem
+      when :TradeItem, :LinkItem
         _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
       when :TradeSpecies
         _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
@@ -793,7 +763,9 @@ class Battle
   end
 
   def addMoveRevealed(user, move_id)
-    @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    if !@movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
+      @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    end
   end
   def moveRevealed?(user, move_id)
     return @movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
@@ -1402,13 +1374,19 @@ DECENT_STAB_MOVES = {
     :NORMAL => :HYPERVOICE, 
     :ROCK => :POWERGEM, :ICE => :ICEBEAM, :STEEL => :FLASHCANNON,
     :ELECTRIC => :THUNDERBOLT, :DRAGON => :DRACOMETEOR, 
-    :GRASS => :ENERGYBALL, :FIGHTING => :AURASPHERE, :FAIRY => :MOONBLAST
+    :GRASS => :ENERGYBALL, :FIGHTING => :AURASPHERE, :FAIRY => :MOONBLAST,
+    :WATER => :SURF, :FIRE => :FLAMETHROWER, :FLYING => :OBLIVIONWING, 
+    :GROUND => :EARTHPOWER, :POISON => :SLUDGEBOMB, :PSYCHIC => :PSYCHIC, 
+    :BUG => :BUGBUZZ, :GHOST => :SHADOWBALL, :DARK => :FIERYWRATH
   },
   physical: {
     :NORMAL => :RETURN, 
     :ROCK => :ROCKSLIDE, :ICE => :ICICLECRASH, :STEEL => :IRONHEAD,
     :ELECTRIC => :ZINGZAP, :DRAGON => :DRAGONRUSH, 
-    :GRASS => :LEAFBLADE, :FIGHTING => :DRAINPUNCH, :FAIRY => :PLAYROUGH
+    :GRASS => :LEAFBLADE, :FIGHTING => :DRAINPUNCH, :FAIRY => :PLAYROUGH,
+    :WATER => :CRABHAMMER, :FIRE => :BLAZEKICK, :FLYING => :AEROBLAST, 
+    :GROUND => :EARTHQUAKE, :POISON => :SHELLSIDEARM, :PSYCHIC => :PSYCHICFANGS, 
+    :BUG => :ATTACKORDER, :GHOST => :SHADOWBONE, :DARK => :CRUNCH
   }
 }
 

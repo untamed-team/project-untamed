@@ -1,7 +1,3 @@
-class PokemonGlobalMetadata
-	attr_accessor   :inTradingMenu
-end
-
 class TradingPokemonStorageScene
   attr_reader :quickswap
 
@@ -951,6 +947,8 @@ class TradingPokemonStorageScreen
     case command
     when 0   # Organise
       @scene.pbStartBox(self, command)
+	  #show tip card for trading if not seen it yet
+	  pbShowTipCardsGrouped(:TRADING) if !pbSeenTipCard?(:TRADING1)
       loop do
         selected = @scene.pbSelectBox(@storage.party)
         if selected.nil?
@@ -1245,20 +1243,34 @@ class TradingPokemonStorageScreen
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+	    pbDisplay(_INTL("You can trade your last party Pokémon away, but this could cause unstable gameplay on this save file. Are you okay with this?"))
       #return
     end
     command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
     if command == 0
       pkmnname = pokemon.name
 	  
-	  #delete the held item from the pkmn
-	  #pokemon.item = nil
-	  
-		#add the pokemon to a global variable to receive on the current save when done
-		#print "Offering #{pokemon} as trade"
-		#this is where we create a new screen for trading and generate an offer code
-		OfflineTradingSystem.tradeMenu(pokemon)
+	  #what trade items does this pkmn need to evolve?
+	  evos = GameData::Species.get(pokemon.species).get_evolutions
+	  holdingTradeItemForEvo = false
+	  for evo in evos
+		evoMethod = evo[1]
+		evoParameter = evo[2]
+		if evoMethod.to_s == "TradeItem" && evoParameter.to_s == pokemon.item.id.to_s
+			holdingTradeItemForEvo = true
+			break
+		end
+	  end
+      #throw the held item (if there is any) into the bag (and if the pkmn does not need this item to evolve in a trade)
+      if pokemon.item && !holdingTradeItemForEvo
+        pbDisplay(_INTL("{1} was stored safely into your bag.", pokemon.item.name))
+        $bag.add(pokemon.item)
+        pokemon.item = nil
+      end
+    
+      #print "Offering #{pokemon} as trade"
+      #this is where we create a new screen for trading and generate an offer code
+      OfflineTradingSystem.tradeMenu(pokemon)
     end
     return
   end
@@ -1406,273 +1418,5 @@ class TradingPokemonStorageScreen
     @scene.pbCloseBox
     $game_temp.in_storage = false
     return retval
-  end
-end
-
-
-
-
-
-
-
-
-class TimeMachinePokemonBox
-  attr_reader   :pokemon
-  attr_accessor :name
-  attr_accessor :background
-
-  BOX_WIDTH  = 6
-  BOX_HEIGHT = 5
-  BOX_SIZE   = BOX_WIDTH * BOX_HEIGHT
-
-  def initialize(name, maxPokemon = BOX_SIZE)
-    @name = name
-    @background = 0
-    @pokemon = []
-    maxPokemon.times { |i| @pokemon[i] = nil }
-  end
-
-  def length
-    return @pokemon.length
-  end
-
-  def nitems
-    ret = 0
-    @pokemon.each { |pkmn| ret += 1 if !pkmn.nil? }
-    return ret
-  end
-
-  def full?
-    return nitems == self.length
-  end
-
-  def empty?
-    return nitems == 0
-  end
-
-  def [](i)
-    return @pokemon[i]
-  end
-
-  def []=(i, value)
-    @pokemon[i] = value
-  end
-
-  def each
-    @pokemon.each { |item| yield item }
-  end
-
-  def clear
-    @pokemon.clear
-  end
-end
-
-
-
-class TimeMachinePokemonStorage
-  attr_reader   :boxes
-  attr_accessor :currentBox
-  attr_writer   :unlockedWallpapers
-
-  BASICWALLPAPERQTY = 16
-
-  def initialize(maxBoxes = Settings::NUM_STORAGE_BOXES, maxPokemon = TimeMachinePokemonBox::BOX_SIZE)
-    @boxes = []
-    maxBoxes.times do |i|
-      @boxes[i] = TimeMachinePokemonBox.new(_INTL("Box {1}", i + 1), maxPokemon)
-      @boxes[i].background = i % BASICWALLPAPERQTY
-    end
-    @currentBox = 0
-    @boxmode = -1
-    @unlockedWallpapers = []
-    allWallpapers.length.times do |i|
-      @unlockedWallpapers[i] = false
-    end
-  end
-
-  def allWallpapers
-    return [
-      # Basic wallpapers
-      _INTL("Forest"), _INTL("City"), _INTL("Desert"), _INTL("Savanna"),
-      _INTL("Crag"), _INTL("Volcano"), _INTL("Snow"), _INTL("Cave"),
-      _INTL("Beach"), _INTL("Seafloor"), _INTL("River"), _INTL("Sky"),
-      _INTL("Poké Center"), _INTL("Machine"), _INTL("Checks"), _INTL("Simple"),
-      # Special wallpapers
-      _INTL("Space"), _INTL("Backyard"), _INTL("Nostalgic 1"), _INTL("Torchic"),
-      _INTL("Trio 1"), _INTL("PikaPika 1"), _INTL("Legend 1"), _INTL("Team Galactic 1"),
-      _INTL("Distortion"), _INTL("Contest"), _INTL("Nostalgic 2"), _INTL("Croagunk"),
-      _INTL("Trio 2"), _INTL("PikaPika 2"), _INTL("Legend 2"), _INTL("Team Galactic 2"),
-      _INTL("Heart"), _INTL("Soul"), _INTL("Big Brother"), _INTL("Pokéathlon"),
-      _INTL("Trio 3"), _INTL("Spiky Pika"), _INTL("Kimono Girl"), _INTL("Revival")
-    ]
-  end
-
-  def unlockedWallpapers
-    @unlockedWallpapers = [] if !@unlockedWallpapers
-    return @unlockedWallpapers
-  end
-
-  def isAvailableWallpaper?(i)
-    @unlockedWallpapers = [] if !@unlockedWallpapers
-    return true if i < BASICWALLPAPERQTY
-    return true if @unlockedWallpapers[i]
-    return false
-  end
-
-  def availableWallpapers
-    ret = [[], []]   # Names, IDs
-    papers = allWallpapers
-    @unlockedWallpapers = [] if !@unlockedWallpapers
-    papers.length.times do |i|
-      next if !isAvailableWallpaper?(i)
-      ret[0].push(papers[i])
-      ret[1].push(i)
-    end
-    return ret
-  end
-
-  def party
-    $player.party
-  end
-
-  def party=(_value)
-    raise ArgumentError.new("Not supported")
-  end
-
-  def party_full?
-    return $player.party_full?
-  end
-
-  def maxBoxes
-    return @boxes.length
-  end
-
-  def maxPokemon(box)
-    return 0 if box >= self.maxBoxes
-    return (box < 0) ? Settings::MAX_PARTY_SIZE : self[box].length
-  end
-
-  def full?
-    self.maxBoxes.times do |i|
-      return false if !@boxes[i].full?
-    end
-    return true
-  end
-
-  def pbFirstFreePos(box)
-    if box == -1
-      ret = self.party.length
-      return (ret >= Settings::MAX_PARTY_SIZE) ? -1 : ret
-    end
-    maxPokemon(box).times do |i|
-      return i if !self[box, i]
-    end
-    return -1
-  end
-
-  def [](x, y = nil)
-    if y.nil?
-      return (x == -1) ? self.party : @boxes[x]
-    else
-      @boxes.each do |i|
-        raise "Box is a Pokémon, not a box" if i.is_a?(Pokemon)
-      end
-      return (x == -1) ? self.party[y] : @boxes[x][y]
-    end
-  end
-
-  def []=(x, y, value)
-    if x == -1
-      self.party[y] = value
-    else
-      @boxes[x][y] = value
-    end
-  end
-
-  def pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-    if indexDst < 0 && boxDst < self.maxBoxes
-      found = false
-      maxPokemon(boxDst).times do |i|
-        next if self[boxDst, i]
-        found = true
-        indexDst = i
-        break
-      end
-      return false if !found
-    end
-    if boxDst == -1   # Copying into party
-      return false if party_full?
-      self.party[self.party.length] = self[boxSrc, indexSrc]
-      self.party.compact!
-    else   # Copying into box
-      pkmn = self[boxSrc, indexSrc]
-      raise "Trying to copy nil to storage" if !pkmn
-      if Settings::HEAL_STORED_POKEMON
-        old_ready_evo = pkmn.ready_to_evolve
-        pkmn.heal
-        pkmn.ready_to_evolve = old_ready_evo
-      end
-      self[boxDst, indexDst] = pkmn
-    end
-    return true
-  end
-
-  def pbMove(boxDst, indexDst, boxSrc, indexSrc)
-    return false if !pbCopy(boxDst, indexDst, boxSrc, indexSrc)
-    pbDelete(boxSrc, indexSrc)
-    return true
-  end
-
-  def pbMoveCaughtToParty(pkmn)
-    return false if party_full?
-    self.party[self.party.length] = pkmn
-  end
-
-  def pbMoveCaughtToBox(pkmn, box)
-    maxPokemon(box).times do |i|
-      next unless self[box, i].nil?
-      if Settings::HEAL_STORED_POKEMON && box >= 0
-        old_ready_evo = pkmn.ready_to_evolve
-        pkmn.heal
-        pkmn.ready_to_evolve = old_ready_evo
-      end
-      self[box, i] = pkmn
-      return true
-    end
-    return false
-  end
-
-  def pbStoreCaught(pkmn)
-    if Settings::HEAL_STORED_POKEMON && @currentBox >= 0
-      old_ready_evo = pkmn.ready_to_evolve
-      pkmn.heal
-      pkmn.ready_to_evolve = old_ready_evo
-    end
-    maxPokemon(@currentBox).times do |i|
-      if self[@currentBox, i].nil?
-        self[@currentBox, i] = pkmn
-        return @currentBox
-      end
-    end
-    self.maxBoxes.times do |j|
-      maxPokemon(j).times do |i|
-        next unless self[j, i].nil?
-        self[j, i] = pkmn
-        @currentBox = j
-        return @currentBox
-      end
-    end
-    return -1
-  end
-
-  def pbDelete(box, index)
-    if self[box, index]
-      self[box, index] = nil
-      self.party.compact! if box == -1
-    end
-  end
-
-  def clear
-    self.maxBoxes.times { |i| @boxes[i].clear }
   end
 end
