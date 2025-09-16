@@ -137,14 +137,12 @@ class Battle::AI
     when "PowerHigherWithTargetFasterThanUser" # Gyro Ball
     #---------------------------------------------------------------------------
     when "PowerHigherWithLessPP" # Trump Card
-        if user.hp==user.totalhp
-            score*=1.3
-        end
-        bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-        maxdam = bestmove[0]
-        if maxdam<(user.hp/3.0)
-            score*=1.3
-        end
+        score *= 1.3 if user.hp == user.totalhp
+        bestmove = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+        score *= 1.3 if bestmove[0] < (user.hp / 3.0)
+        remainingPP = move.pp - 1
+        remainingPP -= 1 if target.hasActiveAbility?(:PRESSURE)
+        score *= 1.1 if remainingPP > 0
     #---------------------------------------------------------------------------
     when "PowerHigherWithTargetWeight" # Low Kick / grass knot
     #---------------------------------------------------------------------------

@@ -280,9 +280,9 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithLessPP < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    dmgs = [200, 80, 60, 50, 40]
-    ppLeft = [@pp, dmgs.length - 1].min   # PP is reduced before the move is used
-    return dmgs[ppLeft]
+    ppratio = @pp.to_f / @total_pp # PP is reduced before the move is used
+    dmg = 40 + ((1.0 - ppratio) * 210).round
+    return [[dmg, 250].min, 40].max
   end
 end
 
