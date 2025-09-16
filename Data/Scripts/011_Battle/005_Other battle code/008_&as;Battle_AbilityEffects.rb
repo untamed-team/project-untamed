@@ -2938,7 +2938,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:ANTICIPATION,
                                                                                     found[2].name, 
                                                                                     found[1].name))
       end
-      battle.addMoveRevealed(found[2], found[1].id) if !battle.moveRevealed?(found[2], found[1].id)
+      battle.addMoveRevealed(found[2], found[1].id)
       battle.pbHideAbilitySplash(battler)
     end
   }
@@ -3143,9 +3143,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
         if battler.pbOwnedByPlayer?
           battle.pbDisplay(_INTL("{1} was alerted to {2}!", battler.pbThis, chosenForewarnMove[0].name))
         end
-        if !battle.moveRevealed?(chosenForewarnMove[1], chosenForewarnMove[0].id)
-          battle.addMoveRevealed(chosenForewarnMove[1], chosenForewarnMove[0].id)
-        end
+        battle.addMoveRevealed(chosenForewarnMove[1], chosenForewarnMove[0].id)
         battle.pbHideAbilitySplash(battler)
       end
     end

@@ -763,7 +763,9 @@ class Battle
   end
 
   def addMoveRevealed(user, move_id)
-    @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    if !@movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
+      @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    end
   end
   def moveRevealed?(user, move_id)
     return @movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
