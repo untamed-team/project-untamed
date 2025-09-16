@@ -5,6 +5,8 @@
 #if I do the above, I'll need to make a way for the player to choose to finalize a trade by reading an agreement file rather than just reading the agreement file from the temporary screen where the pkmn is offered
 #need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
 
+#create another temporary storage where players can see pkmn in trade cloud. They can check summary and choose to "Finalize Trade", creating an agreemet file (in case they lose the original one). This could even generate the original offer file as well?
+
 class Game_Player < Game_Character
 	attr_accessor :tradeID
 	attr_accessor :withheldTradingStorage
@@ -307,39 +309,15 @@ class OfflineTradingSystem
 		#legality checks for invalid pokemon and invalid moves
 		@pkmnPlayerWillReceiveInSymbolFormat = self.legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
 		
-		#for replacing the pkmn on the spot (if never left the trade menu
-		#REVISIT THIS when done storing pkmn in cloud
-		if @pkmnToReplaceLocationAndIndex[0] == "party"
-			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
-		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
-		end
-		
 		#add to the amount of trades player has completed
 		#$stats.trade_count += 1 #this is already handled in the Trade screen
 		
 		Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
-	
-		pbFadeOutIn {
-			@sprites.dispose
-			@tradingViewport.dispose
-			
-			#evolve pkmn if needed
-			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
-			evo.pbTradeSendPkmn
-			evo.pbEndScreen
-			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
-			
-			@boxScene.update
-			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
-			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
-			end
-		}
+		
+		self.receivePkmnFromOtherPlayer
+
 	end #def self.tradeMenu
 	
 	def self.getPkmnToTrade
@@ -427,31 +405,73 @@ class OfflineTradingSystem
 			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		end
 		
-		Game.save
+		#######################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		
 		#show animation for sending pkmn off
-		#pbFadeOutIn {
-		#	@sprites.dispose
-		#	@tradingViewport.dispose
+		pbFadeOutIn {
+			#@sprites.dispose
+			#@tradingViewport.dispose
 			
-			#evolve pkmn if needed
-		#	evo = ModifiedPokemonTrade_Scene.new
-		#	evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
-		#	evo.pbTradeSendPkmn
-		#	evo.pbEndScreen
-		#	@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
+			evo = ModifiedPokemonTrade_Scene.new
+			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbTradeSendPkmn
+			evo.pbEndScreen
+			#@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
-		#	@boxScene.update
-		#	if @pkmnToReplaceLocationAndIndex[0] == "party"
-		#		@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
-		#	elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-		#		@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
-		#	end
-		#}
+			#@boxScene.update
+			#if @pkmnToReplaceLocationAndIndex[0] == "party"
+			#	@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+			#elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+			#	@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+			#end
+		}
 		
 	end #def self.sendPkmnToCloud(pkmn)
+	
+	def self.receivePkmnFromOtherPlayer
+		##############check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
+		
+		
+		
+		#if finalizing trade without leaving trade screen
+		#for replacing the pkmn on the spot (if never left the trade menu
+		#REVISIT THIS when done storing pkmn in cloud
+		if @pkmnToReplaceLocationAndIndex[0] == "party"
+			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+		end
+		
+		
+		
+		#if finalizing trade later...
+		#set location and index of pkmn to update in box or party
+		#@pkmnToReplaceLocationAndIndex[0] == "party"
+		#@pkmnToReplaceLocationAndIndex[0] == "box"
+		
+		#regardless of how the trade is being finalized, receive the pkmn
+		pbFadeOutIn {
+			@sprites.dispose
+			@tradingViewport.dispose
+			
+			#evolve pkmn if needed
+			evo = ModifiedPokemonTrade_Scene.new
+			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbTradeReceivePkmn
+			evo.pbEndScreen
+			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
+			
+			@boxScene.update
+			if @pkmnToReplaceLocationAndIndex[0] == "party"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+			end
+		}
+	
+	end #def self.receivePkmnFromOtherPlayer
 	
 	def self.createOfferFile(pkmn)
 		#this method takes the marshaldata of a pkmn offered for trading and turns the marshaldata into a hexadecimal format
@@ -603,7 +623,7 @@ class OfflineTradingSystem
 				
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The Pokémon you are giving to the other player is not what the other player agreed upon. Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
 				
-			elsif !foundInParty && !foundInBox
+			elsif !self.pkmnExistsInTradeCloud(self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat))
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
 			else
 			
@@ -624,6 +644,20 @@ class OfflineTradingSystem
 		
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
+
+	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray)
+		#pkmnPropertiesArray is an array of properties of the pkmn the player is giving away
+		#check if a pkmn with those exact properties exists in the trade cloud storage
+		exists = false
+		for pokemon in $game_player.withheldTradingStorage
+			if self.getPkmnProperties(pokemon) == pkmnPropertiesArray
+				exists = true
+				print "found the pkmn in the cloud"
+				break
+			end
+		end #for pokemon in $game_player.withheldTradingStorage
+		return exists
+	end #def self.pkmnExistsInTradeCloud
 
 	def self.legalitychecks(pkmn)
 		pkmn.clear_first_moves
