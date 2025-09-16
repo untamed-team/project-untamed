@@ -544,7 +544,7 @@ class Battle::AI
         if (user.hasActiveAbility?(:ECHOCHAMBER) || (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && 
            (move.soundMove? && move.statusMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
-            score += missinghp * (1.0 / 5)
+            score += missinghp * (1.0 / 8)
         end
         # account for foe's multitarget protect moves
         if $aiguardcheck[0]
@@ -943,6 +943,12 @@ class Battle::AI
           #increment = 0 if increment < 0
           ###############################################
           echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
+        end
+        if user.isBossPokemon?
+            target.eachMove do |m|
+                next unless m.function == "FixedDamageHalfTargetHP"
+                increment += 2
+            end
         end
         if targetWillMove?(target)
           targetMove = @battle.choices[target.index][2]
