@@ -4763,7 +4763,7 @@ Weight = 5.7
 Color = Gray
 Shape = Head
 Category = Jewel
-Pokedex = It defends itself by firing beams from the jewel part of its body. Old Tales describe this Pokemon evolving into the most beautiful sight in the whole world.
+Pokedex = Carbink of the Mazah region have been documented to be more brittle compared to those from other regions. Despite this, Old Tales describe this Pokémon evolving into the most beautiful sight in the world.
 Generation = 6
 Evolutions = DIANCIE,Diancie,42
 #-------------------------------

@@ -382,6 +382,9 @@ class Battle::AI
                     # switch worriedness
                     inBattleIndex = @battle.allSameSideBattlers(b.index).map { |b| b.pokemonIndex }
                     foeparty.each_with_index do |pkmn, idxParty|
+                        break if realTarget.battle.choices[realTarget.index][0] == :SwitchOut && 
+                                 realTarget.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 &&
+                                 move.function != "PursueSwitchingFoe"
                         next if !pkmn || !pkmn.able?
                         next if inBattleIndex.include?(idxParty)
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
