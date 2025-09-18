@@ -555,7 +555,7 @@ class Battle::AI
                 end
               when :DIZZY
                 dummymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SPLASH))
-                minimi = getAbilityDisruptScore(dummymove,b,pokmon,100)
+                minimi = getAbilityDisruptScore(dummymove,b,pokmon,100,false)
                 minimi /= 2 if pokmon.hasActiveAbility?(:TANGLEDFEET)
                 sum *= minimi
               end

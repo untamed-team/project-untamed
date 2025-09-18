@@ -4515,7 +4515,7 @@ class Battle::AI
                 miniscore*=0.3
             end    
             if $player.difficulty_mode?("chaos")
-                minimi = getAbilityDisruptScore(move,user,target,skill)
+                minimi = getAbilityDisruptScore(move,user,target,skill,false)
                 minimi = 1.0 / minimi
                 miniscore*=minimi
                 miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
@@ -4620,7 +4620,7 @@ class Battle::AI
                 miniscore*=0.3
             end    
             if $player.difficulty_mode?("chaos")
-                minimi = getAbilityDisruptScore(move,user,target,skill)
+                minimi = getAbilityDisruptScore(move,user,target,skill,false)
                 minimi = 1.0 / minimi
                 miniscore*=minimi
                 miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
@@ -6537,7 +6537,7 @@ class Battle::AI
                         score*=0.5
                     else
                         score*=2.5
-                        score*=5 if user.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
+                        score*=5 if user.moves.any? { |m| priorityAI(user,m,globalArray)>0 }
                     end
                 end
             end
