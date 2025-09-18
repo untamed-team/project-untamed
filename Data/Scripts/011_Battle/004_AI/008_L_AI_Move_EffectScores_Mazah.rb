@@ -1059,7 +1059,7 @@ class Battle::AI
             miniscore*=0.1 if target.moves.any? { |j| [:SLEEPTALK, :SNORE].include?(j&.id) }
             miniscore*=0.7 if target.hasActiveItem?([:CHESTOBERRY, :LUMBERRY])
         when :DIZZY
-            minimi = getAbilityDisruptScore(move,user,target,skill)
+            minimi = getAbilityDisruptScore(move,user,target,skill,false)
             if !user.opposes?(target) # is ally
                 minimi = 1.0 / minimi 
                 minimi *= 2 if target.hasActiveAbility?(:TANGLEDFEET)
@@ -1538,9 +1538,9 @@ class Battle::AI
         return fieldscore
     end
 
-    def getAbilityDisruptScore(move,user,target,skill)
+    def getAbilityDisruptScore(move,user,target,skill,stop=true)
         abilityscore=100.0
-        if target.unstoppableAbility?
+        if target.unstoppableAbility? && stop
             echo("\nUnstoppable Ability Disrupt") if $AIGENERALLOG
             return 0
         end 
@@ -1676,9 +1676,7 @@ class Battle::AI
         end
         if target.hasActiveAbility?(:SHADOWTAG)
             echo("\nShadow Tag Disrupt") if $AIGENERALLOG
-            if !user.hasActiveAbility?(:SHADOWTAG) || !(user.pbHasType?(:GHOST, true) && (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]))
-                abilityscore*=1.5
-            end
+            abilityscore*=1.5 if !user.hasActiveAbility?(:SHADOWTAG)
         end    
         if target.hasActiveAbility?(:ARENATRAP)
             echo("\nArena Trap Disrupt") if $AIGENERALLOG

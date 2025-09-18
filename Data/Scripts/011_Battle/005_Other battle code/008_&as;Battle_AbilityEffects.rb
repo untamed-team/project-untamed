@@ -3112,9 +3112,9 @@ Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
           power = 150 if ["PowerHigherWithUserHP"].include?(m.function) # Eruption
           power = 130 if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(m.function) # OHKO
           # Counter, Mirror Coat, Metal Burst
-          power = 110 if ["CounterPhysicalDamage",
-                          "CounterSpecialDamage",
-                          "CounterDamagePlusHalf"].include?(m.function)
+          power = 99 if ["CounterPhysicalDamage",
+                         "CounterSpecialDamage",
+                         "CounterDamagePlusHalf"].include?(m.function)
           # Sonic Boom, Dragon Rage, Night Shade, Endeavor, Psywave,
           # Return, Frustration, Crush Grip, Gyro Ball, Hidden Power,
           # Natural Gift, Trump Card, Flail, Grass Knot

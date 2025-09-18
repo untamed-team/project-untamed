@@ -1035,7 +1035,7 @@ class Battle::AI
         elsif ![:MULTITYPE, :RKSSYSTEM].include?(user.ability_id) &&
               ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM,
                 :TRACE, :WONDERGUARD, :ZENMODE].include?(target.ability_id)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if minimini > miniscore
                 score *= minimini / miniscore
@@ -1054,7 +1054,7 @@ class Battle::AI
         elsif ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) &&
               ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM, :TRACE, 
                 :ZENMODE].include?(user.ability_id)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy
                 if minimini > miniscore
@@ -1094,7 +1094,7 @@ class Battle::AI
         elsif ![:MULTITYPE, :RKSSYSTEM].include?(target.ability_id) &&
               ![:FLOWERGIFT, :FORECAST, :ILLUSION, :IMPOSTER, :MULTITYPE, :RKSSYSTEM, :TRACE, 
                 :ZENMODE].include?(user.ability_id)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             minimini = getAbilityDisruptScore(move,user,target,skill)  # how good is the target's ability?
             if user.opposes?(target) # is enemy
                 score *= 1.0 / miniscore

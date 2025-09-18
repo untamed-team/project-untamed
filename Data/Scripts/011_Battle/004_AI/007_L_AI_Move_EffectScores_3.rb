@@ -141,8 +141,10 @@ class Battle::AI
         bestmove = bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
         score *= 1.3 if bestmove[0] < (user.hp / 3.0)
         remainingPP = move.pp - 1
-        remainingPP -= 1 if target.hasActiveAbility?(:PRESSURE)
-        score *= 1.1 if remainingPP > 0
+        if target.hasActiveAbility?(:PRESSURE)
+            remainingPP -= 1
+            score *= 1.1 if remainingPP > 0
+        end
     #---------------------------------------------------------------------------
     when "PowerHigherWithTargetWeight" # Low Kick / grass knot
     #---------------------------------------------------------------------------
@@ -3316,7 +3318,7 @@ class Battle::AI
         end
         if user.allAllies.any?
             target_num = move.pbTarget(user)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             user.allAllies.each do |b|
                 if user.hp<user.totalhp*0.5
                     if b.hasActiveAbility?(:SEANCE)
@@ -3370,7 +3372,7 @@ class Battle::AI
         end
         if user.allAllies.any?
             target_num = move.pbTarget(user)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             user.allAllies.each do |b|
                 if b.hasActiveAbility?(:SEANCE)
                     score*=miniscore*1.1
@@ -3418,7 +3420,7 @@ class Battle::AI
         end
         if user.allAllies.any?
             target_num = move.pbTarget(user)
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             user.allAllies.each do |b|
                 if b.hasActiveAbility?(:SEANCE)
                     score*=miniscore*1.1
@@ -3457,7 +3459,7 @@ class Battle::AI
             score*=0.2
         end
         if user.allAllies.any?
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             user.allAllies.each do |b|
                 if b.hasActiveAbility?(:SEANCE)
                     score*=miniscore*1.1
@@ -3500,7 +3502,7 @@ class Battle::AI
             score*=0.1
         end
         if user.allAllies.any?
-            miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+            miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
             user.allAllies.each do |b|
                 if b.hasActiveAbility?(:SEANCE)
                     score*=miniscore*1.1
@@ -3556,7 +3558,7 @@ class Battle::AI
                 end
             end
             if user.allAllies.any?
-                miniscore = getAbilityDisruptScore(move,target,user,skill) # how good is our ability?
+                miniscore = getAbilityDisruptScore(move,target,user,skill,false) # how good is our ability?
                 user.allAllies.each do |b|
                     if b.hasActiveAbility?(:SEANCE)
                         score*=miniscore*1.1
