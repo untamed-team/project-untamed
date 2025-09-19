@@ -3417,25 +3417,19 @@ Battle::AbilityEffects::OnSwitchIn.add(:SCREENCLEANER,
 # slow start rework #by low
 Battle::AbilityEffects::OnSwitchIn.add(:SLOWSTART,
   proc { |ability, battler, battle, switch_in|
-    battle.pbShowAbilitySplash(battler)
-    if battle.wasUserAbilityActivated?(battler) && battler.slowstart_count > 0
-      if Battle::Scene::USE_ABILITY_SPLASH
+    if battle.wasUserAbilityActivated?(battler)
+      if battler.slowstart_count > 0
+        battle.pbShowAbilitySplash(battler)
         battle.pbDisplay(_INTL("{1} still can't get it going!", battler.pbThis))
-      else
-        battle.pbDisplay(_INTL("{1} still can't get it going because of its {2}!",
-           battler.pbThis, battler.abilityName))
+        battle.pbHideAbilitySplash(battler)
       end
     else
+      battle.pbShowAbilitySplash(battler)
       battle.slowstartCount[battler.index & 1][battler.pokemonIndex] = 5
-      if Battle::Scene::USE_ABILITY_SPLASH
-        battle.pbDisplay(_INTL("{1} can't get it going!", battler.pbThis))
-      else
-        battle.pbDisplay(_INTL("{1} can't get it going because of its {2}!",
-           battler.pbThis, battler.abilityName))
-      end
+      battle.pbDisplay(_INTL("{1} can't get it going!", battler.pbThis))
       battle.ActivateUserAbility(battler)
+      battle.pbHideAbilitySplash(battler)
     end
-    battle.pbHideAbilitySplash(battler)
   }
 )
 
