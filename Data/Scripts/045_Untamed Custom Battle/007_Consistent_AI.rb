@@ -347,11 +347,14 @@ class Battle::AI
         elsif target_data.num_targets > 1 || dart
             # If move affects multiple battlers and you don't choose a particular one
             totalScore = 0
+            count = 0
+            valuableTarget = false
             @battle.allBattlers.each do |b|
                 next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
                 score = pbGetMoveScore(move, user, b, skill)
                 if user.opposes?(b)
-                    totalScore += score 
+                    totalScore += score
+                    valuableTarget = true if score > 200
                 else # is ally
                     realtype = pbRoughType(move, user, skill)
                     case realtype
@@ -390,7 +393,10 @@ class Battle::AI
                     end
                     totalScore -= score
                 end
+                count += 1
             end
+            totalScore += 100 if valuableTarget && count > 1
+            totalScore /= count # needs testing
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
         else
             # If move affects one battler and you have to choose which one
