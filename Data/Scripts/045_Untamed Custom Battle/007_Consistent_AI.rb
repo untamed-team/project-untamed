@@ -350,7 +350,46 @@ class Battle::AI
             @battle.allBattlers.each do |b|
                 next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
                 score = pbGetMoveScore(move, user, b, skill)
-                totalScore += ((user.opposes?(b)) ? score : -score)
+                if user.opposes?(b)
+                    totalScore += score 
+                else # is ally
+                    realtype = pbRoughType(move, user, skill)
+                    case realtype
+                    when :ELECTRIC, :WATER
+                        if (b.hasActiveAbility?(:VOLTABSORB) && realtype == :ELECTRIC) ||
+                           (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN]) && realtype == :WATER)
+                            missinghp = (b.totalhp-b.hp) * 100.0 / b.totalhp
+                            score = -missinghp * (1.0 / 4)
+                        end
+                        if (b.hasActiveAbility?(:LIGHTNINGROD) && realtype == :ELECTRIC) ||
+                           (b.hasActiveAbility?(:STORMDRAIN) && realtype == :WATER)
+                            if b.spatk > b.attack
+                                score = -20
+                            elsif b.statStageAtMax?(:SPECIAL_ATTACK)
+                                score = 0
+                            else
+                                score = -10
+                            end
+                        end
+                    when :FIRE
+                        if b.hasActiveAbility?(:FLASHFIRE)
+                            score = b.effects[PBEffects::FlashFire] ? 0 : -20
+                        end
+                    when :GRASS
+                        if b.hasActiveAbility?(:SAPSIPPER)
+                            if b.attack > b.spatk
+                                score = -20
+                            elsif b.statStageAtMax?(:ATTACK)
+                                score = 0
+                            else
+                                score = -10
+                            end
+                        end
+                    when :GROUND
+                        score = 0 if b.hasActiveAbility?(:LEVITATE)
+                    end
+                    totalScore -= score
+                end
             end
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
         else
