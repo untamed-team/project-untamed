@@ -852,12 +852,13 @@ class Battle::AI
         if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||
            (move.function == "HealUserByHalfOfDamageDoneIfTargetAsleep" && target.asleep?) ||
            ((user.hasActiveAbility?(:ECHOCHAMBER) || 
-            (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && move.soundMove?)
+            (user.isSpecies?(:CHIMECHO) && user.pokemon.willmega)) && move.soundMove?) ||
+           (user.hasActiveAbility?(:LIFESTEAL) && move.contactMove?)
             missinghp = (user.totalhp-user.hp) * 100.0 / user.totalhp
             if target.hasActiveAbility?(:LIQUIDOOZE)
                 damagePercentage -= missinghp*0.5
             else
-                damagePercentage += missinghp*0.4
+                damagePercentage += missinghp*0.4 if user.canHeal?
             end
         end
         damagePercentage *= 1.3 if move.soundMove? && user.hasActiveItem?(:THROATSPRAY)

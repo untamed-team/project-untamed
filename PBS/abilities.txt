@@ -1402,3 +1402,8 @@ Name = Eerie Presence
 Description = Absorbs lifeforce if not directly damaged.
 FullDesc = Heals 1/6th of the user's max HP at the end of each turn if the user was not hit by a (direct) attack.
 #-------------------------------
+[LIFESTEAL]
+Name = Lifesteal
+Description = Restored HP when dealing damage with a direct attack.
+FullDesc = The user's HP is restored by 1/6th of the damage dealt via contact moves.
+#-------------------------------
