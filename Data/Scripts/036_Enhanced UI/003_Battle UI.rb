@@ -743,14 +743,14 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # Battler info for player-owned Pokemon.
     if battler.pbOwnedByPlayer?
-      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
       textPos.push(
         [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
         [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
       )
+    end
+      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
       imagePos.push([@path + "battler_owner", xpos + 36, iconY + 11])
       textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
-    end
     if battler.hasAbilityMutation?
       cord = 0
       for i in 0..battler.abilityMutationList.length
@@ -1026,7 +1026,7 @@ class Battle::Scene
     when :SPEED
       value = battler.pbSpeed
     end
-    value *= 0.9 if battler.pokemon.natureBoostAI
+    #value *= 0.9 if battler.pokemon.natureBoostAI
     value = value.round
     value = [[value, 999].min, 1].max
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
