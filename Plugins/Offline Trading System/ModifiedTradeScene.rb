@@ -21,7 +21,7 @@ class ModifiedPokemonTrade_Scene
     end
   end
 
-  def pbStartScreen(pokemon, pokemon2, trader1, trader2)
+  def pbStartScreenScene1(pokemon, pokemon2, trader1, trader2)
     @sprites = {}
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99999
@@ -38,14 +38,14 @@ class ModifiedPokemonTrade_Scene
     @sprites["rsprite1"].y = 264
     @sprites["rsprite1"].z = 10
     @pokemon.species_data.apply_metrics_to_sprite(@sprites["rsprite1"], 1)
-    @sprites["rsprite2"] = PokemonSprite.new(@viewport)
-    @sprites["rsprite2"].setPokemonBitmap(@pokemon2, false)
-    @sprites["rsprite2"].setOffset(PictureOrigin::BOTTOM)
-    @sprites["rsprite2"].x = Graphics.width / 2
-    @sprites["rsprite2"].y = 264
-    @sprites["rsprite2"].z = 10
-    @pokemon2.species_data.apply_metrics_to_sprite(@sprites["rsprite2"], 1)
-    @sprites["rsprite2"].visible = false
+    #@sprites["rsprite2"] = PokemonSprite.new(@viewport)
+    #@sprites["rsprite2"].setPokemonBitmap(@pokemon2, false)
+    #@sprites["rsprite2"].setOffset(PictureOrigin::BOTTOM)
+    #@sprites["rsprite2"].x = Graphics.width / 2
+    #@sprites["rsprite2"].y = 264
+    #@sprites["rsprite2"].z = 10
+    #@pokemon2.species_data.apply_metrics_to_sprite(@sprites["rsprite2"], 1)
+    #@sprites["rsprite2"].visible = false
     @sprites["msgwindow"] = pbCreateMessageWindow(@viewport)
     pbFadeInAndShow(@sprites)
   end
@@ -90,6 +90,35 @@ class ModifiedPokemonTrade_Scene
       [@sprites["rsprite1"], spriteBall]
     )
     spriteBall.dispose
+  end
+  
+  def pbStartScreenScene2(pokemon, pokemon2, trader1, trader2)
+    @sprites = {}
+    @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+    @viewport.z = 99999
+    @pokemon  = pokemon
+    @pokemon2 = pokemon2
+    @trader1  = trader1
+    @trader2  = trader2
+    addBackgroundOrColoredPlane(@sprites, "background", "tradebg",
+                                Color.new(248, 248, 248), @viewport)
+    #@sprites["rsprite1"] = PokemonSprite.new(@viewport)
+    #@sprites["rsprite1"].setPokemonBitmap(@pokemon, false)
+    #@sprites["rsprite1"].setOffset(PictureOrigin::BOTTOM)
+    #@sprites["rsprite1"].x = Graphics.width / 2
+    #@sprites["rsprite1"].y = 264
+    #@sprites["rsprite1"].z = 10
+    #@pokemon.species_data.apply_metrics_to_sprite(@sprites["rsprite1"], 1)
+    @sprites["rsprite2"] = PokemonSprite.new(@viewport)
+    @sprites["rsprite2"].setPokemonBitmap(@pokemon2, false)
+    @sprites["rsprite2"].setOffset(PictureOrigin::BOTTOM)
+    @sprites["rsprite2"].x = Graphics.width / 2
+    @sprites["rsprite2"].y = 264
+    @sprites["rsprite2"].z = 10
+    @pokemon2.species_data.apply_metrics_to_sprite(@sprites["rsprite2"], 1)
+    @sprites["rsprite2"].visible = false
+    @sprites["msgwindow"] = pbCreateMessageWindow(@viewport)
+    pbFadeInAndShow(@sprites)
   end
 
   def pbScene2
@@ -167,7 +196,7 @@ class ModifiedPokemonTrade_Scene
     was_owned = $player.owned?(@pokemon2.species)
     $player.pokedex.register(@pokemon2)
     $player.pokedex.set_owned(@pokemon2.species)
-    pbBGMStop
+    #pbBGMStop
     @pokemon.play_cry
     speciesname1 = GameData::Species.get(@pokemon.species).name
     speciesname2 = GameData::Species.get(@pokemon2.species).name
@@ -187,7 +216,7 @@ class ModifiedPokemonTrade_Scene
     was_owned = $player.owned?(@pokemon2.species)
     $player.pokedex.register(@pokemon2)
     $player.pokedex.set_owned(@pokemon2.species)
-    pbBGMStop
+    #pbBGMStop
     #@pokemon.play_cry
     speciesname1 = GameData::Species.get(@pokemon.species).name
     speciesname2 = GameData::Species.get(@pokemon2.species).name

@@ -96,12 +96,22 @@ class OfflineTradingSystem
 		end
 	end #def self.setTradingID
 	
-	def self.selectPkmnToTrade
+	def self.selectPkmnToTrade(command)
 		self.setTradingID if $game_player.tradeID == ""
+		
+		case command
+		when 0 #start new trade
+			print "going into regular storage"
+			storage = $PokemonStorage
+		when 1 #finalize old trade
+			print "going into cloud storage"
+			storage = $PokemonStorage #change this to cloud storage
+		end
+		
 		pbFadeOutIn {
 			@boxScene = TradingPokemonStorageScene.new
-			@boxScreen = TradingPokemonStorageScreen.new(@boxScene, $PokemonStorage)
-			@boxScreen.pbStartScreen(0)
+			@boxScreen = TradingPokemonStorageScreen.new(@boxScene, storage)
+			@boxScreen.pbStartScreen(command)
 		}
 	end #def self.selectPkmnToTrade
 	
@@ -141,7 +151,10 @@ class OfflineTradingSystem
 		files.each do |file|
 		  File.delete(file)
 		end
-			
+		
+		###########################################################
+		# Beginning Trade from Scratch
+		###########################################################
 		Console.echo_warn "Creating blank error log in Trading folder"
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "", "w")
 		#create new screen for trading
@@ -200,6 +213,9 @@ class OfflineTradingSystem
 		#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
 		self.getPkmnToTrade
 		
+		###########################################################
+		# Ask Player if They Accept Trade
+		###########################################################		
 		#here is where the user will have input
 		command_list = [_INTL("#{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
 		if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
@@ -264,12 +280,15 @@ class OfflineTradingSystem
 		finalizedTrade = false
 		cancel = false
 		
+		###########################################################
+		# Ask Player to Finalize Trade
+		###########################################################
 		while !finalizedTrade && !cancel
 			loop do
 				choice = pbMessage(_INTL("Give 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah' to the person you're trading with. Download their Agreement .mazah file to your Trading folder, then choose 'Finalize Trade' if you agree to the trade."), command_list, -1, nil, command)
 				case choice
 				when -1
-					if pbConfirmMessage(_INTL("Cancel trading?"))
+					if pbConfirmMessage(_INTL("Cancel trading? You can finish this trade later."))
 						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player pressed the back button\n\n", "a")
 						cancel = true
 						break
@@ -283,7 +302,7 @@ class OfflineTradingSystem
 					break
 				when 2
 					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
-					if pbConfirmMessage(_INTL("Cancel trading?"))
+					if pbConfirmMessage(_INTL("Cancel trading? You can finish this trade later."))
 						cancel = true
 						break
 					end
@@ -405,7 +424,7 @@ class OfflineTradingSystem
 			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		end
 		
-		#######################Game.save
+		Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		
@@ -415,7 +434,7 @@ class OfflineTradingSystem
 			#@tradingViewport.dispose
 			
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
 			evo.pbTradeSendPkmn
 			evo.pbEndScreen
 			#@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
@@ -430,27 +449,24 @@ class OfflineTradingSystem
 		
 	end #def self.sendPkmnToCloud(pkmn)
 	
-	def self.receivePkmnFromOtherPlayer
+	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)
 		##############check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
-		
-		
-		
-		#if finalizing trade without leaving trade screen
-		#for replacing the pkmn on the spot (if never left the trade menu
-		#REVISIT THIS when done storing pkmn in cloud
-		if @pkmnToReplaceLocationAndIndex[0] == "party"
-			$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
-		elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+		if finalizingTradeLater
+			#if finalizing trade later...
+			#set location and index of pkmn to update in box or party
+			#@pkmnToReplaceLocationAndIndex[0] == "party"
+			#@pkmnToReplaceLocationAndIndex[0] == "box"
+		else
+			#if finalizing trade without leaving trade screen
+			#for replacing the pkmn on the spot (if never left the trade menu
+			#REVISIT THIS when done storing pkmn in cloud
+			if @pkmnToReplaceLocationAndIndex[0] == "party"
+				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+			end
 		end
-		
-		
-		
-		#if finalizing trade later...
-		#set location and index of pkmn to update in box or party
-		#@pkmnToReplaceLocationAndIndex[0] == "party"
-		#@pkmnToReplaceLocationAndIndex[0] == "box"
-		
+
 		#regardless of how the trade is being finalized, receive the pkmn
 		pbFadeOutIn {
 			@sprites.dispose
@@ -458,7 +474,7 @@ class OfflineTradingSystem
 			
 			#evolve pkmn if needed
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreen(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene2(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
 			evo.pbTradeReceivePkmn
 			evo.pbEndScreen
 			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
@@ -782,5 +798,28 @@ MenuHandlers.add(:pc_menu, :offline_trade, {
   "order"     => 50,
   "effect"    => proc { |menu|
 	OfflineTradingSystem.selectPkmnToTrade
+  }
+})
+
+MenuHandlers.add(:pc_menu, :offline_trade, {
+  "name"      => _INTL("Trade Pokémon"),
+  "order"     => 50,
+  "effect"    => proc { |menu|
+  pbMessage(_INTL("\\se[PC access]The Trading Storage System was opened."))
+    command = 0
+    loop do
+      command = pbShowCommandsWithHelp(nil,
+         [_INTL("Start New Trade"),
+          _INTL("Finalize Old Trade"),
+          #_INTL("Deposit Pokémon"),
+          _INTL("See ya!")],
+         [_INTL("Start a new trade from scratch."),
+          _INTL("Finish a trade started before."),
+          #_INTL("Store Pokémon in your party in Boxes."),
+          _INTL("Return to the previous menu.")], -1, command)
+      break if command < 0 || command == 2
+		OfflineTradingSystem.selectPkmnToTrade(command)
+    end
+    next false
   }
 })
