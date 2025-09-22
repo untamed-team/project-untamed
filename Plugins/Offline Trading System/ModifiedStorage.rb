@@ -1,3 +1,16 @@
+SaveData.register(:trading_cloud) do
+  ensure_class :PokemonStorage
+  save_value { $TradeCloud }
+  load_value { |value| $TradeCloud = value }
+  new_game_value { PokemonStorage.new }
+end
+
+#create variable that can be written to when cancelling a Trade
+#this variable will hold the agreement file's encoded hex data, so the pkmn trade can only be finalized if the pkmn the player is trying to get in return matches the properties of the pkmn your own pkmn is looking for
+class Pokemon
+	attr_accessor :canOnlyBeTradedFor
+end #class Pokemon
+
 class TradingPokemonStorageScene
   attr_reader :quickswap
 

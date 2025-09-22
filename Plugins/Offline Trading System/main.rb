@@ -105,7 +105,7 @@ class OfflineTradingSystem
 			storage = $PokemonStorage
 		when 1 #finalize old trade
 			print "going into cloud storage"
-			storage = $PokemonStorage #change this to cloud storage
+			storage = $TradeCloud
 		end
 		
 		pbFadeOutIn {

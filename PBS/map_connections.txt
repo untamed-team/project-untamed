@@ -10,8 +10,6 @@
 48,East,0,26,West,52
 # Melolado (39) - Route 2 (26)
 39,West,10,26,East,0
-# Calojarro Plaza (36) - Daycare CenterInterior (28)
-36,North,0,28,South,0
 # Route 3 (29) - Route 3-4 Transfer Map (117)
 29,West,52,117,East,0
 # Calojarro (51) - Route 3 (29)
