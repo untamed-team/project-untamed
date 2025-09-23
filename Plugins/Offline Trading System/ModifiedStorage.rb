@@ -1045,7 +1045,7 @@ class TradingPokemonStorageScreen
 	  #show tip card for FINALIZING TRADES
 	  #pbShowTipCardsGrouped(:TRADING) if !pbSeenTipCard?(:TRADING1)
       loop do
-        selected = @scene.pbSelectBox(@storage.party)                    ##########do I need this?
+        selected = @scene.pbSelectBox(@storage.party)
         if selected.nil?
           if pbHeldPokemon
             pbDisplay(_INTL("You're holding a Pokémon!"))
@@ -1095,8 +1095,8 @@ class TradingPokemonStorageScreen
             #commands[cmdWithdraw = commands.length] = (selected[0] == -1) ? _INTL("Store") : _INTL("Withdraw")
             #commands[cmdItem = commands.length]     = _INTL("Item")
             #commands[cmdMark = commands.length]     = _INTL("Mark")
-            commands[cmdOfferAsTrade = commands.length]  = _INTL("Offer as Trade")
-            commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
+            commands[cmdOfferAsTrade = commands.length]  = _INTL("Finish Trade")
+            #commands[cmdDebug = commands.length]    = _INTL("Debug") if $DEBUG
             commands[commands.length]               = _INTL("Cancel")
             command = pbShowCommands(helptext, commands)
             if cmdMove >= 0 && command == cmdMove   # Move/Shift/Place
@@ -1247,7 +1247,7 @@ class TradingPokemonStorageScreen
     if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
       pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Mysterious Program to deposit your last Pokémon!"))
+	  #pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Mysterious Program to deposit your last Pokémon!"))
       return
     end
     @scene.pbHold(selected)
@@ -1334,13 +1334,17 @@ class TradingPokemonStorageScreen
     #  pbDisplay(_INTL("{1} refuses to leave you!", pokemon.name))
     #  return false
     end
-    if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
+    if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke #this is only when you're in your party, which you won't be able to do when in cloud storage
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
 	    pbDisplay(_INTL("You can trade your last party Pokémon away, but this could cause unstable gameplay on this save file. Are you okay with this?"))
       #return
     end
-    command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
+    if @storage == $PokemonStorage
+		command = pbShowCommands(_INTL("Offer this Pokémon as a trade?"), [_INTL("Yes"), _INTL("No")])
+	else #in cloud storage
+		command = pbShowCommands(_INTL("Finish this trade?"), [_INTL("Yes"), _INTL("No")])
+	end
     if command == 0
       pkmnname = pokemon.name
 	  
@@ -1362,9 +1366,13 @@ class TradingPokemonStorageScreen
         pokemon.item = nil
       end
     
-      #print "Offering #{pokemon} as trade"
       #this is where we create a new screen for trading and generate an offer code
-      OfflineTradingSystem.tradeMenu(pokemon)
+	  if @storage == $PokemonStorage
+		screen = "offer"
+	  else #in cloud storage
+		screen = "agreement"
+	  end
+      OfflineTradingSystem.tradeMenu(pokemon, screen)
     end
     return
   end

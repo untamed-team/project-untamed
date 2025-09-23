@@ -1,11 +1,15 @@
 #Offline trading system
 #TO DO:
-# replace '######################' with '' to decomment stuff
-#create a withholding feature where pokemon get added to an array when they are traded away and when reading an agreement file from another player, the pkmn is taken from that instead of the party or box. This is so the pkmn can disappear from where the player can access it, disallowing players to dupe pkmn if one player redeems an agreement offer but the other does not
-#if I do the above, I'll need to make a way for the player to choose to finalize a trade by reading an agreement file rather than just reading the agreement file from the temporary screen where the pkmn is offered
+
+#In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
+
 #need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
 
-#create another temporary storage where players can see pkmn in trade cloud. They can check summary and choose to "Finalize Trade", creating an agreemet file (in case they lose the original one). This could even generate the original offer file as well?
+#should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud
+
+#should not see the "party" button at the bottom of the screen when in cloud storage
+
+#after finalizing a trade from the cloud storage, refresh the box. Will need to set @pkmnToReplaceLocationAndIndex for that
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -138,7 +142,10 @@ class OfflineTradingSystem
 		@sprites["pkmnPlayerIsReceiving"].visible = false
 	end #def self.setupTradingScreen
 	
-	def self.tradeMenu(pkmn)
+	###########################################################
+	# This contains the main loop
+	###########################################################
+	def self.tradeMenu(pkmn, offerOrFinishScreen)
 		#save pokemon symbol as it will be used to delete the exact pokemon later
 		@pkmnPlayerIsOfferingInSymbolFormat = nil
 		@pkmnPlayerIsOfferingInSymbolFormat = pkmn
@@ -161,124 +168,153 @@ class OfflineTradingSystem
 		pbFadeOutIn {
 			self.setupTradingScreen
 		}
+		
+		if offerOrFinishScreen == "offer"
+			createOfferFile(@pkmnPlayerIsOfferingInSymbolFormat)
+			
+			#here is where the user will have input
+			command_list = [_INTL("Open Trading Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
+			# Main loop
+			command = 0
+			ready = false
+			validTrade = false
+			cancel = false
+		
+			while !validTrade && !cancel
+				loop do
+					choice = pbMessage(_INTL("Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah' to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'."), command_list, -1, nil, command)
+					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}'.mazah to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'.\n\n", "a")
+					case choice
+					when -1
+						if pbConfirmMessage(_INTL("Cancel trading?"))
+							GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player pressed the back button.\n\n", "a")
+							cancel = true
+							break
+						end
+					when 0
+						root_folder = RTP.getPath('.', "Game.ini")
+						system("start explorer \"#{root_folder}\\Trading\"")
+							GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trading Folder'\n\n", "a")
+					when 1
+						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Check Offer'\n\n", "a")
+						break
+					when 2
+						if pbConfirmMessage(_INTL("Cancel trading?"))
+							GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
+							cancel = true
+							break
+						end
+					end #case choice
+				end #loop do
+				if !cancel
+					validTrade = self.readOfferFile
+				end #if !cancel
+			end #while !validTrade
+		
+			if cancel
+				pbFadeOutIn {
+					@tradingViewport.dispose
+					return
+				}
+			end
+		
+			#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
+			self.getPkmnToTrade #this sets many variables such as @pkmnPlayerWillReceiveInSymbolFormat, but we might not need to do this since the pkmn the player is offering now has the data of the pkmn it must be traded with in 'pkmn.canOnlyBeTradedFor'
+		
+			###########################################################
+			# Ask Player if They Accept Trade
+			###########################################################		
+			#here is where the user will have input
+			command_list = [_INTL("#{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
+			if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
+				pbDisplay(_INTL("Warning! The Pkmn being offered cannot exist in this savefile!\\nYou may accept the trade, but the Pkmn will be deleted."))
+			end
+			# Main loop
+			command = 0
+			agreed = false
+			cancel = false
+		
+			while !agreed && !cancel
+				loop do
+					choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOfferingInSymbolFormat.name} for #{@pkmnPlayerWillReceiveInSymbolFormat.name}?"), command_list, -1, nil, command)
+					case choice
+					when -1
+						if pbConfirmMessage(_INTL("Cancel trading?"))
+							cancel = true
+							break
+						end
+					when 0
+						#summary of @pkmnPlayerIsOfferingInSymbolFormat
+						pbFadeOutIn {
+							scene = PokemonSummary_Scene.new
+							screen = PokemonSummaryScreen.new(scene)
+							screen.pbStartScreen([@pkmnPlayerIsOfferingInSymbolFormat,@pkmnPlayerWillReceiveInSymbolFormat], 0)
+						}
+					when 1
+						#summary of @pkmnPlayerWillReceiveInSymbolFormat
+						pbFadeOutIn {
+							scene = PokemonSummary_Scene.new
+							screen = PokemonSummaryScreen.new(scene)
+							screen.pbStartScreen([@pkmnPlayerWillReceiveInSymbolFormat,@pkmnPlayerIsOfferingInSymbolFormat], 0)
+						}
+					when 2
+						break
+					when 3
+						if pbConfirmMessage(_INTL("Cancel trading?"))
+							cancel = true
+							break
+						end
+					end #case choice
+				end #loop do
+				if !cancel
+					agreed = true
+				end #if !cancel
+			end #while !agreed && !cancel
+		
+			if cancel
+				pbFadeOutIn {
+					@tradingViewport.dispose
+					return
+				}
+			end
+		
+			#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
+			self.createAgreementFile
 
-		createOfferFile(@pkmnPlayerIsOfferingInSymbolFormat)
-		
-		#here is where the user will have input
-		command_list = [_INTL("Open Trading Folder"),_INTL("Check Offer"),_INTL("Cancel Trade")]
-		# Main loop
-		command = 0
-		ready = false
-		validTrade = false
-		cancel = false
-		
-		while !validTrade && !cancel
-			loop do
-				choice = pbMessage(_INTL("Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah' to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'."), command_list, -1, nil, command)
-				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Give 'Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}'.mazah to the person you're trading with. Download their Offering .mazah file to your Trading folder, then choose 'Check Offer'.\n\n", "a")
-				case choice
-				when -1
-					if pbConfirmMessage(_INTL("Cancel trading?"))
-						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player pressed the back button.\n\n", "a")
-						cancel = true
-						break
-					end
-				when 0
-					root_folder = RTP.getPath('.', "Game.ini")
-					system("start explorer \"#{root_folder}\\Trading\"")
-						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Open Trading Folder'\n\n", "a")
-				when 1
-					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Check Offer'\n\n", "a")
-					break
-				when 2
-					if pbConfirmMessage(_INTL("Cancel trading?"))
-						GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
-						cancel = true
-						break
-					end
-				end #case choice
-			end #loop do
-			if !cancel
-				validTrade = self.readOfferFile
-			end #if !cancel
-		end #while !validTrade
-		
-		if cancel
-			pbFadeOutIn {
-				@tradingViewport.dispose
-				return
-			}
+			#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see		
+			command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
+			# Main loop
+			command = 0
+			finalizedTrade = false
+			cancel = false
+			
+			
+		else #finishing a trade from cloud storage
+			
 		end
 		
-		#the game then asks the player if they wish to accept this trade (showing them the pkmn they would get and giving them the option to look at the summary screen)
-		self.getPkmnToTrade
-		
-		###########################################################
-		# Ask Player if They Accept Trade
-		###########################################################		
-		#here is where the user will have input
-		command_list = [_INTL("#{@pkmnPlayerIsOfferingInSymbolFormat.name}'s Summary"),_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name}'s Summary"),_INTL("Accept Trade"),_INTL("Cancel Trade")]
-		if @pkmnPlayerWillReceiveInSymbolFormat.speciesName.include?("Failsafe")
-			pbDisplay(_INTL("Warning! The Pkmn being offered cannot exist in this savefile!\\nYou may accept the trade, but the Pkmn will be deleted."))
-		end
-		# Main loop
-		command = 0
-		agreed = false
-		cancel = false
-		
-		while !agreed && !cancel
-			loop do
-				choice = pbMessage(_INTL("Trade your #{@pkmnPlayerIsOfferingInSymbolFormat.name} for #{@pkmnPlayerWillReceiveInSymbolFormat.name}?"), command_list, -1, nil, command)
-				case choice
-				when -1
-					if pbConfirmMessage(_INTL("Cancel trading?"))
-						cancel = true
-						break
-					end
-				when 0
-					#summary of @pkmnPlayerIsOfferingInSymbolFormat
-					pbFadeOutIn {
-						scene = PokemonSummary_Scene.new
-						screen = PokemonSummaryScreen.new(scene)
-						screen.pbStartScreen([@pkmnPlayerIsOfferingInSymbolFormat,@pkmnPlayerWillReceiveInSymbolFormat], 0)
-					}
-				when 1
-					#summary of @pkmnPlayerWillReceiveInSymbolFormat
-					pbFadeOutIn {
-						scene = PokemonSummary_Scene.new
-						screen = PokemonSummaryScreen.new(scene)
-						screen.pbStartScreen([@pkmnPlayerWillReceiveInSymbolFormat,@pkmnPlayerIsOfferingInSymbolFormat], 0)
-					}
-				when 2
-					break
-				when 3
-					if pbConfirmMessage(_INTL("Cancel trading?"))
-						cancel = true
-						break
-					end
-				end #case choice
-			end #loop do
-			if !cancel
-				agreed = true
-			end #if !cancel
-		end #while !agreed && !cancel
-		
-		if cancel
-			pbFadeOutIn {
-				@tradingViewport.dispose
-				return
-			}
-		end
-		
-		#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
-		self.createAgreementFile
 
-		#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see		
-		command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
-		# Main loop
-		command = 0
-		finalizedTrade = false
-		cancel = false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		
+		
 		
 		###########################################################
 		# Ask Player to Finalize Trade
@@ -319,7 +355,7 @@ class OfflineTradingSystem
 		
 		if cancel
 			pbFadeOutIn {
-				@tradingViewport.dispose
+				@tradingViewport.dispose				
 				return
 			}
 		end
@@ -353,43 +389,45 @@ class OfflineTradingSystem
 		@sprites["pkmnPlayerIsReceiving"].visible = true
 	end #def self.getPkmnToTrade
 	
-	def self.createAgreementFile
-		pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
-		playerTradeID = $game_player.tradeID
-		serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
+	def self.createAgreementFile(offerOrFinishScreen)
+		if offerOrFinishScreen == "offer"
+			pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
+			playerTradeID = $game_player.tradeID
+			serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
 		
-		serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
+			serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
 		
-		#convert marshaldata to hex
-		hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
-		Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
-		Console.echo_warn "=============================================="
-		@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
-		encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
+			#convert marshaldata to hex
+			hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
+			Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
+			Console.echo_warn "=============================================="
+			@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
+			encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
 		
-		hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
-		Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
-		encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
-		#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
+			hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
+			Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
+			encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
+			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
-		entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
+			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
-		#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
-		self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
+			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+			self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
 		
-		#put hex data into .mazah file
-		# Make sure to define your hex data and file path first
-		# 1. Encode the data
-		File.open("Trading/Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
-			# 'file.write' writes the string content to the file.
-			file.write(entireEncodedAgreementCode)
+			#put hex data into .mazah file
+			# Make sure to define your hex data and file path first
+			# 1. Encode the data
+			File.open("Trading/Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
+				# 'file.write' writes the string content to the file.
+				file.write(entireEncodedAgreementCode)
+			end
+		elsif offerOrFinishScreen == "agreement"
+			#set all these variables according to what pkmn.canOnlyBeTradedFor is set to
 		end
 	end #def self.createAgreementFile
 	
 	def self.sendPkmnToCloud(pkmn)
-		$game_player.withheldTradingStorage = [] if $game_player.withheldTradingStorage.nil?
-		
 		@pkmnToReplaceLocationAndIndex = []
 		#locate the pkmn player is sending
 		foundInParty = false
@@ -412,7 +450,11 @@ class OfflineTradingSystem
 		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pushing pkmn to $game_player.withheldTradingStorage if not already in there...\n\n", "a")
-		$game_player.withheldTradingStorage.push(pkmn) if !$game_player.withheldTradingStorage.include?(pkmn)
+		pkmn.canOnlyBeTradedFor = self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
+		Console.echo_warn "sending this pkmn to the cloud where it cannot be used and will wait to be traded for the following pkmn in return:"
+		Console.echo_warn "#{pkmn.canOnlyBeTradedFor}"
+		#store the pkmn in the trade cloud to finish the trade later
+		$TradeCloud.pbStoreCaught(pkmn)
 		
 		#remove pkmn from player's storage/party
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Removing pkmn from player's party or storage...\n\n", "a")
@@ -437,14 +479,13 @@ class OfflineTradingSystem
 			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
 			evo.pbTradeSendPkmn
 			evo.pbEndScreen
-			#@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
-			#@boxScene.update
-			#if @pkmnToReplaceLocationAndIndex[0] == "party"
-			#	@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
-			#elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-			#	@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
-			#end
+			@boxScene.update
+			if @pkmnToReplaceLocationAndIndex[0] == "party"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+			end
 		}
 		
 	end #def self.sendPkmnToCloud(pkmn)
@@ -505,7 +546,6 @@ class OfflineTradingSystem
 		@pkmnPlayerWillReceiveInHexFormat = hex_data
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "hex data of the pokemon player is offering before encoding: #{hex_data}\n\n", "a")
 		encoded_hex_data = self.encode("#{playerTradeID}_#{hex_data}")
-		
 		
 		#put hex data into .mazah file
 		File.open("Trading/Offering #{@pkmnPlayerIsOfferingSpeciesUppercase}.mazah", "w") do |file|
