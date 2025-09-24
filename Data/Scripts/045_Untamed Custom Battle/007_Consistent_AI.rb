@@ -338,6 +338,7 @@ class Battle::AI
                 score = pbGetMoveScore(move, user, b, skill)
                 totalScore += (score / oppcounter)
             end
+            totalScore = totalScore.to_i
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
         elsif target_data.num_targets == 0
             # If move affects multiple Pokémon and the AI calculates an overall
@@ -356,6 +357,7 @@ class Battle::AI
                     totalScore += score
                     valuableTarget = true if score > 200
                 else # is ally
+                    score = 0 if b.hasActiveAbility?(:TELEPATHY)
                     realtype = pbRoughType(move, user, skill)
                     case realtype
                     when :ELECTRIC, :WATER
@@ -397,6 +399,7 @@ class Battle::AI
             end
             totalScore += 100 if valuableTarget && count > 1
             totalScore /= count # needs testing
+            totalScore = totalScore.to_i
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
         else
             # If move affects one battler and you have to choose which one
