@@ -894,7 +894,7 @@ FullDesc = When the user's HP is reduced to half or less, the user switches out 
 [EMERGENCYEXIT]
 Name = Emergency Exit
 Description = Switches out if its HP becomes half or less.
-FullDesc = When the user's HP is reduced to half or less, the user switches out immediately. Renamed Wimp Out.
+FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn.
 #-------------------------------
 [WATERCOMPACTION]
 Name = Water Compaction

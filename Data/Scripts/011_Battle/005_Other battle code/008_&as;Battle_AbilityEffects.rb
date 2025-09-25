@@ -371,7 +371,7 @@ Battle::AbilityEffects::WeightCalc.add(:LIGHTMETAL,
 # OnHPDroppedBelowHalf handlers
 #===============================================================================
 
-Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:EMERGENCYEXIT,
+Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:WIMPOUT,
   proc { |ability, battler, move_user, battle|
     next false if battler.effects[PBEffects::SkyDrop] >= 0 ||
                   battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSkyTargetCannotAct")   # Sky Drop
@@ -395,8 +395,7 @@ Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:EMERGENCYEXIT,
     if !Battle::Scene::USE_ABILITY_SPLASH
       battle.pbDisplay(_INTL("{1}'s {2} activated!", battler.pbThis, battler.abilityName))
     end
-    battle.pbDisplay(_INTL("{1} went back to {2}!",
-       battler.pbThis, battle.pbGetOwnerName(battler.index)))
+    battle.pbDisplay(_INTL("{1} went back to {2}!", battler.pbThis, battle.pbGetOwnerName(battler.index)))
     if battle.endOfRound   # Just switch out
       battle.scene.pbRecall(battler.index) if !battler.fainted?
       battler.pbAbilitiesOnSwitchOut   # Inc. primordial weather check
@@ -412,7 +411,14 @@ Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:EMERGENCYEXIT,
   }
 )
 
-Battle::AbilityEffects::OnHPDroppedBelowHalf.copy(:EMERGENCYEXIT, :WIMPOUT)
+Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:EMERGENCYEXIT,
+  proc { |ability, battler, move_user, battle|
+    next false if battler.effects[PBEffects::SkyDrop] >= 0 ||
+                  battler.inTwoTurnAttack?("TwoTurnAttackInvulnerableInSkyTargetCannotAct")   # Sky Drop
+    battler.effects[PBEffects::EmergencyCoward] = true
+    next true
+  }
+)
 
 #Honor-bound #by low
 Battle::AbilityEffects::OnHPDroppedBelowHalf.add(:HONORBOUND,
