@@ -717,6 +717,7 @@ FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is 
 [MAGICBOUNCE]
 Name = Magic Bounce
 Description = Reflects status-changing moves.
+FullDesc = Unaffected by certain non-damaging moves directed at self, and will instead use such moves against the original user.
 #-------------------------------
 [SAPSIPPER]
 Name = Sap Sipper

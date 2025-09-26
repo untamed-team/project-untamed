@@ -357,42 +357,56 @@ class Battle::AI
                     totalScore += score
                     valuableTarget = true if score > 200
                 else # is ally
-                    score = 0 if b.hasActiveAbility?(:TELEPATHY)
+                    initialscore = score
+                    score *= 1.667 if b.hasActiveAbility?(:TELEPATHY)
+                    if move.bombMove?
+                        score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF)
+                    elsif move.soundMove?
+                        score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF)
+                    end
                     realtype = pbRoughType(move, user, skill)
                     case realtype
                     when :ELECTRIC, :WATER
                         if (b.hasActiveAbility?(:VOLTABSORB) && realtype == :ELECTRIC) ||
                            (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN]) && realtype == :WATER)
-                            missinghp = (b.totalhp-b.hp) * 100.0 / b.totalhp
-                            score = -missinghp * (1.0 / 4)
+                            missinghp = (b.totalhp - b.hp).to_f / b.totalhp
+                            score *= 1 + (missinghp * 0.75)
                         end
                         if (b.hasActiveAbility?(:LIGHTNINGROD) && realtype == :ELECTRIC) ||
                            (b.hasActiveAbility?(:STORMDRAIN) && realtype == :WATER)
                             if b.spatk > b.attack
-                                score = -20
+                                score *= 2.0
                             elsif b.statStageAtMax?(:SPECIAL_ATTACK)
-                                score = 0
+                                score *= 1.1
                             else
-                                score = -10
+                                score *= 1.2
                             end
+                        end
+                        if b.hasActiveAbility?(:MOTORDRIVE) && realtype == :ELECTRIC
+                            score *= 2.2 if !b.statStageAtMax?(:SPEED)
                         end
                     when :FIRE
                         if b.hasActiveAbility?(:FLASHFIRE)
-                            score = b.effects[PBEffects::FlashFire] ? 0 : -20
+                            if b.effects[PBEffects::FlashFire]
+                                score *= 1.1
+                            else
+                                score *= 2.0
+                            end
                         end
                     when :GRASS
                         if b.hasActiveAbility?(:SAPSIPPER)
                             if b.attack > b.spatk
-                                score = -20
+                                score *= 2.0
                             elsif b.statStageAtMax?(:ATTACK)
-                                score = 0
+                                score *= 1.1
                             else
-                                score = -10
+                                score *= 1.2
                             end
                         end
                     when :GROUND
-                        score = 0 if b.hasActiveAbility?(:LEVITATE)
+                        score *= 1.3 if b.hasActiveAbility?(:LEVITATE)
                     end
+                    score *= -1 if score > 0 && score != initialscore
                     totalScore -= score
                 end
                 count += 1
@@ -433,6 +447,7 @@ class Battle::AI
                         break if realTarget.battle.choices[realTarget.index][0] == :SwitchOut && 
                                  realTarget.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 &&
                                  move.function != "PursueSwitchingFoe"
+                        break if realTarget.trappedInBattle?
                         next if !pkmn || !pkmn.able?
                         next if inBattleIndex.include?(idxParty)
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
