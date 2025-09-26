@@ -383,7 +383,8 @@ class Battle::AI
                             end
                         end
                         if b.hasActiveAbility?(:MOTORDRIVE) && realtype == :ELECTRIC
-                            score *= 2.2 if !b.statStageAtMax?(:SPEED)
+                            score *= 2.2 if !b.statStageAtMax?(:SPEED) && 
+                                            @battle.field.effects[PBEffects::TrickRoom] == 0
                         end
                     when :FIRE
                         if b.hasActiveAbility?(:FLASHFIRE)
