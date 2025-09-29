@@ -1810,7 +1810,7 @@ Evolutions = PAPELLAUDE,HappinessLevel,25
 [PAPELLAUDE]
 Name = Papellaude
 Types = BUG,NORMAL
-BaseStats = 69,69,53,99,99,69
+BaseStats = 53,69,69,99,99,69
 GenderRatio = Genderless
 GrowthRate = Slow
 BaseExp = 45
@@ -4544,7 +4544,7 @@ Generation = 3
 [MAWILE]
 Name = Mawile
 Types = STEEL,FAIRY
-BaseStats = 50,85,85,50,55,55
+BaseStats = 55,85,85,50,75,55
 GenderRatio = Female50Percent
 GrowthRate = Fast
 BaseExp = 133

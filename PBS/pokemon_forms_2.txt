@@ -270,7 +270,7 @@ Pokedex = Supporting a giant heavy jewel, it can't change direction very nimbly.
 [MAWILE,1]
 FormName = Mega Mawile
 MegaStone = MAWILITE
-BaseStats = 50,105,125,50,55,95
+BaseStats = 55,105,125,50,75,95
 BaseExp = 168
 Abilities = HUGEPOWER
 HiddenAbilities = HUGEPOWER

@@ -357,6 +357,8 @@ class Battle::AI
                     totalScore += score
                     valuableTarget = true if score > 200
                 else # is ally
+                    aspeed = pbRoughStat(user, :SPEED, skill)
+                    ospeed = pbRoughStat(b, :SPEED, skill)
                     initialscore = score
                     score *= 1.667 if b.hasActiveAbility?(:TELEPATHY)
                     if move.bombMove?
@@ -377,19 +379,37 @@ class Battle::AI
                             if b.spatk > b.attack
                                 score *= 2.0
                             elsif b.statStageAtMax?(:SPECIAL_ATTACK)
-                                score *= 1.1
+                                score *= 1.01
                             else
                                 score *= 1.2
                             end
                         end
                         if b.hasActiveAbility?(:MOTORDRIVE) && realtype == :ELECTRIC
-                            score *= 2.2 if !b.statStageAtMax?(:SPEED) && 
-                                            @battle.field.effects[PBEffects::TrickRoom] == 0
+                            if @battle.field.effects[PBEffects::TrickRoom] == 0
+                                if b.statStageAtMax?(:SPEED)
+                                    score *= 1.01
+                                else
+                                    oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
+                                    ospeed2 = ospeed * (3.0 / 2.0)
+                                    speedcheck = 0
+                                    b.eachOpposing do |m|
+                                        mspeed = pbRoughStat(m, :SPEED, skill)
+                                        speedcheck += 1 if ospeed2 > mspeed
+                                    end
+                                    if speedcheck >= oppcounter
+                                        score *= 2.5
+                                    else
+                                        score *= 1.5
+                                    end
+                                end
+                            else
+                                score *= 1.01
+                            end
                         end
                     when :FIRE
                         if b.hasActiveAbility?(:FLASHFIRE)
                             if b.effects[PBEffects::FlashFire]
-                                score *= 1.1
+                                score *= 1.01
                             else
                                 score *= 2.0
                             end
@@ -399,7 +419,7 @@ class Battle::AI
                             if b.attack > b.spatk
                                 score *= 2.0
                             elsif b.statStageAtMax?(:ATTACK)
-                                score *= 1.1
+                                score *= 1.01
                             else
                                 score *= 1.2
                             end
@@ -407,7 +427,18 @@ class Battle::AI
                     when :GROUND
                         score *= 1.3 if b.hasActiveAbility?(:LEVITATE)
                     end
-                    score *= -1 if score > 0 && score != initialscore
+                    # score being changed here means it is positive or at least neutral
+                    if score != initialscore
+                        score *= -1 if score > 0
+                    else
+                        s = 0.5 # higher means Kiriya cares more about hitting ally
+                        # cares more if faster and we would likely KO ally
+                        if (aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0) &&
+                           score >= 200
+                            s = 0.75
+                        end
+                        score *= s
+                    end
                     totalScore -= score
                 end
                 count += 1
