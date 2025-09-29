@@ -360,13 +360,18 @@ class Battle::AI
                     aspeed = pbRoughStat(user, :SPEED, skill)
                     ospeed = pbRoughStat(b, :SPEED, skill)
                     initialscore = score
+                    realtype = pbRoughType(move, user, skill)
+                    typeMod = pbCalcTypeMod(realtype, user, b, move)
+                    if move.damagingMove? && Effectiveness.ineffective?(typeMod)
+                        score = 85 if score <= 0
+                        score *= 1.1
+                    end
                     score *= 1.667 if b.hasActiveAbility?(:TELEPATHY)
                     if move.bombMove?
                         score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF)
                     elsif move.soundMove?
                         score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF)
                     end
-                    realtype = pbRoughType(move, user, skill)
                     case realtype
                     when :ELECTRIC, :WATER
                         if (b.hasActiveAbility?(:VOLTABSORB) && realtype == :ELECTRIC) ||
