@@ -546,7 +546,6 @@ class Battle::AI
                 end
             end
         else
-            echoln("if you ever see this, go gamble. You are clearly incredibly lucky.")
             score += 40 if target.status == :BURN
         end
     #---------------------------------------------------------------------------

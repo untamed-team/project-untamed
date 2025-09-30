@@ -450,6 +450,12 @@ class Battle::AI
                             end
                             score *= s
                         end
+
+                        if move.function == "CureTargetBurn"
+                            # hit needs to go through to proc the burn heal
+                            echoln("If you are seeing this, you might be retarded.")
+                            score *= 0.5 if b.status == :BURN && !b.hasActiveAbility?([:GUTS, :FLAREBOOST]) 
+                        end
                     end
                     totalScore -= score
                 end
