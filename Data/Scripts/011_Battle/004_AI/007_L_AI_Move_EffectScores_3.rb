@@ -300,7 +300,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "AlwaysCriticalHit" # frost breath
-        if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) #|| user.effects[PBEffects::LaserFocus]
+        if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus] > 0
             score*=0.9
         else
             if user.opposes?(target) # is enemy
@@ -375,7 +375,31 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "StartPreventCriticalHitsAgainstUserSide"
-        score -= 90 if user.pbOwnSide.effects[PBEffects::LuckyChant] > 0
+        if user.pbOwnSide.effects[PBEffects::LuckyChant] > 0
+            score = 0
+        else
+            score *= 0.5 if user.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR])
+            if target.opposes?(user) # is enemy
+                crit = 0
+                @battle.pbParty(target.index).each_with_index do |pkmn, i|
+                    next if !pkmn || pkmn.fainted?
+                    crit += 1 if user.hasActiveAbility?(:SNIPER)
+                    crit += 1 if user.hasActiveAbility?(:SUPERLUCK)
+                    crit += 1 if user.hasActiveItem?(:SCOPELENS)
+                    pkmn.moves.each do |moove|
+                        critMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(moove.id))
+                        crit += 1 if critMov.highCriticalRate?
+                        crit += 2 if critMov.function == "RaiseUserCriticalHitRate2" ||
+                                     critMov.function == "EnsureNextCriticalHit"
+                    end
+                end
+                if crit > 0
+                    score *= 1 + (crit.to_f / 10.0)
+                else
+                    score = 0
+                end
+            end
+        end
     #---------------------------------------------------------------------------
     when "CannotMakeTargetFaint" # false swipe
         score*=0.1 if !targetSurvivesMove(move,user,target)
@@ -930,7 +954,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "HitThreeTimesAlwaysCriticalHit" # surging strikes
-        if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) #|| user.effects[PBEffects::LaserFocus]
+        if target.hasActiveAbility?([:BATTLEARMOR, :SHELLARMOR],false,mold_broken) || user.effects[PBEffects::LaserFocus] > 0
             score*=0.9
         else
             if user.opposes?(target) # is enemy
