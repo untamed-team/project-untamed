@@ -830,13 +830,13 @@ class Battle::AI
       if !pokmon.hasActiveItem?(:HEAVYDUTYBOOTS)
         if pokmon.takesIndirectDamage?
           if !pokmon.airborneAI(false)
-            if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0 && pokmon.ability != :OVERCOAT
+            if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0 && pokmon.hasActiveAbility?(:OVERCOAT)
               spikesDiv = [8, 6, 4][pokmon.pbOwnSide.effects[PBEffects::Spikes] - 1]
               hazarddamage += pokmon.totalhp/spikesDiv
             end
             if pokmon.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
               if pokmon.pbHasType?(:POISON) ||
-                 pokmon.ability == :TILEWORKER
+                 pokmon.hasActiveAbility?(:TILEWORKER)
                 sum+=5
                 sum+=20 if sack && i!=activemon
               elsif pokmon.pbCanPoison?(nil, false)
@@ -844,14 +844,14 @@ class Battle::AI
               end
             end
           end
-          if pokmon.pbOwnSide.effects[PBEffects::StealthRock] && pokmon.ability != :OVERCOAT
+          if pokmon.pbOwnSide.effects[PBEffects::StealthRock] && pokmon.hasActiveAbility?(:OVERCOAT)
             airdamage = (pokmon.airborneAI(false)) ? 4 : 8
             hazarddamage += (pokmon.totalhp/airdamage)
           end
         end
       end  
       sum=0 if damagetakenPercent>33 && sack && i!=activemon
-      if pokmon.ability == :TILEWORKER
+      if pokmon.hasActiveAbility?(:TILEWORKER)
         if hazarddamage > 0
           sum+=20
           sum=2010 if sack && i!=activemon

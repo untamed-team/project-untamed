@@ -316,7 +316,7 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
     if target.hasActiveAbility?(:ILLUSION)
       Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
     elsif target.effects[PBEffects::Transform]
-      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
+      #blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
       #target.pbTransform(blankBattler, false) # holy mother of all jank
       oldAbil = target.ability_id
       target.effects[PBEffects::Transform] = false

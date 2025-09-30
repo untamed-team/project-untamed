@@ -697,7 +697,8 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "PeperSpray" # Pepper Spray
-        score *= 1.3 if [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
+    #---------------------------------------------------------------------------
+    when "HigherDamageInSunVSNonFireTypes" # Scald (chaos)
     #---------------------------------------------------------------------------
     when "BOOMInstall" # BOOM! BOOM!!! BOOM!!!!!
         if target.effects[PBEffects::BoomInstalled]

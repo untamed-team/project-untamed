@@ -123,6 +123,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "PowerHigherWithTargetHP" # Crush Grip
+        score *= 1.2 if target.hp == target.totalhp
     #---------------------------------------------------------------------------
     when "PowerHigherWithUserHappiness" # return
     #---------------------------------------------------------------------------
@@ -211,6 +212,11 @@ class Battle::AI
     when "DoublePowerIfTargetStatusProblem" # Hex (not the sexy hexy)
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserHasNoItem" # Acrobatics
+        if move.pbCalcType(user) == :FLYING && user.hasActiveItem?(:FLYING) && 
+           user.hasActiveAbility?(:UNBURDEN)
+            score *= 1.3
+            score *= 1.3 if !userFasterThanTarget
+        end
     #---------------------------------------------------------------------------
     when "DoublePowerIfTargetUnderwater" # Surf
         if userFasterThanTarget && 
@@ -237,7 +243,6 @@ class Battle::AI
         score*=1.2 if target.moves.any? { |j| [:BOUNCE,:FLY,:SKYDROP].include?(j&.id) }
     #---------------------------------------------------------------------------
     when "DoublePowerInElectricTerrain" # Rising Voltage
-        score *= 1.4 if expectedTerrain == :Electric && target.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "DoublePowerIfUserLastMoveFailed" # Stomping Tantrum
     #---------------------------------------------------------------------------
@@ -374,7 +379,7 @@ class Battle::AI
             score*=0
         end
     #---------------------------------------------------------------------------
-    when "StartPreventCriticalHitsAgainstUserSide"
+    when "StartPreventCriticalHitsAgainstUserSide" # Lucky Chant
         if user.pbOwnSide.effects[PBEffects::LuckyChant] > 0
             score = 0
         else
@@ -402,7 +407,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "CannotMakeTargetFaint" # false swipe
-        score*=0.1 if !targetSurvivesMove(move,user,target)
+        score *= 0.1 if !targetSurvivesMove(move,user,target)
     #---------------------------------------------------------------------------
     when "UserEnduresFaintingThisTurn" # endure
         if user.hp>1
@@ -447,10 +452,52 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "StartWeakenElectricMoves" # Mud Sport
-        score -= 90 if user.effects[PBEffects::MudSport]
+        if @battle.field.effects[PBEffects::MudSportField] == 0
+            elecvar = 0
+            @battle.pbParty(target.index).each do |pkmn|
+                next if !pkmn || !pkmn.able?
+                elecvar += 2 if pkmn.hasType?(:ELECTRIC)
+                pkmn.eachMove do |m|
+                    elecvar += 1 if m.type == :ELECTRIC
+                end
+            end
+            if elecvar > 0
+                @battle.pbParty(user.index).each do |pkmn|
+                    next if !pkmn || !pkmn.able?
+                    typeMod = pbCalcTypeMod(:ELECTRIC, pkmn, pkmn)
+                    elecvar += 3 if Effectiveness.super_effective?(typeMod)
+                end
+                score *= 1.1 + (elecvar.to_f / 10.0)
+            else
+                score = 0
+            end
+        else
+            score = 0
+        end
     #---------------------------------------------------------------------------
     when "StartWeakenFireMoves" # Water Sport
-        score -= 90 if user.effects[PBEffects::WaterSport]
+        if @battle.field.effects[PBEffects::WaterSportField] == 0
+            firevar = 0
+            @battle.pbParty(target.index).each do |pkmn|
+                next if !pkmn || !pkmn.able?
+                firevar += 2 if pkmn.hasType?(:FIRE)
+                pkmn.eachMove do |m|
+                    firevar += 1 if m.type == :FIRE
+                end
+            end
+            if firevar > 0
+                @battle.pbParty(user.index).each do |pkmn|
+                    next if !pkmn || !pkmn.able?
+                    typeMod = pbCalcTypeMod(:FIRE, pkmn, pkmn)
+                    firevar += 3 if Effectiveness.super_effective?(typeMod)
+                end
+                score *= 1.1 + (firevar.to_f / 10.0)
+            else
+                score = 0
+            end
+        else
+            score = 0
+        end
     #---------------------------------------------------------------------------
     when "StartWeakenPhysicalDamageAgainstUserSide" # Reflect
         if user.pbOwnSide.effects[PBEffects::Reflect] > 0
@@ -2958,25 +3005,148 @@ class Battle::AI
             end
         end
     #---------------------------------------------------------------------------
-    when "HealUserAndAlliesQuarterOfTotalHP" # Life Dew
-        ally_amt = 30
+    when "HealUserAndAlliesQuarterOfTotalHP", 
+         "HealUserAndAlliesQuarterOfTotalHPCureStatus" # Life Dew, Jungle Healing 
+        count = 0
         @battle.allSameSideBattlers(user.index).each do |b|
-            if b.hp == b.totalhp || (skill >= PBTrainerAI.mediumSkill && !b.canHeal?)
-                score -= ally_amt / 2
-            elsif b.hp < b.totalhp * 3 / 4
-                score += ally_amt
+            next if b.hp == b.totalhp || !b.canHeal?
+            count += 1
+            halfhealth = (b.totalhp / 4)
+            halfhealth = (halfhealth*1.5) if b.hasActiveItem?(:COLOGNECASE)
+            bestmove=bestMoveVsTarget(target,b,skill) # [maxdam,maxmove,maxprio,physorspec]
+            maxdam=bestmove[0] 
+            maxmove=bestmove[1]
+            maxdam=0 if (target.status == :SLEEP && target.statusCount>1)        
+            if !targetSurvivesMove(maxmove,target,b)
+                if maxdam>(b.hp+halfhealth)
+                    score=0
+                else
+                    if maxdam>=halfhealth
+                        if userFasterThanTarget
+                            score*=0.5
+                        else
+                            score*=0.1
+                        end
+                    else
+                        score*=2
+                    end
+                end
+            else
+                if maxdam*1.5>b.hp
+                    score*=2
+                end
+                if !userFasterThanTarget
+                    if maxdam*2>b.hp
+                        score*=2
+                    end
+                end
+            end
+            hpchange=(EndofTurnHPChanges(b,target,false,false,true)) # what % of our hp will change after end of turn effects go through
+            opphpchange=(EndofTurnHPChanges(target,b,false,false,true)) # what % of their hp will change after end of turn effects go through
+            if opphpchange<1 ## we are going to be taking more chip damage than we are going to heal
+                oppchipdamage=((target.totalhp*(1-hpchange)))
+            end
+            thisdam=maxdam#*1.1
+            hplost=(b.totalhp-b.hp)
+            hplost+=maxdam if !fasterhealing
+            if b.effects[PBEffects::LeechSeed]>=0 && !userFasterThanTarget && canSleepTarget(target,b,globalArray)
+                score *= 0.3 
+            end    
+            if hpchange<1 ## we are going to be taking more chip damage than we are going to heal
+                chipdamage=((b.totalhp*(1-hpchange)))
+                thisdam+=chipdamage
+            elsif hpchange>1 ## we are going to be healing more hp than we take chip damage for  
+                healing=((b.totalhp*(hpchange-1)))
+                thisdam-=healing if !(thisdam>b.hp)
+            elsif hpchange<=0 ## we are going to a huge overstack of end of turn effects. hence we should just not heal.
+                score*=0
+            end
+            if thisdam>hplost
+                score*=0.1
+            else
+                if @battle.pbAbleNonActiveCount(b.idxOwnSide) == 0 && hplost<=(halfhealth)
+                    score*=0.01
+                end
+                if thisdam<=(halfhealth)
+                    score*=2
+                else
+                    if userFasterThanTarget
+                        if hpchange<1 && thisdam>=halfhealth && !(opphpchange<1)
+                            score*=0.3
+                        end
+                    end
+                end
+            end
+            if ((b.hp.to_f)<=halfhealth)
+                score*=1.5
+            else
+                score*=0.8
+            end
+            score*=0.8 if maxdam>halfhealth
+            if pbHasSetupMove?(target)
+                score*=0.7
+            end 
+            if (b.hp.to_f)/b.totalhp<0.5
+                score*=1.5
+                if b.effects[PBEffects::Curse]
+                    score*=2
+                end
+                if b.hp*4<b.totalhp
+                    if b.poisoned?
+                        score*=1.5
+                    end
+                    if b.effects[PBEffects::LeechSeed]>=0
+                        score*=2
+                    end
+                    if b.hp<b.totalhp*0.13
+                        if b.burned? || b.frozen?
+                            score*=2
+                        end
+                        if b.takesHailDamage? || b.takesSandstormDamage?
+                            score*=2
+                        end  
+                    end            
+                end          
+            else
+                score*=0.9
+            end
+            if b.paralyzed? || b.effects[PBEffects::Attract]>=0 || b.effects[PBEffects::Confusion]>0
+                score*=1.1
+            end
+            if target.poisoned? || target.burned? || target.frozen? || target.effects[PBEffects::LeechSeed]>=0 || target.effects[PBEffects::Curse]
+                score*=1.3
+                if target.effects[PBEffects::Toxic]>0
+                    score*=1.3
+                end
+            end
+            if target.moves.any? { |j| [:SUPERPOWER, :OVERHEAT, :DRACOMETEOR, :LEAFSTORM, :FLEURCANNON, :PSYCHOBOOST].include?(j&.id) }
+                score*=1.2
+            end
+            if target.effects[PBEffects::HyperBeam]>0
+                score*=1.2
+            end
+            score*=0.1 if ((b.hp.to_f)/b.totalhp)>0.8
+            score*=0.6 if ((b.hp.to_f)/b.totalhp)>0.6
+            score*=2 if ((b.hp.to_f)/b.totalhp)<0.25
+            score=0 if b.effects[PBEffects::Wish]>0
+            if move.function == "HealUserAndAlliesQuarterOfTotalHPCureStatus" && b.pbHasAnyStatus?
+                score*=3
+                if (b.hp.to_f)/b.totalhp>0.5
+                    score*=1.5
+                else
+                    score*=0.3
+                end
+                if target.effects[PBEffects::Yawn]>0
+                    score*=0.1
+                end
+                if target.effects[PBEffects::Toxic]>2
+                    score*=1.3
+                end
+                score*=1.3 if target.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
             end
         end
-    #---------------------------------------------------------------------------
-    when "HealUserAndAlliesQuarterOfTotalHPCureStatus" # Jungle Healing
-        ally_amt = 80 / @battle.pbSideSize(user.index)
-        @battle.allSameSideBattlers(user.index).each do |b|
-            if b.hp == b.totalhp || (skill >= PBTrainerAI.mediumSkill && !b.canHeal?)
-                score -= ally_amt
-            elsif b.hp < b.totalhp * 3 / 4
-                score += ally_amt
-            end
-            score += ally_amt / 2 if b.pbHasAnyStatus?
+        if count > 0
+            score = score / count
         end
     #---------------------------------------------------------------------------
     when "HealTargetHalfOfTotalHP" # heal pulse
@@ -3244,7 +3414,7 @@ class Battle::AI
                 score*=(target.hp*(1.0/target.totalhp))
             end
             if target.hasActiveItem?([:LEFTOVERS, :BIGROOT, :COLOGNECASE]) || 
-                    (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
+               (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
                 score*=1.2
             end
             if target.paralyzed? || target.asleep?
@@ -4776,7 +4946,6 @@ class Battle::AI
         score*=miniscore
     #---------------------------------------------------------------------------
     when "HitsAllFoesAndPowersUpInPsychicTerrain" # Expanding Force
-        score *= 1.4 if expectedTerrain == :Psychic && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "TargetNextFireMoveDamagesTarget" # powder
         if target.affectedByPowder?
@@ -4811,7 +4980,7 @@ class Battle::AI
             else
                 if targetWillMove?(target, "dmg")
                     realtype = pbRoughType(@battle.choices[target.index][2], target, 100)
-                    score*=1.5 if realtype == :FIRE
+                    score*=2 if realtype == :FIRE
                 end
             end   
         else
@@ -4822,7 +4991,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "DoublePowerAfterFusionBolt" # Fusion Flare
     #---------------------------------------------------------------------------
-    when "PowerUpAllyMove" # helping hand
+    when "PowerUpAllyMove", "HoldingHandsShamefully" # helping hand, Hold Hands (mazah)
         if user.allAllies.any?
             effvar = user.moves.any? { |moove| pbCalcTypeMod(moove.type, user, user.pbDirectOpposing(true), moove) >= 8 }
             if !effvar
@@ -6048,7 +6217,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SwitchOutTargetDamagingMove" # dragon tail
         if (target.hasActiveAbility?(:DISGUISE,false,mold_broken) && target.form == 0) || target.effects[PBEffects::Substitute]>0
-            # just regular dmg (negative prio debuff is handled elsewhere)
+            # only regular dmg 
+            # negative prio debuff is handled elsewhere
         else
             miniscore = 100
             if target.pbOwnSide.effects[PBEffects::StealthRock]
@@ -6458,7 +6628,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "HigherPriorityInGrassyTerrain" # grassy glide
-        score *= 1.4 if expectedTerrain == :Grassy && user.affectedByTerrain?
+        score *= 1.2 if expectedTerrain == :Grassy && user.affectedByTerrain?
     #---------------------------------------------------------------------------
     when "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3" # Spite, eerie spell
         miniscore=100
@@ -6736,6 +6906,8 @@ class Battle::AI
                 end
             end
         end
+    #---------------------------------------------------------------------------
+    # Shadow moves (unused. shooketh.)
     #---------------------------------------------------------------------------
     when "AllBattlersLoseHalfHPUserSkipsNextTurn"
         score += 20   # Shadow moves are more preferable

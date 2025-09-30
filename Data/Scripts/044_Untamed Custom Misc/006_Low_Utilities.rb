@@ -1,16 +1,30 @@
-# not actually a utilities page, just a "too lazy to create a new page for this"
+# not actually a utilities page, rather it is a "too lazy to create a new page for this"
 
+#----------------------------------------------------------------------------
+# Names for switches [bool]
+#----------------------------------------------------------------------------
 OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
-MIRRORCONTAINER = 100 # Whether the trainer's team is mirrored to a modified player's team in battle
-LOWEREXPGAINSWITCH = 99
-RELEARNERSWITCH = 98
-NOINITIALVALUES = 97
+MIRRORCONTAINER = 100 # Whether the trainer's team is mirrored to a modified player's team
+LOWEREXPGAIN    = 99  # Whether the exp gain is divided/multipled by 50% or 33% per level difference
+RELEARNERSWITCH = 98  # Whether the player can relearn moves on the summary screen
+NOINITIALVALUES = 97  # Whether the initial values screen is skipped
 
-MASTERMODEVARS = 98
-DEXREWARDSVAR = 102
+#----------------------------------------------------------------------------
+# Names for variables
+#----------------------------------------------------------------------------
+MASTERMODEVARS = 98 # [array] unused 
+DEXREWARDSVAR = 102 # [int] Where dex rewards counters are stored
 
+#----------------------------------------------------------------------------
+# Whether all stats follow accuracy/evasion stages or not ((in chaos mode)).
+# With this enabled, max boost is 3x and min is 0.33x
+# With this not enabled, max boost is 4x and min is 0.25x
+#----------------------------------------------------------------------------
 $GLOBALSETUPNERF = true
 
+#===============================================================================
+# Nature Changer (NPC)
+#===============================================================================
 def pbNatureChanger(pkmn)
   commands = []
   ids = []
@@ -49,11 +63,13 @@ def pbNatureChanger(pkmn)
   end
 end
 
+# i hate this piece of shit
 def pbIsBadPokemon?(pkmn)
   return true if pkmn.species_data.get_baby_species == :EEVEE
   return false
 end
 
+# debug commands
 MenuHandlers.add(:debug_menu, :set_time, {
   "name"        => _INTL("Set Time"),
   "parent"      => :field_menu,
@@ -71,6 +87,9 @@ MenuHandlers.add(:debug_menu, :set_time, {
   }
 })
 
+#===============================================================================
+# newish items
+#===============================================================================
 ItemHandlers::UseOnPokemon.add(:HYPERABILITYCAPSULE,proc{ |item, qty, pkmn, scene|
   if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL, :MURKROW].include?(pkmn.species)
     scene.pbDisplay(_INTL("{1} refuses to ingest this item. What a picky eater.", pkmn.name))
@@ -106,6 +125,9 @@ ItemHandlers::UseOnPokemon.add(:SHINYBERRY,proc{ |item, qty, pkmn, scene|
   end
 })
 
+#===============================================================================
+# stall edits
+#===============================================================================
 class Battle
   def pbBattleLoop
     @turnCount = 0
@@ -246,7 +268,6 @@ end #of class PokemonEncounters
 #===============================================================================
 # New Evolution Methods
 #===============================================================================
-  #by low  
 GameData::Evolution.register({  
   :id            => :HappinessLevel,  
   :parameter     => Integer,  
@@ -257,7 +278,6 @@ GameData::Evolution.register({
   }  
 })
 
-#by low
 def pbRaiseTropiusEvolutionStep(pkmn)
   if pkmn.isSpecies?(:TROPIUS)
     pkmn.evolution_steps += 1
@@ -305,6 +325,30 @@ GameData::Evolution.register({ # rotten bananas
 })
 
 GameData::Evolution.register({
+  :id            => :LevelHasTypeMove,
+  :parameter     => String, #take in a string so DARK_32 in pokemon.txt does not crash the game
+  :level_up_proc => proc { |pkmn, parameter|
+  #get the level from the string
+  array = parameter
+  for i in 0...array.length
+    if array[i] == "_"
+      separatorPosition = i
+    end
+  end
+  
+  requiredType = array[0,separatorPosition]
+  if array[separatorPosition+1,array.length] != ""
+    requiredLevel = array[separatorPosition+1,array.length]
+  else
+    requiredLevel = 1
+  end
+  if pkmn.level >= requiredLevel.to_i
+    next pkmn.moves.any? { |m| m && m.type == requiredType.to_sym }
+  end
+  }
+})
+
+GameData::Evolution.register({
   :id            => :Diancie,
   :parameter     => Integer,
   :use_item_proc => proc { |pkmn, parameter, item|  
@@ -314,10 +358,11 @@ GameData::Evolution.register({
   }
 })
 
-#===============================================================================  
+#===============================================================================
 # Link Cable #by low 
 # (this used to be the only way for evolving trade mons)
-#===============================================================================  
+#===============================================================================
+
 GameData::Evolution.register({  
   :id            => :Link,  
   :use_item_proc => proc { |pkmn, parameter, item|  
@@ -347,6 +392,110 @@ GameData::Evolution.register({
     pkmn.item = nil   # Item is now consumed
   }
 })
+
+# Pokedex evolution msgs edits
+class PokemonPokedexInfo_Scene
+  # Gets the evolution array and return evolution message
+  def getEvolutionMessage(evolution, method, parameter)
+    evoName = GameData::Species.get(evolution).name
+    ret = case method
+      when :Level
+        _INTL("{1} at level {2}", evoName,parameter)
+      when :LevelMale
+        _INTL("{1} at level {2} and it's male", evoName,parameter)
+      when :LevelFemale
+        _INTL("{1} at level {2} and it's female", evoName,parameter)
+      when :LevelRain
+        _INTL("{1} at level {2} when raining", evoName,parameter)
+      when :DefenseGreater
+        _INTL("{1} at level {2} and ATK > DEF",evoName,parameter)
+      when :AtkDefEqual
+        _INTL("{1} at level {2} and ATK = DEF",evoName,parameter) 
+      when :AttackGreater
+        _INTL("{1} at level {2} and DEF < ATK",evoName,parameter)
+      when :Silcoon,:Cascoon
+        _INTL("{1} at level {2} with personalID", evoName,parameter)
+      when :Ninjask
+        _INTL("{1} at level {2}",evoName,parameter)
+      when :Shedinja
+        _INTL("{1} at level {2} with empty space",evoName,parameter)
+      when :Happiness
+        _INTL("{1} when happy",evoName)
+      when :HappinessDay
+        _INTL("{1} when happy at day",evoName)
+      when :HappinessNight
+        _INTL("{1} when happy at night",evoName)
+      when :Beauty
+        _INTL("{1} when beauty is greater than {2}",evoName,parameter) 
+      when :DayHoldItem
+        _INTL("{1} holding {2} at day",evoName,GameData::Item.get(parameter).name)
+      when :NightHoldItem
+        _INTL("{1} holding {2} at night",evoName,GameData::Item.get(parameter).name)
+      when :HasMove
+        _INTL("{1} when has move {2}",evoName,GameData::Move.get(parameter).name)
+      when :HappinessMoveType
+        _INTL("{1} when is happy with {2} move",evoName,GameData::Type.get(parameter).name)
+      when :HasInParty
+        _INTL("{1} when has {2} at party",evoName,GameData::Species.get(parameter).name)
+      when :Location
+        _INTL("{1} at {2}",evoName, pbGetMapNameFromId(parameter))
+      when :Item
+        _INTL("{1} using {2}",evoName,GameData::Item.get(parameter).name)
+      when :ItemMale
+        _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
+      when :ItemFemale
+        _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
+      when :Trade, :Link
+        _INTL("{1} trading",evoName)
+      when :TradeItem, :LinkItem
+        _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
+      when :TradeSpecies
+        _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
+      # edits #by low
+      when :None
+        _INTL("None")
+      when :LevelDay
+        _INTL("{1} at level {2} at day", evoName,parameter)
+      when :LevelNight
+        _INTL("{1} at level {2} at night", evoName,parameter)
+      when :HappinessLevel
+        _INTL("{1} at level {2} and when happy", evoName,parameter)
+      when :Level30HasTypeMove
+        _INTL("{1} at level 30 with {2} move",evoName,GameData::Type.get(parameter).name)
+      when :ItemLevel
+        array = parameter
+        for i in 0...array.length
+          if array[i] == "_"
+            separatorPosition = i # found the separator
+          end
+        end
+        requiredItem = array[0,separatorPosition]
+        if array[separatorPosition+1,array.length] != ""
+          requiredLevel = array[separatorPosition+1,array.length]
+        else
+          requiredLevel = 1
+        end
+        _INTL("{1} at level {2} and using {3}",evoName,requiredLevel,GameData::Item.get(requiredItem).name)
+      when :LevelHasTypeMove
+        array = parameter
+        for i in 0...array.length
+          if array[i] == "_"
+            separatorPosition = i # found the separator
+          end
+        end
+        requiredType = array[0,separatorPosition]
+        if array[separatorPosition+1,array.length] != ""
+          requiredLevel = array[separatorPosition+1,array.length]
+        else
+          requiredLevel = 1
+        end
+        _INTL("{1} at level {2} with a {3} move",evoName,requiredType,requiredLevel)
+      else
+        evoName
+    end
+    return ret    
+  end
+end
 
 #===============================================================================
 # powertrip + Noseponch
@@ -471,7 +620,7 @@ class Pokemon
 end
 
 #===============================================================================  
-# Tropius Evolution #by low  
+# Tropius Evolution blockage
 #===============================================================================  
 class Pokemon
 # The core method that performs evolution checks. Needs a block given to it,  
@@ -493,7 +642,7 @@ class Pokemon
 end
 
 #===============================================================================  
-# Dragtaco Calc Stats #by low  
+# Calc Stats edits
 #===============================================================================  
 class Pokemon
   def calcHP(base, level, iv, ev)
@@ -551,133 +700,9 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
   next true
 })
 
-GameData::Evolution.register({
-  :id            => :LevelHasTypeMove,
-  :parameter     => String, #take in a string so DARK_32 in pokemon.txt does not crash the game
-  :level_up_proc => proc { |pkmn, parameter|
-  #get the level from the string
-  array = parameter
-  for i in 0...array.length
-    if array[i] == "_"
-      separatorPosition = i
-    end
-  end
-  
-  requiredType = array[0,separatorPosition]
-  if array[separatorPosition+1,array.length] != ""
-    requiredLevel = array[separatorPosition+1,array.length]
-  else
-    requiredLevel = 1
-  end
-  if pkmn.level >= requiredLevel.to_i
-    next pkmn.moves.any? { |m| m && m.type == requiredType.to_sym }
-  end
-  }
-})
-
-class PokemonPokedexInfo_Scene
-  # Gets the evolution array and return evolution message
-  def getEvolutionMessage(evolution, method, parameter)
-    evoName = GameData::Species.get(evolution).name
-    ret = case method
-      when :Level
-        _INTL("{1} at level {2}", evoName,parameter)
-      when :LevelMale
-        _INTL("{1} at level {2} and it's male", evoName,parameter)
-      when :LevelFemale
-        _INTL("{1} at level {2} and it's female", evoName,parameter)
-      when :LevelRain
-        _INTL("{1} at level {2} when raining", evoName,parameter)
-      when :DefenseGreater
-        _INTL("{1} at level {2} and ATK > DEF",evoName,parameter)
-      when :AtkDefEqual
-        _INTL("{1} at level {2} and ATK = DEF",evoName,parameter) 
-      when :AttackGreater
-        _INTL("{1} at level {2} and DEF < ATK",evoName,parameter)
-      when :Silcoon,:Cascoon
-        _INTL("{1} at level {2} with personalID", evoName,parameter)
-      when :Ninjask
-        _INTL("{1} at level {2}",evoName,parameter)
-      when :Shedinja
-        _INTL("{1} at level {2} with empty space",evoName,parameter)
-      when :Happiness
-        _INTL("{1} when happy",evoName)
-      when :HappinessDay
-        _INTL("{1} when happy at day",evoName)
-      when :HappinessNight
-        _INTL("{1} when happy at night",evoName)
-      when :Beauty
-        _INTL("{1} when beauty is greater than {2}",evoName,parameter) 
-      when :DayHoldItem
-        _INTL("{1} holding {2} at day",evoName,GameData::Item.get(parameter).name)
-      when :NightHoldItem
-        _INTL("{1} holding {2} at night",evoName,GameData::Item.get(parameter).name)
-      when :HasMove
-        _INTL("{1} when has move {2}",evoName,GameData::Move.get(parameter).name)
-      when :HappinessMoveType
-        _INTL("{1} when is happy with {2} move",evoName,GameData::Type.get(parameter).name)
-      when :HasInParty
-        _INTL("{1} when has {2} at party",evoName,GameData::Species.get(parameter).name)
-      when :Location
-        _INTL("{1} at {2}",evoName, pbGetMapNameFromId(parameter))
-      when :Item
-        _INTL("{1} using {2}",evoName,GameData::Item.get(parameter).name)
-      when :ItemMale
-        _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
-      when :ItemFemale
-        _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade, :Link
-        _INTL("{1} trading",evoName)
-      when :TradeItem, :LinkItem
-        _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
-      when :TradeSpecies
-        _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
-      # edits #by low
-      when :None
-        _INTL("None")
-      when :LevelDay
-        _INTL("{1} at level {2} at day", evoName,parameter)
-      when :LevelNight
-        _INTL("{1} at level {2} at night", evoName,parameter)
-      when :HappinessLevel
-        _INTL("{1} at level {2} and when happy", evoName,parameter)
-      when :Level30HasTypeMove
-        _INTL("{1} at level 30 with {2} move",evoName,GameData::Type.get(parameter).name)
-      when :ItemLevel
-        array = parameter
-        for i in 0...array.length
-          if array[i] == "_"
-            separatorPosition = i # found the separator
-          end
-        end
-        requiredItem = array[0,separatorPosition]
-        if array[separatorPosition+1,array.length] != ""
-          requiredLevel = array[separatorPosition+1,array.length]
-        else
-          requiredLevel = 1
-        end
-        _INTL("{1} at level {2} and using {3}",evoName,requiredLevel,GameData::Item.get(requiredItem).name)
-      when :LevelHasTypeMove
-        array = parameter
-        for i in 0...array.length
-          if array[i] == "_"
-            separatorPosition = i # found the separator
-          end
-        end
-        requiredType = array[0,separatorPosition]
-        if array[separatorPosition+1,array.length] != ""
-          requiredLevel = array[separatorPosition+1,array.length]
-        else
-          requiredLevel = 1
-        end
-        _INTL("{1} at level {2} with a {3} move",evoName,requiredType,requiredLevel)
-      else
-        evoName
-    end
-    return ret    
-  end
-end
-
+#===============================================================================
+# Crits edits
+#===============================================================================
 class Battle::Move
   def pbIsCritical?(user, target, move)
     return false if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
@@ -725,9 +750,12 @@ class Battle::Move
   end
 end # of Battle::Move
 
-# making certain abilities trigger once per battle
+#===============================================================================
+# battle attributes edits
+#===============================================================================
 class Battle
   attr_reader :activedAbility
+  attr_reader :activedItem
   attr_reader :slowstartCount
   attr_reader :overwriteType
   attr_reader :movesRevealed
@@ -736,6 +764,7 @@ class Battle
   def initialize(scene, p1, p2, player, opponent)
     abilactivated_initialize(scene, p1, p2, player, opponent)
     @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
+    @activedItem     = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
     @slowstartCount  = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @overwriteType   = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @movesRevealed   = [Array.new(@party1.length, []), Array.new(@party2.length, [])] #kiriya
@@ -749,6 +778,16 @@ class Battle
   end
   def DeActivateUserAbility(user)
     @activedAbility[user.index & 1][user.pokemonIndex] = false
+  end
+  
+  def wasUserItemActivated?(user) 
+    return @activedItem[user.index & 1][user.pokemonIndex]
+  end
+  def activateUserItem(user)
+    @activedItem[user.index & 1][user.pokemonIndex] = true
+  end
+  def deactivateUserItem(user)
+    @activedItem[user.index & 1][user.pokemonIndex] = false
   end
   
   def SlowStartCount(battler)
@@ -785,7 +824,6 @@ class Battle::Battler
   end
 end
 
-#$DEBUG = true
 #===============================================================================
 # Dex Completion Rewards
 #===============================================================================
@@ -1058,7 +1096,6 @@ def fakeCrashLog
     end
   end
 end
-
 
 #===============================================================================
 # RNG seeds
