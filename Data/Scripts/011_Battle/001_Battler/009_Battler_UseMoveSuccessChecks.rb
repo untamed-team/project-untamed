@@ -407,6 +407,16 @@ class Battle::Battler
     end
     # Immunity because of ability (intentionally before type immunity check)
     return false if move.pbImmunityByAbility(user, target, show_message)
+    # Telepathy fix #by low
+    if user.hasActiveAbility?(:TELEPATHY) && move.pbDamagingMove? && 
+       !target.opposes?(user) && user.index != target.index
+      if show_message
+        @battle.pbShowAbilitySplash(user)
+        @battle.pbDisplay(_INTL("{1} avoids attacks by its ally Pokémon!", target.pbThis))
+        @battle.pbHideAbilitySplash(user)
+      end
+      return false
+    end
     # Type immunity
     if move.pbDamagingMove? && Effectiveness.ineffective?(typeMod)
       PBDebug.log("[Target immune] #{target.pbThis}'s type immunity")

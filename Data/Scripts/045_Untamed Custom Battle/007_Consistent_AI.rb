@@ -355,7 +355,7 @@ class Battle::AI
                 score = pbGetMoveScore(move, user, b, skill)
                 if user.opposes?(b)
                     totalScore += score
-                    valuableTarget = true if score > 200
+                    valuableTarget = true if score > 180
                 else # is ally
                     aspeed = pbRoughStat(user, :SPEED, skill)
                     ospeed = pbRoughStat(b, :SPEED, skill)
@@ -439,7 +439,7 @@ class Battle::AI
                         s = 0.5 # higher means Kiriya cares more about hitting ally
                         # cares more if faster and we would likely KO ally
                         if (aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0) &&
-                           score >= 200
+                           score >= 180
                             s = 0.75
                         end
                         score *= s

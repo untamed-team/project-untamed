@@ -691,7 +691,8 @@ class Battle::AI
         return true if !Effectiveness.super_effective?(typeMod) && move.baseDamage>0 && 
                         target.hasActiveAbility?(:WONDERGUARD,false,mold_broken)
         return true if move.damagingMove? && user.index != target.index && !target.opposes?(user) &&
-                       target.hasActiveAbility?(:TELEPATHY,false,mold_broken)
+                       (target.hasActiveAbility?(:TELEPATHY,false,mold_broken) ||
+                        user.hasActiveAbility?(:TELEPATHY))
         return true if move.canMagicCoat? && 
                        (target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) || 
                        (target.isSpecies?(:SABLEYE) && target.pokemon.willmega && !mold_broken)) && 

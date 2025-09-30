@@ -1527,12 +1527,6 @@ class Battle::AI
             if partypsy
                 fieldscore*=0.3
             end
-            if target.hasActiveAbility?(:TELEPATHY)
-                fieldscore*=1.3
-            end
-            if user.hasActiveAbility?(:TELEPATHY)
-                fieldscore*=0.7
-            end 
         end
         fieldscore*=0.01
         return fieldscore

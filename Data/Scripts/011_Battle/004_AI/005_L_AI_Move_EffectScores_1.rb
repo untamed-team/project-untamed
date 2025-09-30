@@ -518,9 +518,6 @@ class Battle::AI
             end
             roles = pbGetPokemonRole(user, target)
             miniscore = getFieldDisruptScore(user,target,globalArray,skill)
-            if user.hasActiveAbility?(:TELEPATHY)
-                miniscore*=1.5
-            end  
             if user.pbHasType?(:PSYCHIC, true)
                 miniscore*=1.5
             end  
@@ -632,9 +629,6 @@ class Battle::AI
                 next if m.fainted?
                 psyvar=true if m.hasType?(:PSYCHIC)
             end
-            if target.hasActiveAbility?(:TELEPATHY)
-                miniscore*=1.5
-            end  
             if target.pbHasType?(:PSYCHIC, true)
                 miniscore*=1.5
             end  
