@@ -441,13 +441,15 @@ class Battle::AI
                     if score != initialscore
                         score *= -1 if score > 0
                     else
-                        s = 0.5 # higher means Kiriya cares more about hitting ally
-                        # cares more if faster and we would likely KO ally
-                        if (aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0) &&
-                           score >= 180
-                            s = 0.75
+                        outspedAyyly = ((aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+                        if (b.hp.to_f) / b.totalhp > 0.10 || outspedAyyly
+                            s = 0.5 # higher means Kiriya cares more about hitting ally
+                            # cares more if faster and we would likely KO ally
+                            if outspedAyyly && score >= 180
+                                s = 0.75
+                            end
+                            score *= s
                         end
-                        score *= s
                     end
                     totalScore -= score
                 end
