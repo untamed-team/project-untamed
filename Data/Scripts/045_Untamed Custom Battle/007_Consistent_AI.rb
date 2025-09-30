@@ -357,6 +357,7 @@ class Battle::AI
                     totalScore += score
                     valuableTarget = true if score > 180
                 else # is ally
+                    mold_broken = moldbroken(user, b, move)
                     aspeed = pbRoughStat(user, :SPEED, skill)
                     ospeed = pbRoughStat(b, :SPEED, skill)
                     initialscore = score
@@ -366,21 +367,25 @@ class Battle::AI
                         score = 85 if score <= 0
                         score *= 1.1
                     end
-                    score *= 1.667 if b.hasActiveAbility?(:TELEPATHY)
+                    score *= 1.667 if b.hasActiveAbility?(:TELEPATHY,false,mold_broken) ||
+                                      user.hasActiveAbility?(:TELEPATHY)
                     if move.bombMove?
-                        score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF)
+                        score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
+                                       (b.isSpecies?(:MAGCARGO) && b.pokemon.willmega && !mold_broken)
                     elsif move.soundMove?
-                        score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF)
+                        score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
                     end
                     case realtype
                     when :ELECTRIC, :WATER
-                        if (b.hasActiveAbility?(:VOLTABSORB) && realtype == :ELECTRIC) ||
-                           (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN]) && realtype == :WATER)
+                        if (b.hasActiveAbility?(:VOLTABSORB,false,mold_broken) && realtype == :ELECTRIC) ||
+                           (b.isSpecies?(:GOHILA) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+                           (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN],false,mold_broken) && realtype == :WATER)
                             missinghp = (b.totalhp - b.hp).to_f / b.totalhp
                             score *= 1 + (missinghp * 0.75)
                         end
-                        if (b.hasActiveAbility?(:LIGHTNINGROD) && realtype == :ELECTRIC) ||
-                           (b.hasActiveAbility?(:STORMDRAIN) && realtype == :WATER)
+                        if (b.hasActiveAbility?(:LIGHTNINGROD,false,mold_broken) && realtype == :ELECTRIC) ||
+                           (b.isSpecies?(:ROADRAPTOR) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+                           (b.hasActiveAbility?(:STORMDRAIN,false,mold_broken) && realtype == :WATER)
                             if b.spatk > b.attack
                                 score *= 2.0
                             elsif b.statStageAtMax?(:SPECIAL_ATTACK)
@@ -389,7 +394,7 @@ class Battle::AI
                                 score *= 1.2
                             end
                         end
-                        if b.hasActiveAbility?(:MOTORDRIVE) && realtype == :ELECTRIC
+                        if b.hasActiveAbility?(:MOTORDRIVE,false,mold_broken) && realtype == :ELECTRIC
                             if @battle.field.effects[PBEffects::TrickRoom] == 0
                                 if b.statStageAtMax?(:SPEED)
                                     score *= 1.01
@@ -412,7 +417,7 @@ class Battle::AI
                             end
                         end
                     when :FIRE
-                        if b.hasActiveAbility?(:FLASHFIRE)
+                        if b.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
                             if b.effects[PBEffects::FlashFire]
                                 score *= 1.01
                             else
@@ -420,7 +425,7 @@ class Battle::AI
                             end
                         end
                     when :GRASS
-                        if b.hasActiveAbility?(:SAPSIPPER)
+                        if b.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
                             if b.attack > b.spatk
                                 score *= 2.0
                             elsif b.statStageAtMax?(:ATTACK)
@@ -430,7 +435,7 @@ class Battle::AI
                             end
                         end
                     when :GROUND
-                        score *= 1.3 if b.hasActiveAbility?(:LEVITATE)
+                        score *= 1.3 if b.hasActiveAbility?(:LEVITATE,false,mold_broken)
                     end
                     # score being changed here means it is positive or at least neutral
                     if score != initialscore
