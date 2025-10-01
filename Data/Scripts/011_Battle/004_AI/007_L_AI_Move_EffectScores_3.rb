@@ -4994,6 +4994,7 @@ class Battle::AI
     when "DoublePowerAfterFusionBolt" # Fusion Flare
     #---------------------------------------------------------------------------
     when "PowerUpAllyMove", "HoldingHandsShamefully" # helping hand, Hold Hands (mazah)
+        # Kiriya cannot properly use either of these moves.
         if user.allAllies.any?
             effvar = user.moves.any? { |moove| pbCalcTypeMod(moove.type, user, user.pbDirectOpposing(true), moove) >= 8 }
             if !effvar
@@ -5021,7 +5022,7 @@ class Battle::AI
             end
             score*=ministat
         else
-            score *= 0.1
+            score = 0
         end
     #---------------------------------------------------------------------------
     when "CounterPhysicalDamage" # Counter
