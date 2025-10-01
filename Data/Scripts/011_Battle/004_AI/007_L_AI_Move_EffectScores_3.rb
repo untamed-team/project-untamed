@@ -490,7 +490,7 @@ class Battle::AI
                 @battle.pbParty(user.index).each_with_index do |pkmn, idxPkmn|
                     next if !pkmn || !pkmn.able?
                     realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false)
-                    typeMod = pbCalcTypeMod(:ELECTRIC, realpkmn, realpkmn)
+                    typeMod = pbCalcTypeMod(:FIRE, realpkmn, realpkmn)
                     firevar += 3 if Effectiveness.super_effective?(typeMod)
                 end
                 score *= 1.1 + (firevar.to_f / 10.0)
