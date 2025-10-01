@@ -458,7 +458,7 @@ class Battle::AI
         # Critical hits - n/a
         # Random variance - n/a
         # Unfair difficulty - Changed by DemICE 27-Sep-2023
-        #if $Trainer.difficunlty_mode==2
+        #if $Trainer.difficulty mode==2
         #    if user.pbOwnedByPlayer?
         #        multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
         #    else

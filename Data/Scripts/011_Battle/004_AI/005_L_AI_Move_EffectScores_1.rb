@@ -4792,8 +4792,12 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "RaiseTargetSpDef1" # Aromatic Mist
-        if !user.allAllies.empty? 
-            ally = user.allAllies.first
+        if user.allAllies.any?
+            if target.opposes?(user) # is enemy
+                ally = user.allAllies.first
+            else
+                ally = target
+            end
             #spdef
             miniscore=100
             miniscore*=1.1 if ally.hp*(1.0/ally.totalhp)>0.75

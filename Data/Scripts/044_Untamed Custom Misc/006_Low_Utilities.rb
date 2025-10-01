@@ -1429,7 +1429,7 @@ DECENT_STAB_MOVES = {
 
 def mirrorBossFight(trainer)
   trainer.party = Marshal.load(Marshal.dump($player.party))
-  balancedlevel = pbBalancedLevel($player.party)
+  balancedlevel = 50#pbBalancedLevel($player.party)
 
   while trainer.party.count < 6 # 1v1? not here, baybee!
     species = GameData::Species.get(:MARIPOME).species
@@ -1453,7 +1453,7 @@ def mirrorBossFight(trainer)
   trainer.party.each_with_index do |pkmn, i|
     # levels
     pkmn.level = [pkmn.level, balancedlevel, 50].max
-    pkmn.level += 3
+    #pkmn.level += 3
     pkmn.enableNatureBoostAI
     pkmn.calc_stats
 

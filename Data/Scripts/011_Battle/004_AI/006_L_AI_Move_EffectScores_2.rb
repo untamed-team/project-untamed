@@ -732,8 +732,8 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SetUserTypesBasedOnEnvironment" # Camouflage
         if !user.canChangeType?
-            score -= 90
-        elsif skill >= PBTrainerAI.mediumSkill
+            score = 0
+        else
             new_type = nil
             case @battle.field.terrain
             when :Electric
@@ -771,7 +771,55 @@ class Battle::AI
                 new_type = nil if !GameData::Type.exists?(new_type)
                 new_type ||= :NORMAL
             end
-            score -= 90 if !user.pbHasOtherType?(new_type)
+            if user.pbHasType?(new_type)
+                score = 0
+            else
+                stabbed = false
+                user.eachMove do |m|
+                    if m.pbCalcType(user) == new_type
+                        stabbed = true
+                        break
+                    end
+                end
+                if stabbed
+                    score *= 1.2
+                    targetTypes = typesAI(target, user, skill)
+                    minimini = 0
+                    targetTypes.each do |t|
+                        typo = Effectiveness.calculate_one(new_type, t)
+                        minimini = typo if typo > minimini
+                    end
+                    if Effectiveness.super_effective?(minimini)
+                        score *= 1.3
+                    else
+                        score *= 0.5
+                    end
+                else
+                    score *= 0.5
+                end
+                if userFasterThanTarget
+                    score *= 1.1
+                    # out of all input reads, this is the most deserving one
+                    if targetWillMove?(target, "dmg")
+                        targetMove = @battle.choices[target.index][2]
+                        targetMoveType = targetMove.pbCalcType(target)
+                        effvalue = Effectiveness.calculate(targetMoveType, new_type)
+                        if Effectiveness.ineffective?(effvalue)
+                            score *= 1.5
+                        elsif Effectiveness.not_very_effective?(effvalue)
+                            score *= 1.3
+                        elsif Effectiveness.super_effective?(effvalue)
+                            score *= 0.1
+                        else
+                            score *= 0.7
+                        end
+                    else
+                        score *= 1.1
+                    end
+                else
+                    score *= 0.7
+                end
+            end
         end
     #---------------------------------------------------------------------------
     when "SetUserTypesToResistLastAttack" # Conversion 2
@@ -846,6 +894,12 @@ class Battle::AI
         if !user.canChangeType? || targetTypes.length == 0 || userTypes == targetTypes
             score = 0
         else
+            while targetTypes.length > 3
+                targetTypes.push(:QMARKS)
+            end
+            while userTypes.length > 3
+                userTypes.push(:QMARKS)
+            end
             miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
                          Effectiveness.calculate(targetTypes[1], userTypes[0], userTypes[1], userTypes[2]), 
                          Effectiveness.calculate(targetTypes[2], userTypes[0], userTypes[1], userTypes[2])].max
@@ -886,6 +940,12 @@ class Battle::AI
             if has_possible_type
                 targetTypes = typesAI(target, user, skill)
                 userTypes = typesAI(user, target, skill)
+                while targetTypes.length > 3
+                    targetTypes.push(:QMARKS)
+                end
+                while userTypes.length > 3
+                    userTypes.push(:QMARKS)
+                end
                 firstType = user.moves[0].pbCalcType(user)
                 miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
                              Effectiveness.calculate(targetTypes[1], userTypes[0], userTypes[1], userTypes[2]), 

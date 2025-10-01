@@ -721,16 +721,6 @@ class Pokemon
     @first_moves.each { |m| return true if !hasMove?(m) }
     return false
   end
-	
-	def has_any_egg_moves? #by low
-		return false if egg? || shadowPokemon?
-		eggmove = []
-		GameData::Species.get(self.species).get_egg_moves.each do |m|
-			eggmove.push(m)
-		end
-		return true if eggmove != []
-		return false
-  end
 
   #=============================================================================
   # Ribbons

@@ -1272,7 +1272,7 @@ FullDesc = Moves with the bite flag use the user's Sp. Atk stat regardless of th
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
-Description = Grassy Terrain boosts critical hit ratio.
+Description = Grassy Terrain greatly boosts critical hit ratio.
 FullDesc = If affected by Grassy Terrain, the user gains +2 critical hit ratio.
 #-------------------------------
 [MOMENTUM]

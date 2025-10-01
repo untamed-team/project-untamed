@@ -13,7 +13,7 @@ class Battle::AI
 
     # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-    $AIMASTERLOG = (false && $DEBUG)
+    $AIMASTERLOG = (true && $DEBUG)
     $AIGENERALLOG = (false && $DEBUG)
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
@@ -367,8 +367,8 @@ class Battle::AI
                         score = 85 if score <= 0
                         score *= 1.1
                     end
-                    score *= 1.667 if b.hasActiveAbility?(:TELEPATHY,false,mold_broken) ||
-                                      user.hasActiveAbility?(:TELEPATHY)
+                    score *= 1.6777 if b.hasActiveAbility?(:TELEPATHY,false,mold_broken)
+                    score *= 1.1 if user.hasActiveAbility?(:TELEPATHY)
                     if move.bombMove?
                         score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
                                        (b.isSpecies?(:MAGCARGO) && b.pokemon.willmega && !mold_broken)
@@ -378,13 +378,13 @@ class Battle::AI
                     case realtype
                     when :ELECTRIC, :WATER
                         if (b.hasActiveAbility?(:VOLTABSORB,false,mold_broken) && realtype == :ELECTRIC) ||
-                           (b.isSpecies?(:GOHILA) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+                           (b.isSpecies?(:GOHILA) && b.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
                            (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN],false,mold_broken) && realtype == :WATER)
                             missinghp = (b.totalhp - b.hp).to_f / b.totalhp
                             score *= 1 + (missinghp * 0.75)
                         end
                         if (b.hasActiveAbility?(:LIGHTNINGROD,false,mold_broken) && realtype == :ELECTRIC) ||
-                           (b.isSpecies?(:ROADRAPTOR) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+                           (b.isSpecies?(:ROADRAPTOR) && b.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
                            (b.hasActiveAbility?(:STORMDRAIN,false,mold_broken) && realtype == :WATER)
                             if b.spatk > b.attack
                                 score *= 2.0

@@ -462,9 +462,10 @@ class Battle::AI
                 end
             end
             if elecvar > 0
-                @battle.pbParty(user.index).each do |pkmn|
+                @battle.pbParty(user.index).each_with_index do |pkmn, idxPkmn|
                     next if !pkmn || !pkmn.able?
-                    typeMod = pbCalcTypeMod(:ELECTRIC, pkmn, pkmn)
+                    realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false)
+                    typeMod = pbCalcTypeMod(:ELECTRIC, realpkmn, realpkmn)
                     elecvar += 3 if Effectiveness.super_effective?(typeMod)
                 end
                 score *= 1.1 + (elecvar.to_f / 10.0)
@@ -486,9 +487,10 @@ class Battle::AI
                 end
             end
             if firevar > 0
-                @battle.pbParty(user.index).each do |pkmn|
+                @battle.pbParty(user.index).each_with_index do |pkmn, idxPkmn|
                     next if !pkmn || !pkmn.able?
-                    typeMod = pbCalcTypeMod(:FIRE, pkmn, pkmn)
+                    realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false)
+                    typeMod = pbCalcTypeMod(:ELECTRIC, realpkmn, realpkmn)
                     firevar += 3 if Effectiveness.super_effective?(typeMod)
                 end
                 score *= 1.1 + (firevar.to_f / 10.0)
