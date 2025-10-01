@@ -894,10 +894,10 @@ class Battle::AI
         if !user.canChangeType? || targetTypes.length == 0 || userTypes == targetTypes
             score = 0
         else
-            while targetTypes.length > 3
+            while targetTypes.length < 3
                 targetTypes.push(:QMARKS)
             end
-            while userTypes.length > 3
+            while userTypes.length < 3
                 userTypes.push(:QMARKS)
             end
             miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
@@ -940,10 +940,10 @@ class Battle::AI
             if has_possible_type
                 targetTypes = typesAI(target, user, skill)
                 userTypes = typesAI(user, target, skill)
-                while targetTypes.length > 3
+                while targetTypes.length < 3
                     targetTypes.push(:QMARKS)
                 end
-                while userTypes.length > 3
+                while userTypes.length < 3
                     userTypes.push(:QMARKS)
                 end
                 firstType = user.moves[0].pbCalcType(user)
