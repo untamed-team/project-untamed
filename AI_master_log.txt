@@ -1,9 +1,3 @@
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
 -----------------------------------------------------------------------
                       Score Board for Garbodor
 -----------------------------------------------------------------------
@@ -47,70 +41,6 @@ Move Skitter Smack real damage on Garbodor: 25
 Move Skitter Smack damage % on Garbodor: 8%
 Move Skitter Smack has initial score 80
 Move Skitter Smack ( Category: Physical ) has final score 88
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move U-turn real damage on Garbodor: 25
 Move U-turn damage % on Garbodor: 8%
 Move U-turn has initial score 64.512
@@ -289,70 +219,6 @@ Move Nasty Plot has initial score 115.23188311911528
 Move Nasty Plot ( Category: Status ) has final score 298
 Move Obstruct has initial score 119.7322859630286
 Move Obstruct ( Category: Status ) has final score 206
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Parting Shot has initial score 109.2423431452002
 Move Parting Shot ( Category: Status ) has final score 144
 Move Quash ( Category: Status ) has final score 0
@@ -516,70 +382,6 @@ Move Rising Voltage real damage on Garbodor: 21
 Move Rising Voltage damage % on Garbodor: 6%
 Move Rising Voltage has initial score 80
 Move Rising Voltage ( Category: Special ) has final score 86
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Volt Switch real damage on Garbodor: 29
 Move Volt Switch damage % on Garbodor: 9%
 Move Volt Switch has initial score 64.512
@@ -1882,128 +1684,11 @@ Move Acupressure has initial score 84.76811688088469
 Move Acupressure ( Category: Status ) has final score 146
 Move After You ( Category: Status ) has final score 0
 -------Assist Start--------
-Move Dragon Rush real damage on Garbodor: 71
-Move Dragon Rush damage % on Garbodor: 46%
-Move Dragon Rush has initial score 84.80000000000001
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 108
-Move Stomping Tantrum damage % on Garbodor: 70%
-Move Stomping Tantrum has initial score 80
-Move Mystical Fire real damage on Garbodor: 31
-Move Mystical Fire damage % on Garbodor: 10%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 74
-Move Psychic damage % on Garbodor: 48%
-Move Psychic has initial score 83.2
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 65
-Move Future Sight damage % on Garbodor: 42%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 65
-Move Rock Blast damage % on Garbodor: 42%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 16
-Move Giga Drain damage % on Garbodor: 5%
-Move Giga Drain has initial score 80
-Move Ancient Power real damage on Garbodor: 25
-Move Ancient Power damage % on Garbodor: 8%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 142
-Move Earthquake damage % on Garbodor: 92%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 43
-Move Poison Jab damage % on Garbodor: 14%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 17
-Move Dazzling Gleam damage % on Garbodor: 5%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 29
-Move Spectral Thief damage % on Garbodor: 9%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 26
-Move Prismatic Laser damage % on Garbodor: 8%
-Move Prismatic Laser has initial score 56.0
-Move Poison Jab real damage on Garbodor: 43
-Move Poison Jab damage % on Garbodor: 14%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 17
-Move Dazzling Gleam damage % on Garbodor: 5%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 29
-Move Spectral Thief damage % on Garbodor: 9%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 26
-Move Prismatic Laser damage % on Garbodor: 8%
-Move Prismatic Laser has initial score 56.0
 ~~~~Assist Move will be EARTHQUAKE
 -------Assist End----------
 Move Assist has initial score 90.7576568547998
 Move Assist ( Category: Status ) has final score 172
 Move Attract ( Category: Status ) has final score 0
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Baton Pass has initial score 104.89837324807418
 Move Baton Pass ( Category: Status ) has final score 174
 Move Belly Drum has initial score 100.0
@@ -2077,31 +1762,6 @@ Move Me First ( Category: Status ) has final score 94
 Move Mean Look has initial score 95.10162675192582
 Move Mean Look ( Category: Status ) has final score 0
 -------Metronome Start--------
-Move Defend Order has initial score 100.0
-Move Terrain Pulse real damage on Garbodor: 21
-Move Terrain Pulse damage % on Garbodor: 6%
-Move Terrain Pulse has initial score 80
-Move Overheat real damage on Garbodor: 49
-Move Overheat damage % on Garbodor: 32%
-Move Overheat has initial score 57.6
-Move Spikes has initial score 109.2423431452002
-Move Clear Smog real damage on Garbodor: 16
-Move Clear Smog damage % on Garbodor: 5%
-Move Clear Smog has initial score 80.0
-Move Scratch real damage on Garbodor: 29
-Move Scratch damage % on Garbodor: 9%
-Move Scratch has initial score 80
-Move Chip Away real damage on Garbodor: 50
-Move Chip Away damage % on Garbodor: 32%
-Move Chip Away has initial score 80.0
-Move Bounce real damage on Garbodor: 61
-Move Bounce damage % on Garbodor: 39%
-Move Bounce has initial score 77.1584
-Move Wild Charge real damage on Garbodor: 64
-Move Wild Charge damage % on Garbodor: 41%
-Move Wild Charge has initial score 81.216
-Move Toxic has initial score 109.2423431452002
-Move Toxic Spikes has initial score 109.2423431452002
 ~~~~Metronome Move will be DEFENDORDER
 -------Metronome End----------
 Move Metronome has initial score 95.10162675192582
@@ -2461,70 +2121,6 @@ Move Skill Swap ( Category: Status ) has final score 0
 Move Speed Swap has initial score 83.03432720084973
 Move Speed Swap ( Category: Status ) has final score 0
 Move Telekinesis ( Category: Status ) has final score 0
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Teleport has initial score 104.89837324807418
 Move Teleport ( Category: Status ) has final score 91
 Move Trick has initial score 100.0
@@ -2779,70 +2375,6 @@ Move Octazooka real damage on Garbodor: 25
 Move Octazooka damage % on Garbodor: 8%
 Move Octazooka has initial score 80
 Move Octazooka ( Category: Special ) has final score 88
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Flip Turn real damage on Garbodor: 43
 Move Flip Turn damage % on Garbodor: 14%
 Move Flip Turn has initial score 64.512
@@ -3017,12 +2549,6 @@ Move Golden Splash real damage on Garbodor: 49
 Move Golden Splash damage % on Garbodor: 32%
 Move Golden Splash has initial score 80
 Move Golden Splash ( Category: Special ) has final score 112
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
 -----------------------------------------------------------------------
                       Score Board for Garbodor
 -----------------------------------------------------------------------
@@ -3064,70 +2590,6 @@ Move Skitter Smack real damage on Garbodor: 25
 Move Skitter Smack damage % on Garbodor: 8%
 Move Skitter Smack has initial score 80
 Move Skitter Smack ( Category: Physical ) has final score 88
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move U-turn real damage on Garbodor: 25
 Move U-turn damage % on Garbodor: 8%
 Move U-turn has initial score 52.992
@@ -3306,70 +2768,6 @@ Move Nasty Plot has initial score 115.23188311911528
 Move Nasty Plot ( Category: Status ) has final score 298
 Move Obstruct has initial score 119.7322859630286
 Move Obstruct ( Category: Status ) has final score 181
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Parting Shot has initial score 109.2423431452002
 Move Parting Shot ( Category: Status ) has final score 176
 Move Quash ( Category: Status ) has final score 0
@@ -3533,70 +2931,6 @@ Move Rising Voltage real damage on Garbodor: 21
 Move Rising Voltage damage % on Garbodor: 6%
 Move Rising Voltage has initial score 80
 Move Rising Voltage ( Category: Special ) has final score 86
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Volt Switch real damage on Garbodor: 29
 Move Volt Switch damage % on Garbodor: 9%
 Move Volt Switch has initial score 52.992
@@ -4902,128 +4236,11 @@ Move Acupressure has initial score 84.76811688088469
 Move Acupressure ( Category: Status ) has final score 146
 Move After You ( Category: Status ) has final score 0
 -------Assist Start--------
-Move Dragon Rush real damage on Garbodor: 71
-Move Dragon Rush damage % on Garbodor: 46%
-Move Dragon Rush has initial score 84.80000000000001
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 108
-Move Stomping Tantrum damage % on Garbodor: 70%
-Move Stomping Tantrum has initial score 80
-Move Mystical Fire real damage on Garbodor: 31
-Move Mystical Fire damage % on Garbodor: 10%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 74
-Move Psychic damage % on Garbodor: 48%
-Move Psychic has initial score 83.2
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 65
-Move Future Sight damage % on Garbodor: 42%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 65
-Move Rock Blast damage % on Garbodor: 42%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 16
-Move Giga Drain damage % on Garbodor: 5%
-Move Giga Drain has initial score 80
-Move Ancient Power real damage on Garbodor: 25
-Move Ancient Power damage % on Garbodor: 8%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 142
-Move Earthquake damage % on Garbodor: 92%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 43
-Move Poison Jab damage % on Garbodor: 14%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 17
-Move Dazzling Gleam damage % on Garbodor: 5%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 29
-Move Spectral Thief damage % on Garbodor: 9%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 26
-Move Prismatic Laser damage % on Garbodor: 8%
-Move Prismatic Laser has initial score 56.0
-Move Poison Jab real damage on Garbodor: 43
-Move Poison Jab damage % on Garbodor: 14%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 17
-Move Dazzling Gleam damage % on Garbodor: 5%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 29
-Move Spectral Thief damage % on Garbodor: 9%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 26
-Move Prismatic Laser damage % on Garbodor: 8%
-Move Prismatic Laser has initial score 56.0
 ~~~~Assist Move will be EARTHQUAKE
 -------Assist End----------
 Move Assist has initial score 90.7576568547998
 Move Assist ( Category: Status ) has final score 172
 Move Attract ( Category: Status ) has final score 0
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 86.88
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Baton Pass has initial score 104.89837324807418
 Move Baton Pass ( Category: Status ) has final score 249
 Move Belly Drum has initial score 100.0
@@ -5100,33 +4317,6 @@ Move Me First ( Category: Status ) has final score 94
 Move Mean Look has initial score 95.10162675192582
 Move Mean Look ( Category: Status ) has final score 0
 -------Metronome Start--------
-Move Screech has initial score 90.7576568547998
-Move Fly real damage on Garbodor: 64
-Move Fly damage % on Garbodor: 41%
-Move Fly has initial score 70.4
-Move Fire Lash real damage on Garbodor: 57
-Move Fire Lash damage % on Garbodor: 37%
-Move Fire Lash has initial score 112.0
-Move Ice Fang real damage on Garbodor: 47
-Move Ice Fang damage % on Garbodor: 30%
-Move Ice Fang has initial score 86.944
-Move Mist Ball real damage on Garbodor: 58
-Move Mist Ball damage % on Garbodor: 37%
-Move Mist Ball has initial score 80
-Move Sweet Kiss has initial score 95.10162675192582
-Move Judgment real damage on Garbodor: 41
-Move Judgment damage % on Garbodor: 13%
-Move Judgment has initial score 80
-Move Sand Attack has initial score 83.03432720084973
-Move Dual Wingbeat real damage on Garbodor: 52
-Move Dual Wingbeat damage % on Garbodor: 33%
-Move Dual Wingbeat has initial score 80
-Move Poison Tail real damage on Garbodor: 29
-Move Poison Tail damage % on Garbodor: 9%
-Move Poison Tail has initial score 80
-Move Rising Voltage real damage on Garbodor: 21
-Move Rising Voltage damage % on Garbodor: 6%
-Move Rising Voltage has initial score 80
 ~~~~Metronome Move will be SCREECH
 -------Metronome End----------
 Move Metronome has initial score 95.10162675192582
@@ -5486,70 +4676,6 @@ Move Skill Swap ( Category: Status ) has final score 0
 Move Speed Swap has initial score 83.03432720084973
 Move Speed Swap ( Category: Status ) has final score 0
 Move Telekinesis ( Category: Status ) has final score 0
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Teleport has initial score 104.89837324807418
 Move Teleport ( Category: Status ) has final score 130
 Move Trick has initial score 100.0
@@ -5804,70 +4930,6 @@ Move Octazooka real damage on Garbodor: 25
 Move Octazooka damage % on Garbodor: 8%
 Move Octazooka has initial score 80
 Move Octazooka ( Category: Special ) has final score 88
--------(Switch Move) Start--------
-Move Pound real damage on Garbodor: 29
-Move Pound damage % on Garbodor: 9%
-Move Pound has initial score 80
-Move Trump Card real damage on Garbodor: 17
-Move Trump Card damage % on Garbodor: 5%
-Move Trump Card has initial score 135.20000000000002
-Move Dragon Rush real damage on Garbodor: 51
-Move Dragon Rush damage % on Garbodor: 33%
-Move Dragon Rush has initial score 80
-Move Entertainment has initial score 83.03432720084973
-Move Stomping Tantrum real damage on Garbodor: 117
-Move Stomping Tantrum damage % on Garbodor: 76%
-Move Stomping Tantrum has initial score 80
-Move Sky Attack real damage on Garbodor: 72
-Move Sky Attack damage % on Garbodor: 47%
-Move Sky Attack has initial score 72.0
-Move Mystical Fire real damage on Garbodor: 40
-Move Mystical Fire damage % on Garbodor: 13%
-Move Mystical Fire has initial score 80
-Move Psychic real damage on Garbodor: 141
-Move Psychic damage % on Garbodor: 92%
-Move Psychic has initial score 80.0
-Move Wish has initial score 104.89837324807418
-Move Future Sight real damage on Garbodor: 126
-Move Future Sight damage % on Garbodor: 82%
-Move Future Sight has initial score 56.0
-Move Rock Blast real damage on Garbodor: 34
-Move Rock Blast damage % on Garbodor: 11%
-Move Rock Blast has initial score 80
-Move Giga Drain real damage on Garbodor: 33
-Move Giga Drain damage % on Garbodor: 10%
-Move Giga Drain has initial score 80.0
-Move Ancient Power real damage on Garbodor: 35
-Move Ancient Power damage % on Garbodor: 11%
-Move Ancient Power has initial score 88.0
-Move Earthquake real damage on Garbodor: 111
-Move Earthquake damage % on Garbodor: 72%
-Move Earthquake has initial score 80
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
-Move Poison Jab real damage on Garbodor: 70
-Move Poison Jab damage % on Garbodor: 45%
-Move Poison Jab has initial score 80
-Move Dazzling Gleam real damage on Garbodor: 75
-Move Dazzling Gleam damage % on Garbodor: 49%
-Move Dazzling Gleam has initial score 80
-Move Spectral Thief real damage on Garbodor: 36
-Move Spectral Thief damage % on Garbodor: 11%
-Move Spectral Thief has initial score 80.0
-Move Prismatic Laser real damage on Garbodor: 358
-Move Prismatic Laser damage % on Garbodor: 150%
-Move Prismatic Laser has initial score 160
--------(Switch Move) End--------
 Move Flip Turn real damage on Garbodor: 43
 Move Flip Turn damage % on Garbodor: 14%
 Move Flip Turn has initial score 52.992
