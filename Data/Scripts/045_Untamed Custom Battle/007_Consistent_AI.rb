@@ -14,7 +14,7 @@ class Battle::AI
     # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
     $AIMASTERLOG = (false && $DEBUG)
-    $AIGENERALLOG = (false && $DEBUG)
+    $AIGENERALLOG = (true && $DEBUG)
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
                             "RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
@@ -331,14 +331,14 @@ class Battle::AI
         if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
             # If move does not have a defined target the AI will calculate
             # a average of every enemy currently active
-            oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
             totalScore = 0
             @battle.allBattlers.each do |b|
                 next if !user.opposes?(b)
                 score = pbGetMoveScore(move, user, b, skill)
-                totalScore += (score / oppcounter)
+                totalScore += score
             end
-            totalScore = totalScore.to_i
+            oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
+            totalScore = (totalScore / oppcounter).to_i
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
         elsif target_data.num_targets == 0
             # If move affects multiple Pokémon and the AI calculates an overall
@@ -439,6 +439,7 @@ class Battle::AI
                     end
                     # score being changed here means it is positive or at least neutral
                     if score != initialscore
+                        echo("\nScore reversed for ally "+move.name+" + "+b.name+" due to neutrality/positive effect.\n") if $AIGENERALLOG
                         score *= -1 if score > 0
                     else
                         outspedAyyly = ((aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
@@ -448,6 +449,7 @@ class Battle::AI
                             if outspedAyyly && score >= 180
                                 s = 0.75
                             end
+                            echo("\nScore lowered for ally "+move.name+" + "+b.name+" due to spread move dealing damage.\n") if $AIGENERALLOG
                             score *= s
                         end
 
@@ -462,6 +464,7 @@ class Battle::AI
                 count += 1
             end
             totalScore += 100 if valuableTarget && count > 1
+            echo("\nScore boosted for move "+move.name+" due to valuable target.\n") if $AIGENERALLOG && valuableTarget && count > 1
             totalScore /= count # needs testing
             totalScore = totalScore.to_i
             choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
@@ -502,8 +505,10 @@ class Battle::AI
                         next if inBattleIndex.include?(idxParty)
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
                         if pbCheckMoveImmunity(score, move, user, dummy, skill)
+                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity.\n") if $AIGENERALLOG
                             score -= 2
                         else
+                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist.\n") if $AIGENERALLOG
                             type = pbRoughType(move, user, skill)
                             typeMod = pbCalcTypeMod(type, user, dummy)
                             score -= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
@@ -519,8 +524,10 @@ class Battle::AI
                             if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
                                 ayylly = a.allAllies.first
                                 if pbCheckMoveImmunity(score, move, user, ayylly, skill)
+                                    echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity.\n") if $AIGENERALLOG
                                     score *= 0.2
                                 else
+                                    echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist.\n") if $AIGENERALLOG
                                     type = pbRoughType(move, user, skill)
                                     typeMod = pbCalcTypeMod(type, user, ayylly)
                                     score *= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
