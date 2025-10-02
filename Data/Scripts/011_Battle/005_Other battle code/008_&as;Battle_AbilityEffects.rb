@@ -2769,7 +2769,6 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
     if battler.pbCanRaiseStatStage?(stats[mood_rand], battler)
       battler.pbRaiseStatStageByAbility(stats[mood_rand], 2, battler, false)
     end
-    echoln mood_rand
     battler.effects[PBEffects::MoodyMemory] = mood_rand
     battle.pbHideAbilitySplash(battler)
   }
