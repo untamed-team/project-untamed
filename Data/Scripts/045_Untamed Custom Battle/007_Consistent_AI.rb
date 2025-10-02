@@ -541,6 +541,10 @@ class Battle::AI
                     end
                     score *= 1 + (doublesThreat/10.0)
                     echo("\nDoubles Threat Level boost from "+user.name+" for "+b.name+": "+(1 + (doublesThreat/10.0)).to_s+"\n") if $AIGENERALLOG
+                    if doublesThreat > 1
+                        score *= 1 + (doublesThreat/10.0)
+                        echo("\nDoubles Threat Level boost from "+user.name+" for "+b.name+": "+(1 + (doublesThreat/10.0)).to_s+"\n") if $AIGENERALLOG
+                    end
                     score = score.to_i
                     scoresAndTargets.push([score, realTarget.index]) if score > 0
                 end

@@ -2760,15 +2760,17 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
     battle.pbShowAbilitySplash(battler)
     moodmemory = battler.effects[PBEffects::MoodyMemory]
     stats = [:ATTACK, :DEFENSE, :SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED]
-    if battler.pbCanLowerStatStage?(stats[moodmemory], battler) && moodmemory > 0
+    if battler.pbCanLowerStatStage?(stats[moodmemory], battler) && moodmemory >= 0
       battler.pbLowerStatStageByAbility(stats[moodmemory], 2, battler, false)
     end
     mood = (0..4).to_a.reject { |i| i == moodmemory }
-    mood = battle.pbRandom(0..mood.length)
-    if battler.pbCanRaiseStatStage?(stats[mood], battler)
-      battler.pbRaiseStatStageByAbility(stats[mood], 2, battler, false)
+    mood_size = mood.length - 1
+    mood_rand = battle.pbRandom(0..mood_size)
+    if battler.pbCanRaiseStatStage?(stats[mood_rand], battler)
+      battler.pbRaiseStatStageByAbility(stats[mood_rand], 2, battler, false)
     end
-    battler.effects[PBEffects::MoodyMemory] = mood
+    echoln mood_rand
+    battler.effects[PBEffects::MoodyMemory] = mood_rand
     battle.pbHideAbilitySplash(battler)
   }
 )
