@@ -735,7 +735,7 @@ class Battle::AI
             score = 0
         else
             new_type = nil
-            case @battle.field.terrain
+            case expectedTerrain
             when :Electric
                 new_type = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
             when :Grassy
