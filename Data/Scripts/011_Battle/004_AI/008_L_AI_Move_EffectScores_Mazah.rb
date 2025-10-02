@@ -1577,6 +1577,9 @@ class Battle::AI
                     abilityscore*=3
                 end
                 targetTypes = typesAI(target, user, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
                 if Effectiveness.calculate(elecmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     abilityscore*=2
                 end
@@ -1605,6 +1608,9 @@ class Battle::AI
                     abilityscore*=3
                 end
                 targetTypes = typesAI(target, user, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
                 if Effectiveness.calculate(watermove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     abilityscore*=2
                 end
@@ -1640,6 +1646,9 @@ class Battle::AI
                     abilityscore*=3
                 end
                 targetTypes = typesAI(target, user, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
                 if Effectiveness.calculate(firemove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     abilityscore*=3
                 end
@@ -1664,6 +1673,9 @@ class Battle::AI
                     abilityscore*=3
                 end
                 targetTypes = typesAI(target, user, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
                 if Effectiveness.calculate(groundmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     abilityscore*=2
                 end
@@ -1876,6 +1888,9 @@ class Battle::AI
                     abilityscore*=3
                 end
                 targetTypes = typesAI(target, user, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
                 if Effectiveness.calculate(grassmove.type, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     abilityscore*=2
                 end

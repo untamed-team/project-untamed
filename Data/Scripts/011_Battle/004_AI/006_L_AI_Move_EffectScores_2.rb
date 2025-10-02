@@ -1108,6 +1108,9 @@ class Battle::AI
                 score*=0.7
             end
             targetTypes = typesAI(target, user, skill)
+            while targetTypes.length < 3
+                targetTypes.push(:QMARKS)
+            end
             effcheck = Effectiveness.calculate(targetTypes[0], :FIRE, :FIRE, :FIRE)
             if effcheck > 4
                 score*=1.5
@@ -1329,9 +1332,12 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "IgnoreTargetAbility", "CategoryDependsOnHigherDamageIgnoreTargetAbility" # Moongeist Beam / Photon Geyser
         targetTypes = typesAI(target, user, skill)
+        while targetTypes.length < 3
+            targetTypes.push(:QMARKS)
+        end
         if target.hasActiveAbility?(:WONDERGUARD)
             score*=5
-        elsif target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD])
+        elsif target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE])
             if move.type==:ELECTRIC
                 if Effectiveness.calculate(:ELECTRIC, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     score*=2

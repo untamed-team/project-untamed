@@ -407,6 +407,9 @@ class Battle::AI
     when "EffectivenessIncludesFlyingType"   # Flying Press
       if GameData::Type.exists?(:FLYING)
         targetTypes = typesAI(target, user, skill)
+        while targetTypes.length < 3
+          targetTypes.push(:QMARKS)
+        end
         mult = Effectiveness.calculate(
           :FLYING, targetTypes[0], targetTypes[1], targetTypes[2]
         )

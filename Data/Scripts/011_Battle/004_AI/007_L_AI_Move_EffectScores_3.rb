@@ -4964,6 +4964,9 @@ class Battle::AI
                 end
             end
             targetTypes = typesAI(target, user, skill)
+            while targetTypes.length < 3
+                targetTypes.push(:QMARKS)
+            end
             effcheck = Effectiveness.calculate(:FIRE, targetTypes[0], targetTypes[1], targetTypes[2])
             if effcheck>4
                 score*=2
