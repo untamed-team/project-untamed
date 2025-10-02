@@ -505,13 +505,15 @@ class Battle::AI
                         next if inBattleIndex.include?(idxParty)
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
                         if pbCheckMoveImmunity(score, move, user, dummy, skill)
-                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity.\n") if $AIGENERALLOG
                             score -= 2
+                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity.\n") if $AIGENERALLOG
                         else
-                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist.\n") if $AIGENERALLOG
                             type = pbRoughType(move, user, skill)
                             typeMod = pbCalcTypeMod(type, user, dummy)
-                            score -= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+                            if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+                                score -= 0.5
+                                echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist.\n") if $AIGENERALLOG
+                            end
                         end
                     end
                     # ally switch cheez prevention
@@ -527,15 +529,18 @@ class Battle::AI
                                     echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity.\n") if $AIGENERALLOG
                                     score *= 0.2
                                 else
-                                    echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist.\n") if $AIGENERALLOG
                                     type = pbRoughType(move, user, skill)
                                     typeMod = pbCalcTypeMod(type, user, ayylly)
-                                    score *= 0.5 if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+                                    if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+                                        score *= 0.5
+                                        echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist.\n") if $AIGENERALLOG
+                                    end
                                 end
                             end
                         end
                     end
                     score *= 1 + (doublesThreat/10.0)
+                    echo("\nDoubles Threat Level boost from "+user.name+" for "+b.name+": "+(1 + (doublesThreat/10.0)).to_s+"\n") if $AIGENERALLOG
                     score = score.to_i
                     scoresAndTargets.push([score, realTarget.index]) if score > 0
                 end
@@ -1066,7 +1071,7 @@ class Battle::AI
           end
           #increment = 0 if increment < 0
           ###############################################
-          echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
+          #echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+increment.to_s+"\n") if $AIGENERALLOG
         end
         if user.isBossPokemon?
             target.eachMove do |m|
@@ -1091,7 +1096,7 @@ class Battle::AI
                 increment *= 0.5
                 increment = -2 if increment == 0
               end
-              echo("\nThreat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
+              #echo("\nThreat Level nullified/lowered for "+target.name+": "+increment.to_s+", due to protect.\n") if $AIGENERALLOG
             end
           end
         end
