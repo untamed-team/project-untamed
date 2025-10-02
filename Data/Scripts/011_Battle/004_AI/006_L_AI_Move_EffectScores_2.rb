@@ -946,13 +946,13 @@ class Battle::AI
                 while userTypes.length < 3
                     userTypes.push(:QMARKS)
                 end
-                firstType = user.moves[0].pbCalcType(user)
+                firstType = user.moves[0].type #intentionally not pbCalcType(user), because this move is weird
                 miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
                              Effectiveness.calculate(targetTypes[1], userTypes[0], userTypes[1], userTypes[2]), 
                              Effectiveness.calculate(targetTypes[2], userTypes[0], userTypes[1], userTypes[2])].max
-                minimini  = [Effectiveness.calculate_one(targetTypes[0], firstType), 
-                             Effectiveness.calculate_one(targetTypes[1], firstType), 
-                             Effectiveness.calculate_one(targetTypes[2], firstType)].max
+                minimini  = [Effectiveness.calculate(targetTypes[0], firstType), 
+                             Effectiveness.calculate(targetTypes[1], firstType), 
+                             Effectiveness.calculate(targetTypes[2], firstType)].max
                 if minimini < miniscore
                     score *= 3
                     if userFasterThanTarget
