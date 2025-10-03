@@ -2198,10 +2198,10 @@ class Battle::AI
                 if !targetSurvivesMove(move,user,target)
                     echo("\n"+target.name+" will not survive.") if $AIGENERALLOG
                     if fastermon
-                        echo("Score (for" + move.name + ") x1.3\n") if $AIGENERALLOG
+                        echo("Score (for " + move.name + ") x1.3\n") if $AIGENERALLOG
                         score*=1.3
                     else
-                        echo("Score (for" + move.name + ") x2\n") if $AIGENERALLOG
+                        echo("Score (for " + move.name + ") x2\n") if $AIGENERALLOG
                         score*=2
                     end
                 end   
@@ -2255,10 +2255,10 @@ class Battle::AI
                     score*=1.1
                     if !targetSurvivesMove(maxpriomove,target,user)
                         if fastermon
-                            echo(user.name+" does not survive piority move. Score (for" + move.name + ") x3. \n") if $AIGENERALLOG
+                            echo(user.name+" does not survive piority move. Score (for " + move.name + ") x3. \n") if $AIGENERALLOG
                             score*=3
                         else
-                            echo(user.name+" does not survive priority move but is faster. Score (for" + move.name + ") x0.7 \n") if $AIGENERALLOG
+                            echo(user.name+" does not survive priority move but is faster. Score (for " + move.name + ") x0.7 \n") if $AIGENERALLOG
                             score*=0.7
                         end
                     end
@@ -2269,26 +2269,26 @@ class Battle::AI
                                             "TwoTurnAttackInvulnerableInSkyParalyzeTarget",
                                             "TwoTurnAttackInvulnerableUnderwater",
                                             "TwoTurnAttackInvulnerableInSkyTargetCannotAct")
-                    echo("Player Pokemon is invulnerable. Score (for" + move.name + ") x0.3 \n") if $AIGENERALLOG
-                    score*=0.3
+                    echo("Player Pokemon is invulnerable. Score (for " + move.name + ") x0.1 \n") if $AIGENERALLOG
+                    score*=0.1
                 end
                 procGlobalArray = processGlobalArray(globalArray)
                 expectedTerrain = procGlobalArray[1]
                 if expectedTerrain == :Psychic && target.affectedByTerrain?
-                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for" + move.name + ") x0.3. \n") if $AIGENERALLOG
-                    score*=0.3
+                    echo("(" + move.name + ") Blocked by Psychic Terrain. Score (for " + move.name + ") x0.1. \n") if $AIGENERALLOG
+                    score*=0.1
                 end
                 @battle.allSameSideBattlers(target.index).each do |b|
                     priobroken=moldbroken(user,b,move)
                     if b.hasActiveAbility?([:DAZZLING, :QUEENLYMAJESTY],false,priobroken) &&
                        !((b.isSpecies?(:LAGUNA) || b.isSpecies?(:DIANCIE)) && b.pokemon.willmega && !b.hasAbilityMutation?) 
                         # laguna/diancie can have priority immunity in pre-mega form
-                        score*=0.3
-                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") x0.3. \n") if $AIGENERALLOG
+                        score*=0.1
+                        echo("(" + move.name + ") Blocked by enemy ability. Score (for" + move.name + ") x0.1. \n") if $AIGENERALLOG
                         break
                     end
                 end 
-                if pbTargetsMultiple?(move,user) && pbHasSingleTargetProtectMove?(target) && targetWillMove?(target, "status")
+                if pbTargetsMultiple?(move,user) && targetWillMove?(target, "status")
                     quickcheck = false 
                     for j in target.moves
                         quickcheck = true if j.function=="ProtectUserSideFromPriorityMoves" && j.effects[PBEffects::ProtectRate] == 0

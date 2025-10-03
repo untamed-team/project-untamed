@@ -87,19 +87,18 @@ class Battle::AI
                 pbRegisterMoveTrainer(user, i, choices, skill)
             end
         end
-        if $AIGENERALLOG
-            echo("\nChoices and scores for: "+user.name+" \n")
-            Console.echo_h2(choices)
-            echo("----------------------------------------\n")
-        end
         # Figure out useful information about the choices
         totalScore = 0
         maxScore   = 0
+        echoln("\n\n---Move scores sum-up-------------------") if $AIGENERALLOG && !wildBattler
         choices.each do |c|
             totalScore += c[1]
-            echoln("#{c[3]} : #{c[1].to_s}") if !wildBattler && $AIGENERALLOG
+            if $AIGENERALLOG && !wildBattler
+                echoln("        #{c[3]} : #{c[1].to_s}; target = #{@battle.battlers[c[2]].name.to_s}")
+            end
             maxScore = c[1] if maxScore < c[1]
         end
+        echoln("----------------------------------------") if $AIGENERALLOG && !wildBattler
         # DemICE: Item usage AI has been moved here.
         item, idxTarget = pbEnemyItemToUse(idxBattler)
         if item
@@ -210,7 +209,7 @@ class Battle::AI
                 end
                 return
             end
-            # Check the foe's damage potential, and if it is a lot, try switching
+            # Check the foe's damage potential, and if it is a lot, try switching # needs testing
             if !attemptedSwitching
                 shouldSwitch = false
                 aspeed = pbRoughStat(user,:SPEED,100)
@@ -232,19 +231,20 @@ class Battle::AI
                         userMaxdampercent = userMaxdam * 100.0 / b.hp
                         userMaxpripercent = userMaxpri * 100.0 / b.hp
 
-                        if (maxpripercent >= 40 && userMaxpripercent < maxpripercent) ||
-                           (maxdampercent >= 50 && userMaxdampercent < maxdampercent)
+                        if (maxpripercent >= 50 && userMaxpripercent < maxpripercent) ||
+                           (maxdampercent >= 60 && userMaxdampercent < maxdampercent)
                             shouldSwitch = true
+                            echo("Switching because of threatening faster foe (#{b.name}).\n") if $AIGENERALLOG
                             break
                         end
                     else
-                        if maxpripercent >= 50 || maxdampercent >= 40
+                        if maxpripercent >= 60 || maxdampercent >= 50
                             shouldSwitch = true
+                            echo("Switching because of threatening slower foe (#{b.name}).\n") if $AIGENERALLOG
                             break
                         end
                     end
                 end
-
                 if shouldSwitch && pbEnemyShouldWithdrawEx?(idxBattler, true)
                     attemptedSwitching = true
                     if $INTERNAL
@@ -506,13 +506,13 @@ class Battle::AI
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
                         if pbCheckMoveImmunity(score, move, user, dummy, skill)
                             score -= 2
-                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity.\n") if $AIGENERALLOG
+                            echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity ("+dummy.name+").\n") if $AIGENERALLOG
                         else
                             type = pbRoughType(move, user, skill)
                             typeMod = pbCalcTypeMod(type, user, dummy)
                             if Effectiveness.resistant?(typeMod) && move.baseDamage>0
                                 score -= 0.5
-                                echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist.\n") if $AIGENERALLOG
+                                echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist ("+dummy.name+").\n") if $AIGENERALLOG
                             end
                         end
                     end
@@ -526,14 +526,14 @@ class Battle::AI
                             if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
                                 ayylly = a.allAllies.first
                                 if pbCheckMoveImmunity(score, move, user, ayylly, skill)
-                                    echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity.\n") if $AIGENERALLOG
+                                    echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity ("+a.name+").\n") if $AIGENERALLOG
                                     score *= 0.2
                                 else
                                     type = pbRoughType(move, user, skill)
                                     typeMod = pbCalcTypeMod(type, user, ayylly)
                                     if Effectiveness.resistant?(typeMod) && move.baseDamage>0
                                         score *= 0.5
-                                        echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist.\n") if $AIGENERALLOG
+                                        echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist ("+a.name+").\n") if $AIGENERALLOG
                                     end
                                 end
                             end
@@ -600,6 +600,14 @@ class Battle::AI
                     echoln "score for protect+FS #{miniscore}" if $AIGENERALLOG
                     score += miniscore
                 end
+            end
+            if $AIGENERALLOG
+                echo("\n-----------------------------")
+                echo("\nfor #{target.name}, from #{user.name}")
+                echo("\n-----------------------------")
+                echo("\n#{move.name} score before calcs = #{initScore}")
+                echo("\n#{move.name} score = #{score}")
+                echo("\n-----------------------------\n")
             end
         end
         if $AIMASTERLOG
@@ -931,7 +939,7 @@ class Battle::AI
         # Prefer status moves if level difference is significantly high
         damagePercentage *= 0.5 if user.level - 5 > target.level
         # Adjust score
-        if damagePercentage > 100   # Treat all lethal moves the same # DemICE
+        if damagePercentage >= 100   # Treat all lethal moves the same # DemICE
             damagePercentage = 110 
             damagePercentage += 40 # Prefer moves likely to be lethal # DemICE
             if ["RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints"].include?(move.function) # DemICE: Fell Stinger should be preferred among other moves that KO
@@ -965,7 +973,8 @@ class Battle::AI
                              "LowerTargetAttack1", "LowerTargetDefense1", 
                              "LowerTargetSpeed1", "LowerTargetSpAtk1", "LowerTargetSpDef1",
                              "LowerPPOfTargetLastMoveBy4", "LowerPPOfTargetLastMoveBy3",
-                             "OverrideTargetStatusWithPoison", "BOOMInstall"]
+                             "OverrideTargetStatusWithPoison", "BOOMInstall", 
+                             "SwitchOutTargetDamagingMove"]
             rainKOarray = ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", 
                            "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"]
             powerhKOarr = ["TwoTurnAttackParalyzeTarget", "TwoTurnAttackInvulnerableInSkyParalyzeTarget", 
@@ -973,7 +982,7 @@ class Battle::AI
             if statusKOarray.include?(move.function) ||
               (rainKOarray.include?(move.function) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) ||
               (powerhKOarr.include?(move.function) && user.hasActiveItem?(:POWERHERB))
-                score = 80
+                score = pbAIPrioSpeedCheck(80, move, user, target)
             end
         end
         if ["HealUserByHalfOfDamageDone","HealUserByThreeQuartersOfDamageDone"].include?(move.function) ||

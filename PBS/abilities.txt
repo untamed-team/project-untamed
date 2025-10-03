@@ -1248,7 +1248,7 @@ FullDesc = When user is on the field, enemy Water types cannot switch out or esc
 [CARPENTER]
 Name = Carpenter
 Description = Boosts the power of Grass, Rock, and Steel-type allies.
-FullDesc = Allies with Grass, Rock, or Steel typing gain a 1.3x boost to their moves. This effect does not stack if allies share multiple of these typings.
+FullDesc = Allies with Grass, Rock, or Steel-typing gain a 1.3x boost to their attacking stats. This effect does not stack if allies share multiple of these typings.
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster

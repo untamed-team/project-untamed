@@ -1114,15 +1114,15 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
-    effects.push(["Stealth Rock", "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
-    effects.push(["Stat Drop Immunity", "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
+    effects.push([_INTL("Stealth Rock"), "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
+    effects.push([_INTL("Stat Drop Immunity"), "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
     battler_effects.each do |key, value|
       next if battler.effects[key] == 0
       count = battler.effects[key]
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
-    effects.push(["Virus Inject", "---"]) if battler.effects[PBEffects::BoomInstalled]
+    effects.push([_INTL("Virus Inject"), "---"]) if battler.effects[PBEffects::BoomInstalled]
     # Draws panels and text for all relevant battle effects affecting the battler.
     effects.each_with_index do |effect, i|
       break if i == 8

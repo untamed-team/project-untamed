@@ -66,8 +66,8 @@ class Battle::AI
         mindamage=100 if ((maxspeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
       end  
     end  
-    echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
-    echoln("mindam = #{mindamage}") if $AIGENERALLOG
+    #echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
+    #echoln("mindam = #{mindamage}") if $AIGENERALLOG
     if maxdampercent<mindamage && !tickdamage
       shouldSwitch = true 
       echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
@@ -223,8 +223,9 @@ class Battle::AI
     enemies.each do |i|
       pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
       if !retvrnspeed && $AIGENERALLOG
+        echo("\n========================================\n")
         echo("\nSwitch score for: "+pokmon.name)
-        echo("\n----------------------------------------\n")
+        echo("\n========================================\n")
       end  
       sum  = 0
       maxdam=0
@@ -653,12 +654,27 @@ class Battle::AI
           ownmaxdmg=tempdam if tempdam>ownmaxdmg
           ownmaxmove=m
           damagedealtPercent = ownmaxdmg *100.0 / b.hp
-          # teleport, u-turn / volt switch, Parting Shot, baton pass
-          if ["SwitchOutUserStatusMove", "SwitchOutUserDamagingMove",
+          # teleport, Parting Shot, baton pass
+          if ["SwitchOutUserStatusMove",
               "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(m.function)
             score=120
+          # u-turn / volt switch
+          elsif m.function == "SwitchOutUserDamagingMove"
+            if tempdam > 1
+              score=100
+            else
+              score=50
+            end
+          # metronome / assist
           elsif ["UseRandomMove", "UseRandomMoveFromUserParty"].include?(m.function) #by low
             score=95
+          # fake out
+          elsif m.function == "FlinchTargetFailsIfNotUserFirstTurn"
+            if tempdam > 1
+              score=85
+            else
+              score=0
+            end
           else  
             score=pbGetMoveScore(m, pokmon, b, 100)
           end  

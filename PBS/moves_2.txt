@@ -5848,7 +5848,7 @@ TotalPP = 30
 Target = User
 FunctionCode = SetUserTypesToUserMoveType
 Flags = Contest_Beauty,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
-Description = The user changes its type to become the same type as one of its moves.
+Description = The user changes its type to become the same type as its first move.
 #-------------------------------
 [CONVERSION2]
 Name = Conversion 2

@@ -137,12 +137,19 @@ class Battle::AI
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
         # Powder (the move) logic
-        if type == :FIRE && targetWillMove?(target)
-            targetMove = @battle.choices[target.index][2]
-            if targetMove.function == "TargetNextFireMoveDamagesTarget" && user.affectedByPowder?
-                thisprio = priorityAI(user, move, globalArray)
-                thatprio = priorityAI(target, targetMove, globalArray)
-                return 0 if thatprio > thisprio
+        if type == :FIRE
+            user.eachOpposing do |b|
+                if targetWillMove?(b, "status")
+                    targetIntent = @battle.choices[b.index]
+                    targetMove = targetIntent[2]
+                    targetAim = targetIntent[3]
+                    if targetMove.function == "TargetNextFireMoveDamagesTarget" && user.affectedByPowder? && 
+                       targetAim == user.index
+                        thisprio = priorityAI(user, move, globalArray)
+                        thatprio = priorityAI(b, targetMove, globalArray)
+                        return 0 if thatprio > thisprio
+                    end
+                end
             end
         end
         # Ability effects that alter damage
@@ -743,6 +750,8 @@ class Battle::AI
     
     def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
         return true if !move
+        return true if ["FailsIfNotUserFirstTurn", "FlinchTargetFailsIfNotUserFirstTurn"].include?(move.function) && 
+                       attacker.turnCount > 0
         mold_broken=moldbroken(attacker,opponent,move)
         damage = pbRoughDamage(move,attacker,opponent,100,0)
         damage+=priodamage

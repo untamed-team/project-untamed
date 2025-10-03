@@ -546,7 +546,8 @@ class Battle::AI
                 end
             end
         else
-            score += 40 if target.status == :BURN
+            # smaller = gooder for allies
+            score -= 40 if target.status == :BURN && !target.hasActiveAbility?([:GUTS, :FLAREBOOST])
         end
     #---------------------------------------------------------------------------
     when "StartUserSideImmunityToInflictedStatus" # Safeguard
@@ -834,6 +835,12 @@ class Battle::AI
             if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
                 if !target.lastMoveUsed.nil?
                     lastmove = target.lastMoveUsed
+                    if targetWillMove?(target, "dmg")
+                        if lastmove == @battle.choices[target.index][2].id &&
+                           @battle.choices[target.index][3] == user.index
+                            score *= 1.2
+                        end
+                    end
                 end
             else
                 if targetWillMove?(target)

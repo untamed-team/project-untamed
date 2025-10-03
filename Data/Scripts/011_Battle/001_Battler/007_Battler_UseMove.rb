@@ -434,16 +434,17 @@ class Battle::Battler
       targets.each do |b|
         b.damageState.reset
         # Special interaction for color change + protean ability combo #by low
-        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && !b.pbOwnedByPlayer? &&
-           b.hasAbilityMutation? && b.abilityMutationList.include?(:COLORCHANGE)
+        if ((b.hasActiveAbility?([:PROTEAN, :LIBERO]) && b.abilityMutationList.include?(:COLORCHANGE)) ||
+            (b.hasActiveAbility?(:COLORCHANGE) && 
+             [:PROTEAN, :LIBERO].any? { |ba| b.abilityMutationList.include?(ba) })) && 
+            b.hasAbilityMutation? && !b.pbOwnedByPlayer?
           offenseType = move.calcType
           if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
             @battle.pbShowAbilitySplash(b)
             resistTypesArr = []
             GameData::Type.each do |t|
               next if t.pseudo_type || user.pbHasType?(t.id)
-              resistTypesArr.push(t.id) if Effectiveness.resistant_type?(offenseType, t.id) && 
-                                          !Effectiveness.ineffective_type?(offenseType, t.id)
+              resistTypesArr.push(t.id) if Effectiveness.not_very_effective_type?(offenseType, t.id)
             end
             if resistTypesArr.empty?
               GameData::Type.each do |t|

@@ -5781,7 +5781,7 @@ class Battle::AI
                 else
                     score*=0.7
                 end
-                score*=0.7 if user.turnCount<1
+                score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
                 score*=0.8 if @battle.pbSideSize(1)>1
             else
                 score = 0
@@ -5906,7 +5906,7 @@ class Battle::AI
                 else
                     score*=0.7
                 end
-                score*=0.7 if user.turnCount<1
+                score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
                 score*=0.8 if @battle.pbSideSize(1)>1
             else
                 score = 0
@@ -6052,7 +6052,7 @@ class Battle::AI
                     end
                     target.stages[:ATTACK] = olderStats[0]
                     target.stages[:SPECIAL_ATTACK] = olderStats[1]
-                    score*=0.7 if user.turnCount<1
+                    score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
                     score*=0.8 if @battle.pbSideSize(1)>1
                 else
                     score = 0
@@ -6156,7 +6156,7 @@ class Battle::AI
                 else
                     score*=0.7
                 end
-                score*=0.7 if user.turnCount<1
+                score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
                 score*=0.8 if @battle.pbSideSize(1)>1
             else
                 score = 0

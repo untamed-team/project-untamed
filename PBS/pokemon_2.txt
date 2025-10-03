@@ -6733,7 +6733,7 @@ Category = Snake
 Pokedex = ...
 #-------------------------------
 [SWABLU]
-Name = Swablu
+Name = Failsafe_Swablu
 Types = QMARKS
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent
@@ -6755,7 +6755,7 @@ Category = Snake
 Pokedex = ...
 #-------------------------------
 [ALTARIA]
-Name = Altaria
+Name = Failsafe_Altaria
 Types = QMARKS
 BaseStats = 2,1,1,1,1,1
 GenderRatio = Female50Percent

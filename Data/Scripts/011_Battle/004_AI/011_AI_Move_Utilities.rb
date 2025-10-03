@@ -175,9 +175,11 @@ class Battle::AI
     end
     # electrify logic
     user.eachOpposing do |b|
-      if targetWillMove?(b)
-        targetMove = @battle.choices[b.index][2]
-        if targetMove.function == "TargetMovesBecomeElectric"
+      if targetWillMove?(b, "status")
+        targetIntent = @battle.choices[b.index]
+        targetMove = targetIntent[2]
+        targetAim = targetIntent[3]
+        if targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index
           thisprio = priorityAI(user, move, globalArray)
           thatprio = priorityAI(b, targetMove, globalArray)
           aspeed = pbRoughStat(user,:SPEED,skill)
