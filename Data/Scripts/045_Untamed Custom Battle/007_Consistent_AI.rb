@@ -198,8 +198,10 @@ class Battle::AI
             if !badMoves && totalScore <= 200
                 badMoves = true
                 choices.each do |c|
-                    badMoves = false 
-                    next if !user.moves[c[0]].statusMove?
+                    cmove = user.moves[c[0]]
+                    if cmove.statusMove?
+                      next unless ["SleepTarget"].include?(cmove.function)
+                    end 
                     badMoves = false if c[1] > 115
                     break
                 end
