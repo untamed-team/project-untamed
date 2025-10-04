@@ -517,7 +517,7 @@ class Battle::AI
             score*=1.3 if roles.include?("Lead")
             score*=1.2 if ["Physical Wall", "Pivot"].any? { |r| roles.include?(r) }
             if maxphys
-                score*=1.2
+                score*=1.3
                 score*=1.4 if halfhealth>maxdam
                 if !userFasterThanTarget
                     score *= 0.5 if maxdam>thirdhealth
@@ -525,9 +525,11 @@ class Battle::AI
                     score *= 1.4 if (maxdam/2.0)<user.hp
                 end     
             end 
-            if userFasterThanTarget
-                if targetWillMove?(target,"phys")
+            if targetWillMove?(target,"phys")
+                if userFasterThanTarget
                     score *= 1.2
+                else
+                    score *= 1.1
                 end
             end
             score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 
@@ -550,7 +552,7 @@ class Battle::AI
             score*=1.3 if roles.include?("Lead")
             score*=1.2 if ["Special Wall", "Pivot"].any? { |r| roles.include?(r) }
             if maxspec
-                score*=1.2
+                score*=1.3
                 score*=1.4 if halfhealth>maxdam
                 if !userFasterThanTarget
                     score *= 0.5 if maxdam>thirdhealth
@@ -558,9 +560,11 @@ class Battle::AI
                     score *= 1.4 if (maxdam/2.0)<user.hp
                 end     
             end 
-            if userFasterThanTarget
-                if targetWillMove?(target,"spec")
+            if targetWillMove?(target,"spec")
+                if userFasterThanTarget
                     score *= 1.2
+                else
+                    score *= 1.1
                 end
             end
             score *= 0.1 if target.pbHasMoveFunction?("StealAndUseBeneficialStatusMove", "RemoveScreens", "LowerTargetEvasion1RemoveSideEffects") || 

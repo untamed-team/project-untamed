@@ -39,6 +39,7 @@ class Battle::AI
     def pbChooseMoves(idxBattler)
         user        = @battle.battlers[idxBattler]
         wildBattler = user.wild? && !user.isBossPokemon?
+        wildBattler = false if $game_switches[99] # knock away pokeball switch
         skill       = 100
         @megaGlobalArray = pbGetMidTurnGlobalChanges
         # if !wildBattler
@@ -194,9 +195,10 @@ class Battle::AI
                (maxScore <= 80 && user.turnCount > 3)
                 badMoves = true
             end
-            if !badMoves && totalScore <= 300
+            if !badMoves && totalScore <= 200
                 badMoves = true
                 choices.each do |c|
+                    badMoves = false 
                     next if !user.moves[c[0]].statusMove?
                     badMoves = false if c[1] > 115
                     break
@@ -209,6 +211,7 @@ class Battle::AI
                 end
                 return
             end
+=begin
             # Check the foe's damage potential, and if it is a lot, try switching # needs testing
             if !attemptedSwitching
                 shouldSwitch = false
@@ -253,6 +256,7 @@ class Battle::AI
                     return
                 end
             end
+=end
         end
         bestScore = ["Splash",0]
         # If there are no calculated choices, pick one at random
@@ -1027,6 +1031,13 @@ class Battle::AI
         increment = 0
         #threatHash[target.index] = increment
         if @battle.pbSideBattlerCount(target) > 1
+          if @battle.choices[target.index][0] == :SwitchOut
+          else
+            if target.status == :SLEEP && target.statusCount > 1
+              threatHash[target.index] = 0
+              next
+            end
+          end
           # increase threat level depending on stat boosts
           actualMaxDmg=0
           actualMaxDmg_PhysOrSpec = ""
