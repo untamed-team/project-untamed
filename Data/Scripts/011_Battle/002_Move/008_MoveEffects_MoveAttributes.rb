@@ -1343,6 +1343,25 @@ class Battle::Move::TypeIsUserFirstType < Battle::Move
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
   end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    if self.id == :TRIMTACKLE
+      t = pbBaseType(user)
+      trims = {
+        :FAIRY => :PLAYROUGH,
+        :ROCK  => :HEADSMASH,
+        :GRASS => :HORNLEECH,
+        :WATER => :WATERFALL,
+        :ICE   => :ICICLECRASH,
+        :GHOST => :POLTERGEIST,
+        :ELECTRIC => :WILDCHARGE,
+        :PSYCHIC  => :ZENHEADBUTT,
+        :FIGHTING => :HAMMERARM
+      }
+      id = trims[t] if trims[t] && GameData::Move.exists?(trims[t])
+    end
+    super
+  end
 end
 
 #===============================================================================

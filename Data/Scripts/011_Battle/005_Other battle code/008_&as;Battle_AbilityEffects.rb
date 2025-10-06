@@ -3576,8 +3576,8 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
       next if choices_blacklist.include?(pkmn.species)
       iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler,false)
       next if iFake.ungainableAbility? || iFake.mega?
-      iBaseStats = iFake.pokemon.baseStats
-      bstTotal = iBaseStats[:HP] + iBaseStats[:ATTACK] + iBaseStats[:DEFENSE] + iBaseStats[:SPECIAL_ATTACK] + iBaseStats[:SPECIAL_DEFENSE] + iBaseStats[:SPEED]
+      bstTotal = 0
+      pkmn.baseStats.each_value { |s| bstTotal += s }
       next if bstTotal <= 0 || bstTotal >= 580
       choices.push(iFake)
     end

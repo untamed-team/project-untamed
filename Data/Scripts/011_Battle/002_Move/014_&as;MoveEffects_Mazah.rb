@@ -59,7 +59,6 @@ class Battle::Move::TitanWrath < Battle::Move
   end
   
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    userTypes = user.pbTypes(true)
     type_moves = {
       special: {
         :NORMAL => :HYPERBEAM, 
@@ -76,7 +75,7 @@ class Battle::Move::TitanWrath < Battle::Move
     }
   
     category = @calcCategory == 1 ? :special : :physical
-    type = userTypes[0]
+    type = pbBaseType(user)
     id = type_moves[category][type] if type_moves[category][type] && 
                                        GameData::Move.exists?(type_moves[category][type])
     super

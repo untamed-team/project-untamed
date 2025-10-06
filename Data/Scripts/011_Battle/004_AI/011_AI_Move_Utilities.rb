@@ -502,7 +502,6 @@ class Battle::AI
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
     evasion  = (evasion  * modifiers[:evasion_multiplier]).round
-    evasion = 1 if evasion < 1
     return modifiers[:base_accuracy] * accuracy / evasion
   end
 

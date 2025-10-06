@@ -715,7 +715,7 @@ class Battle::AI
             score *= 1.1 if target.stages[:SPECIAL_DEFENSE] > 0 && user.moves.any? { |j| j&.specialMove?(j&.type) }
             score *= 1.2 if target.moves.any? { |m| m&.healingMove? } 
             score *= 1.2 if target.trappedInBattle?
-            if !user.allAllies.empty?
+            if user.allAllies.any?
                 roles = pbGetPokemonRole(user, target)
                 score *= 1.2 if roles.include?("Lead")
                 userAlly = user.allAllies.first
