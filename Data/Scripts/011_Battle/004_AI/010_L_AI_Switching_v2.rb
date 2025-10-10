@@ -66,8 +66,8 @@ class Battle::AI
         mindamage=100 if ((maxspeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
       end  
     end  
-    #echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
-    #echoln("mindam = #{mindamage}") if $AIGENERALLOG
+    #echoln("maxdam = #{maxdampercent}") if $AISWITCHLOG
+    #echoln("mindam = #{mindamage}") if $AISWITCHLOG
     if maxdampercent<mindamage && !tickdamage
       shouldSwitch = true 
       echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
@@ -106,7 +106,10 @@ class Battle::AI
         scoreSum   = 0
         scoreCount = 0
         battler.allOpposing.each do |b|
+          backup = $AIGENERALLOG
+          $AIGENERALLOG = false
           scoreSum += pbGetMoveScore(battler.moves[idxEncoredMove], battler, b, skill)
+          $AIGENERALLOG = backup
           scoreCount += 1
         end
         if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
@@ -125,7 +128,10 @@ class Battle::AI
         scoreSum   = 0
         scoreCount = 0
         battler.allOpposing.each do |b|
+          backup = $AIGENERALLOG
+          $AIGENERALLOG = false
           scoreSum += pbGetMoveScore(choicedmove, battler, b, skill)
+          $AIGENERALLOG = backup
           scoreCount += 1
         end
         if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
@@ -222,7 +228,7 @@ class Battle::AI
     speedsarray = []
     enemies.each do |i|
       pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
-      if !retvrnspeed && $AIGENERALLOG
+      if !retvrnspeed && $AISWITCHLOG
         echo("\n========================================\n")
         echo("\nSwitch score for: "+pokmon.name)
         echo("\n========================================\n")
@@ -675,8 +681,11 @@ class Battle::AI
             else
               score=0
             end
-          else  
+          else
+            backup = $AIGENERALLOG
+            $AIGENERALLOG = false
             score=pbGetMoveScore(m, pokmon, b, 100)
+            $AIGENERALLOG = backup
           end  
           maxscore=score if score>maxscore
           scoresum+=score
@@ -693,7 +702,7 @@ class Battle::AI
       end
       sum+=maxscore+(scoresum*0.01) #if damagesum>0 || tickdamage
       #if $consoleenabled
-        echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AIGENERALLOG
+        echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AISWITCHLOG
       #end  
       if ownmaxmove
         sum-=100 if (ownmaxmove.physicalMove? && pokmon.stages[:SPECIAL_ATTACK]>0) || (ownmaxmove.specialMove? && pokmon.stages[:ATTACK]>0)
@@ -731,7 +740,7 @@ class Battle::AI
         end  
       end  
       #if $consoleenabled
-        echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)") if $AIGENERALLOG
+        echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)") if $AISWITCHLOG
       #end  
       ownparty = @battle.pbParty(1)
       ownparty.each_with_index do |pkmn, idxParty|
@@ -879,7 +888,7 @@ class Battle::AI
         end
       end
       #if $consoleenabled
-        echo("\nScore after various other factors: "+sum.to_s+"\n") if $AIGENERALLOG
+        echo("\nScore after various other factors: "+sum.to_s+"\n") if $AISWITCHLOG
       #end  
       if best == -1 || sum > bestSum
         best = i

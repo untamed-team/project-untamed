@@ -700,7 +700,7 @@ class Battle::AI
         return true if move.damagingMove? && user.index != target.index && !target.opposes?(user) &&
                        (target.hasActiveAbility?(:TELEPATHY,false,mold_broken) ||
                         user.hasActiveAbility?(:TELEPATHY))
-        return true if move.canMagicCoat? && 
+        return true if move.statusMove? && move.canMagicCoat? && 
                        (target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) || 
                        (target.isSpecies?(:SABLEYE) && target.pokemon.willmega && !mold_broken)) && 
                        target.opposes?(user)

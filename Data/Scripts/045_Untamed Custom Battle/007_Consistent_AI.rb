@@ -13,8 +13,9 @@ class Battle::AI
 
     # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
-    $AIMASTERLOG = (false && $DEBUG)
-    $AIGENERALLOG = (false && $DEBUG)
+    $AIMASTERLOG  = (false && $DEBUG)
+    $AIGENERALLOG = (true && $DEBUG)
+    $AISWITCHLOG  = (false && $DEBUG && $AIGENERALLOG)
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
                             "RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
@@ -507,6 +508,7 @@ class Battle::AI
                                  realTarget.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 &&
                                  move.function != "PursueSwitchingFoe"
                         break if realTarget.trappedInBattle?
+                        break if score < 1
                         next if !pkmn || !pkmn.able?
                         next if inBattleIndex.include?(idxParty)
                         dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
