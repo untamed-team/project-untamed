@@ -1009,6 +1009,7 @@ class Battle::AI
                 end
             end
         end
+        sum = 1 + (sum / 80.0).to_f
         return sum
     end      
 

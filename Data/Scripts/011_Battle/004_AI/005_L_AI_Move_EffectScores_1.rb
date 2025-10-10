@@ -203,11 +203,11 @@ class Battle::AI
                 score*=1.5
             end
             # check how good the current/mega ability weather is for the opponent
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather")) / 100.0)
+            score*=checkWeatherBenefit(target, globalArray, "weather")
             # check how good the potential weather change is for us
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Sun) / 100.0))
+            score*=checkWeatherBenefit(user, globalArray, "weather", :Sun)
             # check how good the potential weather change is for the opponent
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Sun) / 100.0)))
+            score*=(1 / checkWeatherBenefit(target, globalArray, "weather", :Sun)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartRainWeather" # rain dance
@@ -264,9 +264,9 @@ class Battle::AI
             if user.hasActiveAbility?(:HYDRATION)
                 score*=1.5
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather")) / 100.0)
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Rain) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Rain) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "weather")
+            score*=checkWeatherBenefit(user, globalArray, "weather", :Rain)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "weather", :Rain)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartSandstormWeather" # sandstorm
@@ -286,7 +286,7 @@ class Battle::AI
                 score*=1.2
             end
             if user.hasActiveItem?(:SMOOTHROCK)
-                score*=1.3
+                score*=1.5
             end
             if user.pbHasMove?(:WEATHERBALL)
                 score*=2
@@ -301,6 +301,8 @@ class Battle::AI
             end
             if user.pbHasType?(:ROCK, true)
                 score*=1.5
+            elsif user.pbHasType?(:GROUND, true) || user.pbHasType?(:STEEL, true)
+                score*=1.2
             end
             if user.hasActiveAbility?(:SANDRUSH)
                 score*=2
@@ -319,9 +321,9 @@ class Battle::AI
             if user.hasActiveAbility?(:SANDFORCE)
                 score*=1.5
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Sandstorm) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Sandstorm) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "weather")
+            score*=checkWeatherBenefit(user, globalArray, "weather", :Sandstorm)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "weather", :Sandstorm)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartHailWeather" # hail
@@ -340,7 +342,7 @@ class Battle::AI
                 score*=1.2
             end
             if user.hasActiveItem?(:ICYROCK)
-                score*=1.3
+                score*=1.5
             end
             if user.pbHasMove?(:WEATHERBALL)
                 score*=2
@@ -373,9 +375,9 @@ class Battle::AI
             if user.pbHasMove?(:BLIZZARD)
                 score*=1.3
             end
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "weather") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "weather", :Hail) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "weather", :Hail) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "weather")
+            score*=checkWeatherBenefit(user, globalArray, "weather", :Hail)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "weather", :Hail)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartElectricTerrain" # Electric Terrain
@@ -416,9 +418,9 @@ class Battle::AI
                 end
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Electric) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Electric) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "terrain")
+            score*=checkWeatherBenefit(user, globalArray, "terrain", nil, :Electric)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "terrain", nil, :Electric)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartGrassyTerrain" # grassy terrain
@@ -458,9 +460,9 @@ class Battle::AI
                 end
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Grassy) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Grassy) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "terrain")
+            score*=checkWeatherBenefit(user, globalArray, "terrain", nil, :Grassy)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "terrain", nil, :Grassy)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartMistyTerrain" # misty terrain
@@ -500,9 +502,9 @@ class Battle::AI
                 end
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Misty) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Misty) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "terrain")
+            score*=checkWeatherBenefit(user, globalArray, "terrain", nil, :Misty)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "terrain", nil, :Misty)).to_f
         end
     #---------------------------------------------------------------------------
     when "StartPsychicTerrain" # psychic terrain
@@ -540,9 +542,9 @@ class Battle::AI
                 end
             end
             score*=miniscore
-            score*=(1 + (checkWeatherBenefit(target, globalArray, "terrain") / 100.0))
-            score*=(1 + (checkWeatherBenefit(user, globalArray, "terrain", nil, :Psychic) / 100.0))
-            score*=(1 / (1 + (checkWeatherBenefit(target, globalArray, "terrain", nil, :Psychic) / 100.0)))
+            score*=checkWeatherBenefit(target, globalArray, "terrain")
+            score*=checkWeatherBenefit(user, globalArray, "terrain", nil, :Psychic)
+            score*=(1 / checkWeatherBenefit(target, globalArray, "terrain", nil, :Psychic)).to_f
         end
     #---------------------------------------------------------------------------
     when "RemoveTerrain" # Steel Roller

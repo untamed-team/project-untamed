@@ -2517,7 +2517,7 @@ Pokemon = HELIOPTILE,22
 [CAMPER_F,Alexis,200]
 LoseText = I told you we should've caught more Pokémon!
 Pokemon = HELIOPTILE,21
-    Moves = PARABOLICCHARGE,THUNDERWAVE,CHARGE,HIDDENPOWER
+    Moves = PARABOLICCHARGE,MUDSLAP,CHARGE,HIDDENPOWER
     Ability = SANDVEIL
     HiddenPowerType = NORMAL
 Pokemon = TRAPINCH,21

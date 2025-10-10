@@ -14,7 +14,7 @@ class Battle::AI
     # kiriya settings
     $AIMASTERLOG_TARGET = 0 # 0 = foe, 1 = ally
     $AIMASTERLOG = (false && $DEBUG)
-    $AIGENERALLOG = (true && $DEBUG)
+    $AIGENERALLOG = (false && $DEBUG)
     $movesToTargetAllies = ["HitThreeTimesAlwaysCriticalHit", "AlwaysCriticalHit",
                             "RaiseTargetAttack2ConfuseTarget", "RaiseTargetSpAtk1ConfuseTarget", 
                             "RaiseTargetAtkSpAtk2", "InvertTargetStatStages",
@@ -459,10 +459,10 @@ class Battle::AI
                             score *= s
                         end
 
-                        if move.function == "CureTargetBurn"
+                        if move.function == "CureTargetBurn" && b.status == :BURN
                             # hit needs to go through to proc the burn heal
                             echoln("If you are seeing this, you might be retarded.")
-                            score *= 0.5 if b.status == :BURN && !b.hasActiveAbility?([:GUTS, :FLAREBOOST]) 
+                            score *= 0.5 if !b.hasActiveAbility?([:GUTS, :FLAREBOOST]) 
                         end
                     end
                     totalScore -= score
