@@ -982,7 +982,7 @@ class Battle::Scene
       value *= 1.5 if battler.hasActiveAbility?(:MARVELSCALE) && battler.pbHasAnyStatus?
       value *= 1.3 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:MELEEVEST)
-      if battler.pokemon.species_data.get_evolutions(true).length > 0
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
         value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
       end
     when :SPECIAL_ATTACK
@@ -1016,7 +1016,7 @@ class Battle::Scene
       value *= 1.3 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
       value *= 1.5 if battler.pbHasType?(:ROCK) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:ASSAULTVEST)
-      if battler.pokemon.species_data.get_evolutions(true).length > 0
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
         value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
       end
       if [:Sun, :HarshSun].include?(battler.effectiveWeather)
