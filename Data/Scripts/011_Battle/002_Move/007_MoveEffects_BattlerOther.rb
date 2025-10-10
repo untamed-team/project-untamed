@@ -661,7 +661,10 @@ class Battle::Move::AttractTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbAttract(user) if target.pbCanAttract?(user, false)
+    if target.pbCanAttract?(user, false)
+      target.pbAttract(user)
+      target.pbRaiseAttackStatStageIrritable
+    end
   end
 end
 

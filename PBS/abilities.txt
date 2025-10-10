@@ -759,7 +759,7 @@ Description = Moves can be used regardless of Abilities.
 [AROMAVEIL]
 Name = Aroma Veil
 Description = Protects against attacks that limit move choices.
-FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored or tormented.
+FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored, tormented or heal block.
 #-------------------------------
 [FLOWERVEIL]
 Name = Flower Veil
@@ -1407,4 +1407,9 @@ FullDesc = Heals 1/6th of the user's max HP at the end of each turn if the user 
 Name = Predation
 Description = Restores HP when dealing damage with a direct attack.
 FullDesc = The user's HP is restored by 1/6th of the damage dealt via contact moves.
+#-------------------------------
+[IRRITABLE]
+Name = Irritable
+Description = Increases Atk when user's move choices are limited.
+FullDesc = Whenever the user is affected by effects such as Disable, Attract, Taunt, Encore, Torment, Heal Block, Throat Chop or Imprison, their Attack is increased by one stage.
 #-------------------------------

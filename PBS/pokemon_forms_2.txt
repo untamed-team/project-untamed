@@ -319,47 +319,47 @@ Generation = 6
 [FURFROU,1]
 FormName = Heart Trim
 Types = FAIRY,NORMAL
-Abilities = HEALER
+Abilities = RIVALRY,HEALER
 #-------------------------------
 [FURFROU,2]
 FormName = Star Trim
 Types = ICE,NORMAL
-Abilities = CLEARBODY
+Abilities = RIVALRY,CLEARBODY
 #-------------------------------
 [FURFROU,3]
 FormName = Diamond Trim
 Types = ROCK,NORMAL
-Abilities = STEADFAST
+Abilities = RIVALRY,STEADFAST
 #-------------------------------
 [FURFROU,4]
 FormName = Debutante Trim
 Types = ELECTRIC,NORMAL
-Abilities = STATIC
+Abilities = RIVALRY,STATIC
 #-------------------------------
 [FURFROU,5]
 FormName = Matron Trim
 Types = PSYCHIC,NORMAL
-Abilities = PRESSURE
+Abilities = RIVALRY,PRESSURE
 #-------------------------------
 [FURFROU,6]
 FormName = Dandy Trim
 Types = GRASS,NORMAL
-Abilities = NATURALCURE
+Abilities = RIVALRY,NATURALCURE
 #-------------------------------
 [FURFROU,7]
 FormName = La Reine Trim
 Types = WATER,NORMAL
-Abilities = WATERVEIL
+Abilities = RIVALRY,WATERVEIL
 #-------------------------------
 [FURFROU,8]
 FormName = Kabuki Trim
 Types = FIGHTING,NORMAL
-Abilities = SHEERFORCE
+Abilities = RIVALRY,SHEERFORCE
 #-------------------------------
 [FURFROU,9]
 FormName = Pharaoh Trim
 Types = GHOST,NORMAL
-Abilities = MOLDBREAKER
+Abilities = RIVALRY,MOLDBREAKER
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female

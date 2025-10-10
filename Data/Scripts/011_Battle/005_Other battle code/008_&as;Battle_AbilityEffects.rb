@@ -1928,6 +1928,7 @@ Battle::AbilityEffects::OnBeingHit.add(:CURSEDBODY,
            user.pbThis, regularMove.name, target.pbThis(true), target.abilityName))
       end
       battle.pbHideAbilitySplash(target)
+      user.pbRaiseAttackStatStageIrritable
       user.pbItemStatusCureCheck
     end
     battle.pbHideAbilitySplash(target)

@@ -6710,6 +6710,11 @@ class Battle::AI
                 else
                     score*=0.3
                 end
+                if target.hasActiveAbility?(:IRRITABLE)
+                    bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxphys = (bestmove[3]=="physical")
+                    score*=0.6 if maxphys
+                end
             else
                 score = 0 if move.baseDamage == 0
             end
@@ -6758,6 +6763,11 @@ class Battle::AI
                 else
                     score*=0.3
                 end
+                if target.hasActiveAbility?(:IRRITABLE)
+                    bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxphys = (bestmove[3]=="physical")
+                    score*=0.6 if maxphys
+                end
             else
                 score = 0 if move.baseDamage == 0
             end
@@ -6781,6 +6791,11 @@ class Battle::AI
                 if targetWillMove?(target)
                     oldmove = @battle.choices[target.index][2]
                 end
+            end
+            if target.hasActiveAbility?(:IRRITABLE)
+                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                maxphys = (bestmove[3]=="physical")
+                score*=0.6 if maxphys
             end
             if oldmove.nil?
                 score = 0
@@ -6828,6 +6843,11 @@ class Battle::AI
             else
                 score*=0.7
             end
+            if target.hasActiveAbility?(:IRRITABLE)
+                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                maxphys = (bestmove[3]=="physical")
+                score*=0.6 if maxphys
+            end
             if target.turnCount<=1
                 score*=1.1
             else
@@ -6864,6 +6884,11 @@ class Battle::AI
                         end
                     end
                 end
+                if target.hasActiveAbility?(:IRRITABLE)
+                    bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxphys = (bestmove[3]=="physical")
+                    score*=0.6 if maxphys
+                end
             end
             score*=1.3 if target.hasActiveItem?(:LEFTOVERS) || (target.hasActiveItem?(:BLACKSLUDGE) && target.pbHasType?(:POISON, true))
         end
@@ -6883,6 +6908,11 @@ class Battle::AI
                     score*=2.0
                 end
             end
+            if target.hasActiveAbility?(:IRRITABLE)
+                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                maxphys = (bestmove[3]=="physical")
+                score*=0.6 if maxphys
+            end
         end
     #---------------------------------------------------------------------------
     when "DisableTargetMovesKnownByUser" # Imprison
@@ -6896,15 +6926,18 @@ class Battle::AI
             end
             miniscore = 1
             sharedmoves = []
-            target.moves.each do |m|
-                next if m.nil?
-                if ourmoves.include?(m.id)
-                    miniscore+=1
-                    sharedmoves.push(m.id)
-                    score*=1.5 if m.healingMove?
-                    score*=1.6 if m.id == :TRICKROOM || m.id == :TAILWIND
+            user.eachOpposing do |b|
+                b.moves.each do |m|
+                    next if m.nil?
+                    if ourmoves.include?(m.id)
+                        miniscore+=1
+                        sharedmoves.push(m.id)
+                        score*=1.5 if m.healingMove?
+                        score*=1.6 if m.id == :TRICKROOM || m.id == :TAILWIND
+                    end
                 end
             end
+            sharedmoves |= [] # clean dupes
             score*=miniscore
             if miniscore == 1
                 score = 0
@@ -6913,6 +6946,11 @@ class Battle::AI
                     if sharedmoves.include?(@battle.choices[target.index][2].id)
                         score*=3.0
                     end
+                end
+                if target.hasActiveAbility?(:IRRITABLE)
+                    bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxphys = (bestmove[3]=="physical")
+                    score*=0.6 if maxphys
                 end
             end
         end
