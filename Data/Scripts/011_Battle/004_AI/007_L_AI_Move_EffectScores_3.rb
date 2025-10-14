@@ -3279,7 +3279,7 @@ class Battle::AI
         score = 0 if user.effects[PBEffects::Wish]>0
     #---------------------------------------------------------------------------
     when "StartHealUserEachTurn" # aqua ring
-          if !user.effects[PBEffects::AquaRing]
+        if !user.effects[PBEffects::AquaRing]
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
             maxdam = bestmove[0]
             if user.hp*(1.0/user.totalhp)>0.75
@@ -3375,30 +3375,23 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "StartDamageTargetEachTurnIfTargetAsleep" # nightmare
-        if !target.effects[PBEffects::Nightmare] && 
-           target.effects[PBEffects::Substitute]<=0 && 
-           target.asleep?
-            if target.statusCount>2
-                score*=4
-            end
-            if target.hasActiveAbility?(:EARLYBIRD)
-                score*=0.5
-            end
-            if target.hasActiveAbility?(:COMATOSE)
-                score*=6
-            end
-            if target.hasActiveAbility?(:SHEDSKIN)
-                score*=0.5
-            end
-            if user.hasActiveAbility?([:ARENATRAP, :SHADOWTAG]) || target.effects[PBEffects::MeanLook]>=0 || 
-                    @battle.pbAbleNonActiveCount(user.idxOpposingSide)==0
+        if !target.effects[PBEffects::Nightmare] && target.asleep?
+            if (target.trappedInBattle? && !pbHasPivotMove?(target)) || 
+               @battle.pbAbleNonActiveCount(user.idxOpposingSide)==0
                 score*=1.3
             else
                 score*=0.8
             end
-            hasAlly = !target.allAllies.empty?
-            if hasAlly
-                score*=0.5
+            if target.hasActiveAbility?(:COMATOSE)
+                score*=6.0
+            else
+                score*=4.0 if target.statusCount>2
+                score*=0.5 if target.hasActiveAbility?(:EARLYBIRD)
+                score*=0.5 if target.hasActiveAbility?(:SHEDSKIN)
+                target.allAllies.each do |b|
+                    score*=0.7
+                    score*=0.5 if b.hasActiveAbility?(:HEALER)
+                end
             end
         else
             score*=0

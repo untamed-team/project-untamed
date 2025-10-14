@@ -66,17 +66,20 @@ class Battle::AI
             end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
-                if targetMove.statusMove?
-                    score *= 0.5
-                    score *= 0.3 if pbHasSetupMove?(target, false)
-                    score *= 0.2 if !targetMove.canMagicCoat?
-                else
-                    if !targetSurvivesMove(targetMove,target,user)
-                        score *= 5.0
+                targetAim = @battle.choices[target.index][3]
+                if targetAim == user.index || pbTargetsMultiple?(targetMove, target)
+                    if targetMove.statusMove?
+                        score *= 0.5
+                        score *= 0.3 if pbHasSetupMove?(target, false)
+                        score *= 0.2 if !targetMove.canMagicCoat?
                     else
-                        expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
-                        expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.02)
+                        if !targetSurvivesMove(targetMove,target,user)
+                            score *= 2.5
+                        else
+                            expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                            expectedPrcnt = expectedDmg / user.hp
+                            score *= 1 + expectedPrcnt
+                        end
                     end
                 end
             end
@@ -140,27 +143,30 @@ class Battle::AI
             end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
-                if targetMove.statusMove?
-                    score *= 0.5
-                    score *= 0.3 if pbHasSetupMove?(target, false)
-                    score *= 0.2 if !targetMove.canMagicCoat?
-                else
-                    if !targetSurvivesMove(targetMove,target,user)
-                        score *= 5.0
+                targetAim = @battle.choices[target.index][3]
+                if targetAim == user.index || pbTargetsMultiple?(targetMove, target)
+                    if targetMove.statusMove?
+                        score *= 0.5
+                        score *= 0.3 if pbHasSetupMove?(target, false)
+                        score *= 0.2 if !targetMove.canMagicCoat?
                     else
-                        expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
-                        expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.02)
-                    end
-                    score*=1.3 if targetMove.pbContactMove?(user)
-                    if move.function == "ProtectUserBanefulBunker" && targetMove.pbContactMove?(user)
-                        if target.pbHasAnyStatus?
-                            score*=0.8
+                        if !targetSurvivesMove(targetMove,target,user)
+                            score *= 2.5
                         else
-                            if target.pbCanPoison?(user, false)
-                                miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 80, move, globalArray, 100)
-                                miniscore/=100.0
-                                score*=miniscore
+                            expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                            expectedPrcnt = expectedDmg / user.hp
+                            score *= 1 + expectedPrcnt
+                        end
+                        score*=1.3 if targetMove.pbContactMove?(target)
+                        if move.function == "ProtectUserBanefulBunker" && targetMove.pbContactMove?(target)
+                            if target.pbHasAnyStatus?
+                                score*=0.8
+                            else
+                                if target.pbCanPoison?(user, false)
+                                    miniscore = pbTargetBenefitsFromStatus?(user, target, :POISON, 80, move, globalArray, 100)
+                                    miniscore/=100.0
+                                    score*=miniscore
+                                end
                             end
                         end
                     end
@@ -247,25 +253,27 @@ class Battle::AI
             end
             if targetWillMove?(target)
                 targetMove = @battle.choices[target.index][2]
-                if targetMove.statusMove?
-                    score *= 0.1
-                else
-                    if !targetSurvivesMove(targetMove,target,user)
-                        score *= 5.0
+                targetAim = @battle.choices[target.index][3]
+                if targetAim == user.index || pbTargetsMultiple?(targetMove, target)
+                    if targetMove.statusMove?
+                        score *= 0.1
                     else
-                        expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
-                        expectedPrcnt = expectedDmg * 100.0 / user.hp
-                        score *= (expectedPrcnt * 0.02)
+                        if !targetSurvivesMove(targetMove,target,user)
+                            score *= 2.5
+                        else
+                            expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                            expectedPrcnt = expectedDmg / user.hp
+                            score *= 1 + expectedPrcnt
+                        end
+                        score *= 1.5 if targetMove.pbContactMove?(target)
                     end
-                    score *= 1.5 if targetMove.pbContactMove?(user)
                 end
             end
         end
     #---------------------------------------------------------------------------
     when "ProtectUserSideFromDamagingMovesIfUserFirstTurn" # mat block
         if user.turnCount == 0
-            hasAlly = !user.allAllies.empty?
-            if hasAlly
+            if user.allAllies.any?
                 healcheck = target.moves.any? { |m| m&.healingMove? }
                 setupcheck = pbHasSetupMove?(target, false)
                 score*=1.3
@@ -331,7 +339,7 @@ class Battle::AI
         if targetWillMove?(target, "status")
             target_data = @battle.choices[target.index][2].pbTarget(target)
             if [:User, :UserSide, :UserAndAllies, :AllAllies, :FoeSide].include?(target_data.id)
-                score *= 0.4
+                score *= 0.2
             else
                 score *= 2.5
             end
@@ -364,24 +372,29 @@ class Battle::AI
                 end
             end
             if targetWillMove?(target)
-                targetMove = @battle.choices[target.index][2]
-                if priorityAI(target,targetMove,globalArray) > 0
-                    score *= 3.0 
-                    if targetMove.statusMove?
-                        score *= 0.9
-                        score *= 0.3 if pbHasSetupMove?(target, false)
-                        score *= 0.3 if !targetMove.canMagicCoat?
-                    else
-                        if !targetSurvivesMove(targetMove,target,user)
-                            score *= 5.0
-                        else
-                            expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
-                            expectedPrcnt = expectedDmg * 100.0 / user.hp
-                            score *= (expectedPrcnt * 0.02)
+                @battle.allSameSideBattlers(user.index).each do |b|
+                    targetMove = @battle.choices[target.index][2]
+                    if priorityAI(target,targetMove,globalArray) > 0
+                        targetAim = @battle.choices[target.index][3]
+                        if targetAim == b.index || pbTargetsMultiple?(targetMove, target)
+                            score *= 2.0
+                            if targetMove.statusMove?
+                                score *= 0.9
+                                score *= 0.3 if pbHasSetupMove?(target, false)
+                                score *= 0.3 if !targetMove.canMagicCoat?
+                            else
+                                if !targetSurvivesMove(targetMove,target,b)
+                                    score *= 2.5
+                                else
+                                    expectedDmg = pbRoughDamage(targetMove,target,b,100,targetMove.baseDamage)
+                                    expectedPrcnt = expectedDmg / b.hp
+                                    score *= 1.1 + expectedPrcnt
+                                end
+                            end
                         end
+                    else
+                        score *= 0.6
                     end
-                else
-                    score *= 0.6
                 end
             end
         end
@@ -407,24 +420,26 @@ class Battle::AI
                 end
             end
             if targetWillMove?(target)
-                targetMove = @battle.choices[target.index][2]
-                if pbTargetsMultiple?(targetMove, target)
-                    score *= 3.0 
-                    if targetMove.statusMove?
-                        score *= 0.5
-                        score *= 0.3 if pbHasSetupMove?(target, false)
-                        score *= 0.3 if !targetMove.canMagicCoat?
-                    else
-                        if !targetSurvivesMove(targetMove,target,user)
-                            score *= 5.0
+                @battle.allSameSideBattlers(user.index).each do |b|
+                    targetMove = @battle.choices[target.index][2]
+                    if pbTargetsMultiple?(targetMove, target)
+                        score *= 2.0 
+                        if targetMove.statusMove?
+                            score *= 0.5
+                            score *= 0.3 if pbHasSetupMove?(target, false)
+                            score *= 0.3 if !targetMove.canMagicCoat?
                         else
-                            expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
-                            expectedPrcnt = expectedDmg * 100.0 / user.hp
-                            score *= (expectedPrcnt * 0.02)
+                            if !targetSurvivesMove(targetMove,target,b)
+                                score *= 2.5
+                            else
+                                expectedDmg = pbRoughDamage(targetMove,target,b,100,targetMove.baseDamage)
+                                expectedPrcnt = expectedDmg / b.hp
+                                score *= 1 + expectedPrcnt
+                            end
                         end
+                    else
+                        score *= 0.6
                     end
-                else
-                    score *= 0.6
                 end
             end
         end
