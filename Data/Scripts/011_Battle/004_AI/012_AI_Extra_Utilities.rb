@@ -348,7 +348,7 @@ class Battle::AI
                 end
             end
         end
-        # DemICE adding resist berries ### i made it a hash cuz i was bored
+        # Effectiveness-related modifiers
         if Effectiveness.super_effective?(typeMod)
             multipliers[:final_damage_multiplier] *= 1.25 if user.hasActiveAbility?(:NEUROFORCE)
             multipliers[:final_damage_multiplier] *= 1.20 if user.hasActiveItem?(:EXPERTBELT)
@@ -411,8 +411,7 @@ class Battle::AI
         end
         #mastersex type zones #by low
         multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
-        # Multi-targeting attacks
-        # Splinter Shot #by low
+        # Multi-targeting attacks # Splinter Shot #by low
         if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) && move.function != "HitTwoTimesReload"
             multipliers[:final_damage_multiplier] *= 0.75
         end
@@ -457,13 +456,10 @@ class Battle::AI
                 end
             end
         end
-        # Gravity Boost #by low 
-        # float stone changes
+        # Gravity Boost #by low + # float stone changes
         if move.boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
             multipliers[:base_damage_multiplier] *= 4 / 3.0
         end
-        # Critical hits - n/a
-        # Random variance - n/a
         # Unfair difficulty - Changed by DemICE 27-Sep-2023
         #if $Trainer.difficulty mode==2
         #    if user.pbOwnedByPlayer?
@@ -581,7 +577,7 @@ class Battle::AI
             damage = (damage * 4.33).floor   # Average damage dealt
           end
         end
-        # Increased critical hit rates
+        # Critical hits - Increased critical hit rates
         if skill >= PBTrainerAI.mediumSkill
             c = 0
             # Other efffects
