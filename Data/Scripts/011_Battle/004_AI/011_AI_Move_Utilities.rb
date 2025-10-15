@@ -73,7 +73,7 @@ class Battle::AI
     end
     # Special interaction for color change + protean ability combo
     if target.hasActiveAbility?([:PROTEAN, :LIBERO]) && !target.pbOwnedByPlayer? &&
-       target.hasAbilityMutation? && target.abilityMutationList.include?(:COLORCHANGE)
+       target.hasActiveAbility?(:COLORCHANGE) && target.hasAbilityMutation?
       ret = Effectiveness::NOT_VERY_EFFECTIVE_ONE
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :QMARKS
     end

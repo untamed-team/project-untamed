@@ -9116,7 +9116,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = TypeIsUserFirstType
-Flags = CanProtect,CanMirrorMove,GravityBoosted
+Flags = Contact,CanProtect,CanMirrorMove,GravityBoosted
 Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
 #-------------------------------
 [HARDDRIVECRASH]

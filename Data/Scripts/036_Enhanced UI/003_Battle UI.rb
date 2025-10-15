@@ -991,10 +991,7 @@ class Battle::Scene
         if battler.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) }
           value *= 1.5
         elsif battler.hasAbilityMutation?
-          if (battler.hasActiveAbility?(:MINUS) && battler.abilityMutationList.include?(:PLUS)) ||
-             (battler.hasActiveAbility?(:PLUS) && battler.abilityMutationList.include?(:MINUS))
-            value *= 1.5
-          end
+          value *= 1.5 if battler.hasActiveAbility?(:MINUS) && battler.hasActiveAbility?(:PLUS)
         end
       end
       value *= 1.5 if battler.hasActiveItem?(:CHOICESPECS) && battler.effects[PBEffects::ChoiceBand]

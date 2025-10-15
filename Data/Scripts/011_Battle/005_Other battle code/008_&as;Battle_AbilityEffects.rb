@@ -1356,8 +1356,7 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:MINUS,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     next unless move.specialMove?
     if user.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) } ||
-      (user.ability == :MINUS && user.abilityMutationList.include?(:PLUS)) ||
-      (user.ability == :PLUS && user.abilityMutationList.include?(:MINUS))
+      (user.hasActiveAbility?(:MINUS) && user.hasActiveAbility?(:PLUS))
       mults[:attack_multiplier] *= 1.5
     end
   }
