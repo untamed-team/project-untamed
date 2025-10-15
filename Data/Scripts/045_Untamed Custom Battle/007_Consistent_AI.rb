@@ -159,7 +159,7 @@ class Battle::AI
                 mirrmove = Battle::Move.from_pokemon_move(@battle, mirrored)
                 next if mirrored==nil
                 next if !$movesToTargetAllies.include?(mirrmove.function) && $AIMASTERLOG_TARGET == 1
-                next if ["AttackOneTurnLater", "DoesNothingUnusableInGravity", "DoesNothingCongratulations", "DoesNothingFailsIfNoAlly", "DoubleMoneyGainedFromBattle"].include?(mirrmove.function)
+                next if ["AttackOneTurnLater", "DoesNothingUnusableInGravity", "DoesNothingCongratulations", "DoesNothingFailsIfNoAlly", "DoubleMoneyGainedFromBattle", "Struggle"].include?(mirrmove.function)
                 case mirrmove.category
                 when 0 then moveCateg = "Physical"
                 when 1 then moveCateg = "Special"
@@ -992,7 +992,7 @@ class Battle::AI
                              "PoisonTarget", "BadPoisonTarget",
                              "ParalyzeTarget", "ParalyzeFlinchTarget",
                              "BurnTarget", "BurnFlinchTarget", 
-                             "FreezeTarget", "FreezeFlinchTarget", "FreezeTargetAlwaysHitsInHail",
+                             "FreezeTarget", "FreezeFlinchTarget",
                              "FreezeTargetSuperEffectiveAgainstWater", "ParalyzeBurnOrFreezeTarget",
                              "FlinchTarget", "FlinchTargetDoublePowerIfTargetInSky",
                              "ConfuseTarget", "NegateTargetAbilityIfTargetActed", 
@@ -1003,10 +1003,12 @@ class Battle::AI
                              "SwitchOutTargetDamagingMove"]
             rainKOarray = ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky", 
                            "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"]
+            hailKOarray = ["FreezeTargetAlwaysHitsInHail"]
             powerhKOarr = ["TwoTurnAttackParalyzeTarget", "TwoTurnAttackInvulnerableInSkyParalyzeTarget", 
                            "TwoTurnAttackBurnTarget", "TwoTurnAttackFlinchTarget"]
             if statusKOarray.include?(move.function) ||
               (rainKOarray.include?(move.function) && [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)) ||
+              (hailKOarray.include?(move.function) && [:Hail].include?(expectedWeather)) ||
               (powerhKOarr.include?(move.function) && user.hasActiveItem?(:POWERHERB))
                 score = pbAIPrioSpeedCheck(80, move, user, target)
             end

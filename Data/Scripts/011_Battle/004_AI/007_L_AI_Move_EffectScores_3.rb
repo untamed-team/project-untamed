@@ -6898,15 +6898,19 @@ class Battle::AI
             else
                 score*=1.3
             end
-            if targetWillMove?(target) && userFasterThanTarget
-                if @battle.choices[target.index][2].soundMove?
-                    score*=2.0
+            if target.effects[PBEffects::ThroatChop] == 0
+                if targetWillMove?(target) && userFasterThanTarget
+                    if @battle.choices[target.index][2].soundMove?
+                        score*=2.0
+                    end
                 end
-            end
-            if target.hasActiveAbility?(:IRRITABLE) && target.effects[PBEffects::ThroatChop] == 0
-                bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
-                maxphys = (bestmove[3]=="physical")
-                score*=0.6 if maxphys
+                if target.hasActiveAbility?(:IRRITABLE)
+                    bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
+                    maxphys = (bestmove[3]=="physical")
+                    score*=0.6 if maxphys
+                end
+            else
+                score *= 0.85
             end
         end
     #---------------------------------------------------------------------------

@@ -276,7 +276,7 @@ class Battle::AI
          "FixedDamageUserLevel", "LowerTargetHPToUserHP"
       baseDmg = move.pbFixedDamage(user, target)
     when "FixedDamageUserLevelRandom"   # Psywave
-      baseDmg = user.level
+      baseDmg = (user.level * 3 / 2).floor
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"

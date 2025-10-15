@@ -41,6 +41,7 @@ class Battle::Move::FixedDamageUserLevelRandom < Battle::Move::FixedDamageMove
   def pbFixedDamage(user, target)
     min = (user.level / 2).floor
     max = (user.level * 3 / 2).floor
+    return max if !user.pbOwnedByPlayer?
     return min + @battle.pbRandom(max - min + 1)
   end
 end
