@@ -1360,6 +1360,17 @@ class Battle::Move::StartGravity < Battle::Move
       if showMessage
         @battle.pbDisplay(_INTL("{1} couldn't stay airborne because of gravity!", b.pbThis))
       end
+      if b.hasActiveAbility?(:IRRITABLE)
+        b.eachMove do |i|
+          next unless i.unusableInGravity?
+          @battle.pbShowAbilitySplash(b)
+          @battle.pbDisplay(_INTL("{1} became angry, as it unable to use {2}!", b.pbThis, i.name))
+          b.pbRaiseAttackStatStageIrritable(false)
+          @battle.addMoveRevealed(b, i.id)
+          @battle.pbHideAbilitySplash(b)
+          break
+        end
+      end
     end
   end
 end

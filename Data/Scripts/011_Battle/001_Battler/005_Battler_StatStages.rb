@@ -404,10 +404,10 @@ class Battle::Battler
   end
 
   # irritable #by low
-  def pbRaiseAttackStatStageIrritable
+  def pbRaiseAttackStatStageIrritable(showAnim = true)
     return if fainted?
     return if !hasActiveAbility?(:IRRITABLE)
-    pbRaiseStatStageByAbility(:ATTACK, 1, self)
+    pbRaiseStatStageByAbility(:ATTACK, 1, self, showAnim)
   end
 
   #=============================================================================

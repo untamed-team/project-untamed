@@ -929,11 +929,13 @@ class Battle::Move::DisableTargetMovesKnownByUser < Battle::Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::Imprison] = true
     @battle.pbDisplay(_INTL("{1} sealed any moves its target shares with it!", user.pbThis))
+    userMoves = user.moves.map(&:id)
     @battle.allOtherSideBattlers(user.index).each do |b|
-      next unless b.hasActiveAbility?(:IRRITABLE)
-      userMoves = user.moves.map(&:id)
-      sharedmoves = b.moves.any? { |m| userMoves.include?(m.id) }
-      b.pbRaiseAttackStatStageIrritable if sharedmoves
+      sharedMoves = b.moves.map(&:id) & userMoves
+      sharedMoves.each do |mid|
+        @battle.addMoveRevealed(b, mid)
+      end
+      b.pbRaiseAttackStatStageIrritable if sharedMoves.any?
     end
   end
 end

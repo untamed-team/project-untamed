@@ -2165,6 +2165,8 @@ Battle::AbilityEffects::OnBeingHit.add(:SANDSPIT,
 Battle::AbilityEffects::OnBeingHit.add(:STAMINA,
   proc { |ability, user, target, move, battle|
     next if !move.pbContactMove?(user) #by low
+    next if !battle.wasUserAbilityActivated?(user)
+    battle.ActivateUserAbility(user) if $player.difficulty_mode?("chaos") 
     target.pbRaiseStatStageByAbility(:DEFENSE, 1, target)
   }
 )
@@ -3559,7 +3561,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
     battle.DeActivateUserAbility(battler)
   }
 )
-Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR)
+Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR, :STAMINA)
 
 Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   proc { |ability, battler, battle, switch_in|
@@ -3623,6 +3625,29 @@ Battle::AbilityEffects::OnSwitchIn.add(:SHOWTIME,
     battle.scene.pbAnimation(:SPOTLIGHT, battler, battler)
     battler.pbChangeForm(1, _INTL("Now is my time to shine!"))
     battle.pbHideAbilitySplash(battler)
+  }
+)
+
+Battle::AbilityEffects::OnSwitchIn.add(:IRRITABLE,
+  proc { |ability, battler, battle, switch_in|
+    if battle.field.effects[PBEffects::Gravity] > 0
+      battler.eachMove do |i|
+        next unless i.unusableInGravity?
+        battle.pbShowAbilitySplash(battler)
+        battle.pbDisplay(_INTL("{1} became angry, as it unable to use {2}!", battler.pbThis, i.name))
+        battler.pbRaiseAttackStatStageIrritable(false)
+        battle.addMoveRevealed(battler, i.id)
+        battle.pbHideAbilitySplash(battler)
+        break
+      end
+    end
+    battler.eachOpposing do |b|
+      if b.effects[PBEffects::Imprison]
+        userMoves = b.moves.map(&:id)
+        sharedMoves = battler.moves.any? { |m| userMoves.include?(m.id) }
+        b.pbRaiseAttackStatStageIrritable if sharedMoves
+      end
+    end
   }
 )
 

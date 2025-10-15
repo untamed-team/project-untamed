@@ -339,7 +339,7 @@ Abilities = RIVALRY,STATIC
 [FURFROU,5]
 FormName = Matron Trim
 Types = PSYCHIC,NORMAL
-Abilities = RIVALRY,PRESSURE
+Abilities = RIVALRY,FOREWARN
 #-------------------------------
 [FURFROU,6]
 FormName = Dandy Trim
@@ -354,12 +354,12 @@ Abilities = RIVALRY,WATERVEIL
 [FURFROU,8]
 FormName = Kabuki Trim
 Types = FIGHTING,NORMAL
-Abilities = RIVALRY,SHEERFORCE
+Abilities = RIVALRY,STAMINA
 #-------------------------------
 [FURFROU,9]
 FormName = Pharaoh Trim
 Types = GHOST,NORMAL
-Abilities = RIVALRY,MOLDBREAKER
+Abilities = RIVALRY,STALWART
 #-------------------------------
 [BEAKRAFT,1]
 FormName = Female
