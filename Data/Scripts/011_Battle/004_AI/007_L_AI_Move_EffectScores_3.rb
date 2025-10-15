@@ -6903,7 +6903,7 @@ class Battle::AI
                     score*=2.0
                 end
             end
-            if target.hasActiveAbility?(:IRRITABLE)
+            if target.hasActiveAbility?(:IRRITABLE) && target.effects[PBEffects::ThroatChop] == 0
                 bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
                 maxphys = (bestmove[3]=="physical")
                 score*=0.6 if maxphys
