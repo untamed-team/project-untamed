@@ -813,9 +813,27 @@ class Battle::AI
         end
         # try to avoid triggering slippery peel
         if target.hasActiveAbility?(:SLIPPERYPEEL) && !target.effects[PBEffects::SlipperyPeel] && 
-           move.pbContactMove?(user) && user.affectedByContactEffect? && user.effects[PBEffects::Substitute] == 0 && 
-           !user.hasActiveAbility?(:SUCTIONCUPS) && !user.effects[PBEffects::Ingrain]
-            realDamage *= (2 / 3.0)
+           move.pbContactMove?(user) && user.affectedByContactEffect? && user.effects[PBEffects::Substitute] == 0
+            if (user.hasActiveAbility?(:SUCTIONCUPS) || 
+                user.effects[PBEffects::Ingrain]) && $player.difficulty_mode?("hard")
+                realDamage *= 1.2 # or do, if its a one per battle thing and user is immune
+            else
+                realDamage *= (2 / 3.0)
+            end
+        end
+
+        # try to trigger fervor
+        if user.hasActiveAbility?(:FERVOR) && (move.pbContactMove?(user) && !move.multiHitMove?) &&
+          !battle.wasUserAbilityActivated?(user)
+            realDamage *= 1.1 if @battle.field.effects[PBEffects::TrickRoom] == 0
+            aspeed = pbRoughStat(user,:SPEED,skill)
+            ospeed = pbRoughStat(target,:SPEED,skill)
+            if ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+            else
+                realDamage *= 1.1
+                aspeed *= (3.0/2.0)
+                realDamage *= 1.2 if ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+            end
         end
 
         # not a fan of randomness one bit, but i cant do much about this move

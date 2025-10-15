@@ -468,6 +468,12 @@ class Battle::AI
     baseAcc = move.accuracy
     if skill >= PBTrainerAI.highSkill
       baseAcc = move.pbBaseAccuracy(user, target)
+      if user.hasActiveAbility?(:PRESAGE) && 
+        ["FreezeTargetAlwaysHitsInHail",
+         "ConfuseTargetAlwaysHitsInRainHitsTargetInSky",
+         "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"].include?(move.function)
+        baseAcc = 0
+      end
     end
     return 125 if baseAcc == 0 && skill >= PBTrainerAI.mediumSkill
     # Get the move's type

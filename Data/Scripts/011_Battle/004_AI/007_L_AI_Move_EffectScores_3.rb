@@ -2658,14 +2658,15 @@ class Battle::AI
             else
                 halfhealth=(user.totalhp/4.0)
             end
-            halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE)
+            halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE) && !user.hasActiveItem?(:UTILITYUMBRELLA)
         elsif move.function == "HealUserDependingOnSandstorm" 
             case expectedWeather
             when :Sandstorm
                 halfhealth=(user.totalhp*2 / 3.0)
             else
                 halfhealth=(user.totalhp/2.0)
-            end   
+            end
+            halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE)
         elsif move.function == "HealUserDependingOnHail" 
             case expectedWeather
             when :Hail
@@ -2673,6 +2674,7 @@ class Battle::AI
             else
                 halfhealth=(user.totalhp/2.0)
             end
+            halfhealth=(user.totalhp*2 / 3.0) if user.hasActiveAbility?(:PRESAGE)
         else     
             halfhealth=(user.totalhp/2)
         end       
