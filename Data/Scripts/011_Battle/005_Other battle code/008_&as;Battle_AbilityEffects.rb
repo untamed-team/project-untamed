@@ -3645,7 +3645,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:IRRITABLE,
       if b.effects[PBEffects::Imprison]
         userMoves = b.moves.map(&:id)
         sharedMoves = battler.moves.any? { |m| userMoves.include?(m.id) }
-        b.pbRaiseAttackStatStageIrritable if sharedMoves
+        battler.pbRaiseAttackStatStageIrritable if sharedMoves
       end
     end
   }
