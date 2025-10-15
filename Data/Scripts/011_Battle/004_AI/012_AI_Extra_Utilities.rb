@@ -476,7 +476,7 @@ class Battle::AI
         if skill >= PBTrainerAI.mediumSkill && type
             sage = false
             if user.hasActiveAbility?(:PRESAGE) &&
-              [:FIRE, :WATER, :GROUND, :ROCK, :ICE, :NORMAL, :QMARKS].include?(type)
+              [:FIRE, :WATER, :GROUND, :ICE, :NORMAL].include?(type)
                 multipliers[:final_damage_multiplier] *= w_damage_multiplier if [:FIRE, :WATER].include?(type)
                 sage = true
                 sage = false if move.function == "HigherDamageInSunVSNonFireTypes" && type == :WATER
