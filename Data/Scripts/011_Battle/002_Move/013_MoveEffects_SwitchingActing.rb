@@ -906,9 +906,9 @@ class Battle::Move::DisableTargetSoundMoves < Battle::Move
     if target.effects[PBEffects::ThroatChop] == 0
       @battle.pbDisplay(_INTL("The effects of {1} prevent {2} from using certain moves!",
                               @name, target.pbThis(true)))
+      target.pbRaiseAttackStatStageIrritable
     end
     target.effects[PBEffects::ThroatChop] = 3
-    target.pbRaiseAttackStatStageIrritable
   end
 end
 
