@@ -3709,7 +3709,7 @@ Weight = 64.4
 Color = Blue
 Shape = HeadBase
 Category = Open Ocean
-Pokedex = siren 3
+Pokedex = sirens are so cool and totally not tapus but again. wowiewoeiwowieowieowiwoeiwowieowieow
 #-------------------------------
 [MELUMYST]
 Name = Melumyst
@@ -4126,7 +4126,7 @@ Weight = 332.9
 Color = Green
 Shape = Finned
 Category = False Beacon
-Pokedex =
+Pokedex = They look quite spoopy, innit? it scares off people who dont read
 #-------------------------------
 [WRRAZAL]
 Name = Wrrazal

@@ -1948,6 +1948,7 @@ Battle::AbilityEffects::OnBeingHit.add(:CUTECHARM,
            target.abilityName, user.pbThis(true))
       end
       user.pbAttract(target, msg)
+      user.pbRaiseAttackStatStageIrritable
     end
     battle.pbHideAbilitySplash(target)
   }
@@ -1990,7 +1991,7 @@ Battle::AbilityEffects::OnBeingHit.add(:EFFECTSPORE,
         if user.pbCanParalyze?(target, Battle::Scene::USE_ABILITY_SPLASH)
           msg = nil
           if !Battle::Scene::USE_ABILITY_SPLASH
-            msg = _INTL("{1}'s {2} paralyzed {3}! It may be unable to move!",
+            msg = _INTL("{1}'s {2} paralyzed {3}!",
                target.pbThis, target.abilityName, user.pbThis(true))
           end
           user.pbParalyze(target, msg)

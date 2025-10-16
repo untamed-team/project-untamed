@@ -662,7 +662,7 @@ Color = Blue
 Shape = Quadruped
 Habitat = Cave
 Category = Aqua Dog
-Pokedex = Zolupine makes it home in underwater caves and tunnels that run beneath the surface of the jungle, making it one of the rarest Pokémon in the Mazah region.
+Pokedex = Zolupine makes it home in underwater caves and tunnels that run beneath the surface of the jungle, making it a rather uncommon Pokémon in the Mazah region.
 Generation = 9
 #-------------------------------
 [BUDEW]
@@ -894,7 +894,7 @@ Color = Green
 Shape = Bipedal
 Habitat = WatersEdge
 Category = Jolly
-Pokedex = These Pokémon have learned from humans, adopting some of their dress codes. Lombre's sometimes find work in fashion stores.
+Pokedex = Lombre are considered quite fetching in the Mazah region. Fashion lines have been based on its appearance, and it can often be seen assisting in clothing stores.
 Generation = 3
 Evolutions = LUDICOLO,Item,WATERSTONE
 #------------------------------- # note: +nature 70 speed swift swim = 142 <-> 143 speed
@@ -920,7 +920,7 @@ Color = Green
 Shape = Bipedal
 Habitat = WatersEdge
 Category = Carefree
-Pokedex = Ludicolo dance around bodies of water on certain days, seemingly at random. The dance resembles a joyful Mazian dance.
+Pokedex = Ludicolo dance around bodies of water on certain days, seemingly at random. Whether the dance originated from Ludicolo or from humans is unknown.
 Generation = 3
 #-------------------------------
 [ZEAZAYA]
@@ -1127,7 +1127,7 @@ Habitat = WatersEdge
 Category = Weeping
 Pokedex = Children of the Mazah region love to play with Yaquena. In battle, they use their shrill voice, wailing at the top of their lungs, flooding the area with tears.
 Generation = 9
-Evolutions = YORONAQUA,ItemLevel,DUSKSTONE_43
+Evolutions = YORONAQUA,ItemLevel,DUSKSTONE_40
 #-------------------------------
 [YORONAQUA]
 Name = Yoronaqua
@@ -1164,8 +1164,8 @@ BaseExp = 55
 EVs = SPECIAL_ATTACK,1
 CatchRate = 190
 Happiness = 70
-Abilities = ILLUMINATE,FLAMEBODY
-HiddenAbilities = INFILTRATOR
+Abilities = ILLUMINATE,INFILTRATOR
+HiddenAbilities = FLAMEBODY
 Moves = 1,EMBER,1,ASTONISH,3,NIGHTSHADE,5,SMOG,7,SPITE,10,EMBER,14,WILLOWISP,16,PAINSPLIT,19,INCINERATE,24,IMPRISON,25,FLAMEBURST,28,HEX,31,CONFUSERAY,33,MEMENTO,37,SUNNYDAY,40,SHADOWBALL,45,FLAMETHROWER,50,INFERNO
 TutorMoves = CALMMIND,DARKPULSE,ENERGYBALL,FIREBLAST,FLAMETHROWER,PSYCHIC,SAFEGUARD,HEX,SUNNYDAY,TAUNT,THIEF,TOXIC,TRICKROOM,WILLOWISP,METRONOME,DREAMEATER,HEATWAVE,SHADOWBALL
 EggMoves = ACID,ACIDARMOR,CLEARSMOG,HEATWAVE
@@ -1190,8 +1190,8 @@ BaseExp = 130
 EVs = SPECIAL_ATTACK,2
 CatchRate = 90
 Happiness = 70
-Abilities = FLASHFIRE,FLAMEBODY
-HiddenAbilities = INFILTRATOR
+Abilities = FLASHFIRE,INFILTRATOR
+HiddenAbilities = FLAMEBODY
 Moves = 1,EMBER,1,ASTONISH,3,NIGHTSHADE,5,SMOG,7,SPITE,10,EMBER,14,WILLOWISP,16,PAINSPLIT,19,INCINERATE,24,IMPRISON,25,FLAMEBURST,28,HEX,31,CONFUSERAY,33,MEMENTO,37,SUNNYDAY,40,SHADOWBALL,45,FLAMETHROWER,50,INFERNO
 TutorMoves = CALMMIND,DARKPULSE,ENERGYBALL,FIREBLAST,FLAMETHROWER,PSYCHIC,SAFEGUARD,HEX,SUNNYDAY,TAUNT,THIEF,TOXIC,TRICKROOM,WILLOWISP,METRONOME,DREAMEATER,HEATWAVE,SHADOWBALL
 EggGroups = Amorphous
@@ -1201,9 +1201,9 @@ Weight = 13.0
 Color = Black
 Shape = HeadArms
 Category = Lamp
-Pokedex = They disguise themselves as real lamps, but one can spot them by examining their "flame".
+Pokedex = Lampent are speculated to be one of the most common Pokémon in the land of the dead. They are able to travel to and from the corporeal world at will.
 Generation = 5
-Evolutions = CHANDELURE,ItemLevel,DUSKSTONE_49
+Evolutions = CHANDELURE,ItemLevel,DUSKSTONE_40
 #-------------------------------
 [CHANDELURE]
 Name = Chandelure
@@ -1215,8 +1215,8 @@ BaseExp = 234
 EVs = SPECIAL_ATTACK,3
 CatchRate = 45
 Happiness = 70
-Abilities = FLASHFIRE,FLAMEBODY
-HiddenAbilities = INFILTRATOR
+Abilities = FLASHFIRE,INFILTRATOR
+HiddenAbilities = FLAMEBODY
 Moves = 1,CONFUSERAY,1,HEX,1,WILLOWISP,1,NIGHTSHADE,1,CURSE,1,IMPRISON,1,PAINSPLIT,1,MEMENTO,1,ASTONISH,1,SMOG,1,EMBER,1,MINIMIZE,40,SHADOWBALL
 TutorMoves = CALMMIND,DARKPULSE,ENERGYBALL,FIREBLAST,FLAMETHROWER,PSYCHIC,SAFEGUARD,HEX,SUNNYDAY,TAUNT,THIEF,TOXIC,TRICKROOM,WILLOWISP,METRONOME,DREAMEATER,HEATWAVE,SHADOWBALL
 EggGroups = Amorphous
@@ -1226,7 +1226,7 @@ Weight = 34.3
 Color = Black
 Shape = HeadArms
 Category = Luring
-Pokedex = Their flames are said to steal souls from humans. They inspired the chandelier and it was even named after them.
+Pokedex = It's beautiful flame is used to illuminate funerals. The enchanting fire is said to make watchers feel closer to their passed loved one.
 Generation = 5
 #-------------------------------
 [MURKROW]
@@ -1405,7 +1405,7 @@ Weight = 31.0
 Color = Brown
 Shape = Quadruped
 Category = Mount
-Pokedex = If it has sunshine and water, it doesn't need to eat, because it can generate energy from the leaves on its back.
+Pokedex = Children in the Mazah region are taught to ride Skiddo at a young age, allowing them to safely traverse mountain paths.
 Generation = 6
 Evolutions = GOGOAT,Level,38
 #-------------------------------
@@ -1430,7 +1430,7 @@ Weight = 91.0
 Color = Brown
 Shape = Quadruped
 Category = Mount
-Pokedex = It can tell how its trainer is feeling by subtle shifts in the grip on its horns. This empathetic sense lets them run as if one being.
+Pokedex = Gogoat can traverse any path, no matter how steep. However, it is recommended that only an experienced trainer should attempt to ride one.
 Generation = 6
 #-------------------------------
 [SCATTERBUG]
@@ -1455,7 +1455,7 @@ Weight = 2.5
 Color = Black
 Shape = Insectoid
 Category = Scatterdust
-Pokedex = When under attack from bird Pokémon, it spews a poisonous black powder that causes paralysis on contact.
+Pokedex = Scatterbug play a vital role in forest ecosystems. They consume a diet of poisonous leaves, stopping certain plants from overpopulating.
 Generation = 6
 Evolutions = SPEWPA,Level,9
 #-------------------------------
@@ -1480,7 +1480,7 @@ Weight = 8.4
 Color = Black
 Shape = HeadBase
 Category = Scatterdust
-Pokedex = It lives hidden within thicket shadows. When predators attack, it quickly bristles the fur covering its body in an effort to threaten them.
+Pokedex = It protects its body with sharp, bristled fur, building up the energy it needs to evolve. If attacked, it spews a poisonous black powder.
 Generation = 6
 Evolutions = VIVILLON,Level,12
 #-------------------------------
@@ -1505,7 +1505,7 @@ Weight = 17.0
 Color = White
 Shape = MultiWinged
 Category = Scale
-Pokedex = Vivillon with many different patterns are found all over the world. These patterns are affected by the climate of their habitat.
+Pokedex = Swarms of Vivillon are known to migrate to Mazah in the winter. This journey can take weeks, with some travelling as far as 4000 kilometers.
 FormName = Sun Pattern
 Generation = 6
 #-------------------------------
@@ -1531,7 +1531,7 @@ Weight = 31.0
 Color = Green
 Shape = Bipedal
 Category = Trash Bag
-Pokedex = The combination of garbage bags and industrial waste caused the chemical reaction that crated this Pokémon.
+Pokedex = Trubbish are primarily found in towns and cities. They enjoy rummaging through garbage bags for food and following people who litter.
 Generation = 5
 Evolutions = GARBODOR,Level,36
 #-------------------------------
@@ -1556,7 +1556,7 @@ Weight = 107.3
 Color = Green
 Shape = Bipedal
 Category = Trash Heap
-Pokedex = They absorb garbage and make it part of their bodies. They shoot a poisonous liquid from their right-hand fingertips.
+Pokedex = Garbodor can eat 60 pounds of garbage a day, keeping cities clean. They shoot a poisonous liquid from their right-hand fingertips.
 Generation = 5
 #-------------------------------
 [PORYGON]
@@ -1581,7 +1581,7 @@ Color = Pink
 Shape = HeadLegs
 Habitat = Urban
 Category = Virtual
-Pokedex = It is capable of reverting itself entirely back to program data in order to enter cyberspace. A Porygon is copy-protected so it cannot be duplicated.
+Pokedex = They are thought to have entered the Mazah region through a data leak from Kanto. People are advised to keep their computers updated to avoid incidents.
 Generation = 1
 Evolutions = PORYGON2,TradeItem,UPGRADE,PORYGON2,LinkItem,UPGRADE
 #-------------------------------
@@ -1681,7 +1681,7 @@ Weight = 9.0
 Color = Blue
 Shape = BipedalTail
 Category = Cerebral
-Pokedex = This Pokémon had never been seen until it appeared from far in the desert 50 years ago.
+Pokedex = Elgyem have been observed communicating with nearby Cryoger using a series of flashing lights. Scientists have so far been unable to decipher their code.
 Generation = 5
 Evolutions = BEHEEYEM,Level,42
 #-------------------------------
@@ -2397,7 +2397,7 @@ Weight = 100.0
 Color = Green
 Shape = Quadruped
 Category = Fruit
-Pokedex = Because it continually ate only its favorite fruit, the fruit started growing around its neck.
+Pokedex = It lives in jungles, offering the fruit that grows on its neck to hungry Pokemon in need. The fruit is at its most delicious when Tropius is ready to evolve.
 Evolutions = TITANOTROP,Titanotrop,52
 #-------------------------------
 [TITANOTROP]
@@ -2930,7 +2930,7 @@ Weight = 14.0
 Color = Yellow
 Shape = Serpentine
 Category = Land Snake
-Pokedex = It digs into the ground with its tail and makes a mazelike nest. It can fly just a little.
+Pokedex = When not underground, it can be seen improving its limited flight capabilities a little bit each day. Once mastered, it is said to transcend into a new form.
 Evolutions = DUNSENDED,Dunsended,34
 #-------------------------------
 [DUNSENDED]
@@ -2954,7 +2954,7 @@ Weight = 10.4
 Color = Yellow
 Shape = Serpentine
 Category = Enigma
-Pokedex = This incredibly rare evolution to Dunsparce has long baffled scientists. Despite its massive size, it can soar overhead silently, making study difficult.
+Pokedex = This Dunsparce evolution has long baffled scientists. Despite its massive size, it can soar overhead silently, making study difficult.
 #-------------------------------
 [M_MUDBRAY]
 Name = Mudbray
@@ -3224,7 +3224,7 @@ Color = Green
 Shape = Bipedal
 Habitat = RoughTerrain
 Category = Cactus
-Pokedex = Cacnea live in deserts with virtually no rainfall. It battles by swinging its thick, spiked arms. Once a year, a yellow flower blooms.
+Pokedex = It prefers harsh and arid environments, like deserts. When a dust storm kicks up, Cacnea can some times be found rolling down sand dunes uncontrollably.
 Generation = 3
 Evolutions = CACTURNE,Level,32
 #-------------------------------
@@ -3250,7 +3250,7 @@ Color = Green
 Shape = Bipedal
 Habitat = RoughTerrain
 Category = Scarecrow
-Pokedex = After spending thousands of years in harsh deserts, its blood transformed into the same substances as sand. It is nocturnal, so it hunts at night.
+Pokedex = Old movies show stories of an outlaw who partnered with a Cacturne, which fired thorns from its arms like bullets and shielded the outlaw with its thorny hide.
 Generation = 3
 #-------------------------------
 [FRIZZARD]
@@ -3274,7 +3274,7 @@ Weight = 71.2
 Color = Blue
 Shape = BipedalTail
 Category = Freon
-Pokedex =  Adapting to the hot days of Mazah's deserts, Frizzard's body temperature is incredibly cool. It attacks by expelling super-cooled air through its arms.
+Pokedex = Adapting to the hot days of Mazah's deserts, Frizzard's body temperature is incredibly cool. It attacks by expelling super-cooled air through its arms.
 #-------------------------------
 [ZARCOIL]
 Name = Zarcoil
@@ -3408,7 +3408,7 @@ BaseExp = 161
 EVs = SPECIAL_ATTACK,2
 CatchRate = 255
 Happiness = 70
-Abilities = SOLARPOWER,FLAMEBODY
+Abilities = SOLARPOWER,NATURALCURE
 HiddenAbilities = FLASHFIRE
 Moves = 1,REST,1,ABSORB,1,EMBER,1,INGRAIN,4,GROWTH,8,MEGADRAIN,10,REST,12,LEECHSEED,16,INCINERATE,20,REST,22,SWEETSCENT,24,SUCKERPUNCH,28,FLAMEBURST,30,REST,36,GIGADRAIN,40,REST,42,PEPPERSPRAY,46,FOLLOWME,48,SYNTHESIS,50,REST,53,HEATWAVE,56,WEATHERBALL,60,REST,60,SLEEPPOWDER,65,BURNUP,70,REST
 TutorMoves = SOLARBEAM,SCREECH,SAFEGUARD,RAINDANCE,SUNNYDAY,HELPINGHAND,HEX,BULLETSEED,ASSURANCE,POISONJAB,ENERGYBALL,GRASSKNOT,FLAMETHROWER,FIREBLAST,WILLOWISP,FIREPUNCH,HEATWAVE,GRASSYGLIDE,EXCITE,FACADE,GRASSYTERRAIN
@@ -3597,7 +3597,7 @@ Weight = 332.9
 Color = Green
 Shape = Finned
 Category = False Beacon
-Pokedex =
+Pokedex = They look quite spoopy, innit? it scares off people who dont read
 #-------------------------------
 [G_CORSOLA]
 Name = Corsola
@@ -3671,7 +3671,7 @@ Color = Red
 Shape = Finned
 Habitat = WatersEdge
 Category = Fish
-Pokedex = Its swimming muscles are weak, so it is easily washed away by currents. In places where water pools, you can see many Magikarp deposited there by the flow.
+Pokedex = Its swimming muscles are weak, so it is easily washed away by currents. Magikarp are considered a delicacy amongst the Mazah region's most skilled chefs.
 Generation = 1
 #-------------------------------
 [GYARADOS]
@@ -3696,7 +3696,7 @@ Color = Blue
 Shape = Serpentine
 Habitat = WatersEdge
 Category = Atrocious # thats so true pokedex
-Pokedex = It is an extremely vicious and violent Pokémon. When humans begin to fight, it will appear and burn everything to the ground with intensely hot flames.
+Pokedex = Its ferocity has no equal. It will fight with its Mazian counterpart over territory in battles so fierce they whip up storms capable of sinking ships with ease.
 Generation = 1
 #-------------------------------
 [FEEBAS]
@@ -3748,7 +3748,7 @@ Color = Pink
 Shape = Serpentine
 Habitat = WatersEdge
 Category = Tender
-Pokedex = It is said to live at the bottom of large lakes. Considered to be the most pretty of all Pokémon, it has been depicted in paintings and statues.
+Pokedex = It is said to live at the bottom of large lakes. It has provided inspiration for many works of art.
 Generation = 3
 #-------------------------------
 [JAWSTER]
@@ -4244,7 +4244,7 @@ Color = Green
 Shape = Winged
 Habitat = Forest
 Category = Tiny Bird
-Pokedex = It runs up short trees that grow on the savanna to peck at new shoots. A Natu's eyes look as if they are always observing something.
+Pokedex = Natu have been observed burrowing holes in cactus plants to build their nests. These cacti provide them with both protection and nourishment.
 Generation = 2
 Evolutions = XATU,Level,25
 #-------------------------------
@@ -4270,7 +4270,7 @@ Color = Green
 Shape = Winged
 Habitat = Forest
 Category = Mystic
-Pokedex = It has the enigmatic power of foreseeing the future. Some people in different lands have long believed that Xatu are emissaries from another world.
+Pokedex = While Xatu stand still, their young stack on top of their head, empowering the flock's prophetic abilities. It is said this behavior inspired totem poles.
 Generation = 2
 #-------------------------------
 [ROTATONA]
@@ -4295,7 +4295,7 @@ Weight = 912.6
 Color = Yellow
 Shape = Head
 Category = Calendar
-Pokedex = These rare Pokémon reside within ancient artifacts. Due to their mischievous nature, the study of these artifacts is incredibly difficult for scientists.
+Pokedex = These Pokémon reside within ancient artifacts. Due to their mischievous nature, the study of these artifacts is incredibly difficult for scientists.
 #-------------------------------
 [LUMIPOP]
 Name = Lumipop
@@ -4539,7 +4539,7 @@ Color = Purple
 Shape = Bipedal
 Habitat = Cave
 Category = Darkness
-Pokedex = It digs branching holes in caves using its sharp claws in search of food--raw gems. A Sableye lurks in darkness and is seen only rarely.
+Pokedex = Sableye forage for crystals in the depths of mines. They frighten intruders away from their hoard, and are believed to steal the souls of minors and miners.
 Generation = 3
 #-------------------------------
 [MAWILE]
@@ -4816,7 +4816,7 @@ Weight = 6.8
 Color = Purple
 Shape = Winged
 Category = Ghost Feather
-Pokedex = Wrrazal was once thought to be an ancient Pokémon, but traces of it only go back a few decades. Some say it comes from a fallen deity.
+Pokedex = Wrrazal was once thought to be an ancient Pokémon, but traces of it only go back a few decades. Patients diagnosed with acute schizophrenia say it comes from a fallen deity.
 Evolutions = SPECTERZAL,Level,42
 #-------------------------------
 [SPECTERZAL]
@@ -4839,7 +4839,7 @@ Weight = 149.7
 Color = Purple
 Shape = Winged
 Category = God Feather
-Pokedex = Specterzal is one of the most dangerous predators in the Mazah region, able to take down prey much larger than itself. It has a fierce rivalry with Quetzillian.
+Pokedex = Specterzal is one of the most dangerous predators in the Mazah region, able to take down prey much larger than itself. It has a one-sided rivalry with Quetzillian.
 #------------------------------- # skarmory on his way to make beakraft useless in every conceivable way
 [SKARMORY]
 Name = Skarmory
@@ -4877,7 +4877,7 @@ BaseExp = 60
 EVs = SPECIAL_DEFENSE,1
 CatchRate = 20
 Happiness = 35
-Abilities = DRYSKIN,FLAMEBODY
+Abilities = DRYSKIN,WHITESMOKE
 HiddenAbilities = REGENERATOR
 Moves = 1,WATERGUN,1,EMBER,8,WORKUP,11,FIRESPIN,13,LICK,16,BEATUP,19,WATERPULSE,22,FLAMEWHEEL,25,TORMENT,30,HAZE,32,RETURN,34,AQUATAIL,39,FLAMEBURST,41,SCALD,44,HYDROPUMP,52,BURNUP
 TutorMoves = SURF,WATERFALL,DIVE,WORKUP,HELPINGHAND,SUNNYDAY,DIG,EARTHQUAKE,BRICKBREAK,ROCKTOMB,LIQUIDATION,SCORCHINGSANDS,SCALD,HEATWAVE,AQUATAIL
@@ -4902,7 +4902,7 @@ BaseExp = 158
 EVs = SPECIAL_DEFENSE,2
 CatchRate = 20
 Happiness = 35
-Abilities = DRYSKIN,FLAMEBODY
+Abilities = DRYSKIN,WHITESMOKE
 HiddenAbilities = REGENERATOR
 Moves = 1,WATERGUN,1,EMBER,8,WORKUP,11,FIRESPIN,13,LICK,16,BEATUP,19,WATERPULSE,22,FLAMEWHEEL,25,TORMENT,30,HAZE,32,RETURN,34,AQUATAIL,39,FLAMEBURST,41,SCALD,44,HYDROPUMP,52,BURNUP
 TutorMoves = SURF,WATERFALL,DIVE,WORKUP,HELPINGHAND,SUNNYDAY,DIG,EARTHQUAKE,BRICKBREAK,ROCKTOMB,LIQUIDATION,SCORCHINGSANDS,SCALD,FLAMETHROWER,FIREBLAST,WILLOWISP,BULKUP,HEATWAVE,AQUATAIL
@@ -4926,7 +4926,7 @@ BaseExp = 270
 EVs = SPECIAL_DEFENSE,3
 CatchRate = 20
 Happiness = 35
-Abilities = DRYSKIN,FLAMEBODY
+Abilities = DRYSKIN,WHITESMOKE
 HiddenAbilities = REGENERATOR
 Moves = 1,WATERGUN,1,EMBER,8,WORKUP,11,FIRESPIN,13,LICK,16,BEATUP,19,WATERPULSE,22,FLAMEWHEEL,25,TORMENT,30,HAZE,32,RETURN,34,AQUATAIL,39,FLAMEBURST,41,SCALD,44,HYDROPUMP,52,BURNUP
 TutorMoves = SURF,WATERFALL,DIVE,WORKUP,HELPINGHAND,SUNNYDAY,DIG,EARTHQUAKE,BRICKBREAK,ROCKTOMB,LIQUIDATION,SCORCHINGSANDS,SCALD,FLAMETHROWER,FIREBLAST,WILLOWISP,BULKUP,EARTHQUAKE,FOCUSBLAST,FLASHCANNON,AVALANCHE,HEATWAVE,AQUATAIL
