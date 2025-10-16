@@ -4244,6 +4244,11 @@ class Battle::AI
                     end
                     if user.turnCount<2
                         score*=1.5
+                        if user.isSpecies?(:MAGCARGO) && user.hasActiveAbility?(:SIMPLE) && 
+                          (user.hasMegaEvoMutation? || user.hasActiveItem?(:MAGCARGOITE)) && 
+                          !user.hasAbilityMutation?
+                            score*=3.5 if !target.pbHasMove?(:TAUNT)
+                        end
                     else
                         score*=0.7
                     end

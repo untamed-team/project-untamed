@@ -1171,6 +1171,15 @@ class Battle::AI
                     end
                 end
             end
+        else
+            if !battler.mega?
+                if battler.isSpecies?(:MAGCARGO) && battler.hasActiveAbility?(:SIMPLE) && 
+                   battler.pbHasMove?(:NORETREAT) && !battler.effects[PBEffects::NoRetreat] && 
+                   battler.effects[PBEffects::Taunt] == 0
+                    PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will not Mega Evolve due to Simple + No Retreat being usable")
+                    return false
+                end
+            end
         end
         if @battle.pbCanMegaEvolve?(idxBattler) # Simple "always should if possible"
             PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
