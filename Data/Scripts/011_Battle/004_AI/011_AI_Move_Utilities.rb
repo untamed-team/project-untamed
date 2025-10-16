@@ -468,12 +468,13 @@ class Battle::AI
     baseAcc = move.accuracy
     if skill >= PBTrainerAI.highSkill
       baseAcc = move.pbBaseAccuracy(user, target)
+      procGlobalArray = processGlobalArray(globalArray)
+      expectedWeather = procGlobalArray[0]
+      sage = false
       if ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
           "ConfuseTargetAlwaysHitsInRainHitsTargetInSky",
-          "FreezeTargetAlwaysHitsInHail"].include?(move.function)
-        procGlobalArray = processGlobalArray(globalArray)
-        expectedWeather = procGlobalArray[0]
-        sage = false
+          "FreezeTargetAlwaysHitsInHail"].include?(move.function) &&
+          expectedWeather != @battle.pbWeather
         case move.function
         when "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
              "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
@@ -484,9 +485,9 @@ class Battle::AI
         when "FreezeTargetAlwaysHitsInHail"
           sage = true if expectedWeather == :Hail
         end
-        sage = true if user.hasActiveAbility?(:PRESAGE)
-        baseAcc = 0 if sage
       end
+      sage = true if user.hasActiveAbility?(:PRESAGE)
+      baseAcc = 0 if sage
     end
     return 125 if baseAcc == 0 && skill >= PBTrainerAI.mediumSkill
     # Get the move's type
