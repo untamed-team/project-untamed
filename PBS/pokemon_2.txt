@@ -3597,7 +3597,7 @@ Weight = 332.9
 Color = Green
 Shape = Finned
 Category = False Beacon
-Pokedex = They look quite spoopy, innit? it scares off people who dont read
+Pokedex = Malharo live in the deepest, darkest reaches of the ocean. Fishermen tell horror stories of them creating whirlpools to drag ships into the underworld.
 #-------------------------------
 [G_CORSOLA]
 Name = Corsola
@@ -5075,7 +5075,7 @@ Weight = 64.4
 Color = Blue
 Shape = HeadBase
 Category = Open Ocean
-Pokedex = siren 3
+Pokedex = Those who spend most of their time at sea are familiar with the alluring cry of Melumaunder. Of the four Legendary Sirens, its voice is the most beautiful.
 #-------------------------------
 [MELUMYST]
 Name = Melumyst
