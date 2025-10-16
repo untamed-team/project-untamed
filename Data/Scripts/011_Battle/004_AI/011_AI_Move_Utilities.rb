@@ -473,13 +473,18 @@ class Battle::AI
           "FreezeTargetAlwaysHitsInHail"].include?(move.function)
         procGlobalArray = processGlobalArray(globalArray)
         expectedWeather = procGlobalArray[0]
-        sage = user.hasActiveAbility?(:PRESAGE)
+        sage = false
         case move.function
+        when "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
+             "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
+          if !target.hasActiveItem?(:UTILITYUMBRELLA)
+            sage = true  if [:Rain, :HeavyRain].include?(expectedWeather)
+            baseAcc = 50 if [:Sun, :HarshSun].include?(expectedWeather)
+          end
         when "FreezeTargetAlwaysHitsInHail"
           sage = true if expectedWeather == :Hail
-        when "ConfuseTargetAlwaysHitsInRainHitsTargetInSky", "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky"
-          sage = true if [:Rain, :HeavyRain].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA)
         end
+        sage = true if user.hasActiveAbility?(:PRESAGE)
         baseAcc = 0 if sage
       end
     end
