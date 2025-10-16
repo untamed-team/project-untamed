@@ -379,7 +379,8 @@ class Battle::AI
                     if move.bombMove?
                         score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
                                        (b.isSpecies?(:MAGCARGO) && b.pokemon.willmega && !mold_broken)
-                    elsif move.soundMove?
+                    end
+                    if move.soundMove?
                         score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
                     end
                     case realtype

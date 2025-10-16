@@ -9043,7 +9043,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = RecoilThirdOfDamageDealt
 Flags = Contact,CanProtect,CanMirrorMove,Blade
-Description = The user teleports behind the target and slices, cutting itself as well.
+Description = The user teleports behind the target and slices. It causes considerable cuts to the user as well.
 #-------------------------------
 [THINKFAST]
 Name = Think Fast
@@ -9056,7 +9056,7 @@ Target = NearOther
 Priority = 1
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user quickly thinks up a weak psychic attack.
+Description = The user quickly thinks up a weak psychic attack. It is sure to strike first.
 #-------------------------------
 [TOXIRAVAGE]
 Name = Toxiravage
@@ -9069,7 +9069,7 @@ Target = NearOther
 Priority = 2
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
-Description = Sharp, toxic spikes impale the target. Always hits first.
+Description = The user charges the target and impales it with sharp toxic spikes at blinding speed. Always hits first.
 #-------------------------------
 [THOUSANDFOLDS]
 Name = Thousand Folds
@@ -9081,7 +9081,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
-Description = A folded blade that tears through a target using Protect or Detect.
+Description = A folded blade that tears through a target using Protect or Detect. It also lifts the effects of those moves.
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
@@ -9129,7 +9129,7 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = LowerPPOfTargetLastMoveBy3
 Flags = CanProtect,CanMirrorMove
-Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.
+Description = The user does an all-out attack, crashing its own hard drives. Removes 3 PP from the target's last move.
 #-------------------------------
 [SPLINTERSHOT]
 Name = Splinter Shot
@@ -9141,7 +9141,7 @@ TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = CanProtect,CanMirrorMove,Bomb
-Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
+Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. Hits twice.
 #-------------------------------
 [TITANSWRATH]
 Name = Titan's Wrath
@@ -9187,11 +9187,11 @@ Category = Physical
 Power = 80
 Accuracy = 100
 TotalPP = 5
-Target = NearOther
+Target = AllNearFoes
 FunctionCode = LowerTargetSpeed1
 Flags = Contact,CanProtect,CanMirrorMove,Biting,CannotMetronome
 EffectChance = 100
-Description = The user hunts down its foe with a deadly precision chomp, which lowers their speed.
+Description = The user hunts down its foes with a deadly precision chomp, which lowers their speed.
 #-------------------------------
 [MANADRAIN]
 Name = Mana Drain

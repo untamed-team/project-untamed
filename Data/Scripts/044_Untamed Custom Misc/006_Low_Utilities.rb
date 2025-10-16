@@ -1428,6 +1428,7 @@ DECENT_STAB_MOVES = {
 }
 
 def mirrorBossFight(trainer)
+  $player.heal_party
   trainer.party = Marshal.load(Marshal.dump($player.party))
   balancedlevel = pbBalancedLevel($player.party)
 
@@ -1497,7 +1498,7 @@ def mirrorBossFight(trainer)
       pkmn.status = :DIZZY
       pkmn.statusCount = 4
     end
-    if pkmn.status != :NONE # i am assuming pkmn cant get status'd before the battle
+    if pkmn.status != :NONE
       status_berry_map = {
         :FREEZE => :ASPEARBERRY,
         :SLEEP => :CHESTOBERRY,
@@ -1533,8 +1534,10 @@ def mirrorBossFight(trainer)
       end
       if move.id == :FACADE
         if (pkmn.hasType?(:NORMAL) && pkmn.attack > pkmn.spatk) || 
-           abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
-          pkmn.status = :BURN
+           abilitylist.include?(:FLAREBOOST) || 
+           abilitylist.include?(:TOXICBOOST) || 
+           abilitylist.include?(:GUTS)
+          pkmn.status = :BURN if !abilitylist.include?(:TOXICBOOST)
         else
           pkmn.status = :NONE
           pkmn.forget_move_at_index(i)
