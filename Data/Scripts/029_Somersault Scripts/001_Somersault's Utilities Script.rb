@@ -64,7 +64,7 @@ USE_CUSTOM_SUG_NAME = true
 MALE_CHAR = "Lucas"
 FEM_CHAR  = "Dawn"
 #------------------------------------------------------------------------------#
-alias pbSuggestTrainerNameOld pbSuggestTrainerName
+#alias pbSuggestTrainerNameOld pbSuggestTrainerName
 #def pbSuggestTrainerName(gender)
 #  if USE_CUSTOM_SUG_NAME
 #    return FEM_CHAR  if gender == 1

@@ -238,22 +238,10 @@ def pbTrainerName(name = nil, outfit = 0)
 end
 
 def pbSuggestTrainerName(gender)
-  userName = pbGetUserName
-  userName = userName.gsub(/\s+.*$/, "")
-  if userName.length > 0 && userName.length < Settings::MAX_PLAYER_NAME_SIZE
-    userName[0, 1] = userName[0, 1].upcase
-    return userName
-  end
-  userName = userName.gsub(/\d+$/, "")
-  if userName.length > 0 && userName.length < Settings::MAX_PLAYER_NAME_SIZE
-    userName[0, 1] = userName[0, 1].upcase
-    return userName
-  end
-  userName = System.user_name.capitalize
-  userName = userName[0, Settings::MAX_PLAYER_NAME_SIZE]
+  userName = "Ayylmao"
+  userName = "Theo" if gender == 0 # guy
+  userName = "Lisa" if gender == 1 # gal
   return userName
-  # Unreachable
-#  return getRandomNameEx(gender, nil, 1, Settings::MAX_PLAYER_NAME_SIZE)
 end
 
 def pbGetUserName
