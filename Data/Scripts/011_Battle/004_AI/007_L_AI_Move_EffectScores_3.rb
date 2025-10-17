@@ -4033,6 +4033,16 @@ class Battle::AI
                 end
             end
             if user.item && !user.unlosableItem?(user.item)
+                oldmove = nil
+                if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
+                    if !target.lastRegularMoveUsed.nil?
+                        oldmove = target.pbGetMoveWithID(target.lastRegularMoveUsed)
+                    end
+                else
+                    if targetWillMove?(target)
+                        oldmove = @battle.choices[target.index][2]
+                    end
+                end
                 case user.item_id
                 when :LEFTOVERS, :LIFEORB, :LUMBERRY, :SITRUSBERRY
                     minimini*=0.5
@@ -4047,14 +4057,32 @@ class Battle::AI
                         minimini*=0.9
                     end
                     minimini*=1.3 if statvar
+                    if !oldmove.nil?
+                        if oldmove.statusMove? && (userFasterThanTarget || priorityAI(user, move, globalArray) > 0)
+                            score*=1.2
+                            score*=1.4 if targetWillMove?(target, "dmg")
+                        end
+                    end
                 when :CHOICEBAND
                     minimini*=1.7 if target.attack<target.spatk
                     minimini*=0.8 if user.attack>user.spatk
                     minimini*=1.3 if statvar
+                    if !oldmove.nil?
+                        if oldmove.statusMove? && (userFasterThanTarget || priorityAI(user, move, globalArray) > 0)
+                            score*=1.2
+                            score*=1.4 if targetWillMove?(target, "dmg")
+                        end
+                    end
                 when :CHOICESPECS
                     minimini*=1.7 if target.attack>target.spatk
                     minimini*=0.8 if user.attack<user.spatk
                     minimini*=1.3 if statvar
+                    if !oldmove.nil?
+                        if oldmove.statusMove? && (userFasterThanTarget || priorityAI(user, move, globalArray) > 0)
+                            score*=1.2
+                            score*=1.4 if targetWillMove?(target, "dmg")
+                        end
+                    end
                 when :BLACKSLUDGE
                     if user.pbHasType?(:POISON, true)
                         minimini*=1.5
@@ -4089,7 +4117,7 @@ class Battle::AI
                             end
                         end
                     end
-                    if target.hasActiveAbility?(:PROTEAN)
+                    if target.hasActiveAbility?([:PROTEAN, :LIBERO])
                         if target.moves.any? { |m| [:NORMAL,:FLYING,:GROUND,:GHOST,:STEEL,:DARK,:FAIRY].include?(m&.type) }
                             minimini*=1.5
                         end
@@ -4479,53 +4507,50 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "ThrowUserItemAtTarget" # fling
-        if !user.item || user.unlosableItem?(user.item) || 
-           user.hasActiveAbility?(:KLUTZ) || (user.item.is_berry? && target.hasActiveAbility?(:UNNERVE)) || 
+        if user.unlosableItem?(user.item) || !user.item ||
+           user.hasActiveAbility?(:KLUTZ) || target.hasActiveAbility?(:SHIELDDUST) || 
+          (user.item.is_berry? && target.hasActiveAbility?(:UNNERVE)) || 
            user.effects[PBEffects::Embargo]>0 || @battle.field.effects[PBEffects::MagicRoom]>0
             score*=0
         else
             case user.item_id
             when :POISONBARB
-                if target.pbCanPoison?(user, false) && !target.hasActiveAbility?(:POISONHEAL)
+                if target.pbCanPoison?(user, false) && !target.hasActiveAbility?([:POISONHEAL, :TOXICBOOST, :GUTS])
                     score*=1.2
                 end
             when :TOXICORB
-                if target.pbCanPoison?(user, false) && !target.hasActiveAbility?(:POISONHEAL)
+                if target.pbCanPoison?(user, false) && !target.hasActiveAbility?([:POISONHEAL, :TOXICBOOST, :GUTS])
                     score*=1.2
-                    if user.pbCanPoison?(nil, false) && !user.hasActiveAbility?(:POISONHEAL)
+                    if user.pbCanPoison?(nil, false) && !user.hasActiveAbility?([:POISONHEAL, :TOXICBOOST, :GUTS])
                         score*=2
                     end                
                 end
             when :FLAMEORB
-                if target.pbCanBurn?(user, false) && !target.hasActiveAbility?(:GUTS)
+                if target.pbCanBurn?(user, false) && !target.hasActiveAbility?([:GUTS, :FLAREBOOST])
                     score*=1.3
-                    if user.pbCanBurn?(nil, false) && !user.hasActiveAbility?(:GUTS)
+                    if user.pbCanBurn?(nil, false) && !user.hasActiveAbility?([:GUTS, :FLAREBOOST])
                         score*=2
                     end                
                 end
             when :LIGHTBALL
-                if target.pbCanParalyze?(user, false) && !target.hasActiveAbility?(:QUICKFEET)
+                if target.pbCanParalyze?(user, false) && !target.hasActiveAbility?([:QUICKFEET, :GUTS])
                     score*=1.3
                 end
             when :KINGSROCK, :RAZORCLAW
                 if canFlinchTarget(user,target,mold_broken) && userFasterThanTarget
                     score*=1.3
                 end
-            when :POWERHERB
-                score=0
-            when :MENTALHERB
-                score=0
-            when :LAXINCENSE, :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, 
-                 :EXPERTBELT, :FOCUSSASH, :LEFTOVERS, :MUSCLEBAND, 
-                 :WISEGLASSES, :LIFEORB, :EVIOLITE, :ASSAULTVEST, 
-                 :BLACKSLUDGE, :MELEEVEST
-                score=0
             when :STICKYBARB
                 score*=1.2
-            when :LAGGINGTAIL
-                score*=3
             when :IRONBALL
                 score*=1.5
+            when :LAGGINGTAIL
+                score*=3
+            when :CHOICESCARF, :CHOICEBAND, :CHOICESPECS, 
+                 :EXPERTBELT, :FOCUSSASH, :MUSCLEBAND, :WISEGLASSES, 
+                 :LIFEORB, :EVIOLITE, :ASSAULTVEST, :MELEEVEST, 
+                 :LEFTOVERS, :BLACKSLUDGE, :MENTALHERB, :POWERHERB
+                score=0
             end
         end
     #---------------------------------------------------------------------------
@@ -5709,11 +5734,7 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "FleeFromBattle" # teleport
-        if @battle.trainerBattle?
-            score = 0
-        else
-            score = 999
-        end
+        score *= (@battle.trainerBattle?) ?  0 : 999
     #---------------------------------------------------------------------------
     when "SwitchOutUserStatusMove" # teleport
         #target=user.pbDirectOpposing(true)
@@ -5724,6 +5745,8 @@ class Battle::AI
                     line.puts "-------(Switch Move) Start--------"
                 end
             end
+            backup = $AIMASTERLOG
+            $AIMASTERLOG = false
             score *= 0.8 if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
             score *= 0.7 if user.pbOwnSide.effects[PBEffects::StealthRock]
             score *= (0.9**user.pbOwnSide.effects[PBEffects::ToxicSpikes])
@@ -5785,6 +5808,7 @@ class Battle::AI
             else
                 score = 0
             end
+            $AIMASTERLOG = backup
             if $AIMASTERLOG
                 File.open("AI_master_log.txt", "a") do |line|
                     line.puts "-------(Switch Move) End--------"
@@ -5801,6 +5825,8 @@ class Battle::AI
                     line.puts "-------(Switch Move) Start--------"
                 end
             end
+            backup = $AIMASTERLOG
+            $AIMASTERLOG = false
             if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
                 score *= 0.8
                 # DemICE: Switching AI is dumb so if you're faster, don't sack a healthy mon. Better use another move.
@@ -5910,6 +5936,7 @@ class Battle::AI
             else
                 score = 0
             end
+            $AIMASTERLOG = backup
             if $AIMASTERLOG
                 File.open("AI_master_log.txt", "a") do |line|
                     line.puts "-------(Switch Move) End--------"
@@ -5928,6 +5955,8 @@ class Battle::AI
                         line.puts "-------(Switch Move) Start--------"
                     end
                 end
+                backup = $AIMASTERLOG
+                $AIMASTERLOG = false
                 if user.pbOwnSide.effects[PBEffects::StealthRock]
                     score*=0.7
                 end
@@ -6073,6 +6102,7 @@ class Battle::AI
                 end
                 miniscore/=100.0
                 score*=miniscore
+                $AIMASTERLOG = backup
                 if $AIMASTERLOG
                     File.open("AI_master_log.txt", "a") do |line|
                         line.puts "-------(Switch Move) End--------"
@@ -6090,6 +6120,8 @@ class Battle::AI
                     line.puts "-------(Switch Move) Start--------"
                 end
             end
+            backup = $AIMASTERLOG
+            $AIMASTERLOG = false
             score*=1.1 if user.effects[PBEffects::FocusEnergy]
             score*=1.2 if user.effects[PBEffects::Ingrain]
             score*=1.2 if user.effects[PBEffects::AquaRing]
@@ -6160,6 +6192,7 @@ class Battle::AI
             else
                 score = 0
             end
+            $AIMASTERLOG = backup
             if $AIMASTERLOG
                 File.open("AI_master_log.txt", "a") do |line|
                     line.puts "-------(Switch Move) End--------"

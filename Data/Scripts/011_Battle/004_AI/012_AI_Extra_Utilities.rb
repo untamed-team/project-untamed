@@ -831,8 +831,8 @@ class Battle::AI
     def canLowerStatTarget(stat,move,user,target,mold_bonkers=false)
         return false if target.pbOwnSide.effects[PBEffects::StatDropImmunity] && !target.pbOwnedByPlayer?
         return false if target.hasActiveAbility?(:CONTRARY,false,mold_bonkers)
-        return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
         if target.index != user.index # Not self-inflicted
+            return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
             return false if target.effects[PBEffects::Substitute] > 0 && !move.ignoresSubstitute?(user)
             return false if target.pbOwnSide.effects[PBEffects::Mist] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
             return false if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_bonkers)

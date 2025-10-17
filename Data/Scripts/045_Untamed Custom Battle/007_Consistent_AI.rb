@@ -960,7 +960,6 @@ class Battle::AI
 
         # Convert damage to percentage of target's remaining HP
         damagePercentage = realDamage * 100.0 / target.hp
-        #echoln "#{move.name}'s realdamage = #{realDamage}, dmgpercent = #{damagePercentage}" if user.species == :GLALIE && target.species == :GASTRONAUT && (move.type == :ICE || move.id == :RETURN)
         # Don't prefer weak attacks
         damagePercentage *= 0.5 if damagePercentage < 30
         # Prefer status moves if level difference is significantly high
