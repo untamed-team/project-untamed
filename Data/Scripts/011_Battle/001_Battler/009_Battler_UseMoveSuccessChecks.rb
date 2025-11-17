@@ -93,6 +93,15 @@ class Battle::Battler
       end
       return false
     end
+    # Setup moves block #by low
+    if self.SetupMovesUsed.include?(move.id) && move.statusMove? && 
+       move.target == :User && $player.difficulty_mode?("chaos") && commandPhase
+      if showMessages
+        msg = _INTL("But {1} has already used {2}!", pbThis, GameData::Move.get(move.id).name)
+        (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
+      end
+      return false
+    end
     # Belch
     return false if !move.pbCanChooseMove?(self, commandPhase, showMessages)
     return true

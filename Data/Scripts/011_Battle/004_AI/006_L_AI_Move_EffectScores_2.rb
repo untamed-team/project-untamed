@@ -1427,7 +1427,7 @@ class Battle::AI
             score=0
         else
             score*=2 if user.moves.any? { |m| m&.accuracy <= 70 }
-            score*=3 if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
+            score*=3 if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO) || user.pbHasMove?(:DYNAMICPUNCH)
         end
     #---------------------------------------------------------------------------
     when "HitsTargetInSky", "HitsTargetInSkyGroundsTarget" # sky uppercut, smack down
@@ -1470,7 +1470,7 @@ class Battle::AI
                     score*=1.3 if gravMov.accuracy <= 70
                 end
             end
-            if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
+            if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO) || user.pbHasMove?(:DYNAMICPUNCH)
                 score*=3
             end
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]

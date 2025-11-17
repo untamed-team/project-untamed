@@ -775,7 +775,7 @@ class Battle::AI
         if user.effects[PBEffects::LockOn] > 0
             score = 0
         else
-            score *= 1.3 if user.pbHasMove?(:INFERNO) || user.pbHasMove?(:ZAPCANNON)
+            score *= 1.3 if user.pbHasMove?(:INFERNO) || user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:DYNAMICPUNCH)
         end
     #---------------------------------------------------------------------------
     when "StartNegateTargetEvasionStatStageAndGhostImmunity" # Foresight

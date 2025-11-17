@@ -468,7 +468,7 @@ class Battle::AI
     baseAcc = move.accuracy
     if skill >= PBTrainerAI.highSkill
       baseAcc = move.pbBaseAccuracy(user, target)
-      procGlobalArray = processGlobalArray(globalArray)
+      procGlobalArray = processGlobalArray(@megaGlobalArray)
       expectedWeather = procGlobalArray[0]
       sage = false
       if ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",

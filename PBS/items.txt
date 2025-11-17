@@ -4791,7 +4791,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_90
 Move = WILDCHARGE
-Description = The user shrouds itself in electricity and smashes into its foe. It also damages the user a little.
+Description = The user shrouds itself in electricity and smashes into its foe.
 #-------------------------------
 [TM98]
 Name = TM98
