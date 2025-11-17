@@ -468,6 +468,7 @@ class Battle::AI
         #        multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
         #    end
         #end
+        # Random variance
         # STAB
         if skill >= PBTrainerAI.mediumSkill && type
             sage = false
