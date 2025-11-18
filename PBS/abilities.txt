@@ -759,7 +759,7 @@ Description = Moves can be used regardless of Abilities.
 [AROMAVEIL]
 Name = Aroma Veil
 Description = Protects against attacks that limit move choices.
-FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored, tormented or heal block.
+FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored, tormented or heal blocked.
 #-------------------------------
 [FLOWERVEIL]
 Name = Flower Veil

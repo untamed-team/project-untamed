@@ -1028,6 +1028,7 @@ class Battle::Scene
     #value *= 0.9 if battler.pokemon.natureBoostAI
     value = value.round
     value = [[value, 999].min, 1].max
+    return value if stat == :SPEED
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
   
