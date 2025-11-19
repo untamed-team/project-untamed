@@ -315,6 +315,7 @@ class Battle::Battler
     @effects[PBEffects::HoldingHand]         = false
     @effects[PBEffects::NeedleArm]           = -1
     @effects[PBEffects::SuperEffEye]         = 0
+    @effects[PBEffects::EmergencyCoward]     = false
     @battle.allBattlers.each do |b|   # Other battlers no longer blocked by self
       b.effects[PBEffects::NeedleArm] = -1 if b.effects[PBEffects::NeedleArm] == @index
     end

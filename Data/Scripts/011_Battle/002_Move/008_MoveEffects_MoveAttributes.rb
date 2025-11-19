@@ -41,6 +41,7 @@ class Battle::Move::FixedDamageUserLevelRandom < Battle::Move::FixedDamageMove
   def pbFixedDamage(user, target)
     min = (user.level / 2).floor
     max = (user.level * 3 / 2).floor
+    return max if !user.pbOwnedByPlayer?
     return min + @battle.pbRandom(max - min + 1)
   end
 end
@@ -280,7 +281,7 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithLessPP < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    ppratio = @pp.to_f / @total_pp # PP is reduced before the move is used
+    ppratio = @pp.to_f / @realMove.total_pp # PP is reduced before the move is used
     dmg = 40 + ((1.0 - ppratio) * 220).round
     return [[dmg, 250].min, 40].max
   end
@@ -1342,6 +1343,25 @@ class Battle::Move::TypeIsUserFirstType < Battle::Move
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
+  end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    if self.id == :TRIMTACKLE
+      t = pbBaseType(user)
+      trims = {
+        :FAIRY => :PLAYROUGH,
+        :ROCK  => :HEADSMASH,
+        :GRASS => :HORNLEECH,
+        :WATER => :WATERFALL,
+        :ICE   => :ICICLECRASH,
+        :GHOST => :POLTERGEIST,
+        :ELECTRIC => :WILDCHARGE,
+        :PSYCHIC  => :ZENHEADBUTT,
+        :FIGHTING => :HAMMERARM
+      }
+      id = trims[t] if trims[t] && GameData::Move.exists?(trims[t])
+    end
+    super
   end
 end
 

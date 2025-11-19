@@ -132,6 +132,7 @@ module PBEffects
   HoldingHand         = 127
   NeedleArm           = 128
   SuperEffEye         = 129
+  EmergencyCoward     = 130
 
   #=============================================================================
   # These effects apply to a battler position

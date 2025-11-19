@@ -3,7 +3,7 @@
 #===============================================================================
 class Battle::Move::OHKO < Battle::Move::FixedDamageMove
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.level >= user.level #by low
+    if target.level >= user.level || $player.difficulty_mode?("hard") #by low
       @battle.pbDisplay(_INTL("{1} is unaffected!", target.pbThis)) if show_message
       return true
     end
@@ -25,7 +25,6 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
 
   def pbAccuracyCheck(user, target)
     acc = @accuracy + user.level - target.level
-    acc = 0 if $player.difficulty_mode?("hard") #by low
     return @battle.pbRandom(100) < acc
   end
 

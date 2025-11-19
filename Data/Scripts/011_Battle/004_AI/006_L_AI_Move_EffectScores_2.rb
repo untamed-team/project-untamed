@@ -526,10 +526,28 @@ class Battle::AI
         end
     #---------------------------------------------------------------------------
     when "CureTargetBurn" # Sparkling Aria
-        if user.opposes?(target)
-            score -= 40 if target.status == :BURN
-        elsif target.status == :BURN
-            score -= 40
+        if target.opposes?(user) # is enemy
+            if @battle.choices[target.index][0] == :SwitchOut
+                score *= 0.8
+            elsif target.status == :BURN
+                initialscore = score
+                if target.hasActiveAbility?([:GUTS, :FLAREBOOST])
+                    score *= 1.2
+                end
+                if (pbRoughStat(target, :SPECIAL_ATTACK, skill) > pbRoughStat(target, :ATTACK, skill)) &&
+                   target.hasActiveAbility?(:MAGICGUARD)
+                    score *= 1.3
+                end
+                if score == initialscore
+                    score *= 0.5
+                end
+                if user.pbHasMoveFunction?("DoublePowerIfTargetStatusProblem")
+                    score *= 0.5
+                end
+            end
+        else
+            # smaller = gooder for allies
+            score -= 40 if target.status == :BURN && !target.hasActiveAbility?([:GUTS, :FLAREBOOST])
         end
     #---------------------------------------------------------------------------
     when "StartUserSideImmunityToInflictedStatus" # Safeguard
@@ -715,10 +733,10 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SetUserTypesBasedOnEnvironment" # Camouflage
         if !user.canChangeType?
-            score -= 90
-        elsif skill >= PBTrainerAI.mediumSkill
+            score = 0
+        else
             new_type = nil
-            case @battle.field.terrain
+            case expectedTerrain
             when :Electric
                 new_type = :ELECTRIC if GameData::Type.exists?(:ELECTRIC)
             when :Grassy
@@ -754,7 +772,55 @@ class Battle::AI
                 new_type = nil if !GameData::Type.exists?(new_type)
                 new_type ||= :NORMAL
             end
-            score -= 90 if !user.pbHasOtherType?(new_type)
+            if user.pbHasType?(new_type)
+                score = 0
+            else
+                stabbed = false
+                user.eachMove do |m|
+                    if m.pbCalcType(user) == new_type
+                        stabbed = true
+                        break
+                    end
+                end
+                if stabbed
+                    score *= 1.2
+                    targetTypes = typesAI(target, user, skill)
+                    minimini = 0
+                    targetTypes.each do |t|
+                        typo = Effectiveness.calculate_one(new_type, t)
+                        minimini = typo if typo > minimini
+                    end
+                    if Effectiveness.super_effective?(minimini)
+                        score *= 1.3
+                    else
+                        score *= 0.5
+                    end
+                else
+                    score *= 0.5
+                end
+                if userFasterThanTarget
+                    score *= 1.1
+                    # out of all input reads, this is the most deserving one
+                    if targetWillMove?(target, "dmg")
+                        targetMove = @battle.choices[target.index][2]
+                        targetMoveType = targetMove.pbCalcType(target)
+                        effvalue = Effectiveness.calculate(targetMoveType, new_type)
+                        if Effectiveness.ineffective?(effvalue)
+                            score *= 1.5
+                        elsif Effectiveness.not_very_effective?(effvalue)
+                            score *= 1.3
+                        elsif Effectiveness.super_effective?(effvalue)
+                            score *= 0.1
+                        else
+                            score *= 0.7
+                        end
+                    else
+                        score *= 1.1
+                    end
+                else
+                    score *= 0.7
+                end
+            end
         end
     #---------------------------------------------------------------------------
     when "SetUserTypesToResistLastAttack" # Conversion 2
@@ -763,38 +829,109 @@ class Battle::AI
         # this very well tested code would have said "hey he just used a electric attack"
         # ffs essentials
         if !user.canChangeType?
-            score -= 90
-        elsif !target.lastMoveUsed || !target.lastMoveUsedType ||
-                GameData::Type.get(target.lastMoveUsedType).pseudo_type
-            score -= 90
+            score = 0
         else
-            aType = nil
-            target.eachMove do |m|
-                next if m.id != target.lastMoveUsed
-                aType = m.pbCalcType(target)
-                break
+            lastmove = nil
+            if userFasterThanTarget || priorityAI(user, move, globalArray) > 0
+                if !target.lastMoveUsed.nil?
+                    lastmove = target.lastMoveUsed
+                    if targetWillMove?(target, "dmg")
+                        if lastmove == @battle.choices[target.index][2].id &&
+                           @battle.choices[target.index][3] == user.index
+                            score *= 1.2
+                        end
+                    end
+                end
+            else
+                if targetWillMove?(target)
+                    lastmove = @battle.choices[target.index][2].id
+                end
             end
-            if aType
-                has_possible_type = false
-                GameData::Type.each do |t|
-                    next if t.pseudo_type || user.pbHasType?(t.id, true) ||
-                            !Effectiveness.resistant_type?(target.lastMoveUsedType, t.id)
-                    has_possible_type = true
+            if lastmove
+                lastmovereal = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(lastmove))
+                lastmove = nil if GameData::Type.get(lastmovereal.type).pseudo_type
+            end
+            if lastmove.nil?
+                score = 0
+            else
+                aType = nil
+                target.eachMove do |m|
+                    next if m.id != lastmove
+                    aType = m.pbCalcType(target)
                     break
                 end
-                score -= 90 if !has_possible_type
-            else
-                score -= 90
+                if aType
+                    has_possible_type = false
+                    GameData::Type.each do |t|
+                        next if t.pseudo_type || user.pbHasType?(t.id, true) ||
+                                !Effectiveness.resistant_type?(lastmovereal.type, t.id)
+                        has_possible_type = true
+                        break
+                    end
+                    if has_possible_type
+                        stabbed = false
+                        user.eachMove do |m|
+                            if m.pbCalcType(user) == aType
+                                stabbed = true
+                                break
+                            end
+                        end
+                        if stabbed
+                            score *= 1.3
+                        else
+                            score *= 0.7
+                        end
+                        if userFasterThanTarget
+                            score *= 1.2
+                        else
+                            score *= 0.7
+                        end
+                    else
+                        score = 0
+                    end
+                else
+                    score = 0
+                end
             end
         end
     #---------------------------------------------------------------------------
     when "SetUserTypesToTargetTypes" # Reflect Type
-        tTypes = typesAI(target, user, skill)
-        if !user.canChangeType? || tTypes.length == 0
-            score -= 90
-        elsif user.pbTypes == target.pbTypes &&
-                user.effects[PBEffects::Type3] == target.effects[PBEffects::Type3]
-            score -= 90
+        targetTypes = typesAI(target, user, skill)
+        userTypes = typesAI(user, target, skill)
+        if !user.canChangeType? || targetTypes.length == 0 || userTypes == targetTypes
+            score = 0
+        else
+            while targetTypes.length < 3
+                targetTypes.push(:QMARKS)
+            end
+            while userTypes.length < 3
+                userTypes.push(:QMARKS)
+            end
+            miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
+                         Effectiveness.calculate(targetTypes[1], userTypes[0], userTypes[1], userTypes[2]), 
+                         Effectiveness.calculate(targetTypes[2], userTypes[0], userTypes[1], userTypes[2])].max
+            minimini  = [Effectiveness.calculate(targetTypes[0], targetTypes[0], targetTypes[1], targetTypes[2]), 
+                         Effectiveness.calculate(targetTypes[1], targetTypes[0], targetTypes[1], targetTypes[2]), 
+                         Effectiveness.calculate(targetTypes[2], targetTypes[0], targetTypes[1], targetTypes[2])].max
+            if minimini < miniscore
+                score *= 3
+                if userFasterThanTarget
+                    score *= 1.2
+                else
+                    score *= 0.7
+                end
+                stabbed = false
+                oppstab = false
+                user.eachMove do |m|
+                    temptype = m.pbCalcType(user)
+                    stabbed = true if userTypes.include?(temptype)
+                    oppstab = true if targetTypes.include?(temptype)
+                end
+                score *= 1.2 if !stabbed
+                score *= 1.3 if oppstab
+            else
+                score = 0
+            end
         end
     #---------------------------------------------------------------------------
     when "SetUserTypesToUserMoveType" # Conversion (you cant say that, d*scord will think its le bad!)
@@ -807,9 +944,48 @@ class Battle::AI
                 has_possible_type = true
                 break
             end
-            score -= 90 if !has_possible_type
+            if has_possible_type
+                targetTypes = typesAI(target, user, skill)
+                userTypes = typesAI(user, target, skill)
+                while targetTypes.length < 3
+                    targetTypes.push(:QMARKS)
+                end
+                while userTypes.length < 3
+                    userTypes.push(:QMARKS)
+                end
+                firstType = user.moves[0].type #intentionally not pbCalcType(user), because this move is weird
+                miniscore = [Effectiveness.calculate(targetTypes[0], userTypes[0], userTypes[1], userTypes[2]), 
+                             Effectiveness.calculate(targetTypes[1], userTypes[0], userTypes[1], userTypes[2]), 
+                             Effectiveness.calculate(targetTypes[2], userTypes[0], userTypes[1], userTypes[2])].max
+                minimini  = [Effectiveness.calculate(targetTypes[0], firstType), 
+                             Effectiveness.calculate(targetTypes[1], firstType), 
+                             Effectiveness.calculate(targetTypes[2], firstType)].max
+                if minimini < miniscore
+                    score *= 3
+                    if userFasterThanTarget
+                        score *= 1.2
+                    else
+                        score *= 0.7
+                    end
+                    stabbed = false
+                    user.eachMove do |m|
+                        temptype = m.pbCalcType(user)
+                        if userTypes.include?(temptype)
+                            stabbed = true
+                            break
+                        end
+                    end
+                    if !stabbed
+                        score *= 1.3
+                    end
+                else
+                    score = 0
+                end
+            else
+                score = 0
+            end
         else
-            score -= 90
+            score = 0
         end
     #---------------------------------------------------------------------------
     when "SetTargetTypesToPsychic" # Magic Powder
@@ -939,6 +1115,9 @@ class Battle::AI
                 score*=0.7
             end
             targetTypes = typesAI(target, user, skill)
+            while targetTypes.length < 3
+                targetTypes.push(:QMARKS)
+            end
             effcheck = Effectiveness.calculate(targetTypes[0], :FIRE, :FIRE, :FIRE)
             if effcheck > 4
                 score*=1.5
@@ -1160,9 +1339,12 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "IgnoreTargetAbility", "CategoryDependsOnHigherDamageIgnoreTargetAbility" # Moongeist Beam / Photon Geyser
         targetTypes = typesAI(target, user, skill)
+        while targetTypes.length < 3
+            targetTypes.push(:QMARKS)
+        end
         if target.hasActiveAbility?(:WONDERGUARD)
             score*=5
-        elsif target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD])
+        elsif target.hasActiveAbility?([:VOLTABSORB, :LIGHTNINGROD, :MOTORDRIVE])
             if move.type==:ELECTRIC
                 if Effectiveness.calculate(:ELECTRIC, targetTypes[0], targetTypes[1], targetTypes[2])>4
                     score*=2
@@ -1245,7 +1427,7 @@ class Battle::AI
             score=0
         else
             score*=2 if user.moves.any? { |m| m&.accuracy <= 70 }
-            score*=3 if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
+            score*=3 if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO) || user.pbHasMove?(:DYNAMICPUNCH)
         end
     #---------------------------------------------------------------------------
     when "HitsTargetInSky", "HitsTargetInSkyGroundsTarget" # sky uppercut, smack down
@@ -1288,7 +1470,7 @@ class Battle::AI
                     score*=1.3 if gravMov.accuracy <= 70
                 end
             end
-            if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO)
+            if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO) || user.pbHasMove?(:DYNAMICPUNCH)
                 score*=3
             end
             bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]

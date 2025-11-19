@@ -73,7 +73,7 @@ class Battle::AI
     end
     # Special interaction for color change + protean ability combo
     if target.hasActiveAbility?([:PROTEAN, :LIBERO]) && !target.pbOwnedByPlayer? &&
-       target.hasAbilityMutation? && target.abilityMutationList.include?(:COLORCHANGE)
+       target.hasActiveAbility?(:COLORCHANGE) && target.hasAbilityMutation?
       ret = Effectiveness::NOT_VERY_EFFECTIVE_ONE
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :QMARKS
     end
@@ -175,9 +175,11 @@ class Battle::AI
     end
     # electrify logic
     user.eachOpposing do |b|
-      if targetWillMove?(b)
-        targetMove = @battle.choices[b.index][2]
-        if targetMove.function == "TargetMovesBecomeElectric"
+      if targetWillMove?(b, "status")
+        targetIntent = @battle.choices[b.index]
+        targetMove = targetIntent[2]
+        targetAim = targetIntent[3]
+        if targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index
           thisprio = priorityAI(user, move, globalArray)
           thatprio = priorityAI(b, targetMove, globalArray)
           aspeed = pbRoughStat(user,:SPEED,skill)
@@ -274,7 +276,7 @@ class Battle::AI
          "FixedDamageUserLevel", "LowerTargetHPToUserHP"
       baseDmg = move.pbFixedDamage(user, target)
     when "FixedDamageUserLevelRandom"   # Psywave
-      baseDmg = user.level
+      baseDmg = (user.level * 3 / 2).floor
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
@@ -407,6 +409,9 @@ class Battle::AI
     when "EffectivenessIncludesFlyingType"   # Flying Press
       if GameData::Type.exists?(:FLYING)
         targetTypes = typesAI(target, user, skill)
+        while targetTypes.length < 3
+          targetTypes.push(:QMARKS)
+        end
         mult = Effectiveness.calculate(
           :FLYING, targetTypes[0], targetTypes[1], targetTypes[2]
         )
@@ -463,6 +468,26 @@ class Battle::AI
     baseAcc = move.accuracy
     if skill >= PBTrainerAI.highSkill
       baseAcc = move.pbBaseAccuracy(user, target)
+      procGlobalArray = processGlobalArray(@megaGlobalArray)
+      expectedWeather = procGlobalArray[0]
+      sage = false
+      if ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky",
+          "FreezeTargetAlwaysHitsInHail"].include?(move.function) &&
+          expectedWeather != @battle.pbWeather
+        case move.function
+        when "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
+             "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
+          if !target.hasActiveItem?(:UTILITYUMBRELLA)
+            sage = true  if [:Rain, :HeavyRain].include?(expectedWeather)
+            baseAcc = 50 if [:Sun, :HarshSun].include?(expectedWeather)
+          end
+        when "FreezeTargetAlwaysHitsInHail"
+          sage = true if expectedWeather == :Hail
+        end
+      end
+      sage = true if user.hasActiveAbility?(:PRESAGE)
+      baseAcc = 0 if sage
     end
     return 125 if baseAcc == 0 && skill >= PBTrainerAI.mediumSkill
     # Get the move's type
@@ -497,7 +522,6 @@ class Battle::AI
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
     evasion  = (evasion  * modifiers[:evasion_multiplier]).round
-    evasion = 1 if evasion < 1
     return modifiers[:base_accuracy] * accuracy / evasion
   end
 

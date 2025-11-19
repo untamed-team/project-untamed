@@ -1220,7 +1220,7 @@ Type = ELECTRIC
 Category = Special
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = ParalyzeTarget
 Flags = CanProtect,CanMirrorMove,Contest_Cool,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
@@ -1233,11 +1233,12 @@ Type = ELECTRIC
 Category = Physical
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
-FunctionCode = RecoilQuarterOfDamageDealt
+FunctionCode = ParalyzeTarget
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user shrouds itself in electricity and smashes into its foe. It also damages the user a little.
+EffectChance = 10
+Description = The user shrouds itself in electricity and smashes into its foe. It may also leave the target with paralysis.
 #-------------------------------
 [BOLTBEAK]
 Name = Bolt Beak
@@ -1867,7 +1868,7 @@ Description = The user fights the foe up close without guarding itself. It also 
 Name = Focus Blast
 Type = FIGHTING
 Category = Special
-Power = 120
+Power = 110
 Accuracy = 80
 TotalPP = 5
 Target = NearOther
@@ -1893,7 +1894,7 @@ Name = Cross Chop
 Type = FIGHTING
 Category = Physical
 Power = 100
-Accuracy = 80
+Accuracy = 85
 TotalPP = 5
 Target = NearOther
 FunctionCode = None
@@ -2607,7 +2608,7 @@ TotalPP = 10
 Target = AllNearFoes
 FunctionCode = BurnTarget
 Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
-EffectChance = 10
+EffectChance = 5
 Description = The user attacks by exhaling hot breath on the opposing team. It may also leave targets with a burn.
 #-------------------------------
 [FLAMETHROWER]
@@ -2616,7 +2617,7 @@ Type = FIRE
 Category = Special
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = BurnTarget
 Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
@@ -3431,7 +3432,7 @@ Name = Spite
 Type = GHOST
 Category = Status
 Accuracy = 100
-TotalPP = 10
+TotalPP = 5
 Target = NearOther
 FunctionCode = LowerPPOfTargetLastMoveBy4
 Flags = CanProtect,CanMirrorMove,Contest_Tough,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
@@ -4831,7 +4832,7 @@ Type = NORMAL
 Category = Special
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = TypeIsUserFirstType
 Flags = CanProtect,CanMirrorMove,Dance
@@ -5190,7 +5191,7 @@ Type = STEEL
 Category = Physical
 Power = 65
 Accuracy = 100
-TotalPP = 30
+TotalPP = 20
 Target = NearOther
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove,Blade,Contest_Cool,Contest_Appeal_3,Contest_Effect_Basic
@@ -5847,7 +5848,7 @@ TotalPP = 30
 Target = User
 FunctionCode = SetUserTypesToUserMoveType
 Flags = Contest_Beauty,Contest_Appeal_1,Contest_Effect_Plus3IfGetLowestScore
-Description = The user changes its type to become the same type as one of its moves.
+Description = The user changes its type to become the same type as its first move.
 #-------------------------------
 [CONVERSION2]
 Name = Conversion 2
@@ -7193,7 +7194,7 @@ Description = The user bites the target using psychic capabilities. This can als
 Name = Eerie Spell
 Type = PSYCHIC
 Category = Special
-Power = 80
+Power = 60
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
@@ -8492,7 +8493,7 @@ Type = WATER
 Category = Special
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = AllNearOthers
 FunctionCode = DoublePowerIfTargetUnderwater
 Flags = CanProtect,CanMirrorMove,Contest_Beauty,Contest_Appeal_2,Contest_Effect_Plus2IfFirst
@@ -8943,7 +8944,7 @@ Type = STEEL
 Category = Special
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = BurnTarget
 Flags = CanProtect,CanMirrorMove
@@ -9042,7 +9043,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = RecoilThirdOfDamageDealt
 Flags = Contact,CanProtect,CanMirrorMove,Blade
-Description = The user teleports behind the target and slices, cutting itself as well.
+Description = The user teleports behind the target and slices. It causes considerable cuts to the user as well.
 #-------------------------------
 [THINKFAST]
 Name = Think Fast
@@ -9055,7 +9056,7 @@ Target = NearOther
 Priority = 1
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
-Description = The user quickly thinks up a weak psychic attack.
+Description = The user quickly thinks up a weak psychic attack. It is sure to strike first.
 #-------------------------------
 [TOXIRAVAGE]
 Name = Toxiravage
@@ -9068,7 +9069,7 @@ Target = NearOther
 Priority = 2
 FunctionCode = None
 Flags = Contact,CanProtect,CanMirrorMove
-Description = Sharp, toxic spikes impale the target. Always hits first.
+Description = The user charges the target and impales it with sharp toxic spikes at blinding speed. Always hits first.
 #-------------------------------
 [THOUSANDFOLDS]
 Name = Thousand Folds
@@ -9080,7 +9081,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = RemoveProtections
 Flags = Contact,CanMirrorMove,Blade
-Description = A folded blade that tears through a target using Protect or Detect.
+Description = A folded blade that tears through a target using Protect or Detect. It also lifts the effects of those moves.
 #-------------------------------
 [PEPPERSPRAY]
 Name = Pepper Spray
@@ -9112,10 +9113,10 @@ Type = NORMAL
 Category = Physical
 Power = 90
 Accuracy = 100
-TotalPP = 15
+TotalPP = 10
 Target = NearOther
 FunctionCode = TypeIsUserFirstType
-Flags = CanProtect,CanMirrorMove,GravityBoosted
+Flags = Contact,CanProtect,CanMirrorMove,GravityBoosted
 Description = The user tackles the target with a stylish charge. The user's hairstyle determines the type of this move.
 #-------------------------------
 [HARDDRIVECRASH]
@@ -9128,7 +9129,7 @@ TotalPP = 5
 Target = NearOther
 FunctionCode = LowerPPOfTargetLastMoveBy3
 Flags = CanProtect,CanMirrorMove
-Description = The user does an all-out attack, crashing its own hard drives. Lowers foe's PPs.
+Description = The user does an all-out attack, crashing its own hard drives. Removes 3 PP from the target's last move.
 #-------------------------------
 [SPLINTERSHOT]
 Name = Splinter Shot
@@ -9140,7 +9141,7 @@ TotalPP = 5
 Target = AllNearFoes
 FunctionCode = HitTwoTimesReload
 Flags = CanProtect,CanMirrorMove,Bomb
-Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. 
+Description = Physical or special, depending of the user's attack. Power does not lower even if there are multiple foes. Hits twice.
 #-------------------------------
 [TITANSWRATH]
 Name = Titan's Wrath
@@ -9186,11 +9187,11 @@ Category = Physical
 Power = 80
 Accuracy = 100
 TotalPP = 5
-Target = NearOther
+Target = AllNearFoes
 FunctionCode = LowerTargetSpeed1
 Flags = Contact,CanProtect,CanMirrorMove,Biting,CannotMetronome
 EffectChance = 100
-Description = The user hunts down its foe with a deadly precision chomp, which lowers their speed.
+Description = The user hunts down its foes with a deadly precision chomp, which lowers their speed.
 #-------------------------------
 [MANADRAIN]
 Name = Mana Drain

@@ -1,15 +1,19 @@
 #Offline trading system
+
+#LAST I LEFT OFF:
+#I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
+
+
 #TO DO:
 
 #In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
+#I'm currently working on the above, but how do I check if the pkmn in finalize trade that comes from the other player is coming from the correct player trade ID? I would need to store the player trade ID inside pkmn.canOnlyBeTradedFor
 
 #need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
-
 #should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud
-
 #should not see the "party" button at the bottom of the screen when in cloud storage
-
 #after finalizing a trade from the cloud storage, refresh the box. Will need to set @pkmnToReplaceLocationAndIndex for that
+#should maybe not get the option to go into cloud storage if it's empty
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -279,18 +283,17 @@ class OfflineTradingSystem
 			end
 		
 			#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
-			self.createAgreementFile
-
+			self.createAgreementFile(offerOrFinishScreen)
+			
 			#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see		
 			command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
 			# Main loop
 			command = 0
 			finalizedTrade = false
 			cancel = false
-			
-			
+				
 		else #finishing a trade from cloud storage
-			
+			self.createAgreementFile(offerOrFinishScreen)
 		end
 		
 
@@ -424,8 +427,45 @@ class OfflineTradingSystem
 			end
 		elsif offerOrFinishScreen == "agreement"
 			#set all these variables according to what pkmn.canOnlyBeTradedFor is set to
+			pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
+			#print @pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor
+			
+			@pkmnPlayerWillReceiveInSymbolFormat = self.createDummyPkmnFromHashOfProperties(@pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor[1])
+			@pkmnPlayerIsOfferingSpeciesUppercase = @pkmnPlayerIsOfferingInSymbolFormat.species.upcase
+			@pkmnPlayerWillReceiveSpeciesUppercase = @pkmnPlayerWillReceiveInSymbolFormat.species.upcase
+			@otherPlayerTradeID = @pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor[0]
+			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Generating agreement file 'Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah'...\n\n", "a")
+			playerTradeID = $game_player.tradeID
+			serialized_data_for_pkmn_player_is_offering = Marshal.dump(@pkmnPlayerIsOfferingInSymbolFormat)
+		
+			serialized_data_for_pkmn_player_is_receiving = Marshal.dump(@pkmnPlayerWillReceiveInSymbolFormat)
+		
+			#convert marshaldata to hex
+			hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
+			Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
+			Console.echo_warn "=============================================="
+			@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
+			encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
+		
+			hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
+			Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
+			encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
+			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
+		
+			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
+		
+			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+			self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
+		
+			#put hex data into .mazah file
+			# Make sure to define your hex data and file path first
+			# 1. Encode the data
+			File.open("Trading/Agreement - my #{@pkmnPlayerIsOfferingSpeciesUppercase} for your #{@pkmnPlayerWillReceiveSpeciesUppercase}.mazah", "w") do |file|
+				# 'file.write' writes the string content to the file.
+				file.write(entireEncodedAgreementCode)
+			end
 		end
-	end #def self.createAgreementFile
+	end #def self.createAgreementFile	
 	
 	def self.sendPkmnToCloud(pkmn)
 		@pkmnToReplaceLocationAndIndex = []
@@ -450,7 +490,8 @@ class OfflineTradingSystem
 		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pushing pkmn to $game_player.withheldTradingStorage if not already in there...\n\n", "a")
-		pkmn.canOnlyBeTradedFor = self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
+		#pkmn.canOnlyBeTradedFor is an array with 2 elements. The 1st element is the trade ID of the player sending the pkmn. The 2nd element is the pkmn's values
+		pkmn.canOnlyBeTradedFor = [@otherPlayerTradeID, self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)]
 		Console.echo_warn "sending this pkmn to the cloud where it cannot be used and will wait to be traded for the following pkmn in return:"
 		Console.echo_warn "#{pkmn.canOnlyBeTradedFor}"
 		#store the pkmn in the trade cloud to finish the trade later
@@ -736,100 +777,170 @@ class OfflineTradingSystem
 	end
 	
 	def self.getPkmnProperties(pkmn)
-		propertiesArray = []
-		propertiesArray.push(pkmn.species)
-		propertiesArray.push(pkmn.name)
-		propertiesArray.push(pkmn.level)
+		pkmnHash = {}
+		pkmnHash[:species] = pkmn.species
+		pkmnHash[:name] = pkmn.name
+		pkmnHash[:level] = pkmn.level
 		
 		if pkmn.item.nil?
-			propertiesArray.push(nil)
+			pkmnHash[:item] = nil
 		else
-			propertiesArray.push(pkmn.item.id)
-		end		
+			pkmnHash[:item] = pkmn.item.id
+		end
 		
 		if pkmn.nature.nil?
-			propertiesArray.push(nil)
+			pkmnHash[:nature] = nil
 		else
-			propertiesArray.push(pkmn.nature.id)
-		end
+			pkmnHash[:nature] = pkmn.nature.id
+		end		
 		
-		propertiesArray.push(pkmn.gender)
-		propertiesArray.push(pkmn.form)
-		propertiesArray.push(pkmn.forced_form)
-		propertiesArray.push(pkmn.time_form_set)
-		propertiesArray.push(pkmn.exp)
-		propertiesArray.push(pkmn.steps_to_hatch)
-		propertiesArray.push(pkmn.hp)
-		propertiesArray.push(pkmn.status)
-		propertiesArray.push(pkmn.statusCount)
-		propertiesArray.push(pkmn.shiny?)
+		pkmnHash[:gender] = pkmn.gender
+		pkmnHash[:form] = pkmn.form
+		pkmnHash[:forced_form] = pkmn.forced_form
+		pkmnHash[:time_form_set] = pkmn.time_form_set
+		pkmnHash[:exp] = pkmn.exp
+		pkmnHash[:steps_to_hatch] = pkmn.steps_to_hatch
+		pkmnHash[:hp] = pkmn.hp
+		pkmnHash[:status] = pkmn.status
+		pkmnHash[:statusCount] = pkmn.statusCount
+		pkmnHash[:shiny] = pkmn.shiny?
 		
+		moves = []
 		if pkmn.moves.length > 0
 			for i in pkmn.moves
-				propertiesArray.push(i.id)
+				moves.push(i.id)
 			end
 		else
-			propertiesArray.push(nil)
+			#moves array will remain empty
 		end
-
-		propertiesArray.push(pkmn.first_moves)
-		propertiesArray.push(pkmn.ribbons)
-		propertiesArray.push(pkmn.cool)
-		propertiesArray.push(pkmn.beauty)
-		propertiesArray.push(pkmn.cute)
-		propertiesArray.push(pkmn.smart)
-		propertiesArray.push(pkmn.tough)
-		propertiesArray.push(pkmn.sheen)
-		propertiesArray.push(pkmn.pokerus)
-		propertiesArray.push(pkmn.happiness)
-		propertiesArray.push(pkmn.poke_ball)
-		propertiesArray.push(pkmn.markings)
-		propertiesArray.push(pkmn.iv)
-		propertiesArray.push(pkmn.ivMaxed)
-		propertiesArray.push(pkmn.ev)
-		propertiesArray.push(pkmn.totalhp)
-		propertiesArray.push(pkmn.attack)
-		propertiesArray.push(pkmn.defense)
-		propertiesArray.push(pkmn.spatk)
-		propertiesArray.push(pkmn.spdef)
-		propertiesArray.push(pkmn.speed)
+		pkmnHash[:moves] = pkmn.moves
+		
+		pkmnHash[:first_moves] = pkmn.first_moves
+		pkmnHash[:ribbons] = pkmn.ribbons
+		pkmnHash[:cool] = pkmn.cool
+		pkmnHash[:beauty] = pkmn.beauty
+		pkmnHash[:cute] = pkmn.cute
+		pkmnHash[:smart] = pkmn.smart
+		pkmnHash[:tough] = pkmn.tough
+		pkmnHash[:sheen] = pkmn.sheen
+		pkmnHash[:pokerus] = pkmn.pokerus
+		pkmnHash[:happiness] = pkmn.happiness
+		pkmnHash[:poke_ball] = pkmn.poke_ball
+		pkmnHash[:markings] = pkmn.markings
+		pkmnHash[:iv] = pkmn.iv
+		pkmnHash[:ivMaxed] = pkmn.ivMaxed
+		pkmnHash[:ev] = pkmn.ev
+		#pkmnHash[:totalhp] = pkmn.totalhp
+		pkmnHash[:attack] = pkmn.attack
+		pkmnHash[:defense] = pkmn.defense
+		pkmnHash[:spatk] = pkmn.spatk
+		pkmnHash[:spdef] = pkmn.spdef
+		pkmnHash[:speed] = pkmn.speed
 		
 		if pkmn.owner.nil?
-			propertiesArray.push(nil)
+			pkmnHash[:owner] = nil
 		else
-			propertiesArray.push(pkmn.owner.id)
+			pkmnHash[:owner] = pkmn.owner.id
 		end
 		
-		propertiesArray.push(pkmn.obtain_text)
-		propertiesArray.push(pkmn.obtain_level)
-		propertiesArray.push(pkmn.fused)
-		propertiesArray.push(pkmn.personalID)
-		propertiesArray.push(pkmn.ready_to_evolve)
-		propertiesArray.push(pkmn.cannot_store)
-		propertiesArray.push(pkmn.cannot_release)
-		propertiesArray.push(pkmn.cannot_trade)
-		propertiesArray.push(pkmn.evolution_steps)
-		propertiesArray.push(pkmn.willmega)
-		propertiesArray.push(pkmn.sketchMove)
-		propertiesArray.push(pkmn.triedEvolving)
-		propertiesArray.push(pkmn.trainerevs)
+		pkmnHash[:obtain_text] = pkmn.obtain_text
+		pkmnHash[:obtain_level] = pkmn.obtain_level
+		pkmnHash[:fused] = pkmn.fused
+		pkmnHash[:personalID] = pkmn.personalID
+		pkmnHash[:ready_to_evolve] = pkmn.ready_to_evolve
+		pkmnHash[:cannot_store] = pkmn.cannot_store
+		pkmnHash[:cannot_release] = pkmn.cannot_release
+		pkmnHash[:cannot_trade] = pkmn.cannot_trade
+		pkmnHash[:evolution_steps] = pkmn.evolution_steps
+		pkmnHash[:willmega] = pkmn.willmega
+		pkmnHash[:sketchMove] = pkmn.sketchMove
+		pkmnHash[:triedEvolving] = pkmn.triedEvolving
+		pkmnHash[:trainerevs] = pkmn.trainerevs
 		
 		if pkmn.ability.nil?
-			propertiesArray.push(pkmn.ability.id)
+			pkmnHash[:ability] = nil
 		else
-			propertiesArray.push(nil)
+			pkmnHash[:ability] = pkmn.ability.id
 		end
-			
-		propertiesArray.push(pkmn.abilityMutation)
-		propertiesArray.push(pkmn.pv)
-		propertiesArray.push(pkmn.megaevoMutation)
-		propertiesArray.push(pkmn.natureBoostAI)
-		propertiesArray.push(pkmn.bossmonMutation)
-		propertiesArray.push(pkmn.shiny_roll_count)
-		propertiesArray.push(pkmn.amie_fullness)
-		propertiesArray.push(pkmn.amie_enjoyment)
-		return propertiesArray
-	end #def getPkmnProperties(pkmn)	
+		
+		pkmnHash[:abilityMutation] = pkmn.abilityMutation
+		pkmnHash[:pv] = pkmn.pv
+		pkmnHash[:megaevoMutation] = pkmn.megaevoMutation
+		pkmnHash[:natureBoostAI] = pkmn.natureBoostAI
+		pkmnHash[:bossmonMutation] = pkmn.bossmonMutation
+		pkmnHash[:shiny_roll_count] = pkmn.shiny_roll_count
+		pkmnHash[:amie_fullness] = pkmn.amie_fullness
+		pkmnHash[:amie_enjoyment] = pkmn.amie_enjoyment
+		
+		return pkmnHash
+	end #def getPkmnProperties(pkmn)
+	
+	def self.createDummyPkmnFromHashOfProperties(hashOfProperties)
+		h = hashOfProperties
+		
+		pkmn = Pokemon.new(h[:species], h[:level])
+		
+		pkmn.name = h[:name]
+		pkmn.item = h[:item]
+		pkmn.nature = h[:nature]
+		pkmn.gender = h[:gender]
+		pkmn.form = h[:form]
+		pkmn.forced_form = h[:forced_form]
+		pkmn.time_form_set = h[:time_form_set]
+		pkmn.exp = h[:exp]
+		pkmn.steps_to_hatch = h[:steps_to_hatch]
+		pkmn.hp = h[:hp]
+		pkmn.status = h[:status]
+		pkmn.statusCount = h[:statusCount]
+		pkmn.shiny = h[:shiny]
+		pkmn.moves = h[:moves]
+		pkmn.first_moves = h[:first_moves]
+		pkmn.ribbons = h[:ribbons]
+		pkmn.cool = h[:cool]
+		pkmn.beauty = h[:beauty]
+		pkmn.cute = h[:cute]
+		pkmn.smart = h[:smart]
+		pkmn.tough = h[:tough]
+		pkmn.sheen = h[:sheen]
+		pkmn.pokerus = h[:pokerus]
+		pkmn.happiness = h[:happiness]
+		pkmn.poke_ball = h[:poke_ball]
+		pkmn.markings = h[:markings]
+		pkmn.iv = h[:iv]
+		pkmn.ivMaxed = h[:ivMaxed]
+		pkmn.ev = h[:ev]
+		#pkmn.totalhp = h[:totalhp]
+		pkmn.attack = h[:attack]
+		pkmn.defense = h[:defense]
+		pkmn.spatk = h[:spatk]
+		pkmn.spdef = h[:spdef]
+		pkmn.speed = h[:speed]
+		pkmn.owner = h[:owner]
+		pkmn.obtain_text = h[:obtain_text]
+		pkmn.obtain_level = h[:obtain_level]
+		pkmn.fused = h[:fused]
+		pkmn.personalID = h[:personalID]
+		pkmn.ready_to_evolve = h[:ready_to_evolve]
+		pkmn.cannot_store = h[:cannot_store]
+		pkmn.cannot_release = h[:cannot_release]
+		pkmn.cannot_trade = h[:cannot_trade]
+		pkmn.evolution_steps = h[:evolution_steps]
+		pkmn.willmega = h[:willmega]
+		pkmn.sketchMove = h[:sketchMove]
+		pkmn.triedEvolving = h[:triedEvolving]
+		pkmn.trainerevs = h[:trainerevs]
+		pkmn.ability = h[:ability]
+		pkmn.abilityMutation = h[:abilityMutation]
+		pkmn.pv = h[:pv]
+		pkmn.megaevoMutation = h[:megaevoMutation]
+		pkmn.natureBoostAI = h[:natureBoostAI]
+		pkmn.bossmonMutation = h[:bossmonMutation]
+		pkmn.shiny_roll_count = h[:shiny_roll_count]
+		pkmn.amie_fullness = h[:amie_fullness]
+		pkmn.amie_enjoyment = h[:amie_enjoyment]
+		
+		return pkmn
+	end #def self.createDummyPkmnFromHashOfProperties(arrayOfProperties)
 end #class OfflineTradingSystem
 
 #adds "Trade" to list of options at PC

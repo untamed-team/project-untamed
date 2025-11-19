@@ -151,7 +151,6 @@ class Battle::Move
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
     evasion  = (evasion  * modifiers[:evasion_multiplier]).round
-    evasion = 1 if evasion < 1
     threshold = modifiers[:base_accuracy] * accuracy / evasion
     # Calculation
     r = @battle.pbRandom(100)
@@ -467,6 +466,12 @@ class Battle::Move
       else
         multipliers[:final_damage_multiplier] *= 2
       end
+    end
+    # Random variance
+    if !self.is_a?(Battle::Move::Confusion) && $player.difficulty_mode?("easy")
+      random = 85 + @battle.pbRandom(16)
+      random = user.pbOwnedByPlayer? ? (@battle.pbRandom(8) == 0 ? 85 : random) : 100
+      multipliers[:final_damage_multiplier] *= random / 100.0
     end
     # STAB
     if type && user.pbHasType?(type)

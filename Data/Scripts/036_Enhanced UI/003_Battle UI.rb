@@ -753,12 +753,12 @@ class Battle::Scene
       textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
     if battler.hasAbilityMutation?
       cord = 0
+      textPos.push([_INTL("Abil."), xpos + 272, ypos + (44 + (cord * 24)), 2, BASE_LIGHT, SHADOW_LIGHT])
       for i in 0..battler.abilityMutationList.length
         next if battler.abilityMutationList[i].nil?
         next if battler.abilityMutationList[i] == :TRACE && !battler.effects[PBEffects::Trace]
         imagePos.push([@path + "battle_info_panel", panelX, (65 + (cord * 24)), 0, 0, 218, 24])
         textPos.push(
-          [_INTL("Abil."), xpos + 272, ypos + (44 + (cord * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
           [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (cord * 24)), 2, BASE_DARK, SHADOW_DARK]
         )
         cord += 1
@@ -913,7 +913,9 @@ class Battle::Scene
     cord = 0
     battler.eachMove do |m|
       next if !@battle.moveRevealed?(battler, m.id) && !battler.pbOwnedByPlayer?
-      addText.push([m.name, xpos + 103, ypos + 140 + (cord * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+      move_name = m.name
+      move_name = "HidPwr #{GameData::Type.get(battler.hptype).name}" if m.function == "TypeDependsOnUserIVs"
+      addText.push([move_name, xpos + 103, ypos + 140 + (cord * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
       cord += 1
     end
     return images, addText
@@ -980,7 +982,7 @@ class Battle::Scene
       value *= 1.5 if battler.hasActiveAbility?(:MARVELSCALE) && battler.pbHasAnyStatus?
       value *= 1.3 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:MELEEVEST)
-      if battler.pokemon.species_data.get_evolutions(true).length > 0
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
         value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
       end
     when :SPECIAL_ATTACK
@@ -989,10 +991,7 @@ class Battle::Scene
         if battler.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) }
           value *= 1.5
         elsif battler.hasAbilityMutation?
-          if (battler.hasActiveAbility?(:MINUS) && battler.abilityMutationList.include?(:PLUS)) ||
-             (battler.hasActiveAbility?(:PLUS) && battler.abilityMutationList.include?(:MINUS))
-            value *= 1.5
-          end
+          value *= 1.5 if battler.hasActiveAbility?(:MINUS) && battler.hasActiveAbility?(:PLUS)
         end
       end
       value *= 1.5 if battler.hasActiveItem?(:CHOICESPECS) && battler.effects[PBEffects::ChoiceBand]
@@ -1014,7 +1013,7 @@ class Battle::Scene
       value *= 1.3 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
       value *= 1.5 if battler.pbHasType?(:ROCK) && battler.effectiveWeather == :Sandstorm
       value *= 1.5 if battler.hasActiveItem?(:ASSAULTVEST)
-      if battler.pokemon.species_data.get_evolutions(true).length > 0
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
         value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
       end
       if [:Sun, :HarshSun].include?(battler.effectiveWeather)
@@ -1029,6 +1028,7 @@ class Battle::Scene
     #value *= 0.9 if battler.pokemon.natureBoostAI
     value = value.round
     value = [[value, 999].min, 1].max
+    return value if stat == :SPEED
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
   
@@ -1112,15 +1112,15 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
-    effects.push(["Stealth Rock", "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
-    effects.push(["Stat Drop Immunity", "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
+    effects.push([_INTL("Stealth Rock"), "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
+    effects.push([_INTL("Stat Drop Immunity"), "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
     battler_effects.each do |key, value|
       next if battler.effects[key] == 0
       count = battler.effects[key]
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
-    effects.push(["Virus Inject", "---"]) if battler.effects[PBEffects::BoomInstalled]
+    effects.push([_INTL("Virus Inject"), "---"]) if battler.effects[PBEffects::BoomInstalled]
     # Draws panels and text for all relevant battle effects affecting the battler.
     effects.each_with_index do |effect, i|
       break if i == 8

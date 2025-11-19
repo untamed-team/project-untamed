@@ -93,6 +93,15 @@ class Battle::Battler
       end
       return false
     end
+    # Setup moves block #by low
+    if self.SetupMovesUsed.include?(move.id) && move.statusMove? && 
+       move.target == :User && $player.difficulty_mode?("chaos") && commandPhase
+      if showMessages
+        msg = _INTL("But {1} has already used {2}!", pbThis, GameData::Move.get(move.id).name)
+        (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
+      end
+      return false
+    end
     # Belch
     return false if !move.pbCanChooseMove?(self, commandPhase, showMessages)
     return true
@@ -407,6 +416,16 @@ class Battle::Battler
     end
     # Immunity because of ability (intentionally before type immunity check)
     return false if move.pbImmunityByAbility(user, target, show_message)
+    # Telepathy fix #by low
+    if user.hasActiveAbility?(:TELEPATHY) && move.pbDamagingMove? && 
+       !target.opposes?(user) && user.index != target.index
+      if show_message
+        @battle.pbShowAbilitySplash(user)
+        @battle.pbDisplay(_INTL("{1} avoids attacks by its ally Pokémon!", target.pbThis))
+        @battle.pbHideAbilitySplash(user)
+      end
+      return false
+    end
     # Type immunity
     if move.pbDamagingMove? && Effectiveness.ineffective?(typeMod)
       PBDebug.log("[Target immune] #{target.pbThis}'s type immunity")

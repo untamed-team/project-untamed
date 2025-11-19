@@ -137,12 +137,19 @@ class Battle::AI
         expectedWeather = procGlobalArray[0]
         expectedTerrain = procGlobalArray[1]
         # Powder (the move) logic
-        if type == :FIRE && targetWillMove?(target)
-            targetMove = @battle.choices[target.index][2]
-            if targetMove.function == "TargetNextFireMoveDamagesTarget" && user.affectedByPowder?
-                thisprio = priorityAI(user, move, globalArray)
-                thatprio = priorityAI(target, targetMove, globalArray)
-                return 0 if thatprio > thisprio
+        if type == :FIRE
+            user.eachOpposing do |b|
+                if targetWillMove?(b, "status")
+                    targetIntent = @battle.choices[b.index]
+                    targetMove = targetIntent[2]
+                    targetAim = targetIntent[3]
+                    if targetMove.function == "TargetNextFireMoveDamagesTarget" && user.affectedByPowder? && 
+                       targetAim == user.index
+                        thisprio = priorityAI(user, move, globalArray)
+                        thatprio = priorityAI(b, targetMove, globalArray)
+                        return 0 if thatprio > thisprio
+                    end
+                end
             end
         end
         # Ability effects that alter damage
@@ -341,7 +348,7 @@ class Battle::AI
                 end
             end
         end
-        # DemICE adding resist berries ### i made it a hash cuz i was bored
+        # Effectiveness-related modifiers
         if Effectiveness.super_effective?(typeMod)
             multipliers[:final_damage_multiplier] *= 1.25 if user.hasActiveAbility?(:NEUROFORCE)
             multipliers[:final_damage_multiplier] *= 1.20 if user.hasActiveItem?(:EXPERTBELT)
@@ -404,8 +411,7 @@ class Battle::AI
         end
         #mastersex type zones #by low
         multipliers[:base_damage_multiplier] *= 1.25 if @battle.field.typezone != :None && type == @battle.field.typezone
-        # Multi-targeting attacks
-        # Splinter Shot #by low
+        # Multi-targeting attacks # Splinter Shot #by low
         if skill >= PBTrainerAI.highSkill && pbTargetsMultiple?(move, user) && move.function != "HitTwoTimesReload"
             multipliers[:final_damage_multiplier] *= 0.75
         end
@@ -450,24 +456,29 @@ class Battle::AI
                 end
             end
         end
-        # Gravity Boost #by low 
-        # float stone changes
+        # Gravity Boost #by low + # float stone changes
         if move.boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
             multipliers[:base_damage_multiplier] *= 4 / 3.0
         end
-        # Critical hits - n/a
-        # Random variance - n/a
         # Unfair difficulty - Changed by DemICE 27-Sep-2023
-        #if $Trainer.difficunlty_mode==2
+        #if $Trainer.difficulty mode==2
         #    if user.pbOwnedByPlayer?
         #        multipliers[:final_damage_multiplier] *= 1 - target.level/500.00 
         #    else
         #        multipliers[:final_damage_multiplier] *= 1 + user.level/300.00 
         #    end
         #end
+        # Random variance
         # STAB
         if skill >= PBTrainerAI.mediumSkill && type
-            if user.pbHasType?(type, true) || user.hasActiveAbility?([:PROTEAN,:LIBERO])
+            sage = false
+            if user.hasActiveAbility?(:PRESAGE) &&
+              [:FIRE, :WATER, :GROUND, :ICE, :NORMAL].include?(type)
+                multipliers[:final_damage_multiplier] *= w_damage_multiplier if [:FIRE, :WATER].include?(type)
+                sage = true
+                sage = false if move.function == "HigherDamageInSunVSNonFireTypes" && type == :WATER
+            end
+            if user.pbHasType?(type, true) || user.hasActiveAbility?([:PROTEAN, :LIBERO]) || sage
                 if user.hasActiveAbility?(:ADAPTABILITY)
                     multipliers[:final_damage_multiplier] *= 2
                 else
@@ -567,7 +578,7 @@ class Battle::AI
             damage = (damage * 4.33).floor   # Average damage dealt
           end
         end
-        # Increased critical hit rates
+        # Critical hits - Increased critical hit rates
         if skill >= PBTrainerAI.mediumSkill
             c = 0
             # Other efffects
@@ -691,8 +702,9 @@ class Battle::AI
         return true if !Effectiveness.super_effective?(typeMod) && move.baseDamage>0 && 
                         target.hasActiveAbility?(:WONDERGUARD,false,mold_broken)
         return true if move.damagingMove? && user.index != target.index && !target.opposes?(user) &&
-                       target.hasActiveAbility?(:TELEPATHY,false,mold_broken)
-        return true if move.canMagicCoat? && 
+                       (target.hasActiveAbility?(:TELEPATHY,false,mold_broken) ||
+                        user.hasActiveAbility?(:TELEPATHY))
+        return true if move.statusMove? && move.canMagicCoat? && 
                        (target.hasActiveAbility?(:MAGICBOUNCE,false,mold_broken) || 
                        (target.isSpecies?(:SABLEYE) && target.pokemon.willmega && !mold_broken)) && 
                        target.opposes?(user)
@@ -742,6 +754,8 @@ class Battle::AI
     
     def targetSurvivesMove(move,attacker,opponent,priodamage=0,mult=1)
         return true if !move
+        return true if ["FailsIfNotUserFirstTurn", "FlinchTargetFailsIfNotUserFirstTurn"].include?(move.function) && 
+                       attacker.turnCount > 0
         mold_broken=moldbroken(attacker,opponent,move)
         damage = pbRoughDamage(move,attacker,opponent,100,0)
         damage+=priodamage
@@ -818,8 +832,8 @@ class Battle::AI
     def canLowerStatTarget(stat,move,user,target,mold_bonkers=false)
         return false if target.pbOwnSide.effects[PBEffects::StatDropImmunity] && !target.pbOwnedByPlayer?
         return false if target.hasActiveAbility?(:CONTRARY,false,mold_bonkers)
-        return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
         if target.index != user.index # Not self-inflicted
+            return false if target.hasActiveAbility?(:MIRRORARMOR,false,mold_bonkers)
             return false if target.effects[PBEffects::Substitute] > 0 && !move.ignoresSubstitute?(user)
             return false if target.pbOwnSide.effects[PBEffects::Mist] > 0 && !user.hasActiveAbility?(:INFILTRATOR)
             return false if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY],false,mold_bonkers)
@@ -999,6 +1013,7 @@ class Battle::AI
                 end
             end
         end
+        sum = 1 + (sum / 80.0).to_f
         return sum
     end      
 

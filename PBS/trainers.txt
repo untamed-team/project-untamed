@@ -108,10 +108,10 @@ Pokemon = MURKROW,5
 #-------------------------------
 [EONGRUNT_M,Jamie,200]
 LoseText = Yikes, what's up with kids these days?
-Pokemon = M_EKANS,4
+Pokemon = M_EKANS,5
     Moves = POISONFANG,BITE,LEER,WRAP
     AbilityIndex = 0
-Pokemon = MURKROW,5
+Pokemon = MURKROW,6
     Moves = THIEF,GUST,HYPNOSIS
     AbilityIndex = 1
 #Area=Hacienda1_M
@@ -128,10 +128,10 @@ Pokemon = TECHUPPI,5
 #-------------------------------
 [EONGRUNT_F,Jess,200]
 LoseText = Right? This used to be so much easier.
-Pokemon = CACNEA,4
+Pokemon = CACNEA,5
     Moves = POWERUPPUNCH,BULLETSEED,LEECHSEED
     AbilityIndex = 2
-Pokemon = TECHUPPI,5
+Pokemon = TECHUPPI,6
     Moves = ROLLINGKICK,FOCUSENERGY,THUNDERFANG,BITE
     AbilityIndex = 1
 #Area=Hacienda1_M
@@ -2517,7 +2517,7 @@ Pokemon = HELIOPTILE,22
 [CAMPER_F,Alexis,200]
 LoseText = I told you we should've caught more Pokémon!
 Pokemon = HELIOPTILE,21
-    Moves = PARABOLICCHARGE,THUNDERWAVE,CHARGE,HIDDENPOWER
+    Moves = PARABOLICCHARGE,MUDSLAP,CHARGE,HIDDENPOWER
     Ability = SANDVEIL
     HiddenPowerType = NORMAL
 Pokemon = TRAPINCH,21

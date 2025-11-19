@@ -355,7 +355,8 @@ class Battle::Battler
     return false if !pbCanLowerStatStage?(:ATTACK, user)
     return pbLowerStatStageByCause(:ATTACK, 1, user, user.abilityName)
   end
-
+  
+  # grim tears #by low
   def pbLowerAttackStatStageGrimTears(user)
     return false if fainted?
     if @effects[PBEffects::Substitute] > 0
@@ -400,6 +401,13 @@ class Battle::Battler
     end
     return false if !pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
     return pbLowerStatStageByCause(:SPECIAL_ATTACK, 1, user, user.abilityName)
+  end
+
+  # irritable #by low
+  def pbRaiseAttackStatStageIrritable(showAnim = true)
+    return if fainted?
+    return if !hasActiveAbility?(:IRRITABLE)
+    pbRaiseStatStageByAbility(:ATTACK, 1, self, showAnim)
   end
 
   #=============================================================================

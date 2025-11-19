@@ -6,22 +6,6 @@
 48,North,2,4,South,0
 # Veravalles Town (22) - Route 1 (48)
 22,East,0,48,West,19
-# Route 1 (48) - Route 2 (26)
-48,East,0,26,West,52
-# Melolado (39) - Route 2 (26)
-39,West,10,26,East,0
-# Route 3 (29) - Route 3-4 Transfer Map (117)
-29,West,52,117,East,0
-# Calojarro (51) - Route 3 (29)
-51,South,0,29,North,28
-# Route 4 - Top East (47) - Asterado Ranch (45)
-47,North,0,45,South,57
-# Route 3-4 Transfer Map (117) - Route 4 - Top East (47)
-117,West,0,47,East,3
-# Connection to Hacienda (61) - Route 1 (48)
-61,East,0,48,West,5
-# Hacienda Castaneda (79) - Connection to Hacienda (61)
-79,East,27,61,West,0
 # Ferrera (66) - Route 5 (23)
 66,West,0,23,East,65
 # Route 6 (58) - Route 5 (23)
@@ -30,9 +14,29 @@
 72,West,0,23,East,5
 # Soleca Desert North (87) - Route 5 (23)
 87,East,0,23,West,6
+# Route 1 (48) - Route 2 (26)
+48,East,0,26,West,52
+# Melolado (39) - Route 2 (26)
+39,West,10,26,East,0
+# Connection to Hacienda (61) - Route 1 (48)
+61,East,0,48,West,5
 # Route 6 (58) - Ferrera (66)
 58,North,31,66,South,0
+# Hacienda Castaneda (79) - Connection to Hacienda (61)
+79,East,27,61,West,0
 # Racing Track (72) - Ferrera (66)
 72,South,0,66,North,0
 # Oasis (126) - Soleca Desert North (87)
 126,South,6,87,North,0
+# Route 3-4 Transfer Map (117) - Route 3 (29)
+117,East,0,29,West,52
+# Route 3 North Border (140) - Route 3 (29)
+140,South,0,29,North,0
+# Route 4 - Top East (47) - Route 3-4 Transfer Map (117)
+47,East,3,117,West,0
+# Route 3 North Border (140) - Route 3-4 Transfer Map (117)
+140,West,67,117,East,0
+# Route 3 (29) - Calojarro (51)
+29,71,0,51,0,20
+# Asterado Ranch (45) - Route 4 - Top East (47)
+45,South,57,47,North,0

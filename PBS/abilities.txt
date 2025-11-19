@@ -435,7 +435,7 @@ FullDesc = User gets 1.5x Speed when under any status condition. The user also d
 [NORMALIZE]
 Name = Normalize
 Description = All the Pokémon's moves become the Normal type.
-FullDesc = User's moves become Normal-type and all moves deal 1.2x damage. User's Normal and Fighting-type moves are normally effective against Ghost types.
+FullDesc = All damaging moves deal 1.2x damage, user's moves become Normal-type, and user's moves bypass Ghost types' immunities.
 #-------------------------------
 [SNIPER]
 Name = Sniper
@@ -717,6 +717,7 @@ FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is 
 [MAGICBOUNCE]
 Name = Magic Bounce
 Description = Reflects status-changing moves.
+FullDesc = Unaffected by certain non-damaging moves directed at self, and will instead use such moves against the original user.
 #-------------------------------
 [SAPSIPPER]
 Name = Sap Sipper
@@ -758,7 +759,7 @@ Description = Moves can be used regardless of Abilities.
 [AROMAVEIL]
 Name = Aroma Veil
 Description = Protects against attacks that limit move choices.
-FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored or tormented.
+FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored, tormented or heal blocked.
 #-------------------------------
 [FLOWERVEIL]
 Name = Flower Veil
@@ -894,7 +895,7 @@ FullDesc = When the user's HP is reduced to half or less, the user switches out 
 [EMERGENCYEXIT]
 Name = Emergency Exit
 Description = Switches out if its HP becomes half or less.
-FullDesc = When the user's HP is reduced to half or less, the user switches out immediately. Renamed Wimp Out.
+FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn.
 #-------------------------------
 [WATERCOMPACTION]
 Name = Water Compaction
@@ -1247,7 +1248,7 @@ FullDesc = When user is on the field, enemy Water types cannot switch out or esc
 [CARPENTER]
 Name = Carpenter
 Description = Boosts the power of Grass, Rock, and Steel-type allies.
-FullDesc = Allies with Grass, Rock, or Steel typing gain a 1.3x boost to their moves. This effect does not stack if allies share multiple of these typings.
+FullDesc = Allies with Grass, Rock, or Steel-typing gain a 1.3x boost to their attacking stats. This effect does not stack if allies share multiple of these typings.
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster
@@ -1271,7 +1272,7 @@ FullDesc = Moves with the bite flag use the user's Sp. Atk stat regardless of th
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
-Description = Grassy Terrain boosts critical hit ratio.
+Description = Grassy Terrain greatly boosts critical hit ratio.
 FullDesc = If affected by Grassy Terrain, the user gains +2 critical hit ratio.
 #-------------------------------
 [MOMENTUM]
@@ -1404,6 +1405,11 @@ FullDesc = Heals 1/6th of the user's max HP at the end of each turn if the user 
 #-------------------------------
 [LIFESTEAL]
 Name = Predation
-Description = Restored HP when dealing damage with a direct attack.
+Description = Restores HP when dealing damage with a direct attack.
 FullDesc = The user's HP is restored by 1/6th of the damage dealt via contact moves.
+#-------------------------------
+[IRRITABLE]
+Name = Irritable
+Description = Increases Atk when user's move choices are limited.
+FullDesc = Whenever the user is affected by effects such as Disable, Attract, Taunt, Encore, Torment, Heal Block, Throat Chop or Imprison, their Attack is increased by one stage.
 #-------------------------------
