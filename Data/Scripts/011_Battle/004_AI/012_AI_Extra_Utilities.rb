@@ -473,7 +473,11 @@ class Battle::AI
         if skill >= PBTrainerAI.mediumSkill && type
             sage = false
             if user.hasActiveAbility?(:PRESAGE) &&
-              [:FIRE, :WATER, :GROUND, :ICE, :NORMAL].include?(type)
+              ((type == :FIRE && ![:Sun, :HarshSun].include?(expectedWeather)) ||
+               (type == :WATER && ![:Rain, :HeavyRain].include?(expectedWeather)) ||
+               (type == :GROUND && ![:Sandstorm].include?(expectedWeather)) ||
+               (type == :ICE && ![:Hail].include?(expectedWeather)) ||
+               (type == :NORMAL && ![:None].include?(expectedWeather)))
                 multipliers[:final_damage_multiplier] *= w_damage_multiplier if [:FIRE, :WATER].include?(type)
                 sage = true
                 sage = false if move.function == "HigherDamageInSunVSNonFireTypes" && type == :WATER
