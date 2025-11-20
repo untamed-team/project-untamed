@@ -989,6 +989,34 @@ class TimeMachinePokemonStorageScreen
   attr_reader :scene
   attr_reader :storage
   attr_accessor :heldpkmn
+  
+  def pbPokemonDebug(pkmn, pkmnid, heldpoke = nil, settingUpBattle = false)
+    # Get all commands
+    commands = CommandMenuList.new
+    MenuHandlers.each_available(:pokemon_debug_menu) do |option, hash, name|
+      next if settingUpBattle && !hash["always_show"].nil? && !hash["always_show"]
+      commands.add(option, hash, name)
+    end
+    # Main loop
+    command = 0
+    loop do
+      command = pbShowCommands(_INTL("Do what with {1}?", pkmn.name), commands.list, command)
+      if command < 0
+        parent = commands.getParent
+        break if !parent
+        commands.currentList = parent[0]
+        command = parent[1]
+      else
+        cmd = commands.getCommand(command)
+        if commands.hasSubMenu?(cmd)
+          commands.currentList = cmd
+          command = 0
+        elsif MenuHandlers.call(:pokemon_debug_menu, cmd, "effect", pkmn, pkmnid, heldpoke, settingUpBattle, self)
+          break
+        end
+      end
+    end
+  end
 
   def initialize(scene, storage, saveParty)
     @scene = scene
@@ -1367,7 +1395,7 @@ class TimeMachinePokemonStorageScreen
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause unstable gameplay on the save file you are editing. Are you okay with this?"))
       #return
     end
     command = pbShowCommands(_INTL("Transfer this Pokémon? Any held item will be lost in the process."), [_INTL("No"), _INTL("Yes")])

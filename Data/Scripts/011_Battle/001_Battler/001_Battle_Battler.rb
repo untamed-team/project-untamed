@@ -47,6 +47,7 @@ class Battle::Battler
   attr_accessor :SetupMovesUsed  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
   attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
+  attr_accessor :bossTotalHP # percentage hp fix for bosses #by low
 
   #=============================================================================
   # Complex accessors
@@ -243,8 +244,7 @@ class Battle::Battler
   #=============================================================================
   def pbSpeed(megaSpeed = false)
     return 1 if fainted?
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     stage = @stages[:SPEED] + 6
     speed = @speed * stageMul[stage] / stageDiv[stage]
     speedMult = 1.0
@@ -324,7 +324,9 @@ class Battle::Battler
         ret.push(typeadd)
         ret.delete(typeremove)
         if self.species == :PORYGONZ && !self.moves.empty?
-          # cant cheese the AI here by swapping moves as mega-evolving only happens once
+          # cant cheese the AI here by swapping moves as overwrite only writes a type once
+          # therefore, using ReadOverwriteType here is not needed. 
+          # (not like it would work anyway since overwrite did not yet take effect)
           ret.push(self.moves[0].type)
         end
         ret = ret.uniq
@@ -437,7 +439,7 @@ class Battle::Battler
     return false if @effects[PBEffects::Embargo] > 0
     return false if @battle.field.effects[PBEffects::MagicRoom] > 0
     return false if @battle.corrosiveGas[@index % 2][@pokemonIndex]
-    return false if hasActiveAbility?(:KLUTZ, ignoreFainted)
+    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !hasAbilityMutation?
     return true
   end
 

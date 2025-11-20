@@ -167,7 +167,7 @@ module Compiler
           f.write("    Ace = yes\r\n") if pkmn[:trainer_ace]
           f.write("    AAM = true\r\n") if pkmn[:abilityMutation]
           f.write("    MEM = true\r\n") if pkmn[:megaevoMutation]
-          f.write("    BOSS = true\r\n") if pkmn[:bossmonMutation]
+          f.write("    BOSS = 0\r\n") if pkmn[:bossmonMutation]
           f.write(sprintf("    Focus = %s\r\n", pkmn[:focus])) if PluginManager.installed?("Focus Meter System") && pkmn[:focus]
           f.write(sprintf("    Birthsign = %s\r\n", pkmn[:birthsign])) if PluginManager.installed?("Pokémon Birthsigns") && pkmn[:birthsign]
           f.write(sprintf("    DynamaxLvl = %d\r\n", pkmn[:dynamax_lvl])) if PluginManager.installed?("ZUD Mechanics") && pkmn[:dynamax_lvl]

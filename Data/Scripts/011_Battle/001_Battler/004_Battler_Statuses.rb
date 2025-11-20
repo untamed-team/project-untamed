@@ -625,7 +625,7 @@ class Battle::Battler
   end
 
   def pbAttract(user, msg = nil)
-    @effects[PBEffects::Attract] = user.index
+    #@effects[PBEffects::Attract] = user.index
     @battle.pbCommonAnimation("Attract", self)
     msg = _INTL("{1} fell in love!", pbThis) if nil_or_empty?(msg)
     @battle.pbDisplay(msg)

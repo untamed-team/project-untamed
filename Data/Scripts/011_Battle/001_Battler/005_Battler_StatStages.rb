@@ -123,7 +123,6 @@ class Battle::Battler
   def pbCanLowerStatStage?(stat, user = nil, move = nil, showFailMsg = false,
                            ignoreContrary = false, ignoreMirrorArmor = false)
     return false if fainted?
-		return false if !@battle.pbOwnedByPlayer?(self.index) && pbOwnSide.effects[PBEffects::StatDropImmunity] #by low
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
@@ -135,6 +134,7 @@ class Battle::Battler
         return true
       end
     end
+    return false if !@battle.pbOwnedByPlayer?(self.index) && pbOwnSide.effects[PBEffects::StatDropImmunity] #by low
     if !user || user.index != @index   # Not self-inflicted
       if @effects[PBEffects::Substitute] > 0 &&
          (ignoreMirrorArmor || !(move && move.ignoresSubstitute?(user)))
@@ -355,7 +355,8 @@ class Battle::Battler
     return false if !pbCanLowerStatStage?(:ATTACK, user)
     return pbLowerStatStageByCause(:ATTACK, 1, user, user.abilityName)
   end
-
+  
+  # grim tears #by low
   def pbLowerAttackStatStageGrimTears(user)
     return false if fainted?
     if @effects[PBEffects::Substitute] > 0
@@ -400,6 +401,13 @@ class Battle::Battler
     end
     return false if !pbCanLowerStatStage?(:SPECIAL_ATTACK, user)
     return pbLowerStatStageByCause(:SPECIAL_ATTACK, 1, user, user.abilityName)
+  end
+
+  # irritable #by low
+  def pbRaiseAttackStatStageIrritable(showAnim = true)
+    return if fainted?
+    return if !hasActiveAbility?(:IRRITABLE)
+    pbRaiseStatStageByAbility(:ATTACK, 1, self, showAnim)
   end
 
   #=============================================================================

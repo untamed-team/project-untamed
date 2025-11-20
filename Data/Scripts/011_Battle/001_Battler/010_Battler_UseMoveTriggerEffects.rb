@@ -43,6 +43,10 @@ class Battle::Battler
         user.pbItemHPHealCheck if user.hp < oldHP
       end
     end
+    if target.effects[PBEffects::SuperEffEye] > 0 && !target.fainted? && 
+       Effectiveness.super_effective?(target.damageState.typeMod)
+      target.effects[PBEffects::SuperEffEye] = 0
+    end
     if target.opposes?(user)
       # Rage
       if target.effects[PBEffects::Rage] && !target.fainted? &&

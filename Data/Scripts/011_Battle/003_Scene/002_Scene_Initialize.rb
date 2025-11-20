@@ -89,6 +89,18 @@ class Battle::Scene
         pkmnSprite.tone    = Tone.new(-80, -80, -80)
         pkmnSprite.visible = true
       end
+      ballz = nil
+      GameData::Item.each { |i| 
+        next if i.id == :MASTERBALL
+        if GameData::Item.get(i.id).is_poke_ball? && $bag.quantity(i.id)>0
+          ballz = i
+          break
+        end
+      }
+      if ballz
+        #ballInfo = pbAddSprite("ball_info", 10, 10, "Graphics/Battle/icon_ball_info", @viewport)
+        #ballInfo.z = 99999999
+      end
     end
   end
 

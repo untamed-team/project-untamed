@@ -217,7 +217,13 @@ class PokemonLoad_Scene
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
     addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
-    y = 32
+    if show_continue
+		#if Continue option is available, start y for buttons at this height
+		y = 34
+	else
+		#if Continue option is not available (no save files found), start y for buttons at this height
+		y = 88
+	end
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,

@@ -290,7 +290,7 @@ class Battle::Battler
       @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
       @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
       @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
-      @battle.addMoveRevealed(self, move.id) if !@battle.moveRevealed?(self, move.id) # for Kiriya #by low
+      @battle.addMoveRevealed(self, move.id) # for Kiriya #by low
     end
     @battle.lastMoveUsed = move.id   # For Copycat
     @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
@@ -434,16 +434,15 @@ class Battle::Battler
       targets.each do |b|
         b.damageState.reset
         # Special interaction for color change + protean ability combo #by low
-        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && !b.pbOwnedByPlayer? &&
-           b.hasAbilityMutation? && b.abilityMutationList.include?(:COLORCHANGE)
+        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && b.hasActiveAbility?(:COLORCHANGE) &&
+           b.hasAbilityMutation? && !b.pbOwnedByPlayer?
           offenseType = move.calcType
           if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
             @battle.pbShowAbilitySplash(b)
             resistTypesArr = []
             GameData::Type.each do |t|
               next if t.pseudo_type || user.pbHasType?(t.id)
-              resistTypesArr.push(t.id) if Effectiveness.resistant_type?(offenseType, t.id) && 
-                                          !Effectiveness.ineffective_type?(offenseType, t.id)
+              resistTypesArr.push(t.id) if Effectiveness.not_very_effective_type?(offenseType, t.id)
             end
             if resistTypesArr.empty?
               GameData::Type.each do |t|
@@ -455,6 +454,8 @@ class Battle::Battler
               end
             end
             resistTypesArr.push(offenseType.id) if resistTypesArr.empty?
+            resistTypesArr.delete(:WATER) if move.function == "FreezeTargetSuperEffectiveAgainstWater"
+            resistTypesArr.delete(:STEEL) if move.function == "SuperEffectiveAgainstSteel"
             resistType = resistTypesArr.sample
             b.pbChangeTypes(resistType)
             typeName = GameData::Type.get(resistType).name

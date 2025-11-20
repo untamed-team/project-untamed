@@ -247,6 +247,7 @@ def pbGenerateEgg(pkmn, text = "")
   # Set egg's details
   pkmn.name           = _INTL("Egg")
   pkmn.steps_to_hatch = pkmn.species_data.hatch_steps
+  pkmn.steps_to_hatch = 252 if $player.difficulty_mode?("hard")
   pkmn.obtain_text    = text
   pkmn.calc_stats
   # Add egg to party

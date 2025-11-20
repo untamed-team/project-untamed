@@ -30,7 +30,7 @@ Description = The Pokémon is protected from paralysis.
 #-------------------------------
 [SANDVEIL]
 Name = Sand Veil
-Description = Boosts the user's Defense by 1.5x in a sandstorm.
+Description = Boosts the user's Defense by 1.3x in a sandstorm.
 #-------------------------------
 [STATIC]
 Name = Static
@@ -151,7 +151,8 @@ Description = Boosts the Pokémon's Speed in sunshine.
 #-------------------------------
 [ILLUMINATE]
 Name = Illuminate
-Description = Raises the likelihood of meeting wild Pokémon.
+Description = Boosts the accuracy of damaging moves.
+FullDesc = Increases the accuracy of damaging moves on the user's side of the field by 15%. Raises the likelihood of meeting wild Pokémon if the user is leading the party.
 #-------------------------------
 [TRACE]
 Name = Trace
@@ -169,7 +170,7 @@ FullDesc = When user is hit by a contact move, there's a 30% chance to poison th
 [INNERFOCUS]
 Name = Inner Focus
 Description = Prevents the Pokémon from flinching.
-FullDesc = In Chaos mode, Inner Focus also prevents the user's allies from flinching.
+FullDesc = Prevents the user from flinching. In Chaos mode, Inner Focus also prevents the user's allies from flinching.
 #-------------------------------
 [MAGMAARMOR]
 Name = Magma Armor
@@ -362,7 +363,7 @@ Description = Raises Speed each time the Pokémon flinches.
 #-------------------------------
 [SNOWCLOAK]
 Name = Snow Cloak
-Description = Boosts the user's Sp. Def by 1.5x in a hailstorm.
+Description = Boosts the user's Sp. Def by 1.3x in a hailstorm.
 #-------------------------------
 [GLUTTONY]
 Name = Gluttony
@@ -434,7 +435,7 @@ FullDesc = User gets 1.5x Speed when under any status condition. The user also d
 [NORMALIZE]
 Name = Normalize
 Description = All the Pokémon's moves become the Normal type.
-FullDesc = User's moves become Normal-type and all moves deal 1.2x damage. User's Normal and Fighting-type moves are normally effective against Ghost types.
+FullDesc = All damaging moves deal 1.2x damage, user's moves become Normal-type, and user's moves bypass Ghost types' immunities.
 #-------------------------------
 [SNIPER]
 Name = Sniper
@@ -487,10 +488,12 @@ FullDesc = If the user is KO'ed by a contact move, the attacker loses 1/4 of the
 [ANTICIPATION]
 Name = Anticipation
 Description = Senses a foe's dangerous moves.
+FullDesc = On switch-in, this Pokemon is alerted if any opposing Pokemon has an attack that is super effective against this Pokemon.
 #-------------------------------
 [FOREWARN]
 Name = Forewarn
-Description = Determines what moves a foe has.
+Description = Determines how threatening a foe is.
+FullDesc = Normally: On switch-in, this Pokemon is alerted to the move with the highest power of a foe. In chaos mode: Upon switch in, raises Defense by one stage if foes' effective Attack is higher than Special Attack, otherwise it raises Special Defense by one stage.
 #-------------------------------
 [UNAWARE]
 Name = Unaware
@@ -714,6 +717,7 @@ FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is 
 [MAGICBOUNCE]
 Name = Magic Bounce
 Description = Reflects status-changing moves.
+FullDesc = Unaffected by certain non-damaging moves directed at self, and will instead use such moves against the original user.
 #-------------------------------
 [SAPSIPPER]
 Name = Sap Sipper
@@ -755,7 +759,7 @@ Description = Moves can be used regardless of Abilities.
 [AROMAVEIL]
 Name = Aroma Veil
 Description = Protects against attacks that limit move choices.
-FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored or tormented.
+FullDesc = When user is on the field, all allies including the user cannot be disabled, infatuated, taunted, encored, tormented or heal blocked.
 #-------------------------------
 [FLOWERVEIL]
 Name = Flower Veil
@@ -891,7 +895,7 @@ FullDesc = When the user's HP is reduced to half or less, the user switches out 
 [EMERGENCYEXIT]
 Name = Emergency Exit
 Description = Switches out if its HP becomes half or less.
-FullDesc = When the user's HP is reduced to half or less, the user switches out immediately. Renamed Wimp Out.
+FullDesc = When the user's HP is reduced to half or less, the user switches out at the end of the turn.
 #-------------------------------
 [WATERCOMPACTION]
 Name = Water Compaction
@@ -1244,7 +1248,7 @@ FullDesc = When user is on the field, enemy Water types cannot switch out or esc
 [CARPENTER]
 Name = Carpenter
 Description = Boosts the power of Grass, Rock, and Steel-type allies.
-FullDesc = Allies with Grass, Rock, or Steel typing gain a 1.3x boost to their moves. This effect does not stack if allies share multiple of these typings.
+FullDesc = Allies with Grass, Rock, or Steel-typing gain a 1.3x boost to their attacking stats. This effect does not stack if allies share multiple of these typings.
 #-------------------------------
 [BLADEMASTER]
 Name = Blademaster
@@ -1268,12 +1272,13 @@ FullDesc = Moves with the bite flag use the user's Sp. Atk stat regardless of th
 #-------------------------------
 [JUNGLEFURY]
 Name = Jungle Fury
-Description = Grassy Terrain boosts critical hit ratio.
+Description = Grassy Terrain greatly boosts critical hit ratio.
 FullDesc = If affected by Grassy Terrain, the user gains +2 critical hit ratio.
 #-------------------------------
 [MOMENTUM]
 Name = Momentum
 Description = Using the same move in succession raises its power.
+FullDesc = Using the same move repeatedly boosts its power by 20% for each use, stacking up to 100%. The boost resets if the move fails, a different move is used, or if the user switches out.
 #-------------------------------
 [PARTYPOPPER]
 Name = Party Popper
@@ -1397,4 +1402,14 @@ FullDesc = Bug-type moves from the user's side of the field are powered up by 1.
 Name = Eerie Presence
 Description = Absorbs lifeforce if not directly damaged.
 FullDesc = Heals 1/6th of the user's max HP at the end of each turn if the user was not hit by a (direct) attack.
+#-------------------------------
+[LIFESTEAL]
+Name = Predation
+Description = Restores HP when dealing damage with a direct attack.
+FullDesc = The user's HP is restored by 1/6th of the damage dealt via contact moves.
+#-------------------------------
+[IRRITABLE]
+Name = Irritable
+Description = Increases Atk when user's move choices are limited.
+FullDesc = Whenever the user is affected by effects such as Disable, Attract, Taunt, Encore, Torment, Heal Block, Throat Chop or Imprison, their Attack is increased by one stage.
 #-------------------------------

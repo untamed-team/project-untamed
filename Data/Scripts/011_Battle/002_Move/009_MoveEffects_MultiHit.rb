@@ -520,7 +520,7 @@ end
 class Battle::Move::MultiTurnAttackConfuseUserAtEnd < Battle::Move
   def pbEffectAfterAllHits(user, target)
     if !target.damageState.unaffected && user.effects[PBEffects::Outrage] == 0
-      user.effects[PBEffects::Outrage] = 2 + @battle.pbRandom(2)
+      user.effects[PBEffects::Outrage] = 4#2 + @battle.pbRandom(2)
       user.currentMove = @id
     end
     if user.effects[PBEffects::Outrage] > 0

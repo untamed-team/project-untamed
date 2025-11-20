@@ -52,13 +52,13 @@ module Settings
 
   #=============================================================================
 
-  # The minimum number of badges required to boost each stat of a player's
+  # The minimum number of badges required to boost each stat of a AI's
   # Pokémon by 1.1x, in battle only.
-  NUM_BADGES_BOOST_ATTACK  = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_DEFENSE = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPATK   = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPDEF   = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPEED   = (MECHANICS_GENERATION >= 4) ? 999 : 999
+  NUM_BADGES_BOOST_ATTACK  = 7
+  NUM_BADGES_BOOST_DEFENSE = 5
+  NUM_BADGES_BOOST_SPATK   = 8
+  NUM_BADGES_BOOST_SPDEF   = 6
+  NUM_BADGES_BOOST_SPEED   = 9 # unused
 
   #=============================================================================
 

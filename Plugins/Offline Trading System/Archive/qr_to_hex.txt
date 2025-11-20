@@ -1,0 +1,69 @@
+#!/usr/bin/env ruby
+
+# This script reads a QR code from a PNG file and outputs its contents.
+
+# --- Prerequisites ---
+# To run this script, you need to have the `zbar` command-line utility installed.
+# It is a powerful tool for reading barcodes and QR codes.
+#
+# Installation instructions for common operating systems:
+#
+#   macOS (using Homebrew):
+#     brew install zbar
+#
+#   Debian/Ubuntu Linux:
+#     sudo apt-get install zbar-tools
+#
+#   Windows (via MSYS2/MinGW-w64):
+#     Follow the MSYS2 installation guide and then run `pacman -S mingw-w64-x86_64-zbar`
+#
+# You can run this script from your terminal using:
+#
+#   ruby qr_to_hex.rb
+#
+# Follow the prompts to enter the path to your QR code image file.
+
+# --- Main script execution ---
+
+puts "======================================="
+puts "       QR Code Decoder"
+puts "======================================="
+
+# Check if the `zbarimg` command is available.
+# `zbarimg` is the command-line tool for decoding images.
+unless system('which zbarimg > /dev/null 2>&1')
+  puts "Error: The 'zbarimg' command-line tool was not found."
+  puts "Please install `zbar` and ensure it's in your system's PATH."
+  exit
+end
+
+# Prompt the user for the QR code image file path.
+print "Please enter the path to the QR code image file (e.g., qrcode_1678888888.png): "
+input_file = gets.chomp
+
+# Check if the file exists.
+unless File.exist?(input_file)
+  puts "Error: The file '#{input_file}' was not found. Please check the file path and try again."
+  exit
+end
+
+begin
+  # Use `IO.popen` to execute the `zbarimg` command and capture its output.
+  # The `-q` flag suppresses the image filename from the output.
+  # The `--raw` flag prints only the decoded data, one value per line.
+  decoded_string = IO.popen(['zbarimg', '-q', '--raw', input_file]).read.chomp
+
+  if decoded_string.nil? || decoded_string.empty?
+    puts "Error: No QR code could be found or decoded in the provided image."
+  else
+    puts "\nQR code successfully decoded!"
+    puts "---------------------------------------"
+    puts "Content:"
+    puts decoded_string
+    puts "---------------------------------------"
+  end
+
+rescue => e
+  puts "An error occurred during decoding:"
+  puts "Details: #{e.message}"
+end

@@ -390,7 +390,7 @@ ItemHandlers::UseOnPokemon.add(:POTION, proc { |item, qty, pkmn, scene|
   next pbHPItem(pkmn, 20, scene)
 })
 
-ItemHandlers::UseOnPokemon.copy(:POTION, :BERRYJUICE, :SWEETHEART)
+ItemHandlers::UseOnPokemon.copy(:POTION, :BERRYJUICE, :SWEETHEART, :MELOLADOCONE)
 ItemHandlers::UseOnPokemon.copy(:POTION, :RAGECANDYBAR) if !Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
 
 ItemHandlers::UseOnPokemon.add(:SUPERPOTION, proc { |item, qty, pkmn, scene|
