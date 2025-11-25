@@ -469,7 +469,7 @@ Description = Prevents problems with status in sunny weather.
 [KLUTZ]
 Name = Klutz
 Description = This Pokémon doesn't understand held items.
-FullDesc = In Chaos mode, Klutz ignores both the user's held item as well as the foes' held item, bypassing items such as Assault Vest.
+FullDesc = Normally, this Pokemon's held item has no effect. In Chaos mode, Klutz instead ignores the foes' held item, bypassing items such as Assault Vest.
 #-------------------------------
 [MOLDBREAKER]
 Name = Mold Breaker

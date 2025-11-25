@@ -439,7 +439,7 @@ class Battle::Battler
     return false if @effects[PBEffects::Embargo] > 0
     return false if @battle.field.effects[PBEffects::MagicRoom] > 0
     return false if @battle.corrosiveGas[@index % 2][@pokemonIndex]
-    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !hasAbilityMutation?
+    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !$player.difficulty_mode?("chaos")
     return true
   end
 

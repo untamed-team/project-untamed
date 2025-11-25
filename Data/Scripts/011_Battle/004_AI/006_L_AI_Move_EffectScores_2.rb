@@ -7,6 +7,9 @@ class Battle::AI
   def pbGetMoveScoreFunctionCode(score, move, user, target, skill = 100)
     mold_broken = moldbroken(user,target,move)
     globalArray = @megaGlobalArray
+    procGlobalArray = processGlobalArray(globalArray)
+    expectedWeather = procGlobalArray[0]
+    expectedTerrain = procGlobalArray[1]
     aspeed = pbRoughStat(user,:SPEED,skill)
     ospeed = pbRoughStat(target,:SPEED,skill)
     userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
