@@ -5739,6 +5739,11 @@ class Battle::AI
       #target=user.pbDirectOpposing(true)
       userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       if userlivecount>1
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) Start--------"
+          end
+        end
         backup = $AIMASTERLOG
         $AIMASTERLOG = false
         score *= 0.8 if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
@@ -5803,12 +5808,22 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) End--------"
+          end
+        end
       end
       score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
     when "SwitchOutUserDamagingMove" # uturn / volt switch
       userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       if userlivecount>1
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) Start--------"
+          end
+        end
         backup = $AIMASTERLOG
         $AIMASTERLOG = false
         if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
@@ -5921,6 +5936,11 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) End--------"
+          end
+        end
       end
     #---------------------------------------------------------------------------
     when "LowerTargetAtkSpAtk1SwitchOutUser" # Parting Shot
@@ -5929,6 +5949,11 @@ class Battle::AI
         score=0
       else
         if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
+          if $AIMASTERLOG
+            File.open("AI_master_log.txt", "a") do |line|
+              line.puts "-------(Switch Move) Start--------"
+            end
+          end
           backup = $AIMASTERLOG
           $AIMASTERLOG = false
           if user.pbOwnSide.effects[PBEffects::StealthRock]
@@ -6077,6 +6102,11 @@ class Battle::AI
           miniscore/=100.0
           score*=miniscore
           $AIMASTERLOG = backup
+          if $AIMASTERLOG
+            File.open("AI_master_log.txt", "a") do |line|
+              line.puts "-------(Switch Move) End--------"
+            end
+          end
         else
           score = 0
         end  
@@ -6084,6 +6114,11 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SwitchOutUserPassOnEffects" # baton pass
       if @battle.pbCanChooseNonActive?(user.index)
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) Start--------"
+          end
+        end
         backup = $AIMASTERLOG
         $AIMASTERLOG = false
         score*=1.1 if user.effects[PBEffects::FocusEnergy]
@@ -6157,6 +6192,11 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
+        if $AIMASTERLOG
+          File.open("AI_master_log.txt", "a") do |line|
+            line.puts "-------(Switch Move) End--------"
+          end
+        end
       else
         score = 0
       end
