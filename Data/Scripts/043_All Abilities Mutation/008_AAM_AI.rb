@@ -3,7 +3,7 @@ class Battle::AI
 	# Damage calculation
 	#=============================================================================
 	alias aam_pbRoughDamage pbRoughDamage
-	def pbRoughDamage(move, user, target, skill, baseDmg)
+	def pbRoughDamage(move, user, target, skill, baseDmg=0)
 		$aam_DamageCalcFromAlly=[]
 		$aam_DamageCalcFromTargetAlly=[]
 		aam_pbRoughDamage(move, user, target, skill, baseDmg)
