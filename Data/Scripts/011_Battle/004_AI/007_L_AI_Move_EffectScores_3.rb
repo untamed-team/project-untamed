@@ -5739,7 +5739,7 @@ class Battle::AI
       #target=user.pbDirectOpposing(true)
       userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       if userlivecount>1
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) Start--------"
           end
@@ -5808,7 +5808,7 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) End--------"
           end
@@ -5819,7 +5819,7 @@ class Battle::AI
     when "SwitchOutUserDamagingMove" # uturn / volt switch
       userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       if userlivecount>1
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) Start--------"
           end
@@ -5936,7 +5936,7 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) End--------"
           end
@@ -5949,7 +5949,7 @@ class Battle::AI
         score=0
       else
         if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
-          if $AIMASTERLOG
+          if $AIMASTERLOG && $AISWITCHLOG
             File.open("AI_master_log.txt", "a") do |line|
               line.puts "-------(Switch Move) Start--------"
             end
@@ -6102,7 +6102,7 @@ class Battle::AI
           miniscore/=100.0
           score*=miniscore
           $AIMASTERLOG = backup
-          if $AIMASTERLOG
+          if $AIMASTERLOG && $AISWITCHLOG
             File.open("AI_master_log.txt", "a") do |line|
               line.puts "-------(Switch Move) End--------"
             end
@@ -6114,7 +6114,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SwitchOutUserPassOnEffects" # baton pass
       if @battle.pbCanChooseNonActive?(user.index)
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) Start--------"
           end
@@ -6192,7 +6192,7 @@ class Battle::AI
           score = 0
         end
         $AIMASTERLOG = backup
-        if $AIMASTERLOG
+        if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) End--------"
           end
