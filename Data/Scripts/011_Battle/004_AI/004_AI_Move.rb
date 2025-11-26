@@ -3,9 +3,9 @@ class Battle::AI # mostly made obsolete by Consistent_AI
   # Main move-choosing method (moves with higher scores are more likely to be
   # chosen)
   #=============================================================================
-  def pbChooseMoves(idxBattler)
+  #def pbChooseMoves(idxBattler)
     # not used, check Consistent_AI
-  end
+  #end
 
   #=============================================================================
   # Get scores for the given move against each possible target
@@ -22,22 +22,22 @@ class Battle::AI # mostly made obsolete by Consistent_AI
   end
 
   # Trainer Pokémon calculate how much they want to use each of their moves.
-  def pbRegisterMoveTrainer(user, idxMove, choices, skill)
+  #def pbRegisterMoveTrainer(user, idxMove, choices, skill)
     # not used, check Consistent_AI
-  end
+  #end
 
   #=============================================================================
   # Get a score for the given move being used against the given target
   #=============================================================================
-  def pbGetMoveScore(move, user, target, skill = 100)
+  #def pbGetMoveScore(move, user, target, skill = 100)
     # not used, check Consistent_AI
-  end
+  #end
 
   #=============================================================================
   # Add to a move's score based on how much damage it will deal (as a percentage
   # of the target's current HP)
   #=============================================================================
-  def pbGetMoveScoreDamage(score, move, user, target, skill)
+  #def pbGetMoveScoreDamage(score, move, user, target, skill)
     # not used, check Consistent_AI
-  end
+  #end
 end

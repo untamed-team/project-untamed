@@ -684,7 +684,7 @@ class Battle::AI
           else
             backup = $AIGENERALLOG
             $AIGENERALLOG = false
-            score=pbGetMoveScore(m, pokmon, b, 100)
+            score=pbGetMoveScore(m, pokmon, b, 100, true)
             $AIGENERALLOG = backup
           end  
           maxscore=score if score>maxscore

@@ -3602,7 +3602,7 @@ Pokedex = Malharo live in the deepest, darkest reaches of the ocean. Fishermen t
 [G_CORSOLA]
 Name = Corsola
 Types = GHOST,ROCK
-BaseStats = 49,73,92,30,75,96
+BaseStats = 60,55,95,30,65,95
 GenderRatio = Female75Percent
 GrowthRate = Fast
 BaseExp = 144
@@ -3629,7 +3629,7 @@ Evolutions = CURSOLA,Level,38
 [CURSOLA]
 Name = Cursola
 Types = GHOST,ROCK
-BaseStats = 69,96,62,43,124,106
+BaseStats = 69,96,60,40,123,112
 GenderRatio = Female75Percent
 GrowthRate = Fast
 BaseExp = 179
