@@ -166,13 +166,17 @@ class Battle::AI
         when 2 then moveCateg = "Status"
         end
         next if moveCateg.nil?
-        
+
+        starttime = Process.clock_gettime(Process::CLOCK_MONOTONIC)
         fakeScore = pbGetMoveScore(mirrmove, user, fakeTarget, 100)
         fakeScore *= -1 if $AIMASTERLOG_TARGET == 1
+        finaltime = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+        duration = ((finaltime - starttime) * 1000).round(3)
+
         File.open("AI_master_log.txt", "a") do |line|
-          line.puts "Move " + mirrored.name.to_s + " ( Category: " + moveCateg + " ) " + "has final score " + fakeScore.to_s
+          line.puts "Move #{mirrored.name} ( Category: #{moveCateg} ) has final score #{fakeScore} | Time: #{duration} ms"
         end
-        bestscore.push([mirrored.name.to_s, fakeScore])
+        bestscore.push([mirrored.name.to_s, fakeScore, duration])
       end
 
       sortedscores = bestscore.sort { |a, b| b[1] <=> a[1] }
@@ -183,7 +187,7 @@ class Battle::AI
         for i in 0..sortedscores.length
           next if sortedscores[i].nil?
           next if sortedscores[i][0]=="Atomic Splash"
-          line.puts "Move " + sortedscores[i][0].to_s + " has the final score " + sortedscores[i][1].to_s
+          line.puts "Move #{sortedscores[i][0]} has the final score #{sortedscores[i][1]} | Time: #{sortedscores[i][2]} ms"
         end
       end
     end

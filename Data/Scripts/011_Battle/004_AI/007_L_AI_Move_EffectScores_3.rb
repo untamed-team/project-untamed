@@ -5737,8 +5737,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "SwitchOutUserStatusMove" # teleport
       #target=user.pbDirectOpposing(true)
-      userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
-      if userlivecount>1
+      if @battle.pbCanChooseNonActive?(user.index)
         if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) Start--------"
@@ -5805,7 +5804,7 @@ class Battle::AI
           score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
           score*=0.8 if @battle.pbSideSize(1)>1
         else
-          score = 0
+          score = 1
         end
         $AIMASTERLOG = backup
         if $AIMASTERLOG && $AISWITCHLOG
@@ -5817,8 +5816,7 @@ class Battle::AI
       score = 999 if @battle.wildBattle?
     #---------------------------------------------------------------------------
     when "SwitchOutUserDamagingMove" # uturn / volt switch
-      userlivecount = @battle.pbAbleNonActiveCount(user.idxOwnSide)
-      if userlivecount>1
+      if @battle.pbCanChooseNonActive?(user.index)
         if $AIMASTERLOG && $AISWITCHLOG
           File.open("AI_master_log.txt", "a") do |line|
             line.puts "-------(Switch Move) Start--------"
@@ -5933,7 +5931,7 @@ class Battle::AI
           score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
           score*=0.8 if @battle.pbSideSize(1)>1
         else
-          score = 0
+          score = 1
         end
         $AIMASTERLOG = backup
         if $AIMASTERLOG && $AISWITCHLOG
@@ -5948,7 +5946,7 @@ class Battle::AI
          !canLowerStatTarget(:SPECIAL_ATTACK,move,user,target,mold_broken)
         score=0
       else
-        if @battle.pbAbleNonActiveCount(user.idxOwnSide)>0
+        if @battle.pbCanChooseNonActive?(user.index)
           if $AIMASTERLOG && $AISWITCHLOG
             File.open("AI_master_log.txt", "a") do |line|
               line.puts "-------(Switch Move) Start--------"
@@ -6082,7 +6080,7 @@ class Battle::AI
             score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
             score*=0.8 if @battle.pbSideSize(1)>1
           else
-            score = 0
+            score = 1
           end
             
           ministat=0      
@@ -6189,7 +6187,7 @@ class Battle::AI
           score*=0.7 if user.turnCount<1 && !user.hasActiveAbility?(:REGENERATOR)
           score*=0.8 if @battle.pbSideSize(1)>1
         else
-          score = 0
+          score = 1
         end
         $AIMASTERLOG = backup
         if $AIMASTERLOG && $AISWITCHLOG
