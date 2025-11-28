@@ -1428,6 +1428,19 @@ class Battle::AI
             score*=3
           end
         end
+        if user.allAllies.any?
+          user.allAllies.each do |b|
+            groundaoe = false
+            b.eachMove do |m|
+              target_data = move.pbTarget(user)
+              if m.type == :GROUND && target_data.id == :AllNearOthers && user.near?(b)
+                groundaoe = true
+                break
+              end
+            end
+            score *= 1.2 if groundaoe
+          end
+        end
       end
     #---------------------------------------------------------------------------
     when "StartTargetAirborneAndAlwaysHitByMoves" # Telekinesis

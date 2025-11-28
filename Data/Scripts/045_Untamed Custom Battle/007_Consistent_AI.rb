@@ -486,7 +486,7 @@ class Battle::AI
         end
       end
     when :GROUND
-      score *= 1.3 if target.hasActiveAbility?(:LEVITATE,false,mold_broken)
+      score *= 1.3 if target.airborneAI(mold_broken)
     end
     # score being changed here means it is positive or at least neutral
     if score != initialscore
