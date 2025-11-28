@@ -5744,7 +5744,7 @@ class Battle::AI
           end
         end
         backup = $AIMASTERLOG
-        $AIMASTERLOG = false
+        $AIMASTERLOG = false if !$AISWITCHLOG
         score *= 0.8 if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
         score *= 0.7 if user.pbOwnSide.effects[PBEffects::StealthRock]
         score *= (0.9**user.pbOwnSide.effects[PBEffects::ToxicSpikes])
@@ -5823,7 +5823,7 @@ class Battle::AI
           end
         end
         backup = $AIMASTERLOG
-        $AIMASTERLOG = false
+        $AIMASTERLOG = false if !$AISWITCHLOG
         if userFasterThanTarget && !(target.status == :SLEEP && target.statusCount>1)
           score *= 0.8
           # DemICE: Switching AI is dumb so if you're faster, don't sack a healthy mon. Better use another move.
@@ -5953,7 +5953,7 @@ class Battle::AI
             end
           end
           backup = $AIMASTERLOG
-          $AIMASTERLOG = false
+          $AIMASTERLOG = false if !$AISWITCHLOG
           if user.pbOwnSide.effects[PBEffects::StealthRock]
             score*=0.7
           end
@@ -6118,7 +6118,7 @@ class Battle::AI
           end
         end
         backup = $AIMASTERLOG
-        $AIMASTERLOG = false
+        $AIMASTERLOG = false if !$AISWITCHLOG
         score*=1.1 if user.effects[PBEffects::FocusEnergy]
         score*=1.2 if user.effects[PBEffects::Ingrain]
         score*=1.2 if user.effects[PBEffects::AquaRing]

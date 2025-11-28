@@ -582,7 +582,7 @@ class Battle::AI
     end
     # Parental Bond
     if skill >= PBTrainerAI.mediumSkill && user.hasActiveAbility?(:PARENTALBOND)
-      damage *= 1.25
+      damage += (damage * 0.25).floor
     end
 
     # Critical hits - Increased critical hit rates
@@ -610,7 +610,7 @@ class Battle::AI
         c += user.effects[PBEffects::FocusEnergy]
         c += 1 if user.inHyperMode? && move.type == :SHADOW
         c = 4 if ["AlwaysCriticalHit", "HitThreeTimesAlwaysCriticalHit"].include?(move.function) ||
-                user.effects[PBEffects::LaserFocus] > 0
+                 user.effects[PBEffects::LaserFocus] > 0
         # DemICE: taking into account 100% crit rate.
         stageMul, stageDiv = @battle.pbGetStatMath
         vatk, atkStage = move.pbGetAttackStats(user,target)

@@ -79,7 +79,7 @@ class Battle::AI
         newmove = MEGA_EVO_MOVESET[user.species][1]
         if _m.id == oldmove
           user.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(newmove))
-          user.moves[i].pp     = 5
+          user.moves[i].pp       = 5
           user.moves[i].total_pp = 5
         end
       end
@@ -191,6 +191,8 @@ class Battle::AI
         end
       end
     end
+    $aisuckercheck = [false, 0]
+    $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
     choices.shuffle! if user.wild?
     # Checking if switching is preferred
     if !user.wild? #!wildBattler
@@ -365,112 +367,10 @@ class Battle::AI
         next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
         score = pbGetMoveScore(move, user, b, skill)
         if user.opposes?(b)
-          totalScore += score
           valuableTarget = true if score > 180
+          totalScore += score
         else # is ally
-          mold_broken = moldbroken(user, b, move)
-          aspeed = pbRoughStat(user, :SPEED, skill)
-          ospeed = pbRoughStat(b, :SPEED, skill)
-          initialscore = score
-          realtype = pbRoughType(move, user, skill)
-          typeMod = pbCalcTypeMod(realtype, user, b, move)
-          if move.damagingMove? && Effectiveness.ineffective?(typeMod)
-            score = 85 if score <= 0
-            score *= 1.1
-          end
-          score *= 1.6777 if b.hasActiveAbility?(:TELEPATHY,false,mold_broken)
-          score *= 1.1 if user.hasActiveAbility?(:TELEPATHY)
-          if move.bombMove?
-            score *= 1.2 if b.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
-                           (b.isSpecies?(:MAGCARGO) && b.pokemon.willmega && !mold_broken)
-          end
-          if move.soundMove?
-            score *= 1.2 if b.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
-          end
-          case realtype
-          when :ELECTRIC, :WATER
-            if (b.hasActiveAbility?(:VOLTABSORB,false,mold_broken) && realtype == :ELECTRIC) ||
-               (b.isSpecies?(:GOHILA) && b.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
-               (b.hasActiveAbility?([:WATERABSORB, :DRYSKIN],false,mold_broken) && realtype == :WATER)
-              missinghp = (b.totalhp - b.hp).to_f / b.totalhp
-              score *= 1 + (missinghp * 0.75)
-            end
-            if (b.hasActiveAbility?(:LIGHTNINGROD,false,mold_broken) && realtype == :ELECTRIC) ||
-               (b.isSpecies?(:ROADRAPTOR) && b.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
-               (b.hasActiveAbility?(:STORMDRAIN,false,mold_broken) && realtype == :WATER)
-              if b.spatk > b.attack
-                score *= 2.0
-              elsif b.statStageAtMax?(:SPECIAL_ATTACK)
-                score *= 1.01
-              else
-                score *= 1.2
-              end
-            end
-            if b.hasActiveAbility?(:MOTORDRIVE,false,mold_broken) && realtype == :ELECTRIC
-              if @battle.field.effects[PBEffects::TrickRoom] == 0
-                if b.statStageAtMax?(:SPEED)
-                  score *= 1.01
-                else
-                  oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
-                  ospeed2 = ospeed * (3.0 / 2.0)
-                  speedcheck = 0
-                  b.eachOpposing do |m|
-                    mspeed = pbRoughStat(m, :SPEED, skill)
-                    speedcheck += 1 if ospeed2 > mspeed
-                  end
-                  if speedcheck >= oppcounter
-                    score *= 2.5
-                  else
-                    score *= 1.5
-                  end
-                end
-              else
-                score *= 1.01
-              end
-            end
-          when :FIRE
-            if b.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
-              if b.effects[PBEffects::FlashFire]
-                score *= 1.01
-              else
-                score *= 2.0
-              end
-            end
-          when :GRASS
-            if b.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
-              if b.attack > b.spatk
-                score *= 2.0
-              elsif b.statStageAtMax?(:ATTACK)
-                score *= 1.01
-              else
-                score *= 1.2
-              end
-            end
-          when :GROUND
-            score *= 1.3 if b.hasActiveAbility?(:LEVITATE,false,mold_broken)
-          end
-          # score being changed here means it is positive or at least neutral
-          if score != initialscore
-            echo("\nScore reversed for ally "+move.name+" + "+b.name+" due to neutrality/positive effect.\n") if $AIGENERALLOG
-            score *= -1 if score > 0
-          else
-            outspedAyyly = ((aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-            if (b.hp.to_f) / b.totalhp > 0.10 || outspedAyyly
-              s = 0.5 # higher means Kiriya cares more about hitting ally
-              # cares more if faster and we would likely KO ally
-              if outspedAyyly && score >= 180
-                s = 0.75
-              end
-              echo("\nScore lowered for ally "+move.name+" + "+b.name+" due to spread move dealing damage.\n") if $AIGENERALLOG
-              score *= s
-            end
-
-            if move.function == "CureTargetBurn" && b.status == :BURN
-              # hit needs to go through to proc the burn heal
-              echoln("If you are seeing this, you might be retarded.")
-              score *= 0.5 if !b.hasActiveAbility?([:GUTS, :FLAREBOOST]) 
-            end
-          end
+          score = pbCalcDoublesAllyCollateral(score, user, b, move, skill)
           totalScore -= score
         end
         count += 1
@@ -485,89 +385,198 @@ class Battle::AI
       doublesThreats = pbCalcDoublesThreatsBoost(user, skill)
       scoresAndTargets = []
       @battle.allBattlers.each do |b|
-        doublesThreat = doublesThreats[b.index]
         next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
         next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
-        if !user.opposes?(b) # is ally
+        score = pbGetMoveScore(move, user, b, 100)
+        if user.opposes?(b)
+          ret = pbAdjustScorePositionChange(score, user, b, move, doublesThreats[b.index], skill)
+          scoresAndTargets.push([ret[0], ret[1]]) if ret[0] > 0
+        else # is ally
           # allows for the AI to target allies if its good to do so (polen puff/swag/etc)
-          score = pbGetMoveScore(move, user, b, 100)
           score *= -1
           echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
-        else
-          # switch abuse prevention
-          #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
-          foeparty = @battle.pbParty(b.index)
-          if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
-             move.function != "PursueSwitchingFoe"
-            echoln "target will switch to #{foeparty[b.battle.choices[b.index][1]].name}" if $AIGENERALLOG
-            realTarget = @battle.pbMakeFakeBattler(foeparty[b.battle.choices[b.index][1]],false,b)
-          else
-            realTarget = b
-          end
-          score = pbGetMoveScore(move, user, realTarget, 100)
-          # switch worriedness
-          inBattleIndex = @battle.allSameSideBattlers(b.index).map { |b| b.pokemonIndex }
-          foeparty.each_with_index do |pkmn, idxParty|
-            break if realTarget.battle.choices[realTarget.index][0] == :SwitchOut && 
-                     realTarget.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 &&
-                     move.function != "PursueSwitchingFoe"
-            break if realTarget.trappedInBattle?
-            break if score < 1
-            next if !pkmn || !pkmn.able?
-            next if inBattleIndex.include?(idxParty)
-            dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,b)
-            if pbCheckMoveImmunity(score, move, user, dummy, skill)
-              score -= 2
-              echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity ("+dummy.name+").\n") if $AIGENERALLOG
-            else
-              type = pbRoughType(move, user, skill)
-              typeMod = pbCalcTypeMod(type, user, dummy)
-              if Effectiveness.resistant?(typeMod) && move.baseDamage>0
-                score -= 0.5
-                echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist ("+dummy.name+").\n") if $AIGENERALLOG
-              end
-            end
-          end
-          # ally switch cheez prevention
-          if @battle.pbSideBattlerCount(b) > 1
-            moovprio = priorityAI(user, move, [], true)
-            user.allOpposing.each do |a|
-              break if moovprio > 2
-              next if !a.pbHasMoveFunction?("UserSwapsPositionsWithAlly")
-              next if !targetWillMove?(a, "status")
-              if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
-                ayylly = a.allAllies.first
-                if pbCheckMoveImmunity(score, move, user, ayylly, skill)
-                  echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity ("+a.name+").\n") if $AIGENERALLOG
-                  score *= 0.2
-                else
-                  type = pbRoughType(move, user, skill)
-                  typeMod = pbCalcTypeMod(type, user, ayylly)
-                  if Effectiveness.resistant?(typeMod) && move.baseDamage>0
-                    score *= 0.5
-                    echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist ("+a.name+").\n") if $AIGENERALLOG
-                  end
-                end
-              end
-            end
-          end
-          if doublesThreat > 1
-            score *= 1 + (doublesThreat/10.0)
-            echo("\nDoubles Threat Level boost from "+user.name+" for "+b.name+": "+(1 + (doublesThreat/10.0)).to_s+"\n") if $AIGENERALLOG
-          end
-          score = score.to_i
-          scoresAndTargets.push([score, realTarget.index]) if score > 0
         end
       end
-      $aisuckercheck = [false, 0]
-      $aiguardcheck = [false, "DoesNothingUnusableInGravity"]
       if scoresAndTargets.length > 0
         # Get the one best target for the move
         scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }
         choices.push([idxMove, scoresAndTargets[0][0], scoresAndTargets[0][1], move.name])
       end
     end
+  end
+
+  def pbCalcDoublesAllyCollateral(score, user, target, move, skill = 100)
+    mold_broken = moldbroken(user, target, move)
+    aspeed = pbRoughStat(user, :SPEED, skill)
+    ospeed = pbRoughStat(target, :SPEED, skill)
+    initialscore = score
+    realtype = pbRoughType(move, user, skill)
+    typeMod = pbCalcTypeMod(realtype, user, target, move)
+    if move.damagingMove? && Effectiveness.ineffective?(typeMod)
+      score = 85 if score <= 0
+      score *= 1.1
+    end
+    score *= 1.6777 if target.hasActiveAbility?(:TELEPATHY,false,mold_broken)
+    score *= 1.1 if user.hasActiveAbility?(:TELEPATHY)
+    if move.bombMove?
+      score *= 1.2 if target.hasActiveAbility?(:BULLETPROOF,false,mold_broken) || 
+                     (target.isSpecies?(:MAGCARGO) && target.pokemon.willmega && !mold_broken)
+    end
+    if move.soundMove?
+      score *= 1.2 if target.hasActiveAbility?(:SOUNDPROOF,false,mold_broken)
+    end
+    case realtype
+    when :ELECTRIC, :WATER
+      if (target.hasActiveAbility?(:VOLTABSORB,false,mold_broken) && realtype == :ELECTRIC) ||
+         (target.isSpecies?(:GOHILA) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+         (target.hasActiveAbility?([:WATERABSORB, :DRYSKIN],false,mold_broken) && realtype == :WATER)
+        missinghp = (target.totalhp - target.hp).to_f / target.totalhp
+        score *= 1 + (missinghp * 0.75)
+      end
+      if (target.hasActiveAbility?(:LIGHTNINGROD,false,mold_broken) && realtype == :ELECTRIC) ||
+         (target.isSpecies?(:ROADRAPTOR) && target.pokemon.willmega && !mold_broken && realtype == :ELECTRIC) ||
+         (target.hasActiveAbility?(:STORMDRAIN,false,mold_broken) && realtype == :WATER)
+        if target.spatk > target.attack
+          score *= 2.0
+        elsif target.statStageAtMax?(:SPECIAL_ATTACK)
+          score *= 1.01
+        else
+          score *= 1.2
+        end
+      end
+      if target.hasActiveAbility?(:MOTORDRIVE,false,mold_broken) && realtype == :ELECTRIC
+        if @battle.field.effects[PBEffects::TrickRoom] == 0
+          if target.statStageAtMax?(:SPEED)
+            score *= 1.01
+          else
+            oppcounter = @battle.allBattlers.count { |target| user.opposes?(target) }
+            ospeed2 = ospeed * (3.0 / 2.0)
+            speedcheck = 0
+            target.eachOpposing do |m|
+              mspeed = pbRoughStat(m, :SPEED, skill)
+              speedcheck += 1 if ospeed2 > mspeed
+            end
+            if speedcheck >= oppcounter
+              score *= 2.5
+            else
+              score *= 1.5
+            end
+          end
+        else
+          score *= 1.01
+        end
+      end
+    when :FIRE
+      if target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
+        if target.effects[PBEffects::FlashFire]
+          score *= 1.01
+        else
+          score *= 2.0
+        end
+      end
+    when :GRASS
+      if target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
+        if target.attack > target.spatk
+          score *= 2.0
+        elsif target.statStageAtMax?(:ATTACK)
+          score *= 1.01
+        else
+          score *= 1.2
+        end
+      end
+    when :GROUND
+      score *= 1.3 if target.hasActiveAbility?(:LEVITATE,false,mold_broken)
+    end
+    # score being changed here means it is positive or at least neutral
+    if score != initialscore
+      echo("\nScore reversed for ally "+move.name+" + "+target.name+" due to neutrality/positive effect.\n") if $AIGENERALLOG
+      score *= -1 if score > 0
+    else
+      outspedAyyly = ((aspeed > ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+      if (target.hp.to_f) / target.totalhp > 0.10 || outspedAyyly
+        s = 0.5 # higher means Kiriya cares more about hitting ally
+        # cares more if faster and we would likely KO ally
+        if outspedAyyly && score >= 180
+          s = 0.75
+        end
+        echo("\nScore lowered for ally "+move.name+" + "+target.name+" due to spread move dealing damage.\n") if $AIGENERALLOG
+        score *= s
+      end
+
+      if move.function == "CureTargetBurn" && target.status == :BURN
+        # hit needs to go through to proc the burn heal
+        echoln("If you are seeing this, you might be retarded.")
+        score *= 0.5 if !target.hasActiveAbility?([:GUTS, :FLAREBOOST]) 
+      end
+    end
+    return score
+  end
+
+  def pbAdjustScorePositionChange(score, user, target, move, doublesThreat, skill = 100)
+    # switch abuse prevention
+    #echoln "target's side SwitchAbuse counter: #{target.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
+    foeparty = @battle.pbParty(target.index)
+    if target.battle.choices[target.index][0] == :SwitchOut && 
+       target.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && move.function != "PursueSwitchingFoe"
+      echoln "target will switch to #{foeparty[target.battle.choices[target.index][1]].name}" if $AIGENERALLOG
+      realTarget = @battle.pbMakeFakeBattler(foeparty[target.battle.choices[target.index][1]],false,target)
+    else
+      realTarget = target
+    end
+    score = pbGetMoveScore(move, user, realTarget, 100)
+    # switch worriedness
+    inBattleIndex = @battle.allSameSideBattlers(target.index).map { |target| target.pokemonIndex }
+    foeparty.each_with_index do |pkmn, idxParty|
+      break if realTarget.battle.choices[realTarget.index][0] == :SwitchOut && 
+               realTarget.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 &&
+               move.function != "PursueSwitchingFoe"
+      break if realTarget.trappedInBattle?
+      break if move.id == :UTURN # special case
+      break if score < 1
+      next if !pkmn || !pkmn.able?
+      next if inBattleIndex.include?(idxParty)
+      dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,target)
+      if pbCheckMoveImmunity(score, move, user, dummy, skill)
+        score -= 2
+        echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity ("+dummy.name+").\n") if $AIGENERALLOG
+      else
+        type = pbRoughType(move, user, skill)
+        typeMod = pbCalcTypeMod(type, user, dummy)
+        if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+          score -= 0.5
+          echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into resist ("+dummy.name+").\n") if $AIGENERALLOG
+        end
+      end
+    end
+    # ally switch cheez prevention
+    if @battle.pbSideBattlerCount(target) > 1
+      moovprio = priorityAI(user, move, [], true)
+      user.allOpposing.each do |a|
+        break if moovprio > 2
+        next if !a.pbHasMoveFunction?("UserSwapsPositionsWithAlly")
+        next if !targetWillMove?(a, "status")
+        if @battle.choices[a.index][2].function == "UserSwapsPositionsWithAlly"
+          ayylly = a.allAllies.first
+          if pbCheckMoveImmunity(score, move, user, ayylly, skill)
+            echo("\nScore atomized for "+move.name+" + "+realTarget.name+" due to ally switch into immunity ("+a.name+").\n") if $AIGENERALLOG
+            score *= 0.2
+          else
+            type = pbRoughType(move, user, skill)
+            typeMod = pbCalcTypeMod(type, user, ayylly)
+            if Effectiveness.resistant?(typeMod) && move.baseDamage>0
+              score *= 0.5
+              echo("\nScore halfed for "+move.name+" + "+realTarget.name+" due to ally switch into resist ("+a.name+").\n") if $AIGENERALLOG
+            end
+          end
+        end
+      end
+    end
+    if doublesThreat > 1 && realTarget == target
+      score *= 1 + (doublesThreat/10.0)
+      echo("\nDoubles Threat Level boost from "+user.name+" for "+target.name+": "+(1 + (doublesThreat/10.0)).to_s+"\n") if $AIGENERALLOG
+    end
+    return [score.to_i, realTarget.index]
   end
 
   #=============================================================================
