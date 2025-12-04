@@ -1228,7 +1228,7 @@ class Battle::AI
       priorityko=false
       for zzz in fakemon.moves
         next if zzz.nil? || priorityAI(target,zzz,[],true)<1
-        dam = aiDamage(zzz, fakemon, target)
+        dam = pbRoughDamage(zzz, fakemon, target, 100) # special case, don't use aiDamage
         if target.hp>0
           percentage=(dam*100.0)/target.hp
           priorityko=true if percentage>100
@@ -2379,6 +2379,8 @@ class Battle::AI
     return 0 if user.nil? || target.nil?
     moveIdx = user.moves.find_index(move)
     return 0 if moveIdx.nil?
-    return @damagesAI.dig(user.index, moveIdx, :dmg, target.index) || 0
+    damage = @damagesAI.dig(user.index, moveIdx, :dmg, target.index) || 0
+    echoln("\nAI Damage Pre-Calc for #{move.name} from #{user.name} to #{target.name}: #{damage}\n") if $AIGENERALLOG
+    return damage
   end
 end
