@@ -1,1546 +1,1546 @@
 -----------------------------------------------------------------------
            High Score Board for Strelavison
 -----------------------------------------------------------------------
-Move Metronome has the final score 2885 | Time: 567.452 ms
-Move Fake Out has the final score 2885 | Time: 92.55 ms
-Move Gravity has the final score 1060 | Time: 63.267 ms
-Move Quiver Dance has the final score 444 | Time: 64.628 ms
-Move Trick Room has the final score 409 | Time: 78.251 ms
-Move Spore has the final score 408 | Time: 25.21 ms
-Move Grass Whistle has the final score 404 | Time: 28.105 ms
-Move Lovely Kiss has the final score 404 | Time: 24.346 ms
-Move Hypnosis has the final score 404 | Time: 22.858 ms
-Move Sing has the final score 404 | Time: 23.657 ms
-Move Sleep Powder has the final score 404 | Time: 43.886 ms
-Move Shell Smash has the final score 373 | Time: 62.627 ms
-Move Obstruct has the final score 350 | Time: 26.957 ms
-Move King's Shield has the final score 350 | Time: 25.004 ms
-Move Nuzzle has the final score 286 | Time: 111.501 ms
-Move Reflect has the final score 284 | Time: 53.777 ms
-Move Stun Spore has the final score 283 | Time: 103.516 ms
-Move Glare has the final score 283 | Time: 84.308 ms
-Move Thunder Wave has the final score 283 | Time: 85.997 ms
-Move Yawn has the final score 277 | Time: 20.378 ms
-Move No Retreat has the final score 271 | Time: 59.839 ms
-Move Spiky Shield has the final score 269 | Time: 15.253 ms
-Move Baneful Bunker has the final score 269 | Time: 15.428 ms
-Move Substitute has the final score 264 | Time: 57.253 ms
-Move Speed Swap has the final score 257 | Time: 17.393 ms
-Move Geomancy has the final score 252 | Time: 58.528 ms
-Move Magnet Rise has the final score 249 | Time: 55.014 ms
-Move Tailwind has the final score 229 | Time: 22.774 ms
-Move Autotomize has the final score 228 | Time: 62.254 ms
-Move Rock Polish has the final score 228 | Time: 65.368 ms
-Move Electric Terrain has the final score 222 | Time: 27.761 ms
-Move Grassy Terrain has the final score 222 | Time: 40.118 ms
-Move Calm Mind has the final score 214 | Time: 66.631 ms
-Move Encore has the final score 209 | Time: 22.576 ms
-Move Agility has the final score 207 | Time: 66.759 ms
-Move Tail Glow has the final score 205 | Time: 65.362 ms
-Move Assist has the final score 204 | Time: 4348.811 ms
-Move Will-O-Wisp has the final score 204 | Time: 20.976 ms
-Move Nasty Plot has the final score 199 | Time: 64.144 ms
-Move Water Sport has the final score 199 | Time: 40.471 ms
-Move Misty Terrain has the final score 195 | Time: 39.943 ms
-Move Acupressure has the final score 190 | Time: 60.065 ms
-Move Baby-Doll Eyes has the final score 182 | Time: 69.96 ms
-Move Zap Cannon has the final score 180 | Time: 101.858 ms
-Move Coil has the final score 180 | Time: 71.213 ms
-Move Stealth Rock has the final score 179 | Time: 18.258 ms
-Move Detect has the final score 179 | Time: 14.434 ms
-Move Protect has the final score 179 | Time: 13.818 ms
-Move Shift Gear has the final score 178 | Time: 65.379 ms
-Move Soak has the final score 173 | Time: 17.314 ms
-Move Spikes has the final score 170 | Time: 28.092 ms
-Move Flame Charge has the final score 170 | Time: 75.723 ms
-Move Toxic Spikes has the final score 170 | Time: 18.726 ms
-Move Nature's Madness has the final score 170 | Time: 18.529 ms
-Move Super Fang has the final score 170 | Time: 17.842 ms
-Move Core Enforcer has the final score 168 | Time: 46.245 ms
-Move Payback has the final score 166 | Time: 28.613 ms
-Move Clangorous Soul has the final score 165 | Time: 30.651 ms
-Move Counter has the final score 165 | Time: 44.421 ms
-Move Sucker Punch has the final score 165 | Time: 88.799 ms
-Move Psychic Terrain has the final score 165 | Time: 36.894 ms
-Move Revenge has the final score 163 | Time: 27.118 ms
-Move Avalanche has the final score 163 | Time: 40.584 ms
-Move Confuse Ray has the final score 159 | Time: 40.228 ms
-Move Toxic Thread has the final score 158 | Time: 28.301 ms
-Move Sunny Day has the final score 153 | Time: 35.368 ms
-Move Sticky Web has the final score 152 | Time: 17.576 ms
-Move Coaching has the final score 151 | Time: 22.264 ms
-Move Focus Energy has the final score 146 | Time: 57.492 ms
-Move Fiery Dance has the final score 143 | Time: 109.174 ms
-Move Charge Beam has the final score 143 | Time: 115.767 ms
-Move Power-Up Punch has the final score 143 | Time: 121.509 ms
-Move Light Screen has the final score 142 | Time: 62.647 ms
-Move Worry Seed has the final score 142 | Time: 41.008 ms
-Move Gastro Acid has the final score 142 | Time: 30.594 ms
-Move Virus Inject has the final score 142 | Time: 13.197 ms
-Move Simple Beam has the final score 142 | Time: 31.219 ms
-Move Metal Burst has the final score 141 | Time: 41.399 ms
-Move Dragon Dance has the final score 141 | Time: 73.73 ms
-Move Scale Shot has the final score 140 | Time: 80.657 ms
-Move Trump Card has the final score 140 | Time: 73.287 ms
-Move Rage has the final score 137 | Time: 80.37 ms
-Move Cotton Spore has the final score 136 | Time: 22.978 ms
-Move Scary Face has the final score 136 | Time: 20.164 ms
-Move Aqua Ring has the final score 136 | Time: 59.051 ms
-Move Bolt Strike has the final score 133 | Time: 95.634 ms
-Move Toxic has the final score 131 | Time: 19.723 ms
-Move Ingrain has the final score 130 | Time: 62.746 ms
-Move Feather Dance has the final score 130 | Time: 77.621 ms
-Move Discharge has the final score 128 | Time: 108.084 ms
-Move Body Slam has the final score 128 | Time: 107.257 ms
-Move Chatter has the final score 128 | Time: 75.15 ms
-Move String Shot has the final score 127 | Time: 18.945 ms
-Move Spark has the final score 126 | Time: 95.649 ms
-Move Wring Out has the final score 126 | Time: 25.263 ms
-Move Crush Grip has the final score 126 | Time: 26.386 ms
-Move Sacred Fire has the final score 126 | Time: 31.703 ms
-Move Rain Dance has the final score 125 | Time: 34.732 ms
-Move Thunder Cage has the final score 125 | Time: 67.548 ms
-Move Dragon Breath has the final score 125 | Time: 95.493 ms
-Move Double Iron Bash has the final score 125 | Time: 74.823 ms
-Move Force Palm has the final score 125 | Time: 103.326 ms
-Move Bulk Up has the final score 124 | Time: 66.069 ms
-Move Swagger has the final score 124 | Time: 36.404 ms
-Move Meteor Beam has the final score 124 | Time: 72.477 ms
-Move Teeter Dance has the final score 124 | Time: 37.122 ms
-Move Sweet Kiss has the final score 123 | Time: 34.64 ms
-Move Eerie Spell has the final score 122 | Time: 29.013 ms
-Move Charm has the final score 122 | Time: 59.838 ms
-Move Hard Drive Crash has the final score 122 | Time: 26.573 ms
-Move Lick has the final score 122 | Time: 100.595 ms
-Move Titan's Wrath has the final score 121 | Time: 30.746 ms
-Move Steam Eruption has the final score 121 | Time: 35.315 ms
-Move Blue Flare has the final score 121 | Time: 31.756 ms
-Move Rebalancing has the final score 120 | Time: 84.571 ms
-Move Fire Spin has the final score 119 | Time: 66.015 ms
-Move Whirlpool has the final score 119 | Time: 67.994 ms
-Move Tar Shot has the final score 119 | Time: 21.045 ms
-Move Sand Tomb has the final score 119 | Time: 75.339 ms
-Move Snap Trap has the final score 119 | Time: 85.599 ms
-Move Clamp has the final score 119 | Time: 67.955 ms
-Move Bide has the final score 117 | Time: 110.108 ms
-Move Water Spout has the final score 117 | Time: 43.893 ms
-Move Eruption has the final score 117 | Time: 42.011 ms
-Move Foul Play has the final score 117 | Time: 26.875 ms
-Move Bind has the final score 117 | Time: 69.584 ms
-Move Infestation has the final score 117 | Time: 66.709 ms
-Move Dragon Energy has the final score 117 | Time: 43.747 ms
-Move Wrap has the final score 117 | Time: 76.905 ms
-Move Queso Blast has the final score 116 | Time: 27.418 ms
-Move V-create has the final score 115 | Time: 51.572 ms
-Move Leech Seed has the final score 115 | Time: 19.987 ms
-Move Frigid Maw has the final score 115 | Time: 33.8 ms
-Move Boomburst has the final score 115 | Time: 33.242 ms
-Move Drum Beating has the final score 115 | Time: 38.387 ms
-Move Triple Axel has the final score 115 | Time: 31.016 ms
-Move Curse has the final score 114 | Time: 64.906 ms
-Move Final Gambit has the final score 114 | Time: 27.363 ms
-Move Poison Gas has the final score 114 | Time: 24.728 ms
-Move Glaciate has the final score 113 | Time: 33.584 ms
-Move Low Sweep has the final score 113 | Time: 31.884 ms
-Move Mud Shot has the final score 112 | Time: 32.206 ms
-Move Seed Flare has the final score 112 | Time: 34.86 ms
-Move Searing Shot has the final score 112 | Time: 36.292 ms
-Move Bulldoze has the final score 112 | Time: 33.598 ms
-Move Icy Wind has the final score 112 | Time: 32.036 ms
-Move Night Shade has the final score 112 | Time: 18.927 ms
-Move High Jump Kick has the final score 112 | Time: 32.644 ms
-Move Seismic Toss has the final score 112 | Time: 20.564 ms
-Move Psywave has the final score 112 | Time: 17.577 ms
-Move Electroweb has the final score 112 | Time: 33.486 ms
-Move Rock Tomb has the final score 112 | Time: 31.961 ms
-Move Golden Splash has the final score 111 | Time: 26.789 ms
-Move Heat Crash has the final score 110 | Time: 26.648 ms
-Move Precipice Blades has the final score 110 | Time: 42.596 ms
-Move Astral Barrage has the final score 110 | Time: 37.473 ms
-Move Heavy Slam has the final score 110 | Time: 31.117 ms
-Move Present has the final score 110 | Time: 25.776 ms
-Move Lava Plume has the final score 110 | Time: 31.75 ms
-Move Mat Block has the final score 109 | Time: 9.935 ms
-Move Beak Blast has the final score 109 | Time: 103.123 ms
-Move Light of Ruin has the final score 109 | Time: 31.583 ms
-Move Hone Claws has the final score 109 | Time: 63.54 ms
-Move Surging Strikes has the final score 108 | Time: 29.043 ms
-Move Relic Song has the final score 108 | Time: 38.598 ms
-Move Siren Song has the final score 108 | Time: 36.121 ms
-Move Poison Powder has the final score 108 | Time: 22.823 ms
-Move Magma Storm has the final score 108 | Time: 70.355 ms
-Move Fake Tears has the final score 108 | Time: 19.972 ms
-Move Volt Tackle has the final score 107 | Time: 37.456 ms
-Move Wicked Blow has the final score 107 | Time: 27.44 ms
-Move Flare Blitz has the final score 107 | Time: 34.19 ms
-Move Power Whip has the final score 106 | Time: 34.588 ms
-Move Megahorn has the final score 106 | Time: 31.186 ms
-Move Transform has the final score 106 | Time: 15.098 ms
-Move Thunder has the final score 105 | Time: 96.271 ms
-Move Gunk Shot has the final score 104 | Time: 34.935 ms
-Move Wonder Room has the final score 104 | Time: 16.496 ms
-Move Inferno has the final score 104 | Time: 31.841 ms
-Move Mist has the final score 104 | Time: 17.166 ms
-Move Rollout has the final score 103 | Time: 71.214 ms
-Move Ice Ball has the final score 103 | Time: 72.338 ms
-Move Thunderbolt has the final score 103 | Time: 95.519 ms
-Move Cosmic Power has the final score 103 | Time: 100.041 ms
-Move Jolt Kick has the final score 103 | Time: 97.426 ms
-Move Defend Order has the final score 103 | Time: 98.733 ms
-Move Wild Charge has the final score 103 | Time: 107.881 ms
-Move Wood Hammer has the final score 102 | Time: 35.771 ms
-Move Ow The Edge has the final score 102 | Time: 30.507 ms
-Move Double-Edge has the final score 102 | Time: 29.925 ms
-Move Meteor Mash has the final score 102 | Time: 76.72 ms
-Move Head Charge has the final score 102 | Time: 28.05 ms
-Move Brave Bird has the final score 102 | Time: 45.379 ms
-Move Zing Zap has the final score 102 | Time: 99.223 ms
-Move Echoed Voice has the final score 101 | Time: 71.947 ms
-Move Acid Spray has the final score 101 | Time: 34.497 ms
-Move Metal Sound has the final score 101 | Time: 19.384 ms
-Move Growl has the final score 101 | Time: 58.753 ms
-Move Thunder Punch has the final score 101 | Time: 96.654 ms
-Move Fury Cutter has the final score 101 | Time: 68.914 ms
-Move Secret Power has the final score 101 | Time: 38.433 ms
-Move Play Nice has the final score 101 | Time: 56.497 ms
-Move Freeze Shock has the final score 100 | Time: 75.241 ms
-Move Thunder Fang has the final score 100 | Time: 99.002 ms
-Move Superpower has the final score 99 | Time: 48.105 ms
-Move Hail has the final score 99 | Time: 32.729 ms
-Move Strange Steam has the final score 99 | Time: 48.284 ms
-Move First Impression has the final score 99 | Time: 100.03 ms
-Move Spite has the final score 99 | Time: 18.87 ms
-Move Ice Burn has the final score 98 | Time: 80.405 ms
-Move Head Smash has the final score 98 | Time: 27.002 ms
-Move Blaze Kick has the final score 97 | Time: 36.841 ms
-Move Flamethrower has the final score 97 | Time: 32.556 ms
-Move Forge Breath has the final score 97 | Time: 34.579 ms
-Move Thunder Shock has the final score 97 | Time: 97.664 ms
-Move Dizzy Punch has the final score 97 | Time: 46.938 ms
-Move Biting Cold has the final score 96 | Time: 18.647 ms
-Move Pyro Ball has the final score 96 | Time: 31.81 ms
-Move Fire Blast has the final score 96 | Time: 32.269 ms
-Move Tri Attack has the final score 96 | Time: 31.424 ms
-Move Nature Power has the final score 96 | Time: 39.809 ms
-Move Silver Wind has the final score 95 | Time: 35.489 ms
-Move Sludge Bomb has the final score 95 | Time: 32.095 ms
-Move Fire Punch has the final score 95 | Time: 37.561 ms
-Move Rock Climb has the final score 95 | Time: 49.402 ms
-Move Ominous Wind has the final score 95 | Time: 33.552 ms
-Move Ancient Power has the final score 95 | Time: 39.67 ms
-Move Fire Fang has the final score 94 | Time: 36.562 ms
-Move Shell Side Arm has the final score 94 | Time: 36.435 ms
-Move Poison Jab has the final score 94 | Time: 34.074 ms
-Move Poison Fang has the final score 94 | Time: 34.183 ms
-Move Heat Wave has the final score 94 | Time: 31.6 ms
-Move Acrobatics has the final score 94 | Time: 35.832 ms
-Move Origin Pulse has the final score 94 | Time: 30.087 ms
-Move Flame Wheel has the final score 93 | Time: 34.667 ms
-Move Dragon Rage has the final score 93 | Time: 17.713 ms
-Move Bonemerang has the final score 93 | Time: 31.777 ms
-Move Dragon Darts has the final score 93 | Time: 26.424 ms
-Move Frustration has the final score 93 | Time: 30.444 ms
-Move Return has the final score 93 | Time: 35.688 ms
-Move Spacial Rend has the final score 93 | Time: 31.459 ms
-Move Aeroblast has the final score 93 | Time: 51.699 ms
-Move Signal Beam has the final score 93 | Time: 44.502 ms
-Move Attack Order has the final score 93 | Time: 45.81 ms
-Move Magnitude has the final score 93 | Time: 33.925 ms
-Move Crabhammer has the final score 93 | Time: 29.781 ms
-Move Sludge Wave has the final score 93 | Time: 35.021 ms
-Move Fusion Flare has the final score 92 | Time: 30.21 ms
-Move Pin Missile has the final score 92 | Time: 37.295 ms
-Move Dynamax Cannon has the final score 92 | Time: 28.791 ms
-Move Sludge has the final score 92 | Time: 43.144 ms
-Move Jump Kick has the final score 92 | Time: 41.459 ms
-Move Glacial Lance has the final score 92 | Time: 31.128 ms
-Move Flying Press has the final score 92 | Time: 28.57 ms
-Move Leaf Blade has the final score 92 | Time: 34.593 ms
-Move Body Press has the final score 92 | Time: 25.56 ms
-Move Copycat has the final score 92 | Time: 39.596 ms
-Move Photon Geyser has the final score 92 | Time: 30.181 ms
-Move Psystrike has the final score 92 | Time: 27.38 ms
-Move Psycrush has the final score 92 | Time: 25.702 ms
-Move Mirror Move has the final score 92 | Time: 45.937 ms
-Move Icicle Spear has the final score 92 | Time: 27.887 ms
-Move Sunsteel Strike has the final score 92 | Time: 28.855 ms
-Move Psybeam has the final score 92 | Time: 45.268 ms
-Move Behemoth Blade has the final score 92 | Time: 32.233 ms
-Move Low Kick has the final score 92 | Time: 26.43 ms
-Move Moongeist Beam has the final score 92 | Time: 30.243 ms
-Move Behemoth Bash has the final score 92 | Time: 30.072 ms
-Move Tail Slap has the final score 92 | Time: 28.145 ms
-Move Scatterdust has the final score 92 | Time: 28.083 ms
-Move Earthquake has the final score 92 | Time: 38.372 ms
-Move Bullet Seed has the final score 92 | Time: 31.57 ms
-Move Fusion Bolt has the final score 92 | Time: 27.253 ms
-Move Mana Drain has the final score 92 | Time: 36.857 ms
-Move Bone Rush has the final score 92 | Time: 27.194 ms
-Move Strength has the final score 92 | Time: 30.977 ms
-Move Plasma Fists has the final score 92 | Time: 26.496 ms
-Move Rock Blast has the final score 92 | Time: 27.314 ms
-Move Multi-Attack has the final score 92 | Time: 28.728 ms
-Move Techno Blast has the final score 92 | Time: 29.62 ms
-Move Judgment has the final score 92 | Time: 29.711 ms
-Move Grass Knot has the final score 92 | Time: 29.067 ms
-Move Revelation Dance has the final score 91 | Time: 25.406 ms
-Move Mega Kick has the final score 91 | Time: 33.842 ms
-Move Comet Punch has the final score 91 | Time: 28.262 ms
-Move Dual Chop has the final score 91 | Time: 30.271 ms
-Move Dragon Hammer has the final score 91 | Time: 31.939 ms
-Move Storm Throw has the final score 91 | Time: 26.403 ms
-Move Lucky Chant has the final score 91 | Time: 28.519 ms
-Move Beat Up has the final score 91 | Time: 26.61 ms
-Move Psychic has the final score 91 | Time: 36.196 ms
-Move Ember has the final score 91 | Time: 36.212 ms
-Move Frost Breath has the final score 91 | Time: 28.004 ms
-Move Fiery Wrath has the final score 91 | Time: 28.221 ms
-Move Gear Grind has the final score 91 | Time: 29.838 ms
-Move Energy Ball has the final score 91 | Time: 45.977 ms
-Move Metal Claw has the final score 91 | Time: 82.53 ms
-Move Petal Blizzard has the final score 91 | Time: 40.967 ms
-Move Sacred Sword has the final score 91 | Time: 25.064 ms
-Move Thunderous Kick has the final score 91 | Time: 30.017 ms
-Move Aqua Tail has the final score 91 | Time: 30.861 ms
-Move Grav Apple has the final score 91 | Time: 32.195 ms
-Move Muddy Water has the final score 91 | Time: 29.016 ms
-Move Sparkling Aria has the final score 91 | Time: 32.359 ms
-Move Surf has the final score 91 | Time: 27.433 ms
-Move Snipe Shot has the final score 91 | Time: 25.41 ms
-Move Force Wave has the final score 91 | Time: 30.537 ms
-Move Thousand Folds has the final score 91 | Time: 26.59 ms
-Move Drill Run has the final score 91 | Time: 29.977 ms
-Move Thousand Arrows has the final score 91 | Time: 28.216 ms
-Move Land's Wrath has the final score 91 | Time: 35.368 ms
-Move Earth Power has the final score 91 | Time: 36.912 ms
-Move Trim Tackle has the final score 91 | Time: 27.033 ms
-Move Splinter Shot has the final score 91 | Time: 29.828 ms
-Move Moonblast has the final score 91 | Time: 28.695 ms
-Move Play Rough has the final score 91 | Time: 36.82 ms
-Move Bug Buzz has the final score 91 | Time: 41.344 ms
-Move Hyper Voice has the final score 91 | Time: 38.07 ms
-Move Throat Chop has the final score 90 | Time: 80.355 ms
-Move Liquidation has the final score 90 | Time: 33.58 ms
-Move False Surrender has the final score 90 | Time: 27.863 ms
-Move Dark Pulse has the final score 90 | Time: 29.047 ms
-Move Crunch has the final score 90 | Time: 29.601 ms
-Move Secret Sword has the final score 90 | Time: 26.408 ms
-Move Scald has the final score 90 | Time: 27.585 ms
-Move Defog has the final score 90 | Time: 25.56 ms
-Move Jungle Healing has the final score 90 | Time: 16.973 ms
-Move Dragon Pulse has the final score 90 | Time: 32.125 ms
-Move Leech Life has the final score 90 | Time: 36.085 ms
-Move Night Daze has the final score 90 | Time: 28.648 ms
-Move Lunge has the final score 90 | Time: 32.379 ms
-Move Dragon Claw has the final score 90 | Time: 29.881 ms
-Move Water Pledge has the final score 90 | Time: 26.193 ms
-Move Power Gem has the final score 90 | Time: 29.386 ms
-Move Waterfall has the final score 90 | Time: 29.022 ms
-Move Bubble Beam has the final score 90 | Time: 36.595 ms
-Move Darkest Lariat has the final score 90 | Time: 25.811 ms
-Move High Horsepower has the final score 90 | Time: 38.542 ms
-Move Cross Poison has the final score 90 | Time: 41.712 ms
-Move Extrasensory has the final score 90 | Time: 30.57 ms
-Move Oblivion Wing has the final score 90 | Time: 56.919 ms
-Move Hyperspace Hole has the final score 90 | Time: 26.186 ms
-Move Poltergeist has the final score 90 | Time: 30.901 ms
-Move Spike Cannon has the final score 90 | Time: 26.997 ms
-Move Aura Sphere has the final score 90 | Time: 27.811 ms
-Move Court Change has the final score 90 | Time: 18.16 ms
-Move Psyshock has the final score 90 | Time: 27.153 ms
-Move Zen Headbutt has the final score 90 | Time: 29.086 ms
-Move Fire Lash has the final score 90 | Time: 34.201 ms
-Move Shadow Bone has the final score 90 | Time: 31.07 ms
-Move Shadow Ball has the final score 90 | Time: 36.133 ms
-Move Slam has the final score 90 | Time: 29.887 ms
-Move Mega Punch has the final score 90 | Time: 30.13 ms
-Move Hyper Fang has the final score 90 | Time: 27.958 ms
-Move Extreme Speed has the final score 90 | Time: 87.532 ms
-Move Iron Head has the final score 90 | Time: 30.796 ms
-Move Erosion Wave has the final score 90 | Time: 31.111 ms
-Move Drill Peck has the final score 90 | Time: 47.227 ms
-Move X-Scissor has the final score 90 | Time: 49.563 ms
-Move Flash Cannon has the final score 90 | Time: 34.697 ms
-Move Fire Pledge has the final score 90 | Time: 33.385 ms
-Move Sky Uppercut has the final score 90 | Time: 28.741 ms
-Move Seed Bomb has the final score 90 | Time: 33.928 ms
-Move Grass Pledge has the final score 90 | Time: 28.43 ms
-Move Smog has the final score 90 | Time: 33.854 ms
-Move Freezing Glare has the final score 90 | Time: 32.696 ms
-Move Ice Beam has the final score 90 | Time: 32.883 ms
-Move Icicle Crash has the final score 90 | Time: 27.795 ms
-Move Frost Kick has the final score 90 | Time: 40.543 ms
-Move Scouring Winds has the final score 90 | Time: 31.298 ms
-Move Mystic Lance has the final score 90 | Time: 28.923 ms
-Move Apple Acid has the final score 90 | Time: 37.327 ms
-Move Psychic Fangs has the final score 90 | Time: 25.444 ms
-Move Confusion has the final score 90 | Time: 49.209 ms
-Move Dazzling Gleam has the final score 90 | Time: 29.715 ms
-Move Overdrive has the final score 90 | Time: 30.178 ms
-Move Psycho Cut has the final score 89 | Time: 31.207 ms
-Move Flame Burst has the final score 89 | Time: 25.922 ms
-Move Spirit Break has the final score 89 | Time: 35.213 ms
-Move Petal Dance has the final score 89 | Time: 37.383 ms
-Move Burning Jealousy has the final score 89 | Time: 34.146 ms
-Move Wake-Up Slap has the final score 89 | Time: 26.59 ms
-Move Air Slash has the final score 89 | Time: 49.578 ms
-Move Pollen Puff has the final score 89 | Time: 29.243 ms
-Move Night Slash has the final score 89 | Time: 29.544 ms
-Move Rock Slide has the final score 89 | Time: 27.65 ms
-Move Razor Shell has the final score 89 | Time: 35.459 ms
-Move Pepper Spray has the final score 89 | Time: 24.302 ms
-Move Vital Throw has the final score 89 | Time: 27.884 ms
-Move Toxiravage has the final score 89 | Time: 87.85 ms
-Move Stomping Tantrum has the final score 89 | Time: 30.802 ms
-Move Drain Punch has the final score 89 | Time: 33.952 ms
-Move Scorching Sands has the final score 89 | Time: 26.875 ms
-Move Double Hit has the final score 89 | Time: 27.982 ms
-Move Brick Break has the final score 89 | Time: 25.488 ms
-Move Cross Chop has the final score 89 | Time: 28.883 ms
-Move Skitter Smack has the final score 89 | Time: 31.081 ms
-Move Outrage has the final score 89 | Time: 36.501 ms
-Move Giga Drain has the final score 89 | Time: 38.039 ms
-Move Dual Wingbeat has the final score 89 | Time: 48.143 ms
-Move Mystical Fire has the final score 89 | Time: 29.369 ms
-Move Mist Ball has the final score 89 | Time: 29.236 ms
-Move Luster Purge has the final score 89 | Time: 32.018 ms
-Move Lash Out has the final score 89 | Time: 27.469 ms
-Move Stalagbite has the final score 89 | Time: 33.19 ms
-Move Horn Leech has the final score 89 | Time: 50.147 ms
-Move Smart Strike has the final score 89 | Time: 30.399 ms
-Move Triple Kick has the final score 89 | Time: 29.322 ms
-Move Smelling Salts has the final score 89 | Time: 25.768 ms
-Move Slash has the final score 89 | Time: 31.387 ms
-Move Trop Kick has the final score 89 | Time: 32.177 ms
-Move Retaliate has the final score 89 | Time: 28.102 ms
-Move Headbutt has the final score 89 | Time: 29.547 ms
-Move Facade has the final score 89 | Time: 26.703 ms
-Move Crush Claw has the final score 89 | Time: 34.141 ms
-Move Shadow Claw has the final score 89 | Time: 31.842 ms
-Move Chip Away has the final score 89 | Time: 30.331 ms
-Move Steamroller has the final score 88 | Time: 32.365 ms
-Move Iron Tail has the final score 88 | Time: 32.534 ms
-Move Double Kick has the final score 88 | Time: 27.375 ms
-Move Aurora Beam has the final score 88 | Time: 32.751 ms
-Move Venoshock has the final score 88 | Time: 30.756 ms
-Move Brine has the final score 88 | Time: 30.372 ms
-Move Water Pulse has the final score 88 | Time: 29.179 ms
-Move Horn Attack has the final score 88 | Time: 29.553 ms
-Move Chilling Wail has the final score 88 | Time: 35.918 ms
-Move Air Cutter has the final score 88 | Time: 49.825 ms
-Move Barrage has the final score 88 | Time: 28.315 ms
-Move Fury Swipes has the final score 88 | Time: 29.485 ms
-Move Freeze-Dry has the final score 88 | Time: 32.972 ms
-Move Ice Punch has the final score 88 | Time: 36.917 ms
-Move Cut has the final score 88 | Time: 31.488 ms
-Move Bone Club has the final score 88 | Time: 28.975 ms
-Move Stomp has the final score 88 | Time: 28.581 ms
-Move Poison Tail has the final score 88 | Time: 36.9 ms
-Move Mud Bomb has the final score 88 | Time: 30.558 ms
-Move Parabolic Charge has the final score 88 | Time: 33.987 ms
-Move Dragon Rush has the final score 88 | Time: 28.652 ms
-Move Steel Wing has the final score 88 | Time: 124.172 ms
-Move Mirror Shot has the final score 88 | Time: 31.871 ms
-Move Leaf Tornado has the final score 88 | Time: 33.305 ms
-Move Magnet Bomb has the final score 87 | Time: 27.841 ms
-Move Expanding Force has the final score 87 | Time: 28.193 ms
-Move Bug Bite has the final score 87 | Time: 38.76 ms
-Move Heart Stamp has the final score 87 | Time: 30.208 ms
-Move Water Shuriken has the final score 87 | Time: 86.171 ms
-Move Bite has the final score 87 | Time: 35.461 ms
-Move Kinetic Rend has the final score 87 | Time: 32.101 ms
-Move Vise Grip has the final score 87 | Time: 33.044 ms
-Move Magical Leaf has the final score 87 | Time: 31.577 ms
-Move Swift has the final score 87 | Time: 28.515 ms
-Move Round has the final score 87 | Time: 26.84 ms
-Move Hidden Power has the final score 87 | Time: 24.633 ms
-Move Twineedle has the final score 87 | Time: 34.658 ms
-Move Arm Thrust has the final score 87 | Time: 29.983 ms
-Move Fury Attack has the final score 87 | Time: 28.219 ms
-Move Covet has the final score 87 | Time: 36.061 ms
-Move Incinerate has the final score 87 | Time: 25.667 ms
-Move Aerial Ace has the final score 87 | Time: 45.108 ms
-Move Bubble has the final score 87 | Time: 37.126 ms
-Move Razor Leaf has the final score 87 | Time: 29.727 ms
-Move Pluck has the final score 87 | Time: 39.524 ms
-Move Snarl has the final score 87 | Time: 30.045 ms
-Move Octazooka has the final score 87 | Time: 28.486 ms
-Move Shock Wave has the final score 87 | Time: 27.619 ms
-Move Grassy Glide has the final score 87 | Time: 27.545 ms
-Move Breaking Swipe has the final score 87 | Time: 31.836 ms
-Move Assurance has the final score 87 | Time: 28.896 ms
-Move Wing Attack has the final score 87 | Time: 46.888 ms
-Move Feint Attack has the final score 87 | Time: 27.978 ms
-Move Shadow Punch has the final score 87 | Time: 38.281 ms
-Move Hex has the final score 87 | Time: 28.831 ms
-Move Ice Fang has the final score 87 | Time: 33.67 ms
-Move Brutal Swing has the final score 87 | Time: 29.574 ms
-Move Thief has the final score 87 | Time: 30.621 ms
-Move Rolling Kick has the final score 87 | Time: 28.859 ms
-Move Karate Chop has the final score 87 | Time: 32.327 ms
-Move Dragon Ascent has the final score 87 | Time: 82.167 ms
-Move Double Slap has the final score 87 | Time: 29.955 ms
-Move Mega Drain has the final score 86 | Time: 48.036 ms
-Move Struggle Bug has the final score 86 | Time: 29.626 ms
-Move Rock Throw has the final score 86 | Time: 31.718 ms
-Move Smack Down has the final score 86 | Time: 28.97 ms
-Move Fell Stinger has the final score 86 | Time: 38.673 ms
-Move Sweet Tooth has the final score 86 | Time: 28.662 ms
-Move Rising Voltage has the final score 86 | Time: 36.737 ms
-Move Bolt Beak has the final score 86 | Time: 29.487 ms
-Move Poison Sting has the final score 86 | Time: 31.396 ms
-Move Draining Kiss has the final score 86 | Time: 34.575 ms
-Move Fishious Rend has the final score 86 | Time: 32.105 ms
-Move Clear Smog has the final score 86 | Time: 31.284 ms
-Move Rapid Spin has the final score 86 | Time: 31.912 ms
-Move Terrain Pulse has the final score 86 | Time: 30.206 ms
-Move Weather Ball has the final score 86 | Time: 28.411 ms
-Move Pound has the final score 85 | Time: 29.332 ms
-Move Pay Day has the final score 85 | Time: 29.161 ms
-Move Hold Back has the final score 85 | Time: 37.698 ms
-Move False Swipe has the final score 85 | Time: 35.595 ms
-Move Quick Attack has the final score 85 | Time: 87.719 ms
-Move Bullet Punch has the final score 85 | Time: 86.656 ms
-Move Scratch has the final score 85 | Time: 32.616 ms
-Move Shadow Sneak has the final score 85 | Time: 99.146 ms
-Move Mach Punch has the final score 85 | Time: 85.277 ms
-Move Rock Smash has the final score 85 | Time: 34.911 ms
-Move Vacuum Wave has the final score 85 | Time: 91.055 ms
-Move Fairy Wind has the final score 85 | Time: 29.567 ms
-Move Disarming Voice has the final score 85 | Time: 28.206 ms
-Move Tackle has the final score 85 | Time: 33.694 ms
-Move Electro Ball has the final score 85 | Time: 27.415 ms
-Move Spectral Thief has the final score 85 | Time: 36.726 ms
-Move Corrosive Gas has the final score 85 | Time: 25.832 ms
-Move Gust has the final score 85 | Time: 33.792 ms
-Move Knock Off has the final score 85 | Time: 30.491 ms
-Move Ice Shard has the final score 85 | Time: 85.297 ms
-Move Crimson Surge has the final score 85 | Time: 23.55 ms
-Move Acid has the final score 85 | Time: 34.987 ms
-Move Pursuit has the final score 85 | Time: 29.421 ms
-Move Twister has the final score 85 | Time: 26.979 ms
-Move Leafage has the final score 85 | Time: 38.675 ms
-Move Branch Poke has the final score 85 | Time: 40.774 ms
-Move Think Fast has the final score 85 | Time: 89.735 ms
-Move Close Combat has the final score 85 | Time: 48.004 ms
-Move Accelerock has the final score 85 | Time: 94.794 ms
-Move Vine Whip has the final score 85 | Time: 36.877 ms
-Move Water Gun has the final score 85 | Time: 28.977 ms
-Move Aqua Jet has the final score 85 | Time: 85.428 ms
-Move Noble Roar has the final score 84 | Time: 86.435 ms
-Move Absorb has the final score 84 | Time: 34.342 ms
-Move Mimic has the final score 84 | Time: 41.311 ms
-Move Powder Snow has the final score 84 | Time: 39.472 ms
-Move Feint has the final score 84 | Time: 97.494 ms
-Move Life Dew has the final score 84 | Time: 12.633 ms
-Move Astonish has the final score 84 | Time: 31.1 ms
-Move Gyro Ball has the final score 84 | Time: 31.971 ms
-Move Peck has the final score 84 | Time: 32.127 ms
-Move Cotton Guard has the final score 84 | Time: 111.384 ms
-Move Tearful Look has the final score 84 | Time: 118.791 ms
-Move Sketch has the final score 84 | Time: 38.897 ms
-Move Magic Room has the final score 83 | Time: 22.201 ms
-Move Constrict has the final score 83 | Time: 32.108 ms
-Move Laser Focus has the final score 83 | Time: 11.449 ms
-Move Lock-On has the final score 83 | Time: 13.598 ms
-Move Heal Block has the final score 83 | Time: 13.682 ms
-Move Sky Attack has the final score 83 | Time: 72.571 ms
-Move Steel Beam has the final score 83 | Time: 79.815 ms
-Move Focus Blast has the final score 83 | Time: 32.395 ms
-Move Mind Reader has the final score 83 | Time: 12.316 ms
-Move Fairy Lock has the final score 83 | Time: 13.774 ms
-Move Take Down has the final score 83 | Time: 29.893 ms
-Move Hydro Pump has the final score 83 | Time: 29.278 ms
-Move Solar Blade has the final score 82 | Time: 82.709 ms
-Move Stored Power has the final score 82 | Time: 25.329 ms
-Move Solar Beam has the final score 82 | Time: 72.662 ms
-Move Mud-Slap has the final score 82 | Time: 31.6 ms
-Move Draco Meteor has the final score 82 | Time: 50.02 ms
-Move Stone Edge has the final score 82 | Time: 28.663 ms
-Move Diamond Storm has the final score 82 | Time: 117.03 ms
-Move Flail has the final score 82 | Time: 41.442 ms
-Move Punishment has the final score 82 | Time: 29.657 ms
-Move Reversal has the final score 82 | Time: 41.661 ms
-Move Power Trip has the final score 82 | Time: 29.139 ms
-Move Submission has the final score 82 | Time: 30.494 ms
-Move Geode Burst has the final score 81 | Time: 31.641 ms
-Move Razor Wind has the final score 81 | Time: 65.94 ms
-Move Acid Armor has the final score 80 | Time: 99.261 ms
-Move Leaf Storm has the final score 80 | Time: 48.462 ms
-Move Barrier has the final score 80 | Time: 100.828 ms
-Move Fleur Cannon has the final score 80 | Time: 49.573 ms
-Move Magic Powder has the final score 80 | Time: 18.09 ms
-Move Iron Defense has the final score 80 | Time: 103.499 ms
-Move Overheat has the final score 80 | Time: 47.767 ms
-Move Psycho Boost has the final score 80 | Time: 49.635 ms
-Move Focus Punch has the final score 77 | Time: 31.511 ms
-Move Supersonic has the final score 77 | Time: 33.406 ms
-Move Thrash has the final score 77 | Time: 36.956 ms
-Move Uproar has the final score 77 | Time: 26.379 ms
-Move Flatter has the final score 77 | Time: 35.46 ms
-Move Ice Hammer has the final score 75 | Time: 46.701 ms
-Move Hammer Arm has the final score 75 | Time: 48.925 ms
-Move Sandstorm has the final score 74 | Time: 29.565 ms
-Move Dynamic Punch has the final score 74 | Time: 51.102 ms
-Move Growth has the final score 73 | Time: 63.183 ms
-Move Work Up has the final score 73 | Time: 65.355 ms
-Move Excite has the final score 73 | Time: 67.676 ms
-Move Egg Bomb has the final score 73 | Time: 28.879 ms
-Move Trick-or-Treat has the final score 69 | Time: 26.16 ms
-Move Stockpile has the final score 67 | Time: 65.602 ms
-Move Shell Trap has the final score 67 | Time: 77.493 ms
-Move Hurricane has the final score 67 | Time: 83.858 ms
-Move Doom Desire has the final score 67 | Time: 31.679 ms
-Move Amnesia has the final score 67 | Time: 107.202 ms
-Move Future Sight has the final score 66 | Time: 44.014 ms
-Move Blizzard has the final score 66 | Time: 33.819 ms
-Move Shadow Force has the final score 65 | Time: 30.037 ms
-Move Forest's Curse has the final score 63 | Time: 19.325 ms
-Move Power Split has the final score 60 | Time: 17.793 ms
-Move Roar has the final score 60 | Time: 14.53 ms
-Move Destiny Bond has the final score 60 | Time: 13.678 ms
-Move Whirlwind has the final score 60 | Time: 16.039 ms
-Move Skull Bash has the final score 58 | Time: 68.559 ms
-Move Circle Throw has the final score 58 | Time: 31.869 ms
-Move Dragon Tail has the final score 58 | Time: 29.243 ms
-Move Bounce has the final score 56 | Time: 57.589 ms
-Move Miracle Eye has the final score 49 | Time: 18.265 ms
-Move Odor Sleuth has the final score 49 | Time: 17.301 ms
-Move Grudge has the final score 49 | Time: 13.109 ms
-Move Wide Guard has the final score 49 | Time: 11.439 ms
-Move Foresight has the final score 49 | Time: 12.661 ms
-Move Phantom Force has the final score 47 | Time: 37.774 ms
-Move Fly has the final score 46 | Time: 47.38 ms
-Move Sonic Boom has the final score 46 | Time: 18.43 ms
-Move Conversion 2 has the final score 46 | Time: 18.077 ms
-Move Tickle has the final score 45 | Time: 19.69 ms
-Move Charge has the final score 45 | Time: 99.975 ms
-Move Dive has the final score 45 | Time: 27.54 ms
-Move Clanging Scales has the final score 44 | Time: 80.684 ms
-Move Prismatic Laser has the final score 43 | Time: 49.533 ms
-Move Frenzy Plant has the final score 43 | Time: 48.691 ms
-Move Blast Burn has the final score 43 | Time: 43.139 ms
-Move Hyper Beam has the final score 43 | Time: 43.847 ms
-Move Eternabeam has the final score 43 | Time: 50.095 ms
-Move Meteor Assault has the final score 43 | Time: 42.753 ms
-Move Giga Impact has the final score 43 | Time: 42.789 ms
-Move Rock Wrecker has the final score 43 | Time: 41.081 ms
-Move Hydro Cannon has the final score 43 | Time: 45.146 ms
-Move Roar of Time has the final score 43 | Time: 59.835 ms
-Move Sky Drop has the final score 42 | Time: 47.574 ms
-Move Endure has the final score 41 | Time: 64.147 ms
-Move Harden has the final score 37 | Time: 99.661 ms
-Move Withdraw has the final score 37 | Time: 107.121 ms
-Move Defense Curl has the final score 37 | Time: 99.462 ms
-Move Mind Blown has the final score 33 | Time: 96.494 ms
-Move Camouflage has the final score 29 | Time: 16.085 ms
-Move Quick Guard has the final score 29 | Time: 14.697 ms
-Move Strength Sap has the final score 28 | Time: 139.64 ms
-Move Pain Split has the final score 24 | Time: 73.944 ms
-Move Taunt has the final score 23 | Time: 17.218 ms
-Move Dig has the final score 20 | Time: 36.656 ms
-Move Explosion has the final score 19 | Time: 37.36 ms
-Move Crafty Shield has the final score 19 | Time: 11.624 ms
-Move Snatch has the final score 19 | Time: 12.076 ms
-Move Magic Coat has the final score 19 | Time: 13.002 ms
-Move Self-Destruct has the final score 17 | Time: 34.211 ms
-Move Memento has the final score 16 | Time: 14.844 ms
-Move Misty Explosion has the final score 15 | Time: 35.727 ms
-Move Ion Deluge has the final score 13 | Time: 14.324 ms
-Move Perish Song has the final score 11 | Time: 12.352 ms
-Move Shore Up has the final score 10 | Time: 71.203 ms
-Move Roost has the final score 10 | Time: 75.631 ms
-Move Slack Off has the final score 10 | Time: 68.567 ms
-Move Glacial Gulf has the final score 10 | Time: 68.385 ms
-Move Heal Order has the final score 10 | Time: 69.78 ms
-Move Soft-Boiled has the final score 10 | Time: 73.646 ms
-Move Milk Drink has the final score 10 | Time: 74.188 ms
-Move Morning Sun has the final score 10 | Time: 75.109 ms
-Move Synthesis has the final score 10 | Time: 116.229 ms
-Move Moonlight has the final score 10 | Time: 71.542 ms
-Move Recover has the final score 10 | Time: 73.299 ms
-Move Power Trick has the final score 8 | Time: 16.523 ms
-Move Mirror Coat has the final score 3 | Time: 21.417 ms
-Move Recycle has the final score 0 | Time: 10.075 ms
-Move Spotlight has the final score 0 | Time: 10.258 ms
-Move Guard Split has the final score 0 | Time: 12.199 ms
-Move Reflect Type has the final score 0 | Time: 11.184 ms
-Move Safeguard has the final score 0 | Time: 12.149 ms
-Move Guard Swap has the final score 0 | Time: 11.407 ms
-Move Jaw Lock has the final score 0 | Time: 9.247 ms
-Move Psycho Shift has the final score 0 | Time: 12.067 ms
-Move Psych Up has the final score 0 | Time: 12.208 ms
-Move Torment has the final score 0 | Time: 51.847 ms
-Move Hyperspace Fury has the final score 0 | Time: 5.289 ms
-Move Spider Web has the final score 0 | Time: 7.913 ms
-Move Quash has the final score 0 | Time: 0.016 ms
-Move Minimize has the final score 0 | Time: 12.275 ms
-Move Screech has the final score 0 | Time: 14.331 ms
-Move Steel Roller has the final score 0 | Time: 16.285 ms
-Move Swallow has the final score 0 | Time: 9.019 ms
-Move Mean Look has the final score 0 | Time: 8.394 ms
-Move Me First has the final score 0 | Time: 8.791 ms
-Move Leer has the final score 0 | Time: 13.438 ms
-Move Ally Switch has the final score 0 | Time: 58.33 ms
-Move Anchor Shot has the final score 0 | Time: 11.207 ms
-Move Helping Hand has the final score 0 | Time: 9.085 ms
-Move Heal Bell has the final score 0 | Time: 10.18 ms
-Move Power Swap has the final score 0 | Time: 11.988 ms
-Move Sweet Scent has the final score 0 | Time: 0.016 ms
-Move Rage Powder has the final score 0 | Time: 10.229 ms
-Move Follow Me has the final score 0 | Time: 9.965 ms
-Move Swords Dance has the final score 0 | Time: 58.523 ms
-Move Flash has the final score 0 | Time: 12.717 ms
-Move Entertainment has the final score 0 | Time: 12.459 ms
-Move Sharpen has the final score 0 | Time: 61.913 ms
-Move Double Team has the final score 0 | Time: 11.322 ms
-Move Powder has the final score 0 | Time: 54.771 ms
-Move Trick has the final score 0 | Time: 12.33 ms
-Move Disable has the final score 0 | Time: 9.349 ms
-Move Gear Up has the final score 0 | Time: 12.765 ms
-Move Heal Pulse has the final score 0 | Time: 9.595 ms
-Move Refresh has the final score 0 | Time: 9.628 ms
-Move Conversion has the final score 0 | Time: 9.858 ms
-Move Confide has the final score 0 | Time: 11.346 ms
-Move Tail Whip has the final score 0 | Time: 13.42 ms
-Move Burn Up has the final score 0 | Time: 49.262 ms
-Move Teleport has the final score 0 | Time: 1752.529 ms
-Move Meditate has the final score 0 | Time: 66.18 ms
-Move Block has the final score 0 | Time: 8.616 ms
-Move Switcheroo has the final score 0 | Time: 9.817 ms
-Move Bestow has the final score 0 | Time: 0.017 ms
-Move Teatime has the final score 0 | Time: 10.293 ms
-Move Belly Drum has the final score 0 | Time: 59.499 ms
-Move Telekinesis has the final score 0 | Time: 0.017 ms
-Move Baton Pass has the final score 0 | Time: 1809.921 ms
-Move Attract has the final score 0 | Time: 0.017 ms
-Move Parting Shot has the final score 0 | Time: 1768.328 ms
-Move After You has the final score 0 | Time: 0.017 ms
-Move Octolock has the final score 0 | Time: 10.645 ms
-Move Spit Up has the final score 0 | Time: 6.862 ms
-Move Lunar Dance has the final score 0 | Time: 57.044 ms
-Move Topsy-Turvy has the final score 0 | Time: 12.389 ms
-Move Natural Gift has the final score 0 | Time: 6.798 ms
-Move Horn Drill has the final score 0 | Time: 7.58 ms
-Move Guillotine has the final score 0 | Time: 7.571 ms
-Move Flip Turn has the final score 0 | Time: 1871.275 ms
-Move Decorate has the final score 0 | Time: 13.188 ms
-Move Endeavor has the final score 0 | Time: 7.151 ms
-Move Wish has the final score 0 | Time: 53.114 ms
-Move Sleep Talk has the final score 0 | Time: 8.265 ms
-Move Stuff Cheeks has the final score 0 | Time: 9.345 ms
-Move Belch has the final score 0 | Time: 11.427 ms
-Move Aura Wheel has the final score 0 | Time: 57.328 ms
-Move Snore has the final score 0 | Time: 8.827 ms
-Move Spirit Shackle has the final score 0 | Time: 9.067 ms
-Move Aromatic Mist has the final score 0 | Time: 13.136 ms
-Move U-turn has the final score 0 | Time: 2461.89 ms
-Move Embargo has the final score 0 | Time: 9.857 ms
-Move Floral Healing has the final score 0 | Time: 9.237 ms
-Move Kinesis has the final score 0 | Time: 13.495 ms
-Move Nightmare has the final score 0 | Time: 13.746 ms
-Move Dark Void has the final score 0 | Time: 15.736 ms
-Move Last Resort has the final score 0 | Time: 11.022 ms
-Move Fling has the final score 0 | Time: 7.506 ms
-Move Purify has the final score 0 | Time: 11.253 ms
-Move Venom Drench has the final score 0 | Time: 14.442 ms
-Move Instruct has the final score 0 | Time: 8.028 ms
-Move Imprison has the final score 0 | Time: 7.846 ms
-Move Haze has the final score 0 | Time: 13.784 ms
-Move Aurora Veil has the final score 0 | Time: 7.943 ms
-Move Sheer Cold has the final score 0 | Time: 7.689 ms
-Move Flower Shield has the final score 0 | Time: 12.897 ms
-Move Dream Eater has the final score 0 | Time: 7.277 ms
-Move Skill Swap has the final score 0 | Time: 10.969 ms
-Move Sand Attack has the final score 0 | Time: 12.483 ms
-Move Rototiller has the final score 0 | Time: 12.091 ms
-Move Role Play has the final score 0 | Time: 10.567 ms
-Move Mud Sport has the final score 0 | Time: 9.497 ms
-Move Fissure has the final score 0 | Time: 8.925 ms
-Move Volt Switch has the final score 0 | Time: 1864.174 ms
-Move Smokescreen has the final score 0 | Time: 14.341 ms
-Move Thousand Waves has the final score 0 | Time: 11.823 ms
-Move Needle Arm has the final score 0 | Time: 8.195 ms
-Move Captivate has the final score 0 | Time: 13.378 ms
-Move Heart Swap has the final score 0 | Time: 10.894 ms
-Move Synchronoise has the final score 0 | Time: 12.508 ms
-Move Eerie Impulse has the final score 0 | Time: 13.807 ms
-Move Electrify has the final score 0 | Time: 9.328 ms
-Move Rest has the final score 0 | Time: 68.524 ms
-Move Magnetic Flux has the final score 0 | Time: 11.694 ms
-Move Healing Wish has the final score 0 | Time: 56.303 ms
-Move Howl has the final score 0 | Time: 60.964 ms
-Move Aromatherapy has the final score 0 | Time: 13.552 ms
+Move Fake Out has the final score 2885 | Time: 58.418 ms
+Move Gravity has the final score 1060 | Time: 36.267 ms
+Move Quiver Dance has the final score 444 | Time: 52.067 ms
+Move Trick Room has the final score 409 | Time: 78.304 ms
+Move Spore has the final score 408 | Time: 37.834 ms
+Move Sleep Powder has the final score 404 | Time: 38.986 ms
+Move Hypnosis has the final score 404 | Time: 31.075 ms
+Move Grass Whistle has the final score 404 | Time: 36.251 ms
+Move Sing has the final score 404 | Time: 32.575 ms
+Move Lovely Kiss has the final score 404 | Time: 37.757 ms
+Move Shell Smash has the final score 373 | Time: 37.646 ms
+Move Obstruct has the final score 350 | Time: 16.498 ms
+Move King's Shield has the final score 350 | Time: 15.903 ms
+Move Nuzzle has the final score 286 | Time: 120.733 ms
+Move Glare has the final score 283 | Time: 79.631 ms
+Move Thunder Wave has the final score 283 | Time: 119.343 ms
+Move Stun Spore has the final score 283 | Time: 143.033 ms
+Move Yawn has the final score 277 | Time: 23.938 ms
+Move No Retreat has the final score 271 | Time: 30.574 ms
+Move Spiky Shield has the final score 269 | Time: 19.741 ms
+Move Baneful Bunker has the final score 269 | Time: 15.662 ms
+Move Substitute has the final score 264 | Time: 27.24 ms
+Move Reflect has the final score 258 | Time: 22.133 ms
+Move Speed Swap has the final score 257 | Time: 23.777 ms
+Move Geomancy has the final score 252 | Time: 34.146 ms
+Move Magnet Rise has the final score 249 | Time: 34.682 ms
+Move Tailwind has the final score 229 | Time: 29.445 ms
+Move Autotomize has the final score 228 | Time: 32.847 ms
+Move Rock Polish has the final score 228 | Time: 31.364 ms
+Move Grassy Terrain has the final score 222 | Time: 56.751 ms
+Move Electric Terrain has the final score 222 | Time: 40.853 ms
+Move Calm Mind has the final score 214 | Time: 34.249 ms
+Move Encore has the final score 209 | Time: 15.313 ms
+Move Agility has the final score 207 | Time: 31.684 ms
+Move Tail Glow has the final score 205 | Time: 52.555 ms
+Move Will-O-Wisp has the final score 204 | Time: 28.397 ms
+Move Assist has the final score 204 | Time: 3597.08 ms
+Move Water Sport has the final score 199 | Time: 43.611 ms
+Move Nasty Plot has the final score 199 | Time: 34.136 ms
+Move Misty Terrain has the final score 195 | Time: 61.237 ms
+Move Acupressure has the final score 190 | Time: 29.254 ms
+Move Zap Cannon has the final score 180 | Time: 106.469 ms
+Move Coil has the final score 180 | Time: 35.68 ms
+Move Detect has the final score 179 | Time: 15.232 ms
+Move Protect has the final score 179 | Time: 18.42 ms
+Move Stealth Rock has the final score 179 | Time: 32.993 ms
+Move Shift Gear has the final score 178 | Time: 38.333 ms
+Move Soak has the final score 173 | Time: 21.287 ms
+Move Nature's Madness has the final score 170 | Time: 27.973 ms
+Move Spikes has the final score 170 | Time: 27.757 ms
+Move Super Fang has the final score 170 | Time: 26.928 ms
+Move Toxic Spikes has the final score 170 | Time: 24.716 ms
+Move Flame Charge has the final score 170 | Time: 61.365 ms
+Move Core Enforcer has the final score 168 | Time: 55.184 ms
+Move Payback has the final score 166 | Time: 31.633 ms
+Move Sucker Punch has the final score 165 | Time: 48.908 ms
+Move Clangorous Soul has the final score 165 | Time: 23.88 ms
+Move Psychic Terrain has the final score 165 | Time: 46.458 ms
+Move Avalanche has the final score 163 | Time: 41.956 ms
+Move Revenge has the final score 163 | Time: 41.794 ms
+Move Confuse Ray has the final score 159 | Time: 52.721 ms
+Move Toxic Thread has the final score 158 | Time: 30.671 ms
+Move Light Screen has the final score 156 | Time: 43.026 ms
+Move Sunny Day has the final score 153 | Time: 51.472 ms
+Move Sticky Web has the final score 152 | Time: 26.754 ms
+Move Coaching has the final score 151 | Time: 26.848 ms
+Move Focus Energy has the final score 146 | Time: 23.436 ms
+Move Fiery Dance has the final score 143 | Time: 63.47 ms
+Move Charge Beam has the final score 143 | Time: 55.116 ms
+Move Power-Up Punch has the final score 143 | Time: 64.979 ms
+Move Worry Seed has the final score 142 | Time: 46.7 ms
+Move Gastro Acid has the final score 142 | Time: 40.218 ms
+Move Virus Inject has the final score 142 | Time: 15.866 ms
+Move Simple Beam has the final score 142 | Time: 44.411 ms
+Move Dragon Dance has the final score 141 | Time: 42.044 ms
+Move Trump Card has the final score 140 | Time: 41.459 ms
+Move Scale Shot has the final score 140 | Time: 65.162 ms
+Move Rage has the final score 137 | Time: 49.982 ms
+Move Cotton Spore has the final score 136 | Time: 36.797 ms
+Move Scary Face has the final score 136 | Time: 38.197 ms
+Move Aqua Ring has the final score 136 | Time: 20.269 ms
+Move Bolt Strike has the final score 133 | Time: 101.427 ms
+Move Toxic has the final score 131 | Time: 23.773 ms
+Move Baby-Doll Eyes has the final score 130 | Time: 32.775 ms
+Move Feather Dance has the final score 130 | Time: 33.079 ms
+Move Ingrain has the final score 130 | Time: 24.225 ms
+Move Discharge has the final score 128 | Time: 108.592 ms
+Move Chatter has the final score 128 | Time: 73.76 ms
+Move Body Slam has the final score 128 | Time: 116.822 ms
+Move String Shot has the final score 127 | Time: 33.055 ms
+Move Sacred Fire has the final score 126 | Time: 56.841 ms
+Move Wring Out has the final score 126 | Time: 34.852 ms
+Move Spark has the final score 126 | Time: 115.101 ms
+Move Crush Grip has the final score 126 | Time: 39.126 ms
+Move Rain Dance has the final score 125 | Time: 34.416 ms
+Move Force Palm has the final score 125 | Time: 118.624 ms
+Move Dragon Breath has the final score 125 | Time: 110.602 ms
+Move Thunder Cage has the final score 125 | Time: 48.823 ms
+Move Bulk Up has the final score 124 | Time: 35.371 ms
+Move Teeter Dance has the final score 124 | Time: 39.567 ms
+Move Meteor Beam has the final score 124 | Time: 44.014 ms
+Move Swagger has the final score 124 | Time: 43.303 ms
+Move Sweet Kiss has the final score 123 | Time: 48.844 ms
+Move Lick has the final score 122 | Time: 135.237 ms
+Move Charm has the final score 122 | Time: 32.216 ms
+Move Titan's Wrath has the final score 121 | Time: 33.574 ms
+Move Steam Eruption has the final score 121 | Time: 47.593 ms
+Move Blue Flare has the final score 121 | Time: 47.631 ms
+Move Rebalancing has the final score 120 | Time: 95.095 ms
+Move Sand Tomb has the final score 119 | Time: 49.204 ms
+Move Whirlpool has the final score 119 | Time: 32.649 ms
+Move Clamp has the final score 119 | Time: 42.314 ms
+Move Snap Trap has the final score 119 | Time: 48.007 ms
+Move Tar Shot has the final score 119 | Time: 27.474 ms
+Move Fire Spin has the final score 119 | Time: 51.051 ms
+Move Infestation has the final score 117 | Time: 39.938 ms
+Move Water Spout has the final score 117 | Time: 39.609 ms
+Move Dragon Energy has the final score 117 | Time: 32.425 ms
+Move Wrap has the final score 117 | Time: 50.03 ms
+Move Bide has the final score 117 | Time: 101.331 ms
+Move Eruption has the final score 117 | Time: 33.903 ms
+Move Foul Play has the final score 117 | Time: 42.604 ms
+Move Double Iron Bash has the final score 117 | Time: 46.082 ms
+Move Bind has the final score 117 | Time: 62.703 ms
+Move Metronome has the final score 117 | Time: 504.028 ms
+Move Queso Blast has the final score 116 | Time: 34.045 ms
+Move Boomburst has the final score 115 | Time: 42.877 ms
+Move Frigid Maw has the final score 115 | Time: 41.845 ms
+Move V-create has the final score 115 | Time: 53.692 ms
+Move Triple Axel has the final score 115 | Time: 39.166 ms
+Move Drum Beating has the final score 115 | Time: 326.278 ms
+Move Leech Seed has the final score 115 | Time: 22.112 ms
+Move Poison Gas has the final score 114 | Time: 29.725 ms
+Move Curse has the final score 114 | Time: 28.871 ms
+Move Final Gambit has the final score 114 | Time: 30.929 ms
+Move Glaciate has the final score 113 | Time: 40.029 ms
+Move Low Sweep has the final score 113 | Time: 49.153 ms
+Move Night Shade has the final score 112 | Time: 35.907 ms
+Move Mud Shot has the final score 112 | Time: 52.12 ms
+Move Seismic Toss has the final score 112 | Time: 21.011 ms
+Move Bulldoze has the final score 112 | Time: 53.711 ms
+Move Seed Flare has the final score 112 | Time: 54.323 ms
+Move Electroweb has the final score 112 | Time: 39.028 ms
+Move Rock Tomb has the final score 112 | Time: 40.098 ms
+Move Searing Shot has the final score 112 | Time: 44.821 ms
+Move High Jump Kick has the final score 112 | Time: 51.441 ms
+Move Psywave has the final score 112 | Time: 22.434 ms
+Move Icy Wind has the final score 112 | Time: 47.897 ms
+Move Golden Splash has the final score 111 | Time: 35.717 ms
+Move Heat Crash has the final score 110 | Time: 41.327 ms
+Move Precipice Blades has the final score 110 | Time: 47.422 ms
+Move Lava Plume has the final score 110 | Time: 48.915 ms
+Move Present has the final score 110 | Time: 32.679 ms
+Move Heavy Slam has the final score 110 | Time: 33.378 ms
+Move Astral Barrage has the final score 110 | Time: 38.856 ms
+Move Mat Block has the final score 109 | Time: 14.314 ms
+Move Hone Claws has the final score 109 | Time: 39.1 ms
+Move Beak Blast has the final score 109 | Time: 68.996 ms
+Move Light of Ruin has the final score 109 | Time: 47.722 ms
+Move Relic Song has the final score 108 | Time: 160.475 ms
+Move Magma Storm has the final score 108 | Time: 45.185 ms
+Move Fake Tears has the final score 108 | Time: 26.04 ms
+Move Metal Burst has the final score 108 | Time: 25.575 ms
+Move Siren Song has the final score 108 | Time: 57.795 ms
+Move Poison Powder has the final score 108 | Time: 26.908 ms
+Move Surging Strikes has the final score 108 | Time: 29.337 ms
+Move Wicked Blow has the final score 107 | Time: 30.667 ms
+Move Flare Blitz has the final score 107 | Time: 55.902 ms
+Move Volt Tackle has the final score 107 | Time: 40.847 ms
+Move Transform has the final score 106 | Time: 16.698 ms
+Move Megahorn has the final score 106 | Time: 53.858 ms
+Move Power Whip has the final score 106 | Time: 44.275 ms
+Move Thunder has the final score 105 | Time: 99.462 ms
+Move Wonder Room has the final score 104 | Time: 22.417 ms
+Move Gunk Shot has the final score 104 | Time: 37.797 ms
+Move Inferno has the final score 104 | Time: 54.932 ms
+Move Mist has the final score 104 | Time: 21.065 ms
+Move Wild Charge has the final score 103 | Time: 124.518 ms
+Move Jolt Kick has the final score 103 | Time: 110.312 ms
+Move Cosmic Power has the final score 103 | Time: 34.559 ms
+Move Thunderbolt has the final score 103 | Time: 97.572 ms
+Move Ice Ball has the final score 103 | Time: 44.878 ms
+Move Rollout has the final score 103 | Time: 39.052 ms
+Move Defend Order has the final score 103 | Time: 39.331 ms
+Move Wood Hammer has the final score 102 | Time: 55.048 ms
+Move Brave Bird has the final score 102 | Time: 42.857 ms
+Move Zing Zap has the final score 102 | Time: 116.792 ms
+Move Head Charge has the final score 102 | Time: 44.165 ms
+Move Double-Edge has the final score 102 | Time: 38.429 ms
+Move Meteor Mash has the final score 102 | Time: 51.582 ms
+Move Ow The Edge has the final score 102 | Time: 34.996 ms
+Move Thunder Punch has the final score 101 | Time: 94.874 ms
+Move Play Nice has the final score 101 | Time: 29.197 ms
+Move Metal Sound has the final score 101 | Time: 37.738 ms
+Move Fury Cutter has the final score 101 | Time: 46.486 ms
+Move Acid Spray has the final score 101 | Time: 41.306 ms
+Move Secret Power has the final score 101 | Time: 51.19 ms
+Move Echoed Voice has the final score 101 | Time: 53.769 ms
+Move Growl has the final score 101 | Time: 35.543 ms
+Move Thunder Fang has the final score 100 | Time: 105.797 ms
+Move Freeze Shock has the final score 100 | Time: 55.714 ms
+Move First Impression has the final score 99 | Time: 56.955 ms
+Move Hail has the final score 99 | Time: 45.318 ms
+Move Strange Steam has the final score 99 | Time: 62.621 ms
+Move Superpower has the final score 99 | Time: 91.411 ms
+Move Head Smash has the final score 98 | Time: 31.412 ms
+Move Ice Burn has the final score 98 | Time: 65.564 ms
+Move Blaze Kick has the final score 97 | Time: 47.192 ms
+Move Forge Breath has the final score 97 | Time: 41.135 ms
+Move Dizzy Punch has the final score 97 | Time: 121.542 ms
+Move Thunder Shock has the final score 97 | Time: 108.274 ms
+Move Flamethrower has the final score 97 | Time: 47.174 ms
+Move Tri Attack has the final score 96 | Time: 48.115 ms
+Move Biting Cold has the final score 96 | Time: 24.705 ms
+Move Nature Power has the final score 96 | Time: 57.379 ms
+Move Pyro Ball has the final score 96 | Time: 47.138 ms
+Move Fire Blast has the final score 96 | Time: 53.493 ms
+Move Ancient Power has the final score 95 | Time: 35.956 ms
+Move Silver Wind has the final score 95 | Time: 46.955 ms
+Move Sludge Bomb has the final score 95 | Time: 41.49 ms
+Move Fire Punch has the final score 95 | Time: 48.497 ms
+Move Rock Climb has the final score 95 | Time: 73.366 ms
+Move Ominous Wind has the final score 95 | Time: 55.481 ms
+Move Poison Fang has the final score 94 | Time: 46.926 ms
+Move Origin Pulse has the final score 94 | Time: 43.056 ms
+Move Shell Side Arm has the final score 94 | Time: 40.454 ms
+Move Heat Wave has the final score 94 | Time: 62.746 ms
+Move Poison Jab has the final score 94 | Time: 57.909 ms
+Move Fire Fang has the final score 94 | Time: 52.002 ms
+Move Acrobatics has the final score 94 | Time: 37.118 ms
+Move Flame Wheel has the final score 93 | Time: 53.545 ms
+Move Sludge Wave has the final score 93 | Time: 38.322 ms
+Move Return has the final score 93 | Time: 42.031 ms
+Move Attack Order has the final score 93 | Time: 57.744 ms
+Move Frustration has the final score 93 | Time: 36.945 ms
+Move Dragon Darts has the final score 93 | Time: 38.517 ms
+Move Signal Beam has the final score 93 | Time: 52.588 ms
+Move Magnitude has the final score 93 | Time: 42.808 ms
+Move Dragon Rage has the final score 93 | Time: 26.696 ms
+Move Crabhammer has the final score 93 | Time: 46.284 ms
+Move Bonemerang has the final score 93 | Time: 41.598 ms
+Move Aeroblast has the final score 93 | Time: 45.387 ms
+Move Spacial Rend has the final score 93 | Time: 35.928 ms
+Move Bullet Seed has the final score 92 | Time: 41.684 ms
+Move Tail Slap has the final score 92 | Time: 45.743 ms
+Move Sludge has the final score 92 | Time: 38.823 ms
+Move Glacial Lance has the final score 92 | Time: 42.005 ms
+Move Multi-Attack has the final score 92 | Time: 50.097 ms
+Move Techno Blast has the final score 92 | Time: 46.179 ms
+Move Dynamax Cannon has the final score 92 | Time: 37.433 ms
+Move Fusion Bolt has the final score 92 | Time: 33.717 ms
+Move Jump Kick has the final score 92 | Time: 44.636 ms
+Move Psybeam has the final score 92 | Time: 59.468 ms
+Move Scatterdust has the final score 92 | Time: 36.635 ms
+Move Mana Drain has the final score 92 | Time: 40.19 ms
+Move Leaf Blade has the final score 92 | Time: 64.48 ms
+Move Judgment has the final score 92 | Time: 44.997 ms
+Move Plasma Fists has the final score 92 | Time: 34.704 ms
+Move Bone Rush has the final score 92 | Time: 49.658 ms
+Move Rock Blast has the final score 92 | Time: 33.69 ms
+Move Behemoth Bash has the final score 92 | Time: 41.645 ms
+Move Behemoth Blade has the final score 92 | Time: 43.643 ms
+Move Sunsteel Strike has the final score 92 | Time: 38.155 ms
+Move Strength has the final score 92 | Time: 47.339 ms
+Move Flying Press has the final score 92 | Time: 39.577 ms
+Move Fusion Flare has the final score 92 | Time: 47.582 ms
+Move Moongeist Beam has the final score 92 | Time: 40.586 ms
+Move Psycrush has the final score 92 | Time: 35.483 ms
+Move Pin Missile has the final score 92 | Time: 39.387 ms
+Move Photon Geyser has the final score 92 | Time: 33.596 ms
+Move Psystrike has the final score 92 | Time: 34.144 ms
+Move Low Kick has the final score 92 | Time: 40.775 ms
+Move Body Press has the final score 92 | Time: 39.171 ms
+Move Earthquake has the final score 92 | Time: 46.036 ms
+Move Icicle Spear has the final score 92 | Time: 43.361 ms
+Move Grass Knot has the final score 92 | Time: 40.78 ms
+Move Gear Grind has the final score 91 | Time: 35.046 ms
+Move Drill Run has the final score 91 | Time: 44.419 ms
+Move Psychic has the final score 91 | Time: 65.776 ms
+Move Thousand Arrows has the final score 91 | Time: 42.909 ms
+Move Earth Power has the final score 91 | Time: 48.311 ms
+Move Metal Claw has the final score 91 | Time: 52.861 ms
+Move Ember has the final score 91 | Time: 53.238 ms
+Move Force Wave has the final score 91 | Time: 35.515 ms
+Move Bug Buzz has the final score 91 | Time: 61.009 ms
+Move Lucky Chant has the final score 91 | Time: 31.002 ms
+Move Aqua Tail has the final score 91 | Time: 45.224 ms
+Move Muddy Water has the final score 91 | Time: 45.238 ms
+Move Sparkling Aria has the final score 91 | Time: 39.08 ms
+Move Surf has the final score 91 | Time: 32.986 ms
+Move Revelation Dance has the final score 91 | Time: 42.017 ms
+Move Hyper Voice has the final score 91 | Time: 58.765 ms
+Move Play Rough has the final score 91 | Time: 42.918 ms
+Move Fiery Wrath has the final score 91 | Time: 34.192 ms
+Move Beat Up has the final score 91 | Time: 31.832 ms
+Move Energy Ball has the final score 91 | Time: 61.649 ms
+Move Storm Throw has the final score 91 | Time: 38.758 ms
+Move Petal Blizzard has the final score 91 | Time: 67.143 ms
+Move Snipe Shot has the final score 91 | Time: 31.751 ms
+Move Moonblast has the final score 91 | Time: 41.038 ms
+Move Comet Punch has the final score 91 | Time: 52.977 ms
+Move Grav Apple has the final score 91 | Time: 41.691 ms
+Move Frost Breath has the final score 91 | Time: 44.688 ms
+Move Dragon Hammer has the final score 91 | Time: 35.935 ms
+Move Sacred Sword has the final score 91 | Time: 35.693 ms
+Move Trim Tackle has the final score 91 | Time: 36.473 ms
+Move Thunderous Kick has the final score 91 | Time: 42.048 ms
+Move Dual Chop has the final score 91 | Time: 44.735 ms
+Move Mega Kick has the final score 91 | Time: 55.332 ms
+Move Thousand Folds has the final score 91 | Time: 33.184 ms
+Move Land's Wrath has the final score 91 | Time: 43.546 ms
+Move Splinter Shot has the final score 91 | Time: 44.529 ms
+Move Night Daze has the final score 90 | Time: 42.196 ms
+Move Crunch has the final score 90 | Time: 39.453 ms
+Move Dark Pulse has the final score 90 | Time: 32.074 ms
+Move False Surrender has the final score 90 | Time: 34.138 ms
+Move Darkest Lariat has the final score 90 | Time: 31.743 ms
+Move Throat Chop has the final score 90 | Time: 40.75 ms
+Move Power Gem has the final score 90 | Time: 37.213 ms
+Move Fire Pledge has the final score 90 | Time: 37.472 ms
+Move Seed Bomb has the final score 90 | Time: 42.978 ms
+Move Grass Pledge has the final score 90 | Time: 53.12 ms
+Move Confusion has the final score 90 | Time: 59.532 ms
+Move Apple Acid has the final score 90 | Time: 51.509 ms
+Move Court Change has the final score 90 | Time: 21.11 ms
+Move Leech Life has the final score 90 | Time: 35.593 ms
+Move Jungle Healing has the final score 90 | Time: 20.806 ms
+Move Dragon Pulse has the final score 90 | Time: 33.981 ms
+Move Zen Headbutt has the final score 90 | Time: 40.141 ms
+Move Psyshock has the final score 90 | Time: 33.094 ms
+Move Mystic Lance has the final score 90 | Time: 29.932 ms
+Move Hyperspace Hole has the final score 90 | Time: 31.543 ms
+Move Extrasensory has the final score 90 | Time: 37.289 ms
+Move Psychic Fangs has the final score 90 | Time: 36.835 ms
+Move Scouring Winds has the final score 90 | Time: 50.778 ms
+Move Flash Cannon has the final score 90 | Time: 89.683 ms
+Move Dazzling Gleam has the final score 90 | Time: 40.262 ms
+Move High Horsepower has the final score 90 | Time: 45.972 ms
+Move Dragon Claw has the final score 90 | Time: 36.129 ms
+Move Bubble Beam has the final score 90 | Time: 40.305 ms
+Move Iron Head has the final score 90 | Time: 43.228 ms
+Move Extreme Speed has the final score 90 | Time: 52.614 ms
+Move Freezing Glare has the final score 90 | Time: 46.585 ms
+Move Hyper Fang has the final score 90 | Time: 42.35 ms
+Move Mega Punch has the final score 90 | Time: 46.39 ms
+Move Frost Kick has the final score 90 | Time: 50.105 ms
+Move Slam has the final score 90 | Time: 47.337 ms
+Move Aura Sphere has the final score 90 | Time: 40.364 ms
+Move Shadow Ball has the final score 90 | Time: 46.148 ms
+Move Shadow Bone has the final score 90 | Time: 42.662 ms
+Move Poltergeist has the final score 90 | Time: 38.476 ms
+Move X-Scissor has the final score 90 | Time: 34.136 ms
+Move Defog has the final score 90 | Time: 26.631 ms
+Move Liquidation has the final score 90 | Time: 42.054 ms
+Move Smog has the final score 90 | Time: 40.527 ms
+Move Scald has the final score 90 | Time: 32.262 ms
+Move Water Pledge has the final score 90 | Time: 31.947 ms
+Move Sky Uppercut has the final score 90 | Time: 39.699 ms
+Move Lunge has the final score 90 | Time: 42.928 ms
+Move Secret Sword has the final score 90 | Time: 35.05 ms
+Move Waterfall has the final score 90 | Time: 35.411 ms
+Move Spike Cannon has the final score 90 | Time: 38.128 ms
+Move Erosion Wave has the final score 90 | Time: 52.968 ms
+Move Oblivion Wing has the final score 90 | Time: 39.101 ms
+Move Drill Peck has the final score 90 | Time: 43.293 ms
+Move Cross Poison has the final score 90 | Time: 45.338 ms
+Move Ice Beam has the final score 90 | Time: 45.303 ms
+Move Icicle Crash has the final score 90 | Time: 41.615 ms
+Move Fire Lash has the final score 90 | Time: 43.71 ms
+Move Overdrive has the final score 90 | Time: 35.271 ms
+Move Petal Dance has the final score 89 | Time: 45.511 ms
+Move Double Hit has the final score 89 | Time: 57.744 ms
+Move Air Slash has the final score 89 | Time: 42.375 ms
+Move Toxiravage has the final score 89 | Time: 47.876 ms
+Move Stalagbite has the final score 89 | Time: 37.604 ms
+Move Razor Shell has the final score 89 | Time: 38.797 ms
+Move Smelling Salts has the final score 89 | Time: 48.238 ms
+Move Slash has the final score 89 | Time: 47.058 ms
+Move Wake-Up Slap has the final score 89 | Time: 44.657 ms
+Move Scorching Sands has the final score 89 | Time: 37.38 ms
+Move Stomping Tantrum has the final score 89 | Time: 42.564 ms
+Move Brick Break has the final score 89 | Time: 38.512 ms
+Move Pepper Spray has the final score 89 | Time: 37.697 ms
+Move Retaliate has the final score 89 | Time: 45.95 ms
+Move Luster Purge has the final score 89 | Time: 41.088 ms
+Move Mist Ball has the final score 89 | Time: 40.731 ms
+Move Drain Punch has the final score 89 | Time: 43.946 ms
+Move Outrage has the final score 89 | Time: 38.349 ms
+Move Psycho Cut has the final score 89 | Time: 39.418 ms
+Move Headbutt has the final score 89 | Time: 45.107 ms
+Move Cross Chop has the final score 89 | Time: 42.777 ms
+Move Night Slash has the final score 89 | Time: 36.18 ms
+Move Lash Out has the final score 89 | Time: 33.846 ms
+Move Triple Kick has the final score 89 | Time: 37.233 ms
+Move Facade has the final score 89 | Time: 41.969 ms
+Move Rock Slide has the final score 89 | Time: 34.133 ms
+Move Chip Away has the final score 89 | Time: 78.415 ms
+Move Horn Leech has the final score 89 | Time: 38.308 ms
+Move Giga Drain has the final score 89 | Time: 38.049 ms
+Move Dual Wingbeat has the final score 89 | Time: 42.064 ms
+Move Mystical Fire has the final score 89 | Time: 45.654 ms
+Move Burning Jealousy has the final score 89 | Time: 49.765 ms
+Move Trop Kick has the final score 89 | Time: 49.109 ms
+Move Flame Burst has the final score 89 | Time: 38.62 ms
+Move Crush Claw has the final score 89 | Time: 82.754 ms
+Move Pollen Puff has the final score 89 | Time: 37.181 ms
+Move Spirit Break has the final score 89 | Time: 41.438 ms
+Move Smart Strike has the final score 89 | Time: 36.993 ms
+Move Skitter Smack has the final score 89 | Time: 36.538 ms
+Move Shadow Claw has the final score 89 | Time: 67.728 ms
+Move Vital Throw has the final score 89 | Time: 43.222 ms
+Move Mirror Shot has the final score 88 | Time: 39.615 ms
+Move Steel Wing has the final score 88 | Time: 57.165 ms
+Move Steamroller has the final score 88 | Time: 34.872 ms
+Move Iron Tail has the final score 88 | Time: 44.62 ms
+Move Double Kick has the final score 88 | Time: 39.629 ms
+Move Leaf Tornado has the final score 88 | Time: 49.644 ms
+Move Water Pulse has the final score 88 | Time: 30.659 ms
+Move Chilling Wail has the final score 88 | Time: 39.332 ms
+Move Dragon Rush has the final score 88 | Time: 36.15 ms
+Move Parabolic Charge has the final score 88 | Time: 46.7 ms
+Move Bone Club has the final score 88 | Time: 47.954 ms
+Move Mud Bomb has the final score 88 | Time: 55.437 ms
+Move Poison Tail has the final score 88 | Time: 43.531 ms
+Move Horn Attack has the final score 88 | Time: 47.97 ms
+Move Stomp has the final score 88 | Time: 47.995 ms
+Move Barrage has the final score 88 | Time: 41.167 ms
+Move Fury Swipes has the final score 88 | Time: 48.452 ms
+Move Air Cutter has the final score 88 | Time: 67.709 ms
+Move Venoshock has the final score 88 | Time: 39.507 ms
+Move Ice Punch has the final score 88 | Time: 43.734 ms
+Move Cut has the final score 88 | Time: 47.797 ms
+Move Brine has the final score 88 | Time: 32.266 ms
+Move Freeze-Dry has the final score 88 | Time: 46.826 ms
+Move Aurora Beam has the final score 88 | Time: 40.487 ms
+Move Shock Wave has the final score 87 | Time: 39.755 ms
+Move Copycat has the final score 87 | Time: 59.165 ms
+Move Rolling Kick has the final score 87 | Time: 40.661 ms
+Move Karate Chop has the final score 87 | Time: 45.568 ms
+Move Arm Thrust has the final score 87 | Time: 38.647 ms
+Move Snarl has the final score 87 | Time: 32.755 ms
+Move Incinerate has the final score 87 | Time: 49.825 ms
+Move Kinetic Rend has the final score 87 | Time: 35.049 ms
+Move Water Shuriken has the final score 87 | Time: 39.151 ms
+Move Dragon Ascent has the final score 87 | Time: 63.784 ms
+Move Bug Bite has the final score 87 | Time: 30.149 ms
+Move Bubble has the final score 87 | Time: 39.127 ms
+Move Thief has the final score 87 | Time: 434.621 ms
+Move Vise Grip has the final score 87 | Time: 55.492 ms
+Move Swift has the final score 87 | Time: 52.564 ms
+Move Round has the final score 87 | Time: 44.172 ms
+Move Hidden Power has the final score 87 | Time: 38.831 ms
+Move Covet has the final score 87 | Time: 41.418 ms
+Move Octazooka has the final score 87 | Time: 39.175 ms
+Move Double Slap has the final score 87 | Time: 46.957 ms
+Move Fury Attack has the final score 87 | Time: 51.471 ms
+Move Aerial Ace has the final score 87 | Time: 44.017 ms
+Move Pluck has the final score 87 | Time: 41.203 ms
+Move Breaking Swipe has the final score 87 | Time: 49.746 ms
+Move Wing Attack has the final score 87 | Time: 48.963 ms
+Move Feint Attack has the final score 87 | Time: 32.253 ms
+Move Mirror Move has the final score 87 | Time: 52.642 ms
+Move Ice Fang has the final score 87 | Time: 54.527 ms
+Move Brutal Swing has the final score 87 | Time: 37.898 ms
+Move Twineedle has the final score 87 | Time: 41.786 ms
+Move Hex has the final score 87 | Time: 46.808 ms
+Move Shadow Punch has the final score 87 | Time: 48.991 ms
+Move Magnet Bomb has the final score 87 | Time: 33.6 ms
+Move Expanding Force has the final score 87 | Time: 42.695 ms
+Move Heart Stamp has the final score 87 | Time: 38.123 ms
+Move Bite has the final score 87 | Time: 34.492 ms
+Move Grassy Glide has the final score 87 | Time: 44.679 ms
+Move Magical Leaf has the final score 87 | Time: 42.954 ms
+Move Razor Leaf has the final score 87 | Time: 50.056 ms
+Move Assurance has the final score 87 | Time: 32.16 ms
+Move Mega Drain has the final score 86 | Time: 49.53 ms
+Move Rock Throw has the final score 86 | Time: 35.709 ms
+Move Smack Down has the final score 86 | Time: 34.449 ms
+Move Weather Ball has the final score 86 | Time: 46.715 ms
+Move Draining Kiss has the final score 86 | Time: 38.28 ms
+Move Rising Voltage has the final score 86 | Time: 31.443 ms
+Move Struggle Bug has the final score 86 | Time: 32.611 ms
+Move Fishious Rend has the final score 86 | Time: 34.335 ms
+Move Rapid Spin has the final score 86 | Time: 54.977 ms
+Move Sweet Tooth has the final score 86 | Time: 32.043 ms
+Move Poison Sting has the final score 86 | Time: 42.25 ms
+Move Terrain Pulse has the final score 86 | Time: 53.715 ms
+Move Clear Smog has the final score 86 | Time: 37.516 ms
+Move Fell Stinger has the final score 86 | Time: 36.745 ms
+Move Bolt Beak has the final score 86 | Time: 44.473 ms
+Move Twister has the final score 85 | Time: 39.85 ms
+Move False Swipe has the final score 85 | Time: 44.38 ms
+Move Mach Punch has the final score 85 | Time: 54.28 ms
+Move Rock Smash has the final score 85 | Time: 44.917 ms
+Move Vacuum Wave has the final score 85 | Time: 65.645 ms
+Move Electro Ball has the final score 85 | Time: 40.294 ms
+Move Hold Back has the final score 85 | Time: 48.524 ms
+Move Knock Off has the final score 85 | Time: 31.502 ms
+Move Crimson Surge has the final score 85 | Time: 36.277 ms
+Move Spectral Thief has the final score 85 | Time: 43.424 ms
+Move Shadow Sneak has the final score 85 | Time: 61.338 ms
+Move Fairy Wind has the final score 85 | Time: 38.674 ms
+Move Think Fast has the final score 85 | Time: 44.465 ms
+Move Pay Day has the final score 85 | Time: 43.67 ms
+Move Disarming Voice has the final score 85 | Time: 38.508 ms
+Move Gust has the final score 85 | Time: 35.282 ms
+Move Pursuit has the final score 85 | Time: 30.463 ms
+Move Ice Shard has the final score 85 | Time: 54.166 ms
+Move Corrosive Gas has the final score 85 | Time: 39.739 ms
+Move Leafage has the final score 85 | Time: 52.8 ms
+Move Branch Poke has the final score 85 | Time: 56.602 ms
+Move Aqua Jet has the final score 85 | Time: 39.6 ms
+Move Close Combat has the final score 85 | Time: 59.177 ms
+Move Pound has the final score 85 | Time: 44.738 ms
+Move Vine Whip has the final score 85 | Time: 51.715 ms
+Move Water Gun has the final score 85 | Time: 29.933 ms
+Move Acid has the final score 85 | Time: 41.417 ms
+Move Quick Attack has the final score 85 | Time: 54.189 ms
+Move Accelerock has the final score 85 | Time: 44.376 ms
+Move Tackle has the final score 85 | Time: 44.813 ms
+Move Scratch has the final score 85 | Time: 46.731 ms
+Move Bullet Punch has the final score 85 | Time: 46.431 ms
+Move Noble Roar has the final score 84 | Time: 92.314 ms
+Move Gyro Ball has the final score 84 | Time: 33.672 ms
+Move Cotton Guard has the final score 84 | Time: 44.308 ms
+Move Feint has the final score 84 | Time: 48.893 ms
+Move Astonish has the final score 84 | Time: 43.731 ms
+Move Absorb has the final score 84 | Time: 41.178 ms
+Move Tearful Look has the final score 84 | Time: 77.253 ms
+Move Powder Snow has the final score 84 | Time: 45.804 ms
+Move Peck has the final score 84 | Time: 45.697 ms
+Move Life Dew has the final score 84 | Time: 15.963 ms
+Move Constrict has the final score 83 | Time: 50.04 ms
+Move Steel Beam has the final score 83 | Time: 44.019 ms
+Move Lock-On has the final score 83 | Time: 15.362 ms
+Move Magic Room has the final score 83 | Time: 14.892 ms
+Move Fairy Lock has the final score 83 | Time: 16.845 ms
+Move Hydro Pump has the final score 83 | Time: 42.61 ms
+Move Focus Blast has the final score 83 | Time: 49.285 ms
+Move Heal Block has the final score 83 | Time: 18.692 ms
+Move Mind Reader has the final score 83 | Time: 16.764 ms
+Move Take Down has the final score 83 | Time: 40.584 ms
+Move Sky Attack has the final score 83 | Time: 46.402 ms
+Move Laser Focus has the final score 83 | Time: 13.513 ms
+Move Stone Edge has the final score 82 | Time: 34.08 ms
+Move Solar Blade has the final score 82 | Time: 57.797 ms
+Move Diamond Storm has the final score 82 | Time: 53.302 ms
+Move Draco Meteor has the final score 82 | Time: 59.755 ms
+Move Stored Power has the final score 82 | Time: 35.645 ms
+Move Power Trip has the final score 82 | Time: 34.715 ms
+Move Solar Beam has the final score 82 | Time: 52.079 ms
+Move Submission has the final score 82 | Time: 51.976 ms
+Move Flail has the final score 82 | Time: 40.025 ms
+Move Reversal has the final score 82 | Time: 403.803 ms
+Move Mud-Slap has the final score 82 | Time: 50.921 ms
+Move Punishment has the final score 82 | Time: 46.902 ms
+Move Geode Burst has the final score 81 | Time: 38.917 ms
+Move Razor Wind has the final score 81 | Time: 46.836 ms
+Move Magic Powder has the final score 80 | Time: 24.527 ms
+Move Barrier has the final score 80 | Time: 38.576 ms
+Move Fleur Cannon has the final score 80 | Time: 55.464 ms
+Move Leaf Storm has the final score 80 | Time: 70.716 ms
+Move Iron Defense has the final score 80 | Time: 34.05 ms
+Move Psycho Boost has the final score 80 | Time: 50.222 ms
+Move Overheat has the final score 80 | Time: 55.389 ms
+Move Acid Armor has the final score 80 | Time: 35.954 ms
+Move Flatter has the final score 77 | Time: 44.561 ms
+Move Thrash has the final score 77 | Time: 54.898 ms
+Move Focus Punch has the final score 77 | Time: 45.299 ms
+Move Supersonic has the final score 77 | Time: 42.258 ms
+Move Uproar has the final score 77 | Time: 47.976 ms
+Move Ice Hammer has the final score 75 | Time: 57.097 ms
+Move Mimic has the final score 75 | Time: 51.189 ms
+Move Sketch has the final score 75 | Time: 56.28 ms
+Move Hammer Arm has the final score 75 | Time: 55.155 ms
+Move Dynamic Punch has the final score 74 | Time: 79.656 ms
+Move Hard Drive Crash has the final score 74 | Time: 38.117 ms
+Move Eerie Spell has the final score 74 | Time: 38.353 ms
+Move Sandstorm has the final score 74 | Time: 35.967 ms
+Move Egg Bomb has the final score 73 | Time: 55.161 ms
+Move Growth has the final score 73 | Time: 29.148 ms
+Move Excite has the final score 73 | Time: 36.122 ms
+Move Work Up has the final score 73 | Time: 30.197 ms
+Move Trick-or-Treat has the final score 69 | Time: 27.446 ms
+Move Hurricane has the final score 67 | Time: 69.384 ms
+Move Stockpile has the final score 67 | Time: 26.976 ms
+Move Doom Desire has the final score 67 | Time: 39.452 ms
+Move Amnesia has the final score 67 | Time: 35.818 ms
+Move Future Sight has the final score 66 | Time: 38.67 ms
+Move Blizzard has the final score 66 | Time: 53.836 ms
+Move Shadow Force has the final score 65 | Time: 41.345 ms
+Move Forest's Curse has the final score 63 | Time: 27.628 ms
+Move Power Split has the final score 60 | Time: 20.392 ms
+Move Destiny Bond has the final score 60 | Time: 18.276 ms
+Move Roar has the final score 60 | Time: 19.139 ms
+Move Whirlwind has the final score 60 | Time: 15.958 ms
+Move Circle Throw has the final score 58 | Time: 43.654 ms
+Move Dragon Tail has the final score 58 | Time: 42.028 ms
+Move Skull Bash has the final score 58 | Time: 46.79 ms
+Move Spite has the final score 58 | Time: 23.374 ms
+Move Bounce has the final score 56 | Time: 53.36 ms
+Move Foresight has the final score 49 | Time: 12.527 ms
+Move Odor Sleuth has the final score 49 | Time: 16.63 ms
+Move Miracle Eye has the final score 49 | Time: 14.728 ms
+Move Grudge has the final score 49 | Time: 16.861 ms
+Move Wide Guard has the final score 49 | Time: 14.305 ms
+Move Phantom Force has the final score 47 | Time: 38.339 ms
+Move Conversion 2 has the final score 46 | Time: 21.103 ms
+Move Fly has the final score 46 | Time: 39.034 ms
+Move Sonic Boom has the final score 46 | Time: 23.828 ms
+Move Charge has the final score 45 | Time: 34.286 ms
+Move Dive has the final score 45 | Time: 38.173 ms
+Move Tickle has the final score 45 | Time: 22.793 ms
+Move Clanging Scales has the final score 44 | Time: 44.481 ms
+Move Roar of Time has the final score 43 | Time: 37.274 ms
+Move Rock Wrecker has the final score 43 | Time: 33.5 ms
+Move Hydro Cannon has the final score 43 | Time: 39.916 ms
+Move Eternabeam has the final score 43 | Time: 35.002 ms
+Move Blast Burn has the final score 43 | Time: 34.514 ms
+Move Meteor Assault has the final score 43 | Time: 50.965 ms
+Move Prismatic Laser has the final score 43 | Time: 33.161 ms
+Move Hyper Beam has the final score 43 | Time: 36.495 ms
+Move Frenzy Plant has the final score 43 | Time: 48.421 ms
+Move Giga Impact has the final score 43 | Time: 37.462 ms
+Move Mirror Coat has the final score 42 | Time: 28.944 ms
+Move Sky Drop has the final score 42 | Time: 44.496 ms
+Move Endure has the final score 41 | Time: 21.91 ms
+Move Harden has the final score 37 | Time: 30.553 ms
+Move Defense Curl has the final score 37 | Time: 33.753 ms
+Move Withdraw has the final score 37 | Time: 31.883 ms
+Move Mind Blown has the final score 33 | Time: 48.15 ms
+Move Camouflage has the final score 29 | Time: 21.475 ms
+Move Quick Guard has the final score 29 | Time: 19.437 ms
+Move Strength Sap has the final score 28 | Time: 125.103 ms
+Move Pain Split has the final score 24 | Time: 28.58 ms
+Move Taunt has the final score 23 | Time: 21.838 ms
+Move Dig has the final score 20 | Time: 41.205 ms
+Move Magic Coat has the final score 19 | Time: 17.679 ms
+Move Snatch has the final score 19 | Time: 16.07 ms
+Move Crafty Shield has the final score 19 | Time: 16.644 ms
+Move Explosion has the final score 19 | Time: 36.992 ms
+Move Self-Destruct has the final score 17 | Time: 38.599 ms
+Move Memento has the final score 16 | Time: 17.353 ms
+Move Misty Explosion has the final score 15 | Time: 39.273 ms
+Move Ion Deluge has the final score 13 | Time: 22.521 ms
+Move Perish Song has the final score 11 | Time: 18.251 ms
+Move Soft-Boiled has the final score 10 | Time: 37.274 ms
+Move Synthesis has the final score 10 | Time: 50.396 ms
+Move Roost has the final score 10 | Time: 35.256 ms
+Move Heal Order has the final score 10 | Time: 55.033 ms
+Move U-turn has the final score 10 | Time: 1958.256 ms
+Move Moonlight has the final score 10 | Time: 41.818 ms
+Move Morning Sun has the final score 10 | Time: 37.439 ms
+Move Milk Drink has the final score 10 | Time: 38.035 ms
+Move Glacial Gulf has the final score 10 | Time: 32.678 ms
+Move Volt Switch has the final score 10 | Time: 1640.797 ms
+Move Slack Off has the final score 10 | Time: 36.185 ms
+Move Shore Up has the final score 10 | Time: 44.068 ms
+Move Recover has the final score 10 | Time: 33.256 ms
+Move Counter has the final score 9 | Time: 30.328 ms
+Move Power Trick has the final score 8 | Time: 19.039 ms
+Move Flip Turn has the final score 8 | Time: 1523.91 ms
+Move Baton Pass has the final score 1 | Time: 1493.928 ms
+Move Parting Shot has the final score 1 | Time: 1578.401 ms
+Move Teleport has the final score 1 | Time: 1564.17 ms
+Move Disable has the final score 0 | Time: 9.369 ms
+Move Belch has the final score 0 | Time: 12.355 ms
+Move Stuff Cheeks has the final score 0 | Time: 9.614 ms
+Move Hyperspace Fury has the final score 0 | Time: 6.235 ms
+Move Dark Void has the final score 0 | Time: 18.806 ms
+Move Spider Web has the final score 0 | Time: 11.678 ms
+Move Rage Powder has the final score 0 | Time: 14.676 ms
+Move Fissure has the final score 0 | Time: 17.744 ms
+Move Wish has the final score 0 | Time: 19.918 ms
+Move Embargo has the final score 0 | Time: 12.191 ms
+Move Steel Roller has the final score 0 | Time: 19.892 ms
+Move Trick has the final score 0 | Time: 14.375 ms
+Move Spit Up has the final score 0 | Time: 10.981 ms
+Move Teatime has the final score 0 | Time: 11.931 ms
+Move Nightmare has the final score 0 | Time: 13.837 ms
+Move Telekinesis has the final score 0 | Time: 0.032 ms
+Move Anchor Shot has the final score 0 | Time: 9.817 ms
+Move Tail Whip has the final score 0 | Time: 20.827 ms
+Move After You has the final score 0 | Time: 0.021 ms
+Move Skill Swap has the final score 0 | Time: 13.569 ms
+Move Sweet Scent has the final score 0 | Time: 0.021 ms
+Move Powder has the final score 0 | Time: 28.718 ms
+Move Swallow has the final score 0 | Time: 10.115 ms
+Move Role Play has the final score 0 | Time: 13.387 ms
+Move Mud Sport has the final score 0 | Time: 14.158 ms
+Move Natural Gift has the final score 0 | Time: 12.207 ms
+Move Spotlight has the final score 0 | Time: 13.705 ms
+Move Rest has the final score 0 | Time: 32.061 ms
+Move Psycho Shift has the final score 0 | Time: 15.837 ms
+Move Spirit Shackle has the final score 0 | Time: 12.416 ms
+Move Horn Drill has the final score 0 | Time: 10.248 ms
+Move Gear Up has the final score 0 | Time: 16.77 ms
+Move Smokescreen has the final score 0 | Time: 17.99 ms
+Move Sleep Talk has the final score 0 | Time: 11.508 ms
+Move Jaw Lock has the final score 0 | Time: 8.96 ms
+Move Rototiller has the final score 0 | Time: 18.769 ms
+Move Power Swap has the final score 0 | Time: 14.664 ms
+Move Guillotine has the final score 0 | Time: 10.911 ms
+Move Quash has the final score 0 | Time: 0.026 ms
+Move Fling has the final score 0 | Time: 7.869 ms
+Move Switcheroo has the final score 0 | Time: 11.819 ms
+Move Aromatic Mist has the final score 0 | Time: 19.323 ms
+Move Sand Attack has the final score 0 | Time: 20.902 ms
+Move Sharpen has the final score 0 | Time: 28.022 ms
+Move Conversion has the final score 0 | Time: 12.568 ms
+Move Screech has the final score 0 | Time: 16.999 ms
+Move Endeavor has the final score 0 | Time: 11.131 ms
+Move Purify has the final score 0 | Time: 12.225 ms
+Move Lunar Dance has the final score 0 | Time: 17.814 ms
+Move Aura Wheel has the final score 0 | Time: 24.786 ms
+Move Confide has the final score 0 | Time: 15.21 ms
+Move Safeguard has the final score 0 | Time: 15.135 ms
+Move Refresh has the final score 0 | Time: 12.512 ms
+Move Decorate has the final score 0 | Time: 19.366 ms
+Move Kinesis has the final score 0 | Time: 17.457 ms
+Move Instruct has the final score 0 | Time: 10.878 ms
+Move Reflect Type has the final score 0 | Time: 13.054 ms
+Move Last Resort has the final score 0 | Time: 29.259 ms
+Move Recycle has the final score 0 | Time: 10.172 ms
+Move Captivate has the final score 0 | Time: 20.699 ms
+Move Psych Up has the final score 0 | Time: 16.295 ms
+Move Topsy-Turvy has the final score 0 | Time: 16.682 ms
+Move Sheer Cold has the final score 0 | Time: 10.707 ms
+Move Snore has the final score 0 | Time: 14.252 ms
+Move Aromatherapy has the final score 0 | Time: 14.304 ms
+Move Heart Swap has the final score 0 | Time: 18.643 ms
+Move Healing Wish has the final score 0 | Time: 18.515 ms
+Move Heal Pulse has the final score 0 | Time: 13.417 ms
+Move Aurora Veil has the final score 0 | Time: 14.729 ms
+Move Floral Healing has the final score 0 | Time: 12.806 ms
+Move Flower Shield has the final score 0 | Time: 16.006 ms
+Move Guard Swap has the final score 0 | Time: 20.027 ms
+Move Guard Split has the final score 0 | Time: 14.195 ms
+Move Venom Drench has the final score 0 | Time: 16.215 ms
+Move Minimize has the final score 0 | Time: 15.475 ms
+Move Synchronoise has the final score 0 | Time: 13.258 ms
+Move Dream Eater has the final score 0 | Time: 9.72 ms
+Move Torment has the final score 0 | Time: 18.604 ms
+Move Mean Look has the final score 0 | Time: 9.892 ms
+Move Me First has the final score 0 | Time: 12.98 ms
+Move Haze has the final score 0 | Time: 17.364 ms
+Move Block has the final score 0 | Time: 15.87 ms
+Move Leer has the final score 0 | Time: 15.226 ms
+Move Howl has the final score 0 | Time: 27.236 ms
+Move Burn Up has the final score 0 | Time: 18.916 ms
+Move Helping Hand has the final score 0 | Time: 10.289 ms
+Move Shell Trap has the final score 0 | Time: 18.92 ms
+Move Ally Switch has the final score 0 | Time: 23.49 ms
+Move Attract has the final score 0 | Time: 0.02 ms
+Move Meditate has the final score 0 | Time: 46.673 ms
+Move Magnetic Flux has the final score 0 | Time: 17.056 ms
+Move Heal Bell has the final score 0 | Time: 12.711 ms
+Move Octolock has the final score 0 | Time: 12.19 ms
+Move Electrify has the final score 0 | Time: 10.077 ms
+Move Eerie Impulse has the final score 0 | Time: 19.562 ms
+Move Thousand Waves has the final score 0 | Time: 11.564 ms
+Move Needle Arm has the final score 0 | Time: 11.929 ms
+Move Belly Drum has the final score 0 | Time: 38.035 ms
+Move Follow Me has the final score 0 | Time: 10.225 ms
+Move Flash has the final score 0 | Time: 14.888 ms
+Move Entertainment has the final score 0 | Time: 14.353 ms
+Move Bestow has the final score 0 | Time: 0.029 ms
+Move Swords Dance has the final score 0 | Time: 26.985 ms
+Move Imprison has the final score 0 | Time: 11.695 ms
+Move Double Team has the final score 0 | Time: 11.525 ms
 -----------------------------------------------------------------------
            High Score Board for Strelavison
 -----------------------------------------------------------------------
-Move Gravity has the final score 1060 | Time: 61.74 ms
-Move Quiver Dance has the final score 444 | Time: 65.584 ms
-Move Trick Room has the final score 409 | Time: 79.602 ms
-Move Shell Smash has the final score 373 | Time: 61.294 ms
-Move Spore has the final score 340 | Time: 24.836 ms
-Move Sleep Powder has the final score 336 | Time: 23.082 ms
-Move Lovely Kiss has the final score 336 | Time: 23.398 ms
-Move Sing has the final score 336 | Time: 22.568 ms
-Move Hypnosis has the final score 336 | Time: 20.974 ms
-Move Grass Whistle has the final score 336 | Time: 22.283 ms
-Move Nuzzle has the final score 286 | Time: 95.023 ms
-Move Reflect has the final score 284 | Time: 56.937 ms
-Move Metronome has the final score 283 | Time: 476.581 ms
-Move Stun Spore has the final score 283 | Time: 83.928 ms
-Move Thunder Wave has the final score 283 | Time: 83.076 ms
-Move Glare has the final score 283 | Time: 91.778 ms
-Move No Retreat has the final score 271 | Time: 57.71 ms
-Move Speed Swap has the final score 257 | Time: 16.604 ms
-Move Geomancy has the final score 252 | Time: 57.459 ms
-Move Magnet Rise has the final score 249 | Time: 54.312 ms
-Move Obstruct has the final score 233 | Time: 15.351 ms
-Move King's Shield has the final score 233 | Time: 11.805 ms
-Move Yawn has the final score 231 | Time: 21.899 ms
-Move Tailwind has the final score 229 | Time: 18.321 ms
-Move Autotomize has the final score 228 | Time: 60.993 ms
-Move Rock Polish has the final score 228 | Time: 65.197 ms
-Move Grassy Terrain has the final score 222 | Time: 36.744 ms
-Move Substitute has the final score 222 | Time: 67.157 ms
-Move Electric Terrain has the final score 222 | Time: 28.441 ms
-Move Calm Mind has the final score 214 | Time: 65.454 ms
-Move Encore has the final score 209 | Time: 21.49 ms
-Move Agility has the final score 207 | Time: 59.537 ms
-Move Tail Glow has the final score 205 | Time: 65.318 ms
-Move Assist has the final score 204 | Time: 4385.448 ms
-Move Will-O-Wisp has the final score 204 | Time: 19.466 ms
-Move Nasty Plot has the final score 199 | Time: 62.591 ms
-Move Water Sport has the final score 199 | Time: 38.893 ms
-Move Misty Terrain has the final score 195 | Time: 38.882 ms
-Move Acupressure has the final score 190 | Time: 59.93 ms
-Move Baby-Doll Eyes has the final score 182 | Time: 61.263 ms
-Move Coil has the final score 180 | Time: 65.339 ms
-Move Zap Cannon has the final score 180 | Time: 95.256 ms
-Move Stealth Rock has the final score 179 | Time: 16.732 ms
-Move Baneful Bunker has the final score 179 | Time: 11.756 ms
-Move Spiky Shield has the final score 179 | Time: 13.328 ms
-Move Shift Gear has the final score 178 | Time: 62.58 ms
-Move Soak has the final score 173 | Time: 17.931 ms
-Move Toxic Spikes has the final score 170 | Time: 16.535 ms
-Move Nature's Madness has the final score 170 | Time: 17.249 ms
-Move Super Fang has the final score 170 | Time: 18.68 ms
-Move Spikes has the final score 170 | Time: 20.533 ms
-Move Flame Charge has the final score 170 | Time: 85.012 ms
-Move Core Enforcer has the final score 168 | Time: 46.334 ms
-Move Payback has the final score 166 | Time: 30.545 ms
-Move Psychic Terrain has the final score 165 | Time: 36.232 ms
-Move Sucker Punch has the final score 165 | Time: 88.736 ms
-Move Clangorous Soul has the final score 165 | Time: 26.62 ms
-Move Confuse Ray has the final score 159 | Time: 36.843 ms
-Move Toxic Thread has the final score 158 | Time: 23.78 ms
-Move Counter has the final score 157 | Time: 50.215 ms
-Move Sunny Day has the final score 153 | Time: 36.202 ms
-Move Coaching has the final score 151 | Time: 21.927 ms
-Move Focus Energy has the final score 146 | Time: 58.047 ms
-Move Charge Beam has the final score 143 | Time: 108.01 ms
-Move Power-Up Punch has the final score 143 | Time: 112.979 ms
-Move Fiery Dance has the final score 143 | Time: 110.369 ms
-Move Simple Beam has the final score 142 | Time: 27.953 ms
-Move Worry Seed has the final score 142 | Time: 30.036 ms
-Move Gastro Acid has the final score 142 | Time: 27.568 ms
-Move Virus Inject has the final score 142 | Time: 11.254 ms
-Move Light Screen has the final score 142 | Time: 61.355 ms
-Move Dragon Dance has the final score 141 | Time: 63.336 ms
-Move Scale Shot has the final score 140 | Time: 85.741 ms
-Move Cotton Spore has the final score 136 | Time: 21.933 ms
-Move Scary Face has the final score 136 | Time: 23.388 ms
-Move Aqua Ring has the final score 136 | Time: 54.139 ms
-Move Metal Burst has the final score 134 | Time: 42.744 ms
-Move Bolt Strike has the final score 133 | Time: 96.209 ms
-Move Toxic has the final score 131 | Time: 19.966 ms
-Move Ingrain has the final score 130 | Time: 53.493 ms
-Move Feather Dance has the final score 130 | Time: 61.726 ms
-Move Body Slam has the final score 128 | Time: 94.557 ms
-Move Discharge has the final score 128 | Time: 94.212 ms
-Move Chatter has the final score 128 | Time: 48.728 ms
-Move String Shot has the final score 127 | Time: 18.439 ms
-Move Sacred Fire has the final score 126 | Time: 37.975 ms
-Move Crush Grip has the final score 126 | Time: 29.404 ms
-Move Spark has the final score 126 | Time: 95.092 ms
-Move Wring Out has the final score 126 | Time: 23.126 ms
-Move Rain Dance has the final score 125 | Time: 39.597 ms
-Move Dragon Breath has the final score 125 | Time: 101.982 ms
-Move Force Palm has the final score 125 | Time: 102.921 ms
-Move Thunder Cage has the final score 125 | Time: 67.529 ms
-Move Double Iron Bash has the final score 125 | Time: 77.15 ms
-Move Meteor Beam has the final score 124 | Time: 78.573 ms
-Move Teeter Dance has the final score 124 | Time: 32.696 ms
-Move Bulk Up has the final score 124 | Time: 78.021 ms
-Move Swagger has the final score 124 | Time: 40.831 ms
-Move Sweet Kiss has the final score 123 | Time: 31.805 ms
-Move Hard Drive Crash has the final score 122 | Time: 24.762 ms
-Move Eerie Spell has the final score 122 | Time: 24.979 ms
-Move Charm has the final score 122 | Time: 59.864 ms
-Move Lick has the final score 122 | Time: 104.748 ms
-Move Steam Eruption has the final score 121 | Time: 29.541 ms
-Move Titan's Wrath has the final score 121 | Time: 24.762 ms
-Move Blue Flare has the final score 121 | Time: 31.93 ms
-Move Rebalancing has the final score 120 | Time: 83.442 ms
-Move Clamp has the final score 119 | Time: 76.372 ms
-Move Whirlpool has the final score 119 | Time: 70.615 ms
-Move Tar Shot has the final score 119 | Time: 18.692 ms
-Move Detect has the final score 119 | Time: 11.564 ms
-Move Snap Trap has the final score 119 | Time: 73.246 ms
-Move Fire Spin has the final score 119 | Time: 69.377 ms
-Move Sand Tomb has the final score 119 | Time: 73.237 ms
-Move Protect has the final score 119 | Time: 12.546 ms
-Move Foul Play has the final score 117 | Time: 26.204 ms
-Move Wrap has the final score 117 | Time: 77.538 ms
-Move Bind has the final score 117 | Time: 74.634 ms
-Move Infestation has the final score 117 | Time: 67.771 ms
-Move Queso Blast has the final score 116 | Time: 26.784 ms
-Move Frigid Maw has the final score 115 | Time: 31.669 ms
-Move Dragon Energy has the final score 115 | Time: 41.022 ms
-Move Triple Axel has the final score 115 | Time: 28.948 ms
-Move Water Spout has the final score 115 | Time: 41.55 ms
-Move Boomburst has the final score 115 | Time: 29.066 ms
-Move Eruption has the final score 115 | Time: 40.215 ms
-Move Leech Seed has the final score 115 | Time: 14.763 ms
-Move Drum Beating has the final score 115 | Time: 33.845 ms
-Move V-create has the final score 115 | Time: 57.209 ms
-Move Curse has the final score 114 | Time: 57.334 ms
-Move Poison Gas has the final score 114 | Time: 19.424 ms
-Move Low Sweep has the final score 113 | Time: 31.613 ms
-Move Glaciate has the final score 113 | Time: 38.316 ms
-Move High Jump Kick has the final score 112 | Time: 32.946 ms
-Move Night Shade has the final score 112 | Time: 17.897 ms
-Move Seed Flare has the final score 112 | Time: 42.454 ms
-Move Searing Shot has the final score 112 | Time: 35.214 ms
-Move Psywave has the final score 112 | Time: 17.983 ms
-Move Electroweb has the final score 112 | Time: 41.815 ms
-Move Rock Tomb has the final score 112 | Time: 28.959 ms
-Move Bulldoze has the final score 112 | Time: 33.117 ms
-Move Seismic Toss has the final score 112 | Time: 18.858 ms
-Move Mud Shot has the final score 112 | Time: 35.069 ms
-Move Icy Wind has the final score 112 | Time: 33.242 ms
-Move Golden Splash has the final score 111 | Time: 27.012 ms
-Move Present has the final score 110 | Time: 24.93 ms
-Move Heat Crash has the final score 110 | Time: 32.316 ms
-Move Precipice Blades has the final score 110 | Time: 31.198 ms
-Move Astral Barrage has the final score 110 | Time: 34.264 ms
-Move Lava Plume has the final score 110 | Time: 31.763 ms
-Move Heavy Slam has the final score 110 | Time: 24.611 ms
-Move Trump Card has the final score 109 | Time: 74.059 ms
-Move Hone Claws has the final score 109 | Time: 74.327 ms
-Move Light of Ruin has the final score 109 | Time: 25.646 ms
-Move Beak Blast has the final score 109 | Time: 59.099 ms
-Move Bide has the final score 109 | Time: 109.373 ms
-Move Magma Storm has the final score 108 | Time: 75.292 ms
-Move Surging Strikes has the final score 108 | Time: 34.638 ms
-Move Poison Powder has the final score 108 | Time: 19.552 ms
-Move Fake Tears has the final score 108 | Time: 21.637 ms
-Move Volt Tackle has the final score 107 | Time: 36.173 ms
-Move Final Gambit has the final score 107 | Time: 26.577 ms
-Move Flare Blitz has the final score 107 | Time: 32.963 ms
-Move Wicked Blow has the final score 107 | Time: 26.576 ms
-Move Rage has the final score 106 | Time: 68.561 ms
-Move Megahorn has the final score 106 | Time: 30.503 ms
-Move Transform has the final score 106 | Time: 11.988 ms
-Move Power Whip has the final score 106 | Time: 29.866 ms
-Move Thunder has the final score 105 | Time: 105.266 ms
-Move Inferno has the final score 104 | Time: 33.357 ms
-Move Wonder Room has the final score 104 | Time: 15.308 ms
-Move Gunk Shot has the final score 104 | Time: 34.141 ms
-Move Mist has the final score 104 | Time: 13.4 ms
-Move Cosmic Power has the final score 103 | Time: 99.203 ms
-Move Relic Song has the final score 103 | Time: 40.151 ms
-Move Rollout has the final score 103 | Time: 67.693 ms
-Move Ice Ball has the final score 103 | Time: 72.002 ms
-Move Jolt Kick has the final score 103 | Time: 114.932 ms
-Move Defend Order has the final score 103 | Time: 99.06 ms
-Move Thunderbolt has the final score 103 | Time: 99.126 ms
-Move Wild Charge has the final score 103 | Time: 103.082 ms
-Move Siren Song has the final score 103 | Time: 43.207 ms
-Move Meteor Mash has the final score 102 | Time: 87.607 ms
-Move Zing Zap has the final score 102 | Time: 97.789 ms
-Move Head Charge has the final score 102 | Time: 27.881 ms
-Move Double-Edge has the final score 102 | Time: 25.392 ms
-Move Wood Hammer has the final score 102 | Time: 26.194 ms
-Move Brave Bird has the final score 102 | Time: 26.863 ms
-Move Ow The Edge has the final score 102 | Time: 26.585 ms
-Move Growl has the final score 101 | Time: 62.418 ms
-Move Metal Sound has the final score 101 | Time: 19.227 ms
-Move Play Nice has the final score 101 | Time: 55.677 ms
-Move Thunder Punch has the final score 101 | Time: 98.701 ms
-Move Acid Spray has the final score 101 | Time: 32.246 ms
-Move Secret Power has the final score 101 | Time: 30.226 ms
-Move Freeze Shock has the final score 100 | Time: 72.446 ms
-Move Thunder Fang has the final score 100 | Time: 101.544 ms
-Move Hail has the final score 99 | Time: 32.774 ms
-Move Spite has the final score 99 | Time: 14.673 ms
-Move Strange Steam has the final score 99 | Time: 45.287 ms
-Move Superpower has the final score 99 | Time: 50.819 ms
-Move Head Smash has the final score 98 | Time: 25.66 ms
-Move Ice Burn has the final score 98 | Time: 76.939 ms
-Move Forge Breath has the final score 97 | Time: 30.891 ms
-Move Thunder Shock has the final score 97 | Time: 95.026 ms
-Move Dizzy Punch has the final score 97 | Time: 49.25 ms
-Move Blaze Kick has the final score 97 | Time: 31.332 ms
-Move Flamethrower has the final score 97 | Time: 31.722 ms
-Move Tri Attack has the final score 96 | Time: 25.56 ms
-Move Pyro Ball has the final score 96 | Time: 31.206 ms
-Move Fire Blast has the final score 96 | Time: 31.091 ms
-Move Nature Power has the final score 96 | Time: 35.925 ms
-Move Mana Drain has the final score 96 | Time: 33.056 ms
-Move Biting Cold has the final score 96 | Time: 20.54 ms
-Move Rock Climb has the final score 95 | Time: 43.821 ms
-Move Ominous Wind has the final score 95 | Time: 30.55 ms
-Move Ancient Power has the final score 95 | Time: 30.655 ms
-Move Silver Wind has the final score 95 | Time: 29.513 ms
-Move Sludge Bomb has the final score 95 | Time: 33.003 ms
-Move Fire Punch has the final score 95 | Time: 33.343 ms
-Move Heat Wave has the final score 94 | Time: 31.767 ms
-Move Poison Fang has the final score 94 | Time: 32.037 ms
-Move Fire Fang has the final score 94 | Time: 34.481 ms
-Move Shell Side Arm has the final score 94 | Time: 31.132 ms
-Move Poison Jab has the final score 94 | Time: 31.864 ms
-Move Acrobatics has the final score 94 | Time: 30.997 ms
-Move Origin Pulse has the final score 94 | Time: 32.15 ms
-Move Frustration has the final score 93 | Time: 23.484 ms
-Move Signal Beam has the final score 93 | Time: 60.64 ms
-Move Flame Wheel has the final score 93 | Time: 33.523 ms
-Move Dragon Darts has the final score 93 | Time: 30.885 ms
-Move Sludge Wave has the final score 93 | Time: 33.303 ms
-Move Dragon Rage has the final score 93 | Time: 17.075 ms
-Move Bonemerang has the final score 93 | Time: 31.342 ms
-Move Magnitude has the final score 93 | Time: 26.474 ms
-Move Leech Life has the final score 93 | Time: 36.272 ms
-Move Attack Order has the final score 93 | Time: 30.076 ms
-Move Spacial Rend has the final score 93 | Time: 33.041 ms
-Move Return has the final score 93 | Time: 25.435 ms
-Move Fury Cutter has the final score 93 | Time: 73.497 ms
-Move Echoed Voice has the final score 93 | Time: 64.295 ms
-Move Aeroblast has the final score 93 | Time: 29.069 ms
-Move Crabhammer has the final score 93 | Time: 28.275 ms
-Move Oblivion Wing has the final score 93 | Time: 33.902 ms
-Move Dynamax Cannon has the final score 92 | Time: 29.227 ms
-Move Strength has the final score 92 | Time: 28.706 ms
-Move Bullet Seed has the final score 92 | Time: 27.034 ms
-Move Plasma Fists has the final score 92 | Time: 27.673 ms
-Move Psystrike has the final score 92 | Time: 50.712 ms
-Move Psybeam has the final score 92 | Time: 46.855 ms
-Move Photon Geyser has the final score 92 | Time: 29.223 ms
-Move Drain Punch has the final score 92 | Time: 35.918 ms
-Move Icicle Spear has the final score 92 | Time: 24.775 ms
-Move Pin Missile has the final score 92 | Time: 26.959 ms
-Move Glacial Lance has the final score 92 | Time: 28.659 ms
-Move Fusion Bolt has the final score 92 | Time: 25.758 ms
-Move Multi-Attack has the final score 92 | Time: 28.623 ms
-Move Horn Leech has the final score 92 | Time: 33.904 ms
-Move Giga Drain has the final score 92 | Time: 37.681 ms
-Move Flying Press has the final score 92 | Time: 27.477 ms
-Move Mirror Move has the final score 92 | Time: 39.771 ms
-Move Copycat has the final score 92 | Time: 39.613 ms
-Move Scatterdust has the final score 92 | Time: 27.195 ms
-Move Techno Blast has the final score 92 | Time: 23.826 ms
-Move Leaf Blade has the final score 92 | Time: 34.192 ms
-Move Sludge has the final score 92 | Time: 30.543 ms
-Move Moongeist Beam has the final score 92 | Time: 31.836 ms
-Move Jump Kick has the final score 92 | Time: 32.683 ms
-Move Judgment has the final score 92 | Time: 23.606 ms
-Move Bone Rush has the final score 92 | Time: 33.829 ms
-Move Earthquake has the final score 92 | Time: 26.04 ms
-Move Sunsteel Strike has the final score 92 | Time: 29.659 ms
-Move Tail Slap has the final score 92 | Time: 27.206 ms
-Move Behemoth Blade has the final score 92 | Time: 28.754 ms
-Move Body Press has the final score 92 | Time: 33.631 ms
-Move Behemoth Bash has the final score 92 | Time: 26.812 ms
-Move Rock Blast has the final score 92 | Time: 27.8 ms
-Move Low Kick has the final score 92 | Time: 31.067 ms
-Move Fusion Flare has the final score 92 | Time: 24.957 ms
-Move Psycrush has the final score 92 | Time: 26.472 ms
-Move Grass Knot has the final score 92 | Time: 29.456 ms
-Move Play Rough has the final score 91 | Time: 32.199 ms
-Move Drill Run has the final score 91 | Time: 31.019 ms
-Move Thunderous Kick has the final score 91 | Time: 31.898 ms
-Move Sacred Sword has the final score 91 | Time: 29.669 ms
-Move Frost Breath has the final score 91 | Time: 27.918 ms
-Move Fiery Wrath has the final score 91 | Time: 27.961 ms
-Move Revelation Dance has the final score 91 | Time: 25.443 ms
-Move Thousand Arrows has the final score 91 | Time: 27.554 ms
-Move Land's Wrath has the final score 91 | Time: 29.807 ms
-Move Hyper Voice has the final score 91 | Time: 29.037 ms
-Move Earth Power has the final score 91 | Time: 33.314 ms
-Move Thousand Folds has the final score 91 | Time: 24.262 ms
-Move Lucky Chant has the final score 91 | Time: 32.47 ms
-Move Trim Tackle has the final score 91 | Time: 27.926 ms
-Move Energy Ball has the final score 91 | Time: 31.483 ms
-Move Splinter Shot has the final score 91 | Time: 26.669 ms
-Move Petal Blizzard has the final score 91 | Time: 37.319 ms
-Move Parabolic Charge has the final score 91 | Time: 33.596 ms
-Move Ember has the final score 91 | Time: 32.62 ms
-Move Gear Grind has the final score 91 | Time: 27.644 ms
-Move Grav Apple has the final score 91 | Time: 31.749 ms
-Move Beat Up has the final score 91 | Time: 34.529 ms
-Move Storm Throw has the final score 91 | Time: 26.118 ms
-Move Metal Claw has the final score 91 | Time: 75.824 ms
-Move Dual Chop has the final score 91 | Time: 30.611 ms
-Move Bug Buzz has the final score 91 | Time: 31.558 ms
-Move Muddy Water has the final score 91 | Time: 33.218 ms
-Move Snipe Shot has the final score 91 | Time: 25.499 ms
-Move Dragon Hammer has the final score 91 | Time: 31.459 ms
-Move Surf has the final score 91 | Time: 24.315 ms
-Move Force Wave has the final score 91 | Time: 32.32 ms
-Move Aqua Tail has the final score 91 | Time: 28.805 ms
-Move Comet Punch has the final score 91 | Time: 27.657 ms
-Move Mega Kick has the final score 91 | Time: 32.842 ms
-Move Psychic has the final score 91 | Time: 28.712 ms
-Move Sparkling Aria has the final score 91 | Time: 26.722 ms
-Move Moonblast has the final score 91 | Time: 29.592 ms
-Move Psyshock has the final score 90 | Time: 28.502 ms
-Move Hyperspace Hole has the final score 90 | Time: 22.595 ms
-Move Extrasensory has the final score 90 | Time: 29.81 ms
-Move Psychic Fangs has the final score 90 | Time: 24.003 ms
-Move Zen Headbutt has the final score 90 | Time: 33.612 ms
-Move Freezing Glare has the final score 90 | Time: 37.298 ms
-Move Spike Cannon has the final score 90 | Time: 29.194 ms
-Move Confusion has the final score 90 | Time: 49.817 ms
-Move Seed Bomb has the final score 90 | Time: 30.995 ms
-Move Grass Pledge has the final score 90 | Time: 26.003 ms
-Move Smog has the final score 90 | Time: 31.11 ms
-Move Throat Chop has the final score 90 | Time: 66.408 ms
-Move Apple Acid has the final score 90 | Time: 34.102 ms
-Move Lunge has the final score 90 | Time: 33.788 ms
-Move Erosion Wave has the final score 90 | Time: 28.768 ms
-Move Scouring Winds has the final score 90 | Time: 32.296 ms
-Move Cross Poison has the final score 90 | Time: 31.305 ms
-Move False Surrender has the final score 90 | Time: 29.909 ms
-Move Dark Pulse has the final score 90 | Time: 27.981 ms
-Move High Horsepower has the final score 90 | Time: 30.13 ms
-Move Crunch has the final score 90 | Time: 31.208 ms
-Move Night Daze has the final score 90 | Time: 30.174 ms
-Move Darkest Lariat has the final score 90 | Time: 25.226 ms
-Move Power Gem has the final score 90 | Time: 27.59 ms
-Move Frost Kick has the final score 90 | Time: 34.838 ms
-Move X-Scissor has the final score 90 | Time: 32.447 ms
-Move Dazzling Gleam has the final score 90 | Time: 29.033 ms
-Move Secret Sword has the final score 90 | Time: 25.574 ms
-Move Sky Uppercut has the final score 90 | Time: 36.231 ms
-Move Fire Lash has the final score 90 | Time: 33.87 ms
-Move Aura Sphere has the final score 90 | Time: 32.014 ms
-Move Overdrive has the final score 90 | Time: 31.097 ms
-Move Fire Pledge has the final score 90 | Time: 29.436 ms
-Move Shadow Ball has the final score 90 | Time: 39.051 ms
-Move Shadow Bone has the final score 90 | Time: 30.097 ms
-Move Extreme Speed has the final score 90 | Time: 85.225 ms
-Move Flash Cannon has the final score 90 | Time: 29.057 ms
-Move Poltergeist has the final score 90 | Time: 36.462 ms
-Move Iron Head has the final score 90 | Time: 26.835 ms
-Move Dragon Claw has the final score 90 | Time: 33.296 ms
-Move Bubble Beam has the final score 90 | Time: 34.618 ms
-Move Hyper Fang has the final score 90 | Time: 29.032 ms
-Move Defog has the final score 90 | Time: 13.809 ms
-Move Waterfall has the final score 90 | Time: 30.018 ms
-Move Mega Punch has the final score 90 | Time: 31.221 ms
-Move Water Pledge has the final score 90 | Time: 24.248 ms
-Move Scald has the final score 90 | Time: 22.882 ms
-Move Liquidation has the final score 90 | Time: 27.833 ms
-Move Ice Beam has the final score 90 | Time: 36.145 ms
-Move Icicle Crash has the final score 90 | Time: 29.172 ms
-Move Drill Peck has the final score 90 | Time: 29.223 ms
-Move Dragon Pulse has the final score 90 | Time: 35.977 ms
-Move Mystic Lance has the final score 90 | Time: 23.148 ms
-Move Slam has the final score 90 | Time: 27.618 ms
-Move Outrage has the final score 89 | Time: 40.521 ms
-Move Scorching Sands has the final score 89 | Time: 24.691 ms
-Move Stomping Tantrum has the final score 89 | Time: 29.907 ms
-Move Mega Drain has the final score 89 | Time: 40.99 ms
-Move Luster Purge has the final score 89 | Time: 31.605 ms
-Move Mist Ball has the final score 89 | Time: 27.986 ms
-Move Psycho Cut has the final score 89 | Time: 30.933 ms
-Move Night Slash has the final score 89 | Time: 31.664 ms
-Move Trop Kick has the final score 89 | Time: 33.062 ms
-Move Lash Out has the final score 89 | Time: 25.339 ms
-Move Petal Dance has the final score 89 | Time: 35.776 ms
-Move Rock Slide has the final score 89 | Time: 25.492 ms
-Move Double Hit has the final score 89 | Time: 29.051 ms
-Move Shadow Claw has the final score 89 | Time: 34.676 ms
-Move Smelling Salts has the final score 89 | Time: 32.254 ms
-Move Slash has the final score 89 | Time: 32.773 ms
-Move Spirit Break has the final score 89 | Time: 33.265 ms
-Move Retaliate has the final score 89 | Time: 23.709 ms
-Move Draining Kiss has the final score 89 | Time: 34.406 ms
-Move Headbutt has the final score 89 | Time: 27.2 ms
-Move Facade has the final score 89 | Time: 23.579 ms
-Move Smart Strike has the final score 89 | Time: 29.161 ms
-Move Dual Wingbeat has the final score 89 | Time: 32.102 ms
-Move Air Slash has the final score 89 | Time: 28.991 ms
-Move Razor Shell has the final score 89 | Time: 27.752 ms
-Move Skitter Smack has the final score 89 | Time: 30.714 ms
-Move Flame Burst has the final score 89 | Time: 25.624 ms
-Move Chip Away has the final score 89 | Time: 29.802 ms
-Move Burning Jealousy has the final score 89 | Time: 31.438 ms
-Move Mystical Fire has the final score 89 | Time: 31.175 ms
-Move Cross Chop has the final score 89 | Time: 31.497 ms
-Move Stalagbite has the final score 89 | Time: 29.922 ms
-Move Toxiravage has the final score 89 | Time: 83.542 ms
-Move Crush Claw has the final score 89 | Time: 27.754 ms
-Move Triple Kick has the final score 89 | Time: 27.536 ms
-Move Pepper Spray has the final score 89 | Time: 22.574 ms
-Move Pollen Puff has the final score 89 | Time: 31.243 ms
-Move Brick Break has the final score 89 | Time: 25.975 ms
-Move Wake-Up Slap has the final score 89 | Time: 28.418 ms
-Move Vital Throw has the final score 89 | Time: 29.116 ms
-Move Mud Bomb has the final score 88 | Time: 32.471 ms
-Move Bone Club has the final score 88 | Time: 30.629 ms
-Move Water Pulse has the final score 88 | Time: 33.495 ms
-Move Venoshock has the final score 88 | Time: 26.124 ms
-Move Brine has the final score 88 | Time: 26.893 ms
-Move Poison Tail has the final score 88 | Time: 38.885 ms
-Move Ice Punch has the final score 88 | Time: 33.139 ms
-Move Freeze-Dry has the final score 88 | Time: 33.324 ms
-Move Steamroller has the final score 88 | Time: 28.203 ms
-Move Aurora Beam has the final score 88 | Time: 32.008 ms
-Move Double Kick has the final score 88 | Time: 27.744 ms
-Move Air Cutter has the final score 88 | Time: 28.723 ms
-Move Horn Attack has the final score 88 | Time: 31.874 ms
-Move Stomp has the final score 88 | Time: 29.638 ms
-Move Barrage has the final score 88 | Time: 33.916 ms
-Move Fury Swipes has the final score 88 | Time: 29.924 ms
-Move Chilling Wail has the final score 88 | Time: 29.664 ms
-Move Mirror Shot has the final score 88 | Time: 28.173 ms
-Move Steel Wing has the final score 88 | Time: 127.002 ms
-Move Cut has the final score 88 | Time: 29.085 ms
-Move Iron Tail has the final score 88 | Time: 28.111 ms
-Move Dragon Rush has the final score 88 | Time: 28.896 ms
-Move Leaf Tornado has the final score 88 | Time: 29.774 ms
-Move Absorb has the final score 87 | Time: 37.524 ms
-Move Razor Leaf has the final score 87 | Time: 30.314 ms
-Move Heart Stamp has the final score 87 | Time: 28.513 ms
-Move Assurance has the final score 87 | Time: 27.682 ms
-Move Magical Leaf has the final score 87 | Time: 27.069 ms
-Move Expanding Force has the final score 87 | Time: 27.044 ms
-Move Grassy Glide has the final score 87 | Time: 25.422 ms
-Move Shadow Punch has the final score 87 | Time: 28.007 ms
-Move Bite has the final score 87 | Time: 30.066 ms
-Move Brutal Swing has the final score 87 | Time: 40.798 ms
-Move Vise Grip has the final score 87 | Time: 28.25 ms
-Move Swift has the final score 87 | Time: 27.625 ms
-Move Round has the final score 87 | Time: 27.387 ms
-Move Magnet Bomb has the final score 87 | Time: 24.543 ms
-Move Twineedle has the final score 87 | Time: 32.466 ms
-Move Disable has the final score 87 | Time: 54.482 ms
-Move Hidden Power has the final score 87 | Time: 31.0 ms
-Move Covet has the final score 87 | Time: 28.282 ms
-Move Wing Attack has the final score 87 | Time: 36.822 ms
-Move Double Slap has the final score 87 | Time: 29.482 ms
-Move Fury Attack has the final score 87 | Time: 29.637 ms
-Move Pluck has the final score 87 | Time: 27.929 ms
-Move Arm Thrust has the final score 87 | Time: 28.456 ms
-Move Breaking Swipe has the final score 87 | Time: 32.583 ms
-Move Ice Fang has the final score 87 | Time: 36.398 ms
-Move Kinetic Rend has the final score 87 | Time: 30.153 ms
-Move Aerial Ace has the final score 87 | Time: 26.146 ms
-Move Feint Attack has the final score 87 | Time: 29.721 ms
-Move Incinerate has the final score 87 | Time: 27.455 ms
-Move Water Shuriken has the final score 87 | Time: 93.9 ms
-Move Thief has the final score 87 | Time: 28.633 ms
-Move Snarl has the final score 87 | Time: 33.319 ms
-Move Shock Wave has the final score 87 | Time: 27.084 ms
-Move Bug Bite has the final score 87 | Time: 25.767 ms
-Move Dragon Ascent has the final score 87 | Time: 52.99 ms
-Move Bubble has the final score 87 | Time: 31.052 ms
-Move Karate Chop has the final score 87 | Time: 30.087 ms
-Move Rolling Kick has the final score 87 | Time: 28.293 ms
-Move Hex has the final score 87 | Time: 24.804 ms
-Move Octazooka has the final score 87 | Time: 34.659 ms
-Move Clear Smog has the final score 86 | Time: 24.631 ms
-Move Rock Throw has the final score 86 | Time: 26.735 ms
-Move Smack Down has the final score 86 | Time: 26.467 ms
-Move Weather Ball has the final score 86 | Time: 24.703 ms
-Move Fishious Rend has the final score 86 | Time: 25.165 ms
-Move Bolt Beak has the final score 86 | Time: 28.261 ms
-Move Terrain Pulse has the final score 86 | Time: 30.221 ms
-Move Fell Stinger has the final score 86 | Time: 39.302 ms
-Move Rising Voltage has the final score 86 | Time: 26.663 ms
-Move Sweet Tooth has the final score 86 | Time: 26.242 ms
-Move Struggle Bug has the final score 86 | Time: 28.258 ms
-Move Poison Sting has the final score 86 | Time: 36.121 ms
-Move Rapid Spin has the final score 86 | Time: 30.711 ms
-Move Close Combat has the final score 85 | Time: 48.541 ms
-Move Ice Shard has the final score 85 | Time: 90.736 ms
-Move Twister has the final score 85 | Time: 30.855 ms
-Move Pound has the final score 85 | Time: 27.545 ms
-Move Gust has the final score 85 | Time: 25.74 ms
-Move Hold Back has the final score 85 | Time: 37.215 ms
-Move Bullet Punch has the final score 85 | Time: 91.453 ms
-Move Crimson Surge has the final score 85 | Time: 25.801 ms
-Move Acid has the final score 85 | Time: 29.283 ms
-Move Disarming Voice has the final score 85 | Time: 28.378 ms
-Move Vacuum Wave has the final score 85 | Time: 88.611 ms
-Move Knock Off has the final score 85 | Time: 28.172 ms
-Move Rock Smash has the final score 85 | Time: 33.841 ms
-Move Spectral Thief has the final score 85 | Time: 29.779 ms
-Move Tackle has the final score 85 | Time: 33.029 ms
-Move Scratch has the final score 85 | Time: 29.735 ms
-Move Quick Attack has the final score 85 | Time: 88.061 ms
-Move Fairy Wind has the final score 85 | Time: 28.818 ms
-Move Water Gun has the final score 85 | Time: 32.127 ms
-Move Leafage has the final score 85 | Time: 38.462 ms
-Move Shadow Sneak has the final score 85 | Time: 86.391 ms
-Move False Swipe has the final score 85 | Time: 37.496 ms
-Move Accelerock has the final score 85 | Time: 84.423 ms
-Move Pursuit has the final score 85 | Time: 37.222 ms
-Move Corrosive Gas has the final score 85 | Time: 26.053 ms
-Move Mach Punch has the final score 85 | Time: 87.535 ms
-Move Electro Ball has the final score 85 | Time: 26.699 ms
-Move Branch Poke has the final score 85 | Time: 37.577 ms
-Move Vine Whip has the final score 85 | Time: 37.053 ms
-Move Aqua Jet has the final score 85 | Time: 99.159 ms
-Move Think Fast has the final score 85 | Time: 91.334 ms
-Move Pay Day has the final score 85 | Time: 26.67 ms
-Move Mimic has the final score 84 | Time: 36.353 ms
-Move Sketch has the final score 84 | Time: 38.114 ms
-Move Astonish has the final score 84 | Time: 30.581 ms
-Move Cotton Guard has the final score 84 | Time: 116.795 ms
-Move Feint has the final score 84 | Time: 87.805 ms
-Move Peck has the final score 84 | Time: 29.979 ms
-Move Gyro Ball has the final score 84 | Time: 25.508 ms
-Move Powder Snow has the final score 84 | Time: 31.949 ms
-Move Noble Roar has the final score 84 | Time: 85.108 ms
-Move Tearful Look has the final score 84 | Time: 86.184 ms
-Move Fairy Lock has the final score 83 | Time: 11.71 ms
-Move Magic Room has the final score 83 | Time: 12.273 ms
-Move Sky Attack has the final score 83 | Time: 65.719 ms
-Move Constrict has the final score 83 | Time: 34.826 ms
-Move Hydro Pump has the final score 83 | Time: 33.868 ms
-Move Focus Blast has the final score 83 | Time: 32.068 ms
-Move Take Down has the final score 83 | Time: 24.412 ms
-Move Mind Reader has the final score 83 | Time: 10.674 ms
-Move Laser Focus has the final score 83 | Time: 11.411 ms
-Move Lock-On has the final score 83 | Time: 10.146 ms
-Move Steel Beam has the final score 83 | Time: 72.056 ms
-Move Heal Block has the final score 83 | Time: 11.5 ms
-Move Diamond Storm has the final score 82 | Time: 115.968 ms
-Move Reversal has the final score 82 | Time: 43.961 ms
-Move Draco Meteor has the final score 82 | Time: 47.738 ms
-Move Mud-Slap has the final score 82 | Time: 30.981 ms
-Move Punishment has the final score 82 | Time: 37.555 ms
-Move Solar Blade has the final score 82 | Time: 71.701 ms
-Move Stored Power has the final score 82 | Time: 27.11 ms
-Move Flail has the final score 82 | Time: 42.305 ms
-Move Solar Beam has the final score 82 | Time: 76.821 ms
-Move Submission has the final score 82 | Time: 31.515 ms
-Move Stone Edge has the final score 82 | Time: 29.246 ms
-Move Power Trip has the final score 82 | Time: 34.714 ms
-Move Razor Wind has the final score 81 | Time: 70.822 ms
-Move Geode Burst has the final score 81 | Time: 26.232 ms
-Move Court Change has the final score 81 | Time: 17.338 ms
-Move Fleur Cannon has the final score 80 | Time: 50.366 ms
-Move Barrier has the final score 80 | Time: 102.439 ms
-Move Psycho Boost has the final score 80 | Time: 47.05 ms
-Move Overheat has the final score 80 | Time: 52.246 ms
-Move Iron Defense has the final score 80 | Time: 98.176 ms
-Move Leaf Storm has the final score 80 | Time: 51.826 ms
-Move Magic Powder has the final score 80 | Time: 19.66 ms
-Move Acid Armor has the final score 80 | Time: 102.096 ms
-Move Supersonic has the final score 77 | Time: 34.653 ms
-Move Uproar has the final score 77 | Time: 213.962 ms
-Move Flatter has the final score 77 | Time: 44.306 ms
-Move Thrash has the final score 77 | Time: 34.005 ms
-Move Focus Punch has the final score 77 | Time: 31.703 ms
-Move Hammer Arm has the final score 75 | Time: 46.866 ms
-Move Ice Hammer has the final score 75 | Time: 56.227 ms
-Move Avalanche has the final score 74 | Time: 74.161 ms
-Move Sandstorm has the final score 74 | Time: 28.467 ms
-Move Dynamic Punch has the final score 74 | Time: 45.055 ms
-Move Torment has the final score 74 | Time: 55.926 ms
-Move Revenge has the final score 74 | Time: 74.002 ms
-Move Egg Bomb has the final score 73 | Time: 26.885 ms
-Move Work Up has the final score 73 | Time: 64.428 ms
-Move Excite has the final score 73 | Time: 62.384 ms
-Move Growth has the final score 73 | Time: 61.865 ms
-Move Trick-or-Treat has the final score 69 | Time: 18.015 ms
-Move Doom Desire has the final score 67 | Time: 29.188 ms
-Move Amnesia has the final score 67 | Time: 101.223 ms
-Move Hurricane has the final score 67 | Time: 46.886 ms
-Move Stockpile has the final score 67 | Time: 56.206 ms
-Move Blizzard has the final score 66 | Time: 39.893 ms
-Move Future Sight has the final score 66 | Time: 30.019 ms
-Move Shadow Force has the final score 65 | Time: 43.749 ms
-Move Shell Trap has the final score 64 | Time: 78.271 ms
-Move Forest's Curse has the final score 63 | Time: 17.424 ms
-Move Roar has the final score 60 | Time: 15.827 ms
-Move Power Split has the final score 60 | Time: 15.384 ms
-Move Whirlwind has the final score 60 | Time: 11.833 ms
-Move Skull Bash has the final score 58 | Time: 69.966 ms
-Move Dragon Tail has the final score 58 | Time: 29.073 ms
-Move Circle Throw has the final score 58 | Time: 27.381 ms
-Move Bounce has the final score 56 | Time: 34.26 ms
-Move Odor Sleuth has the final score 49 | Time: 10.853 ms
-Move Foresight has the final score 49 | Time: 10.68 ms
-Move Miracle Eye has the final score 49 | Time: 13.405 ms
-Move Phantom Force has the final score 47 | Time: 30.09 ms
-Move Fly has the final score 46 | Time: 27.413 ms
-Move Sonic Boom has the final score 46 | Time: 17.938 ms
-Move Conversion 2 has the final score 46 | Time: 15.079 ms
-Move Charge has the final score 45 | Time: 105.209 ms
-Move Tickle has the final score 45 | Time: 21.243 ms
-Move Dive has the final score 45 | Time: 30.418 ms
-Move Clanging Scales has the final score 44 | Time: 77.866 ms
-Move Eternabeam has the final score 43 | Time: 48.668 ms
-Move Prismatic Laser has the final score 43 | Time: 49.886 ms
-Move Giga Impact has the final score 43 | Time: 40.422 ms
-Move Rock Wrecker has the final score 43 | Time: 44.035 ms
-Move Frenzy Plant has the final score 43 | Time: 41.675 ms
-Move Meteor Assault has the final score 43 | Time: 44.171 ms
-Move Hyper Beam has the final score 43 | Time: 40.08 ms
-Move Roar of Time has the final score 43 | Time: 50.817 ms
-Move Blast Burn has the final score 43 | Time: 42.139 ms
-Move Hydro Cannon has the final score 43 | Time: 40.452 ms
-Move Sky Drop has the final score 42 | Time: 41.218 ms
-Move Endure has the final score 41 | Time: 54.738 ms
-Move Withdraw has the final score 37 | Time: 142.6 ms
-Move Defense Curl has the final score 37 | Time: 98.475 ms
-Move Harden has the final score 37 | Time: 98.744 ms
-Move Mind Blown has the final score 33 | Time: 87.354 ms
-Move Wide Guard has the final score 32 | Time: 10.303 ms
-Move Camouflage has the final score 29 | Time: 11.755 ms
-Move Strength Sap has the final score 28 | Time: 115.988 ms
-Move Pain Split has the final score 26 | Time: 63.858 ms
-Move Taunt has the final score 23 | Time: 16.654 ms
-Move Dig has the final score 20 | Time: 27.405 ms
-Move Magic Coat has the final score 19 | Time: 12.96 ms
-Move Quick Guard has the final score 19 | Time: 15.377 ms
-Move Snatch has the final score 19 | Time: 12.32 ms
-Move Grudge has the final score 18 | Time: 11.413 ms
-Move Crafty Shield has the final score 13 | Time: 10.585 ms
-Move Ion Deluge has the final score 13 | Time: 13.68 ms
-Move Perish Song has the final score 11 | Time: 12.706 ms
-Move Shore Up has the final score 10 | Time: 70.807 ms
-Move Soft-Boiled has the final score 10 | Time: 68.423 ms
-Move Explosion has the final score 10 | Time: 33.86 ms
-Move Moonlight has the final score 10 | Time: 76.258 ms
-Move Glacial Gulf has the final score 10 | Time: 68.415 ms
-Move Milk Drink has the final score 10 | Time: 68.2 ms
-Move Heal Order has the final score 10 | Time: 68.578 ms
-Move Roost has the final score 10 | Time: 71.193 ms
-Move Morning Sun has the final score 10 | Time: 68.695 ms
-Move Slack Off has the final score 10 | Time: 69.468 ms
-Move Recover has the final score 10 | Time: 69.564 ms
-Move Synthesis has the final score 10 | Time: 72.683 ms
-Move Power Trick has the final score 8 | Time: 13.261 ms
-Move Self-Destruct has the final score 8 | Time: 32.021 ms
-Move Jungle Healing has the final score 7 | Time: 70.348 ms
-Move Life Dew has the final score 7 | Time: 74.059 ms
-Move Misty Explosion has the final score 6 | Time: 34.493 ms
-Move Memento has the final score 6 | Time: 13.295 ms
-Move Mirror Coat has the final score 3 | Time: 24.739 ms
-Move Minimize has the final score 0 | Time: 10.042 ms
-Move Teleport has the final score 0 | Time: 1800.485 ms
-Move Nightmare has the final score 0 | Time: 10.468 ms
-Move Telekinesis has the final score 0 | Time: 0.023 ms
-Move Destiny Bond has the final score 0 | Time: 9.843 ms
-Move Hyperspace Fury has the final score 0 | Time: 5.226 ms
-Move Sharpen has the final score 0 | Time: 59.398 ms
-Move Mean Look has the final score 0 | Time: 7.015 ms
-Move Me First has the final score 0 | Time: 8.843 ms
-Move Fissure has the final score 0 | Time: 8.514 ms
-Move Switcheroo has the final score 0 | Time: 11.368 ms
-Move Sticky Web has the final score 0 | Time: 11.929 ms
-Move Needle Arm has the final score 0 | Time: 7.602 ms
-Move Spider Web has the final score 0 | Time: 7.948 ms
-Move Rage Powder has the final score 0 | Time: 9.595 ms
-Move Magnetic Flux has the final score 0 | Time: 11.848 ms
-Move Quash has the final score 0 | Time: 0.015 ms
-Move Leer has the final score 0 | Time: 12.804 ms
-Move Steel Roller has the final score 0 | Time: 15.504 ms
-Move Howl has the final score 0 | Time: 57.873 ms
-Move Helping Hand has the final score 0 | Time: 8.268 ms
-Move Heal Bell has the final score 0 | Time: 8.964 ms
-Move Spirit Shackle has the final score 0 | Time: 11.939 ms
-Move Heart Swap has the final score 0 | Time: 10.775 ms
-Move Anchor Shot has the final score 0 | Time: 8.596 ms
-Move Skill Swap has the final score 0 | Time: 9.461 ms
-Move Role Play has the final score 0 | Time: 10.239 ms
-Move Rest has the final score 0 | Time: 67.095 ms
-Move Sleep Talk has the final score 0 | Time: 7.135 ms
-Move Powder has the final score 0 | Time: 52.493 ms
-Move Mud Sport has the final score 0 | Time: 9.194 ms
-Move Aromatherapy has the final score 0 | Time: 9.814 ms
-Move Smokescreen has the final score 0 | Time: 12.389 ms
-Move Screech has the final score 0 | Time: 12.163 ms
-Move Flash has the final score 0 | Time: 12.909 ms
-Move Trick has the final score 0 | Time: 9.194 ms
-Move Instruct has the final score 0 | Time: 7.12 ms
-Move Healing Wish has the final score 0 | Time: 58.39 ms
-Move Psycho Shift has the final score 0 | Time: 11.187 ms
-Move Gear Up has the final score 0 | Time: 10.755 ms
-Move Double Team has the final score 0 | Time: 10.004 ms
-Move Heal Pulse has the final score 0 | Time: 8.134 ms
-Move Power Swap has the final score 0 | Time: 10.024 ms
-Move Sand Attack has the final score 0 | Time: 15.326 ms
-Move Safeguard has the final score 0 | Time: 10.402 ms
-Move Spotlight has the final score 0 | Time: 9.224 ms
-Move Conversion has the final score 0 | Time: 10.379 ms
-Move Confide has the final score 0 | Time: 11.043 ms
-Move Captivate has the final score 0 | Time: 11.669 ms
-Move Guard Swap has the final score 0 | Time: 10.551 ms
-Move Block has the final score 0 | Time: 7.106 ms
-Move Electrify has the final score 0 | Time: 10.453 ms
-Move Eerie Impulse has the final score 0 | Time: 15.249 ms
-Move Aromatic Mist has the final score 0 | Time: 13.931 ms
-Move Bestow has the final score 0 | Time: 0.016 ms
-Move Dream Eater has the final score 0 | Time: 8.679 ms
-Move Synchronoise has the final score 0 | Time: 10.58 ms
-Move Belly Drum has the final score 0 | Time: 56.97 ms
-Move Baton Pass has the final score 0 | Time: 1828.818 ms
-Move Ally Switch has the final score 0 | Time: 55.046 ms
-Move Decorate has the final score 0 | Time: 16.72 ms
-Move Attract has the final score 0 | Time: 0.024 ms
-Move Parting Shot has the final score 0 | Time: 1824.37 ms
-Move Floral Healing has the final score 0 | Time: 9.012 ms
-Move After You has the final score 0 | Time: 0.015 ms
-Move Flip Turn has the final score 0 | Time: 1896.938 ms
-Move Meditate has the final score 0 | Time: 65.587 ms
-Move Venom Drench has the final score 0 | Time: 12.359 ms
-Move Follow Me has the final score 0 | Time: 7.847 ms
-Move Spit Up has the final score 0 | Time: 8.8 ms
-Move Flower Shield has the final score 0 | Time: 11.011 ms
-Move Swallow has the final score 0 | Time: 7.072 ms
-Move Natural Gift has the final score 0 | Time: 6.912 ms
-Move Horn Drill has the final score 0 | Time: 7.769 ms
-Move U-turn has the final score 0 | Time: 2105.846 ms
-Move Entertainment has the final score 0 | Time: 11.687 ms
-Move Guillotine has the final score 0 | Time: 8.465 ms
-Move Topsy-Turvy has the final score 0 | Time: 15.255 ms
-Move Purify has the final score 0 | Time: 11.769 ms
-Move Guard Split has the final score 0 | Time: 9.726 ms
-Move Sweet Scent has the final score 0 | Time: 0.017 ms
-Move Endeavor has the final score 0 | Time: 7.413 ms
-Move Swords Dance has the final score 0 | Time: 59.425 ms
-Move Imprison has the final score 0 | Time: 6.764 ms
-Move Sheer Cold has the final score 0 | Time: 8.467 ms
-Move Burn Up has the final score 0 | Time: 52.537 ms
-Move Aurora Veil has the final score 0 | Time: 7.962 ms
-Move Tail Whip has the final score 0 | Time: 11.905 ms
-Move Fling has the final score 0 | Time: 16.129 ms
-Move Haze has the final score 0 | Time: 10.321 ms
-Move Recycle has the final score 0 | Time: 7.371 ms
-Move Teatime has the final score 0 | Time: 7.379 ms
-Move Embargo has the final score 0 | Time: 10.109 ms
-Move Fake Out has the final score 0 | Time: 65.321 ms
-Move Reflect Type has the final score 0 | Time: 8.59 ms
-Move Psych Up has the final score 0 | Time: 10.529 ms
-Move Lunar Dance has the final score 0 | Time: 63.108 ms
-Move Octolock has the final score 0 | Time: 9.905 ms
-Move Mat Block has the final score 0 | Time: 5.993 ms
-Move Aura Wheel has the final score 0 | Time: 63.399 ms
-Move Snore has the final score 0 | Time: 9.093 ms
-Move Jaw Lock has the final score 0 | Time: 7.281 ms
-Move Rototiller has the final score 0 | Time: 11.589 ms
-Move Wish has the final score 0 | Time: 49.645 ms
-Move Volt Switch has the final score 0 | Time: 1819.596 ms
-Move Last Resort has the final score 0 | Time: 12.618 ms
-Move Dark Void has the final score 0 | Time: 17.947 ms
-Move Kinesis has the final score 0 | Time: 13.587 ms
-Move Stuff Cheeks has the final score 0 | Time: 9.348 ms
-Move First Impression has the final score 0 | Time: 62.624 ms
-Move Thousand Waves has the final score 0 | Time: 7.348 ms
-Move Refresh has the final score 0 | Time: 10.74 ms
-Move Belch has the final score 0 | Time: 12.503 ms
+Move Gravity has the final score 1060 | Time: 40.565 ms
+Move Quiver Dance has the final score 444 | Time: 61.964 ms
+Move Trick Room has the final score 409 | Time: 70.376 ms
+Move Shell Smash has the final score 373 | Time: 38.617 ms
+Move Spore has the final score 340 | Time: 30.652 ms
+Move Lovely Kiss has the final score 336 | Time: 32.185 ms
+Move Hypnosis has the final score 336 | Time: 29.058 ms
+Move Sing has the final score 336 | Time: 28.707 ms
+Move Sleep Powder has the final score 336 | Time: 29.929 ms
+Move Grass Whistle has the final score 336 | Time: 32.072 ms
+Move Nuzzle has the final score 286 | Time: 115.554 ms
+Move Reflect has the final score 284 | Time: 23.876 ms
+Move Glare has the final score 283 | Time: 93.684 ms
+Move Thunder Wave has the final score 283 | Time: 101.963 ms
+Move Stun Spore has the final score 283 | Time: 83.992 ms
+Move No Retreat has the final score 271 | Time: 31.294 ms
+Move Speed Swap has the final score 257 | Time: 20.93 ms
+Move Geomancy has the final score 252 | Time: 40.706 ms
+Move Magnet Rise has the final score 249 | Time: 28.197 ms
+Move Substitute has the final score 233 | Time: 27.542 ms
+Move Obstruct has the final score 233 | Time: 16.414 ms
+Move King's Shield has the final score 233 | Time: 15.483 ms
+Move Yawn has the final score 231 | Time: 33.305 ms
+Move Tailwind has the final score 229 | Time: 24.616 ms
+Move Autotomize has the final score 228 | Time: 32.365 ms
+Move Rock Polish has the final score 228 | Time: 32.663 ms
+Move Grassy Terrain has the final score 222 | Time: 49.206 ms
+Move Electric Terrain has the final score 222 | Time: 51.793 ms
+Move Calm Mind has the final score 214 | Time: 41.366 ms
+Move Encore has the final score 209 | Time: 16.056 ms
+Move Agility has the final score 207 | Time: 32.666 ms
+Move Tail Glow has the final score 205 | Time: 35.678 ms
+Move Assist has the final score 204 | Time: 3501.917 ms
+Move Will-O-Wisp has the final score 204 | Time: 25.691 ms
+Move Water Sport has the final score 199 | Time: 48.192 ms
+Move Nasty Plot has the final score 199 | Time: 29.754 ms
+Move Misty Terrain has the final score 195 | Time: 75.712 ms
+Move Acupressure has the final score 190 | Time: 32.284 ms
+Move Baby-Doll Eyes has the final score 182 | Time: 42.688 ms
+Move Coil has the final score 180 | Time: 33.03 ms
+Move Zap Cannon has the final score 180 | Time: 98.068 ms
+Move Spiky Shield has the final score 179 | Time: 16.504 ms
+Move Baneful Bunker has the final score 179 | Time: 12.963 ms
+Move Stealth Rock has the final score 179 | Time: 19.486 ms
+Move Shift Gear has the final score 178 | Time: 34.311 ms
+Move Soak has the final score 173 | Time: 19.387 ms
+Move Nature's Madness has the final score 170 | Time: 44.442 ms
+Move Spikes has the final score 170 | Time: 27.691 ms
+Move Flame Charge has the final score 170 | Time: 48.658 ms
+Move Super Fang has the final score 170 | Time: 27.241 ms
+Move Toxic Spikes has the final score 170 | Time: 25.7 ms
+Move Core Enforcer has the final score 168 | Time: 47.162 ms
+Move Payback has the final score 166 | Time: 28.642 ms
+Move Psychic Terrain has the final score 165 | Time: 46.695 ms
+Move Sucker Punch has the final score 165 | Time: 43.06 ms
+Move Clangorous Soul has the final score 165 | Time: 26.648 ms
+Move Confuse Ray has the final score 159 | Time: 40.074 ms
+Move Toxic Thread has the final score 158 | Time: 27.832 ms
+Move Sunny Day has the final score 153 | Time: 42.56 ms
+Move Coaching has the final score 151 | Time: 37.359 ms
+Move Focus Energy has the final score 146 | Time: 26.673 ms
+Move Charge Beam has the final score 143 | Time: 64.794 ms
+Move Fiery Dance has the final score 143 | Time: 64.243 ms
+Move Power-Up Punch has the final score 143 | Time: 56.503 ms
+Move Virus Inject has the final score 142 | Time: 20.317 ms
+Move Light Screen has the final score 142 | Time: 22.418 ms
+Move Simple Beam has the final score 142 | Time: 38.549 ms
+Move Gastro Acid has the final score 142 | Time: 32.759 ms
+Move Worry Seed has the final score 142 | Time: 37.888 ms
+Move Dragon Dance has the final score 141 | Time: 42.286 ms
+Move Scale Shot has the final score 140 | Time: 48.622 ms
+Move Cotton Spore has the final score 136 | Time: 29.947 ms
+Move Counter has the final score 136 | Time: 28.827 ms
+Move Aqua Ring has the final score 136 | Time: 21.745 ms
+Move Scary Face has the final score 136 | Time: 33.836 ms
+Move Bolt Strike has the final score 133 | Time: 114.472 ms
+Move Toxic has the final score 131 | Time: 24.767 ms
+Move Ingrain has the final score 130 | Time: 21.927 ms
+Move Feather Dance has the final score 130 | Time: 30.187 ms
+Move Discharge has the final score 128 | Time: 97.252 ms
+Move Body Slam has the final score 128 | Time: 96.928 ms
+Move Chatter has the final score 128 | Time: 68.771 ms
+Move String Shot has the final score 127 | Time: 20.497 ms
+Move Crush Grip has the final score 126 | Time: 30.962 ms
+Move Spark has the final score 126 | Time: 184.979 ms
+Move Wring Out has the final score 126 | Time: 36.116 ms
+Move Sacred Fire has the final score 126 | Time: 39.731 ms
+Move Dragon Breath has the final score 125 | Time: 112.24 ms
+Move Rain Dance has the final score 125 | Time: 36.824 ms
+Move Thunder Cage has the final score 125 | Time: 36.325 ms
+Move Force Palm has the final score 125 | Time: 102.34 ms
+Move Meteor Beam has the final score 124 | Time: 37.273 ms
+Move Teeter Dance has the final score 124 | Time: 47.19 ms
+Move Bulk Up has the final score 124 | Time: 44.883 ms
+Move Swagger has the final score 124 | Time: 43.361 ms
+Move Sweet Kiss has the final score 123 | Time: 60.551 ms
+Move Eerie Spell has the final score 122 | Time: 38.159 ms
+Move Lick has the final score 122 | Time: 118.027 ms
+Move Hard Drive Crash has the final score 122 | Time: 34.737 ms
+Move Charm has the final score 122 | Time: 33.718 ms
+Move Steam Eruption has the final score 121 | Time: 42.146 ms
+Move Titan's Wrath has the final score 121 | Time: 34.301 ms
+Move Blue Flare has the final score 121 | Time: 43.036 ms
+Move Rebalancing has the final score 120 | Time: 88.798 ms
+Move Protect has the final score 119 | Time: 13.871 ms
+Move Fire Spin has the final score 119 | Time: 41.562 ms
+Move Snap Trap has the final score 119 | Time: 49.294 ms
+Move Sand Tomb has the final score 119 | Time: 166.157 ms
+Move Whirlpool has the final score 119 | Time: 34.366 ms
+Move Clamp has the final score 119 | Time: 35.704 ms
+Move Detect has the final score 119 | Time: 15.774 ms
+Move Tar Shot has the final score 119 | Time: 21.242 ms
+Move Wrap has the final score 117 | Time: 37.548 ms
+Move Foul Play has the final score 117 | Time: 29.321 ms
+Move Infestation has the final score 117 | Time: 39.736 ms
+Move Double Iron Bash has the final score 117 | Time: 47.221 ms
+Move Bind has the final score 117 | Time: 36.898 ms
+Move Eruption has the final score 116 | Time: 42.062 ms
+Move Water Spout has the final score 116 | Time: 30.049 ms
+Move Queso Blast has the final score 116 | Time: 35.482 ms
+Move Dragon Energy has the final score 116 | Time: 49.656 ms
+Move Boomburst has the final score 115 | Time: 40.258 ms
+Move Triple Axel has the final score 115 | Time: 32.933 ms
+Move Frigid Maw has the final score 115 | Time: 44.054 ms
+Move Drum Beating has the final score 115 | Time: 46.484 ms
+Move Leech Seed has the final score 115 | Time: 19.005 ms
+Move V-create has the final score 115 | Time: 55.018 ms
+Move Curse has the final score 114 | Time: 24.303 ms
+Move Bide has the final score 114 | Time: 34.857 ms
+Move Poison Gas has the final score 114 | Time: 24.846 ms
+Move Low Sweep has the final score 113 | Time: 42.06 ms
+Move Glaciate has the final score 113 | Time: 45.838 ms
+Move Psywave has the final score 112 | Time: 22.626 ms
+Move Night Shade has the final score 112 | Time: 22.957 ms
+Move High Jump Kick has the final score 112 | Time: 57.011 ms
+Move Rock Tomb has the final score 112 | Time: 32.675 ms
+Move Seed Flare has the final score 112 | Time: 42.135 ms
+Move Electroweb has the final score 112 | Time: 61.135 ms
+Move Searing Shot has the final score 112 | Time: 42.557 ms
+Move Seismic Toss has the final score 112 | Time: 28.601 ms
+Move Bulldoze has the final score 112 | Time: 42.724 ms
+Move Mud Shot has the final score 112 | Time: 45.32 ms
+Move Icy Wind has the final score 112 | Time: 41.733 ms
+Move Golden Splash has the final score 111 | Time: 33.331 ms
+Move Final Gambit has the final score 111 | Time: 28.561 ms
+Move Heat Crash has the final score 110 | Time: 32.311 ms
+Move Precipice Blades has the final score 110 | Time: 39.175 ms
+Move Heavy Slam has the final score 110 | Time: 32.98 ms
+Move Lava Plume has the final score 110 | Time: 40.982 ms
+Move Present has the final score 110 | Time: 40.591 ms
+Move Astral Barrage has the final score 110 | Time: 40.917 ms
+Move Light of Ruin has the final score 109 | Time: 35.649 ms
+Move Beak Blast has the final score 109 | Time: 64.464 ms
+Move Trump Card has the final score 109 | Time: 36.522 ms
+Move Hone Claws has the final score 109 | Time: 34.884 ms
+Move Magma Storm has the final score 108 | Time: 37.152 ms
+Move Surging Strikes has the final score 108 | Time: 35.232 ms
+Move Fake Tears has the final score 108 | Time: 28.448 ms
+Move Poison Powder has the final score 108 | Time: 22.492 ms
+Move Flare Blitz has the final score 107 | Time: 41.642 ms
+Move Wicked Blow has the final score 107 | Time: 28.692 ms
+Move Volt Tackle has the final score 107 | Time: 43.702 ms
+Move Metal Burst has the final score 106 | Time: 22.593 ms
+Move Transform has the final score 106 | Time: 16.554 ms
+Move Power Whip has the final score 106 | Time: 50.509 ms
+Move Megahorn has the final score 106 | Time: 32.019 ms
+Move Rage has the final score 106 | Time: 40.371 ms
+Move Thunder has the final score 105 | Time: 94.774 ms
+Move Wonder Room has the final score 104 | Time: 16.045 ms
+Move Inferno has the final score 104 | Time: 39.276 ms
+Move Gunk Shot has the final score 104 | Time: 41.152 ms
+Move Mist has the final score 104 | Time: 20.766 ms
+Move Wild Charge has the final score 103 | Time: 104.503 ms
+Move Defend Order has the final score 103 | Time: 38.224 ms
+Move Relic Song has the final score 103 | Time: 54.222 ms
+Move Thunderbolt has the final score 103 | Time: 107.263 ms
+Move Siren Song has the final score 103 | Time: 53.667 ms
+Move Ice Ball has the final score 103 | Time: 40.893 ms
+Move Cosmic Power has the final score 103 | Time: 36.475 ms
+Move Rollout has the final score 103 | Time: 34.02 ms
+Move Jolt Kick has the final score 103 | Time: 95.641 ms
+Move Brave Bird has the final score 102 | Time: 39.484 ms
+Move Ow The Edge has the final score 102 | Time: 36.159 ms
+Move Zing Zap has the final score 102 | Time: 98.719 ms
+Move Head Charge has the final score 102 | Time: 36.285 ms
+Move Double-Edge has the final score 102 | Time: 33.501 ms
+Move Meteor Mash has the final score 102 | Time: 63.853 ms
+Move Wood Hammer has the final score 102 | Time: 35.146 ms
+Move Thunder Punch has the final score 101 | Time: 112.842 ms
+Move Acid Spray has the final score 101 | Time: 38.959 ms
+Move Secret Power has the final score 101 | Time: 38.364 ms
+Move Growl has the final score 101 | Time: 35.697 ms
+Move Metal Sound has the final score 101 | Time: 21.589 ms
+Move Play Nice has the final score 101 | Time: 25.566 ms
+Move Freeze Shock has the final score 100 | Time: 66.894 ms
+Move Thunder Fang has the final score 100 | Time: 163.794 ms
+Move Spite has the final score 99 | Time: 21.548 ms
+Move Strange Steam has the final score 99 | Time: 60.258 ms
+Move Hail has the final score 99 | Time: 39.188 ms
+Move Superpower has the final score 99 | Time: 73.784 ms
+Move Ice Burn has the final score 98 | Time: 57.001 ms
+Move Head Smash has the final score 98 | Time: 28.684 ms
+Move Blaze Kick has the final score 97 | Time: 50.665 ms
+Move Forge Breath has the final score 97 | Time: 44.725 ms
+Move Thunder Shock has the final score 97 | Time: 132.533 ms
+Move Flamethrower has the final score 97 | Time: 43.817 ms
+Move Dizzy Punch has the final score 97 | Time: 59.436 ms
+Move Fire Blast has the final score 96 | Time: 44.832 ms
+Move Nature Power has the final score 96 | Time: 50.156 ms
+Move Biting Cold has the final score 96 | Time: 28.138 ms
+Move Pyro Ball has the final score 96 | Time: 42.251 ms
+Move Tri Attack has the final score 96 | Time: 38.375 ms
+Move Ominous Wind has the final score 95 | Time: 52.245 ms
+Move Sludge Bomb has the final score 95 | Time: 53.061 ms
+Move Rock Climb has the final score 95 | Time: 54.915 ms
+Move Fire Punch has the final score 95 | Time: 47.328 ms
+Move Silver Wind has the final score 95 | Time: 70.965 ms
+Move Ancient Power has the final score 95 | Time: 31.763 ms
+Move Heat Wave has the final score 94 | Time: 49.12 ms
+Move Fire Fang has the final score 94 | Time: 53.283 ms
+Move Origin Pulse has the final score 94 | Time: 35.615 ms
+Move Poison Fang has the final score 94 | Time: 42.247 ms
+Move Acrobatics has the final score 94 | Time: 36.583 ms
+Move Poison Jab has the final score 94 | Time: 44.819 ms
+Move Shell Side Arm has the final score 94 | Time: 45.975 ms
+Move Crabhammer has the final score 93 | Time: 42.253 ms
+Move Mana Drain has the final score 93 | Time: 33.967 ms
+Move Attack Order has the final score 93 | Time: 30.62 ms
+Move Flame Wheel has the final score 93 | Time: 41.194 ms
+Move Fury Cutter has the final score 93 | Time: 32.947 ms
+Move Sludge Wave has the final score 93 | Time: 48.253 ms
+Move Echoed Voice has the final score 93 | Time: 41.558 ms
+Move Signal Beam has the final score 93 | Time: 60.152 ms
+Move Dragon Rage has the final score 93 | Time: 19.474 ms
+Move Magnitude has the final score 93 | Time: 38.47 ms
+Move Dragon Darts has the final score 93 | Time: 35.978 ms
+Move Spacial Rend has the final score 93 | Time: 35.992 ms
+Move Return has the final score 93 | Time: 34.441 ms
+Move Bonemerang has the final score 93 | Time: 35.79 ms
+Move Frustration has the final score 93 | Time: 31.603 ms
+Move Aeroblast has the final score 93 | Time: 43.383 ms
+Move Jump Kick has the final score 92 | Time: 53.973 ms
+Move Sunsteel Strike has the final score 92 | Time: 43.95 ms
+Move Behemoth Blade has the final score 92 | Time: 33.535 ms
+Move Behemoth Bash has the final score 92 | Time: 31.777 ms
+Move Bullet Seed has the final score 92 | Time: 41.674 ms
+Move Grass Knot has the final score 92 | Time: 39.678 ms
+Move Rock Blast has the final score 92 | Time: 29.89 ms
+Move Bone Rush has the final score 92 | Time: 60.822 ms
+Move Multi-Attack has the final score 92 | Time: 32.251 ms
+Move Copycat has the final score 92 | Time: 45.814 ms
+Move Techno Blast has the final score 92 | Time: 30.202 ms
+Move Low Kick has the final score 92 | Time: 39.554 ms
+Move Pin Missile has the final score 92 | Time: 32.625 ms
+Move Tail Slap has the final score 92 | Time: 37.226 ms
+Move Scatterdust has the final score 92 | Time: 44.07 ms
+Move Leaf Blade has the final score 92 | Time: 39.154 ms
+Move Body Press has the final score 92 | Time: 41.276 ms
+Move Flying Press has the final score 92 | Time: 40.133 ms
+Move Psycrush has the final score 92 | Time: 28.891 ms
+Move Mirror Move has the final score 92 | Time: 50.865 ms
+Move Glacial Lance has the final score 92 | Time: 42.592 ms
+Move Icicle Spear has the final score 92 | Time: 31.289 ms
+Move Judgment has the final score 92 | Time: 33.087 ms
+Move Sludge has the final score 92 | Time: 39.953 ms
+Move Earthquake has the final score 92 | Time: 30.623 ms
+Move Moongeist Beam has the final score 92 | Time: 46.451 ms
+Move Psybeam has the final score 92 | Time: 55.055 ms
+Move Fusion Bolt has the final score 92 | Time: 27.977 ms
+Move Fusion Flare has the final score 92 | Time: 33.25 ms
+Move Photon Geyser has the final score 92 | Time: 43.133 ms
+Move Plasma Fists has the final score 92 | Time: 30.757 ms
+Move Psystrike has the final score 92 | Time: 36.255 ms
+Move Strength has the final score 92 | Time: 37.685 ms
+Move Dynamax Cannon has the final score 92 | Time: 34.833 ms
+Move Aqua Tail has the final score 91 | Time: 41.108 ms
+Move Psychic has the final score 91 | Time: 45.136 ms
+Move Bug Buzz has the final score 91 | Time: 35.661 ms
+Move Splinter Shot has the final score 91 | Time: 47.235 ms
+Move Play Rough has the final score 91 | Time: 40.171 ms
+Move Moonblast has the final score 91 | Time: 43.931 ms
+Move Leech Life has the final score 91 | Time: 31.983 ms
+Move Trim Tackle has the final score 91 | Time: 30.994 ms
+Move Beat Up has the final score 91 | Time: 36.156 ms
+Move Storm Throw has the final score 91 | Time: 36.348 ms
+Move Thousand Folds has the final score 91 | Time: 34.508 ms
+Move Force Wave has the final score 91 | Time: 44.574 ms
+Move Mega Kick has the final score 91 | Time: 38.24 ms
+Move Thunderous Kick has the final score 91 | Time: 39.744 ms
+Move Sacred Sword has the final score 91 | Time: 36.023 ms
+Move Hyper Voice has the final score 91 | Time: 35.509 ms
+Move Revelation Dance has the final score 91 | Time: 28.718 ms
+Move Drill Run has the final score 91 | Time: 47.534 ms
+Move Dual Chop has the final score 91 | Time: 33.444 ms
+Move Thousand Arrows has the final score 91 | Time: 38.397 ms
+Move Energy Ball has the final score 91 | Time: 38.954 ms
+Move Land's Wrath has the final score 91 | Time: 40.931 ms
+Move Petal Blizzard has the final score 91 | Time: 40.391 ms
+Move Earth Power has the final score 91 | Time: 41.595 ms
+Move Snipe Shot has the final score 91 | Time: 29.655 ms
+Move Surf has the final score 91 | Time: 31.232 ms
+Move Grav Apple has the final score 91 | Time: 38.853 ms
+Move Sparkling Aria has the final score 91 | Time: 34.933 ms
+Move Muddy Water has the final score 91 | Time: 36.313 ms
+Move Ember has the final score 91 | Time: 40.317 ms
+Move Metal Claw has the final score 91 | Time: 58.778 ms
+Move Metronome has the final score 91 | Time: 364.34 ms
+Move Lucky Chant has the final score 91 | Time: 37.038 ms
+Move Fiery Wrath has the final score 91 | Time: 29.033 ms
+Move Comet Punch has the final score 91 | Time: 35.249 ms
+Move Gear Grind has the final score 91 | Time: 34.989 ms
+Move Oblivion Wing has the final score 91 | Time: 37.589 ms
+Move Dragon Hammer has the final score 91 | Time: 43.808 ms
+Move Frost Breath has the final score 91 | Time: 40.707 ms
+Move Flash Cannon has the final score 90 | Time: 44.888 ms
+Move Dragon Pulse has the final score 90 | Time: 35.734 ms
+Move Iron Head has the final score 90 | Time: 35.137 ms
+Move Dragon Claw has the final score 90 | Time: 35.415 ms
+Move Drain Punch has the final score 90 | Time: 44.13 ms
+Move Power Gem has the final score 90 | Time: 29.981 ms
+Move Spike Cannon has the final score 90 | Time: 33.51 ms
+Move Darkest Lariat has the final score 90 | Time: 31.091 ms
+Move Horn Leech has the final score 90 | Time: 35.818 ms
+Move Psychic Fangs has the final score 90 | Time: 32.246 ms
+Move Giga Drain has the final score 90 | Time: 36.737 ms
+Move Fire Pledge has the final score 90 | Time: 34.216 ms
+Move Fire Lash has the final score 90 | Time: 40.537 ms
+Move Seed Bomb has the final score 90 | Time: 40.103 ms
+Move Grass Pledge has the final score 90 | Time: 36.599 ms
+Move Liquidation has the final score 90 | Time: 34.516 ms
+Move Scald has the final score 90 | Time: 27.244 ms
+Move Slam has the final score 90 | Time: 36.411 ms
+Move Mega Punch has the final score 90 | Time: 32.787 ms
+Move Hyper Fang has the final score 90 | Time: 34.766 ms
+Move Night Daze has the final score 90 | Time: 30.908 ms
+Move Water Pledge has the final score 90 | Time: 29.813 ms
+Move Waterfall has the final score 90 | Time: 33.702 ms
+Move High Horsepower has the final score 90 | Time: 43.272 ms
+Move Apple Acid has the final score 90 | Time: 43.218 ms
+Move Crunch has the final score 90 | Time: 30.019 ms
+Move Dark Pulse has the final score 90 | Time: 32.02 ms
+Move Extreme Speed has the final score 90 | Time: 43.987 ms
+Move Defog has the final score 90 | Time: 19.39 ms
+Move False Surrender has the final score 90 | Time: 30.404 ms
+Move Bubble Beam has the final score 90 | Time: 34.508 ms
+Move Throat Chop has the final score 90 | Time: 35.722 ms
+Move Dazzling Gleam has the final score 90 | Time: 41.111 ms
+Move X-Scissor has the final score 90 | Time: 32.392 ms
+Move Overdrive has the final score 90 | Time: 34.089 ms
+Move Frost Kick has the final score 90 | Time: 174.088 ms
+Move Scouring Winds has the final score 90 | Time: 64.786 ms
+Move Cross Poison has the final score 90 | Time: 41.356 ms
+Move Confusion has the final score 90 | Time: 52.13 ms
+Move Secret Sword has the final score 90 | Time: 37.367 ms
+Move Poltergeist has the final score 90 | Time: 35.519 ms
+Move Mystic Lance has the final score 90 | Time: 37.521 ms
+Move Sky Uppercut has the final score 90 | Time: 47.436 ms
+Move Aura Sphere has the final score 90 | Time: 44.188 ms
+Move Zen Headbutt has the final score 90 | Time: 37.084 ms
+Move Lunge has the final score 90 | Time: 33.012 ms
+Move Erosion Wave has the final score 90 | Time: 45.081 ms
+Move Shadow Bone has the final score 90 | Time: 49.001 ms
+Move Smog has the final score 90 | Time: 36.223 ms
+Move Shadow Ball has the final score 90 | Time: 53.377 ms
+Move Hyperspace Hole has the final score 90 | Time: 29.715 ms
+Move Extrasensory has the final score 90 | Time: 39.314 ms
+Move Ice Beam has the final score 90 | Time: 54.037 ms
+Move Icicle Crash has the final score 90 | Time: 40.608 ms
+Move Freezing Glare has the final score 90 | Time: 74.415 ms
+Move Drill Peck has the final score 90 | Time: 38.353 ms
+Move Psyshock has the final score 90 | Time: 37.223 ms
+Move Facade has the final score 89 | Time: 36.246 ms
+Move Luster Purge has the final score 89 | Time: 37.487 ms
+Move Vital Throw has the final score 89 | Time: 38.327 ms
+Move Mist Ball has the final score 89 | Time: 36.789 ms
+Move Psycho Cut has the final score 89 | Time: 33.666 ms
+Move Wake-Up Slap has the final score 89 | Time: 34.259 ms
+Move Brick Break has the final score 89 | Time: 35.792 ms
+Move Pollen Puff has the final score 89 | Time: 25.91 ms
+Move Night Slash has the final score 89 | Time: 37.513 ms
+Move Pepper Spray has the final score 89 | Time: 32.576 ms
+Move Spirit Break has the final score 89 | Time: 38.936 ms
+Move Toxiravage has the final score 89 | Time: 50.536 ms
+Move Stalagbite has the final score 89 | Time: 41.936 ms
+Move Lash Out has the final score 89 | Time: 33.961 ms
+Move Dual Wingbeat has the final score 89 | Time: 43.013 ms
+Move Double Hit has the final score 89 | Time: 32.823 ms
+Move Triple Kick has the final score 89 | Time: 37.433 ms
+Move Rock Slide has the final score 89 | Time: 28.751 ms
+Move Air Slash has the final score 89 | Time: 37.92 ms
+Move Skitter Smack has the final score 89 | Time: 33.232 ms
+Move Smart Strike has the final score 89 | Time: 36.856 ms
+Move Outrage has the final score 89 | Time: 38.824 ms
+Move Smelling Salts has the final score 89 | Time: 30.931 ms
+Move Slash has the final score 89 | Time: 35.641 ms
+Move Retaliate has the final score 89 | Time: 33.887 ms
+Move Headbutt has the final score 89 | Time: 34.956 ms
+Move Trop Kick has the final score 89 | Time: 43.712 ms
+Move Cross Chop has the final score 89 | Time: 55.266 ms
+Move Shadow Claw has the final score 89 | Time: 45.978 ms
+Move Chip Away has the final score 89 | Time: 39.101 ms
+Move Crush Claw has the final score 89 | Time: 43.748 ms
+Move Scorching Sands has the final score 89 | Time: 33.901 ms
+Move Stomping Tantrum has the final score 89 | Time: 35.463 ms
+Move Razor Shell has the final score 89 | Time: 33.148 ms
+Move Parabolic Charge has the final score 89 | Time: 51.453 ms
+Move Mystical Fire has the final score 89 | Time: 41.295 ms
+Move Burning Jealousy has the final score 89 | Time: 58.84 ms
+Move Petal Dance has the final score 89 | Time: 37.828 ms
+Move Flame Burst has the final score 89 | Time: 32.434 ms
+Move Venoshock has the final score 88 | Time: 31.259 ms
+Move Poison Tail has the final score 88 | Time: 38.401 ms
+Move Freeze-Dry has the final score 88 | Time: 48.697 ms
+Move Ice Punch has the final score 88 | Time: 44.05 ms
+Move Bone Club has the final score 88 | Time: 38.421 ms
+Move Leaf Tornado has the final score 88 | Time: 39.758 ms
+Move Mud Bomb has the final score 88 | Time: 41.728 ms
+Move Barrage has the final score 88 | Time: 36.038 ms
+Move Brine has the final score 88 | Time: 30.367 ms
+Move Fury Swipes has the final score 88 | Time: 34.721 ms
+Move Water Pulse has the final score 88 | Time: 37.63 ms
+Move Double Kick has the final score 88 | Time: 35.96 ms
+Move Air Cutter has the final score 88 | Time: 38.178 ms
+Move Chilling Wail has the final score 88 | Time: 47.653 ms
+Move Horn Attack has the final score 88 | Time: 34.321 ms
+Move Stomp has the final score 88 | Time: 33.646 ms
+Move Dragon Rush has the final score 88 | Time: 36.436 ms
+Move Iron Tail has the final score 88 | Time: 39.177 ms
+Move Aurora Beam has the final score 88 | Time: 43.866 ms
+Move Steel Wing has the final score 88 | Time: 55.178 ms
+Move Steamroller has the final score 88 | Time: 100.75 ms
+Move Cut has the final score 88 | Time: 36.277 ms
+Move Mirror Shot has the final score 88 | Time: 41.696 ms
+Move Snarl has the final score 87 | Time: 33.3 ms
+Move Vise Grip has the final score 87 | Time: 38.435 ms
+Move Thief has the final score 87 | Time: 28.622 ms
+Move Swift has the final score 87 | Time: 30.42 ms
+Move Water Shuriken has the final score 87 | Time: 39.053 ms
+Move Round has the final score 87 | Time: 29.669 ms
+Move Hidden Power has the final score 87 | Time: 30.583 ms
+Move Kinetic Rend has the final score 87 | Time: 33.195 ms
+Move Feint Attack has the final score 87 | Time: 33.682 ms
+Move Covet has the final score 87 | Time: 38.598 ms
+Move Aerial Ace has the final score 87 | Time: 35.95 ms
+Move Bug Bite has the final score 87 | Time: 60.176 ms
+Move Arm Thrust has the final score 87 | Time: 34.753 ms
+Move Bubble has the final score 87 | Time: 46.777 ms
+Move Pluck has the final score 87 | Time: 32.91 ms
+Move Wing Attack has the final score 87 | Time: 42.693 ms
+Move Magnet Bomb has the final score 87 | Time: 35.455 ms
+Move Draining Kiss has the final score 87 | Time: 34.818 ms
+Move Octazooka has the final score 87 | Time: 32.998 ms
+Move Twineedle has the final score 87 | Time: 36.187 ms
+Move Shock Wave has the final score 87 | Time: 68.427 ms
+Move Double Slap has the final score 87 | Time: 31.97 ms
+Move Fury Attack has the final score 87 | Time: 31.898 ms
+Move Breaking Swipe has the final score 87 | Time: 57.843 ms
+Move Karate Chop has the final score 87 | Time: 35.584 ms
+Move Rolling Kick has the final score 87 | Time: 39.275 ms
+Move Assurance has the final score 87 | Time: 30.98 ms
+Move Heart Stamp has the final score 87 | Time: 34.282 ms
+Move Grassy Glide has the final score 87 | Time: 34.304 ms
+Move Mega Drain has the final score 87 | Time: 35.709 ms
+Move Incinerate has the final score 87 | Time: 33.867 ms
+Move Ice Fang has the final score 87 | Time: 46.851 ms
+Move Dragon Ascent has the final score 87 | Time: 54.23 ms
+Move Hex has the final score 87 | Time: 43.861 ms
+Move Expanding Force has the final score 87 | Time: 37.259 ms
+Move Bite has the final score 87 | Time: 30.686 ms
+Move Shadow Punch has the final score 87 | Time: 41.646 ms
+Move Brutal Swing has the final score 87 | Time: 35.796 ms
+Move Razor Leaf has the final score 87 | Time: 38.059 ms
+Move Magical Leaf has the final score 87 | Time: 38.413 ms
+Move Smack Down has the final score 86 | Time: 33.342 ms
+Move Weather Ball has the final score 86 | Time: 35.453 ms
+Move Terrain Pulse has the final score 86 | Time: 37.952 ms
+Move Rapid Spin has the final score 86 | Time: 36.583 ms
+Move Poison Sting has the final score 86 | Time: 36.621 ms
+Move Struggle Bug has the final score 86 | Time: 31.829 ms
+Move Clear Smog has the final score 86 | Time: 32.629 ms
+Move Rising Voltage has the final score 86 | Time: 43.16 ms
+Move Fell Stinger has the final score 86 | Time: 195.953 ms
+Move Fishious Rend has the final score 86 | Time: 35.129 ms
+Move Bolt Beak has the final score 86 | Time: 34.006 ms
+Move Sweet Tooth has the final score 86 | Time: 35.66 ms
+Move Rock Throw has the final score 86 | Time: 30.002 ms
+Move Pursuit has the final score 85 | Time: 35.561 ms
+Move Gust has the final score 85 | Time: 32.581 ms
+Move Electro Ball has the final score 85 | Time: 41.528 ms
+Move Aqua Jet has the final score 85 | Time: 49.524 ms
+Move Ice Shard has the final score 85 | Time: 45.625 ms
+Move Water Gun has the final score 85 | Time: 37.47 ms
+Move Close Combat has the final score 85 | Time: 74.412 ms
+Move Spectral Thief has the final score 85 | Time: 54.924 ms
+Move Branch Poke has the final score 85 | Time: 50.706 ms
+Move Tackle has the final score 85 | Time: 36.061 ms
+Move Scratch has the final score 85 | Time: 44.616 ms
+Move Acid has the final score 85 | Time: 39.138 ms
+Move Quick Attack has the final score 85 | Time: 53.49 ms
+Move Pound has the final score 85 | Time: 37.036 ms
+Move Accelerock has the final score 85 | Time: 40.603 ms
+Move Disarming Voice has the final score 85 | Time: 38.063 ms
+Move Twister has the final score 85 | Time: 33.213 ms
+Move Pay Day has the final score 85 | Time: 39.221 ms
+Move Corrosive Gas has the final score 85 | Time: 27.866 ms
+Move False Swipe has the final score 85 | Time: 39.448 ms
+Move Crimson Surge has the final score 85 | Time: 30.128 ms
+Move Leafage has the final score 85 | Time: 39.014 ms
+Move Vine Whip has the final score 85 | Time: 38.486 ms
+Move Think Fast has the final score 85 | Time: 49.572 ms
+Move Mach Punch has the final score 85 | Time: 45.305 ms
+Move Rock Smash has the final score 85 | Time: 37.786 ms
+Move Shadow Sneak has the final score 85 | Time: 53.663 ms
+Move Absorb has the final score 85 | Time: 34.31 ms
+Move Fairy Wind has the final score 85 | Time: 42.937 ms
+Move Bullet Punch has the final score 85 | Time: 46.334 ms
+Move Knock Off has the final score 85 | Time: 28.286 ms
+Move Hold Back has the final score 85 | Time: 36.75 ms
+Move Vacuum Wave has the final score 85 | Time: 43.124 ms
+Move Noble Roar has the final score 84 | Time: 85.343 ms
+Move Mimic has the final score 84 | Time: 55.948 ms
+Move Astonish has the final score 84 | Time: 36.955 ms
+Move Gyro Ball has the final score 84 | Time: 39.52 ms
+Move Sketch has the final score 84 | Time: 46.895 ms
+Move Feint has the final score 84 | Time: 36.428 ms
+Move Powder Snow has the final score 84 | Time: 39.518 ms
+Move Peck has the final score 84 | Time: 38.844 ms
+Move Cotton Guard has the final score 84 | Time: 39.899 ms
+Move Tearful Look has the final score 84 | Time: 88.143 ms
+Move Sky Attack has the final score 83 | Time: 45.577 ms
+Move Focus Blast has the final score 83 | Time: 59.257 ms
+Move Magic Room has the final score 83 | Time: 13.541 ms
+Move Mind Reader has the final score 83 | Time: 14.573 ms
+Move Constrict has the final score 83 | Time: 38.564 ms
+Move Fairy Lock has the final score 83 | Time: 16.245 ms
+Move Steel Beam has the final score 83 | Time: 35.639 ms
+Move Lock-On has the final score 83 | Time: 17.553 ms
+Move Hydro Pump has the final score 83 | Time: 35.068 ms
+Move Laser Focus has the final score 83 | Time: 13.973 ms
+Move Heal Block has the final score 83 | Time: 17.389 ms
+Move Take Down has the final score 83 | Time: 34.278 ms
+Move Submission has the final score 82 | Time: 42.378 ms
+Move Stored Power has the final score 82 | Time: 29.42 ms
+Move Solar Blade has the final score 82 | Time: 49.663 ms
+Move Solar Beam has the final score 82 | Time: 40.026 ms
+Move Punishment has the final score 82 | Time: 34.688 ms
+Move Stone Edge has the final score 82 | Time: 29.552 ms
+Move Flail has the final score 82 | Time: 31.525 ms
+Move Draco Meteor has the final score 82 | Time: 64.059 ms
+Move Diamond Storm has the final score 82 | Time: 42.022 ms
+Move Mud-Slap has the final score 82 | Time: 44.006 ms
+Move Power Trip has the final score 82 | Time: 35.716 ms
+Move Reversal has the final score 82 | Time: 47.87 ms
+Move Razor Wind has the final score 81 | Time: 43.506 ms
+Move Court Change has the final score 81 | Time: 19.576 ms
+Move Geode Burst has the final score 81 | Time: 41.202 ms
+Move Leaf Storm has the final score 80 | Time: 56.409 ms
+Move Psycho Boost has the final score 80 | Time: 54.18 ms
+Move Overheat has the final score 80 | Time: 53.765 ms
+Move Magic Powder has the final score 80 | Time: 22.284 ms
+Move Fleur Cannon has the final score 80 | Time: 53.178 ms
+Move Iron Defense has the final score 80 | Time: 37.737 ms
+Move Barrier has the final score 80 | Time: 36.312 ms
+Move Acid Armor has the final score 80 | Time: 32.213 ms
+Move Thrash has the final score 77 | Time: 34.377 ms
+Move Supersonic has the final score 77 | Time: 47.174 ms
+Move Revenge has the final score 77 | Time: 40.501 ms
+Move Focus Punch has the final score 77 | Time: 65.871 ms
+Move Avalanche has the final score 77 | Time: 41.943 ms
+Move Flatter has the final score 77 | Time: 48.527 ms
+Move Uproar has the final score 77 | Time: 31.191 ms
+Move Hammer Arm has the final score 75 | Time: 56.35 ms
+Move Ice Hammer has the final score 75 | Time: 67.568 ms
+Move Dynamic Punch has the final score 74 | Time: 74.796 ms
+Move Sandstorm has the final score 74 | Time: 30.789 ms
+Move Growth has the final score 73 | Time: 32.062 ms
+Move Excite has the final score 73 | Time: 37.14 ms
+Move Work Up has the final score 73 | Time: 31.94 ms
+Move Egg Bomb has the final score 73 | Time: 33.684 ms
+Move Trick-or-Treat has the final score 69 | Time: 26.369 ms
+Move Amnesia has the final score 67 | Time: 35.915 ms
+Move Hurricane has the final score 67 | Time: 75.825 ms
+Move Stockpile has the final score 67 | Time: 23.379 ms
+Move Doom Desire has the final score 67 | Time: 34.997 ms
+Move Blizzard has the final score 66 | Time: 48.078 ms
+Move Shell Trap has the final score 66 | Time: 43.37 ms
+Move Future Sight has the final score 66 | Time: 39.918 ms
+Move Shadow Force has the final score 65 | Time: 37.466 ms
+Move Forest's Curse has the final score 63 | Time: 24.931 ms
+Move Roar has the final score 60 | Time: 17.585 ms
+Move Power Split has the final score 60 | Time: 19.693 ms
+Move Whirlwind has the final score 60 | Time: 18.72 ms
+Move Circle Throw has the final score 58 | Time: 36.968 ms
+Move Skull Bash has the final score 58 | Time: 42.625 ms
+Move Dragon Tail has the final score 58 | Time: 39.13 ms
+Move Bounce has the final score 56 | Time: 46.565 ms
+Move Odor Sleuth has the final score 49 | Time: 13.668 ms
+Move Miracle Eye has the final score 49 | Time: 13.92 ms
+Move Foresight has the final score 49 | Time: 16.278 ms
+Move Phantom Force has the final score 47 | Time: 47.391 ms
+Move Conversion 2 has the final score 46 | Time: 26.09 ms
+Move Fly has the final score 46 | Time: 37.951 ms
+Move Sonic Boom has the final score 46 | Time: 22.219 ms
+Move Charge has the final score 45 | Time: 47.494 ms
+Move Disable has the final score 45 | Time: 22.472 ms
+Move Dive has the final score 45 | Time: 31.255 ms
+Move Tickle has the final score 45 | Time: 25.012 ms
+Move Clanging Scales has the final score 44 | Time: 39.728 ms
+Move Hydro Cannon has the final score 43 | Time: 30.78 ms
+Move Eternabeam has the final score 43 | Time: 39.409 ms
+Move Frenzy Plant has the final score 43 | Time: 37.55 ms
+Move Hyper Beam has the final score 43 | Time: 33.66 ms
+Move Meteor Assault has the final score 43 | Time: 51.833 ms
+Move Rock Wrecker has the final score 43 | Time: 27.829 ms
+Move Blast Burn has the final score 43 | Time: 34.881 ms
+Move Prismatic Laser has the final score 43 | Time: 32.317 ms
+Move Giga Impact has the final score 43 | Time: 37.286 ms
+Move Roar of Time has the final score 43 | Time: 40.714 ms
+Move Sky Drop has the final score 42 | Time: 36.623 ms
+Move Endure has the final score 41 | Time: 29.458 ms
+Move Torment has the final score 38 | Time: 25.975 ms
+Move Harden has the final score 37 | Time: 37.976 ms
+Move Defense Curl has the final score 37 | Time: 34.249 ms
+Move Withdraw has the final score 37 | Time: 35.779 ms
+Move Mind Blown has the final score 33 | Time: 48.586 ms
+Move Wide Guard has the final score 32 | Time: 12.879 ms
+Move Camouflage has the final score 29 | Time: 16.031 ms
+Move Strength Sap has the final score 28 | Time: 79.397 ms
+Move Pain Split has the final score 25 | Time: 24.802 ms
+Move Taunt has the final score 23 | Time: 19.204 ms
+Move Dig has the final score 20 | Time: 35.613 ms
+Move Snatch has the final score 19 | Time: 13.151 ms
+Move Quick Guard has the final score 19 | Time: 18.138 ms
+Move Magic Coat has the final score 19 | Time: 15.762 ms
+Move Crafty Shield has the final score 13 | Time: 22.239 ms
+Move Ion Deluge has the final score 13 | Time: 21.733 ms
+Move Perish Song has the final score 11 | Time: 15.449 ms
+Move Heal Order has the final score 10 | Time: 31.615 ms
+Move Synthesis has the final score 10 | Time: 33.458 ms
+Move U-turn has the final score 10 | Time: 1464.891 ms
+Move Glacial Gulf has the final score 10 | Time: 38.808 ms
+Move Milk Drink has the final score 10 | Time: 33.763 ms
+Move Volt Switch has the final score 10 | Time: 1915.047 ms
+Move Slack Off has the final score 10 | Time: 35.088 ms
+Move Shore Up has the final score 10 | Time: 37.532 ms
+Move Morning Sun has the final score 10 | Time: 39.391 ms
+Move Recover has the final score 10 | Time: 39.996 ms
+Move Soft-Boiled has the final score 10 | Time: 31.965 ms
+Move Roost has the final score 10 | Time: 35.965 ms
+Move Moonlight has the final score 10 | Time: 52.847 ms
+Move Flip Turn has the final score 8 | Time: 1572.35 ms
+Move Power Trick has the final score 8 | Time: 18.921 ms
+Move Life Dew has the final score 7 | Time: 33.307 ms
+Move Jungle Healing has the final score 7 | Time: 37.049 ms
+Move Explosion has the final score 7 | Time: 35.845 ms
+Move Grudge has the final score 6 | Time: 14.629 ms
+Move Self-Destruct has the final score 5 | Time: 33.206 ms
+Move Mirror Coat has the final score 3 | Time: 22.994 ms
+Move Misty Explosion has the final score 3 | Time: 36.274 ms
+Move Memento has the final score 2 | Time: 16.798 ms
+Move Parting Shot has the final score 1 | Time: 1556.472 ms
+Move Baton Pass has the final score 1 | Time: 1625.301 ms
+Move Teleport has the final score 1 | Time: 1421.81 ms
+Move Lunar Dance has the final score 0 | Time: 15.077 ms
+Move Jaw Lock has the final score 0 | Time: 7.515 ms
+Move Kinesis has the final score 0 | Time: 15.688 ms
+Move Instruct has the final score 0 | Time: 7.98 ms
+Move Imprison has the final score 0 | Time: 12.868 ms
+Move Sticky Web has the final score 0 | Time: 11.442 ms
+Move Heart Swap has the final score 0 | Time: 13.857 ms
+Move Spider Web has the final score 0 | Time: 13.807 ms
+Move Rage Powder has the final score 0 | Time: 14.24 ms
+Move Healing Wish has the final score 0 | Time: 15.2 ms
+Move Heal Pulse has the final score 0 | Time: 10.914 ms
+Move Guard Swap has the final score 0 | Time: 14.605 ms
+Move Steel Roller has the final score 0 | Time: 17.745 ms
+Move Guard Split has the final score 0 | Time: 13.859 ms
+Move Ally Switch has the final score 0 | Time: 19.122 ms
+Move Electrify has the final score 0 | Time: 13.886 ms
+Move Hyperspace Fury has the final score 0 | Time: 8.682 ms
+Move Endeavor has the final score 0 | Time: 9.441 ms
+Move Anchor Shot has the final score 0 | Time: 14.307 ms
+Move Guillotine has the final score 0 | Time: 9.063 ms
+Move Horn Drill has the final score 0 | Time: 10.944 ms
+Move Fake Out has the final score 0 | Time: 19.396 ms
+Move Spirit Shackle has the final score 0 | Time: 11.607 ms
+Move Powder has the final score 0 | Time: 22.889 ms
+Move Snore has the final score 0 | Time: 11.404 ms
+Move Natural Gift has the final score 0 | Time: 10.211 ms
+Move Aromatic Mist has the final score 0 | Time: 21.461 ms
+Move Spit Up has the final score 0 | Time: 9.242 ms
+Move Meditate has the final score 0 | Time: 28.253 ms
+Move Destiny Bond has the final score 0 | Time: 10.36 ms
+Move Dream Eater has the final score 0 | Time: 9.024 ms
+Move Decorate has the final score 0 | Time: 17.941 ms
+Move Power Swap has the final score 0 | Time: 15.723 ms
+Move Gear Up has the final score 0 | Time: 13.906 ms
+Move Synchronoise has the final score 0 | Time: 14.786 ms
+Move Venom Drench has the final score 0 | Time: 15.305 ms
+Move Aromatherapy has the final score 0 | Time: 13.298 ms
+Move After You has the final score 0 | Time: 0.02 ms
+Move Purify has the final score 0 | Time: 10.598 ms
+Move Attract has the final score 0 | Time: 0.018 ms
+Move Psycho Shift has the final score 0 | Time: 13.713 ms
+Move Fling has the final score 0 | Time: 11.551 ms
+Move Rest has the final score 0 | Time: 32.753 ms
+Move Thousand Waves has the final score 0 | Time: 9.83 ms
+Move Nightmare has the final score 0 | Time: 14.742 ms
+Move Flower Shield has the final score 0 | Time: 17.555 ms
+Move Belly Drum has the final score 0 | Time: 24.813 ms
+Move Bestow has the final score 0 | Time: 0.018 ms
+Move Block has the final score 0 | Time: 8.074 ms
+Move Magnetic Flux has the final score 0 | Time: 21.679 ms
+Move Belch has the final score 0 | Time: 15.16 ms
+Move Stuff Cheeks has the final score 0 | Time: 12.078 ms
+Move Dark Void has the final score 0 | Time: 24.767 ms
+Move Wish has the final score 0 | Time: 24.537 ms
+Move Burn Up has the final score 0 | Time: 17.443 ms
+Move Embargo has the final score 0 | Time: 14.44 ms
+Move Teatime has the final score 0 | Time: 8.149 ms
+Move Tail Whip has the final score 0 | Time: 21.025 ms
+Move Swords Dance has the final score 0 | Time: 29.128 ms
+Move Role Play has the final score 0 | Time: 12.18 ms
+Move Fissure has the final score 0 | Time: 12.329 ms
+Move Sweet Scent has the final score 0 | Time: 0.023 ms
+Move Mud Sport has the final score 0 | Time: 14.254 ms
+Move Swallow has the final score 0 | Time: 10.029 ms
+Move Skill Swap has the final score 0 | Time: 13.354 ms
+Move Rototiller has the final score 0 | Time: 20.989 ms
+Move Eerie Impulse has the final score 0 | Time: 19.165 ms
+Move Last Resort has the final score 0 | Time: 15.325 ms
+Move Spotlight has the final score 0 | Time: 10.772 ms
+Move Telekinesis has the final score 0 | Time: 0.022 ms
+Move Smokescreen has the final score 0 | Time: 16.288 ms
+Move Sleep Talk has the final score 0 | Time: 9.096 ms
+Move Quash has the final score 0 | Time: 0.307 ms
+Move Switcheroo has the final score 0 | Time: 11.145 ms
+Move Sharpen has the final score 0 | Time: 29.212 ms
+Move Screech has the final score 0 | Time: 17.704 ms
+Move Safeguard has the final score 0 | Time: 15.762 ms
+Move Octolock has the final score 0 | Time: 12.718 ms
+Move Refresh has the final score 0 | Time: 12.589 ms
+Move Mat Block has the final score 0 | Time: 12.094 ms
+Move Reflect Type has the final score 0 | Time: 12.745 ms
+Move Recycle has the final score 0 | Time: 9.417 ms
+Move Trick has the final score 0 | Time: 10.364 ms
+Move Psych Up has the final score 0 | Time: 15.074 ms
+Move Floral Healing has the final score 0 | Time: 14.941 ms
+Move Topsy-Turvy has the final score 0 | Time: 13.457 ms
+Move Sand Attack has the final score 0 | Time: 21.536 ms
+Move Haze has the final score 0 | Time: 15.518 ms
+Move Captivate has the final score 0 | Time: 13.62 ms
+Move Minimize has the final score 0 | Time: 17.325 ms
+Move Confide has the final score 0 | Time: 12.457 ms
+Move Mean Look has the final score 0 | Time: 12.526 ms
+Move Me First has the final score 0 | Time: 12.394 ms
+Move Conversion has the final score 0 | Time: 10.145 ms
+Move Aurora Veil has the final score 0 | Time: 8.758 ms
+Move Sheer Cold has the final score 0 | Time: 9.064 ms
+Move Aura Wheel has the final score 0 | Time: 24.151 ms
+Move Leer has the final score 0 | Time: 17.187 ms
+Move Howl has the final score 0 | Time: 34.088 ms
+Move Helping Hand has the final score 0 | Time: 10.551 ms
+Move Heal Bell has the final score 0 | Time: 11.879 ms
+Move Follow Me has the final score 0 | Time: 11.831 ms
+Move Flash has the final score 0 | Time: 15.82 ms
+Move First Impression has the final score 0 | Time: 18.748 ms
+Move Entertainment has the final score 0 | Time: 15.356 ms
+Move Double Team has the final score 0 | Time: 12.428 ms
+Move Needle Arm has the final score 0 | Time: 10.293 ms

@@ -764,7 +764,7 @@ class Battle::AI
     return true if ["FailsIfNotUserFirstTurn", "FlinchTargetFailsIfNotUserFirstTurn"].include?(move.function) && 
                    attacker.turnCount > 0
     mold_broken = moldbroken(attacker,opponent,move)
-    damage = pbRoughDamage(move,attacker,opponent,100,0)
+    damage = aiDamage(move, attacker, opponent) #pbRoughDamage(move,attacker,opponent,100,0)
     damage+=priodamage
     damage*=mult
     multiarray = move.multiHitMove?
@@ -860,18 +860,19 @@ class Battle::AI
     maxdam=0
     maxmove=nil
     maxprio=0
+    maxidxmove=0
     physorspec= "none"
-    for j in user.moves
+    user.moves.each_with_index do |j, i|
       if moveLocked(user)
         if user.lastMoveUsed && user.pbHasMove?(user.lastMoveUsed)
           next if j.id!=user.lastMoveUsed
         end
       end  
-      tempdam = pbRoughDamage(j,user,target,skill,j.baseDamage)
-      tempdam = 0 if pbCheckMoveImmunity(1,j,user,target,100)
+      tempdam = aiDamage(j, user, target)
       if tempdam>maxdam
         maxdam=tempdam 
         maxmove=j
+        maxidxmove=i
         physorspec= "physical" if j.physicalMove?(j.type)
         physorspec= "special" if j.specialMove?(j.type)
       end  
@@ -879,7 +880,7 @@ class Battle::AI
         maxprio=tempdam if tempdam>maxprio
       end  
     end 
-    return [maxdam,maxmove,maxprio,physorspec]
+    return [maxdam,maxmove,maxprio,physorspec,maxidxmove]
   end  
 
   def checkWeatherBenefit(battler, globalArray, fieldcheck = nil, requestedWeather = nil, requestedTerrain = nil)

@@ -52,8 +52,7 @@ class Battle::AI
           tickdamage=true if j.function=="SetTargetTypesToWater"
           tickdamage=true if j.function=="StartDamageTargetEachTurnIfTargetAsleep" && battler.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn") && b.pbCanSleep?(battler,false,j)
         end  
-        tempdam = pbRoughDamage(j, battler, b, 100, j.baseDamage)
-        tempdam = 0 if pbCheckMoveImmunity(1,j,battler,b,100)
+        tempdam = aiDamage(j, battler, b)
         maxdam=tempdam if tempdam>maxdam
       end 
       maxdampercent = maxdam *100.0 / b.hp
@@ -174,7 +173,10 @@ class Battle::AI
     end
     shouldSwitch = false if !canheswitch
     return false if !shouldSwitch
-    newindex=pbHardSwitchChooseNewEnemy(idxBattler,party,true) if shouldSwitch
+    if shouldSwitch
+      newindex=pbHardSwitchChooseNewEnemy(idxBattler,party,true)
+      preCalculateDamagesAI
+    end
     if newindex
       if newindex.is_a?(Array)
         swapper=newindex[0]
@@ -252,6 +254,7 @@ class Battle::AI
         speedsarray.push(aspeed)
         next
       end
+      preCalculateDamagesAI(pokmon)
       if @battle.field.effects[PBEffects::TrickRoom]>0
         maxspeed = 6900
       else
@@ -322,7 +325,7 @@ class Battle::AI
             death=true  
           end  
           # damage calcs
-          tempdam = pbRoughDamage(j,newenemy,pokmon,100,j.baseDamage)
+          tempdam = aiDamage(j, newenemy, pokmon)
           if pbCheckMoveImmunity(1,j,newenemy,pokmon,100) || 
             (newenemy.status==:SLEEP && newenemy.statusCount>1 && !newenemy.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
             tempdam = 0 
@@ -589,7 +592,7 @@ class Battle::AI
             pokmon.stages[forewarnStat] += increment if pokmon.pbCanRaiseStatStage?(forewarnStat, pokmon)
             pokmon.stages[forewarnStat] = [[pokmon.stages[forewarnStat], -6].max, 6].min
           end
-          tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
+          tempdam = aiDamage(m, pokmon, b)
           if pokmon.hasActiveAbility?(:DOWNLOAD)
             pokmon.stages[downloadStat] = oldStatD
           end

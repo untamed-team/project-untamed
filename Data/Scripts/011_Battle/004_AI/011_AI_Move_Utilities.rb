@@ -286,7 +286,7 @@ class Battle::AI
          (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
         targetMove = @battle.choices[target.index][2]
         if targetSurvivesMove(targetMove,target,user)
-          baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+          baseDmg = aiDamage(targetMove, target, user)
           baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
           if move.function == "CounterDamagePlusHalf"
             baseDmg *= 1.5

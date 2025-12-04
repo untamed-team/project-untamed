@@ -1052,7 +1052,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = HitTwoTimesTargetThenTargetAlly
 Flags = CanProtect,CanMirrorMove
-Description = The user attacks twice using Dreepy. If there are two targets, this move hits each one once.
+Description = The user attacks twice using its artilery. If there are two targets, this move hits each one once.
 #-------------------------------
 [DUALCHOP]
 Name = Dual Chop
@@ -2859,7 +2859,7 @@ TotalPP = 5
 Target = Other
 FunctionCode = TwoTurnAttack
 Flags = CanProtect,CanMirrorMove,HighCriticalHitRate,Contest_Cool,Contest_Appeal_1,Contest_Effect_Plus3IfNoPokemonChoseJudge
-Description = A second-turn attack move where critical hits land more easily.
+Description = The user searches out weak spots, then strikes the next turn.
 #-------------------------------
 [BRAVEBIRD]
 Name = Brave Bird

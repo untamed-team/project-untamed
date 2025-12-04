@@ -74,7 +74,7 @@ class Battle::AI
               if !targetSurvivesMove(targetMove,target,user)
                 score *= 2.5
               else
-                expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                expectedDmg = aiDamage(targetMove, target, user)
                 expectedPrcnt = expectedDmg / user.hp
                 score *= 1 + expectedPrcnt
               end
@@ -148,7 +148,7 @@ class Battle::AI
               if !targetSurvivesMove(targetMove,target,user)
                 score *= 2.5
               else
-                expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                expectedDmg = aiDamage(targetMove, target, user)
                 expectedPrcnt = expectedDmg / user.hp
                 score *= 1 + expectedPrcnt
               end
@@ -252,7 +252,7 @@ class Battle::AI
               if !targetSurvivesMove(targetMove,target,user)
                 score *= 2.5
               else
-                expectedDmg = pbRoughDamage(targetMove,target,user,100,targetMove.baseDamage)
+                expectedDmg = aiDamage(targetMove, target, user)
                 expectedPrcnt = expectedDmg / user.hp
                 score *= 1 + expectedPrcnt
               end
@@ -373,7 +373,7 @@ class Battle::AI
                   if !targetSurvivesMove(targetMove,target,b)
                     score *= 2.5
                   else
-                    expectedDmg = pbRoughDamage(targetMove,target,b,100,targetMove.baseDamage)
+                    expectedDmg = aiDamage(targetMove, target, b)
                     expectedPrcnt = expectedDmg / b.hp
                     score *= 1.1 + expectedPrcnt
                   end
@@ -419,7 +419,7 @@ class Battle::AI
                 if !targetSurvivesMove(targetMove,target,b)
                   score *= 2.5
                 else
-                  expectedDmg = pbRoughDamage(targetMove,target,b,100,targetMove.baseDamage)
+                  expectedDmg = aiDamage(targetMove, target, b)
                   expectedPrcnt = expectedDmg / b.hp
                   score *= 1 + expectedPrcnt
                 end
@@ -1113,7 +1113,7 @@ class Battle::AI
       priorityko=false
       for zzz in pokemon.moves
         next if zzz.nil? || priorityAI(target,zzz,[],true)<1
-        dam=pbRoughDamage(zzz, pokemon, target, 100, zzz.baseDamage)
+        dam = aiDamage(zzz, pokemon, target)
         if target.hp>0
           percentage=(dam*100.0)/target.hp
           priorityko=true if percentage>100
@@ -1228,7 +1228,7 @@ class Battle::AI
       priorityko=false
       for zzz in fakemon.moves
         next if zzz.nil? || priorityAI(target,zzz,[],true)<1
-        dam=pbRoughDamage(zzz, fakemon, target, 100, zzz.baseDamage)
+        dam = aiDamage(zzz, fakemon, target)
         if target.hp>0
           percentage=(dam*100.0)/target.hp
           priorityko=true if percentage>100
@@ -2213,8 +2213,7 @@ class Battle::AI
         opppri = false   
         pridam = -1
         for j in target.moves
-          tempdam = pbRoughDamage(j,target,user,skill,j.baseDamage)
-          tempdam = 0 if pbCheckMoveImmunity(1,j,target,user,100)
+          tempdam = aiDamage(j, target, user)
           if priorityAI(target,j,globalArray)>0
             opppri=true
             if tempdam>pridam
@@ -2242,9 +2241,8 @@ class Battle::AI
                 if target.lastMoveUsed && target.pbHasMove?(target.lastMoveUsed)
                   next if j.id!=target.lastMoveUsed
                 end
-              end    
-              tempdam = pbRoughDamage(j,target,user,skill,j.baseDamage)
-              tempdam = 0 if pbCheckMoveImmunity(1,j,target,user,100)
+              end
+              tempdam = aiDamage(j, target, user)
               maxdam=tempdam if tempdam>maxdam
               maxmove2=j
             end
@@ -2341,5 +2339,46 @@ class Battle::AI
       end    
     end
     return score
+  end
+
+  def preCalculateDamagesAI(switchin = nil)
+    battlers = @battle.battlers.each_with_index.map { |b, idx| (switchin && idx == switchin.index) ? switchin : b }
+    @damagesAI ||= {}
+
+    battlers.each_with_index do |user, userIdx|
+      next if user.nil?
+      perMoveDamages = {}
+      user.moves.each_with_index do |move, moveIdx|
+        damagesForTargets = {}
+        if move.statusMove?
+          battlers.each_with_index { |t, j| damagesForTargets[j] = 0 }
+          perMoveDamages[moveIdx] = { :move => move, :dmg => damagesForTargets }
+          next
+        end
+
+        targetSpec = move.pbTarget(user)
+        battlers.each_with_index do |target, targetIdx|
+          if target.nil?
+            damagesForTargets[targetIdx] = 0
+            next
+          end
+          damagesForTargets[target.index] = 0
+          canTarget = @battle.pbMoveCanTarget?(user.index, target.index, targetSpec)
+          next unless canTarget
+          next if pbCheckMoveImmunity(1, move, user, target, 100)
+          damage = pbRoughDamage(move, user, target, 100)
+          damagesForTargets[target.index] = damage
+        end
+        perMoveDamages[moveIdx] = { :move => move, :dmg => damagesForTargets }
+      end
+      @damagesAI[user.index] = perMoveDamages
+    end
+  end
+
+  def aiDamage(move, user, target)
+    return 0 if user.nil? || target.nil?
+    moveIdx = user.moves.find_index(move)
+    return 0 if moveIdx.nil?
+    return @damagesAI.dig(user.index, moveIdx, :dmg, target.index) || 0
   end
 end

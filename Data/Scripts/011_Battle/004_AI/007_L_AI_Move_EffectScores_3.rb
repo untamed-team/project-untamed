@@ -88,7 +88,7 @@ class Battle::AI
         else
           if targetMove.damagingMove?
             if targetSurvivesMove(targetMove,target,user)
-              damage = pbRoughDamage(targetMove,target,user,skill,0)
+              damage = aiDamage(targetMove, target, user)
               score *= 1 - (damage / user.hp)
             else
               score*=0.01
@@ -111,7 +111,7 @@ class Battle::AI
         else
           if targetMove.damagingMove?
             if targetSurvivesMove(targetMove,target,user)
-              damage = pbRoughDamage(targetMove,target,user,skill,0)
+              damage = aiDamage(targetMove, target, user)
               score *= 1 + (damage / user.hp)
             else
               score*=0.01
@@ -339,7 +339,7 @@ class Battle::AI
               else
                 score*=0.8
               end
-              damage = pbRoughDamage(move,user,target,skill,move.baseDamage)
+              damage = aiDamage(move, user, target)
               damage = damage * 100.0 / target.hp
               score += (damage/2.0)
               # + since it is on the negatives
@@ -1063,7 +1063,7 @@ class Battle::AI
               else
                 score*=0.8
               end
-              damage = pbRoughDamage(move,user,target,skill,move.baseDamage)
+              damage = aiDamage(move, user, target)
               damage = damage * 100.0 / target.hp
               score += (damage/2.0)
               # + since it is on the negatives
@@ -1293,7 +1293,7 @@ class Battle::AI
               end
               # adding "damage" since the score is on the negatives
               baseDmg = pbMoveBaseDamage(move,user,target,skill)
-              damage = pbRoughDamage(move,user,target,skill,baseDmg)
+              damage = aiDamage(move, user, target)
               if target.hasActiveAbility?(:STAMINA)
                 score *= 2.0 if target.pbHasMoveFunction?("UseUserBaseDefenseInsteadOfUserBaseAttack")
                 stageMul, stageDiv = @battle.pbGetStatMath
@@ -2935,7 +2935,7 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDone" # drain punch
-      minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
+      minimini = aiDamage(move, user, target)
       minimini = minimini * 100 / target.hp
       miniscore = minimini / 2.0
       missinghp = (user.totalhp-user.hp) * 100.0
@@ -2961,7 +2961,7 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDoneIfTargetAsleep" # dream eater
       if target.asleep? && (target.statusCount > 1 || userFasterThanTarget)
-        minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
+        minimini = aiDamage(move, user, target)
         minimini = minimini / target.hp
         miniscore = minimini / 2.0
         missinghp = (user.totalhp-user.hp) * 100.0
@@ -2989,7 +2989,7 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "HealUserByThreeQuartersOfDamageDone" # oblivion wing
-      minimini = pbRoughDamage(move,user,target,skill,move.baseDamage)
+      minimini = aiDamage(move, user, target)
       minimini = minimini / target.hp
       miniscore = minimini * (3.0/4.0)
       missinghp = (user.totalhp-user.hp) * 100.0
@@ -6169,6 +6169,7 @@ class Battle::AI
         party = @battle.pbParty(user.index)
         swapper = user.pokemonIndex
         switchin = pbHardSwitchChooseNewEnemy(user.index,party,sack,true)
+        preCalculateDamagesAI
         if switchin
           if switchin.is_a?(Array) # it (should) always be a array
             swapper = switchin[0]
@@ -6825,7 +6826,7 @@ class Battle::AI
         if oldmove.nil?
           score = 0
         else
-          if oldmove.damagingMove? && pbRoughDamage(oldmove, user, target, skill, oldmove.baseDamage)*5>user.hp
+          if oldmove.damagingMove? && aiDamage(oldmove, target, user)*5>user.hp
             score*=0.3
           else
             if target.stages[:SPEED]>0

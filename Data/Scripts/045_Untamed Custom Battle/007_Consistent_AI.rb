@@ -1,10 +1,13 @@
 class Battle::AI
-  # global array initialization
+  # global array initialization / damage precalc
   attr_accessor :megaGlobalArray
+  attr_accessor :damagesAI
+
   alias kiriya_initialize initialize
   def initialize(battle)
     kiriya_initialize(battle)
     @megaGlobalArray = []
+    @damagesAI = {}
   end
 
   # kiriya flags
