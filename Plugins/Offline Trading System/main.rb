@@ -2,12 +2,14 @@
 
 #LAST I LEFT OFF:
 #I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
+#next step is compiling plugin on backup project, clearing storage on both projects, starting a new trade to finish later, then trying to finish a trade later on main project. Goal is getting to print line "got this far"
 
 
 #TO DO:
 
 #In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
 #I'm currently working on the above, but how do I check if the pkmn in finalize trade that comes from the other player is coming from the correct player trade ID? I would need to store the player trade ID inside pkmn.canOnlyBeTradedFor
+#it seems like I stored the playerID in .canOnlyBeTradedFor[0]. Check contents of .canOnlyBeTradedFor
 
 #need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
 #should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud
@@ -114,7 +116,14 @@ class OfflineTradingSystem
 		when 1 #finalize old trade
 			print "going into cloud storage"
 			storage = $TradeCloud
-		end
+		when 2 #clearing cloud storage
+			$TradeCloud.maxBoxes.times do |i|
+				$TradeCloud.maxPokemon(i).times do |j|
+					$TradeCloud[i, j] = nil
+					end
+				end
+			pbMessage(_INTL("The storage boxes were cleared."))
+			end
 		
 		pbFadeOutIn {
 			@boxScene = TradingPokemonStorageScene.new
@@ -429,7 +438,8 @@ class OfflineTradingSystem
 			#set all these variables according to what pkmn.canOnlyBeTradedFor is set to
 			pbMessage(_INTL("\\wtnp[1]Generating agreement..."))
 			#print @pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor
-			
+
+			#print @pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor #[ID of player it must be traded to, pkmn it must be traded for]
 			@pkmnPlayerWillReceiveInSymbolFormat = self.createDummyPkmnFromHashOfProperties(@pkmnPlayerIsOfferingInSymbolFormat.canOnlyBeTradedFor[1])
 			@pkmnPlayerIsOfferingSpeciesUppercase = @pkmnPlayerIsOfferingInSymbolFormat.species.upcase
 			@pkmnPlayerWillReceiveSpeciesUppercase = @pkmnPlayerWillReceiveInSymbolFormat.species.upcase
@@ -838,9 +848,17 @@ class OfflineTradingSystem
 		pkmnHash[:speed] = pkmn.speed
 		
 		if pkmn.owner.nil?
-			pkmnHash[:owner] = nil
+			pkmnHash[:ownerID] = 80085
+			pkmnHash[:ownerName] = "Sorb"
+			pkmnHash[:ownerGender] = 2
+			pkmnHash[:ownerLanguage] = 2
 		else
-			pkmnHash[:owner] = pkmn.owner.id
+			#Owner.new(0, "", 2, 2)
+			#Owner.new(ID, name, gender, language)
+			pkmnHash[:ownerID] = pkmn.owner.id
+			pkmnHash[:ownerName] = pkmn.owner.name
+			pkmnHash[:ownerGender] = pkmn.owner.gender
+			pkmnHash[:ownerLanguage] = pkmn.owner.language
 		end
 		
 		pkmnHash[:obtain_text] = pkmn.obtain_text
@@ -910,12 +928,18 @@ class OfflineTradingSystem
 		pkmn.ivMaxed = h[:ivMaxed]
 		pkmn.ev = h[:ev]
 		#pkmn.totalhp = h[:totalhp]
-		pkmn.attack = h[:attack]
-		pkmn.defense = h[:defense]
-		pkmn.spatk = h[:spatk]
-		pkmn.spdef = h[:spdef]
-		pkmn.speed = h[:speed]
-		pkmn.owner = h[:owner]
+		#pkmn.attack = h[:attack]
+		#pkmn.defense = h[:defense]
+		#pkmn.spatk = h[:spatk]
+		#pkmn.spdef = h[:spdef]
+		#pkmn.speed = h[:speed]
+		pkmn.calc_stats
+		
+		
+		#Owner.new(ID, name, gender, language)
+		pkmn.owner = Owner.new(h[:ownerID], h[:ownerName], h[:ownerGender], h[:ownerLanguage])
+		print "got this far"
+		
 		pkmn.obtain_text = h[:obtain_text]
 		pkmn.obtain_level = h[:obtain_level]
 		pkmn.fused = h[:fused]
@@ -962,13 +986,15 @@ MenuHandlers.add(:pc_menu, :offline_trade, {
       command = pbShowCommandsWithHelp(nil,
          [_INTL("Start New Trade"),
           _INTL("Finalize Old Trade"),
+          _INTL("Empty Cloud Storage"),
           #_INTL("Deposit Pokémon"),
           _INTL("See ya!")],
          [_INTL("Start a new trade from scratch."),
           _INTL("Finish a trade started before."),
+          _INTL("Erase unfinished trades."),
           #_INTL("Store Pokémon in your party in Boxes."),
           _INTL("Return to the previous menu.")], -1, command)
-      break if command < 0 || command == 2
+      break if command < 0 || command == 3
 		OfflineTradingSystem.selectPkmnToTrade(command)
     end
     next false
