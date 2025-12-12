@@ -836,7 +836,8 @@ class Battle::AI
     return false
   end
 
-  def canLowerStatTarget(stat,move,user,target,mold_bonkers=false)
+  def canLowerStatTarget(stat,move,user,target=nil,mold_bonkers=false)
+    target=user if target.nil?
     return false if target.pbOwnSide.effects[PBEffects::StatDropImmunity] && !target.pbOwnedByPlayer?
     return false if target.hasActiveAbility?(:CONTRARY,false,mold_bonkers)
     if target.index != user.index # Not self-inflicted

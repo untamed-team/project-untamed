@@ -3269,8 +3269,10 @@ class Battle::AI
       miniscore/=100.0
       score*=miniscore
       miniscore=100
-      if user.hasActiveItem?(:WHITEHERB)
-        miniscore *= 2.25
+      if !canLowerStatTarget(:DEFENSE,move,user) && !canLowerStatTarget(:SPECIAL_DEFENSE,move,user)
+        miniscore *= 2
+      elsif user.hasActiveItem?(:WHITEHERB)
+        miniscore *= 1.5
       else
         if userFasterThanTarget && targetWillMove?(target, "dmg")
           miniscore*=0.1
@@ -4292,7 +4294,7 @@ class Battle::AI
     when "LowerUserAttack1", "LowerUserAttack2"
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.5
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:ATTACK,move,user)
         score*=1.1
       else
         miniscore=100
@@ -4331,7 +4333,7 @@ class Battle::AI
     when "LowerUserDefense1", "LowerUserDefense2" # Clanging Scales
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.5
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:DEFENSE,move,user)
         score*=1.1
       else
         miniscore=100
@@ -4375,7 +4377,7 @@ class Battle::AI
     when "LowerUserSpAtk1", "LowerUserSpAtk2" # Overheat
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.7
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:SPECIAL_ATTACK,move,user)
         score*=1.15
       else
         miniscore=100
@@ -4414,7 +4416,7 @@ class Battle::AI
     when "LowerUserSpDef1", "LowerUserSpDef2"
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.5
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:SPECIAL_DEFENSE,move,user)
         score*=1.1
       else
         miniscore=100
@@ -4458,7 +4460,7 @@ class Battle::AI
     when "LowerUserSpeed1", "LowerUserSpeed2" # Hammer Arm
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.3
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:SPEED,move,user)
         score*=1.1
       else
         miniscore=100
@@ -4498,7 +4500,7 @@ class Battle::AI
     when "LowerUserAtkDef1" # Superpower
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.7
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:ATTACK,move,user) && !canLowerStatTarget(:DEFENSE,move,user)
         score*=1.15
       else
         miniscore=100
@@ -4542,7 +4544,7 @@ class Battle::AI
     when "LowerUserDefSpDef1" # close combat
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.5
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:SPECIAL_DEFENSE,move,user) && !canLowerStatTarget(:DEFENSE,move,user)
         score*=1.15
       else
         miniscore=100
@@ -4583,7 +4585,9 @@ class Battle::AI
     when "LowerUserDefSpDefSpd1" # V-Create
       if user.hasActiveAbility?(:CONTRARY)
         score*=1.7
-      elsif user.pbOwnSide.effects[PBEffects::StatDropImmunity]
+      elsif !canLowerStatTarget(:SPECIAL_DEFENSE,move,user) && 
+            !canLowerStatTarget(:DEFENSE,move,user) && 
+            !canLowerStatTarget(:SPEED,move,user)
         score*=1.2
       else
         if targetSurvivesMove(move,user,target)
