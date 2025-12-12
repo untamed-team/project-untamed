@@ -623,7 +623,7 @@ class Battle::AI
         if roughFSDamage > 0 && score > 80
           miniscore = 1 + (roughFSDamage / target.hp)
           echoln "score for protect+FS #{miniscore}" if $AIGENERALLOG
-          score += miniscore
+          score *= miniscore
         end
       end
       if $AIGENERALLOG
