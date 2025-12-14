@@ -1058,6 +1058,11 @@ class Battle::Move::LowerTargetSpDef1 < Battle::Move::TargetStatDownMove
     super
     @statDown = [:SPECIAL_DEFENSE, 1]
   end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    id = :HEATWAVE if self.id == :SCOURINGWINDS
+    super
+  end
 end
 
 #===============================================================================
