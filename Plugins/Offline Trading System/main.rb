@@ -2,7 +2,9 @@
 
 #LAST I LEFT OFF:
 #I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
-#next step is compiling plugin on backup project, clearing storage on both projects, starting a new trade to finish later, then trying to finish a trade later on main project. Goal is getting to print line "got this far"
+
+#game crashes when finalizing trade. Crash occurs in "self.getPkmnProperties(pkmn)" around line 784 at "pkmnHash[:species] = pkmn.species"
+#I'm trying to figure out if the file is being decoded to a pokemon correctly
 
 
 #TO DO:
@@ -303,30 +305,13 @@ class OfflineTradingSystem
 				
 		else #finishing a trade from cloud storage
 			self.createAgreementFile(offerOrFinishScreen)
-		end
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-		
-		
+				
+			command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
+			# Main loop
+			command = 0
+			finalizedTrade = false
+			cancel = false
+		end	
 		
 		###########################################################
 		# Ask Player to Finalize Trade
@@ -350,10 +335,17 @@ class OfflineTradingSystem
 					break
 				when 2
 					GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.tradeMenu: Player chose 'Cancel Trade'\n\n", "a")
-					if pbConfirmMessage(_INTL("Cancel trading? You can finish this trade later."))
-						cancel = true
-						break
-					end
+					if offerOrFinishScreen == "offer"
+						if pbConfirmMessage(_INTL("Cancel trading? You can finish this trade later."))
+							cancel = true
+							break
+						end
+					elsif offerOrFinishScreen == "agreement"
+						if pbConfirmMessage(_INTL("Cancel trading? Your Pokémon will remain in cloud storage until the trade is finalized."))
+							cancel = true
+							break
+						end
+					end #if offerOrFinishScreen == "offer"
 				end #case choice
 			end #loop do
 			if !cancel
@@ -372,7 +364,7 @@ class OfflineTradingSystem
 			}
 		end
 		
-		#when finalizedTrade is true, we'll get here
+		#when finalizedTrade is true, we'll get here #this is afteer reading an agreement file from the other player
 		#legality checks for invalid pokemon and invalid moves
 		@pkmnPlayerWillReceiveInSymbolFormat = self.legalitychecks(@pkmnPlayerWillReceiveInSymbolFormat)
 		
@@ -465,7 +457,7 @@ class OfflineTradingSystem
 			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
 		
 			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
-			self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
+			#self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat) if player is not already in the cloud storage
 		
 			#put hex data into .mazah file
 			# Make sure to define your hex data and file path first
@@ -548,6 +540,7 @@ class OfflineTradingSystem
 			#set location and index of pkmn to update in box or party
 			#@pkmnToReplaceLocationAndIndex[0] == "party"
 			#@pkmnToReplaceLocationAndIndex[0] == "box"
+			
 		else
 			#if finalizing trade without leaving trade screen
 			#for replacing the pkmn on the spot (if never left the trade menu
@@ -694,7 +687,7 @@ class OfflineTradingSystem
 				#if less than or equal to 2 elements in the array, what's being read is an offer file, not an agreement file
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Found an offer file instead of an agreement file. Skipping this file...\n\n", "a")
 				next
-			end			
+			end
 
 			tradeIDOfPlayerWhoGeneratedThisFile = self.decode(arrayOfText[0])
 			pkmnOtherTrainerIsGivingToPlayer = self.decode(arrayOfText[1])
@@ -704,6 +697,10 @@ class OfflineTradingSystem
 			#these variables come from the agreement file the player is processing, and we need to check them against the offer files from each player
 			agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat = Marshal.load([pkmnOtherTrainerIsGivingToPlayer].pack('H*'))
 			agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat = Marshal.load([pkmnPlayerIsGivingToOtherPlayer].pack('H*'))
+			
+			print "agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat is #{agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat}"
+			print "========================================="
+			print "agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat is #{agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat}"
 			
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
@@ -935,10 +932,8 @@ class OfflineTradingSystem
 		#pkmn.speed = h[:speed]
 		pkmn.calc_stats
 		
-		
 		#Owner.new(ID, name, gender, language)
-		pkmn.owner = Owner.new(h[:ownerID], h[:ownerName], h[:ownerGender], h[:ownerLanguage])
-		print "got this far"
+		pkmn.owner = Pokemon::Owner.new(h[:ownerID], h[:ownerName], h[:ownerGender], h[:ownerLanguage])
 		
 		pkmn.obtain_text = h[:obtain_text]
 		pkmn.obtain_level = h[:obtain_level]
