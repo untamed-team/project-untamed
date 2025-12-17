@@ -3,9 +3,7 @@
 #LAST I LEFT OFF:
 #I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
 
-#game crashes when finalizing trade. Crash occurs in "self.getPkmnProperties(pkmn)" around line 784 at "pkmnHash[:species] = pkmn.species"
-#I'm trying to figure out if the file is being decoded to a pokemon correctly
-
+#see line 727
 
 #TO DO:
 
@@ -698,9 +696,15 @@ class OfflineTradingSystem
 			agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat = Marshal.load([pkmnOtherTrainerIsGivingToPlayer].pack('H*'))
 			agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat = Marshal.load([pkmnPlayerIsGivingToOtherPlayer].pack('H*'))
 			
-			print "agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat is #{agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat}"
-			print "========================================="
-			print "agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat is #{agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat}"
+			agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat = Marshal.dump(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat)
+			agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat = Marshal.dump(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
+			
+			Console.echo_warn "agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat is #{agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat}"
+			Console.echo_warn "================================================================="
+			Console.echo_warn "agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat is #{agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat}"
+			
+			print @pkmnPlayerWillReceiveInHexFormat
+			print @pkmnPlayerWillReceiveInHexFormat.species
 			
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
@@ -716,8 +720,16 @@ class OfflineTradingSystem
 			elsif $game_player.tradeID != tradeIDOfPlayerThisTradeIsMeantFor
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is not meant to be redeemed by this player. Invalid trade.\n\n", "a")
 				
+				
+				
+			#this is where we crash because when finalizing an old trade, @pkmnPlayerWillReceiveInHexFormat is not set
+			#if not finalizing an old trade, use @pkmnPlayerWillReceiveInHexFormat
+			#if finalizing an old trade, use myPkmn.canOnlyBeTradedFor[1]
+			#need to bring in "offerOrFinishScreen" to see whether we are finalizing a trade
 			elsif self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat) != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
-				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer) is #{self.getPkmnProperties(pkmnOtherTrainerIsGivingToPlayer)}\n\n", "a")
+				#if not finalizing an old trade
+				
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat) is #{self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
 				
@@ -784,6 +796,8 @@ class OfflineTradingSystem
 	end
 	
 	def self.getPkmnProperties(pkmn)
+		print pkmn
+	
 		pkmnHash = {}
 		pkmnHash[:species] = pkmn.species
 		pkmnHash[:name] = pkmn.name
