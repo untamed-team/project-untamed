@@ -179,7 +179,9 @@ class Battle::AI
         targetIntent = @battle.choices[b.index]
         targetMove = targetIntent[2]
         targetAim = targetIntent[3]
-        if targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index
+        next unless @battle.moveRevealed?(b, targetMove.id)
+        if (targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index) ||
+           (targetMove.function == "NormalMovesBecomeElectric" && ret == :NORMAL)
           thisprio = priorityAI(user, move, globalArray)
           thatprio = priorityAI(b, targetMove, globalArray)
           aspeed = pbRoughStat(user,:SPEED,skill)

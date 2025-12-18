@@ -1282,6 +1282,111 @@ def eggMoveTutor
   return false
 end
 
+FOSSILREVIVEVAR = 126
+def fossilreviveNPC(onlyone = true)
+  if !$game_variables[FOSSILREVIVEVAR].is_a?(Array)
+    $game_variables[FOSSILREVIVEVAR] = [nil, 0, [], false] 
+    # fossil currently being revived, time delay, fossils revived, machine fried
+  end
+  fossilgens = 2 # normally it would be 5, but dexit means we only have 2 gens of fossils
+  fossilarr = {
+    #:HELIXFOSSIL => :OMANYTE,
+    #:DOMEFOSSIL  => :KABUTO,
+    #:ROOTFOSSIL  => :LILEEP,
+    #:CLAWFOSSIL  => :ANORITH,
+    #:SKULLFOSSIL => :CRANIDOS,
+    #:ARMORFOSSIL => :SHIELDON,
+    #:COVERFOSSIL => :TIRTOUGA,
+    #:PLUMEFOSSIL => :ARCHEN,
+    :JAWFOSSIL   => :TYRUNT,
+    :SAILFOSSIL  => :AMAURA,
+    # gen8 is gake and fay
+    :OPALFOSSIL  => :CHARCOPAL,
+    :TARFOSSIL   => :ELEGOOP
+  }
+  if $game_variables[FOSSILREVIVEVAR][0].nil?
+    ret = pbChooseFossil
+    return if ret.nil?
+    species = fossilarr[ret]
+    if species.nil?
+      pbMessage(_INTL("This fossil cannot be revived."))
+      return
+    end
+    if onlyone
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:CHARCOPAL) && species == :ELEGOOP) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:ELEGOOP) && species == :CHARCOPAL)
+          pbMessage(_INTL("You already revived an Opal fossil. My machine can't process a Tar fossil after that.")) if species == :ELEGOOP
+          pbMessage(_INTL("You already revived a Tar fossil. My machine can't process an Opal fossil after that.")) if species == :CHARCOPAL
+          return
+        end
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:TYRUNT) && species == :AMAURA) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:AMAURA) && species == :TYRUNT)
+          pbMessage(_INTL("You already revived a Sail fossil. My machine can't process a Jaw fossil after that.")) if species == :TYRUNT
+          pbMessage(_INTL("You already revived a Jaw fossil. My machine can't process a Sail fossil after that.")) if species == :AMAURA
+          return
+        end
+
+        if $game_variables[FOSSILREVIVEVAR][2].include?(species)
+          pbMessage(_INTL("My machine won't process duplicates. Come back with a different fossil."))
+          return
+        end
+      else
+        pbMessage(_INTL("I told you, it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+      end
+    end
+    $bag.remove(ret)
+    pbMessage(_INTL("The fossil is being revived. Come back later."))
+    present = pbGetTimeNow
+    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
+    $game_variables[FOSSILREVIVEVAR][0] = species
+    $game_variables[FOSSILREVIVEVAR][1] = future
+    return
+  else
+    present = pbGetTimeNow
+    past = $game_variables[FOSSILREVIVEVAR][1]
+    timepassed = present>past
+    
+    if timepassed
+      pbMessage(_INTL("Took you long enough to come back! I almost called it a day!\\nLet's see what we've got here..."))
+    else
+      pbMessage(_INTL("...\\nThe revival process isn't complete yet. Come back later."))
+      return
+    end
+
+    species = $game_variables[FOSSILREVIVEVAR][0]
+    pokemon = Pokemon.new(species, 5)
+    pokemon.calc_stats
+    pokemon.heal
+
+    if pbAddPokemon(pokemon)
+      pbMessage(_INTL("This is good news! The fossil revived into {1}!", pokemon.name))
+      $game_variables[FOSSILREVIVEVAR][0] = nil
+      $game_variables[FOSSILREVIVEVAR][1] = 0
+      $game_variables[FOSSILREVIVEVAR][2].push(species)
+      $game_variables[FOSSILREVIVEVAR][2] |= [] # remove duplicates
+      fried = onlyone # default to machine fried for normies
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].length.to_i / 2) > fossilgens
+          fried = true
+        else
+          fried = false
+        end
+      end
+      if fried
+        pbMessage(_INTL("Ah, dammit. it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+      end
+      $game_variables[FOSSILREVIVEVAR][3] = fried
+      return
+    else
+      pbMessage(_INTL("Your party is full. Please make room in your party."))
+      return
+    end
+  end
+end
+
 #===============================================================================
 # Trash encounters
 #===============================================================================
@@ -1333,7 +1438,8 @@ def trashEncounter(trash = 0)
     present = pbGetTimeNow
     future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
     $game_variables[TRASHENCOUNTERVAR][trash][2] = future
-    pbMessage(_INTL("You threw a {1} into the trash pile. Maybe something will get the bait?", ret))
+    nigger = (ret.starts_with_vowel?) ? "an" : "a"
+    pbMessage(_INTL("You threw {1} {2} into the trash pile. Maybe something will get the bait?", nigger, ret))
     return
   else
     trashcounter = $game_variables[TRASHENCOUNTERVAR][trash][1]
