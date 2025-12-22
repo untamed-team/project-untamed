@@ -21,7 +21,7 @@ class TradingPokemonStorageScene
     @command = 1
   end
 
-  def pbStartBox(screen, command)
+  def pbStartBox(screen, command, storage)
     @screen = screen
     @storage = screen.storage
     @bgviewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
@@ -39,8 +39,16 @@ class TradingPokemonStorageScene
     @sprites = {}
     @choseFromParty = false
     @command = command
-    addBackgroundPlane(@sprites, "background", "Storage/bg", @bgviewport)
-    @sprites["box"] = PokemonBoxSprite.new(@storage, @storage.currentBox, @boxviewport)
+    
+	#set background animation depending on which storage we access
+	if storage == $TradeCloud
+		gifPath = "TradingImages/bg"
+	else #$PokemonStorage
+		gifPath = "Storage/bg"
+	end
+	addBackgroundPlane(@sprites, "background", gifPath, @bgviewport)
+    
+	@sprites["box"] = PokemonBoxSprite.new(@storage, @storage.currentBox, @boxviewport)
     @sprites["boxsides"] = IconSprite.new(0, 0, @boxsidesviewport)
     @sprites["boxsides"].setBitmap("Graphics/Pictures/Storage/overlay_main")
     @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @boxsidesviewport)
@@ -959,7 +967,7 @@ class TradingPokemonStorageScreen
     @heldpkmn = nil
     case command
     when 0   # Organise
-      @scene.pbStartBox(self, command)
+      @scene.pbStartBox(self, command, storage)
 	  #show tip card for trading if not seen it yet
 	  pbShowTipCardsGrouped(:TRADING) if !pbSeenTipCard?(:TRADING1)
       loop do
@@ -1041,7 +1049,7 @@ class TradingPokemonStorageScreen
       end
       @scene.pbCloseBox
     when 1   # Finalize Trades
-		@scene.pbStartBox(self, command)
+		@scene.pbStartBox(self, command, storage)
 	  #show tip card for FINALIZING TRADES
 	  #pbShowTipCardsGrouped(:TRADING) if !pbSeenTipCard?(:TRADING1)
       loop do
@@ -1124,7 +1132,7 @@ class TradingPokemonStorageScreen
       @scene.pbCloseBox
     when 2   # Deposit
     when 3
-      @scene.pbStartBox(self, command)
+      @scene.pbStartBox(self, command, storage)
       @scene.pbCloseBox
     end
     $game_temp.in_storage = false
@@ -1466,7 +1474,7 @@ class TradingPokemonStorageScreen
   def pbChoosePokemon(_party = nil)
     $game_temp.in_storage = true
     @heldpkmn = nil
-    @scene.pbStartBox(self, 1)
+    @scene.pbStartBox(self, 1, storage)
     retval = nil
     loop do
       selected = @scene.pbSelectBox(@storage.party)

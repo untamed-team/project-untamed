@@ -5,26 +5,16 @@
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
-#change animated bg in cloud storage to be the same bg as the trade screen - pink
-#maybe change the wallpaper of each box to be clouds?
-
-#switch out method for putting a pkmn in cloud storage when doing a trade for the first time (not finalizing an old trade) to send to $TradeCloud rather than the obsolete storage 'withheldTradingStorage'
-
-#In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
-#I'm currently working on the above, but how do I check if the pkmn in finalize trade that comes from the other player is coming from the correct player trade ID? I would need to store the player trade ID inside pkmn.canOnlyBeTradedFor
-#it seems like I stored the playerID in .canOnlyBeTradedFor[0]. Check contents of .canOnlyBeTradedFor
 
 #need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
 #should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud
 #should not see the "party" button at the bottom of the screen when in cloud storage
-#after finalizing a trade from the cloud storage, refresh the box. Will need to set @pkmnToReplaceLocationAndIndex for that
 #should maybe not get the option to go into cloud storage if it's empty
+#should not have the option to empty cloud storage if not in Debug. This is ready for testing
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
-	attr_accessor :withheldTradingStorage #obsolete
 	@tradeID = ""
-	@withheldTradingStorage = [] #obsolete
 end
 
 class OfflineTradingSystem
@@ -119,6 +109,9 @@ class OfflineTradingSystem
 			@finalizingTradeLater = false
 		when 1 #finalize old trade
 			Console.echo_warn "going into cloud storage"
+			$TradeCloud.maxBoxes.times do |i|
+				$TradeCloud[i].background = 11
+			end
 			storage = $TradeCloud
 			@finalizingTradeLater = true
 		when 2 #clearing cloud storage
@@ -419,8 +412,7 @@ class OfflineTradingSystem
 			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
 			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
-		
-			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+
 			self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 			#put hex data into .mazah file
@@ -459,8 +451,7 @@ class OfflineTradingSystem
 			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
 			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
-		
-			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+
 			#self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat) if player is not already in the cloud storage
 		
 			#put hex data into .mazah file
@@ -494,13 +485,13 @@ class OfflineTradingSystem
 				break if foundInBox
 			end #for i in 0...$PokemonStorage.maxBoxes
 		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
-		
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pushing pkmn to $game_player.withheldTradingStorage if not already in there...\n\n", "a")
+
 		#pkmn.canOnlyBeTradedFor is an array with 2 elements. The 1st element is the trade ID of the player sending the pkmn. The 2nd element is the pkmn's values
 		pkmn.canOnlyBeTradedFor = [@otherPlayerTradeID, self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)]
 		#Console.echo_warn "sending this pkmn to the cloud where it cannot be used and will wait to be traded for the following pkmn in return:"
 		#Console.echo_warn "#{pkmn.canOnlyBeTradedFor}"
 		#store the pkmn in the trade cloud to finish the trade later
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Running '$TradeCloud.pbStoreCaught(pkmn)'...\n\n", "a")
 		$TradeCloud.pbStoreCaught(pkmn)
 		
 		#remove pkmn from player's storage/party
