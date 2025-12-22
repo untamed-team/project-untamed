@@ -1338,7 +1338,7 @@ class Battle::AI
         if !userFasterThanTarget
           miniscore*=1.3
         else
-          miniscore*=0.7
+          miniscore*=0.9
         end
         if target.moves.any? { |m| priorityAI(target,m,globalArray)>0 }
           miniscore*=1.3
