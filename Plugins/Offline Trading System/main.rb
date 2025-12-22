@@ -3,10 +3,10 @@
 #LAST I LEFT OFF:
 #I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
 
-#see line 374
+#see line 546 - does not add new pokemon to pokedex
 
 #TO DO:
-
+#don't forget to uncomment ##########################################################Game.save
 #switch out method for putting a pkmn in cloud storage when doing a trade for the first time (not finalizing an old trade) to send to $TradeCloud rather than the obsolete storage 'withheldTradingStorage'
 
 #In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
@@ -115,9 +115,11 @@ class OfflineTradingSystem
 		when 0 #start new trade
 			print "going into regular storage"
 			storage = $PokemonStorage
+			@finalizingTradeLater = false
 		when 1 #finalize old trade
 			print "going into cloud storage"
 			storage = $TradeCloud
+			@finalizingTradeLater = true
 		when 2 #clearing cloud storage
 			$TradeCloud.maxBoxes.times do |i|
 				$TradeCloud.maxPokemon(i).times do |j|
@@ -374,8 +376,9 @@ class OfflineTradingSystem
 		##########################################################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
-		finalizingTradeLater = false #######need a way to check if we're finalizing the trade later, then put something in the 'receivePkmnFromOtherPlayer' method to do something different than when doing a trade from scratch
-		self.receivePkmnFromOtherPlayer(finalizingTradeLater)
+		#finalizingTradeLater = false #######need a way to check if we're finalizing the trade later, then put something in the 'receivePkmnFromOtherPlayer' method to do something different than when doing a trade from scratch
+		print "@finalizingTradeLater is #{@finalizingTradeLater}"
+		self.receivePkmnFromOtherPlayer(@finalizingTradeLater)
 
 	end #def self.tradeMenu
 	
@@ -519,7 +522,7 @@ class OfflineTradingSystem
 			#@tradingViewport.dispose
 			
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, @pkmnPlayerWillReceiveInSymbolFormat.owner.name)
 			evo.pbTradeSendPkmn
 			evo.pbEndScreen
 			
@@ -535,41 +538,57 @@ class OfflineTradingSystem
 	
 	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)
 		##############check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
-		if finalizingTradeLater
+		if @finalizingTradeLater
 			#if finalizing trade later...
-			#set location and index of pkmn to update in box or party
-			#@pkmnToReplaceLocationAndIndex[0] == "party"
-			#@pkmnToReplaceLocationAndIndex[0] == "box"
+
+			#make pkmn being replaced be NIL
+			$TradeCloud[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
+			#does not currently add new pokemon to dex. Need to do that here
 			
 		else
 			#if finalizing trade without leaving trade screen
-			#for replacing the pkmn on the spot (if never left the trade menu
-			#REVISIT THIS when done storing pkmn in cloud
+			#for replacing the pkmn on the spot (if never left the trade menu)
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
 				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
-		end
+		end #if @finalizingTradeLater
 
-		#regardless of how the trade is being finalized, receive the pkmn
+		#receive the pkmn
 		pbFadeOutIn {
 			@sprites.dispose
 			@tradingViewport.dispose
 			
 			#evolve pkmn if needed
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreenScene2(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene2(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, @pkmnPlayerWillReceiveInSymbolFormat.owner.name)
 			evo.pbTradeReceivePkmn
 			evo.pbEndScreen
 			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
-			@boxScene.update
-			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
-			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
-			end
+			if @finalizingTradeLater
+				#add the pkmn you receive will go into your boxes
+				if $player.party_full?
+					stored_box = $PokemonStorage.pbStoreCaught(@pkmnPlayerWillReceiveInSymbolFormat)
+					box_name   = $PokemonStorage[stored_box].name
+					pbMessage(_INTL("{1} has been sent to Box \"{2}\"!", @pkmnPlayerWillReceiveInSymbolFormat.name, box_name))
+				else
+					pbMessage(_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name} has been added to your party!"))
+					pbAddPokemonSilent(@pkmnPlayerWillReceiveInSymbolFormat)
+				end
+				@boxScene.update
+				print "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2])
+			else
+				@boxScene.update
+				if @pkmnToReplaceLocationAndIndex[0] == "party"
+					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+				elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+					print "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+				end
+			end #if @finalizingTradeLater
 		}
 	
 	end #def self.receivePkmnFromOtherPlayer
@@ -764,6 +783,7 @@ class OfflineTradingSystem
 				if self.getPkmnProperties($TradeCloud[i, j]).to_s
 					exists = true
 					Console.echo_warn "found the pkmn in the cloud"
+					@pkmnToReplaceLocationAndIndex = ["box", i, j]
 					return true
 				end
 			end
@@ -986,18 +1006,31 @@ MenuHandlers.add(:pc_menu, :offline_trade, {
   pbMessage(_INTL("\\se[PC access]The Trading Storage System was opened."))
     command = 0
     loop do
-      command = pbShowCommandsWithHelp(nil,
-         [_INTL("Start New Trade"),
-          _INTL("Finalize Old Trade"),
-          _INTL("Empty Cloud Storage"),
-          #_INTL("Deposit Pokémon"),
-          _INTL("See ya!")],
-         [_INTL("Start a new trade from scratch."),
-          _INTL("Finish a trade started before."),
-          _INTL("Erase unfinished trades."),
-          #_INTL("Store Pokémon in your party in Boxes."),
-          _INTL("Return to the previous menu.")], -1, command)
-      break if command < 0 || command == 3
+		if $DEBUG
+			command = pbShowCommandsWithHelp(nil,
+			[_INTL("Start New Trade"),
+			_INTL("Finalize Old Trade"),
+			_INTL("Empty Cloud Storage"),
+			#_INTL("Deposit Pokémon"),
+			_INTL("See ya!")],
+			[_INTL("Start a new trade from scratch."),
+			_INTL("Finish a trade started before."),
+			_INTL("Erase unfinished trades."),
+			#_INTL("Store Pokémon in your party in Boxes."),
+			_INTL("Return to the previous menu.")], -1, command)
+			break if command < 0 || command == 3
+		else
+			command = pbShowCommandsWithHelp(nil,
+				[_INTL("Start New Trade"),
+				_INTL("Finalize Old Trade"),
+				#_INTL("Deposit Pokémon"),
+				_INTL("See ya!")],
+				[_INTL("Start a new trade from scratch."),
+				_INTL("Finish a trade started before."),
+				#_INTL("Store Pokémon in your party in Boxes."),
+				_INTL("Return to the previous menu.")], -1, command)
+			break if command < 0 || command == 2
+		end
 		OfflineTradingSystem.selectPkmnToTrade(command)
     end
     next false
