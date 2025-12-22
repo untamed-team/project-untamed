@@ -62,10 +62,12 @@ module GameData
           "NORMAL"   => :NORMAL,   "FIGHTING" => :FIGHTING, "FLYING"   => :FLYING,
           "POISON"   => :POISON,   "GROUND"   => :GROUND,   "ROCK"     => :ROCK,
           "BUG"      => :BUG,      "GHOST"    => :GHOST,    "STEEL"    => :STEEL,
-          "QMARKS"   => :QMARKS,   "???"      => :QMARKS,
           "FIRE"     => :FIRE,     "WATER"    => :WATER,    "GRASS"    => :GRASS,
           "ELECTRIC" => :ELECTRIC, "PSYCHIC"  => :PSYCHIC,  "ICE"      => :ICE,
-          "DRAGON"   => :DRAGON,   "DARK"     => :DARK,     "FAIRY"    => :FAIRY
+          "DRAGON"   => :DRAGON,   "DARK"     => :DARK,
+          # QMARKS, SHADOW and FAIRY are all illegal to the player, so be careful with their use
+          "QMARKS"   => :QMARKS,   "???"      => :QMARKS,   
+          "SHADOW"   => :SHADOW,   "FAIRY"    => :FAIRY
         }
         statusHash = {
           "DIZZY"  => [:DIZZY, 4],
