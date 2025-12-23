@@ -2488,3 +2488,13 @@ class Bitmap
     return new_bitmap
   end
 end
+
+#############################################
+# Default Trainer Name if One isn't Entered #
+#############################################
+def pbSuggestTrainerName(gender)
+  userName = "Ayylmao"
+  userName = "Homero" if gender == 0 # guy
+  userName = "Peppa" if gender == 1 # gal
+  return userName
+end
