@@ -3200,6 +3200,7 @@ Pokedex = Crustang are the Pokémon of choice for Mazian gearheads. Trainers wil
 WildItemCommon = NUGGET
 WildItemUncommon = NUGGET
 WildItemRare = NUGGET
+FormName = Classic
 #-------------------------------
 [CACNEA]
 Name = Cacnea

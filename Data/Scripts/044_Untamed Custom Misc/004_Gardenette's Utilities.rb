@@ -2498,3 +2498,96 @@ def pbSuggestTrainerName(gender)
   userName = "Peppa" if gender == 1 # gal
   return userName
 end
+
+#############################################
+# Crustang Riding #
+#############################################
+#Pulled from Overworld Bug Fixes
+#For modifying the bike character set
+class Game_Player < Game_Character
+  def set_movement_type(type)
+    meta = GameData::PlayerMetadata.get($player&.character_ID || 1)
+    new_charset = nil
+    case type
+    when :fishing
+      new_charset = pbGetPlayerCharset(meta.fish_charset)
+    when :surf_fishing
+      new_charset = pbGetPlayerCharset(meta.surf_fish_charset)
+    when :diving, :diving_fast, :diving_jumping, :diving_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.dive_charset)
+    when :surfing, :surfing_fast, :surfing_jumping, :surfing_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :surfing_jumping) ? 3 : 4
+      end
+      new_charset = pbGetPlayerCharset(meta.surf_charset)
+    
+    when :cycling, :cycling_fast, :cycling_jumping, :cycling_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :cycling_jumping) ? 3 : 5
+      end
+      
+      if $player.has_species?(:CRUSTANG)
+        for pkmn in $player.party
+          if pkmn.species == :CRUSTANG
+            firstCrustang = pkmn
+            case firstCrustang.form
+            when 0
+              crustangColor = "classic"
+            when 1
+              crustangColor = "orange"
+            when 2
+              crustangColor = "yellow"
+            when 3
+              crustangColor = "green"
+            when 4
+              crustangColor = "blue"
+            when 5
+              crustangColor = "indigo"
+            when 6
+              crustangColor = "purple"
+            when 7
+              crustangColor = "pink"
+            when 8
+              crustangColor = "black"
+            when 9
+              crustangColor = "white"
+            end #case firstCrustang.form
+            if firstCrustang.shiny?
+              crustangShininess = "s"
+            else
+              crustangShininess = "n"
+            end
+            break
+          end #if $player.party[i].species == :CRUSTANG
+        end #for i in $player.party
+      end #if $player.has_species?(:CRUSTANG)
+      
+      #new_charset = pbGetPlayerCharset(meta.cycle_charset)
+      #playerGender_crustangColor_s (s for shiny or if it's not shiny, 'n')
+      new_charset = "Crustang Riding/#{$player.gender}_#{crustangColor}_#{crustangShininess}"
+
+    when :running
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.run_charset)
+    when :ice_sliding
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+    else   # :walking, :jumping, :walking_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+    end
+    @character_name = new_charset if new_charset
+  end
+end
+
+#For modifying the music that plays on the bike
+#def pbMountBike
+#  return if $PokemonGlobal.bicycle
+#  $PokemonGlobal.bicycle = true
+#  $stats.cycle_count += 1
+#  pbUpdateVehicle
+#  bike_bgm = GameData::Metadata.get.bicycle_BGM
+#  pbCueBGM(bike_bgm, 0.5) if bike_bgm
+#  pbPokeRadarCancel
+#end

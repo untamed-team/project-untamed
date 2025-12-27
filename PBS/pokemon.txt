@@ -4004,6 +4004,7 @@ Shape = Insectoid
 Category = Low Rider
 Pokedex = Crustang are the Pokémon of choice for Mazian gearheads. Trainers will customise their Crustang's carapace with body paints and decals and enter them in shows.
 WildItemUncommon = METALCOAT
+FormName = Classic
 #-------------------------------
 [COSMET]
 Name = Cosmet
