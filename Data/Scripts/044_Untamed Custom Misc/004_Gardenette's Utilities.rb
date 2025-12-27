@@ -2505,79 +2505,110 @@ end
 #Pulled from Overworld Bug Fixes
 #For modifying the bike character set
 class Game_Player < Game_Character
+  def pbGetPlayerCharset(charset, trainer = nil, force = false)
+    trainer = $player if !trainer
+    outfit = (trainer) ? trainer.outfit : 0
+  
+    # --- CRUSTANG MODIFICATION START ---
+    # Check if we are currently looking for the cycle charset
+    meta = GameData::PlayerMetadata.get(trainer&.character_ID || 1)
+    is_cycling = (charset == meta.cycle_charset)
+  
+    # We bypass the cache check if cycling, so it can detect party changes immediately
+    if !is_cycling
+      return nil if !force && $game_player&.charsetData &&
+                  $game_player.charsetData[0] == trainer.character_ID &&
+                  $game_player.charsetData[1] == charset &&
+                  $game_player.charsetData[2] == outfit
+    end
+  
+    $game_player.charsetData = [trainer.character_ID, charset, outfit] if $game_player
+  
+    ret = charset
+  
+    # Logic for Crustang overrides
+    if is_cycling
+      target = trainer.party.find { |p| !p.egg? && p.species == :CRUSTANG }
+      if target
+        colors = ["classic", "orange", "yellow", "green", "blue", "indigo", "purple", "pink", "black", "white"]
+        c_color = colors[target.form] || "classic"
+        c_shiny = target.shiny? ? "s" : "n"
+        path = "Crustang Riding/#{trainer.gender}_#{c_color}_#{c_shiny}"
+      
+        # Verify the file exists before returning it, otherwise use the bike
+        if pbResolveBitmap("Graphics/Characters/" + path)
+          return path
+        end
+      end
+    end
+    # --- CRUSTANG MODIFICATION END ---
+
+    # Original outfit logic
+    if pbResolveBitmap("Graphics/Characters/" + ret + "_" + outfit.to_s)
+      ret = ret + "_" + outfit.to_s
+    end
+    return ret
+  end
+
   def set_movement_type(type)
     meta = GameData::PlayerMetadata.get($player&.character_ID || 1)
     new_charset = nil
     case type
     when :fishing
       new_charset = pbGetPlayerCharset(meta.fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     when :surf_fishing
       new_charset = pbGetPlayerCharset(meta.surf_fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     when :diving, :diving_fast, :diving_jumping, :diving_stopped
       self.move_speed = 3 if !@move_route_forcing
       new_charset = pbGetPlayerCharset(meta.dive_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     when :surfing, :surfing_fast, :surfing_jumping, :surfing_stopped
       if !@move_route_forcing
         self.move_speed = (type == :surfing_jumping) ? 3 : 4
       end
       new_charset = pbGetPlayerCharset(meta.surf_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     
     when :cycling, :cycling_fast, :cycling_jumping, :cycling_stopped
       if !@move_route_forcing
         self.move_speed = (type == :cycling_jumping) ? 3 : 5
       end
       
-      if $player.has_species?(:CRUSTANG)
-        for pkmn in $player.party
-          if pkmn.species == :CRUSTANG
-            firstCrustang = pkmn
-            case firstCrustang.form
-            when 0
-              crustangColor = "classic"
-            when 1
-              crustangColor = "orange"
-            when 2
-              crustangColor = "yellow"
-            when 3
-              crustangColor = "green"
-            when 4
-              crustangColor = "blue"
-            when 5
-              crustangColor = "indigo"
-            when 6
-              crustangColor = "purple"
-            when 7
-              crustangColor = "pink"
-            when 8
-              crustangColor = "black"
-            when 9
-              crustangColor = "white"
-            end #case firstCrustang.form
-            if firstCrustang.shiny?
-              crustangShininess = "s"
-            else
-              crustangShininess = "n"
-            end
-            break
-          end #if $player.party[i].species == :CRUSTANG
-        end #for i in $player.party
-      end #if $player.has_species?(:CRUSTANG)
+      # Shadow Logic Integration
+      if $player.party.any? { |p| !p.egg? && p.species == :CRUSTANG }
+        pbSetOverworldShadow("bigShadow")
+      else
+        pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+      end
       
-      #new_charset = pbGetPlayerCharset(meta.cycle_charset)
-      #playerGender_crustangColor_s (s for shiny or if it's not shiny, 'n')
-      new_charset = "Crustang Riding/#{$player.gender}_#{crustangColor}_#{crustangShininess}"
+      # Fetches Crustang string from the helper above
+      new_charset = pbGetPlayerCharset(meta.cycle_charset, nil, true)
 
     when :running
       self.move_speed = 4 if !@move_route_forcing
       new_charset = pbGetPlayerCharset(meta.run_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     when :ice_sliding
       self.move_speed = 4 if !@move_route_forcing
       new_charset = pbGetPlayerCharset(meta.walk_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
     else   # :walking, :jumping, :walking_stopped
       self.move_speed = 3 if !@move_route_forcing
+      # Ensure shadow returns to normal when walking
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
       new_charset = pbGetPlayerCharset(meta.walk_charset)
     end
+    
     @character_name = new_charset if new_charset
+    $game_player&.refresh_charset
   end
 end
 
