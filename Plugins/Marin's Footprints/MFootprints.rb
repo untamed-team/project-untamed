@@ -23,7 +23,7 @@ class Sprite_Character
   
   # A configurable X/Y offset for bike print sprites, in case they don't align
   # nicely with the player's graphic.
-  BIKE_X_OFFSET = -8
+  BIKE_X_OFFSET = 0
   BIKE_Y_OFFSET = 0
   
   # If true, both the player AND the follower will create footprints.
