@@ -2608,7 +2608,7 @@ class Game_Player < Game_Character
     end
     
     @character_name = new_charset if new_charset
-    $game_player&.refresh_charset
+    #$game_player&.refresh_charset #commented out as it overrides the run sprite for some reason (and possibly others that haven't been tested). This doesn't seem to be needed to work
   end
 end
 
