@@ -846,6 +846,17 @@ class PokemonEncounters
   end
 end #of class
 
+#added by stygma
+GameData::TerrainTag.register({
+  :id                     => :Corn,
+  :id_number              => 18,
+  :shows_grass_rustle     => true,
+  :land_wild_encounters   => true,
+  :battle_environment     => :TallGrass
+})
+
+#See 'GameData::TerrainTag.register({' in 'class TerrainTag' for all terrain tags
+
 #===============================================================================
 # Play Pokemon Cry from Forms Page in Pokedex
 #===============================================================================

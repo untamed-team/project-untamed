@@ -199,11 +199,8 @@ GameData::TerrainTag.register({
   :id_number              => 17
 })
 
-#added by stygma
-GameData::TerrainTag.register({
-  :id                     => :Corn,
-  :id_number              => 18,
-  :shows_grass_rustle     => true,
-  :land_wild_encounters   => true,
-  :battle_environment     => :TallGrass
-})
+#Reserved tags:
+#18 - corn
+#19-29 are reserved for rotatona puzzle track pieces
+#30 - bird bridge for boon's phenomenon
+#31 - shallow beach bubbles
