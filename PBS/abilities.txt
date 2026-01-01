@@ -1227,7 +1227,7 @@ Description = Boosts power of sound moves.
 FullDesc = User's moves with the sound flag deal 1.3x damage.
 #-------------------------------
 [SEANCE]
-Name = Seance
+Name = Séance
 Description = Copies the Ability of a defeated Pokémon.
 #-------------------------------
 [GRIMTEARS]
