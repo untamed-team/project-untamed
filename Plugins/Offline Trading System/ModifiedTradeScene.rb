@@ -178,13 +178,13 @@ class ModifiedPokemonTrade_Scene
     spriteBall.dispose
   end
 
-  def pbEndScreen(need_fade_out = true)
+  def pbEndScreen(need_fade_out = true, evoIfApplicable = false)
     pbDisposeMessageWindow(@sprites["msgwindow"]) if @sprites["msgwindow"]
     pbFadeOutAndHide(@sprites) if need_fade_out
     pbDisposeSpriteHash(@sprites)
     @viewport.dispose
     newspecies = @pokemon2.check_evolution_on_trade(@pokemon)
-    if newspecies
+    if newspecies && evoIfApplicable
       evo = PokemonEvolutionScene.new
       evo.pbStartScreen(@pokemon2, newspecies)
       evo.pbEvolution(false)

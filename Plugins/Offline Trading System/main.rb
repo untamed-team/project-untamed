@@ -5,7 +5,7 @@
 
 #Bugs:
 #upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party
-#a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen
+#a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen. The evo happens after the pkmn you send has gone in a ball and gone up to heaven
 #a pkmn I send is not removed from the cloud when I finalize the trade (not doing it later)
 
 #TO DO:
@@ -521,7 +521,7 @@ class OfflineTradingSystem
 			evo = ModifiedPokemonTrade_Scene.new
 			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, @pkmnPlayerWillReceiveInSymbolFormat.owner.name)
 			evo.pbTradeSendPkmn
-			evo.pbEndScreen
+			evo.pbEndScreen(true, false)
 			
 			@boxScene.update
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
@@ -589,7 +589,7 @@ class OfflineTradingSystem
 			#but before checking for evolution, register pokemon to dex if it's new
 			self.registerInDex(pkmnBeforeEvolution, evo) if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned_before_evolution && $player.has_pokedex
 			
-			evo.pbEndScreen
+			evo.pbEndScreen(true, true)
 			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
 			#mark new pkmn as seen and owned
