@@ -5,6 +5,7 @@
 
 #Bugs:
 #upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party
+#a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
@@ -507,7 +508,7 @@ class OfflineTradingSystem
 			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		end
 		
-		Game.save
+		##########################################################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		
@@ -814,6 +815,28 @@ class OfflineTradingSystem
 		end
 		return exists
 	end #def self.pkmnExistsInTradeCloud
+
+	def self.findPkmnInCloudStorage(pkmnInSymbolFormat)
+		if self.pkmnExistsInTradeCloud(self.getPkmnProperties(pkmnInSymbolFormat))
+			Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
+			location = nil
+			$TradeCloud.maxBoxes.times do |i|
+				Console.echo_warn "checking boxes in cloud storage"
+				$TradeCloud.maxPokemon(i).times do |j|
+					Console.echo_warn "checking pokemon in box #{i}"
+					Console.echo_warn "================================="
+					Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					if self.getPkmnProperties($TradeCloud[i, j]).to_s
+						location = [i,j]
+						Console.echo_warn "found the pkmn in the cloud"
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						return true
+					end
+				end
+			end
+		end
+		return location
+	end #def self.findPkmnInCloudStorage
 
 	def self.legalitychecks(pkmn)
 		pkmn.clear_first_moves
