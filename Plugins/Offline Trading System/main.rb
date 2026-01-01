@@ -1,10 +1,10 @@
 #Offline trading system
 
 #LAST I LEFT OFF:
-#
+#currently having trouble with if statement on line 844. Cannot detect pkmn in cloud storage
 
 #Bugs:
-#upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party
+#upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party (per console: '@pkmnToReplaceLocationAndIndex[0] is box' even when selecting party pkmn)
 #a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen. The evo happens after the pkmn you send has gone in a ball and gone up to heaven
 #a pkmn I send is not removed from the cloud when I finalize the trade (not doing it later)
 
@@ -566,7 +566,10 @@ class OfflineTradingSystem
 			if !self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat).nil?
 				Console.echo_warn "deleting pkmn traded away from cloud storage"
 				location = self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat)
-				$TradeCloud[location[0], location[1]] = nil
+				Console.echo_warn "location is '#{location}'"
+				box = location[0]
+				slot = location[1]
+				$TradeCloud[box][slot] = nil
 			end
 		end #if @finalizingTradeLater
 		
@@ -807,14 +810,14 @@ class OfflineTradingSystem
 		exists = false
 		
 		$TradeCloud.maxBoxes.times do |i|
-			Console.echo_warn "checking boxes in cloud storage"
+			#Console.echo_warn "checking boxes in cloud storage"
 			$TradeCloud.maxPokemon(i).times do |j|
-				Console.echo_warn "checking pokemon in box #{i}"
-				Console.echo_warn "================================="
-				Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
-				if self.getPkmnProperties($TradeCloud[i, j]).to_s
+				#Console.echo_warn "checking pokemon in box #{i}"
+				#Console.echo_warn "================================="
+				#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+				if self.getPkmnProperties($TradeCloud[i, j]).to_s == pkmnPropertiesArray.to_s
 					exists = true
-					Console.echo_warn "found the pkmn in the cloud"
+					#Console.echo_warn "found the pkmn in the cloud"
 					@pkmnToReplaceLocationAndIndex = ["box", i, j]
 					return true
 				end
@@ -825,24 +828,31 @@ class OfflineTradingSystem
 
 	def self.findPkmnInCloudStorage(pkmnInSymbolFormat)
 		if self.pkmnExistsInTradeCloud(self.getPkmnProperties(pkmnInSymbolFormat))
-			Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
+			properties = self.getPkmnProperties(pkmnInSymbolFormat).to_s
+			Console.echo_warn "method 'self.findPkmnInCloudStorage': checking cloud storage to see if the player has #{properties}"
 			location = nil
 			$TradeCloud.maxBoxes.times do |i|
-				Console.echo_warn "checking boxes in cloud storage"
+				#Console.echo_warn "checking boxes in cloud storage"
 				$TradeCloud.maxPokemon(i).times do |j|
-					Console.echo_warn "checking pokemon in box #{i}"
-					Console.echo_warn "================================="
-					Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
-					if self.getPkmnProperties($TradeCloud[i, j]).to_s
+					#Console.echo_warn "checking pokemon in box #{i}"
+					#Console.echo_warn "================================="
+					#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					print "$TradeCloud[i][j] is #{$TradeCloud[i][j]}"
+					Console.echo_warn "self.getPkmnProperties($TradeCloud[i, j]).to_s is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat)
+						print "match in cloud storage"
 						location = [i,j]
 						Console.echo_warn "found the pkmn in the cloud"
 						@pkmnToReplaceLocationAndIndex = ["box", i, j]
-						return true
+						return location
 					end
 				end
 			end
+		else
+			return location
 		end
-		return location
 	end #def self.findPkmnInCloudStorage
 
 	def self.legalitychecks(pkmn)
