@@ -42,7 +42,7 @@ end
 #---------------------------------------------------------------
 GameData::TerrainTag.register({
   :id                     => :ShallowBeach,
-  :id_number              => 18
+  :id_number              => 31
 })
 
 #---------------------------------------------------------------
@@ -56,7 +56,7 @@ class Sprite_WaterBubble
   FRAME_HEIGHT = 32    # Height of each frame
   ANIMATION_TIME = 0.3 # Seconds per animation cycle
   FRAMES_COUNT = 3     # Total number of animation frames
-  TERRAIN_TAG = 18     # Terrain tag for shallow beach
+  TERRAIN_TAG = 31     # Terrain tag for shallow beach
 
   def initialize(sprite, event, viewport = nil)
     @rsprite = sprite
