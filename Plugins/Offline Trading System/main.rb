@@ -6,6 +6,7 @@
 #Bugs:
 #upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party
 #a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen
+#a pkmn I send is not removed from the cloud when I finalize the trade (not doing it later)
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
@@ -560,6 +561,12 @@ class OfflineTradingSystem
 				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
+			end
+			#remove pkmn from cloud storage after trading it away
+			if !self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat).nil?
+				Console.echo_warn "deleting pkmn traded away from cloud storage"
+				location = self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat)
+				$TradeCloud[location[0], location[1]] = nil
 			end
 		end #if @finalizingTradeLater
 		
