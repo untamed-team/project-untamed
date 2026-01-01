@@ -3,6 +3,9 @@
 #LAST I LEFT OFF:
 #
 
+#Bugs:
+#upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party
+
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
 
@@ -551,6 +554,7 @@ class OfflineTradingSystem
 		else
 			#if finalizing trade without leaving trade screen
 			#for replacing the pkmn on the spot (if never left the trade menu)
+			Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
 				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
