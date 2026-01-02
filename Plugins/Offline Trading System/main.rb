@@ -5,7 +5,6 @@
 
 #Bugs:
 #upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party (per console: '@pkmnToReplaceLocationAndIndex[0] is box' even when selecting party pkmn)
-#a trade pkmn sent to me (offer file) evolved when I accepted the trade (not yet generated the agreement file). I think that's because "self.sendPkmnToCloud(pkmn)" contains the evo screen. The evo happens after the pkmn you send has gone in a ball and gone up to heaven
 #a pkmn I send is not removed from the cloud when I finalize the trade (not doing it later)
 
 #TO DO:
@@ -837,11 +836,11 @@ class OfflineTradingSystem
 					#Console.echo_warn "checking pokemon in box #{i}"
 					#Console.echo_warn "================================="
 					#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
-					Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					#Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
 					print "$TradeCloud[i][j] is #{$TradeCloud[i][j]}"
-					Console.echo_warn "self.getPkmnProperties($TradeCloud[i, j]).to_s is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
-					Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
-					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat)
+					Console.echo_warn "pkmn in slot box #{i} slot #{j} is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					#Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat).to_s
 						print "match in cloud storage"
 						location = [i,j]
 						Console.echo_warn "found the pkmn in the cloud"
