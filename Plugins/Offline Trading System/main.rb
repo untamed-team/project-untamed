@@ -1,11 +1,9 @@
 #Offline trading system
 
 #LAST I LEFT OFF:
-#currently having trouble with if statement on line 844. Cannot detect pkmn in cloud storage
 
 #Bugs:
-#upon successful trade (not finished later), the pkmn I received went to my box when there was space in my party (per console: '@pkmnToReplaceLocationAndIndex[0] is box' even when selecting party pkmn)
-#a pkmn I send is not removed from the cloud when I finalize the trade (not doing it later)
+
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
@@ -375,7 +373,7 @@ class OfflineTradingSystem
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		#finalizingTradeLater = false #######need a way to check if we're finalizing the trade later, then put something in the 'receivePkmnFromOtherPlayer' method to do something different than when doing a trade from scratch
-		Console.echo_warn "@finalizingTradeLater is #{@finalizingTradeLater}"
+		#Console.echo_warn "@finalizingTradeLater is #{@finalizingTradeLater}"
 		self.receivePkmnFromOtherPlayer(@finalizingTradeLater)
 
 	end #def self.tradeMenu
@@ -523,8 +521,10 @@ class OfflineTradingSystem
 			evo.pbEndScreen(true, false)
 			
 			@boxScene.update
+			#at this point, @pkmnToReplaceLocationAndIndex[0] == "party"
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+				#does this command really refresh the party?
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1])
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
 			end
@@ -555,12 +555,12 @@ class OfflineTradingSystem
 		else
 			#if finalizing trade without leaving trade screen
 			#for replacing the pkmn on the spot (if never left the trade menu)
-			Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
 				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
+			Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			#remove pkmn from cloud storage after trading it away
 			if !self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat).nil?
 				Console.echo_warn "deleting pkmn traded away from cloud storage"
@@ -617,6 +617,7 @@ class OfflineTradingSystem
 			else
 				@boxScene.update
 				if @pkmnToReplaceLocationAndIndex[0] == "party"
+					#does this really refresh the party?
 					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
 				elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 					Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
@@ -741,7 +742,7 @@ class OfflineTradingSystem
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Found an offer file instead of an agreement file. Skipping this file...\n\n", "a")
 				next
 			end
-
+			
 			tradeIDOfPlayerWhoGeneratedThisFile = self.decode(arrayOfText[0])
 			pkmnOtherTrainerIsGivingToPlayer = self.decode(arrayOfText[1])
 			tradeIDOfPlayerThisTradeIsMeantFor = self.decode(arrayOfText[2])
@@ -761,7 +762,7 @@ class OfflineTradingSystem
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
 			#@pkmnPlayerWillReceiveInSymbolFormat
-			
+			print "1@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			#checking for trickery
 			if $game_player.tradeID == @otherPlayerTradeID
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Player's TradeID and @otherPlayerTradeID match for some reason. Invalid trade.\n\n", "a")
@@ -781,8 +782,8 @@ class OfflineTradingSystem
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat) is #{self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)}\n\n", "a")
 				
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The Pokémon you are giving to the other player is not what the other player agreed upon. Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
-				
-			elsif !self.pkmnExistsInTradeCloud(self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat))
+			
+			elsif !self.pkmnExistsInTradeCloud(self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat), "agreement")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
 			else
 				#Console.echo_warn getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)
@@ -799,10 +800,12 @@ class OfflineTradingSystem
 			pbMessage(_INTL("No valid agreement file from another player found."))
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No valid agreement file from another player found. Either there is no agreement file in the Trading folder, or trickery was detected, as outlined above in this log.\n\n", "a")
 		end #if !found_valid_agreement_file
+		print "2@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
 
-	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray)
+	#this method is responsible for overwriting @pkmnToReplaceLocationAndIndex[0] to be "box" - bug
+	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray, offerOrFinishScreen = "offer")
 		Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
 		#pkmnPropertiesArray is an array of properties of the pkmn the player is giving away
 		#check if a pkmn with those exact properties exists in the trade cloud storage
@@ -817,7 +820,10 @@ class OfflineTradingSystem
 				if self.getPkmnProperties($TradeCloud[i, j]).to_s == pkmnPropertiesArray.to_s
 					exists = true
 					#Console.echo_warn "found the pkmn in the cloud"
-					@pkmnToReplaceLocationAndIndex = ["box", i, j]
+					#if finalizing trade later, do the below
+					if offerOrFinishScreen == "agreement"
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+					end
 					return true
 				end
 			end
