@@ -236,13 +236,15 @@ class Battle::AI
     when :ATTACK
       value = battler.attack*atkmul
       if target
-        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken)
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) ||
+                        target.hasActiveAbility?(:BIGPECKS,false,moldbroken)
       end
     when :DEFENSE
       value = battler.defense*defmul
       if target
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
-                        move.function == "IgnoreTargetDefSpDefEvaStatStages"
+                        move.function == "IgnoreTargetDefSpDefEvaStatStages" ||
+                        user.hasActiveAbility?(:HYPERCUTTER)
       end
     when :SPEED
       value = battler.speed*spemul

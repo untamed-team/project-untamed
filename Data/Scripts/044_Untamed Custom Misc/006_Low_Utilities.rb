@@ -1282,6 +1282,9 @@ def eggMoveTutor
   return false
 end
 
+#===============================================================================
+# NPC to revive fossils
+#===============================================================================
 FOSSILREVIVEVAR = 126
 def fossilreviveNPC(onlyone = true)
   if !$game_variables[FOSSILREVIVEVAR].is_a?(Array)

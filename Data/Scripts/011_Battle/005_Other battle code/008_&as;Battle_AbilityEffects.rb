@@ -1600,6 +1600,12 @@ Battle::AbilityEffects::DamageCalcFromUser.add(:SOULHEART,
   }
 )
 
+Battle::AbilityEffects::DamageCalcFromUser.add(:HYPERCUTTER,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    mults[:defense_stage] = 0 if move.physicalMove? && mults[:defense_stage] > 0
+  }
+)
+
 #by chespin
 Battle::AbilityEffects::DamageCalcFromUser.add(:ARTILLERIST,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
@@ -1757,6 +1763,12 @@ Battle::AbilityEffects::DamageCalcFromTarget.add(:SNOWCLOAK,
   proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
     aiweather = target.effectiveWeather if aiweather.nil?
     mults[:defense_multiplier] *= 1.3 if aiweather == :Hail && move.specialMove?
+  }
+)
+
+Battle::AbilityEffects::DamageCalcFromTarget.add(:BIGPECKS,
+  proc { |ability, user, target, move, mults, baseDmg, type, aiweather|
+    mults[:offense_stage] = 0 if move.physicalMove? && mults[:offense_stage] > 0
   }
 )
 
