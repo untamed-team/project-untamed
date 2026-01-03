@@ -1,20 +1,13 @@
 #Offline trading system
 
 #LAST I LEFT OFF:
-#should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud/regular storage
-#copy summary screen classes and methods, then use that for all summary options in the OTS plugin
-
+#Ready for testing
 
 #Bugs:
 
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
-
-#need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
-
-#should not see the "party" button at the bottom of the screen when in cloud storage
-#should maybe not get the option to go into cloud storage if it's empty
 #should not have the option to empty cloud storage if not in Debug. This is ready for testing
 
 class Game_Player < Game_Character
@@ -113,6 +106,18 @@ class OfflineTradingSystem
 			storage = $PokemonStorage
 			@finalizingTradeLater = false
 		when 1 #finalize old trade
+			#if nothing in cloud storage, say so, then do not proceed
+			foundPkmn = false
+			$TradeCloud.maxBoxes.times do |i|
+				$TradeCloud.maxPokemon(i).times do |j|
+					foundPkmn = true if !$TradeCloud[i, j].nil?
+				end
+			end
+			if !foundPkmn
+				pbMessage(_INTL("No Pokémon from unfinished trades found. This is only accessible if you send a Pokémon away for a trade and have not received a Pokémon in return for it."))
+				return
+			end
+			
 			Console.echo_warn "going into cloud storage"
 			$TradeCloud.maxBoxes.times do |i|
 				$TradeCloud[i].background = 11
@@ -123,10 +128,10 @@ class OfflineTradingSystem
 			$TradeCloud.maxBoxes.times do |i|
 				$TradeCloud.maxPokemon(i).times do |j|
 					$TradeCloud[i, j] = nil
-					end
 				end
-			pbMessage(_INTL("The storage boxes were cleared."))
 			end
+			pbMessage(_INTL("The storage boxes were cleared."))
+		end
 		
 		pbFadeOutIn {
 			@boxScene = TradingPokemonStorageScene.new

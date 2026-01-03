@@ -1230,9 +1230,9 @@ class OTSPokemonSummary_Scene
           pbPlayDecisionSE
           pbRibbonSelection
           dorefresh = true
-        elsif !@inbattle
-          pbPlayDecisionSE
-          dorefresh = pbOptions
+      #  elsif !@inbattle
+      #    pbPlayDecisionSE
+      #    dorefresh = pbOptions
         end
       elsif Input.trigger?(Input::UP) && @partyindex > 0
         oldindex = @partyindex
