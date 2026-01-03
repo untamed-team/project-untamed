@@ -321,6 +321,7 @@ module Settings
         BERRY_PREFERRED_WEATHER_ENABLED     = true
         BERRY_PREFERRED_ZONES_ENABLED       = true
         BERRY_UNPREFERRED_ZONES_ENABLED     = true
+        BERRY_PREFERRED_SOIL_ENABLED        = true
 
         #--------------------------------------------------------------------------------
         # If true, show images to represent each of the respective pieces of information
@@ -330,6 +331,7 @@ module Settings
         BERRYDEX_SHOW_PREFERRED_WEATHER     = true
         BERRYDEX_SHOW_PREFERRED_ZONES       = true
         BERRYDEX_SHOW_UNPREFERRED_ZONES     = true
+        BERRYDEX_SHOW_PREFERRED_SOIL        = true
 
         #--------------------------------------------------------------------------------
         # Define the term used to describe "Zones". For instance, you could treat this as
@@ -339,7 +341,8 @@ module Settings
 
         #--------------------------------------------------------------------------------
         # If true, the player will be told that they planted a berry in a preferred or 
-        # unpreferred zone. 
+        # unpreferred zone. This also applies to when a berry is planted in a preferred
+        # soil type.
         #--------------------------------------------------------------------------------
 
         BERRY_PREFERRED_ZONE_WARNING        = true
@@ -379,6 +382,20 @@ module Settings
             :drying_per_hour    => 0, # Positive makes it dry out faster, negative makes it slower
             :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
             :max_replants       => -2  # Positive increases max replants, negative decreases them
+        }
+
+        #--------------------------------------------------------------------------------
+        # If a berry is planted in its preferred soil (as defined in the berry_data.txt
+        # PBS file), traits apply to the berry's plant. All traits are Additive, can be
+        # positive or negative.
+        #--------------------------------------------------------------------------------	
+        
+        BERRY_PREFERRED_SOIL_TRAITS = {
+            :yield              => 2, # Positive increases final yield, negative decreases it
+            :hours_per_stage    => -1, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => 0, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :max_replants       => 2  # Positive increases max replants, negative decreases them
         }
 
     #====================================================================================
@@ -581,4 +598,162 @@ module Settings
                 :yield              => 1 # Positive increases final yield, negative decreases it
             }
         }
+
+    #====================================================================================
+    #================================== Soil Settings ===================================
+    #====================================================================================
+    BERRY_SOIL_DEFAULT = :Loamy
+
+    BERRY_SOIL_DEFINITIONS = {
+        # Loamy soil is the default, as if you didn't have any special soils.
+        :Loamy => {
+            :name               => _INTL("Loamy"), # Display name
+            :planting_description => _INTL("soft, loamy"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("soft and loamy"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => 0, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => 0, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => 0, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => 0, # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => 0, # Positive increases chance of pests, negative decreases it
+            :yield              => 0  # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        },
+        # Sandy soil dries out quite quickly.
+        :Sandy => {
+            :name               => _INTL("Sandy"), # Display name
+            :planting_description => _INTL("coarse, sandy"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("coarse and sandy"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "_sandy", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "_sandy", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => 0, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => 0, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => 15, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => 0,  # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => 0,  # Positive increases chance of pests, negative decreases it
+            :yield              => 0 # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        },
+        # Clay soil retains moisture longer and can increase the berry yield, but plants grow a lot slower.
+        :Clay => {
+            :name               => _INTL("Clay"), # Display name
+            :planting_description => _INTL("dense, heavy"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("dense and heavy"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "_clay", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "_clay", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => 0, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => 8, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => -15, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => 0,  # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => 0,  # Positive increases chance of pests, negative decreases it
+            :yield              => [0,3] # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        },
+        # Marshy soil never dries out, but plants replant themselves half as much, grow slower, and have an increased chance of weeds or pests.
+        :Marshy => {
+            :name               => _INTL("Marshy"), # Display name
+            :planting_description => _INTL("wet, marshy"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("wet and marshy"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "_marshy", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => -5, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => 6, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => -100, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => 15,  # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => 15,  # Positive increases chance of pests, negative decreases it
+            :yield              => 0 # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        },
+        # Rocky soil has a higher mutation chance and decreased chance of weeds or pests, but plants grow a bit slower and yield less berries.
+        :Rocky => {
+            :name               => _INTL("Rocky"), # Display name
+            :planting_description => _INTL("uneven, gravelly"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("uneven and gravelly"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "_rocky", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => 0, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => 3, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => 0, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 25, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => -15,  # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => -15,  # Positive increases chance of pests, negative decreases it
+            :yield              => -1 # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        },
+        # Fertile soil increases berry yield, plants grow faster, and plants replant themselves more, but there is an increased chance of pests.
+        :Fertile => {
+            :name               => _INTL("Fertile"), # Display name
+            :planting_description => _INTL("rich, fertile"), # Description when planting. "It's {description} soil."
+            :picked_description => _INTL("rich and fertile"), # Description after picking. "The soil returned to its {description} state."
+            :moisture_graphic_ext => "", # Will use moisture graphics that end with this value. For example, "berrytreewet_sandy"
+            :dex_graphic_ext    => "_fertile", # In the Berrydex, will use plant_dirt graphic that ends with this value. For example, "plant_dirt_sandy"
+            :max_replants       => 0, # Positive increases max replants, negative decreases them
+            :hours_per_stage    => -4, # Positive makes it grow slower, negative makes it faster
+            :drying_per_hour    => 0, # Positive makes it dry out faster, negative makes it slower
+            :mutation_chance    => 0, # Positive increases mutation chance, negative decreases it
+            :weed_chance        => 0,  # Positive increases chance of weeds, negative decreases it
+            :pest_chance        => 20,  # Positive increases chance of pests, negative decreases it
+            :yield              => [1,3] # Positive increases final yield, negative decreases it; if an array of 2 integers, will be random in that range.
+        }
+    }
+
+    #====================================================================================
+    #=============================== Berry Seed Settings ================================
+    #====================================================================================
+
+        #--------------------------------------------------------------------------------
+        # If true, Berry Seeds will be enabled. The player will only be able to plant 
+        # berry seeds to start a berry plant.
+        #--------------------------------------------------------------------------------	
+        BERRY_USE_BERRY_SEEDS          = false
+
+        #--------------------------------------------------------------------------------
+        # Default chance out of 100 that berry seed items will be found when harvesting a
+        # berry plant.
+        #--------------------------------------------------------------------------------	
+        BERRY_SEED_DROP_CHANCE          = 50
+
+        #--------------------------------------------------------------------------------
+        # If a berry seed item drops when harvesting a berry plant, this is the amount
+        # of seed items that will drop. Set as an integer for a single value. Set as an
+        # array of 2 integers for a random value in that range. For either the single
+        # value or a value in the range, set to :Yield and that value will be equal to 
+        # the berry yield at the time of harvesting.
+        #--------------------------------------------------------------------------------	
+        BERRY_SEED_DROP_AMOUNT          = [1, :Yield]
+
+        #--------------------------------------------------------------------------------
+        # Set seed drop chance and amount overrides for different berry types.
+        #--------------------------------------------------------------------------------
+        BERRY_SEED_DROP_OVERRIDES = {
+            # :ORANBERRY => { #Use the Berry's Item ID
+            #     :chance => 80, # Chance out of 100 that seeds will drop
+            #     :amount => [2,4] # Amount to drop, same setup as BERRY_SEED_DROP_AMOUNT
+            # },
+            # :CHERIBERRY => {
+            #     :chance => 10,
+            #     :amount => 16
+            # }
+        }
+
+        #--------------------------------------------------------------------------------
+        # Set the pools of mystery seeds. If you plant a mystery seed, it will become
+        # a berry plant based on the available berry IDs set in it's defined array,
+        # randomly chosen. Set a weight for the berry to be chosen.
+        #--------------------------------------------------------------------------------
+        BERRY_MYSTERY_SEED_POOLS = {
+            :MYSTERYBERRYSEED => [ # Use the Item ID of a mystery berry
+                [:ORANBERRY, 33], # Each value should be an array consisting of [:BERRYID, weight]
+                [:PECHABERRY, 33], 
+                [:CHERIBERRY, 33], 
+                [:MARANGABERRY, 1]
+            ],
+            # :MYSTERYBERRYSEEDRARE => [ 
+            #     [:CUSTAPBERRY, 25], 
+            #     [:MICLEBERRY, 25], 
+            #     [:KEEBERRY, 25], 
+            #     [:ENIGMABERRY, 25]
+            # ],
+        }
+		
 end

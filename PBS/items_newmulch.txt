@@ -1,0 +1,40 @@
+#-------------------------------
+[SURPRISEMULCH]
+Name = Surprise Mulch
+NamePlural = Surprise Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It causes strange, sudden mutations based on other Berries nearby.
+#-------------------------------
+[ALLUREMULCH]
+Name = Allure Mulch
+NamePlural = Allure Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. Berries that fall from nearby plants can take root in this mulch.
+#-------------------------------
+[RICHMULCH]
+Name = Rich Mulch
+NamePlural = Rich Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It increases the harvest without the need for particularly diligent care.
+#-------------------------------
+[BOOSTMULCH]
+Name = Boost Mulch
+NamePlural = Boost Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It makes the soil dry out faster.
+#-------------------------------
+[AMAZEMULCH]
+Name = Amaze Mulch
+NamePlural = Amaze Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It increases the harvest, chance of mutations, and drying rate.

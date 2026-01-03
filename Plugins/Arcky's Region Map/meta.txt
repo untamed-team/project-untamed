@@ -1,7 +1,14 @@
 ﻿Name       = Arcky's Region Map
-Version    = 1.3.2
-Essentials = 20.1
+Version    = 2.7.0
+Essentials = 20.1, 21.1
+Requires  = Arcky's Utilities, 1.0.4
 Optional   = Modern Quest System + UI, 1.0
+Optional   = Lin's Pokegear Themes, 1.0.9
+Optional   = Lin's Weather System, 1.3.3
+Optional   = TDW Berry Planting Improvements, 1.8.1
+Optional   = Modular UI Scenes, 2.0.4
 Credits    = Arcky
 
-#IMPORTANT: only edit the 001_RegionMap_Settings.rb file. Use Notepad++ or any similar code editors to change settings that are in this file.
+# IMPORTANT: 
+# Only edit the 000_RegionMap_Settings.rb and 001_RegionMap_LocationInfo.rb files. 
+# Use Notepad++ or any similar code editors to change settings that are in this file.
