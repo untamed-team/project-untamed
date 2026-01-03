@@ -262,15 +262,15 @@ class OfflineTradingSystem
 					when 0
 						#summary of @pkmnPlayerIsOfferingInSymbolFormat
 						pbFadeOutIn {
-							scene = PokemonSummary_Scene.new
-							screen = PokemonSummaryScreen.new(scene)
+							scene = OTSPokemonSummary_Scene.new
+							screen = OTSPokemonSummaryScreen.new(scene)
 							screen.pbStartScreen([@pkmnPlayerIsOfferingInSymbolFormat,@pkmnPlayerWillReceiveInSymbolFormat], 0)
 						}
 					when 1
 						#summary of @pkmnPlayerWillReceiveInSymbolFormat
 						pbFadeOutIn {
-							scene = PokemonSummary_Scene.new
-							screen = PokemonSummaryScreen.new(scene)
+							scene = OTSPokemonSummary_Scene.new
+							screen = OTSPokemonSummaryScreen.new(scene)
 							screen.pbStartScreen([@pkmnPlayerWillReceiveInSymbolFormat,@pkmnPlayerIsOfferingInSymbolFormat], 0)
 						}
 					when 2

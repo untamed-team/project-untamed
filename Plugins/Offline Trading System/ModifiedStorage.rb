@@ -682,7 +682,7 @@ class TradingPokemonStorageScene
   def pbSummary(selected, heldpoke)
     oldsprites = pbFadeOutAndHide(@sprites)
     scene = PokemonSummary_Scene.new
-    screen = PokemonSummaryScreen.new(scene)
+    screen = OTSPokemonSummaryScreen.new(scene)
     if heldpoke
       screen.pbStartScreen([heldpoke], 0)
     elsif selected[0] == -1
