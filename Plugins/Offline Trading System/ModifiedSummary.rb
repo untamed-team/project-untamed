@@ -479,55 +479,54 @@ class OTSPokemonSummary_Scene
       memo += "\n"   # Empty line
     end
     # Write characteristic
-    if showNature
-      best_stat = nil
-      best_iv = 0
-      stats_order = [:HP, :ATTACK, :DEFENSE, :SPEED, :SPECIAL_ATTACK, :SPECIAL_DEFENSE]
-      start_point = @pokemon.personalID % stats_order.length   # Tiebreaker
-      stats_order.length.times do |i|
-        stat = stats_order[(i + start_point) % stats_order.length]
-        if !best_stat || @pokemon.iv[stat] > @pokemon.iv[best_stat]
-          best_stat = stat
-          best_iv = @pokemon.iv[best_stat]
-        end
-      end
-      characteristics = {
-        :HP              => [_INTL("Loves to eat."),
-                             _INTL("Takes plenty of siestas."),
-                             _INTL("Nods off a lot."),
-                             _INTL("Scatters things often."),
-                             _INTL("Likes to relax.")],
-        :ATTACK          => [_INTL("Proud of its power."),
-                             _INTL("Likes to thrash about."),
-                             _INTL("A little quick tempered."),
-                             _INTL("Likes to fight."),
-                             _INTL("Quick tempered.")],
-        :DEFENSE         => [_INTL("Sturdy body."),
-                             _INTL("Capable of taking hits."),
-                             _INTL("Highly persistent."),
-                             _INTL("Good endurance."),
-                             _INTL("Good perseverance.")],
-        :SPECIAL_ATTACK  => [_INTL("Highly curious."),
-                             _INTL("Mischievous."),
-                             _INTL("Thoroughly cunning."),
-                             _INTL("Often lost in thought."),
-                             _INTL("Very finicky.")],
-        :SPECIAL_DEFENSE => [_INTL("Strong willed."),
-                             _INTL("Somewhat vain."),
-                             _INTL("Strongly defiant."),
-                             _INTL("Hates to lose."),
-                             _INTL("Somewhat stubborn.")],
-        :SPEED           => [_INTL("Likes to run."),
-                             _INTL("Alert to sounds."),
-                             _INTL("Impetuous and silly."),
-                             _INTL("Somewhat of a clown."),
-                             _INTL("Quick to flee.")]
-      }
-      memo += sprintf("<c3=404040,B0B0B0>%s\n", characteristics[best_stat][best_iv % 5])
+    if showNature # the gibberish on the middle is to make it blue colored
+			memo += _INTL("\Hidden Power:<r><c3=1870D8,88A8D0>{1}<c3=404040,B0B0B0>\n",@pokemon.hptype) #by low
+    end #of if show nature
+		#draw happiness under nature message
+    memo += _INTL("\nHappiness:<r>[{1}/255]\n",@pokemon.happiness)
+    
+    #drawing hearts
+    imagepos = []
+    grayHeart = sprintf("Graphics/Pictures/Summary/grayheart")
+    pinkHeart = sprintf("Graphics/Pictures/Summary/heart")
+    
+    i = 0
+    5.times do
+      #draw all possible hearts but grayed out
+      imagepos.push([grayHeart, 240+i, Graphics.height-44])
+      i += 36
     end
+    
+    #max happiness is 255
+    #first heart     50
+    #second heart   100
+    #third heart    150
+    #fourth heart   200
+    #fifth heart    255
+    
+    #draw hearts based on happiness
+    if @pokemon.happiness >= 50
+      imagepos.push([pinkHeart, 240, Graphics.height-44])
+    end
+    if @pokemon.happiness >= 100
+      imagepos.push([pinkHeart, 276, Graphics.height-44])
+    end
+    if @pokemon.happiness >= 150
+      imagepos.push([pinkHeart, 312, Graphics.height-44])
+    end
+    if @pokemon.happiness >= 200
+      imagepos.push([pinkHeart, 348, Graphics.height-44])
+    end
+    if @pokemon.happiness >= 255
+      imagepos.push([pinkHeart, 384, Graphics.height-44])
+    end
+    
+    # Draw all images
+    pbDrawImagePositions(overlay, imagepos)
+    
     # Write all text
     drawFormattedTextEx(overlay, 232, 86, 268, memo)
-  end
+  end #of draw page two
 
   def drawPageThree
     overlay = @sprites["overlay"].bitmap
