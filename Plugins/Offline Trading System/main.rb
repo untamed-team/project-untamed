@@ -770,7 +770,6 @@ class OfflineTradingSystem
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
 			#@pkmnPlayerWillReceiveInSymbolFormat
-			print "1@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			#checking for trickery
 			if $game_player.tradeID == @otherPlayerTradeID
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Player's TradeID and @otherPlayerTradeID match for some reason. Invalid trade.\n\n", "a")
@@ -808,7 +807,6 @@ class OfflineTradingSystem
 			pbMessage(_INTL("No valid agreement file from another player found."))
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No valid agreement file from another player found. Either there is no agreement file in the Trading folder, or trickery was detected, as outlined above in this log.\n\n", "a")
 		end #if !found_valid_agreement_file
-		print "2@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
 
@@ -851,11 +849,9 @@ class OfflineTradingSystem
 					#Console.echo_warn "================================="
 					#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
 					#Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
-					print "$TradeCloud[i][j] is #{$TradeCloud[i][j]}"
 					Console.echo_warn "pkmn in slot box #{i} slot #{j} is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
 					#Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
 					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat).to_s
-						print "match in cloud storage"
 						location = [i,j]
 						Console.echo_warn "found the pkmn in the cloud"
 						@pkmnToReplaceLocationAndIndex = ["box", i, j]
