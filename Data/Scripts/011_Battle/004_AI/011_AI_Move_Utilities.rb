@@ -244,7 +244,7 @@ class Battle::AI
       if target
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
                         move.function == "IgnoreTargetDefSpDefEvaStatStages" ||
-                        target.hasActiveAbility?(:HYPERCUTTER)
+                        battler.hasActiveAbility?(:HYPERCUTTER)
       end
     when :SPEED
       value = battler.speed*spemul
