@@ -846,6 +846,17 @@ class PokemonEncounters
   end
 end #of class
 
+#added by stygma
+GameData::TerrainTag.register({
+  :id                     => :Corn,
+  :id_number              => 18,
+  :shows_grass_rustle     => true,
+  :land_wild_encounters   => true,
+  :battle_environment     => :TallGrass
+})
+
+#See 'GameData::TerrainTag.register({' in 'class TerrainTag' for all terrain tags
+
 #===============================================================================
 # Play Pokemon Cry from Forms Page in Pokedex
 #===============================================================================
@@ -2488,3 +2499,137 @@ class Bitmap
     return new_bitmap
   end
 end
+
+#############################################
+# Default Trainer Name if One isn't Entered #
+#############################################
+def pbSuggestTrainerName(gender)
+  userName = "Ayylmao"
+  userName = "Homero" if gender == 0 # guy
+  userName = "Peppa" if gender == 1 # gal
+  return userName
+end
+
+#############################################
+# Crustang Riding #
+#############################################
+#Pulled from Overworld Bug Fixes
+#For modifying the bike character set
+class Game_Player < Game_Character
+  def pbGetPlayerCharset(charset, trainer = nil, force = false)
+    trainer = $player if !trainer
+    outfit = (trainer) ? trainer.outfit : 0
+  
+    # --- CRUSTANG MODIFICATION START ---
+    # Check if we are currently looking for the cycle charset
+    meta = GameData::PlayerMetadata.get(trainer&.character_ID || 1)
+    is_cycling = (charset == meta.cycle_charset)
+  
+    # We bypass the cache check if cycling, so it can detect party changes immediately
+    if !is_cycling
+      return nil if !force && $game_player&.charsetData &&
+                  $game_player.charsetData[0] == trainer.character_ID &&
+                  $game_player.charsetData[1] == charset &&
+                  $game_player.charsetData[2] == outfit
+    end
+  
+    $game_player.charsetData = [trainer.character_ID, charset, outfit] if $game_player
+  
+    ret = charset
+  
+    # Logic for Crustang overrides
+    if is_cycling
+      target = trainer.party.find { |p| !p.egg? && p.species == :CRUSTANG }
+      if target
+        colors = ["classic", "orange", "yellow", "green", "blue", "indigo", "purple", "pink", "black", "white"]
+        c_color = colors[target.form] || "classic"
+        c_shiny = target.shiny? ? "s" : "n"
+        path = "Crustang Riding/#{trainer.gender}_#{c_color}_#{c_shiny}"
+      
+        # Verify the file exists before returning it, otherwise use the bike
+        if pbResolveBitmap("Graphics/Characters/" + path)
+          return path
+        end
+      end
+    end
+    # --- CRUSTANG MODIFICATION END ---
+
+    # Original outfit logic
+    if pbResolveBitmap("Graphics/Characters/" + ret + "_" + outfit.to_s)
+      ret = ret + "_" + outfit.to_s
+    end
+    return ret
+  end
+
+  def set_movement_type(type)
+    meta = GameData::PlayerMetadata.get($player&.character_ID || 1)
+    new_charset = nil
+    case type
+    when :fishing
+      new_charset = pbGetPlayerCharset(meta.fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :surf_fishing
+      new_charset = pbGetPlayerCharset(meta.surf_fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :diving, :diving_fast, :diving_jumping, :diving_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.dive_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :surfing, :surfing_fast, :surfing_jumping, :surfing_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :surfing_jumping) ? 3 : 4
+      end
+      new_charset = pbGetPlayerCharset(meta.surf_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    
+    when :cycling, :cycling_fast, :cycling_jumping, :cycling_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :cycling_jumping) ? 3 : 5
+      end
+      
+      # Shadow Logic Integration
+      if $player.party.any? { |p| !p.egg? && p.species == :CRUSTANG }
+        pbSetOverworldShadow("bigShadow")
+      else
+        pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+      end
+      
+      # Fetches Crustang string from the helper above
+      new_charset = pbGetPlayerCharset(meta.cycle_charset, nil, true)
+
+    when :running
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.run_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :ice_sliding
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    else   # :walking, :jumping, :walking_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      # Ensure shadow returns to normal when walking
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+    end
+    
+    @character_name = new_charset if new_charset
+    #$game_player&.refresh_charset #commented out as it overrides the run sprite for some reason (and possibly others that haven't been tested). This doesn't seem to be needed to work
+  end
+end
+
+#For modifying the music that plays on the bike
+#def pbMountBike
+#  return if $PokemonGlobal.bicycle
+#  $PokemonGlobal.bicycle = true
+#  $stats.cycle_count += 1
+#  pbUpdateVehicle
+#  bike_bgm = GameData::Metadata.get.bicycle_BGM
+#  pbCueBGM(bike_bgm, 0.5) if bike_bgm
+#  pbPokeRadarCancel
+#end

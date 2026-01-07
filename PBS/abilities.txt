@@ -231,6 +231,7 @@ FullDesc = User's Accuracy cannot be lowered and they will ignore any Evasion st
 [HYPERCUTTER]
 Name = Hyper Cutter
 Description = Prevents other Pokémon from lowering Attack stat.
+FullDesc = User's Attack cannot be lowered. Additionally, in chaos mode, they will also ignore any Defense stat boosts when attacking.
 #-------------------------------
 [PICKUP]
 Name = Pickup
@@ -345,7 +346,7 @@ Description = Eliminates the effects of weather.
 [TANGLEDFEET]
 Name = Tangled Feet
 Description = Raises Speed if the Pokémon is confused.
-FullDesc = When user is confused/dizzy, its speed is doubled.
+FullDesc = When user is confused/dizzy, its speed is doubled. The user is immune to the ability disabling effect of dizziness.
 #-------------------------------
 [MOTORDRIVE]
 Name = Motor Drive
@@ -440,7 +441,7 @@ FullDesc = All damaging moves deal 1.2x damage, user's moves become Normal-type,
 [SNIPER]
 Name = Sniper
 Description = Powers up moves if they become critical hits.
-FullDesc = Critical hits deal 1.5x extra damage.
+FullDesc = Increases critical hits from 1.5x damage to 2.25x damage.
 #-------------------------------
 [MAGICGUARD]
 Name = Magic Guard
@@ -603,7 +604,7 @@ FullDesc = When user is hit by a damaging move, there's a 30% chance to disable 
 [HEALER]
 Name = Healer
 Description = Heals status every other turn.
-FullDesc = The user heals itself and/or allies from status conditions every other turn. Allies are prioritized. If there are multiple allies, only one of them is healed.
+FullDesc = The user heals itself or allies from status conditions every other turn. Allies are prioritized. If there are multiple allies, only one of them is healed.
 #-------------------------------
 [FRIENDGUARD]
 Name = Friend Guard
@@ -669,6 +670,7 @@ FullDesc = User recovers 33% of their max HP when switched out.
 [BIGPECKS]
 Name = Big Pecks
 Description = Protects from Defense-lowering attacks.
+FullDesc = User's Defense cannot be lowered. Additionally, in chaos mode, they will also ignore any Attack stat boosts when defending.
 #-------------------------------
 [SANDRUSH]
 Name = Sand Rush
@@ -712,7 +714,7 @@ Description = Raises Attack when hit by a Dark-type move.
 [RATTLED]
 Name = Rattled
 Description = Some move types scare it and boost its Speed.
-FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is boosted by one stage.
+FullDesc = When user gets hit by a Bug, Dark or Ghost-type move, their Speed is boosted by one stage. Additionally, when affected by Intimidate or Grim Tears, the user's speed is boosted by 1 stage.
 #-------------------------------
 [MAGICBOUNCE]
 Name = Magic Bounce
@@ -1227,7 +1229,7 @@ Description = Boosts power of sound moves.
 FullDesc = User's moves with the sound flag deal 1.3x damage.
 #-------------------------------
 [SEANCE]
-Name = Seance
+Name = Séance
 Description = Copies the Ability of a defeated Pokémon.
 #-------------------------------
 [GRIMTEARS]

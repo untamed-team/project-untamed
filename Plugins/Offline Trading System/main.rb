@@ -1,27 +1,18 @@
 #Offline trading system
 
 #LAST I LEFT OFF:
-#I was creating trades on 2 different save files to trade with each other and canceling the trades after sending away each pkmn. I was then going into cloud storage to finalize the trade
+#Ready for testing
 
-#see line 727
+#Bugs:
+
 
 #TO DO:
-
-#In cloud storage, make a way for the player to choose to finish a trade. When that option is selected, they will be taken to the trading screen, where an agreement file will be recreated
-#I'm currently working on the above, but how do I check if the pkmn in finalize trade that comes from the other player is coming from the correct player trade ID? I would need to store the player trade ID inside pkmn.canOnlyBeTradedFor
-#it seems like I stored the playerID in .canOnlyBeTradedFor[0]. Check contents of .canOnlyBeTradedFor
-
-#need a way to detect if a pkmn has been debugged. This variable can be saved to the pkmn itself, then checked when choosing the pkmn to offer as a trade
-#should not be able to change anything about the pkmn in the summary menu when checking other player's pkmn or when checking your own pkmn in the storage cloud
-#should not see the "party" button at the bottom of the screen when in cloud storage
-#after finalizing a trade from the cloud storage, refresh the box. Will need to set @pkmnToReplaceLocationAndIndex for that
-#should maybe not get the option to go into cloud storage if it's empty
+#don't forget to uncomment ##########################################################Game.save
+#should not have the option to empty cloud storage if not in Debug. This is ready for testing
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
-	attr_accessor :withheldTradingStorage
 	@tradeID = ""
-	@withheldTradingStorage = []
 end
 
 class OfflineTradingSystem
@@ -111,19 +102,36 @@ class OfflineTradingSystem
 		
 		case command
 		when 0 #start new trade
-			print "going into regular storage"
+			Console.echo_warn "going into regular storage"
 			storage = $PokemonStorage
+			@finalizingTradeLater = false
 		when 1 #finalize old trade
-			print "going into cloud storage"
+			#if nothing in cloud storage, say so, then do not proceed
+			foundPkmn = false
+			$TradeCloud.maxBoxes.times do |i|
+				$TradeCloud.maxPokemon(i).times do |j|
+					foundPkmn = true if !$TradeCloud[i, j].nil?
+				end
+			end
+			if !foundPkmn
+				pbMessage(_INTL("No Pokémon from unfinished trades found. This is only accessible if you send a Pokémon away for a trade and have not received a Pokémon in return for it."))
+				return
+			end
+			
+			Console.echo_warn "going into cloud storage"
+			$TradeCloud.maxBoxes.times do |i|
+				$TradeCloud[i].background = 11
+			end
 			storage = $TradeCloud
+			@finalizingTradeLater = true
 		when 2 #clearing cloud storage
 			$TradeCloud.maxBoxes.times do |i|
 				$TradeCloud.maxPokemon(i).times do |j|
 					$TradeCloud[i, j] = nil
-					end
 				end
-			pbMessage(_INTL("The storage boxes were cleared."))
 			end
+			pbMessage(_INTL("The storage boxes were cleared."))
+		end
 		
 		pbFadeOutIn {
 			@boxScene = TradingPokemonStorageScene.new
@@ -259,15 +267,15 @@ class OfflineTradingSystem
 					when 0
 						#summary of @pkmnPlayerIsOfferingInSymbolFormat
 						pbFadeOutIn {
-							scene = PokemonSummary_Scene.new
-							screen = PokemonSummaryScreen.new(scene)
+							scene = OTSPokemonSummary_Scene.new
+							screen = OTSPokemonSummaryScreen.new(scene)
 							screen.pbStartScreen([@pkmnPlayerIsOfferingInSymbolFormat,@pkmnPlayerWillReceiveInSymbolFormat], 0)
 						}
 					when 1
 						#summary of @pkmnPlayerWillReceiveInSymbolFormat
 						pbFadeOutIn {
-							scene = PokemonSummary_Scene.new
-							screen = PokemonSummaryScreen.new(scene)
+							scene = OTSPokemonSummary_Scene.new
+							screen = OTSPokemonSummaryScreen.new(scene)
 							screen.pbStartScreen([@pkmnPlayerWillReceiveInSymbolFormat,@pkmnPlayerIsOfferingInSymbolFormat], 0)
 						}
 					when 2
@@ -369,11 +377,12 @@ class OfflineTradingSystem
 		#add to the amount of trades player has completed
 		#$stats.trade_count += 1 #this is already handled in the Trade screen
 		
-		Game.save
+		##########################################################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
-		
-		self.receivePkmnFromOtherPlayer
+		#finalizingTradeLater = false #######need a way to check if we're finalizing the trade later, then put something in the 'receivePkmnFromOtherPlayer' method to do something different than when doing a trade from scratch
+		#Console.echo_warn "@finalizingTradeLater is #{@finalizingTradeLater}"
+		self.receivePkmnFromOtherPlayer(@finalizingTradeLater)
 
 	end #def self.tradeMenu
 	
@@ -402,19 +411,18 @@ class OfflineTradingSystem
 		
 			#convert marshaldata to hex
 			hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
-			Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
-			Console.echo_warn "=============================================="
+			#Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
+			#Console.echo_warn "=============================================="
 			@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
 			encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
 		
 			hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
-			Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
+			#Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
 			encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
 			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
 			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
-		
-			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+
 			self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat)
 		
 			#put hex data into .mazah file
@@ -442,19 +450,18 @@ class OfflineTradingSystem
 		
 			#convert marshaldata to hex
 			hex_data_for_pkmn_player_is_offering = serialized_data_for_pkmn_player_is_offering.unpack("H*")[0]
-			Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
-			Console.echo_warn "=============================================="
+			#Console.echo_warn "hex_data_for_pkmn_player_is_offering is #{hex_data_for_pkmn_player_is_offering}"
+			#Console.echo_warn "=============================================="
 			@pkmnPlayerIsOfferingInHexFormat = hex_data_for_pkmn_player_is_offering
 			encoded_hex_data_for_pkmn_player_is_offering = self.encode("#{playerTradeID}_#{hex_data_for_pkmn_player_is_offering}")
 		
 			hex_data_for_pkmn_player_is_receiving = serialized_data_for_pkmn_player_is_receiving.unpack("H*")[0]
-			Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
+			#Console.echo_warn "hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}"
 			encoded_hex_data_for_pkmn_player_is_receiving = self.encode("#{@otherPlayerTradeID}_#{hex_data_for_pkmn_player_is_receiving}")
 			#GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Check Dusclops hex data decoded. hex_data_for_pkmn_player_is_receiving is #{hex_data_for_pkmn_player_is_receiving}\n\n", "a")
 		
 			entireEncodedAgreementCode = "#{encoded_hex_data_for_pkmn_player_is_offering}_#{encoded_hex_data_for_pkmn_player_is_receiving}"
-		
-			#send away pkmn to $game_player.withheldTradingStorage and save game, then show animation for sending pkmn offer
+
 			#self.sendPkmnToCloud(@pkmnPlayerIsOfferingInSymbolFormat) if player is not already in the cloud storage
 		
 			#put hex data into .mazah file
@@ -488,13 +495,13 @@ class OfflineTradingSystem
 				break if foundInBox
 			end #for i in 0...$PokemonStorage.maxBoxes
 		end #if $player.party.include?(@pkmnPlayerIsOfferingInSymbolFormat)
-		
-		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Pushing pkmn to $game_player.withheldTradingStorage if not already in there...\n\n", "a")
+
 		#pkmn.canOnlyBeTradedFor is an array with 2 elements. The 1st element is the trade ID of the player sending the pkmn. The 2nd element is the pkmn's values
 		pkmn.canOnlyBeTradedFor = [@otherPlayerTradeID, self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)]
-		Console.echo_warn "sending this pkmn to the cloud where it cannot be used and will wait to be traded for the following pkmn in return:"
-		Console.echo_warn "#{pkmn.canOnlyBeTradedFor}"
+		#Console.echo_warn "sending this pkmn to the cloud where it cannot be used and will wait to be traded for the following pkmn in return:"
+		#Console.echo_warn "#{pkmn.canOnlyBeTradedFor}"
 		#store the pkmn in the trade cloud to finish the trade later
+		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Method self.sendPkmnToCloud(pkmn): Running '$TradeCloud.pbStoreCaught(pkmn)'...\n\n", "a")
 		$TradeCloud.pbStoreCaught(pkmn)
 		
 		#remove pkmn from player's storage/party
@@ -507,7 +514,7 @@ class OfflineTradingSystem
 			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		end
 		
-		Game.save
+		##########################################################Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		
@@ -517,13 +524,15 @@ class OfflineTradingSystem
 			#@tradingViewport.dispose
 			
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene1(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, @pkmnPlayerWillReceiveInSymbolFormat.owner.name)
 			evo.pbTradeSendPkmn
-			evo.pbEndScreen
+			evo.pbEndScreen(true, false)
 			
 			@boxScene.update
+			#at this point, @pkmnToReplaceLocationAndIndex[0] == "party"
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+				#does this command really refresh the party?
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1])
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
 			end
@@ -531,43 +540,98 @@ class OfflineTradingSystem
 		
 	end #def self.sendPkmnToCloud(pkmn)
 	
-	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)
-		##############check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
-		if finalizingTradeLater
+	def self.registerInDex(pkmn, scene) # Add 'scene' parameter
+		pbMessageDisplay(@sprites["msgwindow"], _INTL("#{pkmn.species}'s data was added to the Pokédex.")) { 
+			scene.pbUpdate # Call on the instance
+		}
+		$player.pokedex.register_last_seen(pkmn)
+		pbFadeOutIn {
+			scene_dex = PokemonPokedexInfo_Scene.new
+			screen = PokemonPokedexInfoScreen.new(scene_dex)
+			screen.pbDexEntry(pkmn.species)
+			scene.pbEndScreen(false) # Call on the instance
+		}
+	end #def self.registerInDex
+	
+	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)	
+		#check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
+		if @finalizingTradeLater
 			#if finalizing trade later...
-			#set location and index of pkmn to update in box or party
-			#@pkmnToReplaceLocationAndIndex[0] == "party"
-			#@pkmnToReplaceLocationAndIndex[0] == "box"
-			
+
+			#make pkmn being replaced be NIL
+			$TradeCloud[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		else
 			#if finalizing trade without leaving trade screen
-			#for replacing the pkmn on the spot (if never left the trade menu
-			#REVISIT THIS when done storing pkmn in cloud
+			#for replacing the pkmn on the spot (if never left the trade menu)
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
 				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
-		end
+			Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
+			#remove pkmn from cloud storage after trading it away
+			if !self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat).nil?
+				Console.echo_warn "deleting pkmn traded away from cloud storage"
+				location = self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat)
+				Console.echo_warn "location is '#{location}'"
+				box = location[0]
+				slot = location[1]
+				$TradeCloud[box][slot] = nil
+			end
+		end #if @finalizingTradeLater
+		
+		#register new pkmn in dex
+		was_owned_before_evolution = $player.owned?(@pkmnPlayerWillReceiveInSymbolFormat.species)
+		pkmnBeforeEvolution = @pkmnPlayerWillReceiveInSymbolFormat
+		$player.pokedex.register(@pkmnPlayerWillReceiveInSymbolFormat)
+		$player.pokedex.set_owned(@pkmnPlayerWillReceiveInSymbolFormat.species)
 
-		#regardless of how the trade is being finalized, receive the pkmn
+		#receive the pkmn
 		pbFadeOutIn {
 			@sprites.dispose
 			@tradingViewport.dispose
 			
 			#evolve pkmn if needed
 			evo = ModifiedPokemonTrade_Scene.new
-			evo.pbStartScreenScene2(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, "Other Player")
+			evo.pbStartScreenScene2(@pkmnPlayerIsOfferingInSymbolFormat, @pkmnPlayerWillReceiveInSymbolFormat, $player.name, @pkmnPlayerWillReceiveInSymbolFormat.owner.name)
 			evo.pbTradeReceivePkmn
-			evo.pbEndScreen
+
+			#but before checking for evolution, register pokemon to dex if it's new
+			self.registerInDex(pkmnBeforeEvolution, evo) if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned_before_evolution && $player.has_pokedex
+			
+			evo.pbEndScreen(true, true)
 			@pkmnPlayerWillReceiveInSymbolFormat.obtain_method = 4 #fateful encounter
 			
-			@boxScene.update
-			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
-			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
-			end
+			#mark new pkmn as seen and owned
+			was_owned_after_evolution = $player.owned?(@pkmnPlayerWillReceiveInSymbolFormat.species)
+			$player.pokedex.register(@pkmnPlayerWillReceiveInSymbolFormat)
+			$player.pokedex.set_owned(@pkmnPlayerWillReceiveInSymbolFormat.species)
+			
+			#the evolution scene already registers to the dex if the species is new
+			
+			if @finalizingTradeLater
+				#add the pkmn you receive will go into your boxes
+				if $player.party_full?
+					stored_box = $PokemonStorage.pbStoreCaught(@pkmnPlayerWillReceiveInSymbolFormat)
+					box_name   = $PokemonStorage[stored_box].name
+					pbMessage(_INTL("{1} has been sent to Box \"{2}\"!", @pkmnPlayerWillReceiveInSymbolFormat.name, box_name))
+				else
+					pbMessage(_INTL("#{@pkmnPlayerWillReceiveInSymbolFormat.name} has been added to your party!"))
+					pbAddPokemonSilent(@pkmnPlayerWillReceiveInSymbolFormat)
+				end
+				@boxScene.update
+				Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2])
+			else
+				@boxScene.update
+				if @pkmnToReplaceLocationAndIndex[0] == "party"
+					#does this really refresh the party?
+					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
+				elsif @pkmnToReplaceLocationAndIndex[0] == "box"
+					Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
+				end
+			end #if @finalizingTradeLater
 		}
 	
 	end #def self.receivePkmnFromOtherPlayer
@@ -666,7 +730,7 @@ class OfflineTradingSystem
 		return found_valid_offer_file
 	end #def self.readOfferFile
 
-	def self.readAgreementFile	
+	def self.readAgreementFile
 		found_valid_agreement_file = false
 		#get all .mazah files in 'Trading' folder
 		#iterate through those files, reading the tradeIDs of each one until it differs from the tradeID of the player
@@ -686,7 +750,7 @@ class OfflineTradingSystem
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Found an offer file instead of an agreement file. Skipping this file...\n\n", "a")
 				next
 			end
-
+			
 			tradeIDOfPlayerWhoGeneratedThisFile = self.decode(arrayOfText[0])
 			pkmnOtherTrainerIsGivingToPlayer = self.decode(arrayOfText[1])
 			tradeIDOfPlayerThisTradeIsMeantFor = self.decode(arrayOfText[2])
@@ -699,52 +763,38 @@ class OfflineTradingSystem
 			agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat = Marshal.dump(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat)
 			agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat = Marshal.dump(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
 			
-			Console.echo_warn "agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat is #{agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat}"
-			Console.echo_warn "================================================================="
-			Console.echo_warn "agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat is #{agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat}"
-			
-			print @pkmnPlayerWillReceiveInHexFormat
-			print @pkmnPlayerWillReceiveInHexFormat.species
+			#Console.echo_warn "agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat is #{agreementFilePkmnOtherTrainerIsGivingToPlayerInSerializedFormat}"
+			#Console.echo_warn "================================================================="
+			#Console.echo_warn "agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat is #{agreementFilePkmnPlayerIsGivingToOtherPlayerInSerializedFormat}"
 			
 			#these variables come from the offer files, and we need to check them against the agreement file the player is processing
 			#@pkmnPlayerIsOfferingInSymbolFormat
 			#@pkmnPlayerWillReceiveInSymbolFormat
-			
 			#checking for trickery
 			if $game_player.tradeID == @otherPlayerTradeID
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Player's TradeID and @otherPlayerTradeID match for some reason. Invalid trade.\n\n", "a")
-			elsif @otherPlayerTradeID != tradeIDOfPlayerWhoGeneratedThisFile
+			elsif @otherPlayerTradeID.to_s != tradeIDOfPlayerWhoGeneratedThisFile.to_s
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "@otherPlayerTradeID (trade ID of other player from offer file) is not the same as the trade ID of the player who generated this agreement file. Invalid trade.\n\n", "a")
 			elsif $game_player.tradeID == tradeIDOfPlayerWhoGeneratedThisFile
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is the one generated by the player. Invalid trade.\n\n", "a")
 			elsif $game_player.tradeID != tradeIDOfPlayerThisTradeIsMeantFor
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The agreement being checked is not meant to be redeemed by this player. Invalid trade.\n\n", "a")
-				
-				
-				
-			#this is where we crash because when finalizing an old trade, @pkmnPlayerWillReceiveInHexFormat is not set
-			#if not finalizing an old trade, use @pkmnPlayerWillReceiveInHexFormat
-			#if finalizing an old trade, use myPkmn.canOnlyBeTradedFor[1]
-			#need to bring in "offerOrFinishScreen" to see whether we are finalizing a trade
-			elsif self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat) != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)
-				#if not finalizing an old trade
-				
+			elsif self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat).to_s != self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat).to_s
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat) is #{self.getPkmnProperties(agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat)}\n\n", "a")
-				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInHexFormat)}\n\n", "a")
-				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: pkmnOtherTrainerIsGivingToPlayer != @pkmnPlayerWillReceiveInHexFormat\n\n", "a")
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat) is #{self.getPkmnProperties(@pkmnPlayerWillReceiveInSymbolFormat)}\n\n", "a")
+				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The pkmn the player would receive from this agreement is not what the player agreed upon. Error: agreementFilePkmnOtherTrainerIsGivingToPlayerInSymbolFormat != @pkmnPlayerWillReceiveInSymbolFormat\n\n", "a")
 				
-			elsif self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat) != self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
+			elsif self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat).to_s != self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat).to_s
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat) is #{self.getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)}\n\n", "a")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat) is #{self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)}\n\n", "a")
 				
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "The Pokémon you are giving to the other player is not what the other player agreed upon. Error: pkmnPlayerIsGivingToOtherPlayer != @pkmnPlayerIsOfferingInHexFormat\n\n", "a")
-				
-			elsif !self.pkmnExistsInTradeCloud(self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat))
+			
+			elsif !self.pkmnExistsInTradeCloud(self.getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat), "agreement")
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "You no longer have the Pokémon to finalize this trade.\n\n", "a")
 			else
-			
-				Console.echo_warn getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)
-				Console.echo_warn getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
+				#Console.echo_warn getPkmnProperties(@pkmnPlayerIsOfferingInSymbolFormat)
+				#Console.echo_warn getPkmnProperties(agreementFilePkmnPlayerIsGivingToOtherPlayerInSymbolFormat)
 				
 				#no trickery detected, assuming valid trade
 				found_valid_agreement_file = true
@@ -757,23 +807,62 @@ class OfflineTradingSystem
 			pbMessage(_INTL("No valid agreement file from another player found."))
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No valid agreement file from another player found. Either there is no agreement file in the Trading folder, or trickery was detected, as outlined above in this log.\n\n", "a")
 		end #if !found_valid_agreement_file
-		
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
 
-	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray)
+	#this method is responsible for overwriting @pkmnToReplaceLocationAndIndex[0] to be "box" - bug
+	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray, offerOrFinishScreen = "offer")
+		Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
 		#pkmnPropertiesArray is an array of properties of the pkmn the player is giving away
 		#check if a pkmn with those exact properties exists in the trade cloud storage
 		exists = false
-		for pokemon in $game_player.withheldTradingStorage
-			if self.getPkmnProperties(pokemon) == pkmnPropertiesArray
-				exists = true
-				print "found the pkmn in the cloud"
-				break
+		
+		$TradeCloud.maxBoxes.times do |i|
+			#Console.echo_warn "checking boxes in cloud storage"
+			$TradeCloud.maxPokemon(i).times do |j|
+				#Console.echo_warn "checking pokemon in box #{i}"
+				#Console.echo_warn "================================="
+				#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+				if self.getPkmnProperties($TradeCloud[i, j]).to_s == pkmnPropertiesArray.to_s
+					exists = true
+					#Console.echo_warn "found the pkmn in the cloud"
+					#if finalizing trade later, do the below
+					if offerOrFinishScreen == "agreement"
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+					end
+					return true
+				end
 			end
-		end #for pokemon in $game_player.withheldTradingStorage
+		end
 		return exists
 	end #def self.pkmnExistsInTradeCloud
+
+	def self.findPkmnInCloudStorage(pkmnInSymbolFormat)
+		if self.pkmnExistsInTradeCloud(self.getPkmnProperties(pkmnInSymbolFormat))
+			properties = self.getPkmnProperties(pkmnInSymbolFormat).to_s
+			Console.echo_warn "method 'self.findPkmnInCloudStorage': checking cloud storage to see if the player has #{properties}"
+			location = nil
+			$TradeCloud.maxBoxes.times do |i|
+				#Console.echo_warn "checking boxes in cloud storage"
+				$TradeCloud.maxPokemon(i).times do |j|
+					#Console.echo_warn "checking pokemon in box #{i}"
+					#Console.echo_warn "================================="
+					#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					#Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					Console.echo_warn "pkmn in slot box #{i} slot #{j} is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					#Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
+					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat).to_s
+						location = [i,j]
+						Console.echo_warn "found the pkmn in the cloud"
+						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						return location
+					end
+				end
+			end
+		else
+			return location
+		end
+	end #def self.findPkmnInCloudStorage
 
 	def self.legalitychecks(pkmn)
 		pkmn.clear_first_moves
@@ -796,8 +885,6 @@ class OfflineTradingSystem
 	end
 	
 	def self.getPkmnProperties(pkmn)
-		print pkmn
-	
 		pkmnHash = {}
 		pkmnHash[:species] = pkmn.species
 		pkmnHash[:name] = pkmn.name
@@ -992,18 +1079,31 @@ MenuHandlers.add(:pc_menu, :offline_trade, {
   pbMessage(_INTL("\\se[PC access]The Trading Storage System was opened."))
     command = 0
     loop do
-      command = pbShowCommandsWithHelp(nil,
-         [_INTL("Start New Trade"),
-          _INTL("Finalize Old Trade"),
-          _INTL("Empty Cloud Storage"),
-          #_INTL("Deposit Pokémon"),
-          _INTL("See ya!")],
-         [_INTL("Start a new trade from scratch."),
-          _INTL("Finish a trade started before."),
-          _INTL("Erase unfinished trades."),
-          #_INTL("Store Pokémon in your party in Boxes."),
-          _INTL("Return to the previous menu.")], -1, command)
-      break if command < 0 || command == 3
+		if $DEBUG
+			command = pbShowCommandsWithHelp(nil,
+			[_INTL("Start New Trade"),
+			_INTL("Finalize Old Trade"),
+			_INTL("Empty Cloud Storage"),
+			#_INTL("Deposit Pokémon"),
+			_INTL("See ya!")],
+			[_INTL("Start a new trade from scratch."),
+			_INTL("Finish a trade started before."),
+			_INTL("Erase unfinished trades."),
+			#_INTL("Store Pokémon in your party in Boxes."),
+			_INTL("Return to the previous menu.")], -1, command)
+			break if command < 0 || command == 3
+		else
+			command = pbShowCommandsWithHelp(nil,
+				[_INTL("Start New Trade"),
+				_INTL("Finalize Old Trade"),
+				#_INTL("Deposit Pokémon"),
+				_INTL("See ya!")],
+				[_INTL("Start a new trade from scratch."),
+				_INTL("Finish a trade started before."),
+				#_INTL("Store Pokémon in your party in Boxes."),
+				_INTL("Return to the previous menu.")], -1, command)
+			break if command < 0 || command == 2
+		end
 		OfflineTradingSystem.selectPkmnToTrade(command)
     end
     next false

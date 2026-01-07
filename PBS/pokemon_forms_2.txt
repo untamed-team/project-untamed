@@ -569,3 +569,30 @@ FormName = Blue Flower
 [FLORGES,4]
 FormName = White Flower
 #-------------------------------
+[CRUSTANG,1]
+FormName = Orange
+#-------------------------------
+[CRUSTANG,2]
+FormName = Yellow
+#-------------------------------
+[CRUSTANG,3]
+FormName = Green
+#-------------------------------
+[CRUSTANG,4]
+FormName = Blue
+#-------------------------------
+[CRUSTANG,5]
+FormName = Indigo
+#-------------------------------
+[CRUSTANG,6]
+FormName = Purple
+#-------------------------------
+[CRUSTANG,7]
+FormName = Pink
+#-------------------------------
+[CRUSTANG,8]
+FormName = Black
+#-------------------------------
+[CRUSTANG,9]
+FormName = White
+#-------------------------------

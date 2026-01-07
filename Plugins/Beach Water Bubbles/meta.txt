@@ -1,0 +1,4 @@
+Name         = Beach Water Bubble Effect
+Version      = 1.0.2
+Essentials   = 20.1, 21.1
+Credits      = FohlenETech, WolfPP, KleinStudio

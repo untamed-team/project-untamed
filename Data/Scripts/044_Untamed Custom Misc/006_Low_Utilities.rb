@@ -1282,6 +1282,9 @@ def eggMoveTutor
   return false
 end
 
+#===============================================================================
+# NPC to revive fossils
+#===============================================================================
 FOSSILREVIVEVAR = 126
 def fossilreviveNPC(onlyone = true)
   if !$game_variables[FOSSILREVIVEVAR].is_a?(Array)
@@ -1331,9 +1334,11 @@ def fossilreviveNPC(onlyone = true)
           pbMessage(_INTL("My machine won't process duplicates. Come back with a different fossil."))
           return
         end
-      else
+      end
+      if $game_variables[FOSSILREVIVEVAR][3]
         pbMessage(_INTL("I told you, it's fried. And I don't have any spare parts out here..."))
         pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+        return
       end
     end
     $bag.remove(ret)

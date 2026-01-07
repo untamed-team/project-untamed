@@ -250,6 +250,7 @@ Materia Music Publishing
 Merry
 Pint Sized Kiwi
 Pokémon Clover
+pfranzen
 Purple Hat of Awesome
 ReMX
 Rhythm Break
@@ -590,6 +591,11 @@ DiegoWT
 Rose
 Vendily
 
+Beach Water Bubble Effect:
+FohlenETech
+KleinStudio
+WolfPP
+
 Berry Pots:
 Caruban
 DerxwnaKapsyla
@@ -654,7 +660,7 @@ Vendily
 Venom12
 zingzags
 
-Full Odds Tracker
+Full Odds Tracker:
 Delphilly
 
 Item Find:
@@ -667,8 +673,13 @@ LostSoulsDev
 PurpleZaffre
 
 Luka's Scripting Utilities:
+Luka S.J.
 
 Marin's Enhanced Staircases
+Marin
+
+Marin's Footprints:
+Jony
 Marin
 
 Marin's Map Exporter:
@@ -1172,3 +1183,14 @@ Optional  	= Better Bitmaps
 Requires	= TDW Berry Core and Dex,1.0
 Website   	= https://github.com/Jack1324567/PE-Custom-Script
 Credits   	= wrigty12, bo4p5687 (original code), Richard PT (original graphics), Marin (Better Bitmaps plugin)
+
+Name         = Marin's Footprints
+Version      = 2.0
+Essentials   = 21.1
+Credits      = Marin, Jony
+Link         = https://eeveeexpo.com/resources/406/
+
+Name         = Beach Water Bubble Effect
+Version      = 1.0.2
+Essentials   = 20.1, 21.1
+Credits      = FohlenETech, WolfPP, KleinStudio

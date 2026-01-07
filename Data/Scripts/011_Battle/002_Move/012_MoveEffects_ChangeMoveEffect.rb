@@ -55,7 +55,7 @@ end
 class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
   def pbOnStartUse(user, targets)
     baseDmg = [0, 20, 40, 60, 80, 100, 120]
-    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "enormous"]
+    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "gigantic"]
     r = case user.level
       when 0..16
         [

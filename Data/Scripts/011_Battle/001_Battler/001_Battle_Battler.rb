@@ -357,8 +357,9 @@ class Battle::Battler
   def abilityActive?(ignore_fainted = false, check_ability = nil)
     return false if fainted? && !ignore_fainted
     return false if @effects[PBEffects::GastroAcid]
-		return false if self.dizzy? #by low
-    return false if check_ability != :NEUTRALIZINGGAS && self.ability != :NEUTRALIZINGGAS &&
+    #by low
+    return false if self.dizzy? && check_ability != :TANGLEDFEET && !self.abilityMutationList.include?(:TANGLEDFEET)
+    return false if check_ability != :NEUTRALIZINGGAS && !self.abilityMutationList.include?(:NEUTRALIZINGGAS) &&
                     @battle.pbCheckGlobalAbility(:NEUTRALIZINGGAS)
     return true
   end
