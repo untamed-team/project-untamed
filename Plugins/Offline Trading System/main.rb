@@ -1,10 +1,12 @@
 #Offline trading system
 
 #LAST I LEFT OFF:
-#Ready for testing
+#
 
 #Bugs:
-
+#I traded a mon in slot 0 of box 0 and the mon I got back went into slot 1 of box 0
+#Even when party has an open slot, pokemon gets sent to box and replaces what's in slot 1 in box 0
+#The pkmn is replaced right after I press "Finalize Trade". "self.receivePkmnFromOtherPlayer" is the culprit
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
@@ -489,6 +491,7 @@ class OfflineTradingSystem
 					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
 						foundInBox = true
 						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}"
 						break
 					end
 				end
@@ -553,7 +556,8 @@ class OfflineTradingSystem
 		}
 	end #def self.registerInDex
 	
-	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)	
+	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)
+		Console.echo_warn "$PokemonStorage[0, 1].species is #{$PokemonStorage[0, 1].species}"
 		#check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
 		if @finalizingTradeLater
 			#if finalizing trade later...
@@ -633,7 +637,7 @@ class OfflineTradingSystem
 				end
 			end #if @finalizingTradeLater
 		}
-	
+	Console.echo_warn "$PokemonStorage[0, 1].species is #{$PokemonStorage[0, 1].species}"
 	end #def self.receivePkmnFromOtherPlayer
 	
 	def self.createOfferFile(pkmn)
@@ -810,7 +814,6 @@ class OfflineTradingSystem
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
 
-	#this method is responsible for overwriting @pkmnToReplaceLocationAndIndex[0] to be "box" - bug
 	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray, offerOrFinishScreen = "offer")
 		Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
 		#pkmnPropertiesArray is an array of properties of the pkmn the player is giving away
