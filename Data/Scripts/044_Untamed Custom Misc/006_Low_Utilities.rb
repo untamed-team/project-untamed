@@ -1443,8 +1443,8 @@ def trashEncounter(trash = 0)
     present = pbGetTimeNow
     future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
     $game_variables[TRASHENCOUNTERVAR][trash][2] = future
-    nigger = (ret.starts_with_vowel?) ? "an" : "a"
-    pbMessage(_INTL("You threw {1} {2} into the trash pile. Maybe something will get the bait?", nigger, ret))
+    trigger = (ret.name.starts_with_vowel?) ? "an" : "a"
+    pbMessage(_INTL("You threw {1} {2} into the trash pile. Maybe something will get the bait?", trigger, ret))
     return
   else
     trashcounter = $game_variables[TRASHENCOUNTERVAR][trash][1]
