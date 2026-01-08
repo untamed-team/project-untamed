@@ -1395,9 +1395,17 @@ end
 #===============================================================================
 # Trash encounters
 #===============================================================================
+#put trashEncounter(1), trashEncounter(2), trashEncounter(3), trashEncounter(4), etc. in an event
+#the number corresponds to the trash id, so you if you throw a PokeBall in trash id number 1, after a while you'll get trubbish
+#meanwhile, if you throw a nugget in trash id number 2, you'll get cromen
+#these are separate
+#current it can take 4 different trash bins, if you wanna change how many there can be at max you'd need to swap the number of "numTrash"
 TRASHENCOUNTERVAR = 125
+TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 60 #amount of minutes needed to pass before an encounter happens in the trash bin
+TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least this amount from MINUTES UNTIL ENCOUNTER
+TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC = 0 #40 #game will subtract at most this amount from MINUTES UNTIL ENCOUNTER
 def trashEncounter(trash = 0)
-  numTrash = 4
+  numTrash = 4 #max number of trash bins in the game
   trash = [[trash, 0].max, (numTrash - 1)].min
   if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
     $game_variables[TRASHENCOUNTERVAR] = []
@@ -1441,7 +1449,7 @@ def trashEncounter(trash = 0)
     end
 
     present = pbGetTimeNow
-    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
+    future = present + (TRASH_ENC_MINUTES_UNTIL_ENCOUNTER + ((rand(2) == 0 ? -1 : 1) * rand(TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC..TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC))) * UnrealTime::PROPORTION
     $game_variables[TRASHENCOUNTERVAR][trash][2] = future
     trigger = (ret.name.starts_with_vowel?) ? "an" : "a"
     pbMessage(_INTL("You threw {1} {2} into the trash pile. Maybe something will get the bait?", trigger, ret))
