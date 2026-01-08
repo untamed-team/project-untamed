@@ -1406,6 +1406,13 @@ TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least th
 TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC = 0 #40 #game will subtract at most this amount from MINUTES UNTIL ENCOUNTER
 def trashEncounter(trash = 0)
   numTrash = 4 #max number of trash bins in the game
+
+  #get current map ID
+  currentMapID = $game_map.map_id
+  #get ID of event interacted with
+  thisEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+  print "currentMapID is #{currentMapID} and thisEvent is #{thisEvent} with ID #{thisEvent.id}"
+
   trash = [[trash, 0].max, (numTrash - 1)].min
   if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
     $game_variables[TRASHENCOUNTERVAR] = []
