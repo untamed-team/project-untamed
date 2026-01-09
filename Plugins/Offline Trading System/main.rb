@@ -4,9 +4,9 @@
 #
 
 #Bugs:
-#I traded a mon in slot 0 of box 0 and the mon I got back went into slot 1 of box 0
-#Even when party has an open slot, pokemon gets sent to box and replaces what's in slot 1 in box 0
-#The pkmn is replaced right after I press "Finalize Trade". "self.receivePkmnFromOtherPlayer" is the culprit
+#I traded a mon in slot 0 of box 0 and the mon I got back went into slot 1 of box 0 - 'self.pkmnExistsInTradeCloud' was causing this bug, but I created a separate variable for cloud locations: @pkmnToReplaceCloudLocationAndIndex instead of utilizing pkmnToReplaceLocationAndIndex for this. Finishing a trade later needs testing
+
+#Even when party has an open slot, pokemon gets sent to box and replaces what's in slot 1 in box 0 - needs testing
 
 #TO DO:
 #don't forget to uncomment ##########################################################Game.save
@@ -90,7 +90,7 @@ class OfflineTradingSystem
 	}
 
 	def self.setTradingID
-		Console.echo_warn "setting trade ID"
+		#Console.echo_warn "setting trade ID"
 		$game_player.tradeID = ""
 		#7 characters makes Trader IDs matching 1 in 1 million. Good enough for me
 		7.times do
@@ -101,10 +101,12 @@ class OfflineTradingSystem
 	
 	def self.selectPkmnToTrade(command)
 		self.setTradingID if $game_player.tradeID == ""
+		@pkmnToReplaceLocationAndIndex = nil
+		@pkmnToReplaceCloudLocationAndIndex = nil
 		
 		case command
 		when 0 #start new trade
-			Console.echo_warn "going into regular storage"
+			#Console.echo_warn "going into regular storage"
 			storage = $PokemonStorage
 			@finalizingTradeLater = false
 		when 1 #finalize old trade
@@ -120,7 +122,7 @@ class OfflineTradingSystem
 				return
 			end
 			
-			Console.echo_warn "going into cloud storage"
+			#Console.echo_warn "going into cloud storage"
 			$TradeCloud.maxBoxes.times do |i|
 				$TradeCloud[i].background = 11
 			end
@@ -174,7 +176,7 @@ class OfflineTradingSystem
 		@pkmnPlayerIsOfferingInSymbolFormat = pkmn
 		@pkmnPlayerIsOfferingSpeciesUppercase = pkmn.species.upcase
 		
-		Console.echo_warn "Emptying Trading folder..."
+		#Console.echo_warn "Emptying Trading folder..."
 		files = Dir.glob(File.join("Trading", '*')).select { |f| File.file?(f) }
 
 		# Iterate through the list and delete each file.
@@ -185,7 +187,7 @@ class OfflineTradingSystem
 		###########################################################
 		# Beginning Trade from Scratch
 		###########################################################
-		Console.echo_warn "Creating blank error log in Trading folder"
+		#Console.echo_warn "Creating blank error log in Trading folder"
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "", "w")
 		#create new screen for trading
 		pbFadeOutIn {
@@ -300,10 +302,8 @@ class OfflineTradingSystem
 					return
 				}
 			end
-		
 			#if yes, the game creates an agreement code which would create an image of the pokemon they send and the pokemon they receive
 			self.createAgreementFile(offerOrFinishScreen)
-			
 			#if they decline, the game asks them to replace the file and check again or cancel the trade - not sure this is needed. We'll see		
 			command_list = [_INTL("Open Trade Folder"),_INTL("Finalize Trade"),_INTL("Cancel Trade")]
 			# Main loop
@@ -491,7 +491,7 @@ class OfflineTradingSystem
 					if pkmn && pkmn == @pkmnPlayerIsOfferingInSymbolFormat
 						foundInBox = true
 						@pkmnToReplaceLocationAndIndex = ["box", i, j]
-						Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}"
+						#Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}"
 						break
 					end
 				end
@@ -557,13 +557,13 @@ class OfflineTradingSystem
 	end #def self.registerInDex
 	
 	def self.receivePkmnFromOtherPlayer(finalizingTradeLater = false)
-		Console.echo_warn "$PokemonStorage[0, 1].species is #{$PokemonStorage[0, 1].species}"
+		
 		#check here if player is finalizing a trade later or finalizing without ever leaving the trade screen
 		if @finalizingTradeLater
 			#if finalizing trade later...
 
 			#make pkmn being replaced be NIL
-			$TradeCloud[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
+			$TradeCloud[@pkmnToReplaceCloudLocationAndIndex[1], @pkmnToReplaceCloudLocationAndIndex[2]] = nil
 		else
 			#if finalizing trade without leaving trade screen
 			#for replacing the pkmn on the spot (if never left the trade menu)
@@ -572,18 +572,17 @@ class OfflineTradingSystem
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
-			Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
+			#Console.echo_warn "@pkmnToReplaceLocationAndIndex[0] is #{@pkmnToReplaceLocationAndIndex[0]}"
 			#remove pkmn from cloud storage after trading it away
 			if !self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat).nil?
-				Console.echo_warn "deleting pkmn traded away from cloud storage"
+				#Console.echo_warn "deleting pkmn traded away from cloud storage"
 				location = self.findPkmnInCloudStorage(@pkmnPlayerIsOfferingInSymbolFormat)
-				Console.echo_warn "location is '#{location}'"
+				#Console.echo_warn "location is '#{location}'"
 				box = location[0]
 				slot = location[1]
 				$TradeCloud[box][slot] = nil
 			end
 		end #if @finalizingTradeLater
-		
 		#register new pkmn in dex
 		was_owned_before_evolution = $player.owned?(@pkmnPlayerWillReceiveInSymbolFormat.species)
 		pkmnBeforeEvolution = @pkmnPlayerWillReceiveInSymbolFormat
@@ -624,20 +623,19 @@ class OfflineTradingSystem
 					pbAddPokemonSilent(@pkmnPlayerWillReceiveInSymbolFormat)
 				end
 				@boxScene.update
-				Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
-				@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2])
+				#Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+				@boxScreen.pbRefreshSingle(@pkmnToReplaceCloudLocationAndIndex[2])
 			else
 				@boxScene.update
 				if @pkmnToReplaceLocationAndIndex[0] == "party"
 					#does this really refresh the party?
 					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[1]) 
 				elsif @pkmnToReplaceLocationAndIndex[0] == "box"
-					Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
+					#Console.echo_warn "refreshing box at location #{@pkmnToReplaceLocationAndIndex[2]}"
 					@boxScreen.pbRefreshSingle(@pkmnToReplaceLocationAndIndex[2]) 
 				end
 			end #if @finalizingTradeLater
 		}
-	Console.echo_warn "$PokemonStorage[0, 1].species is #{$PokemonStorage[0, 1].species}"
 	end #def self.receivePkmnFromOtherPlayer
 	
 	def self.createOfferFile(pkmn)
@@ -775,6 +773,9 @@ class OfflineTradingSystem
 			#@pkmnPlayerIsOfferingInSymbolFormat
 			#@pkmnPlayerWillReceiveInSymbolFormat
 			#checking for trickery
+			
+			Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}" #should be box 0 slot 0
+			
 			if $game_player.tradeID == @otherPlayerTradeID
 				GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Player's TradeID and @otherPlayerTradeID match for some reason. Invalid trade.\n\n", "a")
 			elsif @otherPlayerTradeID.to_s != tradeIDOfPlayerWhoGeneratedThisFile.to_s
@@ -811,11 +812,14 @@ class OfflineTradingSystem
 			pbMessage(_INTL("No valid agreement file from another player found."))
 			GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "No valid agreement file from another player found. Either there is no agreement file in the Trading folder, or trickery was detected, as outlined above in this log.\n\n", "a")
 		end #if !found_valid_agreement_file
+		
+		Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}" #why is this slot 1 instead of the slot I chose sunflora from?
+		
 		return found_valid_agreement_file	
 	end #def self.readAgreementFile
 
 	def self.pkmnExistsInTradeCloud(pkmnPropertiesArray, offerOrFinishScreen = "offer")
-		Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
+		#Console.echo_warn "checking cloud storage to see if the player has #{pkmnPropertiesArray}"
 		#pkmnPropertiesArray is an array of properties of the pkmn the player is giving away
 		#check if a pkmn with those exact properties exists in the trade cloud storage
 		exists = false
@@ -831,7 +835,7 @@ class OfflineTradingSystem
 					#Console.echo_warn "found the pkmn in the cloud"
 					#if finalizing trade later, do the below
 					if offerOrFinishScreen == "agreement"
-						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						@pkmnToReplaceCloudLocationAndIndex = ["box", i, j]
 					end
 					return true
 				end
@@ -843,7 +847,7 @@ class OfflineTradingSystem
 	def self.findPkmnInCloudStorage(pkmnInSymbolFormat)
 		if self.pkmnExistsInTradeCloud(self.getPkmnProperties(pkmnInSymbolFormat))
 			properties = self.getPkmnProperties(pkmnInSymbolFormat).to_s
-			Console.echo_warn "method 'self.findPkmnInCloudStorage': checking cloud storage to see if the player has #{properties}"
+			#Console.echo_warn "method 'self.findPkmnInCloudStorage': checking cloud storage to see if the player has #{properties}"
 			location = nil
 			$TradeCloud.maxBoxes.times do |i|
 				#Console.echo_warn "checking boxes in cloud storage"
@@ -852,12 +856,12 @@ class OfflineTradingSystem
 					#Console.echo_warn "================================="
 					#Console.echo_warn "checking pkmn in storage to see if it matches: #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
 					#Console.echo_warn "method 'self.findPkmnInCloudStorage': checking if pokemon in box #{i} slot #{j} is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
-					Console.echo_warn "pkmn in slot box #{i} slot #{j} is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
+					#Console.echo_warn "pkmn in slot box #{i} slot #{j} is #{self.getPkmnProperties($TradeCloud[i, j]).to_s}"
 					#Console.echo_warn "self.getPkmnProperties(pkmnInSymbolFormat) is #{self.getPkmnProperties(pkmnInSymbolFormat)}"
 					if self.getPkmnProperties($TradeCloud[i, j]).to_s == self.getPkmnProperties(pkmnInSymbolFormat).to_s
 						location = [i,j]
-						Console.echo_warn "found the pkmn in the cloud"
-						@pkmnToReplaceLocationAndIndex = ["box", i, j]
+						#Console.echo_warn "found the pkmn in the cloud"
+						@pkmnToReplaceCloudLocationAndIndex = ["box", i, j]
 						return location
 					end
 				end
