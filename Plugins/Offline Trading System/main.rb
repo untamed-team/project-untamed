@@ -569,7 +569,9 @@ class OfflineTradingSystem
 			#for replacing the pkmn on the spot (if never left the trade menu)
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
 				#$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
-				$player.party.insert([@pkmnToReplaceLocationAndIndex[1]], @pkmnPlayerWillReceiveInSymbolFormat)
+				Console.echo_warn "@pkmnToReplaceLocationAndIndex is #{@pkmnToReplaceLocationAndIndex}"
+				index = @pkmnToReplaceLocationAndIndex[1]
+				$player.party.insert(index, @pkmnPlayerWillReceiveInSymbolFormat)
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
