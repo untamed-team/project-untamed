@@ -1396,9 +1396,6 @@ end
 # Trash encounters
 #===============================================================================
 #TO DO
-#prevent player from throwing in key items
-#create event trigger (event handlers) that triggers when a map loads (including loading the game) to switch self switch of any events on the map with encounters ready
-#currently a pokemon will come but the dumpster will not shake if you wait in front of the dumpster for the required amount of time. Need to reload map for the dumpster to shake
 #The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
 
 EventHandlers.add(:on_enter_map, :shake_dumpsters,
@@ -1408,7 +1405,7 @@ EventHandlers.add(:on_enter_map, :shake_dumpsters,
 )
 
 TRASHENCOUNTERVAR = 125
-TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 1 #60 #amount of minutes needed to pass before an encounter happens in the trash bin
+TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 480 #8 hours #amount of in-game minutes (seconds real-time) needed to pass before an encounter happens in the trash bin
 TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least this amount from MINUTES UNTIL ENCOUNTER
 TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC = 0 #40 #game will subtract at most this amount from MINUTES UNTIL ENCOUNTER
 
@@ -1542,7 +1539,7 @@ def trashEncounters_CreateEncounter(eventArray, chosenItem)
     future = present + (TRASH_ENC_MINUTES_UNTIL_ENCOUNTER + ((rand(2) == 0 ? -1 : 1) * rand(TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC..TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC))) * UnrealTime::PROPORTION
     eventArray[3] = future
     aOrAn = (chosenItem.name.starts_with_vowel?) ? "an" : "a"
-    pbMessage(_INTL("You threw {1} {2} inside. Maybe something will get the bait?", aOrAn, chosenItem))
+    pbMessage(_INTL("You threw {1} {2} inside. Maybe it will attract something...", aOrAn, chosenItem))
     return
 end
 
@@ -1597,8 +1594,7 @@ def trashEncounters_DeleteEncounter(eventArray, mapArray)
 end
 
 def trashEncounters_ChooseItem
-  #if $game_variables[TRASHENCOUNTERVAR][binNumber][0].nil?
-  #if eventArray[1].nil? #if eventArray's 2nd element (item) is nil
+    return nil if !pbConfirmMessage(_INTL("Do you want to throw an item into the dumpster?"))
     chosenItem = nil
     pbFadeOutIn {
       scene = PokemonBag_Scene.new
@@ -1608,6 +1604,11 @@ def trashEncounters_ChooseItem
     if chosenItem.nil?
       pbMessage(_INTL("You decided not to throw in an item."))
       return chosenItem
+    end
+    itemData = GameData::Item.get(chosenItem)
+    if itemData.is_key_item?
+      pbMessage(_INTL("You can't throw that away!"))
+      return nil
     end
     $bag.remove(chosenItem)
     return chosenItem
