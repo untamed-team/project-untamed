@@ -4,7 +4,7 @@
 #
 
 #Bugs:
-#I traded a mon in slot 0 of box 0 and the mon I got back went into slot 1 of box 0 - 'self.pkmnExistsInTradeCloud' was causing this bug, but I created a separate variable for cloud locations: @pkmnToReplaceCloudLocationAndIndex instead of utilizing pkmnToReplaceLocationAndIndex for this. Finishing a trade later needs testing
+#A pokemon traded from slot 1 (2nd place) in the party was put in the cloud, which put the pokemon in slot 2 of the party (space 3) in slot 1 (space 2), then the pokemon received went into slot 1 (space 2) to replace the initial mon, and that pkmn taht moved from slot 2 (space 3) to slot 1 (space 2) was replaced
 
 #Even when party has an open slot, pokemon gets sent to box and replaces what's in slot 1 in box 0 - needs testing
 
@@ -568,7 +568,8 @@ class OfflineTradingSystem
 			#if finalizing trade without leaving trade screen
 			#for replacing the pkmn on the spot (if never left the trade menu)
 			if @pkmnToReplaceLocationAndIndex[0] == "party"
-				$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+				#$player.party[@pkmnToReplaceLocationAndIndex[1]] = @pkmnPlayerWillReceiveInSymbolFormat
+				$player.party.insert([@pkmnToReplaceLocationAndIndex[1]], @pkmnPlayerWillReceiveInSymbolFormat)
 			elsif @pkmnToReplaceLocationAndIndex[0] == "box"
 				$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = @pkmnPlayerWillReceiveInSymbolFormat
 			end
