@@ -1400,8 +1400,7 @@ end
 
 EventHandlers.add(:on_enter_map, :shake_dumpsters,
   proc { |_old_map_id|
-	return if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
-  trashEncounters_ShakeDumpsters
+	trashEncounters_ShakeDumpsters if $game_variables[TRASHENCOUNTERVAR].is_a?(Array)
   }
 )
 
