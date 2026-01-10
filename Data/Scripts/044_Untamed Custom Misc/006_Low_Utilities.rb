@@ -1399,6 +1399,7 @@ end
 #instead of a binNumber, make each array for item, mon, time based on mapID
 #instead of creating arrays based on binNumber, make an new array if one does not exist with the current mapID at index 0
 #create an array inside each mapID array, and inside the new array, the following elements will be assigned: event#, item, mon, time
+#prevent player from throwing in key items
 
 #put trashEncounter(1), trashEncounter(2), trashEncounter(3), trashEncounter(4), etc. in an event
 #the number corresponds to the trash id, so you if you throw a PokeBall in trash id number 1, after a while you'll get trubbish
@@ -1428,11 +1429,9 @@ TRASH_HASH2 = {
 #currently a pokemon will come but the dumpster will not shake if you wait in front of the dumpster for the required amount of time. Need to reload map for the dumpster to shake
 #The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
 
-#left off at line 1519
-
 def trashEncounters_Dumpster
   #this is the main method
-  numTrash = 500 #max number of trash bins in the game
+  #numTrash = 500 #max number of trash bins in the game
   #binNumber = [[binNumber, 0].max, (numTrash - 1)].min
   #if there are no active bins right now, pre-create arrays for them
   #if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
@@ -1459,30 +1458,30 @@ def trashEncounters_Dumpster
     if encSetForThisDumpster
       #an encounter was confirmed to have been brewing in this event already, so check the encounter to see if it's done
       eventArray = trashEncounters_FindEventArray(mapArray)
-      encounterReady = trashEncounters_CheckEncounter(eventArray)
+      encounterReady = trashEncounters_CheckEncounter(eventArray, mapArray)
       if encounterReady
       else
       end
     else
+      chosenItem = trashEncounters_ChooseItem
+      return if chosenItem.nil?
+
       #an encounter was confirmed NOT to exist in this event yet, so prompt to create one
       eventArray = trashEncounters_CreateEventArray(mapArray)
 
-      chosenItem = trashEncounters_ChooseItem
-      return if chosenItem.nil?
-      
       #create encounter in dumpster event
       trashEncounters_CreateEncounter(eventArray, chosenItem)
 
       return #exit the event since we just created the encounter, and it therefore will not be ready yet
     end #if encSetForThisDumpster
   else #mapIDIndex is nil, which means no dumpster encounter is brewing on this entire map
+    chosenItem = trashEncounters_ChooseItem
+    return if chosenItem.nil?
+    
     mapArray = trashEncounters_CreatemapArray
 
     #since no encounter existed on this map, no encounter existed for this event either, so create an event array for this map's array
     eventArray = trashEncounters_CreateEventArray(mapArray)
-
-    chosenItem = trashEncounters_ChooseItem
-    return if chosenItem.nil?
 
     #create encounter in dumpster event
     trashEncounters_CreateEncounter(eventArray, chosenItem)
@@ -1514,19 +1513,16 @@ end
 def trashEncounters_FindEventArray(mapArray)
   #find eventID in arrays inside game variable[mapArray]
   eventArray = nil
-  Console.echo_warn "mapArray is #{mapArray}"
   eventElement = 1 #start at element 1 since element 0 is the map id
   (mapArray.length-1).times do
     #look through each element inside the $game_variables[TRASHENCOUNTERVAR][mapIDIndex] array for one where the first element of which matches the event number we interacted with
-    Console.echo_warn "eventElement is #{eventElement}"
-    Console.echo_warn "Checking mapArray[eventElement][0], which is #{mapArray[eventElement][0]}"
-    if mapArray[eventElement][0] == $game_player.pbFacingEvent(ignoreInterpreter = true)
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    if mapArray[eventElement][0] == facingEvent.id
       eventArray = mapArray[eventElement]
       break
     end
     eventElement += 1
   end
-  print "eventArray is #{eventArray}"
   return eventArray
 end
 
@@ -1565,7 +1561,7 @@ def trashEncounters_CreateEncounter(eventArray, chosenItem)
     return
 end
 
-def trashEncounters_CheckEncounter(eventArray)
+def trashEncounters_CheckEncounter(eventArray, mapArray)
     targetedReadyTime = eventArray[-1] #last element, or the 4th element
     if targetedReadyTime.nil?
       print "targetedReadyTime is nil. Report this as a bug."
@@ -1578,14 +1574,13 @@ def trashEncounters_CheckEncounter(eventArray)
     message = ""
     msg.times { message += ".   " }
     pbMessage(_INTL(message))
-
+    print targetedReadyTime
     if present >= targetedReadyTime
       #pbMessage(_INTL("!\\nSomething jumped out!"))
       #exclamation point above player's head
       $game_player.animation_id = 3
-      self.showEventAnimation(pkmn.campEvent.id, animation_id=21)
       #wait 1 second
-      pbWait(3)
+      pbWait(20)
     else
       pbMessage(_INTL("...\\nThe item you threw in is still there..."))
       return
@@ -1601,24 +1596,23 @@ def trashEncounters_CheckEncounter(eventArray)
     #else
     #  pbMessage(_INTL("It looks quite young!"))
     #end
-
-    trashbattler = [trashcounter, level]
+    species = eventArray[2]
+    trashbattler = [species, level]
     $game_temp.encounter_type = :Land
-end
-
-def trashEncounters_DeleteEncounter(mapArray)
-  #delete the array for the event on this map
-  #if mapArray is empty, delete it too
-
-
-    $game_variables[TRASHENCOUNTERVAR][binNumber][0] = nil
-    $game_variables[TRASHENCOUNTERVAR][binNumber][1] = nil
-    $game_variables[TRASHENCOUNTERVAR][binNumber][2] = 0
     EventHandlers.trigger(:on_wild_species_chosen, trashbattler)
     WildBattle.start(trashbattler, can_override: false)
     $game_temp.encounter_type = nil
     $game_temp.force_single_battle = false
-    return
+
+    #after the battle, delete encounter
+    trashEncounters_DeleteEncounter(eventArray, mapArray)
+end
+
+def trashEncounters_DeleteEncounter(eventArray, mapArray)
+  #delete the array for the event on this map
+  mapArray.delete(eventArray)
+  #if mapArray is empty, delete it too
+  $game_variables[TRASHENCOUNTERVAR].delete(mapArray) if mapArray.length <= 1 #only has the map ID in the mapArray
 end
 
 def trashEncounters_ChooseItem
@@ -1636,6 +1630,10 @@ def trashEncounters_ChooseItem
     end
     $bag.remove(chosenItem)
     return chosenItem
+end
+
+def trashEncounters_DeleteAllEncounters
+    $game_variables[TRASHENCOUNTERVAR] = []
 end
 
 #===============================================================================
