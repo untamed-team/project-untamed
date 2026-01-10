@@ -1396,16 +1396,17 @@ end
 # Trash encounters
 #===============================================================================
 #TO DO
-#instead of a binNumber, make each array for item, mon, time based on mapID
-#instead of creating arrays based on binNumber, make an new array if one does not exist with the current mapID at index 0
-#create an array inside each mapID array, and inside the new array, the following elements will be assigned: event#, item, mon, time
 #prevent player from throwing in key items
+#create event trigger (event handlers) that triggers when a map loads (including loading the game) to switch self switch of any events on the map with encounters ready
+#currently a pokemon will come but the dumpster will not shake if you wait in front of the dumpster for the required amount of time. Need to reload map for the dumpster to shake
+#The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
 
-#put trashEncounter(1), trashEncounter(2), trashEncounter(3), trashEncounter(4), etc. in an event
-#the number corresponds to the trash id, so you if you throw a PokeBall in trash id number 1, after a while you'll get trubbish
-#meanwhile, if you throw a nugget in trash id number 2, you'll get cromen
-#these are separate
-#current it can take 4 different trash bins, if you wanna change how many there can be at max you'd need to swap the number of "numTrash"
+EventHandlers.add(:on_enter_map, :shake_dumpsters,
+  proc { |_old_map_id|
+	trashEncounters_ShakeDumpsters
+  }
+)
+
 TRASHENCOUNTERVAR = 125
 TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 1 #60 #amount of minutes needed to pass before an encounter happens in the trash bin
 TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least this amount from MINUTES UNTIL ENCOUNTER
@@ -1423,24 +1424,8 @@ TRASH_HASH2 = {
       :PURRLOIN => [:POKETOY]
     }
 
-#TO DO
-#finish trashEncounters_DeleteEncounter
-#create event trigger (event handlers) that triggers when a map loads (including loading the game) to switch self switch of any events on the map with encounters ready
-#currently a pokemon will come but the dumpster will not shake if you wait in front of the dumpster for the required amount of time. Need to reload map for the dumpster to shake
-#The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
-
 def trashEncounters_Dumpster
   #this is the main method
-  #numTrash = 500 #max number of trash bins in the game
-  #binNumber = [[binNumber, 0].max, (numTrash - 1)].min
-  #if there are no active bins right now, pre-create arrays for them
-  #if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
-  #  $game_variables[TRASHENCOUNTERVAR] = []
-  #  numTrash.times do                        # item, mon, time
-  #    $game_variables[TRASHENCOUNTERVAR].push([nil, nil, 0])
-  #  end
-  #end
-
   #if game variable is not yet an arary, make it one
   $game_variables[TRASHENCOUNTERVAR] = [] if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
 
@@ -1563,10 +1548,7 @@ end
 
 def trashEncounters_CheckEncounter(eventArray, mapArray)
     targetedReadyTime = eventArray[-1] #last element, or the 4th element
-    if targetedReadyTime.nil?
-      print "targetedReadyTime is nil. Report this as a bug."
-      return
-    end
+    return if targetedReadyTime.nil?
 
     present = pbGetTimeNow
 
@@ -1574,7 +1556,6 @@ def trashEncounters_CheckEncounter(eventArray, mapArray)
     message = ""
     msg.times { message += ".   " }
     pbMessage(_INTL(message))
-    print targetedReadyTime
     if present >= targetedReadyTime
       #pbMessage(_INTL("!\\nSomething jumped out!"))
       #exclamation point above player's head
@@ -1633,7 +1614,35 @@ def trashEncounters_ChooseItem
 end
 
 def trashEncounters_DeleteAllEncounters
+    mapArray = trashEncounters_FindMapArray
+    return if mapArray.nil?
+    eventElement = 1
+    (mapArray.length-1).times do
+      eventArray = mapArray[eventElement]
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", false)
+    end #(mapArray.length-1).times do
     $game_variables[TRASHENCOUNTERVAR] = []
+end
+
+def trashEncounters_ShakeDumpsters
+  #go through all dumpster encounters in the mapArray for the current map
+  #if any encounters are ready, set self switch A on for those events
+  present = pbGetTimeNow
+  mapArray = trashEncounters_FindMapArray
+  return if mapArray.nil?
+  eventElement = 1
+  (mapArray.length-1).times do
+    eventArray = mapArray[eventElement]
+    Console.echo_warn eventArray
+    Console.echo_warn eventArray[0]
+    targetedReadyTime = eventArray[-1] #last element, or the 4th element
+    next if targetedReadyTime.nil?
+    if present >= targetedReadyTime
+      Console.echo_warn "setting self switch A to ON for event with ID #{eventArray[0]}"
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", true)
+    end
+    eventElement += 1
+  end #(mapArray.length-1).times do
 end
 
 #===============================================================================
