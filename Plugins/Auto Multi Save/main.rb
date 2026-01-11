@@ -232,8 +232,17 @@ class PokemonLoad_Scene
       x = (show_continue && i == 0) ? 126 : 352
       @sprites["panel#{i}"].x = x
       @sprites["panel#{i}"].y = y
+      
+      # Move the bitmaps from the panel class to the scene's @sprites hash
+      if @sprites["panel#{i}"].overlaysprite
+        @sprites["panel#{i}_overlay"] = @sprites["panel#{i}"].overlaysprite
+      end
+      if @sprites["panel#{i}"].trainerNameBitmap
+        @sprites["panel#{i}_name"] = @sprites["panel#{i}"].trainerNameBitmap
+      end
+      
       @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 54 : 54
+      y += 54
     end
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].viewport = @viewport
@@ -284,6 +293,12 @@ class PokemonLoad_Scene
       end
     end
   end
+
+	def pbEndScene
+		pbFadeOutAndHide(@sprites) { pbUpdate }
+		pbDisposeSpriteHash(@sprites)
+		@viewport.dispose
+	end
 end
 
 #===============================================================================
@@ -852,6 +867,7 @@ end
 
 class PokemonLoadPanel < Sprite
   attr_reader :selected
+  attr_reader :overlaysprite, :trainerNameBitmap
 
   TEXTCOLOR             = Color.new(232, 232, 232)
   TEXTSHADOWCOLOR       = Color.new(136, 136, 136)
@@ -875,7 +891,12 @@ class PokemonLoadPanel < Sprite
     @overlaysprite = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
     @overlaysprite.z = self.z + 1
 	pbSetSystemFont(@overlaysprite.bitmap) #added by Gardenette
-	@overlaysprite.bitmap.font.size = MessageConfig::FONT_SIZE #added by Gardenette
+	@overlaysprite.bitmap.font.size = MessageConfig::FONT_SIZE - 4 #added by Gardenette
+	#added by Gardenette
+	@trainerNameBitmap = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
+	pbSetSystemFont(@trainerNameBitmap.bitmap)
+	@trainerNameBitmap.bitmap.font.size = MessageConfig::FONT_SIZE
+	
     if @trainer
 		# Draws text on a bitmap. _textpos_ is an array of text commands. Each text
 		# command is an array that contains the following:
@@ -889,23 +910,26 @@ class PokemonLoadPanel < Sprite
 		#  6 - If true or 1, the text has an outline. Otherwise, the text has a shadow.
 	
       textpos = []
-      textpos.push([_INTL("Pokédex:"), 32, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
-      textpos.push([@trainer.pokedex.seen_count.to_s, 170, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
-      textpos.push([_INTL("Time:"), 204, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([_INTL("Pokédex:"), 40, 328, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([@trainer.pokedex.seen_count.to_s, 170, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([_INTL("Time:"), 212, 328, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
       hour = @totalsec / 60 / 60
       min  = @totalsec / 60 % 60
       if hour > 0
-        textpos.push([_INTL("{1}h {2}m", hour, min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+        textpos.push([_INTL("{1}h {2}m", hour, min), 326, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
       else
-        textpos.push([_INTL("{1}m", min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+        textpos.push([_INTL("{1}m", min), 326, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
       end
       #if @trainer.male?
         #textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
       #else
         #textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
       #end
-	  textpos.push([@trainer.name, 112, 96, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+	  #textpos.push([@trainer.name, 209, 96, 2, TEXTCOLOR, TEXTSHADOWCOLOR])
       pbDrawTextPositions(@overlaysprite.bitmap, textpos)
+	  
+	  trainerTextPos = [[@trainer.name, 209, 96, 2, TEXTCOLOR, TEXTSHADOWCOLOR]]
+	  pbDrawTextPositions(@trainerNameBitmap.bitmap, trainerTextPos)
       
       imagePositions = []
       x = 38
@@ -925,6 +949,7 @@ class PokemonLoadPanel < Sprite
 
   def dispose
     @bgbitmap.dispose
+	@buttonbitmap.dispose
     self.bitmap.dispose
     super
   end
@@ -962,8 +987,8 @@ class PokemonLoadPanel < Sprite
         self.bitmap.blt(0, 0, @buttonbitmap.bitmap, Rect.new(0, (@selected) ? 44 : 0, @buttonbitmap.width, 44))
       end
       textpos = []
-      textpos.push([@title, 32, 16, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if @isContinue
-      textpos.push([@title, 18, 14, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if !@isContinue
+      textpos.push([@title, 32, 13, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if @isContinue
+      textpos.push([@title, 18, 13, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if !@isContinue
       pbDrawTextPositions(self.bitmap, textpos)
     end
     @refreshing = false
