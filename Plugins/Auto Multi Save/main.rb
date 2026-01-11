@@ -242,11 +242,11 @@ class PokemonLoad_Scene
     #added by Gardenette
     arrowsX = 40
     arrowsY = 56
-    @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
+    @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/Save Select/leftarrow",8,40,28,2,@viewport)
     @sprites["leftarrow"].x = arrowsX
     @sprites["leftarrow"].y = arrowsY - @sprites["leftarrow"].bitmap.height/16
     @sprites["leftarrow"].visible = false
-    @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
+    @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/Save Select/rightarrow",8,40,28,2,@viewport)
     @sprites["rightarrow"].x = arrowsX + 10 + @sprites["rightarrow"].bitmap.width*6
     @sprites["rightarrow"].y = arrowsY - @sprites["rightarrow"].bitmap.height/16 
     @sprites["rightarrow"].visible = false
@@ -844,4 +844,128 @@ def pbEmergencySave
     pbMessage(_INTL("\\se[]Save failed.\\wtnp[30]"))
   end
   $scene = oldscene
+end
+
+#########################################
+# Fonts on Load Screen - the fonts I want to make standard
+#########################################
+
+class PokemonLoadPanel < Sprite
+  attr_reader :selected
+
+  TEXTCOLOR             = Color.new(232, 232, 232)
+  TEXTSHADOWCOLOR       = Color.new(136, 136, 136)
+  MALETEXTCOLOR         = Color.new(56, 160, 248)
+  MALETEXTSHADOWCOLOR   = Color.new(56, 104, 168)
+  FEMALETEXTCOLOR       = Color.new(240, 72, 88)
+  FEMALETEXTSHADOWCOLOR = Color.new(160, 64, 64)
+
+  def initialize(index, title, isContinue, trainer, framecount, stats, mapid, viewport = nil)
+    super(viewport)
+    @index = index
+    @title = title
+    @isContinue = isContinue
+    @trainer = trainer
+    @totalsec = (stats) ? stats.play_time.to_i : ((framecount || 0) / Graphics.frame_rate)
+    @mapid = mapid
+    @selected = (index == 0)
+    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/blank")
+    
+    @buttonbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/button")
+    @overlaysprite = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
+    @overlaysprite.z = self.z + 1
+	pbSetSystemFont(@overlaysprite.bitmap) #added by Gardenette
+	@overlaysprite.bitmap.font.size = MessageConfig::FONT_SIZE #added by Gardenette
+    if @trainer
+		# Draws text on a bitmap. _textpos_ is an array of text commands. Each text
+		# command is an array that contains the following:
+		#  0 - Text to draw
+		#  1 - X coordinate
+		#  2 - Y coordinate
+		#  3 - If true or 1, the text is right aligned. If 2, the text is centered.
+		#      Otherwise, the text is left aligned.
+		#  4 - Base color
+		#  5 - Shadow color
+		#  6 - If true or 1, the text has an outline. Otherwise, the text has a shadow.
+	
+      textpos = []
+      textpos.push([_INTL("Pokédex:"), 32, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([@trainer.pokedex.seen_count.to_s, 170, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([_INTL("Time:"), 204, 322, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      hour = @totalsec / 60 / 60
+      min  = @totalsec / 60 % 60
+      if hour > 0
+        textpos.push([_INTL("{1}h {2}m", hour, min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      else
+        textpos.push([_INTL("{1}m", min), 322, 322, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      end
+      #if @trainer.male?
+        #textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
+      #else
+        #textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
+      #end
+	  textpos.push([@trainer.name, 112, 96, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      pbDrawTextPositions(@overlaysprite.bitmap, textpos)
+      
+      imagePositions = []
+      x = 38
+      8.times do |i|
+        if trainer.badges[i]
+          imagePositions.push(["Graphics/Pictures/Trainer Card/icon_badges", x, 268, i * 32, 0, 32, 32])
+        end
+        x += 38
+      end
+      pbDrawImagePositions(@overlaysprite.bitmap, imagePositions)
+    end
+
+    @refreshBitmap = true
+    @refreshing = false
+    refresh
+  end
+
+  def dispose
+    @bgbitmap.dispose
+    self.bitmap.dispose
+    super
+  end
+
+  def selected=(value)
+    return if @selected == value
+    @selected = value
+    @refreshBitmap = true
+    refresh
+  end
+
+  def isContinue
+    return @isContinue
+  end
+
+  def pbRefresh
+    @refreshBitmap = true
+    refresh
+  end
+
+  def refresh
+    return if @refreshing
+    return if disposed?
+    @refreshing = true
+    if !self.bitmap || self.bitmap.disposed?
+      self.bitmap = BitmapWrapper.new(@bgbitmap.width, 222)
+      pbSetSystemFont(self.bitmap)
+    end
+    if @refreshBitmap
+      @refreshBitmap = false
+      self.bitmap&.clear
+      if @isContinue
+        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0,  0, @bgbitmap.width, @bgbitmap.height))
+      else
+        self.bitmap.blt(0, 0, @buttonbitmap.bitmap, Rect.new(0, (@selected) ? 44 : 0, @buttonbitmap.width, 44))
+      end
+      textpos = []
+      textpos.push([@title, 32, 16, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if @isContinue
+      textpos.push([@title, 18, 14, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if !@isContinue
+      pbDrawTextPositions(self.bitmap, textpos)
+    end
+    @refreshing = false
+  end
 end
