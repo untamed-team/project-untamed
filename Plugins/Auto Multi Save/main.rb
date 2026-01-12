@@ -314,6 +314,9 @@ class PokemonLoadScreen
   # @return [Hash] save data
   def load_save_file(file_path)
     save_data = SaveData.read_from_file(file_path)
+	
+	#check if save file is demo 1 save
+	
     unless SaveData.valid?(save_data)
       if File.file?(file_path + ".bak")
         pbMessage(_INTL("The save file is corrupt. A backup will be loaded."))
