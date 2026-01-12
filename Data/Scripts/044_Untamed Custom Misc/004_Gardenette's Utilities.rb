@@ -3,6 +3,7 @@
 #===============================================================================
 module Settings
   DEMO_NUMBER = 2
+  HOTFIX_NUMBER = 0
   DEMO_NUMBER_VARIABLE = 51
 end
 

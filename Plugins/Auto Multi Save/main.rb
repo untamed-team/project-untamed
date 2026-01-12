@@ -305,18 +305,82 @@ end
 #
 #===============================================================================
 class PokemonLoadScreen
+
   def initialize(scene)
-    @scene = scene
+	moveIncompatibleSaveFiles
+	@scene = scene
     @selected_file = SaveData.get_newest_save_slot
   end
 
+	def moveIncompatibleSaveFiles
+		#iterate through all save files
+		SaveData.each_slot do |file_slot|
+			full_path = SaveData.get_full_path(file_slot)
+			saveFileName = file_slot
+			next if !File.file?(full_path)
+			temp_save_data = SaveData.read_from_file(full_path)
+			trainerName = temp_save_data[:player].name
+			lastSaveTimeOld = "#{temp_save_data[:player].last_time_saved || Time.at(1)}"
+			lastSaveTime = lastSaveTimeOld.gsub(":", "_")
+			
+			if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] < Settings::DEMO_NUMBER
+				#this is a save file from an older demo version
+				#force player to move this save file to "AppData/Roaming/project-untamed/Incompatible saves" or exit the game
+				Console.echo_warn "Save file '#{saveFileName}' is incompatible with this demo version."
+				pbMessage(_INTL("Save file with name \\c[2]#{saveFileName}\\c[0] is corrupt, or is incompatible with this game."))
+				if pbConfirmMessageSerious(_INTL("Do you want to preserve save file \\c[2]#{saveFileName}\\c[0] in your Save folder's 'Incompatible Save Files' folder? If not, the game will exit."))
+					preserve_save_file(full_path, trainerName, lastSaveTime)
+				else
+					exit
+				end #if pbConfirmMessageSerious(_INTL("Do you want to preserve
+			end #if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] < Settings::DEMO_NUMBER
+			
+			#check for corrupted save files
+			if !SaveData.valid?(temp_save_data)
+				#this is a save file that is corrupted
+				#force player to move this save file to "AppData/Roaming/project-untamed/Incompatible saves" or exit the game
+				Console.echo_warn "Save file '#{saveFileName}' is corrupt."
+				pbMessage(_INTL("Save file with name \\c[2]#{saveFileName}\\c[0] is corrupt, or is incompatible with this game."))
+				if pbConfirmMessageSerious(_INTL("Do you want to preserve save file \\c[2]#{saveFileName}\\c[0] in your Save folder's 'Incompatible Save Files' folder? If not, the game will exit."))
+					preserve_save_file(full_path, trainerName, lastSaveTime)
+				else
+					exit
+				end #if pbConfirmMessageSerious(_INTL("Do you want to preserve
+			end
+		end #SaveData.each_slot do |file_slot|		
+	end #def moveIncompatibleSaveFiles
+
+	def preserve_save_file(file_path, trainerName, lastSaveTime)
+		#create 'Incompatible Save Files' folder if it doesn't exist in 'AppData/Roaming/project-untamed'
+		folder_path = "#{ENV['APPDATA']}/project-untamed/Incompatiable Save Files"
+		Dir.mkdir(folder_path) unless File.exists?(folder_path)
+
+		# Define the destination full path including the filename
+		file_name = File.basename(file_path)
+		new_name = "#{trainerName}_#{lastSaveTime}.rxdata"
+		dest_path = File.join(folder_path, new_name)
+		#copy the save file to the 'Incompatible Save Files' folder
+		# Perform the move using standard Ruby IO
+		if File.exist?(file_path)
+			#File.open(file_path, 'rb') do |r|
+			#	File.open(dest_path, 'wb') { |w| w.write(r.read) }
+			#end
+			#File.delete(file_path) # Deletes original to complete the "Move"
+
+			# This moves AND renames at the same time
+			File.rename(file_path, dest_path)
+			Console.echo_warn "File moved successfully to #{dest_path}"
+			#rename save file to be of naming convention "trainerName_lastSaveTime"
+			dest_path
+		end
+	end #def preserve_save_file
+
   # @param file_path [String] file to load save data from
   # @return [Hash] save data
+  
+  #this method only triggers when you have a save file selected (switching between them on the load screen)
   def load_save_file(file_path)
     save_data = SaveData.read_from_file(file_path)
-	
-	#check if save file is demo 1 save
-	
     unless SaveData.valid?(save_data)
       if File.file?(file_path + ".bak")
         pbMessage(_INTL("The save file is corrupt. A backup will be loaded."))
@@ -332,9 +396,9 @@ class PokemonLoadScreen
   # Called if save file is invalid.
   # Prompts the player to delete the save files.
   def prompt_save_deletion(file_path)
-    pbMessage(_INTL("A save file is corrupt, or is incompatible with this game."))
+    pbMessage(_INTL("Save file with name '#{file_path}' is corrupt, or is incompatible with this game."))
     self.delete_save_data(file_path) if pbConfirmMessageSerious(
-      _INTL("Do you want to delete that save file? The game will exit afterwards either way.")
+      _INTL("Do you want to delete save file '#{file_path}'? The game will exit afterwards either way.")
     )
     exit
   end
