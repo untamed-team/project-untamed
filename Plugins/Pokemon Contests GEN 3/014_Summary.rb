@@ -940,6 +940,7 @@ class MoveRelearner_Scene
       moveobject = @moves[@sprites["commands"].top_item + i]
       if moveobject
         moveData = GameData::Move.get(moveobject)
+        moveData = GameData::Move.get(:SPLASH) if moveobject == :TRIMTACKLE # why
         type_number = GameData::Type.get(moveData.display_type(@pokemon)).icon_position
         contest_type_number = GameData::ContestType.get(moveData.contest_type).icon_index
 		#added by Gardenette
@@ -965,6 +966,7 @@ class MoveRelearner_Scene
 				end
 			end #if valueHash[:AssignedMoves].include?
 		end #CrustangRacingSettings::MOVE_EFFECTS.each do |key, valueHash|
+        moveData = GameData::Move.get(moveobject)
 		
 		if @contestinfo
 			imagepos.push(["Graphics/Pictures/Contest/contesttype", 12, yPos - 4, 0, contest_type_number * 28, 64, 28])

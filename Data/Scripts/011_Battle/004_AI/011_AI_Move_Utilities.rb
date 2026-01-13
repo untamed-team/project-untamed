@@ -230,21 +230,33 @@ class Battle::AI
     # i am so fucking retarded
     return (battler.pbSpeed(megaSpeed)*spemul).floor if stat == :SPEED
     stageMul, stageDiv = @battle.pbGetStatMath
-    stage = battler.stages[stat] + 6
+    stage = battler.stages[stat]
     value = 0
     case stat
     when :ATTACK
       value = battler.attack*atkmul
       if target
+        # Account for intimidate from mons with AAM
+        if move.physicalMove? && move.function != "UseUserBaseDefenseInsteadOfUserBaseAttack" 
+          battler.allOpposing.each do |b|
+            next unless b.pokemon.willmega && b.hasAbilityMutation?
+            if b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)
+              stagemod -= 1
+              stagemod += 2 if battler.hasActiveAbility?([:DEFIANT, :CONTRARY])
+              stagemod = 0 if battler.hasActiveAbility?(:UNAWARE)
+              stage += stagemod
+            end
+          end
+        end
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) ||
-                        target.hasActiveAbility?(:BIGPECKS,false,moldbroken)
+                       (target.hasActiveAbility?(:BIGPECKS,false,moldbroken) && stage > 0)
       end
     when :DEFENSE
       value = battler.defense*defmul
       if target
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
                         move.function == "IgnoreTargetDefSpDefEvaStatStages" ||
-                        battler.hasActiveAbility?(:HYPERCUTTER)
+                        (battler.hasActiveAbility?(:HYPERCUTTER) && stage > 0)
       end
     when :SPEED
       value = battler.speed*spemul
@@ -260,6 +272,7 @@ class Battle::AI
                         move.function == "IgnoreTargetDefSpDefEvaStatStages"
       end
     end
+    stage += 6
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 

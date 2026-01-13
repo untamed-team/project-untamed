@@ -388,14 +388,16 @@ class Battle::AI
           crit = 0
           @battle.pbParty(target.index).each_with_index do |pkmn, i|
             next if !pkmn || pkmn.fainted?
-            crit += 1 if user.hasActiveAbility?(:SNIPER)
-            crit += 1 if user.hasActiveAbility?(:SUPERLUCK)
-            crit += 1 if user.hasActiveItem?(:SCOPELENS)
+            crit += 1 if pkmn.hasAbility?(:SNIPER)
+            crit += 1 if pkmn.hasAbility?(:SUPERLUCK)
+            crit += 1 if pkmn.hasItem?(:SCOPELENS)
             pkmn.moves.each do |moove|
               critMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(moove.id))
               crit += 1 if critMov.highCriticalRate?
               crit += 2 if critMov.function == "RaiseUserCriticalHitRate2" ||
                            critMov.function == "EnsureNextCriticalHit"
+              crit += 3 if critMov.function == "HitThreeTimesAlwaysCriticalHit" ||
+                           critMov.function == "AlwaysCriticalHit"
             end
           end
           if crit > 0
@@ -4248,7 +4250,7 @@ class Battle::AI
               score*=1.3 if target.pbHasMoveFunction?("GiveUserStatusToTarget")
             else
               if target.pbHasMoveFunction?("GiveUserStatusToTarget", "DoublePowerIfUserPoisonedBurnedParalyzed") || 
-                target.hasActiveAbility?([:GUTS, :TOXICBOOST, :FLAREBOOST, :MARVELSCALE, :QUICKFEET])
+                 target.hasActiveAbility?([:GUTS, :TOXICBOOST, :FLAREBOOST, :MARVELSCALE, :QUICKFEET])
                 score*=1.5
               end
             end

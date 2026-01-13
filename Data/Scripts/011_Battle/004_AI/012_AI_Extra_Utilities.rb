@@ -45,7 +45,7 @@ class Battle::AI
     ##### Calculate user's attack stat #####
     atk = pbRoughStat(user, :ATTACK, skill, target, move, moldBreaker)
     if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
-      atk = pbRoughStat(target, :ATTACK, skill, target, move, moldBreaker)
+      atk = pbRoughStat(target, :ATTACK, skill, user, move, moldBreaker)
     elsif move.function == "UseUserBaseDefenseInsteadOfUserBaseAttack" # Body Press
       atk = pbRoughStat(user, :DEFENSE, skill, target, move, moldBreaker)
     elsif move.function == "UseUserBaseSpecialDefenseInsteadOfUserBaseSpecialAttack" # Psycrush
@@ -67,19 +67,9 @@ class Battle::AI
       atk = pbRoughStat(user, higheststat, skill, target, move, moldBreaker)
     elsif move.specialMove?(type)
       if move.function == "UseTargetAttackInsteadOfUserAttack" # Foul Play
-        atk = pbRoughStat(target, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
+        atk = pbRoughStat(target, :SPECIAL_ATTACK, skill, user, move, moldBreaker)
       else
         atk = pbRoughStat(user, :SPECIAL_ATTACK, skill, target, move, moldBreaker)
-      end
-    end
-    # Account for intimidate from mons with AAM
-    if move.physicalMove?(type) && move.function != "UseUserBaseDefenseInsteadOfUserBaseAttack" && 
-       !user.hasActiveAbility?([:DEFIANT, :CONTRARY, :UNAWARE])
-      user.allOpposing.each do |b|
-        next unless b.pokemon.willmega && b.hasAbilityMutation?
-        if b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)
-          atk *= 2 / 3.0
-        end
       end
     end
     ##### Calculate target's defense stat #####
@@ -130,7 +120,9 @@ class Battle::AI
       :base_damage_multiplier  => 1.0,
       :attack_multiplier       => 1.0,
       :defense_multiplier      => 1.0,
-      :final_damage_multiplier => 1.0
+      :final_damage_multiplier => 1.0,
+      :offense_stage           => 0, # these two should never be called
+      :defense_stage           => 0  # since i deal with them in pbRoughStat
     }
     globalArray = @megaGlobalArray
     procGlobalArray = processGlobalArray(globalArray)

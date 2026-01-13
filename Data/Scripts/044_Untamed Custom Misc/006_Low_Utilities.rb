@@ -1208,7 +1208,7 @@ def eggMoveTutor
         dadmovelist.push(i.id)
       end
       break if dadmovelist.nil?
-      pbMessage(_INTL("{1} is ready to bestow a move.", @father))
+      pbMessage(_INTL("{1} is ready to bestow a move.", @father.name))
       chosen2 = screen.pbChoosePokemon
       break if chosen2 < 0
       @mother = $player.party[chosen2]

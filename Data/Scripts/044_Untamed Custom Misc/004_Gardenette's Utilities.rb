@@ -2648,33 +2648,64 @@ end
 # * Furfrou Trims
 #-----------------------------------------------------------------------------
 FURFROU_TRIM_COST = 500
+TRIM_RULES = {
+  0 => proc { true },
+  1 => proc { true }, #$game_switches[999]
+  2 => proc { true }, #$game_variables[99] >= 1
+  3 => proc { true }, #$player.badge_count >= 1
+  4 => proc { true },
+  5 => proc { true },
+  6 => proc { true },
+  7 => proc { true },
+  8 => proc { false },
+  9 => proc { true }
+}
+TRIM_NAMES = {
+  0 => _INTL("Natural Trim"),
+  1 => _INTL("Heart Trim"),
+  2 => _INTL("Star Trim"),
+  3 => _INTL("Diamond Trim"),
+  4 => _INTL("Debutante Trim"),
+  5 => _INTL("Matron Trim"),
+  6 => _INTL("Dandy Trim"),
+  7 => _INTL("La Reine Trim"),
+  8 => _INTL("Kabuki Trim"),
+  9 => _INTL("Pharaoh Trim")
+}
+
 def furfrouTrimsNPC
   $game_variables[36] = 0
   pbMessage(_INTL("Which lovely Furfrou shall I trim?"))
-  pbChooseTradablePokemon(36, 37,
-		proc { |pkmn| pkmn.isSpecies?(:FURFROU) }
-	)
+  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.isSpecies?(:FURFROU) })
   pkmn = $player.party[$game_variables[36]]
   if $game_variables[36] == -1
     pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
     return
   else
-    choices = [
-      _INTL("Natural Trim"), #0
-      _INTL("Heart Trim"), #1
-      _INTL("Star Trim"), #2
-      _INTL("Diamond Trim"), #3
-      _INTL("Debutante Trim"), #4
-      _INTL("Matron Trim"), #5
-      _INTL("Dandy Trim"), #6
-      _INTL("La Reine Trim"), #7
-      _INTL("Kabuki Trim"), #8
-      _INTL("Pharaoh Trim"), #9
-      _INTL("Nevermind")
-    ]
+    availableForms = []
+    TRIM_NAMES.keys.each do |f| 
+      next unless TRIM_RULES[f] && TRIM_RULES[f].call
+      availableForms.push([f, TRIM_NAMES[f]])
+    end
+    if availableForms.empty?
+      echoln("trim bugz regarding availableForms")
+      pbMessage(_INTL("It seems no trims are available right now."))
+      return
+    else
+      choices = []
+      availableForms.each do |formName|
+        choices.push(_INTL("#{formName[1]}"))
+      end
+      choices.push(_INTL("Nevermind"))
+    end
     
     loop do
       new_form = pbMessage(_INTL("Which trim would you like?"), choices, choices.length)
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
+        break
+      end
+      new_form = availableForms[new_form][0]
       
       #the selection matches current trim
       if new_form == pkmn.form
@@ -2682,17 +2713,7 @@ def furfrouTrimsNPC
         next #loop back to trim choices
       end
 
-      if new_form == -1 || new_form == choices.length-1
-        pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
-        break
-      end
-
-      if pkmn.shiny?
-        shinyPath = "Shiny/"
-      else
-        ""
-      end
-
+      shinyPath = pkmn.shiny? ? "Shiny/" : ""
       filePath = "Furfrou Trims/#{shinyPath}FURFROU_#{new_form}"
       #pbMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
       decision = pbConfirmMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
@@ -2708,11 +2729,10 @@ def furfrouTrimsNPC
       pbSEPlay("Trim")
       pbWait(100)
       
-      pbMessage(_INTL("\\me[Contests_Get Accessory]#{pkmn.name} now has the \\c[1]#{choices[new_form]}\\c[0]!"))
-      pbWait(20)
       #change form
       pkmn.form = new_form
       FollowingPkmn.refresh
+      pbMessage(_INTL("\\me[Contests_Get Accessory]#{pkmn.name} now has the \\c[1]#{pkmn.species_data.form_name.to_s}\\c[0]!"))
       break
     end #loop do
   end #if $game_variables[36] == -1
