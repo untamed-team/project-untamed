@@ -2052,6 +2052,7 @@ end #def pbDiscardInstanceVariables
 #-----------------------------------------------------------------------------
 # * Crustang Paint Job
 #-----------------------------------------------------------------------------
+CRUSTANG_PAINTJOB_COST = 2000
 def crustangPaintJobNPC
   $game_variables[36] = 0
 
@@ -2113,7 +2114,7 @@ def crustangPaintJobNPC
       #change form
       pkmn.form = new_form
       #subtract money
-      $player.money -= 3000
+      $player.money -= CRUSTANG_PAINTJOB_COST
       pbSEPlay("Mart buy item")
       pbWait(1)
       FollowingPkmn.refresh
@@ -2642,3 +2643,78 @@ end
 #  pbCueBGM(bike_bgm, 0.5) if bike_bgm
 #  pbPokeRadarCancel
 #end
+
+#-----------------------------------------------------------------------------
+# * Furfrou Trims
+#-----------------------------------------------------------------------------
+FURFROU_TRIM_COST = 500
+def furfrouTrimsNPC
+  $game_variables[36] = 0
+  pbMessage(_INTL("Which lovely Furfrou shall I trim?"))
+  pbChooseTradablePokemon(36, 37,
+		proc { |pkmn| pkmn.isSpecies?(:FURFROU) }
+	)
+  pkmn = $player.party[$game_variables[36]]
+  if $game_variables[36] == -1
+    pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
+    return
+  else
+    choices = [
+      _INTL("Natural Trim"), #0
+      _INTL("Heart Trim"), #1
+      _INTL("Star Trim"), #2
+      _INTL("Diamond Trim"), #3
+      _INTL("Debutante Trim"), #4
+      _INTL("Matron Trim"), #5
+      _INTL("Dandy Trim"), #6
+      _INTL("La Reine Trim"), #7
+      _INTL("Kabuki Trim"), #8
+      _INTL("Pharaoh Trim"), #9
+      _INTL("Nevermind")
+    ]
+    
+    loop do
+      new_form = pbMessage(_INTL("Which trim would you like?"), choices, choices.length)
+      
+      #the selection matches current trim
+      if new_form == pkmn.form
+        pbMessage(_INTL("Your #{pkmn.name} already has that trim, Dear."))
+        next #loop back to trim choices
+      end
+
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
+        break
+      end
+
+      if pkmn.shiny?
+        shinyPath = "Shiny/"
+      else
+        ""
+      end
+
+      filePath = "Furfrou Trims/#{shinyPath}FURFROU_#{new_form}"
+      #pbMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
+      decision = pbConfirmMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
+      
+      if decision == false
+        next #loop back to trim choices
+      end
+
+      #subtract money
+      $player.money -= FURFROU_TRIM_COST
+      pbSEPlay("Mart buy item")
+      pbWait(20)
+      pbSEPlay("Trim")
+      pbWait(100)
+      
+      pbMessage(_INTL("\\me[Contests_Get Accessory]#{pkmn.name} now has the \\c[1]#{choices[new_form]}\\c[0]!"))
+      pbWait(20)
+      #change form
+      pkmn.form = new_form
+      FollowingPkmn.refresh
+      break
+    end #loop do
+  end #if $game_variables[36] == -1
+  
+end #def furfrouTrimsNPC
