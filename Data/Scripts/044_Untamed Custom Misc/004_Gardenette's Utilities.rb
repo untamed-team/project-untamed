@@ -2733,6 +2733,7 @@ def furfrouTrimsNPC
       pkmn.form = new_form
       FollowingPkmn.refresh
       pbMessage(_INTL("\\me[Contests_Get Accessory]#{pkmn.name} now has the \\c[1]#{pkmn.species_data.form_name.to_s}\\c[0]!"))
+      pbWait(20)
       break
     end #loop do
   end #if $game_variables[36] == -1
