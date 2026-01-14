@@ -821,6 +821,10 @@ Arcky
 Ulithium_Dragon
 wrigty12
 
+TDW Debug List Search
+KRLW890
+wrigty12
+
 Temporal Chains' Wardrobe:
 DarrylBD99
 StarWolff
@@ -1208,3 +1212,8 @@ Name      = Easy Debug Terminal
 Version   = 1.3
 Essentials = 20.1, 20
 Credits   = ENLS
+
+Name       = TDW Debug List Search
+Version    = 1.2
+Essentials = 20.1,21.1
+Credits    = TDW Debug List Search
