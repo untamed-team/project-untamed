@@ -431,15 +431,11 @@ class PokemonLoadScreen
       cmd_debug        = -1
       cmd_quit         = -1
       show_continue = !@save_data.empty?
-      if show_continue        
-        commands[cmd_continue = commands.length] = "#{@selected_file}"
-        if @save_data[:player].mystery_gift_unlocked
-          commands[cmd_mystery_gift = commands.length] = _INTL('Mystery Gift') # Honestly I have no idea how to make Mystery Gift work well with this.
-        end
-      end
+      commands[cmd_continue = commands.length] = "#{@selected_file}" if show_continue
       commands[cmd_new_game = commands.length]  = _INTL('New Game')
       commands[cmd_options = commands.length]   = _INTL('Options')
       commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
+	  commands[cmd_mystery_gift = commands.length] = _INTL('Mys. Gift') if show_continue && @save_data[:player].mystery_gift_unlocked
       commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
       commands[cmd_quit = commands.length]      = _INTL('Quit Game')
       cmd_left = -3

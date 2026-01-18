@@ -2739,3 +2739,109 @@ def furfrouTrimsNPC
   end #if $game_variables[36] == -1
   
 end #def furfrouTrimsNPC
+
+#===============================================================================
+# Mystery Gift system
+# By Maruno, edited by Gardenette
+#===============================================================================
+# This url is the location of an example Mystery Gift file.
+# You should change it to your file's url once you upload it.
+#===============================================================================
+module MysteryGift
+  URL = "https://pastebin.com/raw/VUvfZYiq"
+end
+
+#===============================================================================
+# Downloads all available Mystery Gifts that haven't been downloaded yet.
+#===============================================================================
+# Called from the Continue/New Game screen.
+def pbDownloadMysteryGift(trainer)
+  sprites = {}
+  viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+  viewport.z = 99999
+  addBackgroundPlane(sprites, "background", "mysteryGiftbg", viewport)
+  pbFadeInAndShow(sprites)
+  sprites["msgwindow"] = pbCreateMessageWindow
+  pbMessageDisplay(sprites["msgwindow"], _INTL("Searching for a gift.\nPlease wait...\\wtnp[0]"))
+  string = pbDownloadToString(MysteryGift::URL)
+  if nil_or_empty?(string)
+    pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+  else
+    online = pbMysteryGiftDecrypt(string)
+    pending = []
+    online.each do |gift|
+      notgot = true
+      trainer.mystery_gifts.each do |j|
+        notgot = false if j[0] == gift[0]
+      end
+      pending.push(gift) if notgot
+    end
+    if pending.length == 0
+      pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+    else
+      loop do
+        commands = []
+        pending.each do |gift|
+          commands.push(gift[3])
+        end
+        commands.push(_INTL("Cancel"))
+        pbMessageDisplay(sprites["msgwindow"], _INTL("Choose the gift you want to receive.\\wtnp[0]"))
+        command = pbShowCommands(sprites["msgwindow"], commands, -1)
+        if command == -1 || command == commands.length - 1
+          break
+        else
+          gift = pending[command]
+          sprites["msgwindow"].visible = false
+          if gift[1] == 0
+            sprite = PokemonSprite.new(viewport)
+            sprite.setOffset(PictureOrigin::CENTER)
+            sprite.setPokemonBitmap(gift[2])
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.bitmap.height / 2
+          else
+            sprite = ItemIconSprite.new(0, 0, gift[2], viewport)
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.height / 2
+          end
+          distanceDiff = 8 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.y += distanceDiff
+            break if sprite.y >= Graphics.height / 2
+          end
+          pbMEPlay("Battle capture success")
+          (Graphics.frame_rate * 3).times do
+            Graphics.update
+            Input.update
+            sprite.update
+            pbUpdateSceneMap
+          end
+          sprites["msgwindow"].visible = true
+          pbMessageDisplay(sprites["msgwindow"], _INTL("The gift has been received!")) { sprite.update }
+          pbMessageDisplay(sprites["msgwindow"], _INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          trainer.mystery_gifts.push(gift)
+          pending.delete_at(command)
+          opacityDiff = 16 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.opacity -= opacityDiff
+            break if sprite.opacity <= 0
+          end
+          sprite.dispose
+        end
+        if pending.length == 0
+          pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+          break
+        end
+      end
+    end
+  end
+  pbFadeOutAndHide(sprites)
+  pbDisposeMessageWindow(sprites["msgwindow"])
+  pbDisposeSpriteHash(sprites)
+  viewport.dispose
+end
