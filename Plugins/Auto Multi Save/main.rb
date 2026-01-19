@@ -268,20 +268,20 @@ class PokemonLoad_Scene
   
   def pbChoose(commands, continue_idx)
     @sprites["cmdwindow"].commands = commands
+	#added by Gardenette to show arrows if hovering over continue and if there
+    #is more than one save file
+	if @sprites["cmdwindow"].index == 0 && @savesTaken > 1
+      @sprites["leftarrow"].visible = true if @sprites["leftarrow"].visible == false
+      @sprites["rightarrow"].visible = true if @sprites["rightarrow"].visible == false
+    else
+      @sprites["leftarrow"].visible = false if @sprites["leftarrow"].visible == true
+      @sprites["rightarrow"].visible = false if @sprites["rightarrow"].visible == true
+    end
+	
     loop do
       Graphics.update
       Input.update
       pbUpdate
-      #added by Gardenette to show arrows if hovering over continue and if there
-      #is more than one save file
-      if @sprites["cmdwindow"].index == 0 && @savesTaken > 1
-        @sprites["leftarrow"].visible = true if @sprites["leftarrow"].visible == false
-        @sprites["rightarrow"].visible = true if @sprites["rightarrow"].visible == false
-      else
-        @sprites["leftarrow"].visible = false if @sprites["leftarrow"].visible == true
-        @sprites["rightarrow"].visible = false if @sprites["rightarrow"].visible == true
-      end
-        
       if Input.trigger?(Input::USE)
         return @sprites["cmdwindow"].index
       elsif @sprites["cmdwindow"].index == continue_idx
@@ -427,7 +427,7 @@ class PokemonLoadScreen
       cmd_new_game     = -1
       cmd_options      = -1
       cmd_language     = -1
-      cmd_mystery_gift = -1
+      #cmd_mystery_gift = -1
       cmd_debug        = -1
       cmd_quit         = -1
       show_continue = !@save_data.empty?
@@ -435,7 +435,7 @@ class PokemonLoadScreen
       commands[cmd_new_game = commands.length]  = _INTL('New Game')
       commands[cmd_options = commands.length]   = _INTL('Options')
       commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
-	  commands[cmd_mystery_gift = commands.length] = _INTL('Mys. Gift') if show_continue && @save_data[:player].mystery_gift_unlocked
+	  #commands[cmd_mystery_gift = commands.length] = _INTL('Mys. Gift') if show_continue && @save_data[:player].mystery_gift_unlocked
       commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
       commands[cmd_quit = commands.length]      = _INTL('Quit Game')
       cmd_left = -3
@@ -464,8 +464,8 @@ class PokemonLoadScreen
           @scene.pbEndScene
           Game.start_new
           return
-        when cmd_mystery_gift
-          pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
+        #when cmd_mystery_gift
+          #pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
         when cmd_options
           pbFadeOutIn do
             scene = PokemonOption_Scene.new

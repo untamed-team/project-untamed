@@ -2751,6 +2751,30 @@ module MysteryGift
   URL = "https://pastebin.com/raw/VUvfZYiq"
 end
 
+def pbReceivedGiftInAnySaveFile?(gift)
+  #iterate through other valid save files and set the mystery gifts array to be the same value as this save file's mystery gift array
+        SaveData.each_slot do |file_slot|
+          saveFileName = file_slot
+			    full_path = SaveData.get_full_path(file_slot)
+			    next if !File.file?(full_path)
+			    temp_save_data = SaveData.read_from_file(full_path)
+          saveFileMysteryGifts = temp_save_data[:player].mystery_gifts
+          saveFileMysteryGifts.each do |elementInMysteryGiftArray|
+            Console.echo_warn "Checking '#{saveFileName}'"
+            Console.echo_warn "gift[0] is #{gift[0]}"
+            Console.echo_warn "elementInMysteryGiftArray is #{elementInMysteryGiftArray}"
+            Console.echo_warn "elementInMysteryGiftArray[0] is #{elementInMysteryGiftArray[0]}"
+            if elementInMysteryGiftArray[0] == gift[0]
+              Console.echo_warn "received on checked save file since elementInMysteryGiftArray[0] == gift[0]"
+              return true
+            else
+              Console.echo_warn "not received on checked save file"
+            end #if saveFileMysteryGifts[elementInMysteryGiftArray][0] == gift[0]
+          end #saveFileMysteryGifts.each do |mysteryGiftArray|
+		    end #SaveData.each_slot do |file_slot|
+        return false #return false if we didn't find the gift on any save file
+end #def pbReceivedGiftInOtherSaveFile
+
 #===============================================================================
 # Downloads all available Mystery Gifts that haven't been downloaded yet.
 #===============================================================================
@@ -2762,6 +2786,7 @@ def pbDownloadMysteryGift(trainer)
   addBackgroundPlane(sprites, "background", "mysteryGiftbg", viewport)
   pbFadeInAndShow(sprites)
   sprites["msgwindow"] = pbCreateMessageWindow
+  pbMessageDisplay(sprites["msgwindow"], _INTL("You can receive each gift on \\c[2]only one save file\\c[0], and the game will save, so choose wisely which save file you receive it on!"))
   pbMessageDisplay(sprites["msgwindow"], _INTL("Searching for a gift.\nPlease wait...\\wtnp[0]"))
   string = pbDownloadToString(MysteryGift::URL)
   if nil_or_empty?(string)
@@ -2771,9 +2796,10 @@ def pbDownloadMysteryGift(trainer)
     pending = []
     online.each do |gift|
       notgot = true
-      trainer.mystery_gifts.each do |j|
-        notgot = false if j[0] == gift[0]
-      end
+      notgot = false if !pbReceivedGiftInAnySaveFile?(gift)
+      #trainer.mystery_gifts.each do |j|
+      #  notgot = false if j[0] == gift[0] #this is only checking the current save file
+      #end #trainer.mystery_gifts.each do |j|
       pending.push(gift) if notgot
     end
     if pending.length == 0
@@ -2785,7 +2811,7 @@ def pbDownloadMysteryGift(trainer)
           commands.push(gift[3])
         end
         commands.push(_INTL("Cancel"))
-        pbMessageDisplay(sprites["msgwindow"], _INTL("Choose the gift you want to receive.\\wtnp[0]"))
+        pbMessageDisplay(sprites["msgwindow"], _INTL("Choose the gift you want to receive.\\wtnp[0]"))        
         command = pbShowCommands(sprites["msgwindow"], commands, -1)
         if command == -1 || command == commands.length - 1
           break
@@ -2833,6 +2859,8 @@ def pbDownloadMysteryGift(trainer)
           end
           sprite.dispose
         end
+        Game.save
+        pbMessage(_INTL("\\wtnp[1]Saving game...\\wtnp[0]"))
         if pending.length == 0
           pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
           break
