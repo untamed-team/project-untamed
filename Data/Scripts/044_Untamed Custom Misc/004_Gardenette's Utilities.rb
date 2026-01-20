@@ -2776,6 +2776,24 @@ def pbReceivedGiftInAnySaveFile?(gift)
   return false #return false if we didn't find the gift on any save file
 end #def pbReceivedGiftInOtherSaveFile
 
+def pbEligibleToReceiveGift?(gift)
+  giftID = gift[0]
+  if giftID == 1 #check for shiny crabrawler, gift ID 1
+    #check for Crustang Racing Demo save file
+    crustangRacingDemoRequirementsFulfilled = false
+    crustangRacingDemoRequirementsFulfilled = (pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61))
+    print "crustangRacingDemoRequirementsFulfilled is #{crustangRacingDemoRequirementsFulfilled}"
+    return crustangRacingDemoRequirementsFulfilled
+  elsif giftID == 3 #check for e floette, gift ID 3
+    #check all incompatible save files for demo 1 save with certain switch turned on
+
+    #return false if 
+  else
+    #this is any other gift and has no restrictions
+    return true
+  end
+end #def pbEligibleToReceiveGift?
+
 #===============================================================================
 # Downloads all available Mystery Gifts that haven't been downloaded yet.
 #===============================================================================
@@ -2798,6 +2816,7 @@ def pbDownloadMysteryGift(trainer)
     online.each do |gift|
       notgot = true
       notgot = false if pbReceivedGiftInAnySaveFile?(gift)
+      notgot = false if !pbEligibleToReceiveGift?(gift)
       #trainer.mystery_gifts.each do |j|
       #  notgot = false if j[0] == gift[0] #this is only checking the current save file
       #end #trainer.mystery_gifts.each do |j|
