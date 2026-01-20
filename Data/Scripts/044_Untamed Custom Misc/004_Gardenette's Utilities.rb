@@ -2748,31 +2748,32 @@ end #def furfrouTrimsNPC
 # You should change it to your file's url once you upload it.
 #===============================================================================
 module MysteryGift
+  #my pastebin account has a paste (which never expires) for the mystery gifts
   URL = "https://pastebin.com/raw/VUvfZYiq"
 end
 
 def pbReceivedGiftInAnySaveFile?(gift)
   #iterate through other valid save files and set the mystery gifts array to be the same value as this save file's mystery gift array
-        SaveData.each_slot do |file_slot|
-          saveFileName = file_slot
-			    full_path = SaveData.get_full_path(file_slot)
-			    next if !File.file?(full_path)
-			    temp_save_data = SaveData.read_from_file(full_path)
-          saveFileMysteryGifts = temp_save_data[:player].mystery_gifts
-          saveFileMysteryGifts.each do |elementInMysteryGiftArray|
-            Console.echo_warn "Checking '#{saveFileName}'"
-            Console.echo_warn "gift[0] is #{gift[0]}"
-            Console.echo_warn "elementInMysteryGiftArray is #{elementInMysteryGiftArray}"
-            Console.echo_warn "elementInMysteryGiftArray[0] is #{elementInMysteryGiftArray[0]}"
-            if elementInMysteryGiftArray[0] == gift[0]
-              Console.echo_warn "received on checked save file since elementInMysteryGiftArray[0] == gift[0]"
-              return true
-            else
-              Console.echo_warn "not received on checked save file"
-            end #if saveFileMysteryGifts[elementInMysteryGiftArray][0] == gift[0]
-          end #saveFileMysteryGifts.each do |mysteryGiftArray|
-		    end #SaveData.each_slot do |file_slot|
-        return false #return false if we didn't find the gift on any save file
+  Console.echo_warn "checking all save files for #{gift}"
+  SaveData.each_slot do |file_slot|
+    saveFileName = file_slot
+	  full_path = SaveData.get_full_path(file_slot)
+	  next if !File.file?(full_path)
+	  temp_save_data = SaveData.read_from_file(full_path)
+    saveFileMysteryGifts = temp_save_data[:player].mystery_gifts
+    saveFileMysteryGifts.each do |elementInMysteryGiftArray|
+      Console.echo_warn "Checking '#{saveFileName}' because it has mystery gifts received"
+      if elementInMysteryGiftArray[0] == gift[0]
+        Console.echo_warn "#{gift} received on checked save file '#{saveFileName}'"
+        Console.echo_warn "returning true"
+        return true
+      else
+        Console.echo_warn "#{gift} not received on checked save file '#{saveFileName}'"
+      end #if saveFileMysteryGifts[elementInMysteryGiftArray][0] == gift[0]
+    end #saveFileMysteryGifts.each do |mysteryGiftArray|
+	end #SaveData.each_slot do |file_slot|
+  Console.echo_warn "returning false since #{gift} was not received on any checked save file"
+  return false #return false if we didn't find the gift on any save file
 end #def pbReceivedGiftInOtherSaveFile
 
 #===============================================================================
@@ -2796,7 +2797,7 @@ def pbDownloadMysteryGift(trainer)
     pending = []
     online.each do |gift|
       notgot = true
-      notgot = false if !pbReceivedGiftInAnySaveFile?(gift)
+      notgot = false if pbReceivedGiftInAnySaveFile?(gift)
       #trainer.mystery_gifts.each do |j|
       #  notgot = false if j[0] == gift[0] #this is only checking the current save file
       #end #trainer.mystery_gifts.each do |j|
