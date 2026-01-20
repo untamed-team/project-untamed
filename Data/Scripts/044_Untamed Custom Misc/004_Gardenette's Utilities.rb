@@ -2838,18 +2838,23 @@ def pbDownloadMysteryGift(trainer)
             sprite.y += distanceDiff
             break if sprite.y >= Graphics.height / 2
           end
-          pbMEPlay("Battle capture success")
-          (Graphics.frame_rate * 3).times do
-            Graphics.update
-            Input.update
-            sprite.update
-            pbUpdateSceneMap
-          end
-          sprites["msgwindow"].visible = true
-          pbMessageDisplay(sprites["msgwindow"], _INTL("The gift has been received!")) { sprite.update }
-          pbMessageDisplay(sprites["msgwindow"], _INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          #pbMEPlay("Battle capture success")
+          #added by Gardenette
           trainer.mystery_gifts.push(gift)
           pending.delete_at(command)
+          pbReceiveMysteryGift(gift[0])
+
+          #(Graphics.frame_rate * 3).times do
+          #  Graphics.update
+          #  Input.update
+          #  sprite.update
+          #  pbUpdateSceneMap
+          #end
+          
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("The gift has been received!")) { sprite.update }
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          
+          
           opacityDiff = 16 * 20 / Graphics.frame_rate
           loop do
             Graphics.update
@@ -2860,8 +2865,16 @@ def pbDownloadMysteryGift(trainer)
           end
           sprite.dispose
         end
+        sprites["msgwindow"].visible = true
+
+        #added by Gardenette
         Game.save
         pbMessage(_INTL("\\wtnp[1]Saving game...\\wtnp[0]"))
+        (Graphics.frame_rate * 1).times do
+          Graphics.update
+          pbUpdateSceneMap
+        end
+        
         if pending.length == 0
           pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
           break
@@ -2873,4 +2886,68 @@ def pbDownloadMysteryGift(trainer)
   pbDisposeMessageWindow(sprites["msgwindow"])
   pbDisposeSpriteHash(sprites)
   viewport.dispose
+end
+
+def pbReceiveMysteryGift(id)
+  index = -1
+  $player.mystery_gifts.length.times do |i|
+    if $player.mystery_gifts[i][0] == id && $player.mystery_gifts[i].length > 1
+      index = i
+      break
+    end
+  end
+  if index == -1
+    pbMessage(_INTL("Couldn't find an unclaimed Mystery Gift with ID {1}.", id))
+    return false
+  end
+  gift = $player.mystery_gifts[index]
+  if gift[1] == 0   # Pokémon
+    gift[2].personalID = rand(2**16) | (rand(2**16) << 16)
+    gift[2].calc_stats
+    time = pbGetTimeNow
+    gift[2].timeReceived = time.getgm.to_i
+    gift[2].obtain_method = 4   # Fateful encounter
+    gift[2].record_first_moves
+    gift[2].obtain_level = gift[2].level
+    gift[2].obtain_map = $game_map&.map_id || 0
+    was_owned = $player.owned?(gift[2].species)
+    if pbAddPokemonSilent(gift[2])
+      pbMessage(_INTL("\\me[Pkmn get]{1} received {2}!\\wtnp[60]", $player.name, gift[2].name))
+      $player.mystery_gifts[index] = [id]
+      # Show Pokédex entry for new species if it hasn't been owned before
+      if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned && $player.has_pokedex
+        pbMessage(_INTL("{1}'s data was added to the Pokédex.", gift[2].name))
+        $player.pokedex.register_last_seen(gift[2])
+        pbFadeOutIn {
+          scene = PokemonPokedexInfo_Scene.new
+          screen = PokemonPokedexInfoScreen.new(scene)
+          screen.pbDexEntry(gift[2].species)
+        }
+      end
+      return true
+    end
+  elsif gift[1] > 0   # Item
+    item = gift[2]
+    qty = gift[1]
+    if $bag.can_add?(item, qty)
+      $bag.add(item, qty)
+      itm = GameData::Item.get(item)
+      itemname = (qty > 1) ? itm.name_plural : itm.name
+      if item == :LEFTOVERS
+        pbMessage(_INTL("\\me[Item get]You obtained some \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      elsif itm.is_machine?   # TM or HM
+        pbMessage(_INTL("\\me[Item get]You obtained \\c[1]{1} {2}\\c[0]!\\wtnp[30]", itemname,
+                        GameData::Move.get(itm.move).name))
+      elsif qty > 1
+        pbMessage(_INTL("\\me[Item get]You obtained {1} \\c[1]{2}\\c[0]!\\wtnp[30]", qty, itemname))
+      elsif itemname.starts_with_vowel?
+        pbMessage(_INTL("\\me[Item get]You obtained an \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      else
+        pbMessage(_INTL("\\me[Item get]You obtained a \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      end
+      $player.mystery_gifts[index] = [id]
+      return true
+    end
+  end
+  return false
 end
