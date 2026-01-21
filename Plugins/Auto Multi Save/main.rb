@@ -347,7 +347,7 @@ class PokemonLoadScreen
 					exit
 				end #if pbConfirmMessageSerious(_INTL("Do you want to preserve
 			end
-		end #SaveData.each_slot do |file_slot|		
+		end #SaveData.each_slot do |file_slot|
 	end #def moveIncompatibleSaveFiles
 
 	def preserve_save_file(file_path, trainerName, lastSaveTime)

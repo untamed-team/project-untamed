@@ -2781,13 +2781,27 @@ def pbEligibleToReceiveGift?(gift)
   if giftID == 1 #check for shiny crabrawler, gift ID 1
     #check for Crustang Racing Demo save file
     crustangRacingDemoRequirementsFulfilled = false
-    crustangRacingDemoRequirementsFulfilled = (pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61))
-    print "crustangRacingDemoRequirementsFulfilled is #{crustangRacingDemoRequirementsFulfilled}"
+    #crustangRacingDemoRequirementsFulfilled = (pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61))
+    save_path = "#{ENV['APPDATA']}/Crustang Racing Demo/Game.rxdata"
+		if File.exists?(save_path)
+      #the demo exists
+      temp_save_data = SaveData.read_from_file(save_path)
+      #now check if the correct switches are on (60 and 61) and map last saved on was 1 or 2 (only possible ones for CR demo)
+      crustangRacingDemoRequirementsFulfilled = true if temp_save_data[:switches][60] && temp_save_data[:switches][61] && (temp_save_data[:map_factory].map.map_id == 1 || temp_save_data[:map_factory].map.map_id == 2)
+    end
     return crustangRacingDemoRequirementsFulfilled
   elsif giftID == 3 #check for e floette, gift ID 3
     #check all incompatible save files for demo 1 save with certain switch turned on
-
-    #return false if 
+    demo1RequirementsFulfillded = false
+    location = File.join(ENV['APPDATA'],"project-untamed/Incompatiable Save Files")
+    Dir.each_child(location) do |filename|
+      next if File.extname(filename) != ".rxdata"
+	    file_path = File.join(location, filename)
+	    temp_save_data = SaveData.get_data_from_file(file_path)
+      demo1RequirementsFulfillded = true if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] <= 1 && temp_save_data[:player].pokedex.owned_count >= 65
+      
+		end #Dir.each_child(location) do |filename|
+    return demo1RequirementsFulfillded
   else
     #this is any other gift and has no restrictions
     return true
