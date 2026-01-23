@@ -258,6 +258,7 @@ module QuestModule
     :QuestGiverDescSprite => "SHINYHUNTER_M",
     :Stage1 => "Give Florian a Nugget.",
     :Location1 => "Asterado Ranch",
+    :TurninCondition1 => proc { $bag.has?(:NUGGET) },
     :RewardString => '"Good money"',
     :ReadyAtStart => true,
   }
