@@ -33,11 +33,11 @@ class ContestStage
     pbWait(1 * Graphics.frame_rate)
     
     mainJudge = ContestSettings::JUDGES[1][:Name]
-    pbMessage(_INTL("#{mainJudge}: Congratulations!"))
-    pbMessage(_INTL("Let's recognize our winner! \n#{winner[:TrainerName]}'s #{winner[:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Congratulations!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Let's recognize our winner! \n#{winner[:TrainerName]}'s #{winner[:PkmnName]}!"))
     
     ribbon = RibbonEarn.ribbonToBeEarned
-    pbMessage(_INTL("Our winner is awared with the #{ribbon.name}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Our winner is awared with the #{ribbon.name}!"))
     
     case winnerNumber
     when 1
@@ -92,7 +92,7 @@ class ContestStage
     pbMoveRoute($game_map.events[@announcerEvent.id], [PBMoveRoute::TurnDown])
     
     pbWait(1 * Graphics.frame_rate)
-    pbMessage(_INTL("We look forward to your next Contest challenge!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]We look forward to your next Contest challenge!"))
     
     pbSEPlay("Contests_Crowd",80,100)
     #whistle

@@ -20,12 +20,12 @@ class DressupReveal
     
     #when white screen fades away, announcer starts talking
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("All right, thanks for your patience! \\nLet's begin the Visual Competition!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]All right, thanks for your patience! \\nLet's begin the Visual Competition!"))
 
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: Entry number 1! \\n#{@chosenContestants[0][:TrainerName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 1! \\n#{@chosenContestants[0][:TrainerName]}!"))
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{@chosenContestants[0][:TrainerName]} has entered the Contest with #{@chosenContestants[0][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]#{@chosenContestants[0][:TrainerName]} has entered the Contest with #{@chosenContestants[0][:PkmnName]}!"))
     pbWait(1 * Graphics.frame_rate)
     
     #set the stage with the graphic for whichever contestant#PkmnName you want
@@ -41,9 +41,9 @@ class DressupReveal
     self.dropCurtain
     
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: Entry number 2! \\n#{@chosenContestants[1][:TrainerName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 2! \\n#{@chosenContestants[1][:TrainerName]}!"))
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{@chosenContestants[1][:TrainerName]} enters our Contest with #{@chosenContestants[1][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]#{@chosenContestants[1][:TrainerName]} enters our Contest with #{@chosenContestants[1][:PkmnName]}!"))
     pbWait(1 * Graphics.frame_rate)
     
     #set the stage with the graphic for whichever contestant#PkmnName you want
@@ -59,9 +59,9 @@ class DressupReveal
     self.dropCurtain
     
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: Entry number 3! \\n#{@chosenContestants[2][:TrainerName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 3! \\n#{@chosenContestants[2][:TrainerName]}!"))
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{@chosenContestants[2][:TrainerName]} is in the Contest with #{@chosenContestants[2][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]#{@chosenContestants[2][:TrainerName]} is in the Contest with #{@chosenContestants[2][:PkmnName]}!"))
     pbWait(1 * Graphics.frame_rate)
     
     #set the stage with the graphic for whichever contestant#PkmnName you want
@@ -77,9 +77,9 @@ class DressupReveal
     self.dropCurtain
     
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: Entry number 4! \\n\\PN!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 4! \\n\\PN!"))
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("\\PN's Contest hopes ride with {1}!",@playerPkmn.name))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]\\PN's Contest hopes ride with {1}!",@playerPkmn.name))
     pbWait(1 * Graphics.frame_rate)
     
     #set the stage with the graphic for whichever contestant#PkmnName you want
@@ -93,7 +93,7 @@ class DressupReveal
     
     #End of Visual Competition
     pbWait(1 * Graphics.frame_rate/2)
-    pbMessage(_INTL("The Dance Competition is next! \\nIs everyone up and ready for this?!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]The Dance Competition is next! \\nIs everyone up and ready for this?!"))
     
     pbWait(1 * Graphics.frame_rate)
     self.pbEndScene
