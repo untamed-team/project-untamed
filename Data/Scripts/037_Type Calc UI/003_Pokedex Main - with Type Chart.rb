@@ -8,11 +8,13 @@ class Window_Pokedex < Window_DrawableCommand
     @commands = []
     super(x, y, width, height, viewport)
     @selarrow     = AnimatedBitmap.new("Graphics/Pictures/Pokedex/cursor_list")
+    @searching = false
     
     #added by Gardenette for type chart screen
     @function_sprites = {}
     @function_sprites["function_cursor"] = Sprite.new(viewport)
     @function_sprites["function_cursor"].bitmap = Bitmap.new("Graphics/Pictures/Pokedex/function_cursor")
+    @function_sprites["function_cursor"].x = Graphics.width / 4 - 66
     @cursorPos = 1 #current position of the function cursor (starts on Pokedex)
     
     @pokeballOwn  = AnimatedBitmap.new("Graphics/Pictures/Pokedex/icon_own")
@@ -20,28 +22,50 @@ class Window_Pokedex < Window_DrawableCommand
     self.baseColor   = Color.new(88, 88, 80)
     self.shadowColor = Color.new(168, 184, 184)
     self.windowskin  = nil
+
+
   end
   
   #added by Gardenette
   def updateCursorPos
     dorefresh = false
     if Input.trigger?(Input::LEFT)
-      @cursorPos -= 1 
-      @cursorPos = 1 if @cursorPos > 3
-      @cursorPos = 3 if @cursorPos < 1
+      case @cursorPos
+      when 1
+        #@cursorPos = 3
+      when 2
+        #@cursorPos -= 1
+      when 3
+        #@cursorPos -= 1
+      end
+
+      #@cursorPos = 1 if @cursorPos > 3
+      #@cursorPos = 3 if @cursorPos < 1
       dorefresh = true
-    elsif Input.trigger?(Input::RIGHT) && !$game_switches[84]
-      @cursorPos += 1
-      @cursorPos = 1 if @cursorPos > 3
-      @cursorPos = 3 if @cursorPos < 1
+    elsif Input.trigger?(Input::RIGHT) && !@searching
+      case @cursorPos
+      when 1
+        #@cursorPos += 1
+      when 2
+        #@cursorPos += 1
+      when 3
+        #@cursorPos = 1
+      end
+      #@cursorPos += 1
+      #@cursorPos = 1 if @cursorPos > 3
+      #@cursorPos = 3 if @cursorPos < 1
+      dorefresh = true
+    elsif Input.trigger?(Input::SPECIAL) && !@searching
+      pbSpeciesTypeMatchUI
+
       dorefresh = true
     end
     
-    if $game_switches[84]
+    #if @searching
       @function_sprites["function_cursor"].visible = false
-    else
-      @function_sprites["function_cursor"].visible = true
-    end
+    #else
+    #  @function_sprites["function_cursor"].visible = true
+    #end
     
     if dorefresh
       @function_sprites["function_cursor"].y = 0
@@ -52,12 +76,12 @@ class Window_Pokedex < Window_DrawableCommand
         @function_sprites["function_cursor"].x = Graphics.width - ((Graphics.width / 4) + 66)
         pbPlayDecisionSE
         pbTypeMatchUI
-        @cursorPos = 1
+        #@cursorPos = 1
       when 3 #type chart (species)
         @function_sprites["function_cursor"].x = Graphics.width / 4 - 66
         pbPlayDecisionSE
         pbSpeciesTypeMatchUI
-        @cursorPos = 1
+        #@cursorPos = 1
       end
     end
   end
@@ -337,10 +361,19 @@ class PokemonPokedex_Scene
     @sprites["icon"].setOffset(PictureOrigin::CENTER)
     @sprites["icon"].x = 112
     @sprites["icon"].y = 196
+
+    #added by Gardenette for type chart option
+    @sprites["type_chart_icon"] = IconSprite.new(0, 0, @viewport)
+		@sprites["type_chart_icon"].setBitmap("Graphics/Pictures/Pokedex/type_chart")
+		@sprites["type_chart_icon"].x = (Graphics.width - @sprites["type_chart_icon"].width) - 10
+		@sprites["type_chart_icon"].y = 6
+		@sprites["type_chart_icon"].z = 99999
+
     @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
     pbSetSystemFont(@sprites["overlay"].bitmap)
     @sprites["searchcursor"] = PokedexSearchSelectionSprite.new(@viewport)
     @sprites["searchcursor"].visible = false
+
     @searchResults = false
     @searchParams  = [$PokemonGlobal.pokedexMode, -1, -1, -1, -1, -1, -1, -1, -1, -1]
     pbRefreshDexList($PokemonGlobal.pokedexIndex[pbGetSavePositionIndex])
@@ -479,9 +512,12 @@ class PokemonPokedex_Scene
     #    dexname = (thisdex.is_a?(Array)) ? thisdex[0] : thisdex
     #  end
     #end
+    typeChartButton = $PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name
     textpos = [
-      [dexname, Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
-      ["Type Chart", Graphics.width - Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)]
+      #[dexname, Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
+      [dexname, Graphics.width / 2, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
+      ["#{typeChartButton}: ", @sprites["type_chart_icon"].x - 2, @sprites["type_chart_icon"].y + 4, 1, Color.new(248, 248, 248), Color.new(0, 0, 0)],
+      #["Type Chart", Graphics.width - Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)]
     ]
     textpos.push([GameData::Species.get(iconspecies).name, 112, 58, 2, base, shadow]) if iconspecies
     if @searchResults
@@ -495,6 +531,7 @@ class PokemonPokedex_Scene
     end
     # Draw all text
     pbDrawTextPositions(overlay, textpos)
+
     # Set Pokémon sprite
     setIconBitmap(iconspecies)
     # Draw slider arrows
@@ -1232,7 +1269,7 @@ class PokemonPokedex_Scene
         pbPlayCursorSE if index != oldindex
       elsif Input.trigger?(Input::BACK)
         pbPlayCloseMenuSE
-        $game_switches[84] = false
+        @searching = false
         break
       elsif Input.trigger?(Input::USE)
         pbPlayDecisionSE if index != 9
@@ -1322,7 +1359,7 @@ class PokemonPokedex_Scene
           pbRefresh
         end
         if Input.trigger?(Input::ACTION)
-          $game_switches[84] = true
+          @searching = true
           pbPlayDecisionSE
           @sprites["pokedex"].active = false
           pbDexSearch
