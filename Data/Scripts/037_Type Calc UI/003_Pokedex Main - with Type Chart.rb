@@ -369,6 +369,13 @@ class PokemonPokedex_Scene
 		@sprites["type_chart_icon"].y = 6
 		@sprites["type_chart_icon"].z = 99999
 
+    #added by Gardenette for search option
+    @sprites["search_icon"] = IconSprite.new(0, 0, @viewport)
+		@sprites["search_icon"].setBitmap("Graphics/Pictures/Pokedex/search_icon")
+		@sprites["search_icon"].x = 80
+		@sprites["search_icon"].y = 3
+		@sprites["search_icon"].z = 99999
+
     @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
     pbSetSystemFont(@sprites["overlay"].bitmap)
     @sprites["searchcursor"] = PokedexSearchSelectionSprite.new(@viewport)
@@ -513,10 +520,12 @@ class PokemonPokedex_Scene
     #  end
     #end
     typeChartButton = $PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name
+    searchButton = $PokemonSystem.game_controls.find{|c| c.control_action=="Walk/Run"}.key_name
     textpos = [
       #[dexname, Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
       [dexname, Graphics.width / 2, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)],
       ["#{typeChartButton}: ", @sprites["type_chart_icon"].x - 2, @sprites["type_chart_icon"].y + 4, 1, Color.new(248, 248, 248), Color.new(0, 0, 0)],
+      ["#{searchButton}: ", 10, @sprites["type_chart_icon"].y + 4, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)],
       #["Type Chart", Graphics.width - Graphics.width / 4, 10, 2, Color.new(248, 248, 248), Color.new(0, 0, 0)]
     ]
     textpos.push([GameData::Species.get(iconspecies).name, 112, 58, 2, base, shadow]) if iconspecies
