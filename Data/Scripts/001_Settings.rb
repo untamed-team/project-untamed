@@ -37,7 +37,7 @@ module Settings
   # The odds of a newly generated Pokémon being shiny (out of 65536).
   #If MECHANICS_GENERATION >= 6, the chances are # out of 65536 OR # out of
   #65536. The : means OR
-  SHINY_POKEMON_CHANCE = 16
+  SHINY_POKEMON_CHANCE = 16 #4096
   # Whether super shininess is enabled (uses a different shiny animation).
   SUPER_SHINY          = false
   # The odds of a wild Pokémon/bred egg having Pokérus (out of 65536).

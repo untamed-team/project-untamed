@@ -2739,3 +2739,248 @@ def furfrouTrimsNPC
   end #if $game_variables[36] == -1
   
 end #def furfrouTrimsNPC
+
+#===============================================================================
+# Mystery Gift system
+# By Maruno, edited by Gardenette
+#===============================================================================
+# This url is the location of an example Mystery Gift file.
+# You should change it to your file's url once you upload it.
+#===============================================================================
+module MysteryGift
+  #my pastebin account has a paste (which never expires) for the mystery gifts
+  URL = "https://pastebin.com/raw/VUvfZYiq"
+end
+
+def pbReceivedGiftInAnySaveFile?(gift)
+  #iterate through other valid save files and set the mystery gifts array to be the same value as this save file's mystery gift array
+  Console.echo_warn "checking all save files for #{gift}"
+  SaveData.each_slot do |file_slot|
+    saveFileName = file_slot
+	  full_path = SaveData.get_full_path(file_slot)
+	  next if !File.file?(full_path)
+	  temp_save_data = SaveData.read_from_file(full_path)
+    saveFileMysteryGifts = temp_save_data[:player].mystery_gifts
+    saveFileMysteryGifts.each do |elementInMysteryGiftArray|
+      Console.echo_warn "Checking '#{saveFileName}' because it has mystery gifts received"
+      if elementInMysteryGiftArray[0] == gift[0]
+        Console.echo_warn "#{gift} received on checked save file '#{saveFileName}'"
+        Console.echo_warn "returning true"
+        return true
+      else
+        Console.echo_warn "#{gift} not received on checked save file '#{saveFileName}'"
+      end #if saveFileMysteryGifts[elementInMysteryGiftArray][0] == gift[0]
+    end #saveFileMysteryGifts.each do |mysteryGiftArray|
+	end #SaveData.each_slot do |file_slot|
+  Console.echo_warn "returning false since #{gift} was not received on any checked save file"
+  return false #return false if we didn't find the gift on any save file
+end #def pbReceivedGiftInOtherSaveFile
+
+def pbEligibleToReceiveGift?(gift)
+  giftID = gift[0]
+  if giftID == 1 #check for shiny crabrawler, gift ID 1
+    #check for Crustang Racing Demo save file
+    crustangRacingDemoRequirementsFulfilled = false
+    #crustangRacingDemoRequirementsFulfilled = (pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61))
+    save_path = "#{ENV['APPDATA']}/Crustang Racing Demo/Game.rxdata"
+		if File.exists?(save_path)
+      #the demo exists
+      temp_save_data = SaveData.read_from_file(save_path)
+      #now check if the correct switches are on (60 and 61) and map last saved on was 1 or 2 (only possible ones for CR demo)
+      crustangRacingDemoRequirementsFulfilled = true if temp_save_data[:switches][60] && temp_save_data[:switches][61] && (temp_save_data[:map_factory].map.map_id == 1 || temp_save_data[:map_factory].map.map_id == 2)
+    end
+    return crustangRacingDemoRequirementsFulfilled
+  elsif giftID == 3 #check for e floette, gift ID 3
+    #check all incompatible save files for demo 1 save with certain switch turned on
+    demo1RequirementsFulfillded = false
+    location = File.join(ENV['APPDATA'],"project-untamed/Incompatiable Save Files")
+    Dir.each_child(location) do |filename|
+      next if File.extname(filename) != ".rxdata"
+	    file_path = File.join(location, filename)
+	    temp_save_data = SaveData.get_data_from_file(file_path)
+      demo1RequirementsFulfillded = true if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] <= 1 && temp_save_data[:player].pokedex.owned_count >= 65
+      
+		end #Dir.each_child(location) do |filename|
+    return demo1RequirementsFulfillded
+  else
+    #this is any other gift and has no restrictions
+    return true
+  end
+end #def pbEligibleToReceiveGift?
+
+#===============================================================================
+# Downloads all available Mystery Gifts that haven't been downloaded yet.
+#===============================================================================
+# Called from the Continue/New Game screen.
+def pbDownloadMysteryGift(trainer)
+  sprites = {}
+  viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+  viewport.z = 99999
+  addBackgroundPlane(sprites, "background", "mysteryGiftbg", viewport)
+  pbFadeInAndShow(sprites)
+  sprites["msgwindow"] = pbCreateMessageWindow
+  pbMessageDisplay(sprites["msgwindow"], _INTL("You can receive each gift on \\c[2]only one save file\\c[0], and the game will save, so choose wisely which save file you receive it on!"))
+  pbMessageDisplay(sprites["msgwindow"], _INTL("Searching for a gift.\nPlease wait...\\wtnp[0]"))
+  string = pbDownloadToString(MysteryGift::URL)
+  if nil_or_empty?(string)
+    pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+  else
+    online = pbMysteryGiftDecrypt(string)
+    pending = []
+    online.each do |gift|
+      notgot = true
+      notgot = false if pbReceivedGiftInAnySaveFile?(gift)
+      notgot = false if !pbEligibleToReceiveGift?(gift)
+      #trainer.mystery_gifts.each do |j|
+      #  notgot = false if j[0] == gift[0] #this is only checking the current save file
+      #end #trainer.mystery_gifts.each do |j|
+      pending.push(gift) if notgot
+    end
+    if pending.length == 0
+      pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+    else
+      loop do
+        commands = []
+        pending.each do |gift|
+          commands.push(gift[3])
+        end
+        commands.push(_INTL("Cancel"))
+        pbMessageDisplay(sprites["msgwindow"], _INTL("Choose the gift you want to receive.\\wtnp[0]"))        
+        command = pbShowCommands(sprites["msgwindow"], commands, -1)
+        if command == -1 || command == commands.length - 1
+          break
+        else
+          gift = pending[command]
+          sprites["msgwindow"].visible = false
+          if gift[1] == 0
+            sprite = PokemonSprite.new(viewport)
+            sprite.setOffset(PictureOrigin::CENTER)
+            sprite.setPokemonBitmap(gift[2])
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.bitmap.height / 2
+          else
+            sprite = ItemIconSprite.new(0, 0, gift[2], viewport)
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.height / 2
+          end
+          distanceDiff = 8 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.y += distanceDiff
+            break if sprite.y >= Graphics.height / 2
+          end
+          #pbMEPlay("Battle capture success")
+          #added by Gardenette
+          trainer.mystery_gifts.push(gift)
+          pending.delete_at(command)
+          pbReceiveMysteryGift(gift[0])
+
+          #(Graphics.frame_rate * 3).times do
+          #  Graphics.update
+          #  Input.update
+          #  sprite.update
+          #  pbUpdateSceneMap
+          #end
+          
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("The gift has been received!")) { sprite.update }
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          
+          
+          opacityDiff = 16 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.opacity -= opacityDiff
+            break if sprite.opacity <= 0
+          end
+          sprite.dispose
+        end
+        sprites["msgwindow"].visible = true
+
+        #added by Gardenette
+        Game.save
+        pbMessage(_INTL("\\wtnp[1]Saving game...\\wtnp[0]"))
+        (Graphics.frame_rate * 1).times do
+          Graphics.update
+          pbUpdateSceneMap
+        end
+        
+        if pending.length == 0
+          pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+          break
+        end
+      end
+    end
+  end
+  pbFadeOutAndHide(sprites)
+  pbDisposeMessageWindow(sprites["msgwindow"])
+  pbDisposeSpriteHash(sprites)
+  viewport.dispose
+end
+
+def pbReceiveMysteryGift(id)
+  index = -1
+  $player.mystery_gifts.length.times do |i|
+    if $player.mystery_gifts[i][0] == id && $player.mystery_gifts[i].length > 1
+      index = i
+      break
+    end
+  end
+  if index == -1
+    pbMessage(_INTL("Couldn't find an unclaimed Mystery Gift with ID {1}.", id))
+    return false
+  end
+  gift = $player.mystery_gifts[index]
+  if gift[1] == 0   # Pokémon
+    gift[2].personalID = rand(2**16) | (rand(2**16) << 16)
+    gift[2].calc_stats
+    time = pbGetTimeNow
+    gift[2].timeReceived = time.getgm.to_i
+    gift[2].obtain_method = 4   # Fateful encounter
+    gift[2].record_first_moves
+    gift[2].obtain_level = gift[2].level
+    gift[2].obtain_map = $game_map&.map_id || 0
+    was_owned = $player.owned?(gift[2].species)
+    if pbAddPokemonSilent(gift[2])
+      pbMessage(_INTL("\\me[Pkmn get]{1} received {2}!\\wtnp[60]", $player.name, gift[2].name))
+      $player.mystery_gifts[index] = [id]
+      # Show Pokédex entry for new species if it hasn't been owned before
+      if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned && $player.has_pokedex
+        pbMessage(_INTL("{1}'s data was added to the Pokédex.", gift[2].name))
+        $player.pokedex.register_last_seen(gift[2])
+        pbFadeOutIn {
+          scene = PokemonPokedexInfo_Scene.new
+          screen = PokemonPokedexInfoScreen.new(scene)
+          screen.pbDexEntry(gift[2].species)
+        }
+      end
+      return true
+    end
+  elsif gift[1] > 0   # Item
+    item = gift[2]
+    qty = gift[1]
+    if $bag.can_add?(item, qty)
+      $bag.add(item, qty)
+      itm = GameData::Item.get(item)
+      itemname = (qty > 1) ? itm.name_plural : itm.name
+      if item == :LEFTOVERS
+        pbMessage(_INTL("\\me[Item get]You obtained some \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      elsif itm.is_machine?   # TM or HM
+        pbMessage(_INTL("\\me[Item get]You obtained \\c[1]{1} {2}\\c[0]!\\wtnp[30]", itemname,
+                        GameData::Move.get(itm.move).name))
+      elsif qty > 1
+        pbMessage(_INTL("\\me[Item get]You obtained {1} \\c[1]{2}\\c[0]!\\wtnp[30]", qty, itemname))
+      elsif itemname.starts_with_vowel?
+        pbMessage(_INTL("\\me[Item get]You obtained an \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      else
+        pbMessage(_INTL("\\me[Item get]You obtained a \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      end
+      $player.mystery_gifts[index] = [id]
+      return true
+    end
+  end
+  return false
+end

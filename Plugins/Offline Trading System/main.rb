@@ -4,13 +4,9 @@
 #
 
 #Bugs:
-#A pokemon traded from slot 1 (2nd place) in the party was put in the cloud, which put the pokemon in slot 2 of the party (space 3) in slot 1 (space 2), then the pokemon received went into slot 1 (space 2) to replace the initial mon, and that pkmn taht moved from slot 2 (space 3) to slot 1 (space 2) was replaced
 
-#Even when party has an open slot, pokemon gets sent to box and replaces what's in slot 1 in box 0 - needs testing
 
 #TO DO:
-#don't forget to uncomment ##########################################################Game.save
-#should not have the option to empty cloud storage if not in Debug. This is ready for testing
 
 class Game_Player < Game_Character
 	attr_accessor :tradeID
@@ -379,8 +375,8 @@ class OfflineTradingSystem
 		#add to the amount of trades player has completed
 		#$stats.trade_count += 1 #this is already handled in the Trade screen
 		
-		##########################################################Game.save
-		pbMessage(_INTL("\\wtnp[1]Saving game..."))
+		Game.save
+		pbMessage(_INTL("\\wtnp[1]Saving game...\\wtnp[0]"))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		#finalizingTradeLater = false #######need a way to check if we're finalizing the trade later, then put something in the 'receivePkmnFromOtherPlayer' method to do something different than when doing a trade from scratch
 		#Console.echo_warn "@finalizingTradeLater is #{@finalizingTradeLater}"
@@ -517,7 +513,7 @@ class OfflineTradingSystem
 			$PokemonStorage[@pkmnToReplaceLocationAndIndex[1], @pkmnToReplaceLocationAndIndex[2]] = nil
 		end
 		
-		##########################################################Game.save
+		Game.save
 		pbMessage(_INTL("\\wtnp[1]Saving game..."))
 		GardenUtil.pbCreateTextFile(TRADING_ERROR_LOG_FILE_PATH, "Saving game...\n\n", "a")
 		

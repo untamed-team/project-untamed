@@ -17,7 +17,7 @@ def timeMachineCheckSaves
 	 #if the variable for demo version is less than THIS number, push to eligibleSaveFiles
 	 #increase this number with every demo release
 	 filenameNoExt = filename.gsub(".rxdata", "")
-	 next if $player.save_slot == filenameNoExt
+	 #next if $player.save_slot == filenameNoExt
 	 file_path = File.join(location, filename)
 	 save_data = SaveData.get_data_from_file(file_path)
 	 

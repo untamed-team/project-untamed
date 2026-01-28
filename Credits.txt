@@ -842,6 +842,9 @@ DemICE
 Tweaks to Essentials:
 Derxwna Kapsyla
 
+Type Match-up UI:
+ThatWelshOne_
+
 Video with Using Gif:
 bo4p5687
 
@@ -1217,3 +1220,9 @@ Name       = TDW Debug List Search
 Version    = 1.2
 Essentials = 20.1,21.1
 Credits    = TDW Debug List Search
+
+Name       = Type Match-up UI
+Version    = 1.1.0
+Essentials = 21.1
+Website    = https://reliccastle.com/resources/667/
+Credits    = ThatWelshOne_
