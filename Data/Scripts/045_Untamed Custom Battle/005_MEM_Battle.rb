@@ -26,6 +26,8 @@ MEGA_EVO_STATS = {
   ALTARIA: { item: :ALTARIANITE, atkmul: 1.571, defmul: 1.222, spemul: 1.000, spamul: 1.571, spdmul: 1.000 },
   AUDINO: { item: :AUDINITE, atkmul: 1.000, defmul: 1.465, spemul: 1.000, spamul: 1.333, spdmul: 1.465 },
 
+  CENTISKORCH: { item: :CENTISKITE, atkmul: 1.238, defmul: 1.308, spemul: 1.159, spamul: 1.258, spdmul: 1.250 },
+
   ATELANGLER: { item: :ATELANGLITE, atkmul: 1.538, defmul: 1.325, spemul: 1.079, spamul: 1.185, spdmul: 1.147 },
   BEAKRAFT: { item: :BEAKRAFTITE, 
               male: { atkmul: 1.211, defmul: 1.250, spemul: 1.051, spamul: 1.520, spdmul: 1.333 }, 

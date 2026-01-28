@@ -679,7 +679,7 @@ class Battle::AI
     when :GROUND
       return true if target.airborneAI(mold_broken) && !move.hitsFlyingTargets?
     when :FIRE
-      return true if target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
+      return true if target.hasActiveAbility?(:FLASHFIRE,false,mold_broken) && !(target.isSpecies?(:CENTISKORCH) && target.pokemon.willmega && !target.hasAbilityMutation?)
     when :WATER
       return true if target.hasActiveAbility?([:DRYSKIN,:STORMDRAIN,:WATERABSORB],false,mold_broken)
       target.allAllies.each do |b|

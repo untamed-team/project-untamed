@@ -6716,6 +6716,14 @@ Pocket = 1
 Price = 0
 Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[CENTISKITE]
+Name = Centiskite
+NamePlural = Centiskite
+Pocket = 1
+Price = 0
+Flags = MegaStone,Fling_80
+Description = One of a variety of mysterious Mega Stones. Have Centiskorch hold it, and it will be able to Mega Evolve.
 #---------------------------------------------------
 #- Do NOT change internal names.
 #---------------------------------------------------

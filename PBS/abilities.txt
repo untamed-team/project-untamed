@@ -1415,3 +1415,8 @@ Name = Irritable
 Description = Increases Atk when user's move choices are limited.
 FullDesc = Whenever the user is affected by effects such as Disable, Attract, Taunt, Encore, Torment, Heal Block, Throat Chop or Imprison, their Attack is increased by one stage.
 #-------------------------------
+[MELTDOWN]
+Name = Meltdown
+Description = Trapping moves melt field effects to create Sea of Fire.
+FullDesc = The user's trapping moves turn hazards (1-to-1) and screens (2-to-1) into the Sea of Fire effect turn count. Up to a max of 8.
+#-------------------------------

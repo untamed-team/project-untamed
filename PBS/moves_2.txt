@@ -1583,7 +1583,7 @@ Accuracy = 100
 TotalPP = 10
 Target = NearOther
 FunctionCode = LowerTargetSpAtk1
-Flags = CanProtect,CanMirrorMove
+Flags = CanProtect,CanMirrorMove,Bomb
 EffectChance = 10
 Description = The user attacks by borrowing the power of the moon. This may also lower the target's Sp. Atk stat.
 #-------------------------------

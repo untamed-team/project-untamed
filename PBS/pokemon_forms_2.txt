@@ -10,6 +10,7 @@ Abilities = DARKAURA
 HiddenAbilities = DARKAURA
 Height = 0.9
 Weight = 18.6
+Pokedex = One of the most ruthless Pokemon. It will gladly impose impossible production quotas to its own Minimelos, yet refuse to give them any of their produce.
 #-------------------------------
 [GOHILA,1]
 FormName = Mega Gohila
@@ -20,6 +21,7 @@ Abilities = VOLTABSORB
 HiddenAbilities = VOLTABSORB
 Height = 0.3
 Weight = 3.5
+Pokedex = Despise its tiny size, it can often overpower overconfident foes such as Quetzillian. It pretends to be taller by playing with children's toys.
 #-------------------------------
 [ATELANGLER,1]
 FormName = Mega Atelangler
@@ -29,6 +31,7 @@ Abilities = BAITEDLINE
 HiddenAbilities = BAITEDLINE
 Height = 1.9
 Weight = 46.7
+Pokedex = Having finally caught the biggest fish, Atelangler will sometimes refuse to go back to its regular form. They move if they were as one.
 #-------------------------------
 [CHIXULOB,1]
 FormName = Mega Chixulob
@@ -36,8 +39,9 @@ MegaStone = CHIXULITE
 BaseStats = 75,156,96,148,89,71
 Abilities = RECKLESS
 HiddenAbilities = MASSEXTINCTION
-Height = 20.9
+Height = 15.0
 Weight = 35799.0
+Pokedex = Theorized to be what Chixulob originally looked like, this Pokemon's first instinct is to crash into solid rocks. It has proven to despise Dragon-types in specific.
 # given the 20.9m/35799kg stats, this meteor would have a similar density to iron or steel
 # not as grand as the original meteor it was based off of, but it isnt a replica in lore so it should be fine 
 #-------------------------------
@@ -50,6 +54,7 @@ Abilities = SOLARPOWER
 HiddenAbilities = PREMONITION
 Height = 1.5
 Weight = 16.7
+Pokedex = The Mega Evolution process awaked something in Xatu, as it now not only foresees its trainer's demise, but actively tries to prevent it.
 #-------------------------------
 [FLYGON,1]
 FormName = Mega Flygon
@@ -60,6 +65,7 @@ Abilities = COMPOUNDEYES
 HiddenAbilities = COMPOUNDEYES
 Height = 2.0
 Weight = 81.6
+Pokedex = One of the few first Megas documented in Mazah, long thought to be gone or to not have existed at all. This is because Mega Flygon often hides other's Flygon mega stones, seeking to be forgotten.
 #-------------------------------
 [MILOTIC,1]
 FormName = Mega Milotic
@@ -70,6 +76,7 @@ Abilities = MISTYSURGE
 HiddenAbilities = MISTYSURGE
 Height = 7.6
 Weight = 193.4
+Pokedex = Mega Milotic's scales are so reflective they might as well be producing their own controllable light source, similar to a spotlight. Which makes this Pokemon an excellent partner for more extravagant trainers.
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
@@ -79,6 +86,7 @@ Abilities = CORROSION
 HiddenAbilities = CORROSION
 Height = 2.7
 Weight = 345.6
+Pokedex = Each of its jaws has their own stomatch, allowing for a lot more food to be digested at a time. Ancient stories describe this Pokemon devouring a Snorlax in a single bite.
 #------------------------------- 
 [SKARMORY,1]
 FormName = Mega Skarmory
@@ -89,6 +97,7 @@ HiddenAbilities = HYPERCUTTER
 Height = 1.9
 Weight = 60.3
 Shape = MultiWinged
+Pokedex = One of the more successful tribal kings of Mazah utilizied this Pokemon's as its own body guard. More traditional people regard this Pokemon in much higher regard due to that.
 #------------------------------- 
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
@@ -99,6 +108,7 @@ Abilities = PSYCHICSURGE
 HiddenAbilities = PSYCHICSURGE
 Height = 2.5
 Weight = 44.8
+Pokedex = Oddly, this recently discovered Mega Evolution was only documented specifically after a highly secured military complex in Unova was raided.
 #------------------------------- 
 [GOLURK,1]
 FormName = Mega Golurk
@@ -110,6 +120,7 @@ HiddenAbilities = WEAKARMOR
 Height = 1.7
 Weight = 300.0
 Shape = HeadArms
+Pokedex = Having its seal broken, this Pokemon's core overheated and now constantly bursts out energy from its arms and legs, similar to modern day Jets. How ancient civilizations predicted modern day military airplanes is unknown.
 #------------------------------- 
 [HAWLUCHA,1]
 FormName = Mega Hawlucha
@@ -120,6 +131,7 @@ HiddenAbilities = WARRIORSPIRIT
 Height = 0.9
 Weight = 38.3
 Color = Red
+Pokedex = This Mega's battle tenacity is unforgiving. It grows stronger as it adapts to the current foe's attack pattern, with its goal being to create a show for its fans.
 #------------------------------- 
 [CACTURNE,1]
 FormName = Mega Cacturne
@@ -129,6 +141,7 @@ Abilities = DUSTSENTINEL
 HiddenAbilities = DUSTSENTINEL
 Height = 1.6
 Weight = 92.1
+Pokedex = This Pokemon new thorny hide shows itself to be quite bullet resistant. It loves to tie scarescrows in train tracks, whether the railroad is active or not.
 #------------------------------- # note: +nature 140 spdef fur coat = ~282 spdef (with AAM)
 [FROSMOTH,1]
 FormName = Mega Frosmoth
@@ -139,6 +152,7 @@ Abilities = MAGICGUARD
 HiddenAbilities = MAGICGUARD
 Height = 1.4
 Weight = 51.0
+Pokedex = This Pokemon's wing pattern is unique to each species. Though it can be modified if its trainer is a particularly good glass-maker. How Ice evolved into a similar substance to glass is a mystery.
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
@@ -150,6 +164,7 @@ Abilities = ECHOCHAMBER
 HiddenAbilities = ECHOCHAMBER
 Height = 0.9
 Weight = 3.4
+Pokedex = Despite its tiny size, it's copper bell can shatter even bulletproof glass with little effort. Its origin is unknown, and it seems to grow attached to old trinkets quite easily.
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
@@ -161,6 +176,7 @@ Abilities = OVERWRITE
 HiddenAbilities = OVERWRITE
 Height = 1.1
 Weight = 38.7
+Pokedex = The first signs that Mega Porygon-Z is a possibility was after a trainer tried to download more ram into it. Look at it's eyes for too long, and you'll need pills for psychosis.
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
@@ -171,6 +187,7 @@ Abilities = BULLETPROOF
 HiddenAbilities = BULLETPROOF
 Height = 1.1
 Weight = 120.5
+Pokedex = Its rocky exterior now made into durable titanium now also boast a stinger-cannon hybrid. This Pokemon can shoot searing hot magma with high pressure at will.
 #------------------------------- 
 [SPECTERZAL,1]
 FormName = Mega Specterzal
@@ -180,6 +197,7 @@ Abilities = SPOOPERAURA
 HiddenAbilities = SPOOPERAURA
 Height = 5.6
 Weight = 237.2
+Pokedex = The Mega Evolution process overtuned this Pokemon's aggression. Old stories says that whenever this Pokemon is used, multiple disasters are sure to occur.
 # stab + spooper aura = adaptability boost
 #------------------------------- 
 [TREVENANT,1]
@@ -190,6 +208,7 @@ Abilities = GRASSYSURGE
 HiddenAbilities = GRASSYSURGE
 Height = 3.0
 Weight = 89.5
+Pokedex = The Mega Evolution process started affecting its growth. It is not uncommon to see overly dense forests in places where trainers use this Pokemon often.
 #------------------------------- 
 [M_ROSERADE,1]
 FormName = Mega Roserade
@@ -200,6 +219,7 @@ HiddenAbilities = SOULHEART
 Height = 1.0
 Weight = 14.8
 Color = Black
+Pokedex = Under Mega Evolution, Roserade's spiritual powers go through the roof. It is said that the dress-like appearance is an adaptation to be more welcoming towards the dead.
 #------------------------------- 
 [LUPACABRA,1]
 FormName = Mega Lupacabra
@@ -209,6 +229,7 @@ Abilities = MOLDBREAKER
 HiddenAbilities = MOLDBREAKER
 Height = 2.1
 Weight = 140.0
+Pokedex = Violent and reckless. Many years ago, it was not uncommon to see smaller towns being forced into evacuation if enough of them gathered in one place.
 #------------------------------- 
 [ZOLUPINE,1]
 FormName = Mega Zolupine
@@ -219,6 +240,7 @@ Abilities = DRIZZLE
 HiddenAbilities = DRIZZLE
 Height = 1.6
 Weight = 115.6
+Pokedex = The Mega Evolution process awakend its spiritual prowess. It has been noted that victims of Mega Lupacabra are more easily controlled by this Pokemon.
 #------------------------------- 
 [ROADRAPTOR,1]
 FormName = Mega Roadraptor
@@ -229,6 +251,7 @@ Abilities = LIGHTNINGROD
 HiddenAbilities = LIGHTNINGROD
 Height = 1.0
 Weight = 27.0
+Pokedex = Each step of this Pokemon's very developed legs sound like thunder. Due to this, trainers are advised to only Mega Evolve Roadraptor in specific places, to avoid public nuisance.
 #------------------------------- 
 [FRIZZARD,1]
 FormName = Mega Frizzard
@@ -238,6 +261,7 @@ Abilities = SNOWWARNING
 HiddenAbilities = SNOWWARNING
 Height = 1.7
 Weight = 87.9
+Pokedex = Having its frontal arms massively developed, this Pokemon can launch barrages of ice attacks that are as cold as 0° K. It can even dispense ice cream.
 #------------------------------- 
 [ZARCOIL,1]
 FormName = Mega Zarcoil
@@ -247,6 +271,7 @@ Abilities = DROUGHT
 HiddenAbilities = DROUGHT
 Height = 1.3
 Weight = 78.2
+Pokedex = Due to its spinal structure being rearranged, Zarcoil that Mega Evolve often never worry about backpain. It can dispense tea. The taste depends on the berries it eats.
 #------------------------------- # note: +nature 55 def fur coat = ~112 def
 [LAGUNA,1]
 FormName = Mega Laguna
@@ -257,6 +282,7 @@ Abilities = FURCOAT
 HiddenAbilities = FURCOAT
 Height = 0.8
 Weight = 14.0
+Pokedex = Under the influence of Mega Evolution, Laguna actively generates moonlight. It is a common rumour that its fur is so dense it can make even missles bounce back without as much of a scratch.
 #-------------------------------
 [SABLEYE,1]
 FormName = Mega Sableye
@@ -313,8 +339,20 @@ Height = 1.1
 Weight = 27.8
 Pokedex = It can only undergo this transformation once it feeds from a thousand gems. In this form, Diancie's entire purpose is to fulfill the desires of her subjects.
 Generation = 6
+#------------------------------- 
+[CENTISKORCH,1]
+FormName = Mega Centiskorch
+MegaStone = CENTISKITE
+BaseStats = 90,130,85,73,122,100
+BaseExp = 300
+Abilities = SHIELDDUST
+HiddenAbilities = MELTDOWN
+Height = 12.5
+Weight = 495.0
+Pokedex = The heat it emanates is so intense it's advised to not Mega Evolve it in areas with high quantities of dry, flammable material, such as forests in autumn.
+Generation = 8
 #---------------------------------------------------------------------------------------------
-# FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA + bootleg skarm)
+# FORM CHANGES THAT AFFECT STATS (AND A BASIC BITCH MEGA + temu skarm)
 #---------------------------------------------------------------------------------------------
 [FURFROU,1]
 FormName = Heart Trim

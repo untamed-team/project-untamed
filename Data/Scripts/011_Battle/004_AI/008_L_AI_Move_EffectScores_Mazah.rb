@@ -1110,18 +1110,19 @@ class Battle::AI
       if pokemon.item_id == :LIGHTCLAY
         roles.push("Screener")
       end
-      priorityko=false
-      for zzz in pokemon.moves
-        next if zzz.nil? || priorityAI(target,zzz,[],true)<1
-        dam = aiDamage(zzz, pokemon, target)
-        if target.hp>0
-          percentage=(dam*100.0)/target.hp
-          priorityko=true if percentage>100
-        end
-      end
-      if priorityko #|| (pokemon.pbSpeed>target.pbSpeed)
-        roles.push("Revenge Killer")
-      end
+      #unused
+      #priorityko=false
+      #for zzz in pokemon.moves
+      #  next if zzz.nil? || priorityAI(target,zzz,[],true)<1
+      #  dam = aiDamage(zzz, pokemon, target)
+      #  if target.hp>0
+      #    percentage=(dam*100.0)/target.hp
+      #    priorityko=true if percentage>100
+      #  end
+      #end
+      #if priorityko #|| (pokemon.pbSpeed>target.pbSpeed)
+      #  roles.push("Revenge Killer")
+      #end
       if pbHasPivotMove?(pokemon, false) && (healingmove || pokemon.ability == :REGENERATOR)
         roles.push("Pivot")
       end
@@ -1223,20 +1224,20 @@ class Battle::AI
       if pokemon.item_id == :LIGHTCLAY
         roles.push("Screener")
       end
-      # the index here is (probably) wrong but lets see what will happen
-      fakemon = @battle.pbMakeFakeBattler(pokemon,false,target.pbDirectOpposing)
-      priorityko=false
-      for zzz in fakemon.moves
-        next if zzz.nil? || priorityAI(target,zzz,[],true)<1
-        dam = pbRoughDamage(zzz, fakemon, target, 100) # special case, don't use aiDamage
-        if target.hp>0
-          percentage=(dam*100.0)/target.hp
-          priorityko=true if percentage>100
-        end
-      end
-      if priorityko || (pokemon.speed>target.pbSpeed)
-        roles.push("Revenge Killer")
-      end
+      #unused
+      #fakemon = @battle.pbMakeFakeBattler(pokemon,false,target.pbDirectOpposing)
+      #priorityko=false
+      #for zzz in fakemon.moves
+      #  next if zzz.nil? || priorityAI(target,zzz,[],true)<1
+      #  dam = pbRoughDamage(zzz, fakemon, target, 100) # special case, don't use aiDamage
+      #  if target.hp>0
+      #    percentage=(dam*100.0)/target.hp
+      #    priorityko=true if percentage>100
+      #  end
+      #end
+      #if priorityko || (pokemon.speed>target.pbSpeed)
+      #  roles.push("Revenge Killer")
+      #end
       pivot=false
       for mmm in movelist
         if [:UTURN, :FLIPTURN, :VOLTSWITCH, :PARTINGSHOT, :BATONPASS, :TELEPORT].include?(mmm.id)

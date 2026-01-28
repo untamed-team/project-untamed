@@ -823,7 +823,7 @@ class Battle::AI
          target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB],false,mold_broken)
         score*=0.1
       elsif [:Sun, :HarshSun].include?(expectedWeather) && !user.hasActiveItem?(:UTILITYUMBRELLA) &&
-             target.hasActiveAbility?(:FLASHFIRE,false,mold_broken)
+             target.hasActiveAbility?(:FLASHFIRE,false,mold_broken) && !(target.isSpecies?(:CENTISKORCH) && target.pokemon.willmega && !target.hasAbilityMutation?)
         score*=0.1
       end
     #---------------------------------------------------------------------------
@@ -4623,7 +4623,7 @@ class Battle::AI
           maxtype3 = maxmove.type
           contactcheck3 = maxmove.pbContactMove?(target3)
 
-          if target.hasActiveAbility?(:FLASHFIRE) && (maxtype2==:FIRE || maxtype3==:FIRE)
+          if target.hasActiveAbility?(:FLASHFIRE) && (maxtype2==:FIRE || maxtype3==:FIRE) && !(target.isSpecies?(:CENTISKORCH) && target.pokemon.willmega && !target.hasAbilityMutation?)
             score*=3
           end
           if target.hasActiveAbility?([:DRYSKIN, :STORMDRAIN, :WATERABSORB]) && (maxtype2==:WATER || maxtype3==:WATER)

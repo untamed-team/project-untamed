@@ -2467,6 +2467,63 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:LIFESTEAL,
   }
 )
 
+Battle::AbilityEffects::OnEndOfUsingMove.add(:MELTDOWN,
+  proc { |ability, user, targets, move, battle|
+    next if user.fainted? || user.pbOpposingSide.effects[PBEffects::SeaOfFire] >= 8
+    next unless ["BindTarget","BindTargetDoublePowerIfTargetUnderwater"].include?(move.function)
+    seafirecount = 0
+    # hazards
+    if user.pbOpposingSide.effects[PBEffects::StealthRock]
+      seafirecount += 1
+      user.pbOpposingSide.effects[PBEffects::StealthRock] = false
+      battle.pbDisplay(_INTL("{1} melted down {2}'s stealth rocks!", user.pbThis, user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::ToxicSpikes] > 0
+      seafirecount += user.pbOpposingSide.effects[PBEffects::ToxicSpikes]
+      user.pbOpposingSide.effects[PBEffects::ToxicSpikes] = 0
+      battle.pbDisplay(_INTL("{1} melted down {2}'s poison spikes!", user.pbThis, user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::Spikes] > 0
+      seafirecount += user.pbOpposingSide.effects[PBEffects::Spikes]
+      user.pbOpposingSide.effects[PBEffects::Spikes] = 0
+      battle.pbDisplay(_INTL("{1} melted down {2}'s spikes!", user.pbThis, user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::StickyWeb] > 0
+      seafirecount += user.pbOpposingSide.effects[PBEffects::StickyWeb]
+      user.pbOpposingSide.effects[PBEffects::StickyWeb] = 0
+      battle.pbDisplay(_INTL("{1} melted down {2}'s sticky webs!", user.pbThis, user.pbOpposingTeam))
+    end
+    # screens
+    if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
+      seafirecount += (user.pbOpposingSide.effects[PBEffects::AuroraVeil] / 2.0).round
+      user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
+      battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!", user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::LightScreen] > 0
+      seafirecount += (user.pbOpposingSide.effects[PBEffects::LightScreen] / 2.0).round
+      user.pbOpposingSide.effects[PBEffects::LightScreen] = 0
+      battle.pbDisplay(_INTL("{1}'s Light Screen wore off!", user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::Reflect] > 0
+      seafirecount += (user.pbOpposingSide.effects[PBEffects::Reflect] / 2.0).round
+      user.pbOpposingSide.effects[PBEffects::Reflect] = 0
+      battle.pbDisplay(_INTL("{1}'s Reflect wore off!", user.pbOpposingTeam))
+    end
+    if user.pbOpposingSide.effects[PBEffects::AuroraVeil] > 0
+      seafirecount += (user.pbOpposingSide.effects[PBEffects::AuroraVeil] / 2.0).round
+      user.pbOpposingSide.effects[PBEffects::AuroraVeil] = 0
+      battle.pbDisplay(_INTL("{1}'s Aurora Veil wore off!", user.pbOpposingTeam))
+    end
+    if seafirecount > 0
+      seafirecount += user.pbOpposingSide.effects[PBEffects::SeaOfFire]
+      seafirecount = [seafirecount, 8].min
+      user.pbOpposingSide.effects[PBEffects::SeaOfFire] = seafirecount
+      battle.pbDisplay(_INTL("A sea of fire enveloped {1}!", user.pbOpposingTeam(true)))
+      animName = (user.opposes?) ? "SeaOfFire" : "SeaOfFireOpp"
+      battle.pbCommonAnimation(animName)
+    end
+  }
+)
 #===============================================================================
 # AfterMoveUseFromTarget handlers
 #===============================================================================

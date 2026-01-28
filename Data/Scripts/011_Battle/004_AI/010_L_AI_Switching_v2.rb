@@ -700,7 +700,6 @@ class Battle::AI
         damagedealtPercent =100 if damagedealtPercent>100
         if damagesum<=5 || tickdamage
           maxscore=0
-          maxscore=0
         end
       end
       sum+=maxscore+(scoresum*0.01) #if damagesum>0 || tickdamage

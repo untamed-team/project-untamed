@@ -1369,7 +1369,7 @@ class Battle::AI
         if move.type==:FIRE && target.hasActiveAbility?(:DRYSKIN) 
           score*=0.5
         end
-      elsif target.hasActiveAbility?(:FLASHFIRE)
+      elsif target.hasActiveAbility?(:FLASHFIRE) && !(target.isSpecies?(:CENTISKORCH) && target.pokemon.willmega)
         if move.type==:FIRE
           if Effectiveness.calculate(:FIRE, targetTypes[0], targetTypes[1], targetTypes[2])>4
             score*=2
