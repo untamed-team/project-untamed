@@ -28,14 +28,14 @@ class Sprite_Character
   
   # A configurable X/Y offset for CRUSTANG print sprites, in case they don't align
   # nicely with the player's graphic.
-  CRUSTANG_DOWN_X_OFFSET = 0
-  CRUSTANG_DOWN_Y_OFFSET = 0
+  CRUSTANG_DOWN_X_OFFSET = -16
+  CRUSTANG_DOWN_Y_OFFSET = -16
   CRUSTANG_LEFT_X_OFFSET = 0
   CRUSTANG_LEFT_Y_OFFSET = -20
   CRUSTANG_RIGHT_X_OFFSET = -32
   CRUSTANG_RIGHT_Y_OFFSET = -20
-  CRUSTANG_UP_X_OFFSET = 0
-  CRUSTANG_UP_Y_OFFSET = 0
+  CRUSTANG_UP_X_OFFSET = -16
+  CRUSTANG_UP_Y_OFFSET = -16
   
   # If true, both the player AND the follower will create footprints.
   # If false, only the follower will create footprints.
