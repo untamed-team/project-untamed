@@ -26,6 +26,17 @@ class Sprite_Character
   BIKE_X_OFFSET = 0
   BIKE_Y_OFFSET = 0
   
+  # A configurable X/Y offset for CRUSTANG print sprites, in case they don't align
+  # nicely with the player's graphic.
+  CRUSTANG_DOWN_X_OFFSET = -16
+  CRUSTANG_DOWN_Y_OFFSET = -16
+  CRUSTANG_LEFT_X_OFFSET = 0
+  CRUSTANG_LEFT_Y_OFFSET = -20
+  CRUSTANG_RIGHT_X_OFFSET = -32
+  CRUSTANG_RIGHT_Y_OFFSET = -20
+  CRUSTANG_UP_X_OFFSET = -16
+  CRUSTANG_UP_Y_OFFSET = -16
+  
   # If true, both the player AND the follower will create footprints.
   # If false, only the follower will create footprints.
   DUPLICATE_FOOTSTEPS_WITH_FOLLOWER = false
@@ -97,13 +108,30 @@ class Sprite_Character
         fstep.z = 0
         dirs = [nil,"DownLeft","Down","DownRight","Left","Still","Right","UpLeft",
             "Up", "UpRight"]
-        if @character == $game_player && $PokemonGlobal.bicycle
+        if @character == $game_player && $PokemonGlobal.bicycle && $player.party.find { |p| !p.egg? && p.species == :CRUSTANG }
+          fstep.bmp("Graphics/Characters/MSteps/steps#{dirs[@character.direction]}CRUSTANG")
+		elsif @character == $game_player && $PokemonGlobal.bicycle
           fstep.bmp("Graphics/Characters/MSteps/steps#{dirs[@character.direction]}Bike")
         else
           fstep.bmp("Graphics/Characters/MSteps/steps#{dirs[@character.direction]}")
         end
         @steps ||= []
-        if @character == $game_player && $PokemonGlobal.bicycle
+        if @character == $game_player && $PokemonGlobal.bicycle && $player.party.find { |p| !p.egg? && p.species == :CRUSTANG }
+			case @character.direction
+			when 2
+				x = CRUSTANG_DOWN_X_OFFSET
+				y = CRUSTANG_DOWN_Y_OFFSET
+			when 4
+				x = CRUSTANG_LEFT_X_OFFSET
+				y = CRUSTANG_LEFT_Y_OFFSET
+			when 6
+				x = CRUSTANG_RIGHT_X_OFFSET
+				y = CRUSTANG_RIGHT_Y_OFFSET
+			when 8
+				x = CRUSTANG_UP_X_OFFSET
+				y = CRUSTANG_UP_Y_OFFSET
+			end
+		elsif @character == $game_player && $PokemonGlobal.bicycle
           x = BIKE_X_OFFSET
           y = BIKE_Y_OFFSET
         else
