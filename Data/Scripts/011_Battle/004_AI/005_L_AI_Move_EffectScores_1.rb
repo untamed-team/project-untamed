@@ -109,7 +109,7 @@ class Battle::AI
           if setupcheck
             score*=0.8
           end
-          if setupvar
+          if pbHasSetupMove?(target, false)
             score*=0.5
           end
         end

@@ -2929,9 +2929,7 @@ class Battle::AI
           miniscore*=0.5
         end
         miniscore/=100.0
-        if user.stages[:ATTACK]!=6
-          score*=miniscore
-        end           
+        score*=miniscore          
       else
         score = 0
       end
@@ -3181,6 +3179,7 @@ class Battle::AI
             score*=0
           end
         end
+        score *= 1.25 if user.hasActiveAbility?(:MEGALAUNCHER) && move.pulseMove?
         score *= -1
       end
     #---------------------------------------------------------------------------
@@ -3208,7 +3207,7 @@ class Battle::AI
             score*=0
           end
         end
-        score*=1.3 if expectedTerrain == :Grassy && target.affectedByTerrain?
+        score *= 1.3 if expectedTerrain == :Grassy && target.affectedByTerrain?
         score *= -1
       end
     #---------------------------------------------------------------------------

@@ -1295,11 +1295,11 @@ Type = ELECTRIC
 Category = Physical
 Power = 80
 Accuracy = 100
-TotalPP = 10
+TotalPP = 15
 Target = NearOther
 FunctionCode = ParalyzeTarget
 Flags = Contact,CanProtect,CanMirrorMove
-EffectChance = 10
+EffectChance = 20
 Description = A strong electric blast crashes down on the target. It may also leave the target with paralysis.
 #-------------------------------
 [THUNDERPUNCH]

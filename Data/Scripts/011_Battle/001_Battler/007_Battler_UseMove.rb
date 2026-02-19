@@ -402,6 +402,7 @@ class Battle::Battler
     if user.hasActiveAbility?([:PROTEAN, :LIBERO]) &&
        !move.callsAnotherMove? && !move.snatched &&
        user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
+      $aamName=user.abilityName
       @battle.pbShowAbilitySplash(user)
       user.pbChangeTypes(move.calcType)
       typeName = GameData::Type.get(move.calcType).name
@@ -435,9 +436,10 @@ class Battle::Battler
         b.damageState.reset
         # Special interaction for color change + protean ability combo #by low
         if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && b.hasActiveAbility?(:COLORCHANGE) &&
-           b.hasAbilityMutation? && !b.pbOwnedByPlayer?
+           b.hasAbilityMutation? && !b.pbOwnedByPlayer? && move.damagingMove?
           offenseType = move.calcType
           if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
+            $aamName="Color Change"
             @battle.pbShowAbilitySplash(b)
             resistTypesArr = []
             GameData::Type.each do |t|

@@ -1257,7 +1257,7 @@ class Battle::AI
             score*=2
           end
           if target.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]) ||
-            user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
+             user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
             score=0
           end
         else          # is ally
@@ -1296,7 +1296,7 @@ class Battle::AI
             score*=2
           end
           if target.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST]) ||
-            user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
+             user.hasActiveAbility?([:WONDERGUARD, :SPEEDBOOST])
             score=0
           end
         else          # is ally
