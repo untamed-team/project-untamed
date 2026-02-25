@@ -3598,13 +3598,8 @@ Battle::AbilityEffects::OnSwitchIn.add(:TILEWORKER,
 #Honor-bound #by low
 Battle::AbilityEffects::OnSwitchIn.add(:HONORBOUND,
   proc { |ability, battler, battle, switch_in|
-    next if battler.effects[PBEffects::HonorBound]
-    if battler.hp <= (battler.totalhp / 2)
-      battle.pbShowAbilitySplash(battler)
-      battler.effects[PBEffects::HonorBound] = true
-      battle.pbDisplay(_INTL("{1} feels {2} and will not run away!", battler.pbThis, battler.abilityName))
-      battle.pbHideAbilitySplash(battler)
-    end
+    next if battler.hp >= (battler.totalhp / 2) || battler.effects[PBEffects::HonorBound]
+    Battle::AbilityEffects.triggerOnHPDroppedBelowHalf(ability, battler, nil, battle)
   }
 )
 

@@ -65,7 +65,7 @@ Abilities = COMPOUNDEYES
 HiddenAbilities = COMPOUNDEYES
 Height = 2.0
 Weight = 81.6
-Pokedex = One of the few first Megas documented in Mazah, long thought to be gone or to not have existed at all. This is because Mega Flygon often hides other's Flygon mega stones, seeking to be forgotten.
+Pokedex = One of the few first Megas documented in Mazah, long thought to be gone or to not have existed at all. This is because Mega Flygon often hides other Flygon's mega stones, seeking to be forgotten.
 #-------------------------------
 [MILOTIC,1]
 FormName = Mega Milotic
@@ -76,7 +76,7 @@ Abilities = MISTYSURGE
 HiddenAbilities = MISTYSURGE
 Height = 7.6
 Weight = 193.4
-Pokedex = Mega Milotic's scales are so reflective they might as well be producing their own controllable light source, similar to a spotlight. Which makes this Pokemon an excellent partner for more extravagant trainers.
+Pokedex = Mega Milotic's scales are so reflective they might as well be producing their own controllable light source, similar to a spotlight. This Pokemon an excellent partner for more extravagant trainers.
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
@@ -97,7 +97,7 @@ HiddenAbilities = HYPERCUTTER
 Height = 1.9
 Weight = 60.3
 Shape = MultiWinged
-Pokedex = One of the more successful tribal kings of Mazah utilizied this Pokemon's as its own body guard. More traditional people regard this Pokemon in much higher regard due to that.
+Pokedex = One of the more successful tribal kings of Mazah utilizied this Pokemon as its own body guard. More traditional people regard this Pokemon in much higher regard due to that.
 #------------------------------- 
 [BEHEEYEM,1]
 FormName = Mega Beheeyem
@@ -141,7 +141,7 @@ Abilities = DUSTSENTINEL
 HiddenAbilities = DUSTSENTINEL
 Height = 1.6
 Weight = 92.1
-Pokedex = This Pokemon new thorny hide shows itself to be quite bullet resistant. It loves to tie scarescrows in train tracks, whether the railroad is active or not.
+Pokedex = This Pokemon's new thorny hide shows itself to be quite bullet resistant. It loves to tie scarescrows in train tracks, whether the railroad is active or not.
 #------------------------------- # note: +nature 140 spdef fur coat = ~282 spdef (with AAM)
 [FROSMOTH,1]
 FormName = Mega Frosmoth
@@ -152,7 +152,7 @@ Abilities = MAGICGUARD
 HiddenAbilities = MAGICGUARD
 Height = 1.4
 Weight = 51.0
-Pokedex = This Pokemon's wing pattern is unique to each species. Though it can be modified if its trainer is a particularly good glass-maker. How Ice evolved into a similar substance to glass is a mystery.
+Pokedex = This Pokemon's wing pattern is unique to each specimen, though it can be modified if its trainer is a particularly good glass-maker. How Ice evolved into a similar substance to glass is a mystery.
 #------------------------------- 
 [CHIMECHO,1]
 FormName = Mega Chimecho
@@ -164,7 +164,7 @@ Abilities = ECHOCHAMBER
 HiddenAbilities = ECHOCHAMBER
 Height = 0.9
 Weight = 3.4
-Pokedex = Despite its tiny size, it's copper bell can shatter even bulletproof glass with little effort. Its origin is unknown, and it seems to grow attached to old trinkets quite easily.
+Pokedex = Despite its tiny size, its copper bell can shatter even bulletproof glass with little effort. Its origin is unknown, and it seems to grow attached to old trinkets quite easily.
 #------------------------------- 
 [PORYGONZ,1]
 FormName = Mega Porygon-Z
@@ -176,7 +176,7 @@ Abilities = OVERWRITE
 HiddenAbilities = OVERWRITE
 Height = 1.1
 Weight = 38.7
-Pokedex = The first signs that Mega Porygon-Z is a possibility was after a trainer tried to download more ram into it. Look at it's eyes for too long, and you'll need pills for psychosis.
+Pokedex = The first signs that Mega Porygon-Z is a possibility was after a trainer tried to download more ram into it. Look at its eyes for too long, and you'll need pills for psychosis.
 #------------------------------- 
 [MAGCARGO,1]
 FormName = Mega Magcargo
@@ -187,7 +187,7 @@ Abilities = BULLETPROOF
 HiddenAbilities = BULLETPROOF
 Height = 1.1
 Weight = 120.5
-Pokedex = Its rocky exterior now made into durable titanium now also boast a stinger-cannon hybrid. This Pokemon can shoot searing hot magma with high pressure at will.
+Pokedex = Its rocky exterior now made into durable titanium now also boasts a stinger-cannon hybrid. This Pokemon can shoot searing hot magma with high pressure at will.
 #------------------------------- 
 [SPECTERZAL,1]
 FormName = Mega Specterzal
@@ -282,7 +282,7 @@ Abilities = FURCOAT
 HiddenAbilities = FURCOAT
 Height = 0.8
 Weight = 14.0
-Pokedex = Under the influence of Mega Evolution, Laguna actively generates moonlight. It is a common rumour that its fur is so dense it can make even missles bounce back without as much of a scratch.
+Pokedex = Under the influence of Mega Evolution, Laguna actively generates moonlight. It is a common rumour that its fur is so dense it can make even missiles bounce back without as much of a scratch.
 #-------------------------------
 [SABLEYE,1]
 FormName = Mega Sableye
@@ -413,6 +413,7 @@ Types = STEEL,ELECTRIC
 BaseStats = 75,115,150,82,76,80
 Abilities = ELECTRICSURGE
 HiddenAbilities = ELECTRICSURGE
+Pokedex = Highly intelligent, these incredibly skilled builders are often spotted constructing bigger and better nests as a display of dominance towards others.
 #-------------------------------
 [BEAKRAFT,3]
 FormName = Mega Beakraft ♀
@@ -424,6 +425,7 @@ Abilities = ELECTRICSURGE
 HiddenAbilities = ELECTRICSURGE
 Moves = 1,PECK,1,BABYDOLLEYES,4,PLUCK,8,HEADBUTT,12,METALSOUND,16,IRONDEFENSE,20,METALCLAW,24,ROCKSMASH,28,BOUNCE,32,MAGNETICFLUX,38,ROOST,42,HAMMERARM,47,DRILLPECK,52,IRONHEAD
 TutorMoves = DEFOG,WORKUP,HELPINGHAND,BULKUP,SWAGGER,TAUNT,SANDSTORM,DIG,AERIALACE,FALSESWIPE,STEELWING,FLASHCANNON,BODYPRESS,BULLETSEED,SCOURINGWINDS,BODYSLAM,GYROBALL,ROCKSLIDE,SCREECH,SHADOWCLAW,ZENHEADBUTT,CUT,DRILLRUN,SWORDSDANCE,WILDCHARGE,THUNDERBOLT,THUNDER,THUNDERWAVE,FACADE,ELECTRICTERRAIN,MYSTICBLADE
+Pokedex = Highly intelligent, these incredibly skilled builders are often spotted demolishing old nests and cleaning up room to use as materials.
 #-------------------------------
 [CROACROZEN,1]
 FormName = Frozen
