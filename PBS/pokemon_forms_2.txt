@@ -31,7 +31,7 @@ Abilities = BAITEDLINE
 HiddenAbilities = BAITEDLINE
 Height = 1.9
 Weight = 46.7
-Pokedex = Having finally caught the biggest fish, Atelangler will sometimes refuse to go back to its regular form. They move if they were as one.
+Pokedex = Having finally caught the biggest fish, Atelangler will sometimes refuse to go back to its regular form. They move as if they were as one.
 #-------------------------------
 [CHIXULOB,1]
 FormName = Mega Chixulob
@@ -302,7 +302,7 @@ Abilities = HUGEPOWER
 HiddenAbilities = HUGEPOWER
 Height = 1.0
 Weight = 23.5
-Pokedex = Its two sets of jaws thrash about violently as if they each had a will of their own. One gnash from them can turn a boulder to dust.
+Pokedex = The real danger from its two sets of jaws isn't their boulder-crushing bite strength, but that they will viciously fight each other over every target.
 #-------------------------------
 [BANETTE,1]
 FormName = Mega Banette
@@ -325,7 +325,7 @@ Abilities = REFRIGERATE
 HiddenAbilities = REFRIGERATE
 Height = 2.1
 Weight = 350.2
-Pokedex = It envelops prey in its mouth, freezing them instantly. It's jaws can shred through thick blocks of ice as if they are paper.
+Pokedex = It envelops prey in its mouth, freezing them instantly. Its jaws can shred through thick blocks of ice as if they are paper.
 Generation = 6
 #-------------------------------
 [DIANCIE,1]
