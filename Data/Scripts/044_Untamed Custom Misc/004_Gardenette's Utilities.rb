@@ -2984,29 +2984,3 @@ def pbReceiveMysteryGift(id)
   end
   return false
 end
-#===============================================================================
-# Change event priority by adding something to the event name
-#===============================================================================
-#priority(0): Behaves like a standard "Same as Characters" event.
-#priority(1): Appears above ground tiles but below tiles in the tileset that have a Priority of 2 or higher.
-#priority(5): Appears above almost everything except the "Always on Top" layer.
-
-class Game_Event
-def screen_z(height = 0)
-  if @always_on_top
-    return 999
-  end
-  
-  # Logic for the name tag
-  if @event.name[/priority\((\d+)\)/i]
-    p_val = $1.to_i
-    # We use a very specific offset. 
-    # Ground is 0. Characters start at 32+. 
-    # This puts priority(1) at 32, which is just below the player's feet.
-    return (p_val * 32)
-  end
-
-  # Default Essentials behavior for everything else
-  return (@real_y.to_i + 3) * 32 / 4 + height
-end
-end
