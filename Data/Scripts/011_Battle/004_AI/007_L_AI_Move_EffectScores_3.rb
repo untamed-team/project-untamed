@@ -3947,10 +3947,8 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "TargetTakesUserItem" # bestow
-      if !target.hasActiveAbility?(:STICKYHOLD) &&
-         target.item && user.item && 
-         !target.unlosableItem?(target.item) && 
-         target.effects[PBEffects::Substitute]<=0
+      if !target.hasActiveAbility?(:STICKYHOLD) && user.item && 
+         !target.unlosableItem?(target.item) && target.effects[PBEffects::Substitute]<=0 &&
         case user.item_id
         when :CHOICESCARF
           score*=1.2 if userFasterThanTarget
@@ -3997,6 +3995,7 @@ class Battle::AI
             end
           end
         end
+        score=0 if target.item && !$player.difficulty_mode?("chaos")
       else
         score=0 if move.statusMove?
       end

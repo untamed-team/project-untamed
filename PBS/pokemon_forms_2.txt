@@ -76,7 +76,7 @@ Abilities = MISTYSURGE
 HiddenAbilities = MISTYSURGE
 Height = 7.6
 Weight = 193.4
-Pokedex = Mega Milotic's scales are so reflective they might as well be producing their own controllable light source, similar to a spotlight. This Pokemon an excellent partner for more extravagant trainers.
+Pokedex = Mega Milotic's scales are so reflective they might as well be producing their own controllable light source, similar to a spotlight. This Pokemon is an excellent partner for more extravagant trainers.
 #-------------------------------
 [SUCHOBILE,1]
 FormName = Mega Suchobile
