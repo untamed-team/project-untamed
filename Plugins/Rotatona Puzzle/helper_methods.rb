@@ -392,8 +392,8 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
   proc { |_old_map_id|
-	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
-	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	#skip this check if not on maps with a puzzle
+	next if $game_map.map_id != 59 && $game_map.map_id != 120 && $game_map.map_id != 128
 	#if old map is the same as new map, only identify puzzle pieces and load old values
 	if $game_map.map_id == _old_map_id
 		#restore stored values for events
