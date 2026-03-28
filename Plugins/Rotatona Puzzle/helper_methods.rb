@@ -339,6 +339,7 @@ class RotatonaPuzzle
 	end #def self.saveEventVariables
 	
 	def self.loadEventPositions
+		Console.echo_warn "Loading event positions"
 		#go through each of the map's current events
 		$game_map.events.each_value do |event|
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
@@ -374,8 +375,8 @@ end #class RotatonaPuzzle
 #######################################
 #on_player_interact with puzzle event
 EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_event, proc {
-	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
-	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	#skip this check if not on maps with puzzles
+	next if $game_map.map_id != 59 && $game_map.map_id != 120 && $game_map.map_id != 128
 	facingEvent = $game_player.pbFacingEvent
 	RotatonaPuzzle.playerInteract(facingEvent) if facingEvent && facingEvent.name.match(/RotaPuzzle/i) && !RotatonaPuzzle.discRolling?
 })

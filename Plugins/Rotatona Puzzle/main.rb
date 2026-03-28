@@ -26,6 +26,18 @@
 #13. Disc catcher must have "Always on Top" checked
 #14. Catcher events must be facing up or down if disc is going into it from up or down. Catcher events must be facing left or right if disc is going into it from left or right
 
+############################
+# BUGS
+# ramp doesn't stay switched in the position I put it in after saving then reloading the game. Minor bug
+# after closing the game for some time then reopening the game, events don't respond to interacting, even though they are saved in $rotatona_puzzle.currentRoomPuzzleEvents and the method self.loadEventPositions runs successfully. Check the interact method
+############################
+
+############################
+# TO DO
+# when puzzle is solved, play "mining all found"
+# when puzzle is solved, do this with auto event, then delete itself afterwards: autoscroll to the door event, then play the door event opening animation and sound, autoscroll back to player
+############################
+
 SaveData.register(:rotatona_puzzle) do
   save_value { $rotatona_puzzle }
   load_value { |value|  $rotatona_puzzle = value }
@@ -605,7 +617,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x-2, event.y]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, -2, 0])
 					when 6 #right
 						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing right")
 					when 8 #up
@@ -624,7 +636,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x+2, event.y]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, 2, 0])
 					when 8 #up
 						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing up")
 					end #case event.direction
@@ -643,7 +655,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x, event.y-2]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, -2])
 					end #case event.direction
 				end #case cornerTrackEvent.direction
 				
