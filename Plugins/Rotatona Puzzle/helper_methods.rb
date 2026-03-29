@@ -345,8 +345,14 @@ class RotatonaPuzzle
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
 			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
 				for oldEvent in storedEventsArray
-						if 	event.id == oldEvent.storedPuzzleID
+						if event.id == oldEvent.storedPuzzleID
 							Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
+							
+							#copy old event's properties onto new event's properties
+							
+							#replace old event object with new event object
+							#oldEvent = event
+							
 							event.moveto(oldEvent.storedX, oldEvent.storedY)
 							event.direction = oldEvent.storedDirection
 							
