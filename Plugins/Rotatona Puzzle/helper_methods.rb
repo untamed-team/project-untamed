@@ -173,8 +173,8 @@ class RotatonaPuzzle
 		catcherEvents = []
 		
 		$game_map.events.each_value do |event|
-			discEvents.push(event) if event.name.match(/RotaPuzzle_Disc/i)
-			catcherEvents.push(event) if event.name.match(/RotaPuzzle_Catcher/i)
+			discEvents.push(event.id) if event.name.match(/RotaPuzzle_Disc/i)
+			catcherEvents.push(event.id) if event.name.match(/RotaPuzzle_Catcher/i)
 		end #$game_map.events.each_value do |event|
 		
 		#move the discs to catchers because the puzzle is solved
@@ -222,10 +222,10 @@ class RotatonaPuzzle
 			@frameWaitCounter = 0
 			@timer = 0
 		
-			$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].push(event) if event.name.match(/RotaPuzzle_Disc/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].push(event.id) if event.name.match(/RotaPuzzle_Disc/i)
 			if event.name.match(/RotaPuzzle_Launcher_Rotatable/i)
 				#identify launchers and their associated overlay events
-				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].push(event)
+				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].push(event.id)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -237,10 +237,10 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].push(event.id) if event.name.match(/RotaPuzzle_Launcher_Overlay_Rotatable/i)
 			if event.name.match(/RotaPuzzle_Launcher_Stationary/i)
 				#identify launchers and their associated overlay events
-				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].push(event)
+				$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].push(event.id)
 				#check coordinate to the right of the event, as this should be the associated overlay
 				$game_map.events.each_value do |overlayEvent|
 					if overlayEvent.x == event.x+1 && overlayEvent.y == event.y
@@ -250,11 +250,11 @@ class RotatonaPuzzle
 					end
 				end #$game_map.events.each_value do |overlayEvent|
 			end
-			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
-			$rotatona_puzzle.currentRoomPuzzleEvents[:Catchers].push(event) if event.name.match(/RotaPuzzle_Catcher/i)
-			$rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].push(event) if event.name.match(/RotaPuzzle_Ramp/i)
-			$rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].push(event) if event.name.match(/RotaPuzzle_StraightTrack/i)
-			$rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].push(event) if event.name.match(/RotaPuzzle_CornerTrack/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].push(event.id) if event.name.match(/RotaPuzzle_Launcher_Overlay_Stationary/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Catchers].push(event.id) if event.name.match(/RotaPuzzle_Catcher/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].push(event.id) if event.name.match(/RotaPuzzle_Ramp/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].push(event.id) if event.name.match(/RotaPuzzle_StraightTrack/i)
+			$rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].push(event.id) if event.name.match(/RotaPuzzle_CornerTrack/i)
 		end
 		
 		#dock rotatona disc at start
@@ -368,6 +368,16 @@ class RotatonaPuzzle
 			end #$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |oldEvent|
 		end #$game_map.events.each_value do |event|
 	end #self.loadEventPositions
+	
+	def self.getEventObjectFromID(id)
+		$game_map.events.each_value do |event|
+			Console.echo_warn "event is #{event} and its ID is #{event.id}. Looking for an event with ID #{id}"
+			return event if event.id == id
+			Console.echo_warn "that was event with ID #{event.id}, which didn't make the cut"
+		end #$game_map.events.each_value do |event|
+		print "if you're seeing this, something is wrong"
+	end #def self.getEventObjectFromID(id)
+	
 end #class RotatonaPuzzle
 
 #######################################
