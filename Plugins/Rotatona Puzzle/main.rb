@@ -29,12 +29,13 @@
 ############################
 # BUGS
 # ramp doesn't stay switched in the position I put it in after saving then reloading the game. Minor bug
-# after closing the game for some time then reopening the game
-#$rotatona_puzzle.currentRoomPuzzleEvents[:Ramps] contains a game object, not an event ID. When $rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].include?(event) is run, it checks for a specific game object
+# after closing the game for some time then reopening the game, events don't respond to interacting, even though they are saved in $rotatona_puzzle.currentRoomPuzzleEvents and the method self.loadEventPositions runs successfully. Check the interact method
 ############################
 
 ############################
 # TO DO
+# when puzzle is solved, play "mining all found"
+# when puzzle is solved, do this with auto event, then delete itself afterwards: autoscroll to the door event, then play the door event opening animation and sound, autoscroll back to player
 ############################
 
 SaveData.register(:rotatona_puzzle) do
@@ -116,9 +117,6 @@ class RotatonaPuzzle
 	def self.cameraLogic
 		#for all discs rolling, camera autoscroll to the disc
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
-			#get event object from event ID
-			event = self.getEventObjectFromID(event)
-		
 			next if !event.discRolling
 			#start with locking the player in place
 			$game_player.lock
@@ -148,13 +146,13 @@ class RotatonaPuzzle
 	#######################################
 	def self.playerInteract(event)
 		#events are passed in as GameData		
-		if $rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event.id)
+		if $rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event)
 			#print "this is rota1"
 			#option to launch if docked
 			#rota1LaunchChoice = pbConfirmMessage("Launch the disc?")
 			#print "launching disc from launcher 1" if rota1LaunchChoice
 		###################################################################	
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].include?(event.id)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -180,7 +178,7 @@ class RotatonaPuzzle
 			end
 			self.saveEventVariables
 		###################################################################
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event.id)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
 			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -206,7 +204,7 @@ class RotatonaPuzzle
 			end
 			self.saveEventVariables
 		###################################################################	
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(event.id)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(event)
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -219,7 +217,7 @@ class RotatonaPuzzle
 			end
 			self.saveEventVariables
 		###################################################################	
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event.id)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event)
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -232,29 +230,26 @@ class RotatonaPuzzle
 			end
 			self.saveEventVariables
 		###################################################################
-		elsif event.id == $rotatona_puzzle.currentRoomPuzzleEvents[:Catchers]
+		elsif event == $rotatona_puzzle.currentRoomPuzzleEvents[:Catchers]
 			#print "this is catcher2"
 			#maybe some text about how the rota would seem to fit perfectly in here
 			pbMessage(_INTL("A large disc looks like it would fit perfectly in here."))
 		###################################################################
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].include?(event.id)
-			print "ramp"
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Ramps].include?(event)
 			#print "this is a ramp"
 			#option to switch 180 degrees
 			rampChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.switchRamp(event) if rampChoice
 			self.saveEventVariables
 		###################################################################
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].include?(event.id)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:StraightTracks].include?(event)
 			#print "this is a straight track"
 			#option to turn track 90 degrees
 			straightTrackChoice = pbConfirmMessage("There's a switch here. Press it?")
 			self.rotateStraightTrack(event) if straightTrackChoice
 			self.saveEventVariables
 		###################################################################
-		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].include?(event.id)
-		#get event object from event ID
-			event = self.getEventObjectFromID(event)
+		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:CornerTracks].include?(event)
 			#print "this is a corner track"
 			#option to turn track 90 degrees
 			choices = [
@@ -271,15 +266,12 @@ class RotatonaPuzzle
 				#print "turning corner track right"
 				self.rotateCornerTrack(event,"right90")
 			end
-		end #if $rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event.id)
+		end #if $rotatona_puzzle.currentRoomPuzzleEvents[:Discs].include?(event)
 		self.saveEventVariables
 	end #def self.playerInteract
 	
 	def self.checkForRotatonaCollisions
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
-			#get event object from event ID
-			event = self.getEventObjectFromID(event)
-			
 			next if !event.discRolling
 			
 			#set the tile the disc is touching if it's different than before (so we can't double dip on the same tile when checking for collisions)
@@ -997,9 +989,6 @@ class RotatonaPuzzle
 	
 	def self.discMoveForward
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
-			#get event object from event ID
-			event = self.getEventObjectFromID(event)
-			
 			#don't move if not rolling
 			next if !event.discRolling
 			#we don't want to move forward if the disc is currently turning
@@ -1023,9 +1012,6 @@ class RotatonaPuzzle
 	
 	def self.updateRollingAnimation
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
-			#get event object from event ID
-			self.getEventObjectFromID(id)
-			
 			next if !event.discRolling
 			
 			next if @frameWaitCounter < FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS
