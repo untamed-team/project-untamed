@@ -28,14 +28,11 @@
 
 ############################
 # BUGS
-# ramp doesn't stay switched in the position I put it in after saving then reloading the game. Minor bug
-# after closing the game for some time then reopening the game, events don't respond to interacting, even though they are saved in $rotatona_puzzle.currentRoomPuzzleEvents and the method self.loadEventPositions runs successfully. Check the interact method
+# plugin checks for objects that might no longer exist when loading event position. Plugin saves game objects instead of event IDs
 ############################
 
 ############################
 # TO DO
-# when puzzle is solved, play "mining all found"
-# when puzzle is solved, do this with auto event, then delete itself afterwards: autoscroll to the door event, then play the door event opening animation and sound, autoscroll back to player
 ############################
 
 SaveData.register(:rotatona_puzzle) do
