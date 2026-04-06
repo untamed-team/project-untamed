@@ -2244,7 +2244,7 @@ Weight = 1.6
 Color = Black
 Shape = Winged
 Category = Corvid
-Pokedex = Cromen have a strong affinity for shiny objects and snatch any valuables left unattended. They always carry their favourite piece around in their beak
+Pokedex = Cromen have a strong affinity for shiny objects and snatch any valuables left unattended. They always carry their favourite piece around in their beak.
 WildItemUncommon = PEARL
 Evolutions = CORVOYANT,Level,26
 #-------------------------------
@@ -3827,7 +3827,7 @@ Weight = 40.8
 Color = White
 Shape = HeadBase
 Category = Icy Snow
-Pokedex = Doctors in the Mazah region keep a Vanillish on call, as overheating is a common cause of hospital visits. Their berries can cure any headaches or frostbite
+Pokedex = Doctors in the Mazah region keep a Vanillish on call, as overheating is a common cause of hospital visits. Their berries can cure any headaches or frostbite.
 WildItemUncommon = PERSIMBERRY
 WildItemRare = SITRUSBERRY
 Evolutions = M_VANILLUXE,Level,47
