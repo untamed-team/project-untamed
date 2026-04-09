@@ -3804,6 +3804,11 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,200]
 LoseText = sex
 #Gimmick = stealthrock
+Pokemon = MAGCARGO,50
+    Moves = NORETREAT,FLAMETHROWER,FLASHCANNON,EARTHPOWER
+    Ability = SIMPLE
+    Nature = QUIRKY
+    MEM = True
 Pokemon = STRELAVISON,50
     Moves = STICKYWEB,DISCHARGE,LUNARDANCE
     Ability = SHOWTIME

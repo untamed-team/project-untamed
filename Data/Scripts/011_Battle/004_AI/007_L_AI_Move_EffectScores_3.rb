@@ -926,7 +926,7 @@ class Battle::AI
             score*=0.9
           end
         end
-        if target.hasActiveAbility?(:STAMINA)
+        if target.hasActiveAbility?(:STAMINA) && !$player.difficulty_mode?("chaos")
           score*=0.5
         end
       end
@@ -994,7 +994,7 @@ class Battle::AI
             score*=0.8
           end
         end
-        if target.hasActiveAbility?(:STAMINA)
+        if target.hasActiveAbility?(:STAMINA) && !$player.difficulty_mode?("chaos")
           score*=0.4
         end
       end
@@ -1027,7 +1027,7 @@ class Battle::AI
                 score*=0.8
               end
             end
-            if target.hasActiveAbility?(:STAMINA)
+            if target.hasActiveAbility?(:STAMINA) && !$player.difficulty_mode?("chaos")
               score*=0.4
             end
           end
@@ -1091,7 +1091,7 @@ class Battle::AI
             badeffect = true
           end
         end
-        if target.hasActiveAbility?(:STAMINA)
+        if target.hasActiveAbility?(:STAMINA) && !$player.difficulty_mode?("chaos")
           score*=0.4
           badeffect = true
         end
@@ -1270,7 +1270,7 @@ class Battle::AI
       if livecountuser>0
         if !user.opposes?(target) # is ally
           if (target.hasActiveAbility?(:JUSTIFIED) && move.type == :DARK) || 
-             (target.hasActiveAbility?(:STAMINA) && move.pbContactMove?(user))
+             (target.hasActiveAbility?(:STAMINA) && move.pbContactMove?(user) && !$player.difficulty_mode?("chaos"))
             if targetSurvivesMove(move,user,target)
               score = -100.0
               # checking if the recepient can outspeed
@@ -1321,8 +1321,8 @@ class Battle::AI
                 score*=0.7
               end
             end
-            if target.hasActiveAbility?(:STAMINA)
-                score*=0.3
+            if target.hasActiveAbility?(:STAMINA) && !$player.difficulty_mode?("chaos")
+              score*=0.3
             end
           end
           if target.hp==target.totalhp && (target.hasActiveItem?(:FOCUSSASH) || target.hasActiveAbility?(:STURDY))
@@ -2936,9 +2936,9 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserByHalfOfDamageDone" # drain punch
       minimini = aiDamage(move, user, target)
-      minimini = minimini * 100 / target.hp
+      minimini = (minimini / target.hp) * 100
       miniscore = minimini / 2.0
-      missinghp = (user.totalhp-user.hp) * 100.0
+      missinghp = ((user.totalhp-user.hp) * 100.0) / user.totalhp
       if miniscore > missinghp
         miniscore = missinghp
       end
@@ -2962,9 +2962,9 @@ class Battle::AI
     when "HealUserByHalfOfDamageDoneIfTargetAsleep" # dream eater
       if target.asleep? && (target.statusCount > 1 || userFasterThanTarget)
         minimini = aiDamage(move, user, target)
-        minimini = minimini / target.hp
+        minimini = (minimini / target.hp) * 100
         miniscore = minimini / 2.0
-        missinghp = (user.totalhp-user.hp) * 100.0
+        missinghp = ((user.totalhp-user.hp) * 100.0) / user.totalhp
         if miniscore > missinghp
           miniscore = missinghp
         end
@@ -2990,9 +2990,9 @@ class Battle::AI
     #---------------------------------------------------------------------------
     when "HealUserByThreeQuartersOfDamageDone" # oblivion wing
       minimini = aiDamage(move, user, target)
-      minimini = minimini / target.hp
+      minimini = (minimini / target.hp) * 100
       miniscore = minimini * (3.0/4.0)
-      missinghp = (user.totalhp-user.hp) * 100.0
+      missinghp = ((user.totalhp-user.hp) * 100.0) / user.totalhp
       if miniscore > missinghp
         miniscore = missinghp
       end

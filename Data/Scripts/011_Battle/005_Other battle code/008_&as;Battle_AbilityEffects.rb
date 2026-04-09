@@ -2454,14 +2454,15 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:ECHOCHAMBER,
 Battle::AbilityEffects::OnEndOfUsingMove.add(:LIFESTEAL,
   proc { |ability, user, targets, move, battle|
     next if !user.canHeal? || !move.contactMove?
-    totalDamage = 0
-    targets.each { |b| totalDamage += (b.damageState.hpLost / 6.0).round }
-    next if totalDamage <= 0
-    battle.pbShowAbilitySplash(user)
+    totalDamage = []
     targets.each do |b|
-      hpGain = (b.damageState.hpLost / 6.0).round
-      next if hpGain < 1
-      user.pbRecoverHPFromDrain(hpGain, b)
+      heal = (b.damageState.hpLost / 6.0).round
+      totalDamage.push([b, heal]) if heal > 0
+    end
+    next if totalDamage.empty?
+    battle.pbShowAbilitySplash(user)
+    totalDamage.each do |dmg|
+      user.pbRecoverHPFromDrain(dmg[1], dmg[0])
     end
     battle.pbHideAbilitySplash(user)
   }

@@ -166,11 +166,11 @@ class Battle
     return false if $game_switches[Settings::NO_MEGA_EVOLUTION]
     return true if $DEBUG && Input.press?(Input::CTRL)
     return false if @battlers[idxBattler].effects[PBEffects::SkyDrop] >= 0
+    return false if !@battlers[idxBattler].hasMega?
+    return false if @battlers[idxBattler].mega?
     #~ return false if !pbHasMegaRing?(idxBattler)
     # MEM stuff #by low
     if !@battlers[idxBattler].hasMegaEvoMutation?
-      return false if !@battlers[idxBattler].hasMega?
-      return false if @battlers[idxBattler].mega?
       return false if @battlers[idxBattler].wild?
       side  = @battlers[idxBattler].idxOwnSide
       owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)

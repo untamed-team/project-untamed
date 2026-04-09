@@ -5,25 +5,25 @@ class Battle::AI
     return if pbEnemyShouldWithdraw?(idxBattler)
     return if @battle.pbAutoFightMenu(idxBattler)
     @battle.pbRegisterMegaEvolution(idxBattler) if pbEnemyShouldMegaEvolve?(idxBattler)
-    if PluginManager.installed?("ZUD Mechanics")
-      @battle.pbRegisterUltraBurst(idxBattler) if pbEnemyShouldUltraBurst?(idxBattler)
-      @battle.pbRegisterDynamax(idxBattler) if pbEnemyShouldDynamax?(idxBattler)
-    end
-    if PluginManager.installed?("Terastal Phenomenon")
-      @battle.pbRegisterTerastallize(idxBattler) if pbEnemyShouldTerastallize?(idxBattler)
-    end
-    if PluginManager.installed?("Pokémon Birthsigns")
-      @battle.pbRegisterZodiacPower(idxBattler) if pbEnemyShouldZodiacPower?(idxBattler)
-    end
-    if PluginManager.installed?("Focus Meter System")
-      @battle.pbRegisterFocus(idxBattler) if pbEnemyShouldFocus?(idxBattler)
-    end
-    if PluginManager.installed?("Essentials Deluxe")
-      if !@battle.pbScriptedMechanic?(idxBattler, :custom) && pbEnemyShouldCustom?(idxBattler)
-        @battle.pbRegisterCustom(idxBattler)
-      end
-    end  
     pbChooseMoves(idxBattler)
+    #if PluginManager.installed?("ZUD Mechanics")
+    #  @battle.pbRegisterUltraBurst(idxBattler) if pbEnemyShouldUltraBurst?(idxBattler)
+    #  @battle.pbRegisterDynamax(idxBattler) if pbEnemyShouldDynamax?(idxBattler)
+    #end
+    #if PluginManager.installed?("Terastal Phenomenon")
+    #  @battle.pbRegisterTerastallize(idxBattler) if pbEnemyShouldTerastallize?(idxBattler)
+    #end
+    #if PluginManager.installed?("Pokémon Birthsigns")
+    #  @battle.pbRegisterZodiacPower(idxBattler) if pbEnemyShouldZodiacPower?(idxBattler)
+    #end
+    #if PluginManager.installed?("Focus Meter System")
+    #  @battle.pbRegisterFocus(idxBattler) if pbEnemyShouldFocus?(idxBattler)
+    #end
+    #if PluginManager.installed?("Essentials Deluxe")
+    #  if !@battle.pbScriptedMechanic?(idxBattler, :custom) && pbEnemyShouldCustom?(idxBattler)
+    #    @battle.pbRegisterCustom(idxBattler)
+    #  end
+    #end
   end
   
   

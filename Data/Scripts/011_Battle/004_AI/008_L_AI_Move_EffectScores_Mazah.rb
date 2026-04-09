@@ -1723,7 +1723,7 @@ class Battle::AI
       echo("\nStamina Disrupt") if $AIGENERALLOG
       if user.moves.any? { |m| m&.pbContactMove?(user) }
         abilityscore*=1.3
-        abilityscore*=1.5 if user.moves.any? { |m| m&.multiHitMove? }
+        abilityscore*=1.5 if user.moves.any? { |m| m&.multiHitMove? } && !$player.difficulty_mode?("chaos")
       end
     end
     if target.hasActiveAbility?(:STEAMENGINE)
@@ -2381,7 +2381,7 @@ class Battle::AI
     moveIdx = user.moves.find_index(move)
     return 0 if moveIdx.nil?
     damage = @damagesAI.dig(user.index, moveIdx, :dmg, target.index) || 0
-    echoln("\nAI Damage Pre-Calc for #{move.name} from #{user.name} to #{target.name}: #{damage}\n") if $AIGENERALLOG
+    echoln("AI Damage Pre-Calc for #{move.name} from #{user.name} to #{target.name}: #{damage}") if $AIGENERALLOG
     return damage
   end
 end
