@@ -317,7 +317,7 @@ class Battle::AI
     if @battle.choices[idxBattler][2]
       PBDebug.log("[AI] #{user.pbThis} (#{user.index}) will use #{@battle.choices[idxBattler][2].name}")
     end
-    if $AIGENERALLOG
+    if $AIGENERALLOG && !user.wild?
       echoln("")
       echo("\n---------------------------------------------")
       echo("\n      !!! ENDING THE TURN !!!")
@@ -442,7 +442,8 @@ class Battle::AI
          (target.hasActiveAbility?(:STORMDRAIN,false,mold_broken) && realtype == :WATER)
         if target.spatk > target.attack
           score *= 2.0
-        elsif target.statStageAtMax?(:SPECIAL_ATTACK)
+        elsif target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, :LIGHTNINGROD) &&
+              target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, :STORMDRAIN)
           score *= 1.01
         else
           score *= 1.2
@@ -450,7 +451,7 @@ class Battle::AI
       end
       if target.hasActiveAbility?(:MOTORDRIVE,false,mold_broken) && realtype == :ELECTRIC
         if @battle.field.effects[PBEffects::TrickRoom] == 0
-          if target.statStageAtMax?(:SPEED)
+          if target.pbCannotRaiseStatBySource?(:SPEED, :MOTORDRIVE)
             score *= 1.01
           else
             oppcounter = @battle.allBattlers.count { |target| user.opposes?(target) }
@@ -482,7 +483,7 @@ class Battle::AI
       if target.hasActiveAbility?(:SAPSIPPER,false,mold_broken)
         if target.attack > target.spatk
           score *= 2.0
-        elsif target.statStageAtMax?(:ATTACK)
+        elsif target.pbCannotRaiseStatBySource?(:ATTACK, :SAPSIPPER)
           score *= 1.01
         else
           score *= 1.2
@@ -609,11 +610,6 @@ class Battle::AI
       # Prefer status moves if level difference is significantly high
       if user.level - 5 > target.level
         score *= 1.1
-      else
-        # Don't prefer set up moves if it was already used and still have raised stats
-        if user.SetupMovesUsed.include?(move.id) && user.hasRaisedStatStages?
-          score *= 0.7
-        end
       end
       # IF future sight is about to hit, account for its damage when calcing protect moves
       # ("ProtectRate" check is done above)

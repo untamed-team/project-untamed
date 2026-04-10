@@ -934,7 +934,7 @@ class Battle::AI
           user.pbOwnSide.effects[PBEffects::Spikes] > 0 || 
           user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0 ||
           user.pbOwnSide.effects[PBEffects::StealthRock] || 
-          user.pbOwnSide.effects[PBEffects::StickyWeb] > 0) && !user.SetupMovesUsed.include?(move.id)
+          user.pbOwnSide.effects[PBEffects::StickyWeb] > 0)
         miniscore = 100
         miniscore*=2 if user.hasActiveAbility?(:SIMPLE)
         if user.attack<user.spatk
@@ -995,7 +995,7 @@ class Battle::AI
         end
         miniscore*=0.6 if target.pbHasMoveFunction?("ResetAllBattlersStatStages","ResetTargetStatStages")
         miniscore/=100.0
-        miniscore=1 if user.statStageAtMax?(:SPEED)
+        miniscore=1 if user.pbCannotRaiseStatBySource?(:SPEED, move)
         miniscore=1 if user.hasActiveAbility?(:CONTRARY)
         score*=miniscore 
       end
@@ -1208,7 +1208,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:ATTACK, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -1218,7 +1218,7 @@ class Battle::AI
         miniscore*=0.5 if (move.function == "RaiseUserAttack1" || move.function == "RaiseTargetAttack1") && 
                            user.level >= 20
         miniscore/=100.0
-        if user.statStageAtMax?(:ATTACK)
+        if user.pbCannotRaiseStatBySource?(:ATTACK, move)
           miniscore=0
         end
         miniscore=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1232,7 +1232,7 @@ class Battle::AI
         end      
       end
       if move.damagingMove? && move.addlEffect.to_f == 100
-        if user.SetupMovesUsed.include?(move.id)
+        if user.pbCannotRaiseStatBySource?(:ATTACK, move)
           miniscore=1
         else
           bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -1244,7 +1244,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "MaxUserAttackLoseHalfOfTotalHP" # Belly Drum
       miniscore=100    
@@ -1348,7 +1347,7 @@ class Battle::AI
         miniscore*=0.6
       end
       miniscore/=100.0
-      if user.statStageAtMax?(:ATTACK)
+      if user.pbCannotRaiseStatBySource?(:ATTACK, move)
         miniscore=0
       end
       movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1364,8 +1363,6 @@ class Battle::AI
         physmove=user.moves.any? { |j| j&.physicalMove?(j&.type) }
         score=0 if !physmove
       end
-      score *= 0.1 if user.SetupMovesUsed.include?(move.id)
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserDefense1", "RaiseUserDefense1CurlUpUser" # Harden
       miniscore=100    
@@ -1475,7 +1472,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:DEFENSE, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -1484,7 +1481,7 @@ class Battle::AI
       else
         miniscore*=0.5 if user.level >= 20
         miniscore/=100.0
-        if user.statStageAtMax?(:DEFENSE)
+        if user.pbCannotRaiseStatBySource?(:DEFENSE, move)
           miniscore=0
         end
         movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1506,7 +1503,6 @@ class Battle::AI
           end
         end
       end
-      score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserDefense2", "RaiseUserDefense3" # Iron Defense, Cotton Guard
       miniscore=100    
@@ -1618,7 +1614,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:DEFENSE, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -1626,7 +1622,7 @@ class Battle::AI
         end      
       else
         miniscore/=100.0
-        if user.statStageAtMax?(:DEFENSE)
+        if user.pbCannotRaiseStatBySource?(:DEFENSE, move)
           miniscore=0
         end
         movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1639,7 +1635,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtk1" # Charge Beam
       miniscore=100    
@@ -1753,7 +1748,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:SPECIAL_ATTACK) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -1762,7 +1757,7 @@ class Battle::AI
       else
         miniscore*=0.5 if user.level >= 20
         miniscore/=100.0
-        if user.statStageAtMax?(:SPECIAL_ATTACK)
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move)
           miniscore=0
         end
         miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1772,7 +1767,7 @@ class Battle::AI
         miniscore=1 if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
       end
       if move.damagingMove? && move.addlEffect.to_f == 100
-        if user.SetupMovesUsed.include?(move.id)
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move)
           miniscore=1
         else
           bestmove=bestMoveVsTarget(user,target,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -1784,7 +1779,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtk2", "RaiseUserSpAtk3" # Nasty Plot
       miniscore=100    
@@ -1890,7 +1884,7 @@ class Battle::AI
         miniscore*=0.6
       end
       miniscore/=100.0
-      if user.statStageAtMax?(:SPECIAL_ATTACK)
+      if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move)
         miniscore=0
       end
       miniscore=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -1901,7 +1895,6 @@ class Battle::AI
         miniscore=1
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpDef1", "RaiseUserSpDef1PowerUpElectricMove" # Charge
       miniscore=100    
@@ -2017,7 +2010,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -2026,7 +2019,7 @@ class Battle::AI
       else
         miniscore*=0.5 if user.level >= 20
         miniscore/=100.0
-        if user.statStageAtMax?(:SPECIAL_DEFENSE)
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
           miniscore=0
         end
         movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -2039,7 +2032,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpDef2", "RaiseUserSpDef3" # Amnesia
       miniscore=100    
@@ -2149,7 +2141,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:SPECIAL_DEFENSE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -2157,7 +2149,7 @@ class Battle::AI
         end      
       else
         miniscore/=100.0
-        if user.statStageAtMax?(:SPECIAL_DEFENSE)
+        if user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
           miniscore=0
         end
         miniscore*=0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -2169,7 +2161,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpeed1", "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" # Flame Charge, Aura Wheel
       miniscore=100    
@@ -2296,7 +2287,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:SPEED, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -2308,7 +2299,7 @@ class Battle::AI
           miniscore*=0.6
         end
         miniscore/=100.0
-        if user.statStageAtMax?(:SPEED)
+        if user.pbCannotRaiseStatBySource?(:SPEED, move)
           miniscore=0
         end
         movecheck=target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -2321,7 +2312,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
       score=0 if move.function == "TypeDependsOnUserMorpekoFormRaiseUserSpeed1" && !(user.isSpecies?(:MORPEKO) || user.effects[PBEffects::TransformSpecies] == :MORPEKO)
     #---------------------------------------------------------------------------
     when "RaiseUserSpeed2", "RaiseUserSpeed2LowerUserWeight", "RaiseUserSpeed3" # Agility
@@ -2456,7 +2446,7 @@ class Battle::AI
         miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0      
-        if user.statStageAtMax?(:SPEED) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        if user.pbCannotRaiseStatBySource?(:SPEED, move)
           miniscore=1
         end     
         if user.hasActiveAbility?(:CONTRARY)
@@ -2467,7 +2457,7 @@ class Battle::AI
           miniscore*=0.6
         end
         miniscore/=100.0
-        if user.statStageAtMax?(:SPEED)
+        if user.pbCannotRaiseStatBySource?(:SPEED, move)
           miniscore=0
         end
         if move.function == "RaiseUserSpeed2LowerUserWeight" # Autotomize
@@ -2481,7 +2471,6 @@ class Battle::AI
         end
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserAccuracy1", "RaiseUserAccuracy2", "RaiseUserAccuracy3"
       miniscore=100
@@ -2560,7 +2549,7 @@ class Battle::AI
       if user.hasActiveAbility?(:CONTRARY)
         miniscore*=0
       end
-      if user.statStageAtMax?(:ACCURACY)
+      if user.pbCanRaiseStatBySource?(:ACCURACY, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -2763,13 +2752,13 @@ class Battle::AI
           miniscore*=(move.addlEffect.to_f/100.0)
           miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
         end
-        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0
         if user.hasActiveAbility?(:CONTRARY)
           miniscore*=0.5
         end      
-        if !user.statStageAtMax?(:ATTACK)
+        if user.pbCanRaiseStatBySource?(:ATTACK, move)
           score*=miniscore
         end
       else
@@ -2782,7 +2771,7 @@ class Battle::AI
           miniscore=1
         end      
         physmove=user.moves.any? { |j| j&.physicalMove?(j&.type) }
-        if physmove && !user.statStageAtMax?(:ATTACK)
+        if physmove && user.pbCanRaiseStatBySource?(:ATTACK, move)
           score*=miniscore
         end
       end
@@ -2823,7 +2812,7 @@ class Battle::AI
           miniscore*=(move.addlEffect.to_f/100.0)
           miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
         end
-        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0
         if user.hasActiveAbility?(:CONTRARY)
@@ -2839,10 +2828,9 @@ class Battle::AI
           miniscore=1
         end
       end
-      if !user.statStageAtMax?(:DEFENSE)
+      if user.pbCanRaiseStatBySource?(:DEFENSE, move)
         score*=miniscore
       end
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserAtkDefAcc1" # Coil
       miniscore=100    
@@ -2953,7 +2941,7 @@ class Battle::AI
         if user.hasActiveAbility?(:CONTRARY)
           miniscore*=0.5
         end      
-        if !user.statStageAtMax?(:ATTACK)
+        if user.pbCanRaiseStatBySource?(:ATTACK, move)
           score*=miniscore
         end
       else
@@ -2965,7 +2953,7 @@ class Battle::AI
           miniscore=1
         end      
         physmove=user.moves.any? { |j| j&.physicalMove?(j&.type) }
-        if physmove && !user.statStageAtMax?(:ATTACK)
+        if physmove && user.pbCanRaiseStatBySource?(:ATTACK, move)
           score*=miniscore
         end
       end
@@ -3002,7 +2990,7 @@ class Battle::AI
         end
       end
       miniscore/=100.0
-      if !user.statStageAtMax?(:DEFENSE)
+      if user.pbCanRaiseStatBySource?(:DEFENSE, move)
         score*=miniscore
       end
 
@@ -3023,7 +3011,7 @@ class Battle::AI
           miniscore*=(move.addlEffect.to_f/100.0)
           miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
         end
-        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+        miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
         miniscore+=100
         miniscore/=100.0
         if user.hasActiveAbility?(:CONTRARY)
@@ -3038,12 +3026,13 @@ class Battle::AI
           miniscore=1
         end
       end
-      if !user.statStageAtMax?(:ACCURACY)
+      if user.pbCanRaiseStatBySource?(:ACCURACY, move)
         score*=miniscore
       end
       score = 0 if target.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
-      score = 0 if user.statStageAtMax?(:ACCURACY) && user.statStageAtMax?(:ATTACK) && user.statStageAtMax?(:DEFENSE)
-      score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      score = 0 if user.pbCannotRaiseStatBySource?(:ACCURACY, move) && 
+                   user.pbCannotRaiseStatBySource?(:ATTACK, move) && 
+                   user.pbCannotRaiseStatBySource?(:DEFENSE, move)
     #---------------------------------------------------------------------------
     when "RaiseUserAtkSpAtk1", "RaiseUserAtkSpAtk1Or2InSun" # Work Up, Growth
       miniscore=100    
@@ -3168,12 +3157,11 @@ class Battle::AI
       end
       physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
       specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-      if (physmove && !user.statStageAtMax?(:ATTACK)) ||
-         (specmove && !user.statStageAtMax?(:SPECIAL_ATTACK))
+      if (physmove && user.pbCanRaiseStatBySource?(:ATTACK, move)) ||
+         (specmove && user.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, move))
         miniscore/=100.0
         score*=miniscore
       end
-      score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2" # shell smash
       miniscore=100
@@ -3286,7 +3274,7 @@ class Battle::AI
       if user.hasActiveAbility?([:MOXIE, :SOULHEART])
         miniscore*=1.3
       end  
-      if !user.statStageAtMax?(:SPEED)      
+      if user.pbCanRaiseStatBySource?(:SPEED, move)      
         miniscore/=100.0
         score*=miniscore
       end
@@ -3298,8 +3286,6 @@ class Battle::AI
       if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
         score=0
       end
-      score/=2.0 if user.SetupMovesUsed.include?(move.id)
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserAtkSpd1", "RaiseUserAtk1Spd2" # Dragon Dance, Shift Gear
       miniscore=100    
@@ -3406,12 +3392,12 @@ class Battle::AI
       end
       if move.baseDamage==0
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-        if physmove && !user.statStageAtMax?(:ATTACK)
+        if physmove && user.pbCanRaiseStatBySource?(:ATTACK, move)
           miniscore/=100.0
           score*=miniscore
         end
       else
-        if !user.statStageAtMax?(:ATTACK)
+        if user.pbCanRaiseStatBySource?(:ATTACK, move)
           miniscore/=100.0
           score*=miniscore
         end
@@ -3455,7 +3441,7 @@ class Battle::AI
       if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
         miniscore=1
       end
-      if !user.statStageAtMax?(:SPEED)
+      if user.pbCanRaiseStatBySource?(:SPEED, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -3463,8 +3449,8 @@ class Battle::AI
       if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
         score*=2
       end
-      score=0 if user.statStageAtMax?(:SPEED) && user.statStageAtMax?(:ATTACK)
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      score=0 if user.pbCannotRaiseStatBySource?(:SPEED, move) && 
+                 user.pbCannotRaiseStatBySource?(:ATTACK, move)
     #---------------------------------------------------------------------------
     when "RaiseUserAtkAcc1" # Hone Claws
       miniscore=100    
@@ -3579,12 +3565,12 @@ class Battle::AI
       end  
       if move.baseDamage==0
         physmove=user.moves.any? { |m| m&.physicalMove?(m&.type) }
-        if physmove && !user.statStageAtMax?(:ATTACK)
+        if physmove && user.pbCanRaiseStatBySource?(:ATTACK, move)
           miniscore/=100.0
           score*=miniscore
         end
       else
-        if !user.statStageAtMax?(:ATTACK)
+        if user.pbCanRaiseStatBySource?(:ATTACK, move)
           miniscore/=100.0
           score*=miniscore
         end
@@ -3607,12 +3593,12 @@ class Battle::AI
       if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
         miniscore=1
       end
-      if user.statStageAtMax?(:ACCURACY)
+      if user.pbCanRaiseStatBySource?(:ACCURACY, move)
         miniscore/=100.0
         score*=miniscore
       end
-      score = 0 if user.statStageAtMax?(:ACCURACY) && user.statStageAtMax?(:ATTACK)
-      score = 0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      score = 0 if user.pbCannotRaiseStatBySource?(:ACCURACY, move) && 
+                   user.pbCannotRaiseStatBySource?(:ATTACK, move)
     #---------------------------------------------------------------------------
     when "RaiseUserDefSpDef1" # Cosmic Power
       miniscore=100    
@@ -3697,7 +3683,7 @@ class Battle::AI
           miniscore*=1.2
         end
       end
-      if !user.statStageAtMax?(:DEFENSE)
+      if user.pbCanRaiseStatBySource?(:DEFENSE, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -3730,12 +3716,12 @@ class Battle::AI
           miniscore*=1.2
         end
       end
-      if !user.statStageAtMax?(:SPECIAL_DEFENSE)
+      if user.pbCanRaiseStatBySource?(:SPECIAL_DEFENSE, move)
         miniscore/=100.0
         score*=miniscore
       end
-      score=0 if user.statStageAtMax?(:DEFENSE) && user.statStageAtMax?(:SPECIAL_DEFENSE)
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      score=0 if user.pbCannotRaiseStatBySource?(:DEFENSE, move) && 
+                 user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtkSpDef1" # calm mind
       miniscore=100    
@@ -3835,7 +3821,7 @@ class Battle::AI
         miniscore*=0.6
       end
       specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-      if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
+      if specmove && user.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -3878,7 +3864,7 @@ class Battle::AI
           miniscore*=1.2
         end
       end
-      if !user.statStageAtMax?(:SPECIAL_DEFENSE)
+      if user.pbCanRaiseStatBySource?(:SPECIAL_DEFENSE, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -3886,7 +3872,6 @@ class Battle::AI
       if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
         score*=2
       end
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserSpAtkSpDefSpd1" # Quiver Dance
       #spatk
@@ -3987,7 +3972,7 @@ class Battle::AI
         miniscore*=0.6
       end
       specmove=user.moves.any? { |m| m&.specialMove?(m&.type) }
-      if specmove && !user.statStageAtMax?(:SPECIAL_ATTACK)
+      if specmove && user.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -4031,7 +4016,7 @@ class Battle::AI
           miniscore*=1.2
         end
       end
-      if !user.statStageAtMax?(:SPECIAL_DEFENSE)
+      if user.pbCanRaiseStatBySource?(:SPECIAL_DEFENSE, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -4065,7 +4050,7 @@ class Battle::AI
       if target.hasActiveAbility?(:UNAWARE,false,mold_broken)
         miniscore=1
       end
-      if !user.statStageAtMax?(:SPEED)
+      if user.pbCanRaiseStatBySource?(:SPEED, move)
         miniscore/=100.0
         score*=miniscore
       end
@@ -4073,7 +4058,6 @@ class Battle::AI
       if !hasAlly && move.statusMove? && @battle.choices[target.index][0] == :SwitchOut
         score*=3
       end
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseUserMainStats1" # Ancient Power
       miniscore=100
@@ -4084,21 +4068,21 @@ class Battle::AI
         miniscore*=(move.addlEffect.to_f/100.0)
         miniscore*=2 if user.hasActiveAbility?(:SERENEGRACE) || user.pbOwnSide.effects[PBEffects::Rainbow]>0
       end
-      miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE) || (user.SetupMovesUsed.include?(move.id) && $player.difficulty_mode?("chaos"))
+      miniscore = 1 if user.hasActiveAbility?(:SHEERFORCE)
       miniscore+=100
       miniscore/=100.0   
       miniscore = ( 1.0 / miniscore ) - 0.5 if user.hasActiveAbility?(:CONTRARY)
       score*=miniscore
     #---------------------------------------------------------------------------
     when "RaiseUserMainStats1LoseThirdOfTotalHP" # Clangorous Soul
-      if (user.hp <= user.totalhp / 2) || ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      if (user.hp <= user.totalhp / 2)
         score = 0
       elsif user.hasActiveAbility?(:CONTRARY)
         score = 0
       else
         stats_maxed = true
         GameData::Stat.each_main_battle do |s|
-          next if user.statStageAtMax?(s.id)
+          next if user.pbCannotRaiseStatBySource?(s.id, move)
           stats_maxed = false
           break
         end
@@ -4171,14 +4155,14 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "RaiseUserMainStats1TrapUserInBattle" # No Retreat
-      if user.effects[PBEffects::NoRetreat] || ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
+      if user.effects[PBEffects::NoRetreat]
         score = 0
       elsif user.hasActiveAbility?(:CONTRARY)
         score = 0
       else
         stats_maxed = true
         GameData::Stat.each_main_battle do |s|
-          next if user.statStageAtMax?(s.id)
+          next if user.pbCannotRaiseStatBySource?(s.id, move)
           stats_maxed = false
           break
         end
@@ -4677,7 +4661,7 @@ class Battle::AI
           minimi = getAbilityDisruptScore(move,user,target,skill,false)
           minimi = 1.0 / minimi
           miniscore*=minimi
-          miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
+          miniscore = 0 if target.pbCannotRaiseStatBySource?(:ATTACK, move) && minimi < 1
         else
           if target.hasActiveAbility?(:CONTRARY)
             miniscore = 0
@@ -4782,7 +4766,7 @@ class Battle::AI
           minimi = getAbilityDisruptScore(move,user,target,skill,false)
           minimi = 1.0 / minimi
           miniscore*=minimi
-          miniscore = 0 if target.SetupMovesUsed.include?(move.id) && minimi < 1
+          miniscore = 0 if target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move) && minimi < 1
         else
           if target.hasActiveAbility?(:CONTRARY)
             miniscore = 0
@@ -4824,7 +4808,7 @@ class Battle::AI
           miniscore*=1.2
         end
         miniscore/=100.0
-        miniscore = 1 if ally.statStageAtMax?(:SPECIAL_DEFENSE)
+        miniscore = 1 if ally.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)
         score *= miniscore
 
         #atk
@@ -4847,7 +4831,7 @@ class Battle::AI
           miniscore*=0.3
         end
         miniscore/=100.0
-        miniscore = 1 if ally.statStageAtMax?(:ATTACK)
+        miniscore = 1 if ally.pbCannotRaiseStatBySource?(:ATTACK, move)
         score *= miniscore
 
         #for both
@@ -4855,7 +4839,7 @@ class Battle::AI
           score*=0.3
         end
         score *= 2 if ally.hasActiveAbility?(:SIMPLE)
-        score = 0 if ally.hasActiveAbility?(:CONTRARY) || ($player.difficulty_mode?("chaos") && ally.SetupMovesUsed.include?(move.id))
+        score = 0 if ally.hasActiveAbility?(:CONTRARY)
       else
         score=0
       end
@@ -4937,14 +4921,14 @@ class Battle::AI
       end
       miniscore/=100.0
       maxstat=0
-      maxstat+=1 if user.statStageAtMax?(:ATTACK)    
-      maxstat+=1 if user.statStageAtMax?(:DEFENSE)    
-      maxstat+=1 if user.statStageAtMax?(:SPECIAL_ATTACK)    
-      maxstat+=1 if user.statStageAtMax?(:SPECIAL_DEFENSE)    
-      maxstat+=1 if user.statStageAtMax?(:SPEED)    
-      maxstat+=1 if user.statStageAtMax?(:ACCURACY)    
-      maxstat+=1 if user.statStageAtMax?(:EVASION)    
-      if maxstat>1
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:ATTACK, move)    
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:DEFENSE, move)    
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move)    
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, move)    
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:SPEED, move)    
+      maxstat+=1 if user.pbCannotRaiseStatBySource?(:ACCURACY, move)    
+      #maxstat+=1 if user.pbCannotRaiseStatBySource?(:EVASION, move)    
+      if maxstat>2
         miniscore=0
       end
       miniscore*=0 if enemy1.moves.any? { |j| [:CLEARSMOG, :HAZE].include?(j&.id) }
@@ -4955,7 +4939,6 @@ class Battle::AI
         miniscore=1
       end
       score*=miniscore
-      score=0 if ($player.difficulty_mode?("chaos") && user.SetupMovesUsed.include?(move.id) && move.statusMove?)
     #---------------------------------------------------------------------------
     when "RaiseTargetAtkSpAtk2" # Decorate
       if target.hasActiveAbility?(:CONTRARY)
@@ -4964,7 +4947,7 @@ class Battle::AI
         else
           score = 0
         end
-      elsif target.opposes?(user) || ($player.difficulty_mode?("chaos") && target.SetupMovesUsed.include?(move.id))
+      elsif target.opposes?(user)
         score = 0
       else
         miniscore=120
@@ -4989,8 +4972,8 @@ class Battle::AI
         miniscore*=0.3 if target.pbOwnedByPlayer?
         physmove=target.moves.any? { |m| m&.physicalMove?(m&.type) }
         specmove=target.moves.any? { |m| m&.specialMove?(m&.type) }
-        if (physmove && !target.statStageAtMax?(:ATTACK)) ||
-          (specmove && !target.statStageAtMax?(:SPECIAL_ATTACK))
+        if (physmove && target.pbCanRaiseStatBySource?(:ATTACK, move)) ||
+           (specmove && target.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, move))
           miniscore/=100.0
           score*=miniscore
         end
@@ -5962,9 +5945,8 @@ class Battle::AI
     when "RaiseUserAndAlliesAtkDef1" # Coaching
       has_ally = false
       @battle.allSameSideBattlers(user.index).each do |b|
-        next if !b.pbCanRaiseStatStage?(:ATTACK, user) &&
-                !b.pbCanRaiseStatStage?(:DEFENSE, user)
-        next if  $player.difficulty_mode?("chaos") && b.SetupMovesUsed.include?(move.id)
+        next if !b.pbCanRaiseStatBySource?(:ATTACK, move, user) &&
+                !b.pbCanRaiseStatBySource?(:DEFENSE, move, user)
         has_ally = true
         if b.hasActiveAbility?(:CONTRARY)
           score *= 0.1
@@ -6021,7 +6003,6 @@ class Battle::AI
     when "RaisePlusMinusUserAndAlliesAtkSpAtk1" # Gear Up
       count = 0
       @battle.allSameSideBattlers(user.index).each do |b|
-        next if $player.difficulty_mode?("chaos") && b.SetupMovesUsed.include?(move.id)
         if b.hasActiveAbility?([:PLUS, :MINUS])
           barget = b.pbDirectOpposing
           bestmove = bestMoveVsTarget(barget,b,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -6107,12 +6088,11 @@ class Battle::AI
           if b.paralyzed?
             miniscore*=0.5
           end
-          if (physmove && !b.statStageAtMax?(:ATTACK)) ||
-             (specmove && !b.statStageAtMax?(:SPECIAL_ATTACK))
+          if (physmove && b.pbCannotRaiseStatBySource?(:ATTACK, move)) ||
+             (specmove && b.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, move))
             miniscore/=100.0
             score*=miniscore
           end
-          score = 0 if ($player.difficulty_mode?("chaos") && b.SetupMovesUsed.include?(move.id) && move.statusMove?)
         end
       end
       score = 0 if count == 0
@@ -6120,7 +6100,6 @@ class Battle::AI
     when "RaisePlusMinusUserAndAlliesDefSpDef1" # Magnetic Flux
       count = 0
       @battle.allSameSideBattlers(user.index).each do |b|
-        next if $player.difficulty_mode?("chaos") && b.SetupMovesUsed.include?(move.id)
         if b.hasActiveAbility?([:PLUS, :MINUS])
           barget = b.pbDirectOpposing
           bestmove = bestMoveVsTarget(barget,b,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -6205,8 +6184,7 @@ class Battle::AI
       @battle.allBattlers.each do |b|
         mold_bonkers=moldbroken(user,b,move)
         if b.pbHasType?(:GRASS, true) && !b.airborneAI(mold_bonkers) &&
-         (!b.statStageAtMax?(:ATTACK) || !b.statStageAtMax?(:SPECIAL_ATTACK)) && 
-         ($player.difficulty_mode?("chaos") && !b.SetupMovesUsed.include?(move.id))
+          (b.pbCanRaiseStatBySource?(:ATTACK, move) || b.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, move))
           if user.opposes?(b)
             score *= 0.5
           else
@@ -6236,7 +6214,7 @@ class Battle::AI
       movecheck = pbHasPhazingMove?(target)
       count = 0
       @battle.allBattlers.each do |b|
-        if b.pbHasType?(:GRASS, true) && !b.statStageAtMax?(:DEFENSE) && ($player.difficulty_mode?("chaos") && !b.SetupMovesUsed.include?(move.id))
+        if b.pbHasType?(:GRASS, true) && b.pbCanRaiseStatBySource?(:DEFENSE, move)
           if user.opposes?(b)
             score *= 0.5
           else
@@ -6678,7 +6656,7 @@ class Battle::AI
       end
     #---------------------------------------------------------------------------
     when "RaiseUserAttack2IfTargetFaints", "RaiseUserAttack3IfTargetFaints" # Fell Stinger
-      if !user.statStageAtMax?(:ATTACK)
+      if user.pbCanRaiseStatBySource?(:ATTACK, move)
         if !targetSurvivesMove(move,user,target) && 
           @battle.choices[target.index][0] != :SwitchOut
           if userFasterThanTarget

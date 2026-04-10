@@ -621,42 +621,38 @@ class Battle::AI
           end
         else           # is ally
           miniscore*=-1 # neg due to being ally
-          if !target.SetupMovesUsed.include?(move.id)
-            if (1.0/target.totalhp)*target.hp < 0.6
-              miniscore*=0.3
-            end
-            if target.paralyzed? || target.asleep? || 
-              target.effects[PBEffects::Yawn]>0
-              miniscore*=0.3
-            end
-            enemy1 = user.pbDirectOpposing(true)
-            if enemy1.allAllies.empty?
-              enemy2 = enemy1
-            else
-              enemy2 = enemy1.allAllies.first
-            end
-            e1sped = pbRoughStat(enemy1,:SPEED,skill)
-            e2sped = pbRoughStat(enemy2,:SPEED,skill)
-            if ospeed > e1sped && ospeed > e2sped
-              miniscore*=1.3
-            else
-              if highestStatID == :SPEED
-                ospeed2 = ospeed * (3.0 / 2.0)
-                if ospeed2 > e1sped && ospeed2 > e2sped
-                  miniscore*=1.3
-                else
-                  miniscore*=0.7
-                end
+          if (1.0/target.totalhp)*target.hp < 0.6
+            miniscore*=0.3
+          end
+          if target.paralyzed? || target.asleep? || 
+             target.effects[PBEffects::Yawn]>0
+            miniscore*=0.3
+          end
+          enemy1 = user.pbDirectOpposing(true)
+          if enemy1.allAllies.empty?
+            enemy2 = enemy1
+          else
+            enemy2 = enemy1.allAllies.first
+          end
+          e1sped = pbRoughStat(enemy1,:SPEED,skill)
+          e2sped = pbRoughStat(enemy2,:SPEED,skill)
+          if ospeed > e1sped && ospeed > e2sped
+            miniscore*=1.3
+          else
+            if highestStatID == :SPEED
+              ospeed2 = ospeed * (3.0 / 2.0)
+              if ospeed2 > e1sped && ospeed2 > e2sped
+                miniscore*=1.3
               else
                 miniscore*=0.7
               end
+            else
+              miniscore*=0.7
             end
-            if (enemy1.pbHasMove?(:FOULPLAY) || enemy2.pbHasMove?(:FOULPLAY)) &&
-               highestStatID == :ATTACK
-              miniscore*=0.3
-            end
-          else
-            miniscore = 0
+          end
+          if (enemy1.pbHasMove?(:FOULPLAY) || enemy2.pbHasMove?(:FOULPLAY)) &&
+              highestStatID == :ATTACK
+            miniscore*=0.3
           end
         end
         miniscore/=100.0

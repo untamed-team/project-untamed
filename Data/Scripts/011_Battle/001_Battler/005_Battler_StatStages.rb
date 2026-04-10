@@ -2,18 +2,64 @@ class Battle::Battler
   #=============================================================================
   # Increase stat stages
   #=============================================================================
-  def statStageAtMax?(stat)
-    return @stages[stat] >= 6
+  def setupGetSourceCategory(source)
+    if source.nil?
+      echoln "exiting early, as source is nil"
+      return nil, nil
+    end
+    category = nil
+    source_id = nil
+    if source.is_a?(Symbol)
+      source_id = source
+      if GameData::Move.exists?(source)
+        category = :moves
+        echoln "source = move, #{source_id}"
+      elsif GameData::Item.exists?(source)
+        category = :items
+        echoln "source = item, #{source_id}"
+      elsif GameData::Ability.exists?(source) && @abilityMutationList.include?(source)
+        category = :abil
+        echoln "source = abil, #{source_id}"
+      end
+      return category, source_id
+    elsif source.respond_to?("id")
+      source_id = source.id
+      echoln "source (not sym) = #{category}, #{source.name}"
+      return :moves, source_id if GameData::Move.exists?(source_id)
+      return :items, source_id if GameData::Item.exists?(source_id)
+      return :abil, source_id  if GameData::Ability.exists?(source_id)
+    end
+    echoln "category determination failed"
+    return nil, nil
   end
 
-  def pbCanRaiseStatStage?(stat, user = nil, move = nil, showFailMsg = false, ignoreContrary = false)
+  def statStageAtMax?(stat, source = nil)
+    return true if @stages[stat] >= 6 # default check
+    return false if [:ACCURACY, :EVASION].include?(stat) # eva/acc bypass caps
+    return false unless $player.difficulty_mode?("chaos")
+    cap = @setupBoosts[stat][:totalcap]
+    category, source_id = setupGetSourceCategory(source)
+    if source_id && category
+      # allow new sources of setup to increase stats
+      return false if !@setupBoosts[stat][category].include?(source_id)
+      # only allow old sources of setup to increase stats, if we are bellow the cap
+      return true if @setupBoosts[stat][category].include?(source_id) && @stages[stat] >= cap
+    end
+    return @stages[stat] >= cap 
+  end
+
+  def pbCanRaiseStatStage?(stat, user = nil, move = nil, showFailMsg = false, ignoreContrary = false, source = nil)
     return false if fainted?
+    # skipping needing to define source on the 6th slot if we have move, which is on the 3rd slot
+    if source.nil? && move
+      source = move
+    end
     # Contrary
     if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
       return pbCanLowerStatStage?(stat, user, move, showFailMsg, true)
     end
     # Check the stat stage
-    if statStageAtMax?(stat)
+    if statStageAtMax?(stat, source)
       if showFailMsg
         @battle.pbDisplay(_INTL("{1}'s {2} won't go any higher!",
                                 pbThis, GameData::Stat.get(stat).name))
@@ -23,7 +69,14 @@ class Battle::Battler
     return true
   end
 
-  def pbRaiseStatStageBasic(stat, increment, ignoreContrary = false)
+  def pbCanRaiseStatBySource?(stat, source, user = nil, move = nil, showFailMsg = false, ignoreContrary = false)
+    return pbCanRaiseStatStage?(stat, user, move, showFailMsg, ignoreContrary, source)
+  end
+  def pbCannotRaiseStatBySource?(stat, source, user = nil, move = nil, showFailMsg = false, ignoreContrary = false)
+    return !pbCanRaiseStatBySource?(stat, source, user, move, showFailMsg, ignoreContrary)
+  end
+
+  def pbRaiseStatStageBasic(stat, increment, ignoreContrary = false, source = nil)
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
@@ -37,20 +90,33 @@ class Battle::Battler
     if increment > 0
       stat_name = GameData::Stat.get(stat).name
       new = @stages[stat] + increment
-      PBDebug.log("[Stat change] #{pbThis}'s #{stat_name}: #{@stages[stat]} -> #{new} (+#{increment})")
-      @stages[stat] += increment
-      @statsRaisedThisRound = true
+      category, source_id = setupGetSourceCategory(source)
+      if category && source_id
+        if !@setupBoosts[stat][category].include?(source_id)
+          @setupBoosts[stat][category] << source_id
+          @setupBoosts[stat][:totalcap] += increment
+          @setupBoosts[stat][:totalcap] = 6 if @setupBoosts[stat][:totalcap] > 6
+        end
+      end
+      increment_true = @setupBoosts[stat][:totalcap] - @stages[stat]
+      increment_true = 0 if increment_true < 0
+      increment = [increment, increment_true].min
+      if increment > 0
+        PBDebug.log("[Stat change] #{pbThis}'s #{stat_name}: #{@stages[stat]} -> #{new} (+#{increment})")
+        @stages[stat] += increment
+        @statsRaisedThisRound = true
+      end
     end
     return increment
   end
 
-  def pbRaiseStatStage(stat, increment, user, showAnim = true, ignoreContrary = false)
+  def pbRaiseStatStage(stat, increment, user, showAnim = true, ignoreContrary = false, source = nil)
     # Contrary
     if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
       return pbLowerStatStage(stat, increment, user, showAnim, true)
     end
     # Perform the stat stage change
-    increment = pbRaiseStatStageBasic(stat, increment, ignoreContrary)
+    increment = pbRaiseStatStageBasic(stat, increment, ignoreContrary, source)
     return false if increment <= 0
     # Stat up animation and message
     @battle.pbCommonAnimation("StatUp", self) if showAnim
@@ -67,13 +133,13 @@ class Battle::Battler
     return true
   end
 
-  def pbRaiseStatStageByCause(stat, increment, user, cause, showAnim = true, ignoreContrary = false)
+  def pbRaiseStatStageByCause(stat, increment, user, cause, showAnim = true, ignoreContrary = false, source = nil)
     # Contrary
     if hasActiveAbility?(:CONTRARY) && !ignoreContrary && !@battle.moldBreaker
       return pbLowerStatStageByCause(stat, increment, user, cause, showAnim, true)
     end
     # Perform the stat stage change
-    increment = pbRaiseStatStageBasic(stat, increment, ignoreContrary)
+    increment = pbRaiseStatStageBasic(stat, increment, ignoreContrary, source)
     return false if increment <= 0
     # Stat up animation and message
     @battle.pbCommonAnimation("StatUp", self) if showAnim
@@ -98,15 +164,15 @@ class Battle::Battler
     return true
   end
 
-  def pbRaiseStatStageByAbility(stat, increment, user, splashAnim = true)
+  def pbRaiseStatStageByAbility(stat, increment, user, splashAnim = true, source = nil)
     return false if fainted?
     ret = false
     @battle.pbShowAbilitySplash(user) if splashAnim
-    if pbCanRaiseStatStage?(stat, user, nil, Battle::Scene::USE_ABILITY_SPLASH)
+    if pbCanRaiseStatStage?(stat, user, nil, Battle::Scene::USE_ABILITY_SPLASH, false, source)
       if Battle::Scene::USE_ABILITY_SPLASH
-        ret = pbRaiseStatStage(stat, increment, user)
+        ret = pbRaiseStatStage(stat, increment, user, splashAnim, false, source)
       else
-        ret = pbRaiseStatStageByCause(stat, increment, user, user.abilityName)
+        ret = pbRaiseStatStageByCause(stat, increment, user, user.abilityName, true, false, source)
       end
     end
     @battle.pbHideAbilitySplash(user) if splashAnim
@@ -126,7 +192,7 @@ class Battle::Battler
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
-        return pbCanRaiseStatStage?(stat, user, move, showFailMsg, true)
+        return pbCanRaiseStatStage?(stat, user, move, showFailMsg, true, :CONTRARY)
       end
       # Mirror Armor
       if hasActiveAbility?(:MIRRORARMOR) && !ignoreMirrorArmor &&
@@ -178,7 +244,7 @@ class Battle::Battler
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
-        return pbRaiseStatStageBasic(stat, increment, true)
+        return pbRaiseStatStageBasic(stat, increment, true, :CONTRARY)
       end
       # Simple
       increment *= 2 if hasActiveAbility?(:SIMPLE)
@@ -201,7 +267,7 @@ class Battle::Battler
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
-        return pbRaiseStatStage(stat, increment, user, showAnim, true)
+        return pbRaiseStatStage(stat, increment, user, showAnim, true, :CONTRARY)
       end
       # Mirror Armor
       if hasActiveAbility?(:MIRRORARMOR) && !ignoreMirrorArmor &&
@@ -243,7 +309,7 @@ class Battle::Battler
     if !@battle.moldBreaker
       # Contrary
       if hasActiveAbility?(:CONTRARY) && !ignoreContrary
-        return pbRaiseStatStageByCause(stat, increment, user, cause, showAnim, true)
+        return pbRaiseStatStageByCause(stat, increment, user, cause, showAnim, true, false, :CONTRARY)
       end
       # Mirror Armor
       if hasActiveAbility?(:MIRRORARMOR) && !ignoreMirrorArmor &&
@@ -407,7 +473,7 @@ class Battle::Battler
   def pbRaiseAttackStatStageIrritable(showAnim = true)
     return if fainted?
     return if !hasActiveAbility?(:IRRITABLE)
-    pbRaiseStatStageByAbility(:ATTACK, 1, self, showAnim)
+    pbRaiseStatStageByAbility(:ATTACK, 1, self, showAnim, :IRRITABLE)
   end
 
   #=============================================================================
@@ -437,7 +503,6 @@ class Battle::Battler
         @statsRaisedThisRound = true
       end
       @stages[s.id] = 0
-      @SetupMovesUsed = [] #by low
     end
   end
 end

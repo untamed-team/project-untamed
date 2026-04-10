@@ -580,7 +580,7 @@ class Battle::AI
             increment = 1
             increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
             increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
-            pokmon.stages[downloadStat] += increment if pokmon.pbCanRaiseStatStage?(downloadStat, pokmon)
+            pokmon.stages[downloadStat] += increment if pokmon.pbCanRaiseStatBySource?(downloadStat, pokmon, :DOWNLOAD)
             pokmon.stages[downloadStat] = [[pokmon.stages[downloadStat], -6].max, 6].min
           end
           if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
@@ -589,7 +589,7 @@ class Battle::AI
             increment = 1
             increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
             increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
-            pokmon.stages[forewarnStat] += increment if pokmon.pbCanRaiseStatStage?(forewarnStat, pokmon)
+            pokmon.stages[forewarnStat] += increment if pokmon.pbCanRaiseStatBySource?(forewarnStat, pokmon, :FOREWARN)
             pokmon.stages[forewarnStat] = [[pokmon.stages[forewarnStat], -6].max, 6].min
           end
           tempdam = aiDamage(m, pokmon, b)

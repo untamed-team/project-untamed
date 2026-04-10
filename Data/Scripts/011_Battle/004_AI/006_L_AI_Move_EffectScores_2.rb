@@ -1492,9 +1492,9 @@ class Battle::AI
           next if !pkmn || pkmn.fainted?
           pkmn.moves.each do |moove|
             gravMov = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(moove.id))
-            score*=0.5 if gravMov.unusableInGravity?
-            score*=1.2 if gravMov.boostedByGravity?
-            score*=1.3 if gravMov.accuracy <= 70
+            score*=0.85 if gravMov.unusableInGravity?
+            score*=1.05 if gravMov.boostedByGravity?
+            score*=1.10 if gravMov.accuracy <= 70
           end
         end
         if user.pbHasMove?(:ZAPCANNON) || user.pbHasMove?(:INFERNO) || user.pbHasMove?(:DYNAMICPUNCH)

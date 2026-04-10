@@ -846,14 +846,14 @@ Battle::AbilityEffects::StatLossImmunityFromAlly.add(:FLOWERVEIL,
 Battle::AbilityEffects::OnStatLoss.add(:COMPETITIVE,
   proc { |ability, battler, stat, user|
     next if user && !user.opposes?(battler)
-    battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 2, battler)
+    battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 2, battler, true, :COMPETITIVE)
   }
 )
 
 Battle::AbilityEffects::OnStatLoss.add(:DEFIANT,
   proc { |ability, battler, stat, user|
     next if user && !user.opposes?(battler)
-    battler.pbRaiseStatStageByAbility(:ATTACK, 2, battler)
+    battler.pbRaiseStatStageByAbility(:ATTACK, 2, battler, true, :DEFIANT)
   }
 )
 
@@ -927,7 +927,7 @@ Battle::AbilityEffects::PriorityBracketUse.add(:QUICKDRAW,
 
 Battle::AbilityEffects::OnFlinch.add(:STEADFAST,
   proc { |ability, battler, battle|
-    battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
+    battler.pbRaiseStatStageByAbility(:SPEED, 1, battler, true, :STEADFAST)
   }
 )
 
@@ -1000,21 +1000,21 @@ Battle::AbilityEffects::MoveImmunity.add(:FLASHFIRE,
 Battle::AbilityEffects::MoveImmunity.add(:LIGHTNINGROD,
   proc { |ability, user, target, move, type, battle, show_message|
     next target.pbMoveImmunityStatRaisingAbility(user, move, type,
-       :ELECTRIC, :SPECIAL_ATTACK, 1, show_message)
+       :ELECTRIC, :SPECIAL_ATTACK, 1, show_message, :LIGHTNINGROD)
   }
 )
 
 Battle::AbilityEffects::MoveImmunity.add(:MOTORDRIVE,
   proc { |ability, user, target, move, type, battle, show_message|
     next target.pbMoveImmunityStatRaisingAbility(user, move, type,
-       :ELECTRIC, :SPEED, 1, show_message)
+       :ELECTRIC, :SPEED, 1, show_message, :MOTORDRIVE)
   }
 )
 
 Battle::AbilityEffects::MoveImmunity.add(:SAPSIPPER,
   proc { |ability, user, target, move, type, battle, show_message|
     next target.pbMoveImmunityStatRaisingAbility(user, move, type,
-       :GRASS, :ATTACK, 1, show_message)
+       :GRASS, :ATTACK, 1, show_message, :SAPSIPPER)
   }
 )
 
@@ -1889,7 +1889,7 @@ Battle::AbilityEffects::OnBeingHit.add(:AFTERMATH,
 Battle::AbilityEffects::OnBeingHit.add(:ANGERPOINT,
   proc { |ability, user, target, move, battle|
     next if !target.damageState.critical
-    next if !target.pbCanRaiseStatStage?(:ATTACK, target)
+    next if target.pbCannotRaiseStatBySource?(:ATTACK, :ANGERPOINT, target)
     battle.pbShowAbilitySplash(target)
     target.stages[:ATTACK] = 6
     target.statsRaisedThisRound = true
@@ -2093,7 +2093,7 @@ Battle::AbilityEffects::OnBeingHit.copy(:IRONBARBS, :ROUGHSKIN)
 Battle::AbilityEffects::OnBeingHit.add(:JUSTIFIED,
   proc { |ability, user, target, move, battle|
     next if move.calcType != :DARK
-    target.pbRaiseStatStageByAbility(:ATTACK, 1, target)
+    target.pbRaiseStatStageByAbility(:ATTACK, 1, target, true, :JUSTIFIED)
   }
 )
 
@@ -2165,7 +2165,7 @@ Battle::AbilityEffects::OnBeingHit.add(:POISONPOINT,
 Battle::AbilityEffects::OnBeingHit.add(:RATTLED,
   proc { |ability, user, target, move, battle|
     next if ![:BUG, :DARK, :GHOST].include?(move.calcType)
-    target.pbRaiseStatStageByAbility(:SPEED, 1, target)
+    target.pbRaiseStatStageByAbility(:SPEED, 1, target, true, :RATTLED)
   }
 )
 
@@ -2178,9 +2178,7 @@ Battle::AbilityEffects::OnBeingHit.add(:SANDSPIT,
 Battle::AbilityEffects::OnBeingHit.add(:STAMINA,
   proc { |ability, user, target, move, battle|
     next if !move.pbContactMove?(user) #by low
-    next if !battle.wasUserAbilityActivated?(user)
-    battle.ActivateUserAbility(user) if $player.difficulty_mode?("chaos") 
-    target.pbRaiseStatStageByAbility(:DEFENSE, 1, target)
+    target.pbRaiseStatStageByAbility(:DEFENSE, 1, target, true, :STAMINA)
   }
 )
 
@@ -2241,7 +2239,7 @@ Battle::AbilityEffects::OnBeingHit.add(:WANDERINGSPIRIT,
 Battle::AbilityEffects::OnBeingHit.add(:WATERCOMPACTION,
   proc { |ability, user, target, move, battle|
     next if move.calcType != :WATER
-    target.pbRaiseStatStageByAbility(:DEFENSE, 2, target)
+    target.pbRaiseStatStageByAbility(:DEFENSE, 2, target, true, :WATERCOMPACTION)
   }
 )
 
@@ -2317,7 +2315,7 @@ Battle::AbilityEffects::OnDealingHit.add(:FERVOR,
   proc { |ability,user,target,move,battle|
     next if !move.contactMove? || move.multiHitMove?
     next if battle.wasUserAbilityActivated?(user)
-    user.pbRaiseStatStageByAbility(:SPEED,1,user)
+    user.pbRaiseStatStageByAbility(:SPEED, 1, user, true, :FERVOR)
     battle.ActivateUserAbility(user)
   }
 )
@@ -2337,8 +2335,8 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:BEASTBOOST,
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if userStats[s.id] < highestStatValue
-      if user.pbCanRaiseStatStage?(s.id, user)
-        user.pbRaiseStatStageByAbility(s.id, numFainted, user)
+      if user.pbCanRaiseStatBySource?(s.id, :BEASTBOOST, user)
+        user.pbRaiseStatStageByAbility(s.id, numFainted, user, true, :BEASTBOOST)
       end
       break
     end
@@ -2350,9 +2348,9 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:CHILLINGNEIGH,
     next if battle.pbAllFainted?(user.idxOpposingSide)
     numFainted = 0
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
-    next if numFainted == 0 || !user.pbCanRaiseStatStage?(:ATTACK, user)
+    next if numFainted == 0 || user.pbCannotRaiseStatBySource?(:ATTACK, :CHILLINGNEIGH, user)
     user.ability_id = :CHILLINGNEIGH   # So the As One abilities can just copy this
-    user.pbRaiseStatStageByAbility(:ATTACK, 1, user)
+    user.pbRaiseStatStageByAbility(:ATTACK, 1, user, true, :CHILLINGNEIGH)
     user.ability_id = ability
   }
 )
@@ -2364,9 +2362,9 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:GRIMNEIGH,
     next if battle.pbAllFainted?(user.idxOpposingSide)
     numFainted = 0
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
-    next if numFainted == 0 || !user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user)
+    next if numFainted == 0 || user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, :GRIMNEIGH, user)
     user.ability_id = :GRIMNEIGH   # So the As One abilities can just copy this
-    user.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, user)
+    user.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, user, true, :GRIMNEIGH)
     user.ability_id = ability
   }
 )
@@ -2418,8 +2416,8 @@ Battle::AbilityEffects::OnEndOfUsingMove.add(:MOXIE,
     next if battle.pbAllFainted?(user.idxOpposingSide) || $player.difficulty_mode?("chaos")
     numFainted = 0
     targets.each { |b| numFainted += 1 if b.damageState.fainted }
-    next if numFainted == 0 || !user.pbCanRaiseStatStage?(:ATTACK, user)
-    user.pbRaiseStatStageByAbility(:ATTACK, numFainted, user)
+    next if numFainted == 0 || user.pbCannotRaiseStatBySource?(:ATTACK, :MOXIE, user)
+    user.pbRaiseStatStageByAbility(:ATTACK, numFainted, user, true, :MOXIE)
   }
 )
 
@@ -2533,8 +2531,8 @@ Battle::AbilityEffects::AfterMoveUseFromTarget.add(:BERSERK,
   proc { |ability, target, user, move, switched_battlers, battle|
     next if !move.damagingMove?
     next if !target.droppedBelowHalfHP
-    next if !target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, target)
-    target.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, target)
+    next if target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, :BERSERK, target)
+    target.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, target, true, :BERSERK)
   }
 )
 
@@ -2839,8 +2837,8 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
     mood = (0..4).to_a.reject { |i| i == moodmemory }
     mood_size = mood.length - 1
     mood_rand = battle.pbRandom(0..mood_size)
-    if battler.pbCanRaiseStatStage?(stats[mood_rand], battler)
-      battler.pbRaiseStatStageByAbility(stats[mood_rand], 2, battler, false)
+    if battler.pbCanRaiseStatBySource?(stats[mood_rand], :MOODY, battler)
+      battler.pbRaiseStatStageByAbility(stats[mood_rand], 2, battler, false, :MOODY)
     end
     battler.effects[PBEffects::MoodyMemory] = mood_rand
     battle.pbHideAbilitySplash(battler)
@@ -2854,8 +2852,8 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:SPEEDBOOST,
     # A Pokémon's turnCount is 0 if it became active after the beginning of a
     # round
     if battler.turnCount > 0 && battle.choices[battler.index][0] != :Run &&
-       battler.pbCanRaiseStatStage?(:SPEED, battler)
-      battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
+       battler.pbCanRaiseStatBySource?(:SPEED, :SPEEDBOOST, battler)
+      battler.pbRaiseStatStageByAbility(:SPEED, 1, battler, true, :SPEEDBOOST)
     end
   }
 )
@@ -3108,7 +3106,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:SPOOPERAURA,
 
 Battle::AbilityEffects::OnSwitchIn.add(:DAUNTLESSSHIELD,
   proc { |ability, battler, battle, switch_in|
-    battler.pbRaiseStatStageByAbility(:DEFENSE, 1, battler)
+    battler.pbRaiseStatStageByAbility(:DEFENSE, 1, battler, true, :DAUNTLESSSHIELD)
   }
 )
 
@@ -3132,7 +3130,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DOWNLOAD,
       oSpDef += b.spdef
     end
     stat = (oDef < oSpDef) ? :ATTACK : :SPECIAL_ATTACK
-    battler.pbRaiseStatStageByAbility(stat, 1, battler)
+    battler.pbRaiseStatStageByAbility(stat, 1, battler, true, :DOWNLOAD)
   }
 )
 
@@ -3182,7 +3180,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
         oSpAtk += realSpAtk
       end
       stat = (oAtk > oSpAtk) ? :DEFENSE : :SPECIAL_DEFENSE
-      battler.pbRaiseStatStageByAbility(stat, 1, battler)
+      battler.pbRaiseStatStageByAbility(stat, 1, battler, true, :FOREWARN)
     else
       highestPower = 0
       forewarnMoves = []
@@ -3314,7 +3312,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:INTIMIDATE,
       next if !b.near?(battler)
       check_item = true
       if b.hasActiveAbility?(:CONTRARY)
-        check_item = false if b.statStageAtMax?(:ATTACK)
+        check_item = false if b.statStageAtMax?(:ATTACK, :CONTRARY)
       elsif b.statStageAtMin?(:ATTACK)
         check_item = false
       end
@@ -3333,7 +3331,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:GRIMTEARS,
       next if !b.near?(battler)
       check_item = true
       if b.hasActiveAbility?(:CONTRARY)
-        check_item = false if b.statStageAtMax?(:SPECIAL_ATTACK)
+        check_item = false if b.statStageAtMax?(:SPECIAL_ATTACK, :CONTRARY)
       elsif b.statStageAtMin?(:SPECIAL_ATTACK)
         check_item = false
       end
@@ -3347,7 +3345,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:GRIMTEARS,
 
 Battle::AbilityEffects::OnSwitchIn.add(:INTREPIDSWORD,
   proc { |ability, battler, battle, switch_in|
-    battler.pbRaiseStatStageByAbility(:ATTACK, 1, battler)
+    battler.pbRaiseStatStageByAbility(:ATTACK, 1, battler, true, :INTREPIDSWORD)
   }
 )
 
@@ -3621,13 +3619,13 @@ Battle::AbilityEffects::OnSwitchIn.add(:OVERWRITE,
 #by low
 # in theory, you could use skill swap and such on doubles with these abilities to dupe the effect of any
 # ability that uses the "activated?" commands. Sounds funny though so ill keep it for now
-Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
-  proc { |ability, battler, battle, switch_in|
-    next if !battle.wasUserAbilityActivated?(battler)
-    battle.DeActivateUserAbility(battler)
-  }
-)
-Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR, :STAMINA)
+#Battle::AbilityEffects::OnSwitchIn.add(:FERVOR,
+#  proc { |ability, battler, battle, switch_in|
+#    next if !battle.wasUserAbilityActivated?(battler)
+#    battle.DeActivateUserAbility(battler)
+#  }
+#)
+#Battle::AbilityEffects::OnSwitchIn.copy(:FERVOR, :WEAKARMOR, :STAMINA)
 
 Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
   proc { |ability, battler, battle, switch_in|
@@ -3813,7 +3811,7 @@ Battle::AbilityEffects::ChangeOnBattlerFainting.copy(:POWEROFALCHEMY, :RECEIVER)
 Battle::AbilityEffects::OnBattlerFainting.add(:SOULHEART,
   proc { |ability, battler, fainted, battle|
     next if $player.difficulty_mode?("chaos")
-    battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler)
+    battler.pbRaiseStatStageByAbility(:SPECIAL_ATTACK, 1, battler, true, :SOULHEART)
   }
 )
 
@@ -3870,7 +3868,7 @@ Battle::AbilityEffects::OnTerrainChange.add(:MIMICRY,
 Battle::AbilityEffects::OnIntimidated.add(:RATTLED,
   proc { |ability, battler, battle|
     next if Settings::MECHANICS_GENERATION < 8
-    battler.pbRaiseStatStageByAbility(:SPEED, 1, battler)
+    battler.pbRaiseStatStageByAbility(:SPEED, 1, battler, true, :RATTLED)
   }
 )
 

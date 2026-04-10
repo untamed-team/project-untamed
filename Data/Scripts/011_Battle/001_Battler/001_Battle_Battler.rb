@@ -44,7 +44,7 @@ class Battle::Battler
   attr_accessor :canRestoreIceFace   # Whether Hail started in the round
   attr_accessor :damageState
   attr_accessor :premonitionMove # Premonition #by low
-  attr_accessor :SetupMovesUsed  # setup moves nerf #by low
+  attr_accessor :setupBoosts  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
   attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
   attr_accessor :bossTotalHP # percentage hp fix for bosses #by low

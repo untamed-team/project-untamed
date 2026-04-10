@@ -3804,6 +3804,9 @@ Pokemon = NOCTAVISPA,10
 [HEXMANIAC,zinnia,200]
 LoseText = sex
 #Gimmick = stealthrock
+Pokemon = GARBODOR,50
+    Nature = QUIRKY
+    Item = ORANBERRY
 Pokemon = MAGCARGO,50
     Moves = NORETREAT,FLAMETHROWER,FLASHCANNON,EARTHPOWER
     Ability = SIMPLE

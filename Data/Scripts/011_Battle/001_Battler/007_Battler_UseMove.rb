@@ -869,7 +869,7 @@ class Battle::Battler
         next if b.damageState.unaffected
         next if b.damageState.calcDamage == 0 || b.damageState.substitute
         next if !b.hasActiveAbility?(:STEAMENGINE)
-        b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
+        b.pbRaiseStatStageByAbility(:SPEED, 6, b, true, :STEAMENGINE) if b.pbCanRaiseStatBySource?(:SPEED, :STEAMENGINE, b)
       end
     end
     # redundant text for Splinter Shot #by low

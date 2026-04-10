@@ -117,9 +117,9 @@ class Battle::AI
       hasPhysicalAttack = battler.moves.any? { |m| m&.physicalMove?(m&.type) }
       hasSpecialAttack = battler.moves.any? { |m| m&.specialMove?(m&.type) }
       aspeed = pbRoughStat(battler,:SPEED,skill)
-      aspeed *= 1.5 if battler.hasActiveAbility?(:SPEEDBOOST) && !battler.statStageAtMax?(:SPEED)
+      aspeed *= 1.5 if battler.hasActiveAbility?(:SPEEDBOOST) && battler.pbCanRaiseStatBySource?(:SPEED, :SPEEDBOOST)
       ospeed = pbRoughStat(target,:SPEED,skill)
-      ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST) && !target.statStageAtMax?(:SPEED)
+      ospeed *= 1.5 if target.hasActiveAbility?(:SPEEDBOOST) && target.pbCanRaiseStatBySource?(:SPEED, :SPEEDBOOST)
       userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
       globalArray = @megaGlobalArray
       move = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SPLASH)) # dummy move for mold breaker checks

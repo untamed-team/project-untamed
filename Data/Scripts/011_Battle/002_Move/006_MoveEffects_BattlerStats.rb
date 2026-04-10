@@ -26,7 +26,7 @@ class Battle::Move::RaiseUserAttack2IfTargetFaints < Battle::Move
   def pbEffectAfterAllHits(user, target)
     return if !target.damageState.fainted
     return if !user.pbCanRaiseStatStage?(:ATTACK, user, self)
-    user.pbRaiseStatStage(:ATTACK, 2, user)
+    user.pbRaiseStatStage(:ATTACK, 2, user, true, false, self)
   end
 end
 
@@ -48,7 +48,7 @@ class Battle::Move::RaiseUserAttack3IfTargetFaints < Battle::Move
   def pbEffectAfterAllHits(user, target)
     return if !target.damageState.fainted
     return if !user.pbCanRaiseStatStage?(:ATTACK, user, self)
-    user.pbRaiseStatStage(:ATTACK, 3, user)
+    user.pbRaiseStatStage(:ATTACK, 3, user, true, false, self)
   end
 end
 
@@ -448,7 +448,7 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
     showAnim = true
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
+      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim, false, self)
         showAnim = false
       end
     end
@@ -758,12 +758,12 @@ class Battle::Move::RaiseTargetAttack1 < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     return if damagingMove?
-    target.pbRaiseStatStage(:ATTACK, 1, user)
+    target.pbRaiseStatStage(:ATTACK, 1, user, true, false, self)
   end
 
   def pbAdditionalEffect(user, target)
     return if !target.pbCanRaiseStatStage?(:ATTACK, user, self)
-    target.pbRaiseStatStage(:ATTACK, 1, user)
+    target.pbRaiseStatStage(:ATTACK, 1, user, true, false, self)
   end
 end
 
@@ -778,7 +778,6 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -790,10 +789,7 @@ class Battle::Move::RaiseTargetAttack2ConfuseTarget < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-    if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      target.pbRaiseStatStage(:ATTACK, 2, user)
-      target.SetupMovesUsed.push(@id)
-    end
+    target.pbRaiseStatStage(:ATTACK, 2, user, true, false, self) if target.pbCanRaiseStatStage?(:ATTACK, user, self)
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
 end
@@ -810,7 +806,6 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
     targets.each do |b|
       next if !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) &&
               !b.pbCanConfuse?(user, false, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
       failed = false
       break
     end
@@ -823,27 +818,27 @@ class Battle::Move::RaiseTargetSpAtk1ConfuseTarget < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     raise_num = ($player.difficulty_mode?("chaos")) ? 2 : 1 #by low
-    if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user)
-      target.SetupMovesUsed.push(@id)
-    end
+    target.pbRaiseStatStage(:SPECIAL_ATTACK, raise_num, user, true, false, self) if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
     target.pbConfuse if target.pbCanConfuse?(user, false, self)
   end
 end
 
 #===============================================================================
-# Increases target's Special Defense by 1 stage. (Aromatic Mist)
+# Increases target's Special Defense/Atk by 1 stage. (Aromatic Mist)
+# the atk boost was a typo at first but sure why not
 #===============================================================================
 class Battle::Move::RaiseTargetSpDef1 < Battle::Move
   def ignoresSubstitute?(user); return true; end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message)
+    return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
+                   !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
     return false
   end
 
   def pbEffectAgainstTarget(user, target)
-    target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user)
+    target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, true, false, self)
+    target.pbRaiseStatStage(:ATTACK, 1, user, true, false, self)
   end
 end
 
@@ -854,6 +849,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
   def pbFailsAgainstTarget?(user, target, show_message)
     @statArray = []
     GameData::Stat.each_battle do |s|
+      next if s.id == :EVASION
       @statArray.push(s.id) if target.pbCanRaiseStatStage?(s.id, user, self)
     end
     if @statArray.length == 0
@@ -865,7 +861,7 @@ class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     stat = @statArray[@battle.pbRandom(@statArray.length)]
-    target.pbRaiseStatStage(stat, 2, user)
+    target.pbRaiseStatStage(stat, 2, user, true, false, self)
   end
 end
 
@@ -890,10 +886,10 @@ class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
 
   def pbEffectAgainstTarget(user, target)
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      target.pbRaiseStatStage(:ATTACK, 2, user)
+      target.pbRaiseStatStage(:ATTACK, 2, user, true, false, self)
     end
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user)
+      target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user, true, false, self)
     end
   end
 end
@@ -1444,10 +1440,10 @@ class Battle::Move::RaiseUserAndAlliesAtkDef1 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     showAnim = true
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
+      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim, false, self)
     end
     if target.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
+      target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim, false, self)
     end
   end
 end
@@ -1492,10 +1488,10 @@ class Battle::Move::RaisePlusMinusUserAndAlliesAtkSpAtk1 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     showAnim = true
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
+      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim, false, self)
     end
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
+      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim, false, self)
     end
   end
 
@@ -1545,10 +1541,10 @@ class Battle::Move::RaisePlusMinusUserAndAlliesDefSpDef1 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     showAnim = true
     if target.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      showAnim = false if target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
+      showAnim = false if target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim, false, self)
     end
     if target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
-      target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
+      target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim, false, self)
     end
   end
 
@@ -1590,10 +1586,10 @@ class Battle::Move::RaiseGroundedGrassBattlersAtkSpAtk1 < Battle::Move
   def pbEffectAgainstTarget(user, target)
     showAnim = true
     if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
+      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim, false, self)
     end
     if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
+      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim, false, self)
     end
   end
 end
@@ -1625,7 +1621,7 @@ class Battle::Move::RaiseGrassBattlersDef1 < Battle::Move
   end
 
   def pbEffectAgainstTarget(user, target)
-    target.pbRaiseStatStage(:DEFENSE, 1, user)
+    target.pbRaiseStatStage(:DEFENSE, 1, user, true, false, self)
   end
 end
 
@@ -1724,13 +1720,13 @@ end
 
 #===============================================================================
 # User gains stat stages equal to each of the target's positive stat stages,
-# and target's positive stat stages become 0, before damage calculation.
+# and target's positive stat stages become 0, after the damage is dealt.
 # (Spectral Thief)
 #===============================================================================
 class Battle::Move::UserStealTargetPositiveStatStages < Battle::Move
   def ignoresSubstitute?(user); return true; end
 
-  def pbCalcDamage(user, target, numTargets = 1)
+  def pbEffectAfterAllHits(user, target)
     if target.hasRaisedStatStages?
       pbShowAnimation(@id, user, target, 1)   # Stat stage-draining animation
       @battle.pbDisplay(_INTL("{1} stole the target's boosted stats!", user.pbThis))
@@ -1738,7 +1734,7 @@ class Battle::Move::UserStealTargetPositiveStatStages < Battle::Move
       GameData::Stat.each_battle do |s|
         next if target.stages[s.id] <= 0
         if user.pbCanRaiseStatStage?(s.id, user, self)
-          showAnim = false if user.pbRaiseStatStage(s.id, target.stages[s.id], user, showAnim)
+          showAnim = false if user.pbRaiseStatStage(s.id, target.stages[s.id], user, showAnim, false, self)
         end
         target.statsLoweredThisRound = true
         target.statsDropped = true
