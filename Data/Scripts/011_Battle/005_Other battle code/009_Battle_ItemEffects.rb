@@ -1536,7 +1536,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:ENIGMABERRY,
     next false if !forced && !battler.canConsumeBerry?
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
-    amt = battler.totalhp / 4
+    amt = battler.totalhp / 3
     ripening = false
 		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)

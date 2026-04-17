@@ -3568,6 +3568,7 @@ class Battle::AI
           end
         end
       end
+      score*=12 if pbIsBadPokemon?(user.pokemon)
       reserves = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       foes   = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
       if skill >= PBTrainerAI.mediumSkill && reserves == 0 && foes > 0
@@ -3616,6 +3617,7 @@ class Battle::AI
           end
         end
       end
+      score*=12 if pbIsBadPokemon?(user.pokemon)
       reserves = @battle.pbAbleNonActiveCount(user.idxOwnSide)
       foes   = @battle.pbAbleNonActiveCount(user.idxOpposingSide)
       if skill >= PBTrainerAI.mediumSkill && reserves == 0 && foes > 0
@@ -4139,7 +4141,14 @@ class Battle::AI
             end
           end
         end
-        if user.recycleItem.is_berry?
+        useful_berries = [
+          :ORANBERRY, :SITRUSBERRY, :AGUAVBERRY, :APICOTBERRY, :CHERIBERRY,
+          :CHESTOBERRY, :FIGYBERRY, :GANLONBERRY, :IAPAPABERRY, :KEEBERRY,
+          :LANSATBERRY, :LEPPABERRY, :LIECHIBERRY, :LUMBERRY, :MAGOBERRY,
+          :MARANGABERRY, :PECHABERRY, :PERSIMBERRY, :PETAYABERRY, :RAWSTBERRY,
+          :SALACBERRY, :STARFBERRY, :WIKIBERRY, :ENIGMABERRY
+        ]
+        if useful_berries.include?(user.recycleItem)
           score=0 if target.hasActiveAbility?(:UNNERVE)
           score=0 if movecheck
         end
@@ -4316,7 +4325,7 @@ class Battle::AI
           :CHESTOBERRY, :FIGYBERRY, :GANLONBERRY, :IAPAPABERRY, :KEEBERRY,
           :LANSATBERRY, :LEPPABERRY, :LIECHIBERRY, :LUMBERRY, :MAGOBERRY,
           :MARANGABERRY, :PECHABERRY, :PERSIMBERRY, :PETAYABERRY, :RAWSTBERRY,
-          :SALACBERRY, :STARFBERRY, :WIKIBERRY
+          :SALACBERRY, :STARFBERRY, :WIKIBERRY, :ENIGMABERRY
         ]
         ebinberry = [:LIECHIBERRY, :GANLONBERRY, :SALACBERRY, :PETAYABERRY, :APICOTBERRY, :STARFBERRY]
         score *= 1.2 if useful_berries.include?(user.item_id)
@@ -4437,7 +4446,7 @@ class Battle::AI
           :CHESTOBERRY, :FIGYBERRY, :GANLONBERRY, :IAPAPABERRY, :KEEBERRY,
           :LANSATBERRY, :LEPPABERRY, :LIECHIBERRY, :LUMBERRY, :MAGOBERRY,
           :MARANGABERRY, :PECHABERRY, :PERSIMBERRY, :PETAYABERRY,
-          :RAWSTBERRY, :SALACBERRY, :STARFBERRY, :WIKIBERRY
+          :RAWSTBERRY, :SALACBERRY, :STARFBERRY, :WIKIBERRY, :ENIGMABERRY
         ]
         @battle.allSameSideBattlers(user.index).each do |b|
           if !b.item || !b.item.is_berry? || !b.itemActive?
@@ -4486,7 +4495,7 @@ class Battle::AI
           :CHESTOBERRY, :FIGYBERRY, :GANLONBERRY, :IAPAPABERRY, :KEEBERRY,
           :LANSATBERRY, :LEPPABERRY, :LIECHIBERRY, :LUMBERRY, :MAGOBERRY,
           :MARANGABERRY, :PECHABERRY, :PERSIMBERRY, :PETAYABERRY, :RAWSTBERRY,
-          :SALACBERRY, :STARFBERRY, :WIKIBERRY
+          :SALACBERRY, :STARFBERRY, :WIKIBERRY, :ENIGMABERRY
         ]
         score *= 1.2 if useful_berries.include?(user.item_id)
       end

@@ -913,6 +913,7 @@ class Battle::Scene
     cord = 0
     battler.eachMove do |m|
       next if !@battle.moveRevealed?(battler, m.id) && !battler.pbOwnedByPlayer?
+      break if cord > 3
       move_name = m.name
       move_name = "HidPwr #{GameData::Type.get(battler.hptype).name}" if m.function == "TypeDependsOnUserIVs"
       addText.push([move_name, xpos + 103, ypos + 140 + (cord * 24), 0, BASE_LIGHT, SHADOW_LIGHT])

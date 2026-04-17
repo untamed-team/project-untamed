@@ -813,7 +813,7 @@ class Battle::AI
                 if fasterAtk
                   realDamage *= 1.5
                 else
-                  realDamage *= 0.2
+                  realDamage *= 0.8
                 end
               end
             else

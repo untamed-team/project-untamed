@@ -1189,7 +1189,8 @@ class Battle::AI
 
   def encoredIntoStatus(user)
     if user.effects[PBEffects::Encore] > 0
-      return true if GameData::Move.get(user.effects[PBEffects::EncoreMove]).statusMove?
+      encoremove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(user.effects[PBEffects::EncoreMove]))
+      return true if encoremove.statusMove?
     end
     return false
   end

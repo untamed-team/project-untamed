@@ -35,7 +35,7 @@ class Battle::Battler
 
   def statStageAtMax?(stat, source = nil)
     return true if @stages[stat] >= 6 # default check
-    return false if [:ACCURACY, :EVASION].include?(stat) # eva/acc bypass caps
+    #return false if [:ACCURACY, :EVASION].include?(stat) # eva/acc bypass caps
     return false unless $player.difficulty_mode?("chaos")
     cap = @setupBoosts[stat][:totalcap]
     category, source_id = setupGetSourceCategory(source)
@@ -105,6 +105,8 @@ class Battle::Battler
         PBDebug.log("[Stat change] #{pbThis}'s #{stat_name}: #{@stages[stat]} -> #{new} (+#{increment})")
         @stages[stat] += increment
         @statsRaisedThisRound = true
+      else
+        Console.echo_h2("#{stat}, #{stat_name} failed to raise stats. user = #{pbThis} / totalcap = #{@setupBoosts[stat][:totalcap]}")
       end
     end
     return increment

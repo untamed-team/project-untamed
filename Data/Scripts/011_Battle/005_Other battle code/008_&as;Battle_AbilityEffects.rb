@@ -3166,7 +3166,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:FAIRYAURA,
 Battle::AbilityEffects::OnSwitchIn.add(:FOREWARN,
   proc { |ability, battler, battle, switch_in|
     if $player.difficulty_mode?("chaos")
-      stageMul, stageDiv = @battle.pbGetStatMath
+      stageMul, stageDiv = battle.pbGetStatMath
       oAtk = 0
       oSpAtk = 0
       battle.allOtherSideBattlers(battler.index).each do |b|
