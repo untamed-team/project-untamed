@@ -286,6 +286,9 @@ or dont
           elsif ["retro", "retro battle"].include?(gimmick_downcase)
             # if it wasnt due to move categories i could have made this a @battle trait, but alas.
             $game_switches[OLDSCHOOLBATTLE] = true
+          elsif ["noexp", "zeroexp", "exp", "nomoney", "money"].include?(gimmick_downcase)
+            @expGain = false
+            @moneyGain = false
           end
         end
       end

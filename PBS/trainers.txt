@@ -3597,6 +3597,7 @@ Pokemon = MAWILE,26
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,1]
 LoseText = Well done.
+Gimmick = NoExp
 Pokemon = VIVILLON,31
     Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
     Ability = FRIENDGUARD
@@ -3631,6 +3632,7 @@ Pokemon = PAPELLAUDE,36
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,101]
 LoseText = Well done.
+Gimmick = NoExp
 Pokemon = VIVILLON,31
     Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
     Ability = FRIENDGUARD
@@ -3665,6 +3667,7 @@ Pokemon = PAPELLAUDE,36
 #------------------------------- #battle in sanctuary after Neo grunts
 [TRAINER_Reine,Reine,201]
 LoseText = Well done.
+Gimmick = NoExp
 Pokemon = VIVILLON,31
     Moves = SLEEPPOWDER,SCOURINGWINDS,LIGHTSCREEN,REFLECT
     Ability = FRIENDGUARD
