@@ -3,18 +3,20 @@
 #=============================================================================
 class RockSmashWall
 	def self.findRockSmashWallsOnMap
-		#go through all events on the current map and only do something if an event on the map is named "DigSpot"
+		#go through all events on the current map and only do something if an event on the map is named "RockSmashWall"
 		$game_map.events.each_value do |event|
 			next if event.name != "RockSmashWall"
 			Console.echo_warn "found a RockSmashWall with event id #{event.id}"
 			
-			#roll to activate dig spots
+			#roll to activate RockSmashWall
 			if self.rollToActivateRockSmashWall
 				Console.echo_warn "roll successful for RockSmashWall. Activiating RockSmashWall with event ID #{event.id}"
-				pbMapInterpreter.pbSetSelfSwitch(event.id, "A", true)
+				#pbMapInterpreter.pbSetSelfSwitch(event.id, "A", true)
+				$game_self_switches[[$game_map.map_id,event.id,"A"]] = true
 			else
 				Console.echo_warn "roll unsuccessful for RockSmashWall. RockSmashWall with event ID #{event.id} will not be activated"
-				pbMapInterpreter.pbSetSelfSwitch(event.id, "A", false)
+				#pbMapInterpreter.pbSetSelfSwitch(event.id, "A", false)
+				$game_self_switches[[$game_map.map_id,event.id,"A"]] = false
 			end #if self.rollToActivateRockSmashWall
 		end #$game_map.events.each_value do |event|
 	end #def self.findRockSmashWallsOnMap
@@ -50,18 +52,6 @@ class RockSmashWall
 			pbMapInterpreter.pbSetSelfSwitch(eventID, "A", false)
 		end
 	end #def self.interact
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	def self.pbRockSmashWall(chance, lootTable)
 		#return if !pbRockSmashWallQuestion #player used rock smash successfully
@@ -136,12 +126,11 @@ class RockSmashWall
 
 	EventHandlers.add(:on_player_interact, :rockSmashWall, proc {
 		facingEvent = $game_player.pbFacingEvent
-		next if facingEvent.nil?
+		next if facingEvent.nil? || facingEvent.name != "RockSmashWall"
 		#if player is facing an event, check if it's a rockSmashWall
 		if !facingEvent.nil?
-			next if facingEvent.name != "RockSmashWall"
 			commands = facingEvent.list
-			next if  commands.nil?
+			next if commands.nil?
 	
 			comment = ""
 			commands.each do |command|
@@ -177,7 +166,7 @@ class RockSmashWall
 		next if !facingEvent
 		if facingEvent.name == "RockSmashWall"
 			commands = facingEvent.list
-			next if  commands.nil?
+			next if commands.nil?
 	
 			comment = ""
 			commands.each do |command|

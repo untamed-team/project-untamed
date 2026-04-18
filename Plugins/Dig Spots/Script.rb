@@ -29,10 +29,12 @@ class DigSpots
 			#roll to activate dig spots
 			if self.rollToActivateDigSpot
 				Console.echo_warn "roll successful for dig spot. Activiating dig spot with event ID #{event.id}"
-				pbMapInterpreter.pbSetSelfSwitch(event.id, "A", true)
+				#pbMapInterpreter.pbSetSelfSwitch(event.id, "A", true)
+				$game_self_switches[[$game_map.map_id,event.id,"A"]] = true
 			else
 				Console.echo_warn "roll unsuccessful for dig spot. Dig spot with event ID #{event.id} will not be activated"
-				pbMapInterpreter.pbSetSelfSwitch(event.id, "A", false)
+				#pbMapInterpreter.pbSetSelfSwitch(event.id, "A", false)
+				$game_self_switches[[$game_map.map_id,event.id,"A"]] = false
 			end #if self.rollToActivateDigSpot
 		end #$game_map.events.each_value do |event|
 
