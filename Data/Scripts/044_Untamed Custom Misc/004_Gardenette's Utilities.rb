@@ -1784,6 +1784,9 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
 )
 
 #===============================================================================
+# Outfit-related
+#===============================================================================
+#===============================================================================
 # Pokecenter Animations (to account for player outfits)
 #===============================================================================
 def playCenterAnimGivePkmn
@@ -1856,6 +1859,32 @@ def playCenterAnimTakePkmn
     PBMoveRoute::TurnUp,
     PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
     PBMoveRoute::Graphic, charset, 0, 8, 0,
+  ])
+end
+
+#===============================================================================
+# Climbing
+#===============================================================================
+def pbClimbOn
+  if $Trainer.male?
+    characterGraphic = "HOMERO_CLIMBING"
+  else
+    characterGraphic = "PEPA_CLIMBING"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+  ])
+end
+
+def pbClimbOff
+  characterGraphic = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
   ])
 end
 
