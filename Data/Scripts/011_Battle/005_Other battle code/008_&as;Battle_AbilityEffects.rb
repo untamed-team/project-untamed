@@ -2848,7 +2848,6 @@ Battle::AbilityEffects::EndOfRoundEffect.add(:MOODY,
 
 Battle::AbilityEffects::EndOfRoundEffect.add(:SPEEDBOOST,
   proc { |ability, battler, battle|
-    next if battler.turnCount.even? && $player.difficulty_mode?("chaos") #by low
     # A Pokémon's turnCount is 0 if it became active after the beginning of a
     # round
     if battler.turnCount > 0 && battle.choices[battler.index][0] != :Run &&

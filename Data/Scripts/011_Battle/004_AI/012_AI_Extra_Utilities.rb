@@ -872,7 +872,10 @@ class Battle::AI
       if priorityAI(user,j)>0
         maxprio=tempdam if tempdam>maxprio
       end  
-    end 
+    end
+    if maxmove.nil?
+      maxmove = user.moves.first
+    end
     return [maxdam,maxmove,maxprio,physorspec,maxidxmove]
   end  
 

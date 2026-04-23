@@ -49,7 +49,7 @@ class Battle::AI
         end
         score*=0.1 if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
                                                "RemoveProtectionsBypassSubstitute", 
-                                               "RemoveProtections"].includes?(m&.id) }
+                                               "RemoveProtections"].include?(m&.id) }
         if user.effects[PBEffects::Wish]>0
           bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
           maxdam=bestmove[0]
@@ -119,7 +119,7 @@ class Battle::AI
         movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
         movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
                                                    "RemoveProtectionsBypassSubstitute", 
-                                                   "RemoveProtections"].includes?(m&.id) }
+                                                   "RemoveProtections"].include?(m&.id) }
         score*=0.1 if movecheck
         if user.effects[PBEffects::Wish]>0
           bestmove=bestMoveVsTarget(target,user,skill) # [maxdam,maxmove,maxprio,physorspec]
@@ -224,7 +224,7 @@ class Battle::AI
         movecheck=target.moves.any? { |m| m&.ignoresSubstitute?(target) }
         movecheck=true if target.moves.any? { |m| ["HoopaRemoveProtectionsBypassSubstituteLowerUserDef1", 
                                                    "RemoveProtectionsBypassSubstitute", 
-                                                   "RemoveProtections"].includes?(m&.id) }
+                                                   "RemoveProtections"].include?(m&.id) }
         score*=0.1 if movecheck
         score*=1.3 if target.moves.any? { |m| m&.pbContactMove?(target) }
         if user.effects[PBEffects::Wish]>0
