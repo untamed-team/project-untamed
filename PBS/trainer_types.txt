@@ -369,7 +369,7 @@ VictoryBGM = Victory - Gym Leader
 Name = Gym Leader
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Gym_Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [YOUNGSTER_M]
@@ -387,7 +387,7 @@ Name = Eon Grunt
 Gender = Male
 BaseMoney = 16
 IntroBGM = Encounter - Eon
-BattleBGM = Battle - Eon
+BattleBGM = VS_Team_Eon
 VictoryBGM = Victory - Eon
 #-------------------------------
 [EONGRUNT_F]
@@ -395,7 +395,7 @@ Name = Eon Grunt
 Gender = Female
 BaseMoney = 16
 IntroBGM = Encounter - Eon
-BattleBGM = Battle - Eon
+BattleBGM = VS_Team_Eon
 VictoryBGM = Victory - Eon
 #-------------------------------
 [NEOGRUNT_M]
@@ -403,7 +403,7 @@ Name = Neo Grunt
 Gender = Male
 BaseMoney = 16
 IntroBGM = Encounter - Neo
-BattleBGM = Battle - Neo
+BattleBGM = VS_Team_Neo
 VictoryBGM = Victory - Neo
 #-------------------------------
 [NEOGRUNT_F]
@@ -411,7 +411,7 @@ Name = Neo Grunt
 Gender = Female
 BaseMoney = 16
 IntroBGM = Encounter - Neo
-BattleBGM = Battle - Neo
+BattleBGM = VS_Team_Neo
 VictoryBGM = Victory - Neo
 #-------------------------------
 [FARMER]
@@ -579,46 +579,46 @@ BaseMoney = 60
 Name = Trainer
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Gym_Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [LEADER_Thalia]
 Name = Gym Leader
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Gym_Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [LEADER_Mateo]
 Name = Gym Leader
 Gender = Male
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Gym_Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [LEADER_Mercedes]
 Name = Gym Leader
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Gym_Leader
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [ADMIN_Xandra]
 Name = Neo Admin
 Gender = Female
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Team_Neo
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [ADMIN_Idelfonso]
 Name = Eon Admin
 Gender = Male
 BaseMoney = 100
-BattleBGM = Battle - Gym Leader
+BattleBGM = VS_Team_Eon
 VictoryBGM = Victory - Gym Leader
 #-------------------------------
 [WILD_PKMN]
-Name = Wild Pokemon
+Name = Wild Pokémon
 Gender = Male
 BaseMoney = 10
 #-------------------------------
