@@ -278,17 +278,20 @@ class Battle::Scene::PokemonDataBox < Sprite
     end
     if @battler.isBossPokemon?
       @hpBar.src_rect.x = @hpBar.bitmap.width - w if !@showHP
+      @hpBar2.src_rect.x = @hpBar2.bitmap.width - w if !@showHP
       @hpBar.src_rect.width = w
+      @hpBar2.src_rect.width = w
       hpColor = 0                                      # Green bar
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
+      @hpBar2.src_rect.y = hpColor * @hpBarBitmap2.height / 3
       if remainingPoints > 0
         @hpBar2.y = @hpBar.y
         @hpBar2.x = @hpBar.x
         @hpBar2.z = @hpBar.z - 1
         @hpBar2.src_rect.x = 0
-        @hpBar2.visible = true
+        #@hpBar2.visible = true
 				@hpBar2.src_rect.width = @hpBar.bitmap.width
       else
         @hpBar2.visible = false
@@ -300,12 +303,6 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
-      @hpBar2.y = @hpBar.y
-      @hpBar2.x = @hpBar.x
-      @hpBar2.z = @hpBar.z - 1
-      @hpBar2.src_rect.x = 0
-      @hpBar2.src_rect.width = @hpBar.bitmap.width
-      @hpBar2.visible = false
     end
   end
 
