@@ -442,10 +442,13 @@ class PokemonPokedex_Scene
   def pbGetDexList
     region = pbGetPokedexRegion
     regionalSpecies = pbAllRegionalSpecies(region)
-    if !regionalSpecies || regionalSpecies.length == 0
+    if true #!regionalSpecies || regionalSpecies.length == 0
       # If no Regional Dex defined for the given region, use the National Pokédex
       regionalSpecies = []
-      GameData::Species.each_species { |s| regionalSpecies.push(s.id) }
+      GameData::Species.each_species { |s|
+        next if s.name.include?("Failsafe") || s.species == :DELETED_PKMN
+        regionalSpecies.push(s.id) 
+      }
     end
     shift = Settings::DEXES_WITH_OFFSETS.include?(region)
     ret = []

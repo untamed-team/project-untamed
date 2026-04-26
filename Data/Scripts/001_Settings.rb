@@ -217,7 +217,6 @@ module Settings
   def self.pokedex_names
     return [
       [_INTL("Mazah Pokédex"), 0],
-      [_INTL("Johto Pokédex"), 1],
       _INTL("National Pokédex")
     ]
   end

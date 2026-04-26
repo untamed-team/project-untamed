@@ -433,7 +433,7 @@ class PokemonLoadScreen
       show_continue = !@save_data.empty?
       commands[cmd_continue = commands.length] = "#{@selected_file}" if show_continue
       commands[cmd_new_game = commands.length]  = _INTL('New Game')
-      commands[cmd_options = commands.length]   = _INTL('Options')
+      commands[cmd_options = commands.length]   = _INTL('Options') if show_continue
       commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
 	  #commands[cmd_mystery_gift = commands.length] = _INTL('Mys. Gift') if show_continue && @save_data[:player].mystery_gift_unlocked
       commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG

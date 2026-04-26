@@ -475,6 +475,7 @@ FullDesc = Normally, this Pokemon's held item has no effect. In Chaos mode, Klut
 [MOLDBREAKER]
 Name = Mold Breaker
 Description = Moves can be used regardless of Abilities.
+FullDesc = Moves used by this Pokemon will never fail, expect due to type immunities.
 #-------------------------------
 [SUPERLUCK]
 Name = Super Luck
