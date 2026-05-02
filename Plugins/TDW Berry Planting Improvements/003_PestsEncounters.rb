@@ -46,12 +46,15 @@ GameData::EncounterType.register({
 # Handling
 #===============================================================================
 
-def pbBerryPlantPestRandomEncounter(berryColor)
+def pbBerryPlantPestRandomEncounter(berry)
     return false if $game_system.encounter_disabled
-    color_enc = ("BerryPlantPest" + berryColor.to_s).to_sym
     enc_type = nil
-    enc_type = color_enc if $PokemonEncounters.has_encounter_type?(color_enc)
-    enc_type = :BerryPlantPest if $PokemonEncounters.has_encounter_type?(:BerryPlantPest)
+    if PluginManager.installed?("TDW Berry Core and Dex") && berry
+        berryColor = GameData::BerryData.get(berry).color
+        color_enc = ("BerryPlantPest" + berryColor.to_s).to_sym
+        enc_type = color_enc if $PokemonEncounters.has_encounter_type?(color_enc)
+    end
+    enc_type = :BerryPlantPest if !enc_type && $PokemonEncounters.has_encounter_type?(:BerryPlantPest)
     enc_type = :BerryPlantDefault if !enc_type
     $stats.berry_pest_battles ||= 0
     $stats.berry_pest_battles += 1
@@ -138,12 +141,20 @@ class PokemonEncounters
          end
         end
         # Black Flute and White Flute alter the level of the wild Pokémon
-        if Settings::FLUTES_CHANGE_WILD_ENCOUNTER_LEVELS
-          if $PokemonMap.blackFluteUsed
-            level = [level + rand(1..4), GameData::GrowthRate.max_level].min
-          elsif $PokemonMap.whiteFluteUsed
-            level = [level - rand(1..4), 1].max
-          end
+        if Essentials::VERSION.include?("21")
+            if $PokemonMap.lower_level_wild_pokemon
+                level = [level - rand(1..4), 1].max
+              elsif $PokemonMap.higher_level_wild_pokemon
+                level = [level + rand(1..4), GameData::GrowthRate.max_level].min
+            end
+        else
+            if Settings::FLUTES_CHANGE_WILD_ENCOUNTER_LEVELS
+                if $PokemonMap.blackFluteUsed
+                level = [level + rand(1..4), GameData::GrowthRate.max_level].min
+                elsif $PokemonMap.whiteFluteUsed
+                level = [level - rand(1..4), 1].max
+                end
+            end
         end
         # Return [species, level]
         return [encounter[1], level]
