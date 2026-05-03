@@ -5,8 +5,8 @@
 #-------------------------------
 [0]
 Filename = southernMazah.png
-Name = """Southern Mazah"""
-Point = 19,5,"Veravalles Town","Ceiba''''s Lab",22,19,11,,
+Name = "Southern Mazah"
+Point = 19,5,"Veravalles Town","Ceiba's Lab",22,19,11,,
 Point = 20,5,"Route 1",,,,,,
 Point = 20,4,"Route 1",,,,,,
 Point = 19,4,"Route 1",,,,,,
@@ -27,7 +27,20 @@ Point = 24,6,"Route 3",,,,,,
 Point = 24,7,"Dorado Mine",,,,,,
 Point = 23,7,"Route 4",,,,,,
 Point = 22,7,"Route 4",,,,,,
-Point = 22,6,"Asterado Ranch","Pokémon Daycare",,,,,
+Point = 22,6,"Asterado Lake","Pokémon Daycare",,,,,
+Point = 22,8,"Route 5","Shady Shuckle",,,,,
+Point = 22,9,"Route 5","Shady Shuckle",,,,,
+Point = 22,10,"Route 5","Shady Shuckle",,,,,
+Point = 22,11,"Route 5","Shady Shuckle",,,,,
+Point = 22,12,"Route 6",,,,,,
+Point = 23,12,"Route 6",,,,,,
+Point = 24,12,"Route 6",,,,,,
+Point = 20,9,"Soleca Desert",,,,,,
+Point = 21,9,"Soleca Desert",,,,,,
+Point = 20,10,"Soleca Desert",,,,,,
+Point = 21,10,"Soleca Desert",,,,,,
+Point = 23,10,"Ferrera Town","Crustang Derby",66,9,27,,
+Point = 23,11,"Ferrera Town","Crustang Derby",66,9,27,,
 
 #[1]
 #Filename = northernMazah.png
