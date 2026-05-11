@@ -7033,7 +7033,7 @@ TotalPP = 10
 Target = NearOther
 FunctionCode = BadPoisonTarget
 Flags = CanProtect,CanMirrorMove,Contest_Smart,Contest_Appeal_2,Contest_Effect_PreventVoltageDownSameTurn
-Description = A move that leaves the target badly poisoned. Its poison damage worsens every turn.
+Description = A move that leaves the target badly poisoned. Its poison damage worsens every other turn.
 #-------------------------------
 [TOXICSPIKES]
 Name = Toxic Spikes
@@ -7084,7 +7084,7 @@ Description = The user can't move on the next turn, unless the target was knocke
 Name = Psycho Boost
 Type = PSYCHIC
 Category = Special
-Power = 120
+Power = 130
 Accuracy = 100
 TotalPP = 5
 Target = NearOther
