@@ -2377,7 +2377,7 @@ class Battle::AI
     moveIdx = user.moves.find_index(move)
     return 0 if moveIdx.nil?
     damage = @damagesAI.dig(user.index, moveIdx, :dmg, target.index) || 0
-    echoln("AI Damage Pre-Calc for #{move.name} from #{user.name} to #{target.name}: #{damage}") if $AIGENERALLOG
+    echoln("AI Damage Pre-Calc for #{move.name} from #{user.name} to #{target.name}: #{damage}") if false#$AIGENERALLOG
     return damage
   end
 end

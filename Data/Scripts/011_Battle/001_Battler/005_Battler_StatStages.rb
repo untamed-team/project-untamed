@@ -3,8 +3,9 @@ class Battle::Battler
   # Increase stat stages
   #=============================================================================
   def setupGetSourceCategory(source)
+    debug_setuplog = false
     if source.nil?
-      echoln "exiting early, as source is nil"
+      echoln "exiting early, as source is nil" if debug_setuplog
       return nil, nil
     end
     category = nil
@@ -13,23 +14,23 @@ class Battle::Battler
       source_id = source
       if GameData::Move.exists?(source)
         category = :moves
-        echoln "source = move, #{source_id}"
+        echoln "source = move, #{source_id}" if debug_setuplog
       elsif GameData::Item.exists?(source)
         category = :items
-        echoln "source = item, #{source_id}"
+        echoln "source = item, #{source_id}" if debug_setuplog
       elsif GameData::Ability.exists?(source) && @abilityMutationList.include?(source)
         category = :abil
-        echoln "source = abil, #{source_id}"
+        echoln "source = abil, #{source_id}" if debug_setuplog
       end
       return category, source_id
     elsif source.respond_to?("id")
       source_id = source.id
-      echoln "source (not sym) = #{category}, #{source.name}"
+      echoln "source (not sym) = #{category}, #{source.name}" if debug_setuplog
       return :moves, source_id if GameData::Move.exists?(source_id)
       return :items, source_id if GameData::Item.exists?(source_id)
       return :abil, source_id  if GameData::Ability.exists?(source_id)
     end
-    echoln "category determination failed"
+    echoln "category determination failed" if debug_setuplog
     return nil, nil
   end
 

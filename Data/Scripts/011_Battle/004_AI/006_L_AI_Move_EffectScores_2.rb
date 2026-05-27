@@ -1396,7 +1396,7 @@ class Battle::AI
       elsif target.hasActiveAbility?(:SOUNDPROOF)
         score*=3.0 if move.soundMove?
       elsif target.hasActiveAbility?(:MULTISCALE)
-        score*=1.5 if user.hp==user.totalhp
+        score*=1.5 if target.hp==target.totalhp
       elsif target.hasActiveAbility?(:SNOWCLOAK) && expectedWeather == :Hail
         score*=1.2 if move.specialMove?(move.type)
       elsif target.hasActiveAbility?(:SANDVEIL)  && expectedWeather == :Sandstorm

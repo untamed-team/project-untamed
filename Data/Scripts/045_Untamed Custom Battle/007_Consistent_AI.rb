@@ -77,7 +77,7 @@ class Battle::AI
     choices   = []
     user.eachMoveWithIndex do |_m, i|
       next if !@battle.pbCanChooseMove?(idxBattler, i, false)
-      if MEGA_EVO_MOVESET.key?(user.species) && $player.difficulty_mode?("chaos")
+      if MEGA_EVO_MOVESET.key?(user.species) && $player.difficulty_mode?("chaos") && battler.willmega
         oldmove = MEGA_EVO_MOVESET[user.species][0]
         newmove = MEGA_EVO_MOVESET[user.species][1]
         if _m.id == oldmove
@@ -390,12 +390,12 @@ class Battle::AI
       @battle.allBattlers.each do |b|
         next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
         next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
-        score = pbGetMoveScore(move, user, b, 100)
         if user.opposes?(b)
-          ret = pbAdjustScorePositionChange(score, user, b, move, doublesThreats[b.index], skill)
+          ret = pbAdjustScorePositionChange(80, user, b, move, doublesThreats[b.index], skill)
           scoresAndTargets.push([ret[0], ret[1]]) if ret[0] > 0
         else # is ally
           # allows for the AI to target allies if its good to do so (polen puff/swag/etc)
+          score = pbGetMoveScore(move, user, b, 100)
           score *= -1
           echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
           scoresAndTargets.push([score, b.index])
@@ -529,6 +529,77 @@ class Battle::AI
       realTarget = target
     end
     score = pbGetMoveScore(move, user, realTarget, 100)
+    # in theory, this is jank. Because it will only affect battler.index == 3
+    if @battle.pbSideBattlerCount(user) > 1
+      if user.allAllies.any?
+        partner = user.allAllies.first
+        partnerAction = @battle.choices[partner.index]
+        if partnerAction[0] == :UseMove
+          roles = pbGetPokemonRole(user, target)
+          # attempt to prevent overkill
+          if partnerAction[3] == target.index
+            targethp = (target.hp.to_f) / target.totalhp
+            if targethp < 0.3
+              score *= 0.6
+            elsif targethp < 0.5
+              score *= 0.8
+            end
+          end
+          
+          partnerMove = partnerAction[2]
+          if partnerMove
+            # move conflicts (very rarely do i expect this to actually matter)
+            if partnerMove.id == move.id && move.statusMove?
+              overlap = [:STEALTHROCK, :SPIKES, :TOXICSPIKES, :STICKYWEB,
+                         :REFLECT, :LIGHTSCREEN, :AURORAVEIL,
+                         :SUNNYDAY, :RAINDANCE, :SANDSTORM, :HAIL, 
+                         :GRASSYTERRAIN, :ELECTRICTERRAIN, :MISTYTERRAIN, :PSYCHICTERRAIN]
+              if overlap.include?(move.id)
+                score *= 0.2
+              end
+            end
+            if (partnerMove.id == :REFLECT && move.id == :LIGHTSCREEN) ||
+               (partnerMove.id == :LIGHTSCREEN && move.id == :REFLECT)
+              score *= 1.2
+            end
+            # encourage specific moves if ally is choosing to use helping hand / hold hands
+            # Might be better to store these in damange calculations? although then it would mess with the preCalculateDamages hash
+            if partnerMove.function == "PowerUpAllyMove"
+              if move.damagingMove?
+                score *= 1.3
+              elsif move.statusMove?
+                score *= 0.3
+              end
+            end
+            if partnerMove.function == "HoldingHandsShamefully"
+              if move.statusMove?
+                if move.function.to_s.start_with?("RaiseUser")
+                  score *= 1.2 if roles.include?("Sweeper")
+                  score *= 1.2
+                elsif overlap.include?(move.id)
+                  score *= 1.2
+                else
+                  score *= 0.7
+                end
+              elsif move.damagingMove?
+                score *= 1.1
+              end
+            end
+            # fake out partner means we have a free turn
+            if partnerMove.function == "FlinchTargetFailsIfNotUserFirstTurn"
+              freeturn = [:TAILWIND, :TRICKROOM, :REFLECT, :LIGHTSCREEN, :AURORAVEIL,
+                          :SUNNYDAY, :RAINDANCE, :SANDSTORM, :HAIL, 
+                          :GRASSYTERRAIN, :ELECTRICTERRAIN, :MISTYTERRAIN, :PSYCHICTERRAIN]
+              score *= 1.5 if freeturn.include?(move.id)
+              if move.function.to_s.start_with?("RaiseUser") && move.statusMove?
+                score *= 1.2 if roles.include?("Sweeper")
+                score *= 1.2
+              end
+            end
+          end
+        end
+      end
+    end
     # switch worriedness
     inBattleIndex = @battle.allSameSideBattlers(target.index).map { |target| target.pokemonIndex }
     foeparty.each_with_index do |pkmn, idxParty|
