@@ -64,6 +64,7 @@ class Battle::Battler
     # Do other things
     @battle.pbClearChoice(@index)   # Reset choice
     pbOwnSide.effects[PBEffects::LastRoundFainted] = @battle.turnCount
+    pbOwnSide.effects[PBEffects::FaintedMons] += 1 if pbOwnSide.effects[PBEffects::FaintedMons] < 6
     if $game_temp.party_direct_damage_taken &&
        $game_temp.party_direct_damage_taken[@pokemonIndex] &&
        pbOwnedByPlayer?
@@ -85,14 +86,14 @@ end
 
 #the below method is handled in the script MEM_Battle
 class Battle
-  alias achieve_pbMegaEvolve pbMegaEvolve
-  def pbMegaEvolve(index)
-    achieve_pbMegaEvolve(index)
-    return if !pbOwnedByPlayer?(index)
-    if @battlers[index].mega?
-      Achievements.incrementProgress("MEGA_EVOLUTIONS",1)
-    end
-  end
+  #alias achieve_pbMegaEvolve pbMegaEvolve
+  #def pbMeg aEvolve(index)
+  #  achieve_pbMegaEvolve(index)
+  #  return if !pbOwnedByPlayer?(index)
+  #  if @battlers[index].mega?
+  #    Achievements.incrementProgress("MEGA_EVOLUTIONS",1)
+  #  end
+  #end
   
   alias achieve_pbPrimalReversion pbPrimalReversion
   def pbPrimalReversion(index)

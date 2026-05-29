@@ -41,6 +41,7 @@ class Battle::Move::FixedDamageUserLevelRandom < Battle::Move::FixedDamageMove
   def pbFixedDamage(user, target)
     min = (user.level / 2).floor
     max = (user.level * 3 / 2).floor
+    return max if !user.pbOwnedByPlayer?
     return min + @battle.pbRandom(max - min + 1)
   end
 end
@@ -280,9 +281,9 @@ end
 #===============================================================================
 class Battle::Move::PowerHigherWithLessPP < Battle::Move
   def pbBaseDamage(baseDmg, user, target)
-    dmgs = [200, 80, 60, 50, 40]
-    ppLeft = [@pp, dmgs.length - 1].min   # PP is reduced before the move is used
-    return dmgs[ppLeft]
+    ppratio = @pp.to_f / @realMove.total_pp # PP is reduced before the move is used
+    dmg = 40 + ((1.0 - ppratio) * 220).round
+    return [[dmg, 250].min, 40].max
   end
 end
 
@@ -1192,8 +1193,7 @@ class Battle::Move::CategoryDependsOnHigherDamagePoisonTarget < Battle::Move::Po
 
   def pbOnStartUse(user, targets)
     target = targets[0]
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     # Calculate user's effective attacking values
     attack_stage         = user.stages[:ATTACK] + 6
     real_attack          = (user.attack.to_f * stageMul[attack_stage] / stageDiv[attack_stage]).floor
@@ -1233,8 +1233,7 @@ class Battle::Move::CategoryDependsOnHigherDamageIgnoreTargetAbility < Battle::M
 
   def pbOnStartUse(user, targets)
     # Calculate user's effective attacking value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     atk        = user.attack
     atkStage   = user.stages[:ATTACK] + 6
     realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
@@ -1344,6 +1343,25 @@ class Battle::Move::TypeIsUserFirstType < Battle::Move
   def pbBaseType(user)
     userTypes = user.pbTypes(true)
     return userTypes[0] || @type
+  end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    if self.id == :TRIMTACKLE
+      t = pbBaseType(user)
+      trims = {
+        :FAIRY => :PLAYROUGH,
+        :ROCK  => :HEADSMASH,
+        :GRASS => :HORNLEECH,
+        :WATER => :WATERFALL,
+        :ICE   => :ICICLECRASH,
+        :GHOST => :POLTERGEIST,
+        :ELECTRIC => :WILDCHARGE,
+        :PSYCHIC  => :ZENHEADBUTT,
+        :FIGHTING => :HAMMERARM
+      }
+      id = trims[t] if trims[t] && GameData::Move.exists?(trims[t])
+    end
+    super
   end
 end
 

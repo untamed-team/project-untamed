@@ -290,7 +290,7 @@ class Battle::Battler
       @lastRegularMoveUsed   = move.id   # For Disable, Encore, Instruct, Mimic, Mirror Move, Sketch, Spite
       @lastRegularMoveTarget = choice[3]   # For Instruct (remembering original target is fine)
       @movesUsed.push(move.id) if !@movesUsed.include?(move.id)   # For Last Resort
-      @battle.addMoveRevealed(self, move.id) if !@battle.moveRevealed?(self, move.id) # for Kiriya #by low
+      @battle.addMoveRevealed(self, move.id) # for Kiriya #by low
     end
     @battle.lastMoveUsed = move.id   # For Copycat
     @battle.lastMoveUser = @index   # For "self KO" battle clause to avoid draws
@@ -399,9 +399,10 @@ class Battle::Battler
       end
     end
     # Protean
-    if user.hasActiveAbility?([:LIBERO, :PROTEAN]) &&
+    if user.hasActiveAbility?([:PROTEAN, :LIBERO]) &&
        !move.callsAnotherMove? && !move.snatched &&
        user.pbHasOtherType?(move.calcType) && !GameData::Type.get(move.calcType).pseudo_type
+      $aamName=user.abilityName
       @battle.pbShowAbilitySplash(user)
       user.pbChangeTypes(move.calcType)
       typeName = GameData::Type.get(move.calcType).name
@@ -433,6 +434,37 @@ class Battle::Battler
       end
       targets.each do |b|
         b.damageState.reset
+        # Special interaction for color change + protean ability combo #by low
+        if b.hasActiveAbility?([:PROTEAN, :LIBERO]) && b.hasActiveAbility?(:COLORCHANGE) &&
+           b.hasAbilityMutation? && !b.pbOwnedByPlayer? && move.damagingMove?
+          offenseType = move.calcType
+          if b.pbHasOtherType?(offenseType) && !GameData::Type.get(offenseType).pseudo_type
+            $aamName="Color Change"
+            @battle.pbShowAbilitySplash(b)
+            resistTypesArr = []
+            GameData::Type.each do |t|
+              next if t.pseudo_type || user.pbHasType?(t.id)
+              resistTypesArr.push(t.id) if Effectiveness.not_very_effective_type?(offenseType, t.id)
+            end
+            if resistTypesArr.empty?
+              GameData::Type.each do |t|
+                next if t.pseudo_type || user.pbHasType?(t.id)
+                if Effectiveness.ineffective_type?(offenseType, t.id)
+                  resistTypesArr.push(t.id)
+                  break
+                end
+              end
+            end
+            resistTypesArr.push(offenseType.id) if resistTypesArr.empty?
+            resistTypesArr.delete(:WATER) if move.function == "FreezeTargetSuperEffectiveAgainstWater"
+            resistTypesArr.delete(:STEEL) if move.function == "SuperEffectiveAgainstSteel"
+            resistType = resistTypesArr.sample
+            b.pbChangeTypes(resistType)
+            typeName = GameData::Type.get(resistType).name
+            @battle.pbDisplay(_INTL("{1}'s type changed to {2}!", b.pbThis, typeName))
+            @battle.pbHideAbilitySplash(b)
+          end
+        end
         next if pbSuccessCheckAgainstTarget(move, user, b, targets)
         b.damageState.unaffected = true
       end
@@ -837,7 +869,7 @@ class Battle::Battler
         next if b.damageState.unaffected
         next if b.damageState.calcDamage == 0 || b.damageState.substitute
         next if !b.hasActiveAbility?(:STEAMENGINE)
-        b.pbRaiseStatStageByAbility(:SPEED, 6, b) if b.pbCanRaiseStatStage?(:SPEED, b)
+        b.pbRaiseStatStageByAbility(:SPEED, 6, b, true, :STEAMENGINE) if b.pbCanRaiseStatBySource?(:SPEED, :STEAMENGINE, b)
       end
     end
     # redundant text for Splinter Shot #by low

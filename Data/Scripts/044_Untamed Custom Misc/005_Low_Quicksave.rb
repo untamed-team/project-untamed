@@ -11,7 +11,7 @@ class Scene_Map
 				pbMessage(_INTL("You will be seeing messages when earning exp."))					
 			end	
 		end
-		if Input.trigger?(Input::AUX6) && !$game_player.moving? && !$PokemonGlobal.camping && !pbMapInterpreterRunning?
+		if Input.trigger?(Input::AUX6) && !$game_player.moving? && !$PokemonGlobal.camping && !pbMapInterpreterRunning? && !$game_system.save_disabled
 			if Game.save
 				pbSEPlay("Pkmn exp full") if FileTest.audio_exist?("Audio/SE/Pkmn exp full")
 				pbMessage(_INTL("\\PN saved the game."))

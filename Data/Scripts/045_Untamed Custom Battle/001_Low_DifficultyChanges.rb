@@ -47,85 +47,14 @@ def pbUpdatePBSFilesForDifficulty(thing = false)
   end
 end
 
-class Battle
-  #=============================================================================
-  # Switching Pokémon
-  #=============================================================================
-  # General switching method that checks if any Pokémon need to be sent out and,
-  # if so, does. Called at the end of each round.
-  def pbEORSwitch(favorDraws = false)
-    return if @decision > 0 && !favorDraws
-    return if @decision == 5 && favorDraws
-    pbJudge
-    return if @decision > 0
-    # Check through each fainted battler to see if that spot can be filled.
-    switched = []
-    loop do
-      switched.clear
-      @battlers.each do |b|
-        next if !b || !b.fainted?
-        idxBattler = b.index
-        next if !pbCanChooseNonActive?(idxBattler)
-        if !pbOwnedByPlayer?(idxBattler)   # Opponent/ally is switching in
-          next if b.wild?   # Wild Pokémon can't switch
-          idxPartyNew = pbSwitchInBetween(idxBattler)
-          opponent = pbGetOwnerFromBattlerIndex(idxBattler)
-          # NOTE: The player is only offered the chance to switch their own
-          #       Pokémon when an opponent replaces a fainted Pokémon in single
-          #       battles. In double battles, etc. there is no such offer.
-          if @internalBattle && (@switchStyle && $player.difficulty_mode?("easy")) && #edits #by low
-             trainerBattle? && pbSideSize(0) == 1 && opposes?(idxBattler) && 
-             !@battlers[0].fainted? && !switched.include?(0) &&
-             pbCanChooseNonActive?(0) && @battlers[0].effects[PBEffects::Outrage] == 0 &&
-            idxPartyForName = idxPartyNew
-            enemyParty = pbParty(idxBattler)
-            if enemyParty[idxPartyNew].ability == :ILLUSION && !pbCheckGlobalAbility(:NEUTRALIZINGGAS)
-              new_index = pbLastInTeam(idxBattler)
-              idxPartyForName = new_index if new_index >= 0 && new_index != idxPartyNew
-            end
-            unless isWildBoss?(opponent)
-              if pbDisplayConfirm(_INTL("{1} is about to send out {2}. Will you switch your Pokémon?",
-                                        opponent.full_name, enemyParty[idxPartyForName].name))
-                idxPlayerPartyNew = pbSwitchInBetween(0, false, true)
-                if idxPlayerPartyNew >= 0
-                  pbMessageOnRecall(@battlers[0])
-                  pbRecallAndReplace(0, idxPlayerPartyNew)
-                  switched.push(0)
-                end
-              end
-            end
-          end
-          pbRecallAndReplace(idxBattler, idxPartyNew)
-          switched.push(idxBattler)
-        elsif trainerBattle?   # Player switches in in a trainer battle
-          idxPlayerPartyNew = pbGetReplacementPokemonIndex(idxBattler)   # Owner chooses
-          pbRecallAndReplace(idxBattler, idxPlayerPartyNew)
-          switched.push(idxBattler)
-        else   # Player's Pokémon has fainted in a wild battle
-          switch = false
-          if pbDisplayConfirm(_INTL("Use next Pokémon?"))
-            switch = true
-          else
-            switch = (pbRun(idxBattler, true) <= 0)
-          end
-          if switch
-            idxPlayerPartyNew = pbGetReplacementPokemonIndex(idxBattler)   # Owner chooses
-            pbRecallAndReplace(idxBattler, idxPlayerPartyNew)
-            switched.push(idxBattler)
-          end
-        end
-      end
-      break if switched.length == 0
-      pbOnBattlerEnteringBattle(switched)
-    end
-  end
-  
-  
+class Battle  
   def pbCommandPhaseLoop(isPlayer)
     # NOTE: Doing some things (e.g. running, throwing a Poké Ball) takes up all
     #       your actions in a round.
     actioned = []
     idxBattler = -1
+    # DemICE store all damages in a hash for better efficiency.
+    @battleAI.preCalculateDamagesAI if isPlayer
     loop do
       break if @decision != 0   # Battle ended, stop choosing actions
       idxBattler += 1
@@ -182,6 +111,9 @@ class Battle
             pbCancelChoice(idxBattler + 1)   # Clear the previous battler's choice
             actioned.pop   # Forget the previous battler was done
             break
+          when -3   # Hotkey for sending ballz
+            commandsEnd = true
+            break
           end
           pbCancelChoice(idxBattler)
         end
@@ -211,7 +143,7 @@ class Battle
           anim_name = GameData::Status.get(:POISON).animation
           pbCommonAnimation(anim_name, battler) if anim_name
           pbShowAbilitySplash(battler)
-          battler.pbRecoverHP(battler.totalhp / 8)
+          battler.pbRecoverHP(battler.bossTotalHP / 8)
           if Scene::USE_ABILITY_SPLASH
             pbDisplay(_INTL("{1}'s HP was restored.", battler.pbThis))
           else
@@ -221,17 +153,17 @@ class Battle
         end
       elsif battler.takesIndirectDamage?
         battler.droppedBelowHalfHP = false
-        dmg = battler.totalhp / 8
+        dmg = battler.bossTotalHP / 8
         if battler.statusCount > 0
           if $player.difficulty_mode?("chaos") #by low
             if battler.effects[PBEffects::Toxic] > 2
-              dmg = battler.totalhp / 4
+              dmg = battler.bossTotalHP / 4
               battler.effects[PBEffects::Toxic] = 0
               battler.statusCount = 2 #for "pbContinueStatus" to say a different message
               #~ print "super damage"
             end
           else
-            dmg = battler.totalhp * battler.effects[PBEffects::Toxic] / 16
+            dmg = battler.bossTotalHP * battler.effects[PBEffects::Toxic] / 16
           end
         end
         battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
@@ -245,7 +177,7 @@ class Battle
     priority.each do |battler|
       next if battler.status != :BURN || !battler.takesIndirectDamage? || battler.hasActiveAbility?(:FLAREBOOST) #by low
       battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
+      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.bossTotalHP / 16 : battler.bossTotalHP / 8
       dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:HEATPROOF)
       battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
       battler.pbItemHPHealCheck
@@ -257,7 +189,7 @@ class Battle
     priority.each do |battler|
       next if battler.status != :FROZEN || !battler.takesIndirectDamage?
       battler.droppedBelowHalfHP = false
-      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.totalhp / 16 : battler.totalhp / 8
+      dmg = (Settings::MECHANICS_GENERATION >= 7) ? battler.bossTotalHP / 16 : battler.bossTotalHP / 8
       dmg = (dmg / 2.0).round if battler.hasActiveAbility?(:THICKFAT)
       battler.pbContinueStatus { battler.pbReduceHP(dmg, false) }
       battler.pbItemHPHealCheck
@@ -314,11 +246,12 @@ class DifficultySelectMenu_Scene
     @sprites["msgwindow"] = Window_AdvancedTextPokemon.new("")
     @sprites["msgwindow"].visible = false
     @sprites["msgwindow"].viewport = @viewport
+    @sprites["msgwindow"].z = 99999
     pbSetSystemFont(@sprites["overlay"].bitmap)
 
     @sprites["overlay"].x = @sprites["bg"].x
     @sprites["overlay"].y = @sprites["bg"].y
-    @sprites["overlay"].z = 99999
+    @sprites["overlay"].z = 99
 
     page = 1
     drawPage(page)

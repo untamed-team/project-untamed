@@ -426,7 +426,7 @@ ShowArea = true
 BattleBack = desert
 Flags = campMapDesert
 #-------------------------------
-[069]
+[069]   # Calojarro Gym Beach
 Name = Contest Reception
 Outdoor = false
 MapSize = 1,1
@@ -613,3 +613,7 @@ Name = Canyon Temple Right
 Outdoor = false
 BattleBack = cave_deep
 Flags = campMapCave,CanCamp
+#-------------------------------
+[126]   # Oasis
+Name = Oasis
+Outdoor = true

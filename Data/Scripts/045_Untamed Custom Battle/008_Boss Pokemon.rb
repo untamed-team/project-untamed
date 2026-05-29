@@ -1,23 +1,23 @@
 class Pokemon
   attr_accessor :bossmonMutation
-	bossmonMutation = false
+	@bossmonMutation = false
 	def enableBossPokemonMutation
-		bossmonMutation = true
+		@bossmonMutation = true
 	end  
 	def disableBossPokemonMutation
-		bossmonMutation = false
+		@bossmonMutation = false
 	end    
 
 	def toggleBossPokemonMutation
 		if !bossmonMutation
-			bossmonMutation = true
+			@bossmonMutation = true
 		else	
-			bossmonMutation = false
+			@bossmonMutation = false
 		end	
 	end 		
 	
 	def isBossPokemon?
-		return true if bossmonMutation==true
+		return true if @bossmonMutation
 	end
 end
 
@@ -161,8 +161,8 @@ class Battle::Battler
   ################################################################################
 
   def pbReduceHP(amt, anim = true, registerDamage = true, anyAnim = true)
-    amt = amt.round
     amt *= (5.0 / 4.0) if self.effects[PBEffects::BoomInstalled]
+    amt = amt.round
     amt = @hp if amt > @hp
     amt = 1 if amt < 1 && !fainted?
     breakbar = 0
@@ -283,15 +283,20 @@ class Battle::Scene::PokemonDataBox < Sprite
       hpColor = 1 if self.hp <= @battler.totalhp / 2   # Yellow bar
       hpColor = 2 if self.hp <= @battler.totalhp / 4   # Red bar
       @hpBar.src_rect.y = hpColor * @hpBarBitmap.height / 3
-      if remainingPoints > 0
-        @hpBar2.y = @hpBar.y
-        @hpBar2.x = @hpBar.x
-        @hpBar2.z = @hpBar.z - 1
-        @hpBar2.src_rect.x = 0
-        @hpBar2.visible = true
-				@hpBar2.src_rect.width = @hpBar.bitmap.width
-      else
-        @hpBar2.visible = false
+      if @hpBar2
+        @hpBar2.src_rect.x = @hpBar2.bitmap.width - w if !@showHP
+        @hpBar2.src_rect.y = hpColor * @hpBarBitmap2.height / 3
+        @hpBar2.src_rect.width = w
+        if remainingPoints > 0
+          @hpBar2.y = @hpBar.y
+          @hpBar2.x = @hpBar.x
+          @hpBar2.z = @hpBar.z - 1
+          @hpBar2.src_rect.x = 0
+          #@hpBar2.visible = true
+          @hpBar2.src_rect.width = @hpBar.bitmap.width
+        else
+          @hpBar2.visible = false
+        end
       end
       draw_bossHPBars
     else

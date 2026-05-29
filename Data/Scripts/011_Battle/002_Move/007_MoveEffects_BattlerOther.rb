@@ -383,11 +383,23 @@ end
 #===============================================================================
 class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
   def canSnatch?; return true; end
+  
+  def usableWhenAsleep?
+    return true if $player.difficulty_mode?("chaos")
+    return false
+  end
 
   def pbMoveFailed?(user, targets)
-    if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
+    if $player.difficulty_mode?("chaos")
+      if !user.pbHasAnyStatus?
+        @battle.pbDisplay(_INTL("But it failed!"))
+        return true
+      end
+    else
+      if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
+        @battle.pbDisplay(_INTL("But it failed!"))
+        return true
+      end
     end
     return false
   end
@@ -404,6 +416,10 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
       @battle.pbDisplay(_INTL("{1} cured its paralysis!", user.pbThis))
     when :FREEZE
       @battle.pbDisplay(_INTL("{1} healed its frostbite!", user.pbThis))
+    when :SLEEP
+      @battle.pbDisplay(_INTL("{1} woke up!", user.pbThis))
+    when :DIZZY
+      @battle.pbDisplay(_INTL("{1} regained focus!", user.pbThis))
     end
   end
 end
@@ -661,7 +677,10 @@ class Battle::Move::AttractTarget < Battle::Move
 
   def pbAdditionalEffect(user, target)
     return if target.damageState.substitute
-    target.pbAttract(user) if target.pbCanAttract?(user, false)
+    if target.pbCanAttract?(user, false)
+      target.pbAttract(user)
+      target.pbRaiseAttackStatStageIrritable
+    end
   end
 end
 
@@ -1090,7 +1109,7 @@ class Battle::Move::SetTargetAbilityToUserAbility < Battle::Move
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.unstoppableAbility? || target.ability == :TRUANT
+    if target.unstoppableAbility? #|| target.ability == :TRUANT
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     end
@@ -1356,6 +1375,17 @@ class Battle::Move::StartGravity < Battle::Move
       end
       if showMessage
         @battle.pbDisplay(_INTL("{1} couldn't stay airborne because of gravity!", b.pbThis))
+      end
+      if b.hasActiveAbility?(:IRRITABLE)
+        b.eachMove do |i|
+          next unless i.unusableInGravity?
+          @battle.pbShowAbilitySplash(b)
+          @battle.pbDisplay(_INTL("{1} became angry, as it unable to use {2}!", b.pbThis, i.name))
+          b.pbRaiseAttackStatStageIrritable(false)
+          @battle.addMoveRevealed(b, i.id)
+          @battle.pbHideAbilitySplash(b)
+          break
+        end
       end
     end
   end

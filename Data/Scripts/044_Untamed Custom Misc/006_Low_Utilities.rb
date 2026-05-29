@@ -1,15 +1,30 @@
-# not actually a utilities page, just a "too lazy to create a new page for this"
+# not actually a utilities page, rather it is a "too lazy to create a new page for this"
 
-OLDSCHOOLBATTLE = 101
-INVERSEBATTLESWITCH = 100
-LOWEREXPGAINSWITCH = 99
-RELEARNERSWITCH = 98
-NOINITIALVALUES = 97
+#----------------------------------------------------------------------------
+# Names for switches [bool]
+#----------------------------------------------------------------------------
+OLDSCHOOLBATTLE = 101 # Whether the battle mechanics are roughly converted to RSE mechanics
+MIRRORCONTAINER = 100 # Whether the trainer's team is mirrored to a modified player's team
+LOWEREXPGAIN    = 99  # Whether the exp gain is divided/multipled by 50% or 33% per level difference
+RELEARNERSWITCH = 98  # Whether the player can relearn moves on the summary screen
+NOINITIALVALUES = 97  # Whether the initial values screen is skipped
 
-MAXITEMSVAR = 99
-MASTERMODEVARS = 98
-DEXREWARDSVAR = 102
+#----------------------------------------------------------------------------
+# Names for variables
+#----------------------------------------------------------------------------
+MASTERMODEVARS = 98 # [array] unused 
+DEXREWARDSVAR = 102 # [int] Where dex rewards counters are stored
 
+#----------------------------------------------------------------------------
+# Whether all stats follow accuracy/evasion stages or not ((in chaos mode)).
+# With this enabled, max boost is 3x and min is 0.33x
+# With this not enabled, max boost is 4x and min is 0.25x
+#----------------------------------------------------------------------------
+$GLOBALSETUPNERF = true
+
+#===============================================================================
+# Nature Changer (NPC)
+#===============================================================================
 def pbNatureChanger(pkmn)
   commands = []
   ids = []
@@ -48,11 +63,13 @@ def pbNatureChanger(pkmn)
   end
 end
 
+# i hate this piece of shit
 def pbIsBadPokemon?(pkmn)
   return true if pkmn.species_data.get_baby_species == :EEVEE
   return false
 end
 
+# debug commands
 MenuHandlers.add(:debug_menu, :set_time, {
   "name"        => _INTL("Set Time"),
   "parent"      => :field_menu,
@@ -70,8 +87,11 @@ MenuHandlers.add(:debug_menu, :set_time, {
   }
 })
 
+#===============================================================================
+# newish items
+#===============================================================================
 ItemHandlers::UseOnPokemon.add(:HYPERABILITYCAPSULE,proc{ |item, qty, pkmn, scene|
-  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL].include?(pkmn.species)
+  if pbIsBadPokemon?(pkmn) || [:XOLSMOL, :AMPHIBARK, :PEROXOTAL, :DRILBUR, :EXCADRILL, :MURKROW].include?(pkmn.species)
     scene.pbDisplay(_INTL("{1} refuses to ingest this item. What a picky eater.", pkmn.name))
     next false
   end
@@ -97,7 +117,7 @@ ItemHandlers::UseOnPokemon.add(:SHINYBERRY,proc{ |item, qty, pkmn, scene|
   command = scene.pbShowCommands(_INTL("{1} this Pokémon?", command2), [_INTL("Yes"), _INTL("No")])
   if command == 0
     pkmn.shiny = (pkmn.shiny?) ? false : true
-    pkmn.happiness += 75
+    pkmn.happiness = [(pkmn.happiness - 75), 0].max
     pbMessage(_INTL("This Pokémon color palette was swapped."))
     next true
   else
@@ -105,6 +125,9 @@ ItemHandlers::UseOnPokemon.add(:SHINYBERRY,proc{ |item, qty, pkmn, scene|
   end
 })
 
+#===============================================================================
+# stall edits
+#===============================================================================
 class Battle
   def pbBattleLoop
     @turnCount = 0
@@ -131,7 +154,6 @@ class Battle
       @battlers.each do |b|
         next if !b
         next if b.hp <= 0
-        #~ next if !b.hasActiveAbility?(:STALL)
         if b.hasActiveAbility?(:STALL) && b.turnCount > 0
           pbShowAbilitySplash(b)
           pbDisplay(_INTL("{1} stalls for time.",b.name))
@@ -246,7 +268,6 @@ end #of class PokemonEncounters
 #===============================================================================
 # New Evolution Methods
 #===============================================================================
-  #by low  
 GameData::Evolution.register({  
   :id            => :HappinessLevel,  
   :parameter     => Integer,  
@@ -257,7 +278,6 @@ GameData::Evolution.register({
   }  
 })
 
-#by low
 def pbRaiseTropiusEvolutionStep(pkmn)
   if pkmn.isSpecies?(:TROPIUS)
     pkmn.evolution_steps += 1
@@ -305,6 +325,30 @@ GameData::Evolution.register({ # rotten bananas
 })
 
 GameData::Evolution.register({
+  :id            => :LevelHasTypeMove,
+  :parameter     => String, #take in a string so DARK_32 in pokemon.txt does not crash the game
+  :level_up_proc => proc { |pkmn, parameter|
+  #get the level from the string
+  array = parameter
+  for i in 0...array.length
+    if array[i] == "_"
+      separatorPosition = i
+    end
+  end
+  
+  requiredType = array[0,separatorPosition]
+  if array[separatorPosition+1,array.length] != ""
+    requiredLevel = array[separatorPosition+1,array.length]
+  else
+    requiredLevel = 1
+  end
+  if pkmn.level >= requiredLevel.to_i
+    next pkmn.moves.any? { |m| m && m.type == requiredType.to_sym }
+  end
+  }
+})
+
+GameData::Evolution.register({
   :id            => :Diancie,
   :parameter     => Integer,
   :use_item_proc => proc { |pkmn, parameter, item|  
@@ -314,29 +358,31 @@ GameData::Evolution.register({
   }
 })
 
-#===============================================================================  
-# Link Cable #by low  
-#===============================================================================  
+#===============================================================================
+# Link Cable #by low 
+# (this used to be the only way for evolving trade mons)
+#===============================================================================
+
 GameData::Evolution.register({  
-  :id            => :Trade,  
+  :id            => :Link,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeMale,  
+  :id            => :LinkMale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.male? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id            => :TradeFemale,  
+  :id            => :LinkFemale,  
   :use_item_proc => proc { |pkmn, parameter, item|  
     next pkmn.female? && item == :LINKCABLE  
   }  
 })  
 GameData::Evolution.register({  
-  :id                   => :TradeItem,  
+  :id                   => :LinkItem,  
   :parameter            => :Item,  
   :use_item_proc        => proc { |pkmn, parameter, item|  
     next pkmn.item == parameter && item == :LINKCABLE  
@@ -346,25 +392,110 @@ GameData::Evolution.register({
     pkmn.item = nil   # Item is now consumed
   }
 })
-  
-  # these 2 are the same thing, fsr it doesnt check night/day when using items and its such a niche problem  
-GameData::Evolution.register({  
-  :id            => :TradeDay,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isDay?  
-      next item == :LINKCABLE  
-    end  
-  }  
-})
 
-GameData::Evolution.register({  
-  :id            => :TradeNight,  
-  :use_item_proc => proc { |pkmn, parameter, item|  
-    if PBDayNight.isNight?  
-      next item == :LINKCABLE  
-    end  
-  }  
-})
+# Pokedex evolution msgs edits
+class PokemonPokedexInfo_Scene
+  # Gets the evolution array and return evolution message
+  def getEvolutionMessage(evolution, method, parameter)
+    evoName = GameData::Species.get(evolution).name
+    ret = case method
+      when :Level
+        _INTL("{1} at level {2}", evoName,parameter)
+      when :LevelMale
+        _INTL("{1} at level {2} and it's male", evoName,parameter)
+      when :LevelFemale
+        _INTL("{1} at level {2} and it's female", evoName,parameter)
+      when :LevelRain
+        _INTL("{1} at level {2} when raining", evoName,parameter)
+      when :DefenseGreater
+        _INTL("{1} at level {2} and ATK > DEF",evoName,parameter)
+      when :AtkDefEqual
+        _INTL("{1} at level {2} and ATK = DEF",evoName,parameter) 
+      when :AttackGreater
+        _INTL("{1} at level {2} and DEF < ATK",evoName,parameter)
+      when :Silcoon,:Cascoon
+        _INTL("{1} at level {2} with personalID", evoName,parameter)
+      when :Ninjask
+        _INTL("{1} at level {2}",evoName,parameter)
+      when :Shedinja
+        _INTL("{1} at level {2} with empty space",evoName,parameter)
+      when :Happiness
+        _INTL("{1} when happy",evoName)
+      when :HappinessDay
+        _INTL("{1} when happy at day",evoName)
+      when :HappinessNight
+        _INTL("{1} when happy at night",evoName)
+      when :Beauty
+        _INTL("{1} when beauty is greater than {2}",evoName,parameter) 
+      when :DayHoldItem
+        _INTL("{1} holding {2} at day",evoName,GameData::Item.get(parameter).name)
+      when :NightHoldItem
+        _INTL("{1} holding {2} at night",evoName,GameData::Item.get(parameter).name)
+      when :HasMove
+        _INTL("{1} when has move {2}",evoName,GameData::Move.get(parameter).name)
+      when :HappinessMoveType
+        _INTL("{1} when is happy with {2} move",evoName,GameData::Type.get(parameter).name)
+      when :HasInParty
+        _INTL("{1} when has {2} at party",evoName,GameData::Species.get(parameter).name)
+      when :Location
+        _INTL("{1} at {2}",evoName, pbGetMapNameFromId(parameter))
+      when :Item
+        _INTL("{1} using {2}",evoName,GameData::Item.get(parameter).name)
+      when :ItemMale
+        _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
+      when :ItemFemale
+        _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
+      when :Trade, :Link
+        _INTL("{1} trading",evoName)
+      when :TradeItem, :LinkItem
+        _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
+      when :TradeSpecies
+        _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
+      # edits #by low
+      when :None
+        _INTL("None")
+      when :LevelDay
+        _INTL("{1} at level {2} at day", evoName,parameter)
+      when :LevelNight
+        _INTL("{1} at level {2} at night", evoName,parameter)
+      when :HappinessLevel
+        _INTL("{1} at level {2} and when happy", evoName,parameter)
+      when :Level30HasTypeMove
+        _INTL("{1} at level 30 with {2} move",evoName,GameData::Type.get(parameter).name)
+      when :ItemLevel
+        array = parameter
+        for i in 0...array.length
+          if array[i] == "_"
+            separatorPosition = i # found the separator
+          end
+        end
+        requiredItem = array[0,separatorPosition]
+        if array[separatorPosition+1,array.length] != ""
+          requiredLevel = array[separatorPosition+1,array.length]
+        else
+          requiredLevel = 1
+        end
+        _INTL("{1} at level {2} and using {3}",evoName,requiredLevel,GameData::Item.get(requiredItem).name)
+      when :LevelHasTypeMove
+        array = parameter
+        for i in 0...array.length
+          if array[i] == "_"
+            separatorPosition = i # found the separator
+          end
+        end
+        requiredType = array[0,separatorPosition]
+        if array[separatorPosition+1,array.length] != ""
+          requiredLevel = array[separatorPosition+1,array.length]
+        else
+          requiredLevel = 1
+        end
+        _INTL("{1} at level {2} with a {3} move",evoName,requiredType,requiredLevel)
+      else
+        evoName
+    end
+    return ret    
+  end
+end
 
 #===============================================================================
 # powertrip + Noseponch
@@ -489,7 +620,7 @@ class Pokemon
 end
 
 #===============================================================================  
-# Tropius Evolution #by low  
+# Tropius Evolution blockage
 #===============================================================================  
 class Pokemon
 # The core method that performs evolution checks. Needs a block given to it,  
@@ -511,7 +642,7 @@ class Pokemon
 end
 
 #===============================================================================  
-# Dragtaco Calc Stats #by low  
+# Calc Stats edits
 #===============================================================================  
 class Pokemon
   def calcHP(base, level, iv, ev)
@@ -540,20 +671,18 @@ end
 # Use Rare Candy - Level Cap #by low  
 #===============================================================================  
 ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
-  # level cap #by low
-  proceed=false
-  for i in $Trainer.party
-    if i.level>pkmn.level
-      proceed=true
-      break
-    end  
+  highestlvl = 0
+  $player.party.each do |mon|
+    highestlvl = mon.level if mon.level > highestlvl
+  end
+  proceed = false
+  proceed = true if pkmn.level < highestlvl
+  unless proceed
+    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment (lvl. {1}).", highestlvl))
+    next false
   end
   if pkmn.shadowPokemon?
     scene.pbDisplay(_INTL("It won't have any effect."))
-    next false
-  end
-  if proceed==false
-    scene.pbDisplay(_INTL("This Pokémon already has the highest level possible at the moment."))
     next false
   end
   if pkmn.level >= GameData::GrowthRate.max_level
@@ -562,16 +691,7 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
       scene.pbDisplay(_INTL("It won't have any effect."))
       next false
     end
-    #edited by Gardenette to work with No Auto Evolve script
-    # Check for evolution
-    #pbFadeOutInWithMusic {
-      #  evo = PokemonEvolutionScene.new
-      #  evo.pbStartScreen(pkmn, new_species)
-      #  evo.pbEvolution
-      #  evo.pbEndScreen
-      #  scene.pbRefresh if scene.is_a?(PokemonPartyScreen)
-      #}
-      pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
+    pbMessage(_INTL("\\c[1]{1} can now evolve!", pkmn.name))
     next true
   end
   # Level up
@@ -580,133 +700,9 @@ ItemHandlers::UseOnPokemon.add(:RARECANDY, proc { |item, qty, pkmn, scene|
   next true
 })
 
-GameData::Evolution.register({
-  :id            => :LevelHasTypeMove,
-  :parameter     => String, #take in a string so DARK_32 in pokemon.txt does not crash the game
-  :level_up_proc => proc { |pkmn, parameter|
-  #get the level from the string
-  array = parameter
-  for i in 0...array.length
-    if array[i] == "_"
-      separatorPosition = i
-    end
-  end
-  
-  requiredType = array[0,separatorPosition]
-  if array[separatorPosition+1,array.length] != ""
-    requiredLevel = array[separatorPosition+1,array.length]
-  else
-    requiredLevel = 1
-  end
-  if pkmn.level >= requiredLevel.to_i
-    next pkmn.moves.any? { |m| m && m.type == requiredType.to_sym }
-  end
-  }
-})
-
-class PokemonPokedexInfo_Scene
-  # Gets the evolution array and return evolution message
-  def getEvolutionMessage(evolution, method, parameter)
-    evoName = GameData::Species.get(evolution).name
-    ret = case method
-      when :Level
-        _INTL("{1} at level {2}", evoName,parameter)
-      when :LevelMale
-        _INTL("{1} at level {2} and it's male", evoName,parameter)
-      when :LevelFemale
-        _INTL("{1} at level {2} and it's female", evoName,parameter)
-      when :LevelRain
-        _INTL("{1} at level {2} when raining", evoName,parameter)
-      when :DefenseGreater
-        _INTL("{1} at level {2} and ATK > DEF",evoName,parameter)
-      when :AtkDefEqual
-        _INTL("{1} at level {2} and ATK = DEF",evoName,parameter) 
-      when :AttackGreater
-        _INTL("{1} at level {2} and DEF < ATK",evoName,parameter)
-      when :Silcoon,:Cascoon
-        _INTL("{1} at level {2} with personalID", evoName,parameter)
-      when :Ninjask
-        _INTL("{1} at level {2}",evoName,parameter)
-      when :Shedinja
-        _INTL("{1} at level {2} with empty space",evoName,parameter)
-      when :Happiness
-        _INTL("{1} when happy",evoName)
-      when :HappinessDay
-        _INTL("{1} when happy at day",evoName)
-      when :HappinessNight
-        _INTL("{1} when happy at night",evoName)
-      when :Beauty
-        _INTL("{1} when beauty is greater than {2}",evoName,parameter) 
-      when :DayHoldItem
-        _INTL("{1} holding {2} at day",evoName,GameData::Item.get(parameter).name)
-      when :NightHoldItem
-        _INTL("{1} holding {2} at night",evoName,GameData::Item.get(parameter).name)
-      when :HasMove
-        _INTL("{1} when has move {2}",evoName,GameData::Move.get(parameter).name)
-      when :HappinessMoveType
-        _INTL("{1} when is happy with {2} move",evoName,GameData::Type.get(parameter).name)
-      when :HasInParty
-        _INTL("{1} when has {2} at party",evoName,GameData::Species.get(parameter).name)
-      when :Location
-        _INTL("{1} at {2}",evoName, pbGetMapNameFromId(parameter))
-      when :Item
-        _INTL("{1} using {2}",evoName,GameData::Item.get(parameter).name)
-      when :ItemMale
-        _INTL("{1} using {2} and it's male",evoName,GameData::Item.get(parameter).name)
-      when :ItemFemale
-        _INTL("{1} using {2} and it's female",evoName,GameData::Item.get(parameter).name)
-      when :Trade
-        _INTL("{1} trading",evoName)
-      when :TradeItem
-        _INTL("{1} trading holding {2}",evoName,GameData::Item.get(parameter).name)
-      when :TradeSpecies
-        _INTL("{1} trading by {2}",evoName,GameData::Species.get(parameter).name)
-      # edits #by low
-      when :None
-        _INTL("None")
-      when :LevelDay
-        _INTL("{1} at level {2} at day", evoName,parameter)
-      when :LevelNight
-        _INTL("{1} at level {2} at night", evoName,parameter)
-      when :HappinessLevel
-        _INTL("{1} at level {2} and when happy", evoName,parameter)
-      when :Level30HasTypeMove
-        _INTL("{1} at level 30 with {2} move",evoName,GameData::Type.get(parameter).name)
-      when :ItemLevel
-        array = parameter
-        for i in 0...array.length
-          if array[i] == "_"
-            separatorPosition = i # found the separator
-          end
-        end
-        requiredItem = array[0,separatorPosition]
-        if array[separatorPosition+1,array.length] != ""
-          requiredLevel = array[separatorPosition+1,array.length]
-        else
-          requiredLevel = 1
-        end
-        _INTL("{1} at level {2} and using {3}",evoName,requiredLevel,GameData::Item.get(requiredItem).name)
-      when :LevelHasTypeMove
-        array = parameter
-        for i in 0...array.length
-          if array[i] == "_"
-            separatorPosition = i # found the separator
-          end
-        end
-        requiredType = array[0,separatorPosition]
-        if array[separatorPosition+1,array.length] != ""
-          requiredLevel = array[separatorPosition+1,array.length]
-        else
-          requiredLevel = 1
-        end
-        _INTL("{1} at level {2} with a {3} move",evoName,requiredLevel,requiredType)
-      else
-        evoName
-    end
-    return ret    
-  end
-end
-
+#===============================================================================
+# Crits edits
+#===============================================================================
 class Battle::Move
   def pbIsCritical?(user, target, move)
     return false if target.pbOwnSide.effects[PBEffects::LuckyChant] > 0
@@ -754,9 +750,12 @@ class Battle::Move
   end
 end # of Battle::Move
 
-# making certain abilities trigger once per battle
+#===============================================================================
+# battle attributes edits
+#===============================================================================
 class Battle
   attr_reader :activedAbility
+  attr_reader :activedItem
   attr_reader :slowstartCount
   attr_reader :overwriteType
   attr_reader :movesRevealed
@@ -765,6 +764,7 @@ class Battle
   def initialize(scene, p1, p2, player, opponent)
     abilactivated_initialize(scene, p1, p2, player, opponent)
     @activedAbility  = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
+    @activedItem     = [Array.new(@party1.length, false), Array.new(@party2.length, false)]
     @slowstartCount  = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @overwriteType   = [Array.new(@party1.length, 0), Array.new(@party2.length, 0)]
     @movesRevealed   = [Array.new(@party1.length, []), Array.new(@party2.length, [])] #kiriya
@@ -780,6 +780,16 @@ class Battle
     @activedAbility[user.index & 1][user.pokemonIndex] = false
   end
   
+  def wasUserItemActivated?(user) 
+    return @activedItem[user.index & 1][user.pokemonIndex]
+  end
+  def activateUserItem(user)
+    @activedItem[user.index & 1][user.pokemonIndex] = true
+  end
+  def deactivateUserItem(user)
+    @activedItem[user.index & 1][user.pokemonIndex] = false
+  end
+  
   def SlowStartCount(battler)
     return @slowstartCount[battler.index & 1][battler.pokemonIndex]
   end
@@ -792,7 +802,9 @@ class Battle
   end
 
   def addMoveRevealed(user, move_id)
-    @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    if !@movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
+      @movesRevealed[user.index & 1][user.pokemonIndex].push(move_id)
+    end
   end
   def moveRevealed?(user, move_id)
     return @movesRevealed[user.index & 1][user.pokemonIndex].include?(move_id)
@@ -850,36 +862,39 @@ def pbGiveDexReward
     dexseen  = $player.pokedex.seen_count
     dexcount = $player.pokedex.owned_count
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]So, you've seen <b>{1}</b> Pokémon\\nand caught <b>{2}</b> of them...", dexseen, dexcount))
-    if DEX_COMPLETION_REWARDS[progress][0] > dexcount
+    rewards_given = false
+    while progress < DEX_COMPLETION_REWARDS.length &&
+          DEX_COMPLETION_REWARDS[progress][1] &&
+          DEX_COMPLETION_REWARDS[progress][0] <= dexcount
+      msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
+      pbMessage(_INTL(msg))
+      reward = DEX_COMPLETION_REWARDS[progress][1]
+      if reward.is_a?(Symbol) && GameData::Species.exists?(reward)
+        egg = Pokemon.new(reward, 1)
+        egg.name           = _INTL("Egg")
+        egg.steps_to_hatch = 252
+        egg.calc_stats
+        pbAddPokemon(egg)
+      elsif reward.is_a?(Array)
+        reward.each { |item| pbReceiveItem(item) }
+      else
+        pbReceiveItem(reward)
+      end
+      progress += 1
+      $game_variables[DEXREWARDSVAR] += 1
+      rewards_given = true
+    end
+    if rewards_given && progress < DEX_COMPLETION_REWARDS.length
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
+      pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
+    elsif !rewards_given
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Well, when you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
       pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
       return false
     end
-    return false if DEX_COMPLETION_REWARDS[progress][1].nil?
-    msg = DEX_COMPLETION_MESSAGES[progress] || DEX_COMPLETION_MESSAGES[:default]
-    pbMessage(_INTL(msg))
-    if [4].include?(progress)
-      egg = Pokemon.new(DEX_COMPLETION_REWARDS[progress][1], 1)
-      egg.name           = _INTL("Egg")
-      egg.steps_to_hatch = 252
-      egg.calc_stats
-      pbAddPokemon(egg)
-    else
-      if DEX_COMPLETION_REWARDS[progress][1].is_a?(Array)
-        reward_array = DEX_COMPLETION_REWARDS[progress][1]
-        for i in 0...reward_array.length
-          pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1][i])
-        end
-      else
-        pbReceiveItem(DEX_COMPLETION_REWARDS[progress][1])
-      end
-    end
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress + 1][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
-    $game_variables[DEXREWARDSVAR] += 1
   else
     pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]When you catch {1} Pokémon, come speak to me and I'll give you a special reward!", DEX_COMPLETION_REWARDS[progress][0]))
-    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress + 1][0] == 999
+    pbMessage(_INTL("\\xn[Ceiba]\\mr[CEIBA]Just kidding! just kidding.")) if DEX_COMPLETION_REWARDS[progress][0] == 999
     return false
   end
   return true
@@ -994,7 +1009,7 @@ def pbTrashBin(eventID, specialBin = false)
     pbMessage(_INTL("It's a Charizard Doll.\\nWell, can't say it doesn't deserve to be there."))
   when "Code"
     pbMessage(_INTL("You found some ...\\c[1]Crash logs\\c[0]?"))
-    print "What do mean Quash is 'too complicated' for me to learn!? Just TEACH ME you dumb granny!!!"
+    fakeCrashLog
     pbMessage(_INTL("Seems like Kiriya is having a fit. I hope she calms down soon enough."))
   when "Walmart"
     pbMessage(_INTL("You found a \\c[1]Cropped Newspaper\\c[0]!"))
@@ -1042,6 +1057,44 @@ def pbTrashBin(eventID, specialBin = false)
   end
   $player.bin_array.delete_at(bin_rng2)
   Achievements.incrementProgress("EBIN_BINS",1)
+end
+
+def fakeCrashLog
+  pbSetWindowText("Kiriya's Playground")
+  message = "[Pokémon Essentials version #{Essentials::VERSION}]\r\n"
+  message += "Exception: Kiriya's Tantrum\r\n"
+  message += "Message: What do mean Quash is 'too complicated' for me to learn!?\r\n"
+  message += "\n\r\nBacktrace:\r\n"
+  message += "Game crashed due to a unexpected complaint from Kiriya.\r\n"
+  message += "Location: /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1351\r\n"
+  message += "          /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1348\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:330\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:316\r\n"
+  message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:169\r\n"
+  message += "Kiriya's Suggestion: Just teach me you dumb granny! (๑`^´๑)\r\n"
+
+  errorlog = "errorlog.txt"
+  errorlog = RTP.getSaveFileName("errorlog.txt") if (Object.const_defined?(:RTP) rescue false)
+  File.open(errorlog, "ab") do |f|
+    f.write("\r\n=================\r\n\r\n[#{Time.now}]\r\n")
+    f.write(message)
+  end
+
+  errorlogline = errorlog.gsub("/", "\\")
+  errorlogline.sub!(Dir.pwd + "\\", "")
+  errorlogline.sub!(pbGetUserName, "USERNAME")
+  errorlogline = "\r\n" + errorlogline if errorlogline.length > 20
+
+  print("#{message}\r\nThis exception was logged in #{errorlogline}.\r\nHold Ctrl when closing this message to copy it to the clipboard.")
+
+  t = System.delta
+  until (System.delta - t) >= 500_000
+    Input.update
+    if Input.press?(Input::CTRL)
+      Input.clipboard = message
+      break
+    end
+  end
 end
 
 #===============================================================================
@@ -1126,6 +1179,10 @@ class PersonalNumberGenerator
   end
 end
 
+#===============================================================================
+# egg moves tutor
+#===============================================================================
+
 def eggMoveTutor
   @eggmovesarray = []
   @mother = nil
@@ -1151,7 +1208,7 @@ def eggMoveTutor
         dadmovelist.push(i.id)
       end
       break if dadmovelist.nil?
-      pbMessage(_INTL("{1} is ready to bestow a move.", @father))
+      pbMessage(_INTL("{1} is ready to bestow a move.", @father.name))
       chosen2 = screen.pbChoosePokemon
       break if chosen2 < 0
       @mother = $player.party[chosen2]
@@ -1198,7 +1255,7 @@ def eggMoveTutor
   if doegg
     commands = []
     @eggmovesarray.each do |move|
-      commands.push(_INTL("#{move.name}"))
+      commands.push(_INTL("#{GameData::Move.get(move).name}"))
     end
     commands.push(_INTL("Cancel"))
     helpwindow = Window_UnformattedTextPokemon.new("")
@@ -1211,7 +1268,7 @@ def eggMoveTutor
       return false
     else
       @eggmovesarray.each do |move|
-        if selectedCommander == "#{move.name}"
+        if selectedCommander == "#{GameData::Move.get(move).name}"
           if pbLearnMove(@mother, move, false, false)
             $stats.moves_taught_by_tutor += 1
             return true
@@ -1225,98 +1282,559 @@ def eggMoveTutor
   return false
 end
 
-# radioactive code, needs testing
-TRASHENCOUNTERVAR = 125
-def trashEncounter(trash = 0)
-  numTrash = 4
-  trash = [[trash, 0].max, (numTrash - 1)].min
-  if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
-    $game_variables[TRASHENCOUNTERVAR] = []
-    numTrash.times do                        # item, mon, time
-      $game_variables[TRASHENCOUNTERVAR].push([nil, nil, 0])
+#===============================================================================
+# NPC to revive fossils
+#===============================================================================
+FOSSILREVIVEVAR = 126
+def fossilreviveNPC(onlyone = true)
+  if !$game_variables[FOSSILREVIVEVAR].is_a?(Array)
+    $game_variables[FOSSILREVIVEVAR] = [nil, 0, [], false] 
+    # fossil currently being revived, time delay, fossils revived, machine fried
+  end
+  fossilgens = 2 # normally it would be 5, but dexit means we only have 2 gens of fossils
+  fossilarr = {
+    #:HELIXFOSSIL => :OMANYTE,
+    #:DOMEFOSSIL  => :KABUTO,
+    #:ROOTFOSSIL  => :LILEEP,
+    #:CLAWFOSSIL  => :ANORITH,
+    #:SKULLFOSSIL => :CRANIDOS,
+    #:ARMORFOSSIL => :SHIELDON,
+    #:COVERFOSSIL => :TIRTOUGA,
+    #:PLUMEFOSSIL => :ARCHEN,
+    :JAWFOSSIL   => :TYRUNT,
+    :SAILFOSSIL  => :AMAURA,
+    # gen8 is gake and fay
+    :OPALFOSSIL  => :CHARCOPAL,
+    :TARFOSSIL   => :ELEGOOP
+  }
+  if $game_variables[FOSSILREVIVEVAR][0].nil?
+    ret = pbChooseFossil
+    return if ret.nil?
+    species = fossilarr[ret]
+    if species.nil?
+      pbMessage(_INTL("This fossil cannot be revived."))
+      return
+    end
+    if onlyone
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:CHARCOPAL) && species == :ELEGOOP) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:ELEGOOP) && species == :CHARCOPAL)
+          pbMessage(_INTL("You already revived an Opal fossil. My machine can't process a Tar fossil after that.")) if species == :ELEGOOP
+          pbMessage(_INTL("You already revived a Tar fossil. My machine can't process an Opal fossil after that.")) if species == :CHARCOPAL
+          return
+        end
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:TYRUNT) && species == :AMAURA) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:AMAURA) && species == :TYRUNT)
+          pbMessage(_INTL("You already revived a Sail fossil. My machine can't process a Jaw fossil after that.")) if species == :TYRUNT
+          pbMessage(_INTL("You already revived a Jaw fossil. My machine can't process a Sail fossil after that.")) if species == :AMAURA
+          return
+        end
+
+        if $game_variables[FOSSILREVIVEVAR][2].include?(species)
+          pbMessage(_INTL("My machine won't process duplicates. Come back with a different fossil."))
+          return
+        end
+      end
+      if $game_variables[FOSSILREVIVEVAR][3]
+        pbMessage(_INTL("I told you, it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+        return
+      end
+    end
+    $bag.remove(ret)
+    pbMessage(_INTL("The fossil is being revived. Come back later."))
+    present = pbGetTimeNow
+    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
+    $game_variables[FOSSILREVIVEVAR][0] = species
+    $game_variables[FOSSILREVIVEVAR][1] = future
+    return
+  else
+    present = pbGetTimeNow
+    past = $game_variables[FOSSILREVIVEVAR][1]
+    timepassed = present>past
+    
+    if timepassed
+      pbMessage(_INTL("Took you long enough to come back! I almost called it a day!\\nLet's see what we've got here..."))
+    else
+      pbMessage(_INTL("...\\nThe revival process isn't complete yet. Come back later."))
+      return
+    end
+
+    species = $game_variables[FOSSILREVIVEVAR][0]
+    pokemon = Pokemon.new(species, 5)
+    pokemon.calc_stats
+    pokemon.heal
+
+    if pbAddPokemon(pokemon)
+      pbMessage(_INTL("This is good news! The fossil revived into {1}!", pokemon.name))
+      $game_variables[FOSSILREVIVEVAR][0] = nil
+      $game_variables[FOSSILREVIVEVAR][1] = 0
+      $game_variables[FOSSILREVIVEVAR][2].push(species)
+      $game_variables[FOSSILREVIVEVAR][2] |= [] # remove duplicates
+      fried = onlyone # default to machine fried for normies
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].length.to_i / 2) > fossilgens
+          fried = true
+        else
+          fried = false
+        end
+      end
+      if fried
+        pbMessage(_INTL("Ah, dammit. it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+      end
+      $game_variables[FOSSILREVIVEVAR][3] = fried
+      return
+    else
+      pbMessage(_INTL("Your party is full. Please make room in your party."))
+      return
     end
   end
+end
 
-  if $game_variables[TRASHENCOUNTERVAR][trash][0].nil?
-    ret = nil
-    pbFadeOutIn {
-      scene = PokemonBag_Scene.new
-      screen = PokemonBagScreen.new(scene, $bag)
-      ret = screen.pbChooseItemScreen
-    }
-    return if ret.nil?
+#===============================================================================
+# Trash encounters
+#===============================================================================
+#TO DO
+#The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
 
-    trashHash = {
+EventHandlers.add(:on_enter_map, :shake_dumpsters,
+  proc { |_old_map_id|
+	trashEncounters_ShakeDumpsters if $game_variables[TRASHENCOUNTERVAR].is_a?(Array)
+  }
+)
+
+TRASHENCOUNTERVAR = 125
+TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 480 #8 hours #amount of in-game minutes (seconds real-time) needed to pass before an encounter happens in the trash bin
+TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least this amount from MINUTES UNTIL ENCOUNTER
+TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC = 0 #40 #game will subtract at most this amount from MINUTES UNTIL ENCOUNTER
+
+TRASH_HASH1 = {
       :CROMEN => [:NUGGET, :BIGNUGGET, :PEARL, :BIGPEARL, :PEARLSTRING, :COMETSHARD, :RELICGOLD],
-      :M_BURMY => [:GRASSMAIL, :FLAMEMAIL, :BUBBLEMAIL, :BLOOMMAIL, :TUNNELMAIL, :STEELMAIL, 
-                   :HEARTMAIL, :SNOWMAIL, :SPACEMAIL, :AIRMAIL, :MOSAICMAIL, :BRICKMAIL],
       :TRUBBISH => [:BLACKSLUDGE, :LEFTOVERS]
     }
-    trashHash2 = {
+#will not be available on chaos mode
+#will combine with possibilities in TRASH_HASH1 if not on chaos mode    
+TRASH_HASH2 = {
       :EEVEE => [:MASTERBALL],
       :SKITTY => [:FLUFFYTAIL],
       :PURRLOIN => [:POKETOY]
     }
-    unless $player.difficulty_mode?("chaos")
-      trashHash.merge!(trashHash2) { |key, oldval, newval| oldval }
+
+def trashEncounters_Dumpster
+  #this is the main method
+  #if game variable is not yet an arary, make it one
+  $game_variables[TRASHENCOUNTERVAR] = [] if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
+
+  #does an array exist for this map yet, meaning there is an encounter somewhere?
+  mapArray = trashEncounters_FindMapArray
+  if !mapArray.nil?
+    #a dumpster encounter exists or is brewing on this map already
+    #check this event's encounter to see if it's ready or not
+    encSetForThisDumpster = false
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    #mapArray should look like this: [mapID[eventNumber, item, mon, time][eventNumber, item, mon, time][eventNumber, item, mon, time]]
+    mapArray.length.times do |i|
+      encSetForThisDumpster = true if mapArray[i][0] == facingEvent.id
+    end #mapArray.length.times do |i|
+    if encSetForThisDumpster
+      #an encounter was confirmed to have been brewing in this event already, so check the encounter to see if it's done
+      eventArray = trashEncounters_FindEventArray(mapArray)
+      encounterReady = trashEncounters_CheckEncounter(eventArray, mapArray)
+      if encounterReady
+      else
+      end
+    else
+      chosenItem = trashEncounters_ChooseItem
+      return if chosenItem.nil?
+
+      #an encounter was confirmed NOT to exist in this event yet, so prompt to create one
+      eventArray = trashEncounters_CreateEventArray(mapArray)
+
+      #create encounter in dumpster event
+      trashEncounters_CreateEncounter(eventArray, chosenItem)
+
+      return #exit the event since we just created the encounter, and it therefore will not be ready yet
+    end #if encSetForThisDumpster
+  else #mapIDIndex is nil, which means no dumpster encounter is brewing on this entire map
+    chosenItem = trashEncounters_ChooseItem
+    return if chosenItem.nil?
+    
+    mapArray = trashEncounters_CreatemapArray
+
+    #since no encounter existed on this map, no encounter existed for this event either, so create an event array for this map's array
+    eventArray = trashEncounters_CreateEventArray(mapArray)
+
+    #create encounter in dumpster event
+    trashEncounters_CreateEncounter(eventArray, chosenItem)
+
+    return #exit the event since we just created the encounter, and it therefore will not be ready yet
+  end #if !mapIDIndex.nil?
+end #def trashEncounter
+
+def trashEncounters_FindMapArray
+  #find mapArray in arrays inside game variable
+  mapArray = nil
+  $game_variables[TRASHENCOUNTERVAR].length.times do |i|
+    #look through each element inside the $game_variables[TRASHENCOUNTERVAR] array to find one that has the mapID in slot 0
+    if $game_variables[TRASHENCOUNTERVAR][i][0] == $game_map.map_id
+      mapArray = $game_variables[TRASHENCOUNTERVAR][i]
+      break
     end
-    $bag.remove(ret)
-    $game_variables[TRASHENCOUNTERVAR][trash][0] = ret
-    trashHash.each do |species, item|
-      if item.include?(ret)
-        $game_variables[TRASHENCOUNTERVAR][trash][1] = species
+  end
+  return mapArray
+end
+
+def trashEncounters_CreatemapArray
+  #push a new array for this map id to $game_variables[TRASHENCOUNTERVAR]
+  $game_variables[TRASHENCOUNTERVAR].push([$game_map.map_id])
+  mapArray = $game_variables[TRASHENCOUNTERVAR][-1]
+  return mapArray
+end
+
+def trashEncounters_FindEventArray(mapArray)
+  #find eventID in arrays inside game variable[mapArray]
+  eventArray = nil
+  eventElement = 1 #start at element 1 since element 0 is the map id
+  (mapArray.length-1).times do
+    #look through each element inside the $game_variables[TRASHENCOUNTERVAR][mapIDIndex] array for one where the first element of which matches the event number we interacted with
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    if mapArray[eventElement][0] == facingEvent.id
+      eventArray = mapArray[eventElement]
+      break
+    end
+    eventElement += 1
+  end
+  return eventArray
+end
+
+def trashEncounters_CreateEventArray(mapArray)
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    #eventArray will look like this: [eventID, item, mon, time]
+    mapArray.push([facingEvent.id, nil, nil, 0])
+    eventArray = mapArray[-1]
+    return eventArray
+end
+
+def trashEncounters_CreateEncounter(eventArray, chosenItem)
+  #merge hashes together except when on chaos mode
+  unless $player.difficulty_mode?("chaos")
+      trashHash1 = TRASH_HASH1.clone
+      trashHash2 = TRASH_HASH2.clone
+      trashHash1.merge!(trashHash2) { |key, oldval, newval| oldval }
+  end
+
+  eventArray[1] = chosenItem
+    trashHash1.each do |species, requiredItem|
+      if requiredItem.include?(chosenItem)
+        eventArray[2] = species
         break
       else
-        $game_variables[TRASHENCOUNTERVAR][trash][1] = :TRUBBISH
+        eventArray[2] = :TRUBBISH
       end
     end
 
+    #set targeted time for when ecounter will be ready
     present = pbGetTimeNow
-    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
-    $game_variables[TRASHENCOUNTERVAR][trash][2] = future
-    pbMessage(_INTL("You threw a {1} into the trash pile. Maybe something will get the bait?", ret))
+    future = present + (TRASH_ENC_MINUTES_UNTIL_ENCOUNTER + ((rand(2) == 0 ? -1 : 1) * rand(TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC..TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC))) * UnrealTime::PROPORTION
+    eventArray[3] = future
+    aOrAn = (chosenItem.name.starts_with_vowel?) ? "an" : "a"
+    pbMessage(_INTL("You threw {1} {2} inside. Maybe it will attract something...", aOrAn, chosenItem))
     return
-  else
-    trashcounter = $game_variables[TRASHENCOUNTERVAR][trash][1]
-    return if trashcounter.nil?
+end
+
+def trashEncounters_CheckEncounter(eventArray, mapArray)
+    targetedReadyTime = eventArray[-1] #last element, or the 4th element
+    return if targetedReadyTime.nil?
 
     present = pbGetTimeNow
-    past = $game_variables[TRASHENCOUNTERVAR][trash][2]
-    timepassed = present>past
 
     msg = rand(5..10)
     message = ""
     msg.times { message += ".   " }
     pbMessage(_INTL(message))
-
-    if timepassed
-      pbMessage(_INTL("!\\nSomething jumped out of the trash!"))
+    if present >= targetedReadyTime
+      #pbMessage(_INTL("!\\nSomething jumped out!"))
+      #exclamation point above player's head
+      $game_player.animation_id = 3
+      #wait 1 second
+      pbWait(20)
     else
-      pbMessage(_INTL("...\\nThere is nothing of note here..."))
+      pbMessage(_INTL("...\\nThe item you threw in is still there..."))
       return
     end
 
-    level = 10
-    level = [(level - rand(10)), 1].max
-    if level.between?(8,10)
-      pbMessage(_INTL("It looks quite fierce!"))
-    elsif level.between?(5,7)
-      pbMessage(_INTL("It looks quite protective!"))
-    elsif level.between?(2,4)
-      pbMessage(_INTL("It looks quite energetic!"))
-    else
-      pbMessage(_INTL("It looks quite young!"))
-    end
-
-    trashbattler = [trashcounter, level]
+    level = rand(9..13)
+    #if level.between?(8,10)
+    #  pbMessage(_INTL("It looks quite fierce!"))
+    #elsif level.between?(5,7)
+    #  pbMessage(_INTL("It looks quite protective!"))
+    #elsif level.between?(2,4)
+    #  pbMessage(_INTL("It looks quite energetic!"))
+    #else
+    #  pbMessage(_INTL("It looks quite young!"))
+    #end
+    species = eventArray[2]
+    trashbattler = [species, level]
     $game_temp.encounter_type = :Land
-    $game_variables[TRASHENCOUNTERVAR][trash][0] = nil
-    $game_variables[TRASHENCOUNTERVAR][trash][1] = nil
-    $game_variables[TRASHENCOUNTERVAR][trash][2] = 0
     EventHandlers.trigger(:on_wild_species_chosen, trashbattler)
     WildBattle.start(trashbattler, can_override: false)
     $game_temp.encounter_type = nil
     $game_temp.force_single_battle = false
-    return
+
+    #after the battle, delete encounter
+    trashEncounters_DeleteEncounter(eventArray, mapArray)
+end
+
+def trashEncounters_DeleteEncounter(eventArray, mapArray)
+  #delete the array for the event on this map
+  mapArray.delete(eventArray)
+  #if mapArray is empty, delete it too
+  $game_variables[TRASHENCOUNTERVAR].delete(mapArray) if mapArray.length <= 1 #only has the map ID in the mapArray
+end
+
+def trashEncounters_ChooseItem
+    return nil if !pbConfirmMessage(_INTL("Do you want to throw an item into the dumpster?"))
+    chosenItem = nil
+    pbFadeOutIn {
+      scene = PokemonBag_Scene.new
+      screen = PokemonBagScreen.new(scene, $bag)
+      chosenItem = screen.pbChooseItemScreen
+    }
+    if chosenItem.nil?
+      pbMessage(_INTL("You decided not to throw in an item."))
+      return chosenItem
+    end
+    itemData = GameData::Item.get(chosenItem)
+    if itemData.is_key_item?
+      pbMessage(_INTL("You can't throw that away!"))
+      return nil
+    end
+    $bag.remove(chosenItem)
+    return chosenItem
+end
+
+def trashEncounters_DeleteAllEncounters
+    mapArray = trashEncounters_FindMapArray
+    return if mapArray.nil?
+    eventElement = 1
+    (mapArray.length-1).times do
+      eventArray = mapArray[eventElement]
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", false)
+    end #(mapArray.length-1).times do
+    $game_variables[TRASHENCOUNTERVAR] = []
+end
+
+def trashEncounters_ShakeDumpsters
+  #go through all dumpster encounters in the mapArray for the current map
+  #if any encounters are ready, set self switch A on for those events
+  present = pbGetTimeNow
+  mapArray = trashEncounters_FindMapArray
+  return if mapArray.nil?
+  eventElement = 1
+  (mapArray.length-1).times do
+    eventArray = mapArray[eventElement]
+    Console.echo_warn eventArray
+    Console.echo_warn eventArray[0]
+    targetedReadyTime = eventArray[-1] #last element, or the 4th element
+    next if targetedReadyTime.nil?
+    if present >= targetedReadyTime
+      Console.echo_warn "setting self switch A to ON for event with ID #{eventArray[0]}"
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", true)
+    end
+    eventElement += 1
+  end #(mapArray.length-1).times do
+end
+
+#===============================================================================
+# Mirror boss fight (a random idea i had for Kiriya)
+# this is *not* a self insert, as I fucking hate myself.
+#===============================================================================
+
+MEGA_ITEM_REPLACEMENTS = {
+  CHOICEBAND: [:LEDIAN],
+  CHOICESPECS: [:FRIZZARD, :ZARCOIL],
+  LIFEORB: [:FLYGON, :CACTURNE, :CHIXULOB, :LUPACABRA],
+  FIREGEM: [:XATU],
+  ICEGEM: [:GLALIE],
+  ELECTRICGEM: [:BEHEEYEM, :HAWLUCHA, :BEAKRAFT],
+  FLYINGGEM: [:GOLURK, :ROADRAPTOR],
+  WATERGEM: [:ZOLUPINE],
+  LEFTOVERS: [:MAGCARGO, :SABLEYE, :MILOTIC, :CHIMECHO],
+  BLACKSLUDGE: [:GOHILA, :SUCHOBILE],
+  ROCKYHELMET: [:SKARMORY],
+  ASSAULTVEST: [:MAWILE, :ATELANGLER, :LAGUNA],
+  MELEEVEST: [:M_ROSERADE],
+  COLBURBERRY: [:BANETTE], # dark resist
+  CHARTIBERRY: [:FROSMOTH], # rock resist
+  LUMBERRY: [:GYARADOS, :M_ROSERADE],
+  SITRUSBERRY: [:DIANCIE, :SPECTERZAL],
+  TERRAINEXTENDER: [:TREVENANT]
+}
+
+DECENT_STAB_MOVES = {
+  special: {
+    :NORMAL => :HYPERVOICE, 
+    :ROCK => :POWERGEM, :ICE => :ICEBEAM, :STEEL => :FLASHCANNON,
+    :ELECTRIC => :THUNDERBOLT, :DRAGON => :DRACOMETEOR, 
+    :GRASS => :ENERGYBALL, :FIGHTING => :AURASPHERE, :FAIRY => :MOONBLAST,
+    :WATER => :SURF, :FIRE => :FLAMETHROWER, :FLYING => :OBLIVIONWING, 
+    :GROUND => :EARTHPOWER, :POISON => :SLUDGEBOMB, :PSYCHIC => :PSYCHIC, 
+    :BUG => :BUGBUZZ, :GHOST => :SHADOWBALL, :DARK => :FIERYWRATH
+  },
+  physical: {
+    :NORMAL => :RETURN, 
+    :ROCK => :ROCKSLIDE, :ICE => :ICICLECRASH, :STEEL => :IRONHEAD,
+    :ELECTRIC => :ZINGZAP, :DRAGON => :DRAGONRUSH, 
+    :GRASS => :LEAFBLADE, :FIGHTING => :DRAINPUNCH, :FAIRY => :PLAYROUGH,
+    :WATER => :CRABHAMMER, :FIRE => :BLAZEKICK, :FLYING => :AEROBLAST, 
+    :GROUND => :EARTHQUAKE, :POISON => :SHELLSIDEARM, :PSYCHIC => :PSYCHICFANGS, 
+    :BUG => :ATTACKORDER, :GHOST => :SHADOWBONE, :DARK => :CRUNCH
+  }
+}
+
+def mirrorBossFight(trainer)
+  $player.heal_party
+  trainer.party = Marshal.load(Marshal.dump($player.party))
+  balancedlevel = pbBalancedLevel($player.party)
+
+  while trainer.party.count < 6 # 1v1? not here, baybee!
+    species = GameData::Species.get(:MARIPOME).species
+    pkmn = Pokemon.new(species, 50, trainer, false)
+    pkmn.bossmonMutation = true
+    pkmn.remaningHPBars = [1, 1] # [current hp bars, max hp bars]
+    pkmn.learn_move(:BUGBUZZ)
+    pkmn.learn_move(:HIGHJUMPKICK)
+    pkmn.learn_move(:POISONJAB)
+    pkmn.learn_move(:DAZZLINGGLEAM)
+    pkmn.learn_move(:SPECTRALTHIEF)
+    pkmn.learn_move(:PRISMATICLASER)
+    pkmn.ability = :PARENTALBOND
+    pkmn.item = :EXPERTBELT
+    pkmn.nature = :NAIVE
+    pkmn.calc_stats
+    pkmn.name = "?QMARKS?"
+    trainer.party.push(pkmn)
+  end
+
+  trainer.party.each_with_index do |pkmn, i|
+    # levels
+    pkmn.level = [pkmn.level, balancedlevel, 50].max
+    pkmn.level += 3
+    pkmn.enableNatureBoostAI
+    pkmn.calc_stats
+
+    # mega stones / MEM
+    mega_data = MEGA_EVO_STATS[pkmn.species]
+    if mega_data
+      pkmn.megaevoMutation = true
+      if pkmn.item == mega_data[:item]
+        MEGA_ITEM_REPLACEMENTS.each do |replacementItem, speciesList|
+          if speciesList.include?(pkmn.species)
+            pkmn.item = replacementItem
+            break
+          end
+        end
+      end
+    end
+    if [:CHOICEBAND, :CHOICESPECS, :CHOICESCARF].include?(pkmn.item)
+      pkmn.learn_move(:TRICK) unless pkmn.hasMove?(:TRICK)
+    end
+
+    # AAM
+    aamSpeciesBlacklist = [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL]
+    pkmn.abilityMutation = true unless aamSpeciesBlacklist.include?(pkmn.species)
+    abilitylist = [pkmn.ability_id]
+    if pkmn.abilityMutation
+      abilist = [pkmn.ability_id]
+      for i in pkmn.getAbilityList
+        abilist.push(i[0])
+      end
+      abilitylist = abilist|[]
+    end
+
+    # prestatus
+    if abilitylist.include?(:FLAREBOOST) || abilitylist.include?(:GUTS)
+      pkmn.status = :BURN
+    elsif abilitylist.include?(:TOXICBOOST) || abilitylist.include?(:POISONHEAL)
+      pkmn.status = :POISON
+    elsif abilitylist.include?(:QUICKFEET)
+      pkmn.status = :PARALYSIS
+    elsif abilitylist.include?(:TANGLEDFEET)
+      pkmn.status = :DIZZY
+      pkmn.statusCount = 4
+    end
+    if pkmn.status != :NONE
+      status_berry_map = {
+        :FREEZE => :ASPEARBERRY,
+        :SLEEP => :CHESTOBERRY,
+        :PARALYSIS => :CHERIBERRY,
+        :POISON => :PECHABERRY,
+        :DIZZY => :PERSIMBERRY,
+        :BURN => :RAWSTBERRY
+      }
+      heldberry = status_berry_map[pkmn.status]
+      if pkmn.item == :LUMBERRY || pkmn.item == heldberry
+        pkmn.item = :SITRUSBERRY
+      end
+      pkmn.calc_stats
+    end
+
+    # move edits
+    uselessarray = [:SPLASH, :CELEBRATE, :HOLDHANDS, :HAPPYHOUR]
+    uselessarray += [:SLIMESHOT, :ZEALOUSDANCE, :PSYSONIC, :STEAMBURST, :HAUNT, :SUPERNOVA, :SUPERNOVA_ALT] if $player.difficulty_mode?("chaos")
+    pkmn.moves.each_with_index do |move, i|
+      new_move = nil
+      if (move.category == 2 && [:ASSAULTVEST, :MELEEVEST].include?(pkmn.item)) ||
+         uselessarray.include?(move.id)
+        pkmn.forget_move_at_index(i)
+        desiredCateg = (pkmn.attack > pkmn.spatk) ? :physical : :special
+        pkmn.types.each do |type|
+          candidate = DECENT_STAB_MOVES[desiredCateg][type]
+          unless pkmn.hasMove?(candidate)
+            new_move = candidate
+            break
+          end
+        end
+        new_move ||= :METRONOME
+      end
+      if move.id == :FACADE
+        if (pkmn.hasType?(:NORMAL) && pkmn.attack > pkmn.spatk) || 
+           abilitylist.include?(:FLAREBOOST) || 
+           abilitylist.include?(:TOXICBOOST) || 
+           abilitylist.include?(:GUTS)
+          pkmn.status = :BURN if !abilitylist.include?(:TOXICBOOST)
+        else
+          pkmn.status = :NONE
+          pkmn.forget_move_at_index(i)
+          new_move = :METRONOME
+        end
+      end
+      if new_move
+        pkmn.learn_move(new_move)
+      end
+    end
+    if pkmn.moves.length == pkmn.moves.count { |move| move.category == 2 }
+      pkmn.learn_move(:METRONOME) unless pkmn.hasMove?(:METRONOME)
+    end
+
+    # final touches
+    pkmn.moves.each_with_index do |m, i| # max out their PP
+      m.ppup = 3
+      m.pp = (m.pp * 1.6).floor
+    end
+    if [:BURBRAWL, :HUMBEAT, :HUMMIPUMMEL].include?(pkmn.species)
+      pkmn.ability = :LEVITATE
+    end
+    pkmn.calc_stats
   end
 end
+
+EventHandlers.add(:on_trainer_load, :mirror_boss,
+  proc { |trainer|
+    if trainer
+      trainerfullname = "#{trainer.trainer_type}" + " " + "#{trainer.name}"
+      mirrorBossFight(trainer) if $game_switches[MIRRORCONTAINER] || trainerfullname == "Princess Kiriya"
+    end
+  }
+)

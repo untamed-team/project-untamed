@@ -1,0 +1,33 @@
+Hi everyone,
+
+Thank you so much for all the feedback!
+Please note that at this time, while I consider the feedback not related to balance (such as UI changes, tutorials, etc.) very important to have polished for the demo release, I would like to get the minigame balanced and more fun before I take the time to do a tutorial and such. Once something in the game changes, the tutorial changes. I do not want to adjust the tutorial/UI several times as changes are made.
+
+Because of the feedback, it's become clear to me that regarding balancing of the different moves, the secondary boost (Stabilize) and invincibility are far too powerful in their current states. I do plan on nerfing those in some way.
+
+HOWEVER, regarding balance, based on your feedback, it seem the offensive moves do not serve much purpose. Part of this is due to the non-offensive moves being over powered, keeping you in first place and therefore not giving you a reason to use the offensive moves since no other racer is threatening your position in first place.
+Therefore, I think I want to focus a large part of my attention (for now at least) on improving the offensive moves' usefulness to avoid gameplay that is boring or too easy.
+
+Here are my thoughts for making the offensive moves more useful, and I want your opinions and ideas as well:
+
+Changing AI:
+Possibly make AI % chance to boost be higher when you are ahead of them vs the normal % chance when you are behind them. Currently the chance for them to use boost is something like this: if boost available to use, roll the dice every second to see if AI uses it, and the chance of a successful roll is about 80%, meaning they will not *always* use boost when it's ready for them. If AI decides not to boost even thought it's ready to use, they'll think about it the next second that passes until they do use it.
+
+Changing the objective of the race:
+Someone said in their feedback: "offensive moves feel pointless, at least to me, since how others perform is irrelevant as you're just chasing a high score and just always want to go faster and further, so hindrance moves just don't feel beneficial (but still good for variety and would likely be more prominent in a pvp type setting)".
+Please note: I do not plan on making this game playable with others online, as that would require networking skills I just don't have! It's important to me that the AI you're facing feels like a real person!
+But anyway, about the offensive moves feeling pointless. If we were change the objective of the race from coming in first place to getting a certain amount of points, and different actions in the race give you more points (like bumping a racer or sabotaging them), perhaps this could make for more varied gameplay?
+My thought: maybe instead of just wanting to see who comes in first, the audience is excited to see who puts on the best show? And in turn, it's the audience excitement level that really gets you different rewards? Just spitballing here. Please let me know what you think.
+
+Changing the moves themselves:
+More feedback from someone: "when using one of the range abilties yourself, if you press the button (like you do with every single other move), it ends up doing nothing because you have to hold it down to grow it, then release it when something is in range... The cooldowns dont reset until you release so you're sabotaging yourself if you don't use it quickly as you can't use other moves at that time."
+My thought: maybe instead of something you need to charge, maybe I just make the move instant-press like the others and just have it disrupt in a shockwave pattern - small ring, then short pause, then medium ring, short pause, large ring, then dissipate.
+
+Changing the cooldowns for moves:
+More feedback from someone: "if i could suggest anything to spice the gameplay up, maybe have some sort of coin system? Like Mario Kart, many coins would be scattered through the race, and you would want to collect them. They could be used to slightly increase speed like Mario Kart, but they could also be used to use a power up, for example. Maybe some powers like invincibility and second boost are more expensive, while others cost less coins. And maybe by hitting an enemy, you get a good amount of coins too?"
+My thought: I like this! Or something like it at least. I want something else to do on the track other than dodge hazards and attacks. I was thinking rings to go through and have # of rings be the objective, but collecting coins to use your powers could work as well. It might even promote hitting other enemies if they drop coins or transfer them to you upon hitting them - they lose coins, you gain them
+
+I'm also considering unlinking the move cooldowns so using one move does not lock you out of using another one or reset the cooldown for the moves
+
+Please let me know your thoughts and opinions!
+I really want either another additional objective to racing or change the current one to something else. As it stands, staying in first place is just far too easy and might get boring.

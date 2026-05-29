@@ -44,8 +44,10 @@ class Battle::Battler
   attr_accessor :canRestoreIceFace   # Whether Hail started in the round
   attr_accessor :damageState
   attr_accessor :premonitionMove # Premonition #by low
-  attr_accessor :SetupMovesUsed  # setup moves nerf #by low
+  attr_accessor :setupBoosts  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
+  attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
+  attr_accessor :bossTotalHP # percentage hp fix for bosses #by low
 
   #=============================================================================
   # Complex accessors
@@ -242,8 +244,7 @@ class Battle::Battler
   #=============================================================================
   def pbSpeed(megaSpeed = false)
     return 1 if fainted?
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     stage = @stages[:SPEED] + 6
     speed = @speed * stageMul[stage] / stageDiv[stage]
     speedMult = 1.0
@@ -323,7 +324,9 @@ class Battle::Battler
         ret.push(typeadd)
         ret.delete(typeremove)
         if self.species == :PORYGONZ && !self.moves.empty?
-          # cant cheese the AI here by swapping moves as mega-evolving only happens once
+          # cant cheese the AI here by swapping moves as overwrite only writes a type once
+          # therefore, using ReadOverwriteType here is not needed. 
+          # (not like it would work anyway since overwrite did not yet take effect)
           ret.push(self.moves[0].type)
         end
         ret = ret.uniq
@@ -354,8 +357,9 @@ class Battle::Battler
   def abilityActive?(ignore_fainted = false, check_ability = nil)
     return false if fainted? && !ignore_fainted
     return false if @effects[PBEffects::GastroAcid]
-		return false if self.dizzy? #by low
-    return false if check_ability != :NEUTRALIZINGGAS && self.ability != :NEUTRALIZINGGAS &&
+    #by low
+    return false if self.dizzy? && check_ability != :TANGLEDFEET && !self.abilityMutationList.include?(:TANGLEDFEET)
+    return false if check_ability != :NEUTRALIZINGGAS && !self.abilityMutationList.include?(:NEUTRALIZINGGAS) &&
                     @battle.pbCheckGlobalAbility(:NEUTRALIZINGGAS)
     return true
   end
@@ -436,7 +440,7 @@ class Battle::Battler
     return false if @effects[PBEffects::Embargo] > 0
     return false if @battle.field.effects[PBEffects::MagicRoom] > 0
     return false if @battle.corrosiveGas[@index % 2][@pokemonIndex]
-    return false if hasActiveAbility?(:KLUTZ, ignoreFainted)
+    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !$player.difficulty_mode?("chaos")
     return true
   end
 
@@ -550,7 +554,7 @@ class Battle::Battler
     return false if pbHasType?(:GROUND) || pbHasType?(:ROCK) || pbHasType?(:STEEL)
     return false if inTwoTurnAttack?("TwoTurnAttackInvulnerableUnderground",
                                      "TwoTurnAttackInvulnerableUnderwater")
-    return false if hasActiveAbility?([:OVERCOAT, :SANDFORCE, :SANDRUSH, :SANDVEIL, :DUSTSENTINEL, :SANDSTREAM])
+    return false if hasActiveAbility?([:OVERCOAT, :SANDFORCE, :SANDRUSH, :SANDVEIL, :SANDSTREAM, :DUSTSENTINEL, :PARTICURE])
     return false if hasActiveItem?(:SAFETYGOGGLES)
     return true
   end
@@ -632,7 +636,10 @@ class Battle::Battler
     return true if @effects[PBEffects::Octolock] >= 0
     return true if @effects[PBEffects::Ingrain]
     return true if @effects[PBEffects::NoRetreat]
-    return true if @effects[PBEffects::HonorBound] #by low
+    #by low
+    return true if @effects[PBEffects::HonorBound]
+    return true if @effects[PBEffects::NeedleArm] >= 0
+    return true if @battle.allBattlers.any? { |b| b.effects[PBEffects::NeedleArm] == @index }
     return true if @battle.field.effects[PBEffects::FairyLock] > 0
     return false
   end

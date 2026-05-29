@@ -28,12 +28,6 @@ class Battle::AI
   #=============================================================================
   def pbCalcTypeModSingle(moveType, defType, user, target, move=nil)
     ret = Effectiveness.calculate_one(moveType, defType)
-    if move
-      if (move.function == "FreezeTargetSuperEffectiveAgainstWater" && defType == :WATER) ||
-         (move.function == "SuperEffectiveAgainstSteel" && defType == :STEEL)
-        ret = Effectiveness::SUPER_EFFECTIVE_ONE
-      end
-    end
     if Effectiveness.ineffective_type?(moveType, defType)
       # Ring Target
       if target.hasActiveItem?(:RINGTARGET)
@@ -45,7 +39,8 @@ class Battle::AI
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Corrosion #by low
-      if user.hasActiveAbility?(:CORROSION) && defType == :STEEL
+      if (user.hasActiveAbility?(:CORROSION) ||
+         (user.isSpecies?(:SUCHOBILE) && user.pokemon.willmega && $player.difficulty_mode?("chaos"))) && defType == :STEEL
         ret = Effectiveness::NORMAL_EFFECTIVE_ONE
       end
       # Miracle Eye
@@ -59,13 +54,28 @@ class Battle::AI
       end
     elsif !Effectiveness.super_effective_type?(moveType, defType)
       # Mass Extinction #by low
-      if user.hasActiveAbility?(:MASSEXTINCTION) && defType == :DRAGON
+      if (user.hasActiveAbility?(:MASSEXTINCTION) || 
+         (user.isSpecies?(:CHIXULOB) && user.pokemon.willmega && user.pokemon.hasHiddenAbility? && $player.difficulty_mode?("chaos"))) && 
+         defType == :DRAGON
         ret = Effectiveness::SUPER_EFFECTIVE_ONE
       end
     end
     # Grounded Flying-type Pokémon become susceptible to Ground moves
     if !target.airborne? && defType == :FLYING && moveType == :GROUND
       ret = Effectiveness::NORMAL_EFFECTIVE_ONE
+    end
+    # Freeze-Dry / Kinetic Rend
+    if move
+      if (move.function == "FreezeTargetSuperEffectiveAgainstWater" && defType == :WATER) ||
+         (move.function == "SuperEffectiveAgainstSteel" && defType == :STEEL)
+        ret = Effectiveness::SUPER_EFFECTIVE_ONE
+      end
+    end
+    # Special interaction for color change + protean ability combo
+    if target.hasActiveAbility?([:PROTEAN, :LIBERO]) && !target.pbOwnedByPlayer? &&
+       target.hasActiveAbility?(:COLORCHANGE) && target.hasAbilityMutation?
+      ret = Effectiveness::NOT_VERY_EFFECTIVE_ONE
+      ret = Effectiveness::NORMAL_EFFECTIVE_ONE if moveType == :QMARKS
     end
     return ret
   end
@@ -93,9 +103,11 @@ class Battle::AI
     # Multiply all effectivenesses together
     ret = 1
     typeMods.each { |m| ret *= m }
+    ret *= 2 if target.effects[PBEffects::TarShot] && moveType == :FIRE
+    ret = 16 if target.effects[PBEffects::SuperEffEye] > 0
     # Inverse Battle Switch #by low
     # 8x = ret 64; 4x = ret 32
-    if $game_switches[INVERSEBATTLESWITCH]
+    if @battle.inverseBattle
       if ret == 0
         ret = 16
       elsif ret >= 64
@@ -139,11 +151,13 @@ class Battle::AI
           ret = :FLYING
         elsif user.isSpecies?(:GLALIE)
           ret = :ICE
+        elsif user.isSpecies?(:ALTARIA)
+          ret = :FAIRY
         end
       end
     end
     # only need the globalarray here since pbCalcType should get the type in the normal way
-    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain", "TargetMovesBecomeElectric"].include?(move.function)
+    if ["TypeAndPowerDependOnWeather", "TypeAndPowerDependOnTerrain"].include?(move.function)
       globalArray = @megaGlobalArray
       if move.function == "TypeAndPowerDependOnWeather"
         if !user.hasActiveItem?(:UTILITYUMBRELLA)
@@ -158,19 +172,23 @@ class Battle::AI
         ret = :FAIRY    if globalArray.include?("misty terrain")
         ret = :PSYCHIC  if globalArray.include?("psychic terrain")
       end
-      # electrify logic
-      user.eachOpposing do |b|
-        if targetWillMove?(b)
-          targetMove = @battle.choices[b.index][2]
-          if targetMove.function == "TargetMovesBecomeElectric"
-            thisprio = priorityAI(user, move, globalArray)
-            thatprio = priorityAI(b, targetMove, globalArray)
-            aspeed = pbRoughStat(user,:SPEED,skill)
-            ospeed = pbRoughStat(b,:SPEED,skill)
-            if (thatprio > thisprio) || ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
-              ret = :ELECTRIC
-            end
-          end
+    end
+    # electrify logic
+    user.eachOpposing do |b|
+      if targetWillMove?(b, "status")
+        targetIntent = @battle.choices[b.index]
+        targetMove = targetIntent[2]
+        targetAim = targetIntent[3]
+        next unless @battle.moveRevealed?(b, targetMove.id)
+        if (targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index) ||
+           (targetMove.function == "NormalMovesBecomeElectric" && ret == :NORMAL)
+          thisprio = priorityAI(user, move, globalArray)
+          thatprio = priorityAI(b, targetMove, globalArray)
+          aspeed = pbRoughStat(user,:SPEED,skill)
+          ospeed = pbRoughStat(b,:SPEED,skill)
+          outsped = ((ospeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+          outsped = true if thatprio > thisprio && thatprio != 0
+          ret = :ELECTRIC if outsped
         end
       end
     end
@@ -211,21 +229,34 @@ class Battle::AI
     end
     # i am so fucking retarded
     return (battler.pbSpeed(megaSpeed)*spemul).floor if stat == :SPEED
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
-    stage = battler.stages[stat] + 6
+    stageMul, stageDiv = @battle.pbGetStatMath
+    stage = battler.stages[stat]
     value = 0
     case stat
     when :ATTACK
       value = battler.attack*atkmul
       if target
-        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken)
+        # Account for intimidate from mons with AAM
+        if move.physicalMove? && move.function != "UseUserBaseDefenseInsteadOfUserBaseAttack" 
+          battler.allOpposing.each do |b|
+            next unless b.pokemon.willmega && b.hasAbilityMutation?
+            if b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)
+              stagemod -= 1
+              stagemod += 2 if battler.hasActiveAbility?([:DEFIANT, :CONTRARY])
+              stagemod = 0 if battler.hasActiveAbility?(:UNAWARE)
+              stage += stagemod
+            end
+          end
+        end
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) ||
+                       (target.hasActiveAbility?(:BIGPECKS,false,moldbroken) && stage > 0)
       end
     when :DEFENSE
       value = battler.defense*defmul
       if target
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
-                        move.function == "IgnoreTargetDefSpDefEvaStatStages"
+                        move.function == "IgnoreTargetDefSpDefEvaStatStages" ||
+                        (battler.hasActiveAbility?(:HYPERCUTTER) && stage > 0)
       end
     when :SPEED
       value = battler.speed*spemul
@@ -241,6 +272,7 @@ class Battle::AI
                         move.function == "IgnoreTargetDefSpDefEvaStatStages"
       end
     end
+    stage += 6
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
@@ -261,7 +293,7 @@ class Battle::AI
          "FixedDamageUserLevel", "LowerTargetHPToUserHP"
       baseDmg = move.pbFixedDamage(user, target)
     when "FixedDamageUserLevelRandom"   # Psywave
-      baseDmg = user.level
+      baseDmg = (user.level * 3 / 2).floor
     when "OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"
       baseDmg = 200
     when "CounterPhysicalDamage", "CounterSpecialDamage", "CounterDamagePlusHalf"
@@ -271,7 +303,7 @@ class Battle::AI
          (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
         targetMove = @battle.choices[target.index][2]
         if targetSurvivesMove(targetMove,target,user)
-          baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+          baseDmg = aiDamage(targetMove, target, user)
           baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
           if move.function == "CounterDamagePlusHalf"
             baseDmg *= 1.5
@@ -394,6 +426,9 @@ class Battle::AI
     when "EffectivenessIncludesFlyingType"   # Flying Press
       if GameData::Type.exists?(:FLYING)
         targetTypes = typesAI(target, user, skill)
+        while targetTypes.length < 3
+          targetTypes.push(:QMARKS)
+        end
         mult = Effectiveness.calculate(
           :FLYING, targetTypes[0], targetTypes[1], targetTypes[2]
         )
@@ -403,6 +438,12 @@ class Battle::AI
       baseDmg *= 2 if user.lastRoundMoveFailed
     when "PursueSwitchingFoe" # Pursuit
       baseDmg *= 2 if @battle.choices[target.index][0] == :SwitchOut
+    when "RemoveTargetItem" # knock off
+      if !$player.difficulty_mode?("chaos")
+        if target.item && !target.unlosableItem?(target.item) && !target.hasActiveAbility?(:STICKYHOLD)
+          baseDmg *= 1.5
+        end
+      end
     when "DoublePowerIfTargetNotActed" # Fishious Rend / Bolt Beak
       aspeed = pbRoughStat(user,:SPEED,skill)
       ospeed = pbRoughStat(target,:SPEED,skill)
@@ -411,9 +452,7 @@ class Battle::AI
         targetMove = @battle.choices[target.index][2]
         thisprio = priorityAI(user, move, globalArray)
         thatprio = priorityAI(target, targetMove, globalArray)
-        if thatprio > 0
-          fasterAtk = (thisprio >= thatprio) ? true : false
-        end
+        fasterAtk = (thisprio >= thatprio) ? true : false if thatprio != 0
       end
       if @battle.choices[target.index][0] == :SwitchOut || fasterAtk
         baseDmg *= 2
@@ -446,6 +485,26 @@ class Battle::AI
     baseAcc = move.accuracy
     if skill >= PBTrainerAI.highSkill
       baseAcc = move.pbBaseAccuracy(user, target)
+      procGlobalArray = processGlobalArray(@megaGlobalArray)
+      expectedWeather = procGlobalArray[0]
+      sage = false
+      if ["ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
+          "ConfuseTargetAlwaysHitsInRainHitsTargetInSky",
+          "FreezeTargetAlwaysHitsInHail"].include?(move.function) &&
+          expectedWeather != @battle.pbWeather
+        case move.function
+        when "ParalyzeTargetAlwaysHitsInRainHitsTargetInSky",
+             "ConfuseTargetAlwaysHitsInRainHitsTargetInSky"
+          if !target.hasActiveItem?(:UTILITYUMBRELLA)
+            sage = true  if [:Rain, :HeavyRain].include?(expectedWeather)
+            baseAcc = 50 if [:Sun, :HarshSun].include?(expectedWeather)
+          end
+        when "FreezeTargetAlwaysHitsInHail"
+          sage = true if expectedWeather == :Hail
+        end
+      end
+      sage = true if user.hasActiveAbility?(:PRESAGE)
+      baseAcc = 0 if sage
     end
     return 125 if baseAcc == 0 && skill >= PBTrainerAI.mediumSkill
     # Get the move's type
@@ -475,13 +534,11 @@ class Battle::AI
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
-    stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    stageMul, stageDiv = @battle.pbGetStatMath(:ACCURACY)
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
     evasion  = (evasion  * modifiers[:evasion_multiplier]).round
-    evasion = 1 if evasion < 1
     return modifiers[:base_accuracy] * accuracy / evasion
   end
 

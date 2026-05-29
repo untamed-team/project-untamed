@@ -24,7 +24,9 @@ class Battle::Move::TitanWrath < Battle::Move
   
   def pbGetAttackStats(user, target)
     userStats = user.plainStats
-    highestStatValue = 0;higheststat = 0;statbranch = [0,0]
+    highestStatValue = 0
+    higheststat = :SPECIAL_ATTACK
+    statvalue = user.spatk
     userStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if userStats[s.id] < highestStatValue
@@ -34,21 +36,21 @@ class Battle::Move::TitanWrath < Battle::Move
     case higheststat
     when :ATTACK
       @calcCategory = 0
-      statbranch = [user.attack, user.stages[higheststat] + 6]
+      statvalue = user.attack
     when :DEFENSE
       @calcCategory = 0
-      statbranch = [user.defense, user.stages[higheststat] + 6]
+      statvalue = user.defense
     when :SPECIAL_ATTACK
       @calcCategory = 1
-      statbranch = [user.spatk, user.stages[higheststat] + 6]
+      statvalue = user.spatk
     when :SPECIAL_DEFENSE
       @calcCategory = 1
-      statbranch = [user.spdef, user.stages[higheststat] + 6]
+      statvalue = user.spdef
     when :SPEED
       @calcCategory = 1
-      statbranch = [user.speed, user.stages[higheststat] + 6]
+      statvalue = user.speed
     end
-    return statbranch
+    return [statvalue, user.stages[higheststat] + 6]
   end
   
   def pbBaseType(user)
@@ -57,7 +59,6 @@ class Battle::Move::TitanWrath < Battle::Move
   end
   
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    userTypes = user.pbTypes(true)
     type_moves = {
       special: {
         :NORMAL => :HYPERBEAM, 
@@ -74,7 +75,7 @@ class Battle::Move::TitanWrath < Battle::Move
     }
   
     category = @calcCategory == 1 ? :special : :physical
-    type = userTypes[0]
+    type = pbBaseType(user)
     id = type_moves[category][type] if type_moves[category][type] && 
                                        GameData::Move.exists?(type_moves[category][type])
     super
@@ -97,13 +98,12 @@ class Battle::Move::Rebalancing < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    return true if target.SetupMovesUsed.include?(@id)
     targetStats = target.plainStats; highestStatValue = 0
     targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        if !target.pbCanRaiseStatStage?(s.id, target)
+        if !target.pbCanRaiseStatStage?(s.id, target, self, false, true, self)
           @battle.pbDisplay(_INTL("But it failed!"))
           return true 
         end
@@ -125,8 +125,7 @@ class Battle::Move::Rebalancing < Battle::Move
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        target.pbRaiseStatStage(s.id, 1, target, true) if target.pbCanRaiseStatStage?(s.id, target)
-        target.SetupMovesUsed.push(@id)
+        target.pbRaiseStatStage(s.id, 1, target, true, true, self) if target.pbCanRaiseStatStage?(s.id, target, self, true, true, self)
       else
         target.pbLowerStatStage(s.id, 2, target, true) if target.pbCanLowerStatStage?(s.id, target)
       end
@@ -291,6 +290,71 @@ class Battle::Move::HoldingHandsShamefully < Battle::Move
 end
 
 #===============================================================================
+# Until the end of the next round or when hit with a move, the target will 
+# always take super effective damage. "Reverts" transform and breaks illusion 
+# (we dont even have zoroark in the game) (Reworked Miracle Eye)
+#===============================================================================
+class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
+  def pbOnStartUse(user,targets)
+    @transformbreak = false
+    @transformbreak = true if targets[0].effects[PBEffects::Transform]
+  end
+  def canMagicCoat?; return true; end
+  def pbFailsAgainstTarget?(user, target, show_message)
+    if target.fainted? || target.effects[PBEffects::SuperEffEye] > 0
+      @battle.pbDisplay(_INTL("But it failed!")) if show_message
+      return true
+    end
+    return false
+  end
+
+  def pbEffectAgainstTarget(user, target)
+    target.effects[PBEffects::SuperEffEye] = 2
+    if target.hasActiveAbility?(:ILLUSION)
+      Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
+    elsif target.effects[PBEffects::Transform]
+      #blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
+      #target.pbTransform(blankBattler, false) # holy mother of all jank
+      oldAbil = target.ability_id
+      target.effects[PBEffects::Transform] = false
+      target.effects[PBEffects::TransformSpecies] = nil
+      target.pbResetTypes
+      target.ability = target.pokemon.ability
+      target.attack  = target.pokemon.attack
+      target.defense = target.pokemon.defense
+      target.spatk   = target.pokemon.spatk
+      target.spdef   = target.pokemon.spdef
+      target.speed   = target.pokemon.speed
+      target.pbResetStatStages
+      target.effects[PBEffects::FocusEnergy] = 0
+      target.effects[PBEffects::LaserFocus]  = 0
+      target.moves.clear
+      target.pokemon.moves.each_with_index do |m, i|
+        target.moves[i] = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(m.id))
+        target.moves[i].pp       = target.pokemon.moves[i].pp
+        target.moves[i].total_pp = target.pokemon.moves[i].total_pp
+      end
+      target.effects[PBEffects::Disable]      = 0
+      target.effects[PBEffects::DisableMove]  = nil
+      target.effects[PBEffects::WeightChange] = 0
+      @battle.pbDisplay(_INTL("{1}'s transform wore off!", target.pbThis))
+      target.pbOnLosingAbility(oldAbil)
+    else
+      @battle.pbDisplay(_INTL("{1} was identified!", target.pbThis))
+    end
+  end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    return if !showAnimation
+    @battle.pbAnimation(id, user, targets, hitNum)
+    if @transformbreak
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false)
+      @battle.scene.pbChangePokemon(targets[0], blankBattler.pokemon)
+    end
+  end
+end
+
+#===============================================================================
 # Deals double damage if the opponent initial item belongs to the "choice" brand
 # "Knocks Off" the opponent item if its a choice item (not used)
 #===============================================================================
@@ -352,8 +416,7 @@ class Battle::Move::HitTwoTimesReload < Battle::Move
   def specialMove?(thisType = nil);  return (@calcCategory == 1); end
   def pbOnStartUse(user, targets)
     # Calculate user's effective attacking value
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     atk        = user.attack
     atkStage   = user.stages[:ATTACK] + 6
     realAtk    = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
@@ -415,5 +478,20 @@ class Battle::Move::HealUserDependingOnHail < Battle::Move::HealingMove
   def pbHealAmount(user)
     return (user.totalhp * 2 / 3.0).round if user.effectiveWeather == :Hail
     return (user.totalhp / 2.0).round
+  end
+end
+
+#===============================================================================
+# Prevents the user and the target from switching out or fleeing. This effect
+# isn't applied if the user is already trapped. 
+# Chip damage is dealt at the end of the round. (Needle Arm)
+#===============================================================================
+class Battle::Move::TrapUserAndTargetInBattleNeedleArm < Battle::Move
+  def pbAdditionalEffect(user, target)
+    return if user.fainted? || target.fainted? || target.damageState.substitute
+    return if (Settings::MORE_TYPE_EFFECTS && !$game_switches[OLDSCHOOLBATTLE]) && target.pbHasType?(:GHOST)
+    return if user.trappedInBattle?
+    target.effects[PBEffects::NeedleArm] = user.index
+    @battle.pbDisplay(_INTL("{1}'s thorny arms prevent either Pokémon from running away!", user.pbThis))
   end
 end

@@ -93,6 +93,15 @@ class Battle::Battler
       end
       return false
     end
+    # Setup moves block #by low
+    #if self.SetupMovesUsed.include?(move.id) && move.statusMove? && 
+    #   move.target == :User && $player.difficulty_mode?("chaos") && commandPhase
+    #  if showMessages
+    #    msg = _INTL("But {1} has already used {2}!", pbThis, GameData::Move.get(move.id).name)
+    #    (commandPhase) ? @battle.pbDisplayPaused(msg) : @battle.pbDisplay(msg)
+    #  end
+    #  return false
+    #end
     # Belch
     return false if !move.pbCanChooseMove?(self, commandPhase, showMessages)
     return true
@@ -109,15 +118,11 @@ class Battle::Battler
     return true if !@battle.internalBattle
     return true if !@battle.pbOwnedByPlayer?(@index)
     disobedient = false
-    # Pokémon may be disobedient; calculate if it is
-    badge_level = 10 * (@battle.pbPlayer.badge_count + 1)
+    # Pokémon may be disobedient; calculate if it is #edits #by low
+    badge_level = ((@battle.pbPlayer.badge_count + 1) ** 2.2).floor + 5
     badge_level = GameData::GrowthRate.max_level if @battle.pbPlayer.badge_count >= 8
-    if Settings::ANY_HIGH_LEVEL_POKEMON_CAN_DISOBEY ||
-       (Settings::FOREIGN_HIGH_LEVEL_POKEMON_CAN_DISOBEY && @pokemon.foreign?(@battle.pbPlayer))
-      if @level > badge_level
-        a = ((@level + badge_level) * @battle.pbRandom(256) / 256).floor
-        disobedient |= (a >= badge_level)
-      end
+    if @pokemon.foreign?(@battle.pbPlayer) && @pokemon.obtain_method == 4 && @pokemon.owner.name != "Mustang"
+      disobedient = true if @level > badge_level
     end
     disobedient |= !pbHyperModeObedience(choice[2])
     return true if !disobedient
@@ -133,23 +138,6 @@ class Battle::Battler
     if @status == :SLEEP && move.usableWhenAsleep?
       @battle.pbDisplay(_INTL("{1} ignored orders and kept sleeping!", pbThis))
       return false
-    end
-    b = ((@level + badge_level) * @battle.pbRandom(256) / 256).floor
-    # Use another move
-    if b < badge_level
-      @battle.pbDisplay(_INTL("{1} ignored orders!", pbThis))
-      return false if !@battle.pbCanShowFightMenu?(@index)
-      otherMoves = []
-      eachMoveWithIndex do |_m, i|
-        next if i == choice[1]
-        otherMoves.push(i) if @battle.pbCanChooseMove?(@index, i, false)
-      end
-      return false if otherMoves.length == 0   # No other move to use; do nothing
-      newChoice = otherMoves[@battle.pbRandom(otherMoves.length)]
-      choice[1] = newChoice
-      choice[2] = @moves[newChoice]
-      choice[3] = -1
-      return true
     end
     c = @level - badge_level
     r = @battle.pbRandom(256)
@@ -228,10 +216,11 @@ class Battle::Battler
         @battle.pbShowAbilitySplash(self)
         @battle.pbDisplay(_INTL("{1} is loafing around!", pbThis))
         @battle.pbHideAbilitySplash(self)
-				unless move.usableWhenTruanting? # Truant buff #by low
-					@lastMoveFailed = true
-					return false
-				end
+        unless move.usableWhenTruanting? # Truant buff #by low
+          @lastMoveFailed = true
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
+          return false
+        end
       end
     end
     # Flinching
@@ -253,8 +242,9 @@ class Battle::Battler
         @battle.pbCommonAnimation("Confusion", self)
         @battle.pbDisplay(_INTL("{1} is confused!", pbThis))
         threshold = (Settings::MECHANICS_GENERATION >= 7) ? 30 : 50   # % chance
-        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 #by low
+        if @battle.pbRandom(100) < threshold && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
           pbConfusionDamage(_INTL("It hurt itself in its confusion!"))
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
           @lastMoveFailed = true
           return false
         end
@@ -262,15 +252,16 @@ class Battle::Battler
     end
     # Paralysis
     if @status == :PARALYSIS 
-			if $player.difficulty_mode?("chaos") #by low
-				#nothing
-			else
-				if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 #by low
-					pbContinueStatus
-					@lastMoveFailed = true
-					return false
-				end
-			end
+      if $player.difficulty_mode?("chaos") #by low
+        #nothing
+      else
+        if @battle.pbRandom(100) < 25 && @battle.turnCount >= 1 && @effects[PBEffects::NoFlinch] == 0 #by low
+          pbContinueStatus
+          @effects[PBEffects::NoFlinch] = 2 if !@battle.pbOwnedByPlayer?(@index)
+          @lastMoveFailed = true
+          return false
+        end
+      end
     end
     return true
   end
@@ -425,6 +416,16 @@ class Battle::Battler
     end
     # Immunity because of ability (intentionally before type immunity check)
     return false if move.pbImmunityByAbility(user, target, show_message)
+    # Telepathy fix #by low
+    if user.hasActiveAbility?(:TELEPATHY) && move.pbDamagingMove? && 
+       !target.opposes?(user) && user.index != target.index
+      if show_message
+        @battle.pbShowAbilitySplash(user)
+        @battle.pbDisplay(_INTL("{1} avoids attacks by its ally Pokémon!", target.pbThis))
+        @battle.pbHideAbilitySplash(user)
+      end
+      return false
+    end
     # Type immunity
     if move.pbDamagingMove? && Effectiveness.ineffective?(typeMod)
       PBDebug.log("[Target immune] #{target.pbThis}'s type immunity")

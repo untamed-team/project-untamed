@@ -288,6 +288,11 @@ class Battle::Move::BindTarget < Battle::Move
     end
     @battle.pbDisplay(msg)
   end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    id = :FIRESPIN if user.hasActiveAbility?(:MELTDOWN)
+    super
+  end
 end
 
 #===============================================================================
@@ -735,6 +740,7 @@ class Battle::Move::DisableTargetLastMoveUsed < Battle::Move
     target.effects[PBEffects::DisableMove] = target.lastRegularMoveUsed
     @battle.pbDisplay(_INTL("{1}'s {2} was disabled!", target.pbThis,
                             GameData::Move.get(target.lastRegularMoveUsed).name))
+    target.pbRaiseAttackStatStageIrritable
     target.pbItemStatusCureCheck
   end
 end
@@ -758,6 +764,7 @@ class Battle::Move::DisableTargetUsingSameMoveConsecutively < Battle::Move
   def pbEffectAgainstTarget(user, target)
     target.effects[PBEffects::Torment] = true
     @battle.pbDisplay(_INTL("{1} was subjected to torment!", target.pbThis))
+    target.pbRaiseAttackStatStageIrritable
     target.pbItemStatusCureCheck
   end
 end
@@ -829,6 +836,7 @@ class Battle::Move::DisableTargetUsingDifferentMove < Battle::Move
     target.effects[PBEffects::Encore]     = 4
     target.effects[PBEffects::EncoreMove] = target.lastRegularMoveUsed
     @battle.pbDisplay(_INTL("{1} received an encore!", target.pbThis))
+    target.pbRaiseAttackStatStageIrritable
     target.pbItemStatusCureCheck
   end
 end
@@ -866,6 +874,7 @@ class Battle::Move::DisableTargetStatusMoves < Battle::Move
   def pbEffectAgainstTarget(user, target)
     target.effects[PBEffects::Taunt] = 4
     @battle.pbDisplay(_INTL("{1} fell for the taunt!", target.pbThis))
+    target.pbRaiseAttackStatStageIrritable
     target.pbItemStatusCureCheck
   end
 end
@@ -888,6 +897,7 @@ class Battle::Move::DisableTargetHealingMoves < Battle::Move
   def pbEffectAgainstTarget(user, target)
     target.effects[PBEffects::HealBlock] = 5
     @battle.pbDisplay(_INTL("{1} was prevented from healing!", target.pbThis))
+    target.pbRaiseAttackStatStageIrritable
     target.pbItemStatusCureCheck
   end
 end
@@ -901,6 +911,7 @@ class Battle::Move::DisableTargetSoundMoves < Battle::Move
     if target.effects[PBEffects::ThroatChop] == 0
       @battle.pbDisplay(_INTL("The effects of {1} prevent {2} from using certain moves!",
                               @name, target.pbThis(true)))
+      target.pbRaiseAttackStatStageIrritable
     end
     target.effects[PBEffects::ThroatChop] = 3
   end
@@ -923,5 +934,13 @@ class Battle::Move::DisableTargetMovesKnownByUser < Battle::Move
   def pbEffectGeneral(user)
     user.effects[PBEffects::Imprison] = true
     @battle.pbDisplay(_INTL("{1} sealed any moves its target shares with it!", user.pbThis))
+    userMoves = user.moves.map(&:id)
+    @battle.allOtherSideBattlers(user.index).each do |b|
+      sharedMoves = b.moves.map(&:id) & userMoves
+      sharedMoves.each do |mid|
+        @battle.addMoveRevealed(b, mid)
+      end
+      b.pbRaiseAttackStatStageIrritable if sharedMoves.any?
+    end
   end
 end

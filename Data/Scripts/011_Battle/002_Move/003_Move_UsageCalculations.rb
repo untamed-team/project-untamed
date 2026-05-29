@@ -91,10 +91,10 @@ class Battle::Move
     ret = 1
     typeMods.each { |m| ret *= m }
     ret *= 2 if target.effects[PBEffects::TarShot] && moveType == :FIRE
+    ret = 16 if target.effects[PBEffects::SuperEffEye] > 0
     # Inverse Battle Switch #by low
-    # 8x = ret 64
-    # 4x = ret 32
-    if $game_switches[INVERSEBATTLESWITCH]
+    # 8x = ret 64; 4x = ret 32
+    if @battle.inverseBattle
       if ret == 0
         ret = 16
       elsif ret >= 64
@@ -146,13 +146,11 @@ class Battle::Move
     # Calculation
     accStage = [[modifiers[:accuracy_stage], -6].max, 6].min + 6
     evaStage = [[modifiers[:evasion_stage], -6].max, 6].min + 6
-    stageMul = [3, 3, 3, 3, 3, 3, 3, 4, 5, 6, 7, 8, 9]
-    stageDiv = [9, 8, 7, 6, 5, 4, 3, 3, 3, 3, 3, 3, 3]
+    stageMul, stageDiv = @battle.pbGetStatMath(:ACCURACY)
     accuracy = 100.0 * stageMul[accStage] / stageDiv[accStage]
     evasion  = 100.0 * stageMul[evaStage] / stageDiv[evaStage]
     accuracy = (accuracy * modifiers[:accuracy_multiplier]).round
     evasion  = (evasion  * modifiers[:evasion_multiplier]).round
-    evasion = 1 if evasion < 1
     threshold = modifiers[:base_accuracy] * accuracy / evasion
     # Calculation
     r = @battle.pbRandom(100)
@@ -228,20 +226,18 @@ class Battle::Move
   def pbModifyDamage(damageMult, user, target);         return damageMult; end
 
   def pbGetAttackStats(user, target)
-    if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
-      return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
+    if (user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove?) || #by low
+       specialMove?
+      return user.spatk, user.stages[:SPECIAL_ATTACK]
     end
-    if specialMove?
-      return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
-    end
-    return user.attack, user.stages[:ATTACK] + 6
+    return user.attack, user.stages[:ATTACK]
   end
 
   def pbGetDefenseStats(user, target)
     if specialMove?
-      return target.spdef, target.stages[:SPECIAL_DEFENSE] + 6
+      return target.spdef, target.stages[:SPECIAL_DEFENSE]
     end
-    return target.defense, target.stages[:DEFENSE] + 6
+    return target.defense, target.stages[:DEFENSE]
   end
 
   def pbCalcDamage(user, target, numTargets = 1)
@@ -250,38 +246,43 @@ class Battle::Move
       target.damageState.calcDamage = 1
       return
     end
-    stageMul = [2, 2, 2, 2, 2, 2, 2, 3, 4, 5, 6, 7, 8]
-    stageDiv = [8, 7, 6, 5, 4, 3, 2, 2, 2, 2, 2, 2, 2]
+    stageMul, stageDiv = @battle.pbGetStatMath
     # Get the move's type
     type = @calcType   # nil is treated as physical
     # Calculate whether this hit deals critical damage
     target.damageState.critical = pbIsCritical?(user, target, @battle.choices[user.index][2])
     # Calcuate base power of move
     baseDmg = pbBaseDamage(@baseDamage, user, target)
-    # Calculate user's attack stat
+    # Calculate user's initial attack stat
     atk, atkStage = pbGetAttackStats(user, target)
-    if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
-      atkStage = 6 if target.damageState.critical && atkStage < 6
-      atk = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
-    end
-    # Calculate target's defense stat
+    # Calculate target's initial defense stat
     defense, defStage = pbGetDefenseStats(user, target)
-    if !user.hasActiveAbility?(:UNAWARE)
-      defStage = 6 if target.damageState.critical && defStage > 6
-      defense = (defense.to_f * stageMul[defStage] / stageDiv[defStage]).floor
-    end
     # Calculate all multiplier effects
     multipliers = {
       :base_damage_multiplier  => 1.0,
       :attack_multiplier       => 1.0,
       :defense_multiplier      => 1.0,
-      :final_damage_multiplier => 1.0
+      :final_damage_multiplier => 1.0,
+      :offense_stage           => atkStage,
+      :defense_stage           => defStage
     }
     pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
     # Golden Camera calculation
     if $PokemonGlobal.goldencamera
       atk *= 0.8 if user.pbOwnedByPlayer?
       defense *= 0.8 if target.pbOwnedByPlayer?
+    end
+    # Calculate user's attack stat
+    atkStage = multipliers[:offense_stage] + 6
+    if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
+      atkStage = 6 if target.damageState.critical && atkStage < 6
+      atk = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
+    end
+    # Calculate target's defense stat
+    defStage = multipliers[:defense_stage] + 6
+    if !user.hasActiveAbility?(:UNAWARE)
+      defStage = 6 if target.damageState.critical && defStage > 6
+      defense = (defense.to_f * stageMul[defStage] / stageDiv[defStage]).floor
     end
     # Main damage calculation
     baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max
@@ -403,11 +404,11 @@ class Battle::Move
     # Terrain
     case @battle.field.terrain
     when :Electric
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :ELECTRIC && user.affectedByTerrain? && @function != "DoublePowerInElectricTerrain"
     when :Grassy
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :GRASS && user.affectedByTerrain? && @function != "HigherPriorityInGrassyTerrain"
     when :Psychic
-      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain?
+      multipliers[:base_damage_multiplier] *= t_damage_multiplier if type == :PSYCHIC && user.affectedByTerrain? && @function != "HitsAllFoesAndPowersUpInPsychicTerrain"
     when :Misty
       multipliers[:base_damage_multiplier] /= t_damage_divider if type == :DRAGON && target.affectedByTerrain?
     end
@@ -454,9 +455,9 @@ class Battle::Move
       end
     end
     # Master Mode stuff #by low
-    if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
-      multipliers[:final_damage_multiplier] *= 0.75
-    end
+    #if $game_variables[MASTERMODEVARS][28]==true && !target.pbOwnedByPlayer? && Effectiveness.super_effective?(target.damageState.typeMod)
+    #  multipliers[:final_damage_multiplier] *= 0.75
+    #end
     # Gravity Boost #by low 
     # float stone changes
     if boostedByGravity? && @battle.field.effects[PBEffects::Gravity] > 0 && !target.hasActiveItem?(:FLOATSTONE)
@@ -469,6 +470,12 @@ class Battle::Move
       else
         multipliers[:final_damage_multiplier] *= 2
       end
+    end
+    # Random variance
+    if !self.is_a?(Battle::Move::Confusion) && $player.difficulty_mode?("easy")
+      random = 85 + @battle.pbRandom(16)
+      random = user.pbOwnedByPlayer? ? (@battle.pbRandom(8) == 0 ? 85 : random) : 100
+      multipliers[:final_damage_multiplier] *= random / 100.0
     end
     # STAB
     if type && user.pbHasType?(type)
@@ -515,6 +522,22 @@ class Battle::Move
     # Minimize
     if target.effects[PBEffects::Minimize] && tramplesMinimize?
       multipliers[:final_damage_multiplier] *= 2
+    end
+    # AI-specific modifiers #by low
+    if !user.pbOwnedByPlayer?
+      if user.index != target.index && !target.opposes?(user) # Kiriya targeting own allies
+        multipliers[:final_damage_multiplier] *= 0.75
+      end
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_ATTACK) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPATK)
+          multipliers[:attack_multiplier] *= 1.1
+      end
+    end
+    if !target.pbOwnedByPlayer?
+      if (physicalMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_DEFENSE) ||
+         (specialMove? && @battle.pbPlayer.badge_count >= Settings::NUM_BADGES_BOOST_SPDEF)
+        multipliers[:defense_multiplier] *= 1.1
+      end
     end
     # Move-specific base damage modifiers
     multipliers[:base_damage_multiplier] = pbBaseDamageMultiplier(multipliers[:base_damage_multiplier], user, target)

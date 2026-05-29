@@ -46,7 +46,7 @@ class Dressup
 
     #export the bitmap to a file
     #if the filename already exists, overwrite it
-    bitmap.to_file("Graphics/Pictures/Contest/Dressup/contestants/playerPkmn.png")
+    bitmap.to_file("Graphics/Pictures/Contest/Dressup/contestants/#{$player.id}.png")
   end #def self.saveContestantBitmap
   
   def self.tallyPoints    

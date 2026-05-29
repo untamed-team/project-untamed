@@ -33,7 +33,7 @@ def bootTimeMachine
 	end
 	
 	commands.push(_INTL("Cancel"))
-	choice = pbMessage(_INTL("Choose the Save File to access."), commands, -1, nil, 0)
+	choice = pbMessage(_INTL("Choose the Save File to access. Only files from previous demo versions are eligible."), commands, -1, nil, 0)
 	
 	#get out of here if the user cancels
 	return if choice == -1 || choice == (commands.length-1)
@@ -989,6 +989,34 @@ class TimeMachinePokemonStorageScreen
   attr_reader :scene
   attr_reader :storage
   attr_accessor :heldpkmn
+  
+  def pbPokemonDebug(pkmn, pkmnid, heldpoke = nil, settingUpBattle = false)
+    # Get all commands
+    commands = CommandMenuList.new
+    MenuHandlers.each_available(:pokemon_debug_menu) do |option, hash, name|
+      next if settingUpBattle && !hash["always_show"].nil? && !hash["always_show"]
+      commands.add(option, hash, name)
+    end
+    # Main loop
+    command = 0
+    loop do
+      command = pbShowCommands(_INTL("Do what with {1}?", pkmn.name), commands.list, command)
+      if command < 0
+        parent = commands.getParent
+        break if !parent
+        commands.currentList = parent[0]
+        command = parent[1]
+      else
+        cmd = commands.getCommand(command)
+        if commands.hasSubMenu?(cmd)
+          commands.currentList = cmd
+          command = 0
+        elsif MenuHandlers.call(:pokemon_debug_menu, cmd, "effect", pkmn, pkmnid, heldpoke, settingUpBattle, self)
+          break
+        end
+      end
+    end
+  end
 
   def initialize(scene, storage, saveParty)
     @scene = scene
@@ -1277,7 +1305,7 @@ class TimeMachinePokemonStorageScreen
     if box == -1 && pbAble?(@storage[box, index]) && pbAbleCount <= 1
       pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Time Machine to deposit your last Pokémon!"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but you cannot use the Mysterious Program to deposit your last Pokémon!"))
       return
     end
     @scene.pbHold(selected)
@@ -1363,16 +1391,23 @@ class TimeMachinePokemonStorageScreen
     #elsif pokemon.cannot_release
     #  pbDisplay(_INTL("{1} refuses to leave you!", pokemon.name))
     #  return false
+	elsif pokemon.species == :FLOETTE && pokemon.form == 5
+		pbDisplay(_INTL("You cannot transfer Eternal Floette from a save file."))
+		pbDisplay(_INTL("Use Mystery Gift from your Blukberry Phone to receive Eternal Floette."))
+		return false
     end
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE
       pbDisplay(_INTL("That's your last Pokémon!"))
-	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause cause unstable gameplay on the save file you are editing. Are you okay with this?"))
+	  pbDisplay(_INTL("You can transfer your last party Pokémon to the current save file, but this will cause unstable gameplay on the save file you are editing. Are you okay with this?"))
       #return
     end
-    command = pbShowCommands(_INTL("Transfer this Pokémon?"), [_INTL("No"), _INTL("Yes")])
+    command = pbShowCommands(_INTL("Transfer this Pokémon? Any held item will be lost in the process."), [_INTL("No"), _INTL("Yes")])
     if command == 1
       pkmnname = pokemon.name
+	  
+	  #delete the held item from the pkmn
+	  pokemon.item = nil
 	  
 		#add the pokemon to a global variable to receive on the current save when done
 		$PokemonGlobal.timeMachineTransferredPkmn.push(pokemon)

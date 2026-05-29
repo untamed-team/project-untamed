@@ -97,7 +97,6 @@ class Battle::Scene::PokemonDataBox < Sprite
       @hpBar2.bitmap = @hpBarBitmap2.bitmap
       @hpBar2.src_rect.height = @hpBarBitmap2.height / 3
       @sprites["hpBar2"] = @hpBar2
-      @hpBar2.visible = false
     end
     # Create sprite wrapper that displays Exp bar
     @expBar = Sprite.new(viewport)
@@ -116,6 +115,7 @@ class Battle::Scene::PokemonDataBox < Sprite
     @databoxBitmap.dispose
     @numbersBitmap.dispose
     @hpBarBitmap.dispose
+    @hpBar2Bitmap.dispose
     @expBarBitmap.dispose
     @contents.dispose
     super
@@ -124,6 +124,9 @@ class Battle::Scene::PokemonDataBox < Sprite
   def x=(value)
     super
     @hpBar.x     = value + @spriteBaseX + 102
+    if @hpBar2
+      @hpBar2.x     = value + @spriteBaseX + 102
+    end
     #@expBar.x    = value + @spriteBaseX + 6
     @expBar.x    = value+@spriteBaseX + 0
     #@hpNumbers.x = value + @spriteBaseX + 80
@@ -133,7 +136,10 @@ class Battle::Scene::PokemonDataBox < Sprite
   def y=(value)
     super
     @hpBar.y     = value + 40
-    #@expBar.y    = value + 74
+    if @hpBar2
+      @hpBar2.y     = value + 40
+    end
+      #@expBar.y    = value + 74
     @expBar.y    = value + 48
     @hpNumbers.y = value + 52
   end
@@ -141,6 +147,9 @@ class Battle::Scene::PokemonDataBox < Sprite
   def z=(value)
     super
     @hpBar.z     = value + 1
+    if @hpBar2
+      @hpBar2.z     = value + 1
+    end
     @expBar.z    = value + 1
     @hpNumbers.z = value + 2
   end

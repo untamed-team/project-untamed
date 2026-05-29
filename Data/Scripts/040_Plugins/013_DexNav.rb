@@ -634,7 +634,7 @@ EventHandlers.add(:on_wild_pokemon_created, :dexnav_chain,
         # There is a higher chance for shininess, so we give it another chance to force it to be shiny
         tempInt = $PokemonBag.pbQuantity(GameData::Item.get(:SHINYCHARM))>0 ? 256 : 768
         if rand(tempInt)<=1+($chain/5).floor && $chain<46
-         pokemon.makeShiny
+         pokemon.shiny = true
         end
       end
         $currentDexSearch = nil

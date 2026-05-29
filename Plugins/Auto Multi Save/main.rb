@@ -217,7 +217,13 @@ class PokemonLoad_Scene
     @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
     @viewport.z = 99998
     addBackgroundOrColoredPlane(@sprites, "background", "/Save Select/bg", Color.new(248, 248, 248), @viewport)
-    y = 32
+    if show_continue
+		#if Continue option is available, start y for buttons at this height
+		y = 34
+	else
+		#if Continue option is not available (no save files found), start y for buttons at this height
+		y = 88
+	end
     commands.length.times do |i|
       @sprites["panel#{i}"] = PokemonLoadPanel.new(
         i, commands[i], (show_continue) ? (i == 0) : false, trainer,
@@ -226,8 +232,17 @@ class PokemonLoad_Scene
       x = (show_continue && i == 0) ? 126 : 352
       @sprites["panel#{i}"].x = x
       @sprites["panel#{i}"].y = y
+      
+      # Move the bitmaps from the panel class to the scene's @sprites hash
+      if @sprites["panel#{i}"].overlaysprite
+        @sprites["panel#{i}_overlay"] = @sprites["panel#{i}"].overlaysprite
+      end
+      if @sprites["panel#{i}"].trainerNameBitmap
+        @sprites["panel#{i}_name"] = @sprites["panel#{i}"].trainerNameBitmap
+      end
+      
       @sprites["panel#{i}"].pbRefresh
-      y += (show_continue && i == 0) ? 54 : 54
+      y += 54
     end
     @sprites["cmdwindow"] = Window_CommandPokemon.new([])
     @sprites["cmdwindow"].viewport = @viewport
@@ -236,11 +251,11 @@ class PokemonLoad_Scene
     #added by Gardenette
     arrowsX = 40
     arrowsY = 56
-    @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/leftarrow",8,40,28,2,@viewport)
+    @sprites["leftarrow"] = AnimatedSprite.new("Graphics/Pictures/Save Select/leftarrow",8,40,28,2,@viewport)
     @sprites["leftarrow"].x = arrowsX
     @sprites["leftarrow"].y = arrowsY - @sprites["leftarrow"].bitmap.height/16
     @sprites["leftarrow"].visible = false
-    @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/rightarrow",8,40,28,2,@viewport)
+    @sprites["rightarrow"] = AnimatedSprite.new("Graphics/Pictures/Save Select/rightarrow",8,40,28,2,@viewport)
     @sprites["rightarrow"].x = arrowsX + 10 + @sprites["rightarrow"].bitmap.width*6
     @sprites["rightarrow"].y = arrowsY - @sprites["rightarrow"].bitmap.height/16 
     @sprites["rightarrow"].visible = false
@@ -253,20 +268,20 @@ class PokemonLoad_Scene
   
   def pbChoose(commands, continue_idx)
     @sprites["cmdwindow"].commands = commands
+	#added by Gardenette to show arrows if hovering over continue and if there
+    #is more than one save file
+	if @sprites["cmdwindow"].index == 0 && @savesTaken > 1
+      @sprites["leftarrow"].visible = true if @sprites["leftarrow"].visible == false
+      @sprites["rightarrow"].visible = true if @sprites["rightarrow"].visible == false
+    else
+      @sprites["leftarrow"].visible = false if @sprites["leftarrow"].visible == true
+      @sprites["rightarrow"].visible = false if @sprites["rightarrow"].visible == true
+    end
+	
     loop do
       Graphics.update
       Input.update
       pbUpdate
-      #added by Gardenette to show arrows if hovering over continue and if there
-      #is more than one save file
-      if @sprites["cmdwindow"].index == 0 && @savesTaken > 1
-        @sprites["leftarrow"].visible = true if @sprites["leftarrow"].visible == false
-        @sprites["rightarrow"].visible = true if @sprites["rightarrow"].visible == false
-      else
-        @sprites["leftarrow"].visible = false if @sprites["leftarrow"].visible == true
-        @sprites["rightarrow"].visible = false if @sprites["rightarrow"].visible == true
-      end
-        
       if Input.trigger?(Input::USE)
         return @sprites["cmdwindow"].index
       elsif @sprites["cmdwindow"].index == continue_idx
@@ -278,19 +293,92 @@ class PokemonLoad_Scene
       end
     end
   end
+
+	def pbEndScene
+		pbFadeOutAndHide(@sprites) { pbUpdate }
+		pbDisposeSpriteHash(@sprites)
+		@viewport.dispose
+	end
 end
 
 #===============================================================================
 #
 #===============================================================================
 class PokemonLoadScreen
+
   def initialize(scene)
-    @scene = scene
+	moveIncompatibleSaveFiles
+	@scene = scene
     @selected_file = SaveData.get_newest_save_slot
   end
 
+	def moveIncompatibleSaveFiles
+		#iterate through all save files
+		SaveData.each_slot do |file_slot|
+			full_path = SaveData.get_full_path(file_slot)
+			saveFileName = file_slot
+			next if !File.file?(full_path)
+			temp_save_data = SaveData.read_from_file(full_path)
+			trainerName = temp_save_data[:player].name
+			lastSaveTimeOld = "#{temp_save_data[:player].last_time_saved || Time.at(1)}"
+			lastSaveTime = lastSaveTimeOld.gsub(":", "_")
+			
+			if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] < Settings::DEMO_NUMBER
+				#this is a save file from an older demo version
+				#force player to move this save file to "AppData/Roaming/project-untamed/Incompatible saves" or exit the game
+				Console.echo_warn "Save file '#{saveFileName}' is incompatible with this demo version."
+				pbMessage(_INTL("Save file with name \\c[2]#{saveFileName}\\c[0] is corrupt, or is incompatible with this game."))
+				if pbConfirmMessageSerious(_INTL("Do you want to preserve save file \\c[2]#{saveFileName}\\c[0] in your Save folder's 'Incompatible Save Files' folder? If not, the game will exit."))
+					preserve_save_file(full_path, trainerName, lastSaveTime)
+				else
+					exit
+				end #if pbConfirmMessageSerious(_INTL("Do you want to preserve
+			end #if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] < Settings::DEMO_NUMBER
+			
+			#check for corrupted save files
+			if !SaveData.valid?(temp_save_data)
+				#this is a save file that is corrupted
+				#force player to move this save file to "AppData/Roaming/project-untamed/Incompatible saves" or exit the game
+				Console.echo_warn "Save file '#{saveFileName}' is corrupt."
+				pbMessage(_INTL("Save file with name \\c[2]#{saveFileName}\\c[0] is corrupt, or is incompatible with this game."))
+				if pbConfirmMessageSerious(_INTL("Do you want to preserve save file \\c[2]#{saveFileName}\\c[0] in your Save folder's 'Incompatible Save Files' folder? If not, the game will exit."))
+					preserve_save_file(full_path, trainerName, lastSaveTime)
+				else
+					exit
+				end #if pbConfirmMessageSerious(_INTL("Do you want to preserve
+			end
+		end #SaveData.each_slot do |file_slot|
+	end #def moveIncompatibleSaveFiles
+
+	def preserve_save_file(file_path, trainerName, lastSaveTime)
+		#create 'Incompatible Save Files' folder if it doesn't exist in 'AppData/Roaming/project-untamed'
+		folder_path = "#{ENV['APPDATA']}/project-untamed/Incompatiable Save Files"
+		Dir.mkdir(folder_path) unless File.exists?(folder_path)
+
+		# Define the destination full path including the filename
+		file_name = File.basename(file_path)
+		new_name = "#{trainerName}_#{lastSaveTime}.rxdata"
+		dest_path = File.join(folder_path, new_name)
+		#copy the save file to the 'Incompatible Save Files' folder
+		# Perform the move using standard Ruby IO
+		if File.exist?(file_path)
+			#File.open(file_path, 'rb') do |r|
+			#	File.open(dest_path, 'wb') { |w| w.write(r.read) }
+			#end
+			#File.delete(file_path) # Deletes original to complete the "Move"
+
+			# This moves AND renames at the same time
+			File.rename(file_path, dest_path)
+			Console.echo_warn "File moved successfully to #{dest_path}"
+			#rename save file to be of naming convention "trainerName_lastSaveTime"
+			dest_path
+		end
+	end #def preserve_save_file
+
   # @param file_path [String] file to load save data from
   # @return [Hash] save data
+  
+  #this method only triggers when you have a save file selected (switching between them on the load screen)
   def load_save_file(file_path)
     save_data = SaveData.read_from_file(file_path)
     unless SaveData.valid?(save_data)
@@ -308,9 +396,9 @@ class PokemonLoadScreen
   # Called if save file is invalid.
   # Prompts the player to delete the save files.
   def prompt_save_deletion(file_path)
-    pbMessage(_INTL("A save file is corrupt, or is incompatible with this game."))
+    pbMessage(_INTL("Save file with name '#{file_path}' is corrupt, or is incompatible with this game."))
     self.delete_save_data(file_path) if pbConfirmMessageSerious(
-      _INTL("Do you want to delete that save file? The game will exit afterwards either way.")
+      _INTL("Do you want to delete save file '#{file_path}'? The game will exit afterwards either way.")
     )
     exit
   end
@@ -339,19 +427,15 @@ class PokemonLoadScreen
       cmd_new_game     = -1
       cmd_options      = -1
       cmd_language     = -1
-      cmd_mystery_gift = -1
+      #cmd_mystery_gift = -1
       cmd_debug        = -1
       cmd_quit         = -1
       show_continue = !@save_data.empty?
-      if show_continue        
-        commands[cmd_continue = commands.length] = "#{@selected_file}"
-        if @save_data[:player].mystery_gift_unlocked
-          commands[cmd_mystery_gift = commands.length] = _INTL('Mystery Gift') # Honestly I have no idea how to make Mystery Gift work well with this.
-        end
-      end
+      commands[cmd_continue = commands.length] = "#{@selected_file}" if show_continue
       commands[cmd_new_game = commands.length]  = _INTL('New Game')
-      commands[cmd_options = commands.length]   = _INTL('Options')
+      commands[cmd_options = commands.length]   = _INTL('Options') if show_continue
       commands[cmd_language = commands.length]  = _INTL('Language') if Settings::LANGUAGES.length >= 2
+	  #commands[cmd_mystery_gift = commands.length] = _INTL('Mys. Gift') if show_continue && @save_data[:player].mystery_gift_unlocked
       commands[cmd_debug = commands.length]     = _INTL('Debug') if $DEBUG
       commands[cmd_quit = commands.length]      = _INTL('Quit Game')
       cmd_left = -3
@@ -380,8 +464,8 @@ class PokemonLoadScreen
           @scene.pbEndScene
           Game.start_new
           return
-        when cmd_mystery_gift
-          pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
+        #when cmd_mystery_gift
+          #pbFadeOutIn { pbDownloadMysteryGift(@save_data[:player]) }
         when cmd_options
           pbFadeOutIn do
             scene = PokemonOption_Scene.new
@@ -534,8 +618,7 @@ class PokemonSaveScreen
   end
 
   # Return true if pause menu should close after this is done (if the game was saved successfully)
-  def pbSaveScreen
-    
+  def pbSaveScreen(quitting = nil)
     #added by Gardenette
     #if there are no save slots, show the tip
     if !SaveData.get_newest_save_slot
@@ -544,39 +627,62 @@ class PokemonSaveScreen
     
     ret = false
     loop do
-      @scene.pbStartScreenMultiSave
-      if !$player.save_slot
-        # New Game - must select slot
-        ret = slotSelect
-      else
-        choices = [
-          _INTL("Save to #{$player.save_slot}"),
-          _INTL("Save to another file"),
-          _INTL("Cancel")
-        ]
-        opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
-        if opt == 0
-          pbSEPlay('GUI save choice')
-          ret = doSave($player.save_slot)
-        elsif opt == 1
-          pbPlayDecisionSE
-          saved = slotSelect
-        else
-          pbPlayCancelSE
-          canceled = true
-        end
-      end
-      @scene.pbEndScreen
-      if ret
-        return ret
-      end
-      if saved
-        return saved
-      end
-      if canceled
-        return canceled
-      end
-    end #loop do
+		@scene.pbStartScreenMultiSave
+		if !$player.save_slot
+			# New Game - must select slot
+			ret = slotSelect
+		#if triggered from "quit game" option
+		elsif quitting == true
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Quit without saving"),
+			_INTL("Don't quit")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,4)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			elsif opt == 2
+				pbPlayCancelSE
+				canceled = "exitWithoutSaving"
+			else
+				pbPlayCancelSE
+				canceled = "doNotQuit"
+			end
+		#if not triggered from "quit game" option
+		else
+			choices = [
+			_INTL("Save to #{$player.save_slot}"),
+			_INTL("Save to another file"),
+			_INTL("Don't save")
+			]
+			opt = pbMessage(_INTL('Would you like to save the game?'),choices,3)
+			if opt == 0
+				pbSEPlay('GUI save choice')
+				ret = doSave($player.save_slot)
+			elsif opt == 1
+				pbPlayDecisionSE
+				saved = slotSelect
+			else
+				pbPlayCancelSE
+				canceled = true
+			end
+		end #if !$player.save_slot
+		@scene.pbEndScreen
+		if ret
+			return ret
+		end
+		if saved
+			return saved
+		end
+		if canceled
+			return canceled
+		end
+	end #loop do
   end
 
   # Call this to open the slot select screen
@@ -816,4 +922,138 @@ def pbEmergencySave
     pbMessage(_INTL("\\se[]Save failed.\\wtnp[30]"))
   end
   $scene = oldscene
+end
+
+#########################################
+# Fonts on Load Screen - the fonts I want to make standard
+#########################################
+
+class PokemonLoadPanel < Sprite
+  attr_reader :selected
+  attr_reader :overlaysprite, :trainerNameBitmap
+
+  TEXTCOLOR             = Color.new(232, 232, 232)
+  TEXTSHADOWCOLOR       = Color.new(136, 136, 136)
+  MALETEXTCOLOR         = Color.new(56, 160, 248)
+  MALETEXTSHADOWCOLOR   = Color.new(56, 104, 168)
+  FEMALETEXTCOLOR       = Color.new(240, 72, 88)
+  FEMALETEXTSHADOWCOLOR = Color.new(160, 64, 64)
+
+  def initialize(index, title, isContinue, trainer, framecount, stats, mapid, viewport = nil)
+    super(viewport)
+    @index = index
+    @title = title
+    @isContinue = isContinue
+    @trainer = trainer
+    @totalsec = (stats) ? stats.play_time.to_i : ((framecount || 0) / Graphics.frame_rate)
+    @mapid = mapid
+    @selected = (index == 0)
+    @bgbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/blank")
+    
+    @buttonbitmap = AnimatedBitmap.new("Graphics/Pictures/Save Select/button")
+    @overlaysprite = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
+    @overlaysprite.z = self.z + 1
+	pbSetSystemFont(@overlaysprite.bitmap) #added by Gardenette
+	@overlaysprite.bitmap.font.size = MessageConfig::FONT_SIZE - 4 #added by Gardenette
+	#added by Gardenette
+	@trainerNameBitmap = BitmapSprite.new(@bgbitmap.bitmap.width, @bgbitmap.bitmap.height, viewport)
+	pbSetSystemFont(@trainerNameBitmap.bitmap)
+	@trainerNameBitmap.bitmap.font.size = MessageConfig::FONT_SIZE
+	
+    if @trainer
+		# Draws text on a bitmap. _textpos_ is an array of text commands. Each text
+		# command is an array that contains the following:
+		#  0 - Text to draw
+		#  1 - X coordinate
+		#  2 - Y coordinate
+		#  3 - If true or 1, the text is right aligned. If 2, the text is centered.
+		#      Otherwise, the text is left aligned.
+		#  4 - Base color
+		#  5 - Shadow color
+		#  6 - If true or 1, the text has an outline. Otherwise, the text has a shadow.
+	
+      textpos = []
+      textpos.push([_INTL("Pokédex:"), 40, 328, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([@trainer.pokedex.seen_count.to_s, 170, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      textpos.push([_INTL("Time:"), 212, 328, 0, TEXTCOLOR, TEXTSHADOWCOLOR])
+      hour = @totalsec / 60 / 60
+      min  = @totalsec / 60 % 60
+      if hour > 0
+        textpos.push([_INTL("{1}h {2}m", hour, min), 326, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      else
+        textpos.push([_INTL("{1}m", min), 326, 328, 1, TEXTCOLOR, TEXTSHADOWCOLOR])
+      end
+      #if @trainer.male?
+        #textpos.push([@trainer.name, 112, 96, 0, MALETEXTCOLOR, MALETEXTSHADOWCOLOR])
+      #else
+        #textpos.push([@trainer.name, 112, 96, 0, FEMALETEXTCOLOR, FEMALETEXTSHADOWCOLOR])
+      #end
+	  #textpos.push([@trainer.name, 209, 96, 2, TEXTCOLOR, TEXTSHADOWCOLOR])
+      pbDrawTextPositions(@overlaysprite.bitmap, textpos)
+	  
+	  trainerTextPos = [[@trainer.name, 209, 96, 2, TEXTCOLOR, TEXTSHADOWCOLOR]]
+	  pbDrawTextPositions(@trainerNameBitmap.bitmap, trainerTextPos)
+      
+      imagePositions = []
+      x = 38
+      8.times do |i|
+        if trainer.badges[i]
+          imagePositions.push(["Graphics/Pictures/Trainer Card/icon_badges", x, 268, i * 32, 0, 32, 32])
+        end
+        x += 38
+      end
+      pbDrawImagePositions(@overlaysprite.bitmap, imagePositions)
+    end
+
+    @refreshBitmap = true
+    @refreshing = false
+    refresh
+  end
+
+  def dispose
+    @bgbitmap.dispose
+	@buttonbitmap.dispose
+    self.bitmap.dispose
+    super
+  end
+
+  def selected=(value)
+    return if @selected == value
+    @selected = value
+    @refreshBitmap = true
+    refresh
+  end
+
+  def isContinue
+    return @isContinue
+  end
+
+  def pbRefresh
+    @refreshBitmap = true
+    refresh
+  end
+
+  def refresh
+    return if @refreshing
+    return if disposed?
+    @refreshing = true
+    if !self.bitmap || self.bitmap.disposed?
+      self.bitmap = BitmapWrapper.new(@bgbitmap.width, 222)
+      pbSetSystemFont(self.bitmap)
+    end
+    if @refreshBitmap
+      @refreshBitmap = false
+      self.bitmap&.clear
+      if @isContinue
+        self.bitmap.blt(0, 0, @bgbitmap.bitmap, Rect.new(0,  0, @bgbitmap.width, @bgbitmap.height))
+      else
+        self.bitmap.blt(0, 0, @buttonbitmap.bitmap, Rect.new(0, (@selected) ? 44 : 0, @buttonbitmap.width, 44))
+      end
+      textpos = []
+      textpos.push([@title, 32, 13, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if @isContinue
+      textpos.push([@title, 18, 13, 0, TEXTCOLOR, TEXTSHADOWCOLOR]) if !@isContinue
+      pbDrawTextPositions(self.bitmap, textpos)
+    end
+    @refreshing = false
+  end
 end

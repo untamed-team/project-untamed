@@ -1,5 +1,5 @@
 def timeMachineCheckSaves
-  location = File.join(ENV['APPDATA'],"project-untamed")
+  location = File.join(ENV['APPDATA'],"project-untamed/Incompatiable Save Files")
   return false unless File.directory?(location)
   #find eligible save files
   eligibleSaveFiles = []
@@ -17,11 +17,17 @@ def timeMachineCheckSaves
 	 #if the variable for demo version is less than THIS number, push to eligibleSaveFiles
 	 #increase this number with every demo release
 	 filenameNoExt = filename.gsub(".rxdata", "")
-	 next if $player.save_slot == filenameNoExt
+	 #next if $player.save_slot == filenameNoExt
 	 file_path = File.join(location, filename)
 	 save_data = SaveData.get_data_from_file(file_path)
-	 #a save is eligible if variable X is less than value Y in the statement below at the part "Variable",[X,Y]
-	 eligibleSaveFiles.push([filenameNoExt,save_data,file_path]) if !timeMachineSaveTest("project-untamed","Variable",[51,2],ver=20,save_data)
+	 
+	 currentlyLoadedFileDemoVersion = $game_variables[Settings::DEMO_NUMBER]
+	 
+	 #a save is eligible if the value of variable 51 (demo version) is less than the currently loaded save file's value. If loaded a save from demo 2, variable 51 will be set to '2', and only save files where the demo version is less than '2' will be loaded
+	#in the statement below, we are checking "Variable",[X,Y], with X being the variable number and Y being the value of that variable
+	#demo version is set at beginning of the game in common event 'Do at beginning of game'
+	 #eligibleSaveFiles.push([filenameNoExt,save_data,file_path]) if !timeMachineSaveTest("project-untamed","Variable",[Settings::DEMO_NUMBER_VARIABLE,currentlyLoadedFileDemoVersion],ver=20,save_data)
+	 eligibleSaveFiles.push([filenameNoExt,save_data,file_path]) if save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] < Settings::DEMO_NUMBER
   end
   return eligibleSaveFiles
 end

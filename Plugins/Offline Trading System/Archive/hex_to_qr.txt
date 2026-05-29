@@ -1,0 +1,81 @@
+#!/usr/bin/env ruby
+
+# This script converts a string of hexadecimal characters into a QR code
+# and saves it as a PNG file.
+
+# --- Prerequisites ---
+# To run this script, you need to install the following gems:
+#
+#   gem install rqrcode
+#   gem install rqcode_png
+#
+# You can run this script from your terminal using:
+#
+#   ruby hex_to_qr.rb
+#
+# Follow the prompts to enter your hexadecimal string.
+
+require 'rqrcode'
+require 'rqrcode_png'
+
+# This function takes a hexadecimal string and converts it into a standard ASCII string.
+def hex_to_string(hex_string)
+  # Remove any spaces or newlines to ensure a clean string.
+  hex_string = hex_string.gsub(/\s+/, '')
+  
+  # Check if the string has an even number of characters.
+  unless hex_string.length.even?
+    puts "Error: The hexadecimal string must have an even number of characters."
+    return nil
+  end
+
+  # Convert each pair of hex characters into a single ASCII character.
+  [hex_string].pack('H*')
+end
+
+# --- Main script execution ---
+
+puts "======================================="
+puts "  Hexadecimal to QR Code Converter"
+puts "======================================="
+
+# Prompt the user for input.
+print "Please enter the hexadecimal string: "
+input_hex = gets.chomp
+
+# Validate the input to ensure it only contains hex characters.
+unless input_hex.match?(/^[0-9a-fA-F\s]+$/)
+  puts "Invalid input. Please enter a valid hexadecimal string (0-9, a-f, A-F)."
+  exit
+end
+
+puts "\nConverting the following data to a QR code:"
+puts input_hex
+puts ""
+
+# Generate the QR code object.
+# The `level` can be :l (low), :m (medium), :q (quartile), or :h (high) for error correction.
+begin
+  qr_code = RQRCode::QRCode.new(input_hex, level: :l)
+rescue RQRCodeCore::QRCodeRunTimeError => e
+  puts "Error: The hexadecimal string is too long to be converted into a single QR code."
+  puts "Details: #{e.message}"
+  exit
+end
+
+
+# Generate a PNG from the QR code using the `as_png` method.
+# The `module_px_size` and `border_modules` are now passed to this method.
+png = qr_code.as_png(
+  module_px_size: 6,
+  border_modules: 4
+).resize(600, 600)
+
+# Define the output file name.
+output_file = "qrcode_#{Time.now.to_i}.png"
+
+# Save the PNG file.
+png.save(output_file)
+
+puts "QR code successfully generated!"
+puts "The QR code has been saved as: #{output_file}"

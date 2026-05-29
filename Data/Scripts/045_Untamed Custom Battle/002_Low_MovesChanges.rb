@@ -3,7 +3,7 @@
 #===============================================================================
 class Battle::Move::OHKO < Battle::Move::FixedDamageMove
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.level >= user.level #by low
+    if target.level >= user.level || $player.difficulty_mode?("hard") #by low
       @battle.pbDisplay(_INTL("{1} is unaffected!", target.pbThis)) if show_message
       return true
     end
@@ -25,7 +25,6 @@ class Battle::Move::OHKO < Battle::Move::FixedDamageMove
 
   def pbAccuracyCheck(user, target)
     acc = @accuracy + user.level - target.level
-    acc = 0 if $player.difficulty_mode?("hard") #by low
     return @battle.pbRandom(100) < acc
   end
 
@@ -73,492 +72,6 @@ end
 # Setup moves edits
 # ====================================================================================================================
 
-#==================================
-# Raise one of user's stats.
-#==================================
-class Battle::Move::StatUpMove < Battle::Move
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    return false if damagingMove?
-    if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-      return true
-    end
-    return !user.pbCanRaiseStatStage?(@statUp[0], user, self, true)
-  end
-
-  def pbEffectGeneral(user)
-    return if damagingMove?
-    user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
-    user.SetupMovesUsed.push(@id)
-  end
-
-  def pbAdditionalEffect(user, target)
-    if user.pbCanRaiseStatStage?(@statUp[0], user, self) && 
-       !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
-      if damagingMove? #&& @addlEffect == 100
-        user.SetupMovesUsed.push(@id)
-      end
-    end
-  end
-end
-
-#==================================
-# Raise multiple of user's stats.
-#==================================
-class Battle::Move::MultiStatUpMove < Battle::Move
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    return false if damagingMove?
-    failed = true
-    (@statUp.length / 2).times do |i|
-      next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      failed = false
-      break
-    end
-    if !damagingMove? && user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-      return true
-    end
-    if failed
-      @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", user.pbThis))
-      return true
-    end
-    return false
-  end
-
-  def pbEffectGeneral(user)
-    return if damagingMove?
-    showAnim = true
-    (@statUp.length / 2).times do |i|
-      next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
-        showAnim = false
-        user.SetupMovesUsed.push(@id)
-        user.SetupMovesUsed |= []
-      end
-    end
-  end
-
-  def pbAdditionalEffect(user, target)
-    showAnim = true
-    (@statUp.length / 2).times do |i|
-      next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim) && 
-         !user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-        showAnim = false
-        if damagingMove? #&& @addlEffect == 100
-          user.SetupMovesUsed.push(@id)
-          user.SetupMovesUsed |= []
-        end
-      end
-    end
-  end
-end
-
-
-#===============================================================================
-# Removes trapping moves, entry hazards and Leech Seed on user/user's side.
-# Raises user's Speed by 1 stage IF REMOVED SOMETHING #by low (Rapid Spin)
-#===============================================================================
-class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
-  def pbEffectAfterAllHits(user, target)
-    return if user.fainted? || target.damageState.unaffected
-    didsomething=false
-    if user.effects[PBEffects::Trapping] > 0
-      trapMove = GameData::Move.get(user.effects[PBEffects::TrappingMove]).name
-      trapUser = @battle.battlers[user.effects[PBEffects::TrappingUser]]
-      @battle.pbDisplay(_INTL("{1} got free of {2}'s {3}!", user.pbThis, trapUser.pbThis(true), trapMove))
-      user.effects[PBEffects::Trapping]     = 0
-      user.effects[PBEffects::TrappingMove] = nil
-      user.effects[PBEffects::TrappingUser] = -1
-      didsomething=true
-    end
-    if user.effects[PBEffects::LeechSeed] >= 0
-      user.effects[PBEffects::LeechSeed] = -1
-      user.effects[PBEffects::LeechSeedCount] = 0
-      @battle.pbDisplay(_INTL("{1} shed Leech Seed!", user.pbThis))
-      didsomething=true
-    end
-    if user.pbOwnSide.effects[PBEffects::StealthRock]
-      user.pbOwnSide.effects[PBEffects::StealthRock] = false
-      @battle.pbDisplay(_INTL("{1} blew away stealth rocks!", user.pbThis))
-      didsomething=true
-    end
-    if user.pbOwnSide.effects[PBEffects::Spikes] > 0
-      user.pbOwnSide.effects[PBEffects::Spikes] = 0
-      @battle.pbDisplay(_INTL("{1} blew away spikes!", user.pbThis))
-      didsomething=true
-    end
-    if user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0
-      user.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
-      @battle.pbDisplay(_INTL("{1} blew away poison spikes!", user.pbThis))
-      didsomething=true
-    end
-    if user.pbOwnSide.effects[PBEffects::StickyWeb] > 0
-      user.pbOwnSide.effects[PBEffects::StickyWeb] = 0
-      @battle.pbDisplay(_INTL("{1} blew away sticky webs!", user.pbThis))
-      didsomething=true
-    end
-    if didsomething && !user.SetupMovesUsed.include?(@id)
-      user.pbRaiseStatStage(:SPEED, 1, user)
-      user.SetupMovesUsed.push(@id)
-    end
-  end
-end
-
-#===============================================================================
-# Raises the Attack and Defense of all user's allies by 1 stage each. Bypasses
-# protections, including Crafty Shield. Fails if there is no ally. (Coaching)
-#===============================================================================
-class Battle::Move::RaiseUserAndAlliesAtkDef1 < Battle::Move
-  def ignoresSubstitute?(user); return true; end
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    @validTargets = []
-    @battle.allSameSideBattlers(user).each do |b|
-      next if b.index == user.index
-      next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
-              !b.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @validTargets.push(b)
-    end
-    if @validTargets.length == 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if @validTargets.any? { |b| b.index == target.index }
-    @battle.pbDisplay(_INTL("{1}'s stats can't be raised further!", target.pbThis)) if show_message
-    return true
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    showAnim = true
-    if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
-    end
-    if target.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
-    end
-    target.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Increases the user's and its ally's Attack and Special Attack by 1 stage each,
-# if they have Plus or Minus. (Gear Up)
-#===============================================================================
-# NOTE: In Gen 5, this move should have a target of UserSide, while in Gen 6+ it
-#       should have a target of UserAndAllies. This is because, in Gen 5, this
-#       move shouldn't call def pbSuccessCheckAgainstTarget for each Pokémon
-#       currently in battle that will be affected by this move (i.e. allies
-#       aren't protected by their substitute/ability/etc., but they are in Gen
-#       6+). We achieve this by not targeting any battlers in Gen 5, since
-#       pbSuccessCheckAgainstTarget is only called for targeted battlers.
-class Battle::Move::RaisePlusMinusUserAndAlliesAtkSpAtk1 < Battle::Move
-  def ignoresSubstitute?(user); return true; end
-  def canSnatch?;               return true; end
-
-  def pbMoveFailed?(user, targets)
-    @validTargets = []
-    @battle.allSameSideBattlers(user).each do |b|
-      next if !b.hasActiveAbility?([:MINUS, :PLUS])
-      next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
-              !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @validTargets.push(b)
-    end
-    if @validTargets.length == 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if @validTargets.any? { |b| b.index == target.index }
-    return true if !target.hasActiveAbility?([:MINUS, :PLUS])
-    @battle.pbDisplay(_INTL("{1}'s stats can't be raised further!", target.pbThis)) if show_message
-    return true
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    showAnim = true
-    if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
-    end
-    if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
-    end
-    target.SetupMovesUsed.push(@id)
-  end
-
-  def pbEffectGeneral(user)
-    return if pbTarget(user) != :UserSide
-    @validTargets.each { |b| pbEffectAgainstTarget(user, b) }
-  end
-end
-
-
-#===============================================================================
-# Increases the user's and its ally's Defense and Special Defense by 1 stage
-# each, if they have Plus or Minus. (Magnetic Flux)
-#===============================================================================
-# NOTE: In Gen 5, this move should have a target of UserSide, while in Gen 6+ it
-#       should have a target of UserAndAllies. This is because, in Gen 5, this
-#       move shouldn't call def pbSuccessCheckAgainstTarget for each Pokémon
-#       currently in battle that will be affected by this move (i.e. allies
-#       aren't protected by their substitute/ability/etc., but they are in Gen
-#       6+). We achieve this by not targeting any battlers in Gen 5, since
-#       pbSuccessCheckAgainstTarget is only called for targeted battlers.
-class Battle::Move::RaisePlusMinusUserAndAlliesDefSpDef1 < Battle::Move
-  def ignoresSubstitute?(user); return true; end
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    @validTargets = []
-    @battle.allSameSideBattlers(user).each do |b|
-      next if !b.hasActiveAbility?([:MINUS, :PLUS])
-      next if !b.pbCanRaiseStatStage?(:DEFENSE, user, self) &&
-              !b.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @validTargets.push(b)
-    end
-    if @validTargets.length == 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if @validTargets.any? { |b| b.index == target.index }
-    return true if !target.hasActiveAbility?([:MINUS, :PLUS])
-    @battle.pbDisplay(_INTL("{1}'s stats can't be raised further!", target.pbThis)) if show_message
-    return true
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    showAnim = true
-    if target.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      showAnim = false if target.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
-    end
-    if target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
-      target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
-    end
-    target.SetupMovesUsed.push(@id)
-  end
-
-  def pbEffectGeneral(user)
-    return if pbTarget(user) != :UserSide
-    @validTargets.each { |b| pbEffectAgainstTarget(user, b) }
-  end
-end
-
-#===============================================================================
-# Increases the Attack and Special Attack of all Grass-type Pokémon in battle by
-# 1 stage each. Doesn't affect airborne Pokémon. (Rototiller)
-#===============================================================================
-class Battle::Move::RaiseGroundedGrassBattlersAtkSpAtk1 < Battle::Move
-  def pbMoveFailed?(user, targets)
-    @validTargets = []
-    @battle.allBattlers.each do |b|
-      next if !b.pbHasType?(:GRASS)
-      next if b.airborne? || b.semiInvulnerable?
-      next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
-              !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @validTargets.push(b.index)
-    end
-    if @validTargets.length == 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if @validTargets.include?(target.index)
-    return true if !target.pbHasType?(:GRASS)
-    return true if target.airborne? || target.semiInvulnerable?
-    @battle.pbDisplay(_INTL("{1}'s stats can't be raised further!", target.pbThis)) if show_message
-    return true
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    showAnim = true
-    if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if target.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
-    end
-    if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      target.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, showAnim)
-    end
-    target.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Increases the Defense of all Grass-type Pokémon on the field by 1 stage each.
-# (Flower Shield)
-#===============================================================================
-class Battle::Move::RaiseGrassBattlersDef1 < Battle::Move
-  def pbMoveFailed?(user, targets)
-    @validTargets = []
-    @battle.allBattlers.each do |b|
-      next if !b.pbHasType?(:GRASS)
-      next if b.semiInvulnerable?
-      next if !b.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @validTargets.push(b.index)
-    end
-    if @validTargets.length == 0
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if @validTargets.include?(target.index)
-    return true if !target.pbHasType?(:GRASS) || target.semiInvulnerable?
-    return !target.pbCanRaiseStatStage?(:DEFENSE, user, self, show_message)
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    target.pbRaiseStatStage(:DEFENSE, 1, user)
-    target.SetupMovesUsed.push(@id)
-  end
-end
-#===============================================================================
-# Increases the user's and allies' Attack by 1 stage. (Howl (Gen 8+))
-#===============================================================================
-class Battle::Move::RaiseTargetAttack1 < Battle::Move
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    return false if damagingMove?
-    failed = true
-    targets.each do |b|
-      next if !b.pbCanRaiseStatStage?(:ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      failed = false
-      break
-    end
-    if failed
-      if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-        @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name))
-      else
-        @battle.pbDisplay(_INTL("But it failed!"))
-      end
-      return true
-    end
-    return false
-  end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return false if damagingMove?
-    return !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    return if damagingMove?
-    target.pbRaiseStatStage(:ATTACK, 1, user)
-    target.SetupMovesUsed.push(@id)
-  end
-
-  def pbAdditionalEffect(user, target)
-    return if !target.pbCanRaiseStatStage?(:ATTACK, user, self)
-    target.pbRaiseStatStage(:ATTACK, 1, user)
-  end
-end
-
-#===============================================================================
-# Increases target's Special Defense/Atk by 1 stage. (Aromatic Mist)
-# the atk boost was a typo at first but sure why not
-#===============================================================================
-class Battle::Move::RaiseTargetSpDef1 < Battle::Move
-  def ignoresSubstitute?(user); return true; end
-
-  def pbFailsAgainstTarget?(user, target, show_message)
-    return true if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self, show_message) &&
-                   !target.pbCanRaiseStatStage?(:ATTACK, user, self, show_message)
-    if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name)) if show_message
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    target.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user)
-    target.pbRaiseStatStage(:ATTACK, 1, user)
-    target.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Increases one random stat of the target by 2 stages (except HP). (Acupressure)
-#===============================================================================
-class Battle::Move::RaiseTargetRandomStat2 < Battle::Move
-  def pbFailsAgainstTarget?(user, target, show_message)
-    @statArray = []
-    GameData::Stat.each_battle do |s|
-      next if s.id == :EVASION
-      @statArray.push(s.id) if target.pbCanRaiseStatStage?(s.id, user, self)
-    end
-    if @statArray.length == 0
-      @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", target.pbThis)) if show_message
-      return true
-    end
-    if target.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already been affected by {2}!", user.pbThis, GameData::Move.get(@id).name)) if show_message
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    stat = @statArray[@battle.pbRandom(@statArray.length)]
-    target.pbRaiseStatStage(stat, 2, user)
-    target.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Increases the target's Attack and Special Attack by 2 stages each. (Decorate)
-#===============================================================================
-class Battle::Move::RaiseTargetAtkSpAtk2 < Battle::Move
-  def pbMoveFailed?(user, targets)
-    failed = true
-    targets.each do |b|
-      next if !b.pbCanRaiseStatStage?(:ATTACK, user, self) &&
-              !b.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      next if b.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      failed = false
-      break
-    end
-    if failed
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
-    end
-    return false
-  end
-
-  def pbEffectAgainstTarget(user, target)
-    target.pbRaiseStatStage(:ATTACK, 2, user) if target.pbCanRaiseStatStage?(:ATTACK, user, self)
-    target.pbRaiseStatStage(:SPECIAL_ATTACK, 2, user) if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-    target.SetupMovesUsed.push(@id)
-  end
-end
-
 #===============================================================================
 # (Shell Smash) edits #by low [dumb move tbdesu]
 #===============================================================================
@@ -594,10 +107,6 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
       @battle.pbDisplay(_INTL("{1}'s stats can't be changed further!", user.pbThis))
       return true
     end
-    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-      return true
-    end
     return false
   end
 
@@ -605,18 +114,17 @@ class Battle::Move::LowerUserDefSpDef1RaiseUserAtkSpAtkSpd2 < Battle::Move
     showAnim = true
     (@statDown.length / 2).times do |i|
       next if !user.pbCanLowerStatStage?(@statDown[i * 2], user, self)
-      if user.pbLowerStatStage(@statDown[i * 2], @statDown[(i * 2) + 1], user, showAnim)
+      if user.pbLowerStatStage(@statDown[i * 2], @statDown[(i * 2) + 1], user, showAnim, false, self)
         showAnim = false
       end
     end
     showAnim = true
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
+      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim, false, self)
         showAnim = false
       end
     end
-    user.SetupMovesUsed.push(@id)
   end
 end
 
@@ -642,120 +150,8 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
 
   def pbEffectAfterAllHits(user, target)
     return if target.damageState.unaffected
-    return if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
     user.pbLowerStatStage(:DEFENSE, 1, user) if user.pbCanLowerStatStage?(:DEFENSE, user, self)
-    user.pbRaiseStatStage(:SPEED, 1, user) if user.pbCanRaiseStatStage?(:SPEED, user, self)
-    user.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Two turn attack. Skips first turn, and increases the user's Special Attack,
-# Special Defense and Speed by 2 stages each in the second turn. (Geomancy)
-#===============================================================================
-class Battle::Move::TwoTurnAttackRaiseUserSpAtkSpDefSpd2 < Battle::Move::TwoTurnMove
-  def pbMoveFailed?(user, targets)
-    return false if user.effects[PBEffects::TwoTurnAttack]   # Charging turn
-    if !user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) &&
-       !user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self) &&
-       !user.pbCanRaiseStatStage?(:SPEED, user, self)
-      @battle.pbDisplay(_INTL("{1}'s stats won't go any higher!", user.pbThis))
-      return true
-    end
-    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-      return true
-    end
-    return false
-  end
-
-  def pbChargingTurnMessage(user, targets)
-    @battle.pbDisplay(_INTL("{1} is absorbing power!", user.pbThis))
-  end
-
-  def pbEffectGeneral(user)
-    return if !@damagingTurn
-    showAnim = true
-    [:SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED].each do |s|
-      next if !user.pbCanRaiseStatStage?(s, user, self)
-      if user.pbRaiseStatStage(s, 2, user, showAnim)
-        showAnim = false
-      end
-    end
-    user.SetupMovesUsed.push(@id)
-  end
-end
-
-#===============================================================================
-# Two turn attack. Ups user's Defense by 1 stage first turn, attacks second turn.
-# (Skull Bash)
-#===============================================================================
-class Battle::Move::TwoTurnAttackChargeRaiseUserDefense1 < Battle::Move::TwoTurnMove
-  def pbChargingTurnMessage(user, targets)
-    @battle.pbDisplay(_INTL("{1} tucked in its head!", user.pbThis))
-  end
-
-  def pbChargingTurnEffect(user, target)
-    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
-      user.pbRaiseStatStage(:DEFENSE, 1, user)
-      user.SetupMovesUsed.push(@id)
-    end
-  end
-end
-
-#===============================================================================
-# Two-turn attack. On the first turn, increases the user's Special Attack by 1
-# stage. On the second turn, does damage. (Meteor Beam)
-#===============================================================================
-class Battle::Move::TwoTurnAttackChargeRaiseUserSpAtk1 < Battle::Move::TwoTurnMove
-  def pbChargingTurnMessage(user, targets)
-    @battle.pbDisplay(_INTL("{1} is overflowing with space power!", user.pbThis))
-  end
-
-  def pbChargingTurnEffect(user, target)
-    if user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
-      user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
-      user.SetupMovesUsed.push(@id)
-    end
-  end
-end
-
-#===============================================================================
-# Increases the user's Defense and Special Defense by 1 stage each. Ups the
-# user's stockpile by 1 (max. 3). (Stockpile)
-#===============================================================================
-class Battle::Move::UserAddStockpileRaiseDefSpDef1 < Battle::Move
-  def canSnatch?; return true; end
-
-  def pbMoveFailed?(user, targets)
-    if user.effects[PBEffects::Stockpile] >= 3
-      @battle.pbDisplay(_INTL("{1} can't stockpile any more!", user.pbThis))
-      return true
-    end
-    return false
-  end
-
-  def pbEffectGeneral(user)
-    user.effects[PBEffects::Stockpile] += 1
-    @battle.pbDisplay(_INTL("{1} stockpiled {2}!",
-                            user.pbThis, user.effects[PBEffects::Stockpile]))
-    showAnim = true
-    didsomething = false
-    if user.pbCanRaiseStatStage?(:DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
-      if user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
-        user.effects[PBEffects::StockpileDef] += 1
-        showAnim = false
-        didsomething = true
-      end
-    end
-    if user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self) && (!user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos"))
-      if user.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
-        user.effects[PBEffects::StockpileSpDef] += 1
-        didsomething = true
-      end
-    end
-    user.SetupMovesUsed.push(@id) if didsomething
-    user.SetupMovesUsed |= []
+    user.pbRaiseStatStage(:SPEED, 1, user, true, false, self) if user.pbCanRaiseStatStage?(:SPEED, user, self)
   end
 end
 
@@ -784,10 +180,6 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    if user.SetupMovesUsed.include?(@id) && $player.difficulty_mode?("chaos")
-      @battle.pbDisplay(_INTL("But it failed! {1} has already used {2}!", user.pbThis, GameData::Move.get(@id).name))
-      return true
-    end
     return false
   end
 
@@ -807,12 +199,11 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
     end
     showAnim = true
     if user.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if user.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
+      showAnim = false if user.pbRaiseStatStage(:ATTACK, 1, user, showAnim, false, self)
     end
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
+      user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim, false, self)
     end
-    user.SetupMovesUsed.push(@id)
   end
 
   def pbEffectAgainstTarget(user, target)

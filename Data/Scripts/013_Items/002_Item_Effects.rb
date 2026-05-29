@@ -390,7 +390,7 @@ ItemHandlers::UseOnPokemon.add(:POTION, proc { |item, qty, pkmn, scene|
   next pbHPItem(pkmn, 20, scene)
 })
 
-ItemHandlers::UseOnPokemon.copy(:POTION, :BERRYJUICE, :SWEETHEART)
+ItemHandlers::UseOnPokemon.copy(:POTION, :BERRYJUICE, :SWEETHEART, :MELOLADOCONE)
 ItemHandlers::UseOnPokemon.copy(:POTION, :RAGECANDYBAR) if !Settings::RAGE_CANDY_BAR_CURES_STATUS_PROBLEMS
 
 ItemHandlers::UseOnPokemon.add(:SUPERPOTION, proc { |item, qty, pkmn, scene|
@@ -1453,24 +1453,24 @@ ItemHandlers::UseOnPokemon.add(:REINSOFUNITYUSED, proc { |item, qty, pkmn, scene
 
 # DDT Spray #by low
 ItemHandlers::UseFromBag.add(:DDTSPRAY, proc { |item|
-	commands = ["DDT Spray", "Infinite Repel", "Go Back"]
+	commands = ["Infinite Repel", "DDT Spray", "Go Back"]
 	Kernel.pbMessage(_INTL("What settings of the DDT Spray would you like to change?"))
 	cmd = Kernel.pbShowCommands(nil, commands, 0)
 	case cmd
 	when 0
-		$PokemonGlobal.ddtspray = !$PokemonGlobal.ddtspray
-		if $PokemonGlobal.ddtspray
-			pbMessage(_INTL("DDT Repel will prevent wild Pokémon that the player has already caught from appearing."))
-		else
-			pbMessage(_INTL("DDT Repel OFF."))
-		end
-	when 1
 		if $PokemonGlobal.repel == 0
 			$PokemonGlobal.repel = 100000000000 # so lazy i can feel my inner yandev showing
 			pbMessage(_INTL("Almost-Infinite Repel ON."))
 		else
 			$PokemonGlobal.repel = 0
 			pbMessage(_INTL("Almost-Infinite Repel OFF."))
+		end
+	when 1
+		$PokemonGlobal.ddtspray = !$PokemonGlobal.ddtspray
+		if $PokemonGlobal.ddtspray
+			pbMessage(_INTL("DDT Repel will prevent wild Pokémon that the player has already caught from appearing."))
+		else
+			pbMessage(_INTL("DDT Repel OFF."))
 		end
 	when 2
 		next 0
@@ -1478,24 +1478,24 @@ ItemHandlers::UseFromBag.add(:DDTSPRAY, proc { |item|
 })
 
 ItemHandlers::UseInField.add(:DDTSPRAY,proc { |item|
-	commands = ["DDT Spray", "Infinite Repel", "Lure", "Go Back"]
+	commands = ["Infinite Repel", "DDT Spray", "Lure", "Go Back"]
 	Kernel.pbMessage(_INTL("What settings of the DDT Spray would you like to change?"))
 	cmd = Kernel.pbShowCommands(nil, commands, 0)
 	case cmd
 	when 0
-		$PokemonGlobal.ddtspray = !$PokemonGlobal.ddtspray
-		if $PokemonGlobal.ddtspray
-			pbMessage(_INTL("DDT Repel will prevent wild Pokémon that the player has already caught from appearing."))
-		else
-			pbMessage(_INTL("DDT Repel OFF."))
-		end
-	when 1
 		if $PokemonGlobal.repel == 0
 			$PokemonGlobal.repel = 100000000000 # so lazy i can feel my inner yandev showing
 			pbMessage(_INTL("Almost-Infinite Repel ON."))
 		else
 			$PokemonGlobal.repel = 0
 			pbMessage(_INTL("Almost-Infinite Repel OFF."))
+		end
+	when 1
+		$PokemonGlobal.ddtspray = !$PokemonGlobal.ddtspray
+		if $PokemonGlobal.ddtspray
+			pbMessage(_INTL("DDT Repel will prevent wild Pokémon that the player has already caught from appearing."))
+		else
+			pbMessage(_INTL("DDT Repel OFF."))
 		end
 	when 2
 		pbSweetScent

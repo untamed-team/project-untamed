@@ -473,9 +473,11 @@ class Battle
                                     @opponent[0].full_name, @opponent[1].full_name, @opponent[2].full_name))
             end
           end
+          pbLoseMoney unless $player.difficulty_mode?("chaos")
+        else
+          # Lose money from losing a battle
+          pbLoseMoney
         end
-        # Lose money from losing a battle
-        pbLoseMoney
         pbDisplayPaused(_INTL("You blacked out!")) if !@canLose
       elsif @decision == 2   # Lost in a Battle Frontier battle
         if @opponent

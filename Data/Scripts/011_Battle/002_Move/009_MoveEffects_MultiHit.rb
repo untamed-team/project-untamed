@@ -151,7 +151,7 @@ class Battle::Move::HitTwoToFiveTimesRaiseUserSpd1LowerUserDef1 < Battle::Move
       user.pbLowerStatStage(:DEFENSE, 1, user)
     end
     if user.pbCanRaiseStatStage?(:SPEED, user, self)
-      user.pbRaiseStatStage(:SPEED, 1, user)
+      user.pbRaiseStatStage(:SPEED, 1, user, true, false, self)
     end
   end
 end
@@ -311,7 +311,7 @@ class Battle::Move::TwoTurnAttackRaiseUserSpAtkSpDefSpd2 < Battle::Move::TwoTurn
     showAnim = true
     [:SPECIAL_ATTACK, :SPECIAL_DEFENSE, :SPEED].each do |s|
       next if !user.pbCanRaiseStatStage?(s, user, self)
-      if user.pbRaiseStatStage(s, 2, user, showAnim)
+      if user.pbRaiseStatStage(s, 2, user, showAnim, false, self)
         showAnim = false
       end
     end
@@ -329,7 +329,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserDefense1 < Battle::Move::TwoTurn
 
   def pbChargingTurnEffect(user, target)
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      user.pbRaiseStatStage(:DEFENSE, 1, user)
+      user.pbRaiseStatStage(:DEFENSE, 1, user, true, false, self)
     end
   end
 end
@@ -345,7 +345,7 @@ class Battle::Move::TwoTurnAttackChargeRaiseUserSpAtk1 < Battle::Move::TwoTurnMo
 
   def pbChargingTurnEffect(user, target)
     if user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user, self)
-      user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
+      user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, true, false, self)
     end
   end
 end
@@ -520,7 +520,7 @@ end
 class Battle::Move::MultiTurnAttackConfuseUserAtEnd < Battle::Move
   def pbEffectAfterAllHits(user, target)
     if !target.damageState.unaffected && user.effects[PBEffects::Outrage] == 0
-      user.effects[PBEffects::Outrage] = 2 + @battle.pbRandom(2)
+      user.effects[PBEffects::Outrage] = 4#2 + @battle.pbRandom(2)
       user.currentMove = @id
     end
     if user.effects[PBEffects::Outrage] > 0

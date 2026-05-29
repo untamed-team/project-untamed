@@ -109,10 +109,15 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # Draws images.
     typenumber = GameData::Type.get(type).icon_position
+    categ = move.category
+    if $game_switches[OLDSCHOOLBATTLE] && move.damagingMove?
+      categ = 0 if GameData::Type.get(move.type).physical?
+      categ = 1 if GameData::Type.get(move.type).special?
+    end
     imagePos = [
       [@path + "move_info_bg",       xpos, ypos],
       ["Graphics/Pictures/types",    xpos + 272, ypos + 4, 0, typenumber * 28, 64, 28],
-      ["Graphics/Pictures/category", xpos + 336, ypos + 4, 0, move.category * 28, 64, 28]
+      ["Graphics/Pictures/category", xpos + 336, ypos + 4, 0, categ * 28, 64, 28]
     ]
     imagePos += pbDrawMoveFlagIcons(xpos, ypos, move)
     imagePos += pbDrawTypeEffectiveness(xpos, ypos, move, type)
@@ -257,14 +262,23 @@ class Battle::Scene
       if b && !b.fainted? && move.category < 2
         poke = b.displayPokemon
         unknown_species = ($player.pokedex.battled_count(poke.species) == 0 && !$player.pokedex.owned?(poke.species))
-        unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES
+        unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES || $player.difficulty_mode?("hard")
         unknown_species = true if b.celestial?
         value = Effectiveness.calculate(type, poke.types[0], poke.types[1])
-        if unknown_species                             then effct = 0
-        elsif Effectiveness.ineffective?(value)        then effct = 1
-        elsif Effectiveness.not_very_effective?(value) then effct = 2
-        elsif Effectiveness.super_effective?(value)    then effct = 3
-        else effct = 4
+        if @battle.inverseBattle #by low
+          if unknown_species                             then effct = 0
+          elsif Effectiveness.ineffective?(value)        then effct = 3
+          elsif Effectiveness.not_very_effective?(value) then effct = 3
+          elsif Effectiveness.super_effective?(value)    then effct = 2
+          else effct = 4
+          end
+        else
+          if unknown_species                             then effct = 0
+          elsif Effectiveness.ineffective?(value)        then effct = 1
+          elsif Effectiveness.not_very_effective?(value) then effct = 2
+          elsif Effectiveness.super_effective?(value)    then effct = 3
+          else effct = 4
+          end
         end
         images.push([@path + "move_effectiveness", Graphics.width - 64 - (idx * 64), ypos - 76, effct * 64, 0, 64, 76])
         @sprites["battler_icon#{b.index}"].visible = true
@@ -729,22 +743,25 @@ class Battle::Scene
     #---------------------------------------------------------------------------
     # Battler info for player-owned Pokemon.
     if battler.pbOwnedByPlayer?
-      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
       textPos.push(
         [_INTL("Item"), xpos + 272, ypos + 68, 2, BASE_LIGHT, SHADOW_LIGHT],
         [_INTL("{1}", battler.itemName), xpos + 375, ypos + 68, 2, BASE_DARK, SHADOW_DARK],
       )
+    end
+      imagePos.push([@path + "battle_info_panel", panelX, 89, 0, 0, 218, 24])
       imagePos.push([@path + "battler_owner", xpos + 36, iconY + 11])
       textPos.push([sprintf("%d/%d", battler.hp, battler.totalhp), iconX + 73, iconY + 13, 2, BASE_LIGHT, SHADOW_LIGHT])
-    end
     if battler.hasAbilityMutation?
+      cord = 0
+      textPos.push([_INTL("Abil."), xpos + 272, ypos + (44 + (cord * 24)), 2, BASE_LIGHT, SHADOW_LIGHT])
       for i in 0..battler.abilityMutationList.length
         next if battler.abilityMutationList[i].nil?
-        imagePos.push([@path + "battle_info_panel", panelX, (65 + (i * 24)), 0, 0, 218, 24])
+        next if battler.abilityMutationList[i] == :TRACE && !battler.effects[PBEffects::Trace]
+        imagePos.push([@path + "battle_info_panel", panelX, (65 + (cord * 24)), 0, 0, 218, 24])
         textPos.push(
-          [_INTL("Abil."), xpos + 272, ypos + (44 + (i * 24)), 2, BASE_LIGHT, SHADOW_LIGHT],
-          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (i * 24)), 2, BASE_DARK, SHADOW_DARK]
+          [_INTL("{1}", GameData::Ability.get(battler.abilityMutationList[i]).name), xpos + 375, ypos + (44 + (cord * 24)), 2, BASE_DARK, SHADOW_DARK]
         )
+        cord += 1
       end
     else
       imagePos.push([@path + "battle_info_panel", panelX, 65, 0, 0, 218, 24])
@@ -829,7 +846,7 @@ class Battle::Scene
       $player.pokedex.owned?(poke.species) ||
       $player.pokedex.battled_count(poke.species) > 0
     )
-    unknown_species = false
+    unknown_species = false if Settings::ALWAYS_DISPLAY_TYPES || $player.difficulty_mode?("hard")
     # Displays the "???" type on newly encountered species, or battlers with no typing.
     displayTypes = [:QMARKS] if unknown_species || displayTypes.empty?
 		case displayTypes.length #triple type UI #by low
@@ -880,16 +897,140 @@ class Battle::Scene
             end
           end
         end
-        addText.push([stat[1], xpos + 17, ypos + 139 + (i * 24), 0, BASE_LIGHT, color])
-        stage = battler.stages[stat[0]]
+        addText.push([stat[1], xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
+        stat = pbRoughDisplayStat(battler, stat[0])
+        addText.push([stat.to_s, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
       else
-        addText.push([stat, xpos + 17, ypos + 139 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
-        stage = [battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost], 4].min
+        addText.push([stat, xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+        stage = battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost]
+        stage += 1 if battler.hasActiveAbility?(:SUPERLUCK)
+        stage += 1 if battler.hasActiveItem?(:SCOPELENS)
+        stage = [stage, 4].min
+        arrow = (stage > 0) ? 0 : 1
+        stage.abs.times { |t| images.push([@path + "battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
       end
-      arrow = (stage > 0) ? 0 : 1
-      stage.abs.times { |t| images.push([@path + "battler_stats", xpos + 105 + (t * 18), ypos + 139 + (i * 24), arrow * 18, 0, 18, 18]) }
+    end
+    cord = 0
+    battler.eachMove do |m|
+      next if !@battle.moveRevealed?(battler, m.id) && !battler.pbOwnedByPlayer?
+      break if cord > 3
+      move_name = m.name
+      move_name = "HidPwr #{GameData::Type.get(battler.hptype).name}" if m.function == "TypeDependsOnUserIVs"
+      addText.push([move_name, xpos + 103, ypos + 140 + (cord * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
+      cord += 1
     end
     return images, addText
+  end
+
+  def pbRoughDisplayStat(battler, stat)
+    stageMul, stageDiv = @battle.pbGetStatMath(stat)
+    if [:ACCURACY, :EVASION].include?(stat)
+      stage = battler.stages[stat]
+      if stat == :ACCURACY && stage < 0
+        if $player.difficulty_mode?("hard")
+          stage = 0
+        else
+          stage += 1 if !battler.pbOwnedByPlayer?
+        end
+      end
+      stage = [stage, 0].min if stat == :EVASION
+      stage += 6
+      value = (100.0 * stageMul[stage] / stageDiv[stage]).floor
+      if stat == :ACCURACY
+        value *= 1.3 if battler.hasActiveAbility?(:COMPOUNDEYES)
+        value *= 1.1 if battler.hasActiveItem?(:WIDELENS)
+        value *= 0.8 if battler.hasActiveAbility?(:HUSTLE)
+      end
+      value = value.round
+      return value
+    end
+    stage = battler.stages[stat] + 6
+    value = 0
+    case stat
+    when :ATTACK
+      value = battler.attack
+      value *= 1.5 if battler.hasActiveAbility?(:HUSTLE)
+      value *= 1.5 if battler.hasActiveAbility?(:TOXICBOOST) && battler.poisoned?
+      value *= 1.5 if battler.hasActiveAbility?(:GUTS) && battler.pbHasAnyStatus?
+      value *= 2.0 if battler.hasActiveAbility?([:HUGEPOWER, :PUREPOWER])
+      if battler.effects[PBEffects::ChoiceBand]
+        value *= 1.5 if battler.hasActiveItem?(:CHOICEBAND)
+        value *= 1.5 if battler.hasActiveAbility?(:GORILLATACTICS)
+      end
+      value *= 0.5 if battler.hasActiveAbility?(:DEFEATIST) && battler.hp <= battler.totalhp / 2
+      value *= (2 / 3.0) if battler.hasActiveAbility?(:SLOWSTART) && battler.slowstart_count > 0
+      if [:Sun, :HarshSun].include?(battler.effectiveWeather)
+        if battler.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERGIFT) } ||
+           battler.hasActiveAbility?(:FLOWERGIFT)
+          value *= 1.5
+        end
+      end
+      if $player.difficulty_mode?("chaos")
+        if battler.hasActiveAbility?(:MOXIE)
+          ded = battler.pbOpposingSide.effects[PBEffects::FaintedMons]
+          met = [(1 + (0.05 * ded)), 1.3].min
+          value *= met
+        end
+      end
+      if battler.allAllies.any? { |b| b.hasActiveAbility?(:CARPENTER) } &&
+        (battler.pbHasType?(:GRASS) || battler.pbHasType?(:ROCK) || battler.pbHasType?(:STEEL))
+        value *= 1.3
+      end
+    when :DEFENSE
+      value = battler.defense
+      value *= 2.0 if battler.hasActiveAbility?(:FURCOAT)
+      value *= 1.5 if battler.hasActiveAbility?(:GRASSPELT) && battler.battle.field.terrain == :Grassy
+      value *= 1.5 if battler.hasActiveAbility?(:MARVELSCALE) && battler.pbHasAnyStatus?
+      value *= 1.3 if battler.hasActiveAbility?(:SANDVEIL) && battler.effectiveWeather == :Sandstorm
+      value *= 1.5 if battler.hasActiveItem?(:MELEEVEST)
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
+        value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
+      end
+    when :SPECIAL_ATTACK
+      value = battler.spatk
+      if battler.hasActiveAbility?([:MINUS, :PLUS])
+        if battler.allAllies.any? { |b| b.hasActiveAbility?([:PLUS, :MINUS]) }
+          value *= 1.5
+        elsif battler.hasAbilityMutation?
+          value *= 1.5 if battler.hasActiveAbility?(:MINUS) && battler.hasActiveAbility?(:PLUS)
+        end
+      end
+      value *= 1.5 if battler.hasActiveItem?(:CHOICESPECS) && battler.effects[PBEffects::ChoiceBand]
+      value *= 1.5 if battler.hasActiveAbility?(:SOLARPOWER) && [:Sun, :HarshSun].include?(battler.effectiveWeather)
+      if $player.difficulty_mode?("chaos")
+        if battler.hasActiveAbility?(:SOULHEART)
+          ded = battler.pbOpposingSide.effects[PBEffects::FaintedMons]
+          met = [(1 + (0.05 * ded)), 1.3].min
+          value *= met
+        end
+      end
+      if battler.allAllies.any? { |b| b.hasActiveAbility?(:CARPENTER) } &&
+        (battler.pbHasType?(:GRASS) || battler.pbHasType?(:ROCK) || battler.pbHasType?(:STEEL))
+        value *= 1.3
+      end
+    when :SPECIAL_DEFENSE
+      value = battler.spdef
+      value *= 2.0 if battler.hasActiveAbility?(:ICESCALES)
+      value *= 1.3 if battler.hasActiveAbility?(:SNOWCLOAK) && battler.effectiveWeather == :Hail
+      value *= 1.5 if battler.pbHasType?(:ROCK) && battler.effectiveWeather == :Sandstorm
+      value *= 1.5 if battler.hasActiveItem?(:ASSAULTVEST)
+      if battler.hasActiveItem?(:EVIOLITE) && battler.pokemon.species_data.get_evolutions(true).length > 0
+        value = (battler.hp >= (battler.totalhp/2)) ? (value * 1.5) : (value * 1.2)
+      end
+      if [:Sun, :HarshSun].include?(battler.effectiveWeather)
+        if battler.allAllies.any? { |b| b.hasActiveAbility?(:FLOWERGIFT) } ||
+           battler.hasActiveAbility?(:FLOWERGIFT)
+          value *= 1.5
+        end
+      end
+    when :SPEED
+      value = battler.pbSpeed
+    end
+    #value *= 0.9 if battler.pokemon.natureBoostAI
+    value = value.round
+    value = [[value, 999].min, 1].max
+    return value if stat == :SPEED
+    return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
   
   
@@ -921,7 +1062,10 @@ class Battle::Scene
       PBEffects::Tailwind        => [_INTL("Tailwind"),     4],
       PBEffects::Rainbow         => [_INTL("Rainbow"),      4],
       PBEffects::SeaOfFire       => [_INTL("Sea of Fire"),  4],
-      PBEffects::Swamp           => [_INTL("Swamp"),        4]
+      PBEffects::Swamp           => [_INTL("Swamp"),        4],
+      PBEffects::Spikes          => [_INTL("Spikes"),       3],
+      PBEffects::ToxicSpikes     => [_INTL("Toxic Spikes"), 2],
+      PBEffects::StickyWeb       => [_INTL("Sticky Web"),   3]
     }
     # Effects that apply to an individual battler.
     battler_effects = {
@@ -933,26 +1077,12 @@ class Battle::Scene
       PBEffects::Taunt           => [_INTL("Taunt"),        4],
       PBEffects::PerishSong      => [_INTL("Perish Song"),  3],
       PBEffects::Telekinesis     => [_INTL("Telekinesis"),  3],
-      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2]
+      PBEffects::ThroatChop      => [_INTL("Throat Chop"),  2],
+      PBEffects::SuperEffEye     => [_INTL("Miracle Eye"),  2]
     }
     if battler.effects[PBEffects::Trapping] > 0
       moveName = GameData::Move.get(battler.effects[PBEffects::TrappingMove]).name
       battler_effects[PBEffects::Trapping]  = [_INTL("{1}", moveName),   5]
-    end
-    # Adds plugin-specific effects.
-    if PluginManager.installed?("ZUD Mechanics")
-      team_effects[PBEffects::VineLash]     = [_INTL("G-Max Vine Lash"), 4]
-      team_effects[PBEffects::Wildfire]     = [_INTL("G-Max Wildfire"),  4]
-      team_effects[PBEffects::Cannonade]    = [_INTL("G-Max Cannonade"), 4]
-      team_effects[PBEffects::Volcalith]    = [_INTL("G-Max Volcalith"), 4]
-      if battler.effects[PBEffects::Dynamax] > 0
-        count = (battler.effects[PBEffects::MaxRaidBoss]) ? "---" : "#{battler.effects[PBEffects::Dynamax]}/#{Settings::DYNAMAX_TURNS}"
-        effects.push([_INTL("Dynamax"), count])
-      end
-    end
-    if PluginManager.installed?("Focus Meter System")
-      team_effects[PBEffects::FocusedGuard] = [_INTL("Focused Guard"),   4]
-      battler_effects[PBEffects::FocusLock] = [_INTL("Focus Lock"),      4]
     end
     # Weather
     if @battle.field.weather != :None
@@ -983,13 +1113,15 @@ class Battle::Scene
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
+    effects.push([_INTL("Stealth Rock"), "---"]) if battler.pbOwnSide.effects[PBEffects::StealthRock]
+    effects.push([_INTL("Stat Drop Immunity"), "---"]) if battler.pbOwnSide.effects[PBEffects::StatDropImmunity]
     battler_effects.each do |key, value|
       next if battler.effects[key] == 0
       count = battler.effects[key]
       count = (count < 100) ? "#{count}/#{value[1]}" : "---"
       effects.push([value[0], count])
     end
-    effects.push(["Virus Inject", "---"]) if battler.effects[PBEffects::BoomInstalled]
+    effects.push([_INTL("Virus Inject"), "---"]) if battler.effects[PBEffects::BoomInstalled]
     # Draws panels and text for all relevant battle effects affecting the battler.
     effects.each_with_index do |effect, i|
       break if i == 8

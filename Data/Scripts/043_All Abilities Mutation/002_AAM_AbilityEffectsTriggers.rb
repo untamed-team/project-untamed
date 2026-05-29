@@ -300,7 +300,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTarget(ability, user, target, move, mults, base_damage, type, ai_array = [], aiweather = nil)
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTarget.trigger(i, user, target, move, mults, base_damage, type, aiweather)
@@ -308,7 +308,7 @@ module Battle::AbilityEffects
   end
 
   def self.triggerDamageCalcFromTargetNonIgnorable(ability, user, target, move, mults, base_damage, type, ai_array = [])
-    for i in user.abilityMutationList
+    for i in target.abilityMutationList
       next if ai_array.include?(i)
       $aamName=GameData::Ability.get(i).name
       DamageCalcFromTargetNonIgnorable.trigger(i, user, target, move, mults, base_damage, type)
@@ -660,8 +660,7 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
 Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
   proc { |ability, battler|
     next if battler.status != :POISON
-    next if battler.abilityMutationList.include?(:TOXICBOOST)
-    next if battler.abilityMutationList.include?(:POISONHEAL)
+    next if battler.hasActiveAbility?([:TOXICBOOST, :POISONHEAL])
     battler.battle.pbShowAbilitySplash(battler)
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH
@@ -675,9 +674,26 @@ Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
 Battle::AbilityEffects::OnSwitchOut.add(:IMMUNITY,
   proc { |ability, battler, endOfBattle|
     next if battler.status != :POISON
-    next if battler.abilityMutationList.include?(:TOXICBOOST)
-    next if battler.abilityMutationList.include?(:POISONHEAL)
+    next if battler.hasActiveAbility?([:TOXICBOOST, :POISONHEAL])
     PBDebug.log("[Ability triggered] #{battler.pbThis}'s #{battler.abilityName}")
     battler.status = :NONE
+  }
+)
+
+Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
+  proc { |ability, user, target, move, battle|
+    next if !move.physicalMove?
+    next if !target.pbCanRaiseStatBySource?(:SPEED, :WEAKARMOR, target)
+    clearly = false
+    if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY])
+      clearly = true
+    else
+      next if !target.pbCanLowerStatStage?(:DEFENSE, target)
+    end
+    battle.pbShowAbilitySplash(target)
+    target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false) if !clearly
+    target.pbRaiseStatStageByAbility(:SPEED,
+       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false, :WEAKARMOR)
+    battle.pbHideAbilitySplash(target)
   }
 )

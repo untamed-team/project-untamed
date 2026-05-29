@@ -1,11 +1,11 @@
-class Battle::AI
+class Battle::AI # mostly made obsolete by Consistent_AI
   #=============================================================================
   # Main move-choosing method (moves with higher scores are more likely to be
   # chosen)
   #=============================================================================
-  def pbChooseMoves(idxBattler)
+  #def pbChooseMoves(idxBattler)
     # not used, check Consistent_AI
-  end
+  #end
 
   #=============================================================================
   # Get scores for the given move against each possible target
@@ -15,98 +15,29 @@ class Battle::AI
     move = _user.moves[idxMove]
     if ["SwitchOutTargetStatusMove", "SwitchOutUserStatusMove", 
         "SwitchOutTargetDamagingMove", "FleeFromBattle"].include?(move.function)
-      score = pbGetMoveScore(move, _user, _user, 100)
-      choices.push([idxMove, score, -1]) if score > 0
+      choices.push([idxMove, 999, -1])
     else
       choices.push([idxMove, 100, -1])   # Move index, score, target
     end
   end
 
-  # it seems the AI isnt fooled by illusion, thats pretty neat actually
   # Trainer Pokémon calculate how much they want to use each of their moves.
-  def pbRegisterMoveTrainer(user, idxMove, choices, skill)
-    move = user.moves[idxMove]
-    target_data = move.pbTarget(user)
-       # setup moves, screens/tailwi/etc, aromathe/heal bell, coaching, perish song, hazards
-    if [:User, :UserSide, :UserAndAllies, :AllAllies, :AllBattlers, :FoeSide].include?(target_data.id)
-      # If move does not have a defined target the AI will calculate
-      # a average of every enemy currently active
-      oppcounter = @battle.allBattlers.count { |b| user.opposes?(b) }
-      if oppcounter == 1
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          choices.push([idxMove, score, -1, move.name]) if score > 0
-        end
-      else
-        totalScore = 0
-        @battle.allBattlers.each do |b|
-          next if !user.opposes?(b)
-          score = pbGetMoveScore(move, user, b, skill)
-          totalScore += (score * (1 / oppcounter))
-        end
-        choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
-      end
-    elsif target_data.num_targets == 0
-      # If move affects multiple Pokémon and the AI calculates an overall
-      # score at once instead of per target
-      score = pbGetMoveScore(move, user, user, skill)
-      choices.push([idxMove, score, -1, move.name]) if score > 0
-    elsif target_data.num_targets > 1
-      # If move affects multiple battlers and you don't choose a particular one
-      totalScore = 0
-      @battle.allBattlers.each do |b|
-        next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-        score = pbGetMoveScore(move, user, b, skill)
-        totalScore += ((user.opposes?(b)) ? score : -score)
-      end
-      choices.push([idxMove, totalScore, -1, move.name]) if totalScore > 0
-    else
-      # If move affects one battler and you have to choose which one
-      scoresAndTargets = []
-      @battle.allBattlers.each do |b|
-        next if !@battle.pbMoveCanTarget?(user.index, b.index, target_data)
-        next if (target_data.targets_foe && !$movesToTargetAllies.include?(move.function)) && !user.opposes?(b)
-        if !user.opposes?(b) # is ally
-          # wip, allows for the AI to target allies if its good to do so (polen puff/swag/etc)
-          score = pbGetMoveScore(move, user, b, 100)
-          score *= -1
-          echoln "\ntargeting ally #{b.name} with #{move.name} for the score of #{score}" if $AIGENERALLOG
-          scoresAndTargets.push([score, b.index])
-        else
-          # switch abuse prevention #by low
-          #echoln "target's side SwitchAbuse counter: #{b.pbOwnSide.effects[PBEffects::SwitchAbuse]}"
-          if b.battle.choices[b.index][0] == :SwitchOut && b.pbOwnSide.effects[PBEffects::SwitchAbuse]>1 && 
-             move.function != "PursueSwitchingFoe"
-            echoln "target will switch to #{@battle.pbParty(b.index)[b.battle.choices[b.index][1]].name}" if $AIGENERALLOG
-            realTarget = @battle.pbMakeFakeBattler(@battle.pbParty(b.index)[b.battle.choices[b.index][1]],false,b)
-          else
-            realTarget = b
-          end
-          score = pbGetMoveScore(move, user, realTarget, 100)
-          scoresAndTargets.push([score, realTarget.index]) if score > 0
-        end
-      end
-      if scoresAndTargets.length > 0
-        # Get the one best target for the move
-        scoresAndTargets.sort! { |a, b| b[0] <=> a[0] }
-        choices.push([idxMove, scoresAndTargets[0][0], scoresAndTargets[0][1], move.name])
-      end
-    end
-  end
+  #def pbRegisterMoveTrainer(user, idxMove, choices, skill)
+    # not used, check Consistent_AI
+  #end
 
   #=============================================================================
   # Get a score for the given move being used against the given target
   #=============================================================================
-  def pbGetMoveScore(move, user, target, skill = 100)
+  #def pbGetMoveScore(move, user, target, skill = 100)
     # not used, check Consistent_AI
-  end
+  #end
 
   #=============================================================================
   # Add to a move's score based on how much damage it will deal (as a percentage
   # of the target's current HP)
   #=============================================================================
-  def pbGetMoveScoreDamage(score, move, user, target, skill)
+  #def pbGetMoveScoreDamage(score, move, user, target, skill)
     # not used, check Consistent_AI
-  end
+  #end
 end

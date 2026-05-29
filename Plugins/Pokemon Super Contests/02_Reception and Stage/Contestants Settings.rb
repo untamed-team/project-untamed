@@ -77,10 +77,6 @@ DressupPoints: 5, ConditionPoints: 8},
 PkmnName: "Rickard", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 7, ConditionPoints: 12},
 
-{TrainerName: "Vivian", TrainerCharacter: "NPC 14", PkmnSpecies: :EKANS,
-PkmnName: "Snake", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
-DressupPoints: 4, ConditionPoints: 18},
-
 {TrainerName: "Leonard", TrainerCharacter: "NPC 25", PkmnSpecies: :EEVEE,
 PkmnName: "Sweetie", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 2, ConditionPoints: 19},
@@ -90,14 +86,6 @@ CONTESTANTS_GREAT = [
 {TrainerName: "Sam", TrainerCharacter: "NPC 26", PkmnSpecies: :M_ROSELIA,
 PkmnName: "Butter", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 20, ConditionPoints: 150},
-
-{TrainerName: "Luis", TrainerCharacter: "NPC 02", PkmnSpecies: :PORYGON,
-PkmnName: "Eugene", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
-DressupPoints: 16, ConditionPoints: 128},
-
-{TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :ARBOK,
-PkmnName: "Kobra", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
-DressupPoints: 12, ConditionPoints: 114},
 
 {TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :UMBREON,
 PkmnName: "Lord Dark", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
@@ -154,7 +142,7 @@ PkmnName: "Rickard", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 18, ConditionPoints: 270},
 
 {TrainerName: "Jillian", TrainerCharacter: "NPC 11", PkmnSpecies: :EEVEE,
-PkmnName: "Sandwich", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
+PkmnName: "Snadwich", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 15, ConditionPoints: 300},
 ]
 
@@ -170,10 +158,6 @@ DressupPoints: 32, ConditionPoints: 580},
 {TrainerName: "Trevor", TrainerCharacter: "NPC 03", PkmnSpecies: :MILOTIC,
 PkmnName: "Milo", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
 DressupPoints: 24, ConditionPoints: 596},
-
-{TrainerName: "Maxine", TrainerCharacter: "NPC 04", PkmnSpecies: :TROPIUS,
-PkmnName: "Mr. Flowy", PkmnGender: 0, PkmnForm: 0, PkmnShiny: false,
-DressupPoints: 20, ConditionPoints: 540},
 
 {TrainerName: "Dalid", TrainerCharacter: "NPC 05", PkmnSpecies: :M_ROSERADE,
 PkmnName: "Skully", PkmnGender: 1, PkmnForm: 0, PkmnShiny: false,

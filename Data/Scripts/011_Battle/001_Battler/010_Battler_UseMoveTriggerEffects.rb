@@ -43,12 +43,16 @@ class Battle::Battler
         user.pbItemHPHealCheck if user.hp < oldHP
       end
     end
+    if target.effects[PBEffects::SuperEffEye] > 0 && !target.fainted? && 
+       Effectiveness.super_effective?(target.damageState.typeMod)
+      target.effects[PBEffects::SuperEffEye] = 0
+    end
     if target.opposes?(user)
       # Rage
       if target.effects[PBEffects::Rage] && !target.fainted? &&
-         target.pbCanRaiseStatStage?(:ATTACK, target)
+         target.pbCanRaiseStatBySource?(:ATTACK, :RAGE, target)
         @battle.pbDisplay(_INTL("{1}'s rage is building!", target.pbThis))
-        target.pbRaiseStatStage(:ATTACK, 1, target)
+        target.pbRaiseStatStage(:ATTACK, 1, target, true, false, :RAGE)
       end
       # Beak Blast
       if target.effects[PBEffects::BeakBlast]

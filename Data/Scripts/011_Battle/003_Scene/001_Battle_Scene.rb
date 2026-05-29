@@ -373,6 +373,7 @@ class Battle::Scene
     pbBGMFade(1.0)
     pbFadeOutAndHide(@sprites)
     pbDisposeSprites
+    $game_switches[OLDSCHOOLBATTLE] = false #by low
   end
 
   #=============================================================================

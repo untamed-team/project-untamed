@@ -20,7 +20,7 @@ module Achievements
       "id"=>2,
       "name"=>"Gotta Catch 'Em All",
       "description"=>"Catch Pokémon.",
-      "goals"=>[100,250,500]
+      "goals"=>[10,20,30,50,75,100,125,150,175,200]
     },
     "WILD_ENCOUNTERS"=>{
       "id"=>3,

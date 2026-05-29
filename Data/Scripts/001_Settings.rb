@@ -37,7 +37,7 @@ module Settings
   # The odds of a newly generated Pokémon being shiny (out of 65536).
   #If MECHANICS_GENERATION >= 6, the chances are # out of 65536 OR # out of
   #65536. The : means OR
-  SHINY_POKEMON_CHANCE = 16
+  SHINY_POKEMON_CHANCE = 16 #4096
   # Whether super shininess is enabled (uses a different shiny animation).
   SUPER_SHINY          = false
   # The odds of a wild Pokémon/bred egg having Pokérus (out of 65536).
@@ -67,7 +67,7 @@ module Settings
   # Whether Pokémon in the Day Care gain Exp for each step the player takes.
   # This is true for the Day Care and false for the Pokémon Nursery, both of
   # which use the same code in Essentials.
-  DAY_CARE_POKEMON_GAIN_EXP_FROM_WALKING     = true#(MECHANICS_GENERATION <= 6)
+  DAY_CARE_POKEMON_GAIN_EXP_FROM_WALKING     = false#(MECHANICS_GENERATION <= 6)
   # Whether two Pokémon in the Day Care can learn egg moves from each other if
   # they are the same species.
   DAY_CARE_POKEMON_CAN_SHARE_EGG_MOVES       = true#(MECHANICS_GENERATION >= 8)
@@ -217,7 +217,6 @@ module Settings
   def self.pokedex_names
     return [
       [_INTL("Mazah Pokédex"), 0],
-      [_INTL("Johto Pokédex"), 1],
       _INTL("National Pokédex")
     ]
   end

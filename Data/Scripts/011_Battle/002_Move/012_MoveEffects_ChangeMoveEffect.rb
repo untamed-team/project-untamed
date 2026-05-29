@@ -55,7 +55,7 @@ end
 class Battle::Move::RandomlyDamageOrHealTarget < Battle::Move
   def pbOnStartUse(user, targets)
     baseDmg = [0, 20, 40, 60, 80, 100, 120]
-    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "enormous"]
+    prTrait = ["kind", "miniscule", "small", "medium", "big", "sizable", "gigantic"]
     r = case user.level
       when 0..16
         [
@@ -233,10 +233,10 @@ class Battle::Move::CurseTargetOrLowerUserSpd1RaiseUserAtkDef1 < Battle::Move
     end
     showAnim = true
     if user.pbCanRaiseStatStage?(:ATTACK, user, self)
-      showAnim = false if user.pbRaiseStatStage(:ATTACK, 1, user, showAnim)
+      showAnim = false if user.pbRaiseStatStage(:ATTACK, 1, user, showAnim, false, self)
     end
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
+      user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim, false, self)
     end
   end
 
@@ -580,13 +580,13 @@ class Battle::Move::UserAddStockpileRaiseDefSpDef1 < Battle::Move
                             user.pbThis, user.effects[PBEffects::Stockpile]))
     showAnim = true
     if user.pbCanRaiseStatStage?(:DEFENSE, user, self)
-      if user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim)
+      if user.pbRaiseStatStage(:DEFENSE, 1, user, showAnim, false, self)
         user.effects[PBEffects::StockpileDef] += 1
         showAnim = false
       end
     end
     if user.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, user, self)
-      if user.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim)
+      if user.pbRaiseStatStage(:SPECIAL_DEFENSE, 1, user, showAnim, false, self)
         user.effects[PBEffects::StockpileSpDef] += 1
       end
     end
@@ -1029,6 +1029,7 @@ class Battle::Move::UseRandomMove < Battle::Move
       @metronomeMove = move_data.id
       break
     end
+    @metronomeMove = :HARDDRIVECRASH if !@metronomeMove && !user.pbOwnedByPlayer?
     if !@metronomeMove
       @battle.pbDisplay(_INTL("But it failed!"))
       return true

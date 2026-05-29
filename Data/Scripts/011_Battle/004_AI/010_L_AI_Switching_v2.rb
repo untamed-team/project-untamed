@@ -52,8 +52,7 @@ class Battle::AI
           tickdamage=true if j.function=="SetTargetTypesToWater"
           tickdamage=true if j.function=="StartDamageTargetEachTurnIfTargetAsleep" && battler.pbHasMoveFunction?("SleepTarget", "SleepTargetIfUserDarkrai", "SleepTargetNextTurn") && b.pbCanSleep?(battler,false,j)
         end  
-        tempdam = pbRoughDamage(j, battler, b, 100, j.baseDamage)
-        tempdam = 0 if pbCheckMoveImmunity(1,j,battler,b,100)
+        tempdam = aiDamage(j, battler, b)
         maxdam=tempdam if tempdam>maxdam
       end 
       maxdampercent = maxdam *100.0 / b.hp
@@ -66,8 +65,8 @@ class Battle::AI
         mindamage=100 if ((maxspeed>aspeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
       end  
     end  
-    echoln("maxdam = #{maxdampercent}") if $AIGENERALLOG
-    echoln("mindam = #{mindamage}") if $AIGENERALLOG
+    #echoln("maxdam = #{maxdampercent}") if $AISWITCHLOG
+    #echoln("mindam = #{mindamage}") if $AISWITCHLOG
     if maxdampercent<mindamage && !tickdamage
       shouldSwitch = true 
       echo("Switching because of dealing little to no direct or indirect damage.\n") if $AIGENERALLOG
@@ -106,7 +105,10 @@ class Battle::AI
         scoreSum   = 0
         scoreCount = 0
         battler.allOpposing.each do |b|
+          backup = $AIGENERALLOG
+          $AIGENERALLOG = false
           scoreSum += pbGetMoveScore(battler.moves[idxEncoredMove], battler, b, skill)
+          $AIGENERALLOG = backup
           scoreCount += 1
         end
         if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
@@ -115,8 +117,7 @@ class Battle::AI
         end
       end
     end
-    if battler.effects[PBEffects::ChoiceBand] &&
-      battler.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+    if moveLocked(battler)
       if battler.lastMoveUsed && battler.pbHasMove?(battler.lastMoveUsed)
         choicedmove=nil
         for choice in battler.moves
@@ -126,7 +127,10 @@ class Battle::AI
         scoreSum   = 0
         scoreCount = 0
         battler.allOpposing.each do |b|
+          backup = $AIGENERALLOG
+          $AIGENERALLOG = false
           scoreSum += pbGetMoveScore(choicedmove, battler, b, skill)
+          $AIGENERALLOG = backup
           scoreCount += 1
         end
         if scoreCount > 0 && scoreSum / scoreCount <= 120 #&& pbAIRandom(100) < 80 # DemICE removing randomness
@@ -169,7 +173,10 @@ class Battle::AI
     end
     shouldSwitch = false if !canheswitch
     return false if !shouldSwitch
-    newindex=pbHardSwitchChooseNewEnemy(idxBattler,party,true) if shouldSwitch
+    if shouldSwitch
+      newindex=pbHardSwitchChooseNewEnemy(idxBattler,party,true)
+      preCalculateDamagesAI
+    end
     if newindex
       if newindex.is_a?(Array)
         swapper=newindex[0]
@@ -215,15 +222,18 @@ class Battle::AI
   #=============================================================================
   # Choose a replacement Pokémon
   #=============================================================================
-  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false)
+  def pbChooseBestNewEnemy(idxBattler, party, enemies, sack=false, activemon=-1, batonpasscheck=false, retvrnspeed=false)
     return -1 if !enemies || enemies.length == 0
+    currentBattler = @battle.battlers[idxBattler]
     best    = -1
     bestSum = 0
+    speedsarray = []
     enemies.each do |i|
       pokmon = @battle.pbMakeFakeBattler(party[i],batonpasscheck,@battle.battlers[idxBattler]) 
-      if $AIGENERALLOG
+      if !retvrnspeed && $AISWITCHLOG
+        echo("\n========================================\n")
         echo("\nSwitch score for: "+pokmon.name)
-        echo("\n----------------------------------------\n")
+        echo("\n========================================\n")
       end  
       sum  = 0
       maxdam=0
@@ -240,6 +250,11 @@ class Battle::AI
           aspeed *= 2 if pokmon.hasActiveItem?(:PSYCHICSEED)
         end
       end
+      if retvrnspeed
+        speedsarray.push(aspeed)
+        next
+      end
+      preCalculateDamagesAI(pokmon)
       if @battle.field.effects[PBEffects::TrickRoom]>0
         maxspeed = 6900
       else
@@ -298,8 +313,7 @@ class Battle::AI
         ###############
         for j in newenemy.moves
           mold_broken=moldbroken(newenemy,pokmon,j)
-          if newenemy.effects[PBEffects::ChoiceBand] &&
-            newenemy.hasActiveItem?([:CHOICEBAND,:CHOICESPECS,:CHOICESCARF])
+          if moveLocked(newenemy)
             if newenemy.lastMoveUsed && newenemy.pbHasMove?(newenemy.lastMoveUsed)
               next if j.id!=newenemy.lastMoveUsed
             end
@@ -311,7 +325,7 @@ class Battle::AI
             death=true  
           end  
           # damage calcs
-          tempdam = pbRoughDamage(j,newenemy,pokmon,100,j.baseDamage)
+          tempdam = aiDamage(j, newenemy, pokmon)
           if pbCheckMoveImmunity(1,j,newenemy,pokmon,100) || 
             (newenemy.status==:SLEEP && newenemy.statusCount>1 && !newenemy.pbHasMoveFunction?("UseRandomUserMoveIfAsleep"))
             tempdam = 0 
@@ -430,6 +444,31 @@ class Battle::AI
       maxprio=0
       fakedmg=0
       damagedealtPercent=0
+      if pokmon.hasActiveAbility?(:DOWNLOAD)
+        oDef = oSpDef = 0
+        @battle.allOtherSideBattlers(pokmon.index).each do |data|
+          oDef   += data.defense
+          oSpDef += data.spdef
+        end
+        downloadStat = (oDef < oSpDef) ? :ATTACK : :SPECIAL_ATTACK
+      end
+      if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+        # added f_ to everything to ensure nothing blows up
+        f_stageMul, f_stageDiv = @battle.pbGetStatMath
+        oAtk = 0
+        oSpAtk = 0
+        battle.allOtherSideBattlers(pokmon.index).each do |data|
+          f_atk        = data.attack
+          f_atkStage   = data.stages[:ATTACK] + 6
+          f_realAtk    = (f_atk.to_f * f_stageMul[f_atkStage] / f_stageDiv[f_atkStage]).floor
+          oAtk   += f_realAtk
+          f_spAtk      = data.spatk
+          f_spAtkStage = data.stages[:SPECIAL_ATTACK] + 6
+          f_realSpAtk  = (f_spAtk.to_f * f_stageMul[f_spAtkStage] / f_stageDiv[f_spAtkStage]).floor
+          oSpAtk += f_realSpAtk
+        end
+        forewarnStat = (oAtk > oSpAtk) ? :DEFENSE : :SPECIAL_DEFENSE
+      end
       pokmon.moves.each do |m|
         pokmon.eachOpposing do |b|
           mold_broken=moldbroken(pokmon,b,m)
@@ -459,6 +498,12 @@ class Battle::AI
               sum+=80 if damagetakenPercent<33
             end  
           end
+          if currentBattler.hasActiveAbility?(:REGENERATOR)
+            if currentBattler.hp < (currentBattler.totalhp * 2.0/3.0)
+              sum+=30
+              sum+=20 if sack && i!=activemon
+            end
+          end
           if pokmon.effects[PBEffects::Wish]>0
             wishhealPercent = (pokmon.effects[PBEffects::WishAmount] * 100.0 / pokmon.hp)
             if wishhealPercent >= 50 && damagetakenPercent<50
@@ -483,7 +528,7 @@ class Battle::AI
               sum+=80
             end
             healsStatus = battlePos.effects[PBEffects::HealingWish] || battlePos.effects[PBEffects::LunarDance]
-            if healsStatus && pokmon.status == :NONE
+            if healsStatus && pokmon.status != :NONE
               case pokmon.status
               when :POISON
                 if pokmon.hasActiveAbility?([:GUTS, :MARVELSCALE, :QUICKFEET, :TOXICBOOST, :POISONHEAL]) && 
@@ -520,7 +565,7 @@ class Battle::AI
                 end
               when :DIZZY
                 dummymove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(:SPLASH))
-                minimi = getAbilityDisruptScore(dummymove,b,pokmon,100)
+                minimi = getAbilityDisruptScore(dummymove,b,pokmon,100,false)
                 minimi /= 2 if pokmon.hasActiveAbility?(:TANGLEDFEET)
                 sum *= minimi
               end
@@ -529,7 +574,31 @@ class Battle::AI
               sum+=60 if m.total_pp <= 16 && (m.pp / m.total_pp) <= 0.625
             end
           end
-          tempdam = pbRoughDamage(m,pokmon,b,100,m.baseDamage)
+          if pokmon.hasActiveAbility?(:DOWNLOAD)
+            oldStatD = pokmon.stages[downloadStat]
+            # why would you combo download and contrary?
+            increment = 1
+            increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
+            increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
+            pokmon.stages[downloadStat] += increment if pokmon.pbCanRaiseStatBySource?(downloadStat, pokmon, :DOWNLOAD)
+            pokmon.stages[downloadStat] = [[pokmon.stages[downloadStat], -6].max, 6].min
+          end
+          if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+            oldStatF = pokmon.stages[forewarnStat]
+            # why would you combo forewarn and contrary?
+            increment = 1
+            increment *= 2 if pokmon.hasActiveAbility?(:SIMPLE)
+            increment *= -1 if pokmon.hasActiveAbility?(:CONTRARY)
+            pokmon.stages[forewarnStat] += increment if pokmon.pbCanRaiseStatBySource?(forewarnStat, pokmon, :FOREWARN)
+            pokmon.stages[forewarnStat] = [[pokmon.stages[forewarnStat], -6].max, 6].min
+          end
+          tempdam = aiDamage(m, pokmon, b)
+          if pokmon.hasActiveAbility?(:DOWNLOAD)
+            pokmon.stages[downloadStat] = oldStatD
+          end
+          if pokmon.hasActiveAbility?(:FOREWARN) && $player.difficulty_mode?("chaos")
+            pokmon.stages[forewarnStat] = oldStatF
+          end
           thispriority=priorityAI(pokmon,m,[],true)
           tempdam = 0 if thispriority>0 && pokmon.hasActiveAbility?(:PSYCHICSURGE) && b.affectedByTerrain?
           maxprio=thispriority if tempdam>=b.hp && thispriority>0
@@ -546,7 +615,7 @@ class Battle::AI
           end
           if pokmon.hasActiveAbility?([:SANDSTREAM, :DUSTSENTINEL]) && @battle.pbWeather != :Sandstorm 
             tempdam*=0.67 if b.pbHasType?(:ROCK,true) && m.specialMove?
-            tempdam*=0.67 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
+            tempdam*=0.77 if b.hasActiveAbility?(:SANDVEIL) && m.physicalMove?
             tempdam*=1.3 if [:GROUND,:ROCK,:STEEL].include?(m.type) && pokmon.hasActiveAbility?([:SANDFORCE, :DUSTSENTINEL])
           end
           if pokmon.hasActiveAbility?(:SNOWWARNING) && @battle.pbWeather != :Hail 
@@ -555,15 +624,15 @@ class Battle::AI
               typeMod = pbCalcTypeMod(moveType, b, pokmon)
               tempdam*=0.75 if Effectiveness.super_effective?(typeMod)
             end
-            tempdam*=0.67 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
+            tempdam*=0.77 if b.hasActiveAbility?(:SNOWCLOAK) && m.specialMove?
           end
           if pokmon.hasActiveAbility?(:ELECTRICSURGE) && @battle.field.terrain != :Electric
-            tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC
+            tempdam*=t_damage_multiplier if pokmon.affectedByTerrain? if m.type == :ELECTRIC && m.function!="DoublePowerInElectricTerrain"
             tempdam*=1.6 if m.function=="DoublePowerInElectricTerrain" && pokmon.affectedByTerrain?
             tempdam*=0.67 if b.hasActiveItem?(:ELECTRICSEED) && m.physicalMove?
           end
           if pokmon.hasActiveAbility?(:GRASSYSURGE) && @battle.field.terrain != :Grassy
-            tempdam*=t_damage_multiplier if m.type == :GRASS && pokmon.affectedByTerrain?
+            tempdam*=t_damage_multiplier if m.type == :GRASS && pokmon.affectedByTerrain? && m.function != "HigherPriorityInGrassyTerrain"
             tempdam*=0.67 if b.hasActiveItem?(:GRASSYSEED) && m.physicalMove?
             tempdam*=0.67 if b.hasActiveAbility?(:GRASSPELT) && m.physicalMove?
             if ["DoublePowerIfTargetUnderground", "LowerTargetSpeed1WeakerInGrassyTerrain",
@@ -572,7 +641,7 @@ class Battle::AI
             end
           end
           if pokmon.hasActiveAbility?(:PSYCHICSURGE) && @battle.field.terrain != :Psychic
-            tempdam*=t_damage_multiplier if m.type == :PSYCHIC && pokmon.affectedByTerrain?
+            tempdam*=t_damage_multiplier if m.type == :PSYCHIC && pokmon.affectedByTerrain? && m.function!="HitsAllFoesAndPowersUpInPsychicTerrain"
             tempdam*=1.3 if m.function=="HitsAllFoesAndPowersUpInPsychicTerrain" && pokmon.affectedByTerrain?
             tempdam*=0.67 if b.hasActiveItem?(:PSYCHICSEED) && m.specialMove?
           end
@@ -594,12 +663,32 @@ class Battle::AI
           ownmaxdmg=tempdam if tempdam>ownmaxdmg
           ownmaxmove=m
           damagedealtPercent = ownmaxdmg *100.0 / b.hp
-          if m.function=="SwitchOutUserPassOnEffects"
+          # teleport, Parting Shot, baton pass
+          if ["SwitchOutUserStatusMove",
+              "LowerTargetAtkSpAtk1SwitchOutUser", "SwitchOutUserPassOnEffects"].include?(m.function)
             score=120
+          # u-turn / volt switch
+          elsif m.function == "SwitchOutUserDamagingMove"
+            if tempdam > 1
+              score=100
+            else
+              score=50
+            end
+          # metronome / assist
           elsif ["UseRandomMove", "UseRandomMoveFromUserParty"].include?(m.function) #by low
             score=95
-          else  
-            score=pbGetMoveScore(m, pokmon, b, 100)
+          # fake out
+          elsif m.function == "FlinchTargetFailsIfNotUserFirstTurn"
+            if tempdam > 1
+              score=85
+            else
+              score=0
+            end
+          else
+            backup = $AIGENERALLOG
+            $AIGENERALLOG = false
+            score=pbGetMoveScore(m, pokmon, b, 100, true)
+            $AIGENERALLOG = backup
           end  
           maxscore=score if score>maxscore
           scoresum+=score
@@ -611,12 +700,11 @@ class Battle::AI
         damagedealtPercent =100 if damagedealtPercent>100
         if damagesum<=5 || tickdamage
           maxscore=0
-          maxscore=0
         end
       end
       sum+=maxscore+(scoresum*0.01) #if damagesum>0 || tickdamage
       #if $consoleenabled
-        echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AIGENERALLOG
+        echo("\nScore after factoring offense: "+sum.to_s+" (Maximum potential damage dealt: "+damagedealtPercent.to_s+" percent)") if $AISWITCHLOG
       #end  
       if ownmaxmove
         sum-=100 if (ownmaxmove.physicalMove? && pokmon.stages[:SPECIAL_ATTACK]>0) || (ownmaxmove.specialMove? && pokmon.stages[:ATTACK]>0)
@@ -654,7 +742,7 @@ class Battle::AI
         end  
       end  
       #if $consoleenabled
-        echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)") if $AIGENERALLOG
+        echo("\nScore after factoring defense: "+sum.to_s+" (Maximum expected damage taken: "+damagetakenPercent.to_s+" percent)") if $AISWITCHLOG
       #end  
       ownparty = @battle.pbParty(1)
       ownparty.each_with_index do |pkmn, idxParty|
@@ -663,6 +751,7 @@ class Battle::AI
         if pokmon.ability==:DROUGHT
           sum+=20 if pkmn.ability == :CHLOROPHYLL
           sum+=10 if pkmn.ability == :FLOWERGIFT || pkmn.ability == :SOLARPOWER
+          sum+=5 if pkmn.ability == :HEALINGSUN
           pkmn.eachMove do |m|
             next if m.base_damage==0 || m.type != :FIRE
             sum += 10
@@ -691,15 +780,18 @@ class Battle::AI
         end
         if pokmon.ability==:SANDSTREAM || pokmon.ability==:DUSTSENTINEL
           sum+=20 if pkmn.ability == :SANDRUSH
-          sum+=10 if pkmn.ability == :SANDVEIL || pkmn.ability == :SANDFORCE
+          sum+=15 if pkmn.ability == :SANDFORCE
+          sum+=10 if pkmn.ability == :SANDVEIL
           sum+=10 if pkmn.hasType?(:ROCK)
+          sum+=5 if pkmn.ability == :PARTICURE
           sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
           sum+=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnSandstorm") 
         end
         if pokmon.ability==:SNOWWARNING
           sum+=20 if pkmn.ability == :SLUSHRUSH
-          sum+=10 if pkmn.ability == :SNOWCLOAK || pkmn.ability == :ICEBODY
+          sum+=10 if pkmn.ability == :SNOWCLOAK
           sum+=10 if pkmn.hasType?(:ICE)
+          sum+=5 if pkmn.ability == :ICEBODY
           sum-=5 if pkmn.pbHasMoveFunction?("HealUserDependingOnWeather", "RaiseUserAtkSpAtk1Or2InSun", "TwoTurnAttackOneTurnInSun") && @battle.field.weather == :Sun
           sum+=5 if pkmn.pbHasMoveFunction?("FreezeTargetAlwaysHitsInHail") 
           sum+=5 if pkmn.pbHasMoveFunction?("StartWeakenDamageAgainstUserSideIfHail", "HealUserDependingOnHail") 
@@ -751,7 +843,7 @@ class Battle::AI
         sum-=30 if pokmon.hasActiveAbility?(:WONDERGUARD)
       end  
       pokmon.eachOpposing do |enemy|
-        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?(:TRUANT)
+        sum*=0.2 if pokmon.hasActiveAbility?(:TRACE) && enemy.hasActiveAbility?([:TRUANT,:SLOWSTART,:DEFEATIST])
         sum*=0.2 if pokmon.hasActiveAbility?(:IMPOSTER) && enemy.hp == 0
       end
       if i==party.length-1
@@ -765,13 +857,13 @@ class Battle::AI
       if !pokmon.hasActiveItem?(:HEAVYDUTYBOOTS)
         if pokmon.takesIndirectDamage?
           if !pokmon.airborneAI(false)
-            if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0 && pokmon.ability != :OVERCOAT
+            if pokmon.pbOwnSide.effects[PBEffects::Spikes]>0 && pokmon.hasActiveAbility?(:OVERCOAT)
               spikesDiv = [8, 6, 4][pokmon.pbOwnSide.effects[PBEffects::Spikes] - 1]
               hazarddamage += pokmon.totalhp/spikesDiv
             end
             if pokmon.pbOwnSide.effects[PBEffects::ToxicSpikes]>0
               if pokmon.pbHasType?(:POISON) ||
-                 pokmon.ability == :TILEWORKER
+                 pokmon.hasActiveAbility?(:TILEWORKER)
                 sum+=5
                 sum+=20 if sack && i!=activemon
               elsif pokmon.pbCanPoison?(nil, false)
@@ -779,14 +871,14 @@ class Battle::AI
               end
             end
           end
-          if pokmon.pbOwnSide.effects[PBEffects::StealthRock] && pokmon.ability != :OVERCOAT
+          if pokmon.pbOwnSide.effects[PBEffects::StealthRock] && pokmon.hasActiveAbility?(:OVERCOAT)
             airdamage = (pokmon.airborneAI(false)) ? 4 : 8
             hazarddamage += (pokmon.totalhp/airdamage)
           end
         end
       end  
       sum=0 if damagetakenPercent>33 && sack && i!=activemon
-      if pokmon.ability == :TILEWORKER
+      if pokmon.hasActiveAbility?(:TILEWORKER)
         if hazarddamage > 0
           sum+=20
           sum=2010 if sack && i!=activemon
@@ -798,13 +890,14 @@ class Battle::AI
         end
       end
       #if $consoleenabled
-        echo("\nScore after various other factors: "+sum.to_s+"\n") if $AIGENERALLOG
+        echo("\nScore after various other factors: "+sum.to_s+"\n") if $AISWITCHLOG
       #end  
       if best == -1 || sum > bestSum
         best = i
         bestSum = sum
       end
     end
+    return speedsarray if retvrnspeed
     return [best,bestSum] if batonpasscheck
     return best
   end

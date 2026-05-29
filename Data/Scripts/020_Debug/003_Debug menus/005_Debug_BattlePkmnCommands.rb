@@ -604,6 +604,38 @@ MenuHandlers.add(:battle_pokemon_debug_menu, :reset_moves, {
   }
 })
 
+MenuHandlers.add(:battle_pokemon_debug_menu, :get_scores, {
+  "name"   => _INTL("Get move scores"),
+  "parent" => :moves,
+  "usage"  => :field,
+  "effect" => proc { |pkmn, battler, battle|
+    battlerAI = Battle::AI.new(battle)
+    text = ""
+    choices = []
+    battler.eachMoveWithIndex do |_m, i|
+      next if !battle.pbCanChooseMove?(battler.index, i, false)
+      if MEGA_EVO_MOVESET.key?(battler.species) && $player.difficulty_mode?("chaos") && battler.willmega
+        oldmove = MEGA_EVO_MOVESET[battler.species][0]
+        newmove = MEGA_EVO_MOVESET[battler.species][1]
+        if _m.id == oldmove
+          battler.moves[i] = Battle::Move.from_pokemon_move(battle, Pokemon::Move.new(newmove))
+          battler.moves[i].pp       = 5
+          battler.moves[i].total_pp = 5
+        end
+      end
+      if battler.wild?
+        battlerAI.pbRegisterMoveWild(battler, i, choices)
+      else
+        battlerAI.pbRegisterMoveTrainer(battler, i, choices, 100)
+      end
+    end
+    choices.each do |c|
+      text += "#{c[3]} : #{c[1].to_s}; target = #{battle.battlers[c[2]].name.to_s}\\n"
+    end
+    pbMessage(_INTL("{1}", text))
+  }
+})
+
 #===============================================================================
 # Other options
 #===============================================================================

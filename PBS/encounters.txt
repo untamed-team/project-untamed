@@ -1,4 +1,4 @@
-# See the documentation on the wiki to learn how to edit this file.
+﻿# See the documentation on the wiki to learn how to edit this file.
 #-------------------------------
 [005] # San Cerigold Cemetery
 Land,21
@@ -44,24 +44,24 @@ Land,21
 Cave,5
     20,BUDEW,8,10
     20,FLABEBE,9,11
-    20,WOOBAT,8,10
     20,KNOGGIN,8,10
+    20,WOOBAT,8,10
     10,CHICATTA,10,11
     10,M_ROSELIA,9,11
 Land,21
     20,BUDEW,8,10
-    20,FLABEBE,9,11
-    10,WOOBAT,8,10
-    10,KNOGGIN,8,10
     20,CHICATTA,10,11
+    20,FLABEBE,9,11
     20,M_ROSELIA,9,11
+    10,KNOGGIN,8,10
+    10,WOOBAT,8,10
 #-------------------------------
 [035] # Monarca Cave 2
 Cave,5
     20,BUDEW,8,10
     20,FLABEBE,9,11
-    20,WOOBAT,8,10
     20,KNOGGIN,8,10
+    20,WOOBAT,8,10
     10,CHICATTA,10,11
     10,M_ROSELIA,9,11
 #-------------------------------
@@ -111,3 +111,7 @@ Land,21
     30,SPEWPA,8,11
     25,BURBRAWL,8,11
     10,VIVILLON,12
+#-------------------------------
+[130] # Dust Cloud Encounters
+PhenomenonCave,25
+    20,MOLLUCOTTA,5

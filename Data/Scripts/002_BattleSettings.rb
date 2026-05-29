@@ -2,7 +2,7 @@ module Settings
   # Whether turn order is recalculated after a Pokémon Mega Evolves.
   RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION = (MECHANICS_GENERATION >= 7)
   # Whether turn order is recalculated after a Pokémon's Speed stat changes.
-  RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES  = (MECHANICS_GENERATION >= 8)
+  RECALCULATE_TURN_ORDER_AFTER_SPEED_CHANGES  = false#(MECHANICS_GENERATION >= 8)
   # Whether any Pokémon (originally owned by the player or foreign) can disobey
   # the player's commands if the Pokémon is too high a level compared to the
   # number of Gym Badges the player has.
@@ -52,13 +52,13 @@ module Settings
 
   #=============================================================================
 
-  # The minimum number of badges required to boost each stat of a player's
+  # The minimum number of badges required to boost each stat of a AI's
   # Pokémon by 1.1x, in battle only.
-  NUM_BADGES_BOOST_ATTACK  = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_DEFENSE = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPATK   = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPDEF   = (MECHANICS_GENERATION >= 4) ? 999 : 999
-  NUM_BADGES_BOOST_SPEED   = (MECHANICS_GENERATION >= 4) ? 999 : 999
+  NUM_BADGES_BOOST_ATTACK  = 7
+  NUM_BADGES_BOOST_DEFENSE = 5
+  NUM_BADGES_BOOST_SPATK   = 8
+  NUM_BADGES_BOOST_SPDEF   = 6
+  NUM_BADGES_BOOST_SPEED   = 9 # unused
 
   #=============================================================================
 

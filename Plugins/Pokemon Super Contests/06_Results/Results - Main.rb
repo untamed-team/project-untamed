@@ -17,21 +17,21 @@ class Results
     
     pbWait(1 * Graphics.frame_rate)
     mainJudge = ContestSettings::JUDGES[1][:Name]
-    pbMessage(_INTL("#{mainJudge}: That's it, folks! \nAll judging has been completed!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]That's it, folks! \nAll judging has been completed!"))
     pbFlash(Color.new(255,255,255), 2)
     pbSEPlay("Contests_Camera_Shutter",80,100)
     pbWait(1 * Graphics.frame_rate/2)
     pbFlash(Color.new(255,255,255), 2)
     pbSEPlay("Contests_Camera_Shutter",80,100)
     
-    pbMessage(_INTL("Which Pokémon will be crowned the winner?"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Which Pokémon will be crowned the winner?"))
     pbFlash(Color.new(255,255,255), 2)
     pbSEPlay("Contests_Camera_Shutter",80,100)
     pbWait(1 * Graphics.frame_rate/2)
     pbFlash(Color.new(255,255,255), 2)
     pbSEPlay("Contests_Camera_Shutter",80,100)
     
-    pbMessage(_INTL("Let's announce the results!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Let's announce the results!"))
     pbFlash(Color.new(255,255,255), 2)
     pbSEPlay("Contests_Camera_Shutter",80,100)
     pbWait(1 * Graphics.frame_rate/2)
@@ -41,7 +41,7 @@ class Results
     self.setupPointsScreen
     pbBGMPlay("Contests_Results")
     pbWaitUpdateGraphics(1 * Graphics.frame_rate)
-    pbMessage(_INTL("And now, it's time to announce the results of the individual categories!")) {Results.update}
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]And now, it's time to announce the results of the individual categories!")) {Results.update}
     
     @contestant_order = self.sortPoints
     self.setPointsProportion
@@ -67,7 +67,7 @@ class Results
     self.placementNumbers
     self.getWinningEntryNumber
     
-    pbMessage(_INTL("#{mainJudge}: The winner is... \nEntry number #{@winningEntryNumber}!")) {Results.update}
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]The winner is... \nEntry number #{@winningEntryNumber}!")) {Results.update}
     msgwindow = pbMessageNoClear(_INTL("#{@chosenContestants[@winningEntryNumber-1][:TrainerName]} and #{@chosenContestants[@winningEntryNumber-1][:PkmnName]}! \nCongratulations!")) {Results.update}
     
     self.showWinner

@@ -282,10 +282,12 @@ class PokemonLoadScreen
       case command
       when cmd_continue
         @scene.pbEndScene
+        pbBGMStop(1.0)
         Game.load(@save_data)
         return
       when cmd_new_game
         @scene.pbEndScene
+        pbBGMStop(1.0)
         Game.start_new
         return
       when cmd_mystery_gift

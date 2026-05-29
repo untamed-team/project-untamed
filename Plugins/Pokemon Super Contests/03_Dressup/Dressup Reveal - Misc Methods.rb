@@ -31,7 +31,7 @@ class DressupReveal
     @sprites["contestant"] = IconSprite.new(0, 0, @viewport)
     
     if contestant == @playerPkmn
-      @sprites["contestant"].setBitmap("Graphics/Pictures/Contest/dressup/contestants/playerPkmn")
+      @sprites["contestant"].setBitmap("Graphics/Pictures/Contest/dressup/contestants/#{$player.id}.png")
     else
       @sprites["contestant"].setBitmap("Graphics/Pictures/Contest/dressup/contestants/#{@chosenRank}/#{contestant}")
     end
