@@ -6982,3 +6982,11 @@ ContestJam = 0
 ContestFunctionCode = Contest_Effect_Basic
 ContestFlags = 
 ContestDescription = 
+#-------------------------------
+[TRIMTACKLE]
+ContestType = SMART
+ContestHearts = 3
+ContestJam = 0
+ContestFunctionCode = Contest_Effect_Basic
+ContestFlags = 
+ContestDescription = 

@@ -17,9 +17,13 @@ class BerryPlantData
     attr_accessor :weeds_timer
     attr_accessor :pests
     attr_accessor :pests_timer
+    attr_accessor :soil
+    attr_accessor :preferred_soil
     attr_accessor :withered_item
     attr_accessor :persistent
     attr_accessor :watering_cans_used
+    attr_accessor :debug_info
+    attr_accessor :seed_id
 
     alias tdw_berry_plant_init initialize
     def initialize(event = nil)
@@ -29,10 +33,10 @@ class BerryPlantData
 
     def tdw_new_init(event)
         @event = event || pbMapInterpreter.get_self
-        @event_base_speed = @event.move_speed
+        @event_base_speed = @event&.move_speed
         @town_map_location = nil
-        @town_map_location = [$~[1].to_i,$~[2].to_i,$~[3].to_i] if @event.name[/map\((\d+),(\d+),(\d+)\)/i]
-        @plant_zone = $~[1].to_s if @event.name[/berryzone\((\w+)\)$/i]
+        @town_map_location = [$~[1].to_i,$~[2].to_i,$~[3].to_i] if @event && @event.name[/map\((\d+),(\d+),(\d+)\)/i]
+        @plant_zone = $~[1].to_s if @event && @event.name[/berryzone\((\w+)\)$/i]
         @mutated_berry_tried = false
         @mutated_berry_info = nil
         @exposed_to_preferred_weather = false
@@ -40,6 +44,7 @@ class BerryPlantData
         @unpreferred_zone = nil
         @withered_item = nil
         @persistent = nil
+        @seed_id = nil
         @watering_cans_used = []
         if Settings::BERRY_USE_WEED_MECHANICS
             @weeds = false
@@ -49,16 +54,31 @@ class BerryPlantData
             @pests = false
             @pests_timer = nil
         end
+        if @event && @event.name[/berrysoil\((\w+)\)$/i]
+            id = $~[1].to_sym
+            if Settings::BERRY_SOIL_DEFINITIONS[id]
+                @soil = Settings::BERRY_SOIL_DEFINITIONS[id].clone
+                @soil[:id] = id 
+            end
+        end
+        if @soil.nil?
+            @soil = Settings::BERRY_SOIL_DEFINITIONS[Settings::BERRY_SOIL_DEFAULT].clone
+            @soil[:id] = Settings::BERRY_SOIL_DEFAULT if @soil
+        end
+        @preferred_soil = nil
+        @debug_info = init_debug_info
     end
 
-    # alias tdw_berry_plant_update update
-    # def update
-    #     tdw_berry_plant_update
-    #     @exposed_to_preferred_weather = true if pbBerryPreferredWeatherEnabled? && checkPreferredWeather
-    #     return if !planted? || !@event || @mutated_berry_tried || @growth_stage < 2 || 
-    #                 (Settings::ALLOW_BERRY_MUTATIONS_SWITCH_ID > 0 && !$game_switches[Settings::ALLOW_BERRY_MUTATIONS_SWITCH_ID])
-    #     checkNearbyPlantsForMutation
-    # end
+    def init_debug_info
+        return {
+            :time_per_stage => nil,
+            :drying_per_hour => nil,
+            :max_replants => nil,
+            :stages_fully_grown => nil,
+            :mutation_chance => 0,
+            :propagation_chance => 0
+        }
+    end
 
     def update
         return update_new if Settings::BERRY_USE_NEW_UPDATE_LOGIC && @event
@@ -75,6 +95,8 @@ class BerryPlantData
         time_per_stage += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:hours_per_stage] * 3600) if @unpreferred_zone
         time_per_stage += (Settings::BERRY_HAS_WEEDS_TRAITS[:hours_per_stage] * 3600) if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
         time_per_stage += (Settings::BERRY_HAS_PESTS_TRAITS[:hours_per_stage] * 3600) if Settings::BERRY_USE_PEST_MECHANICS && @event && @pests
+        time_per_stage += (@soil[:hours_per_stage] * 3600) if @soil
+        time_per_stage += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:hours_per_stage] * 3600) if @preferred_soil
         time_per_stage += (getWateringCansUsedTraits(:hours_per_stage) * 3600)
         time_per_stage = 3600 if time_per_stage < 3600
         drying_per_hour = plant_data.drying_per_hour
@@ -83,12 +105,15 @@ class BerryPlantData
         drying_per_hour += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:drying_per_hour]) if @unpreferred_zone
         drying_per_hour += Settings::BERRY_HAS_WEEDS_TRAITS[:drying_per_hour] if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
         drying_per_hour += Settings::BERRY_HAS_PESTS_TRAITS[:drying_per_hour] if Settings::BERRY_USE_PEST_MECHANICS && @event && @pests
+        drying_per_hour += @soil[:drying_per_hour] if @soil
+        drying_per_hour += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:drying_per_hour]) if @preferred_soil
         drying_per_hour += getWateringCansUsedTraits(:drying_per_hour)
         drying_per_hour = 0 if drying_per_hour < 0
-        max_replants = GameData::BerryPlant::NUMBER_OF_REPLANTS
+        max_replants = max_replant_count
         max_replants += (Settings::BERRY_PREFERRED_WEATHER_TRAITS[:max_replants]) if @exposed_to_preferred_weather
         max_replants += (Settings::BERRY_PREFERRED_ZONE_TRAITS[:max_replants]) if @preferred_zone
         max_replants += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:max_replants]) if @unpreferred_zone
+        max_replants += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:max_replants]) if @preferred_soil
         max_replants = 1 if max_replants < 1
         stages_growing = GameData::BerryPlant::NUMBER_OF_GROWTH_STAGES
         stages_fully_grown = GameData::BerryPlant::NUMBER_OF_FULLY_GROWN_STAGES
@@ -108,6 +133,13 @@ class BerryPlantData
         when :AMAZEMULCH
             drying_per_hour = (drying_per_hour * 2).ceil
         end
+        # Save debug info
+        @debug_info = init_debug_info if !@debug_info
+        @debug_info[:time_per_stage] = time_per_stage / 3600
+        @debug_info[:drying_per_hour] = drying_per_hour
+        @debug_info[:max_replants] = max_replants
+        @debug_info[:stages_fully_grown] = stages_fully_grown
+        @debug_info[:propagation_chance] = Settings::BERRY_MULCHES_IMPACTING_PROPAGATION[@mulch_id] || Settings::BERRY_BASE_PROPAGATION_CHANCE
         # Do replants
         done_replant = false
         loop do
@@ -194,6 +226,8 @@ class BerryPlantData
         time_per_stage += (Settings::BERRY_PREFERRED_WEATHER_TRAITS[:hours_per_stage] * 3600) if @exposed_to_preferred_weather
         time_per_stage += (Settings::BERRY_PREFERRED_ZONE_TRAITS[:hours_per_stage] * 3600) if @preferred_zone
         time_per_stage += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:hours_per_stage] * 3600) if @unpreferred_zone
+        time_per_stage += (@soil[:hours_per_stage] * 3600) if @soil
+        time_per_stage += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:hours_per_stage] * 3600) if @preferred_soil
         time_per_stage += (getWateringCansUsedTraits(:hours_per_stage) * 3600)
         time_per_stage = 3600 if time_per_stage < 3600
         dynamic_time_per_stage += (Settings::BERRY_HAS_WEEDS_TRAITS[:hours_per_stage] * 3600) if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
@@ -204,17 +238,20 @@ class BerryPlantData
         drying_per_hour += (Settings::BERRY_PREFERRED_WEATHER_TRAITS[:drying_per_hour]) if @exposed_to_preferred_weather
         drying_per_hour += (Settings::BERRY_PREFERRED_ZONE_TRAITS[:drying_per_hour]) if @preferred_zone
         drying_per_hour += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:drying_per_hour]) if @unpreferred_zone
+        drying_per_hour += @soil[:drying_per_hour] if @soil
+        drying_per_hour += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:drying_per_hour]) if @preferred_soil
         drying_per_hour += getWateringCansUsedTraits(:drying_per_hour)
         drying_per_hour = 0 if drying_per_hour < 0
         dynamic_drying_per_hour += Settings::BERRY_HAS_WEEDS_TRAITS[:drying_per_hour] if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
         dynamic_drying_per_hour += Settings::BERRY_HAS_PESTS_TRAITS[:drying_per_hour] if Settings::BERRY_USE_PEST_MECHANICS && @event && @pests
 
-        max_replants = GameData::BerryPlant::NUMBER_OF_REPLANTS
+        max_replants = max_replant_count
         max_replants += (Settings::BERRY_PREFERRED_WEATHER_TRAITS[:max_replants]) if @exposed_to_preferred_weather
         max_replants += (Settings::BERRY_PREFERRED_ZONE_TRAITS[:max_replants]) if @preferred_zone
         max_replants += (Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:max_replants]) if @unpreferred_zone
+        max_replants += (Settings::BERRY_PREFERRED_SOIL_TRAITS[:max_replants]) if @preferred_soil
         max_replants = 1 if max_replants < 1
-
+        
         stages_growing = GameData::BerryPlant::NUMBER_OF_GROWTH_STAGES
         stages_fully_grown = GameData::BerryPlant::NUMBER_OF_FULLY_GROWN_STAGES
         case @mulch_id
@@ -237,6 +274,13 @@ class BerryPlantData
         when :AMAZEMULCH
             drying_per_hour = (drying_per_hour * 2).ceil
         end
+        # Save debug info
+        @debug_info = init_debug_info if !@debug_info
+        @debug_info[:time_per_stage] = time_per_stage / 3600
+        @debug_info[:drying_per_hour] = drying_per_hour
+        @debug_info[:max_replants] = max_replants
+        @debug_info[:stages_fully_grown] = stages_fully_grown
+        @debug_info[:propagation_chance] = Settings::BERRY_MULCHES_IMPACTING_PROPAGATION[@mulch_id] || Settings::BERRY_BASE_PROPAGATION_CHANCE
         # Weed counts
         if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds_timer && !@weeds && @growth_stage > 1
             weed_delta = time_now.to_i - @weeds_timer
@@ -319,13 +363,16 @@ class BerryPlantData
 
 
     alias tdw_berry_plant_plant plant
-    def plant(berry_id)
+    def plant(berry_id, seed_id = nil)
         tdw_berry_plant_plant(berry_id)
+        @seed_id = seed_id
         @withered_item = nil
         @preferred_weather = (@berry_id && @event && pbBerryPreferredWeatherEnabled? ) ? GameData::BerryData.try_get(@berry_id).preferred_weather : nil
         @preferred_zone = @berry_id && @event && pbBerryPreferredZonesEnabled? && GameData::BerryData.try_get(@berry_id).preferred_zones.include?(@plant_zone)
         @unpreferred_zone = @berry_id && @event && pbBerryUnpreferredZonesEnabled? && !@preferred_zone && 
                 GameData::BerryData.try_get(@berry_id).unpreferred_zones.include?(@plant_zone)
+        @preferred_soil = @berry_id && @event && @soil && pbBerryPreferredSoilEnabled? && 
+                GameData::BerryData.try_get(@berry_id).preferred_soil == @soil[:id]
         @time_in_stage = 0
         @watering_cans_used = []
         if Settings::BERRY_USE_WEED_MECHANICS
@@ -351,6 +398,8 @@ class BerryPlantData
         @mutated_berry_info = nil
         @preferred_zone = nil
         @unpreferred_zone = nil
+        @preferred_soil = nil
+        @seed_id = nil
         @time_in_stage = 0
         @watering_cans_used = []
         if Settings::BERRY_USE_WEED_MECHANICS
@@ -361,6 +410,7 @@ class BerryPlantData
             @pests = false
             @pests_timer = nil
         end
+        @debug_info = init_debug_info
     end
 
     def reset_withered
@@ -386,6 +436,7 @@ class BerryPlantData
         tdw_berry_plant_replant
         @exposed_to_preferred_weather = false
         @watering_cans_used = []
+        @seed_id = nil
         if Settings::BERRY_REPLANT_RESETS_MUTATION
             @mutated_berry_tried = false
             @mutated_berry_info = nil
@@ -433,7 +484,22 @@ class BerryPlantData
         ret += Settings::BERRY_PREFERRED_WEATHER_TRAITS[:yield] if @exposed_to_preferred_weather
         ret += Settings::BERRY_PREFERRED_ZONE_TRAITS[:yield] if @preferred_zone
         ret += Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:yield] if @unpreferred_zone
+        if @soil
+            if @soil[:yield].is_a?(Array)
+                arr = @soil[:yield]
+                ret += rand(arr[0]..arr[1])
+            else
+                ret += @soil[:yield] 
+            end
+            ret += Settings::BERRY_PREFERRED_SOIL_TRAITS[:yield] if @preferred_soil
+        end
         ret += getWateringCansUsedTraits(:yield)
+        return ret
+    end
+
+    def max_replant_count
+        ret = GameData::BerryPlant::NUMBER_OF_REPLANTS
+        ret += @soil[:max_replants] if @soil
         return ret
     end
 
@@ -478,9 +544,13 @@ class BerryPlantData
         mutation_chance += Settings::BERRY_PREFERRED_WEATHER_TRAITS[:mutation_chance] if @exposed_to_preferred_weather
         mutation_chance += Settings::BERRY_PREFERRED_ZONE_TRAITS[:mutation_chance] if @preferred_zone
         mutation_chance += Settings::BERRY_UNPREFERRED_ZONE_TRAITS[:mutation_chance] if @unpreferred_zone
+        mutation_chance += @soil[:mutation_chance] if @soil
+        mutation_chance += Settings::BERRY_PREFERRED_SOIL_TRAITS[:mutation_chance] if @preferred_soil
         mutation_chance += Settings::BERRY_HAS_WEEDS_TRAITS[:mutation_chance] if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
         mutation_chance += Settings::BERRY_HAS_PESTS_TRAITS[:mutation_chance] if Settings::BERRY_USE_PEST_MECHANICS && @event && @pests
         mutation_chance += getWateringCansUsedTraits(:mutation_chance)
+        @debug_info = init_debug_info if !@debug_info
+        @debug_info[:mutation_chance] = mutation_chance
         return if mutation_chance <= 0 || rand(100) >= mutation_chance
         #position = [@event.map_id, @event.x, @event.y]
         #map = $map_factory.getMap(position[0])
@@ -521,7 +591,8 @@ class BerryPlantData
 
     def getWeedGrowthChance
         return 0 unless Settings::BERRY_USE_WEED_MECHANICS
-        weeds_chance =  Settings::BERRY_MULCHES_IMPACTING_WEEDS[@mulch_id] || Settings::BERRY_WEED_GROWTH_CHANCE
+        weeds_chance = Settings::BERRY_MULCHES_IMPACTING_WEEDS[@mulch_id] || Settings::BERRY_WEED_GROWTH_CHANCE
+        weeds_chance += @soil[:weed_chance] if @soil
         weeds_chance += getWateringCansUsedTraits(:weed_chance) if @event
         return weeds_chance
     end
@@ -530,6 +601,7 @@ class BerryPlantData
         return 0 unless Settings::BERRY_USE_PEST_MECHANICS
         pests_chance =  Settings::BERRY_MULCHES_IMPACTING_PESTS[@mulch_id] || Settings::BERRY_PEST_APPEAR_CHANCE
         pests_chance += Settings::BERRY_HAS_WEEDS_TRAITS[:pest_chance] if Settings::BERRY_USE_WEED_MECHANICS && @event && @weeds
+        pests_chance += @soil[:pest_chance] if @soil
         pests_chance += getWateringCansUsedTraits(:pest_chance) if @event
         return pests_chance
     end
@@ -583,20 +655,26 @@ def pbBerryPlantOrig
         interp.setVariable(berry_plant)
     end
     berry = berry_plant.berry_id
+    planted_item = berry_plant.seed_id ? berry_plant.seed_id : berry
     # Interact with the event based on its growth
     if berry_plant.grown?
         this_event.turn_up   # Stop the event turning towards the player
-        berry_plant.reset if pbPickBerry(berry, berry_plant.berry_yield)
+        berry_yield = berry_plant.berry_yield
+        if pbPickBerry(berry, berry_yield)
+            berry_plant.reset
+            pbDropBerrySeeds(berry, berry_yield)
+        end
         return
     elsif berry_plant.growing?
         berry_name = GameData::Item.get(berry).name
         case berry_plant.growth_stage
         when 1   # X planted
             this_event.turn_down   # Stop the event turning towards the player
+            planted_item_name = GameData::Item.get(planted_item).name
             if berry_name.starts_with_vowel?
-                pbMessage(_INTL("An {1} was planted here.", berry_name))
+                pbMessage(_INTL("An {1} was planted here.", planted_item_name))
             else
-                pbMessage(_INTL("A {1} was planted here.", berry_name))
+                pbMessage(_INTL("A {1} was planted here.", planted_item_name))
             end
         when 2   # X sprouted
             this_event.turn_down   # Stop the event turning towards the player
@@ -634,8 +712,8 @@ def pbBerryPlantOrig
         if berry_plant.mulch_id
             pbMessage(_INTL("{1} has been laid down.", GameData::Item.get(berry_plant.mulch_id).name))
         else
-            case pbMessage(_INTL("It's soft, earthy soil."),
-                       [_INTL("Fertilize"), _INTL("Plant Berry"), _INTL("Exit")], -1)
+            case pbMessage(_INTL("It's {1} soil.", (berry_plant.soil ? berry_plant.soil[:planting_description] : _INTL("soft, earthy"))),
+                       [_INTL("Fertilize"), _INTL("Plant #{(Settings::BERRY_USE_BERRY_SEEDS ? "Berry Seed" : "Berry")}"), _INTL("Exit")], -1)
             when 0   # Fertilize
                 mulch = nil
                 pbFadeOutIn do
@@ -661,29 +739,63 @@ def pbBerryPlantOrig
         end
     else
         # Old mechanics
-        return if !pbConfirmMessage(_INTL("It's soft, loamy soil. Want to plant a berry?"))
+        return if !pbConfirmMessage(_INTL("It's {1} soil. Want to plant a #{(Settings::BERRY_USE_BERRY_SEEDS ? "berry seed" : "berry")}?", (berry_plant.soil ? berry_plant.soil[:planting_description] : _INTL("soft, loamy"))))
         ask_to_plant = false
     end
-    if !ask_to_plant || pbConfirmMessage(_INTL("Want to plant a Berry?"))
+    if !ask_to_plant || pbConfirmMessage(_INTL("Want to plant a #{(Settings::BERRY_USE_BERRY_SEEDS ? "Berry Seed" : "Berry")}?"))
+        seed = nil
+        planted_item = nil
         pbFadeOutIn do
             scene = PokemonBag_Scene.new
             screen = PokemonBagScreen.new(scene, $bag)
-            berry = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item).is_berry? })
+            if Settings::BERRY_USE_BERRY_SEEDS
+                seed = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item).is_berry_seed? && GameData::Item.get(item).can_plant? })
+                if seed
+                    if Settings::BERRY_MYSTERY_SEED_POOLS[seed]
+                        pool = Settings::BERRY_MYSTERY_SEED_POOLS[seed]
+                        pool.sort! { |a, b| b[1] <=> a[1] }
+                        chance_total = 0
+                        pool.each { |a| chance_total += a[1] }
+                        rnd = rand(chance_total)
+                        pool.each do |b|
+                            rnd -= b[1]
+                            next if rnd >= 0
+                            berry = b[0]
+                            planted_item = seed
+                            break
+                        end
+                    elsif seed.to_s.include?("_SEED")
+                        berry = seed.to_s.sub("_SEED", "").to_sym 
+                        planted_item = seed
+                    end
+                end
+            else
+                berry = screen.pbChooseItemScreen(proc { |item| GameData::Item.get(item).is_berry? && GameData::Item.get(item).can_plant? })
+                planted_item = berry
+            end
         end
         if berry
+            planted_item = berry if planted_item.nil?
             $stats.berries_planted += 1
-            berry_plant.plant(berry)
-            $bag.remove(berry)
-            if Settings::NEW_BERRY_PLANTS
-                pbMessage(_INTL("The {1} was planted in the soft, earthy soil.",
-                                GameData::Item.get(berry).name))
-            elsif GameData::Item.get(berry).name.starts_with_vowel?
-                pbMessage(_INTL("{1} planted an {2} in the soft loamy soil.",
-                                $player.name, GameData::Item.get(berry).name))
+            berry_plant.plant(berry, seed)
+            if Settings::BERRY_USE_BERRY_SEEDS && seed
+                $bag.remove(seed)
             else
-                pbMessage(_INTL("{1} planted a {2} in the soft loamy soil.",
-                                $player.name, GameData::Item.get(berry).name))
+                $bag.remove(berry)
             end
+            if Settings::NEW_BERRY_PLANTS
+                pbMessage(_INTL("The {1} was planted in the {2} soil.", 
+                                GameData::Item.get(planted_item).name, (berry_plant.soil ? berry_plant.soil[:planting_description] : _INTL("soft, earthy"))))
+            elsif GameData::Item.get(planted_item).name.starts_with_vowel?
+                pbMessage(_INTL("{1} planted an {2} in the {3} soil.",
+                                $player.name, GameData::Item.get(planted_item).name,
+                                (berry_plant.soil ? berry_plant.soil[:planting_description] : _INTL("soft, loamy"))))
+            else
+                pbMessage(_INTL("{1} planted a {2} in the {3} soil.",
+                                $player.name, GameData::Item.get(planted_item).name,
+                                (berry_plant.soil ? berry_plant.soil[:planting_description] : _INTL("soft, loamy"))))
+            end
+			
         end
     end
 end
@@ -735,18 +847,6 @@ def pbBerryPlantWater(berry_plant)
     end
     pbMessage(_INTL("The {1} is now empty.",GameData::Item.get(cans[cmd]).name)) if Settings::BERRY_WATERING_MUST_FILL && pbGetWateringCanLevel(cans[cmd]).is_a?(Integer) &&
             pbGetWateringCanLevel(cans[cmd]) <= 0
-
-        # break if !pbConfirmMessage(_INTL("Want to sprinkle some water with the {1}?",
-        #                                 GameData::Item.get(item).name))
-        # berry_plant.water
-        # pbMessage(_INTL("{1} watered the plant.", $player.name) + "\\wtnp[40]")
-        # if Settings::NEW_BERRY_PLANTS
-        #     pbMessage(_INTL("There! All happy!"))
-        # else
-        #     pbMessage(_INTL("The plant seemed to be delighted."))
-        # end
-        # break
-
 end
 
 def pbGetWateringCanLevel(can, string = false)
@@ -792,9 +892,114 @@ end
 #alias tdw_berry_improvements_berry_plant pbBerryPlant
 def pbBerryPlant
     berry_plant = pbMapInterpreter.getVariable
+    if $DEBUG && Input.press?(Input::CTRL) && berry_plant
+        loop do
+            cmds = [_INTL("Plant Info"),_INTL("Make Fully Grown"),_INTL("Reset Plant"), _INTL("Continue")]
+            help = [_INTL("View info about the plant event."), _INTL("Make the plant fully grown and ready to harvest."), 
+                        _INTL("Reset the entire plant (will clear all data)."), _INTL("Continue.")]
+            cmd = pbShowCommandsWithHelp(nil, cmds, help, cmds.length, cmds.length - 1)
+            if cmd == 0
+                infowindow = Window_AdvancedTextPokemon.new("")
+                infowindow.viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+                infowindow.x        = 0
+                infowindow.y        = 0
+                infowindow.width    = Graphics.width
+                infowindow.height   = Graphics.height
+                overlay = BitmapSprite.new(Graphics.width, Graphics.height, infowindow.viewport)
+                overlay.z = infowindow.z + 1
+                pbSetSmallFont(overlay.bitmap)
+                textpos = []
+                textpos.push(_INTL("Zone: {1}", berry_plant.plant_zone || "None") + "  |  " + _INTL("Map Location: {1}", berry_plant.town_map_location))
+                if berry_plant.soil
+                    textpos.push(_INTL("Soil: {1}  |  Mulch: {2}", berry_plant.soil[:name], berry_plant.mulch_id ? GameData::Item.get(berry_plant.mulch_id).name : "None"))
+                else
+                    textpos.push(_INTL("Mulch: {1}", berry_plant.mulch_id ? GameData::Item.get(berry_plant.mulch_id).name : "None"))
+                end
+                if berry_plant.planted?
+                    if berry_plant.seed_id
+                        textpos.push(_INTL("Seed: {1}", GameData::Item.get(berry_plant.berry_id).name) + "  |  " + 
+                                    _INTL("Current Yield: {1}", berry_plant.berry_yield))
+                    else
+                        textpos.push(_INTL("Berry: {1}", GameData::Item.get(berry_plant.berry_id).name) + "  |  " + 
+                                    _INTL("Current Yield: {1}", berry_plant.berry_yield))
+                    end
+                    textpos.push(_INTL("Stage: {1}", berry_plant.growth_stage) + "  |  " + 
+                                _INTL("Hrs per stage: {1}", berry_plant.debug_info[:time_per_stage]) + "  |  " + 
+                                _INTL("Max replants: {1}", berry_plant.debug_info[:max_replants]))
+                    textpos.push(_INTL("Moisture: {1}%  |  Dry rate: {2}%/hr", berry_plant.moisture_level, berry_plant.debug_info[:drying_per_hour]))
+                    textpos.push(_INTL("Fully grown stage count: {1}", berry_plant.debug_info[:stages_fully_grown]))
+                    textpos.push(_INTL("Exposed to Pref Weather?: {1}", berry_plant.exposed_to_preferred_weather))
+
+                    if Settings::BERRY_PREFERRED_ZONES_ENABLED && Settings::BERRY_UNPREFERRED_ZONES_ENABLED
+                        textpos.push(_INTL("In Pref Zone?: {1}", berry_plant.preferred_zone) + "  |  " + _INTL("In Unpref Zone?: {1}", berry_plant.unpreferred_zone))
+                    elsif Settings::BERRY_PREFERRED_ZONES_ENABLED
+                        textpos.push(_INTL("In Pref Zone?: {1}", berry_plant.preferred_zone))
+                    elsif Settings::BERRY_UNPREFERRED_ZONES_ENABLED
+                        textpos.push(_INTL("In Unpref Zone?: {1}", berry_plant.unpreferred_zone))
+                    end
+
+                    textpos.push(_INTL("In Pref Soil?: {1}", berry_plant.preferred_soil)) if Settings::BERRY_PREFERRED_SOIL_ENABLED 
+
+                    if Settings::BERRY_USE_WEED_MECHANICS && Settings::BERRY_USE_PEST_MECHANICS
+                        textpos.push(_INTL("Weed chance: {1}%", berry_plant.getWeedGrowthChance) + "  |  " + _INTL("Pest chance: {1}%", berry_plant.getPestAppearChance))
+                    elsif Settings::BERRY_USE_WEED_MECHANICS
+                        textpos.push(_INTL("Weed chance: {1}%", berry_plant.getWeedGrowthChance))
+                    elsif Settings::BERRY_USE_PEST_MECHANICS
+                        textpos.push(_INTL("Pest chance: {1}%", berry_plant.getPestAppearChance))
+                    end
+
+                    if ![-1, false].include?(Settings::ALLOW_BERRY_MUTATIONS_SWITCH_ID) 
+                        text = _INTL("Mutation chance: {1}%", berry_plant.debug_info[:mutation_chance]) 
+                        text += "  |  " + _INTL("Mutation: {1} [{2}]", GameData::Item.get(berry_plant.mutation_info[0]), berry_plant.mutation_info[1]) if @mutation_info
+                        textpos.push(text)
+                    end
+                    
+                    textpos.push(_INTL("Propagation chance: {1}%", berry_plant.debug_info[:propagation_chance]/10.0)) if ![-1, false].include?(Settings::ALLOW_BERRY_PROPAGATION_SWITCH_ID) 
+                    
+                    if berry_plant.watering_cans_used.empty?
+                        textpos.push(_INTL("Watering cans (with traits) used: None"))
+                    else
+                        berry_plant.watering_cans_used.each_with_index do |c, i| 
+                            text = ""
+                            text += _INTL("Watering cans (with traits) used:") if i == 0
+                            text += _INTL(" {1}", c)
+                            textpos.push(text)
+                        end
+                    end
+                end
+                line_y = 16
+                textpos.each_with_index do |t, i|
+                    textpos[i] = [t, 16, line_y + i*25, 0, MessageConfig::DARK_TEXT_MAIN_COLOR, MessageConfig::DARK_TEXT_SHADOW_COLOR]
+                end
+                pbDrawTextPositions(overlay.bitmap, textpos)
+                loop do
+                    Graphics.update
+                    Input.update
+                    if Input.trigger?(Input::USE) || Input.trigger?(Input::BACK)
+                        infowindow.dispose
+                        overlay.dispose
+                        break
+                    end
+                end
+            elsif cmd == 1
+                    berry_plant = pbMapInterpreter.getVariable
+                    berry_plant.growth_stage = GameData::BerryPlant::NUMBER_OF_GROWTH_STAGES + 1
+                    pbMessage(_INTL("The berry plant is ready to harvest."))
+            elsif cmd == 2
+                if pbConfirmMessageSerious(_INTL("Are you sure you want to reset all data for this plant?"))
+                    pbMapInterpreter.setVariable(BerryPlantData.new(pbMapInterpreter.get_self))
+                    berry_plant = pbMapInterpreter.getVariable
+                    pbMessage(_INTL("Berry plant reset."))
+                end
+            else
+                break
+            end
+        end
+    end
     not_planted = !berry_plant&.planted?
     pbBerryPlantWitheredItem
     pbPestInteraction
+    return if $game_switches[Settings::STARTING_OVER_SWITCH]
     if berry_plant&.mutated_berry_info
         pbBerryPlantWithMutation
         if Settings::BERRY_SHOW_WATERING_ANIMATION && $game_player.berry_watering
@@ -809,11 +1014,14 @@ def pbBerryPlant
         pbOtherInteractions if !not_planted
     end
     if Settings::BERRY_PREFERRED_ZONE_WARNING && not_planted && berry_plant && 
-                berry_plant.berry_id && berry_plant.plant_zone
-        if GameData::BerryData.get(berry_plant.berry_id).preferred_zones.include?(berry_plant.plant_zone)
-            pbMessage(_INTL("The {1} seemed happy to be planted here!", GameData::Item.get(berry_plant.berry_id).name))
-        elsif GameData::BerryData.get(berry_plant.berry_id).unpreferred_zones.include?(berry_plant.plant_zone)
-            pbMessage(_INTL("The {1} didn't seem happy to be planted here...", GameData::Item.get(berry_plant.berry_id).name))
+                berry_plant.berry_id && (berry_plant.plant_zone || berry_plant.soil)
+        planted_item_id = (Settings::BERRY_USE_BERRY_SEEDS && berry_plant.seed_id) ? berry_plant.seed_id : berry_plant.berry_id
+        if berry_plant.plant_zone && pbBerryPreferredZonesEnabled? && GameData::BerryData.get(berry_plant.berry_id).preferred_zones.include?(berry_plant.plant_zone)
+            pbMessage(_INTL("The {1} seemed happy to be planted here!", GameData::Item.get(planted_item_id).name))
+        elsif berry_plant.plant_zone && pbBerryUnpreferredZonesEnabled? && GameData::BerryData.get(berry_plant.berry_id).unpreferred_zones.include?(berry_plant.plant_zone)
+            pbMessage(_INTL("The {1} didn't seem happy to be planted here...", GameData::Item.get(planted_item_id).name))
+        elsif berry_plant.soil && pbBerryPreferredSoilEnabled? && GameData::BerryData.get(berry_plant.berry_id).preferred_soil == berry_plant.soil[:id]
+            pbMessage(_INTL("The {1} seemed happy to be planted here!", GameData::Item.get(planted_item_id).name))
         end
     end
 end
@@ -826,7 +1034,11 @@ def pbBerryPlantWithMutation
     # Interact with the event based on its growth
     if berry_plant.grown?
         this_event.turn_up   # Stop the event turning towards the player
-        berry_plant.reset if pbPickBerryWithMutation(berry, berry_plant.berry_yield, berry_plant.mutated_berry_info)
+        berry_yield = berry_plant.berry_yield
+        if pbPickBerryWithMutation(berry, berry_yield, berry_plant.mutated_berry_info)
+            berry_plant.reset 
+            pbDropBerrySeeds(berry, berry_yield)
+        end
         return
     elsif berry_plant.growing?
         berry_name = GameData::Item.get(berry).name
@@ -912,13 +1124,13 @@ def pbPickBerryWithMutation(berry, qty = 1, mutation_info)
     pocket = berry.pocket
     pbMessage(_INTL("{1} put them in\\nyour Bag's <icon=bagPocket{2}>\\c[1]{3}\\c[0] Pocket.\1", $player.name, pocket, PokemonBag.pocket_names[pocket - 1]))
     berry_plant = pbMapInterpreter.getVariable
-    berry_plant.persistent = true if Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0 && berry_plant && berry_plant.replant_count < GameData::BerryPlant::NUMBER_OF_REPLANTS && 
+    berry_plant.persistent = true if Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0 && berry_plant && berry_plant.replant_count < berry_plant.max_replant_count && 
             rand(100) < Settings::BERRY_PERSISTENT_PLANT_CHANCE
     unless berry_plant&.persistent
         if Settings::NEW_BERRY_PLANTS
-            pbMessage(_INTL("The soil returned to its soft and earthy state."))
+            pbMessage(_INTL("The soil returned to its {1} state.", (berry_plant.soil ? berry_plant.soil[:picked_description] : _INTL("soft and earthy"))))
         else
-            pbMessage(_INTL("The soil returned to its soft and loamy state."))
+            pbMessage(_INTL("The soil returned to its {1} state.", (berry_plant.soil ? berry_plant.soil[:picked_description] : _INTL("soft and loamy"))))
         end
     end
     this_event = pbMapInterpreter.get_self
@@ -965,12 +1177,12 @@ def pbPickBerryPersistent(berry, qty)
         berry_plant.growth_stage = 2
         preplanted = true
     end
-    berry_plant.persistent = true if Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0 && berry_plant && berry_plant.replant_count < GameData::BerryPlant::NUMBER_OF_REPLANTS && will_persist
+    berry_plant.persistent = true if Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0 && berry_plant && berry_plant.replant_count < berry_plant.max_replant_count && will_persist
     unless berry_plant&.persistent
         if Settings::NEW_BERRY_PLANTS
-            pbMessage(_INTL("The soil returned to its soft and earthy state."))
+            pbMessage(_INTL("The soil returned to its {1} state.", (berry_plant.soil ? berry_plant.soil[:picked_description] : _INTL("soft and earthy"))))
         else
-            pbMessage(_INTL("The soil returned to its soft and loamy state."))
+            pbMessage(_INTL("The soil returned to its {1} state.", (berry_plant.soil ? berry_plant.soil[:picked_description] : _INTL("soft and loamy"))))
         end
     end
     this_event = pbMapInterpreter.get_self
@@ -996,14 +1208,10 @@ def pbPestInteraction
         end
     end
     if Settings::BERRY_REPEL_WORKS_ON_PESTS && $PokemonGlobal.repel > 0
-        if $PokemonGlobal.repel_item
-            pbMessage(_INTL("A Pokémon jumped out, but the {1} made it run away!",GameData::Item.get($PokemonGlobal.repel_item).name))
-        else
-            pbMessage(_INTL("A Pokémon jumped out, but the repellent made it run away!"))
-        end
+        pbMessage(_INTL("A Pokémon jumped out, but the repellent made it run away!"))
     else
         pbMessage(_INTL("A Pokémon jumped out at you!"))
-        pbBerryPlantPestRandomEncounter(GameData::BerryData.get(berry).color)
+        pbBerryPlantPestRandomEncounter(berry)
     end
     berry_plant.pests = false
     berry_plant.pests_timer = pbGetTimeNow.to_i
@@ -1014,13 +1222,26 @@ def pbOtherInteractions
     berry = berry_plant.berry_id
     # Dig Up
     if berry_plant.growing? && berry_plant.growth_stage == 1 && pbCanDigUpBerry?
-        if pbConfirmMessage(_INTL("You may be able to dig up the berry. Dig up the {1}?", GameData::Item.get(berry).name))
-            berry_plant.reset
-            if rand(100) < Settings::BERRY_DIG_UP_KEEP_CHANCE
-                $bag.add(berry)
-                pbMessage(_INTL("The dug up {1} was in good enough condition to keep.",GameData::Item.get(berry).name))
-            else
-                pbMessage(_INTL("The dug up {1} broke apart in your hands.",GameData::Item.get(berry).name))
+        if berry_plant.seed_id
+            if pbConfirmMessageSerious(_INTL("You may be able to dig up the seed. Dig up the {1}?", GameData::Item.get(berry_plant.seed_id).name))
+                seed = berry_plant.seed_id
+                berry_plant.reset
+                if rand(100) < Settings::BERRY_DIG_UP_KEEP_CHANCE
+                    $bag.add(seed)
+                    pbMessage(_INTL("The dug up {1} was in good enough condition to keep.", GameData::Item.get(seed).name))
+                else
+                    pbMessage(_INTL("The dug up {1} broke apart in your hands.", GameData::Item.get(seed).name))
+                end
+            end
+        else
+            if pbConfirmMessageSerious(_INTL("You may be able to dig up the berry. Dig up the {1}?", GameData::Item.get(berry).name))
+                berry_plant.reset
+                if rand(100) < Settings::BERRY_DIG_UP_KEEP_CHANCE
+                    $bag.add(berry)
+                    pbMessage(_INTL("The dug up {1} was in good enough condition to keep.",GameData::Item.get(berry).name))
+                else
+                    pbMessage(_INTL("The dug up {1} broke apart in your hands.",GameData::Item.get(berry).name))
+                end
             end
         end
     end
@@ -1152,70 +1373,7 @@ class PokemonRegionMap_Scene
         return pbMapShowBerries?
     end
         
-    if PluginManager.installed?("Arcky's Region Map") 
-        def berryModeID
-            return 3 if PluginManager.installed?("Arcky's Region Map","1.2") 
-            return 0
-        end
-        
-        alias tdw_berry_improvements_map_add addFlyIconSprites
-        def addFlyIconSprites
-            tdw_berry_improvements_map_add
-            addBerryIconSprites if allowShowingBerries
-        end
-
-        alias tdw_berry_improvements_map_refresh refreshFlyScreen
-        def refreshFlyScreen
-            tdw_berry_improvements_map_refresh
-            refreshBerryScreen if allowShowingBerries
-        end
-
-        def addBerryIconSprites
-            if !@spritesMap["BerryIcons"]
-                @berryIcons = {}
-                regionID = -1
-                if @region >= 0 && @playerPos && @region != @playerPos[0]
-                    regionID = @region
-                elsif @playerPos
-                    regionID = @playerPos[0]
-                end
-                berryPlants = pbForceUpdateAllBerryPlants(mapOnly: true, region: regionID, returnArray: true)
-                settings = Settings::BERRIES_ON_MAP_SHOW_PRIORITY
-                berryPlants.each do |plant|
-                    img = 999
-                    settings.each_with_index { |set, i|
-                        if set == :ReadyToPick && plant.grown? then img = i
-                        elsif set == :HasPests && plant.pests then img = i
-                        elsif set == :NeedsWater && plant.moisture_stage == 0 then img = i
-                        elsif set == :HasWeeds && plant.weeds then img = i
-                        end
-                        break if img != 999
-                    }
-                    if @berryIcons[plant.town_map_location]
-                        @berryIcons[plant.town_map_location] = img if img < @berryIcons[plant.town_map_location]
-                    else
-                        @berryIcons[plant.town_map_location] = img
-                    end
-                end
-                @mapHeight = @mapHeigth if @mapHeigth
-                @spritesMap["BerryIcons"] = BitmapSprite.new(@mapWidth, @mapHeight, @viewportMap)
-                @spritesMap["BerryIcons"].x = @spritesMap["map"].x
-                @spritesMap["BerryIcons"].y = @spritesMap["map"].y
-                @spritesMap["BerryIcons"].z = 59
-                @spritesMap["BerryIcons"].visible = @mode == berryModeID
-            end
-            @berryIcons.each { |key, value|
-                conversion = {:NeedsWater => "mapBerryDry", :ReadyToPick => "mapBerryReady", 
-                        :HasPests => "mapBerryPest", :HasWeeds => "mapBerryWeeds"}[settings[value]] || "mapBerry"
-                pbDrawImagePositions(@spritesMap["BerryIcons"].bitmap,
-                  [[pbGetBerryMapIcon(conversion), pointXtoScreenX(key[1]), pointYtoScreenY(key[2])]])
-            }
-        end
-
-        def refreshBerryScreen
-            @spritesMap["BerryIcons"].visible = @mode == berryModeID
-        end
-    else
+    if !PluginManager.installed?("Arcky's Region Map") 
         alias tdw_berry_improvements_map_fy_refresh refresh_fly_screen
         def refresh_fly_screen
             tdw_berry_improvements_map_fy_refresh
@@ -1243,10 +1401,10 @@ class PokemonRegionMap_Scene
                     end
                     break if img != 999
                 }
-                if @berryIcons[plant.town_map_location]
-                    @berryIcons[plant.town_map_location] = img if img < @berryIcons[plant.town_map_location]
+                if berryIcons[plant.town_map_location]
+                    berryIcons[plant.town_map_location] = img if img < berryIcons[plant.town_map_location]
                 else
-                    @berryIcons[plant.town_map_location] = img
+                    berryIcons[plant.town_map_location] = img
                 end
             end
             k = 0
@@ -1282,6 +1440,26 @@ class PokemonRegionMap_Scene
             return "Graphics/UI/Berry Improvements/#{id}"
         else
             return "Graphics/Pictures/Berry Improvements/#{id}"
+        end
+    end
+end
+
+#===============================================================================
+# Moisture Graphic
+#===============================================================================
+
+class BerryPlantMoistureSprite
+    alias tdw_berry_improvements_moisture_update_graphic update_graphic
+    def update_graphic
+        if @event&.variable && @event.variable.is_a?(BerryPlantData) && @event.variable.soil && @event.variable.soil[:moisture_graphic_ext]
+            case @moisture_stage
+            when -1 then @sprite.setBitmap("")
+            when 0  then @sprite.setBitmap("Graphics/Characters/berrytreedry#{@event.variable.soil[:moisture_graphic_ext]}")
+            when 1  then @sprite.setBitmap("Graphics/Characters/berrytreedamp#{@event.variable.soil[:moisture_graphic_ext]}")
+            when 2  then @sprite.setBitmap("Graphics/Characters/berrytreewet#{@event.variable.soil[:moisture_graphic_ext]}")
+            end
+        else
+            tdw_berry_improvements_moisture_update_graphic
         end
     end
 end
@@ -1325,8 +1503,12 @@ class BerryPlantMulchSprite
     end
   
     def update_graphic
-        if @mulch  
-            @sprite.setBitmap("Graphics/Characters/#{Settings::BERRY_JUST_MULCH_GRAPHIC}")
+        if @mulch
+            if @event&.variable && @event.variable.is_a?(BerryPlantData) && @event.variable.soil && @event.variable.soil[:moisture_graphic_ext]
+                @sprite.setBitmap("Graphics/Characters/#{Settings::BERRY_JUST_MULCH_GRAPHIC}#{@event.variable.soil[:moisture_graphic_ext]}")
+            else
+                @sprite.setBitmap("Graphics/Characters/#{Settings::BERRY_JUST_MULCH_GRAPHIC}")
+            end
         else
             @sprite.setBitmap("") 
         end
@@ -1430,6 +1612,10 @@ def pbBerryUnpreferredZonesEnabled?
     return PluginManager.installed?("TDW Berry Core and Dex") && Settings::BERRY_UNPREFERRED_ZONES_ENABLED
 end
 
+def pbBerryPreferredSoilEnabled?
+    return PluginManager.installed?("TDW Berry Core and Dex","1.6") && Settings::BERRY_PREFERRED_SOIL_ENABLED
+end
+
 #===============================================================================
 # Settings Checks
 #===============================================================================
@@ -1495,8 +1681,46 @@ def pbMapShowBerries?
     return switch
 end
 
+def pbGetBerrySeedDrops(berry_id, qty)
+    seed_id = GameData::Item.try_get((berry_id.to_s + "_SEED").to_sym)
+    return nil unless seed_id
+    seed_id = seed_id.id
+    if Settings::BERRY_SEED_DROP_OVERRIDES[berry_id]
+        chance = Settings::BERRY_SEED_DROP_OVERRIDES[berry_id][:chance] || Settings::BERRY_SEED_DROP_CHANCE || 0
+        amt = Settings::BERRY_SEED_DROP_OVERRIDES[berry_id][:amount] || Settings::BERRY_SEED_DROP_AMOUNT || 0
+    else
+        chance = Settings::BERRY_SEED_DROP_CHANCE || 0
+        amt = Settings::BERRY_SEED_DROP_AMOUNT || 0
+    end
+    return nil unless rand(100) < chance
+    if amt.is_a?(Array)
+        val_1 = (amt[0] == :Yield ? qty : amt[0])
+        val_2 = (amt[1] == :Yield ? qty : amt[1])
+        if val_2 < val_1
+            amt = rand(val_2..val_1)
+        else
+            amt = rand(val_1..val_2)
+        end
+    elsif amt == :Yield
+        amt = qty
+    end
+    return nil unless amt > 0
+    return [seed_id, amt]
+end
+
+def pbDropBerrySeeds(berry_id, berry_yield)
+    return false unless Settings::BERRY_USE_BERRY_SEEDS
+    drops = pbGetBerrySeedDrops(berry_id, berry_yield)
+    if drops && $bag.can_add?(drops[0], drops[1])
+        pbMessage(_INTL("Oh, something dropped!"))
+        pbReceiveItem(drops[0], drops[1])
+        return true
+    end
+    return false
+end
+
 #===============================================================================
-# Watering sprites
+# Watering sprites, Seed check
 #===============================================================================
 
 module GameData
@@ -1517,6 +1741,15 @@ module GameData
             return @watering_charset
         end
 
+    end
+
+    class Item
+        def is_berry_seed?; return has_flag?("BerrySeed"); end
+
+        def can_plant?
+            return false if has_flag?("NoPlant")
+            return true
+        end
     end
 end
 

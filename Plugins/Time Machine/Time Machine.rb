@@ -1391,6 +1391,10 @@ class TimeMachinePokemonStorageScreen
     #elsif pokemon.cannot_release
     #  pbDisplay(_INTL("{1} refuses to leave you!", pokemon.name))
     #  return false
+	elsif pokemon.species == :FLOETTE && pokemon.form == 5
+		pbDisplay(_INTL("You cannot transfer Eternal Floette from a save file."))
+		pbDisplay(_INTL("Use Mystery Gift from your Blukberry Phone to receive Eternal Floette."))
+		return false
     end
     if box == -1 && pbAbleCount <= 1 && pbAble?(pokemon) && !heldpoke
       #pbPlayBuzzerSE

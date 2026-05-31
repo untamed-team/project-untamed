@@ -205,16 +205,10 @@ class Battle::Move
         elsif target.hasActiveItem?(:FOCUSSASH) && target.hp == target.totalhp
           target.damageState.focusSash = true
           damage -= 1
-        elsif target.hasActiveItem?(:FOCUSBAND) && @battle.pbRandom(100) < 10
+        elsif target.hasActiveItem?(:FOCUSBAND) && @battle.pbRandom(100) < 10 &&
+              !@battle.wasUserItemActivated?(target)
           target.damageState.focusBand = true
           damage -= 1
-        elsif Settings::AFFECTION_EFFECTS && @battle.internalBattle &&
-              target.pbOwnedByPlayer? && !target.mega?
-          chance = [0, 0, 0, 10, 15, 25][target.affection_level]
-          if chance > 0 && @battle.pbRandom(100) < chance
-            target.damageState.affection_endured = true
-            damage -= 1
-          end
         end
       end
     end
@@ -332,7 +326,7 @@ class Battle::Move
       end
       @battle.pbHideAbilitySplash(target)
       target.pbChangeForm(1, _INTL("{1}'s disguise was busted!", target.pbThis))
-      target.pbReduceHP(target.totalhp / 8, false) if Settings::MECHANICS_GENERATION >= 8
+      target.pbReduceHP(target.totalhp / 8, false)
     elsif target.damageState.iceFace
       @battle.pbShowAbilitySplash(target)
       if !Battle::Scene::USE_ABILITY_SPLASH
@@ -357,8 +351,7 @@ class Battle::Move
     elsif target.damageState.focusBand
       @battle.pbCommonAnimation("UseItem", target)
       @battle.pbDisplay(_INTL("{1} hung on using its Focus Band!", target.pbThis))
-    elsif target.damageState.affection_endured
-      @battle.pbDisplay(_INTL("{1} toughed it out so you wouldn't feel sad!", target.pbThis))
+      @battle.activateUserItem(target)
     end
   end
 

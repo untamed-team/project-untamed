@@ -173,6 +173,39 @@ class Battle
         break
       end
       next if advance
+      allBattlers.each do |battler|
+        next if !battler
+        next if battler.fainted?
+        next unless battler.hasActiveAbility?(:EMERGENCYEXIT) && 
+                    battler.effects[PBEffects::EmergencyCoward]
+        # In wild battles
+        if wildBattle?
+          next if battler.opposes? && pbSideBattlerCount(battler.index) > 1
+          next if !pbCanRun?(battler.index)
+          pbShowAbilitySplash(battler, true)
+          pbHideAbilitySplash(battler)
+          pbSEPlay("Battle flee")
+          pbDisplay(_INTL("{1} fled from battle!", battler.pbThis))
+          @decision = 3   # Escaped
+        else
+          # In trainer battles
+          next if pbAllFainted?(battler.idxOpposingSide)
+          next if !pbCanSwitch?(battler.index) # Battler can't switch out
+          next if !pbCanChooseNonActive?(battler.index) # No Pokémon can switch in
+          pbShowAbilitySplash(battler, true)
+          pbHideAbilitySplash(battler)
+          pbDisplay(_INTL("{1} went back to {2}!", battler.pbThis, pbGetOwnerName(battler.index)))
+          if @endOfRound # Just switch out
+            scene.pbRecall(battler.index) if !battler.fainted?
+            battler.pbAbilitiesOnSwitchOut # Inc. primordial weather check
+          end
+          newPkmn = pbGetReplacementPokemonIndex(battler.index) # Owner chooses
+          next if newPkmn < 0 # Shouldn't ever do this
+          pbRecallAndReplace(battler.index, newPkmn)
+          pbClearChoice(battler.index) # Replacement Pokémon does nothing this round
+          pbOnBattlerEnteringBattle(battler.index)
+        end
+      end
       # All Pokémon have moved; end the loop
       break
     end

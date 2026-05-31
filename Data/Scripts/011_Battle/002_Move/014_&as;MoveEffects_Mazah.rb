@@ -59,7 +59,6 @@ class Battle::Move::TitanWrath < Battle::Move
   end
   
   def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
-    userTypes = user.pbTypes(true)
     type_moves = {
       special: {
         :NORMAL => :HYPERBEAM, 
@@ -76,7 +75,7 @@ class Battle::Move::TitanWrath < Battle::Move
     }
   
     category = @calcCategory == 1 ? :special : :physical
-    type = userTypes[0]
+    type = pbBaseType(user)
     id = type_moves[category][type] if type_moves[category][type] && 
                                        GameData::Move.exists?(type_moves[category][type])
     super
@@ -99,13 +98,12 @@ class Battle::Move::Rebalancing < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    return true if target.SetupMovesUsed.include?(@id)
     targetStats = target.plainStats; highestStatValue = 0
     targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        if !target.pbCanRaiseStatStage?(s.id, target)
+        if !target.pbCanRaiseStatStage?(s.id, target, self, false, true, self)
           @battle.pbDisplay(_INTL("But it failed!"))
           return true 
         end
@@ -127,8 +125,7 @@ class Battle::Move::Rebalancing < Battle::Move
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        target.pbRaiseStatStage(s.id, 1, target, true) if target.pbCanRaiseStatStage?(s.id, target)
-        target.SetupMovesUsed.push(@id)
+        target.pbRaiseStatStage(s.id, 1, target, true, true, self) if target.pbCanRaiseStatStage?(s.id, target, self, true, true, self)
       else
         target.pbLowerStatStage(s.id, 2, target, true) if target.pbCanLowerStatStage?(s.id, target)
       end
@@ -316,7 +313,7 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
     if target.hasActiveAbility?(:ILLUSION)
       Battle::AbilityEffects.triggerOnBeingHit(target.ability, user, target, self, @battle)
     elsif target.effects[PBEffects::Transform]
-      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
+      #blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(target.index)[target.pokemonIndex],false,target,false)
       #target.pbTransform(blankBattler, false) # holy mother of all jank
       oldAbil = target.ability_id
       target.effects[PBEffects::Transform] = false

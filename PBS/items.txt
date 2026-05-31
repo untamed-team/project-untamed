@@ -4791,7 +4791,7 @@ Price = 3000
 FieldUse = TM
 Flags = Fling_90
 Move = WILDCHARGE
-Description = The user shrouds itself in electricity and smashes into its foe. It also damages the user a little.
+Description = The user shrouds itself in electricity and smashes into its foe.
 #-------------------------------
 [TM98]
 Name = TM98
@@ -6716,6 +6716,14 @@ Pocket = 1
 Price = 0
 Flags = MegaStone,Fling_80
 Description = One of a variety of mysterious Mega Stones. Have Ledian hold it, and it will be able to Mega Evolve.
+#-------------------------------
+[CENTISKITE]
+Name = Centiskite
+NamePlural = Centiskite
+Pocket = 1
+Price = 0
+Flags = MegaStone,Fling_80
+Description = One of a variety of mysterious Mega Stones. Have Centiskorch hold it, and it will be able to Mega Evolve.
 #---------------------------------------------------
 #- Do NOT change internal names.
 #---------------------------------------------------
@@ -6973,3 +6981,43 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = An old washing pan. There's treasure inside!
+#-------------------------------
+[SURPRISEMULCH]
+Name = Surprise Mulch
+NamePlural = Surprise Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It causes strange, sudden mutations based on other Berries nearby.
+#-------------------------------
+[ALLUREMULCH]
+Name = Allure Mulch
+NamePlural = Allure Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. Berries that fall from nearby plants can take root in this mulch.
+#-------------------------------
+[RICHMULCH]
+Name = Rich Mulch
+NamePlural = Rich Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It increases the harvest without the need for particularly diligent care.
+#-------------------------------
+[BOOSTMULCH]
+Name = Boost Mulch
+NamePlural = Boost Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It makes the soil dry out faster.
+#-------------------------------
+[AMAZEMULCH]
+Name = Amaze Mulch
+NamePlural = Amaze Mulch
+Pocket = 1
+Price = 200
+Flags = Mulch,Fling_30
+Description = A fertilizer for growing Berries. It increases the harvest, chance of mutations, and drying rate.

@@ -319,6 +319,12 @@ class RotatonaPuzzle
 		#I might need to save event IDs somewhere because restoring values to an event object might vary in result. Event objects could be different values when the game reloads
 		#if I start a new game, then identify puzzle pieces, will the puzzle pieces variable exist if I enter the room again without identifying pieces? If so, I don't need to store event IDs and assign stored values based on event ID
 		$game_map.events.each_value do |event|
+			#if event is still in the middle of changing its direction, position, etc, wait
+			while event.move_route_forcing
+				pbUpdateSceneMap
+				Graphics.update
+			end
+			
 			event.storedPuzzleID = event.id
 			event.storedX = event.x
 			event.storedY = event.y
@@ -339,30 +345,37 @@ class RotatonaPuzzle
 	end #def self.saveEventVariables
 	
 	def self.loadEventPositions
+		Console.echo_warn "Loading event positions"
 		#go through each of the map's current events
 		$game_map.events.each_value do |event|
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
 			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
 				for oldEvent in storedEventsArray
-						if 	event.id == oldEvent.storedPuzzleID
-							Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
-							event.moveto(oldEvent.storedX, oldEvent.storedY)
-							event.direction = oldEvent.storedDirection
+					if event.id == oldEvent.storedPuzzleID
+						Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
 							
-							event.associatedLauncher = event.storedAssociatedLauncher
-							event.associatedOverlay = event.storedAssociatedOverlay
-							event.launcherThisDiscIsDockedIn = event.storedLauncherThisDiscIsDockedIn
-							event.launcherThisDiscWasLaunchedFrom = event.storedLauncherThisDiscWasLaunchedFrom
-							event.discThisLauncherHasDocked = event.storedDiscThisLauncherHasDocked
-							event.discRolling = event.storedDiscRolling
-							event.discTouchingTile = event.storedTouchingTile
-							event.discTurningDirection = event.storedDiscTurningDirection
-							event.discJumping = event.storedDiscJumping
-							event.discLandingSpot = event.storedDiscLandingSpot
-							event.catcherHasDisc = event.storedCatcherHasDisc
-							event.discInCatcher = event.storedDiscInCatcher
-							next
-						end #if event.id == oldEvent.storedPuzzleID
+						#copy old event's properties onto new event's properties							
+						event.moveto(oldEvent.storedX, oldEvent.storedY)
+						event.direction = oldEvent.storedDirection		
+						event.associatedLauncher = oldEvent.storedAssociatedLauncher
+						event.associatedOverlay = oldEvent.storedAssociatedOverlay
+						event.launcherThisDiscIsDockedIn = oldEvent.storedLauncherThisDiscIsDockedIn
+						event.launcherThisDiscWasLaunchedFrom = oldEvent.storedLauncherThisDiscWasLaunchedFrom
+						event.discThisLauncherHasDocked = oldEvent.storedDiscThisLauncherHasDocked
+						event.discRolling = oldEvent.storedDiscRolling
+						event.discTouchingTile = oldEvent.storedTouchingTile
+						event.discTurningDirection = oldEvent.storedDiscTurningDirection
+						event.discJumping = oldEvent.storedDiscJumping
+						event.discLandingSpot = oldEvent.storedDiscLandingSpot
+						event.catcherHasDisc = oldEvent.storedCatcherHasDisc
+						event.discInCatcher = oldEvent.storedDiscInCatcher
+							
+						#replace old event object with new event object
+						#oldEvent = event
+						oldEvent = event	
+							
+						next
+					end #if event.id == oldEvent.storedPuzzleID
 				end #for oldEvent in storedEventsArray
 			end #$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |oldEvent|
 		end #$game_map.events.each_value do |event|
@@ -374,8 +387,8 @@ end #class RotatonaPuzzle
 #######################################
 #on_player_interact with puzzle event
 EventHandlers.add(:on_player_interact, :rototona_puzzle_interact_with_puzzle_event, proc {
-	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
-	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	#skip this check if not on maps with puzzles
+	next if $game_map.map_id != 59 && $game_map.map_id != 120 && $game_map.map_id != 128
 	facingEvent = $game_player.pbFacingEvent
 	RotatonaPuzzle.playerInteract(facingEvent) if facingEvent && facingEvent.name.match(/RotaPuzzle/i) && !RotatonaPuzzle.discRolling?
 })
@@ -392,8 +405,8 @@ EventHandlers.add(:on_frame_update, :rotatona_puzzle_logic_listener, proc {
 
 EventHandlers.add(:on_enter_map, :rotatona_puzzle_get_puzzle_pieces_when_enter_map,
   proc { |_old_map_id|
-	#skip this check if not on Canyon Temple Left and Canyon Temple Right maps
-	next if $game_map.map_id != 59 && $game_map.map_id != 120
+	#skip this check if not on maps with a puzzle
+	next if $game_map.map_id != 59 && $game_map.map_id != 120 && $game_map.map_id != 128
 	#if old map is the same as new map, only identify puzzle pieces and load old values
 	if $game_map.map_id == _old_map_id
 		#restore stored values for events

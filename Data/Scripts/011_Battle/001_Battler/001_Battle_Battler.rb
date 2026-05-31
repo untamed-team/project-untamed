@@ -44,7 +44,7 @@ class Battle::Battler
   attr_accessor :canRestoreIceFace   # Whether Hail started in the round
   attr_accessor :damageState
   attr_accessor :premonitionMove # Premonition #by low
-  attr_accessor :SetupMovesUsed  # setup moves nerf #by low
+  attr_accessor :setupBoosts  # setup moves nerf #by low
   attr_accessor :prepickedMove  # random move for AI #by low
   attr_accessor :tookDirectDmgThisRound # used for eerie presence #by low
   attr_accessor :bossTotalHP # percentage hp fix for bosses #by low
@@ -357,8 +357,9 @@ class Battle::Battler
   def abilityActive?(ignore_fainted = false, check_ability = nil)
     return false if fainted? && !ignore_fainted
     return false if @effects[PBEffects::GastroAcid]
-		return false if self.dizzy? #by low
-    return false if check_ability != :NEUTRALIZINGGAS && self.ability != :NEUTRALIZINGGAS &&
+    #by low
+    return false if self.dizzy? && check_ability != :TANGLEDFEET && !self.abilityMutationList.include?(:TANGLEDFEET)
+    return false if check_ability != :NEUTRALIZINGGAS && !self.abilityMutationList.include?(:NEUTRALIZINGGAS) &&
                     @battle.pbCheckGlobalAbility(:NEUTRALIZINGGAS)
     return true
   end
@@ -439,7 +440,7 @@ class Battle::Battler
     return false if @effects[PBEffects::Embargo] > 0
     return false if @battle.field.effects[PBEffects::MagicRoom] > 0
     return false if @battle.corrosiveGas[@index % 2][@pokemonIndex]
-    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !hasAbilityMutation?
+    return false if hasActiveAbility?(:KLUTZ, ignoreFainted) && !$player.difficulty_mode?("chaos")
     return true
   end
 

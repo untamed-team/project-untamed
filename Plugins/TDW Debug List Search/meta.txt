@@ -1,0 +1,15 @@
+Name       = TDW Debug List Search
+Version    = 1.2
+Essentials = 20.1,21.1
+Credits    = wrigty12, KRLW890
+#============
+# Change log
+#============
+# v1.2
+# Added the search option to a couple more places. Notably, the Add Item debug command.
+#
+# v1.1
+# Fixed crash due to not resetting index after a search is run
+#
+# v1.0
+# Initial Release

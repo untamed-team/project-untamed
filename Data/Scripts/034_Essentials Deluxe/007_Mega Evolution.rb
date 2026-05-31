@@ -93,16 +93,16 @@ end
 # Allows wild Pokemon to Mega Evolve if they are capable and flagged as an ace.
 #-------------------------------------------------------------------------------
 class Battle::AI
-  def pbEnemyShouldMegaEvolve?(idxBattler)
-    return false if @battle.pbScriptedMechanic?(idxBattler, :mega)
-    battler = @battle.battlers[idxBattler]
-    elig = (battler.wild?) ? battler.ace? : true
-    if @battle.pbCanMegaEvolve?(idxBattler) && elig
-      PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
-      return true
-    end
-    return false
-  end
+  #def pbEnemyShouldMegaEvolve?(idxBattler)
+  #  return false if @battle.pbScriptedMechanic?(idxBattler, :mega)
+  #  battler = @battle.battlers[idxBattler]
+  #  elig = (battler.wild?) ? battler.ace? : true
+  #  if @battle.pbCanMegaEvolve?(idxBattler) && elig
+  #    PBDebug.log("[AI] #{battler.pbThis} (#{idxBattler}) will Mega Evolve")
+  #    return true
+  #  end
+  #  return false
+  #end
 end
 
 
@@ -114,10 +114,8 @@ class Battle
     pbPriority.each do |b|
       next if b.wild? # removed "ace" bit, useless
       next unless @choices[b.index][0] == :UseMove && !b.fainted?
-			if !b.hasMegaEvoMutation? #by low
-				owner = pbGetOwnerIndexFromBattlerIndex(b.index)
-				next if @megaEvolution[b.idxOwnSide][owner] != b.index
-			end
+      owner = pbGetOwnerIndexFromBattlerIndex(b.index)
+      next if @megaEvolution[b.idxOwnSide][owner] != b.index
       pbMegaEvolve(b.index)
     end
   end
@@ -140,70 +138,70 @@ class Battle
     return @megaEvolution[side][owner] == -1
   end
   
-  def pbMegaEvolve(idxBattler)
-    battler = @battlers[idxBattler]
-    return if !battler || !battler.pokemon
-    return if !battler.hasMega? || battler.mega?
-    triggers = ["mega", "mega" + battler.species.to_s]
-    battler.pokemon.types.each { |t| triggers.push("mega" + t.to_s) }
-    @scene.pbDeluxeTriggers(idxBattler, nil, triggers)
-    $stats.mega_evolution_count += 1 if battler.pbOwnedByPlayer?
-    old_ability = battler.ability_id
-    if battler.hasActiveAbility?(:ILLUSION)
-      Battle::AbilityEffects.triggerOnBeingHit(battler.ability, nil, battler, nil, self)
-    end
-    if battler.wild?
-      case battler.pokemon.megaMessage
-      when 1
-        pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
-      else
-        pbDisplay(_INTL("{1}'s {2} radiates with Mega energy!", battler.pbThis, battler.itemName))
-      end
-    else
-      trainerName = pbGetOwnerName(idxBattler)
-      case battler.pokemon.megaMessage
-      when 1
-        pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
-      else
-        pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
-                        battler.pbThis, battler.itemName, trainerName, pbGetMegaRingName(idxBattler)))
-      end
-    end
-    if @scene.pbCommonAnimationExists?("MegaEvolution")
-      pbCommonAnimation("MegaEvolution", battler)
-      battler.pokemon.makeMega
-      battler.form = battler.pokemon.form
-      @scene.pbChangePokemon(battler, battler.pokemon)
-      pbCommonAnimation("MegaEvolution2", battler)
-    else 
-      if Settings::SHOW_MEGA_ANIM && $PokemonSystem.battlescene == 0
-        @scene.pbShowMegaEvolution(idxBattler)
-        battler.pokemon.makeMega
-        battler.form = battler.pokemon.form
-        @scene.pbChangePokemon(battler, battler.pokemon)
-      else
-        @scene.pbRevertBattlerStart(idxBattler)
-        battler.pokemon.makeMega
-        battler.form = battler.pokemon.form
-        @scene.pbChangePokemon(battler, battler.pokemon)
-        @scene.pbRevertBattlerEnd
-      end
-    end
-    battler.pbUpdate(true)
-    @scene.pbRefreshOne(idxBattler)
-    megaName = battler.pokemon.megaName
-    megaName = _INTL("Mega {1}", battler.pokemon.speciesName) if nil_or_empty?(megaName)
-    pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
-    side  = battler.idxOwnSide
-    owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
-    @megaEvolution[side][owner] = -2
-    if battler.isSpecies?(:GENGAR) && battler.mega?
-      battler.effects[PBEffects::Telekinesis] = 0
-    end
-    battler.pbOnLosingAbility(old_ability)
-    battler.pbTriggerAbilityOnGainingIt
-    pbCalculatePriority(false, [idxBattler]) if Settings::RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION
-  end
+  #def pbMega Evolve(idxBattler)
+  #  battler = @battlers[idxBattler]
+  #  return if !battler || !battler.pokemon
+  #  return if !battler.hasMega? || battler.mega?
+  #  triggers = ["mega", "mega" + battler.species.to_s]
+  #  battler.pokemon.types.each { |t| triggers.push("mega" + t.to_s) }
+  #  @scene.pbDeluxeTriggers(idxBattler, nil, triggers)
+  #  $stats.mega_evolution_count += 1 if battler.pbOwnedByPlayer?
+  #  old_ability = battler.ability_id
+  #  if battler.hasActiveAbility?(:ILLUSION)
+  #    Battle::AbilityEffects.triggerOnBeingHit(battler.ability, nil, battler, nil, self)
+  #  end
+  #  if battler.wild?
+  #    case battler.pokemon.megaMessage
+  #    when 1
+  #      pbDisplay(_INTL("{1} radiates with Mega energy!", battler.pbThis))
+  #    else
+  #      pbDisplay(_INTL("{1}'s {2} radiates with Mega energy!", battler.pbThis, battler.itemName))
+  #    end
+  #  else
+  #    trainerName = pbGetOwnerName(idxBattler)
+  #    case battler.pokemon.megaMessage
+  #    when 1
+  #      pbDisplay(_INTL("{1}'s fervent wish has reached {2}!", trainerName, battler.pbThis))
+  #    else
+  #      pbDisplay(_INTL("{1}'s {2} is reacting to {3}'s {4}!",
+  #                      battler.pbThis, battler.itemName, trainerName, pbGetMegaRingName(idxBattler)))
+  #    end
+  #  end
+  #  if @scene.pbCommonAnimationExists?("MegaEvolution")
+  #    pbCommonAnimation("MegaEvolution", battler)
+  #    battler.pokemon.makeMega
+  #    battler.form = battler.pokemon.form
+  #    @scene.pbChangePokemon(battler, battler.pokemon)
+  #    pbCommonAnimation("MegaEvolution2", battler)
+  #  else 
+  #    if Settings::SHOW_MEGA_ANIM && $PokemonSystem.battlescene == 0
+  #      @scene.pbShowMegaEvolution(idxBattler)
+  #      battler.pokemon.makeMega
+  #      battler.form = battler.pokemon.form
+  #      @scene.pbChangePokemon(battler, battler.pokemon)
+  #    else
+  #      @scene.pbRevertBattlerStart(idxBattler)
+  #      battler.pokemon.makeMega
+  #      battler.form = battler.pokemon.form
+  #      @scene.pbChangePokemon(battler, battler.pokemon)
+  #      @scene.pbRevertBattlerEnd
+  #    end
+  #  end
+  #  battler.pbUpdate(true)
+  #  @scene.pbRefreshOne(idxBattler)
+  #  megaName = battler.pokemon.megaName
+  #  megaName = _INTL("Mega {1}", battler.pokemon.speciesName) if nil_or_empty?(megaName)
+  #  pbDisplay(_INTL("{1} has Mega Evolved into {2}!", battler.pbThis, megaName))
+  #  side  = battler.idxOwnSide
+  #  owner = pbGetOwnerIndexFromBattlerIndex(idxBattler)
+  #  @megaEvolution[side][owner] = -2
+  #  if battler.isSpecies?(:GENGAR) && battler.mega?
+  #    battler.effects[PBEffects::Telekinesis] = 0
+  #  end
+  #  battler.pbOnLosingAbility(old_ability)
+  #  battler.pbTriggerAbilityOnGainingIt
+  #  pbCalculatePriority(false, [idxBattler]) if Settings::RECALCULATE_TURN_ORDER_AFTER_MEGA_EVOLUTION
+  #end
 
   def pbPrimalReversion(idxBattler)
     battler = @battlers[idxBattler]

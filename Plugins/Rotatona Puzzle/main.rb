@@ -26,6 +26,14 @@
 #13. Disc catcher must have "Always on Top" checked
 #14. Catcher events must be facing up or down if disc is going into it from up or down. Catcher events must be facing left or right if disc is going into it from left or right
 
+############################
+# BUGS
+############################
+
+############################
+# TO DO
+############################
+
 SaveData.register(:rotatona_puzzle) do
   save_value { $rotatona_puzzle }
   load_value { |value|  $rotatona_puzzle = value }
@@ -605,7 +613,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x-2, event.y]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, -2, 0])
 					when 6 #right
 						self.crashRotatona(event, "touched ramp track event, ramp facing left, disc facing right")
 					when 8 #up
@@ -624,7 +632,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x+2, event.y]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, 2, 0])
 					when 8 #up
 						self.crashRotatona(event, "touched ramp track event, ramp facing right, disc facing up")
 					end #case event.direction
@@ -643,7 +651,7 @@ class RotatonaPuzzle
 						event.discLandingSpot = [event.x, event.y-2]
 						pbSEPlay(SE_DISC_JUMP)
 						#PBMoveRoute::Jump, X+, Y+
-						pbMoveRoute(event, [PBMoveRoute::Jump, 0, 2])
+						pbMoveRoute(event, [PBMoveRoute::Jump, 0, -2])
 					end #case event.direction
 				end #case cornerTrackEvent.direction
 				
@@ -731,7 +739,7 @@ class RotatonaPuzzle
 			PBMoveRoute::Wait, 2,
 			PBMoveRoute::DirectionFixOn,
 			PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-		])
+		], true)
 	end #def self.rotateStraightTrack
 
 	def self.switchRamp(event)
@@ -755,6 +763,7 @@ class RotatonaPuzzle
 			newDirection = 2 #down
 			#print "currently looking up, turning down"
 		end
+		#print "event.direction is #{event.direction}"
 		pbSEPlay(SE_SWITCH_RAMP)
 		pbMoveRoute(event, [
 			PBMoveRoute::DirectionFixOff,
@@ -762,7 +771,8 @@ class RotatonaPuzzle
 			PBMoveRoute::Wait, 2,
 			PBMoveRoute::DirectionFixOn,
 			PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-		])
+		], true)
+		#print "event.direction is #{event.direction}"
 	end #def self.switchRamp(event)
 
 	def self.rotateCornerTrack(event,directionString)
@@ -794,7 +804,7 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-			])
+			], true)
 		else #directionString is "left90"
 			case event.direction
 			when 2 #down
@@ -817,7 +827,7 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-			])
+			], true)
 		end #if directionString == "right90"
 	end #def self.rotateCornerTrack(event,dirString)
 
@@ -855,14 +865,14 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-			])
+			], true)
 			#rotate launcher's overlay
 			overlay = event.associatedOverlay
 			pbMoveRoute(overlay, [
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, overlay.direction, 1,
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
-			])
+			], true)
 			
 			self.rotateDockedDisc(event.discThisLauncherHasDocked, newDirection) if !event.discThisLauncherHasDocked.nil?
 		else #directionString is "left90"
@@ -887,14 +897,14 @@ class RotatonaPuzzle
 				PBMoveRoute::Wait, 2,
 				#PBMoveRoute::DirectionFixOn,
 				PBMoveRoute::Graphic, event.character_name, event.character_hue, newDirection, 0
-			])
+			], true)
 			#rotate launcher's overlay
 			overlay = event.associatedOverlay
 			pbMoveRoute(overlay, [
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, overlay.direction, 2,
 				PBMoveRoute::Wait, 2,
 				PBMoveRoute::Graphic, overlay.character_name, overlay.character_hue, newDirection, 0
-			])
+			], true)
 			self.rotateDockedDisc(event.discThisLauncherHasDocked, newDirection) if !event.discThisLauncherHasDocked.nil?
 		end #if directionString == "right90"
 	end #def self.rotateLauncher(event,directionString)
@@ -1075,7 +1085,7 @@ class RotatonaPuzzle
 			PBMoveRoute::Graphic, discEvent.character_name, discEvent.character_hue, 8, transitionPattern,
 			PBMoveRoute::Wait, 2,
 			PBMoveRoute::Graphic, discEvent.character_name, discEvent.character_hue, newDirection, 1
-		])
+		], true)
 	end #def self.rotateDockedDisc(discEvent, newDirection)
 end #class RotatonaPuzzle
 

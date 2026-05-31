@@ -106,7 +106,7 @@ class Battle
 	exp = (a/defeatedBattler.participants.length).floor * haveexpshare
     return 0 if exp <= 0
 	# level cap #by low
-	expvariable = ($game_switches[LOWEREXPGAINSWITCH]) ? 50 : 33
+	expvariable = ($game_switches[LOWEREXPGAIN]) ? 50 : 33
 	truelevel = defeatedBattler.level
 	truelevel = (defeatedBattler.level - 5) if (pkmn.level - defeatedBattler.level) >= 3 && 
 									 	 	 	$player.difficulty_mode?("easy")
@@ -120,7 +120,7 @@ class Battle
 	exp = 0 if pkmn.level - truelevel >= 3 && $player.difficulty_mode?("normal")
 	exp = (originExp * 0.1).floor if exp <= 0 && 
 									 $player.difficulty_mode?("easy") && 
-									!$game_switches[LOWEREXPGAINSWITCH]
+									!$game_switches[LOWEREXPGAIN]
 	exp = (exp / 2).floor if pkmn.level>40
 	exp = 10000 if exp > 10000 && $player.difficulty_mode?("normal")
 	#exp = (exp * 0.2).floor if $game_switches[319]         # custom wild

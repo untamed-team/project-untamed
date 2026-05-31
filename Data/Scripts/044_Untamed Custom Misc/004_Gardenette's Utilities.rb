@@ -1,3 +1,12 @@
+#===============================================================================
+# Global Settings
+#===============================================================================
+module Settings
+  DEMO_NUMBER = 2
+  HOTFIX_NUMBER = 0
+  DEMO_NUMBER_VARIABLE = 51
+end
+
 #######################Confirm Forget Move#######################
 #===============================================================================
 # Confirm Forget Move (Fear not a Misclick!)
@@ -845,6 +854,17 @@ class PokemonEncounters
     return ret
   end
 end #of class
+
+#added by stygma
+GameData::TerrainTag.register({
+  :id                     => :Corn,
+  :id_number              => 18,
+  :shows_grass_rustle     => true,
+  :land_wild_encounters   => true,
+  :battle_environment     => :TallGrass
+})
+
+#See 'GameData::TerrainTag.register({' in 'class TerrainTag' for all terrain tags
 
 #===============================================================================
 # Play Pokemon Cry from Forms Page in Pokedex
@@ -1764,6 +1784,9 @@ EventHandlers.add(:on_enter_map, :setup_new_map,
 )
 
 #===============================================================================
+# Outfit-related
+#===============================================================================
+#===============================================================================
 # Pokecenter Animations (to account for player outfits)
 #===============================================================================
 def playCenterAnimGivePkmn
@@ -1836,6 +1859,32 @@ def playCenterAnimTakePkmn
     PBMoveRoute::TurnUp,
     PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
     PBMoveRoute::Graphic, charset, 0, 8, 0,
+  ])
+end
+
+#===============================================================================
+# Climbing
+#===============================================================================
+def pbClimbOn
+  if $Trainer.male?
+    characterGraphic = "HOMERO_CLIMBING"
+  else
+    characterGraphic = "PEPA_CLIMBING"
+  end
+
+  if $player.outfit > 0
+    characterGraphic = characterGraphic + "_#{$player.outfit}"
+  end
+
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
+  ])
+end
+
+def pbClimbOff
+  characterGraphic = pbGetPlayerCharset(GameData::PlayerMetadata.get($player.character_ID).walk_charset, nil, true)
+  pbMoveRoute($game_player, [
+    PBMoveRoute::Graphic, characterGraphic, 0, 8, 0,
   ])
 end
 
@@ -2032,6 +2081,7 @@ end #def pbDiscardInstanceVariables
 #-----------------------------------------------------------------------------
 # * Crustang Paint Job
 #-----------------------------------------------------------------------------
+CRUSTANG_PAINTJOB_COST = 2000
 def crustangPaintJobNPC
   $game_variables[36] = 0
 
@@ -2093,7 +2143,7 @@ def crustangPaintJobNPC
       #change form
       pkmn.form = new_form
       #subtract money
-      $player.money -= 3000
+      $player.money -= CRUSTANG_PAINTJOB_COST
       pbSEPlay("Mart buy item")
       pbWait(1)
       FollowingPkmn.refresh
@@ -2486,5 +2536,540 @@ class Bitmap
       end
     end
     return new_bitmap
+  end
+end
+
+#############################################
+# Default Trainer Name if One isn't Entered #
+#############################################
+def pbSuggestTrainerName(gender)
+  userName = "Ayylmao"
+  userName = "Homero" if gender == 0 # guy
+  userName = "Peppa" if gender == 1 # gal
+  return userName
+end
+
+#############################################
+# Crustang Riding #
+#############################################
+#Pulled from Overworld Bug Fixes
+#For modifying the bike character set
+class Game_Player < Game_Character
+  def pbGetPlayerCharset(charset, trainer = nil, force = false)
+    trainer = $player if !trainer
+    outfit = (trainer) ? trainer.outfit : 0
+  
+    # --- CRUSTANG MODIFICATION START ---
+    # Check if we are currently looking for the cycle charset
+    meta = GameData::PlayerMetadata.get(trainer&.character_ID || 1)
+    is_cycling = (charset == meta.cycle_charset)
+  
+    # We bypass the cache check if cycling, so it can detect party changes immediately
+    if !is_cycling
+      return nil if !force && $game_player&.charsetData &&
+                  $game_player.charsetData[0] == trainer.character_ID &&
+                  $game_player.charsetData[1] == charset &&
+                  $game_player.charsetData[2] == outfit
+    end
+  
+    $game_player.charsetData = [trainer.character_ID, charset, outfit] if $game_player
+  
+    ret = charset
+  
+    # Logic for Crustang overrides
+    if is_cycling
+      target = trainer.party.find { |p| !p.egg? && p.species == :CRUSTANG }
+      if target
+        colors = ["classic", "orange", "yellow", "green", "blue", "indigo", "purple", "pink", "black", "white"]
+        c_color = colors[target.form] || "classic"
+        c_shiny = target.shiny? ? "s" : "n"
+        path = "Crustang Riding/#{trainer.gender}_#{c_color}_#{c_shiny}"
+      
+        # Verify the file exists before returning it, otherwise use the bike
+        if pbResolveBitmap("Graphics/Characters/" + path)
+          return path
+        end
+      end
+    end
+    # --- CRUSTANG MODIFICATION END ---
+
+    # Original outfit logic
+    if pbResolveBitmap("Graphics/Characters/" + ret + "_" + outfit.to_s)
+      ret = ret + "_" + outfit.to_s
+    end
+    return ret
+  end
+
+  def set_movement_type(type)
+    meta = GameData::PlayerMetadata.get($player&.character_ID || 1)
+    new_charset = nil
+    case type
+    when :fishing
+      new_charset = pbGetPlayerCharset(meta.fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :surf_fishing
+      new_charset = pbGetPlayerCharset(meta.surf_fish_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :diving, :diving_fast, :diving_jumping, :diving_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.dive_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :surfing, :surfing_fast, :surfing_jumping, :surfing_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :surfing_jumping) ? 3 : 4
+      end
+      new_charset = pbGetPlayerCharset(meta.surf_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    
+    when :cycling, :cycling_fast, :cycling_jumping, :cycling_stopped
+      if !@move_route_forcing
+        self.move_speed = (type == :cycling_jumping) ? 3 : 5
+      end
+      
+      # Shadow Logic Integration
+      if $player.party.any? { |p| !p.egg? && p.species == :CRUSTANG }
+        pbSetOverworldShadow("bigShadow")
+      else
+        pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+      end
+      
+      # Fetches Crustang string from the helper above
+      new_charset = pbGetPlayerCharset(meta.cycle_charset, nil, true)
+
+    when :running
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.run_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    when :ice_sliding
+      self.move_speed = 4 if !@move_route_forcing
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+      # Ensure shadow returns to normal
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+    else   # :walking, :jumping, :walking_stopped
+      self.move_speed = 3 if !@move_route_forcing
+      # Ensure shadow returns to normal when walking
+      pbSetOverworldShadow(OWShadowSettings::PLAYER_SHADOW_FILENAME)
+      new_charset = pbGetPlayerCharset(meta.walk_charset)
+    end
+    
+    @character_name = new_charset if new_charset
+    #$game_player&.refresh_charset #commented out as it overrides the run sprite for some reason (and possibly others that haven't been tested). This doesn't seem to be needed to work
+  end
+end
+
+#For modifying the music that plays on the bike
+#def pbMountBike
+#  return if $PokemonGlobal.bicycle
+#  $PokemonGlobal.bicycle = true
+#  $stats.cycle_count += 1
+#  pbUpdateVehicle
+#  bike_bgm = GameData::Metadata.get.bicycle_BGM
+#  pbCueBGM(bike_bgm, 0.5) if bike_bgm
+#  pbPokeRadarCancel
+#end
+
+#-----------------------------------------------------------------------------
+# * Furfrou Trims
+#-----------------------------------------------------------------------------
+FURFROU_TRIM_COST = 500
+TRIM_RULES = {
+  0 => proc { true },
+  1 => proc { true }, #$game_switches[999]
+  2 => proc { true }, #$game_variables[99] >= 1
+  3 => proc { true }, #$player.badge_count >= 1
+  4 => proc { true },
+  5 => proc { true },
+  6 => proc { true },
+  7 => proc { true },
+  8 => proc { false },
+  9 => proc { true }
+}
+TRIM_NAMES = {
+  0 => _INTL("Natural Trim"),
+  1 => _INTL("Heart Trim"),
+  2 => _INTL("Star Trim"),
+  3 => _INTL("Diamond Trim"),
+  4 => _INTL("Debutante Trim"),
+  5 => _INTL("Matron Trim"),
+  6 => _INTL("Dandy Trim"),
+  7 => _INTL("La Reine Trim"),
+  8 => _INTL("Kabuki Trim"),
+  9 => _INTL("Pharaoh Trim")
+}
+
+def furfrouTrimsNPC
+  $game_variables[36] = 0
+  pbMessage(_INTL("Which lovely Furfrou shall I trim?"))
+  pbChooseTradablePokemon(36, 37, proc { |pkmn| pkmn.isSpecies?(:FURFROU) })
+  pkmn = $player.party[$game_variables[36]]
+  if $game_variables[36] == -1
+    pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
+    return
+  else
+    availableForms = []
+    TRIM_NAMES.keys.each do |f| 
+      next unless TRIM_RULES[f] && TRIM_RULES[f].call
+      availableForms.push([f, TRIM_NAMES[f]])
+    end
+    if availableForms.empty?
+      echoln("trim bugz regarding availableForms")
+      pbMessage(_INTL("It seems no trims are available right now."))
+      return
+    else
+      choices = []
+      availableForms.each do |formName|
+        choices.push(_INTL("#{formName[1]}"))
+      end
+      choices.push(_INTL("Nevermind"))
+    end
+    
+    loop do
+      new_form = pbMessage(_INTL("Which trim would you like?"), choices, choices.length)
+      if new_form == -1 || new_form == choices.length-1
+        pbMessage(_INTL("Changed your mind? That's fine, Dear, don't worry."))
+        break
+      end
+      new_form = availableForms[new_form][0]
+      
+      #the selection matches current trim
+      if new_form == pkmn.form
+        pbMessage(_INTL("Your #{pkmn.name} already has that trim, Dear."))
+        next #loop back to trim choices
+      end
+
+      shinyPath = pkmn.shiny? ? "Shiny/" : ""
+      filePath = "Furfrou Trims/#{shinyPath}FURFROU_#{new_form}"
+      #pbMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
+      decision = pbConfirmMessage(_INTL("\\f[#{filePath}]This is what #{pkmn.name} will look like. Is that fine?"))
+      
+      if decision == false
+        next #loop back to trim choices
+      end
+
+      #subtract money
+      $player.money -= FURFROU_TRIM_COST
+      pbSEPlay("Mart buy item")
+      pbWait(20)
+      pbSEPlay("Trim")
+      pbWait(100)
+      
+      #change form
+      pkmn.form = new_form
+      FollowingPkmn.refresh
+      pbMessage(_INTL("\\me[Contests_Get Accessory]#{pkmn.name} now has the \\c[1]#{pkmn.species_data.form_name.to_s}\\c[0]!"))
+      pbWait(20)
+      break
+    end #loop do
+  end #if $game_variables[36] == -1
+  
+end #def furfrouTrimsNPC
+
+#===============================================================================
+# Mystery Gift system
+# By Maruno, edited by Gardenette
+#===============================================================================
+# This url is the location of an example Mystery Gift file.
+# You should change it to your file's url once you upload it.
+#===============================================================================
+module MysteryGift
+  #my pastebin account has a paste (which never expires) for the mystery gifts
+  URL = "https://pastebin.com/raw/VUvfZYiq"
+end
+
+def pbReceivedGiftInAnySaveFile?(gift)
+  #iterate through other valid save files and set the mystery gifts array to be the same value as this save file's mystery gift array
+  Console.echo_warn "checking all save files for #{gift}"
+  SaveData.each_slot do |file_slot|
+    saveFileName = file_slot
+	  full_path = SaveData.get_full_path(file_slot)
+	  next if !File.file?(full_path)
+	  temp_save_data = SaveData.read_from_file(full_path)
+    saveFileMysteryGifts = temp_save_data[:player].mystery_gifts
+    saveFileMysteryGifts.each do |elementInMysteryGiftArray|
+      Console.echo_warn "Checking '#{saveFileName}' because it has mystery gifts received"
+      if elementInMysteryGiftArray[0] == gift[0]
+        Console.echo_warn "#{gift} received on checked save file '#{saveFileName}'"
+        Console.echo_warn "returning true"
+        return true
+      else
+        Console.echo_warn "#{gift} not received on checked save file '#{saveFileName}'"
+      end #if saveFileMysteryGifts[elementInMysteryGiftArray][0] == gift[0]
+    end #saveFileMysteryGifts.each do |mysteryGiftArray|
+	end #SaveData.each_slot do |file_slot|
+  Console.echo_warn "returning false since #{gift} was not received on any checked save file"
+  return false #return false if we didn't find the gift on any save file
+end #def pbReceivedGiftInOtherSaveFile
+
+def pbEligibleToReceiveGift?(gift)
+  giftID = gift[0]
+  if giftID == 1 #check for shiny crabrawler, gift ID 1
+    #check for Crustang Racing Demo save file
+    crustangRacingDemoRequirementsFulfilled = false
+    #crustangRacingDemoRequirementsFulfilled = (pbSaveTest("Crustang Racing Demo","switch",60) && pbSaveTest("Crustang Racing Demo","switch",61))
+    save_path = "#{ENV['APPDATA']}/Crustang Racing Demo/Game.rxdata"
+		if File.exists?(save_path)
+      #the demo exists
+      temp_save_data = SaveData.read_from_file(save_path)
+      #now check if the correct switches are on (60 and 61) and map last saved on was 1 or 2 (only possible ones for CR demo)
+      crustangRacingDemoRequirementsFulfilled = true if temp_save_data[:switches][60] && temp_save_data[:switches][61] && (temp_save_data[:map_factory].map.map_id == 1 || temp_save_data[:map_factory].map.map_id == 2)
+    end
+    return crustangRacingDemoRequirementsFulfilled
+  elsif giftID == 3 #check for e floette, gift ID 3
+    #check all incompatible save files for demo 1 save with certain switch turned on
+    demo1RequirementsFulfillded = false
+    location = File.join(ENV['APPDATA'],"project-untamed/Incompatiable Save Files")
+    Dir.each_child(location) do |filename|
+      next if File.extname(filename) != ".rxdata"
+	    file_path = File.join(location, filename)
+	    temp_save_data = SaveData.get_data_from_file(file_path)
+      demo1RequirementsFulfillded = true if temp_save_data[:variables][Settings::DEMO_NUMBER_VARIABLE] <= 1 && temp_save_data[:player].pokedex.owned_count >= 65
+      
+		end #Dir.each_child(location) do |filename|
+    return demo1RequirementsFulfillded
+  else
+    #this is any other gift and has no restrictions
+    return true
+  end
+end #def pbEligibleToReceiveGift?
+
+#===============================================================================
+# Downloads all available Mystery Gifts that haven't been downloaded yet.
+#===============================================================================
+# Called from the Continue/New Game screen.
+def pbDownloadMysteryGift(trainer)
+  sprites = {}
+  viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
+  viewport.z = 99999
+  addBackgroundPlane(sprites, "background", "mysteryGiftbg", viewport)
+  pbFadeInAndShow(sprites)
+  sprites["msgwindow"] = pbCreateMessageWindow
+  pbMessageDisplay(sprites["msgwindow"], _INTL("You can receive each gift on \\c[2]only one save file\\c[0], and the game will save, so choose wisely which save file you receive it on!"))
+  pbMessageDisplay(sprites["msgwindow"], _INTL("Searching for a gift.\nPlease wait...\\wtnp[0]"))
+  string = pbDownloadToString(MysteryGift::URL)
+  if nil_or_empty?(string)
+    pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+  else
+    online = pbMysteryGiftDecrypt(string)
+    pending = []
+    online.each do |gift|
+      notgot = true
+      notgot = false if pbReceivedGiftInAnySaveFile?(gift)
+      notgot = false if !pbEligibleToReceiveGift?(gift)
+      #trainer.mystery_gifts.each do |j|
+      #  notgot = false if j[0] == gift[0] #this is only checking the current save file
+      #end #trainer.mystery_gifts.each do |j|
+      pending.push(gift) if notgot
+    end
+    if pending.length == 0
+      pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+    else
+      loop do
+        commands = []
+        pending.each do |gift|
+          commands.push(gift[3])
+        end
+        commands.push(_INTL("Cancel"))
+        pbMessageDisplay(sprites["msgwindow"], _INTL("Choose the gift you want to receive.\\wtnp[0]"))        
+        command = pbShowCommands(sprites["msgwindow"], commands, -1)
+        if command == -1 || command == commands.length - 1
+          break
+        else
+          gift = pending[command]
+          sprites["msgwindow"].visible = false
+          if gift[1] == 0
+            sprite = PokemonSprite.new(viewport)
+            sprite.setOffset(PictureOrigin::CENTER)
+            sprite.setPokemonBitmap(gift[2])
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.bitmap.height / 2
+          else
+            sprite = ItemIconSprite.new(0, 0, gift[2], viewport)
+            sprite.x = Graphics.width / 2
+            sprite.y = -sprite.height / 2
+          end
+          distanceDiff = 8 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.y += distanceDiff
+            break if sprite.y >= Graphics.height / 2
+          end
+          #pbMEPlay("Battle capture success")
+          #added by Gardenette
+          trainer.mystery_gifts.push(gift)
+          pending.delete_at(command)
+          pbReceiveMysteryGift(gift[0])
+
+          #(Graphics.frame_rate * 3).times do
+          #  Graphics.update
+          #  Input.update
+          #  sprite.update
+          #  pbUpdateSceneMap
+          #end
+          
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("The gift has been received!")) { sprite.update }
+          #pbMessageDisplay(sprites["msgwindow"], _INTL("Please pick up your gift from the deliveryman in any Poké Mart.")) { sprite.update }
+          
+          
+          opacityDiff = 16 * 20 / Graphics.frame_rate
+          loop do
+            Graphics.update
+            Input.update
+            sprite.update
+            sprite.opacity -= opacityDiff
+            break if sprite.opacity <= 0
+          end
+          sprite.dispose
+        end
+        sprites["msgwindow"].visible = true
+
+        #added by Gardenette
+        Game.save
+        pbMessage(_INTL("\\wtnp[1]Saving game...\\wtnp[0]"))
+        (Graphics.frame_rate * 1).times do
+          Graphics.update
+          pbUpdateSceneMap
+        end
+        
+        if pending.length == 0
+          pbMessageDisplay(sprites["msgwindow"], _INTL("No new gifts are available."))
+          break
+        end
+      end
+    end
+  end
+  pbFadeOutAndHide(sprites)
+  pbDisposeMessageWindow(sprites["msgwindow"])
+  pbDisposeSpriteHash(sprites)
+  viewport.dispose
+end
+
+def pbReceiveMysteryGift(id)
+  index = -1
+  $player.mystery_gifts.length.times do |i|
+    if $player.mystery_gifts[i][0] == id && $player.mystery_gifts[i].length > 1
+      index = i
+      break
+    end
+  end
+  if index == -1
+    pbMessage(_INTL("Couldn't find an unclaimed Mystery Gift with ID {1}.", id))
+    return false
+  end
+  gift = $player.mystery_gifts[index]
+  if gift[1] == 0   # Pokémon
+    gift[2].personalID = rand(2**16) | (rand(2**16) << 16)
+    gift[2].calc_stats
+    time = pbGetTimeNow
+    gift[2].timeReceived = time.getgm.to_i
+    gift[2].obtain_method = 4   # Fateful encounter
+    gift[2].record_first_moves
+    gift[2].obtain_level = gift[2].level
+    gift[2].obtain_map = $game_map&.map_id || 0
+    was_owned = $player.owned?(gift[2].species)
+    if pbAddPokemonSilent(gift[2])
+      pbMessage(_INTL("\\me[Pkmn get]{1} received {2}!\\wtnp[60]", $player.name, gift[2].name))
+      $player.mystery_gifts[index] = [id]
+      # Show Pokédex entry for new species if it hasn't been owned before
+      if Settings::SHOW_NEW_SPECIES_POKEDEX_ENTRY_MORE_OFTEN && !was_owned && $player.has_pokedex
+        pbMessage(_INTL("{1}'s data was added to the Pokédex.", gift[2].name))
+        $player.pokedex.register_last_seen(gift[2])
+        pbFadeOutIn {
+          scene = PokemonPokedexInfo_Scene.new
+          screen = PokemonPokedexInfoScreen.new(scene)
+          screen.pbDexEntry(gift[2].species)
+        }
+      end
+      return true
+    end
+  elsif gift[1] > 0   # Item
+    item = gift[2]
+    qty = gift[1]
+    if $bag.can_add?(item, qty)
+      $bag.add(item, qty)
+      itm = GameData::Item.get(item)
+      itemname = (qty > 1) ? itm.name_plural : itm.name
+      if item == :LEFTOVERS
+        pbMessage(_INTL("\\me[Item get]You obtained some \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      elsif itm.is_machine?   # TM or HM
+        pbMessage(_INTL("\\me[Item get]You obtained \\c[1]{1} {2}\\c[0]!\\wtnp[30]", itemname,
+                        GameData::Move.get(itm.move).name))
+      elsif qty > 1
+        pbMessage(_INTL("\\me[Item get]You obtained {1} \\c[1]{2}\\c[0]!\\wtnp[30]", qty, itemname))
+      elsif itemname.starts_with_vowel?
+        pbMessage(_INTL("\\me[Item get]You obtained an \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      else
+        pbMessage(_INTL("\\me[Item get]You obtained a \\c[1]{1}\\c[0]!\\wtnp[30]", itemname))
+      end
+      $player.mystery_gifts[index] = [id]
+      return true
+    end
+  end
+  return false
+end
+
+#===============================================================================
+# Update method for Spriteset_Map now changes tone of panoramas to match day/night tones
+#===============================================================================
+class Spriteset_Map
+  def update
+    if @panorama_name != @map.panorama_name || @panorama_hue != @map.panorama_hue
+      @panorama_name = @map.panorama_name
+      @panorama_hue  = @map.panorama_hue
+      @panorama.set_panorama(nil) if !@panorama.bitmap.nil?
+      @panorama.set_panorama(@panorama_name, @panorama_hue) if !nil_or_empty?(@panorama_name)
+      Graphics.frame_reset
+    end
+    if @fog_name != @map.fog_name || @fog_hue != @map.fog_hue
+      @fog_name = @map.fog_name
+      @fog_hue = @map.fog_hue
+      @fog.set_fog(nil) if !@fog.bitmap.nil?
+      @fog.set_fog(@fog_name, @fog_hue) if !nil_or_empty?(@fog_name)
+      Graphics.frame_reset
+    end
+    tmox = (@map.display_x / Game_Map::X_SUBPIXELS).round
+    tmoy = (@map.display_y / Game_Map::Y_SUBPIXELS).round
+    @@viewport1.rect.set(0, 0, Graphics.width, Graphics.height)
+    @@viewport1.ox = 0
+    @@viewport1.oy = 0
+    @@viewport1.ox += $game_screen.shake
+    @panorama.ox = tmox / 2
+    @panorama.oy = tmoy / 2
+    @fog.ox         = tmox + @map.fog_ox
+    @fog.oy         = tmoy + @map.fog_oy
+    @fog.zoom_x     = @map.fog_zoom / 100.0
+    @fog.zoom_y     = @map.fog_zoom / 100.0
+    @fog.opacity    = @map.fog_opacity
+    @fog.blend_type = @map.fog_blend_type
+    @fog.tone       = @map.fog_tone
+    @panorama.update
+    @fog.update
+    @character_sprites.each do |sprite|
+      sprite.update
+    end
+    if self.map == $game_map
+      @weather.fade_in($game_screen.weather_type, $game_screen.weather_max, $game_screen.weather_duration)
+    else
+      @weather.fade_in(:None, 0, 20)
+    end
+    @weather.ox   = tmox
+    @weather.oy   = tmoy
+    @weather.update
+    @@viewport1.tone = $game_screen.tone
+    
+    if @panorama
+      t = PBDayNight.getTone
+      @panorama.color = Color.new(t.red, t.green, t.blue, t.gray)
+    end
+
+    @@viewport3.color = $game_screen.flash_color
+    @@viewport1.update
+    @@viewport3.update
   end
 end

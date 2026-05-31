@@ -1,17 +1,46 @@
 ﻿# See the documentation on the wiki to learn how to edit this file.
+#[Region Number]
+#Point = mapXCoord,mapYCoord,mapPrimaryName,mapSecondaryName (point of interest),mapIDForFly,xCoordForFly,yCoordForFly,switchToShowOnTownMap,imageName
+#Point = 13,12,Lappet Town,Oak's Lab,2,8,8
 #-------------------------------
 [0]
 Filename = southernMazah.png
 Name = "Southern Mazah"
-Point = 19,5,"Veravalles Town","Ceiba''s Lab",13,11,,,
+Point = 19,5,"Veravalles Town","Ceiba's Lab",22,19,11,,
 Point = 20,5,"Route 1",,,,,,
 Point = 20,4,"Route 1",,,,,,
 Point = 19,4,"Route 1",,,,,,
 Point = 18,4,"Hacienda Castaneda",,,,,,
 Point = 18,3,"Hacienda Fields",,,,,,
-Point = 20,3,"San Cerigold Town",Cemetery,28,22,,,
+Point = 20,3,"San Cerigold Town",,4,28,22,,
 Point = 22,3,"Route 2",,,,,,
 Point = 22,2,"Route 2",,,,,,
 Point = 23,2,"Route 2",,,,,,
 Point = 24,2,"Route 2",,,,,,
 Point = 21,3,"Route 2",,,,,,
+Point = 22,1,"Monarca Woods","Butterfly Sanctuary",,,,,
+Point = 25,2,"Melolado Factory",,,,,,
+Point = 24,3,"Calojarro City","Contest Hall",96,43,39,,
+Point = 24,4,"Calojarro City","Contest Hall",96,43,39,,
+Point = 24,5,"Route 3",,,,,,
+Point = 24,6,"Route 3",,,,,,
+Point = 24,7,"Dorado Mine",,,,,,
+Point = 23,7,"Route 4",,,,,,
+Point = 22,7,"Route 4",,,,,,
+Point = 22,6,"Asterado Lake","Pokémon Daycare",,,,,
+Point = 22,8,"Route 5","Shady Shuckle",,,,,
+Point = 22,9,"Route 5","Shady Shuckle",,,,,
+Point = 22,10,"Route 5","Shady Shuckle",,,,,
+Point = 22,11,"Route 5","Shady Shuckle",,,,,
+Point = 22,12,"Route 6",,,,,,
+Point = 23,12,"Route 6",,,,,,
+Point = 24,12,"Route 6",,,,,,
+Point = 20,9,"Soleca Desert",,,,,,
+Point = 21,9,"Soleca Desert",,,,,,
+Point = 20,10,"Soleca Desert",,,,,,
+Point = 21,10,"Soleca Desert",,,,,,
+Point = 23,10,"Ferrera Town","Crustang Derby",66,9,27,,
+Point = 23,11,"Ferrera Town","Crustang Derby",66,9,27,,
+
+#[1]
+#Filename = northernMazah.png

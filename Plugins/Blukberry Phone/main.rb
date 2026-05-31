@@ -145,6 +145,8 @@ class PhoneScene # The scene class
 			screen = PokemonAchievements.new(scene)
 			screen.pbStartScreen
 		}
+	when "phoneMysteryGift"
+		pbFadeOutIn(99999) { pbDownloadMysteryGift($player) }
 	end #case @appHoveredOver[:functionName]
   end #def getAppFunction
 
