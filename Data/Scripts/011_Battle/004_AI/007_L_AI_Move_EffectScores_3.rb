@@ -466,7 +466,7 @@ class Battle::AI
         if elecvar > 0
           @battle.pbParty(user.index).each_with_index do |pkmn, idxPkmn|
             next if !pkmn || !pkmn.able?
-            realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false)
+            realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false,true)
             typeMod = pbCalcTypeMod(:ELECTRIC, realpkmn, realpkmn)
             elecvar += 3 if Effectiveness.super_effective?(typeMod)
           end
@@ -491,7 +491,7 @@ class Battle::AI
         if firevar > 0
           @battle.pbParty(user.index).each_with_index do |pkmn, idxPkmn|
             next if !pkmn || !pkmn.able?
-            realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false)
+            realpkmn = @battle.pbMakeFakeBattler(@battle.pbParty(user.index)[idxPkmn],false,user,false,true)
             typeMod = pbCalcTypeMod(:FIRE, realpkmn, realpkmn)
             firevar += 3 if Effectiveness.super_effective?(typeMod)
           end

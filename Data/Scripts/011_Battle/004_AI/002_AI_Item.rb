@@ -101,7 +101,7 @@ class Battle::AI
       if activeMon
         battler = @battle.battlers[idxTarget]
       else
-        battler = @battle.pbMakeFakeBattler(@battle.pbParty(idxBattler)[index],false,nil,false)
+        battler = @battle.pbMakeFakeBattler(@battle.pbParty(idxBattler)[index],false,nil,false,true)
       end
       pkmn = battler.pokemon
       revHP = [battler.totalhp / 2, 1].max

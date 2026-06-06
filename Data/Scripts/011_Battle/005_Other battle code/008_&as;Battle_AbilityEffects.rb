@@ -3639,7 +3639,7 @@ Battle::AbilityEffects::OnSwitchIn.add(:DUBIOUS,
       next if idxPkmn == battler.index
       next if pkmn.fainted?
       next if choices_blacklist.include?(pkmn.species)
-      iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler,false)
+      iFake = battle.pbMakeFakeBattler(battle.pbParty(battler.index)[idxPkmn],false,battler,false,true)
       next if iFake.ungainableAbility? || iFake.mega?
       bstTotal = 0
       pkmn.baseStats.each_value { |s| bstTotal += s }

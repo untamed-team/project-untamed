@@ -903,7 +903,7 @@ class Battle::AI
       if moveUser.nil? # User isn't in battle, get it from the party
         party = @battle.pbParty(targetPosi.effects[PBEffects::FutureSightUserIndex])
         pkmn = party[targetPosi.effects[PBEffects::FutureSightUserPartyIndex]]
-        moveUser = @battle.pbMakeFakeBattler(pkmn,false,sacrifice) if pkmn&.able?
+        moveUser = @battle.pbMakeFakeBattler(pkmn,false,sacrifice,false,false,true) if pkmn&.able?
       end
       return 0 if !moveUser
       futureUsableMove = Battle::Move.from_pokemon_move(@battle, Pokemon::Move.new(futureMove))

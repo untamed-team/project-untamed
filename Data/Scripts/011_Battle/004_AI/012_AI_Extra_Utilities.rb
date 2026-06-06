@@ -1248,7 +1248,11 @@ class Battle::Battler
 end  
 
 class Battle
-  def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,switching=true)
+  def pbMakeFakeBattler(pokemon,batonpass=false,currentmon=nil,switching=true,dontreplace=false)
+    if @index.nil? || !currentmon.nil?
+      @index=currentmon.index
+    end
+    @index = 999 if dontreplace
     if @index.nil? || !currentmon.nil?
       @index=currentmon.index
     end
