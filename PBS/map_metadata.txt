@@ -145,7 +145,8 @@ Flags = campMapMeadow
 Name = Route 5
 Outdoor = true
 ShowArea = true
-MapPosition = 0,22,10
+MapPosition = 0,22,8
+MapSize = 1,1111
 BattleBack = desert
 Flags = campMapDesert
 #-------------------------------
@@ -158,13 +159,14 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
+MapSize = 2,11
 BattleBack = canyon
 #-------------------------------
 [026]   # Route 2
 Name = Route 2
 Outdoor = true
 ShowArea = true
-MapPosition = 0,22,2
+MapPosition = 0,21,2
 BattleBack = field
 MapSize = 4,01111100
 Flags = campMapMeadow
@@ -174,6 +176,7 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
+MapSize = 2,11
 BattleBack = canyon
 Flags = 
 #-------------------------------
@@ -186,7 +189,8 @@ MapPosition = 0,22,6
 Name = Route 3
 Outdoor = true
 ShowArea = true
-MapPosition = 0,24,6
+MapPosition = 0,24,5
+MapSize = 1,11
 BattleBack = mountain
 Flags = campMapMeadow
 #-------------------------------
@@ -321,6 +325,7 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
+MapSize = 2,11
 BattleBack = canyon
 Flags = 
 #-------------------------------
@@ -329,7 +334,7 @@ Name = Route 1
 Outdoor = true
 ShowArea = true
 Bicycle = true
-MapPosition = 0,20,4
+MapPosition = 0,19,4
 BattleBack = field
 MapSize = 2,1101
 Flags = campMapMeadow
@@ -411,7 +416,8 @@ Flags = campMapCave,CanCamp
 Name = Route 6
 Outdoor = true
 ShowArea = true
-MapPosition = 0,23,12
+MapPosition = 0,22,12
+MapSize = 3,111
 BattleBack = desert
 Flags = campMapDesert
 #-------------------------------
@@ -612,6 +618,7 @@ MapPosition = 0,22,10
 Name = Route 4
 Outdoor = true
 MapPosition = 0,22,7
+MapSize = 2,11
 BattleBack = canyon
 Flags = 
 #-------------------------------

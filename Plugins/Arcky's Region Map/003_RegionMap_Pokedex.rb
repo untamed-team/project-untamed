@@ -150,17 +150,12 @@ class PokemonPokedexInfo_Scene
         map_height = (map_shape.length.to_f / map_width).ceil
       end
       # Mark each visible point covered by the map as containing the area
-      map_width.times do |i|
+	  map_width.times do |i|
         map_height.times do |j|
           next if map_shape[i + (j * map_width), 1].to_i == 0   # Point isn't part of map
           next if !visible_points.include?([mappos[1] + i, mappos[2] + j])   # Point isn't visible
           ret[mappos[1] + i + ((mappos[2] + j) * town_map_width)] = true
-		  Console.echo_warn "i is #{i}"
-		  Console.echo_warn "j is #{j}"
-		  Console.echo_warn "mappos is #{mappos}"
-		  Console.echo_warn " town_map_width is #{town_map_width}"
         end
-        Console.echo_warn "============================="
       end
     end
     return ret
