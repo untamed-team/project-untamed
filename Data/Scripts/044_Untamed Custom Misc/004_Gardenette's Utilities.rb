@@ -864,6 +864,14 @@ GameData::TerrainTag.register({
   :battle_environment     => :TallGrass
 })
 
+GameData::TerrainTag.register({
+  :id                     => :DeepSand,
+  :id_number              => 32,
+  :shows_grass_rustle     => false,
+  :land_wild_encounters   => true,
+  :battle_environment     => :Sand
+})
+
 #See 'GameData::TerrainTag.register({' in 'class TerrainTag' for all terrain tags
 
 #===============================================================================

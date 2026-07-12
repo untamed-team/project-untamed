@@ -21,6 +21,10 @@ GoodRod
     20,FEEBAS,10,16
     20,LOTAD,10,15
 #-------------------------------
+[023] # Route 5
+Land,21
+    20,MOLLUCOTTA,5
+#-------------------------------
 [026] # Route 2
 Land,21
     20,SKIDDO,7,10
@@ -104,6 +108,10 @@ Corn,5
     75,ZEAZAYA,5
     20,WRENNER,3,5
     5,PACUNA,2,4
+#-------------------------------
+[087] # Soleca Desert North
+Land,21
+    20,MOLLUCOTTA,5
 #-------------------------------
 [106] # Butterfly Sanctuary Entrance
 Land,21
