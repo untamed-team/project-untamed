@@ -93,7 +93,7 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
     end
     #@expBar.x    = value + @spriteBaseX + 6
     #edited by Gardenette
-    @expBar.x    = value+@spriteBaseX + 0
+    @expBar.x    = value+@spriteBaseX + 26
     #@hpNumbers.x = value + @spriteBaseX + 80
     #edited by Gardenette
     @hpNumbers.x = value+@spriteBaseX + 100
@@ -115,7 +115,7 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
     end
     #@expBar.y    = value + 74
     #edited by Gardenette
-    @expBar.y    = value + 48
+    @expBar.y    = value + 50
     @hpNumbers.y = value + 52
   end
   
