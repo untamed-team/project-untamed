@@ -3079,5 +3079,9 @@ class Spriteset_Map
     @@viewport3.color = $game_screen.flash_color
     @@viewport1.update
     @@viewport3.update
+
+    @@viewport3.tone.set(0, 0, 0, 0)
+    _animationSprite_update
+    @usersprites.each { |sprite| sprite.update if !sprite.disposed? }
   end
 end
