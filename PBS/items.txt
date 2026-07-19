@@ -5046,7 +5046,7 @@ Description = It may be used or held by a Pokémon to recover from poison.
 Name = Pecha Berry (C)
 NamePlural = Pecha Berries (C)
 Pocket = 5
-Price = 20=
+Price = 20
 Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
 Description = A cultivar of the Pecha Berry plant. It's alike in every way, except it has no status healing effects.
 #-------------------------------
