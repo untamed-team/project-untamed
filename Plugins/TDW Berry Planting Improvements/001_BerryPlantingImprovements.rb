@@ -1139,7 +1139,14 @@ def pbPickBerryWithMutation(berry, qty = 1, mutation_info)
 end
 
 def pbPickBerryPersistent(berry, qty)
-    berry = GameData::Item.get(berry)
+	#if banned berry, replace berry with cultivar counterpart
+	cultivar = "#{berry.to_s}_C"
+	if !GameData::Item.get(cultivar).nil?
+		berry = GameData::Item.get(cultivar)
+	else
+		berry = GameData::Item.get(berry)
+	end
+
     berry_name = (qty > 1) ? berry.name_plural : berry.name
     if qty > 1
         message = _INTL("There are {1} \\c[1]{2}\\c[0]!\nWant to pick them?", qty, berry_name)
@@ -1300,7 +1307,7 @@ end
 # This sets up berry data after a static berry plant is picked.
 alias tdw_berry_improvements_pickberry pbPickBerry
 def pbPickBerry(berry, qty = 1)
-    ret = (Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0) ? pbPickBerryPersistent(berry, qty) : tdw_berry_improvements_pickberry(berry, qty)
+	ret = (Settings::BERRY_PERSISTENT_PLANT_CHANCE > 0) ? pbPickBerryPersistent(berry, qty) : tdw_berry_improvements_pickberry(berry, qty)
     if ret
         interp = pbMapInterpreter
         berry_plant = interp.getVariable

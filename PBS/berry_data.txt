@@ -768,6 +768,14 @@ Smoothness = 40
 Color = Green
 Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sky.
 #-------------------------------
+[SHINYBERRY]
+Size = 5.0
+Firmness = Soft
+Flavor = 0,0,0,0,0
+Smoothness = 40
+Color = Green
+Description = ???
+#-------------------------------
 [SHUCABERRY]
 Size = 4.2
 Firmness = Soft
