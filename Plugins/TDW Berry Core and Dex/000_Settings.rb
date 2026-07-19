@@ -4,6 +4,20 @@ module Settings
     #====================================================================================
     
         #--------------------------------------------------------------------------------
+        # If true, the Berrydex will appear in the Pause Menu if the player has access. 
+        # Otherwise, you'll need to set up other ways to view it using pbBerryDex.
+        #--------------------------------------------------------------------------------	
+        SHOW_BERRYDEX_IN_PAUSE_MENU       = false
+
+        #--------------------------------------------------------------------------------
+        # If true, any berries you receive before you get the BerryDex will not be 
+        # "registered" and you'll need to receive berries again after receiving
+        # the BerryDex to register them. If false, berries you've already received will
+        # be "registered" when you receive the BerryDex.
+        #--------------------------------------------------------------------------------	
+        REQUIRE_BERRYDEX_BEFORE_REGISTRATION = false
+    
+        #--------------------------------------------------------------------------------
         # Switch ID to be set to true to have access to the Berrydex.
         # Set to 0 to always allow access.
         #--------------------------------------------------------------------------------	
@@ -65,6 +79,12 @@ module Settings
         # Requires the Berry Planting Improvements plugin
         #--------------------------------------------------------------------------------		
         BERRYDEX_MUTATIONS_PAGE         = true
+
+        #--------------------------------------------------------------------------------
+        # If true, only berries that you have registered in the Berrydex will appear
+        # when viewing the mutations page. Otherwise, they'll appear as unknown.
+        #--------------------------------------------------------------------------------	
+        BERRY_MUTATION_HIDE_UNREGISTERED    = true
 
         #--------------------------------------------------------------------------------
         # Defines how DryingPerHour values appear in the Berrydex's Plant tab. You can

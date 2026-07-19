@@ -4,9 +4,10 @@
 class Window_Berrydex < Window_DrawableCommand
     def initialize(x, y, width, height, viewport)
         @commands = []
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
         super(x, y, width, height, viewport)
-        @selarrow     = AnimatedBitmap.new("Graphics/Pictures/Berrydex/cursor_list")
-        @found        = AnimatedBitmap.new("Graphics/Pictures/Berrydex/icon_found")
+        @selarrow     = AnimatedBitmap.new("Graphics/#{@file_location}/Berrydex/cursor_list")
+        @found        = AnimatedBitmap.new("Graphics/#{@file_location}/Berrydex/icon_found")
         self.baseColor   = Color.new(88, 88, 80)
         self.shadowColor = Color.new(168, 184, 184)
         self.windowskin  = nil
@@ -68,8 +69,8 @@ class Window_Berrydex < Window_DrawableCommand
   
     def update
         super
-        @uparrow.visible   = false
-        @downarrow.visible = false
+        @uparrow&.visible   = false
+        @downarrow&.visible = false
     end
 end
 
@@ -83,11 +84,14 @@ class PokemonBerrydex_Scene
     end
   
     def pbStartScene
-        @sliderbitmap       = AnimatedBitmap.new("Graphics/Pictures/Berrydex/icon_slider")
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
+        @sliderbitmap       = AnimatedBitmap.new("Graphics/#{@file_location}/Berrydex/icon_slider")
         @sprites = {}
         @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
         @viewport.z = 99999
-        addBackgroundPlane(@sprites, "background", "Berrydex/bg_list", @viewport)
+        #addBackgroundPlane(@sprites, "background", "Berrydex/bg_list", @viewport)
+        @sprites["background"] = IconSprite.new(0, 0, @viewport)
+        @sprites["background"].setBitmap("Graphics/#{@file_location}/Berrydex/bg_list")
         @sprites["berrydex"] = Window_Berrydex.new(206, 30, 276, 364, @viewport)
         @sprites["itemicon"] = BerrydexItemIconSprite.new(48, Graphics.height - 48, nil, @viewport)
         @sprites["itemicon"].setOffset(PictureOrigin::CENTER)
@@ -95,7 +99,7 @@ class PokemonBerrydex_Scene
         @sprites["itemicon"].x = 112
         @sprites["itemicon"].y = 196
         @sprites["unknownicon"] = IconSprite.new(48, Graphics.height - 48, @viewport)
-        @sprites["unknownicon"].setBitmap("Graphics/Pictures/Berrydex/unknown")
+        @sprites["unknownicon"].setBitmap("Graphics/#{@file_location}/Berrydex/unknown")
         @sprites["unknownicon"].ox = @sprites["unknownicon"].width / 2
         @sprites["unknownicon"].oy = @sprites["unknownicon"].height / 2
         @sprites["unknownicon"].x = 112
@@ -156,7 +160,7 @@ class PokemonBerrydex_Scene
         @sprites["berrydex"].commands = @dexlist
         @sprites["berrydex"].index    = index
         @sprites["berrydex"].refresh
-        @sprites["background"].setBitmap("Graphics/Pictures/Berrydex/bg_list")
+        @sprites["background"].setBitmap("Graphics/#{@file_location}/Berrydex/bg_list")
         pbRefresh
     end
   
@@ -268,6 +272,7 @@ class BerrydexInfo_Scene
     def pbStartScene(dexlist, index)
         @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
         @viewport.z = 99999
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
         @dexlist = dexlist
         @index   = index
         @page = 1
@@ -286,7 +291,7 @@ class BerrydexInfo_Scene
         @sprites["itemicon"].x = 144
         @sprites["itemicon"].y = 134 - (Settings::BERRYDEX_SHOW_COLOR ? 18 : 0)
         @sprites["berry_plant_dirt"] = IconSprite.new(84, 176, @viewport)
-        @sprites["berry_plant_dirt"].setBitmap(_INTL("Graphics/Pictures/Berrydex/plant_dirt"))
+        @sprites["berry_plant_dirt"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/plant_dirt"))
         @sprites["berry_plant_dirt"].zoom_x = @sprites["berry_plant_dirt"].zoom_y = 2
         @sprites["berry_plant_dirt"].visible = false
         @sprites["berry_plant"] = IconSprite.new(112, 108, @viewport)
@@ -296,13 +301,13 @@ class BerrydexInfo_Scene
                     ((pbBerryPreferredZonesEnabled? && Settings::BERRYDEX_SHOW_PREFERRED_ZONES) || 
                     (pbBerryUnpreferredZonesEnabled? && Settings::BERRYDEX_SHOW_UNPREFERRED_ZONES))
                 @sprites["weather_box_split"] = IconSprite.new(12, 268, @viewport)
-                @sprites["weather_box_split"].setBitmap(_INTL("Graphics/Pictures/Berrydex/preferred_weather_box_split"))
+                @sprites["weather_box_split"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/preferred_weather_box_split"))
                 @sprites["weather_box_split"].visible = false
             elsif (pbBerryPreferredWeatherEnabled? && Settings::BERRYDEX_SHOW_PREFERRED_WEATHER) || 
                 (pbBerryPreferredZonesEnabled? && Settings::BERRYDEX_SHOW_PREFERRED_ZONES) || 
                 (pbBerryUnpreferredZonesEnabled? && Settings::BERRYDEX_SHOW_UNPREFERRED_ZONES)
                 @sprites["weather_box"] = IconSprite.new(12, 268, @viewport)
-                @sprites["weather_box"].setBitmap(_INTL("Graphics/Pictures/Berrydex/preferred_weather_box"))
+                @sprites["weather_box"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/preferred_weather_box"))
                 @sprites["weather_box"].visible = false
             end
         end
@@ -311,23 +316,23 @@ class BerrydexInfo_Scene
 
         end
         if pbShowMutationsPage?
-            @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_mutations_info"))
+            @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_mutations_info"))
 
             @sprites["mutnamebox"] = IconSprite.new(60, 40, @viewport)
-            @sprites["mutnamebox"].setBitmap(_INTL("Graphics/Pictures/Berrydex/mutation_titles"))
+            @sprites["mutnamebox"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/mutation_titles"))
             @sprites["mutnamebox"].visible = false
             @sprites["mutpagebox"] = IconSprite.new(0, 36, @viewport)
-            @sprites["mutpagebox"].setBitmap(_INTL("Graphics/Pictures/Berrydex/mutation_pageindicator"))
+            @sprites["mutpagebox"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/mutation_pageindicator"))
             @sprites["mutpagebox"].visible = false
             @sprites["mutbox0"] = IconSprite.new(12, 84, @viewport)
-            @sprites["mutbox0"].setBitmap(_INTL("Graphics/Pictures/Berrydex/mutation_row"))
+            @sprites["mutbox0"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/mutation_row"))
             @sprites["mutbox0"].visible = false
             @sprites["mutbox1"] = IconSprite.new(12, 234, @viewport)
-            @sprites["mutbox1"].setBitmap(_INTL("Graphics/Pictures/Berrydex/mutation_row2"))
+            @sprites["mutbox1"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/mutation_row2"))
             @sprites["mutbox1"].visible = false
             @sprites["backoverlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
             @sprites["mutboxnone"] = IconSprite.new(146, 192, @viewport)
-            @sprites["mutboxnone"].setBitmap(_INTL("Graphics/Pictures/Berrydex/mutation_none"))
+            @sprites["mutboxnone"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/mutation_none"))
             @sprites["mutboxnone"].visible = false
             6.times { |i|
                 @sprites["mutitemicon#{i}"] = BerrydexItemIconSprite.new(0,0, nil, @viewport)
@@ -338,26 +343,31 @@ class BerrydexInfo_Scene
                 @sprites["mutitemicon#{i}"].visible = false
             }
             @sprites["mutmultipleicon0"] = IconSprite.new(0, 0, @viewport)
-            @sprites["mutmultipleicon0"].setBitmap("Graphics/Pictures/Berrydex/unknown")
+            @sprites["mutmultipleicon0"].setBitmap("Graphics/#{@file_location}/Berrydex/unknown")
             @sprites["mutmultipleicon0"].ox = @sprites["mutmultipleicon0"].width / 2
             @sprites["mutmultipleicon0"].oy = @sprites["mutmultipleicon0"].height / 2
             @sprites["mutmultipleicon0"].x = 429
             @sprites["mutmultipleicon0"].y = 130
             @sprites["mutmultipleicon0"].visible = false
             @sprites["mutmultipleicon1"] = IconSprite.new(0, 0, @viewport)
-            @sprites["mutmultipleicon1"].setBitmap("Graphics/Pictures/Berrydex/unknown")
+            @sprites["mutmultipleicon1"].setBitmap("Graphics/#{@file_location}/Berrydex/unknown")
             @sprites["mutmultipleicon1"].ox = @sprites["mutmultipleicon1"].width / 2
             @sprites["mutmultipleicon1"].oy = @sprites["mutmultipleicon1"].height / 2
             @sprites["mutmultipleicon1"].x = 429
             @sprites["mutmultipleicon1"].y = 280
             @sprites["mutmultipleicon1"].visible = false
         end
-        @sprites["uparrow"] = AnimatedSprite.new("Graphics/Pictures/uparrow", 8, 28, 40, 2, @viewport)
+        if Essentials::VERSION.include?("21")
+            @sprites["uparrow"] = AnimatedSprite.new("Graphics/UI/up_arrow", 8, 28, 40, 2, @viewport)
+            @sprites["downarrow"] = AnimatedSprite.new("Graphics/UI/down_arrow", 8, 28, 40, 2, @viewport)
+        else
+            @sprites["uparrow"] = AnimatedSprite.new("Graphics/Pictures/uparrow", 8, 28, 40, 2, @viewport)
+            @sprites["downarrow"] = AnimatedSprite.new("Graphics/Pictures/downarrow", 8, 28, 40, 2, @viewport)
+        end
         @sprites["uparrow"].x = 242
         @sprites["uparrow"].y = 268
         @sprites["uparrow"].play
         @sprites["uparrow"].visible = false
-        @sprites["downarrow"] = AnimatedSprite.new("Graphics/Pictures/downarrow", 8, 28, 40, 2, @viewport)
         @sprites["downarrow"].x = 242
         @sprites["downarrow"].y = 348
         @sprites["downarrow"].play
@@ -372,19 +382,19 @@ class BerrydexInfo_Scene
             @sprites["pentagonstats"].visible = false
         else
             @sprites["circled_spicy"] = IconSprite.new(356, 92, @viewport)
-            @sprites["circled_spicy"].setBitmap(_INTL("Graphics/Pictures/Berrydex/flavor_selected"))
+            @sprites["circled_spicy"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/flavor_selected"))
             @sprites["circled_spicy"].visible = false
             @sprites["circled_dry"] = IconSprite.new(420, 146, @viewport)
-            @sprites["circled_dry"].setBitmap(_INTL("Graphics/Pictures/Berrydex/flavor_selected"))
+            @sprites["circled_dry"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/flavor_selected"))
             @sprites["circled_dry"].visible = false
             @sprites["circled_sweet"] = IconSprite.new(398, 212, @viewport)
-            @sprites["circled_sweet"].setBitmap(_INTL("Graphics/Pictures/Berrydex/flavor_selected"))
+            @sprites["circled_sweet"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/flavor_selected"))
             @sprites["circled_sweet"].visible = false
             @sprites["circled_bitter"] = IconSprite.new(314, 212, @viewport)
-            @sprites["circled_bitter"].setBitmap(_INTL("Graphics/Pictures/Berrydex/flavor_selected"))
+            @sprites["circled_bitter"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/flavor_selected"))
             @sprites["circled_bitter"].visible = false
             @sprites["circled_sour"] = IconSprite.new(292, 146, @viewport)
-            @sprites["circled_sour"].setBitmap(_INTL("Graphics/Pictures/Berrydex/flavor_selected"))
+            @sprites["circled_sour"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/flavor_selected"))
             @sprites["circled_sour"].visible = false
         end
 
@@ -422,13 +432,13 @@ class BerrydexInfo_Scene
         case page
         when 1 
             if pbShowBattlePage? && pbShowMutationsPage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_battle_mutations_info"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_battle_mutations_info"))
                 @sprites["barcommands"].visible = true
             elsif pbShowBattlePage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_battle_info"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_battle_info"))
                 @sprites["barcommands"].visible = true
             elsif pbShowMutationsPage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_mutations_info"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_mutations_info"))
                 @sprites["barcommands"].visible = true
             else
                 @sprites["barcommands"].visible = false
@@ -436,13 +446,13 @@ class BerrydexInfo_Scene
             drawPageInfo
         when 2 
             if pbShowBattlePage? && pbShowMutationsPage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_battle_mutations_plant"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_battle_mutations_plant"))
                 @sprites["barcommands"].visible = true
             elsif pbShowBattlePage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_battle_plant"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_battle_plant"))
                 @sprites["barcommands"].visible = true
             elsif pbShowMutationsPage?
-                @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_mutations_plant"))
+                @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_mutations_plant"))
                 @sprites["barcommands"].visible = true
             else
                 @sprites["barcommands"].visible = false
@@ -451,7 +461,7 @@ class BerrydexInfo_Scene
         when 3 
             if pbShowBattlePage?
                 if pbShowMutationsPage?
-                    @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_mutations_battle"))
+                    @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_mutations_battle"))
                     @sprites["barcommands"].visible = true
                 else
                     @sprites["barcommands"].visible = false
@@ -462,7 +472,7 @@ class BerrydexInfo_Scene
                 drawPageMutations
             end
         when 4 
-            @sprites["barcommands"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bar_battle_mutations"))
+            @sprites["barcommands"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bar_battle_mutations"))
             @sprites["barcommands"].visible = true
             drawPageMutations
         end
@@ -472,9 +482,9 @@ class BerrydexInfo_Scene
         draw_color = Settings::BERRYDEX_SHOW_COLOR
         color_path = draw_color ? "_color" : ""
         if PluginManager.installed?("Better Bitmaps") && Settings::BERRYDEX_USE_PENTAGON_GRAPH
-            @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bg_info#{color_path}_graph"))
+            @sprites["background"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bg_info#{color_path}_graph"))
         else
-            @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bg_info#{color_path}"))
+            @sprites["background"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bg_info#{color_path}"))
         end
         overlay = @sprites["overlay"].bitmap
         base   = Color.new(88, 88, 80)
@@ -483,7 +493,7 @@ class BerrydexInfo_Scene
         berry_data = GameData::BerryData.try_get(@berry)
         berry_item = GameData::Item.try_get(berry_data.id)
         # Show the found icon
-        imagepos.push(["Graphics/Pictures/Berrydex/icon_found", 16, 44])
+        imagepos.push(["Graphics/#{@file_location}/Berrydex/icon_found", 16, 44])
         # Write various bits of text
         indexText = ""
         if Settings::BERRYDEX_SHOW_NUMBER
@@ -531,7 +541,6 @@ class BerrydexInfo_Scene
         end
         drawTextEx(overlay, 40, 278, Graphics.width - (40 * 2), 3,   # overlay, x, y, width, num lines
                 berry_data.description, base, shadow)
-
         # Draw all text
         pbDrawTextPositions(overlay, textpos)
         # Draw all images
@@ -539,7 +548,7 @@ class BerrydexInfo_Scene
     end
  
     def drawPagePlant
-        @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bg_plant"))
+        @sprites["background"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bg_plant"))
         overlay = @sprites["overlay"].bitmap
         base   = Color.new(88, 88, 80)
         shadow = Color.new(168, 184, 184)
@@ -553,7 +562,7 @@ class BerrydexInfo_Scene
         @sprites["circled_bitter"]&.visible = false
         @sprites["circled_sour"]&.visible = false
         # Show the found icon
-        imagepos.push(["Graphics/Pictures/Berrydex/icon_found", 16, 44])
+        imagepos.push(["Graphics/#{@file_location}/Berrydex/icon_found", 16, 44])
         # Write various bits of text
         indexText = ""
         if Settings::BERRYDEX_SHOW_NUMBER
@@ -568,6 +577,13 @@ class BerrydexInfo_Scene
             [_INTL("{1}{2} {3}", indexText, " ", berry_item.name),
             50, 48, 0, Color.new(248, 248, 248), Color.new(0, 0, 0)]
         ]
+        if PluginManager.installed?("TDW Berry Planting Improvements","1.9") && Settings::BERRY_PREFERRED_SOIL_ENABLED && Settings::BERRYDEX_SHOW_PREFERRED_SOIL
+            if Settings::BERRY_SOIL_DEFINITIONS[berry_data.preferred_soil]
+                @sprites["berry_plant_dirt"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/plant_dirt#{Settings::BERRY_SOIL_DEFINITIONS[berry_data.preferred_soil][:dex_graphic_ext]}"))
+            else
+                @sprites["berry_plant_dirt"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/plant_dirt"))
+            end
+        end
 
         filename = sprintf("berrytree_%s", berry_item.id.to_s)
         if pbResolveBitmap("Graphics/Characters/" + filename)
@@ -607,7 +623,7 @@ class BerrydexInfo_Scene
                     weather.each_with_index do |w, i|
                         break if i >= 6
                         w = GameData::Weather.get(w).id.to_sym
-                        imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{w}", xPos + i*60, 310])
+                        imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{w}", xPos + i*60, 310])
                     end
                 else
                     @sprites["weather_box"].visible = false
@@ -625,7 +641,7 @@ class BerrydexInfo_Scene
                 if zones.length > 0
                     zones.each_with_index do |z, i|
                         z = z.upcase
-                        imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{z}", xPos + 60*total_i, 310])
+                        imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{z}", xPos + 60*total_i, 310])
                         total_i += 1
                         break if total_i >= 6
                     end
@@ -634,7 +650,7 @@ class BerrydexInfo_Scene
                     unzones.each_with_index do |z, i|
                         break if total_i >= 6
                         z = z.upcase
-                        imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{z}_UNPREF", xPos + 60*total_i, 310])
+                        imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{z}_UNPREF", xPos + 60*total_i, 310])
                         total_i += 1
                         break if total_i >= 6
                     end
@@ -656,7 +672,7 @@ class BerrydexInfo_Scene
                 weather.each_with_index do |w, i|
                     break if i >= 3
                     w = GameData::Weather.get(w).id.to_sym
-                    imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{w}", xPos + 52*i, 310])
+                    imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{w}", xPos + 52*i, 310])
                 end
             end
             if zones.length > 0 || unzones.length > 0
@@ -668,7 +684,7 @@ class BerrydexInfo_Scene
                 if zones.length > 0
                     zones.each_with_index do |z, i|
                         z = z.upcase
-                        imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{z}", xPos + 52*total_i, 310])
+                        imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{z}", xPos + 52*total_i, 310])
                         total_i += 1
                         break if total_i >= 3
                     end
@@ -677,7 +693,7 @@ class BerrydexInfo_Scene
                     unzones.each_with_index do |z, i|
                         break if total_i >= 3
                         z = z.upcase
-                        imagepos.push(["Graphics/Pictures/Berrydex/Plant Icons/#{z}_UNPREF", xPos + 52*total_i, 310])
+                        imagepos.push(["Graphics/#{@file_location}/Berrydex/Plant Icons/#{z}_UNPREF", xPos + 52*total_i, 310])
                         total_i += 1
                         break if total_i >= 3
                     end
@@ -692,7 +708,7 @@ class BerrydexInfo_Scene
     end
   
     def drawPageBattle
-        @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bg_battle"))
+        @sprites["background"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bg_battle"))
         overlay = @sprites["overlay"].bitmap
         base   = Color.new(88, 88, 80)
         shadow = Color.new(168, 184, 184)
@@ -700,7 +716,7 @@ class BerrydexInfo_Scene
         berry_data = GameData::BerryData.try_get(@berry)
         berry_item = GameData::Item.try_get(berry_data.id)
         # Show the found icon
-        imagepos.push(["Graphics/Pictures/Berrydex/icon_found", 16, 44])
+        imagepos.push(["Graphics/#{@file_location}/Berrydex/icon_found", 16, 44])
         # Write various bits of text
         indexText = ""
         if Settings::BERRYDEX_SHOW_NUMBER
@@ -732,7 +748,7 @@ class BerrydexInfo_Scene
         textpos.push([_INTL("Power"), 176, yPos + 102, 0, base, shadow])
         textpos.push([natural[1].to_s, 356, yPos + 102, 1, base, shadow])
 
-        type_bitmap = Essentials::VERSION.include?("21") ? AnimatedBitmap.new(_INTL("Graphics/UI/types")) : AnimatedBitmap.new(_INTL("Graphics/Pictures/types"))
+        type_bitmap = AnimatedBitmap.new(_INTL("Graphics/#{@file_location}/types"))
         type_number = GameData::Type.get(natural[0]).icon_position
         type_rect = Rect.new(0, type_number * 28, 64, 28)
         overlay.blt(292, yPos + 64, type_bitmap.bitmap, type_rect)
@@ -749,7 +765,7 @@ class BerrydexInfo_Scene
 
     def drawPageMutations
         pbHideMutationsIcons
-        @sprites["background"].setBitmap(_INTL("Graphics/Pictures/Berrydex/bg_mutation"))
+        @sprites["background"].setBitmap(_INTL("Graphics/#{@file_location}/Berrydex/bg_mutation"))
         overlay = @sprites["overlay"].bitmap
         base   = Color.new(88, 88, 80)
         shadow = Color.new(168, 184, 184)
@@ -777,28 +793,44 @@ class BerrydexInfo_Scene
                 parent_two = mutation[1]
                 children = mutation[2]
                 icon_number = (i == 0 ? 0 : 3)
-                imagepos.push(["Graphics/Pictures/Berrydex/mutation_choice", 20, 98 + i*150]) if parent_one == @berry
-                drawFormattedTextEx(overlay, 22, 168 + i*150, 122,    # overlay, x, y, width, 
-                    "<ac>" + GameData::Item.try_get(parent_one).name, base, shadow, 30)
-                @sprites["mutitemicon#{icon_number}"].item = parent_one
+                imagepos.push(["Graphics/#{@file_location}/Berrydex/mutation_choice", 20, 98 + i*150]) if parent_one == @berry
+                if pbBerryRegistered?(parent_one) || !Settings::BERRY_MUTATION_HIDE_UNREGISTERED
+                    drawFormattedTextEx(overlay, 22, 168 + i*150, 122,    # overlay, x, y, width, 
+                        "<ac>" + GameData::Item.try_get(parent_one).name, base, shadow, 30)
+                    @sprites["mutitemicon#{icon_number}"].item = parent_one
+                else
+                    drawFormattedTextEx(overlay, 22, 168 + i*150, 122,   
+                        "<ac>???", base, shadow, 30)
+                        @sprites["mutitemicon#{icon_number}"].item = nil
+                end
                 @sprites["mutitemicon#{icon_number}"].visible = true
-                imagepos.push(["Graphics/Pictures/Berrydex/mutation_choice", 172, 98 + i*150]) if parent_two == @berry
-                drawFormattedTextEx(overlay, 174, 168 + i*150, 122,    # overlay, x, y, width,
-                    "<ac>" + GameData::Item.try_get(parent_two).name, base, shadow, 30)
-                @sprites["mutitemicon#{icon_number+1}"].item = parent_two
+                imagepos.push(["Graphics/#{@file_location}/Berrydex/mutation_choice", 172, 98 + i*150]) if parent_two == @berry
+                if pbBerryRegistered?(parent_two) || !Settings::BERRY_MUTATION_HIDE_UNREGISTERED
+                    drawFormattedTextEx(overlay, 174, 168 + i*150, 122,    # overlay, x, y, width, 
+                        "<ac>" + GameData::Item.try_get(parent_two).name, base, shadow, 30)
+                    @sprites["mutitemicon#{icon_number+1}"].item = parent_two
+                else
+                    drawFormattedTextEx(overlay, 174, 168 + i*150, 122,   
+                        "<ac>???", base, shadow, 30)
+                        @sprites["mutitemicon#{icon_number+1}"].item = nil
+                end
                 @sprites["mutitemicon#{icon_number+1}"].visible = true
                 if children.include?(@berry)
-                    imagepos.push(["Graphics/Pictures/Berrydex/mutation_choice", 366, 98 + i*150])
+                    imagepos.push(["Graphics/#{@file_location}/Berrydex/mutation_choice", 366, 98 + i*150])
                     drawFormattedTextEx(overlay, 368, 168 + i*150, 122,   # overlay, x, y, width, num lines
                         "<ac>" + berry_item.name, base, shadow, 30)
                     @sprites["mutitemicon#{icon_number+2}"].item = @berry
                     @sprites["mutitemicon#{icon_number+2}"].visible = true
-
                 elsif children.length == 1
-                    drawFormattedTextEx(overlay, 368, 168 + i*150, 122,   # overlay, x, y, width, num lines
-                        "<ac>" + GameData::Item.try_get(children[0]).name, base, shadow, 30)
-                    @sprites["mutitemicon#{icon_number+2}"].item = children[0]
-                    @sprites["mutitemicon#{icon_number+2}"].visible = true
+                    if pbBerryRegistered?(children[0])
+                        drawFormattedTextEx(overlay, 368, 168 + i*150, 122,   # overlay, x, y, width, num lines
+                            "<ac>" + GameData::Item.try_get(children[0]).name, base, shadow, 30)
+                        @sprites["mutitemicon#{icon_number+2}"].item = children[0]
+                        @sprites["mutitemicon#{icon_number+2}"].visible = true
+                    else
+                        textpos.push([_INTL("???"), 428, 168 + i*150, 2, base, shadow])
+                        @sprites["mutmultipleicon0"].visible = true
+                    end
                 else
                     textpos.push([_INTL("Multiple"), 428, 168 + i*150, 2, base, shadow])
                     @sprites["mutmultipleicon0"].visible = true
@@ -991,6 +1023,7 @@ class BerrydexItemIconSprite < Sprite
   
     def initialize(x, y, item, viewport = nil)
         super(viewport)
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
         @bitmap = nil
         @tag_icon = false
         self.x = x
@@ -1045,8 +1078,8 @@ class BerrydexItemIconSprite < Sprite
         @bitmap&.dispose
         @bitmap = nil
         if @item
-            if Settings::BERRYDEX_USE_TAG_ICONS && pbResolveBitmap("Graphics/Pictures/Berrydex/Tag Icons/" + value.to_s)
-                @bitmap = AnimatedBitmap.new("Graphics/Pictures/Berrydex/Tag Icons/" + value.to_s)
+            if Settings::BERRYDEX_USE_TAG_ICONS && pbResolveBitmap("Graphics/#{@file_location}/Berrydex/Tag Icons/" + value.to_s)
+                @bitmap = AnimatedBitmap.new("Graphics/#{@file_location}/Berrydex/Tag Icons/" + value.to_s)
                 self.bitmap = @bitmap.bitmap
                 self.src_rect = Rect.new(0, 0, self.bitmap.width, self.bitmap.height)
             else
@@ -1055,7 +1088,9 @@ class BerrydexItemIconSprite < Sprite
                 self.src_rect = Rect.new(0, 0, self.bitmap.width, self.bitmap.height)
             end
         else
-            self.bitmap = nil
+            @bitmap = AnimatedBitmap.new("Graphics/#{@file_location}/Berrydex/unknown")
+            self.bitmap = @bitmap.bitmap
+            self.src_rect = Rect.new(0, 0, self.bitmap.width, self.bitmap.height)
         end
         changeOrigin
     end

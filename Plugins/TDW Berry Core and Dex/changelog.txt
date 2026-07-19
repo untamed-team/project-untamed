@@ -1,3 +1,20 @@
+v1.6
+- Added a SHOW_BERRYDEX_IN_PAUSE_MENU setting to provide a way to make the BerryDex appear in the vanilla pause menu (since I've been asked for this many times).
+- Added a REQUIRE_BERRYDEX_BEFORE_REGISTRATION setting to allow defining whether or not berries you pick before receiving the BerryDex will appear registered when you receive it.
+- Added a BERRY_MUTATION_HIDE_UNREGISTERED setting to allow only showing berries you have registered in the BerryDex while viewing the mutations page.
+- Added changes to support Preferred Soil (requires Berry Planting Improvements).
+
+v1.5.1
+- Actually alias the deprecation suppression correctly to prevent crashes.
+
+v1.5
+- New feature: Added function pbBerryGetNaturalGift to check a Berry's Natural Gift data directly.
+- New feature: Added a paramter to pbChooseBerryMultiple to allow showing different labels when selecting a Berry. For example, you can either things like the Berry's color, size, or Natural Gift type.
+- Started the process of being fully v21 compatible.
+-- Note: Compiling berry_data PBS file is not yet converted. I added a bit of code to suppress the warning that appears every compile in the meantime.
+- Made some changes to pbChooseBerryMultiple to have text that fits the count of berries.
+
+
 v1.4
 - New feature: Berrydex Battle page. This page will show information pertaining to battles, like the Fling power, Natural Gift type and Power, and effect when used in battle. By default, the item description for the berry will show as the "effect when used in battle" portion. However, not all descriptions would fit this. You can customize what description to show here by including a BattleDescription for the berry in the berry_data.txt to show that, instead.
 - Added the option to show a berry's color in the Tag Page of the Berrydex.

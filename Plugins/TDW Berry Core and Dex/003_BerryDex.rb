@@ -92,7 +92,7 @@ class Player < Trainer
         end
 
         def register(berry)
-            return false if !$player.has_berrydex
+            return false if !$player.has_berrydex && Settings::REQUIRE_BERRYDEX_BEFORE_REGISTRATION
             data = GameData::BerryData.try_get(berry)
             return false if !data
             return false if @registered[berry]
@@ -163,6 +163,22 @@ def pbGetBerrydexNumber(berry, region = 0)
     return 0 if !berry_data
     dex_list.each_with_index { |s, index| return index + 1 if s.id == berry_data.id }
     return 0
+end
+
+#===============================================================================
+# Pause menu commands
+#===============================================================================
+if Settings::SHOW_BERRYDEX_IN_PAUSE_MENU
+    MenuHandlers.add(:pause_menu, :berrydex, {
+        "name"      => _INTL("Berrydex"),
+        "order"     => 11,
+        "condition" => proc { next pbCanViewBerryDex? },
+        "effect"    => proc { |menu|
+            pbPlayDecisionSE
+            pbBerryDex
+            next false
+        }
+    })
 end
 
 #===============================================================================

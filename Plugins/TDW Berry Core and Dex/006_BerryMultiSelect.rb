@@ -1,7 +1,7 @@
 #===============================================================================
 # pbChooseBerryMultiple
 #===============================================================================
-def pbChooseBerryMultiple(count = 2, allowLess = true, remove = true)
+def pbChooseBerryMultiple(count = 2, allowLess = true, remove = true, label = :Color)
     count = count.clamp(0,6)
     if !$bag.hasAnyBerry?
         pbMessage(_INTL("You don't have any berries!"))
@@ -9,7 +9,7 @@ def pbChooseBerryMultiple(count = 2, allowLess = true, remove = true)
     end
     berries = nil
     pbFadeOutIn {
-        scene = ChooseBerryMultiple_Scene.new(count)
+        scene = ChooseBerryMultiple_Scene.new(count, label)
         screen = ChooseBerryMultipleScreen.new(scene, $bag, allowLess)
         berries = screen.pbStartScreen(proc { |item| GameData::Item.get(item).pocket == 5 && GameData::Item.get(item).is_berry? })
     }
@@ -24,19 +24,22 @@ end
 class ChooseBerryMultiple_Scene
     attr_accessor         :selectedBerries
     attr_accessor         :count
+    attr_accessor         :label
     ITEMLISTBASECOLOR     = Color.new(88, 88, 80)
     ITEMLISTSHADOWCOLOR   = Color.new(168, 184, 184)
     ITEMTEXTBASECOLOR     = Color.new(248, 248, 248)
     ITEMTEXTSHADOWCOLOR   = Color.new(0, 0, 0)
     ITEMSVISIBLE          = 7
   
-    def initialize(count)
+    def initialize(count, label)
         @count = count
+        @label = label
     end
   
     def pbStartScene(bag, choosing, filterproc)
         @viewport = Viewport.new(0, 0, Graphics.width, Graphics.height)
         @viewport.z = 99999
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
         @bag        = bag
         @choosing   = choosing
         @filterproc = filterproc
@@ -47,10 +50,10 @@ class ChooseBerryMultiple_Scene
     
         #     end
         # end
-        @sliderbitmap = AnimatedBitmap.new("Graphics/Pictures/Bag/icon_slider")
+        @sliderbitmap = AnimatedBitmap.new("Graphics/#{@file_location}/Bag/icon_slider")
         @sprites = {}
         @sprites["background"] = IconSprite.new(0, 0, @viewport)
-        @sprites["background"].setBitmap(sprintf("Graphics/Pictures/Berrydex/bg_berry_selection"))
+        @sprites["background"].setBitmap(sprintf("Graphics/#{@file_location}/Berrydex/bg_berry_selection"))
         @sprites["selectedberries"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
         drawSelectedBerryCircles
         @sprites["overlay"] = BitmapSprite.new(Graphics.width, Graphics.height, @viewport)
@@ -68,9 +71,9 @@ class ChooseBerryMultiple_Scene
         @sprites["itemtext"].shadowColor = ITEMTEXTSHADOWCOLOR
         @sprites["itemtext"].visible     = true
         @sprites["itemtext"].windowskin  = nil
-        @sprites["itemcolor"] = BitmapSprite.new(186, 64, @viewport)
-        @sprites["itemcolor"].y = 224
-        pbSetSystemFont(@sprites["itemcolor"].bitmap)
+        @sprites["itemlabel"] = BitmapSprite.new(186, 64, @viewport)
+        @sprites["itemlabel"].y = 224
+        pbSetSystemFont(@sprites["itemlabel"].bitmap)
         @sprites["helpwindow"] = Window_UnformattedTextPokemon.new("")
         @sprites["helpwindow"].visible  = false
         @sprites["helpwindow"].viewport = @viewport
@@ -144,7 +147,7 @@ class ChooseBerryMultiple_Scene
         
         @count.times { |i| 
             xPos += 38 if odd && i+1 == @count
-            imagepos.push(["Graphics/Pictures/Berrydex/berry_select_circle", xPos + 74*(i%2), yPos + 74*(i/2)])
+            imagepos.push(["Graphics/#{@file_location}/Berrydex/berry_select_circle", xPos + 74*(i%2), yPos + 74*(i/2)])
             @sprites["berryicon#{i}"] = ItemIconSprite.new(xPos + 30 + 74*(i%2), yPos + 30 + 74*(i/2), nil, @viewport)
             @sprites["berryicon#{i}"].visible = false
         }
@@ -194,11 +197,44 @@ class ChooseBerryMultiple_Scene
         @sprites["itemicon"].item = itemlist.item
         # Set the selected item's description
         @sprites["itemtext"].text = (itemlist.item) ? GameData::Item.get(itemlist.item).description : _INTL("Close bag.")
-        # Set the selected item's color
-        @sprites["itemcolor"].bitmap.clear
-        color_data = itemlist.item ? GameData::BerryColor.get(GameData::BerryData.get(itemlist.item).color) : nil
-        pbDrawTextPositions(@sprites["itemcolor"].bitmap, [[(itemlist.item ? color_data.name : ""),
-                92, 18, 2, color_data.base_color, color_data.shadow_color]]) if itemlist.item
+        # Set the selected item's label
+        @sprites["itemlabel"].bitmap.clear
+        if !itemlist.item
+        elsif [:Type, :TypeText].include?(@label)
+            type_data = GameData::Type.get(pbBerryGetNaturalGift(itemlist.item)[0])
+            pbDrawTextPositions(@sprites["itemlabel"].bitmap, [[type_data.name,
+                    92, 18, 2, ITEMLISTBASECOLOR, ITEMLISTSHADOWCOLOR]])
+        elsif @label == :TypeIcon
+            file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
+            type_data = GameData::Type.get(pbBerryGetNaturalGift(itemlist.item)[0])
+            type_number = type_data.icon_position
+            pbDrawImagePositions(@sprites["itemlabel"].bitmap, [["Graphics/#{file_location}/types", 
+                    60, 14, 0, type_number * 28, 64, 28]])
+        elsif @label == :Size
+            berry_data = GameData::BerryData.get(itemlist.item)
+            size = ""
+            if System.user_language[3..4] == "US"   # If the user is in the United States
+                inches = (berry_data.size / 2.54).round(1)
+                size = _ISPRINTF("{1:.1f}\"", inches)
+            else
+                size = _ISPRINTF("{1:.1f} cm", size)
+            end
+            pbDrawTextPositions(@sprites["itemlabel"].bitmap, [[size,
+                    92, 18, 2, ITEMLISTBASECOLOR, ITEMLISTSHADOWCOLOR]])
+        elsif [:Firm, :Firmness].include?(@label)
+            berry_data = GameData::BerryData.get(itemlist.item)
+            pbDrawTextPositions(@sprites["itemlabel"].bitmap, [[berry_data.firmness,
+                    92, 18, 2, ITEMLISTBASECOLOR, ITEMLISTSHADOWCOLOR]])
+        elsif @label == :Flavor
+            berry_data = GameData::BerryData.get(itemlist.item)
+            flavor = berry_data.flavor.max_by{|key,val| val}
+            pbDrawTextPositions(@sprites["itemlabel"].bitmap, [[flavor[0],
+                    92, 18, 2, ITEMLISTBASECOLOR, ITEMLISTSHADOWCOLOR]])
+        else # :Color
+            color_data = GameData::BerryColor.get(GameData::BerryData.get(itemlist.item).color)
+            pbDrawTextPositions(@sprites["itemlabel"].bitmap, [[(itemlist.item ? color_data.name : ""),
+                    92, 18, 2, color_data.base_color, color_data.shadow_color]])
+        end
     end
   
     def pbRefreshFilter
@@ -251,9 +287,9 @@ class ChooseBerryMultipleScreen
         ready = false
         loop do
             if ready
-                if @scene.pbConfirm(_INTL("Choose these berries?"))
+                if @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Choose this berry?") : _INTL("Choose these berries?"))
                     break
-                elsif @scene.pbConfirm(_INTL("Stop choosing berries?"))
+                elsif @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Stop choosing a berry?") : _INTL("Stop choosing berries?"))
                     @scene.selectedBerries = []
                     break
                 end
@@ -263,7 +299,7 @@ class ChooseBerryMultipleScreen
             if !item 
                 if @allow_less && @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Choose this berry?") : _INTL("Choose these berries?")) 
                     break
-                elsif @scene.pbConfirm(_INTL("Stop choosing berries?"))
+                elsif @scene.pbConfirm(@scene.selectedBerries.length == 1 ? _INTL("Stop choosing a berry?") : _INTL("Stop choosing berries?"))
                     @scene.selectedBerries = []
                     break
                 end
@@ -314,14 +350,15 @@ end
 class Window_ChooseBerryMultiple < Window_DrawableCommand
   
     def initialize(bag, filterlist, scene, x, y, width, height)
+        @file_location = Essentials::VERSION.include?("21") ? "UI" : "Pictures"
         @bag        = bag
         @filterlist = filterlist
         @scene 		= scene
         @sorting = false
         @adapter = PokemonMartAdapter.new
         super(x, y, width, height)
-        @selarrow  = AnimatedBitmap.new("Graphics/Pictures/Bag/cursor")
-        @swaparrow = AnimatedBitmap.new("Graphics/Pictures/Bag/cursor_swap")
+        @selarrow  = AnimatedBitmap.new("Graphics/#{@file_location}/Bag/cursor")
+        @swaparrow = AnimatedBitmap.new("Graphics/#{@file_location}/Bag/cursor_swap")
         self.windowskin = nil
     end
   

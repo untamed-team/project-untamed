@@ -5006,6 +5006,14 @@ BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FIRE_80
 Description = It may be used or held by a Pokémon to recover from paralysis.
 #-------------------------------
+[CHERIBERRY_C]
+Name = Cheri Berry (C)
+NamePlural = Cheri Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FIRE_80
+Description = A cultivar of the Cheri Berry plant. It's alike in every way, except it has no status healing effects.
+#-------------------------------
 [CHESTOBERRY]
 Name = Chesto Berry
 NamePlural = Chesto Berries
@@ -5015,6 +5023,14 @@ FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_WATER_80
 Description = It may be used or held by a Pokémon to recover from sleep.
+#-------------------------------
+[CHESTOBERRY_C]
+Name = Chesto Berry (C)
+NamePlural = Chesto Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_WATER_80
+Description = A cultivar of the Chesto Berry plant. It's alike in every way, except it has no status healing effects.
 #-------------------------------
 [PECHABERRY]
 Name = Pecha Berry
@@ -5026,6 +5042,14 @@ BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
 Description = It may be used or held by a Pokémon to recover from poison.
 #-------------------------------
+[PECHABERRY_C]
+Name = Pecha Berry (C)
+NamePlural = Pecha Berries (C)
+Pocket = 5
+Price = 20=
+Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
+Description = A cultivar of the Pecha Berry plant. It's alike in every way, except it has no status healing effects.
+#-------------------------------
 [RAWSTBERRY]
 Name = Rawst Berry
 NamePlural = Rawst Berries
@@ -5035,6 +5059,14 @@ FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_GRASS_80
 Description = It may be used or held by a Pokémon to recover from a burn.
+#-------------------------------
+[RAWSTBERRY_C]
+Name = Rawst Berry (C)
+NamePlural = Rawst Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GRASS_80
+Description = A cultivar of the Rawst Berry plant. It's alike in every way, except it has no status healing effects.
 #-------------------------------
 [ASPEARBERRY]
 Name = Aspear Berry
@@ -5046,6 +5078,14 @@ BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_ICE_80
 Description = It may be used or held by a Pokémon to defrost it.
 #-------------------------------
+[ASPEARBERRY_C]
+Name = Aspear Berry (C)
+NamePlural = Aspear Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ICE_80
+Description = A cultivar of the Aspear Berry plant. It's alike in every way, except it has no status healing effects.
+#-------------------------------
 [LEPPABERRY]
 Name = Leppa Berry
 NamePlural = Leppa Berries
@@ -5055,6 +5095,14 @@ FieldUse = OnPokemon
 BattleUse = OnMove
 Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
 Description = It may be used or held by a Pokémon to restore a move's PP by 10.
+#-------------------------------
+[LEPPABERRY_C]
+Name = Leppa Berry (C)
+NamePlural = Leppa Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
+Description = A cultivar of the Leppa Berry plant. It's alike in every way, except it has no PP restoration effects.
 #-------------------------------
 [ORANBERRY]
 Name = Oran Berry
@@ -5066,6 +5114,14 @@ BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_POISON_80
 Description = It may be used or held by a Pokémon to heal the user by just 10 HP.
 #-------------------------------
+[ORANBERRY_C]
+Name = Oran Berry (C)
+NamePlural = Oran Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_POISON_80
+Description = A cultivar of the Oran Berry plant. It's alike in every way, except it has no healing effects.
+#-------------------------------
 [PERSIMBERRY]
 Name = Persim Berry
 NamePlural = Persim Berries
@@ -5074,6 +5130,14 @@ Price = 20
 BattleUse = OnBattler
 Flags = Berry,Fling_10,NaturalGift_GROUND_80
 Description = It may be used or held by a Pokémon to recover from confusion/dizziness.
+#-------------------------------
+[PERSIMBERRY_C]
+Name = Persim Berry (C)
+NamePlural = Persim Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GROUND_80
+Description = A cultivar of the Persim Berry plant. It's alike in every way, except it has no status healing effects.
 #-------------------------------
 [LUMBERRY]
 Name = Lum Berry
@@ -5085,6 +5149,14 @@ BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_FLYING_80
 Description = It may be used or held by a Pokémon to recover from any status problem.
 #-------------------------------
+[LUMBERRY_C]
+Name = Lum Berry (C)
+NamePlural = Lum Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FLYING_80
+Description = A cultivar of the Lum Berry plant. It's alike in every way, except it has no status healing effects.
+#-------------------------------
 [SITRUSBERRY]
 Name = Sitrus Berry
 NamePlural = Sitrus Berries
@@ -5094,6 +5166,14 @@ FieldUse = OnPokemon
 BattleUse = OnPokemon
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
 Description = It may be used or held by a Pokémon to heal the user's HP a little.
+#-------------------------------
+[SITRUSBERRY_C]
+Name = Sitrus Berry (C)
+NamePlural = Sitrus Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
+Description = A cultivar of the Sitris Berry plant. It's alike in every way, except it has no healing effects.
 #-------------------------------
 [NYLOBERRY]
 Name = Nylo Berry
@@ -5113,6 +5193,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_BUG_80
 Description = If held by a Pokémon, it restores the user's HP in a pinch, but will cause confusion if it hates the taste.
 #-------------------------------
+[FIGYBERRY_C]
+Name = Figy Berry (C)
+NamePlural = Figy Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_BUG_80
+Description = A cultivar of the Figy Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [WIKIBERRY]
 Name = Wiki Berry
 NamePlural = Wiki Berries
@@ -5120,6 +5208,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_ROCK_80
 Description = If held by a Pokémon, it restores the user's HP in a pinch, but will cause confusion if it hates the taste.
+#-------------------------------
+[WIKIBERRY_C]
+Name = Wiki Berry (C)
+NamePlural = Wiki Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ROCK_80
+Description = A cultivar of the Wiki Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [MAGOBERRY]
 Name = Mago Berry
@@ -5129,6 +5225,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_GHOST_80
 Description = If held by a Pokémon, it restores the user's HP in a pinch, but will cause confusion if it hates the taste.
 #-------------------------------
+[MAGOBERRY_C]
+Name = Mago Berry (C)
+NamePlural = Mago Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GHOST_80
+Description = A cultivar of the Mago Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [AGUAVBERRY]
 Name = Aguav Berry
 NamePlural = Aguav Berries
@@ -5137,6 +5241,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_DRAGON_80
 Description = If held by a Pokémon, it restores the user's HP in a pinch, but will cause confusion if it hates the taste.
 #-------------------------------
+[AGUAVBERRY_C]
+Name = Aguav Berry (C)
+NamePlural = Aguav Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DRAGON_80
+Description = A cultivar of the Aguav Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [IAPAPABERRY]
 Name = Iapapa Berry
 NamePlural = Iapapa Berries
@@ -5144,6 +5256,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_DARK_80
 Description = If held by a Pokémon, it restores the user's HP in a pinch, but will cause confusion if it hates the taste.
+#-------------------------------
+[IAPAPABERRY_C]
+Name = Iapapa Berry (C)
+NamePlural = Iapapa Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DARK_80
+Description = A cultivar of the Iapapa Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [RAZZBERRY]
 Name = Razz Berry
@@ -5319,6 +5439,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_FIRE_80
 Description = Weakens a supereffective Fire-type attack against the holding Pokémon.
 #-------------------------------
+[OCCABERRY_C]
+Name = Occa Berry (C)
+NamePlural = Occa Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FIRE_80
+Description = A cultivar of the Occa Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [PASSHOBERRY]
 Name = Passho Berry
 NamePlural = Passho Berries
@@ -5326,6 +5454,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_WATER_80
 Description = Weakens a supereffective Water-type attack against the holding Pokémon.
+#-------------------------------
+[PASSHOBERRY_C]
+Name = Passho Berry (C)
+NamePlural = Passho Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_WATER_80
+Description = A cultivar of the Passho Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [WACANBERRY]
 Name = Wacan Berry
@@ -5335,6 +5471,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
 Description = Weakens a supereffective Electric-type attack against the holding Pokémon.
 #-------------------------------
+[WACANBERRY_C]
+Name = Wacan Berry (C)
+NamePlural = Wacan Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ELECTRIC_80
+Description = A cultivar of the Wacan Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [RINDOBERRY]
 Name = Rindo Berry
 NamePlural = Rindo Berries
@@ -5342,6 +5486,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_GRASS_80
 Description = Weakens a supereffective Grass-type attack against the holding Pokémon.
+#-------------------------------
+[RINDOBERRY_C]
+Name = Rindo Berry (C)
+NamePlural = Rindo Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GRASS_80
+Description = A cultivar of the Rindo Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [YACHEBERRY]
 Name = Yache Berry
@@ -5351,6 +5503,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_ICE_80
 Description = Weakens a supereffective Ice-type attack against the holding Pokémon.
 #-------------------------------
+[YACHEBERRY_C]
+Name = Yache Berry (C)
+NamePlural = Yache Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ICE_80
+Description = A cultivar of the Yache Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [CHOPLEBERRY]
 Name = Chople Berry
 NamePlural = Chople Berries
@@ -5358,6 +5518,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
 Description = Weakens a supereffective Fighting-type attack against the holding Pokémon.
+#-------------------------------
+[CHOPLEBERRY_C]
+Name = Chople Berry (C)
+NamePlural = Chople Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FIGHTING_80
+Description = A cultivar of the Chople Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [KEBIABERRY]
 Name = Kebia Berry
@@ -5367,6 +5535,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_POISON_80
 Description = Weakens a supereffective Poison-type attack against the holding Pokémon.
 #-------------------------------
+[KEBIABERRY_C]
+Name = Kebia Berry (C)
+NamePlural = Kebia Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_POISON_80
+Description = A cultivar of the Kebia Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [SHUCABERRY]
 Name = Shuca Berry
 NamePlural = Shuca Berries
@@ -5374,6 +5550,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_GROUND_80
 Description = Weakens a supereffective Ground-type attack against the holding Pokémon.
+#-------------------------------
+[SHUCABERRY_C]
+Name = Shuca Berry (C)
+NamePlural = Shuca Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GROUND_80
+Description = A cultivar of the Shuca Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [COBABERRY]
 Name = Coba Berry
@@ -5383,6 +5567,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_FLYING_80
 Description = Weakens a supereffective Flying-type attack against the holding Pokémon.
 #-------------------------------
+[COBABERRY_C]
+Name = Coba Berry (C)
+NamePlural = Coba Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FLYING_80
+Description = A cultivar of the Coba Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [PAYAPABERRY]
 Name = Payapa Berry
 NamePlural = Payapa Berries
@@ -5390,6 +5582,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
 Description = Weakens a supereffective Psychic-type attack against the holding Pokémon.
+#-------------------------------
+[PAYAPABERRY_C]
+Name = Payapa Berry (C)
+NamePlural = Payapa Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_PSYCHIC_80
+Description = A cultivar of the Payapa Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [TANGABERRY]
 Name = Tanga Berry
@@ -5399,6 +5599,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_BUG_80
 Description = Weakens a supereffective Bug-type attack against the holding Pokémon.
 #-------------------------------
+[TANGABERRY_C]
+Name = Tanga Berry (C)
+NamePlural = Tanga Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_BUG_80
+Description = A cultivar of the Tanga Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [CHARTIBERRY]
 Name = Charti Berry
 NamePlural = Charti Berries
@@ -5406,6 +5614,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_ROCK_80
 Description = Weakens a supereffective Rock-type attack against the holding Pokémon.
+#-------------------------------
+[CHARTIBERRY_C]
+Name = Charti Berry (C)
+NamePlural = Charti Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ROCK_80
+Description = A cultivar of the Charti Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [KASIBBERRY]
 Name = Kasib Berry
@@ -5415,6 +5631,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_GHOST_80
 Description = Weakens a supereffective Ghost-type attack against the holding Pokémon.
 #-------------------------------
+[KASIBBERRY_C]
+Name = Kasib Berry (C)
+NamePlural = Kasib Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GHOST_80
+Description = A cultivar of the Kasib Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [HABANBERRY]
 Name = Haban Berry
 NamePlural = Haban Berries
@@ -5422,6 +5646,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_DRAGON_80
 Description = Weakens a supereffective Dragon-type attack against the holding Pokémon.
+#-------------------------------
+[HABANBERRY_C]
+Name = Haban Berry (C)
+NamePlural = Haban Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DRAGON_80
+Description = A cultivar of the Haban Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [COLBURBERRY]
 Name = Colbur Berry
@@ -5431,6 +5663,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_DARK_80
 Description = Weakens a supereffective Dark-type attack against the holding Pokémon.
 #-------------------------------
+[COLBURBERRY_C]
+Name = Colbur Berry (C)
+NamePlural = Colbur Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DARK_80
+Description = A cultivar of the Colbur Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [BABIRIBERRY]
 Name = Babiri Berry
 NamePlural = Babiri Berries
@@ -5438,6 +5678,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_STEEL_80
 Description = Weakens a supereffective Steel-type attack against the holding Pokémon.
+#-------------------------------
+[BABIRIBERRY_C]
+Name = Babiri Berry (C)
+NamePlural = Babiri Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_STEEL_80
+Description = A cultivar of the Babiri Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [ROSELIBERRY]
 Name = Roseli Berry
@@ -5447,6 +5695,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_80
 Description = Weakens a supereffective Fairy-type attack against the holding Pokémon.
 #-------------------------------
+[ROSELIBERRY_C]
+Name = Roseli Berry (C)
+NamePlural = Roseli Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FAIRY_80
+Description = A cultivar of the Roseli Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [CHILANBERRY]
 Name = Chilan Berry
 NamePlural = Chilan Berries
@@ -5454,6 +5710,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_NORMAL_80
 Description = Weakens a Normal-type attack against the Pokémon holding this berry.
+#-------------------------------
+[CHILANBERRY_C]
+Name = Chilan Berry (C)
+NamePlural = Chilan Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_NORMAL_80
+Description = A cultivar of the Chilan Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [LIECHIBERRY]
 Name = Liechi Berry
@@ -5463,6 +5727,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_GRASS_100
 Description = If held by a Pokémon, it raises its Attack stat in a pinch.
 #-------------------------------
+[LIECHIBERRY_C]
+Name = Liechi Berry (C)
+NamePlural = Liechi Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GRASS_100
+Description = A cultivar of the Liechi Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [GANLONBERRY]
 Name = Ganlon Berry
 NamePlural = Ganlon Berries
@@ -5470,6 +5742,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_ICE_100
 Description = If held by a Pokémon, it raises its Defense stat in a pinch.
+#-------------------------------
+[GANLONBERRY_C]
+Name = Ganlon Berry (C)
+NamePlural = Ganlon Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ICE_100
+Description = A cultivar of the Ganlon Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [SALACBERRY]
 Name = Salac Berry
@@ -5479,6 +5759,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_FIGHTING_100
 Description = If held by a Pokémon, it raises its Speed stat in a pinch.
 #-------------------------------
+[SALACBERRY_C]
+Name = Salac Berry (C)
+NamePlural = Salac Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FIGHTING_100
+Description = A cultivar of the Salac Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [PETAYABERRY]
 Name = Petaya Berry
 NamePlural = Petaya Berries
@@ -5486,6 +5774,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_POISON_100
 Description = If held by a Pokémon, it raises its Sp. Atk stat in a pinch.
+#-------------------------------
+[PETAYABERRY_C]
+Name = Petaya Berry (C)
+NamePlural = Petaya Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_POISON_100
+Description = A cultivar of the Petaya Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [APICOTBERRY]
 Name = Apicot Berry
@@ -5495,6 +5791,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_GROUND_100
 Description = If held by a Pokémon, it raises its Sp. Def stat in a pinch.
 #-------------------------------
+[APICOTBERRY_C]
+Name = Apicot Berry (C)
+NamePlural = Apicot Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GROUND_100
+Description = A cultivar of the Apicot Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [LANSATBERRY]
 Name = Lansat Berry
 NamePlural = Lansat Berries
@@ -5502,6 +5806,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_FLYING_100
 Description = If held by a Pokémon, it raises its critical-hit ratio in a pinch.
+#-------------------------------
+[LANSATBERRY_C]
+Name = Lansat Berry (C)
+NamePlural = Lansat Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FLYING_100
+Description = A cultivar of the Kee Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [STARFBERRY]
 Name = Starf Berry
@@ -5511,6 +5823,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_PSYCHIC_100
 Description = If held by a Pokémon, it sharply raises one of its stats in a pinch.
 #-------------------------------
+[STARFBERRY_C]
+Name = Starf Berry (C)
+NamePlural = Starf Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_PSYCHIC_100
+Description = A cultivar of the Starf Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [ENIGMABERRY]
 Name = Enigma Berry
 NamePlural = Enigma Berries
@@ -5518,6 +5838,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_BUG_100
 Description = If held by a Pokémon, it restores its HP if it is hit by any supereffective attack.
+#-------------------------------
+[ENIGMABERRY_C]
+Name = Enigma Berry (C)
+NamePlural = Enigma Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_BUG_100
+Description = A cultivar of the Enigma Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [MICLEBERRY]
 Name = Micle Berry
@@ -5527,6 +5855,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_ROCK_100
 Description = If held by a Pokémon, it raises the accuracy of a move just once in a pinch.
 #-------------------------------
+[MICLEBERRY_C]
+Name = Micle Berry (C)
+NamePlural = Micle Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_ROCK_100
+Description = A cultivar of the Micle Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [CUSTAPBERRY]
 Name = Custap Berry
 NamePlural = Custap Berries
@@ -5534,6 +5870,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_GHOST_100
 Description = If held by a Pokémon, it gets to move first just once in a pinch.
+#-------------------------------
+[CUSTAPBERRY_C]
+Name = Custap Berry (C)
+NamePlural = Custap Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_GHOST_100
+Description = A cultivar of the Custap Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [JABOCABERRY]
 Name = Jaboca Berry
@@ -5543,6 +5887,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_DRAGON_100
 Description = If held by a Pokémon and a physical attack lands, the attacker also takes damage.
 #-------------------------------
+[JABOCABERRY_C]
+Name = Jaboca Berry (C)
+NamePlural = Jaboca Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DRAGON_100
+Description = A cultivar of the Jaboca Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [ROWAPBERRY]
 Name = Rowap Berry
 NamePlural = Rowap Berries
@@ -5550,6 +5902,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_DARK_100
 Description = If held by a Pokémon and a special attack lands, the attacker also takes damage.
+#-------------------------------
+[ROWAPBERRY_C]
+Name = Rowap Berry (C)
+NamePlural = Rowap Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DARK_100
+Description = A cultivar of the Rowap Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [KEEBERRY]
 Name = Kee Berry
@@ -5559,6 +5919,14 @@ Price = 20
 Flags = Berry,Fling_10,NaturalGift_FAIRY_100
 Description = If held by a Pokémon, this Berry will increase the holder's Defense if it's hit with a physical move.
 #-------------------------------
+[KEEBERRY_C]
+Name = Kee Berry (C)
+NamePlural = Kee Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_FAIRY_100
+Description = A cultivar of the Kee Berry plant. It's alike in every way, except it has no effects in battle.
+#-------------------------------
 [MARANGABERRY]
 Name = Maranga Berry
 NamePlural = Maranga Berries
@@ -5566,6 +5934,14 @@ Pocket = 5
 Price = 20
 Flags = Berry,Fling_10,NaturalGift_DARK_100
 Description = If held by a Pokémon, this Berry will increase the holder's Sp. Def if it's hit with a special move.
+#-------------------------------
+[MARANGABERRY_C]
+Name = Maranga Berry (C)
+NamePlural = Maranga Berries (C)
+Pocket = 5
+Price = 20
+Flags = Berry,Fling_10,NaturalGift_DARK_100
+Description = A cultivar of the Maranga Berry plant. It's alike in every way, except it has no effects in battle.
 #-------------------------------
 [GRASSMAIL]
 Name = Grass Mail
