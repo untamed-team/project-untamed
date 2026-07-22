@@ -611,7 +611,7 @@ class Battle::AI
       break if score < 1
       next if !pkmn || !pkmn.able?
       next if inBattleIndex.include?(idxParty)
-      dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,target)
+      dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,nil,true,true)
       if pbCheckMoveImmunity(score, move, user, dummy, skill)
         score -= 2
         echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity ("+dummy.name+").\n") if $AIGENERALLOG

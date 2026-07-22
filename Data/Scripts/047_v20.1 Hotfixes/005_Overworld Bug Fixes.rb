@@ -65,8 +65,7 @@ end
 #===============================================================================
 class Game_Character
   def calculate_bush_depth
-     ### NOTE: this makes the game stutter every time you move and bushes are involved. Removing it for now #by low
-    if true#@tile_id > 0 || @always_on_top || jumping?
+    if @tile_id > 0 || @always_on_top || jumping?
       @bush_depth = 0
       return
     end

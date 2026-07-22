@@ -229,6 +229,7 @@ class PokemonRegionMap_Scene
     end
     @unvisitedMaps.each do |visit|
       @spritesMap["Visited"].z = 10
+	  Console.echo_warn "visit is #{visit}"
       pbDrawImagePositions(
         @spritesMap["Visited"].bitmap,
         [["Graphics/Pictures/RegionMap/Unvisited/map#{visit[9]}", ((visit[0] - 1) * SQUARE_WIDTH) , ((visit[1] - 1) * SQUARE_HEIGHT)]]

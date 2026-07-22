@@ -348,7 +348,7 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
     return if !showAnimation
     @battle.pbAnimation(id, user, targets, hitNum)
     if @transformbreak
-      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false)
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false,true)
       @battle.scene.pbChangePokemon(targets[0], blankBattler.pokemon)
     end
   end

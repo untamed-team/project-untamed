@@ -204,3 +204,4 @@ GameData::TerrainTag.register({
 #19-29 are reserved for rotatona puzzle track pieces
 #30 - bird bridge for boon's phenomenon
 #31 - shallow beach bubbles
+#32 - deep sand

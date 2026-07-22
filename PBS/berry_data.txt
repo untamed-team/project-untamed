@@ -1,6 +1,110 @@
 ﻿# Flavor = [Spicy,Dry,Sweet,Bitter,Sour] aka [Cool,Beauty,Cute,Smart,Tough]
 #-------------------------------
+[AGUAVBERRY]
+Size = 6.4
+Firmness = Super Hard
+Flavor = 0,0,0,15,0
+Smoothness = 25
+Color = Green
+Description = This Berry turns bitter toward the stem. The dainty flower it grows from doesn't absorb much sunlight.
+#-------------------------------
+[AGUAVBERRY_C]
+Size = 6.4
+Firmness = Super Hard
+Flavor = 0,0,0,15,0
+Smoothness = 25
+Color = Green
+Description = This Berry turns bitter toward the stem. The dainty flower it grows from doesn't absorb much sunlight.
+#-------------------------------
+[APICOTBERRY]
+Size = 7.5
+Firmness = Very Hard
+Flavor = 10,30,0,0,30
+Smoothness = 40
+Color = Blue
+Description = This is a very, very mystifying Berry. There is no telling how it can be used, or what may happen if it is used.
+#-------------------------------
+[APICOTBERRY_C]
+Size = 7.5
+Firmness = Very Hard
+Flavor = 10,30,0,0,30
+Smoothness = 40
+Color = Blue
+Description = This is a very, very mystifying Berry. There is no telling how it can be used, or what may happen if it is used.
+#-------------------------------
+[ASPEARBERRY]
+Size = 5.0
+Firmness = Super Hard
+Flavor = 0,0,0,0,10
+Smoothness = 25
+Color = Yellow
+Description = This Berry's peel is hard, but the flesh inside is very juicy. It is distinguished by its bracing sourness.
+#-------------------------------
+[ASPEARBERRY_C]
+Size = 5.0
+Firmness = Super Hard
+Flavor = 0,0,0,0,10
+Smoothness = 25
+Color = Yellow
+Description = This Berry's peel is hard, but the flesh inside is very juicy. It is distinguished by its bracing sourness.
+#-------------------------------
+[BABIRIBERRY]
+Size = 26.5
+Firmness = Super Hard
+Flavor = 25,10,0,0,0
+Smoothness = 35
+Color = Green
+Description = This Berry is very tough with a strong flavor. It was used to make medicine by people in the past.
+#-------------------------------
+[BABIRIBERRY_C]
+Size = 26.5
+Firmness = Super Hard
+Flavor = 25,10,0,0,0
+Smoothness = 35
+Color = Green
+Description = This Berry is very tough with a strong flavor. It was used to make medicine by people in the past.
+#-------------------------------
+[BELUEBERRY]
+Size = 30.0
+Firmness = Very Soft
+Flavor = 10,0,0,0,30
+Smoothness = 35
+Color = Blue
+Description = This glossy and colorful Berry has a mouthwateringly delicious appearance. However, it is awfully sour.
+#-------------------------------
+[BLUKBERRY]
+Size = 10.8
+Firmness = Soft
+Flavor = 0,10,10,0,0
+Smoothness = 20
+Color = Blue
+Description = Though this small, delicately skinned Berry is blue in color, it dyes the mouth black when eaten.
+#-------------------------------
+[CHARTIBERRY]
+Size = 2.8
+Firmness = Very Soft
+Flavor = 10,20,0,0,0
+Smoothness = 35
+Color = Yellow
+Description = It is often used for pickles because of its very dry flavor. It can also be eaten raw for its provocative taste.
+#-------------------------------
+[CHARTIBERRY_C]
+Size = 2.8
+Firmness = Very Soft
+Flavor = 10,20,0,0,0
+Smoothness = 35
+Color = Yellow
+Description = It is often used for pickles because of its very dry flavor. It can also be eaten raw for its provocative taste.
+#-------------------------------
 [CHERIBERRY]
+Size = 2.0
+Firmness = Soft
+Flavor = 10,0,0,0,0
+Smoothness = 25
+Color = Red
+Description = This bright red Berry is very spicy and has a provocative flavor. It blooms with delicate, pretty flowers.
+#-------------------------------
+[CHERIBERRY_C]
 Size = 2.0
 Firmness = Soft
 Flavor = 10,0,0,0,0
@@ -16,69 +120,125 @@ Smoothness = 25
 Color = Blue
 Description = This Berry's thick skin and fruit are very tough and dry tasting. However, every bit of it can be eaten.
 #-------------------------------
-[PECHABERRY]
-Size = 4.0
-Firmness = Very Soft
-Flavor = 0,0,10,0,0
-Smoothness = 25
-Color = Pink
-Description = Because of its hollow inside pocket, there isn't a lot to eat. What can be eaten is very sweet and delicious.
-#-------------------------------
-[RAWSTBERRY]
-Size = 3.2
-Firmness = Hard
-Flavor = 0,0,0,10,0
-Smoothness = 25
-Color = Green
-Description = If the leaves grow longer and curlier than average, this Berry will have a somewhat-bitter taste.
-#-------------------------------
-[ASPEARBERRY]
-Size = 5.0
+[CHESTOBERRY_C]
+Size = 8.0
 Firmness = Super Hard
-Flavor = 0,0,0,0,10
+Flavor = 0,10,0,0,0
 Smoothness = 25
-Color = Yellow
-Description = This Berry's peel is hard, but the flesh inside is very juicy. It is distinguished by its bracing sourness.
-#-------------------------------
-[LEPPABERRY]
-Size = 2.8
-Firmness = Very Hard
-Flavor = 10,0,10,10,10
-Smoothness = 20
-Color = Red
-Description = It takes longer to grow than Berries such as Cheri. The smaller Berries taste better.
-#-------------------------------
-[ORANBERRY]
-Size = 3.5
-Firmness = Super Hard
-Flavor = 10,10,0,10,10
-Smoothness = 20
 Color = Blue
-Description = Nature's gifts came together as one in this Berry. It has a wondrous mix of flavors that spread in the mouth.
+Description = This Berry's thick skin and fruit are very tough and dry tasting. However, every bit of it can be eaten.
 #-------------------------------
-[PERSIMBERRY]
-Size = 4.7
-Firmness = Hard
-Flavor = 10,10,10,0,10
-Smoothness = 20
-Color = Pink
-Description = The more this berry absorbs energy from sunlight, the more vividly colorful it grows.
-#-------------------------------
-[LUMBERRY]
-Size = 3.4
-Firmness = Super Hard
-Flavor =  10,10,10,10,0
-Smoothness = 20
-Color = Green
-Description = This Berry's gradual process of storing nutrients beneficial to Pokémon health causes it to mature slowly.
-#-------------------------------
-[SITRUSBERRY]
-Size = 9.5
-Firmness = Very Hard
-Flavor = 0,10,10,10,10
-Smoothness = 20
+[CHILANBERRY]
+Size = 3.3
+Firmness = Very Soft
+Flavor = 0,25,10,0,0
+Smoothness = 35
 Color = Yellow
-Description = Sitrus came from the same family as Oran. It is larger and smoother tasting than Oran.
+Description = This Berry can be cored out and dried to make a whistle. Blowing through its hole makes an indescribable sound.
+#-------------------------------
+[CHILANBERRY_C]
+Size = 3.3
+Firmness = Very Soft
+Flavor = 0,25,10,0,0
+Smoothness = 35
+Color = Yellow
+Description = This Berry can be cored out and dried to make a whistle. Blowing through its hole makes an indescribable sound.
+#-------------------------------
+[CHOPLEBERRY]
+Size = 7.7
+Firmness = Soft
+Flavor = 15,0,0,10,0
+Smoothness = 30
+Color = Red
+Description = This Berry contains a substance that generates heat. It can even heat up a chilly heart.
+#-------------------------------
+[CHOPLEBERRY_C]
+Size = 7.7
+Firmness = Soft
+Flavor = 15,0,0,10,0
+Smoothness = 30
+Color = Red
+Description = This Berry contains a substance that generates heat. It can even heat up a chilly heart.
+#-------------------------------
+[COBABERRY]
+Size = 27.7
+Firmness = Very Hard
+Flavor = 0,10,0,15,0
+Smoothness = 30
+Color = Blue
+Description = This Berry is said to be a new kind that is a cross of two Berries brought together by winds from far away.
+#-------------------------------
+[COBABERRY_C]
+Size = 27.7
+Firmness = Very Hard
+Flavor = 0,10,0,15,0
+Smoothness = 30
+Color = Blue
+Description = This Berry is said to be a new kind that is a cross of two Berries brought together by winds from far away.
+#-------------------------------
+[COLBURBERRY]
+Size = 3.8
+Firmness = Super Hard
+Flavor = 0,0,0,10,20
+Smoothness = 35
+Color = Pink
+Description = Tiny hooks grow on the surface of this Berry. It latches on to Pokémon so it can be carried to far-off places.
+#-------------------------------
+[COLBURBERRY_C]
+Size = 3.8
+Firmness = Super Hard
+Flavor = 0,0,0,10,20
+Smoothness = 35
+Color = Pink
+Description = Tiny hooks grow on the surface of this Berry. It latches on to Pokémon so it can be carried to far-off places.
+#-------------------------------
+[CORNNBERRY]
+Size = 7.5
+Firmness = Hard
+Flavor = 0,20,10,0,0
+Smoothness = 30
+Color = Blue
+Description = Its dryness is quite strong. As a result, its true deliciousness can't be appreciated by just eating one or two.
+#-------------------------------
+[CUSTAPBERRY]
+Size = 26.7
+Firmness = Super Hard
+Flavor = 0,0,40,10,0
+Smoothness = 60
+Color = Red
+Description = The flesh underneath the Custap Berry's tough skin is sweet and creamy soft.
+#-------------------------------
+[CUSTAPBERRY_C]
+Size = 26.7
+Firmness = Super Hard
+Flavor = 0,0,40,10,0
+Smoothness = 60
+Color = Red
+Description = The flesh underneath the Custap Berry's tough skin is sweet and creamy soft.
+#-------------------------------
+[DURINBERRY]
+Size = 28.0
+Firmness = Hard
+Flavor = 0,0,0,30,10
+Smoothness = 35
+Color = Green
+Description = This Berry is tremendously bitter. Just one bite is enough to instantly stop hiccups.
+#-------------------------------
+[ENIGMABERRY]
+Size = 15.5
+Firmness = Hard 
+Flavor = 40,10,0,0,0
+Smoothness = 60
+Color = Yellow
+Description = A completely enigmatic Berry. It apparently has the power of the stars that fill the night sky.
+#-------------------------------
+[ENIGMABERRY_C]
+Size = 15.5
+Firmness = Hard 
+Flavor = 40,10,0,0,0
+Smoothness = 60
+Color = Yellow
+Description = A completely enigmatic Berry. It apparently has the power of the stars that fill the night sky.
 #-------------------------------
 [FIGYBERRY]
 Size = 10.0
@@ -88,29 +248,61 @@ Smoothness = 25
 Color = Red
 Description = This Berry is oddly shaped, appearing as if someone took a bite out of it. It is packed full of spicy substances.
 #-------------------------------
-[WIKIBERRY]
-Size = 11.5
-Firmness = Hard
-Flavor = 0,15,0,0,0
+[FIGYBERRY_C]
+Size = 10.0
+Firmness = Soft
+Flavor = 15,0,0,0,0
 Smoothness = 25
+Color = Red
+Description = This Berry is oddly shaped, appearing as if someone took a bite out of it. It is packed full of spicy substances.
+#-------------------------------
+[GANLONBERRY]
+Size = 3.3
+Firmness = Very Hard
+Flavor = 0,30,10,30,0
+Smoothness = 40
 Color = Blue
-Description = It is said that this Berry grew lumps to help Pokémon grip it, allowing propagation farther afield.
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the land.
 #-------------------------------
-[MAGOBERRY]
-Size = 12.6
+[GANLONBERRY_C]
+Size = 3.3
+Firmness = Very Hard
+Flavor = 0,30,10,30,0
+Smoothness = 40
+Color = Blue
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the land.
+#-------------------------------
+[GREPABERRY]
+Size = 14.9
+Firmness = Soft
+Flavor = 0,10,10,0,10
+Smoothness = 20
+Color = Yellow
+Description = One bite of this very tender Berry fills the mouth with its sweet and tangy flavor.
+#-------------------------------
+[HABANBERRY]
+Size = 2.3
+Firmness = Very Soft
+Flavor = 0,0,10,20,0
+Smoothness = 35
+Color = Red
+Description = If a large enough volume of this Berry is boiled down, its bitterness fades away. It makes a good jam.
+#-------------------------------
+[HABANBERRY_C]
+Size = 2.3
+Firmness = Very Soft
+Flavor = 0,0,10,20,0
+Smoothness = 35
+Color = Red
+Description = If a large enough volume of this Berry is boiled down, its bitterness fades away. It makes a good jam.
+#-------------------------------
+[HONDEWBERRY]
+Size = 16.2
 Firmness = Hard
-Flavor = 0,0,15,0,0
-Smoothness = 25
-Color = Pink
-Description = This Berry progressively curves as it grows. The curvier the Berry, the sweeter and tastier.
-#-------------------------------
-[AGUAVBERRY]
-Size = 6.4
-Firmness = Super Hard
-Flavor = 0,0,0,15,0
-Smoothness = 25
+Flavor = 10,10,0,10,0
+Smoothness = 20
 Color = Green
-Description = This Berry turns bitter toward the stem. The dainty flower it grows from doesn't absorb much sunlight.
+Description = This somewhat-rare Berry projects an image of luxury, so it is favored as a gift item.
 #-------------------------------
 [IAPAPABERRY]
 Size = 22.3
@@ -120,21 +312,205 @@ Smoothness = 25
 Color = Yellow
 Description = This Berry is very big and sour. The juiciness of the pulp accentuates the sourness.
 #-------------------------------
-[RAZZBERRY]
-Size = 12.0
-Firmness = Very Hard
-Flavor = 10,10,0,0,0
-Smoothness = 20
-Color = Red
-Description = A small hint of spiciness lingers in the red granules surrounding this Berry. Their centers have a dry taste.
-#-------------------------------
-[BLUKBERRY]
-Size = 10.8
+[IAPAPABERRY_C]
+Size = 22.3
 Firmness = Soft
-Flavor = 0,10,10,0,0
+Flavor = 0,0,0,0,15
+Smoothness = 25
+Color = Yellow
+Description = This Berry is very big and sour. The juiciness of the pulp accentuates the sourness.
+#-------------------------------
+[JABOCABERRY]
+Size = 3.3
+Firmness = Soft
+Flavor = 0,0,0,40,10
+Smoothness = 60
+Color = Yellow
+Description = The cluster of drupelets that make up this berry pop rhythmically if the berry is handled roughly.
+#-------------------------------
+[JABOCABERRY_C]
+Size = 3.3
+Firmness = Soft
+Flavor = 0,0,0,40,10
+Smoothness = 60
+Color = Yellow
+Description = The cluster of drupelets that make up this berry pop rhythmically if the berry is handled roughly.
+#-------------------------------
+[KASIBBERRY]
+Size = 14.4
+Firmness = Hard
+Flavor = 0,10,20,0,0
+Smoothness = 35
+Color = Pink
+Description = Considered to have a special power from the olden days, this Berry is sometimes dried and used as a good-luck charm.
+#-------------------------------
+[KASIBBERRY_C]
+Size = 14.4
+Firmness = Hard
+Flavor = 0,10,20,0,0
+Smoothness = 35
+Color = Pink
+Description = Considered to have a special power from the olden days, this Berry is sometimes dried and used as a good-luck charm.
+#-------------------------------
+[KEBIABERRY]
+Size = 8.9
+Firmness = Hard
+Flavor = 0,15,0,0,10
+Smoothness = 30
+Color = Green
+Description = This Berry is a brilliant green on the outside. Inside, it is packed with a dry-flavored, black-colored flesh.
+#-------------------------------
+[KEBIABERRY_C]
+Size = 8.9
+Firmness = Hard
+Flavor = 0,15,0,0,10
+Smoothness = 30
+Color = Green
+Description = This Berry is a brilliant green on the outside. Inside, it is packed with a dry-flavored, black-colored flesh.
+#-------------------------------
+[KEEBERRY]
+Size = 8.9
+Firmness = Hard
+Flavor = 30,30,10,10,10
+Smoothness = 50
+Color = Pink
+Description = You'll be hit first by its burning spiciness, then its extreme bitterness.
+#-------------------------------
+[KEEBERRY_C]
+Size = 8.9
+Firmness = Hard
+Flavor = 30,30,10,10,10
+Smoothness = 50
+Color = Pink
+Description = You'll be hit first by its burning spiciness, then its extreme bitterness.
+#-------------------------------
+[KELPSYBERRY]
+Size = 15.0
+Firmness = Hard
+Flavor = 0,10,0,10,10
 Smoothness = 20
 Color = Blue
-Description = Though this small, delicately skinned Berry is blue in color, it dyes the mouth black when eaten.
+Description = This Berry can be eaten as is or boiled to obtain an extract that adds a dash of flavor to food.
+#-------------------------------
+[LANSATBERRY]
+Size = 9.7
+Firmness = Soft
+Flavor = 30,10,30,10,30
+Smoothness = 50
+Color = Pink
+Description = This is said to be a legendary Berry. Holding it supposedly brings great joy.
+#-------------------------------
+[LANSATBERRY_C]
+Size = 9.7
+Firmness = Soft
+Flavor = 30,10,30,10,30
+Smoothness = 50
+Color = Pink
+Description = This is said to be a legendary Berry. Holding it supposedly brings great joy.
+#-------------------------------
+[LEPPABERRY]
+Size = 2.8
+Firmness = Very Hard
+Flavor = 10,0,10,10,10
+Smoothness = 20
+Color = Red
+Description = It takes longer to grow than Berries such as Cheri. The smaller Berries taste better.
+#-------------------------------
+[LEPPABERRY_C]
+Size = 2.8
+Firmness = Very Hard
+Flavor = 10,0,10,10,10
+Smoothness = 20
+Color = Red
+Description = It takes longer to grow than Berries such as Cheri. The smaller Berries taste better.
+#-------------------------------
+[LIECHIBERRY]
+Size = 11.1
+Firmness = Very Hard
+Flavor = 30,10,30,0,0
+Smoothness = 40
+Color = Yellow
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sea.
+#-------------------------------
+[LIECHIBERRY_C]
+Size = 11.1
+Firmness = Very Hard
+Flavor = 30,10,30,0,0
+Smoothness = 40
+Color = Yellow
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sea.
+#-------------------------------
+[LUMBERRY]
+Size = 3.4
+Firmness = Super Hard
+Flavor =  10,10,10,10,0
+Smoothness = 20
+Color = Green
+Description = This Berry's gradual process of storing nutrients beneficial to Pokémon health causes it to mature slowly.
+#-------------------------------
+[LUMBERRY_C]
+Size = 3.4
+Firmness = Super Hard
+Flavor =  10,10,10,10,0
+Smoothness = 20
+Color = Green
+Description = This Berry's gradual process of storing nutrients beneficial to Pokémon health causes it to mature slowly.
+#-------------------------------
+[MAGOBERRY]
+Size = 12.6
+Firmness = Hard
+Flavor = 0,0,15,0,0
+Smoothness = 25
+Color = Pink
+Description = This Berry progressively curves as it grows. The curvier the Berry, the sweeter and tastier.
+#-------------------------------
+[MAGOBERRY_C]
+Size = 12.6
+Firmness = Hard
+Flavor = 0,0,15,0,0
+Smoothness = 25
+Color = Pink
+Description = This Berry progressively curves as it grows. The curvier the Berry, the sweeter and tastier.
+#-------------------------------
+[MAGOSTBERRY]
+Size = 14.0
+Firmness = Hard
+Flavor = 0,0,20,10,0
+Smoothness = 30
+Color = Pink
+Description = The grown-up flavor and dreamy sweetness of this Berry make it a favorite of Pokémon everywhere.
+#-------------------------------
+[MARANGABERRY]
+Size = 24.1
+Firmness = Hard
+Flavor = 10,10,30,30,10
+Smoothness = 50
+Color = Yellow
+Description = Its outside is very bitter, but its inside tastes like a sweet drink.
+#-------------------------------
+[MARANGABERRY_C]
+Size = 24.1
+Firmness = Hard
+Flavor = 10,10,30,30,10
+Smoothness = 50
+Color = Yellow
+Description = Its outside is very bitter, but its inside tastes like a sweet drink.
+#-------------------------------
+[MICLEBERRY]
+Size = 4.1
+Firmness = Soft
+Flavor = 0,40,10,0,0
+Smoothness = 60
+Color = Green
+Description = This berry has a very dry flavor. It has the effect of making other food eaten at the same time taste sweet.
+#-------------------------------
+[MICLEBERRY_C]
+Size = 4.1
+Firmness = Soft
+Flavor = 0,40,10,0,0
+Smoothness = 60
+Color = Green
+Description = This berry has a very dry flavor. It has the effect of making other food eaten at the same time taste sweet.
 #-------------------------------
 [NANABBERRY]
 Size = 7.7
@@ -144,13 +520,133 @@ Smoothness = 20
 Color = Pink
 Description = Bitter, but with a trace of sweetness, the Nanab Berry was the seventh to be discovered in the world.
 #-------------------------------
-[WEPEARBERRY]
-Size = 7.4
+[NOMELBERRY]
+Size = 28.5
 Firmness = Super Hard
-Flavor = 0,0,0,10,10
+Flavor = 10,0,0,0,20
+Smoothness = 30
+Color = Yellow
+Description = This Berry is quite sour overall, with the sourness especially concentrated at the pointed end.
+#-------------------------------
+[OCCABERRY]
+Size = 8.9
+Firmness = Super Hard
+Flavor = 15,0,10,0,0
+Smoothness = 30
+Color = Red
+Description = This Berry is said to have grown plentiful in the tropics of the past. It boasts an intensely hot spiciness.
+#-------------------------------
+[OCCABERRY_C]
+Size = 8.9
+Firmness = Super Hard
+Flavor = 15,0,10,0,0
+Smoothness = 30
+Color = Red
+Description = This Berry is said to have grown plentiful in the tropics of the past. It boasts an intensely hot spiciness.
+#-------------------------------
+[ORANBERRY]
+Size = 3.5
+Firmness = Super Hard
+Flavor = 10,10,0,10,10
 Smoothness = 20
-Color = Green
-Description = The potent mix of bitter and sour in this Berry seems to promote digestion. The flower is white and beautiful.
+Color = Blue
+Description = Nature's gifts came together as one in this Berry. It has a wondrous mix of flavors that spread in the mouth.
+#-------------------------------
+[ORANBERRY_C]
+Size = 3.5
+Firmness = Super Hard
+Flavor = 10,10,0,10,10
+Smoothness = 20
+Color = Blue
+Description = Nature's gifts came together as one in this Berry. It has a wondrous mix of flavors that spread in the mouth.
+#-------------------------------
+[PAMTREBERRY]
+Size = 24.4
+Firmness = Very Soft
+Flavor = 0,30,10,0,0
+Smoothness = 35
+Color = Blue
+Description = This Berry drifted from a faraway sea. It is now cultivated in the Sinnoh region.
+#-------------------------------
+[PASSHOBERRY]
+Size = 3.3
+Firmness = Soft
+Flavor = 0,15,0,10,0
+Smoothness = 30
+Color = Blue
+Description = This Berry's flesh is dotted with countless tiny bubbles of air that keep it afloat in water.
+#-------------------------------
+[PASSHOBERRY_C]
+Size = 3.3
+Firmness = Soft
+Flavor = 0,15,0,10,0
+Smoothness = 30
+Color = Blue
+Description = This Berry's flesh is dotted with countless tiny bubbles of air that keep it afloat in water.
+#-------------------------------
+[PAYAPABERRY]
+Size = 25.1
+Firmness = Soft
+Flavor = 0,0,10,0,15
+Smoothness = 30
+Color = Red
+Description = This Berry is said to sense human emotions for the way it swells roundly when a person approaches.
+#-------------------------------
+[PAYAPABERRY_C]
+Size = 25.1
+Firmness = Soft
+Flavor = 0,0,10,0,15
+Smoothness = 30
+Color = Red
+Description = This Berry is said to sense human emotions for the way it swells roundly when a person approaches.
+#-------------------------------
+[PECHABERRY]
+Size = 4.0
+Firmness = Very Soft
+Flavor = 0,0,10,0,0
+Smoothness = 25
+Color = Pink
+Description = Because of its hollow inside pocket, there isn't a lot to eat. What can be eaten is very sweet and delicious.
+#-------------------------------
+[PECHABERRY_C]
+Size = 4.0
+Firmness = Very Soft
+Flavor = 0,0,10,0,0
+Smoothness = 25
+Color = Pink
+Description = Because of its hollow inside pocket, there isn't a lot to eat. What can be eaten is very sweet and delicious.
+#-------------------------------
+[PERSIMBERRY]
+Size = 4.7
+Firmness = Hard
+Flavor = 10,10,10,0,10
+Smoothness = 20
+Color = Pink
+Description = The more this berry absorbs energy from sunlight, the more vividly colorful it grows.
+#-------------------------------
+[PERSIMBERRY_C]
+Size = 4.7
+Firmness = Hard
+Flavor = 10,10,10,0,10
+Smoothness = 20
+Color = Pink
+Description = The more this berry absorbs energy from sunlight, the more vividly colorful it grows.
+#-------------------------------
+[PETAYABERRY]
+Size = 23.7
+Firmness = Very Hard
+Flavor = 30,0,0,30,10
+Smoothness = 40
+Color = Pink
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of all living things.
+#-------------------------------
+[PETAYABERRY_C]
+Size = 23.7
+Firmness = Very Hard
+Flavor = 30,0,0,30,10
+Smoothness = 40
+Color = Pink
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of all living things.
 #-------------------------------
 [PINAPBERRY]
 Size = 8.0
@@ -168,14 +664,6 @@ Smoothness = 20
 Color = Red
 Description = When this sweetly spicy Berry's thick skin is peeled, many pieces of the fruit spill out.
 #-------------------------------
-[KELPSYBERRY]
-Size = 15.0
-Firmness = Hard
-Flavor = 0,10,0,10,10
-Smoothness = 20
-Color = Blue
-Description = This Berry can be eaten as is or boiled to obtain an extract that adds a dash of flavor to food.
-#-------------------------------
 [QUALOTBERRY]
 Size = 11.0
 Firmness = Hard
@@ -183,46 +671,6 @@ Flavor = 10,0,10,0,10
 Smoothness = 20
 Color = Pink
 Description = Even in places of constant rain and high humidity, this Berry's plant grows healthy and strong.
-#-------------------------------
-[HONDEWBERRY]
-Size = 16.2
-Firmness = Hard
-Flavor = 10,10,0,10,0
-Smoothness = 20
-Color = Green
-Description = This somewhat-rare Berry projects an image of luxury, so it is favored as a gift item.
-#-------------------------------
-[GREPABERRY]
-Size = 14.9
-Firmness = Soft
-Flavor = 0,10,10,0,10
-Smoothness = 20
-Color = Yellow
-Description = One bite of this very tender Berry fills the mouth with its sweet and tangy flavor.
-#-------------------------------
-[TAMATOBERRY]
-Size = 20.0
-Firmness = Soft
-Flavor = 20,10,0,0,0
-Smoothness = 30
-Color = Red
-Description = This Berry is large and spicy. When eaten during the cold season, it warms the body from inside.
-#-------------------------------
-[CORNNBERRY]
-Size = 7.5
-Firmness = Hard
-Flavor = 0,20,10,0,0
-Smoothness = 30
-Color = Blue
-Description = Its dryness is quite strong. As a result, its true deliciousness can't be appreciated by just eating one or two.
-#-------------------------------
-[MAGOSTBERRY]
-Size = 14.0
-Firmness = Hard
-Flavor = 0,0,20,10,0
-Smoothness = 30
-Color = Pink
-Description = The grown-up flavor and dreamy sweetness of this Berry make it a favorite of Pokémon everywhere.
 #-------------------------------
 [RABUTABERRY]
 Size = 22.6
@@ -232,77 +680,29 @@ Smoothness = 30
 Color = Green
 Description = Even though it is bitter, it should be eaten peel and all. The hair on the peel cleans the stomach from the inside.
 #-------------------------------
-[NOMELBERRY]
-Size = 28.5
-Firmness = Super Hard
-Flavor = 10,0,0,0,20
-Smoothness = 30
-Color = Yellow
-Description = This Berry is quite sour overall, with the sourness especially concentrated at the pointed end.
-#-------------------------------
-[SPELONBERRY]
-Size = 13.3
-Firmness = Soft
-Flavor = 30,10,0,0,0
-Smoothness = 35
-Color = Pink
-Description = So spicy is the Spelon Berry that, Fire type or not, Pokémon will try to breathe fire after eating a single one.
-#-------------------------------
-[PAMTREBERRY]
-Size = 24.4
-Firmness = Very Soft
-Flavor = 0,30,10,0,0
-Smoothness = 35
-Color = Blue
-Description = This Berry drifted from a faraway sea. It is now cultivated in the Sinnoh region.
-#-------------------------------
-[WATMELBERRY]
-Size = 25.0
-Firmness = Soft
-Flavor = 0,0,30,10,0
-Smoothness = 35
-Color = Green
-Description = A bounty of nature that is exceedingly sweet. The Berry is huge, with some discovered that exceed 20 inches.
-#-------------------------------
-[DURINBERRY]
-Size = 28.0
+[RAWSTBERRY]
+Size = 3.2
 Firmness = Hard
-Flavor = 0,0,0,30,10
-Smoothness = 35
+Flavor = 0,0,0,10,0
+Smoothness = 25
 Color = Green
-Description = This Berry is tremendously bitter. Just one bite is enough to instantly stop hiccups.
+Description = If the leaves grow longer and curlier than average, this Berry will have a somewhat-bitter taste.
 #-------------------------------
-[BELUEBERRY]
-Size = 30.0
-Firmness = Very Soft
-Flavor = 10,0,0,0,30
-Smoothness = 35
-Color = Blue
-Description = This glossy and colorful Berry has a mouthwateringly delicious appearance. However, it is awfully sour.
+[RAWSTBERRY_C]
+Size = 3.2
+Firmness = Hard
+Flavor = 0,0,0,10,0
+Smoothness = 25
+Color = Green
+Description = If the leaves grow longer and curlier than average, this Berry will have a somewhat-bitter taste.
 #-------------------------------
-[OCCABERRY]
-Size = 8.9
-Firmness = Super Hard
-Flavor = 15,0,10,0,0
-Smoothness = 30
+[RAZZBERRY]
+Size = 12.0
+Firmness = Very Hard
+Flavor = 10,10,0,0,0
+Smoothness = 20
 Color = Red
-Description = This Berry is said to have grown plentiful in the tropics of the past. It boasts an intensely hot spiciness.
-#-------------------------------
-[PASSHOBERRY]
-Size = 3.3
-Firmness = Soft
-Flavor = 0,15,0,10,0
-Smoothness = 30
-Color = Blue
-Description = This Berry's flesh is dotted with countless tiny bubbles of air that keep it afloat in water.
-#-------------------------------
-[WACANBERRY]
-Size = 25.0
-Firmness = Very Soft
-Flavor = 0,0,15,0,10
-Smoothness = 30
-Color = Yellow
-Description = Energy from lightning strikes is drawn into the plant, making the Berries grow big and rich.
+Description = A small hint of spiciness lingers in the red granules surrounding this Berry. Their centers have a dry taste.
 #-------------------------------
 [RINDOBERRY]
 Size = 15.5
@@ -312,205 +712,13 @@ Smoothness = 30
 Color = Green
 Description = This berry has a disagreeable "green" flavor and scent typical of vegetables. It is rich in health-promoting fiber.
 #-------------------------------
-[YACHEBERRY]
-Size = 13.5
-Firmness = Very Hard
-Flavor = 0,10,0,0,15
-Smoothness = 30
-Color = Blue
-Description = This Berry has a refreshing flavor that strikes a good balance of dryness and sourness. It tastes better chilled.
-#-------------------------------
-[CHOPLEBERRY]
-Size = 7.7
-Firmness = Soft
-Flavor = 15,0,0,10,0
-Smoothness = 30
-Color = Red
-Description = This Berry contains a substance that generates heat. It can even heat up a chilly heart.
-#-------------------------------
-[KEBIABERRY]
-Size = 8.9
-Firmness = Hard
-Flavor = 0,15,0,0,10
-Smoothness = 30
-Color = Green
-Description = This Berry is a brilliant green on the outside. Inside, it is packed with a dry-flavored, black-colored flesh.
-#-------------------------------
-[SHUCABERRY]
-Size = 4.2
-Firmness = Soft
-Flavor = 10,0,15,0,0
-Smoothness = 30
-Color = Yellow
-Description = The sweetness-laden pulp has just the hint of a hard-edged and fragrant bite to it.
-#-------------------------------
-[COBABERRY]
-Size = 27.7
-Firmness = Very Hard
-Flavor = 0,10,0,15,0
-Smoothness = 30
-Color = Blue
-Description = This Berry is said to be a new kind that is a cross of two Berries brought together by winds from far away.
-#-------------------------------
-[PAYAPABERRY]
-Size = 25.1
-Firmness = Soft
-Flavor = 0,0,10,0,15
-Smoothness = 30
-Color = Red
-Description = This Berry is said to sense human emotions for the way it swells roundly when a person approaches.
-#-------------------------------
-[TANGABERRY]
-Size = 4.3
-Firmness = Very Soft
-Flavor = 20,0,0,0,10
-Smoothness = 35
-Color = Green
-Description = The flower grows at the tip of this Berry. It attracts Bug Pokémon by letting its stringy petals stream out.
-#-------------------------------
-[CHARTIBERRY]
-Size = 2.8
-Firmness = Very Soft
-Flavor = 10,20,0,0,0
-Smoothness = 35
-Color = Yellow
-Description = It is often used for pickles because of its very dry flavor. It can also be eaten raw for its provocative taste.
-#-------------------------------
-[KASIBBERRY]
-Size = 14.4
-Firmness = Hard
-Flavor = 0,10,20,0,0
-Smoothness = 35
-Color = Pink
-Description = Considered to have a special power from the olden days, this Berry is sometimes dried and used as a good-luck charm.
-#-------------------------------
-[HABANBERRY]
-Size = 2.3
-Firmness = Very Soft
-Flavor = 0,0,10,20,0
-Smoothness = 35
-Color = Red
-Description = If a large enough volume of this Berry is boiled down, its bitterness fades away. It makes a good jam.
-#-------------------------------
-[COLBURBERRY]
-Size = 3.8
-Firmness = Super Hard
-Flavor = 0,0,0,10,20
-Smoothness = 35
-Color = Pink
-Description = Tiny hooks grow on the surface of this Berry. It latches on to Pokémon so it can be carried to far-off places.
-#-------------------------------
-[BABIRIBERRY]
-Size = 26.5
-Firmness = Super Hard
-Flavor = 25,10,0,0,0
-Smoothness = 35
-Color = Green
-Description = This Berry is very tough with a strong flavor. It was used to make medicine by people in the past.
-#-------------------------------
-[CHILANBERRY]
-Size = 3.3
-Firmness = Very Soft
-Flavor = 0,25,10,0,0
-Smoothness = 35
-Color = Yellow
-Description = This Berry can be cored out and dried to make a whistle. Blowing through its hole makes an indescribable sound.
-#-------------------------------
-[LIECHIBERRY]
-Size = 11.1
-Firmness = Very Hard
-Flavor = 30,10,30,0,0
-Smoothness = 40
-Color = Yellow
-Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sea.
-#-------------------------------
-[GANLONBERRY]
-Size = 3.3
-Firmness = Very Hard
-Flavor = 0,30,10,30,0
-Smoothness = 40
-Color = Blue
-Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the land.
-#-------------------------------
-[SALACBERRY]
-Size = 9.5
-Firmness = Very Hard
-Flavor = 0,0,30,10,30
-Smoothness = 40
-Color = Green
-Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sky.
-#-------------------------------
-[PETAYABERRY]
-Size = 23.7
-Firmness = Very Hard
-Flavor = 30,0,0,30,10
-Smoothness = 40
-Color = Pink
-Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of all living things.
-#-------------------------------
-[APICOTBERRY]
-Size = 7.5
-Firmness = Very Hard
-Flavor = 10,30,0,0,30
-Smoothness = 40
-Color = Blue
-Description = This is a very, very mystifying Berry. There is no telling how it can be used, or what may happen if it is used.
-#-------------------------------
-[LANSATBERRY]
-Size = 9.7
-Firmness = Soft
-Flavor = 30,10,30,10,30
-Smoothness = 50
-Color = Pink
-Description = This is said to be a legendary Berry. Holding it supposedly brings great joy.
-#-------------------------------
-[STARFBERRY]
-Size = 15.3
-Firmness = Super Hard
-Flavor = 30,10,30,10,30
-Smoothness = 50
-Color = Green
-Description = This Berry is considered a mirage. It was said to be so strong that it had to be abandoned at the world's edge.
-#-------------------------------
-[ENIGMABERRY]
+[RINDOBERRY_C]
 Size = 15.5
-Firmness = Hard 
-Flavor = 40,10,0,0,0
-Smoothness = 60
-Color = Yellow
-Description = A completely enigmatic Berry. It apparently has the power of the stars that fill the night sky.
-#-------------------------------
-[MICLEBERRY]
-Size = 4.1
 Firmness = Soft
-Flavor = 0,40,10,0,0
-Smoothness = 60
+Flavor = 10,0,0,15,0
+Smoothness = 30
 Color = Green
-Description = This berry has a very dry flavor. It has the effect of making other food eaten at the same time taste sweet.
-#-------------------------------
-[CUSTAPBERRY]
-Size = 26.7
-Firmness = Super Hard
-Flavor = 0,0,40,10,0
-Smoothness = 60
-Color = Red
-Description = The flesh underneath the Custap Berry's tough skin is sweet and creamy soft.
-#-------------------------------
-[JABOCABERRY]
-Size = 3.3
-Firmness = Soft
-Flavor = 0,0,0,40,10
-Smoothness = 60
-Color = Yellow
-Description = The cluster of drupelets that make up this berry pop rhythmically if the berry is handled roughly.
-#-------------------------------
-[ROWAPBERRY]
-Size = 5.2
-Firmness = Very Soft
-Flavor = 10,0,0,0,40
-Smoothness = 60
-Color = Blue
-Description = In days of old, people worked the top-shaped pieces of this Berry free and used them as toys.
+Description = This berry has a disagreeable "green" flavor and scent typical of vegetables. It is rich in health-promoting fiber.
 #-------------------------------
 [ROSELIBERRY]
 Size = 3.5
@@ -520,26 +728,195 @@ Smoothness = 35
 Color = Red
 Description = The slight bitterness that cuts through the rich sweetness makes this Berry a perfect ingredient for adding an accent.
 #-------------------------------
-[KEEBERRY]
-Size = 8.9
+[ROSELIBERRY_C]
+Size = 3.5
 Firmness = Hard
-Flavor = 30,30,10,10,10
-Smoothness = 50
-Color = Pink
-Description = You'll be hit first by its burning spiciness, then its extreme bitterness.
+Flavor = 0,0,25,10,0
+Smoothness = 35
+Color = Red
+Description = The slight bitterness that cuts through the rich sweetness makes this Berry a perfect ingredient for adding an accent.
 #-------------------------------
-[MARANGABERRY]
-Size = 24.1
-Firmness = Hard
-Flavor = 10,10,30,30,10
-Smoothness = 50
-Color = Yellow
-Description = Its outside is very bitter, but its inside tastes like a sweet drink.
+[ROWAPBERRY]
+Size = 5.2
+Firmness = Very Soft
+Flavor = 10,0,0,0,40
+Smoothness = 60
+Color = Blue
+Description = In days of old, people worked the top-shaped pieces of this Berry free and used them as toys.
+#-------------------------------
+[ROWAPBERRY_C]
+Size = 5.2
+Firmness = Very Soft
+Flavor = 10,0,0,0,40
+Smoothness = 60
+Color = Blue
+Description = In days of old, people worked the top-shaped pieces of this Berry free and used them as toys.
+#-------------------------------
+[SALACBERRY]
+Size = 9.5
+Firmness = Very Hard
+Flavor = 0,0,30,10,30
+Smoothness = 40
+Color = Green
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sky.
+#-------------------------------
+[SALACBERRY_C]
+Size = 9.5
+Firmness = Very Hard
+Flavor = 0,0,30,10,30
+Smoothness = 40
+Color = Green
+Description = This Berry is surrounded by mystery. It is rumored to be imbued with the power of the sky.
 #-------------------------------
 [SHINYBERRY]
-Size = 24.1
-Firmness = Hard
-Flavor = 10,10,30,30,10
-Smoothness = 50
+Size = 5.0
+Firmness = Soft
+Flavor = 0,0,0,0,0
+Smoothness = 40
+Color = Green
+Description = ???
+#-------------------------------
+[SHUCABERRY]
+Size = 4.2
+Firmness = Soft
+Flavor = 10,0,15,0,0
+Smoothness = 30
 Color = Yellow
-Description = A berry filled with coloring. you can force your pokemon to eat it, it makes them have a different color.
+Description = The sweetness-laden pulp has just the hint of a hard-edged and fragrant bite to it.
+#-------------------------------
+[SHUCABERRY_C]
+Size = 4.2
+Firmness = Soft
+Flavor = 10,0,15,0,0
+Smoothness = 30
+Color = Yellow
+Description = The sweetness-laden pulp has just the hint of a hard-edged and fragrant bite to it.
+#-------------------------------
+[SITRUSBERRY]
+Size = 9.5
+Firmness = Very Hard
+Flavor = 0,10,10,10,10
+Smoothness = 20
+Color = Yellow
+Description = Sitrus came from the same family as Oran. It is larger and smoother tasting than Oran.
+#-------------------------------
+[SITRUSBERRY_C]
+Size = 9.5
+Firmness = Very Hard
+Flavor = 0,10,10,10,10
+Smoothness = 20
+Color = Yellow
+Description = Sitrus came from the same family as Oran. It is larger and smoother tasting than Oran.
+#-------------------------------
+[SPELONBERRY]
+Size = 13.3
+Firmness = Soft
+Flavor = 30,10,0,0,0
+Smoothness = 35
+Color = Pink
+Description = So spicy is the Spelon Berry that, Fire type or not, Pokémon will try to breathe fire after eating a single one.
+#-------------------------------
+[STARFBERRY]
+Size = 15.3
+Firmness = Super Hard
+Flavor = 30,10,30,10,30
+Smoothness = 50
+Color = Green
+Description = This Berry is considered a mirage. It was said to be so strong that it had to be abandoned at the world's edge.
+#-------------------------------
+[STARFBERRY_C]
+Size = 15.3
+Firmness = Super Hard
+Flavor = 30,10,30,10,30
+Smoothness = 50
+Color = Green
+Description = This Berry is considered a mirage. It was said to be so strong that it had to be abandoned at the world's edge.
+#-------------------------------
+[TAMATOBERRY]
+Size = 20.0
+Firmness = Soft
+Flavor = 20,10,0,0,0
+Smoothness = 30
+Color = Red
+Description = This Berry is large and spicy. When eaten during the cold season, it warms the body from inside.
+#-------------------------------
+[TANGABERRY]
+Size = 4.3
+Firmness = Very Soft
+Flavor = 20,0,0,0,10
+Smoothness = 35
+Color = Green
+Description = The flower grows at the tip of this Berry. It attracts Bug Pokémon by letting its stringy petals stream out.
+#-------------------------------
+[TANGABERRY_C]
+Size = 4.3
+Firmness = Very Soft
+Flavor = 20,0,0,0,10
+Smoothness = 35
+Color = Green
+Description = The flower grows at the tip of this Berry. It attracts Bug Pokémon by letting its stringy petals stream out.
+#-------------------------------
+[WACANBERRY]
+Size = 25.0
+Firmness = Very Soft
+Flavor = 0,0,15,0,10
+Smoothness = 30
+Color = Yellow
+Description = Energy from lightning strikes is drawn into the plant, making the Berries grow big and rich.
+#-------------------------------
+[WACANBERRY_C]
+Size = 25.0
+Firmness = Very Soft
+Flavor = 0,0,15,0,10
+Smoothness = 30
+Color = Yellow
+Description = Energy from lightning strikes is drawn into the plant, making the Berries grow big and rich.
+#-------------------------------
+[WATMELBERRY]
+Size = 25.0
+Firmness = Soft
+Flavor = 0,0,30,10,0
+Smoothness = 35
+Color = Green
+Description = A bounty of nature that is exceedingly sweet. The Berry is huge, with some discovered that exceed 20 inches.
+#-------------------------------
+[WEPEARBERRY]
+Size = 7.4
+Firmness = Super Hard
+Flavor = 0,0,0,10,10
+Smoothness = 20
+Color = Green
+Description = The potent mix of bitter and sour in this Berry seems to promote digestion. The flower is white and beautiful.
+#-------------------------------
+[WIKIBERRY]
+Size = 11.5
+Firmness = Hard
+Flavor = 0,15,0,0,0
+Smoothness = 25
+Color = Blue
+Description = It is said that this Berry grew lumps to help Pokémon grip it, allowing propagation farther afield.
+#-------------------------------
+[WIKIBERRY_C]
+Size = 11.5
+Firmness = Hard
+Flavor = 0,15,0,0,0
+Smoothness = 25
+Color = Blue
+Description = It is said that this Berry grew lumps to help Pokémon grip it, allowing propagation farther afield.
+#-------------------------------
+[YACHEBERRY]
+Size = 13.5
+Firmness = Very Hard
+Flavor = 0,10,0,0,15
+Smoothness = 30
+Color = Blue
+Description = This Berry has a refreshing flavor that strikes a good balance of dryness and sourness. It tastes better chilled.
+#-------------------------------
+[YACHEBERRY_C]
+Size = 13.5
+Firmness = Very Hard
+Flavor = 0,10,0,0,15
+Smoothness = 30
+Color = Blue
+Description = This Berry has a refreshing flavor that strikes a good balance of dryness and sourness. It tastes better chilled.
+#-------------------------------

@@ -1,3 +1,9 @@
+#Mulch effects reminder:
+#Rich Mulch increases final Berry harvest by two Berries. It can be made by mixing three differently colored Berries.
+#Boost Mulch dries the soil quicker, allowing the player to water the plant more often and obtain a larger yield. It can be made by mixing two Berries of the same color with another Berry.
+#Surprise Mulch boosts chances of mutations depending on the Berries used to make the Mulch. It can be made by mixing three Berries of the same color.
+#Amaze Mulch has the combined effects of the other Mulches. It can be made by mixing a Kee or Maranga Berry with two other Berries.
+
 module Settings
 
     #====================================================================================
@@ -49,8 +55,8 @@ module Settings
         #              the berry that was originally planted, instead.
         #--------------------------------------------------------------------------------	
         BERRY_WITHERED_ITEMS                = [
-            [5,:BIGROOT],
-            [1,:DropParentBerry]
+            #[5,:BIGROOT],
+            [5,:DropParentBerry]
         ]
 
     #====================================================================================
@@ -86,7 +92,49 @@ module Settings
             [:KASIBBERRY,:POMEGBERRY]   => [:PETAYABERRY],
             [:KELPSYBERRY,:WACANBERRY]  => [:APICOTBERRY],
             [:GANLONBERRY,:LIECHIBERRY] => [:KEEBERRY],
-            [:PETAYABERRY,:SALACBERRY]  => [:MARANGABERRY]
+            [:PETAYABERRY,:SALACBERRY]  => [:MARANGABERRY],
+			# Cultivar combinations
+            [:IAPAPABERRY_C,:MAGOBERRY]   => [:POMEGBERRY],
+			[:IAPAPABERRY,:MAGOBERRY_C]   => [:POMEGBERRY],
+			[:IAPAPABERRY_C,:MAGOBERRY_C]   => [:POMEGBERRY],
+            
+			[:CHESTOBERRY_C,:PERSIMBERRY] => [:KELPSYBERRY],
+			[:CHESTOBERRY,:PERSIMBERRY_C] => [:KELPSYBERRY],
+			[:CHESTOBERRY_C,:PERSIMBERRY_C] => [:KELPSYBERRY],
+            
+			[:ORANBERRY_C,:PECHABERRY]    => [:QUALOTBERRY],
+			[:ORANBERRY,:PECHABERRY_C]    => [:QUALOTBERRY],
+			[:ORANBERRY_C,:PECHABERRY_C]    => [:QUALOTBERRY],
+            
+			[:ASPEARBERRY_C,:LEPPABERRY]  => [:HONDEWBERRY],
+			[:ASPEARBERRY,:LEPPABERRY_C]  => [:HONDEWBERRY],
+			[:ASPEARBERRY_C,:LEPPABERRY_C]  => [:HONDEWBERRY],
+            
+			[:AGUAVBERRY_C,:FIGYBERRY]    => [:GREPABERRY],
+			[:AGUAVBERRY,:FIGYBERRY_C]    => [:GREPABERRY],
+			[:AGUAVBERRY_C,:FIGYBERRY_C]    => [:GREPABERRY],
+            
+			[:LUMBERRY_C,:SITRUSBERRY]    => [:TAMATOBERRY],
+			[:LUMBERRY,:SITRUSBERRY_C]    => [:TAMATOBERRY],
+			[:LUMBERRY_C,:SITRUSBERRY_C]    => [:TAMATOBERRY],
+            
+			[:HONDEWBERRY,:YACHEBERRY_C]  => [:LIECHIBERRY],
+            
+			[:QUALOTBERRY,:TANGABERRY_C]  => [:GANLONBERRY],
+            
+			[:GREPABERRY,:ROSELIBERRY_C]  => [:SALACBERRY],
+            
+			[:KASIBBERRY_C,:POMEGBERRY]   => [:PETAYABERRY],
+            
+			[:KELPSYBERRY,:WACANBERRY_C]  => [:APICOTBERRY],
+            
+			[:GANLONBERRY_C,:LIECHIBERRY] => [:KEEBERRY],
+			[:GANLONBERRY,:LIECHIBERRY_C] => [:KEEBERRY],
+			[:GANLONBERRY_C,:LIECHIBERRY_C] => [:KEEBERRY],
+            
+			[:PETAYABERRY_C,:SALACBERRY]  => [:MARANGABERRY],
+			[:PETAYABERRY,:SALACBERRY_C]  => [:MARANGABERRY],
+			[:PETAYABERRY_C,:SALACBERRY_C]  => [:MARANGABERRY],
         }
     
         #--------------------------------------------------------------------------------
@@ -318,20 +366,20 @@ module Settings
         # If true, each respective feature will be enabled.
         #--------------------------------------------------------------------------------
 
-        BERRY_PREFERRED_WEATHER_ENABLED     = true
-        BERRY_PREFERRED_ZONES_ENABLED       = true
-        BERRY_UNPREFERRED_ZONES_ENABLED     = true
-        BERRY_PREFERRED_SOIL_ENABLED        = true
+        BERRY_PREFERRED_WEATHER_ENABLED     = false
+        BERRY_PREFERRED_ZONES_ENABLED       = false
+        BERRY_UNPREFERRED_ZONES_ENABLED     = false
+        BERRY_PREFERRED_SOIL_ENABLED        = false
 
         #--------------------------------------------------------------------------------
         # If true, show images to represent each of the respective pieces of information
         # in the Berrydex's Plant tab.
         # Images for each are found in the Plant Icons folder.
         #--------------------------------------------------------------------------------		
-        BERRYDEX_SHOW_PREFERRED_WEATHER     = true
-        BERRYDEX_SHOW_PREFERRED_ZONES       = true
-        BERRYDEX_SHOW_UNPREFERRED_ZONES     = true
-        BERRYDEX_SHOW_PREFERRED_SOIL        = true
+        BERRYDEX_SHOW_PREFERRED_WEATHER     = false
+        BERRYDEX_SHOW_PREFERRED_ZONES       = false
+        BERRYDEX_SHOW_UNPREFERRED_ZONES     = false
+        BERRYDEX_SHOW_PREFERRED_SOIL        = false
 
         #--------------------------------------------------------------------------------
         # Define the term used to describe "Zones". For instance, you could treat this as
@@ -446,7 +494,7 @@ module Settings
         #--------------------------------------------------------------------------------
         # If true, Pokemon can be encountered on Berry trees.
         #--------------------------------------------------------------------------------	
-        BERRY_USE_PEST_MECHANICS            = true
+        BERRY_USE_PEST_MECHANICS            = false
 
         #--------------------------------------------------------------------------------
         # If true, Pokemon on Berry trees will run away if you have an active repel.
@@ -493,13 +541,13 @@ module Settings
         #--------------------------------------------------------------------------------	
         BERRY_PEST_DEFAULT_ENCOUNTERS = [
             # [chance, :PokemonID, minLevel, maxLevel, (Optional)favoredColor],
-            [20, :CATERPIE, 14, 15],
-            [20, :LEDYBA, 14, 15, :Red],
-            [20, :VOLBEAT, 14, 15, :Blue],
-            [20, :ILLUMISE, 14, 15, :Purple],
-            [20, :BURMY, 14, 15, :Green],
-            [20, :COMBEE, 14, 15, :Yellow],
-            [20, :SPEWPA, 14, 15, :Pink]
+            #[20, :CATERPIE, 14, 15],
+            #[20, :LEDYBA, 14, 15, :Red],
+            #[20, :VOLBEAT, 14, 15, :Blue],
+            #[20, :ILLUMISE, 14, 15, :Purple],
+            #[20, :BURMY, 14, 15, :Green],
+            #[20, :COMBEE, 14, 15, :Yellow],
+            #[20, :SPEWPA, 14, 15, :Pink]
         ]
 
     #====================================================================================
@@ -515,8 +563,8 @@ module Settings
         # matches the trainers defined in metadata.txt
         #--------------------------------------------------------------------------------
         BERRY_WATERING_SPRITES = [
-            "boy_watering", #Trainer [1]
-            "girl_watering" #Trainer [2]
+            "boy_berrywater", #Trainer [1]
+            "girl_berrywater" #Trainer [2]
         ]
 
         #--------------------------------------------------------------------------------
