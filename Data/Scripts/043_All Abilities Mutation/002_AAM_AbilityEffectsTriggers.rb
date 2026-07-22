@@ -660,7 +660,8 @@ Battle::AbilityEffects::OnBattlerFainting.add(:SEANCE, #by low
 Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
   proc { |ability, battler|
     next if battler.status != :POISON
-    next if battler.hasActiveAbility?([:TOXICBOOST, :POISONHEAL])
+    next if battler.abilityMutationList.include?(:TOXICBOOST)
+    next if battler.abilityMutationList.include?(:POISONHEAL)
     battler.battle.pbShowAbilitySplash(battler)
     battler.pbCureStatus(Battle::Scene::USE_ABILITY_SPLASH)
     if !Battle::Scene::USE_ABILITY_SPLASH
@@ -674,7 +675,8 @@ Battle::AbilityEffects::StatusCure.add(:IMMUNITY,
 Battle::AbilityEffects::OnSwitchOut.add(:IMMUNITY,
   proc { |ability, battler, endOfBattle|
     next if battler.status != :POISON
-    next if battler.hasActiveAbility?([:TOXICBOOST, :POISONHEAL])
+    next if battler.abilityMutationList.include?(:TOXICBOOST)
+    next if battler.abilityMutationList.include?(:POISONHEAL)
     PBDebug.log("[Ability triggered] #{battler.pbThis}'s #{battler.abilityName}")
     battler.status = :NONE
   }
@@ -683,17 +685,19 @@ Battle::AbilityEffects::OnSwitchOut.add(:IMMUNITY,
 Battle::AbilityEffects::OnBeingHit.add(:WEAKARMOR,
   proc { |ability, user, target, move, battle|
     next if !move.physicalMove?
-    next if !target.pbCanRaiseStatBySource?(:SPEED, :WEAKARMOR, target)
+    next if !target.pbCanRaiseStatStage?(:SPEED, target)
     clearly = false
-    if target.hasActiveAbility?([:CLEARBODY, :WHITESMOKE, :FULLMETALBODY])
+    if target.abilityMutationList.include?(:CLEARBODY)
       clearly = true
     else
       next if !target.pbCanLowerStatStage?(:DEFENSE, target)
     end
+    next if battle.wasUserAbilityActivated?(target)
     battle.pbShowAbilitySplash(target)
     target.pbLowerStatStageByAbility(:DEFENSE, 1, target, false) if !clearly
     target.pbRaiseStatStageByAbility(:SPEED,
-       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false, :WEAKARMOR)
+       (Settings::MECHANICS_GENERATION >= 7) ? 2 : 1, target, false)
+    battle.ActivateUserAbility(target) if $player.difficulty_mode?("chaos")
     battle.pbHideAbilitySplash(target)
   }
 )
