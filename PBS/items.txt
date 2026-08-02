@@ -6546,6 +6546,14 @@ Price = 0
 Flags = KeyItem
 Description = A watering can shaped like a Lotad. It helps promote the healthy growth of any Berries planted in soft soil.
 #-------------------------------
+[WATERINGCAN]
+Name = Watering Can
+NamePlural = Watering Cans
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A watering can left behind by someone. It helps promote the healthy growth of any Berries planted in soft soil.
+#-------------------------------
 [GRACIDEA]
 Name = Gracidea
 NamePlural = Gracideas

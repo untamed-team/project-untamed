@@ -3133,3 +3133,12 @@ def pbPickBerry(berry, qty = 1)
   pbSetSelfSwitch(this_event.id, "A", true)
   return true
 end
+
+#===============================================================================
+# Add a watering can for Mazah
+#===============================================================================
+module GameData
+  class BerryPlant
+    WATERING_CANS                = [:SPRAYDUCK, :SQUIRTBOTTLE, :WAILMERPAIL, :SPRINKLOTAD, :WATERINGCAN]
+  end #class BerryPlant
+end #module GameData

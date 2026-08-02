@@ -611,6 +611,7 @@ module Settings
         BERRY_WATERING_USES_ALWAYS_FULL = [
             # :SPRINKLOTAD
             # :GOLDSPRAYDUCK
+            :WATERINGCAN
         ]
 
         #--------------------------------------------------------------------------------
