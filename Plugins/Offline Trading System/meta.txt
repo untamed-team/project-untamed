@@ -1,0 +1,4 @@
+Name         = Offline Trading System
+Version      = 1.0
+Website      = NONE
+Credits      = Gardenette

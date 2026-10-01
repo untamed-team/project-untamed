@@ -6,7 +6,7 @@
 [0]
 Filename = southernMazah.png
 Name = "Southern Mazah"
-Point = 19,5,"Veravalles Town","Ceiba's Lab",22,19,11,,
+Point = 19,5,"Veravalles Town","Ceiba''s Lab",22,19,11,,
 Point = 20,5,"Route 1",,,,,,
 Point = 20,4,"Route 1",,,,,,
 Point = 19,4,"Route 1",,,,,,
@@ -41,6 +41,34 @@ Point = 20,10,"Soleca Desert",,,,,,
 Point = 21,10,"Soleca Desert",,,,,,
 Point = 23,10,"Ferrera Town","Crustang Derby",66,9,27,,
 Point = 23,11,"Ferrera Town","Crustang Derby",66,9,27,,
+#================ Post Demo 2 ================
+Point = 23,15,Undefined,,999,1,1,,
+
+Point = 21,13,Undefined,,998,1,1,,
+Point = 22,13,Undefined,,998,1,1,,
+Point = 21,14,Undefined,,998,1,1,,
+Point = 22,14,Undefined,,998,1,1,,
+
+Point = 17,14,Undefined,,997,1,1,,
+
+Point = 13,14,Undefined,,996,1,1,,
+Point = 14,14,Undefined,,996,1,1,,
+
+Point = 9,13,Undefined,,995,1,1,,
+
+Point = 6,11,Undefined,,994,1,1,,
+Point = 7,11,Undefined,,994,1,1,,
+Point = 6,12,Undefined,,994,1,1,,
+Point = 7,12,Undefined,,994,1,1,,
+
+Point = 1,7,Undefined,,993,1,1,,
+
+Point = 4,6,Undefined,,992,1,1,,
+Point = 5,6,Undefined,,992,1,1,,
+Point = 4,7,Undefined,,992,1,1,,
+Point = 5,7,Undefined,,992,1,1,,
+
+Point = 4,1,Undefined,,991,1,1,,
 
 #[1]
 #Filename = northernMazah.png
