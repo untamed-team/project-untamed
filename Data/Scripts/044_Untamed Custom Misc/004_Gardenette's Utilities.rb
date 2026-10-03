@@ -3146,7 +3146,7 @@ end #module GameData
 #===============================================================================
 # BGM Fading - Add Fade-in
 #===============================================================================
-#usage: pbFadeInBGM("Route 1", 10.0, 100)
+#usage: pbFadeInBGM("Route 1", 100, 100, 10)
 def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
   return if !bgm_name
   #start playing the file immediately at volume 0
@@ -3154,22 +3154,26 @@ def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
   
   start_volume = 0
   total_frames = timeInSeconds * Graphics.frame_rate
+  #Console.echo_warn "target_volume is #{target_volume}, and total_frames is #{total_frames}"
   increment = (target_volume - start_volume) / total_frames.to_f
-
+  #Console.echo_warn "increment is #{increment}"
   current_volume = start_volume
   frame_count = 0
 
   #register a non-blocking frame handler
   EventHandlers.add(:on_frame_update, :audio_fade_in, proc {
+    #Console.echo_warn "frame_count is #{frame_count}"
+    #Console.echo_warn "current_volume is #{current_volume}"
     frame_count += 1
     current_volume += increment
 
     #set updated volume
-    Audio.bgm_set_volume(current_volume.clamp(0, 100).round)
+    pbBGMPlay(bgm_name, current_volume.clamp(0, 100).round, pitch)
+    #Audio.bgm_set_volume(current_volume.clamp(0, 100).round)
 
     #clean up and remove handler when completed
     if frame_count >= total_frames
-      Event.Handlers.remove(:on_frame_update, :audio_fade_in)
+      EventHandlers.remove(:on_frame_update, :audio_fade_in)
     end #if frame_count >= total_frames
   }) #EventHanlders.add
 end #def pbBGMPlayFadeIn
