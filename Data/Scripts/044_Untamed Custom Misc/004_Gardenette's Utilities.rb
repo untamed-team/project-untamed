@@ -3142,3 +3142,34 @@ module GameData
     WATERING_CANS                = [:SPRAYDUCK, :SQUIRTBOTTLE, :WAILMERPAIL, :SPRINKLOTAD, :WATERINGCAN]
   end #class BerryPlant
 end #module GameData
+
+#===============================================================================
+# BGM Fading - Add Fade-in
+#===============================================================================
+#usage: pbFadeInBGM("Route 1", 10.0, 100)
+def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
+  return if !bgm_name
+  #start playing the file immediately at volume 0
+  pbBGMPlay(bgm_name, 0, pitch)
+  
+  start_volume = 0
+  total_frames = timeInSeconds * Graphics.frame_rate
+  increment = (target_volume - start_volume) / total_frames.to_f
+
+  current_volume = start_volume
+  frame_count = 0
+
+  #register a non-blocking frame handler
+  EventHandlers.add(:on_frame_update, :audio_fade_in, proc {
+    frame_count += 1
+    current_volume += increment
+
+    #set updated volume
+    Audio.bgm_set_volume(current_volume.clamp(0, 100).round)
+
+    #clean up and remove handler when completed
+    if frame_count >= total_frames
+      Event.Handlers.remove(:on_frame_update, :audio_fade_in)
+    end #if frame_count >= total_frames
+  }) #EventHanlders.add
+end #def pbBGMPlayFadeIn
