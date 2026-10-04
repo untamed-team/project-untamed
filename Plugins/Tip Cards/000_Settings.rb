@@ -19,7 +19,7 @@ module Settings
         #  If set to true, when the player uses the SPECIAL control, a list of all
         #  groups available to view will appear for the player to jump to one.
         #--------------------------------------------------------------------------------	
-        TIP_CARDS_GROUP_LIST = false
+        TIP_CARDS_GROUP_LIST = true
 
         #--------------------------------------------------------------------------------
         #  Set the default text colors
@@ -52,6 +52,9 @@ module Settings
                     :YAdjustment => 0, # Adjust the vertical spacing of the tip's text (in pixels)
                     :HideRevisit => true # Set to true if you don't want the player to see the tip again when revisiting seen tips.
             },
+			#--------------------------------------------------------------------------------
+			#  Tutorial
+			#--------------------------------------------------------------------------------
             :BOOK1PAGE1 => {
                 :Title => _INTL("Page 1"),
                 :Text => _INTL("<al>This is the first page. <br>Introducing: all the characters!</al>"),
@@ -72,6 +75,9 @@ module Settings
                 :Text => _INTL("<al>This is the final page. <br>It's resolution time!</al>"),
                 :Background => "bg_book"
             },
+            #--------------------------------------------------------------------------------
+			#  Autoheal
+			#--------------------------------------------------------------------------------
             :AUTOHEAL1 => {
                 :Title => _INTL("Auto Heal"),
                 :Text => _INTL("The Auto Heal feature will automatically select items from your bag and use them to heal your Pokémon."),
@@ -87,6 +93,9 @@ module Settings
                 :ImageAdvGuide => "auto heal2 - guide",
                 :YAdjustmentAdvGuide => -20,
             },
+            #--------------------------------------------------------------------------------
+			#  Multisave
+			#--------------------------------------------------------------------------------
             :MULTISAVE1 => {
                 :Title => _INTL("Multi-save"),
                 :Text => _INTL("When saving for the first time, you will select a save slot."),
@@ -108,6 +117,9 @@ module Settings
                 :ImageAdvGuide => "multi save3 - guide",
                 :YAdjustmentAdvGuide => -36,
             },
+            #--------------------------------------------------------------------------------
+			#  Advanced Dex
+			#--------------------------------------------------------------------------------
             :ADVDEX1 => {
                 :Title => _INTL("Advanced Dex"),
                 :Text => _INTL("Your Pokédex has an 'Advanced' page."),
@@ -141,6 +153,9 @@ module Settings
                 :ImageAdvGuide => "advanced dex5 - guide",
                 :YAdjustmentAdvGuide => -36,
             },
+            #--------------------------------------------------------------------------------
+			#  Battle Info
+			#--------------------------------------------------------------------------------
             :BATTLEINFO1 => {
                 :Title => _INTL("Battle Info"),
                 :Text => _INTL("View information about the battle by pressing the <c2=0999367C><b>Battle Info</b></c2> key."),
@@ -186,6 +201,9 @@ module Settings
                 :Image => "move_icons2",
                 :ImageAdvGuide => "move_icons2 - guide",
             },
+            #--------------------------------------------------------------------------------
+			#  Camp
+			#--------------------------------------------------------------------------------
             :CAMP1 => {
                 :Title => _INTL("Camp"),
                 :Text => _INTL("With the <c2=0999367C><b>Camping Gear</b></c2>, you can access Camp from the pause menu. You can access Camp from many different places like on the grass, in a cave, etc."),
@@ -198,6 +216,9 @@ module Settings
                 :ImageAdvGuide => "camp interact - guide",
                 :YAdjustmentAdvGuide => -36,
             },
+            #--------------------------------------------------------------------------------
+			#  Cooking
+			#--------------------------------------------------------------------------------
             :COOKING1 => {
                 :Title => _INTL("Cooking Candy"),
                 :Text => _INTL("Inside Camp, you can create your own candy over the camp fire if you have candy bases and berries!"),
@@ -225,6 +246,9 @@ module Settings
                 :Image => _INTL("cooking4"),
                 :ImageAdvGuide => _INTL("cooking4 - guide"),
             },
+            #--------------------------------------------------------------------------------
+			#  Trading
+			#--------------------------------------------------------------------------------
             :TRADING1 => {
                 :Title => _INTL("Trading"),
                 :Text => _INTL("Choose a Pokémon, then select 'Offer as Trade'."),
@@ -316,8 +340,119 @@ module Settings
                 :ImageAdvGuide => "trading13",
                 :YAdjustmentAdvGuide => -36,
             },
+			#--------------------------------------------------------------------------------
+			#  Berry Planting
+			#--------------------------------------------------------------------------------
+            :ABOUTBERRIES1 => {
+                :Title => _INTL("Berries: About"),
+                :Text => _INTL("When interacting with soft soil, you can plant any berry you have in your bag."),
+                :Image => "about berries 1",
+                :ImageAdvGuide => "about berries 1",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTBERRIES2 => {
+                :Title => _INTL("Berries: About"),
+                :Text => _INTL("After planting a berry, you can water it. All berries need water to grow! Make sure you water it when the soil dries out, otherwise the tree won't produce a decent harvest!"),
+                :Image => "", #[Show image of player watering berries]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTBERRIES3 => {
+                :Title => _INTL("Berries: About"),
+                :Text => _INTL("It takes time for your berry trees to grow large enough to yield berries. To ensure a healthy crop, keep them watered and pull up any weeds. Once your trees mature, you'll be able to harvest the berries."),
+                :Image => "", #[Show image of player obtaining large harvest]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTBERRIES4 => {
+                :Title => _INTL("Berries: About"),
+                :Text => _INTL("Different berries have different effects. Some berries heal status conditions, while others have even more useful benefits."),
+                :Image => "", #[Show image of several different berries that have effects]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTBERRIES5 => {
+                :Title => _INTL("Berries: About"),
+                :Text => _INTL("Although most berries are hard to come by, you can grow as many as you like in soft soil. They're great for making candy over a campfire or feeding them to your Pokémon to make them happy!"),
+                :Image => "", #[Show player next to many sprouting berry trees, player facing camera]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTCULTIVARS1 => {
+                :Title => _INTL("Berries: Cultivars"),
+                :Text => _INTL("Many berries that have special effects can only produce cultivars of themselves, which have no special effects."),
+                :Image => "", #[Show image of player harvesting cultivar]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTCULTIVARS2 => {
+                :Title => _INTL("Berries: Cultivars"),
+                :Text => _INTL("Berries that are not cultivars can be quite rare, so be sure you want to plant them before you do! Alternatively, if you come across a cultivar, you can plant it to grow more of that cultivar."),
+                :Image => "", #no image
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTMUTATIONS1 => {
+                :Title => _INTL("Berries: Mutations"),
+                :Text => _INTL("Mutations can sometimes occur when two different trees are planted next to each other. For example, an Aspear Berry and a Leppa Berry planted next to each other will sometimes give rise to a mutation."),
+                :Image => "", #[Show image of mutation sprouted between two berry trees]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTMUTATIONS2 => {
+                :Title => _INTL("Berries: Mutations"),
+                :Text => _INTL("Some berries are so rare, they've only been found through mutations! Try planting as many different trees next to each other as you can, and see what develops!"),
+                :Image => "", #[add silouettes of rare berry only obtained through mutation]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTMULCH1 => {
+                :Title => _INTL("Berries: Mulch"),
+                :Text => _INTL("Mulch can help your berry trees yield greater crops-or even surprising ones."),
+                :Image => "", #no image
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTMULCH2 => {
+                :Title => _INTL("Berries: Mulch"),
+                :Text => _INTL("When interacting with soft soil, you can use any mulch you have in your bag. Only one bag of mulch can be used on a soil spot at one time until a berry is planted there and harvested."), #I think? I need to test
+                :Image => "", #[Show image of mulch on soil (I think I have a graphic for it)]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:ABOUTMULCH3 => {
+                :Title => _INTL("Berries: Mulch"),
+                :Text => _INTL("First inspect a patch of soft soil to spread the mulch, then plant a berry."),
+                :Image => "", #[Show images of different mulch]
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:BERRYAPPS1 => {
+                :Title => _INTL("Berries: Helpful Apps"),
+                :Text => _INTL("The berry mode on the town map app can also show you which berries are ready to harvest, which need to be watered, etc."),
+                :Image => "", #no image
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:BERRYAPPS2 => {
+                :Title => _INTL("Berries: Helpful Apps"),
+                :Text => _INTL("This will only show on the map for berries you've planted. Naturally-occurring berries don't appear on the town map."),
+                :Image => "", #no image
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
+			:BERRYAPPS3 => {
+                :Title => _INTL("Berries: Helpful Apps"),
+                :Text => _INTL("The Berrydex app on your phone shows you all the berries you've discovered as well as the mutations needed to produce those berries."), #I think - need to test
+                :Image => "", #no image
+                :ImageAdvGuide => "",
+                :YAdjustmentAdvGuide => -36,
+            },
         }
-
+		
+		#--------------------------------------------------------------------------------
+		#  Tip Card Groups
+		#--------------------------------------------------------------------------------
         TIP_CARDS_GROUPS = {
             :AUTOHEAL => {
                 :Title => _INTL("Auto Heal"),
@@ -346,6 +481,26 @@ module Settings
             :TRADING => {
                 :Title => _INTL("Trading"),
                 :Tips => [:TRADING1, :TRADING2, :TRADING3, :TRADING4, :TRADING5, :TRADING6, :TRADING7, :TRADING8, :TRADING9, :TRADING10, :TRADING11, :TRADING12, :TRADING13]
+            },
+            :ABOUTBERRIES => {
+                :Title => _INTL("About Berries"),
+                :Tips => [:ABOUTBERRIES1, :ABOUTBERRIES2, :ABOUTBERRIES3, :ABOUTBERRIES4, :ABOUTBERRIES5]
+            },
+			:ABOUTCULTIVARS => {
+                :Title => _INTL("Berry Cultivars"),
+                :Tips => [:ABOUTCULTIVARS1, :ABOUTCULTIVARS1]
+            },
+            :ABOUTMUTATIONS => {
+                :Title => _INTL("Berry Mutations"),
+                :Tips => [:ABOUTMUTATIONS1, :ABOUTMUTATIONS2]
+            },
+            :ABOUTMULCH => {
+                :Title => _INTL("About Berry Mulch"),
+                :Tips => [:ABOUTMULCH1, :ABOUTMULCH2, :ABOUTMULCH3]
+            },
+            :BERRYAPPS => {
+                :Title => _INTL("Berry Farming: Helpful Apps"),
+                :Tips => [:BERRYAPPS1, :BERRYAPPS2, :BERRYAPPS3]
             },
         }
 end

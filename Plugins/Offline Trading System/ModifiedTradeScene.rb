@@ -254,6 +254,7 @@ end
 #===============================================================================
 #
 #===============================================================================
+class ModifiedPokemonTrade
 def pbStartTrade(pokemonIndex, newpoke, nickname, trainerName, trainerGender = 0)
   $stats.trade_count += 1
   myPokemon = $player.party[pokemonIndex]
@@ -281,3 +282,4 @@ def pbStartTrade(pokemonIndex, newpoke, nickname, trainerName, trainerGender = 0
   }
   #$player.party[pokemonIndex] = yourPokemon
 end
+end #class ModifiedPokemonTrade

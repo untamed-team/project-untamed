@@ -3133,3 +3133,47 @@ def pbPickBerry(berry, qty = 1)
   pbSetSelfSwitch(this_event.id, "A", true)
   return true
 end
+
+#===============================================================================
+# Add a watering can for Mazah
+#===============================================================================
+module GameData
+  class BerryPlant
+    WATERING_CANS                = [:SPRAYDUCK, :SQUIRTBOTTLE, :WAILMERPAIL, :SPRINKLOTAD, :WATERINGCAN]
+  end #class BerryPlant
+end #module GameData
+
+#===============================================================================
+# BGM Fading - Add Fade-in
+#===============================================================================
+#usage: pbFadeInBGM("Route 1", 100, 100, 10)
+def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
+  return if !bgm_name
+  #start playing the file immediately at volume 0
+  pbBGMPlay(bgm_name, 0, pitch)
+  
+  start_volume = 0
+  total_frames = timeInSeconds * Graphics.frame_rate
+  #Console.echo_warn "target_volume is #{target_volume}, and total_frames is #{total_frames}"
+  increment = (target_volume - start_volume) / total_frames.to_f
+  #Console.echo_warn "increment is #{increment}"
+  current_volume = start_volume
+  frame_count = 0
+
+  #register a non-blocking frame handler
+  EventHandlers.add(:on_frame_update, :audio_fade_in, proc {
+    #Console.echo_warn "frame_count is #{frame_count}"
+    #Console.echo_warn "current_volume is #{current_volume}"
+    frame_count += 1
+    current_volume += increment
+
+    #set updated volume
+    pbBGMPlay(bgm_name, current_volume.clamp(0, 100).round, pitch)
+    #Audio.bgm_set_volume(current_volume.clamp(0, 100).round)
+
+    #clean up and remove handler when completed
+    if frame_count >= total_frames
+      EventHandlers.remove(:on_frame_update, :audio_fade_in)
+    end #if frame_count >= total_frames
+  }) #EventHanlders.add
+end #def pbBGMPlayFadeIn

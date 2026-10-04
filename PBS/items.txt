@@ -687,7 +687,7 @@ NamePlural = Growth Mulch
 Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
-Description = A fertilizer to be spread on soft soil in regions where Berries are grown. A maniac will buy it for a high price.
+Description = A mulch with no particular effects. A maniac will buy it for a high price.
 #-------------------------------
 [DAMPMULCH]
 Name = Damp Mulch
@@ -695,7 +695,7 @@ NamePlural = Damp Mulch
 Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
-Description = A fertilizer to be spread on soft soil in regions where Berries are grown. A maniac will buy it for a high price.
+Description = A mulch with no particular effects. A maniac will buy it for a high price.
 #-------------------------------
 [STABLEMULCH]
 Name = Stable Mulch
@@ -703,7 +703,7 @@ NamePlural = Stable Mulch
 Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
-Description = A fertilizer to be spread on soft soil in regions where Berries are grown. A maniac will buy it for a high price.
+Description = A mulch with no particular effects. A maniac will buy it for a high price.
 #-------------------------------
 [GOOEYMULCH]
 Name = Gooey Mulch
@@ -711,7 +711,7 @@ NamePlural = Gooey Mulch
 Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
-Description = A fertilizer to be spread on soft soil in regions where Berries are grown. A maniac will buy it for a high price.
+Description = A mulch with no particular effects. A maniac will buy it for a high price.
 #-------------------------------
 [SHOALSALT]
 Name = Shoal Salt
@@ -6546,6 +6546,14 @@ Price = 0
 Flags = KeyItem
 Description = A watering can shaped like a Lotad. It helps promote the healthy growth of any Berries planted in soft soil.
 #-------------------------------
+[WATERINGCAN]
+Name = Watering Can
+NamePlural = Watering Cans
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = A watering can left behind by someone. It helps promote the healthy growth of any Berries planted in soft soil.
+#-------------------------------
 [GRACIDEA]
 Name = Gracidea
 NamePlural = Gracideas
@@ -7388,7 +7396,7 @@ NamePlural = Boost Mulch
 Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
-Description = A fertilizer for growing Berries. It makes the soil dry out faster.
+Description = A fertilizer for growing Berries. It makes the soil dry out faster so you can water the berry tree more.
 #-------------------------------
 [AMAZEMULCH]
 Name = Amaze Mulch
