@@ -77,7 +77,7 @@ class Battle::AI
     choices   = []
     user.eachMoveWithIndex do |_m, i|
       next if !@battle.pbCanChooseMove?(idxBattler, i, false)
-      if MEGA_EVO_MOVESET.key?(user.species) && $player.difficulty_mode?("chaos") && battler.willmega
+      if MEGA_EVO_MOVESET.key?(user.species) && $player.difficulty_mode?("chaos") && user.willmega
         oldmove = MEGA_EVO_MOVESET[user.species][0]
         newmove = MEGA_EVO_MOVESET[user.species][1]
         if _m.id == oldmove
@@ -611,7 +611,7 @@ class Battle::AI
       break if score < 1
       next if !pkmn || !pkmn.able?
       next if inBattleIndex.include?(idxParty)
-      dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,nil,true,true)
+      dummy = @battle.pbMakeFakeBattler(foeparty[idxParty],false,target,true,true)
       if pbCheckMoveImmunity(score, move, user, dummy, skill)
         score -= 2
         echo("\nScore lowered for "+move.name+" + "+realTarget.name+" due to possible switch into immunity ("+dummy.name+").\n") if $AIGENERALLOG
