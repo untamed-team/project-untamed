@@ -3221,16 +3221,18 @@ class Sprite_Character < RPG::Sprite
   end
 end
 
+#currently this breaks following pkmn's ability to pathfind
+
 #hijacked the update method for events on the map to skip updating events when on certain maps unless player is close to the event (with some events excluded via "eflr" in their name)
 class Game_Event < Game_Character
   alias culling_event_update update  
   def update
     #should we skip updating?
-    #skip updating if current map is one that needs culling, if event (event) name doesn't contain "eflr", and if event is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE)
+    #skip updating if current map is one that needs culling, if event (event) name doesn't contain "eflr", if event is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE), and if the event isn't the following pkmn
     #calculate event's distance from player
       outOfDistance = ($game_player.x - event.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - event.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
       
-      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !event.name[/eflr/] && outOfDistance
+      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !event.name[/eflr/] && outOfDistance && !event.name == "FollowingPkmn"
         #Console.echo_warn "map needs culling" if MAPS_THAT_NEED_CULLING.include?($game_map.map_id)
         #Console.echo_warn "event name does not contain 'eflr'" if !event.name[/eflr/]
         #Console.echo_warn "event is not within distance" if outOfDistance
