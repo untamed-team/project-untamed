@@ -3177,3 +3177,36 @@ def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
     end #if frame_count >= total_frames
   }) #EventHanlders.add
 end #def pbBGMPlayFadeIn
+
+#===============================================================================
+# Custom Self-switches
+#===============================================================================
+#E is reserved for reducing lag on large maps
+#usage: s:self_switch("E")
+def self_switch(letter)
+  return $game_self_switches[[@map_id, @event_id, letter]]
+end
+
+#===============================================================================
+# Reduce Lag on Maps - Like Calojarro Exterior
+#===============================================================================
+#When on certain maps, activate switch 148 if the event is further than X tiles away from the player
+#The event must have a blank event page with switch 148 active? Switch 148 is self-switch G
+#Can I hijack the interpreter or something instead to skip processing the event?
+TILE_DISTANCE_FROM_PLAYER_TOLERANCE = 4
+EventHandlers.add(:on_player_step_taken, :lag_reducing, proc {
+	#skip this check if not on certain maps
+	next if $game_map.map_id != 96 #Calojarro Exterior
+  Console.echo_warn "Step taken. Re-evaluating all events within #{TILE_DISTANCE_FROM_PLAYER_TOLERANCE} tile radius..."
+  $game_map.events.each do |event|
+    event = event[1] #to get the event itself since 'event' above is in this format: [event_id, event_object]
+    if ($game_player.x - event.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - event.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
+      #the event is too far away, so turn it off by activating self-switch E
+      $game_self_switches[[@map_id, @event_id, "E"]] = true
+      Console.echo_warn "event133 not within #{TILE_DISTANCE_FROM_PLAYER_TOLERANCE}, so turning self-event on" if event.id == 133
+    else
+      $game_self_switches[[@map_id, @event_id, "E"]] = false
+      Console.echo_warn "event133 within #{TILE_DISTANCE_FROM_PLAYER_TOLERANCE}, so turning self-event off" if event.id == 133
+    end
+  end
+})
