@@ -3190,28 +3190,53 @@ end
 #===============================================================================
 # Reduce Lag on Maps - Like Calojarro Exterior
 #===============================================================================
-#When on certain maps, activate switch 148 if the event is further than X tiles away from the player
-#The event must have a blank event page with switch 148 active? Switch 148 is self-switch E
-#Can I hijack the interpreter or something instead to skip processing the event?
+#Add the ID of a map you want to cull (reduce lag) to the array MAPS_THAT_NEED_CULLING
 
-TILE_DISTANCE_FROM_PLAYER_TOLERANCE = 2
-EventHandlers.add(:on_player_step_taken, :lag_reducing, proc {
-	#skip this check if not on certain maps
-	next if $game_map.map_id != 96 #Calojarro Exterior
-  
-  Console.echo_warn "Step taken. Re-evaluating all events within #{TILE_DISTANCE_FROM_PLAYER_TOLERANCE} tile radius..."
-  $game_map.events.each do |id, event|
-    #skips enabling or disabling the event if the name contains "eflr" (exclude from lag reduction)
-    next if event.name[/eflr/]
-    switch_key = [$game_map.map_id, id, "E"]
-    if ($game_player.x - event.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - event.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
-      #the event is too far away, so turn it off by activating self-switch E
-      $game_self_switches[switch_key] = true
-    else
-      $game_self_switches[switch_key] = false
-      Console.echo_warn "turning off self-switch E for event ID #{event.id}"
+TILE_DISTANCE_FROM_PLAYER_TOLERANCE = 20
+MAPS_THAT_NEED_CULLING = [
+  96, #Calojarro Exterior
+]
+
+#hijacked the update method that causes lag on maps with lots of events: 003_Sprite_Character
+class Sprite_Character < RPG::Sprite
+  alias culling_sprite_update update
+  def update
+    return if @character.is_a?(Game_Event) && !@character.should_update?
+
+    #should we skip updating?
+    #skip updating if current map is one that needs culling, if event (@character) name doesn't contain "eflr", and if @character is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE)
+    if @character != $game_player
+      #calculate event's distance from player
+      outOfDistance = ($game_player.x - @character.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - @character.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
+      
+      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !@character.name[/eflr/] && outOfDistance
+        #Console.echo_warn "map needs culling" if MAPS_THAT_NEED_CULLING.include?($game_map.map_id)
+        #Console.echo_warn "@character name does not contain 'eflr'" if !@character.name[/eflr/]
+        #Console.echo_warn "@character is not within distance" if outOfDistance
+        return
+      end
     end
+
+    culling_sprite_update
   end
-  #refresh the map
-  $game_map.need_refresh = true
-})
+end
+
+#hijacked the update method for events on the map to skip updating events when on certain maps unless player is close to the event (with some events excluded via "eflr" in their name)
+class Game_Event < Game_Character
+  alias culling_event_update update  
+  def update
+    #should we skip updating?
+    #skip updating if current map is one that needs culling, if event (event) name doesn't contain "eflr", and if event is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE)
+    #calculate event's distance from player
+      outOfDistance = ($game_player.x - event.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - event.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
+      
+      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !event.name[/eflr/] && outOfDistance
+        #Console.echo_warn "map needs culling" if MAPS_THAT_NEED_CULLING.include?($game_map.map_id)
+        #Console.echo_warn "event name does not contain 'eflr'" if !event.name[/eflr/]
+        #Console.echo_warn "event is not within distance" if outOfDistance
+        return
+      end
+
+    culling_event_update
+  end
+end
