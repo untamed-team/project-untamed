@@ -380,6 +380,24 @@ class RotatonaPuzzle
 			end #$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |oldEvent|
 		end #$game_map.events.each_value do |event|
 	end #self.loadEventPositions
+	
+	def self.useAncientKey
+		if !$bag.has?(:ANCIENTKEY)
+			pbMessage(_INTL("There's an indentation on the contraption in the shape of a sideways key."))
+			return false
+		else
+			if !$game_switches[149] #Used Key on Rota Puzzle First Time
+				pbMessage(_INTL("There's an indentation on the contraption in the shape of a sideways key."))
+				pbMessage(_INTL("\\PN put the Ancient Key into the indentation."))
+				pbWait(20)
+				pbSEPlay("Battle catch click", 80, 50)
+				pbWait(20)
+				pbMessage(_INTL("A stone panel slid up to reveal some buttons!"))
+				$game_switches[149] = true
+			end
+			return true
+		end
+	end #def self.useAncientKey
 end #class RotatonaPuzzle
 
 #######################################
