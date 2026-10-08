@@ -351,12 +351,13 @@ class RotatonaPuzzle
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
 			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
 				for oldEvent in storedEventsArray
+					Console.echo_warn "oldEvent.storedPuzzleID is #{oldEvent.storedPuzzleID}"
 					if event.id == oldEvent.storedPuzzleID
 						Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
 							
 						Console.echo_warn "replacing old game object which is #{oldEvent} with newer event object which is #{event}"
 						oldEventPositionInArray = storedEventsArray.index(oldEvent)
-						storedEventsArray[oldEventPositionInArray] = event
+						#storedEventsArray[oldEventPositionInArray] = event
 							
 						#copy old event's properties onto new event's properties							
 						storedEventsArray[oldEventPositionInArray].moveto(oldEvent.storedX, oldEvent.storedY)
@@ -373,7 +374,23 @@ class RotatonaPuzzle
 						storedEventsArray[oldEventPositionInArray].discLandingSpot = oldEvent.storedDiscLandingSpot
 						storedEventsArray[oldEventPositionInArray].catcherHasDisc = oldEvent.storedCatcherHasDisc
 						storedEventsArray[oldEventPositionInArray].discInCatcher = oldEvent.storedDiscInCatcher
-							
+						
+						Console.echo_warn "oldEvent.storedX is #{oldEvent.storedX}"
+						Console.echo_warn "oldEvent.storedY is #{oldEvent.storedY}"
+						Console.echo_warn "oldEvent.storedDirection is #{oldEvent.storedDirection}"
+						Console.echo_warn "oldEvent.storedAssociatedLauncher is #{oldEvent.storedAssociatedLauncher}"
+						Console.echo_warn "oldEvent.storedAssociatedOverlay is #{oldEvent.storedAssociatedOverlay}"
+						Console.echo_warn "oldEvent.storedLauncherThisDiscIsDockedIn is #{oldEvent.storedLauncherThisDiscIsDockedIn}"
+						Console.echo_warn "oldEvent.storedLauncherThisDiscWasLaunchedFrom is #{oldEvent.storedLauncherThisDiscWasLaunchedFrom}"
+						Console.echo_warn "oldEvent.storedDiscThisLauncherHasDocked is #{oldEvent.storedDiscThisLauncherHasDocked}"
+						Console.echo_warn "oldEvent.storedDiscRolling is #{oldEvent.storedDiscRolling}"
+						Console.echo_warn "oldEvent.storedTouchingTile is #{oldEvent.storedTouchingTile}"
+						Console.echo_warn "oldEvent.storedDiscTurningDirection is #{oldEvent.storedDiscTurningDirection}"
+						Console.echo_warn "oldEvent.storedDiscJumping is #{oldEvent.storedDiscJumping}"
+						Console.echo_warn "oldEvent.storedDiscLandingSpot is #{oldEvent.storedDiscLandingSpot}"
+						Console.echo_warn "oldEvent.storedCatcherHasDisc is #{oldEvent.storedCatcherHasDisc}"
+						Console.echo_warn "oldEvent.storedDiscInCatcher is #{oldEvent.storedDiscInCatcher}"
+					
 						next
 					end #if event.id == oldEvent.storedPuzzleID
 				end #for oldEvent in storedEventsArray
