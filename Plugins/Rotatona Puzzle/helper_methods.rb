@@ -354,25 +354,25 @@ class RotatonaPuzzle
 					if event.id == oldEvent.storedPuzzleID
 						Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
 							
-						#copy old event's properties onto new event's properties							
-						event.moveto(oldEvent.storedX, oldEvent.storedY)
-						event.direction = oldEvent.storedDirection		
-						event.associatedLauncher = oldEvent.storedAssociatedLauncher
-						event.associatedOverlay = oldEvent.storedAssociatedOverlay
-						event.launcherThisDiscIsDockedIn = oldEvent.storedLauncherThisDiscIsDockedIn
-						event.launcherThisDiscWasLaunchedFrom = oldEvent.storedLauncherThisDiscWasLaunchedFrom
-						event.discThisLauncherHasDocked = oldEvent.storedDiscThisLauncherHasDocked
-						event.discRolling = oldEvent.storedDiscRolling
-						event.discTouchingTile = oldEvent.storedTouchingTile
-						event.discTurningDirection = oldEvent.storedDiscTurningDirection
-						event.discJumping = oldEvent.storedDiscJumping
-						event.discLandingSpot = oldEvent.storedDiscLandingSpot
-						event.catcherHasDisc = oldEvent.storedCatcherHasDisc
-						event.discInCatcher = oldEvent.storedDiscInCatcher
+						Console.echo_warn "replacing old game object which is #{oldEvent} with newer event object which is #{event}"
+						oldEventPositionInArray = storedEventsArray.index(oldEvent)
+						storedEventsArray[oldEventPositionInArray] = event
 							
-						#replace old event object with new event object
-						#oldEvent = event
-						oldEvent = event	
+						#copy old event's properties onto new event's properties							
+						storedEventsArray[oldEventPositionInArray].moveto(oldEvent.storedX, oldEvent.storedY)
+						storedEventsArray[oldEventPositionInArray].direction = oldEvent.storedDirection		
+						storedEventsArray[oldEventPositionInArray].associatedLauncher = oldEvent.storedAssociatedLauncher
+						storedEventsArray[oldEventPositionInArray].associatedOverlay = oldEvent.storedAssociatedOverlay
+						storedEventsArray[oldEventPositionInArray].launcherThisDiscIsDockedIn = oldEvent.storedLauncherThisDiscIsDockedIn
+						storedEventsArray[oldEventPositionInArray].launcherThisDiscWasLaunchedFrom = oldEvent.storedLauncherThisDiscWasLaunchedFrom
+						storedEventsArray[oldEventPositionInArray].discThisLauncherHasDocked = oldEvent.storedDiscThisLauncherHasDocked
+						storedEventsArray[oldEventPositionInArray].discRolling = oldEvent.storedDiscRolling
+						storedEventsArray[oldEventPositionInArray].discTouchingTile = oldEvent.storedTouchingTile
+						storedEventsArray[oldEventPositionInArray].discTurningDirection = oldEvent.storedDiscTurningDirection
+						storedEventsArray[oldEventPositionInArray].discJumping = oldEvent.storedDiscJumping
+						storedEventsArray[oldEventPositionInArray].discLandingSpot = oldEvent.storedDiscLandingSpot
+						storedEventsArray[oldEventPositionInArray].catcherHasDisc = oldEvent.storedCatcherHasDisc
+						storedEventsArray[oldEventPositionInArray].discInCatcher = oldEvent.storedDiscInCatcher
 							
 						next
 					end #if event.id == oldEvent.storedPuzzleID
