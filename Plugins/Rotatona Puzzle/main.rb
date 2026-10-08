@@ -149,6 +149,7 @@ class RotatonaPuzzle
 			#print "launching disc from launcher 1" if rota1LaunchChoice
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].include?(event)
+			return if !self.useAncientKey
 			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -175,6 +176,7 @@ class RotatonaPuzzle
 			self.saveEventVariables
 		###################################################################
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
+			return if !self.useAncientKey
 			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -201,6 +203,7 @@ class RotatonaPuzzle
 			self.saveEventVariables
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(event)
+			return if !self.useAncientKey
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -214,6 +217,7 @@ class RotatonaPuzzle
 			self.saveEventVariables
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event)
+			return if !self.useAncientKey
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))

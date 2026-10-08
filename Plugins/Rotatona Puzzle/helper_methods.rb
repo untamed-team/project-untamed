@@ -351,35 +351,70 @@ class RotatonaPuzzle
 			#and compare the currently selected event to each of the events stored in $rotatona_puzzle.currentRoomPuzzleEvents until we find a match in the id vs storedPuzzleID
 			$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |storedEventsArray|
 				for oldEvent in storedEventsArray
+					Console.echo_warn "oldEvent.storedPuzzleID is #{oldEvent.storedPuzzleID}"
 					if event.id == oldEvent.storedPuzzleID
 						Console.echo_warn "map event with id #{event.id} matches with an event in $rotatona_puzzle.currentRoomPuzzleEvents with storedPuzzleID #{oldEvent.storedPuzzleID}"
 							
+						Console.echo_warn "replacing old game object which is #{oldEvent} with newer event object which is #{event}"
+						oldEventPositionInArray = storedEventsArray.index(oldEvent)
+						#storedEventsArray[oldEventPositionInArray] = event
+							
 						#copy old event's properties onto new event's properties							
-						event.moveto(oldEvent.storedX, oldEvent.storedY)
-						event.direction = oldEvent.storedDirection		
-						event.associatedLauncher = oldEvent.storedAssociatedLauncher
-						event.associatedOverlay = oldEvent.storedAssociatedOverlay
-						event.launcherThisDiscIsDockedIn = oldEvent.storedLauncherThisDiscIsDockedIn
-						event.launcherThisDiscWasLaunchedFrom = oldEvent.storedLauncherThisDiscWasLaunchedFrom
-						event.discThisLauncherHasDocked = oldEvent.storedDiscThisLauncherHasDocked
-						event.discRolling = oldEvent.storedDiscRolling
-						event.discTouchingTile = oldEvent.storedTouchingTile
-						event.discTurningDirection = oldEvent.storedDiscTurningDirection
-						event.discJumping = oldEvent.storedDiscJumping
-						event.discLandingSpot = oldEvent.storedDiscLandingSpot
-						event.catcherHasDisc = oldEvent.storedCatcherHasDisc
-						event.discInCatcher = oldEvent.storedDiscInCatcher
-							
-						#replace old event object with new event object
-						#oldEvent = event
-						oldEvent = event	
-							
+						storedEventsArray[oldEventPositionInArray].moveto(oldEvent.storedX, oldEvent.storedY)
+						storedEventsArray[oldEventPositionInArray].direction = oldEvent.storedDirection		
+						storedEventsArray[oldEventPositionInArray].associatedLauncher = oldEvent.storedAssociatedLauncher
+						storedEventsArray[oldEventPositionInArray].associatedOverlay = oldEvent.storedAssociatedOverlay
+						storedEventsArray[oldEventPositionInArray].launcherThisDiscIsDockedIn = oldEvent.storedLauncherThisDiscIsDockedIn
+						storedEventsArray[oldEventPositionInArray].launcherThisDiscWasLaunchedFrom = oldEvent.storedLauncherThisDiscWasLaunchedFrom
+						storedEventsArray[oldEventPositionInArray].discThisLauncherHasDocked = oldEvent.storedDiscThisLauncherHasDocked
+						storedEventsArray[oldEventPositionInArray].discRolling = oldEvent.storedDiscRolling
+						storedEventsArray[oldEventPositionInArray].discTouchingTile = oldEvent.storedTouchingTile
+						storedEventsArray[oldEventPositionInArray].discTurningDirection = oldEvent.storedDiscTurningDirection
+						storedEventsArray[oldEventPositionInArray].discJumping = oldEvent.storedDiscJumping
+						storedEventsArray[oldEventPositionInArray].discLandingSpot = oldEvent.storedDiscLandingSpot
+						storedEventsArray[oldEventPositionInArray].catcherHasDisc = oldEvent.storedCatcherHasDisc
+						storedEventsArray[oldEventPositionInArray].discInCatcher = oldEvent.storedDiscInCatcher
+						
+						Console.echo_warn "oldEvent.storedX is #{oldEvent.storedX}"
+						Console.echo_warn "oldEvent.storedY is #{oldEvent.storedY}"
+						Console.echo_warn "oldEvent.storedDirection is #{oldEvent.storedDirection}"
+						Console.echo_warn "oldEvent.storedAssociatedLauncher is #{oldEvent.storedAssociatedLauncher}"
+						Console.echo_warn "oldEvent.storedAssociatedOverlay is #{oldEvent.storedAssociatedOverlay}"
+						Console.echo_warn "oldEvent.storedLauncherThisDiscIsDockedIn is #{oldEvent.storedLauncherThisDiscIsDockedIn}"
+						Console.echo_warn "oldEvent.storedLauncherThisDiscWasLaunchedFrom is #{oldEvent.storedLauncherThisDiscWasLaunchedFrom}"
+						Console.echo_warn "oldEvent.storedDiscThisLauncherHasDocked is #{oldEvent.storedDiscThisLauncherHasDocked}"
+						Console.echo_warn "oldEvent.storedDiscRolling is #{oldEvent.storedDiscRolling}"
+						Console.echo_warn "oldEvent.storedTouchingTile is #{oldEvent.storedTouchingTile}"
+						Console.echo_warn "oldEvent.storedDiscTurningDirection is #{oldEvent.storedDiscTurningDirection}"
+						Console.echo_warn "oldEvent.storedDiscJumping is #{oldEvent.storedDiscJumping}"
+						Console.echo_warn "oldEvent.storedDiscLandingSpot is #{oldEvent.storedDiscLandingSpot}"
+						Console.echo_warn "oldEvent.storedCatcherHasDisc is #{oldEvent.storedCatcherHasDisc}"
+						Console.echo_warn "oldEvent.storedDiscInCatcher is #{oldEvent.storedDiscInCatcher}"
+					
 						next
 					end #if event.id == oldEvent.storedPuzzleID
 				end #for oldEvent in storedEventsArray
 			end #$rotatona_puzzle.currentRoomPuzzleEvents.each_value do |oldEvent|
 		end #$game_map.events.each_value do |event|
 	end #self.loadEventPositions
+	
+	def self.useAncientKey
+		if !$bag.has?(:ANCIENTKEY)
+			pbMessage(_INTL("There's an indentation on the contraption in the shape of a sideways key."))
+			return false
+		else
+			if !$game_switches[149] #Used Key on Rota Puzzle First Time
+				pbMessage(_INTL("There's an indentation on the contraption in the shape of a sideways key."))
+				pbMessage(_INTL("\\PN put the Ancient Key into the indentation."))
+				pbWait(20)
+				pbSEPlay("Battle catch click", 80, 50)
+				pbWait(20)
+				pbMessage(_INTL("A stone panel slid up to reveal some buttons!"))
+				$game_switches[149] = true
+			end
+			return true
+		end
+	end #def self.useAncientKey
 end #class RotatonaPuzzle
 
 #######################################
