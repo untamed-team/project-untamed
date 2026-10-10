@@ -82,14 +82,16 @@ class RotatonaPuzzle
 	SE_DOCKING = "Rotatona Slot"
 	SE_CATCHING = "Rotatona Slot"
 	SE_DISC_JUMP = "Player jump"
-	SE_DISC_CRASH = "Rock Smash"
+	SE_DISC_CRASH = "Rotatona Crash"
 	SE_DISC_ROLLING = "Rotatona Roll"
+	SE_PUZZLE_SOLVED = "Mining Reveal Full"
 	FRAMES_TO_WAIT_BETWEEN_ROLLING_PATTERNS = 3 #default is 3
 	FRAMES_FOR_ROLLING_DISC_TURNING_ANIMATION = 0
 	DISC_SPEED = 4 #default 4
-	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE = [44,17]
-	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT = [16,21]
-	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT = [16,21]
+	#where do we teleport the player when they're standing on the track?
+	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_ENTRANCE = [44,18]
+	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_LEFT = [17,19]
+	TILE_TRANSFER_PLAYER_CANYON_TEMPLE_RIGHT = [16,20]
 	
 	#######################################
 	#============== Set up ================
@@ -126,7 +128,7 @@ class RotatonaPuzzle
 		@cameraPanning = true
 		pbWait(Graphics.frame_rate)
 		pbMapInterpreter.autoscroll_player(DISC_SPEED+1)
-		pbWait(Graphics.frame_rate)
+		pbWait(Graphics.frame_rate/2)
 		
 		@cameraPanning = false
 		#end cutscene
@@ -311,7 +313,7 @@ class RotatonaPuzzle
 					
 						when 6 #ramp is facing right
 							if event.direction == 4
-								Console.echo_warn "disc received successfully onto 2nd ramp"
+								#Console.echo_warn "disc received successfully onto 2nd ramp"
 							else
 								self.crashRotatona(event, "ramp facing right, disc not facing left")
 							end
@@ -348,7 +350,7 @@ class RotatonaPuzzle
 					self.crashRotatona(event, "touched track corner1, disc facing down")
 				when 4 #left
 					newDirection = 2 #down
-					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
+					turnSpritePattern = self.determinePatternForTurning(event, newDirection)
 					#start move route, then turn on discTurningDirection
 					pbMoveRoute(event, [
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -361,7 +363,7 @@ class RotatonaPuzzle
 					self.crashRotatona(event, "touched track corner1, disc facing right")
 				when 8 #up
 					newDirection = 6 #right
-					turnSpritePattern = self.determinePatterForTurning(event, newDirection)
+					turnSpritePattern = self.determinePatternForTurning(event, newDirection)
 					#start move route, then turn on discTurningDirection
 					pbMoveRoute(event, [
 						PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -387,7 +389,7 @@ class RotatonaPuzzle
 				
 				#next if disc crashed
 				
-				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				turnSpritePattern = self.determinePatternForTurning(event, newDirection)	
 				#start move route, then turn on discTurningDirection
 				pbMoveRoute(event, [
 					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -411,7 +413,7 @@ class RotatonaPuzzle
 				
 				#next if disc crashed
 				
-				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				turnSpritePattern = self.determinePatternForTurning(event, newDirection)	
 				#start move route, then turn on discTurningDirection
 				pbMoveRoute(event, [
 					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -435,7 +437,7 @@ class RotatonaPuzzle
 				
 				#next if disc crashed
 				
-				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				turnSpritePattern = self.determinePatternForTurning(event, newDirection)	
 				#start move route, then turn on discTurningDirection
 				pbMoveRoute(event, [
 					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -534,7 +536,7 @@ class RotatonaPuzzle
 				#next if disc crashed
 				next if !event.discRolling
 				
-				turnSpritePattern = self.determinePatterForTurning(event, newDirection)	
+				turnSpritePattern = self.determinePatternForTurning(event, newDirection)	
 				#start move route, then turn on discTurningDirection
 				pbMoveRoute(event, [
 					PBMoveRoute::Graphic, event.character_name, event.character_hue, turnSpriteDirectionForPattern, turnSpritePattern,
@@ -545,6 +547,7 @@ class RotatonaPuzzle
 
 			elsif !self.touchingCatcherEvent?(event).nil?
 				catcherEvent = self.touchingCatcherEvent?(event)
+				#Console.echo_warn "touching catcher event #{catcherEvent.id}"
 				if catcherEvent.catcherHasDisc
 					#catcher already has a disc docked
 					self.crashRotatona(event, "disc touched catcher that already had a disc docked in it")
@@ -979,6 +982,10 @@ class RotatonaPuzzle
 		discEvent.direction = discEvent.launcherThisDiscIsDockedIn.direction
 		discEvent.character_name = "Rotatona_Disc_Anim1"
 		discEvent.pattern = 1
+		
+		pbSEStop
+		pbSEPlay(SE_CATCHING)
+		
 		self.cameraPanToPlayer("panning camera to player - docking disc") if success
 	end #def self.dockDisc
 	
@@ -992,7 +999,8 @@ class RotatonaPuzzle
 		discEvent.discRolling = false
 		
 		if self.checkIfPuzzleSolved
-			Console.echo_warn "puzzle solved" 
+			Console.echo_warn "puzzle solved"
+				
 			case $game_map.map_id
 			when 59 #canyon temple left
 				$game_switches[142] = true
@@ -1001,9 +1009,12 @@ class RotatonaPuzzle
 			when 128 #canyon temple entrance
 				$game_switches[141] = true
 			end #case $game_map.map_id
+			
+			self.cameraPanToPlayer("catching disc")
+			pbSEPlay(SE_PUZZLE_SOLVED)
+		else
+			self.cameraPanToPlayer("catching disc")
 		end #if self.checkIfPuzzleSolved
-		
-		self.cameraPanToPlayer("catching disc")
 	end #def self.catchDisc
 	
 	def self.discMoveForward
@@ -1063,6 +1074,8 @@ class RotatonaPuzzle
 		discEvent.discRolling = false
 		discEvent.discJumping = false
 		discEvent.discLandingSpot = []
+		pbSEStop
+		pbSEPlay(SE_DISC_CRASH)
 		Console.echo_warn "disc crashed - #{reason}"
 		
 		#fade screen to black

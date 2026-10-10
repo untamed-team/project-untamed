@@ -43,7 +43,7 @@ class RotatonaPuzzle
 		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 	end #def self.turnDisc(event, oldDirection, newDirection)
 	
-	def self.determinePatterForTurning(event, newDirection)
+	def self.determinePatternForTurning(event, newDirection)
 		#determine pattern for turning
 		if event.direction == 2 && newDirection == 6 #going down, turning right
 			turnSpritePattern = 0
@@ -66,7 +66,7 @@ class RotatonaPuzzle
 		print "Due to an unforeseen edge case, you're about to crash :) Please report this as a bug. Event direction is #{event.direction} and it's turning #{newDirection}" if turnSpritePattern.nil?
 		
 		return turnSpritePattern
-	end #def self.determinePatterForTurning
+	end #def self.determinePatternForTurning
 	
 	def self.touchingCornerTrackEvent?(discEvent)
 		#print "checking for corner track. this should print twice when touching one" #it didn't work on event 29
@@ -158,10 +158,13 @@ class RotatonaPuzzle
 		#run this when disc goes into launcher successfully
 		$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
 			#return false if a disc is not in a catcher
-			Console.echo_warn "puzzle not yet completed"
-			return false if !event.discInCatcher
+			Console.echo_warn "event.discInCatcher is #{event.discInCatcher}"
+			if !event.discInCatcher
+				Console.echo_warn "puzzle not yet completed"
+				return false
+			end #if !event.discInCatcher
 		end #$rotatona_puzzle.currentRoomPuzzleEvents[:Discs].each do |event|
-
+		#return true if all discs are in catchers
 		return true
 	end #def self.checkIfPuzzleSolved
 	
