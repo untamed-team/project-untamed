@@ -898,8 +898,10 @@ class Battle::Scene
           end
         end
         addText.push([stat[1], xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
-        stat = pbRoughDisplayStat(battler, stat[0])
-        addText.push([stat.to_s, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
+        sstat = pbRoughDisplayStat(battler, stat[0])
+        sstat = sstat.to_s
+        sstat += "%" if [:ACCURACY, :EVASION].include?(stat[0])
+        addText.push([sstat, xpos + 64, ypos + 140 + (i * 24), 0, BASE_LIGHT, color])
       else
         addText.push([stat, xpos - 15, ypos + 140 + (i * 24), 0, BASE_LIGHT, SHADOW_LIGHT])
         stage = battler.effects[PBEffects::FocusEnergy] + battler.effects[PBEffects::CriticalBoost]
