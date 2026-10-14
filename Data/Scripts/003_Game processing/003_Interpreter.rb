@@ -341,7 +341,7 @@ class Interpreter
     end
   end
 
-  # Sets another event's self switch on a different map (eg. pbSetSelfSwitch(420,15,"A",true) ).
+  # Sets another event's self switch on a different map (eg. pbSetSelfSwitch2(420,15,"A",true) ).
 # To be used in a script event command.
 	def pbSetSelfSwitch2(map,event,swtch,value)
 		 $game_self_switches[[map,event,swtch]]=value
