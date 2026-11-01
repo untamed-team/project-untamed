@@ -102,7 +102,7 @@ class PokemonParty_Scene
     pbBottomLeftLines(@sprites["messagebox"], 2)
     
     @sprites["storagetext"] = Window_UnformattedTextPokemon.new(
-      $game_temp.in_battle ? "" : _INTL("{1}: Auto Heal",$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name))
+      $game_temp.in_battle ? "" : _INTL("Ctrl + {1}: Auto Heal",$PokemonSystem.game_controls.find{|c| c.control_action=="Registered Item"}.key_name))
     
     @sprites["storagetext"].x           = 32
     @sprites["storagetext"].y           = Graphics.height - @sprites["messagebox"].height - 16

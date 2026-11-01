@@ -281,7 +281,7 @@ class VPM_GameSpeedHud < Component
   def refresh
     @currentGameSpeed = $GameSpeed.to_i
     if $GameSpeed > 0
-		text = _INTL("{1} Speed: {2}",$PokemonSystem.game_controls.find{|c| c.control_action=="Change Game Speed"}.key_name,$GameSpeed.to_s)
+		text = _INTL("[{1}] Speed: {2}",$PokemonSystem.game_controls.find{|c| c.control_action=="Change Game Speed"}.key_name,$GameSpeed.to_s)
     else
 		text = _INTL("")
     end

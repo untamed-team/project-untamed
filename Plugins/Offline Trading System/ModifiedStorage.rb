@@ -326,8 +326,8 @@ class TradingPokemonStorageScene
           pbSetMosaic(selection)
         end
       elsif Input.trigger?(Input::ACTION) && @command == 0   # Organize only
-        pbPlayDecisionSE
-        pbSetQuickSwap(!@quickswap)
+        #pbPlayDecisionSE
+        #pbSetQuickSwap(!@quickswap)
       elsif Input.trigger?(Input::BACK)
         @selection = selection
         return nil
@@ -406,8 +406,8 @@ class TradingPokemonStorageScene
       end
       self.update
       if Input.trigger?(Input::ACTION) && @command == 0   # Organize only
-        pbPlayDecisionSE
-        pbSetQuickSwap(!@quickswap)
+        #pbPlayDecisionSE
+        #pbSetQuickSwap(!@quickswap)
       elsif Input.trigger?(Input::BACK)
         @selection = selection
         return -1
