@@ -98,13 +98,12 @@ class Battle::Move::Rebalancing < Battle::Move
       @battle.pbDisplay(_INTL("But it failed!"))
       return true
     end
-    return true if target.SetupMovesUsed.include?(@id)
     targetStats = target.plainStats; highestStatValue = 0
     targetStats.each_value { |value| highestStatValue = value if highestStatValue < value }
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        if !target.pbCanRaiseStatStage?(s.id, target)
+        if !target.pbCanRaiseStatStage?(s.id, target, self, false, true, self)
           @battle.pbDisplay(_INTL("But it failed!"))
           return true 
         end
@@ -126,8 +125,7 @@ class Battle::Move::Rebalancing < Battle::Move
     GameData::Stat.each_main_battle do |s|
       next if targetStats[s.id] < highestStatValue
       if @TargetIsAlly
-        target.pbRaiseStatStage(s.id, 1, target, true) if target.pbCanRaiseStatStage?(s.id, target)
-        target.SetupMovesUsed.push(@id)
+        target.pbRaiseStatStage(s.id, 1, target, true, true, self) if target.pbCanRaiseStatStage?(s.id, target, self, true, true, self)
       else
         target.pbLowerStatStage(s.id, 2, target, true) if target.pbCanLowerStatStage?(s.id, target)
       end
@@ -350,7 +348,7 @@ class Battle::Move::NextMoveIs2xSuperEffective < Battle::Move
     return if !showAnimation
     @battle.pbAnimation(id, user, targets, hitNum)
     if @transformbreak
-      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false)
+      blankBattler = @battle.pbMakeFakeBattler(@battle.pbParty(targets[0].index)[targets[0].pokemonIndex],false,targets[0],false,true)
       @battle.scene.pbChangePokemon(targets[0], blankBattler.pokemon)
     end
   end

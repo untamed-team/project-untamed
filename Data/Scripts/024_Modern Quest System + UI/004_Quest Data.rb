@@ -252,12 +252,13 @@ module QuestModule
   Quest13 = {
     :ID => "13",
     :Name => "All that Glitters",
-    :QuestDescription => "Florian saw a shiny Magikarp in Asterado Lake! Help him find it!",
+    :QuestDescription => "Florian saw a shiny Magikarp in Asterado Lake! He thinks using a Nugget as bait will help him fish it up.",
     :QuestGiver => "Florian",
     :QuestGiverSprite => "NPC Shiny Hunter",
     :QuestGiverDescSprite => "SHINYHUNTER_M",
-    :Stage1 => "Help Florian find the shiny Magikarp in Asterado Lake.",
+    :Stage1 => "Give Florian a Nugget.",
     :Location1 => "Asterado Ranch",
+    :TurninCondition1 => proc { $bag.has?(:NUGGET) },
     :RewardString => '"Good money"',
     :ReadyAtStart => true,
   }

@@ -460,7 +460,7 @@ Battle::ItemEffects::HPHeal.add(:NYLOBERRY,
 Battle::ItemEffects::HPHeal.add(:STARFBERRY,
   proc { |item, battler, battle, forced|
     stats = []
-    GameData::Stat.each_main_battle { |s| stats.push(s.id) if battler.pbCanRaiseStatStage?(s.id, battler) }
+    GameData::Stat.each_main_battle { |s| stats.push(s.id) if battler.pbCanRaiseStatBySource?(s.id, item, battler) }
     next false if stats.length == 0
     stat = stats[battle.pbRandom(stats.length)]
     next battler.pbStatIncreasingBerry(item, forced, stat, 2)
@@ -734,9 +734,9 @@ Battle::ItemEffects::OnMissingTarget.add(:BLUNDERPOLICY,
   proc { |item, user, target, move, hit_num, battle|
     next if hit_num > 0 || target.damageState.invulnerable
     next if ["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(move.function)
-    next if !user.pbCanRaiseStatStage?(:SPEED, user)
+    next if user.pbCannotRaiseStatBySource?(:SPEED, item, user)
     battle.pbCommonAnimation("UseItem", user)
-    user.pbRaiseStatStageByCause(:SPEED, 2, user, user.itemName)
+    user.pbRaiseStatStageByCause(:SPEED, 2, user, user.itemName, true, false, item)
     battle.pbDisplay(_INTL("The {1} was used up...", user.itemName))
     user.pbHeldItemTriggered(item)
   }
@@ -1347,9 +1347,9 @@ Battle::ItemEffects::CriticalCalcFromUser.copy(:LEEK, :STICK)
 Battle::ItemEffects::OnBeingHit.add(:ABSORBBULB,
   proc { |item, user, target, move, battle|
     next if move.calcType != :WATER
-    next if !target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, target)
+    next if target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, :ABSORBBULB, target)
     battle.pbCommonAnimation("UseItem", target)
-    target.pbRaiseStatStageByCause(:SPECIAL_ATTACK, 1, target, target.itemName)
+    target.pbRaiseStatStageByCause(:SPECIAL_ATTACK, 1, target, target.itemName, true, false, item)
     target.pbHeldItemTriggered(item)
   }
 )
@@ -1365,9 +1365,9 @@ Battle::ItemEffects::OnBeingHit.add(:AIRBALLOON,
 Battle::ItemEffects::OnBeingHit.add(:CELLBATTERY,
   proc { |item, user, target, move, battle|
     next if move.calcType != :ELECTRIC
-    next if !target.pbCanRaiseStatStage?(:ATTACK, target)
+    next if target.pbCannotRaiseStatBySource?(:ATTACK, :CELLBATTERY, target)
     battle.pbCommonAnimation("UseItem", target)
-    target.pbRaiseStatStageByCause(:ATTACK, 1, target, target.itemName)
+    target.pbRaiseStatStageByCause(:ATTACK, 1, target, target.itemName, true, false, item)
     target.pbHeldItemTriggered(item)
   }
 )
@@ -1423,9 +1423,9 @@ Battle::ItemEffects::OnBeingHit.add(:KEEBERRY,
 Battle::ItemEffects::OnBeingHit.add(:LUMINOUSMOSS,
   proc { |item, user, target, move, battle|
     next if move.calcType != :WATER
-    next if !target.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, target)
+    next if target.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, item, target)
     battle.pbCommonAnimation("UseItem", target)
-    target.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, target, target.itemName)
+    target.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, target, target.itemName, true, false, item)
     target.pbHeldItemTriggered(item)
   }
 )
@@ -1480,9 +1480,9 @@ Battle::ItemEffects::OnBeingHit.add(:ROWAPBERRY,
 Battle::ItemEffects::OnBeingHit.add(:SNOWBALL,
   proc { |item, user, target, move, battle|
     next if move.calcType != :ICE
-    next if !target.pbCanRaiseStatStage?(:ATTACK, target)
+    next if target.pbCannotRaiseStatBySource?(:ATTACK, item, target)
     battle.pbCommonAnimation("UseItem", target)
-    target.pbRaiseStatStageByCause(:ATTACK, 1, target, target.itemName)
+    target.pbRaiseStatStageByCause(:ATTACK, 1, target, target.itemName, true, false, item)
     target.pbHeldItemTriggered(item)
   }
 )
@@ -1508,16 +1508,16 @@ Battle::ItemEffects::OnBeingHit.add(:WEAKNESSPOLICY,
   proc { |item, user, target, move, battle|
     next if target.damageState.disguise || target.damageState.iceFace
     next if !Effectiveness.super_effective?(target.damageState.typeMod)
-    next if !target.pbCanRaiseStatStage?(:ATTACK, target) &&
-            !target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, target)
+    next if target.pbCannotRaiseStatBySource?(:ATTACK, item, target) &&
+            target.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, item, target)
     battle.pbCommonAnimation("UseItem", target)
     showAnim = true
-    if target.pbCanRaiseStatStage?(:ATTACK, target)
-      target.pbRaiseStatStageByCause(:ATTACK, 2, target, target.itemName, showAnim)
+    if target.pbCanRaiseStatBySource?(:ATTACK, item, target)
+      target.pbRaiseStatStageByCause(:ATTACK, 2, target, target.itemName, showAnim, false, item)
       showAnim = false
     end
-    if target.pbCanRaiseStatStage?(:SPECIAL_ATTACK, target)
-      target.pbRaiseStatStageByCause(:SPECIAL_ATTACK, 2, target, target.itemName, showAnim)
+    if target.pbCanRaiseStatBySource?(:SPECIAL_ATTACK, item, target)
+      target.pbRaiseStatStageByCause(:SPECIAL_ATTACK, 2, target, target.itemName, showAnim, false, item)
     end
     battle.pbDisplay(_INTL("The {1} was used up...", target.itemName))
     target.pbHeldItemTriggered(item)
@@ -1536,7 +1536,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:ENIGMABERRY,
     next false if !forced && !battler.canConsumeBerry?
     itemName = GameData::Item.get(item).name
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}") if forced
-    amt = battler.totalhp / 4
+    amt = battler.totalhp / 3
     ripening = false
 		pbRaiseTropiusEvolutionStep(battler) #by low
     if battler.hasActiveAbility?(:RIPEN)
@@ -1559,7 +1559,7 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:ENIGMABERRY,
 Battle::ItemEffects::OnBeingHitPositiveBerry.add(:KEEBERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumeBerry?
-    next false if !battler.pbCanRaiseStatStage?(:DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     amt = 1
     ripening = false
@@ -1571,16 +1571,16 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:KEEBERRY,
     end
     battle.pbCommonAnimation("EatBerry", battler) if !forced
     battle.pbHideAbilitySplash(battler) if ripening
-    next battler.pbRaiseStatStageByCause(:DEFENSE, amt, battler, itemName) if !forced
+    next battler.pbRaiseStatStageByCause(:DEFENSE, amt, battler, itemName, true, false, item) if !forced
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}")
-    next battler.pbRaiseStatStage(:DEFENSE, amt, battler)
+    next battler.pbRaiseStatStage(:DEFENSE, amt, battler, true, false, item)
   }
 )
 
 Battle::ItemEffects::OnBeingHitPositiveBerry.add(:MARANGABERRY,
   proc { |item, battler, battle, forced|
     next false if !forced && !battler.canConsumeBerry?
-    next false if !battler.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     amt = 1
     ripening = false
@@ -1592,9 +1592,9 @@ Battle::ItemEffects::OnBeingHitPositiveBerry.add(:MARANGABERRY,
     end
     battle.pbCommonAnimation("EatBerry", battler) if !forced
     battle.pbHideAbilitySplash(battler) if ripening
-    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, amt, battler, itemName) if !forced
+    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, amt, battler, itemName, true, false, item) if !forced
     PBDebug.log("[Item triggered] #{battler.pbThis}'s #{itemName}")
-    next battler.pbRaiseStatStage(:SPECIAL_DEFENSE, amt, battler)
+    next battler.pbRaiseStatStage(:SPECIAL_DEFENSE, amt, battler, true, false, item)
   }
 )
 
@@ -1694,9 +1694,9 @@ Battle::ItemEffects::AfterMoveUseFromUser.add(:THROATSPRAY,
     next if battle.pbAllFainted?(user.idxOwnSide) ||
             battle.pbAllFainted?(user.idxOpposingSide)
     next if !move.soundMove? || numHits == 0
-    next if !user.pbCanRaiseStatStage?(:SPECIAL_ATTACK, user)
+    next if user.pbCannotRaiseStatBySource?(:SPECIAL_ATTACK, item, user)
     battle.pbCommonAnimation("UseItem", user)
-    user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user)
+    user.pbRaiseStatStage(:SPECIAL_ATTACK, 1, user, true, false, item)
     user.pbConsumeItem
   }
 )
@@ -1871,40 +1871,40 @@ Battle::ItemEffects::TerrainExtender.add(:TERRAINEXTENDER,
 Battle::ItemEffects::TerrainStatBoost.add(:ELECTRICSEED,
   proc { |item, battler, battle|
     next false if battle.field.terrain != :Electric
-    next false if !battler.pbCanRaiseStatStage?(:DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     battle.pbCommonAnimation("UseItem", battler)
-    next battler.pbRaiseStatStageByCause(:DEFENSE, 1, battler, itemName)
+    next battler.pbRaiseStatStageByCause(:DEFENSE, 1, battler, itemName, true, false, item)
   }
 )
 
 Battle::ItemEffects::TerrainStatBoost.add(:GRASSYSEED,
   proc { |item, battler, battle|
     next false if battle.field.terrain != :Grassy
-    next false if !battler.pbCanRaiseStatStage?(:DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     battle.pbCommonAnimation("UseItem", battler)
-    next battler.pbRaiseStatStageByCause(:DEFENSE, 1, battler, itemName)
+    next battler.pbRaiseStatStageByCause(:DEFENSE, 1, battler, itemName, true, false, item)
   }
 )
 
 Battle::ItemEffects::TerrainStatBoost.add(:MISTYSEED,
   proc { |item, battler, battle|
     next false if battle.field.terrain != :Misty
-    next false if !battler.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     battle.pbCommonAnimation("UseItem", battler)
-    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, battler, itemName)
+    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, battler, itemName, true, false, item)
   }
 )
 
 Battle::ItemEffects::TerrainStatBoost.add(:PSYCHICSEED,
   proc { |item, battler, battle|
     next false if battle.field.terrain != :Psychic
-    next false if !battler.pbCanRaiseStatStage?(:SPECIAL_DEFENSE, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:SPECIAL_DEFENSE, item, battler)
     itemName = GameData::Item.get(item).name
     battle.pbCommonAnimation("UseItem", battler)
-    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, battler, itemName)
+    next battler.pbRaiseStatStageByCause(:SPECIAL_DEFENSE, 1, battler, itemName, true, false, item)
   }
 )
 
@@ -2011,10 +2011,10 @@ Battle::ItemEffects::OnSwitchIn.add(:ROOMSERVICE,
 
 Battle::ItemEffects::OnIntimidated.add(:ADRENALINEORB,
   proc { |item, battler, battle|
-    next false if !battler.pbCanRaiseStatStage?(:SPEED, battler)
+    next false if battler.pbCannotRaiseStatBySource?(:SPEED, item, battler)
     itemName = GameData::Item.get(item).name
     battle.pbCommonAnimation("UseItem", battler)
-    next battler.pbRaiseStatStageByCause(:SPEED, 1, battler, itemName)
+    next battler.pbRaiseStatStageByCause(:SPEED, 1, battler, itemName, true, false, item)
   }
 )
 

@@ -53,6 +53,8 @@ class Battle
     #       your actions in a round.
     actioned = []
     idxBattler = -1
+    # DemICE store all damages in a hash for better efficiency.
+    @battleAI.preCalculateDamagesAI if isPlayer
     loop do
       break if @decision != 0   # Battle ended, stop choosing actions
       idxBattler += 1

@@ -249,9 +249,9 @@ class ContestStage
     
     pbWait(1 * Graphics.frame_rate) #wait one second
     
-    pbMessage(_INTL("#{ContestSettings::JUDGES[1][:Name]}: We are about to get under way with this #{@chosenRank} rank Pokémon #{@chosenType} contest!"))
-    pbMessage(_INTL("I'm #{ContestSettings::JUDGES[1][:Name]}, and I'll be serving as the MC and as one of the Judges!"))
-    pbMessage(_INTL("The results will be announced at the end, so please bear with me!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]We are about to get under way with this #{@chosenRank} rank Pokémon #{@chosenType} contest!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]I'm #{ContestSettings::JUDGES[1][:Name]}, and I'll be serving as the MC and as one of the Judges!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]The results will be announced at the end, so please bear with me!"))
     
     pbWait(1 * Graphics.frame_rate)
     pbMoveRoute($game_map.events[@announcerEvent.id], [
@@ -259,8 +259,8 @@ class ContestStage
     ])
     pbWait(1 * Graphics.frame_rate/2)
     
-    pbMessage(_INTL("Let me introduce our contestants!"))
-    pbMessage(_INTL("Entry number 1! \\nHere's #{@chosenContestants[0][:TrainerName]} with #{@chosenContestants[0][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Let me introduce our contestants!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 1! \\nHere's #{@chosenContestants[0][:TrainerName]} with #{@chosenContestants[0][:PkmnName]}!"))
     #play crowd cheering se
     pbSEPlay("Contests_Crowd",80,100)    
     #whistle from crowd
@@ -285,7 +285,7 @@ class ContestStage
     ])
     pbWait(2 * Graphics.frame_rate)
     
-    pbMessage(_INTL("Next, it's entry number 2! #{@chosenContestants[1][:TrainerName]} with #{@chosenContestants[1][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Next, it's entry number 2! #{@chosenContestants[1][:TrainerName]} with #{@chosenContestants[1][:PkmnName]}!"))
     
     #play crowd cheering se
     pbSEPlay("Contests_Crowd",80,100)    
@@ -306,7 +306,7 @@ class ContestStage
     pbSEPlay("Contests_Camera_Shutter",80,100)
     
     pbWait(2 * Graphics.frame_rate)
-    pbMessage(_INTL("Entry number 3! #{@chosenContestants[2][:TrainerName]} with #{@chosenContestants[2][:PkmnName]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Entry number 3! #{@chosenContestants[2][:TrainerName]} with #{@chosenContestants[2][:PkmnName]}!"))
     
     #play crowd cheering se
     pbSEPlay("Contests_Crowd",80,100)    
@@ -332,7 +332,7 @@ class ContestStage
     ])
     pbWait(2 * Graphics.frame_rate)
     
-    pbMessage(_INTL("And last but not least, entry number 4! \\PN with #{$game_variables[ContestSettings::SELECTED_POKEMON_NAME_VARIABLE]}!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]And last but not least, entry number 4! \\PN with #{$game_variables[ContestSettings::SELECTED_POKEMON_NAME_VARIABLE]}!"))
     
     #play crowd cheering se
     pbSEPlay("Contests_Crowd",80,100)    
@@ -358,8 +358,8 @@ class ContestStage
     ])
     pbWait(1 * Graphics.frame_rate)
     
-    pbMessage(_INTL("Let's begin by having everyone get in their proper attire for evaluations."))
-    pbMessage(_INTL("Contestants, dress up your Pokemon for the Visual Competition!"))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Let's begin by having everyone get in their proper attire for evaluations."))
+    pbMessage(_INTL("\\xn[#{ContestSettings::JUDGES[1][:Name]}]Contestants, dress up your Pokemon for the Visual Competition!"))
     
     #play crowd cheering se
     pbSEPlay("Contests_Crowd",80,100)

@@ -3,6 +3,10 @@ def pbAutoPlantBerry(events, map = nil)
         Console.echo_warn("TDW Berry Core and Dex v1.1 is required to use autoplanting.") 
         return pbMessage(_INTL("Autoplanting cannot be done."))
     end
+    if Settings::BERRY_USE_BERRY_SEEDS
+        Console.echo_warn("Autoplanting berry seeds is not yet supported.") 
+        return pbMessage(_INTL("Oh I don't know how to plant seeds yet. Maybe one day."))
+    end
     pbMessage(_INTL("I can plant some Berries for you!"))
     return if !pbConfirmMessage(_INTL("Do you want me to plant some of your Berries?"))
     count = (events.length < 6) ? events.length : 6

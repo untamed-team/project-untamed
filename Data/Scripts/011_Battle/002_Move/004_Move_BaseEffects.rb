@@ -94,12 +94,12 @@ class Battle::Move::StatUpMove < Battle::Move
 
   def pbEffectGeneral(user)
     return if damagingMove?
-    user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
+    user.pbRaiseStatStage(@statUp[0], @statUp[1], user, true, false, self)
   end
 
   def pbAdditionalEffect(user, target)
     if user.pbCanRaiseStatStage?(@statUp[0], user, self)
-      user.pbRaiseStatStage(@statUp[0], @statUp[1], user)
+      user.pbRaiseStatStage(@statUp[0], @statUp[1], user, true, false, self)
     end
   end
 end
@@ -130,7 +130,7 @@ class Battle::Move::MultiStatUpMove < Battle::Move
     showAnim = true
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
+      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim, false, self)
         showAnim = false
       end
     end
@@ -140,7 +140,7 @@ class Battle::Move::MultiStatUpMove < Battle::Move
     showAnim = true
     (@statUp.length / 2).times do |i|
       next if !user.pbCanRaiseStatStage?(@statUp[i * 2], user, self)
-      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim)
+      if user.pbRaiseStatStage(@statUp[i * 2], @statUp[(i * 2) + 1], user, showAnim, false, self)
         showAnim = false
       end
     end
@@ -206,7 +206,7 @@ class Battle::Move::TargetMultiStatDownMove < Battle::Move
       canLower = false
       if target.hasActiveAbility?(:CONTRARY) && !@battle.moldBreaker
         (@statDown.length / 2).times do |i|
-          next if target.statStageAtMax?(@statDown[i * 2])
+          next if target.pbCannotRaiseStatBySource?(@statDown[i * 2], :CONTRARY)
           canLower = true
           break
         end

@@ -288,6 +288,11 @@ class Battle::Move::BindTarget < Battle::Move
     end
     @battle.pbDisplay(msg)
   end
+
+  def pbShowAnimation(id, user, targets, hitNum = 0, showAnimation = true)
+    id = :FIRESPIN if user.hasActiveAbility?(:MELTDOWN)
+    super
+  end
 end
 
 #===============================================================================

@@ -154,9 +154,9 @@ class SpeciesTypeMatch_Scene
       ["Weak",@w+74,@h+80,2,base,shadow],
       ["Resist",Graphics.width/2,@h+80,2,base,shadow],
       ["Immune",@w+314,@h+80,2,base,shadow],
-      ["USE: Jump",4,Graphics.height-26,0,Color.new(248,248,248),Color.new(72,80,88)],
-      ["ARROWS: Navigate",Graphics.width/2,Graphics.height-26,2,Color.new(248,248,248),Color.new(72,80,88)],
-      ["BACK: Exit",Graphics.width-4,Graphics.height-26,1,Color.new(248,248,248),Color.new(72,80,88)]
+      ["#{$PokemonSystem.game_controls.find{|c| c.control_action=="Action"}.key_name}: Jump",4,Graphics.height-26,0,Color.new(248,248,248),Color.new(72,80,88)],
+      ["#{$PokemonSystem.game_controls.find{|c| c.control_action=="Left"}.key_name}/#{$PokemonSystem.game_controls.find{|c| c.control_action=="Right"}.key_name}: Navigate",Graphics.width/2,Graphics.height-26,2,Color.new(248,248,248),Color.new(72,80,88)],
+      ["#{$PokemonSystem.game_controls.find{|c| c.control_action=="Cancel"}.key_name}: Exit",Graphics.width-4,Graphics.height-26,1,Color.new(248,248,248),Color.new(72,80,88)]
     ]
     pbDrawTextPositions(@overlay_text,textpos) if @init
     # Draw species name

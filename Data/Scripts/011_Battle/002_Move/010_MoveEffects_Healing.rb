@@ -119,7 +119,7 @@ class Battle::Move::HealUserByTargetAttackLowerTargetAttack1 < Battle::Move
     #       works even if the stat stage cannot be changed due to an ability or
     #       other effect.
     if !@battle.moldBreaker && target.hasActiveAbility?(:CONTRARY) &&
-       target.statStageAtMax?(:ATTACK)
+       target.pbCannotRaiseStatBySource?(:ATTACK, :CONTRARY)
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
     elsif target.statStageAtMin?(:ATTACK)

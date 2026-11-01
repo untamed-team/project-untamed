@@ -555,7 +555,7 @@ end
 class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
   def pbEffectAfterAllHits(user, target)
     return if user.fainted? || target.damageState.unaffected
-		didsomething=false
+    didsomething=false
     if user.effects[PBEffects::Trapping] > 0
       trapMove = GameData::Move.get(user.effects[PBEffects::TrappingMove]).name
       trapUser = @battle.battlers[user.effects[PBEffects::TrappingUser]]
@@ -563,38 +563,35 @@ class Battle::Move::RemoveUserBindingAndEntryHazards < Battle::Move
       user.effects[PBEffects::Trapping]     = 0
       user.effects[PBEffects::TrappingMove] = nil
       user.effects[PBEffects::TrappingUser] = -1
-			didsomething=true
+      didsomething=true
     end
     if user.effects[PBEffects::LeechSeed] >= 0
       user.effects[PBEffects::LeechSeed] = -1
       user.effects[PBEffects::LeechSeedCount] = 0
       @battle.pbDisplay(_INTL("{1} shed Leech Seed!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::StealthRock]
       user.pbOwnSide.effects[PBEffects::StealthRock] = false
       @battle.pbDisplay(_INTL("{1} blew away stealth rocks!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::Spikes] > 0
       user.pbOwnSide.effects[PBEffects::Spikes] = 0
       @battle.pbDisplay(_INTL("{1} blew away spikes!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::ToxicSpikes] > 0
       user.pbOwnSide.effects[PBEffects::ToxicSpikes] = 0
       @battle.pbDisplay(_INTL("{1} blew away poison spikes!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
     if user.pbOwnSide.effects[PBEffects::StickyWeb] > 0
       user.pbOwnSide.effects[PBEffects::StickyWeb] = 0
       @battle.pbDisplay(_INTL("{1} blew away sticky webs!", user.pbThis))
-			didsomething=true
+      didsomething=true
     end
-		if user.pbCanRaiseStatStage?(:SPEED, user) && didsomething && !user.SetupMovesUsed.include?(@id)
-			user.pbRaiseStatStage(:SPEED, 1, user)
-      user.SetupMovesUsed.push(@id)
-    end
+    user.pbRaiseStatStage(:SPEED, 1, user, true, false, self) if didsomething
   end
 end
 

@@ -226,20 +226,18 @@ class Battle::Move
   def pbModifyDamage(damageMult, user, target);         return damageMult; end
 
   def pbGetAttackStats(user, target)
-    if user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove? #by low
-      return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
+    if (user.hasActiveAbility?(:CRYSTALJAW) && @battle.choices[user.index][2].bitingMove?) || #by low
+       specialMove?
+      return user.spatk, user.stages[:SPECIAL_ATTACK]
     end
-    if specialMove?
-      return user.spatk, user.stages[:SPECIAL_ATTACK] + 6
-    end
-    return user.attack, user.stages[:ATTACK] + 6
+    return user.attack, user.stages[:ATTACK]
   end
 
   def pbGetDefenseStats(user, target)
     if specialMove?
-      return target.spdef, target.stages[:SPECIAL_DEFENSE] + 6
+      return target.spdef, target.stages[:SPECIAL_DEFENSE]
     end
-    return target.defense, target.stages[:DEFENSE] + 6
+    return target.defense, target.stages[:DEFENSE]
   end
 
   def pbCalcDamage(user, target, numTargets = 1)
@@ -255,30 +253,36 @@ class Battle::Move
     target.damageState.critical = pbIsCritical?(user, target, @battle.choices[user.index][2])
     # Calcuate base power of move
     baseDmg = pbBaseDamage(@baseDamage, user, target)
-    # Calculate user's attack stat
+    # Calculate user's initial attack stat
     atk, atkStage = pbGetAttackStats(user, target)
-    if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
-      atkStage = 6 if target.damageState.critical && atkStage < 6
-      atk = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
-    end
-    # Calculate target's defense stat
+    # Calculate target's initial defense stat
     defense, defStage = pbGetDefenseStats(user, target)
-    if !user.hasActiveAbility?(:UNAWARE)
-      defStage = 6 if target.damageState.critical && defStage > 6
-      defense = (defense.to_f * stageMul[defStage] / stageDiv[defStage]).floor
-    end
     # Calculate all multiplier effects
     multipliers = {
       :base_damage_multiplier  => 1.0,
       :attack_multiplier       => 1.0,
       :defense_multiplier      => 1.0,
-      :final_damage_multiplier => 1.0
+      :final_damage_multiplier => 1.0,
+      :offense_stage           => atkStage,
+      :defense_stage           => defStage
     }
     pbCalcDamageMultipliers(user, target, numTargets, type, baseDmg, multipliers)
     # Golden Camera calculation
     if $PokemonGlobal.goldencamera
       atk *= 0.8 if user.pbOwnedByPlayer?
       defense *= 0.8 if target.pbOwnedByPlayer?
+    end
+    # Calculate user's attack stat
+    atkStage = multipliers[:offense_stage] + 6
+    if !target.hasActiveAbility?(:UNAWARE) || @battle.moldBreaker
+      atkStage = 6 if target.damageState.critical && atkStage < 6
+      atk = (atk.to_f * stageMul[atkStage] / stageDiv[atkStage]).floor
+    end
+    # Calculate target's defense stat
+    defStage = multipliers[:defense_stage] + 6
+    if !user.hasActiveAbility?(:UNAWARE)
+      defStage = 6 if target.damageState.critical && defStage > 6
+      defense = (defense.to_f * stageMul[defStage] / stageDiv[defStage]).floor
     end
     # Main damage calculation
     baseDmg = [(baseDmg * multipliers[:base_damage_multiplier]).round, 1].max

@@ -105,7 +105,11 @@ module RegionMapSettings
     # example USE_UNVISITED_IMAGE_EXCEPTION = [[11, 19, 32, "Size2x2Special1"]]
     # There might be a different work around but this setting makes it much easier and prevents you from having to make tons of new images with different names which can get confusing.
     USE_UNVISITED_IMAGE_EXCEPTION = [
-      [11, 19, 32, "Size2x2Special1"]
+      #[11, 19, 32, "Size2x2Special1"],
+	  [4, 28, 22, "Size1x1Round"], #San Cerigold PC
+	  [22,19,11, "Size1x1Round"], #\PN's house
+	  [96, 43, 39, "Size1x2Diamond"], #Caroljarro PC
+	  [66, 9, 27, "Size1x2Square"], #Ferrera PC
     ]
     #===============================================================================
     # Replace Unvisited Map Names and Point of Interests with "???"

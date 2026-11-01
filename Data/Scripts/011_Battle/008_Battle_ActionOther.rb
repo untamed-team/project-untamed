@@ -135,6 +135,7 @@ class Battle
   # Mega Evolving a battler
   #=============================================================================
   def pbMegaEvolve(idxBattler)
+    # check mem_battle
     battler = @battlers[idxBattler]
     return if !battler || !battler.pokemon
     return if !battler.hasMega? || battler.mega?

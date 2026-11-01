@@ -82,7 +82,7 @@ class Battle::Battler
   #=============================================================================
   # For abilities that grant immunity to moves of a particular type, and raises
   # one of the ability's bearer's stats instead.
-  def pbMoveImmunityStatRaisingAbility(user, move, moveType, immuneType, stat, increment, show_message)
+  def pbMoveImmunityStatRaisingAbility(user, move, moveType, immuneType, stat, increment, show_message, source = nil)
     return false if user.index == @index
     return false if moveType != immuneType
     # NOTE: If show_message is false (Dragon Darts only), the stat will not be
@@ -91,11 +91,11 @@ class Battle::Battler
     #       place if it's immune, so why would this ability be triggered by them?
     if show_message
       @battle.pbShowAbilitySplash(self)
-      if pbCanRaiseStatStage?(stat, self)
+      if pbCanRaiseStatBySource?(stat, source, self)
         if Battle::Scene::USE_ABILITY_SPLASH
-          pbRaiseStatStage(stat, increment, self)
+          pbRaiseStatStage(stat, increment, self, true, false, source)
         else
-          pbRaiseStatStageByCause(stat, increment, self, abilityName)
+          pbRaiseStatStageByCause(stat, increment, self, abilityName, false, false, source)
         end
       elsif Battle::Scene::USE_ABILITY_SPLASH
         @battle.pbDisplay(_INTL("It doesn't affect {1}...", pbThis(true)))
@@ -404,7 +404,7 @@ class Battle::Battler
 
   def pbStatIncreasingBerry(item_to_use, forced, stat, increment = 1)
     return false if !forced && !canConsumePinchBerry?
-    return false if !pbCanRaiseStatStage?(stat, self)
+    return false if !pbCanRaiseStatBySource?(stat, item_to_use, self)
     used_item_name = GameData::Item.get(item_to_use).name
     ripening = false
 		pbRaiseTropiusEvolutionStep(self) #by low
@@ -415,9 +415,9 @@ class Battle::Battler
     end
     @battle.pbCommonAnimation("EatBerry", self) if !forced
     @battle.pbHideAbilitySplash(self) if ripening
-    return pbRaiseStatStageByCause(stat, increment, self, used_item_name) if !forced
+    return pbRaiseStatStageByCause(stat, increment, self, used_item_name, item_to_use, false, item_to_use) if !forced
     PBDebug.log("[Item triggered] Forced consuming of #{used_item_name}")
-    return pbRaiseStatStage(stat, increment, self)
+    return pbRaiseStatStage(stat, increment, self, false, false, item_to_use)
   end
 
   def pbMoveTypeWeakeningBerry(berry_type, move_type, mults)

@@ -179,7 +179,9 @@ class Battle::AI
         targetIntent = @battle.choices[b.index]
         targetMove = targetIntent[2]
         targetAim = targetIntent[3]
-        if targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index
+        next unless @battle.moveRevealed?(b, targetMove.id)
+        if (targetMove.function == "TargetMovesBecomeElectric" && targetAim == user.index) ||
+           (targetMove.function == "NormalMovesBecomeElectric" && ret == :NORMAL)
           thisprio = priorityAI(user, move, globalArray)
           thatprio = priorityAI(b, targetMove, globalArray)
           aspeed = pbRoughStat(user,:SPEED,skill)
@@ -228,19 +230,33 @@ class Battle::AI
     # i am so fucking retarded
     return (battler.pbSpeed(megaSpeed)*spemul).floor if stat == :SPEED
     stageMul, stageDiv = @battle.pbGetStatMath
-    stage = battler.stages[stat] + 6
+    stage = battler.stages[stat]
     value = 0
     case stat
     when :ATTACK
       value = battler.attack*atkmul
       if target
-        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken)
+        # Account for intimidate from mons with AAM
+        if move.physicalMove? && move.function != "UseUserBaseDefenseInsteadOfUserBaseAttack" 
+          battler.allOpposing.each do |b|
+            next unless b.pokemon.willmega && b.hasAbilityMutation?
+            if b.isSpecies?(:GYARADOS) || b.isSpecies?(:LUPACABRA) || b.isSpecies?(:MAWILE)
+              stagemod -= 1
+              stagemod += 2 if battler.hasActiveAbility?([:DEFIANT, :CONTRARY])
+              stagemod = 0 if battler.hasActiveAbility?(:UNAWARE)
+              stage += stagemod
+            end
+          end
+        end
+        return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) ||
+                       (target.hasActiveAbility?(:BIGPECKS,false,moldbroken) && stage > 0)
       end
     when :DEFENSE
       value = battler.defense*defmul
       if target
         return value if target.hasActiveAbility?(:UNAWARE,false,moldbroken) || 
-                        move.function == "IgnoreTargetDefSpDefEvaStatStages"
+                        move.function == "IgnoreTargetDefSpDefEvaStatStages" ||
+                        (battler.hasActiveAbility?(:HYPERCUTTER) && stage > 0)
       end
     when :SPEED
       value = battler.speed*spemul
@@ -256,6 +272,7 @@ class Battle::AI
                         move.function == "IgnoreTargetDefSpDefEvaStatStages"
       end
     end
+    stage += 6
     return (value.to_f * stageMul[stage] / stageDiv[stage]).floor
   end
 
@@ -286,7 +303,7 @@ class Battle::AI
          (move.function == "CounterDamagePlusHalf" && targetWillMove?(target, "dmg"))
         targetMove = @battle.choices[target.index][2]
         if targetSurvivesMove(targetMove,target,user)
-          baseDmg = pbRoughDamage(targetMove,target,user,skill,targetMove.baseDamage)
+          baseDmg = aiDamage(targetMove, target, user)
           baseDmg *= 2.0 if ["CounterPhysicalDamage","CounterSpecialDamage"].include?(move.function)
           if move.function == "CounterDamagePlusHalf"
             baseDmg *= 1.5

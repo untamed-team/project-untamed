@@ -1,0 +1,2 @@
+surround the entirety of each route with 2 pixels of dark red on each side and in each corner
+change yellow of route to orange

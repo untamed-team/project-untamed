@@ -8,12 +8,23 @@ def pbMulchComposter
         return pbMessage(_INTL("The composter cannot be used."))
     end
     if $player.composter_seen
-        return if !pbConfirmMessage(_INTL("It's a composter.\nCompost some Berries to make Mulch?"))
+        # return if !pbConfirmMessage(_INTL("It's a composter.\nCompost some Berries to make Mulch?"))
+        cmds = [_INTL("Yes"), _INTL("No"),_INTL("Read lid")]
+        loop do
+          cmd = pbMessage(_INTL("It's a composter.\nCompost some Berries to make Mulch?"), cmds, -1)
+          case cmd
+          when -1, 1
+            return
+          when 2
+            pbReadComposterLid
+          else
+            break
+          end
+        end
     else
         $player.composter_seen = true
         pbMessage(_INTL("It's a composter!\nThe instructions are written on the lid..."))
-        pbMessage(_INTL("Put {1} Berries in, and you can make Mulch.",Settings::COMPOSTER_BERRY_AMOUNT))
-        pbMessage(_INTL("Using Mulch on the soil before planting a Berry helps the Berries grow."))
+        pbReadComposterLid
         return if !pbConfirmMessage(_INTL("Do you want to compost some Berries to make Mulch?"))
     end
     berries = pbChooseBerryMultiple(Settings::COMPOSTER_BERRY_AMOUNT, false)
@@ -30,6 +41,11 @@ def pbMulchComposter
     count = Settings::COMPOSTER_DISPENSE_AMOUNT
     result = pbProcessComposterRecipe(berries)
     pbReceiveItem(result,count)
+end
+
+def pbReadComposterLid
+    pbMessage(_INTL("\\w[signskin]Put {1} Berries in, and you can make Mulch.",Settings::COMPOSTER_BERRY_AMOUNT))
+    pbMessage(_INTL("\\w[signskin]Using Mulch on the soil before planting a Berry helps the Berries grow."))
 end
 
 alias pbComposter pbMulchComposter

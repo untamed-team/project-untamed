@@ -1066,8 +1066,8 @@ def fakeCrashLog
   message += "Message: What do mean Quash is 'too complicated' for me to learn!?\r\n"
   message += "\n\r\nBacktrace:\r\n"
   message += "Game crashed due to a unexpected complaint from Kiriya.\r\n"
-  message += "Location: /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1363\r\n"
-  message += "          /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1360\r\n"
+  message += "Location: /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1351\r\n"
+  message += "          /Scripts/011_Battle/004_AI/008_L_AI_Move_EffectScores_Mazah.rb:1348\r\n"
   message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:330\r\n"
   message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:316\r\n"
   message += "          /Scripts/045_Untamed Custom Battle/007_Consistent_AI.rb:169\r\n"
@@ -1208,7 +1208,7 @@ def eggMoveTutor
         dadmovelist.push(i.id)
       end
       break if dadmovelist.nil?
-      pbMessage(_INTL("{1} is ready to bestow a move.", @father))
+      pbMessage(_INTL("{1} is ready to bestow a move.", @father.name))
       chosen2 = screen.pbChoosePokemon
       break if chosen2 < 0
       @mother = $player.party[chosen2]
@@ -1283,101 +1283,367 @@ def eggMoveTutor
 end
 
 #===============================================================================
-# Trash encounters
+# NPC to revive fossils
 #===============================================================================
-TRASHENCOUNTERVAR = 125
-def trashEncounter(trash = 0)
-  numTrash = 4
-  trash = [[trash, 0].max, (numTrash - 1)].min
-  if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
-    $game_variables[TRASHENCOUNTERVAR] = []
-    numTrash.times do                        # item, mon, time
-      $game_variables[TRASHENCOUNTERVAR].push([nil, nil, 0])
+FOSSILREVIVEVAR = 126
+def fossilreviveNPC(onlyone = true)
+  if !$game_variables[FOSSILREVIVEVAR].is_a?(Array)
+    $game_variables[FOSSILREVIVEVAR] = [nil, 0, [], false] 
+    # fossil currently being revived, time delay, fossils revived, machine fried
+  end
+  fossilgens = 2 # normally it would be 5, but dexit means we only have 2 gens of fossils
+  fossilarr = {
+    #:HELIXFOSSIL => :OMANYTE,
+    #:DOMEFOSSIL  => :KABUTO,
+    #:ROOTFOSSIL  => :LILEEP,
+    #:CLAWFOSSIL  => :ANORITH,
+    #:SKULLFOSSIL => :CRANIDOS,
+    #:ARMORFOSSIL => :SHIELDON,
+    #:COVERFOSSIL => :TIRTOUGA,
+    #:PLUMEFOSSIL => :ARCHEN,
+    :JAWFOSSIL   => :TYRUNT,
+    :SAILFOSSIL  => :AMAURA,
+    # gen8 is gake and fay
+    :OPALFOSSIL  => :CHARCOPAL,
+    :TARFOSSIL   => :ELEGOOP
+  }
+  if $game_variables[FOSSILREVIVEVAR][0].nil?
+    ret = pbChooseFossil
+    return if ret.nil?
+    species = fossilarr[ret]
+    if species.nil?
+      pbMessage(_INTL("This fossil cannot be revived."))
+      return
+    end
+    if onlyone
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:CHARCOPAL) && species == :ELEGOOP) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:ELEGOOP) && species == :CHARCOPAL)
+          pbMessage(_INTL("You already revived an Opal fossil. My machine can't process a Tar fossil after that.")) if species == :ELEGOOP
+          pbMessage(_INTL("You already revived a Tar fossil. My machine can't process an Opal fossil after that.")) if species == :CHARCOPAL
+          return
+        end
+        if ($game_variables[FOSSILREVIVEVAR][2].include?(:TYRUNT) && species == :AMAURA) ||
+           ($game_variables[FOSSILREVIVEVAR][2].include?(:AMAURA) && species == :TYRUNT)
+          pbMessage(_INTL("You already revived a Sail fossil. My machine can't process a Jaw fossil after that.")) if species == :TYRUNT
+          pbMessage(_INTL("You already revived a Jaw fossil. My machine can't process a Sail fossil after that.")) if species == :AMAURA
+          return
+        end
+
+        if $game_variables[FOSSILREVIVEVAR][2].include?(species)
+          pbMessage(_INTL("My machine won't process duplicates. Come back with a different fossil."))
+          return
+        end
+      end
+      if $game_variables[FOSSILREVIVEVAR][3]
+        pbMessage(_INTL("I told you, it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+        return
+      end
+    end
+    $bag.remove(ret)
+    pbMessage(_INTL("The fossil is being revived. Come back later."))
+    present = pbGetTimeNow
+    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
+    $game_variables[FOSSILREVIVEVAR][0] = species
+    $game_variables[FOSSILREVIVEVAR][1] = future
+    return
+  else
+    present = pbGetTimeNow
+    past = $game_variables[FOSSILREVIVEVAR][1]
+    timepassed = present>past
+    
+    if timepassed
+      pbMessage(_INTL("Took you long enough to come back! I almost called it a day!\\nLet's see what we've got here..."))
+    else
+      pbMessage(_INTL("...\\nThe revival process isn't complete yet. Come back later."))
+      return
+    end
+
+    species = $game_variables[FOSSILREVIVEVAR][0]
+    pokemon = Pokemon.new(species, 5)
+    pokemon.calc_stats
+    pokemon.heal
+
+    if pbAddPokemon(pokemon)
+      pbMessage(_INTL("This is good news! The fossil revived into {1}!", pokemon.name))
+      $game_variables[FOSSILREVIVEVAR][0] = nil
+      $game_variables[FOSSILREVIVEVAR][1] = 0
+      $game_variables[FOSSILREVIVEVAR][2].push(species)
+      $game_variables[FOSSILREVIVEVAR][2] |= [] # remove duplicates
+      fried = onlyone # default to machine fried for normies
+      if $player.difficulty_mode?("chaos")
+        if ($game_variables[FOSSILREVIVEVAR][2].length.to_i / 2) > fossilgens
+          fried = true
+        else
+          fried = false
+        end
+      end
+      if fried
+        pbMessage(_INTL("Ah, dammit. it's fried. And I don't have any spare parts out here..."))
+        pbMessage(_INTL("Come visit me in my lab in Mazah City, okay? I have my full equipment there."))
+      end
+      $game_variables[FOSSILREVIVEVAR][3] = fried
+      return
+    else
+      pbMessage(_INTL("Your party is full. Please make room in your party."))
+      return
     end
   end
+end
 
-  if $game_variables[TRASHENCOUNTERVAR][trash][0].nil?
-    ret = nil
-    pbFadeOutIn {
-      scene = PokemonBag_Scene.new
-      screen = PokemonBagScreen.new(scene, $bag)
-      ret = screen.pbChooseItemScreen
-    }
-    return if ret.nil?
+#===============================================================================
+# Trash encounters
+#===============================================================================
+#TO DO
+#The idea is to have one eevee available upon first arrival. However the item to summon eevee to the dumpster would be sold in a later town, thus limiting the repeatable encounter until later. This is primarily to avoid the player stacking up on a full team of eeveelutions in the early game as many of them are quite powerful until later in the game.
 
-    trashHash = {
+EventHandlers.add(:on_enter_map, :shake_dumpsters,
+  proc { |_old_map_id|
+	trashEncounters_ShakeDumpsters if $game_variables[TRASHENCOUNTERVAR].is_a?(Array)
+  }
+)
+
+TRASHENCOUNTERVAR = 125
+TRASH_ENC_MINUTES_UNTIL_ENCOUNTER = 480 #8 hours #amount of in-game minutes (seconds real-time) needed to pass before an encounter happens in the trash bin
+TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC = 0 #20 #game will subtract at least this amount from MINUTES UNTIL ENCOUNTER
+TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC = 0 #40 #game will subtract at most this amount from MINUTES UNTIL ENCOUNTER
+
+TRASH_HASH1 = {
       :CROMEN => [:NUGGET, :BIGNUGGET, :PEARL, :BIGPEARL, :PEARLSTRING, :COMETSHARD, :RELICGOLD],
-      :M_BURMY => [:GRASSMAIL, :FLAMEMAIL, :BUBBLEMAIL, :BLOOMMAIL, :TUNNELMAIL, :STEELMAIL, 
-                   :HEARTMAIL, :SNOWMAIL, :SPACEMAIL, :AIRMAIL, :MOSAICMAIL, :BRICKMAIL],
       :TRUBBISH => [:BLACKSLUDGE, :LEFTOVERS]
     }
-    trashHash2 = {
+#will not be available on chaos mode
+#will combine with possibilities in TRASH_HASH1 if not on chaos mode    
+TRASH_HASH2 = {
       :EEVEE => [:MASTERBALL],
       :SKITTY => [:FLUFFYTAIL],
       :PURRLOIN => [:POKETOY]
     }
-    unless $player.difficulty_mode?("chaos")
-      trashHash.merge!(trashHash2) { |key, oldval, newval| oldval }
+
+def trashEncounters_Dumpster
+  #this is the main method
+  #if game variable is not yet an arary, make it one
+  $game_variables[TRASHENCOUNTERVAR] = [] if !$game_variables[TRASHENCOUNTERVAR].is_a?(Array)
+
+  #does an array exist for this map yet, meaning there is an encounter somewhere?
+  mapArray = trashEncounters_FindMapArray
+  if !mapArray.nil?
+    #a dumpster encounter exists or is brewing on this map already
+    #check this event's encounter to see if it's ready or not
+    encSetForThisDumpster = false
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    #mapArray should look like this: [mapID[eventNumber, item, mon, time][eventNumber, item, mon, time][eventNumber, item, mon, time]]
+    mapArray.length.times do |i|
+      encSetForThisDumpster = true if mapArray[i][0] == facingEvent.id
+    end #mapArray.length.times do |i|
+    if encSetForThisDumpster
+      #an encounter was confirmed to have been brewing in this event already, so check the encounter to see if it's done
+      eventArray = trashEncounters_FindEventArray(mapArray)
+      encounterReady = trashEncounters_CheckEncounter(eventArray, mapArray)
+      if encounterReady
+      else
+      end
+    else
+      chosenItem = trashEncounters_ChooseItem
+      return if chosenItem.nil?
+
+      #an encounter was confirmed NOT to exist in this event yet, so prompt to create one
+      eventArray = trashEncounters_CreateEventArray(mapArray)
+
+      #create encounter in dumpster event
+      trashEncounters_CreateEncounter(eventArray, chosenItem)
+
+      return #exit the event since we just created the encounter, and it therefore will not be ready yet
+    end #if encSetForThisDumpster
+  else #mapIDIndex is nil, which means no dumpster encounter is brewing on this entire map
+    chosenItem = trashEncounters_ChooseItem
+    return if chosenItem.nil?
+    
+    mapArray = trashEncounters_CreatemapArray
+
+    #since no encounter existed on this map, no encounter existed for this event either, so create an event array for this map's array
+    eventArray = trashEncounters_CreateEventArray(mapArray)
+
+    #create encounter in dumpster event
+    trashEncounters_CreateEncounter(eventArray, chosenItem)
+
+    return #exit the event since we just created the encounter, and it therefore will not be ready yet
+  end #if !mapIDIndex.nil?
+end #def trashEncounter
+
+def trashEncounters_FindMapArray
+  #find mapArray in arrays inside game variable
+  mapArray = nil
+  $game_variables[TRASHENCOUNTERVAR].length.times do |i|
+    #look through each element inside the $game_variables[TRASHENCOUNTERVAR] array to find one that has the mapID in slot 0
+    if $game_variables[TRASHENCOUNTERVAR][i][0] == $game_map.map_id
+      mapArray = $game_variables[TRASHENCOUNTERVAR][i]
+      break
     end
-    $bag.remove(ret)
-    $game_variables[TRASHENCOUNTERVAR][trash][0] = ret
-    trashHash.each do |species, item|
-      if item.include?(ret)
-        $game_variables[TRASHENCOUNTERVAR][trash][1] = species
+  end
+  return mapArray
+end
+
+def trashEncounters_CreatemapArray
+  #push a new array for this map id to $game_variables[TRASHENCOUNTERVAR]
+  $game_variables[TRASHENCOUNTERVAR].push([$game_map.map_id])
+  mapArray = $game_variables[TRASHENCOUNTERVAR][-1]
+  return mapArray
+end
+
+def trashEncounters_FindEventArray(mapArray)
+  #find eventID in arrays inside game variable[mapArray]
+  eventArray = nil
+  eventElement = 1 #start at element 1 since element 0 is the map id
+  (mapArray.length-1).times do
+    #look through each element inside the $game_variables[TRASHENCOUNTERVAR][mapIDIndex] array for one where the first element of which matches the event number we interacted with
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    if mapArray[eventElement][0] == facingEvent.id
+      eventArray = mapArray[eventElement]
+      break
+    end
+    eventElement += 1
+  end
+  return eventArray
+end
+
+def trashEncounters_CreateEventArray(mapArray)
+    facingEvent = $game_player.pbFacingEvent(ignoreInterpreter = true)
+    #eventArray will look like this: [eventID, item, mon, time]
+    mapArray.push([facingEvent.id, nil, nil, 0])
+    eventArray = mapArray[-1]
+    return eventArray
+end
+
+def trashEncounters_CreateEncounter(eventArray, chosenItem)
+  #merge hashes together except when on chaos mode
+  unless $player.difficulty_mode?("chaos")
+      trashHash1 = TRASH_HASH1.clone
+      trashHash2 = TRASH_HASH2.clone
+      trashHash1.merge!(trashHash2) { |key, oldval, newval| oldval }
+  end
+
+  eventArray[1] = chosenItem
+    trashHash1.each do |species, requiredItem|
+      if requiredItem.include?(chosenItem)
+        eventArray[2] = species
         break
       else
-        $game_variables[TRASHENCOUNTERVAR][trash][1] = :TRUBBISH
+        eventArray[2] = :TRUBBISH
       end
     end
 
+    #set targeted time for when ecounter will be ready
     present = pbGetTimeNow
-    future = present + (60 + ((rand(2) == 0 ? -1 : 1) * rand(20..40))) * UnrealTime::PROPORTION
-    $game_variables[TRASHENCOUNTERVAR][trash][2] = future
-    pbMessage(_INTL("You threw a {1} into the trash pile. Maybe something will get the bait?", ret))
+    future = present + (TRASH_ENC_MINUTES_UNTIL_ENCOUNTER + ((rand(2) == 0 ? -1 : 1) * rand(TRASH_ENC_MIN_MINUTES_SUBTRACT_UNTIL_ENC..TRASH_ENC_MAX_MINUTES_SUBTRACT_UNTIL_ENC))) * UnrealTime::PROPORTION
+    eventArray[3] = future
+    aOrAn = (chosenItem.name.starts_with_vowel?) ? "an" : "a"
+    pbMessage(_INTL("You threw {1} {2} inside. Maybe it will attract something...", aOrAn, chosenItem))
     return
-  else
-    trashcounter = $game_variables[TRASHENCOUNTERVAR][trash][1]
-    return if trashcounter.nil?
+end
+
+def trashEncounters_CheckEncounter(eventArray, mapArray)
+    targetedReadyTime = eventArray[-1] #last element, or the 4th element
+    return if targetedReadyTime.nil?
 
     present = pbGetTimeNow
-    past = $game_variables[TRASHENCOUNTERVAR][trash][2]
-    timepassed = present>past
 
     msg = rand(5..10)
     message = ""
     msg.times { message += ".   " }
     pbMessage(_INTL(message))
-
-    if timepassed
-      pbMessage(_INTL("!\\nSomething jumped out of the trash!"))
+    if present >= targetedReadyTime
+      #pbMessage(_INTL("!\\nSomething jumped out!"))
+      #exclamation point above player's head
+      $game_player.animation_id = 3
+      #wait 1 second
+      pbWait(20)
     else
-      pbMessage(_INTL("...\\nThere is nothing of note here..."))
+      pbMessage(_INTL("...\\nThe item you threw in is still there..."))
       return
     end
 
-    level = 10
-    level = [(level - rand(10)), 1].max
-    if level.between?(8,10)
-      pbMessage(_INTL("It looks quite fierce!"))
-    elsif level.between?(5,7)
-      pbMessage(_INTL("It looks quite protective!"))
-    elsif level.between?(2,4)
-      pbMessage(_INTL("It looks quite energetic!"))
-    else
-      pbMessage(_INTL("It looks quite young!"))
-    end
-
-    trashbattler = [trashcounter, level]
+    level = rand(9..13)
+    #if level.between?(8,10)
+    #  pbMessage(_INTL("It looks quite fierce!"))
+    #elsif level.between?(5,7)
+    #  pbMessage(_INTL("It looks quite protective!"))
+    #elsif level.between?(2,4)
+    #  pbMessage(_INTL("It looks quite energetic!"))
+    #else
+    #  pbMessage(_INTL("It looks quite young!"))
+    #end
+    species = eventArray[2]
+    trashbattler = [species, level]
     $game_temp.encounter_type = :Land
-    $game_variables[TRASHENCOUNTERVAR][trash][0] = nil
-    $game_variables[TRASHENCOUNTERVAR][trash][1] = nil
-    $game_variables[TRASHENCOUNTERVAR][trash][2] = 0
     EventHandlers.trigger(:on_wild_species_chosen, trashbattler)
     WildBattle.start(trashbattler, can_override: false)
     $game_temp.encounter_type = nil
     $game_temp.force_single_battle = false
-    return
-  end
+
+    #after the battle, delete encounter
+    trashEncounters_DeleteEncounter(eventArray, mapArray)
+end
+
+def trashEncounters_DeleteEncounter(eventArray, mapArray)
+  #delete the array for the event on this map
+  mapArray.delete(eventArray)
+  #if mapArray is empty, delete it too
+  $game_variables[TRASHENCOUNTERVAR].delete(mapArray) if mapArray.length <= 1 #only has the map ID in the mapArray
+end
+
+def trashEncounters_ChooseItem
+    return nil if !pbConfirmMessage(_INTL("Do you want to throw an item into the dumpster?"))
+    chosenItem = nil
+    pbFadeOutIn {
+      scene = PokemonBag_Scene.new
+      screen = PokemonBagScreen.new(scene, $bag)
+      chosenItem = screen.pbChooseItemScreen
+    }
+    if chosenItem.nil?
+      pbMessage(_INTL("You decided not to throw in an item."))
+      return chosenItem
+    end
+    itemData = GameData::Item.get(chosenItem)
+    if itemData.is_key_item?
+      pbMessage(_INTL("You can't throw that away!"))
+      return nil
+    end
+    $bag.remove(chosenItem)
+    return chosenItem
+end
+
+def trashEncounters_DeleteAllEncounters
+    mapArray = trashEncounters_FindMapArray
+    return if mapArray.nil?
+    eventElement = 1
+    (mapArray.length-1).times do
+      eventArray = mapArray[eventElement]
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", false)
+    end #(mapArray.length-1).times do
+    $game_variables[TRASHENCOUNTERVAR] = []
+end
+
+def trashEncounters_ShakeDumpsters
+  #go through all dumpster encounters in the mapArray for the current map
+  #if any encounters are ready, set self switch A on for those events
+  present = pbGetTimeNow
+  mapArray = trashEncounters_FindMapArray
+  return if mapArray.nil?
+  eventElement = 1
+  (mapArray.length-1).times do
+    eventArray = mapArray[eventElement]
+    Console.echo_warn eventArray
+    Console.echo_warn eventArray[0]
+    targetedReadyTime = eventArray[-1] #last element, or the 4th element
+    next if targetedReadyTime.nil?
+    if present >= targetedReadyTime
+      Console.echo_warn "setting self switch A to ON for event with ID #{eventArray[0]}"
+      pbMapInterpreter.pbSetSelfSwitch(eventArray[0], "A", true)
+    end
+    eventElement += 1
+  end #(mapArray.length-1).times do
 end
 
 #===============================================================================

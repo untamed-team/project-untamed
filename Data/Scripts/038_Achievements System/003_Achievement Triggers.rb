@@ -86,14 +86,14 @@ end
 
 #the below method is handled in the script MEM_Battle
 class Battle
-  alias achieve_pbMegaEvolve pbMegaEvolve
-  def pbMegaEvolve(index)
-    achieve_pbMegaEvolve(index)
-    return if !pbOwnedByPlayer?(index)
-    if @battlers[index].mega?
-      Achievements.incrementProgress("MEGA_EVOLUTIONS",1)
-    end
-  end
+  #alias achieve_pbMegaEvolve pbMegaEvolve
+  #def pbMeg aEvolve(index)
+  #  achieve_pbMegaEvolve(index)
+  #  return if !pbOwnedByPlayer?(index)
+  #  if @battlers[index].mega?
+  #    Achievements.incrementProgress("MEGA_EVOLUTIONS",1)
+  #  end
+  #end
   
   alias achieve_pbPrimalReversion pbPrimalReversion
   def pbPrimalReversion(index)

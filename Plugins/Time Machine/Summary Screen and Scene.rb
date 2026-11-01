@@ -1227,9 +1227,9 @@ class TimeMachinePokemonSummary_Scene
         break
       elsif Input.trigger?(Input::USE)
         if @page == 4
-          pbPlayDecisionSE
-          pbMoveSelection
-          dorefresh = true
+          #pbPlayDecisionSE
+          #pbMoveSelection
+          #dorefresh = true
         elsif @page == 5
           pbPlayDecisionSE
           pbRibbonSelection
@@ -1656,16 +1656,16 @@ class TimeMachinePokemonSummary_Scene
 			break
 		  elsif Input.trigger?(Input::USE)
 			if @page == 4
-			  pbPlayDecisionSE
-			  pbMoveSelection
-			  dorefresh = true
+			  #pbPlayDecisionSE
+			  #pbMoveSelection
+			  #dorefresh = true
 			elsif @page == 5
 			  pbPlayDecisionSE
 			  pbRibbonSelection
 			  dorefresh = true
 			elsif !@inbattle
-			  pbPlayDecisionSE
-			  dorefresh = pbOptions
+			  #pbPlayDecisionSE
+			  #dorefresh = pbOptions
 			end
 		  elsif Input.trigger?(Input::SPECIAL) 
 			if @page == 3# && $game_switches[ContestSettings::CONTEST_INFO_IN_SUMMARY_SWITCH]

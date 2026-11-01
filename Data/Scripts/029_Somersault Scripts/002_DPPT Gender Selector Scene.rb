@@ -200,8 +200,7 @@ class DpptGdSelScene < SMScreen
  
   def pbUpdate
     pbHideShow(1)
-    Kernel.pbMessageDisplay(@objectsList["msgwindow"],
-        _INTL("\\wtnp[1]Get ready!"))
+    pbMessageDisplay(@objectsList["msgwindow"], _INTL("\\ts[]Get ready!\\wtnp[0]"))
     selectChar(@select)
     loop do
       loop do    

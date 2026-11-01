@@ -319,7 +319,10 @@ class Battle::Battler
     @battle.allBattlers.each do |b|   # Other battlers no longer blocked by self
       b.effects[PBEffects::NeedleArm] = -1 if b.effects[PBEffects::NeedleArm] == @index
     end
-    @SetupMovesUsed                          = []
+    @setupBoosts = {}
+    GameData::Stat.each_battle do |s|
+      @setupBoosts[s.id] = { :totalcap => 0, :moves => [], :abil => [], :items => [] }
+    end
     @prepickedMove                           = nil
     @tookDirectDmgThisRound                  = false
   end

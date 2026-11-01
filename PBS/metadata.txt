@@ -5,13 +5,13 @@ StartMoney = 3000
 StartItemStorage = POTION, DDTSPRAY
 Home = 33,6,6,6
 StorageCreator = Bill
-WildBattleBGM = Battle - Generic Wild
-TrainerBattleBGM = Battle - Generic Trainer
+WildBattleBGM = WildBattleFull
+TrainerBattleBGM = Battle trainer
 WildVictoryBGM = Battle victory wild
 TrainerVictoryBGM = Battle victory trainer
 WildCaptureME = Battle capture success.ogg
 SurfBGM = Surfing
-BicycleBGM = Bicycle
+BicycleBGM = Cycling
 #-------------------------------
 [1]
 TrainerType = POKEMONTRAINER_Red

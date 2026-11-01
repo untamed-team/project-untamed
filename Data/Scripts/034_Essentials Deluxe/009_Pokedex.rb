@@ -50,7 +50,10 @@ class PokemonPokedexInfo_Scene
       next if sp.form != 0 && (!sp.real_form_name || sp.real_form_name.empty?)
       next if sp.pokedex_form != sp.form
       multiple_forms = true if sp.form > 0
-      if sp.single_gendered?
+      nodiff = true
+      femalecheck = GameData::Species.front_sprite_filename(sp.species, sp.form, 1, false, false)
+      nodiff = false if femalecheck.to_s.include?("_female")
+      if sp.single_gendered? || nodiff
         real_gender = (sp.gender_ratio == :AlwaysFemale) ? 1 : 0
         form_gender = (sp.gender_ratio == :Genderless)   ? 2 : real_gender
         #-----------------------------------------------------------------------
@@ -68,9 +71,9 @@ class PokemonPokedexInfo_Scene
         #-----------------------------------------------------------------------
         # Shadow single-gendered
         #-----------------------------------------------------------------------
-        if $player.pokedex.owned_shadow_species?(sp.id) && Settings::POKEDEX_SHADOW_FORMS
-          ret.push([sp.form_name, form_gender, sp.form, false, false, true])
-        end
+        #if $player.pokedex.owned_shadow_species?(sp.id) && Settings::POKEDEX_SHADOW_FORMS
+        #  ret.push([sp.form_name, form_gender, sp.form, false, false, true])
+        #end
       else
         2.times do |real_gender|
           #---------------------------------------------------------------------
@@ -88,9 +91,9 @@ class PokemonPokedexInfo_Scene
           #---------------------------------------------------------------------
           # Shadow Male/Female
           #---------------------------------------------------------------------
-          if $player.pokedex.owned_shadow_species?(sp.id) && Settings::POKEDEX_SHADOW_FORMS
-            ret.push([sp.form_name, real_gender, sp.form, false, false, true])
-          end
+          #if $player.pokedex.owned_shadow_species?(sp.id) && Settings::POKEDEX_SHADOW_FORMS
+          #  ret.push([sp.form_name, real_gender, sp.form, false, false, true])
+          #end
         end
       end
       #-------------------------------------------------------------------------

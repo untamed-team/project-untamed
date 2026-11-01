@@ -82,5 +82,5 @@ GameData::EncounterType.register({
 #-------------------------------------------------------------------------------
 GameData::TerrainTag.register({
   :id => :BirdBridge,
-  :id_number => 29,
+  :id_number => 30,
 })

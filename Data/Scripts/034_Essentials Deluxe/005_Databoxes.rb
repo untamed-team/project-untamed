@@ -72,19 +72,28 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
     pbSetFocusBarX(value) if @can_focus
     if @raid_boss
       @hpBar.x = value + 20
+      if @hpBar2
+        @hpBar2.x = value + 20
+      end
     else
       #edited by Gardenette; it's crude but it works
       if @doubleBattle && !@battler.index.even?
         @hpBar.x = value + @spriteBaseX + 121
+        if @hpBar2
+          @hpBar.x = value + @spriteBaseX + 121
+        end
       else
         @hpBar.x = value + @spriteBaseX + 102
+        if @hpBar2
+          @hpBar2.x = value + @spriteBaseX + 102
+        end
       end
       #end of added by Gardenette
       
     end
     #@expBar.x    = value + @spriteBaseX + 6
     #edited by Gardenette
-    @expBar.x    = value+@spriteBaseX + 0
+    @expBar.x    = value+@spriteBaseX + 26
     #@hpNumbers.x = value + @spriteBaseX + 80
     #edited by Gardenette
     @hpNumbers.x = value+@spriteBaseX + 100
@@ -95,12 +104,18 @@ class Battle::Scene::PokemonDataBox < SpriteWrapper
     pbSetFocusBarY(value) if @can_focus
     if @raid_boss
       @hpBar.y = value + 34
+      if @hpBar2
+        @hpBar2.y = value + 34
+      end
     else
       @hpBar.y = value + 40
+      if @hpBar2
+        @hpBar2.y = value + 40
+      end
     end
     #@expBar.y    = value + 74
     #edited by Gardenette
-    @expBar.y    = value + 48
+    @expBar.y    = value + 50
     @hpNumbers.y = value + 52
   end
   

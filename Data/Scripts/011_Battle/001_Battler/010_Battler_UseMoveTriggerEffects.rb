@@ -50,9 +50,9 @@ class Battle::Battler
     if target.opposes?(user)
       # Rage
       if target.effects[PBEffects::Rage] && !target.fainted? &&
-         target.pbCanRaiseStatStage?(:ATTACK, target)
+         target.pbCanRaiseStatBySource?(:ATTACK, :RAGE, target)
         @battle.pbDisplay(_INTL("{1}'s rage is building!", target.pbThis))
-        target.pbRaiseStatStage(:ATTACK, 1, target)
+        target.pbRaiseStatStage(:ATTACK, 1, target, true, false, :RAGE)
       end
       # Beak Blast
       if target.effects[PBEffects::BeakBlast]

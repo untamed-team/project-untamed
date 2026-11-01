@@ -44,9 +44,23 @@ class Battle::Move::TargetTakesUserItem < Battle::Move
   end
 
   def pbFailsAgainstTarget?(user, target, show_message)
-    if target.item || target.unlosableItem?(user.item)
+    if (target.item && !$player.difficulty_mode?("chaos")) || 
+       target.unlosableItem?(user.item)
       @battle.pbDisplay(_INTL("But it failed!")) if show_message
       return true
+    end
+    if target.item && target.hasActiveAbility?(:STICKYHOLD) && !@battle.moldBreaker
+      if show_message
+        @battle.pbShowAbilitySplash(target)
+        if Battle::Scene::USE_ABILITY_SPLASH
+          @battle.pbDisplay(_INTL("But it failed to affect {1}!", target.pbThis(true)))
+        else
+          @battle.pbDisplay(_INTL("But it failed to affect {1} because of its {2}!",
+                                  target.pbThis(true), target.abilityName))
+        end
+        @battle.pbHideAbilitySplash(target)
+        return false
+      end
     end
     return false
   end

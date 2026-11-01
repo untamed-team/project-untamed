@@ -383,11 +383,23 @@ end
 #===============================================================================
 class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
   def canSnatch?; return true; end
+  
+  def usableWhenAsleep?
+    return true if $player.difficulty_mode?("chaos")
+    return false
+  end
 
   def pbMoveFailed?(user, targets)
-    if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
-      @battle.pbDisplay(_INTL("But it failed!"))
-      return true
+    if $player.difficulty_mode?("chaos")
+      if !user.pbHasAnyStatus?
+        @battle.pbDisplay(_INTL("But it failed!"))
+        return true
+      end
+    else
+      if ![:BURN, :POISON, :PARALYSIS, :FREEZE].include?(user.status)
+        @battle.pbDisplay(_INTL("But it failed!"))
+        return true
+      end
     end
     return false
   end
@@ -404,6 +416,10 @@ class Battle::Move::CureUserBurnPoisonParalysis < Battle::Move
       @battle.pbDisplay(_INTL("{1} cured its paralysis!", user.pbThis))
     when :FREEZE
       @battle.pbDisplay(_INTL("{1} healed its frostbite!", user.pbThis))
+    when :SLEEP
+      @battle.pbDisplay(_INTL("{1} woke up!", user.pbThis))
+    when :DIZZY
+      @battle.pbDisplay(_INTL("{1} regained focus!", user.pbThis))
     end
   end
 end
