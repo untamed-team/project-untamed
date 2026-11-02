@@ -18,6 +18,16 @@
 48,East,0,26,West,52
 # Melolado (39) - Route 2 (26)
 39,West,10,26,East,0
+# Route 3-4 Transfer Map (117) - Route 3 (29)
+117,East,0,29,West,52
+# Route 3 North Border (140) - Route 3 (29)
+140,South,0,29,North,0
+# Route 3 (29) - Calojarro (51)
+29,71,0,51,0,20
+# Asterado Ranch (45) - Route 4 - Top East (47)
+45,South,57,47,North,0
+# Route 4 - Top East (47) - Route 3-4 Transfer Map (117)
+47,East,3,117,West,0
 # Connection to Hacienda (61) - Route 1 (48)
 61,East,0,48,West,5
 # Route 6 (58) - Ferrera (66)
@@ -28,15 +38,7 @@
 72,South,0,66,North,0
 # Oasis (126) - Soleca Desert North (87)
 126,South,6,87,North,0
-# Route 3-4 Transfer Map (117) - Route 3 (29)
-117,East,0,29,West,52
-# Route 3 North Border (140) - Route 3 (29)
-140,South,0,29,North,0
-# Route 4 - Top East (47) - Route 3-4 Transfer Map (117)
-47,East,3,117,West,0
 # Route 3 North Border (140) - Route 3-4 Transfer Map (117)
 140,West,67,117,East,0
-# Route 3 (29) - Calojarro (51)
-29,71,0,51,0,20
-# Asterado Ranch (45) - Route 4 - Top East (47)
-45,South,57,47,North,0
+# Route 4 - Top Border (49) - Route 4 - Bottom Vertical (27)
+49,South,0,27,North,0
