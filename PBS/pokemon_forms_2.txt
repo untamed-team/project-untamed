@@ -132,7 +132,7 @@ Height = 0.9
 Weight = 38.3
 Color = Red
 Pokedex = This Mega's battle tenacity is unforgiving. It grows stronger as it adapts to the current foe's attack pattern, with its goal being to create a show for its fans.
-#------------------------------- 
+#------------------------------- # note: +nature 100 def sand veil = ~131 def (with AAM)
 [CACTURNE,1]
 FormName = Mega Cacturne
 MegaStone = CACTURNITE
@@ -142,7 +142,7 @@ HiddenAbilities = DUSTSENTINEL
 Height = 1.6
 Weight = 92.1
 Pokedex = This Pokemon's new thorny hide shows itself to be quite bullet resistant. It loves to tie scarescrows in train tracks, whether the railroad is active or not.
-#------------------------------- # note: +nature 140 spdef fur coat = ~282 spdef (with AAM)
+#------------------------------- # note: +nature 140 spdef ice scales = ~282 spdef (with AAM)
 [FROSMOTH,1]
 FormName = Mega Frosmoth
 MegaStone = FROSMOTHITE
