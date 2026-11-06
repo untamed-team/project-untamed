@@ -3177,3 +3177,68 @@ def pbFadeInBGM(bgm_name, target_volume = nil, pitch = nil, timeInSeconds = 0.0)
     end #if frame_count >= total_frames
   }) #EventHanlders.add
 end #def pbBGMPlayFadeIn
+
+#===============================================================================
+# Custom Self-switches
+#===============================================================================
+#E is reserved for reducing lag on large maps
+#usage: s:self_switch("E")
+def self_switch(letter)
+  return $game_self_switches[[@map_id, @id, letter]]
+end
+
+#===============================================================================
+# Reduce Lag on Maps - Like Calojarro Exterior
+#===============================================================================
+#Add the ID of a map you want to cull (reduce lag) to the array MAPS_THAT_NEED_CULLING
+
+TILE_DISTANCE_FROM_PLAYER_TOLERANCE = 20
+MAPS_THAT_NEED_CULLING = [
+  96, #Calojarro Exterior
+]
+
+#hijacked the update method that causes lag on maps with lots of events: 003_Sprite_Character
+class Sprite_Character < RPG::Sprite
+  alias culling_sprite_update update
+  def update
+    return if @character.is_a?(Game_Event) && !@character.should_update?
+
+    #should we skip updating?
+    #skip updating if current map is one that needs culling, if event (@character) name doesn't contain "eflr", and if @character is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE)
+    if @character != $game_player
+      #calculate event's distance from player
+      outOfDistance = ($game_player.x - @character.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - @character.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
+      
+      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !@character.name[/eflr/] && outOfDistance
+        #Console.echo_warn "map needs culling" if MAPS_THAT_NEED_CULLING.include?($game_map.map_id)
+        #Console.echo_warn "@character name does not contain 'eflr'" if !@character.name[/eflr/]
+        #Console.echo_warn "@character is not within distance" if outOfDistance
+        return
+      end
+    end
+
+    culling_sprite_update
+  end
+end
+
+#currently this breaks following pkmn's ability to pathfind
+
+#hijacked the update method for events on the map to skip updating events when on certain maps unless player is close to the event (with some events excluded via "eflr" in their name)
+class Game_Event < Game_Character
+  alias culling_event_update update  
+  def update
+    #should we skip updating?
+    #skip updating if current map is one that needs culling, if event (event) name doesn't contain "eflr", if event is far from the player (not within TILE_DISTANCE_FROM_PLAYER_TOLERANCE), and if the event isn't the following pkmn
+    #calculate event's distance from player
+      outOfDistance = ($game_player.x - event.x).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE || ($game_player.y - event.y).abs > TILE_DISTANCE_FROM_PLAYER_TOLERANCE
+      
+      if MAPS_THAT_NEED_CULLING.include?($game_map.map_id) && !event.name[/eflr/] && outOfDistance && !event.name == "FollowingPkmn"
+        #Console.echo_warn "map needs culling" if MAPS_THAT_NEED_CULLING.include?($game_map.map_id)
+        #Console.echo_warn "event name does not contain 'eflr'" if !event.name[/eflr/]
+        #Console.echo_warn "event is not within distance" if outOfDistance
+        return
+      end
+
+    culling_event_update
+  end
+end

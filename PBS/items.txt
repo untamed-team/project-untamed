@@ -7405,3 +7405,12 @@ Pocket = 1
 Price = 200
 Flags = Mulch,Fling_30
 Description = A fertilizer for growing Berries. It increases the harvest, chance of mutations, and drying rate.
+#-------------------------------
+[ANCIENTKEY]
+Name = Ancient Key
+NamePlural = Ancient Keys
+Pocket = 8
+Price = 0
+Flags = KeyItem
+Description = An old key that you found in the temple on route 4.
+#-------------------------------
