@@ -146,8 +146,8 @@ Name = Route 5
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,8
-MapSize = 1,1111
 BattleBack = desert
+MapSize = 1,1111
 Flags = campMapDesert
 #-------------------------------
 [024]   # Camp - Grassy
@@ -159,8 +159,8 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
-MapSize = 2,11
 BattleBack = canyon
+MapSize = 2,11
 #-------------------------------
 [026]   # Route 2
 Name = Route 2
@@ -176,8 +176,8 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
-MapSize = 2,11
 BattleBack = canyon
+MapSize = 2,11
 Flags = 
 #-------------------------------
 [028]   # Daycare CenterInterior
@@ -190,8 +190,8 @@ Name = Route 3
 Outdoor = true
 ShowArea = true
 MapPosition = 0,24,5
-MapSize = 1,11
 BattleBack = mountain
+MapSize = 1,11
 Flags = campMapMeadow
 #-------------------------------
 [030]   # Butterfly Sanctuary
@@ -325,8 +325,8 @@ Name = Route 4
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,7
-MapSize = 2,11
 BattleBack = canyon
+MapSize = 2,11
 Flags = 
 #-------------------------------
 [048]   # Route 1
@@ -339,7 +339,7 @@ BattleBack = field
 MapSize = 2,1101
 Flags = campMapMeadow
 #-------------------------------
-[049]   # Asterado Dive
+[049]   # MAP049
 Name = Asterado Lake
 Outdoor = false
 MapPosition = 0,23,6
@@ -367,16 +367,16 @@ Flags = campMapBeach
 #-------------------------------
 [052]   # Dorado Mine Floor 2 Main
 Name = Dorado Mine F2
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,24,7
 BattleBack = cave1
 Flags = campMapCave,CanCamp
 #-------------------------------
 [053]   # Dorado Mine Floor 3 Main
 Name = Dorado Mine F3
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,24,7
 BattleBack = cave4
 Flags = campMapCave,CanCamp
@@ -390,17 +390,16 @@ Flags = campMapCave,CanCamp
 #-------------------------------
 [055]   # Dorado Mine Floor 2 South Section
 Name = Dorado Mine F2
-ShowArea = true
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,24,7
 BattleBack = cave
 Flags = campMapCave,CanCamp
 #-------------------------------
 [056]   # Dorado Mine Floor 4
 Name = Dorado Mine F4
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,24,7
 BattleBack = cave4
 Flags = campMapCave,CanCamp
@@ -417,8 +416,8 @@ Name = Route 6
 Outdoor = true
 ShowArea = true
 MapPosition = 0,22,12
-MapSize = 3,111
 BattleBack = desert
+MapSize = 3,111
 Flags = campMapDesert
 #-------------------------------
 [059]   # Canyon Temple Left
@@ -590,16 +589,16 @@ Flags = campMapBeach
 #-------------------------------
 [098]   # Dorado Mine Level 2 Right Side
 Name = Dorado Mine F2
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,24,7
 BattleBack = cave
 Flags = campMapCave,CanCamp
 #-------------------------------
 [105]   # Route 4 - Dorado Cave
 Name = Dorado Cave
-ShowArea = true
 Outdoor = false
+ShowArea = true
 MapPosition = 0,22,7
 #-------------------------------
 [106]   # Butterfly Sanctuary Entrance
@@ -618,8 +617,8 @@ MapPosition = 0,22,10
 Name = Route 4
 Outdoor = true
 MapPosition = 0,22,7
-MapSize = 2,11
 BattleBack = canyon
+MapSize = 2,11
 Flags = 
 #-------------------------------
 [114]   # Cromen Collectibles 2
@@ -730,3 +729,6 @@ MapPosition = 0,23,11
 [144]   # Foremans Office
 Name = Foremans Office
 MapPosition = 0,23,12
+#-------------------------------
+[145]   # MAP145
+Name = MAP145
