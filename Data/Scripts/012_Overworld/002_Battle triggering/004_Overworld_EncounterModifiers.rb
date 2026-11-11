@@ -8,6 +8,9 @@
 # Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
 EventHandlers.add(:on_wild_pokemon_created, :make_shiny_switch,
   proc { |pkmn|
+    # prevents the generation of shiny pokermans when the player has guest followers #by low
+    # the -1 is to account for the pokemon follower
+    pkmn.shiny = false if ($PokemonGlobal.followers.length - 1) > 0
     pkmn.shiny = true if $game_switches[Settings::SHINY_WILD_POKEMON_SWITCH]
   }
 )

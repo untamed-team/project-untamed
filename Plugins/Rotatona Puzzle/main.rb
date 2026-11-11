@@ -153,6 +153,8 @@ class RotatonaPuzzle
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Rotatable].include?(event)
 			return if !self.useAncientKey
+			return if !self.ShakersDisabled
+			
 			#print "this is #{event}, and its associatedOverlay is #{event.associatedOverlay}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -181,6 +183,7 @@ class RotatonaPuzzle
 		###################################################################
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Rotatable].include?(event)
 			return if !self.useAncientKey
+			return if !self.ShakersDisabled
 			#print "this is #{event}, and its associatedLauncher is #{event.associatedLauncher}"
 			choices = [
 				_INTL("Left Arrow Button"), #0
@@ -209,6 +212,7 @@ class RotatonaPuzzle
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Stationary].include?(event)
 			return if !self.useAncientKey
+			return if !self.ShakersDisabled
 			if !event.discThisLauncherHasDocked.nil?
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -224,6 +228,7 @@ class RotatonaPuzzle
 		###################################################################	
 		elsif $rotatona_puzzle.currentRoomPuzzleEvents[:Launchers_Overlay_Stationary].include?(event)
 			return if !self.useAncientKey
+			return if !self.ShakersDisabled
 			if !event.associatedLauncher.discThisLauncherHasDocked.nil? #discDocked
 				#if disc is docked
 				choice = pbConfirmMessage(_INTL("There's a square button here. Press it?"))
@@ -1124,6 +1129,26 @@ class RotatonaPuzzle
 			PBMoveRoute::Graphic, discEvent.character_name, discEvent.character_hue, newDirection, 1
 		], true)
 	end #def self.rotateDockedDisc(discEvent, newDirection)
+	
+	def self.ShakersDisabled
+		#if shaker(s) in this room is not disabled, shake screen and disallow interaction
+		if $game_map.map_id == 59 && !$game_switches[151] #temple room left, switch 151 off (meaning shaker in that room is NOT disabled)
+			Console.echo_warn "in left room, shaker not disabled yet"
+			pbCommonEvent(26) #shake screen
+			pbWait(20)
+			pbMessage(_INTL("\\PN tries to put the Ancient Key into the machinery, but the room is shaking too much!"))
+			pbMessage(_INTL("There must be a way to stop the shaking in this room..."))
+			return false
+		elsif $game_map.map_id == 120 && !$game_switches[154] #temple room right, switch 154 off (meaning shaker in that room is NOT disabled)
+			Console.echo_warn "in right room, shaker not disabled yet"
+			pbCommonEvent(26) #shake screen
+			pbWait(20)
+			pbMessage(_INTL("\\PN tries to put the Ancient Key into the machinery, but the room is shaking too much!"))
+			pbMessage(_INTL("There must be a way to stop the shaking in this room..."))
+			return false
+		end
+		return true
+	end #def self.ShakersDisabled
 end #class RotatonaPuzzle
 
 #logic to do:
