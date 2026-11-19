@@ -3195,6 +3195,7 @@ end
 TILE_DISTANCE_FROM_PLAYER_TOLERANCE = 20
 MAPS_THAT_NEED_CULLING = [
   96, #Calojarro Exterior
+  26, #Route 2
 ]
 
 #hijacked the update method that causes lag on maps with lots of events: 003_Sprite_Character
