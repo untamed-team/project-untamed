@@ -111,6 +111,7 @@ class Battle
       #makes it so it wont be common to see the same move have the same side effect 
       #if 2 or more mons choose it on the same turn
       @battlers.each do |b|
+        next if b.nil?
         next if b.movedThisRound?
         haxxvalue += b.index
       end

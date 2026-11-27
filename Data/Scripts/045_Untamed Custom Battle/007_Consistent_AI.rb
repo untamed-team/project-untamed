@@ -710,6 +710,14 @@ class Battle::AI
     # Account for the accuracy of the move
     accuracy = pbRoughAccuracy(move, user, target, skill)
     accuracy = 100 if accuracy > 100
+    if accuracy <= 70 && user.hasActiveItem?(:BLUNDERPOLICY) && user.pbCanRaiseStatBySource?(:SPEED, user.item) && 
+       !["OHKO", "OHKOIce", "OHKOHitsUndergroundTarget"].include?(move.function) && @battle.field.effects[PBEffects::TrickRoom] == 0
+      accuracy += 20
+      aspeed = pbRoughStat(user,:SPEED,skill)
+      ospeed = pbRoughStat(target,:SPEED,skill)
+      userFasterThanTarget = ((aspeed>=ospeed) ^ (@battle.field.effects[PBEffects::TrickRoom]>0))
+      score *= 1.2 if !userFasterThanTarget
+    end
     score -= (100 - accuracy) * (4 / 3.0) if accuracy < 100
     # A score of 0 here means it should not be used 
     # ...unless it is a good move to target allies, which are stored on the negatives
